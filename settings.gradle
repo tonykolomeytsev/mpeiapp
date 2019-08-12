@@ -1,0 +1,1 @@
+include ':app', ':core', ':coreui', ':repository', ':feed', ':buildSrc', ':domain', ':mainscreen'

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center_vertical">
+
+    <ImageView
+            android:layout_width="100dp"
+            android:layout_height="56dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/imageViewAvatar"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/img_template"
+            android:scaleType="centerCrop"/>
+
+    <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="16dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="24dp"
+            tools:src="@drawable/img_template"
+            android:scaleType="centerCrop" android:id="@+id/imageView2"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#DE000000"
+            android:textSize="16sp"
+            tools:text="Two-line item"
+            android:id="@+id/textViewPrimary"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toEndOf="@+id/imageViewAvatar"
+            android:layout_marginStart="16dp"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#99000000"
+            tools:text="Secondary text"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@+id/textViewPrimary"
+            android:id="@+id/textViewSecondary"
+            app:layout_constraintTop_toBottomOf="@+id/textViewPrimary"/>
+
+</android.support.constraint.ConstraintLayout>

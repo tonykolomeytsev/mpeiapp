@@ -1,0 +1,20 @@
+package kekmech.ru.coreui.adapter
+
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+
+/**
+ * Created by Kolomeytsev Anton on 09.07.2016.
+ * This class is a part of Mr. Captain project.
+ */
+abstract class BaseFactory(val layoutId: Int) {
+
+    fun instanceNative(parent: ViewGroup?): BaseViewHolder {
+        return instance(LayoutInflater
+                .from(parent!!.context)
+                .inflate(layoutId, parent, false))
+    }
+
+    abstract fun instance(view: View): BaseViewHolder
+}
