@@ -1,34 +1,37 @@
 package kekmech.ru.mainscreen
 
-import android.app.Activity
-import android.content.Context
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
-import dagger.Subcomponent
-import dagger.android.AndroidInjection
-import kekmech.ru.core.dto.Couple
-import kekmech.ru.coreui.adapter.BaseAdapter
-import kekmech.ru.feed.FeedItem
-import kotlinx.android.synthetic.main.activity_main.*
-import java.util.*
-import javax.inject.Inject
+import android.support.design.widget.BottomNavigationView
+import android.support.v7.app.AppCompatActivity
+import android.widget.TextView
 
-class MainActivity : Activity() {
+class MainActivity : AppCompatActivity() {
 
-    @Inject
-    lateinit var context: Context
+    private lateinit var textMessage: TextView
+    private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+        when (item.itemId) {
+            R.id.navigation_home -> {
+                textMessage.setText(R.string.title_home)
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.navigation_dashboard -> {
+                textMessage.setText(R.string.title_dashboard)
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.navigation_notifications -> {
+                textMessage.setText(R.string.title_notifications)
+                return@OnNavigationItemSelectedListener true
+            }
+        }
+        false
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        
+        val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
-        val adapter = BaseAdapter.Builder()
-            .registerViewTypeFactory(FeedItem.Factory())
-            .build()
-        adapter.baseItems.addAll((1..10).map { Couple(it,"Пара $it", "Рандом", Date()) }.map { FeedItem(it) })
-
-        feedView.layoutManager = LinearLayoutManager(this@MainActivity)
-        feedView.adapter = adapter
+        textMessage = findViewById(R.id.message)
+        navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
     }
 }
