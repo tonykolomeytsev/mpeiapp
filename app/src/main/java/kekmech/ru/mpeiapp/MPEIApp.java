@@ -2,22 +2,27 @@ package kekmech.ru.mpeiapp;
 
 import android.app.Application;
 import dagger.android.AndroidInjector;
-import dagger.android.DaggerApplication;
-import android.content.Intent;
-import kekmech.ru.mainscreen.MainActivity;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.HasAndroidInjector;
+
+import javax.inject.Inject;
 
 
-public class MPEIApp extends Application {
-    private static AppComponent component;
-
-    public static AppComponent getComponent() {
-        return component;
-    }
+public class MPEIApp extends Application implements HasAndroidInjector {
+    @Inject
+    DispatchingAndroidInjector<Object> dispatchingAndroidInjector;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        component = AppComponent.Initializer.init(this);
+        DaggerAppComponent.Companion
+                .init(this)
+                .inject(this);
+    }
+
+    @Override
+    public AndroidInjector<Object> androidInjector() {
+        return dispatchingAndroidInjector;
     }
 }
 

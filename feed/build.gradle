@@ -30,6 +30,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support:support-v4:28.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
@@ -40,16 +41,15 @@ dependencies {
     implementation project(path: ':core')
 
 
-
     // dagger
-    implementation 'com.google.dagger:dagger:2.16'
-    kapt 'com.google.dagger:dagger-compiler:2.16'
+    implementation 'com.google.dagger:dagger:2.24'
+    kapt 'com.google.dagger:dagger-compiler:2.24'
     compileOnly 'javax.annotation:jsr250-api:1.0'
 
     // dagger android
-    kapt "com.google.dagger:dagger-android-processor:2.16"
-    implementation "com.google.dagger:dagger-android:2.16"
-    implementation "com.google.dagger:dagger-android-support:2.16"
+    kapt "com.google.dagger:dagger-android-processor:2.24"
+    implementation "com.google.dagger:dagger-android:2.24"
+    implementation "com.google.dagger:dagger-android-support:2.24"
 }
 repositories {
     mavenCentral()
