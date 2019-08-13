@@ -18,5 +18,9 @@ class TimetableFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_timetable, container, false)
     }
 
+    companion object {
+        fun newInstance(): TimetableFragment = TimetableFragment()
+    }
+
 
 }

@@ -44,6 +44,7 @@ dependencies {
     implementation "com.google.dagger:dagger-android-support:2.24"
 
     implementation 'com.android.support:recyclerview-v7:28.0.0'
+    implementation 'ru.terrakok.cicerone:cicerone:3.0.0'
 
     implementation project(path: ':core')
     implementation project(path: ':feed')
@@ -51,4 +52,6 @@ dependencies {
     implementation project(path: ':domain')
     implementation project(path: ':repository')
     implementation project(path: ':mainscreen')
+    implementation project(path: ':timetable')
+    implementation project(path: ':settings')
 }

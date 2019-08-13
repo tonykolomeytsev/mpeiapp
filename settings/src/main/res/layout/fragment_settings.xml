@@ -3,13 +3,12 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             android:background="#ff0000"
-             tools:context=".FeedFragment">
+             android:background="#00FF00"
+             tools:context=".SettingsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment"/>
+            android:text="HELLO BLANK FRAGMENT"/>
 
 </FrameLayout>

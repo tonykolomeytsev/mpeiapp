@@ -8,13 +8,15 @@ import kekmech.ru.core.RepositoryProvider
 import kekmech.ru.domain.InteractorComponent
 import kekmech.ru.mainscreen.MainActivityModule
 import kekmech.ru.repository.RepositoryComponent
+import ru.terrakok.cicerone.Cicerone
+import ru.terrakok.cicerone.Router
 import javax.inject.Singleton
 
 @Singleton
 @Component(
     modules = [
         AndroidInjectionModule::class,
-        ContextModule::class,
+        AppModule::class,
         MainActivityModule::class
     ],
     dependencies = [
@@ -25,12 +27,11 @@ interface AppComponent {
     fun inject(app: MPEIApp)
 
     companion object {
-        fun init(app: Application): AppComponent {
-            val contextModule = ContextModule(app)
-            val contextProvider = ContextComponent.init(contextModule)
-
+        fun init(app: Application, cicerone: Cicerone<Router>): AppComponent {
+            val contextProvider = ContextComponent.init(ContextModule(app))
+            val appModule = AppModule(app, cicerone)
             return DaggerAppComponent.builder()
-                .contextModule(contextModule)
+                .appModule(appModule)
                 .repositoryProvider(RepositoryComponent.Initializer.init(contextProvider))
                 .interactorProvider(InteractorComponent.Initializer.init(contextProvider))
                 .build()

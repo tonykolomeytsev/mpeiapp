@@ -1,4 +1,4 @@
-package kekmech.ru.feed
+package kekmech.ru.timetable
 
 import dagger.Subcomponent
 import dagger.android.AndroidInjector
