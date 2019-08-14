@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:paddingBottom="16dp"
+        android:gravity="center_vertical"
+        android:clipToPadding="false">
+
+    <TextView android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:textColor="#DE000000"
+              android:textSize="24sp"
+              tools:text="Линейная алгебра"
+              android:id="@+id/textViewCoupleName"
+              android:ellipsize="end"
+              android:maxLines="1"
+              android:fontFamily="sans-serif"
+              android:layout_marginStart="40dp"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintEnd_toEndOf="parent"
+              android:layout_marginEnd="64dp" tools:layout_editor_absoluteY="26dp"
+                app:layout_constraintTop_toBottomOf="@id/textViewCoupleType"
+    android:layout_marginTop="0dp"/>
+
+    <ImageView android:layout_width="18dp" android:layout_height="18dp"
+               android:src="@drawable/ic_outline_place_black_18dp"
+               android:tintMode="src_in"
+               android:tint="#464646"
+               app:layout_constraintEnd_toStartOf="@+id/textViewCouplePlace"
+               android:layout_marginEnd="8dp" android:layout_marginTop="2dp"
+               app:layout_constraintTop_toTopOf="@+id/textViewCouplePlace"/>
+
+    <ImageView android:layout_width="18dp"
+               android:layout_height="18dp"
+               android:src="@drawable/ic_outline_access_time_black_18dp"
+               android:tintMode="src_in"
+               android:tint="#464646" android:id="@+id/imageView3"
+               android:layout_marginEnd="8dp"
+               app:layout_constraintEnd_toStartOf="@+id/textViewCoupleTimeStart"
+               android:layout_marginTop="2dp"
+               app:layout_constraintTop_toTopOf="@+id/textViewCoupleTimeStart"/>
+
+    <ImageView android:layout_width="18dp"
+               android:layout_height="18dp"
+               android:src="@drawable/ic_outline_person_black_18dp"
+               android:tintMode="src_in"
+               android:tint="#464646"
+               app:layout_constraintEnd_toStartOf="@+id/textViewCoupleTeacher"
+               android:layout_marginEnd="8dp" android:layout_marginTop="2dp"
+               app:layout_constraintTop_toTopOf="@+id/textViewCoupleTeacher"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#DE000000"
+            tools:text="Б-407"
+            android:textSize="16sp"
+            android:id="@+id/textViewCouplePlace"
+            app:layout_constraintStart_toStartOf="@+id/textViewCoupleName"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/textViewCoupleName"/>
+
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#DE000000"
+            tools:text="11:10"
+            android:textSize="16sp"
+            android:id="@+id/textViewCoupleTimeStart"
+            app:layout_constraintStart_toStartOf="@+id/textViewCoupleName"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/textViewCouplePlace"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#DE000000"
+            tools:text="Кудин С.Ф."
+            android:textSize="16sp"
+            android:id="@+id/textViewCoupleTeacher"
+            tools:layout_editor_absoluteY="136dp"
+            app:layout_constraintStart_toStartOf="@+id/textViewCoupleTimeStart"
+            app:layout_constraintTop_toBottomOf="@id/textViewCoupleTimeStart"
+            android:layout_marginTop="8dp"/>
+
+
+    <TextView android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:textColor="#99000000"
+              tools:text="практика"
+              android:textAllCaps="true"
+              android:textStyle="bold"
+              android:textSize="10sp"
+              app:layout_constraintStart_toStartOf="@+id/textViewCoupleName"
+              android:id="@+id/textViewCoupleType"
+              android:layout_marginTop="16dp" app:layout_constraintTop_toTopOf="parent"/>
+
+    <kekmech.ru.coreui.Chip
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:text="Лекция"
+            app:accentColor="#870000"
+            tools:layout_editor_absoluteY="75dp"
+            tools:layout_editor_absoluteX="129dp"/>
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#33000000"
+            app:layout_constraintTop_toBottomOf="parent"
+            android:layout_marginTop="15dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginLeft="40dp"/>
+
+</android.support.constraint.ConstraintLayout>

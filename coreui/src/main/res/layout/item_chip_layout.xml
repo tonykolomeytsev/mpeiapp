@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:minHeight="32dp"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:gravity="center_vertical"
+        android:background="@drawable/item_chip_drawable"
+        android:backgroundTint="#ffffff">
+
+    <TextView
+            android:id="@+id/textViewChipLayout"
+            tools:text="Filter Chip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:textSize="14sp"
+            android:textColor="#de000000"/>
+
+</LinearLayout>

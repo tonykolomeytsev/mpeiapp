@@ -11,21 +11,25 @@ import kekmech.ru.coreui.adapter.BaseViewHolder
 class FeedItem(val couple: Couple) : BaseItem<FeedItem.ViewHolder>() {
 
     override fun updateViewHolder(viewHolder: ViewHolder) {
-        viewHolder.primaryText.text = couple.name
-        viewHolder.secondaryText.text = couple.teacher
-        viewHolder.icon.setImageResource(R.drawable.img_template)
+        viewHolder.coupleName.text = couple.name
+        viewHolder.coupleType.text = listOf("Практика", "Лекция").random()
+        viewHolder.couplePlace.text = listOf("Б-407","Д-200", "Д-301", "Б-400").random()
+        viewHolder.coupleTime.text = "11:10"
+        viewHolder.coupleTeacher.text = couple.teacher
     }
 
     override fun approveFactory(factory: BaseFactory) = factory is Factory
 
     class ViewHolder(itemView: View) : BaseViewHolder(itemView) {
-        val primaryText by bind<TextView>(R.id.textViewPrimary)
-        val secondaryText by bind<TextView>(R.id.textViewSecondary)
-        val icon by bind<ImageView>(R.id.imageViewAvatar)
+        val coupleName by bind<TextView>(R.id.textViewCoupleName)
+        val coupleType by bind<TextView>(R.id.textViewCoupleType)
+        val couplePlace by bind<TextView>(R.id.textViewCouplePlace)
+        val coupleTime by bind<TextView>(R.id.textViewCoupleTimeStart)
+        val coupleTeacher by bind<TextView>(R.id.textViewCoupleTeacher)
         override fun onCreateView(view: View) {}
     }
 
-    class Factory: BaseFactory(R.layout.item_two_line_rounded_icon_layout) {
+    class Factory: BaseFactory(R.layout.item_couple_full_layout) {
         override fun instance(view: View) = ViewHolder(view)
     }
 }

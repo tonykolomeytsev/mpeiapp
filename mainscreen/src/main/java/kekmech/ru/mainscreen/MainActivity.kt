@@ -21,7 +21,8 @@ import javax.inject.Inject
 
 class MainActivity : DaggerAppCompatActivity() {
 
-    private lateinit var textMessage: TextView
+    val feedFragment by lazy { FeedFragment() }
+
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_home -> {
@@ -42,13 +43,13 @@ class MainActivity : DaggerAppCompatActivity() {
 
     val navigator = object : SupportAppNavigator(this, R.id.main_container) {
 
+
         override fun createActivityIntent(context: Context?, screenKey: String?, data: Any?): Intent? = null
-//            when (screenKey) {
-//            //"MAIN" -> Intent(this@MainActivity, AuthActivity::class.java)
-//            else -> null}
+//            when (screenKey) { "MAIN" -> Intent(this@MainActivity, AuthActivity::class.java)
+//            else -> null }
 
         override fun createFragment(screenKey: String?, data: Any?): Fragment? = when (screenKey) {
-            "FEED" -> FeedFragment()
+            "FEED" -> feedFragment //FeedFragment()
             "TIMETABLE" -> TimetableFragment()
             "SETTINGS" -> SettingsFragment()
             else -> null
@@ -59,7 +60,6 @@ class MainActivity : DaggerAppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        textMessage = findViewById(R.id.message)
         nav_view.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
     }
 
