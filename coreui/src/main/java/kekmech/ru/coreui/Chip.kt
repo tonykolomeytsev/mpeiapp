@@ -23,9 +23,15 @@ class Chip : LinearLayout {
     private var accentColorText = DEFAULT_ACCENT_COLOR_TEXT
     private var accentColorChip = DEFAULT_ACCENT_COLOR_CHIP
     private val contentView: LinearLayout
+    private val textView: TextView
+
+    var text: String
+        get() = textView.text.toString()
+        set(value) { textView.text = value }
 
     init {
         contentView = LayoutInflater.from(context).inflate(R.layout.item_chip_layout, null) as LinearLayout
+        textView = contentView.findViewById<TextView>(R.id.textViewChipLayout)
         addView(contentView)
     }
 
@@ -60,9 +66,9 @@ class Chip : LinearLayout {
             Color.red(accentColor),
             Color.green(accentColor),
             Color.blue(accentColor))
-        val textView = contentView.findViewById<TextView>(R.id.textViewChipLayout)
+
         textView.setTextColor(accentColorText)
-        textView.text = text
+        this.text = text ?: ""
         val imageView = contentView.findViewById<ImageView>(R.id.imageViewChipThumbnail)
         if (thumbnail == null) {
             imageView.visibility = View.GONE
@@ -72,6 +78,5 @@ class Chip : LinearLayout {
             imageView.setColorFilter(accentColorText, PorterDuff.Mode.SRC_ATOP)
         }
         contentView.background.setColorFilter(accentColorChip, PorterDuff.Mode.SRC_ATOP)
-
     }
 }
