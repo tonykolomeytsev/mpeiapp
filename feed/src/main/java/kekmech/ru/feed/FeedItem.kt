@@ -15,7 +15,7 @@ class FeedItem(val couple: Couple) : BaseItem<FeedItem.ViewHolder>() {
         viewHolder.coupleType.text = listOf("Практика", "Лекция").random()
         viewHolder.couplePlace.text = listOf("Б-407","Д-200", "Д-301", "Б-400").random()
         viewHolder.coupleTime.text = "11:10"
-        viewHolder.coupleTeacher.text = couple.teacher
+        //viewHolder.coupleTeacher.text = couple.teacher
     }
 
     override fun approveFactory(factory: BaseFactory) = factory is Factory
@@ -25,7 +25,7 @@ class FeedItem(val couple: Couple) : BaseItem<FeedItem.ViewHolder>() {
         val coupleType by bind<TextView>(R.id.textViewCoupleType)
         val couplePlace by bind<TextView>(R.id.textViewCouplePlace)
         val coupleTime by bind<TextView>(R.id.textViewCoupleTimeStart)
-        val coupleTeacher by bind<TextView>(R.id.textViewCoupleTeacher)
+        //val coupleTeacher by bind<TextView>(R.id.textViewCoupleTeacher)
         override fun onCreateView(view: View) {}
     }
 

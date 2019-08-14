@@ -3,9 +3,11 @@ package kekmech.ru.coreui
 import android.content.Context
 import android.graphics.Color
 import android.graphics.PorterDuff
+import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 
@@ -45,6 +47,7 @@ class Chip : LinearLayout {
         val typedArray = context.theme.obtainStyledAttributes(attrs, R.styleable.Chip, 0, 0)
         val accentColor = typedArray.getColor(R.styleable.Chip_accentColor, DEFAULT_ACCENT_COLOR_TEXT)
         val text = typedArray.getString(R.styleable.Chip_text)
+        val thumbnail: Drawable? = typedArray.getDrawable(R.styleable.Chip_thumbnail)
         typedArray.recycle()
 
         accentColorText = Color.argb(
@@ -60,6 +63,14 @@ class Chip : LinearLayout {
         val textView = contentView.findViewById<TextView>(R.id.textViewChipLayout)
         textView.setTextColor(accentColorText)
         textView.text = text
+        val imageView = contentView.findViewById<ImageView>(R.id.imageViewChipThumbnail)
+        if (thumbnail == null) {
+            imageView.visibility = View.GONE
+        } else {
+            imageView.visibility = View.VISIBLE
+            imageView.setImageDrawable(thumbnail)
+            imageView.setColorFilter(accentColorText, PorterDuff.Mode.SRC_ATOP)
+        }
         contentView.background.setColorFilter(accentColorChip, PorterDuff.Mode.SRC_ATOP)
 
     }

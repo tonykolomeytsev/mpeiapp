@@ -3,5 +3,6 @@
     <declare-styleable name="Chip">
         <attr name="accentColor" format="color"/>
         <attr name="text" format="string"/>
+        <attr name="thumbnail" format="integer"/>
     </declare-styleable>
 </resources>
