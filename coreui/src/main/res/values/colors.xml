@@ -12,5 +12,8 @@
     <color name="secondaryDarkColor">#002f6c</color>
     <color name="primaryTextColor">#ffffff</color>
     <color name="secondaryTextColor">#ffffff</color>
-</resources>
 
+    <color name="colorChipLecture">#005005</color>
+    <color name="colorChipPractice">#524c00</color>
+    <color name="colorChipLab">#870000</color>
+</resources>
