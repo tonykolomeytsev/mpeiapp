@@ -6,5 +6,6 @@ data class Couple(
     var id: Int,
     var name: String,
     var teacher: String,
-    var date: Date
+    var date: Date,
+    var type: CoupleType
 )
