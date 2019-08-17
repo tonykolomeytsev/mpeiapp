@@ -17,4 +17,5 @@
     <color name="colorChipPractice">#524c00</color>
     <color name="colorChipLab">#870000</color>
     <color name="colorBlack">#000000</color>
+    <color name="colorBrackTransparent">#4D000000</color>
 </resources>
