@@ -1,20 +1,24 @@
-package kekmech.ru.settings
+package kekmech.ru.coreui.items
 
-import android.graphics.drawable.Drawable
-import android.media.Image
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import kekmech.ru.coreui.R
+import kekmech.ru.coreui.adapter.BaseClickableItem
 import kekmech.ru.coreui.adapter.BaseFactory
-import kekmech.ru.coreui.adapter.BaseItem
 import kekmech.ru.coreui.adapter.BaseViewHolder
 
-class SettingsItem(val header: String, val description: String, val icon: Int) : BaseItem<SettingsItem.ViewHolder>() {
+class TwoLineIconedItem(
+    private val header: String,
+    private val description: String,
+    private val icon: Int,
+    itemId: String = ""
+) : BaseClickableItem<TwoLineIconedItem.ViewHolder>(itemId) {
 
-    override fun updateViewHolder(vh: ViewHolder) {
-        vh.description.text = description
-        vh.header.text = header
-        vh.icon.setImageResource(icon)
+    override fun updateViewHolder(viewHolder: ViewHolder) {
+        viewHolder.description.text = description
+        viewHolder.header.text = header
+        viewHolder.icon.setImageResource(icon)
     }
 
     override fun approveFactory(factory: BaseFactory) = factory is Factory
@@ -26,7 +30,7 @@ class SettingsItem(val header: String, val description: String, val icon: Int) :
         override fun onCreateView(view: View) = Unit
     }
 
-    class Factory : BaseFactory(R.layout.item_settings_layout) {
+    class Factory : BaseFactory(R.layout.item_two_line_iconed_layout) {
         override fun instance(view: View) = ViewHolder(view)
     }
 }

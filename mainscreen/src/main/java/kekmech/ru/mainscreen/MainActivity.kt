@@ -9,6 +9,7 @@ import android.widget.TextView
 import android.widget.Toast
 import dagger.android.support.DaggerAppCompatActivity
 import kekmech.ru.feed.FeedFragment
+import kekmech.ru.settings.SettingsDevFragment
 import kekmech.ru.settings.SettingsFragment
 import kekmech.ru.timetable.TimetableFragment
 import kotlinx.android.synthetic.main.activity_main.*
@@ -52,6 +53,7 @@ class MainActivity : DaggerAppCompatActivity() {
             "FEED" -> feedFragment //FeedFragment()
             "TIMETABLE" -> TimetableFragment()
             "SETTINGS" -> SettingsFragment()
+            "DEV" -> SettingsDevFragment()
             else -> null
         }
     }

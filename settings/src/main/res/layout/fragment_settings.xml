@@ -36,7 +36,7 @@
             />
 
             <android.support.v7.widget.Toolbar
-                    android:id="@+id/main.toolbar"
+                    android:id="@+id/toolbar"
                     app:title="Настройки"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
@@ -60,6 +60,7 @@
                 android:paddingBottom="200dp"
                 android:clipToPadding="false"
         />
+
 
 
     </android.support.v4.widget.NestedScrollView>

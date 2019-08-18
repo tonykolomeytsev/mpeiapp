@@ -1,12 +1,16 @@
-package kekmech.ru.settings
+package kekmech.ru.coreui.items
 
 import android.view.View
 import android.widget.TextView
+import kekmech.ru.coreui.R
 import kekmech.ru.coreui.adapter.BaseFactory
 import kekmech.ru.coreui.adapter.BaseItem
 import kekmech.ru.coreui.adapter.BaseViewHolder
 
-class SettingsDividerItem(val header: String, val isLineVisible: Boolean = true) : BaseItem<SettingsDividerItem.ViewHolder>() {
+class DividerItem(
+    private val header: String,
+    private val isLineVisible: Boolean = true
+) : BaseItem<DividerItem.ViewHolder>() {
 
     override fun updateViewHolder(viewHolder: ViewHolder) {
         viewHolder.header.text = header
@@ -21,7 +25,7 @@ class SettingsDividerItem(val header: String, val isLineVisible: Boolean = true)
         override fun onCreateView(view: View) = Unit
     }
 
-    class Factory : BaseFactory(R.layout.item_settings_divider_layout) {
+    class Factory : BaseFactory(R.layout.item_divider_layout) {
         override fun instance(view: View) = ViewHolder(view)
     }
 }

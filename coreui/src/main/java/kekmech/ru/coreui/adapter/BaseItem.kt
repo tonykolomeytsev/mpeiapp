@@ -12,7 +12,7 @@ abstract class BaseItem<T : BaseViewHolder> {
 
     var cacheType: Int = -1
 
-    fun updateViewHolderNative(viewHolder: BaseViewHolder) {
+    open fun updateViewHolderNative(viewHolder: BaseViewHolder) {
         updateViewHolder(viewHolder as T)
     }
 

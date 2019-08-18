@@ -1,3 +1,7 @@
 package kekmech.ru.core
 
-interface RepositoryProvider
+import io.realm.Realm
+
+interface RepositoryProvider {
+    fun provideRealm(): Realm
+}

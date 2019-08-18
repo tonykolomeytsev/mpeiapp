@@ -3,12 +3,12 @@ package kekmech.ru.coreui.items
 import android.view.View
 import android.widget.TextView
 import kekmech.ru.coreui.R
-import kekmech.ru.coreui.adapter.BaseAdapter
-import kekmech.ru.coreui.adapter.BaseFactory
-import kekmech.ru.coreui.adapter.BaseItem
-import kekmech.ru.coreui.adapter.BaseViewHolder
+import kekmech.ru.coreui.adapter.*
 
-class TwoLineItem(val strings: Pair<String, String>) : BaseItem<TwoLineItem.ViewHolder>() {
+class TwoLineItem(
+    val strings: Pair<String, String>,
+    itemId: String = ""
+) : BaseClickableItem<TwoLineItem.ViewHolder>(itemId) {
 
     override fun updateViewHolder(viewHolder: ViewHolder) {
         viewHolder.textPrimary.text = strings.first
