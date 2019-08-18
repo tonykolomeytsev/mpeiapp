@@ -38,6 +38,9 @@ class SettingsDevFragment : DaggerFragment(), ItemListener {
             "new RealmObject()",
             R.drawable.outline_refresh_black_24,
             "REALM_FILL")
+        .item(
+            "Стереть номер группы",
+            "REALM_GROUP")
         .divider("Retrofit")
         .item(
             "Получить тестовый JSON",
@@ -84,6 +87,9 @@ class SettingsDevFragment : DaggerFragment(), ItemListener {
                     user.firstLaunchFlag = false
                     user.developerMode = true
                 }
+            }
+            "REALM_GROUP" -> {
+
             }
         }
     }
