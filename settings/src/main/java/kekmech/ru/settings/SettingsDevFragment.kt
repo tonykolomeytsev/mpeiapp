@@ -13,7 +13,6 @@ import io.realm.Realm
 import kekmech.ru.coreui.Resources
 import kekmech.ru.coreui.menu.ItemListener
 import kekmech.ru.coreui.menu.BaseMenu
-import kekmech.ru.repository.User
 import kotlinx.android.synthetic.main.fragment_settings.view.*
 import ru.terrakok.cicerone.Router
 import javax.inject.Inject
@@ -76,19 +75,19 @@ class SettingsDevFragment : DaggerFragment(), ItemListener {
                 it.deleteAll()
                 Toast.makeText(activity, "База данных приложения стёрта", Toast.LENGTH_SHORT).show()
             }
-            "REALM_WATCH" -> {
-                val user = realm
-                    .where(User::class.java)
-                    .findFirst()
-                Toast.makeText(activity, user.toString(), Toast.LENGTH_LONG).show()
-            }
-            "REALM_FILL" -> {
-                realm.executeTransaction {
-                    val user = it.createObject(User::class.java)
-                    user.firstLaunchFlag = false
-                    user.developerMode = true
-                }
-            }
+//            "REALM_WATCH" -> {
+//                val user = realm
+//                    .where(User::class.java)
+//                    .findFirst()
+//                Toast.makeText(activity, user.toString(), Toast.LENGTH_LONG).show()
+//            }
+//            "REALM_FILL" -> {
+//                realm.executeTransaction {
+//                    val user = it.createObject(User::class.java)
+//                    user.firstLaunchFlag = false
+//                    user.developerMode = true
+//                }
+//            }
             "REALM_GROUP" -> {
 
             }

@@ -1,18 +1,15 @@
 package kekmech.ru.feed.model
 
-import kekmech.ru.core.dto.Couple
 import kekmech.ru.core.scopes.ActivityScope
-import kekmech.ru.core.scopes.FeedScope
-import kekmech.ru.core.scopes.FragmentScope
 import kekmech.ru.core.usecases.LoadOffsetScheduleUseCase
+import kekmech.ru.core.usecases.LoadUserInfoUseCase
 import kekmech.ru.coreui.adapter.BaseItem
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @ActivityScope
 class FeedModelImpl @Inject constructor(
-//    val loadOffsetScheduleUseCase: LoadOffsetScheduleUseCase
+    val loadOffsetScheduleUseCase: LoadOffsetScheduleUseCase,
+    val loadUserInfoUseCase: LoadUserInfoUseCase
 ) : FeedModel {
 
 

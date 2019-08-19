@@ -5,21 +5,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
-import android.widget.TextView
-import android.widget.Toast
 import dagger.android.support.DaggerAppCompatActivity
 import kekmech.ru.feed.FeedFragment
 import kekmech.ru.settings.SettingsDevFragment
 import kekmech.ru.settings.SettingsFragment
 import kekmech.ru.timetable.TimetableFragment
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import ru.terrakok.cicerone.Navigator
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router
-import ru.terrakok.cicerone.android.AppNavigator
 import ru.terrakok.cicerone.android.SupportAppNavigator
 import javax.inject.Inject
 

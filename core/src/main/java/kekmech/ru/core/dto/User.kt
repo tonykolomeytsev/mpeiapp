@@ -1,4 +1,4 @@
-package kekmech.ru.repository
+package kekmech.ru.core.dto
 
 import io.realm.RealmObject
 

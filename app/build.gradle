@@ -1,9 +1,6 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
-
 apply plugin: 'kotlin-kapt'
 
 android {
@@ -50,4 +47,8 @@ dependencies {
     implementation project(path: ':domain')
     implementation project(path: ':repository')
     implementation project(path: ':mainscreen')
+    implementation project(path: ':feed')
+    implementation project(path: ':timetable')
+    implementation project(path: ':settings')
+    implementation project(path: ':coreui')
 }

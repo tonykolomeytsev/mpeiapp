@@ -2,8 +2,6 @@ package kekmech.ru.feed.presenter
 
 import kekmech.ru.core.Presenter
 import kekmech.ru.core.scopes.ActivityScope
-import kekmech.ru.core.scopes.FeedScope
-import kekmech.ru.core.scopes.FragmentScope
 import kekmech.ru.coreui.adapter.BaseAdapter
 import kekmech.ru.feed.FeedFragment
 import kekmech.ru.feed.items.CoupleItem
@@ -13,7 +11,6 @@ import kekmech.ru.feed.model.FeedModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @ActivityScope

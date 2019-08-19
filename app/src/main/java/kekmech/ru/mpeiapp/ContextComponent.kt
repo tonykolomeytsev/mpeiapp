@@ -2,7 +2,6 @@ package kekmech.ru.mpeiapp
 
 import dagger.Component
 import kekmech.ru.core.ContextProvider
-import javax.inject.Singleton
 
 @Component(modules = [ContextModule::class])
 interface ContextComponent: ContextProvider {
