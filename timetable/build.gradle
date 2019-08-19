@@ -47,4 +47,6 @@ dependencies {
     kapt "com.google.dagger:dagger-android-processor:2.24"
     implementation "com.google.dagger:dagger-android:2.24"
     implementation "com.google.dagger:dagger-android-support:2.24"
+    implementation project(path: ':coreui')
+    implementation project(path: ':core')
 }

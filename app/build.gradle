@@ -47,11 +47,7 @@ dependencies {
     implementation 'ru.terrakok.cicerone:cicerone:3.0.0'
 
     implementation project(path: ':core')
-    implementation project(path: ':feed')
-    implementation project(path: ':coreui')
     implementation project(path: ':domain')
     implementation project(path: ':repository')
     implementation project(path: ':mainscreen')
-    implementation project(path: ':timetable')
-    implementation project(path: ':settings')
 }

@@ -13,6 +13,9 @@ import kekmech.ru.settings.SettingsDevFragment
 import kekmech.ru.settings.SettingsFragment
 import kekmech.ru.timetable.TimetableFragment
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import ru.terrakok.cicerone.Navigator
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router
@@ -23,6 +26,9 @@ import javax.inject.Inject
 class MainActivity : DaggerAppCompatActivity() {
 
     val feedFragment by lazy { FeedFragment() }
+    val timetableFragment by lazy { TimetableFragment() }
+    val settingsFragment by lazy { SettingsFragment() }
+    val settingsDevFragment by lazy { SettingsDevFragment() }
 
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
@@ -51,9 +57,9 @@ class MainActivity : DaggerAppCompatActivity() {
 
         override fun createFragment(screenKey: String?, data: Any?): Fragment? = when (screenKey) {
             "FEED" -> feedFragment //FeedFragment()
-            "TIMETABLE" -> TimetableFragment()
-            "SETTINGS" -> SettingsFragment()
-            "DEV" -> SettingsDevFragment()
+            "TIMETABLE" -> timetableFragment
+            "SETTINGS" -> settingsFragment
+            "DEV" -> settingsDevFragment
             else -> null
         }
     }

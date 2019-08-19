@@ -35,8 +35,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation project(path: ':core')
-    implementation project(path: ':repository')
-    implementation project(path: ':domain')
     implementation project(path: ':coreui')
     implementation project(path: ':feed')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -57,6 +55,9 @@ dependencies {
     implementation project(path: ':timetable')
 
     implementation 'ru.terrakok.cicerone:cicerone:3.0.0'
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.1"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.2.1"
+
     implementation project(path: ':settings')
 
 }

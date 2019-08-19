@@ -89,41 +89,53 @@ public abstract class CachedFragmentNavigator implements Navigator {
      * Performs {@link Forward} command transition
      */
     protected void forward(Forward command) {
-        throw new NotImplementedError();
-//        Fragment fragment = createFragment(command.getScreenKey(), command.getTransitionData());
-//
-//        if (fragment == null) {
-//            unknownScreen(command);
-//            return;
-//        }
-//
-//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//
-//        setupFragmentTransactionAnimation(
-//                command,
-//                fragmentManager.findFragmentById(containerId),
-//                fragment,
-//                fragmentTransaction
-//        );
-//
-//        fragmentTransaction
-//                .replace(containerId, fragment)
-//                .addToBackStack(command.getScreenKey())
-//                .commit();
-//        localStackCopy.add(command.getScreenKey());
+        Fragment fragment = createFragment(command.getScreenKey(), command.getTransitionData());
+
+        if (fragment == null) {
+            unknownScreen(command);
+            return;
+        }
+
+        // lazy init
+        if (addedFragmentsCache == null) {
+            addedFragmentsCache = new HashMap<>();
+        }
+
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        Fragment currentFragment = fragmentManager.findFragmentById(containerId);
+        setupFragmentTransactionAnimation(
+                command,
+                currentFragment,
+                fragment,
+                fragmentTransaction
+        );
+
+        if (currentFragment != null)
+            fragmentTransaction.hide(currentFragment);
+
+        if (!addedFragmentsCache.containsKey(fragment)) {
+            addedFragmentsCache.put(fragment, true);
+            fragmentTransaction.add(containerId, fragment);
+        }
+
+        fragmentTransaction
+                .show(fragment)
+                .addToBackStack(command.getScreenKey())
+                .commit();
+        localStackCopy.add(command.getScreenKey());
     }
 
     /**
      * Performs {@link Back} command transition
      */
     protected void back() {
-        throw new NotImplementedError();
-//        if (localStackCopy.size() > 0) {
-//            fragmentManager.popBackStack();
-//            localStackCopy.pop();
-//        } else {
-//            exit();
-//        }
+        if (localStackCopy.size() > 0) {
+            fragmentManager.popBackStack();
+            localStackCopy.pop();
+        } else {
+            exit();
+        }
     }
 
     /**
@@ -199,25 +211,24 @@ public abstract class CachedFragmentNavigator implements Navigator {
      * Performs {@link BackTo} command transition
      */
     protected void backTo(BackTo command) {
-        throw new NotImplementedError();
-//        String key = command.getScreenKey();
-//
-//        if (key == null) {
-//            backToRoot();
-//
-//        } else {
-//            int index = localStackCopy.indexOf(key);
-//            int size = localStackCopy.size();
-//
-//            if (index != -1) {
-//                for (int i = 1; i < size - index; i++) {
-//                    localStackCopy.pop();
-//                }
-//                fragmentManager.popBackStack(key, 0);
-//            } else {
-//                backToUnexisting(command.getScreenKey());
-//            }
-//        }
+        String key = command.getScreenKey();
+
+        if (key == null) {
+            backToRoot();
+
+        } else {
+            int index = localStackCopy.indexOf(key);
+            int size = localStackCopy.size();
+
+            if (index != -1) {
+                for (int i = 1; i < size - index; i++) {
+                    localStackCopy.pop();
+                }
+                fragmentManager.popBackStack(key, 0);
+            } else {
+                backToUnexisting(command.getScreenKey());
+            }
+        }
     }
 
     private void backToRoot() {

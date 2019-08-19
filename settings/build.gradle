@@ -58,7 +58,5 @@ dependencies {
     implementation 'ru.terrakok.cicerone:cicerone:3.0.0'
 
     implementation project(path: ':core')
-    implementation project(path: ':repository')
     implementation project(path: ':coreui')
-    implementation project(path: ':domain')
 }

@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import dagger.android.support.DaggerFragment
 import io.realm.Realm
+import kekmech.ru.coreui.Resources
 import kekmech.ru.coreui.menu.ItemListener
 import kekmech.ru.coreui.menu.BaseMenu
 import kekmech.ru.repository.User
@@ -97,7 +98,7 @@ class SettingsDevFragment : DaggerFragment(), ItemListener {
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         statusBarColor = activity!!.window.statusBarColor
-        activity!!.window.statusBarColor = context!!.resources.getColor(R.color.colorPrimary)
+        activity!!.window.statusBarColor = Resources.getColor(context, R.color.colorPrimary)
     }
 
     override fun onDetach() {

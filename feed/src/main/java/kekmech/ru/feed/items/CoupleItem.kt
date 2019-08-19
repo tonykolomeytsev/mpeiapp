@@ -1,4 +1,4 @@
-package kekmech.ru.feed
+package kekmech.ru.feed.items
 
 import android.view.View
 import android.widget.TextView
@@ -8,6 +8,7 @@ import kekmech.ru.coreui.Chip
 import kekmech.ru.coreui.adapter.BaseFactory
 import kekmech.ru.coreui.adapter.BaseItem
 import kekmech.ru.coreui.adapter.BaseViewHolder
+import kekmech.ru.feed.R
 
 class CoupleItem(val couple: Couple) : BaseItem<CoupleItem.ViewHolder>() {
 

@@ -51,6 +51,9 @@ dependencies {
     kapt "com.google.dagger:dagger-android-processor:2.24"
     implementation "com.google.dagger:dagger-android:2.24"
     implementation "com.google.dagger:dagger-android-support:2.24"
+
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.1"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.2.1"
 }
 repositories {
     mavenCentral()
