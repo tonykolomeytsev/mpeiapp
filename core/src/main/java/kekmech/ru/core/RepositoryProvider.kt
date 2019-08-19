@@ -4,4 +4,5 @@ import io.realm.Realm
 
 interface RepositoryProvider {
     fun provideRealm(): Realm
+    fun provideRepository(): Repository
 }
