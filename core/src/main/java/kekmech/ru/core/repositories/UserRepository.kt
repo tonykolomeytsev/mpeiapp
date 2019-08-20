@@ -1,4 +1,4 @@
-package kekmech.ru.core
+package kekmech.ru.core.repositories
 
 import kekmech.ru.core.dto.User
 

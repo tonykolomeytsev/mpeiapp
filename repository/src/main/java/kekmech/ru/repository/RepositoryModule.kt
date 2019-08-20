@@ -3,7 +3,11 @@ package kekmech.ru.repository
 import dagger.Module
 import dagger.Provides
 import io.realm.Realm
-import kekmech.ru.core.*
+import kekmech.ru.core.gateways.ScheduleCacheGateway
+import kekmech.ru.core.gateways.ScheduleRemoteGateway
+import kekmech.ru.core.gateways.UserCacheGateway
+import kekmech.ru.core.repositories.ScheduleRepository
+import kekmech.ru.core.repositories.UserRepository
 import kekmech.ru.repository.gateways.ScheduleCacheGatewayImpl
 import kekmech.ru.repository.gateways.ScheduleRemoteGatewayImpl
 import kekmech.ru.repository.gateways.UserCacheGatewayImpl

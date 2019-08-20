@@ -1,8 +1,8 @@
 package kekmech.ru.repository
 
-import kekmech.ru.core.ScheduleCacheGateway
-import kekmech.ru.core.ScheduleRemoteGateway
-import kekmech.ru.core.ScheduleRepository
+import kekmech.ru.core.gateways.ScheduleCacheGateway
+import kekmech.ru.core.gateways.ScheduleRemoteGateway
+import kekmech.ru.core.repositories.ScheduleRepository
 import kekmech.ru.core.dto.CoupleNative
 
 class ScheduleRepositoryImpl(

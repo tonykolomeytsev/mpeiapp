@@ -1,9 +1,7 @@
 package kekmech.ru.repository
 
-import kekmech.ru.core.ScheduleCacheGateway
-import kekmech.ru.core.ScheduleRemoteGateway
-import kekmech.ru.core.UserCacheGateway
-import kekmech.ru.core.UserRepository
+import kekmech.ru.core.gateways.UserCacheGateway
+import kekmech.ru.core.repositories.UserRepository
 import kekmech.ru.core.dto.User
 
 class UserRepositoryImpl(
