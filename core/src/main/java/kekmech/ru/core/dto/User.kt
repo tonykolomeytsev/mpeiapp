@@ -4,5 +4,6 @@ import io.realm.RealmObject
 
 open class User (
     var firstLaunchFlag: Boolean? = null, // первый запуск
-    var developerMode: Boolean? = null // режим разработчика
+    var developerMode: Boolean? = null, // режим разработчика
+    var groupName: String? = null // номер группы
 ) : RealmObject()

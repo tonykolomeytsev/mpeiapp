@@ -1,13 +1,13 @@
 package kekmech.ru.repository
 
-import kekmech.ru.core.CacheGateway
-import kekmech.ru.core.InternetGateway
+import kekmech.ru.core.ScheduleCacheGateway
+import kekmech.ru.core.ScheduleRemoteGateway
+import kekmech.ru.core.UserCacheGateway
 import kekmech.ru.core.UserRepository
 import kekmech.ru.core.dto.User
 
 class UserRepositoryImpl(
-    val internetGateway: InternetGateway,
-    val cacheGateway: CacheGateway
+    val cacheGateway: UserCacheGateway
 ) : UserRepository {
 
     override fun get(refrash: Boolean): User {
