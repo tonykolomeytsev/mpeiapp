@@ -2,12 +2,36 @@ package kekmech.ru.repository.gateways
 
 import io.realm.Realm
 import kekmech.ru.core.dto.CoupleNative
+import kekmech.ru.core.dto.Schedule
+import kekmech.ru.core.dto.WeekInfo
 import kekmech.ru.core.gateways.ScheduleCacheGateway
 import javax.inject.Inject
 
-class ScheduleCacheGatewayImpl @Inject constructor(realm: Realm) : ScheduleCacheGateway {
-    override fun get(dayNum: Int, odd: Boolean): List<CoupleNative> {
-        return /*if (dayNum != 1) emptyList() else*/ list
+class ScheduleCacheGatewayImpl @Inject constructor(val realm: Realm) : ScheduleCacheGateway {
+    override fun getSchedule(): Schedule? {
+        var schedule: Schedule? = null
+        realm.executeTransaction {
+            schedule = it
+                .where(Schedule::class.java)
+                .findFirst()
+        }
+        return schedule
+    }
+
+    override fun getWeekInfo(): WeekInfo? {
+        return getSchedule()?.weekInfo
+    }
+
+    override fun getCouples(dayNum: Int, odd: Boolean): List<CoupleNative>? {
+        return getSchedule()?.coupleList
+            ?.filter { it.day == dayNum && it.week == if (odd) CoupleNative.ODD else CoupleNative.EVEN }
+            ?.sortedBy { it.num }
+    }
+
+    override fun saveSchedule(schedule: Schedule) {
+        realm.executeTransaction {
+            it.insertOrUpdate(schedule)
+        }
     }
 
     companion object {

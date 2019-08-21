@@ -1,9 +1,10 @@
-package kekmech.ru.mainscreen
+package kekmech.ru.mainscreen.di
 
 import dagger.Subcomponent
 import dagger.android.AndroidInjector
 import kekmech.ru.core.scopes.ActivityScope
 import kekmech.ru.feed.di.FeedFragmentModule
+import kekmech.ru.mainscreen.MainActivity
 import kekmech.ru.settings.di.SettingsDevFragmentModule
 import kekmech.ru.settings.di.SettingsFragmentModule
 import kekmech.ru.timetable.TimetableFragmentModule

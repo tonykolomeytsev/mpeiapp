@@ -6,7 +6,7 @@ import dagger.android.AndroidInjectionModule
 import kekmech.ru.core.InteractorProvider
 import kekmech.ru.core.RepositoryProvider
 import kekmech.ru.domain.InteractorComponent
-import kekmech.ru.mainscreen.MainActivityModule
+import kekmech.ru.mainscreen.di.MainActivityModule
 import kekmech.ru.repository.di.RepositoryComponent
 import ru.terrakok.cicerone.Cicerone
 import ru.terrakok.cicerone.Router

@@ -10,6 +10,6 @@ class LoadOffsetScheduleUseCaseImpl @Inject constructor(
 ) : LoadOffsetScheduleUseCase {
 
     override fun execute(offset: Int, refresh: Boolean): List<CoupleNative> {
-        return repository.get(offset, refresh)
+        return repository.getOffsetCouples(offset, refresh)
     }
 }
