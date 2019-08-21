@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.fragment_feed.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @ActivityScope

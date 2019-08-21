@@ -3,6 +3,7 @@ package kekmech.ru.mainscreen
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import dagger.android.support.DaggerAppCompatActivity
@@ -11,6 +12,10 @@ import kekmech.ru.settings.SettingsDevFragment
 import kekmech.ru.settings.SettingsFragment
 import kekmech.ru.timetable.TimetableFragment
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router
 import ru.terrakok.cicerone.android.SupportAppNavigator

@@ -10,10 +10,8 @@ import android.view.ViewGroup
  */
 abstract class BaseFactory(val layoutId: Int) {
 
-    fun instanceNative(parent: ViewGroup?): BaseViewHolder {
-        return instance(LayoutInflater
-                .from(parent!!.context)
-                .inflate(layoutId, parent, false))
+    fun instanceNative(parent: ViewGroup?, inflater: LayoutInflater): BaseViewHolder {
+        return instance(inflater.inflate(layoutId, parent, false))
     }
 
     abstract fun instance(view: View): BaseViewHolder
