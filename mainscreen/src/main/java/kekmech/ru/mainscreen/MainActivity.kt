@@ -7,6 +7,7 @@ import android.os.Handler
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import dagger.android.support.DaggerAppCompatActivity
+import kekmech.ru.core.Screens
 import kekmech.ru.feed.FeedFragment
 import kekmech.ru.settings.SettingsDevFragment
 import kekmech.ru.settings.SettingsFragment
@@ -32,16 +33,16 @@ class MainActivity : DaggerAppCompatActivity() {
         when (item.itemId) {
             R.id.navigation_home -> {
                 nav_view.postOnAnimation {
-                    router.replaceScreen("FEED")
+                    router.replaceScreen(Screens.FEED)
                 }
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_dashboard -> {
-                router.replaceScreen("TIMETABLE")
+                router.replaceScreen(Screens.TIMETABLE)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_notifications -> {
-                router.replaceScreen("SETTINGS")
+                router.replaceScreen(Screens.SETTINGS)
                 return@OnNavigationItemSelectedListener true
             }
         }
@@ -56,10 +57,10 @@ class MainActivity : DaggerAppCompatActivity() {
 //            else -> null }
 
         override fun createFragment(screenKey: String?, data: Any?): Fragment? = when (screenKey) {
-            "FEED" -> feedFragment //FeedFragment()
-            "TIMETABLE" -> timetableFragment
-            "SETTINGS" -> settingsFragment
-            "DEV" -> settingsDevFragment
+            Screens.FEED -> feedFragment //FeedFragment()
+            Screens.TIMETABLE -> timetableFragment
+            Screens.SETTINGS -> settingsFragment
+            Screens.DEV -> settingsDevFragment
             else -> null
         }
     }
@@ -69,7 +70,7 @@ class MainActivity : DaggerAppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         nav_view.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
-        router.replaceScreen("FEED")
+        router.replaceScreen(Screens.FEED)
     }
 
     @Inject

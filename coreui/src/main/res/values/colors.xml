@@ -12,6 +12,7 @@
     <color name="secondaryDarkColor">#002f6c</color>
     <color name="primaryTextColor">#ffffff</color>
     <color name="secondaryTextColor">#ffffff</color>
+    <color name="colorWhite">#ffffff</color>
 
     <color name="colorChipLecture">#005005</color>
     <color name="colorChipPractice">#524c00</color>
