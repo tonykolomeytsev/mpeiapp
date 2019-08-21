@@ -14,4 +14,12 @@ open class CoupleNative(
     var type: String? = null,       // тип занятия
     var num: Int? = null,           // номер пары
     var day: Int? = null            // день проведения
-) : RealmObject()
+) : RealmObject() {
+    companion object {
+        const val LECTURE = "LECTURE"
+        const val PRACTICE = "PRACTICE"
+        const val LAB = "LAB"
+        const val LUNCH = "LUNCH"
+        const val UNKNOWN = "UNKNOWN"
+    }
+}

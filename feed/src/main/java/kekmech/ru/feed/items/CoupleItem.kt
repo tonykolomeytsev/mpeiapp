@@ -3,6 +3,7 @@ package kekmech.ru.feed.items
 import android.view.View
 import android.widget.TextView
 import kekmech.ru.core.dto.Couple
+import kekmech.ru.core.dto.CoupleNative
 import kekmech.ru.core.dto.CoupleType
 import kekmech.ru.coreui.Chip
 import kekmech.ru.coreui.adapter.BaseFactory
@@ -10,18 +11,23 @@ import kekmech.ru.coreui.adapter.BaseItem
 import kekmech.ru.coreui.adapter.BaseViewHolder
 import kekmech.ru.feed.R
 
-class CoupleItem(val couple: Couple) : BaseItem<CoupleItem.ViewHolder>() {
+class CoupleItem(val couple: CoupleNative) : BaseItem<CoupleItem.ViewHolder>() {
 
     override fun updateViewHolder(viewHolder: ViewHolder) {
-        viewHolder.name.text = couple.name
-        viewHolder.typeLecture.visibility = if (couple.type == CoupleType.LECTURE) View.VISIBLE  else View.GONE
-        viewHolder.typePractice.visibility = if (couple.type == CoupleType.PRACTICE) View.VISIBLE  else View.GONE
-        viewHolder.typeLab.visibility = if (couple.type == CoupleType.LAB) View.VISIBLE else View.GONE
-        viewHolder.overline.text = listOf("Первая пара", "Вторая пара", "Третья пара", "Четвертая пара")[couple.id]
-        viewHolder.place.text = listOf("Б-401","Б-402","Б-403","Б-404").random()
-        viewHolder.timeStart.text = "9:20"
-        viewHolder.timeEnd.text = "10:55"
-        viewHolder.teacher.text = couple.teacher
+        viewHolder.name.text = couple.name ?: ""
+        viewHolder.typeLecture.visibility = if (couple.type == CoupleNative.LECTURE) View.VISIBLE  else View.GONE
+        viewHolder.typePractice.visibility = if (couple.type == CoupleNative.PRACTICE) View.VISIBLE  else View.GONE
+        viewHolder.typeLab.visibility = if (couple.type == CoupleNative.LAB) View.VISIBLE else View.GONE
+        viewHolder.overline.text = "Очередная пара" //couple.num
+        viewHolder.place.text = couple.place ?: ""
+        viewHolder.timeStart.text = couple.timeStart ?: ""
+        viewHolder.timeEnd.text = couple.timeEnd ?: ""
+        if (couple.teacher != null) {
+            viewHolder.teacher.visibility = View.VISIBLE
+            viewHolder.teacher.text = couple.teacher!!
+        } else {
+            viewHolder.teacher.visibility = View.GONE
+        }
     }
 
     override fun approveFactory(factory: BaseFactory) = factory is Factory

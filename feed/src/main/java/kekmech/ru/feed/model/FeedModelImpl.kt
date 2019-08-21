@@ -1,9 +1,16 @@
 package kekmech.ru.feed.model
 
+import android.util.Log
+import kekmech.ru.core.dto.CoupleNative
+import kekmech.ru.core.dto.User
 import kekmech.ru.core.scopes.ActivityScope
 import kekmech.ru.core.usecases.LoadOffsetScheduleUseCase
 import kekmech.ru.core.usecases.LoadUserInfoUseCase
 import kekmech.ru.coreui.adapter.BaseItem
+import kekmech.ru.feed.items.CoupleItem
+import kekmech.ru.feed.items.LunchItem
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @ActivityScope
@@ -12,32 +19,37 @@ class FeedModelImpl @Inject constructor(
     val loadUserInfoUseCase: LoadUserInfoUseCase
 ) : FeedModel {
 
+    override var scheduleInfoUpdateListener: (List<CoupleNative>) -> Unit = {}
 
     /**
      * Group number like "C-12-16"
      */
     override val groupNumber: String
-        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
+        get() = loadUserInfoUseCase.execute().groupName ?: ""
+
     /**
      * Current week number
      */
     override val weekNumber: Int
-        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
+        get() = 0 // FIXME научиться определять номер недели
 
     /**
      * Get couples for day
      * @param offset - 0 - today, 1 - yesterday etc.
      * @return return today's couples if offset == 0
      */
-    override suspend fun getDayCouples(offset: Int): List<BaseItem<*>> {
-        TODO("not implemented")
-//        return withContext(Dispatchers.IO) {
-//            loadOffsetScheduleUseCase.init(offset)
-//            val couples: List<Couple> = loadOffsetScheduleUseCase.execute()
-//            // TODO if couples is empty
-//
-//            emptyList<BaseItem<*>>()
-//        }
+    override suspend fun getDayCouples(offset: Int, refresh: Boolean): List<BaseItem<*>> {
+        return withContext(Dispatchers.IO) {
+            val list = loadOffsetScheduleUseCase.execute(offset, refresh)
+            Log.e(this@FeedModelImpl::class.java.simpleName, list.size.toString())
+            list.map { couple ->
+                Log.e(couple::class.java.simpleName, couple.toString())
+                when (couple.type) {
+                    CoupleNative.LUNCH -> LunchItem(couple)
+                    else -> CoupleItem(couple)
+                }
+            }
+        }
     }
 
 }

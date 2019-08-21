@@ -9,9 +9,10 @@ import kekmech.ru.core.RepositoryProvider
 interface InteractorComponent: InteractorProvider {
     class Initializer private constructor() {
         companion object {
-            fun init(contextProvider: ContextProvider): InteractorComponent {
+            fun init(contextProvider: ContextProvider, repositoryProvider: RepositoryProvider): InteractorComponent {
                 return DaggerInteractorComponent.builder()
                     .contextProvider(contextProvider)
+                    .repositoryProvider(repositoryProvider)
                     .build()
             }
         }

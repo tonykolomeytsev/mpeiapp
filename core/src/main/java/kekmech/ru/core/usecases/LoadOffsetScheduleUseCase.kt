@@ -1,6 +1,7 @@
 package kekmech.ru.core.usecases
 
-import kekmech.ru.core.dto.Couple
-import kekmech.ru.core.UseCase
+import kekmech.ru.core.dto.CoupleNative
 
-interface LoadOffsetScheduleUseCase : UseCase<Int, List<Couple>>
+interface LoadOffsetScheduleUseCase {
+    fun execute(offset: Int, refresh: Boolean): List<CoupleNative>
+}

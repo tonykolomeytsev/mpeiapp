@@ -41,82 +41,7 @@ class FeedFragment : DaggerFragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_feed, container, false)
-
-        GlobalScope.launch(Dispatchers.Main) {
-            val adapter = BaseAdapter.Builder()
-                .registerViewTypeFactory(FeedDividerItem.Factory())
-                .registerViewTypeFactory(CoupleItem.Factory())
-                .registerViewTypeFactory(LunchItem.Factory())
-                .build()
-            GlobalScope.async(Dispatchers.Default) {
-                adapter.baseItems.addAll(listOf(
-                    FeedDividerItem("Четверг 28 октября", isLineVisible = false),
-                    CoupleItem(
-                        Couple(
-                            0,
-                            "Линейная алгебра",
-                            "Кудин С.Ф.", Date(), CoupleType.LECTURE
-                        )
-                    ),
-                    CoupleItem(
-                        Couple(
-                            1,
-                            "Гидропневпопривод мехатронных и робототехнических устройств",
-                            "Зуев Ю.Ю.", Date(), CoupleType.PRACTICE
-                        )
-                    ),
-                    LunchItem(),
-                    CoupleItem(
-                        Couple(
-                            2,
-                            "Английский",
-                            "Крук Р.Р.", Date(), CoupleType.LAB
-                        )
-                    ),
-                    CoupleItem(
-                        Couple(
-                            3,
-                            "Инж. и комп. графика",
-                            "Чахеев Е.Я.", Date(), CoupleType.PRACTICE
-                        )
-                    ),
-                    FeedDividerItem("Пятница 29 октября", isLineVisible = false),
-                    CoupleItem(
-                        Couple(
-                            0,
-                            "Линейная алгебра",
-                            "Кудин С.Ф.", Date(), CoupleType.LECTURE
-                        )
-                    ),
-                    CoupleItem(
-                        Couple(
-                            1,
-                            "Гидропневпопривод мехатронных и робототехнических устройств",
-                            "Зуев Ю.Ю.", Date(), CoupleType.PRACTICE
-                        )
-                    ),
-                    LunchItem(),
-                    CoupleItem(
-                        Couple(
-                            2,
-                            "Английский",
-                            "Крук Р.Р.", Date(), CoupleType.LAB
-                        )
-                    ),
-                    CoupleItem(
-                        Couple(
-                            3,
-                            "Инж. и комп. графика",
-                            "Чахеев Е.Я.", Date(), CoupleType.PRACTICE
-                        )
-                    )
-                ))
-                Unit
-            }.await()
-
-            view.recyclerView.layoutManager = LinearLayoutManager(activity)
-            view.recyclerView.adapter = adapter
-        }
+        view.recyclerView.layoutManager = LinearLayoutManager(activity)
         return view
     }
 
@@ -130,6 +55,7 @@ class FeedFragment : DaggerFragment() {
         presenter.onPause(this)
     }
 
+    @Deprecated("Нарушение dependency rule")
     fun updateView(adapter: BaseAdapter) {
         recyclerView.adapter = adapter
     }

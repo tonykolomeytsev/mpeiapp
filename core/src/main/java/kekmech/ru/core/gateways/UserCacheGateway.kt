@@ -1,3 +1,7 @@
 package kekmech.ru.core.gateways
 
-interface UserCacheGateway
+import kekmech.ru.core.dto.User
+
+interface UserCacheGateway {
+    fun get(): User
+}

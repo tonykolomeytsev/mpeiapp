@@ -1,5 +1,6 @@
 package kekmech.ru.feed.presenter
 
+import android.util.Log
 import kekmech.ru.core.Presenter
 import kekmech.ru.core.scopes.ActivityScope
 import kekmech.ru.coreui.adapter.BaseAdapter
@@ -8,6 +9,7 @@ import kekmech.ru.feed.items.CoupleItem
 import kekmech.ru.feed.items.FeedDividerItem
 import kekmech.ru.feed.items.LunchItem
 import kekmech.ru.feed.model.FeedModel
+import kotlinx.android.synthetic.main.fragment_feed.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -33,6 +35,7 @@ class FeedPresenter @Inject constructor(
     override fun onResume(view: FeedFragment) {
         this.view = view
         view.onScrollEndListener = { onScrollEnd() }
+        if (view.recyclerView.adapter == null) view.updateView(adapter)
         if (offset == 0) onScrollEnd()
     }
 
@@ -47,9 +50,11 @@ class FeedPresenter @Inject constructor(
     private fun onScrollEnd() {
         GlobalScope.launch(Dispatchers.Main) {
             view?.showLoading()
-            val couples = model.getDayCouples(offset)
+            val couples = model.getDayCouples(offset, refresh = false)
             adapter.baseItems.addAll(couples)
             adapter.notifyDataSetChanged()
+            Log.d(this@FeedPresenter::class.java.simpleName, couples.size.toString())
+            view?.updateView(adapter)
             view?.hideLoading()
             offset++
         }

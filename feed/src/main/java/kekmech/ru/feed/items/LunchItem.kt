@@ -2,12 +2,13 @@ package kekmech.ru.feed.items
 
 import android.view.View
 import android.widget.TextView
+import kekmech.ru.core.dto.CoupleNative
 import kekmech.ru.coreui.adapter.BaseFactory
 import kekmech.ru.coreui.adapter.BaseItem
 import kekmech.ru.coreui.adapter.BaseViewHolder
 import kekmech.ru.feed.R
 
-class LunchItem : BaseItem<LunchItem.ViewHolder>() {
+class LunchItem(val couple: CoupleNative) : BaseItem<LunchItem.ViewHolder>() {
 
     override fun updateViewHolder(viewHolder: ViewHolder) {
         viewHolder.timeStart.text = "12:45"

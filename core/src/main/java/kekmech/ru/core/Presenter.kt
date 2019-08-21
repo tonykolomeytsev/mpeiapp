@@ -1,6 +1,7 @@
 package kekmech.ru.core
 
 interface Presenter<T> {
+
     /**
      * subscribe to view events
      */

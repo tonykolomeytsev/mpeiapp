@@ -30,10 +30,11 @@ interface AppComponent {
         fun init(app: Application, cicerone: Cicerone<Router>): AppComponent {
             val contextProvider = ContextComponent.init(ContextModule(app))
             val appModule = AppModule(app, cicerone)
+            val repositoryProvider = RepositoryComponent.Initializer.init(contextProvider)
             return DaggerAppComponent.builder()
                 .appModule(appModule)
                 .repositoryProvider(RepositoryComponent.Initializer.init(contextProvider))
-                .interactorProvider(InteractorComponent.Initializer.init(contextProvider))
+                .interactorProvider(InteractorComponent.Initializer.init(contextProvider, repositoryProvider))
                 .build()
         }
     }

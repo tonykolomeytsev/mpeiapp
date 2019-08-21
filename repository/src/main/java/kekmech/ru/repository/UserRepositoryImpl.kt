@@ -10,7 +10,7 @@ class UserRepositoryImpl @Inject constructor(
 ) : UserRepository {
 
     override fun get(refrash: Boolean): User {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return cacheGateway.get()
     }
 
 }
