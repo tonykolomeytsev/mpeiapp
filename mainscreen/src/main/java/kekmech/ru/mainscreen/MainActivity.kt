@@ -31,7 +31,9 @@ class MainActivity : DaggerAppCompatActivity() {
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_home -> {
-                router.replaceScreen("FEED")
+                nav_view.postOnAnimation {
+                    router.replaceScreen("FEED")
+                }
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_dashboard -> {
@@ -67,6 +69,7 @@ class MainActivity : DaggerAppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         nav_view.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
+        router.replaceScreen("FEED")
     }
 
     @Inject

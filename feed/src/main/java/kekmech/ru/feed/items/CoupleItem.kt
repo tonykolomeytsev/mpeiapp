@@ -18,7 +18,7 @@ class CoupleItem(val couple: CoupleNative) : BaseItem<CoupleItem.ViewHolder>() {
         viewHolder.typeLecture.visibility = if (couple.type == CoupleNative.LECTURE) View.VISIBLE  else View.GONE
         viewHolder.typePractice.visibility = if (couple.type == CoupleNative.PRACTICE) View.VISIBLE  else View.GONE
         viewHolder.typeLab.visibility = if (couple.type == CoupleNative.LAB) View.VISIBLE else View.GONE
-        viewHolder.overline.text = "Очередная пара" //couple.num
+        viewHolder.overline.text = "Очередная пара".toUpperCase() //couple.num
         viewHolder.place.text = couple.place ?: ""
         viewHolder.timeStart.text = couple.timeStart ?: ""
         viewHolder.timeEnd.text = couple.timeEnd ?: ""

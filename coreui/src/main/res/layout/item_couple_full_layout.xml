@@ -9,7 +9,6 @@
         android:clickable="true"
         android:focusable="true"
         android:paddingTop="16dp"
-        android:paddingBottom="16dp"
         android:gravity="center_vertical"
         android:clipToPadding="false"
         android:orientation="vertical">

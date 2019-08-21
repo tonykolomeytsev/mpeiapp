@@ -7,7 +7,11 @@ import javax.inject.Inject
 
 class ScheduleCacheGatewayImpl @Inject constructor(realm: Realm) : ScheduleCacheGateway {
     override fun get(dayNum: Int, odd: Boolean): List<CoupleNative> {
-        return /*if (dayNum != 1) emptyList() else*/ listOf(
+        return /*if (dayNum != 1) emptyList() else*/ list
+    }
+
+    companion object {
+        val list by lazy { listOf(
             CoupleNative(
                 "Защита интеллектуальной собственности и патентоведение",
                 "Комерзан Е.В.",
@@ -41,6 +45,6 @@ class ScheduleCacheGatewayImpl @Inject constructor(realm: Realm) : ScheduleCache
                 "17:10",
                 CoupleNative.PRACTICE,
                 4,1)
-            )
+        ) }
     }
 }
