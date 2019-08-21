@@ -2,5 +2,6 @@ package kekmech.ru.repository.gateways
 
 import io.realm.Realm
 import kekmech.ru.core.gateways.ScheduleCacheGateway
+import javax.inject.Inject
 
-class ScheduleCacheGatewayImpl(realm: Realm) : ScheduleCacheGateway
+class ScheduleCacheGatewayImpl @Inject constructor(realm: Realm) : ScheduleCacheGateway

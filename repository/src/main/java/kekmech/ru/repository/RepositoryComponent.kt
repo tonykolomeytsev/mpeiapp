@@ -6,7 +6,16 @@ import kekmech.ru.core.RepositoryProvider
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [RepositoryModule::class], dependencies = [ContextProvider::class])
+@Component(
+    modules = [
+        RealmModule::class,
+        RepositoryModule::class,
+        GatewayModule::class
+    ],
+    dependencies = [
+        ContextProvider::class
+    ]
+)
 interface RepositoryComponent: RepositoryProvider {
     class Initializer private constructor() {
         companion object {

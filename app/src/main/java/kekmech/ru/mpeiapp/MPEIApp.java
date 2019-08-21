@@ -21,14 +21,14 @@ public class MPEIApp extends Application implements HasAndroidInjector {
     public void onCreate() {
         super.onCreate();
         cicerone = Cicerone.create();
-        DaggerAppComponent.Companion
-                .init(this, cicerone)
-                .inject(this);
         Realm.init(this);
         Realm.setDefaultConfiguration(new RealmConfiguration.Builder()
                 .name("mpeiapp.db")
                 .build()
         );
+        DaggerAppComponent.Companion
+                .init(this, cicerone)
+                .inject(this);
     }
 
     @Override

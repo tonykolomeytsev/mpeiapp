@@ -4,8 +4,9 @@ import kekmech.ru.core.gateways.ScheduleCacheGateway
 import kekmech.ru.core.gateways.ScheduleRemoteGateway
 import kekmech.ru.core.repositories.ScheduleRepository
 import kekmech.ru.core.dto.CoupleNative
+import javax.inject.Inject
 
-class ScheduleRepositoryImpl(
+class ScheduleRepositoryImpl @Inject constructor(
     val scheduleRemoteGateway: ScheduleRemoteGateway,
     val scheduleCacheGateway: ScheduleCacheGateway
 ) : ScheduleRepository {

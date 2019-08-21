@@ -1,11 +1,14 @@
 package kekmech.ru.domain.feed
 
 import kekmech.ru.core.dto.Couple
+import kekmech.ru.core.repositories.ScheduleRepository
 import kekmech.ru.core.scopes.ActivityScope
 import kekmech.ru.core.usecases.LoadOffsetScheduleUseCase
 import javax.inject.Inject
 
-class LoadOffsetScheduleUseCaseImpl @Inject constructor() : LoadOffsetScheduleUseCase {
+class LoadOffsetScheduleUseCaseImpl @Inject constructor(
+    val scheduleRepository: ScheduleRepository
+) : LoadOffsetScheduleUseCase {
     override fun init(i: Int) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
