@@ -1,4 +1,4 @@
-package kekmech.ru.repository
+package kekmech.ru.repository.di
 
 import dagger.Component
 import kekmech.ru.core.ContextProvider
