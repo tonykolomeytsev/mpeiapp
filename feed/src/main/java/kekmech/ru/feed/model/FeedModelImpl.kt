@@ -41,9 +41,7 @@ class FeedModelImpl @Inject constructor(
     override suspend fun getDayCouples(offset: Int, refresh: Boolean): List<BaseItem<*>> {
         return withContext(Dispatchers.IO) {
             val list = loadOffsetScheduleUseCase.execute(offset, refresh)
-            Log.e(this@FeedModelImpl::class.java.simpleName, list.size.toString())
             list.map { couple ->
-                Log.e(couple::class.java.simpleName, couple.toString())
                 when (couple.type) {
                     CoupleNative.LUNCH -> LunchItem(couple)
                     else -> CoupleItem(couple)

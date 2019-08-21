@@ -35,7 +35,7 @@ class FeedPresenter @Inject constructor(
     override fun onResume(view: FeedFragment) {
         this.view = view
         view.onScrollEndListener = { onScrollEnd() }
-        if (view.recyclerView.adapter == null) view.updateView(adapter)
+        if (view.recyclerView.adapter == null) view.recyclerView.adapter = (adapter)
         if (offset == 0) onScrollEnd()
     }
 
@@ -53,8 +53,6 @@ class FeedPresenter @Inject constructor(
             val couples = model.getDayCouples(offset, refresh = false)
             adapter.baseItems.addAll(couples)
             adapter.notifyDataSetChanged()
-            Log.d(this@FeedPresenter::class.java.simpleName, couples.size.toString())
-            view?.updateView(adapter)
             view?.hideLoading()
             offset++
         }

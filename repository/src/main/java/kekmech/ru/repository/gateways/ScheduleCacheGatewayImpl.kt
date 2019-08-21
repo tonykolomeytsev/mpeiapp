@@ -9,7 +9,7 @@ class ScheduleCacheGatewayImpl @Inject constructor(realm: Realm) : ScheduleCache
     override fun get(dayNum: Int, odd: Boolean): List<CoupleNative> {
         return /*if (dayNum != 1) emptyList() else*/ listOf(
             CoupleNative(
-                "Патентоведение",
+                "Защита интеллектуальной собственности и патентоведение",
                 "Комерзан Е.В.",
                 "C-213",
                 "9:20",
@@ -34,12 +34,12 @@ class ScheduleCacheGatewayImpl @Inject constructor(realm: Realm) : ScheduleCache
                 CoupleNative.LAB,
                 3,1),
             CoupleNative(
-                "Гидропневмопривод",
+                "Гидропневмопривод мехатронных и робототехнических систем",
                 "Зуев Ю.Ю.",
                 "C-213",
                 "15:35",
                 "17:10",
-                CoupleNative.LECTURE,
+                CoupleNative.PRACTICE,
                 4,1)
             )
     }
