@@ -11,10 +11,9 @@ class UserCacheGatewayImpl @Inject constructor(val realm: Realm) : UserCacheGate
         var user: User? = null
         realm.executeTransaction {
             user = it.where(User::class.java).findFirst()
-            if (user == null) {
-                user = it.createObject(User::class.java)
-                initDefault(user!!)
-            }
+            if (user == null) user = User()
+            initDefault(user!!)
+            it.insertOrUpdate(user!!)
         }
         return user!!
     }
@@ -23,6 +22,7 @@ class UserCacheGatewayImpl @Inject constructor(val realm: Realm) : UserCacheGate
         user.groupName = ""
         user.firstLaunchFlag = false
         user.developerMode = false
+        user.nightMode = false
     }
 
 }
