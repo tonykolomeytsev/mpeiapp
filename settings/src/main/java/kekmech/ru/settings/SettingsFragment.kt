@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.*
 import dagger.android.support.DaggerFragment
-import io.realm.Realm
 import kekmech.ru.coreui.Resources
 import kekmech.ru.coreui.menu.BaseMenu
 import kekmech.ru.coreui.menu.ItemListener
@@ -18,9 +17,6 @@ import javax.inject.Inject
 class SettingsFragment : DaggerFragment(), ItemListener {
 
     var statusBarColor: Int = 0
-
-    @Inject
-    lateinit var realm: Realm
 
     @Inject
     lateinit var router: Router

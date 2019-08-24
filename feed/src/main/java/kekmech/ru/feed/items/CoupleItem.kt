@@ -1,10 +1,9 @@
 package kekmech.ru.feed.items
 
+import android.annotation.SuppressLint
 import android.view.View
 import android.widget.TextView
-import kekmech.ru.core.dto.Couple
 import kekmech.ru.core.dto.CoupleNative
-import kekmech.ru.core.dto.CoupleType
 import kekmech.ru.coreui.Chip
 import kekmech.ru.coreui.adapter.BaseFactory
 import kekmech.ru.coreui.adapter.BaseItem
@@ -13,6 +12,7 @@ import kekmech.ru.feed.R
 
 class CoupleItem(val couple: CoupleNative) : BaseItem<CoupleItem.ViewHolder>() {
 
+    @SuppressLint("DefaultLocale")
     override fun updateViewHolder(viewHolder: ViewHolder) {
         viewHolder.name.text = couple.name ?: ""
         viewHolder.typeLecture.visibility = if (couple.type == CoupleNative.LECTURE) View.VISIBLE  else View.GONE

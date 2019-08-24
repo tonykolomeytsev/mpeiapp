@@ -1,11 +1,13 @@
 package kekmech.ru.core.dto
 
-import io.realm.RealmList
-import io.realm.RealmObject
-import io.realm.annotations.PrimaryKey
+import android.arch.persistence.room.Entity
+import android.arch.persistence.room.PrimaryKey
+import kotlin.coroutines.suspendCoroutine
 
-open class Schedule(
-    @PrimaryKey var id: Int = 0,
-    var weekInfo: WeekInfo? = null,
-    var coupleList: RealmList<CoupleNative>? = null
-) : RealmObject()
+data class Schedule(
+    var id: Int = 0,
+    var calendarWeek: Int? = null,
+    var universityWeek: Int? = null,
+    var coupleList: List<CoupleNative>? = null,
+    val name: String? = null
+)

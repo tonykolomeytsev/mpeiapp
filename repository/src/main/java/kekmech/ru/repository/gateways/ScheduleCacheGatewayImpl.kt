@@ -1,42 +1,53 @@
 package kekmech.ru.repository.gateways
 
-import io.realm.Realm
 import kekmech.ru.core.dto.CoupleNative
 import kekmech.ru.core.dto.Schedule
+import kekmech.ru.core.dto.ScheduleNative
 import kekmech.ru.core.dto.WeekInfo
 import kekmech.ru.core.gateways.ScheduleCacheGateway
+import kekmech.ru.repository.room.AppDatabase
 import javax.inject.Inject
 
-class ScheduleCacheGatewayImpl @Inject constructor(val realm: Realm) : ScheduleCacheGateway {
-    override fun getSchedule(): Schedule? {
-        var schedule: Schedule? = null
-        realm.executeTransaction {
-            schedule = it
-                .where(Schedule::class.java)
-                .findFirst()
-        }
-        return schedule
-    }
+class ScheduleCacheGatewayImpl @Inject constructor(val appdb: AppDatabase) : ScheduleCacheGateway {
+    override fun getSchedule(): Schedule? =
+        appdb.scheduleDao()
+            .getAllByUserId(0)
+            .firstOrNull()
+            .let { Schedule(
+                it?.id ?: 0,
+                it?.calendarWeek,
+                it?.universityWeek,
+                appdb.coupleDao().getAllByScheduleId(it?.id ?: 0),
+                it?.name
+            ) }
 
-    override fun getWeekInfo(): WeekInfo? {
-        return getSchedule()?.weekInfo
-    }
+
+    override fun getWeekInfo(): WeekInfo? =
+        getSchedule().let { WeekInfo(it?.calendarWeek, it?.universityWeek) }
 
     override fun getCouples(dayNum: Int, odd: Boolean): List<CoupleNative>? {
         return getSchedule()?.coupleList
-            ?.filter { it.day == dayNum && it.week == if (odd) CoupleNative.ODD else CoupleNative.EVEN }
+            ?.filter { it.day == dayNum }
+            ?.filter { it.week == CoupleNative.BOTH || it.week == if (odd) CoupleNative.ODD else CoupleNative.EVEN }
             ?.sortedBy { it.num }
     }
 
     override fun saveSchedule(schedule: Schedule) {
-        realm.executeTransaction {
-            it.insertOrUpdate(schedule)
-        }
+        schedule.coupleList
+            ?.forEach { appdb.coupleDao().update(it) }
+        appdb.scheduleDao()
+            .update(ScheduleNative(
+                schedule.id,
+                0,
+                schedule.calendarWeek,
+                schedule.universityWeek,
+                schedule.name
+            ))
     }
 
     companion object {
         val list by lazy { listOf(
-            CoupleNative(
+            CoupleNative(0,0,
                 "Защита интеллектуальной собственности и патентоведение",
                 "Комерзан Е.В.",
                 "C-213",
@@ -44,7 +55,7 @@ class ScheduleCacheGatewayImpl @Inject constructor(val realm: Realm) : ScheduleC
                 "10:50",
                 CoupleNative.LECTURE,
                 1,1),
-            CoupleNative(
+            CoupleNative(1, 0,
                 "Вычислительная механика",
                 "Адамов Б.И.",
                 "C-213",
@@ -53,7 +64,7 @@ class ScheduleCacheGatewayImpl @Inject constructor(val realm: Realm) : ScheduleC
                 CoupleNative.LECTURE,
                 2,1),
             CoupleNative(type = CoupleNative.LUNCH),
-            CoupleNative(
+            CoupleNative(2,0,
                 "Вычислительная механика",
                 "Адамов Б.И.",
                 "C-213",
@@ -61,7 +72,7 @@ class ScheduleCacheGatewayImpl @Inject constructor(val realm: Realm) : ScheduleC
                 "15:20",
                 CoupleNative.LAB,
                 3,1),
-            CoupleNative(
+            CoupleNative(3,0,
                 "Гидропневмопривод мехатронных и робототехнических систем",
                 "Зуев Ю.Ю.",
                 "C-213",

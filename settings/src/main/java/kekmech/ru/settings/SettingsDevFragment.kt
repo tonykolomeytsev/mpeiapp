@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import dagger.android.support.DaggerFragment
-import io.realm.Realm
 import kekmech.ru.coreui.Resources
 import kekmech.ru.coreui.menu.ItemListener
 import kekmech.ru.coreui.menu.BaseMenu
@@ -50,9 +49,6 @@ class SettingsDevFragment : DaggerFragment(), ItemListener {
         .buildAdapter(this)
 
     @Inject
-    lateinit var realm: Realm
-
-    @Inject
     lateinit var router: Router
 
     override fun onCreateView(
@@ -71,10 +67,10 @@ class SettingsDevFragment : DaggerFragment(), ItemListener {
 
     override fun onItemClick(itemId: String) {
         when(itemId) {
-            "REALM_DELETE" -> realm.executeTransaction {
-                it.deleteAll()
-                Toast.makeText(activity, "База данных приложения стёрта", Toast.LENGTH_SHORT).show()
-            }
+//            "REALM_DELETE" -> realm.executeTransaction {
+//                it.deleteAll()
+//                Toast.makeText(activity, "База данных приложения стёрта", Toast.LENGTH_SHORT).show()
+//            }
 //            "REALM_WATCH" -> {
 //                val user = realm
 //                    .where(User::class.java)

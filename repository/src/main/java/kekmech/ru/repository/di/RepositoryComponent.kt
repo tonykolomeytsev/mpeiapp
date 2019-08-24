@@ -8,7 +8,7 @@ import javax.inject.Singleton
 @Singleton
 @Component(
     modules = [
-        RealmModule::class,
+        AppDatabaseModule::class,
         RepositoryModule::class,
         GatewayModule::class
     ],
