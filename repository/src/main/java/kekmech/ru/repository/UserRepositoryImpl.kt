@@ -6,7 +6,7 @@ import kekmech.ru.core.dto.User
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
-    val userCacheGateway: UserCacheGateway
+    private val userCacheGateway: UserCacheGateway
 ) : UserRepository {
 
     override fun get(refresh: Boolean): User {

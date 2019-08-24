@@ -1,11 +1,10 @@
 package kekmech.ru.repository
 
+import kekmech.ru.core.dto.CoupleNative
+import kekmech.ru.core.dto.Schedule
 import kekmech.ru.core.gateways.ScheduleCacheGateway
 import kekmech.ru.core.gateways.ScheduleRemoteGateway
 import kekmech.ru.core.repositories.ScheduleRepository
-import kekmech.ru.core.dto.CoupleNative
-import kekmech.ru.core.dto.Schedule
-import kekmech.ru.core.dto.WeekInfo
 import java.util.*
 import javax.inject.Inject
 

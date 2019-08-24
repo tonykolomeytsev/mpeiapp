@@ -33,4 +33,20 @@ object Resources {
         }
         return context.getDrawable(drawableId)
     }
+
+    fun getStringArray(context: Context?, stringArrayId: Int): Array<String> {
+        if (context == null) {
+            Log.e(this::class.java.simpleName, "Does not found string array resource")
+            return emptyArray()
+        }
+        return context.resources.getStringArray(stringArrayId)
+    }
+
+    fun getIntArray(context: Context?, intArrayId: Int): IntArray {
+        if (context == null) {
+            Log.e(this::class.java.simpleName, "Does not found string array resource")
+            return intArrayOf()
+        }
+        return context.resources.getIntArray(intArrayId)
+    }
 }

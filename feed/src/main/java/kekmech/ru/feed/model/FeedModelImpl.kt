@@ -25,7 +25,7 @@ class FeedModelImpl @Inject constructor(
      * Group number like "C-12-16"
      */
     override val groupNumber: String
-        get() = loadUserInfoUseCase.execute().groupName ?: ""
+        get() = "" //loadUserInfoUseCase.execute(). ?: ""
 
     /**
      * Current week number

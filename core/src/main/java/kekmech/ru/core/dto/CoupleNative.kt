@@ -36,6 +36,7 @@ open class CoupleNative @Ignore constructor(
         const val LAB = "LAB"
         const val LUNCH = "LUNCH"
         const val UNKNOWN = "UNKNOWN"
+        const val COURSE = "COURSE"
         const val BOTH = 0 // обе недели
         const val ODD = 1 // нечетный
         const val EVEN = 2 // четный

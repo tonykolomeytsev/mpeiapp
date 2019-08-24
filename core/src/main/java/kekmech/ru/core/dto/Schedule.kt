@@ -6,6 +6,7 @@ import kotlin.coroutines.suspendCoroutine
 
 data class Schedule(
     var id: Int = 0,
+    var group: String? = null,
     var calendarWeek: Int? = null,
     var universityWeek: Int? = null,
     var coupleList: List<CoupleNative>? = null,
