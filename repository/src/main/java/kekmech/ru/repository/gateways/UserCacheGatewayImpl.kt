@@ -7,8 +7,13 @@ import javax.inject.Inject
 
 class UserCacheGatewayImpl @Inject constructor(val appdb: AppDatabase) : UserCacheGateway {
 
-    override fun get(): User = appdb.userDao()
+    override fun get(): User? = appdb.userDao()
         .getAll()
-        .first()
+        .firstOrNull()
+
+    override fun set(user: User) {
+        appdb.userDao()
+            .update(user)
+    }
 
 }

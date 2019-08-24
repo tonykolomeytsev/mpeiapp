@@ -15,4 +15,14 @@ data class User @Ignore constructor(
     @ColumnInfo(name = "last_schedule_id") var lastScheduleId: Int = 0 // последнее открытое расписание
 ) {
     constructor() : this(0) // Чтобы скрыть WARNING при компиляции
+
+    companion object {
+        fun defaultUser() = User(
+            0,
+            firstLaunchFlag = false,
+            developerMode = false,
+            groupName = "",
+            nightMode = false
+        )
+    }
 }

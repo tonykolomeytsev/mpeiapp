@@ -16,13 +16,13 @@ import android.arch.persistence.room.*
         unique = true
     )])
 open class CoupleNative @Ignore constructor(
-    @PrimaryKey(autoGenerate = true) var id: Int = 0,
-    @ColumnInfo(name = "schedule_id") var scheduleId: Int = 0,
+    @PrimaryKey(autoGenerate = true)    var id: Int = 0,
+    @ColumnInfo(name = "schedule_id")   var scheduleId: Int = 0,
     var name: String? = null,       // название предмета
     var teacher: String? = null,    // ФИО препода
     var place: String? = null,      // место проведения
-    @ColumnInfo(name = "time_start") var timeStart: String? = null,  // время начала
-    @ColumnInfo(name = "time_end") var timeEnd: String? = null,    // время конца
+    @ColumnInfo(name = "time_start")    var timeStart: String? = null,  // время начала
+    @ColumnInfo(name = "time_end")      var timeEnd: String? = null,    // время конца
     var type: String? = null,       // тип занятия
     var num: Int? = null,           // номер пары
     var day: Int? = null,           // день проведения
