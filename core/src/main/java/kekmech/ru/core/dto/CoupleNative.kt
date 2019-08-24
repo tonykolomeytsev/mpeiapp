@@ -1,9 +1,6 @@
 package kekmech.ru.core.dto
 
-import android.arch.persistence.room.ColumnInfo
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.ForeignKey
-import android.arch.persistence.room.PrimaryKey
+import android.arch.persistence.room.*
 
 /**
  * В таком виде приложение хранит информацию о занятиях
@@ -12,10 +9,13 @@ import android.arch.persistence.room.PrimaryKey
     foreignKeys = [ForeignKey(
         entity = ScheduleNative::class,
         parentColumns = ["id"],
-        childColumns = ["schedule_id"],
-        onDelete = ForeignKey.CASCADE)],
-    tableName = "couples")
-open class CoupleNative(
+        childColumns = ["schedule_id"])],
+    tableName = "couples",
+    indices = [Index(
+        value = ["id", "schedule_id"],
+        unique = true
+    )])
+open class CoupleNative @Ignore constructor(
     @PrimaryKey(autoGenerate = true) var id: Int = 0,
     @ColumnInfo(name = "schedule_id") var scheduleId: Int = 0,
     var name: String? = null,       // название предмета
@@ -28,6 +28,8 @@ open class CoupleNative(
     var day: Int? = null,           // день проведения
     var week: Int? = null           // ODD\EVEN\BOTH
 ) {
+    constructor(): this(0) // Чтобы скрыть WARNING при компиляции
+
     companion object {
         const val LECTURE = "LECTURE"
         const val PRACTICE = "PRACTICE"
