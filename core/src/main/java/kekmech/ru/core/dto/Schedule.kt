@@ -1,14 +1,10 @@
 package kekmech.ru.core.dto
 
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.PrimaryKey
-import kotlin.coroutines.suspendCoroutine
-
 data class Schedule(
-    var id: Int = 0,
-    var group: String? = null,
-    var calendarWeek: Int? = null,
-    var universityWeek: Int? = null,
-    var coupleList: List<CoupleNative>? = null,
-    val name: String? = null
+    var id: Int,
+    var group: String,
+    var calendarWeek: Int,
+    var universityWeek: Int,
+    var coupleList: List<CoupleNative>,
+    val name: String
 )

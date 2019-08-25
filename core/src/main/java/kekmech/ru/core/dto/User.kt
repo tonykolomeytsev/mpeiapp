@@ -6,21 +6,20 @@ import android.arch.persistence.room.Ignore
 import android.arch.persistence.room.PrimaryKey
 
 @Entity(tableName = "users")
-data class User @Ignore constructor(
-    @PrimaryKey(autoGenerate = true) var id: Int = 0,
-    @ColumnInfo(name = "first_launch") var firstLaunchFlag: Boolean? = null, // первый запуск
-    @ColumnInfo(name = "dev_mode") var developerMode: Boolean? = null, // режим разработчика
-    @ColumnInfo(name = "night_mode") var nightMode: Boolean? = null,
-    @ColumnInfo(name = "last_schedule_id") var lastScheduleId: Int = 0 // последнее открытое расписание
+data class User(
+    @PrimaryKey(autoGenerate = true) var id: Int,
+    @ColumnInfo(name = "first_launch") var firstLaunchFlag: Boolean, // первый запуск
+    @ColumnInfo(name = "dev_mode") var developerMode: Boolean, // режим разработчика
+    @ColumnInfo(name = "night_mode") var nightMode: Boolean,
+    @ColumnInfo(name = "last_schedule_id") var lastScheduleId: Int // последнее открытое расписание
 ) {
-    constructor() : this(0) // Чтобы скрыть WARNING при компиляции
-
     companion object {
         fun defaultUser() = User(
             0,
             firstLaunchFlag = false,
             developerMode = false,
-            nightMode = false
+            nightMode = false,
+            lastScheduleId = -1
         )
     }
 }

@@ -14,10 +14,10 @@ interface CoupleDao {
     @Query("select * from couples where schedule_id = :scheduleId")
     fun getAllByScheduleId(scheduleId: Int): List<CoupleNative>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(coupleNative: CoupleNative)
 
-    @Update
+    @Update(onConflict = OnConflictStrategy.REPLACE)
     fun update(coupleNative: CoupleNative)
 
     @Delete

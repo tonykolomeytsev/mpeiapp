@@ -1,5 +1,6 @@
 package kekmech.ru.repository.gateways
 
+import android.util.Log
 import kekmech.ru.core.dto.CoupleNative
 import kekmech.ru.core.dto.Schedule
 import kekmech.ru.core.dto.ScheduleNative
@@ -10,52 +11,64 @@ import javax.inject.Inject
 
 class ScheduleCacheGatewayImpl @Inject constructor(val appdb: AppDatabase) : ScheduleCacheGateway {
 
-    init {
-        val schedule = Schedule(0, "С-12-16", 36, 1, ScheduleCacheGatewayImpl.allWeek, "Расписание на осенний семестр 2019/2020 учебного года")
-        saveSchedule(schedule)
-    }
+    val sch = Schedule(0, "С-12-16", 36, 1, allWeek, "Расписание на осенний семестр 2019/2020 учебного года")
+    var saved = false
 
-    override fun getSchedule(): Schedule? =
-        appdb.scheduleDao()
+    override fun getSchedule(): Schedule? {
+//        if (!saved) {
+//            newSchedule(sch)
+//            saved = true
+//        }
+        println("kek")
+        return appdb.scheduleDao()
             .getAllByUserId(0)
             .firstOrNull()
-            .let { Schedule(
-                it?.id ?: 0,
-                it?.group,
-                it?.calendarWeek,
-                it?.universityWeek,
-                appdb.coupleDao().getAllByScheduleId(it?.id ?: 0),
-                it?.name
-            ) }
+            .let {
+                if (it != null) Schedule(
+                    it.id,
+                    it.group,
+                    it.calendarWeek,
+                    it.universityWeek,
+                    appdb.coupleDao().getAllByScheduleId(it.id),
+                    it.name
+                ) else null
+            }
+    }
 
 
     override fun getWeekInfo(): WeekInfo? =
         getSchedule().let { WeekInfo(it?.calendarWeek, it?.universityWeek) }
 
     override fun getCouples(dayNum: Int, odd: Boolean): List<CoupleNative>? {
+        Log.e("ScheduleCacheGateway", getSchedule().toString())
         return getSchedule()?.coupleList
             ?.filter { it.day == dayNum }
             ?.filter { it.week == CoupleNative.BOTH || it.week == if (odd) CoupleNative.ODD else CoupleNative.EVEN }
             ?.sortedBy { it.num }
     }
 
-    override fun saveSchedule(schedule: Schedule) {
-        schedule.coupleList
-            ?.forEach { appdb.coupleDao().update(it) }
-        appdb.scheduleDao()
-            .update(ScheduleNative(
-                schedule.id,
-                0,
-                schedule.group,
-                schedule.calendarWeek,
-                schedule.universityWeek,
-                schedule.name
-            ))
+    override fun newSchedule(schedule: Schedule) {
+        val native = ScheduleNative(
+            0,
+            schedule.group,
+            schedule.calendarWeek,
+            schedule.universityWeek,
+            schedule.name
+        )
+        if (appdb.scheduleDao().getById(0) == null) {
+            appdb.scheduleDao().insert(native)
+            schedule.coupleList
+                ?.forEach { appdb.coupleDao().insert(it) }
+        } else {
+            appdb.scheduleDao().update(native)
+            schedule.coupleList
+                ?.forEach { appdb.coupleDao().update(it) }
+        }
     }
 
     companion object {
         val monday by lazy { listOf(
-            CoupleNative(0,0,
+            CoupleNative(1,
                 "Защита интеллектуальной собственности и патентоведение",
                 "Комерзан Е.В.",
                 "C-213",
@@ -63,7 +76,7 @@ class ScheduleCacheGatewayImpl @Inject constructor(val appdb: AppDatabase) : Sch
                 "10:50",
                 CoupleNative.LECTURE,
                 1,1, CoupleNative.ODD),
-            CoupleNative(1, 0,
+            CoupleNative(1,
                 "Вычислительная механика",
                 "Адамов Б.И.",
                 "C-213",
@@ -71,7 +84,7 @@ class ScheduleCacheGatewayImpl @Inject constructor(val appdb: AppDatabase) : Sch
                 "12:45",
                 CoupleNative.LECTURE,
                 2,1, CoupleNative.BOTH),
-            CoupleNative(2,0,
+            CoupleNative(1,
                 "Вычислительная механика",
                 "Адамов Б.И.",
                 "C-213",
@@ -79,7 +92,7 @@ class ScheduleCacheGatewayImpl @Inject constructor(val appdb: AppDatabase) : Sch
                 "15:20",
                 CoupleNative.LAB,
                 3,1, CoupleNative.BOTH),
-            CoupleNative(3,0,
+            CoupleNative(1,
                 "Гидропневмопривод мехатронных и робототехнических систем",
                 "Зуев Ю.Ю.",
                 "C-213",
@@ -92,7 +105,7 @@ class ScheduleCacheGatewayImpl @Inject constructor(val appdb: AppDatabase) : Sch
         val tuesday by lazy { listOf<CoupleNative>() }
 
         val wednesday by lazy { listOf(
-            CoupleNative(1, 0,
+            CoupleNative(1,
                 "Безопасность жизнедеятельности",
                 "Боровкова А.М.",
                 "Л-508",
@@ -100,7 +113,7 @@ class ScheduleCacheGatewayImpl @Inject constructor(val appdb: AppDatabase) : Sch
                 "12:45",
                 CoupleNative.LECTURE,
                 2,3, CoupleNative.BOTH),
-            CoupleNative(3,0,
+            CoupleNative(1,
                 "Гидропневмопривод мехатронных и робототехнических систем",
                 "Зуев Ю.Ю.",
                 "C-213",
@@ -108,7 +121,7 @@ class ScheduleCacheGatewayImpl @Inject constructor(val appdb: AppDatabase) : Sch
                 "15:20",
                 CoupleNative.LECTURE,
                 3,3, CoupleNative.BOTH),
-            CoupleNative(2,0,
+            CoupleNative(1,
                 "Научно исследовательская работа",
                 "",
                 "Кафедра РМД и ПМ",
@@ -120,7 +133,7 @@ class ScheduleCacheGatewayImpl @Inject constructor(val appdb: AppDatabase) : Sch
 
 
         val thursday by lazy { listOf(
-            CoupleNative(0,0,
+            CoupleNative(1,
                 "Вычислительная механика",
                 "Адамов Б.И.",
                 "C-213",
@@ -128,7 +141,7 @@ class ScheduleCacheGatewayImpl @Inject constructor(val appdb: AppDatabase) : Sch
                 "10:50",
                 CoupleNative.COURSE,
                 1,4, CoupleNative.ODD),
-            CoupleNative(1, 0,
+            CoupleNative(1,
                 "Основы мехатроники и робототехники",
                 "Адамов Б.И.",
                 "С-213",
@@ -136,7 +149,7 @@ class ScheduleCacheGatewayImpl @Inject constructor(val appdb: AppDatabase) : Sch
                 "12:45",
                 CoupleNative.LECTURE,
                 2,4, CoupleNative.BOTH),
-            CoupleNative(1, 0,
+            CoupleNative(1,
                 "Безопасность жизнедеятельности",
                 "Адамов Б.И.",
                 "С-213",
@@ -144,7 +157,7 @@ class ScheduleCacheGatewayImpl @Inject constructor(val appdb: AppDatabase) : Sch
                 "12:45",
                 CoupleNative.LAB,
                 2,4, CoupleNative.EVEN),
-            CoupleNative(3,0,
+            CoupleNative(1,
                 "Прикладные методы теории колебаний",
                 "Кобрин А.Н.",
                 "C-215",
@@ -152,7 +165,7 @@ class ScheduleCacheGatewayImpl @Inject constructor(val appdb: AppDatabase) : Sch
                 "15:20",
                 CoupleNative.LECTURE,
                 3,4, CoupleNative.BOTH),
-            CoupleNative(2,0,
+            CoupleNative(1,
                 "Прикладные методы теории колебаний",
                 "Панкратьева Г.В.",
                 "C-215",
@@ -163,7 +176,7 @@ class ScheduleCacheGatewayImpl @Inject constructor(val appdb: AppDatabase) : Sch
         ) }
 
         val friday by lazy { listOf(
-            CoupleNative(0,0,
+            CoupleNative(1,
                 "Защита интеллектуальной собественности и патентоведение",
                 "Комерзан Е.В.",
                 "C-213",
@@ -171,7 +184,7 @@ class ScheduleCacheGatewayImpl @Inject constructor(val appdb: AppDatabase) : Sch
                 "10:50",
                 CoupleNative.COURSE,
                 1,5, CoupleNative.EVEN),
-            CoupleNative(1, 0,
+            CoupleNative(1,
                 "Основы мехатроники и робототехники",
                 "Адамов Б.И.",
                 "Кафедра РМД и ПМ",
@@ -179,7 +192,7 @@ class ScheduleCacheGatewayImpl @Inject constructor(val appdb: AppDatabase) : Sch
                 "12:45",
                 CoupleNative.LECTURE,
                 2,5, CoupleNative.BOTH),
-            CoupleNative(3,0,
+            CoupleNative(1,
                 "Основы мехатроники и робототехники",
                 "",
                 "Кафедра РМД и ПМ",

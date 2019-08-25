@@ -37,7 +37,8 @@ class FeedPresenter @Inject constructor(
         this.view = view
         view.onScrollEndListener = { onScrollEnd() }
         if (view.recyclerView.adapter == null) view.recyclerView.adapter = (adapter)
-        if (offset == 0) onScrollEnd()
+        //if (offset == 0)
+            onScrollEnd()
     }
 
     /**
@@ -51,8 +52,11 @@ class FeedPresenter @Inject constructor(
     private fun onScrollEnd() {
         GlobalScope.launch(Dispatchers.Main) {
             view?.showLoading()
-            val couples = model.getDayCouples(offset, refresh = false)
-            adapter.baseItems.addAll(couples)
+            for (i in 0..3) {
+                val couples = model.getDayCouples(offset+i, refresh = false)
+                Log.e("FeedPresenter", couples.size.toString())
+                adapter.baseItems.addAll(couples)
+            }
             adapter.notifyDataSetChanged()
             view?.hideLoading()
             offset++

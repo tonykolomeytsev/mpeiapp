@@ -9,15 +9,15 @@ interface ScheduleDao {
     fun getAll(): List<ScheduleNative>
 
     @Query("select * from schedules where id = :id")
-    fun getById(id: Int): ScheduleNative
+    fun getById(id: Int): ScheduleNative?
 
     @Query("select * from schedules where user_id = :userId")
     fun getAllByUserId(userId: Int): List<ScheduleNative>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(scheduleNative: ScheduleNative)
 
-    @Update
+    @Update(onConflict = OnConflictStrategy.REPLACE)
     fun update(scheduleNative: ScheduleNative)
 
     @Delete

@@ -14,5 +14,5 @@ interface ScheduleCacheGateway {
 
     fun getWeekInfo(): WeekInfo?
 
-    fun saveSchedule(schedule: Schedule)
+    fun newSchedule(schedule: Schedule)
 }
