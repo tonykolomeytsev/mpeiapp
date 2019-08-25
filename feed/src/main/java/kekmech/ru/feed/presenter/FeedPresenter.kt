@@ -57,15 +57,23 @@ class FeedPresenter @Inject constructor(
     private fun onScrollEnd() {
         GlobalScope.launch(Dispatchers.Main) {
             view?.showLoading()
-            model.getDayCouples(offset, refresh = false).forEach {
+            val couples = model.getDayCouples(offset, refresh = false)
+            clearAdapter()
+            couples.forEach {
                 adapter.baseItems.add(it)
                 adapter.notifyItemChanged(adapter.baseItems.size - 1)
-                delay(100)
+                delay(100) // TODO избавиться от задержки и придумать анимацию иначе
             }
 //            adapter.notifyDataSetChanged()
             view?.hideLoading()
             offset++
         }
 
+    }
+
+    private fun clearAdapter() {
+        val count = adapter.baseItems.size
+        adapter.baseItems.clear()
+        adapter.notifyItemRangeRemoved(0, count)
     }
 }
