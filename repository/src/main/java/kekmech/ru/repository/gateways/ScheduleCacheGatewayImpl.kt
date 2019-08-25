@@ -58,11 +58,11 @@ class ScheduleCacheGatewayImpl @Inject constructor(val appdb: AppDatabase) : Sch
         if (appdb.scheduleDao().getById(0) == null) {
             appdb.scheduleDao().insert(native)
             schedule.coupleList
-                ?.forEach { appdb.coupleDao().insert(it) }
+                .forEach { appdb.coupleDao().insert(it) }
         } else {
             appdb.scheduleDao().update(native)
             schedule.coupleList
-                ?.forEach { appdb.coupleDao().update(it) }
+                .forEach { appdb.coupleDao().update(it) }
         }
     }
 
