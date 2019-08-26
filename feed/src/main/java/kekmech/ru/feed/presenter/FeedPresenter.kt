@@ -34,6 +34,11 @@ class FeedPresenter @Inject constructor(
     override fun onResume(view: FeedFragment) {
         this.view = view
         view.onScrollEndListener = { onScrollEnd() }
+        view.fab.setOnClickListener {
+            it.postOnAnimation {
+                print("click on fab")
+            }
+        }
 
         if (view.recyclerView.adapter == null) {
             view.recyclerView.adapter = adapter

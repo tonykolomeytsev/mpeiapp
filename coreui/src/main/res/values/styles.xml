@@ -18,6 +18,16 @@
         <item name="colorAccent">@color/colorPrimary</item>
     </style>
 
+    <style name="PrimaryActionButton" parent="Theme.AppCompat.Light">
+        <item name="colorAccent">@color/colorWhite</item>
+        <item name="colorControlHighlight">#22000000</item>
+    </style>
+
+    <style name="CollapsingToolbarLayoutExpandedTextStyle" parent="AppTheme">
+        <item name="android:textSize">28sp</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
 
     <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:statusBarColor">@color/colorAccent</item>
