@@ -8,22 +8,17 @@ import kekmech.ru.coreui.adapter.BaseItem
 import kekmech.ru.coreui.adapter.BaseViewHolder
 import kekmech.ru.feed.R
 
-class LunchItem() : BaseItem<LunchItem.ViewHolder>() {
+class WeekendItem() : BaseItem<WeekendItem.ViewHolder>() {
 
-    override fun updateViewHolder(viewHolder: ViewHolder) {
-        viewHolder.timeStart.text = "12:45"
-        viewHolder.timeEnd.text = "13:45"
-    }
+    override fun updateViewHolder(viewHolder: ViewHolder) = Unit
 
     override fun approveFactory(factory: BaseFactory) = factory is Factory
 
     class ViewHolder(itemView: View) : BaseViewHolder(itemView) {
-        val timeStart by bind<TextView>(R.id.textViewCoupleTimeStart)
-        val timeEnd by bind<TextView>(R.id.textViewCoupleTimeEnd)
-        override fun onCreateView(view: View) {}
+        override fun onCreateView(view: View) = Unit
     }
 
-    class Factory: BaseFactory(R.layout.item_lunch_full_layout) {
+    class Factory: BaseFactory(R.layout.item_weekend_full_layout) {
         override fun instance(view: View) = ViewHolder(view)
     }
 }

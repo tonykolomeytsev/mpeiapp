@@ -19,7 +19,6 @@ class ScheduleCacheGatewayImpl @Inject constructor(val appdb: AppDatabase) : Sch
 //            newSchedule(sch)
 //            saved = true
 //        }
-        println("kek")
         return appdb.scheduleDao()
             .getAllByUserId(0)
             .firstOrNull()
@@ -40,7 +39,6 @@ class ScheduleCacheGatewayImpl @Inject constructor(val appdb: AppDatabase) : Sch
         getSchedule().let { WeekInfo(it?.calendarWeek, it?.universityWeek) }
 
     override fun getCouples(dayNum: Int, odd: Boolean): List<CoupleNative>? {
-        Log.e("ScheduleCacheGateway", getSchedule().toString())
         return getSchedule()?.coupleList
             ?.filter { it.day == dayNum }
             ?.filter { it.week == CoupleNative.BOTH || it.week == if (odd) CoupleNative.ODD else CoupleNative.EVEN }

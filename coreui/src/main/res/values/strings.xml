@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">coreui</string>
+
+
+    <!-- НУМЕРАЦИЯ ПАР-->
+    <string-array name="couples_numbers">
+        <item>Первая пара</item>
+        <item>Вторая пара</item>
+        <item>Третья пара</item>
+        <item>Четвертая пара</item>
+        <item>Пятая пара</item>
+    </string-array>
+
+    <string name="couple_without_number">Очередная пара</string>
+
+    <string name="lunch_name">Обеденный перерыв</string>
+    <string name="weekend_name">Выходной</string>
 </resources>

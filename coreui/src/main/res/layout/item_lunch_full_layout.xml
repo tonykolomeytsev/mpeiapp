@@ -5,27 +5,19 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?android:attr/selectableItemBackground"
+        android:background="@color/colorLunchItem"
         android:clickable="true"
         android:focusable="true"
         android:gravity="center_vertical"
+        android:elevation="2dp"
         android:clipToPadding="false">
 
-
-    <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:src="@drawable/pizza"
-            android:scaleType="centerCrop"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            />
 
     <!--OVERLINE-->
     <TextView android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:textColor="@color/colorBlack"
-              android:text="Обеденный перерыв"
+              android:text="@string/lunch_name"
               android:textAllCaps="true"
               android:textStyle="bold"
               android:textSize="10sp"

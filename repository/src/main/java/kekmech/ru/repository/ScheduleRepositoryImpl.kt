@@ -25,7 +25,6 @@ class ScheduleRepositoryImpl @Inject constructor(
         val today = Calendar.getInstance()
         today.time = Date(System.currentTimeMillis())
         val dayOfWeek = today.get(Calendar.DAY_OF_WEEK) - 1
-        Log.e("ScheduleRepositoryImpl", dayOfWeek.toString() + " + $offset")
         if (dayOfWeek + offset <= 6) {
             return scheduleCacheGateway.getCouples(dayOfWeek + offset, true) ?: getOffsetCouples(offset, true)
         } else {

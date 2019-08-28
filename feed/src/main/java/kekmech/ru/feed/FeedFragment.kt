@@ -30,7 +30,7 @@ class FeedFragment @Inject constructor() : DaggerFragment(), IFeedFragment {
 
     override val activityContext: Context? get() = activity
 
-    @Volatile private var lock = false
+    @Volatile private var lock = true
 
     /**
      * fires when user scroll his feed down to the end.

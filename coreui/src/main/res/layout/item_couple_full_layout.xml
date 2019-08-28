@@ -5,13 +5,15 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?android:attr/selectableItemBackground"
+        android:background="@drawable/item_couple_drawable"
         android:clickable="true"
         android:focusable="true"
         android:paddingTop="16dp"
         android:gravity="center_vertical"
         android:clipToPadding="false"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:elevation="2dp"
+        >
 
     <!--TODO TEXT ALL CAPS IN CODE -->
     <!--OVERLINE-->

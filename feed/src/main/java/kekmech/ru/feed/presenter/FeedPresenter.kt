@@ -12,6 +12,7 @@ import kekmech.ru.feed.IFeedFragment
 import kekmech.ru.feed.items.CoupleItem
 import kekmech.ru.feed.items.FeedDividerItem
 import kekmech.ru.feed.items.LunchItem
+import kekmech.ru.feed.items.WeekendItem
 import kekmech.ru.feed.model.FeedModel
 import kotlinx.coroutines.*
 import javax.inject.Inject
@@ -28,6 +29,7 @@ class FeedPresenter @Inject constructor(
         .registerViewTypeFactory(FeedDividerItem.Factory())
         .registerViewTypeFactory(CoupleItem.Factory())
         .registerViewTypeFactory(LunchItem.Factory())
+        .registerViewTypeFactory(WeekendItem.Factory())
         .build()
     }
 
@@ -43,7 +45,8 @@ class FeedPresenter @Inject constructor(
         Handler().postDelayed({
             if (offset == 0)
                 onScrollEnd()
-        }, 200)
+            view.unlock()
+        }, 50)
     }
 
     private fun onStatusEdit() {
@@ -61,17 +64,17 @@ class FeedPresenter @Inject constructor(
     }
 
     private fun onScrollEnd() {
+        val localOffset = offset
+        offset++
         GlobalScope.launch(Dispatchers.Main) {
-            val couples = model.getDayCouples(offset, refresh = false)
+            val couples = model.getDayCouples(localOffset, refresh = false)
             couples.forEach {
                 adapter.baseItems.add(it)
                 adapter.notifyItemChanged(adapter.baseItems.size - 1)
                 delay(100) // TODO избавиться от задержки и придумать анимацию иначе
             }
-            if (offset < 3) offset++
             view?.unlock()
         }
-
     }
 
     private fun clearAdapter() {
