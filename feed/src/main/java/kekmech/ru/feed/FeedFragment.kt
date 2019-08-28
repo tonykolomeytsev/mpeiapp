@@ -2,29 +2,43 @@ package kekmech.ru.feed
 
 import android.content.Context
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import dagger.android.support.DaggerFragment
 import kekmech.ru.core.Presenter
 import kekmech.ru.coreui.Resources
 import kekmech.ru.coreui.adapter.BaseAdapter
 import kotlinx.android.synthetic.main.fragment_feed.*
 import kotlinx.android.synthetic.main.fragment_feed.view.*
+import java.lang.IllegalStateException
 import javax.inject.Inject
+import android.support.v4.widget.NestedScrollView
 
 
-class FeedFragment : DaggerFragment() {
+
+
+class FeedFragment @Inject constructor() : DaggerFragment(), IFeedFragment {
 
     @Inject
-    lateinit var presenter: Presenter<FeedFragment>
+    lateinit var presenter: Presenter<IFeedFragment>
+
+    override val activityContext: Context? get() = activity
+
+    @Volatile private var lock = false
 
     /**
      * fires when user scroll his feed down to the end.
      * presenter must subscribe for this event and load new items to the feed
      */
-    var onScrollEndListener: () -> Unit = {}
+    override var onEditListener: () -> Unit = {}
+
+    override var bottomReachListener: () -> Unit = {}
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,11 +47,21 @@ class FeedFragment : DaggerFragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_feed, container, false)
         view.recyclerView.layoutManager = LinearLayoutManager(activity)
+        view.nestedScroll.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, _, _, _, _ ->
+            if (view.nestedScroll.scrollY >= ((v.getChildAt(0).measuredHeight - v.measuredHeight) * 0.95)) {
+                if (!lock) {
+                    lock = true
+                    bottomReachListener()
+                }
+            }
+        })
+        view.fab.setOnClickListener { it.postOnAnimation { onEditListener() } }
         return view
     }
 
     override fun onResume() {
         super.onResume()
+        unlock()
         presenter.onResume(this)
     }
 
@@ -51,16 +75,23 @@ class FeedFragment : DaggerFragment() {
         activity!!.window.statusBarColor = Resources.getColor(context, R.color.colorSecondary)
     }
 
-    @Deprecated("Нарушение dependency rule")
-    fun updateView(adapter: BaseAdapter) {
-        recyclerView.adapter = adapter
+    override fun showEditDialog(dialog: AlertDialog) {
+        dialog.show()
     }
 
-    fun showLoading() {
-
+    override fun setStatus(title: String, subtitle: String) {
+        toolbar.title = title
+        textViewDayInfo.text = subtitle
     }
 
-    fun hideLoading() {
+    override fun updateAdapterIfNull(adapter: BaseAdapter) {
+        if (recyclerView.adapter == null) {
+            recyclerView.adapter = adapter
+            adapter.notifyDataSetChanged()
+        }
+    }
 
+    override fun unlock() {
+        lock = false
     }
 }

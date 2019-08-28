@@ -1,25 +1,28 @@
 package kekmech.ru.feed.presenter
 
+import android.content.Context
 import android.os.Handler
 import android.util.Log
+import android.widget.Toast
 import kekmech.ru.core.Presenter
 import kekmech.ru.core.scopes.ActivityScope
 import kekmech.ru.coreui.adapter.BaseAdapter
-import kekmech.ru.feed.FeedFragment
+import kekmech.ru.feed.Dialogs
+import kekmech.ru.feed.IFeedFragment
 import kekmech.ru.feed.items.CoupleItem
 import kekmech.ru.feed.items.FeedDividerItem
 import kekmech.ru.feed.items.LunchItem
 import kekmech.ru.feed.model.FeedModel
-import kotlinx.android.synthetic.main.fragment_feed.*
 import kotlinx.coroutines.*
 import javax.inject.Inject
 
 @ActivityScope
 class FeedPresenter @Inject constructor(
-    private val model: FeedModel
-) : Presenter<FeedFragment> {
+    private val model: FeedModel,
+    private val context: Context
+) : Presenter<IFeedFragment> {
 
-    var view: FeedFragment? = null
+    var view: IFeedFragment? = null
     var offset = 0
     val adapter by lazy { BaseAdapter.Builder()
         .registerViewTypeFactory(FeedDividerItem.Factory())
@@ -31,47 +34,42 @@ class FeedPresenter @Inject constructor(
     /**
      * subscribe to view events
      */
-    override fun onResume(view: FeedFragment) {
+    override fun onResume(view: IFeedFragment) {
         this.view = view
-        view.onScrollEndListener = { onScrollEnd() }
-        view.fab.setOnClickListener {
-            it.postOnAnimation {
-                print("click on fab")
-            }
-        }
-
-        if (view.recyclerView.adapter == null) {
-            view.recyclerView.adapter = adapter
-            adapter.notifyDataSetChanged()
-        }
+        view.updateAdapterIfNull(adapter)
+        view.onEditListener = { onStatusEdit() }
+        view.bottomReachListener = { onScrollEnd() }
 
         Handler().postDelayed({
             if (offset == 0)
                 onScrollEnd()
-        }, 300)
+        }, 200)
+    }
+
+    private fun onStatusEdit() {
+        val dialog = Dialogs.listDialog(view?.activityContext!!,"Редактировать", listOf("Кэшировать заново", "Сменить расписание")) { _, i ->
+            Toast.makeText(context, i.toString(), Toast.LENGTH_SHORT).show()
+        }
+        view?.showEditDialog(dialog)
     }
 
     /**
      * unsubscribe to view events
      */
-    override fun onPause(view: FeedFragment) {
-        view.onScrollEndListener = {}
+    override fun onPause(view: IFeedFragment) {
         this.view = null
     }
 
     private fun onScrollEnd() {
         GlobalScope.launch(Dispatchers.Main) {
-            view?.showLoading()
             val couples = model.getDayCouples(offset, refresh = false)
-            clearAdapter()
             couples.forEach {
                 adapter.baseItems.add(it)
                 adapter.notifyItemChanged(adapter.baseItems.size - 1)
                 delay(100) // TODO избавиться от задержки и придумать анимацию иначе
             }
-//            adapter.notifyDataSetChanged()
-            view?.hideLoading()
-            offset++
+            if (offset < 3) offset++
+            view?.unlock()
         }
 
     }
@@ -81,4 +79,5 @@ class FeedPresenter @Inject constructor(
         adapter.baseItems.clear()
         adapter.notifyItemRangeRemoved(0, count)
     }
+
 }

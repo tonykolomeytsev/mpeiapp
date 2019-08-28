@@ -8,6 +8,7 @@ import dagger.multibindings.IntoMap
 import kekmech.ru.core.Presenter
 import kekmech.ru.core.scopes.ActivityScope
 import kekmech.ru.feed.FeedFragment
+import kekmech.ru.feed.IFeedFragment
 import kekmech.ru.feed.model.FeedModel
 import kekmech.ru.feed.model.FeedModelImpl
 import kekmech.ru.feed.presenter.FeedPresenter
@@ -21,7 +22,7 @@ abstract class FeedFragmentModule {
 
     @ActivityScope
     @Binds
-    abstract fun providePresenter(presenter: FeedPresenter): Presenter<FeedFragment>
+    abstract fun providePresenter(presenter: FeedPresenter): Presenter<IFeedFragment>
 
     @ActivityScope
     @Binds

@@ -11,9 +11,9 @@ import java.util.zip.Inflater
  * Created by Kolomeytsev Anton on 09.07.2016.
  * This class is a part of Mr. Captain project.
  */
-class BaseAdapter private constructor() : RecyclerView.Adapter<BaseViewHolder>() {
+open class BaseAdapter : RecyclerView.Adapter<BaseViewHolder>() {
 
-    private val viewFactories = hashMapOf<Int, BaseFactory>()
+    internal val viewFactories = hashMapOf<Int, BaseFactory>()
     private val viewCache = hashMapOf<Int, View>()
     val baseItems: MutableList<BaseItem<*>> = ArrayList()
     var inflater: LayoutInflater? = null
