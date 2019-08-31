@@ -9,6 +9,8 @@ class Time(private val calendar: Calendar = Calendar.getInstance()) {
 
     constructor(date: Date) : this(Calendar.getInstance().apply { time = date })
 
+    constructor(year: Int, month: Int, dayOfMonth: Int) : this(Calendar.getInstance().apply { set(year, month, dayOfMonth) })
+
     private val hoursMinutesFormatter = SimpleDateFormat("hh:mm", Locale.ENGLISH)
 
     val dayOfWeek by lazy { calendar.get(Calendar.DAY_OF_WEEK) }
@@ -19,6 +21,13 @@ class Time(private val calendar: Calendar = Calendar.getInstance()) {
     val month by lazy { calendar.get(Calendar.MONTH) }
     val year by lazy { calendar.get(Calendar.YEAR) }
 
+    val semester by lazy { if (month in Calendar.FEBRUARY..Calendar.AUGUST) SemesterType.SPRING else SemesterType.FALL }
+    val weekOfSemester by lazy {
+        val firstDay = if (semester == SemesterType.FALL) fallSemesterFirstDay() else springSemesterFirstDay()
+        return@lazy 1 + weekOfYear - firstDay.weekOfYear
+    }
+    val parity by lazy { if (weekOfSemester % 2 == 0) Parity.EVEN else Parity.ODD }
+
     /**
      * Форматирование времени к виду "Часы:Минуты"
      */
@@ -28,6 +37,7 @@ class Time(private val calendar: Calendar = Calendar.getInstance()) {
      * Форматирование к виду "День недели"
      * @param context - контекст через который можно получить доступ к strings.xml
      * @param stringArrayId - массив с названиями дней недели (ВСК, ПН, ВТ, СР ...)
+     * @return [String] - соответствующее номеру названия дня недели
      * *Обрати внимание, что воскресенье считается первым днем недели (id = 1)
      */
     fun formattedAsDayName(context: Context?, stringArrayId: Int) = getStringArray(context, stringArrayId)[dayOfWeek - 1]
@@ -42,7 +52,25 @@ class Time(private val calendar: Calendar = Calendar.getInstance()) {
 
     enum class Parity { ODD, EVEN }
 
+    enum class SemesterType { FALL, SPRING }
+
     companion object {
-        fun today() = Time(Calendar.getInstance(TimeZone.getDefault()))
+        fun today() = Time(Calendar.getInstance())
+
+        /**
+         * Всегда первое сентября
+         */
+        fun fallSemesterFirstDay(year: Int = today().year) = Time(year, Calendar.SEPTEMBER, 1)
+
+        /**
+         * Первый понедельник февраля
+         */
+        fun springSemesterFirstDay(year: Int = today().year): Time {
+            var febDayNum = 1
+            var day = Time(year, Calendar.FEBRUARY, febDayNum++)
+            while (day.dayOfWeek != Calendar.MONDAY)
+                day = Time(year, Calendar.FEBRUARY, febDayNum++)
+            return day
+        }
     }
 }
