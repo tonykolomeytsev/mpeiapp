@@ -4,6 +4,7 @@ import kekmech.ru.core.repositories.ScheduleRepository
 import kekmech.ru.core.usecases.LoadWeekInfoUseCase
 import javax.inject.Inject
 
+@Deprecated("WeekInfo wil be deleted/ Use Status instead")
 class LoadWeekInfoUseCaseImpl @Inject constructor(
     val scheduleRepository: ScheduleRepository
 ) : LoadWeekInfoUseCase {
