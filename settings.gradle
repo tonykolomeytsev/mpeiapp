@@ -1,1 +1,1 @@
-include ':app', ':core', ':coreui', ':repository', ':feed', ':buildSrc', ':domain', ':mainscreen', ':timetable', ':settings'
+include ':app', ':core', ':coreui', ':repository', ':feed', ':domain', ':mainscreen', ':timetable', ':settings'
