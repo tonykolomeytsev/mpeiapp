@@ -1,5 +1,7 @@
 package kekmech.ru.core.usecases
 
-interface LoadDayStatusUseCase {
+import kekmech.ru.core.dto.DayStatus
 
+interface LoadDayStatusUseCase {
+    fun execute(offset: Int, refresh: Boolean = false): DayStatus
 }

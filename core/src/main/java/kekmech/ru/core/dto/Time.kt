@@ -1,4 +1,4 @@
-package kekmech.ru.repository.utils
+package kekmech.ru.core.dto
 
 import android.content.Context
 import android.util.Log
@@ -27,14 +27,25 @@ class Time(private val calendar: Calendar = Calendar.getInstance()) {
         return@lazy 1 + weekOfYear - firstDay.weekOfYear
     }
     val parity by lazy { if (weekOfSemester % 2 == 0) Parity.EVEN else Parity.ODD }
-    val nextDay by lazy { Time(Calendar.getInstance().apply { timeInMillis = calendar.timeInMillis + MILLIS_IN_DAY } ) }
-    val prevDay by lazy { Time(Calendar.getInstance().apply { timeInMillis = calendar.timeInMillis - MILLIS_IN_DAY } ) }
+    val nextDay by lazy {
+        Time(Calendar.getInstance().apply {
+            timeInMillis = calendar.timeInMillis + MILLIS_IN_DAY
+        })
+    }
+    val prevDay by lazy {
+        Time(Calendar.getInstance().apply {
+            timeInMillis = calendar.timeInMillis - MILLIS_IN_DAY
+        })
+    }
 
     /**
      * Получить день, который будет через [dayOffset] дней
      */
     fun getDayWithOffset(dayOffset: Int) =
-        Time(Calendar.getInstance().apply { timeInMillis = calendar.timeInMillis + (MILLIS_IN_DAY * dayOffset) } )
+        Time(Calendar.getInstance().apply {
+            timeInMillis =
+                calendar.timeInMillis + (MILLIS_IN_DAY * dayOffset)
+        })
 
     /**
      * Форматирование времени к виду "Часы:Минуты"
@@ -82,7 +93,8 @@ class Time(private val calendar: Calendar = Calendar.getInstance()) {
         /**
          * Всегда первое сентября
          */
-        fun fallSemesterFirstDay(year: Int = today().year) = Time(year, Calendar.SEPTEMBER, 1)
+        fun fallSemesterFirstDay(year: Int = today().year) =
+            Time(year, Calendar.SEPTEMBER, 1)
 
         /**
          * Первый понедельник февраля

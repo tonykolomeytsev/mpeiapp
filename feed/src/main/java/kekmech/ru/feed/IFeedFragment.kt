@@ -12,7 +12,7 @@ interface IFeedFragment {
 
     val activityContext: Context?
 
-    fun setStatus(title: String, subtitle: String)
+    fun setStatus(title: String, dayInfo: String, weekInfo: String)
 
     fun showEditDialog(dialog: AlertDialog)
 

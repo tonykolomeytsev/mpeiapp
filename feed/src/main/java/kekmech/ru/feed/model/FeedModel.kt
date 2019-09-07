@@ -15,7 +15,7 @@ interface FeedModel {
     /**
      * Current week number
      */
-    val weekNumber: Int
+    val currentWeekNumber: Int
 
     /**
      * Get couples for day

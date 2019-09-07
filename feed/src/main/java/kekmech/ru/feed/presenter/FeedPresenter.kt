@@ -41,6 +41,7 @@ class FeedPresenter @Inject constructor(
         view.updateAdapterIfNull(adapter)
         view.onEditListener = { onStatusEdit() }
         view.bottomReachListener = { onScrollEnd() }
+        view.setStatus("Группа ${model.groupNumber}", "Какой-то день", "Идет ${model.currentWeekNumber} учебная неделя")
 
         Handler().postDelayed({
             if (offset == 0)

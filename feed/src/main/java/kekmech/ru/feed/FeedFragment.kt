@@ -4,19 +4,15 @@ import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import dagger.android.support.DaggerFragment
 import kekmech.ru.core.Presenter
 import kekmech.ru.coreui.Resources
 import kekmech.ru.coreui.adapter.BaseAdapter
 import kotlinx.android.synthetic.main.fragment_feed.*
 import kotlinx.android.synthetic.main.fragment_feed.view.*
-import java.lang.IllegalStateException
 import javax.inject.Inject
 import android.support.v4.widget.NestedScrollView
 
@@ -79,9 +75,10 @@ class FeedFragment @Inject constructor() : DaggerFragment(), IFeedFragment {
         dialog.show()
     }
 
-    override fun setStatus(title: String, subtitle: String) {
+    override fun setStatus(title: String, dayInfo: String, weekInfo: String) {
         toolbar.title = title
-        textViewDayInfo.text = subtitle
+        textViewDayInfo.text = dayInfo
+        textViewWeekInfo.text = weekInfo
     }
 
     override fun updateAdapterIfNull(adapter: BaseAdapter) {
