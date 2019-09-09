@@ -1,8 +1,8 @@
 package kekmech.ru.repository.room
 
-import android.arch.persistence.room.Database
-import android.arch.persistence.room.RoomDatabase
-import android.arch.persistence.room.TypeConverters
+import androidx.room.Database
+import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import kekmech.ru.core.dto.CoupleNative
 import kekmech.ru.core.dto.ScheduleNative
 import kekmech.ru.core.dto.User

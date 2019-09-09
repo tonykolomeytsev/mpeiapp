@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/main_nav"
+        app:startDestination="@id/feedFragment">
+
+    <fragment
+            android:id="@+id/feedFragment"
+            android:name="kekmech.ru.feed.FeedFragment"
+            android:label="FeedFragment" />
+    <fragment
+            android:id="@+id/timetableFragment"
+            android:name="kekmech.ru.timetable.TimetableFragment"
+            android:label="TimetableFragment" />
+    <fragment
+            android:id="@+id/settingsFragment"
+            android:name="kekmech.ru.settings.SettingsFragment"
+            android:label="SettingsFragment" >
+        <action
+                android:id="@+id/action_settingsFragment_to_settingsDevFragment"
+                app:destination="@id/settingsDevFragment"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:exitAnim="@anim/nav_default_exit_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+            android:id="@+id/settingsDevFragment"
+            android:name="kekmech.ru.settings.SettingsDevFragment"
+            android:label="SettingsDevFragment" />
+</navigation>

@@ -3,17 +3,17 @@ package kekmech.ru.settings
 
 import android.content.Context
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import dagger.android.support.DaggerFragment
+import kekmech.ru.core.Router
 import kekmech.ru.coreui.Resources
 import kekmech.ru.coreui.menu.ItemListener
 import kekmech.ru.coreui.menu.BaseMenu
 import kotlinx.android.synthetic.main.fragment_settings.view.*
-import ru.terrakok.cicerone.Router
 import javax.inject.Inject
 
 class SettingsDevFragment : DaggerFragment(), ItemListener {
@@ -57,10 +57,10 @@ class SettingsDevFragment : DaggerFragment(), ItemListener {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_settings_dev, container, false)
-        view.recyclerView.layoutManager = LinearLayoutManager(context)
+        view.recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
         view.recyclerView.adapter = adapter
         view.toolbar.setNavigationOnClickListener {
-            it.postOnAnimation { router.exit() }
+            it.postOnAnimation { router.popBackStack() }
         }
         return view
     }
@@ -90,7 +90,7 @@ class SettingsDevFragment : DaggerFragment(), ItemListener {
         }
     }
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
         statusBarColor = activity!!.window.statusBarColor
         activity!!.window.statusBarColor = Resources.getColor(context, R.color.colorPrimary)

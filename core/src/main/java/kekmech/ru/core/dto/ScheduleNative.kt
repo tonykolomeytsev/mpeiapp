@@ -1,6 +1,6 @@
 package kekmech.ru.core.dto
 
-import android.arch.persistence.room.*
+import androidx.room.*
 
 @Entity(
 //    foreignKeys = [ForeignKey(

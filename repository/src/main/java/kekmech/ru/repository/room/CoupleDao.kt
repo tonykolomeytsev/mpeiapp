@@ -1,6 +1,6 @@
 package kekmech.ru.repository.room
 
-import android.arch.persistence.room.*
+import androidx.room.*
 import kekmech.ru.core.dto.CoupleNative
 
 @Dao

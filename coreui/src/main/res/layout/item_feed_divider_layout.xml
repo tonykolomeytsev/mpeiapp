@@ -8,7 +8,7 @@
         android:clipToPadding="false"
         android:elevation="2dp"
         >
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorWhite"
@@ -43,5 +43,5 @@
                 android:fontFamily="sans-serif-medium"
                 />
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

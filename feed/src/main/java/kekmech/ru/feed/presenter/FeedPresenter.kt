@@ -25,6 +25,7 @@ class FeedPresenter @Inject constructor(
 
     var view: IFeedFragment? = null
     var offset = 0
+    val daysToLoadOnStart = 3
     val adapter by lazy { BaseAdapter.Builder()
         .registerViewTypeFactory(FeedDividerItem.Factory())
         .registerViewTypeFactory(CoupleItem.Factory())
@@ -75,6 +76,8 @@ class FeedPresenter @Inject constructor(
                 delay(100) // TODO избавиться от задержки и придумать анимацию иначе
             }
             view?.unlock()
+            if (offset < daysToLoadOnStart)
+                onScrollEnd()
         }
     }
 

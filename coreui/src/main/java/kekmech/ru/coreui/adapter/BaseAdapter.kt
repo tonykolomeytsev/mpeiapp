@@ -1,6 +1,6 @@
 package kekmech.ru.coreui.adapter
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +11,7 @@ import java.util.zip.Inflater
  * Created by Kolomeytsev Anton on 09.07.2016.
  * This class is a part of Mr. Captain project.
  */
-open class BaseAdapter : RecyclerView.Adapter<BaseViewHolder>() {
+open class BaseAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<BaseViewHolder>() {
 
     internal val viewFactories = hashMapOf<Int, BaseFactory>()
     private val viewCache = hashMapOf<Int, View>()

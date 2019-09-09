@@ -1,6 +1,6 @@
 package kekmech.ru.coreui.adapter
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import kotlin.reflect.KProperty
 
@@ -9,7 +9,7 @@ import kotlin.reflect.KProperty
  * This class is a part of Mr. Captain project.
  */
 @Suppress("UNCHECKED_CAST")
-abstract class BaseViewHolder : RecyclerView.ViewHolder {
+abstract class BaseViewHolder : androidx.recyclerview.widget.RecyclerView.ViewHolder {
 
     constructor(itemView: View) : super(itemView) {
         this.onCreateView(itemView)

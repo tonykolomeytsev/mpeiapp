@@ -2,8 +2,8 @@ package kekmech.ru.feed
 
 import android.content.Context
 import android.os.Bundle
-import android.support.v7.app.AlertDialog
-import android.support.v7.widget.LinearLayoutManager
+import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +14,7 @@ import kekmech.ru.coreui.adapter.BaseAdapter
 import kotlinx.android.synthetic.main.fragment_feed.*
 import kotlinx.android.synthetic.main.fragment_feed.view.*
 import javax.inject.Inject
-import android.support.v4.widget.NestedScrollView
+import androidx.core.widget.NestedScrollView
 
 
 
@@ -66,7 +66,7 @@ class FeedFragment @Inject constructor() : DaggerFragment(), IFeedFragment {
         presenter.onPause(this)
     }
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
         activity!!.window.statusBarColor = Resources.getColor(context, R.color.colorSecondary)
     }

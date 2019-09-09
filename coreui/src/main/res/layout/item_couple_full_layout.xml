@@ -101,7 +101,7 @@
 
 
     <!-- TIMELINE -->
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintCoupleTimeline"
             android:layout_width="match_parent"
             android:layout_height="24dp"
@@ -155,7 +155,7 @@
                 app:layout_constraintStart_toEndOf="@+id/textViewCoupleTimeStart"
                 app:layout_constraintEnd_toStartOf="@+id/textViewCoupleTimeEnd" android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"/>
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <FrameLayout
             android:layout_width="wrap_content"

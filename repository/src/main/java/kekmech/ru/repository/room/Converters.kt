@@ -1,6 +1,6 @@
 package kekmech.ru.repository.room
 
-import android.arch.persistence.room.TypeConverter
+import androidx.room.TypeConverter
 import java.util.*
 
 class Converters {
