@@ -1,24 +1,17 @@
 package kekmech.ru.feed.model
 
-import android.util.Log
 import kekmech.ru.core.ASYNCIO
 import kekmech.ru.core.dto.CoupleNative
-import kekmech.ru.core.dto.DayStatus
-import kekmech.ru.core.dto.User
 import kekmech.ru.core.scopes.ActivityScope
 import kekmech.ru.core.usecases.LoadDayStatusUseCase
 import kekmech.ru.core.usecases.LoadOffsetScheduleUseCase
-import kekmech.ru.core.usecases.LoadUserInfoUseCase
 import kekmech.ru.coreui.adapter.BaseItem
-import kekmech.ru.coreui.items.DividerItem
 import kekmech.ru.feed.items.CoupleItem
 import kekmech.ru.feed.items.FeedDividerItem
 import kekmech.ru.feed.items.LunchItem
 import kekmech.ru.feed.items.WeekendItem
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.withContext
-import java.util.concurrent.Executors
 import javax.inject.Inject
 
 @ActivityScope

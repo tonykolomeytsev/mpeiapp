@@ -10,8 +10,8 @@ import java.util.*
 import javax.inject.Inject
 
 class ScheduleRepositoryImpl @Inject constructor(
-    val scheduleRemoteGateway: ScheduleRemoteGateway,
-    val scheduleCacheGateway: ScheduleCacheGateway
+    private val scheduleRemoteGateway: ScheduleRemoteGateway,
+    private val scheduleCacheGateway: ScheduleCacheGateway
 ) : ScheduleRepository {
     override fun getCurrentWeek(refresh: Boolean): Int {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -25,11 +25,13 @@ class ScheduleRepositoryImpl @Inject constructor(
         val today = Calendar.getInstance()
         today.time = Date(System.currentTimeMillis())
         val dayOfWeek = today.get(Calendar.DAY_OF_WEEK) - 1
-        if (dayOfWeek + offset <= 6) {
-            return scheduleCacheGateway.getCouples(dayOfWeek + offset, true) ?: getOffsetCouples(offset, true)
+        if (dayOfWeek + offset <= 7) {
+            if (refresh) return scheduleRemoteGateway.getCouples(dayOfWeek + offset) ?: emptyList()
+            else return scheduleCacheGateway.getCouples(dayOfWeek + offset, true) ?: getOffsetCouples(offset, true)
         } else {
             val necessaryDayOfWeek = (dayOfWeek+offset) % 6
-            return scheduleCacheGateway.getCouples(necessaryDayOfWeek, true) ?: getOffsetCouples(offset, true)
+            if (refresh) return scheduleRemoteGateway.getCouples(necessaryDayOfWeek) ?: emptyList()
+            else return scheduleCacheGateway.getCouples(necessaryDayOfWeek, true) ?: getOffsetCouples(offset, true)
         }
     }
 
