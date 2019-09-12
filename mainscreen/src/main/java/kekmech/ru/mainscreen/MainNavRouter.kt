@@ -13,7 +13,7 @@ class MainNavRouter @Inject constructor(): Router {
             Screens.FEED -> navController?.navigate(R.id.feedFragment)
             Screens.TIMETABLE -> navController?.navigate(R.id.timetableFragment)
             Screens.SETTINGS -> navController?.navigate(R.id.settingsFragment)
-            Screens.DEV -> navController?.navigate(R.id.settingsDevFragment)
+            Screens.DEV -> navController?.navigate(R.id.action_settingsFragment_to_settingsDevFragment)
         }
     }
 
@@ -22,7 +22,7 @@ class MainNavRouter @Inject constructor(): Router {
             Screens.FEED -> navController?.navigate(R.id.feedFragment)
             Screens.TIMETABLE -> navController?.navigate(R.id.timetableFragment)
             Screens.SETTINGS -> navController?.navigate(R.id.settingsFragment)
-            Screens.DEV -> navController?.navigate(R.id.settingsDevFragment)
+            Screens.DEV -> navController?.navigate(R.id.action_settingsFragment_to_settingsDevFragment)
         }
     }
 
