@@ -23,7 +23,13 @@ class Time(private val calendar: Calendar = Calendar.getInstance()) {
 
     val semester by lazy { if (month in Calendar.FEBRUARY..Calendar.AUGUST) SemesterType.SPRING else SemesterType.FALL }
     val weekOfSemester by lazy {
-        val firstDay = if (semester == SemesterType.FALL) fallSemesterFirstDay() else springSemesterFirstDay()
+        val firstDay = if (semester == SemesterType.FALL) {
+            val fallFirst = fallSemesterFirstDay()
+            if (fallFirst.dayOfWeek == Calendar.SUNDAY)
+                fallFirst.nextDay
+            else
+                fallFirst
+        } else springSemesterFirstDay()
         return@lazy 1 + weekOfYear - firstDay.weekOfYear
     }
     val parity by lazy { if (weekOfSemester % 2 == 0) Parity.EVEN else Parity.ODD }

@@ -1,10 +1,13 @@
 package kekmech.ru.feed.model
 
 import kekmech.ru.core.dto.CoupleNative
+import kekmech.ru.core.dto.Time
 import kekmech.ru.core.dto.User
 import kekmech.ru.coreui.adapter.BaseItem
 
 interface FeedModel {
+
+    val today: Time
 
     var scheduleInfoUpdateListener: (List<CoupleNative>) -> Unit
     /**
@@ -16,6 +19,8 @@ interface FeedModel {
      * Current week number
      */
     val currentWeekNumber: Int
+
+    val formattedTodayStatus: String
 
     /**
      * Get couples for day

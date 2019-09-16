@@ -24,4 +24,8 @@
         android:id="@+id/settingsDevFragment"
         android:name="kekmech.ru.settings.SettingsDevFragment"
         android:label="SettingsDevFragment" />
+    <fragment
+            android:id="@+id/addFragment"
+            android:name="kekmech.ru.addscreen.AddFragment"
+            android:label="AddFragment" />
 </navigation>

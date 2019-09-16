@@ -3,6 +3,7 @@ package kekmech.ru.mainscreen.di
 import dagger.Subcomponent
 import dagger.android.AndroidInjector
 import kekmech.ru.core.scopes.ActivityScope
+import kekmech.ru.feed.di.AddFragmentModule
 import kekmech.ru.feed.di.FeedFragmentModule
 import kekmech.ru.mainscreen.MainActivity
 import kekmech.ru.settings.di.SettingsDevFragmentModule
@@ -15,7 +16,8 @@ import kekmech.ru.timetable.TimetableFragmentModule
         FeedFragmentModule::class,
         TimetableFragmentModule::class,
         SettingsFragmentModule::class,
-        SettingsDevFragmentModule::class
+        SettingsDevFragmentModule::class,
+        AddFragmentModule::class
     ])
 interface MainActivityComponent : AndroidInjector<MainActivity> {
     @Subcomponent.Factory

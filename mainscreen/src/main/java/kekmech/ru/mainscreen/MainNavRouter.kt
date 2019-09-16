@@ -14,6 +14,7 @@ class MainNavRouter @Inject constructor(): Router {
             Screens.TIMETABLE -> navController?.navigate(R.id.timetableFragment)
             Screens.SETTINGS -> navController?.navigate(R.id.settingsFragment)
             Screens.DEV -> navController?.navigate(R.id.action_settingsFragment_to_settingsDevFragment)
+            Screens.ADD -> navController?.navigate(R.id.addFragment)
         }
     }
 
@@ -23,6 +24,7 @@ class MainNavRouter @Inject constructor(): Router {
             Screens.TIMETABLE -> navController?.navigate(R.id.timetableFragment)
             Screens.SETTINGS -> navController?.navigate(R.id.settingsFragment)
             Screens.DEV -> navController?.navigate(R.id.action_settingsFragment_to_settingsDevFragment)
+            Screens.ADD -> navController?.navigate(R.id.addFragment)
         }
     }
 

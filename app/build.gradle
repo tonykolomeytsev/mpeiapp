@@ -61,4 +61,5 @@ dependencies {
     implementation project(path: ':timetable')
     implementation project(path: ':settings')
     implementation project(path: ':coreui')
+    implementation project(path: ':addscreen')
 }

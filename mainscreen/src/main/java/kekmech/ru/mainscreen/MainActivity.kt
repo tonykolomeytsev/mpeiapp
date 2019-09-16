@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.view.animation.LinearInterpolator
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.navigation.Navigation
 import dagger.android.support.DaggerAppCompatActivity
@@ -18,11 +19,7 @@ import javax.inject.Inject
 
 class MainActivity : DaggerAppCompatActivity() {
 
-    val feedFragment by lazy { FeedFragment().apply { retainInstance = true } }
-    val timetableFragment by lazy { TimetableFragment() }
-    val settingsFragment by lazy { SettingsFragment() }
-    val settingsDevFragment by lazy { SettingsDevFragment() }
-    val navController by lazy { Navigation.findNavController(this, R.id.nav_host_fragment) }
+    private val navController by lazy { Navigation.findNavController(this, R.id.nav_host_fragment) }
     @Inject lateinit var router: Router
 
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->

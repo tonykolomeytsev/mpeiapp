@@ -5,4 +5,5 @@ object Screens {
     const val TIMETABLE = "TIMETABLE"
     const val SETTINGS = "SETTINGS"
     const val DEV = "DEV"
+    const val ADD = "ADD"
 }

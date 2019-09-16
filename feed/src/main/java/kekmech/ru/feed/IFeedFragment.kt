@@ -10,7 +10,7 @@ interface IFeedFragment {
 
     var bottomReachListener: () -> Unit
 
-    val activityContext: Context?
+    fun withinContext(listener: (context: Context) -> Unit)
 
     fun setStatus(title: String, dayInfo: String, weekInfo: String)
 

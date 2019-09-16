@@ -24,9 +24,10 @@ class FeedFragment @Inject constructor() : DaggerFragment(), IFeedFragment {
     @Inject
     lateinit var presenter: Presenter<IFeedFragment>
 
-    override val activityContext: Context? get() = activity
+    @Volatile
+    private var lock = true
 
-    @Volatile private var lock = true
+    init { retainInstance = true }
 
     /**
      * fires when user scroll his feed down to the end.
@@ -90,5 +91,9 @@ class FeedFragment @Inject constructor() : DaggerFragment(), IFeedFragment {
 
     override fun unlock() {
         lock = false
+    }
+
+    override fun withinContext(listener: (context: Context) -> Unit) {
+        listener(requireContext())
     }
 }

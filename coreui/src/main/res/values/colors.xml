@@ -17,6 +17,7 @@
     <color name="colorChipLab">#870000</color>
     <color name="colorBlack">#000000</color>
     <color name="colorBlackTransparent">#4D000000</color>
+    <color name="colorSearchView">#11000000</color>
     <color name="colorTransparent">#00000000</color>
     <color name="colorCollapsingToolbarTransparent">#0042a5f5</color>
     <color name="colorIconsTint">#464646</color>

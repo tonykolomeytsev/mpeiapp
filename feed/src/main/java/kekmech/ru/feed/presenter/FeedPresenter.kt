@@ -5,22 +5,28 @@ import android.os.Handler
 import android.util.Log
 import android.widget.Toast
 import kekmech.ru.core.Presenter
+import kekmech.ru.core.Router
+import kekmech.ru.core.Screens
+import kekmech.ru.core.dto.Time
 import kekmech.ru.core.scopes.ActivityScope
 import kekmech.ru.coreui.adapter.BaseAdapter
 import kekmech.ru.feed.Dialogs
 import kekmech.ru.feed.IFeedFragment
+import kekmech.ru.feed.R
 import kekmech.ru.feed.items.CoupleItem
 import kekmech.ru.feed.items.FeedDividerItem
 import kekmech.ru.feed.items.LunchItem
 import kekmech.ru.feed.items.WeekendItem
 import kekmech.ru.feed.model.FeedModel
 import kotlinx.coroutines.*
+import java.util.*
 import javax.inject.Inject
 
 @ActivityScope
 class FeedPresenter @Inject constructor(
     private val model: FeedModel,
-    private val context: Context
+    private val context: Context,
+    private val router: Router
 ) : Presenter<IFeedFragment> {
 
     var view: IFeedFragment? = null
@@ -39,23 +45,35 @@ class FeedPresenter @Inject constructor(
      */
     override fun onResume(view: IFeedFragment) {
         this.view = view
-        view.updateAdapterIfNull(adapter)
-        view.onEditListener = { onStatusEdit() }
-        view.bottomReachListener = { onScrollEnd() }
-        view.setStatus("Группа ${model.groupNumber}", "Какой-то день", "Идет ${model.currentWeekNumber} учебная неделя")
+        GlobalScope.launch(Dispatchers.Main) {
+            delay(100)
+            view.updateAdapterIfNull(adapter)
+            view.onEditListener = { onStatusEdit() }
+            view.bottomReachListener = { onScrollEnd() }
 
-        Handler().postDelayed({
+            delay(50)
             if (offset == 0)
                 onScrollEnd()
             view.unlock()
-        }, 50)
+        }
+        view.setStatus(
+            "Группа ${model.groupNumber}",
+            model.formattedTodayStatus,
+            "Идет ${model.currentWeekNumber} учебная неделя"
+        )
     }
 
     private fun onStatusEdit() {
-        val dialog = Dialogs.listDialog(view?.activityContext!!,"Редактировать", listOf("Кэшировать заново", "Сменить расписание")) { _, i ->
-            Toast.makeText(context, i.toString(), Toast.LENGTH_SHORT).show()
+        view?.withinContext {
+            val dialog = Dialogs.listDialog(it,"Редактировать", listOf("Кэшировать заново", "Сменить расписание")) { _, i ->
+                Toast.makeText(context, i.toString(), Toast.LENGTH_SHORT).show()
+            }
+            GlobalScope.launch(Dispatchers.Main) {
+                delay(50)
+                //view?.showEditDialog(dialog)
+            }
         }
-        view?.showEditDialog(dialog)
+        router.navigateTo(Screens.ADD)
     }
 
     /**
