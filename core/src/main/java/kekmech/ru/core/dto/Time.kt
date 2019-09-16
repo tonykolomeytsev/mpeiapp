@@ -12,6 +12,7 @@ class Time(private val calendar: Calendar = Calendar.getInstance()) {
     constructor(year: Int, month: Int, dayOfMonth: Int) : this(Calendar.getInstance().apply { set(year, month, dayOfMonth) })
 
     private val hoursMinutesFormatter = SimpleDateFormat("hh:mm", Locale.ENGLISH)
+    private val yearMonthDayFormatter = SimpleDateFormat("yyyy.MM.dd", Locale.ENGLISH)
 
     val dayOfWeek by lazy { calendar.get(Calendar.DAY_OF_WEEK) }
     val dayOfMonth by lazy { calendar.get(Calendar.DAY_OF_MONTH) }
@@ -23,13 +24,8 @@ class Time(private val calendar: Calendar = Calendar.getInstance()) {
 
     val semester by lazy { if (month in Calendar.FEBRUARY..Calendar.AUGUST) SemesterType.SPRING else SemesterType.FALL }
     val weekOfSemester by lazy {
-        val firstDay = if (semester == SemesterType.FALL) {
-            val fallFirst = fallSemesterFirstDay()
-            if (fallFirst.dayOfWeek == Calendar.SUNDAY)
-                fallFirst.nextDay
-            else
-                fallFirst
-        } else springSemesterFirstDay()
+        val firstDay = if (semester == SemesterType.FALL) fallSemesterFirstDay()
+        else springSemesterFirstDay()
         return@lazy 1 + weekOfYear - firstDay.weekOfYear
     }
     val parity by lazy { if (weekOfSemester % 2 == 0) Parity.EVEN else Parity.ODD }
@@ -57,6 +53,11 @@ class Time(private val calendar: Calendar = Calendar.getInstance()) {
      * Форматирование времени к виду "Часы:Минуты"
      */
     val formattedAsHoursMinutes by lazy { hoursMinutesFormatter.format(calendar.time) }
+
+    /**
+     * Форматирование ГОД.МЕСЯЦ.ДЕНЬ
+     */
+    val formattedAsYearMonthDay by lazy { yearMonthDayFormatter.format(calendar.time) }
 
     /**
      * Форматирование к виду "День недели"
@@ -99,8 +100,10 @@ class Time(private val calendar: Calendar = Calendar.getInstance()) {
         /**
          * Всегда первое сентября
          */
-        fun fallSemesterFirstDay(year: Int = today().year) =
-            Time(year, Calendar.SEPTEMBER, 1)
+        fun fallSemesterFirstDay(year: Int = today().year): Time {
+            val firstSep = Time(year, Calendar.SEPTEMBER, 1)
+            return if (firstSep.dayOfWeek == Calendar.SUNDAY) firstSep.nextDay else firstSep
+        }
 
         /**
          * Первый понедельник февраля

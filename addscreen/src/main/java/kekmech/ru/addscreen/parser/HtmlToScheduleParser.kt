@@ -1,5 +1,6 @@
-package kekmech.ru.repository.parser
+package kekmech.ru.addscreen.parser
 
+import android.annotation.SuppressLint
 import java.util.*
 
 class HtmlToScheduleParser {
@@ -14,8 +15,10 @@ class HtmlToScheduleParser {
             ?.value ?: throw IllegalArgumentException("Unable to find <table> with 'mpei-galaktika-lessong-grid-tbl' class")
         "<tr>.*?</tr>".toRegex()
             .findAll(table)
-            .asIterable()
-            .forEach(::parseTr)
+            .iterator()
+            .forEach {
+                parseTr(it)
+            }
         return scheduleBuilder.build()
     }
 
@@ -23,8 +26,7 @@ class HtmlToScheduleParser {
         val group = matchResult.groups[0]!!.value
         when {
             group.matches(WEEK_INFO) -> WEEK_INFO
-                .findGroupsIn(group)
-                .first { it.value.matches(WEEK_INFO_DATE) }
+                .findGroupsIn(group)[1]
                 .value
                 .let { pushWeekInfo(it) }
             group.matches(DAY_INFO) -> DAY_INFO
@@ -47,7 +49,7 @@ class HtmlToScheduleParser {
             else if (!it.value.matches(COUPLE_INFO))
                 metaInfo = it.value
         }
-        println("COUPLE INFO: $timeInfo $metaInfo")
+        //println("COUPLE INFO: $timeInfo $metaInfo")
         createCouple(timeInfo, metaInfo)
     }
 
@@ -57,11 +59,10 @@ class HtmlToScheduleParser {
         coupleBuilder.timeStart = groups[1].value
         coupleBuilder.timeEnd = groups[2].value
 
-        val metas = metaInfo.split("<br>")
-        coupleBuilder.name = metas[0]
-        coupleBuilder.place = metas[2]
-        coupleBuilder.teacher = metas[4]
-        val type = metas[1].toUpperCase(Locale.getDefault())
+        coupleBuilder.name = COUPLE_NAME.findGroupsIn(metaInfo)[1].value
+        coupleBuilder.place = COUPLE_PLACE.findGroupsIn(metaInfo)[1].value
+        coupleBuilder.teacher = COUPLE_TEACHER.findGroupsIn(metaInfo)[1].value
+        val type = COUPLE_TYPE.findGroupsIn(metaInfo)[1].value.toUpperCase()
         coupleBuilder.type = when {
             type.contains("ЛЕК") -> ParserCouple.LECTURE
             type.contains("ЛАБ") -> ParserCouple.LAB
@@ -81,8 +82,9 @@ class HtmlToScheduleParser {
     }
 
     // найден заголовок недели
+    @SuppressLint("DefaultLocale")
     private fun pushWeekInfo(weekInfo: String) {
-        println("WEEK INFO: $weekInfo")
+        //println("WEEK INFO: $weekInfo")
         coupleBuilder.week = when (coupleBuilder.week) {
             -1 -> 1
             1 -> 2
@@ -97,7 +99,7 @@ class HtmlToScheduleParser {
                 .findGroupsIn(weekInfo)
                 .forEach {
                     if (it.value.matches(WEEK_INFO_DATE_DAY)) { if (day == -1) day = it.value.trim().toInt() }
-                    else if (it.value.matches(WEEK_INFO_DATE_MONTH)) { if (month == -1) month = getMonthNumByName(it.value.trim().toUpperCase(Locale.getDefault())) }
+                    else if (it.value.matches(WEEK_INFO_DATE_MONTH)) { if (month == -1) month = getMonthNumByName(it.value.trim().toUpperCase()) }
                     else if (it.value.matches(WEEK_INFO_DATE_YEAR)) { if (year == -1) year = it.value.trim().toInt() }
                 }
             scheduleBuilder.firstCoupleDay = Calendar.getInstance().apply { set(year, month, day) }
@@ -106,9 +108,10 @@ class HtmlToScheduleParser {
     }
 
     // найден заголовок дня
+    @SuppressLint("DefaultLocale")
     private fun pushDayInfo(dayInfo: String) {
-        println("DAY_INFO: $dayInfo")
-        coupleBuilder.day = getDayNumByName(dayInfo.toUpperCase(Locale.getDefault()))
+        //println("DAY_INFO: $dayInfo")
+        coupleBuilder.day = getDayNumByName(dayInfo.toUpperCase())
     }
 
     private fun getMonthNumByName(month: String): Int = when {
@@ -150,14 +153,18 @@ class HtmlToScheduleParser {
     companion object {
         val SCHEDULE_TABLE = "<table.+?class=\"mpei-galaktika-lessons-grid-tbl\".*?</table>".toRegex()
         val WEEK_INFO = ".*<td.+?mpei-galaktika-lessons-grid-week.*?>(.+?)</td>.*".toRegex()
-        val WEEK_INFO_DATE = "(\\d+)(.*?)(\\d+).*?(\\d+)(.*?)(\\d+)".toRegex()
-        val WEEK_INFO_DATE_DAY = "(\\d{1,2})[^0-9]*".toRegex()
+        val WEEK_INFO_DATE = ".*?(\\d+)(.*?)(\\d+).*?(\\d+)(.*?)(\\d+).*?".toRegex()
+        val WEEK_INFO_DATE_DAY = ".*?(\\d{1,2})[^0-9]*.*?".toRegex()
         val WEEK_INFO_DATE_MONTH = "[^0-9]+".toRegex()
         val WEEK_INFO_DATE_YEAR = "\\d{4}".toRegex()
         val DAY_INFO = ".*<td.+?mpei-galaktika-lessons-grid-date.*?>(.+?)</td>.*".toRegex()
         val DAY_INFO_DATE = "([^>]+){2}\\s(\\d+).*?([^<]+)".toRegex()
         val COUPLE_INFO = ".*<td.+?mpei-galaktika-lessons-grid-time.*?>(.+?)</td>.*<td.+?mpei-galaktika-lessons-grid-day.*?>(.+?)</td>.*".toRegex()
         val COUPLE_INFO_TIME = "(\\d+:\\d+).*?(\\d+:\\d+)".toRegex()
+        val COUPLE_NAME = ".*?<span.*?name.*?>(.*?)</span>.*".toRegex()
+        val COUPLE_TYPE = ".*?<span.*?type.*?>(.*?)</span>.*".toRegex()
+        val COUPLE_PLACE = ".*?<span.*?room.*?>(.*?)</span>.*".toRegex()
+        val COUPLE_TEACHER = ".*?<span.*?pers.*?>(.*?)</span>.*".toRegex()
     }
 
     class CoupleBuilder {
@@ -177,7 +184,7 @@ class HtmlToScheduleParser {
     class ScheduleBuilder {
         private var couples = mutableListOf<ParserCouple>()
 
-        fun build() = ParserSchedule(couples, firstCoupleDay!!)
+        fun build() = ParserSchedule(couples, Calendar.getInstance())
 
         var firstCoupleDay: Calendar? = null
 

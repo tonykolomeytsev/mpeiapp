@@ -1,4 +1,4 @@
-package kekmech.ru.repository.parser
+package kekmech.ru.addscreen.parser
 
 data class ParserCouple(
     var name: String,       // название предмета
