@@ -58,6 +58,7 @@ class FeedFragment @Inject constructor() : DaggerFragment(), IFeedFragment {
 
     override fun onResume() {
         super.onResume()
+        activity!!.window.statusBarColor = Resources.getColor(context, R.color.colorSecondary)
         unlock()
         presenter.onResume(this)
     }
@@ -65,11 +66,6 @@ class FeedFragment @Inject constructor() : DaggerFragment(), IFeedFragment {
     override fun onPause() {
         super.onPause()
         presenter.onPause(this)
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        activity!!.window.statusBarColor = Resources.getColor(context, R.color.colorSecondary)
     }
 
     override fun showEditDialog(dialog: AlertDialog) {

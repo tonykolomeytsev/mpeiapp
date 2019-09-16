@@ -83,11 +83,13 @@
         </FrameLayout>
     </FrameLayout>
 
-    <WebView
-            android:id="@+id/webView"
+    <ViewStub
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="invisible"/>
+            android:id="@+id/stub"
+            android:visibility="gone"
+            android:layout="@layout/web_view_stub"
+            />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

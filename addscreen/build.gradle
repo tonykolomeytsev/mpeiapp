@@ -45,6 +45,10 @@ dependencies {
     implementation project(path: ':core')
 
 
+    // string utils
+    implementation 'org.apache.commons:commons-lang3:3.9'
+
+
     // dagger
     implementation 'com.google.dagger:dagger:2.24'
     kapt 'com.google.dagger:dagger-compiler:2.24'

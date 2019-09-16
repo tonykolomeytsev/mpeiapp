@@ -12,7 +12,7 @@ class HtmlToScheduleParser {
             .find(html)
             .let { it?.groups?.toList() ?: emptyList() }
             .find { it?.value?.startsWith("<table") ?: false }
-            ?.value ?: throw IllegalArgumentException("Unable to find <table> with 'mpei-galaktika-lessong-grid-tbl' class")
+            ?.value ?: throw IllegalArgumentException("Unable to find <table> with 'mpei-galaktika-lessons-grid-tbl' class")
         "<tr>.*?</tr>".toRegex()
             .findAll(table)
             .iterator()
@@ -151,7 +151,7 @@ class HtmlToScheduleParser {
         .filterNotNull()
 
     companion object {
-        val SCHEDULE_TABLE = "<table.+?class=\"mpei-galaktika-lessons-grid-tbl\".*?</table>".toRegex()
+        val SCHEDULE_TABLE = "<table.+?mpei-galaktika-lessons-grid-tbl.*?</table>".toRegex()
         val WEEK_INFO = ".*<td.+?mpei-galaktika-lessons-grid-week.*?>(.+?)</td>.*".toRegex()
         val WEEK_INFO_DATE = ".*?(\\d+)(.*?)(\\d+).*?(\\d+)(.*?)(\\d+).*?".toRegex()
         val WEEK_INFO_DATE_DAY = ".*?(\\d{1,2})[^0-9]*.*?".toRegex()

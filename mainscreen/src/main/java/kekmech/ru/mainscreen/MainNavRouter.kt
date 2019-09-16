@@ -1,38 +1,36 @@
 package kekmech.ru.mainscreen
 
+import androidx.lifecycle.LifecycleObserver
 import androidx.navigation.NavController
+import kekmech.ru.addscreen.AddFragment
 import kekmech.ru.core.Router
 import kekmech.ru.core.Screens
+import kekmech.ru.feed.FeedFragment
+import kekmech.ru.settings.SettingsDevFragment
+import kekmech.ru.settings.SettingsFragment
+import kekmech.ru.timetable.TimetableFragment
 import javax.inject.Inject
 
 class MainNavRouter @Inject constructor(): Router {
-    private var navController: NavController? = null
+    private var navController: MainNavController? = null
 
     override fun navigateTo(fragmentId: String) {
         when(fragmentId) {
-            Screens.FEED -> navController?.navigate(R.id.feedFragment)
-            Screens.TIMETABLE -> navController?.navigate(R.id.timetableFragment)
-            Screens.SETTINGS -> navController?.navigate(R.id.settingsFragment)
-            Screens.DEV -> navController?.navigate(R.id.action_settingsFragment_to_settingsDevFragment)
-            Screens.ADD -> navController?.navigate(R.id.addFragment)
+            Screens.FEED -> navController?.navigate(FeedFragment::class, false)
+            Screens.TIMETABLE -> navController?.navigate(TimetableFragment::class, false)
+            Screens.SETTINGS -> navController?.navigate(SettingsFragment::class, false)
+            Screens.DEV -> navController?.navigateWithTransition(SettingsDevFragment::class, true)
+            Screens.ADD -> navController?.navigate(AddFragment::class, true)
         }
     }
 
-    override fun replaceScreen(fragmentId: String) {
-        when(fragmentId) {
-            Screens.FEED -> navController?.navigate(R.id.feedFragment)
-            Screens.TIMETABLE -> navController?.navigate(R.id.timetableFragment)
-            Screens.SETTINGS -> navController?.navigate(R.id.settingsFragment)
-            Screens.DEV -> navController?.navigate(R.id.action_settingsFragment_to_settingsDevFragment)
-            Screens.ADD -> navController?.navigate(R.id.addFragment)
-        }
-    }
+    override fun replaceScreen(fragmentId: String) = navigateTo(fragmentId)
 
     override fun popBackStack() {
         navController?.popBackStack()
     }
 
-    fun registerNavController(navController: NavController) {
+    fun registerNavController(navController: MainNavController) {
         this.navController = navController
     }
 

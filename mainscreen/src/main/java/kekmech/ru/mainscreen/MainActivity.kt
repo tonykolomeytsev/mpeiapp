@@ -1,25 +1,17 @@
 package kekmech.ru.mainscreen
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.view.animation.LinearInterpolator
+import android.view.View
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import androidx.navigation.Navigation
 import dagger.android.support.DaggerAppCompatActivity
 import kekmech.ru.core.Router
 import kekmech.ru.core.Screens
-import kekmech.ru.feed.FeedFragment
-import kekmech.ru.settings.SettingsDevFragment
-import kekmech.ru.settings.SettingsFragment
-import kekmech.ru.timetable.TimetableFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
 class MainActivity : DaggerAppCompatActivity() {
 
-    private val navController by lazy { Navigation.findNavController(this, R.id.nav_host_fragment) }
+    private val navController by lazy { MainNavController(this) }
     @Inject lateinit var router: Router
 
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
@@ -45,16 +37,33 @@ class MainActivity : DaggerAppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         nav_view.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
-        navController // init
     }
 
     override fun onResume() {
         super.onResume()
+        navController.onResume(this)
         (router as MainNavRouter).registerNavController(navController)
+        navController.onAddGroupListener = this::toggleBottomNavBar
+        if (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) == null)
+            router.navigateTo(Screens.FEED)
     }
 
     override fun onPause() {
         super.onPause()
         (router as MainNavRouter).removeNavController()
+    }
+
+    private fun toggleBottomNavBar(boolean: Boolean) {
+        if (!boolean) nav_view.visibility = View.VISIBLE
+        nav_view.animate()
+            .alpha(if (boolean) 0f else 1f)
+            .setDuration(300)
+            .withEndAction { if (boolean) nav_view.visibility = View.GONE }
+            .start()
+
+    }
+
+    override fun onBackPressed() {
+        router.popBackStack()
     }
 }

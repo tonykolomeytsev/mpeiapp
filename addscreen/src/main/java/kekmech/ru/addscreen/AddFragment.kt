@@ -13,7 +13,13 @@ import dagger.android.support.DaggerFragment
 import kekmech.ru.core.Presenter
 import kekmech.ru.coreui.Resources
 import kotlinx.android.synthetic.main.fragment_add.*
+import kotlinx.android.synthetic.main.web_view_stub.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.coroutines.coroutineContext
 
 /**
  * A simple [Fragment] subclass.
@@ -22,7 +28,7 @@ class AddFragment @Inject constructor() : DaggerFragment(), IAddFragment {
 
     @Inject lateinit var presenter: Presenter<IAddFragment>
 
-    override val web: WebView get() = webView
+    override val web: WebView get() = view?.findViewById(R.id.webView)!!
     override lateinit var onSearchClickListener: (String) -> Unit
 
     override fun onCreateView(
@@ -31,6 +37,13 @@ class AddFragment @Inject constructor() : DaggerFragment(), IAddFragment {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_add, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        GlobalScope.launch(Dispatchers.Main) {
+            delay(100)
+            stub.inflate()
+        }
     }
 
     override fun onAttach(context: Context?) {

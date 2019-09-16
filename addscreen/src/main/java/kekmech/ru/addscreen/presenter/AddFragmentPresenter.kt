@@ -12,13 +12,14 @@ import java.util.regex.Pattern
 import javax.inject.Inject
 
 class AddFragmentPresenter @Inject constructor() : Presenter<IAddFragment> {
+    private var view: IAddFragment? = null
     private var htmlWorker: HTMLWorker? = null
 
     /**
      * subscribe to view events
      */
     override fun onResume(view: IAddFragment) {
-        htmlWorker = HTMLWorker(view.web)
+        this.view = view
         view.onSearchClickListener = this::onSearch
     }
 
@@ -26,10 +27,12 @@ class AddFragmentPresenter @Inject constructor() : Presenter<IAddFragment> {
      * unsubscribe to view events
      */
     override fun onPause(view: IAddFragment) {
+        this.view = null
         htmlWorker = null
     }
 
     private fun onSearch(group: String) {
+        htmlWorker = HTMLWorker(view?.web!!)
         GlobalScope.launch(Dispatchers.IO) {
             htmlWorker?.tryGroup(group)
 
