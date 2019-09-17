@@ -28,7 +28,7 @@ class HTMLWorker(private val webView: WebView) {
         val (html2, _) = getHtml("$MPEI_TIMETABLE?groupoid=$id&start=$start", 1)
         val schedule2 = HtmlToScheduleParser().parse(StringEscapeUtils.unescapeJava(html2))
         couples.addAll(schedule1.couples)
-        couples.addAll(schedule2.couples)
+        couples.addAll(schedule2.couples.onEach { it.week = 2 })
         (ParserSchedule(couples, schedule1.firstCoupleDay))
     }
 
