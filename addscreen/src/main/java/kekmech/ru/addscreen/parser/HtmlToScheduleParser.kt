@@ -1,6 +1,8 @@
 package kekmech.ru.addscreen.parser
 
 import android.annotation.SuppressLint
+import kekmech.ru.core.dto.Time
+import java.text.SimpleDateFormat
 import java.util.*
 
 class HtmlToScheduleParser {
@@ -92,18 +94,15 @@ class HtmlToScheduleParser {
         }
 
         if (scheduleBuilder.firstCoupleDay == null) {
-            var day = -1
-            var month = -1
-            var year = -1
-            WEEK_INFO_DATE
+            val parser: (String) -> Date = SimpleDateFormat("yyyy.MM.dd", Locale.getDefault())::parse
+            val nextWeek = "start=(\\d+.\\d+.\\d+)".toRegex()
                 .findGroupsIn(weekInfo)
-                .forEach {
-                    if (it.value.matches(WEEK_INFO_DATE_DAY)) { if (day == -1) day = it.value.trim().toInt() }
-                    else if (it.value.matches(WEEK_INFO_DATE_MONTH)) { if (month == -1) month = getMonthNumByName(it.value.trim().toUpperCase()) }
-                    else if (it.value.matches(WEEK_INFO_DATE_YEAR)) { if (year == -1) year = it.value.trim().toInt() }
-                }
-            scheduleBuilder.firstCoupleDay = Calendar.getInstance().apply { set(year, month, day) }
-            println("FIRST COUPLE DAY: $day.${month + 1}.$year")
+                .last { it.value.matches("\\d+.\\d+.\\d+".toRegex()) }
+                .let { parser(it.value) }
+                .let { Time(it) }
+            val currentWeek = nextWeek.getDayWithOffset(-7)
+            scheduleBuilder.firstCoupleDay = currentWeek.calendar
+            println("FIRST COUPLE DAY: ${currentWeek.dayOfMonth}.${currentWeek.month + 1}.${currentWeek.year}")
         }
     }
 

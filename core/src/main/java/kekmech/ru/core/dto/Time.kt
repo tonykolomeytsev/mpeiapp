@@ -5,7 +5,7 @@ import android.util.Log
 import java.text.SimpleDateFormat
 import java.util.*
 
-class Time(private val calendar: Calendar = Calendar.getInstance()) {
+class Time(val calendar: Calendar = Calendar.getInstance()) {
 
     constructor(date: Date) : this(Calendar.getInstance().apply { time = date })
 

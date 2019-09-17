@@ -1,10 +1,7 @@
 package kekmech.ru.repository.gateways
 
 import android.util.Log
-import kekmech.ru.core.dto.CoupleNative
-import kekmech.ru.core.dto.Schedule
-import kekmech.ru.core.dto.ScheduleNative
-import kekmech.ru.core.dto.WeekInfo
+import kekmech.ru.core.dto.*
 import kekmech.ru.core.gateways.ScheduleCacheGateway
 import kekmech.ru.repository.room.AppDatabase
 import javax.inject.Inject
@@ -15,13 +12,14 @@ class ScheduleCacheGatewayImpl @Inject constructor(val appdb: AppDatabase) : Sch
     var saved = false
 
     override fun getSchedule(): Schedule? {
-//        if (!saved) {
-//            newSchedule(sch)
-//            saved = true
-//        }
+        val users = appdb.userDao().getAll()
+        if (users.isEmpty())
+            appdb
+                .userDao()
+                .insert(User.defaultUser())
+        val user = appdb.userDao().getAll().first()
         return appdb.scheduleDao()
-            .getAllByUserId(0)
-            .firstOrNull()
+            .getById(user.lastScheduleId)
             .let {
                 if (it != null) Schedule(
                     it.id,
@@ -53,15 +51,13 @@ class ScheduleCacheGatewayImpl @Inject constructor(val appdb: AppDatabase) : Sch
             schedule.universityWeek,
             schedule.name
         )
-        if (appdb.scheduleDao().getById(0) == null) {
-            appdb.scheduleDao().insert(native)
-            schedule.coupleList
-                .forEach { appdb.coupleDao().insert(it) }
-        } else {
-            appdb.scheduleDao().update(native)
-            schedule.coupleList
-                .forEach { appdb.coupleDao().update(it) }
-        }
+
+        appdb.scheduleDao().insert(native)
+        val id = appdb.scheduleDao().getAll().last().id
+        schedule.coupleList
+            .forEach { appdb.coupleDao().insert(it.apply { this.scheduleId = id }) }
+        val user = appdb.userDao().getAll().last()
+        appdb.userDao().update(user.apply { lastScheduleId = id })
     }
 
     companion object {

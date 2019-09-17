@@ -35,4 +35,8 @@ class ScheduleRepositoryImpl @Inject constructor(
         }
     }
 
+    override fun saveSchedule(schedule: Schedule) {
+        scheduleCacheGateway.newSchedule(schedule)
+    }
+
 }
