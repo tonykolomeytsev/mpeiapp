@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -7,21 +7,25 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:clipToPadding="false"
         android:orientation="vertical"
-        >
+        android:paddingBottom="4dp"
+        > <!--TODO FIX VISUAL ISSUE -->
 
     <View
             android:id="@+id/weekendItemSpacing"
             android:layout_width="match_parent"
             android:layout_height="32dp"
-            android:background="@android:color/transparent"/>
+            android:background="@android:color/transparent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="192dp"
             android:background="@color/colorWhite"
             android:clipToPadding="false"
             android:clickable="true"
             android:focusable="true"
+            app:layout_constraintTop_toBottomOf="@id/weekendItemSpacing"
             android:elevation="2dp">
 
 
@@ -34,6 +38,7 @@
                 android:textAllCaps="true"
                 android:textColor="@color/colorPrimary"
                 android:textSize="14sp"
+                android:layout_gravity="center_horizontal|top"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -49,10 +54,11 @@
                 android:textAllCaps="true"
                 android:textColor="@color/colorPrimary"
                 android:textSize="14sp"
+                android:layout_gravity="center_horizontal|bottom"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:text="Воскресенье" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</LinearLayout>
+    </FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
