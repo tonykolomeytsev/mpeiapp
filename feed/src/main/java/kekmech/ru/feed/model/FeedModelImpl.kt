@@ -64,7 +64,9 @@ class FeedModelImpl @Inject constructor(
                     if (e.num == 3 && i != 0) {
                         couples += LunchItem()
                     }
-                    couples += CoupleItem(e)
+                    couples += CoupleItem(e).apply {
+                        isDividerVisible = (i != list.size - 1)
+                    }
                 }
                 couples
             } else {

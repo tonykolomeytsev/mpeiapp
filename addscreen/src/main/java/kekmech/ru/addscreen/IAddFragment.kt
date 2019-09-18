@@ -6,4 +6,9 @@ interface IAddFragment {
     val web: WebView
 
     var onSearchClickListener: (String) -> Unit
+
+    fun hideLoadButton()
+    fun showLoadButton()
+    fun disableEditText()
+    fun enableEditText()
 }

@@ -8,10 +8,7 @@ import kekmech.ru.core.dto.CoupleNative
 import kekmech.ru.core.dto.Schedule
 import kekmech.ru.core.dto.Time
 import kekmech.ru.core.usecases.SaveScheduleUseCase
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import java.util.regex.Pattern
 import javax.inject.Inject
 
@@ -38,6 +35,8 @@ class AddFragmentPresenter @Inject constructor(
     }
 
     private fun onSearch(group: String) {
+        view?.hideLoadButton()
+        view?.disableEditText()
         htmlWorker = HTMLWorker(view?.web!!)
         GlobalScope.launch(Dispatchers.IO) {
             try {
@@ -69,6 +68,10 @@ class AddFragmentPresenter @Inject constructor(
             } catch (e: Exception) {
                 // todo вывести сообщение об ошибке
                 e.printStackTrace()
+            }
+            withContext(Dispatchers.Main) {
+                view?.showLoadButton()
+                view?.enableEditText()
             }
         }
     }

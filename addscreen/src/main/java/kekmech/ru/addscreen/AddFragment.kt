@@ -62,5 +62,31 @@ class AddFragment @Inject constructor() : DaggerFragment(), IAddFragment {
         presenter.onPause(this)
     }
 
+    override fun showLoadButton() {
+        buttonSelectGroup.isClickable = true
+        buttonSelectGroup
+            .animate()
+            .alpha(1f)
+            .setDuration(200)
+            .start()
+    }
+
+    override fun hideLoadButton() {
+        buttonSelectGroup.isClickable = false
+        buttonSelectGroup
+            .animate()
+            .alpha(0f)
+            .setDuration(200)
+            .start()
+    }
+
+    override fun disableEditText() {
+        editTextGroupName.clearFocus()
+        editTextGroupName.isEnabled = false
+    }
+
+    override fun enableEditText() {
+        editTextGroupName.isEnabled = true
+    }
 
 }

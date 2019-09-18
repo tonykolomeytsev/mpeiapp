@@ -13,6 +13,7 @@ import kekmech.ru.coreui.adapter.BaseViewHolder
 import kekmech.ru.feed.R
 
 class CoupleItem(val couple: CoupleNative) : BaseItem<CoupleItem.ViewHolder>() {
+    var isDividerVisible = false
 
     @SuppressLint("DefaultLocale")
     override fun updateViewHolder(viewHolder: ViewHolder) {
@@ -24,6 +25,7 @@ class CoupleItem(val couple: CoupleNative) : BaseItem<CoupleItem.ViewHolder>() {
         viewHolder.place.text = couple.place
         viewHolder.timeStart.text = couple.timeStart
         viewHolder.timeEnd.text = couple.timeEnd
+        viewHolder.divider.visibility = if (isDividerVisible) View.VISIBLE else View.INVISIBLE
         if (couple.teacher.isNotEmpty()) {
             viewHolder.teacher.visibility = View.VISIBLE
             viewHolder.teacher.text = couple.teacher
@@ -42,6 +44,7 @@ class CoupleItem(val couple: CoupleNative) : BaseItem<CoupleItem.ViewHolder>() {
         val typeLecture by bind<Chip>(R.id.chipCoupleLecture)
         val typePractice by bind<Chip>(R.id.chipCouplePractice)
         val typeLab by bind<Chip>(R.id.chipCoupleLab)
+        val divider by bind<View>(R.id.viewDivider)
         override fun onCreateView(view: View) {}
     }
 
