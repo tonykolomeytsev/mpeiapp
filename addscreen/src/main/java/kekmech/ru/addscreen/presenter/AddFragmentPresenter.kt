@@ -68,6 +68,7 @@ class AddFragmentPresenter @Inject constructor(
 
             } catch (e: Exception) {
                 // todo вывести сообщение об ошибке
+                e.printStackTrace()
             }
         }
     }

@@ -9,7 +9,13 @@ class Time(val calendar: Calendar = Calendar.getInstance()) {
 
     constructor(date: Date) : this(Calendar.getInstance().apply { time = date })
 
-    constructor(year: Int, month: Int, dayOfMonth: Int) : this(Calendar.getInstance().apply { set(year, month, dayOfMonth) })
+    constructor(year: Int, month: Int, dayOfMonth: Int) : this(Calendar.getInstance().apply {
+        set(
+            year,
+            month,
+            dayOfMonth
+        )
+    })
 
     private val hoursMinutesFormatter = SimpleDateFormat("hh:mm", Locale.ENGLISH)
     private val yearMonthDayFormatter = SimpleDateFormat("yyyy.MM.dd", Locale.ENGLISH)
@@ -66,7 +72,8 @@ class Time(val calendar: Calendar = Calendar.getInstance()) {
      * @return [String] - соответствующее номеру названия дня недели
      * *Calendar.SUNDAY == 1 (недели начинаются с воскресенья, нумерация дней с единицы)
      */
-    fun formattedAsDayName(context: Context?, stringArrayId: Int) = getStringArray(context, stringArrayId)[dayOfWeek - 1]
+    fun formattedAsDayName(context: Context?, stringArrayId: Int) =
+        getStringArray(context, stringArrayId)[dayOfWeek - 1]
 
     /**
      * Форматирование к виду "Месяц"
@@ -75,7 +82,8 @@ class Time(val calendar: Calendar = Calendar.getInstance()) {
      * @return [String] - соответствующее номеру названия дня недели
      * *Calendar.JANUARY == 0 (нумерация месяцев с нуля)
      */
-    fun formattedAsMonthName(context: Context?, stringArrayId: Int) = getStringArray(context, stringArrayId)[month]
+    fun formattedAsMonthName(context: Context?, stringArrayId: Int) =
+        getStringArray(context, stringArrayId)[month]
 
     private fun getStringArray(context: Context?, stringArrayId: Int): Array<String> {
         if (context == null) {
@@ -84,6 +92,18 @@ class Time(val calendar: Calendar = Calendar.getInstance()) {
         }
         return context.resources.getStringArray(stringArrayId)
     }
+
+    fun gotoMonday(): Time = getDayWithOffset(
+        when (dayOfWeek) {
+            Calendar.SUNDAY -> 1
+            Calendar.SATURDAY -> 2
+            Calendar.FRIDAY -> 3
+            Calendar.THURSDAY -> 4
+            Calendar.WEDNESDAY -> 5
+            Calendar.TUESDAY -> 6
+            else -> 0
+        }
+    )
 
     enum class Parity { ODD, EVEN }
 
@@ -115,5 +135,13 @@ class Time(val calendar: Calendar = Calendar.getInstance()) {
                 day = Time(year, Calendar.FEBRUARY, febDayNum++)
             return day
         }
+
+        fun firstSemesterDay() =
+            Time.today().let {
+                if (it.semester == SemesterType.FALL)
+                    fallSemesterFirstDay()
+                else
+                    springSemesterFirstDay()
+            }
     }
 }

@@ -15,4 +15,6 @@ interface ScheduleCacheGateway {
     fun getWeekInfo(): WeekInfo?
 
     fun newSchedule(schedule: Schedule)
+
+    fun getGroupNum(): String
 }

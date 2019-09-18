@@ -11,4 +11,6 @@ interface ScheduleRepository {
     fun getSchedule(refresh: Boolean): Schedule
 
     fun saveSchedule(schedule: Schedule)
+
+    fun getGroupNum(): String
 }

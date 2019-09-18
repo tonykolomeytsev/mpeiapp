@@ -1,5 +1,6 @@
 package kekmech.ru.feed.model
 
+import androidx.lifecycle.LiveData
 import kekmech.ru.core.dto.CoupleNative
 import kekmech.ru.core.dto.Time
 import kekmech.ru.core.dto.User

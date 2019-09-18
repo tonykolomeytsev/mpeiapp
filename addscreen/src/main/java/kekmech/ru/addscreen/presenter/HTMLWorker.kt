@@ -9,7 +9,10 @@ import kekmech.ru.addscreen.parser.HtmlToScheduleParser
 import kekmech.ru.addscreen.parser.ParserCouple
 import kekmech.ru.addscreen.parser.ParserSchedule
 import kekmech.ru.core.dto.Time
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.withContext
 import org.apache.commons.lang3.StringEscapeUtils
 
 class HTMLWorker(private val webView: WebView) {
@@ -18,18 +21,52 @@ class HTMLWorker(private val webView: WebView) {
     private lateinit var parser: HtmlToScheduleParser
     private lateinit var web: Wrapper
 
-    suspend fun tryGroup(group: String) = GlobalScope.async (Dispatchers.IO) {
-        this@HTMLWorker.group = group
-        val (html1, url1) = getHtml(MPEI_DEFAULT)
-        val couples = mutableListOf<ParserCouple>()
-        val schedule1 = HtmlToScheduleParser().parse(StringEscapeUtils.unescapeJava(html1))
-        val id = "id=(\\d+)".toRegex().findGroupsIn(url1).last { it.value.matches("\\d+".toRegex()) }.value
-        val start = Time(schedule1.firstCoupleDay).getDayWithOffset(7).formattedAsYearMonthDay
-        val (html2, _) = getHtml("$MPEI_TIMETABLE?groupoid=$id&start=$start", 1)
-        val schedule2 = HtmlToScheduleParser().parse(StringEscapeUtils.unescapeJava(html2))
-        couples.addAll(schedule1.couples)
-        couples.addAll(schedule2.couples.onEach { it.week = 2 })
-        (ParserSchedule(couples, schedule1.firstCoupleDay))
+    private fun formSubmitScript(group: String) =
+        "document.getElementsByName('$TEXTBOX_NAME')[0].value = '$group';" +
+                "document.getElementsByName('$BUTTON_NAME')[0].click();"
+
+    private fun getHtmlScript() = "document.documentElement.outerHTML"
+
+    private fun timetableUrl(groupId: String, startDate: Time) =
+        "$MPEI_TIMETABLE?groupoid=$groupId&start=${startDate.formattedAsYearMonthDay}"
+
+    suspend fun tryGroup(group: String) = GlobalScope.async(Dispatchers.IO) {
+        // загружаем страничку и вбиваем номер группы в форму
+        WebkitLatch(webView).async { loadUrl(MPEI_DEFAULT) }
+        val groupId = WebkitLatch(webView).async {
+            evaluateJavascript(formSubmitScript(group), null)
+        }.getGroupId()
+
+        // вычисляем первый понедельник семестра и второй понедельник семестра
+        val firstMonday = Time.firstSemesterDay().gotoMonday()
+        val secondMonday = firstMonday.getDayWithOffset(7)
+
+        // загружаем первый
+        withContext(Dispatchers.IO) {
+            // скрапим первую страничку
+            WebkitLatch(webView).async { loadUrl(timetableUrl(groupId, firstMonday)) }
+            val firstWeekHtml = WebkitLatchJs(webView).async(script = getHtmlScript())
+            // скрапим вторую страничку
+            WebkitLatch(webView).async { loadUrl(timetableUrl(groupId, secondMonday)) }
+            val secondWeekHtml = WebkitLatchJs(webView).async(script = getHtmlScript())
+
+            Pair(firstWeekHtml, secondWeekHtml)
+        }.let {
+            // парсим обе странички
+            Pair(
+                HtmlToScheduleParser().parse(StringEscapeUtils.unescapeJava(it.first)),
+                HtmlToScheduleParser().parse(StringEscapeUtils.unescapeJava(it.second))
+            )
+        }.let {
+            // объединяем результаты парсинга
+            val joinedCouples = mutableListOf<ParserCouple>()
+            joinedCouples.addAll(it.first.couples)
+            joinedCouples.addAll(it.second.couples.onEach { it.week = 2 })
+            ParserSchedule(
+                joinedCouples,
+                firstMonday.calendar
+            )
+        }
     }
 
     private fun Regex.findGroupsIn(group: String) = this
@@ -37,39 +74,10 @@ class HTMLWorker(private val webView: WebView) {
         .let { it?.groups?.toMutableList() }!!
         .filterNotNull()
 
-    private suspend fun getHtml(url: String, requests: Int = 3): Pair<String, String> {
-        web = Wrapper(webView)
-        web.load(url)
-        fillInputs()
-
-        var html = ""
-        var urlWithId = ""
-        var running = true
-        while (web.urls.size <= 3 && running) {
-            if (web.urls.size == requests) {
-                if (web.urls.last().contains("groupoid")) {
-                    urlWithId = web.urls.last { it.contains("groupoid") }
-                    print("GROUPOID")
-                    web.js("document.documentElement.outerHTML") { html = it }
-                    while (html.isEmpty()) {
-                        delay(10)
-                    } // дождаться загрузки странички
-                    running = false
-                } else throw RuntimeException("Не удалось получить страничку")
-            }
-            println("SIZE " + web.urls.size.toString())
-        }
-
-        val contains = html.contains("mpei-galaktika-lessons-grid-tbl")
-        if (!contains) throw IllegalArgumentException("Неправильный номер группы")
-        return Pair(html, urlWithId)
-    }
-
-    private fun fillInputs() {
-        web.lock()
-        web.js("document.getElementsByName('$TEXTBOX_NAME')[0].value = '$group';") {}
-        web.js("document.getElementsByName('$BUTTON_NAME')[0].click();") {}
-    }
+    private fun String.getGroupId() = "id=(\\d+)".toRegex()
+        .findGroupsIn(this)
+        .first { it.value.matches("\\d+".toRegex()) }
+        .value
 
     @SuppressLint("SetJavaScriptEnabled")
     class Wrapper(private val webView: WebView) {
@@ -144,7 +152,7 @@ class HTMLWorker(private val webView: WebView) {
         const val MPEI_DEFAULT = "https://mpei.ru/Education/timetable/Pages/default.aspx"
         const val MPEI_TIMETABLE = "https://mpei.ru/Education/timetable/Pages/table.aspx"
         const val TEXTBOX_NAME = "ctl00\$ctl30\$g_f0649160_e72e_4671_a36b_743021868df5\$ctl03"
-        const val BUTTON_NAME =  "ctl00\$ctl30\$g_f0649160_e72e_4671_a36b_743021868df5\$ctl04"
+        const val BUTTON_NAME = "ctl00\$ctl30\$g_f0649160_e72e_4671_a36b_743021868df5\$ctl04"
 
         const val LOADING_DEFAULT = 0
         const val FILLING = 1

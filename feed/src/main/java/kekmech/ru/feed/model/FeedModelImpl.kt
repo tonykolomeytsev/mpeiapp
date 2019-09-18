@@ -1,6 +1,8 @@
 package kekmech.ru.feed.model
 
 import android.content.Context
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import kekmech.ru.core.dto.CoupleNative
 import kekmech.ru.core.dto.Time
 import kekmech.ru.core.scopes.ActivityScope
@@ -12,8 +14,7 @@ import kekmech.ru.feed.items.CoupleItem
 import kekmech.ru.feed.items.FeedDividerItem
 import kekmech.ru.feed.items.LunchItem
 import kekmech.ru.feed.items.WeekendItem
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import javax.inject.Inject
 
 @ActivityScope
@@ -32,13 +33,13 @@ class FeedModelImpl @Inject constructor(
      * Group number like "C-12-16"
      */
     override val groupNumber: String
-        get() = "C-12-16" //loadUserInfoUseCase.execute(). ?: ""
+        get() = loadDayStatusUseCase.execute(0).groupNum
 
     /**
      * Current week number
      */
     override val currentWeekNumber: Int
-        get() = loadDayStatusUseCase.execute(0).time.weekOfSemester
+        get() = today.weekOfSemester
 
     override val formattedTodayStatus: String
         get() = "${today.formattedAsDayName(context, R.array.days_of_week)}, ${today.dayOfMonth} " +
@@ -54,7 +55,10 @@ class FeedModelImpl @Inject constructor(
             val list = loadOffsetScheduleUseCase.execute(offset, refresh)
             if (list.isNotEmpty()) {
                 val couples = mutableListOf<BaseItem<*>>()
-                if (offset > 0) couples += FeedDividerItem("Разделитель", offset == 0)
+                if (offset > 0) couples += FeedDividerItem(
+                    today.getDayWithOffset(offset).formatAsDivider(),
+                    offset == 0
+                )
                 list.forEachIndexed { i, e ->
                     // вставим обед между второй и третьей парой
                     if (e.num == 3 && i != 0) {
@@ -65,11 +69,18 @@ class FeedModelImpl @Inject constructor(
                 couples
             } else {
                 val couples = mutableListOf<BaseItem<*>>()
-                if (offset > 0) couples += FeedDividerItem("Разделитель", offset == 0)
+                if (offset > 0) couples += FeedDividerItem(
+                    today.getDayWithOffset(offset).formatAsDivider(),
+                    offset == 0
+                )
                 couples += WeekendItem()
                 couples
             }
         }
     }
+
+    private fun Time.formatAsDivider() =
+        "${formattedAsDayName(context, R.array.days_of_week)}, $dayOfMonth " +
+                formattedAsMonthName(context, R.array.months)
 
 }

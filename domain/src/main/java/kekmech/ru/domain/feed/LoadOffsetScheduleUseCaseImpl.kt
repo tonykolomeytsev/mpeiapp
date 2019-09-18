@@ -1,6 +1,7 @@
 package kekmech.ru.domain.feed
 
 import kekmech.ru.core.dto.CoupleNative
+import kekmech.ru.core.dto.Time
 import kekmech.ru.core.repositories.ScheduleRepository
 import kekmech.ru.core.usecases.LoadOffsetScheduleUseCase
 import javax.inject.Inject

@@ -16,9 +16,6 @@ import kotlinx.android.synthetic.main.fragment_feed.view.*
 import javax.inject.Inject
 import androidx.core.widget.NestedScrollView
 
-
-
-
 class FeedFragment @Inject constructor() : DaggerFragment(), IFeedFragment {
 
     @Inject
@@ -73,6 +70,7 @@ class FeedFragment @Inject constructor() : DaggerFragment(), IFeedFragment {
     }
 
     override fun setStatus(title: String, dayInfo: String, weekInfo: String) {
+        main_collapsing.title = title
         toolbar.title = title
         textViewDayInfo.text = dayInfo
         textViewWeekInfo.text = weekInfo

@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Handler
 import android.util.Log
 import android.widget.Toast
+import androidx.lifecycle.Observer
 import kekmech.ru.core.Presenter
 import kekmech.ru.core.Router
 import kekmech.ru.core.Screens
@@ -46,6 +47,14 @@ class FeedPresenter @Inject constructor(
     override fun onResume(view: IFeedFragment) {
         this.view = view
         GlobalScope.launch(Dispatchers.Main) {
+
+            val group: String = withContext(Dispatchers.IO) { model.groupNumber }.toUpperCase()
+            view.setStatus(
+                "Группа $group",
+                model.formattedTodayStatus,
+                "Идет ${model.currentWeekNumber} учебная неделя"
+            )
+
             delay(100)
             view.updateAdapterIfNull(adapter)
             view.onEditListener = { onStatusEdit() }
@@ -56,11 +65,6 @@ class FeedPresenter @Inject constructor(
                 onScrollEnd()
             view.unlock()
         }
-        view.setStatus(
-            "Группа ${model.groupNumber}",
-            model.formattedTodayStatus,
-            "Идет ${model.currentWeekNumber} учебная неделя"
-        )
     }
 
     private fun onStatusEdit() {
