@@ -1,8 +1,6 @@
 package kekmech.ru.feed.model
 
 import android.content.Context
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import kekmech.ru.core.dto.CoupleNative
 import kekmech.ru.core.dto.Time
 import kekmech.ru.core.scopes.ActivityScope
@@ -10,10 +8,7 @@ import kekmech.ru.core.usecases.LoadDayStatusUseCase
 import kekmech.ru.core.usecases.LoadOffsetScheduleUseCase
 import kekmech.ru.coreui.adapter.BaseItem
 import kekmech.ru.feed.R
-import kekmech.ru.feed.items.CoupleItem
-import kekmech.ru.feed.items.FeedDividerItem
-import kekmech.ru.feed.items.LunchItem
-import kekmech.ru.feed.items.WeekendItem
+import kekmech.ru.feed.items.*
 import kotlinx.coroutines.*
 import javax.inject.Inject
 
@@ -45,6 +40,8 @@ class FeedModelImpl @Inject constructor(
         get() = "${today.formattedAsDayName(context, R.array.days_of_week)}, ${today.dayOfMonth} " +
                 today.formattedAsMonthName(context, R.array.months)
 
+    override var weekendOffset: Int = 0
+
     /**
      * Get couples for day
      * @param offset - 0 - today, 1 - yesterday etc.
@@ -55,6 +52,36 @@ class FeedModelImpl @Inject constructor(
             val list = loadOffsetScheduleUseCase.execute(offset, refresh)
             if (list.isNotEmpty()) {
                 val couples = mutableListOf<BaseItem<*>>()
+                if (list.first().type == CoupleNative.WEEKEND) {
+                    val firstWeekendTime = today.getDayWithOffset(offset)
+                    // если сегодня выходной, то пытаемся собрать все последующие выходные в стек и вернуть сразу все
+                    var i = 1
+                    val nativeCouples = mutableListOf<CoupleNative>()
+                    var nextDayCouples = loadOffsetScheduleUseCase.execute(offset + i, refresh)
+                    while (nextDayCouples.isNotEmpty() && nextDayCouples.first().type == CoupleNative.WEEKEND) {
+                        nativeCouples.addAll(nextDayCouples)
+                        nextDayCouples = loadOffsetScheduleUseCase.execute(offset + (++i), refresh)
+                    }
+                    weekendOffset += i - 1
+
+                    if (nativeCouples.size == 1) {
+                        if (offset > 0) couples += FeedDividerItem(
+                            today.getDayWithOffset(offset).formatAsDivider(),
+                            offset == 0
+                        )
+                        couples += WeekendItem()
+                    } else {
+                        couples.add(
+                            WeekendStackItem(
+                                firstWeekendTime.formatAsDivider(),
+                                firstWeekendTime.getDayWithOffset(nativeCouples.size).formatAsDivider(),
+                                offset != 0
+                            )
+                        )
+                    }
+                    return@withContext couples
+                }
+
                 if (offset > 0) couples += FeedDividerItem(
                     today.getDayWithOffset(offset).formatAsDivider(),
                     offset == 0
@@ -65,18 +92,20 @@ class FeedModelImpl @Inject constructor(
                         couples += LunchItem()
                     }
                     couples += CoupleItem(e).apply {
+                        // если пара последняя, не показываем разделительную линию внизу
                         isDividerVisible = (i != list.size - 1)
                     }
                 }
-                couples
+                return@withContext couples
             } else {
+                // TODO DEPRECATED
                 val couples = mutableListOf<BaseItem<*>>()
                 if (offset > 0) couples += FeedDividerItem(
                     today.getDayWithOffset(offset).formatAsDivider(),
                     offset == 0
                 )
                 couples += WeekendItem()
-                couples
+                return@withContext couples
             }
         }
     }

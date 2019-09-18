@@ -1,7 +1,6 @@
 package kekmech.ru.core.dto
 
 import androidx.room.*
-import org.jetbrains.annotations.PropertyKey
 
 /**
  * В таком виде приложение хранит информацию о занятиях
@@ -38,8 +37,13 @@ class CoupleNative(
         const val LUNCH = "LUNCH"
         const val UNKNOWN = "UNKNOWN"
         const val COURSE = "COURSE"
+        const val WEEKEND = "WEEKEND" // выходной
+
         const val BOTH = 0 // обе недели
         const val ODD = 1 // нечетный
         const val EVEN = 2 // четный
+
+        val dayOff: CoupleNative
+            get() = CoupleNative(0,"","","","","", WEEKEND, 0,0, 0)
     }
 }

@@ -1,26 +1,17 @@
 package kekmech.ru.feed.presenter
 
 import android.content.Context
-import android.os.Handler
-import android.util.Log
 import android.widget.Toast
-import androidx.lifecycle.Observer
 import kekmech.ru.core.Presenter
 import kekmech.ru.core.Router
 import kekmech.ru.core.Screens
-import kekmech.ru.core.dto.Time
 import kekmech.ru.core.scopes.ActivityScope
 import kekmech.ru.coreui.adapter.BaseAdapter
 import kekmech.ru.feed.Dialogs
 import kekmech.ru.feed.IFeedFragment
-import kekmech.ru.feed.R
-import kekmech.ru.feed.items.CoupleItem
-import kekmech.ru.feed.items.FeedDividerItem
-import kekmech.ru.feed.items.LunchItem
-import kekmech.ru.feed.items.WeekendItem
+import kekmech.ru.feed.items.*
 import kekmech.ru.feed.model.FeedModel
 import kotlinx.coroutines.*
-import java.util.*
 import javax.inject.Inject
 
 @ActivityScope
@@ -30,6 +21,7 @@ class FeedPresenter @Inject constructor(
     private val router: Router
 ) : Presenter<IFeedFragment> {
 
+    private var isNotifiedToRefresh: Boolean = false
     var view: IFeedFragment? = null
     var offset = 0
     val daysToLoadOnStart = 3
@@ -38,6 +30,7 @@ class FeedPresenter @Inject constructor(
         .registerViewTypeFactory(CoupleItem.Factory())
         .registerViewTypeFactory(LunchItem.Factory())
         .registerViewTypeFactory(WeekendItem.Factory())
+        .registerViewTypeFactory(WeekendStackItem.Factory())
         .build()
     }
 
@@ -47,7 +40,6 @@ class FeedPresenter @Inject constructor(
     override fun onResume(view: IFeedFragment) {
         this.view = view
         GlobalScope.launch(Dispatchers.Main) {
-
             val group: String = withContext(Dispatchers.IO) { model.groupNumber }.toUpperCase()
             view.setStatus(
                 "Группа $group",
@@ -61,8 +53,12 @@ class FeedPresenter @Inject constructor(
             view.bottomReachListener = { onScrollEnd() }
 
             delay(50)
-            if (offset == 0)
+            if (offset == 0) {
                 onScrollEnd()
+            } else if (isNotifiedToRefresh) {
+                isNotifiedToRefresh = false
+                refresh()
+            }
             view.unlock()
         }
     }
@@ -87,26 +83,42 @@ class FeedPresenter @Inject constructor(
         this.view = null
     }
 
+    private fun refresh() {
+        offset = 1
+        model.weekendOffset = 0
+        clearAdapter()
+        GlobalScope.launch(Dispatchers.Main) {
+            loadOffsetCouples(0)
+        }
+    }
+
     private fun onScrollEnd() {
         val localOffset = offset
         offset++
         GlobalScope.launch(Dispatchers.Main) {
-            val couples = model.getDayCouples(localOffset, refresh = false)
-            couples.forEach {
-                adapter.baseItems.add(it)
-                adapter.notifyItemChanged(adapter.baseItems.size - 1)
-                delay(100) // TODO избавиться от задержки и придумать анимацию иначе
-            }
-            view?.unlock()
-            if (offset < daysToLoadOnStart)
-                onScrollEnd()
+            loadOffsetCouples(localOffset + model.weekendOffset)
         }
     }
 
+    private suspend fun loadOffsetCouples(localOffset: Int, refresh: Boolean = false) = withContext(Dispatchers.Main) {
+        val couples = model.getDayCouples(localOffset, refresh = refresh)
+        couples.forEach {
+            adapter.baseItems.add(it)
+            adapter.notifyItemChanged(adapter.baseItems.size - 1)
+            delay(100) // TODO избавиться от задержки и придумать анимацию иначе
+        }
+        view?.unlock()
+        if (offset < daysToLoadOnStart)
+            onScrollEnd()
+    }
+
     private fun clearAdapter() {
-        val count = adapter.baseItems.size
         adapter.baseItems.clear()
-        adapter.notifyItemRangeRemoved(0, count)
+        adapter.notifyDataSetChanged()
+    }
+
+    fun notifyToRefresh() {
+        isNotifiedToRefresh = true
     }
 
 }

@@ -24,6 +24,11 @@ interface FeedModel {
     val formattedTodayStatus: String
 
     /**
+     * For off day stack
+     */
+    var weekendOffset: Int
+
+    /**
      * Get couples for day
      * @param offset - 0 - today, 1 - yesterday etc.
      * @return return today's couples if offset == 0

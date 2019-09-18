@@ -45,6 +45,10 @@ class Time(val calendar: Calendar = Calendar.getInstance()) {
             timeInMillis = calendar.timeInMillis - MILLIS_IN_DAY
         })
     }
+    val isNonSchoolTime by lazy {
+        if (semester == SemesterType.FALL) month <= Calendar.DECEMBER
+        else month <= Calendar.JUNE
+    }
 
     /**
      * Получить день, который будет через [dayOffset] дней

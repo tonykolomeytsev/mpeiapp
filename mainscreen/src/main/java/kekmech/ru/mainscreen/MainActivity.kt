@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.android.support.DaggerAppCompatActivity
+import kekmech.ru.addscreen.AddFragment
 import kekmech.ru.core.Router
 import kekmech.ru.core.Screens
 import kotlinx.android.synthetic.main.activity_main.*
@@ -57,13 +58,15 @@ class MainActivity : DaggerAppCompatActivity() {
         if (!boolean) nav_view.visibility = View.VISIBLE
         nav_view.animate()
             .alpha(if (boolean) 0f else 1f)
-            .setDuration(300)
+            .setDuration(200)
             .withEndAction { if (boolean) nav_view.visibility = View.GONE }
             .start()
-
     }
 
     override fun onBackPressed() {
-        router.popBackStack()
+        if (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) is AddFragment)
+            finish()
+        else
+            router.popBackStack()
     }
 }

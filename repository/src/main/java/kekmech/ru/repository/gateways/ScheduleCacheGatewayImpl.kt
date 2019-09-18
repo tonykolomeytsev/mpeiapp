@@ -7,9 +7,6 @@ import kekmech.ru.repository.room.AppDatabase
 import javax.inject.Inject
 
 class ScheduleCacheGatewayImpl @Inject constructor(val appdb: AppDatabase) : ScheduleCacheGateway {
-    val sch = Schedule(0, "С-12-16", 36, 1, allWeek, "Расписание на осенний семестр 2019/2020 учебного года")
-    var saved = false
-
     override fun getSchedule(): Schedule? {
         val users = appdb.userDao().getAll()
         if (users.isEmpty())

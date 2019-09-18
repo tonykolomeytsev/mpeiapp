@@ -27,12 +27,20 @@ class ScheduleRepositoryImpl @Inject constructor(
     override fun getOffsetCouples(offset: Int, refresh: Boolean): List<CoupleNative> {
         val today = Time.today()
         if (today.dayOfWeek + offset <= 7) {
-            if (refresh) throw UnsupportedOperationException()
-            else return scheduleCacheGateway.getCouples(today.dayOfWeek + offset, true) ?: getOffsetCouples(offset, true)
+            val couples = scheduleCacheGateway.getCouples(today.dayOfWeek + offset, true)
+            when {
+                couples == null -> return emptyList()
+                couples.isEmpty() -> return listOf(CoupleNative.dayOff)
+                else -> return couples
+            }
         } else {
             val necessaryDayOfWeek = (today.dayOfWeek + offset) % 7
-            if (refresh) throw UnsupportedOperationException()
-            else return scheduleCacheGateway.getCouples(necessaryDayOfWeek, true) ?: getOffsetCouples(offset, true)
+            val couples = scheduleCacheGateway.getCouples(necessaryDayOfWeek, true)
+            when {
+                couples == null -> return emptyList()
+                couples.isEmpty() -> return listOf(CoupleNative.dayOff)
+                else -> return couples
+            }
         }
     }
 
