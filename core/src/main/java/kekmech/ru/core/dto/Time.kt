@@ -55,8 +55,7 @@ class Time(val calendar: Calendar = Calendar.getInstance()) {
      */
     fun getDayWithOffset(dayOffset: Int) =
         Time(Calendar.getInstance().apply {
-            timeInMillis =
-                calendar.timeInMillis + (MILLIS_IN_DAY * dayOffset)
+            add(Calendar.DATE, dayOffset)
         })
 
     /**
