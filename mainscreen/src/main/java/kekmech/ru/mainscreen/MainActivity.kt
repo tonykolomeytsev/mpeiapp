@@ -64,9 +64,6 @@ class MainActivity : DaggerAppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) is AddFragment)
-            finish()
-        else
-            router.popBackStack()
+        router.popBackStack()
     }
 }

@@ -22,4 +22,10 @@ interface IFeedFragment : LifecycleOwner {
     fun updateAdapterIfNull(adapter: BaseAdapter)
 
     fun unlock()
+
+    fun showMenu()
+
+    fun hideMenu()
+
+    fun updateMenu(menuAdapter: BaseAdapter)
 }

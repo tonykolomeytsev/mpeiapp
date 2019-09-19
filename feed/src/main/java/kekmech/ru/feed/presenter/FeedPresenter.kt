@@ -33,6 +33,9 @@ class FeedPresenter @Inject constructor(
         .registerViewTypeFactory(WeekendStackItem.Factory())
         .build()
     }
+    val menuAdapter = BaseAdapter.Builder()
+        .registerViewTypeFactory(FeedMenuItem.Factory())
+        .build()
 
     /**
      * subscribe to view events
@@ -61,7 +64,23 @@ class FeedPresenter @Inject constructor(
                 refresh()
             }
             view.unlock()
+            setupMenu()
         }
+    }
+
+    fun setupMenu() {
+        menuAdapter.baseItems.clear()
+        menuAdapter.baseItems.add(
+            FeedMenuItem("Добавить группу").apply {
+                clickListener = {
+                    GlobalScope.launch(Dispatchers.Main){
+                        delay(100)
+                        router.navigateTo(Screens.ADD)
+                    }
+                }
+            }
+        )
+        view?.updateMenu(menuAdapter)
     }
 
     private fun onStatusEdit() {
@@ -74,7 +93,8 @@ class FeedPresenter @Inject constructor(
                 //view?.showEditDialog(dialog)
             }
         }
-        router.navigateTo(Screens.ADD)
+        //router.navigateTo(Screens.ADD)
+        view?.showMenu()
     }
 
     /**

@@ -110,4 +110,51 @@
             app:layout_anchorGravity="bottom|right|end"
             android:theme="@style/PrimaryActionButton"
             />
+
+    <androidx.cardview.widget.CardView
+            android:id="@+id/cardViewMenu"
+            android:layout_marginRight="16dp"
+            app:cardCornerRadius="28dp"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            app:layout_anchor="@id/main.appbar"
+            app:layout_anchorGravity="right|bottom"
+            android:visibility="invisible"
+            android:layout_marginTop="122dp"
+
+            tools:layout_width="wrap_content"
+            tools:cardCornerRadius="4dp"
+            tools:visibility="visible"
+            tools:layout_height="300dp"
+            >
+
+        <FrameLayout
+                android:id="@+id/cardViewChild"
+                android:layout_width="220dp"
+                android:layout_height="wrap_content">
+
+            <androidx.recyclerview.widget.RecyclerView
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    android:id="@+id/recyclerViewMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:listitem="@layout/item_feed_menu_layout"
+                    />
+
+        </FrameLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <FrameLayout
+            android:id="@+id/frameLayoutMenuOverlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:focusable="true"
+            android:clickable="true"
+            android:visibility="invisible"
+
+            tools:visibility="visible"
+            />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
