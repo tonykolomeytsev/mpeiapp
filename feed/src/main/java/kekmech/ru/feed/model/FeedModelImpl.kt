@@ -64,7 +64,7 @@ class FeedModelImpl @Inject constructor(
                     }
                     weekendOffset += i - 1
 
-                    if (nativeCouples.size == 1) {
+                    if (nativeCouples.size == 0) {
                         if (offset > 0) couples += FeedDividerItem(
                             today.getDayWithOffset(offset).formatAsDivider(),
                             offset == 0
@@ -88,7 +88,7 @@ class FeedModelImpl @Inject constructor(
                 )
                 list.forEachIndexed { i, e ->
                     // вставим обед между второй и третьей парой
-                    if (e.num == 3 && i != 0) {
+                    if (e.num == 3 && i != 0 && !couples.any { it is LunchItem }) {
                         couples += LunchItem()
                     }
                     couples += CoupleItem(e).apply {
