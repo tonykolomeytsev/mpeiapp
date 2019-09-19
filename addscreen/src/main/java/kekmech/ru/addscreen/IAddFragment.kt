@@ -11,4 +11,6 @@ interface IAddFragment {
     fun showLoadButton()
     fun disableEditText()
     fun enableEditText()
+    fun showLoading()
+    fun hideLoading()
 }

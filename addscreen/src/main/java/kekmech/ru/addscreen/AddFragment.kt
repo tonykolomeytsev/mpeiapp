@@ -46,14 +46,10 @@ class AddFragment @Inject constructor() : DaggerFragment(), IAddFragment {
         }
     }
 
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-        activity?.window?.statusBarColor = Resources.getColor(context, R.color.colorWhite)
-    }
-
     override fun onResume() {
         super.onResume()
         presenter.onResume(this)
+        activity?.window?.statusBarColor = Resources.getColor(context, R.color.colorWhite)
         buttonSelectGroup.setOnClickListener { onSearchClickListener(editTextGroupName.text.toString()) }
     }
 
@@ -87,6 +83,22 @@ class AddFragment @Inject constructor() : DaggerFragment(), IAddFragment {
 
     override fun enableEditText() {
         editTextGroupName.isEnabled = true
+    }
+
+    override fun showLoading() {
+        frameLayoutLoading.animate()
+            .alpha(1f)
+            .setDuration(200)
+            .withStartAction { frameLayoutLoading.visibility = View.VISIBLE }
+            .start()
+    }
+
+    override fun hideLoading() {
+        frameLayoutLoading.animate()
+            .alpha(1f)
+            .setDuration(200)
+            .withEndAction { frameLayoutLoading.visibility = View.INVISIBLE }
+            .start()
     }
 
 }

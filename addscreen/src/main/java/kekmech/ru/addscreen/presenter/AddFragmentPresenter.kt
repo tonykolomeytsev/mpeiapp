@@ -40,6 +40,7 @@ class AddFragmentPresenter @Inject constructor(
     private fun onSearch(group: String) {
         view?.hideLoadButton()
         view?.disableEditText()
+        view?.showLoading()
         htmlWorker = HTMLWorker(view?.web!!)
         GlobalScope.launch(Dispatchers.IO) {
             try {
@@ -76,6 +77,7 @@ class AddFragmentPresenter @Inject constructor(
             withContext(Dispatchers.Main) {
                 view?.showLoadButton()
                 view?.enableEditText()
+                view?.hideLoading()
             }
         }
     }
