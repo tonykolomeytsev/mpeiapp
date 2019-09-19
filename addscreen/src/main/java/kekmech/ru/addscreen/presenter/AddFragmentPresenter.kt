@@ -4,6 +4,8 @@ import android.text.InputFilter
 import android.text.Spanned
 import kekmech.ru.addscreen.IAddFragment
 import kekmech.ru.core.Presenter
+import kekmech.ru.core.Router
+import kekmech.ru.core.Screens
 import kekmech.ru.core.dto.CoupleNative
 import kekmech.ru.core.dto.Schedule
 import kekmech.ru.core.dto.Time
@@ -13,7 +15,8 @@ import java.util.regex.Pattern
 import javax.inject.Inject
 
 class AddFragmentPresenter @Inject constructor(
-    private val saveScheduleUseCase: SaveScheduleUseCase
+    private val saveScheduleUseCase: SaveScheduleUseCase,
+    private val router: Router
 ) : Presenter<IAddFragment> {
     private var view: IAddFragment? = null
     private var htmlWorker: HTMLWorker? = null
@@ -64,6 +67,7 @@ class AddFragmentPresenter @Inject constructor(
                     "Schedule"
                 )
                 saveScheduleUseCase.save(schedule)
+                withContext(Dispatchers.Main) { router.navigateTo(Screens.ADD_TO_FEED) }
 
             } catch (e: Exception) {
                 // todo вывести сообщение об ошибке

@@ -7,6 +7,8 @@ import kekmech.ru.coreui.adapter.BaseAdapter
 
 interface IFeedFragment : LifecycleOwner {
 
+    var requiredAction: String
+
     var onEditListener: () -> Unit
 
     var bottomReachListener: () -> Unit

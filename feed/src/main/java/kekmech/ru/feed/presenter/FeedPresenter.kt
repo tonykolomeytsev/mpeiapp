@@ -38,6 +38,7 @@ class FeedPresenter @Inject constructor(
      * subscribe to view events
      */
     override fun onResume(view: IFeedFragment) {
+        if (view.requiredAction == Screens.ADD_TO_FEED) notifyToRefresh()
         this.view = view
         GlobalScope.launch(Dispatchers.Main) {
             val group: String = withContext(Dispatchers.IO) { model.groupNumber }.toUpperCase()

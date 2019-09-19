@@ -1,17 +1,13 @@
 package kekmech.ru.mainscreen
 
-import android.app.Activity
-import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
-import androidx.navigation.NavController
-import dagger.android.support.DaggerFragment
 import kekmech.ru.addscreen.AddFragment
+import kekmech.ru.feed.FeedFragment
 import kotlin.reflect.KClass
 
 class MainNavController(private var activity: AppCompatActivity?) : LifecycleObserver {
@@ -24,13 +20,27 @@ class MainNavController(private var activity: AppCompatActivity?) : LifecycleObs
         }
     }
 
-    fun navigate(fragmentKClass: KClass<out Fragment>, addToBackStack: Boolean ,enterAnim: Int = -1, exitAnim: Int = -1, transitionStyle: Int = -1) {
+    fun navigate(
+        fragmentKClass: KClass<out Fragment>,
+        addToBackStack: Boolean,
+        enterAnim: Int = -1,
+        exitAnim: Int = -1,
+        transitionStyle: Int = -1,
+        action: String = ""
+    ) {
         val instance = fragment(fragmentKClass)
         instance.retainInstance = true
+        if (instance is FeedFragment && action.isNotEmpty()) instance.notifyActionRequired(action)
         activity?.supportFragmentManager
             ?.beginTransaction()
-            ?.apply { if (enterAnim != -1 && exitAnim != -1) setCustomAnimations(enterAnim, exitAnim) }
-            ?.replace(R.id.nav_host_fragment, instance)?.apply { if (addToBackStack) addToBackStack(fragmentKClass.java.simpleName) }
+            ?.apply {
+                if (enterAnim != -1 && exitAnim != -1) setCustomAnimations(
+                    enterAnim,
+                    exitAnim
+                )
+            }
+            ?.replace(R.id.nav_host_fragment, instance)
+            ?.apply { if (addToBackStack) addToBackStack(fragmentKClass.java.simpleName) }
             ?.apply { if (transitionStyle != -1) setTransitionStyle(transitionStyle) }?.commit()
         if (instance is AddFragment) onAddGroupListener(true)
         else onAddGroupListener(false)
@@ -63,7 +73,7 @@ class MainNavController(private var activity: AppCompatActivity?) : LifecycleObs
         activity = null
     }
 
-    private fun <T: Fragment> fragment(fragmentKClass: KClass<T>): Fragment {
+    private fun <T : Fragment> fragment(fragmentKClass: KClass<T>): Fragment {
         //lazy init
         if (!fragmentsMap.containsKey(fragmentKClass)) {
             fragmentsMap[fragmentKClass] = fragmentKClass.java.newInstance()

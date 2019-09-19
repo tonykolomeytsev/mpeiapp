@@ -24,6 +24,8 @@ class FeedFragment @Inject constructor() : DaggerFragment(), IFeedFragment {
     @Volatile
     private var lock = true
 
+    override var requiredAction: String = ""
+
     init { retainInstance = true }
 
     /**
@@ -58,6 +60,7 @@ class FeedFragment @Inject constructor() : DaggerFragment(), IFeedFragment {
         activity!!.window.statusBarColor = Resources.getColor(context, R.color.colorSecondary)
         unlock()
         presenter.onResume(this)
+        requiredAction = ""
     }
 
     override fun onPause() {
@@ -89,5 +92,9 @@ class FeedFragment @Inject constructor() : DaggerFragment(), IFeedFragment {
 
     override fun withinContext(listener: (context: Context) -> Unit) {
         listener(requireContext())
+    }
+
+    fun notifyActionRequired(action: String) {
+        this.requiredAction = action
     }
 }

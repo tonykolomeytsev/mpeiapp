@@ -6,8 +6,6 @@ import kekmech.ru.core.scopes.ActivityScope
 import kekmech.ru.core.usecases.*
 import kekmech.ru.domain.feed.LoadDayStatusUseCaseImpl
 import kekmech.ru.domain.feed.LoadOffsetScheduleUseCaseImpl
-import kekmech.ru.domain.feed.LoadUserInfoUseCaseImpl
-import kekmech.ru.domain.feed.LoadWeekInfoUseCaseImpl
 
 @Module
 abstract class InteractorModule {

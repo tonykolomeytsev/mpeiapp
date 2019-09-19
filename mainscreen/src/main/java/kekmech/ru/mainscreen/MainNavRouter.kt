@@ -21,6 +21,7 @@ class MainNavRouter @Inject constructor(): Router {
             Screens.SETTINGS -> navController?.navigate(SettingsFragment::class, false)
             Screens.DEV -> navController?.navigateWithTransition(SettingsDevFragment::class, true)
             Screens.ADD -> navController?.navigate(AddFragment::class, true)
+            Screens.ADD_TO_FEED -> navController?.navigate(FeedFragment::class, false, action = Screens.ADD_TO_FEED)
         }
     }
 
