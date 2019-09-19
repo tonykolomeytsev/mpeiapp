@@ -54,7 +54,7 @@ class Time(val calendar: Calendar = Calendar.getInstance()) {
      * Получить день, который будет через [dayOffset] дней
      */
     fun getDayWithOffset(dayOffset: Int) =
-        Time(Calendar.getInstance().apply {
+        Time(Time(year, month, dayOfMonth).calendar.apply {
             add(Calendar.DATE, dayOffset)
         })
 
