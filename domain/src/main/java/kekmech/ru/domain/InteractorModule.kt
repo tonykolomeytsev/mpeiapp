@@ -16,12 +16,6 @@ abstract class InteractorModule {
     abstract fun provideLoadOffsetScheduleUseCase(useCaseImpl: LoadOffsetScheduleUseCaseImpl): LoadOffsetScheduleUseCase
 
     @Binds
-    abstract fun provideLoadUserInfoUseCase(useCaseImpl: LoadUserInfoUseCaseImpl): LoadUserInfoUseCase
-
-    @Binds
-    abstract fun provideLoadWeekInfoUseCase(useCaseImpl: LoadWeekInfoUseCaseImpl): LoadWeekInfoUseCase
-
-    @Binds
     abstract fun provideLoadDayStatusUseCase(useCase: LoadDayStatusUseCaseImpl): LoadDayStatusUseCase
 
     @Binds
