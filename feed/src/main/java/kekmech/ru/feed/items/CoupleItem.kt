@@ -54,7 +54,7 @@ class CoupleItem(val couple: CoupleNative) : BaseItem<CoupleItem.ViewHolder>() {
 
 
     private fun getCoupleNumAsString(context: Context): String {
-        if (couple.num in 1..5) {
+        if (couple.num in 1..7) {
             if (coupleNames == null) coupleNames = Resources.getStringArray(context, R.array.couples_numbers)
             return coupleNames!![couple.num - 1]
         } else {

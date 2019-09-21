@@ -78,6 +78,8 @@ class HtmlToScheduleParser {
             coupleBuilder.timeStart == "13:45" -> 3
             coupleBuilder.timeStart == "15:35" -> 4
             coupleBuilder.timeStart.contains("17") -> 5
+            coupleBuilder.timeStart.contains("18") -> 6
+            coupleBuilder.timeStart.contains("20") -> 7
             else -> -1
         }
         scheduleBuilder.putCouple(coupleBuilder.build())

@@ -9,6 +9,8 @@
         <item>Третья пара</item>
         <item>Четвертая пара</item>
         <item>Пятая пара</item>
+        <item>Шестая пара</item>
+        <item>Седьмая пара</item>
     </string-array>
 
     <string-array name="days_of_week">
