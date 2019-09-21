@@ -1,6 +1,5 @@
 package kekmech.ru.repository.gateways
 
-import android.util.Log
 import kekmech.ru.core.dto.*
 import kekmech.ru.core.gateways.ScheduleCacheGateway
 import kekmech.ru.repository.room.AppDatabase
@@ -27,10 +26,6 @@ class ScheduleCacheGatewayImpl @Inject constructor(val appdb: AppDatabase) : Sch
                 ) else null
             }
     }
-
-
-    override fun getWeekInfo(): WeekInfo? =
-        getSchedule().let { WeekInfo(it?.calendarWeek, it?.universityWeek) }
 
     override fun getCouples(dayNum: Int, odd: Boolean): List<CoupleNative>? {
         return getSchedule()?.coupleList

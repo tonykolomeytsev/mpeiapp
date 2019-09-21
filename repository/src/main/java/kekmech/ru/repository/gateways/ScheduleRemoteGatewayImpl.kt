@@ -6,7 +6,7 @@ import kekmech.ru.core.gateways.ScheduleRemoteGateway
 import kekmech.ru.repository.room.AppDatabase
 import javax.inject.Inject
 
-class ScheduleRemoteGatewayImpl @Inject constructor(appdb: AppDatabase) : ScheduleRemoteGateway {
+class ScheduleRemoteGatewayImpl @Inject constructor(/*appdb: AppDatabase*/) : ScheduleRemoteGateway {
     override fun getCouples(offset: Int): List<CoupleNative>? {
         return emptyList()
     }

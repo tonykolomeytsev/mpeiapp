@@ -84,16 +84,6 @@ class FeedPresenter @Inject constructor(
     }
 
     private fun onStatusEdit() {
-        view?.withinContext {
-            val dialog = Dialogs.listDialog(it,"Редактировать", listOf("Кэшировать заново", "Сменить расписание")) { _, i ->
-                Toast.makeText(context, i.toString(), Toast.LENGTH_SHORT).show()
-            }
-            GlobalScope.launch(Dispatchers.Main) {
-                delay(50)
-                //view?.showEditDialog(dialog)
-            }
-        }
-        //router.navigateTo(Screens.ADD)
         view?.showMenu()
     }
 
