@@ -67,4 +67,5 @@ dependencies {
     implementation project(path: ':settings')
     implementation project(path: ':coreui')
     implementation project(path: ':addscreen')
+    implementation project(path: ':map')
 }

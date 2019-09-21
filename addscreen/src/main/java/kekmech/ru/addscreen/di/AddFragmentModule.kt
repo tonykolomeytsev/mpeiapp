@@ -1,4 +1,4 @@
-package kekmech.ru.feed.di
+package kekmech.ru.addscreen.di
 
 import dagger.Binds
 import dagger.Module
