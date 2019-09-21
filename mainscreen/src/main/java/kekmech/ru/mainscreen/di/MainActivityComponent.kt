@@ -8,7 +8,7 @@ import kekmech.ru.feed.di.FeedFragmentModule
 import kekmech.ru.mainscreen.MainActivity
 import kekmech.ru.settings.di.SettingsDevFragmentModule
 import kekmech.ru.settings.di.SettingsFragmentModule
-import kekmech.ru.timetable.TimetableFragmentModule
+import kekmech.ru.timetable.di.TimetableFragmentModule
 import com.example.map.di.MapFragmentModule
 
 @ActivityScope

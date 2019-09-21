@@ -10,7 +10,7 @@
         android:label="FeedFragment" />
     <fragment
         android:id="@+id/timetableFragment"
-        android:name="kekmech.ru.timetable.TimetableFragment"
+        android:name="kekmech.ru.timetable.view.TimetableFragment"
         android:label="TimetableFragment" />
     <fragment
         android:id="@+id/settingsFragment"

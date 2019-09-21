@@ -1,15 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:background="#0000FF"
-             tools:context=".TimetableFragment">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        tools:context=".view.TimetableFragment"
+        android:orientation="vertical"
+        >
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/timetableToolbar"
+            android:background="@color/colorSecondary"
+            android:minHeight="?attr/actionBarSize"
+            app:title="Расписание на неделю"
+            android:theme="@style/Theme.Design.NoActionBar"
+            />
+
+    <com.google.android.material.tabs.TabLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tabLayout"
+            android:background="@color/colorSecondary"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="@style/Theme.Design.NoActionBar"
+            />
+
+    <androidx.viewpager.widget.ViewPager
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="BLANK FRAGMENT"/>
+            android:id="@+id/viewPager"
 
-</FrameLayout>
+            />
+</LinearLayout>

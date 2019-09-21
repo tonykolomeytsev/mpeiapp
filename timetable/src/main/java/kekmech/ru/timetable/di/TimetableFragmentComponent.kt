@@ -1,8 +1,8 @@
-package kekmech.ru.timetable
+package kekmech.ru.timetable.di
 
 import dagger.Subcomponent
 import dagger.android.AndroidInjector
-import kekmech.ru.timetable.TimetableFragment
+import kekmech.ru.timetable.view.TimetableFragment
 
 @Subcomponent
 interface TimetableFragmentComponent : AndroidInjector<TimetableFragment> {
