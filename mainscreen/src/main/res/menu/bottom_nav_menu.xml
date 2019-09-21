@@ -12,6 +12,11 @@
             android:title="@string/title_dashboard"/>
 
     <item
+            android:id="@+id/navigation_map"
+            android:icon="@drawable/outline_room_black_24"
+            android:title="@string/title_map"/>
+
+    <item
             android:id="@+id/navigation_notifications"
             android:icon="@drawable/ic_outline_menu_black_24dp"
             android:title="@string/title_notifications"/>
