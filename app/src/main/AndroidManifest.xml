@@ -4,8 +4,14 @@
         xmlns:tools="http://schemas.android.com/tools"
         package="kekmech.ru.mpeiapp"
         android:installLocation="auto"
->
+        >
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
+    <permission
+        android:name="com.example.permission.MAPS_RECEIVE"
+        android:protectionLevel="signature"/>
+    <uses-permission android:name="com.example.permission.MAPS_RECEIVE"/>
 
     <application
             android:allowBackup="true"
@@ -16,6 +22,10 @@
             android:name=".MPEIApp"
             android:theme="@style/AppTheme"
             tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+
+            <meta-data
+                android:name="com.google.android.geo.API_KEY"
+                android:value="AIzaSyBUPGrHZSippSb4g_CjyX5Xj8VkbsLdZpw"/>
     </application>
 
 </manifest>
