@@ -2,6 +2,7 @@ package kekmech.ru.mainscreen
 
 import androidx.lifecycle.LifecycleObserver
 import androidx.navigation.NavController
+import com.example.map.view.MapFragment
 import kekmech.ru.addscreen.AddFragment
 import kekmech.ru.core.Router
 import kekmech.ru.core.Screens
@@ -20,6 +21,8 @@ class MainNavRouter @Inject constructor(): Router {
             Screens.TIMETABLE -> navController?.navigate(TimetableFragment::class, false)
             Screens.SETTINGS -> navController?.navigate(SettingsFragment::class, false)
             Screens.DEV -> navController?.navigateWithTransition(SettingsDevFragment::class, true)
+            Screens.MAP -> navController?.navigate(MapFragment::class, false)
+
             Screens.ADD -> navController?.navigate(AddFragment::class, true)
             Screens.ADD_TO_FEED -> navController?.navigate(FeedFragment::class, false, action = Screens.ADD_TO_FEED)
         }

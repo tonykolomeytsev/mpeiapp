@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.android.support.DaggerAppCompatActivity
-import kekmech.ru.addscreen.AddFragment
 import kekmech.ru.core.Router
 import kekmech.ru.core.Screens
 import kotlinx.android.synthetic.main.activity_main.*
@@ -21,12 +20,16 @@ class MainActivity : DaggerAppCompatActivity() {
                 nav_view.postOnAnimation { router.replaceScreen(Screens.FEED) }
                 return@OnNavigationItemSelectedListener true
             }
+            R.id.navigation_map -> {
+                nav_view.postOnAnimation { router.replaceScreen(Screens.MAP) }
+                return@OnNavigationItemSelectedListener true
+            }
             R.id.navigation_dashboard -> {
                 router.replaceScreen(Screens.TIMETABLE)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_notifications -> {
-                router.replaceScreen(Screens.SETTINGS)
+                nav_view.postOnAnimation { router.replaceScreen(Screens.SETTINGS) }
                 return@OnNavigationItemSelectedListener true
             }
         }
