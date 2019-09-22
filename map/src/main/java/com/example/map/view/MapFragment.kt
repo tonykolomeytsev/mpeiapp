@@ -3,6 +3,7 @@ package com.example.map.view
 
 import android.content.Context
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,6 +43,14 @@ class MapFragment : DaggerFragment(), MapFragmentView, OnMapReadyCallback {
         mapView = v.findViewById(R.id.mapView) as MapView
         mapView.onCreate(savedInstanceState)
 
+        val typedValue = TypedValue()
+        val statusBarSize = if (activity?.theme?.resolveAttribute(android.R.attr.actionBarSize, typedValue, true) == true)
+            TypedValue.complexToDimensionPixelSize(typedValue.data, resources.displayMetrics)
+        else 0
+        val p = mapView.layoutParams as ViewGroup.MarginLayoutParams
+        p.topMargin = -statusBarSize
+        mapView.layoutParams = p
+
         // Gets to GoogleMap from the MapView and does initialization stuff
         mapView.getMapAsync(this)
 
@@ -52,10 +61,11 @@ class MapFragment : DaggerFragment(), MapFragmentView, OnMapReadyCallback {
         map?.apply {
             uiSettings.isMyLocationButtonEnabled = false
             isMyLocationEnabled = false
+            isBuildingsEnabled = true
 
 
             // Updates the location and zoom of the MapView
-            val cameraUpdate = CameraUpdateFactory.newLatLngZoom(LatLng(43.1, -87.9), 10f)
+            val cameraUpdate = CameraUpdateFactory.newLatLngZoom(LatLng(55.754749, 37.707771), 17f)
             animateCamera(cameraUpdate)
         }
     }

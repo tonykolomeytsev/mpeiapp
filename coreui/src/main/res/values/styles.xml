@@ -9,7 +9,9 @@
 
         <!-- Transparent statusBar -->
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:statusBarColor">#4D000000</item>
+        <!--<item name="android:statusBarColor">#4D000000</item>-->
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
     <style name="PrimaryFlatButton" parent="Theme.AppCompat.Light">

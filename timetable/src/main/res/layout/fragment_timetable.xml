@@ -1,36 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        tools:context=".view.TimetableFragment"
-        android:orientation="vertical"
-        >
+        android:fitsSystemWindows="true"
+        tools:context=".view.TimetableFragment">
 
-    <androidx.appcompat.widget.Toolbar
+    <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbarTimetable"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/timetableToolbar"
-            android:background="@color/colorSecondary"
-            android:minHeight="?attr/actionBarSize"
-            app:title="Расписание на неделю"
-            android:theme="@style/Theme.Design.NoActionBar"
-            />
+            android:theme="@style/Theme.Design.NoActionBar">
 
-    <com.google.android.material.tabs.TabLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/tabLayout"
-            android:background="@color/colorSecondary"
-            android:minHeight="?attr/actionBarSize"
-            android:theme="@style/Theme.Design.NoActionBar"
-            />
+        <androidx.appcompat.widget.Toolbar
+                android:id="@+id/timetableToolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorSecondary"
+                android:fitsSystemWindows="true"
+                android:minHeight="?attr/actionBarSize"
+                android:theme="@style/Theme.Design.NoActionBar"
+                app:title="Расписание на неделю" />
+
+        <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorSecondary"
+                android:minHeight="?attr/actionBarSize"
+                android:theme="@style/Theme.Design.NoActionBar" />
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewPager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/viewPager"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
 
-            />
-</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

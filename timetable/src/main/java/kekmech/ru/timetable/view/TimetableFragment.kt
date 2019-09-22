@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.tabs.TabLayout
 import dagger.android.support.DaggerFragment
+import kekmech.ru.coreui.Resources
 import kekmech.ru.timetable.R
 import kekmech.ru.timetable.WeekAdapter
 import kotlinx.android.synthetic.main.fragment_timetable.*
@@ -24,6 +25,7 @@ class TimetableFragment : DaggerFragment(), TimetableFragmentView {
 
     override fun onResume() {
         super.onResume()
+        activity?.window?.statusBarColor = Resources.getColor(context, R.color.colorSecondary)
         viewPager.adapter = WeekAdapter(childFragmentManager)
         tabLayout.setupWithViewPager(viewPager)
         tabLayout.tabMode = TabLayout.MODE_SCROLLABLE
