@@ -18,7 +18,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorSecondary"
-                android:fitsSystemWindows="true"
                 android:minHeight="?attr/actionBarSize"
                 android:theme="@style/Theme.Design.NoActionBar"
                 app:title="Расписание на неделю" />
