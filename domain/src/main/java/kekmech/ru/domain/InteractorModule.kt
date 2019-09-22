@@ -18,4 +18,7 @@ abstract class InteractorModule {
 
     @Binds
     abstract fun provideSaveSheduleUseCase(useCaseImpl: SaveScheduleUseCaseImpl): SaveScheduleUseCase
+
+    @Binds
+    abstract fun provideGetTimetableScheduleUseCase(useCaseImpl: GetTimetableScheduleUseCaseImpl): GetTimetableScheduleUseCase
 }

@@ -1,60 +1,31 @@
 package kekmech.ru.timetable
 
+import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import kekmech.ru.core.dto.CoupleNative
+import kekmech.ru.coreui.Resources
 import kekmech.ru.timetable.model.TimetableFragmentModel
 import kekmech.ru.timetable.view.DayFragment
 
 class WeekAdapter(
-    fragmentManager: FragmentManager/*,
-    private val model: TimetableFragmentModel*/
+    fragmentManager: FragmentManager,
+    private val model: TimetableFragmentModel,
+    context: Context
 ) :
     FragmentPagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
+    private val daysOfWeekNames = Resources.getStringArray(context, R.array.days_of_week)
+
     override fun getCount() = 6
 
-    override fun getItem(position: Int): Fragment {
-        return DayFragment(monday)
+    override fun getItem(position: Int): Fragment { // +2 потому что Sunday это 1
+        val couples = { model.getDaySchedule(position + 2, model.today.weekOfSemester) }
+        return DayFragment(couples)
     }
 
     override fun getPageTitle(position: Int): CharSequence? {
-        return "Понедельник"
+        return daysOfWeekNames[position + 1] // +1 cause of zero element is Sunday. We don't need to show Sunday in timetable
     }
-
-    val monday by lazy { listOf(
-        CoupleNative(1,
-            "Защита интеллектуальной собственности и патентоведение",
-            "Комерзан Е.В.",
-            "C-213",
-            "9:20",
-            "10:50",
-            CoupleNative.LECTURE,
-            1,1, CoupleNative.ODD),
-        CoupleNative(1,
-            "Вычислительная механика",
-            "Адамов Б.И.",
-            "C-213",
-            "11:10",
-            "12:45",
-            CoupleNative.LECTURE,
-            2,1, CoupleNative.BOTH),
-        CoupleNative(1,
-            "Вычислительная механика",
-            "Адамов Б.И.",
-            "C-213",
-            "13:45",
-            "15:20",
-            CoupleNative.LAB,
-            3,1, CoupleNative.BOTH),
-        CoupleNative(1,
-            "Гидропневмопривод мехатронных и робототехнических систем",
-            "Зуев Ю.Ю.",
-            "C-213",
-            "15:35",
-            "17:10",
-            CoupleNative.PRACTICE,
-            4,1, CoupleNative.BOTH)
-    ) }
 }
