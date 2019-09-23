@@ -38,6 +38,14 @@
         <item>декабря</item>
     </string-array>
 
+    <string-array name="couple_types">
+        <item>Лекция</item>
+        <item>Практика</item>
+        <item>Лабораторная</item>
+        <item>Курсовая</item>
+        <item>Очередная пара</item>
+    </string-array>
+
     <string name="couple_without_number">Очередная пара</string>
 
     <string name="lunch_name">Обеденный перерыв</string>

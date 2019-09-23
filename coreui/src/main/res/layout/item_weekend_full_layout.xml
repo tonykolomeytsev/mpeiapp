@@ -16,10 +16,10 @@
             android:id="@+id/emoji"
             android:layout_width="36dp"
             android:layout_height="36dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginStart="40dp"
             android:src="@drawable/emoji_love"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/textViewWeekend"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
     <!--OVERLINE-->
@@ -27,15 +27,15 @@
             android:id="@+id/textViewWeekend"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
             android:text="@string/weekend_name"
             android:textColor="@color/colorBlack"
             android:textSize="16sp"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="24dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="24dp"
+            app:layout_constraintStart_toEndOf="@+id/emoji"
             app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
