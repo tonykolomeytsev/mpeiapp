@@ -44,6 +44,34 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Суббота" />
 
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                >
+            <ImageView
+                    android:id="@+id/emoji1"
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    android:src="@drawable/emoji_hooray"
+                    />
+            <ImageView
+                    android:id="@+id/emoji2"
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    android:src="@drawable/emoji_love"
+                    android:layout_marginRight="24dp"
+                    android:layout_marginLeft="24dp"
+                    />
+            <ImageView
+                    android:id="@+id/emoji3"
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    android:src="@drawable/emoji_smile"
+                    />
+        </LinearLayout>
+
 
         <TextView
                 android:id="@+id/textViewWeekendFooter"
