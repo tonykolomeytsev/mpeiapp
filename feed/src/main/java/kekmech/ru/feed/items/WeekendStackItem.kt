@@ -24,7 +24,8 @@ class WeekendStackItem(
             R.drawable.emoji_hooray,
             R.drawable.emoji_stars,
             R.drawable.emoji_deal_with,
-            R.drawable.emoji_cucumber
+            R.drawable.emoji_cucumber,
+            R.drawable.emoji_confetti
         )
             .shuffled()
             .take(3)
