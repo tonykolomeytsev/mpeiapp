@@ -12,6 +12,7 @@ import kekmech.ru.feed.IFeedFragment
 import kekmech.ru.feed.items.*
 import kekmech.ru.feed.model.FeedModel
 import kotlinx.coroutines.*
+import java.util.*
 import javax.inject.Inject
 
 @ActivityScope
@@ -44,14 +45,14 @@ class FeedPresenter @Inject constructor(
         if (view.requiredAction == Screens.ADD_TO_FEED) notifyToRefresh()
         this.view = view
         GlobalScope.launch(Dispatchers.Main) {
-            val group: String = withContext(Dispatchers.IO) { model.groupNumber }.toUpperCase()
+            val group: String = withContext(Dispatchers.IO) { model.groupNumber }.toUpperCase(Locale.getDefault())
             view.setStatus(
                 "Группа $group",
                 model.formattedTodayStatus,
                 "Идет ${model.currentWeekNumber} учебная неделя"
             )
 
-            delay(100)
+            //delay(100)
             view.updateAdapterIfNull(adapter)
             view.onEditListener = { onStatusEdit() }
             view.bottomReachListener = { onScrollEnd() }

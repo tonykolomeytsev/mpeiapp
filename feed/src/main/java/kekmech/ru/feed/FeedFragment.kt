@@ -17,6 +17,7 @@ import javax.inject.Inject
 import androidx.core.widget.NestedScrollView
 import android.animation.ValueAnimator
 import android.util.TypedValue
+import androidx.recyclerview.widget.RecyclerView
 
 
 class FeedFragment @Inject constructor() : DaggerFragment(), IFeedFragment {
@@ -46,6 +47,7 @@ class FeedFragment @Inject constructor() : DaggerFragment(), IFeedFragment {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_feed, container, false)
         view.recyclerView.layoutManager = LinearLayoutManager(activity)
+        view.recyclerView.setRecycledViewPool(recycledViewPool)
         view.recyclerViewMenu.layoutManager = LinearLayoutManager(activity)
         view.nestedScroll.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, _, _, _, _ ->
             if (view.nestedScroll.scrollY >= ((v.getChildAt(0).measuredHeight - v.measuredHeight) * 0.95)) {
@@ -179,5 +181,9 @@ class FeedFragment @Inject constructor() : DaggerFragment(), IFeedFragment {
 
     override fun updateMenu(menuAdapter: BaseAdapter) {
         recyclerViewMenu.adapter = menuAdapter
+    }
+
+    companion object {
+        private val recycledViewPool = RecyclerView.RecycledViewPool()
     }
 }

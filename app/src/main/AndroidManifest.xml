@@ -21,6 +21,7 @@
             android:supportsRtl="true"
             android:name=".MPEIApp"
             android:theme="@style/AppTheme"
+            android:hardwareAccelerated="true"
             tools:ignore="AllowBackup,GoogleAppIndexingWarning">
 
             <meta-data
