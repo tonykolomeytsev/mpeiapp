@@ -2,6 +2,7 @@ package kekmech.ru.addscreen.presenter
 
 import android.annotation.SuppressLint
 import android.webkit.WebResourceRequest
+import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import kotlinx.coroutines.Dispatchers
@@ -22,6 +23,7 @@ class WebkitLatch(private val webView: WebView) {
                 setSupportMultipleWindows(false)
                 loadsImagesAutomatically = false
                 defaultTextEncodingName = "utf-8"
+                cacheMode = WebSettings.LOAD_NO_CACHE
             }
             webView.webViewClient = object : WebViewClient() {
                 override fun shouldOverrideUrlLoading(
