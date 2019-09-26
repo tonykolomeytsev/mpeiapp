@@ -15,6 +15,12 @@ class MinCoupleItem(val coupleNative: CoupleNative) : BaseItem<MinCoupleItem.Vie
         viewHolder.name.text = coupleNative.name
         viewHolder.place.text = coupleNative.place
         viewHolder.type.text = getStringType(viewHolder, coupleNative.type, coupleNative.teacher)
+        if (coupleNative.teacher.isNotBlank()) {
+            viewHolder.teacher.text = coupleNative.teacher
+            viewHolder.teacher.visibility = View.VISIBLE
+        } else {
+            viewHolder.teacher.visibility = View.GONE
+        }
         viewHolder.timeStart.text = coupleNative.timeStart
         viewHolder.timeEnd.text = coupleNative.timeEnd
     }
@@ -31,11 +37,9 @@ class MinCoupleItem(val coupleNative: CoupleNative) : BaseItem<MinCoupleItem.Vie
             CoupleNative.COURSE -> 3
             else -> 4
         }
-        val coupleType = Resources.getStringArray(viewHolder.itemView.context,
+        return Resources.getStringArray(viewHolder.itemView.context,
             R.array.couple_types
         )[index]
-        val coupleTeacher = if (teacher.isNotBlank()) "- $teacher" else ""
-        return "$coupleType $coupleTeacher"
     }
 
     override fun approveFactory(factory: BaseFactory) = factory is Factory
@@ -44,6 +48,7 @@ class MinCoupleItem(val coupleNative: CoupleNative) : BaseItem<MinCoupleItem.Vie
         val name by bind<TextView>(R.id.textViewCoupleName)
         val place by bind<TextView>(R.id.textViewCouplePlace)
         val type by bind<TextView>(R.id.textViewCoupleType)
+        val teacher by bind<TextView>(R.id.textViewCoupleTeacher)
         val timeStart by bind<TextView>(R.id.textViewCoupleTimeStart)
         val timeEnd by bind<TextView>(R.id.textViewCoupleTimeEnd)
 
