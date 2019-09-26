@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- ORIGINAL COLOR PALETTE -->
     <color name="colorPrimary">#bf360c</color>
     <color name="colorPrimaryDark">#870000</color>
     <color name="colorAccent">#42a5f5</color>
@@ -24,4 +25,10 @@
     <color name="colorLunchItem">#b4ffff</color>
     <color name="colorFeedBackground">#EEEEEE</color>
     <color name="colorBlackMask">#1A000000</color>
+
+    <!-- DARK COLOR PALETTE -->
+    <color name="colorPrimary_Inverse">#bf360c</color>
+    <color name="colorPrimaryDark_Inverse">#870000</color>
+    <color name="colorAccent_Inverse">#42a5f5</color>
+    <color name="colorSecondary_Inverse">#42a5f5</color>
 </resources>
