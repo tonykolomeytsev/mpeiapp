@@ -12,6 +12,7 @@ import kekmech.ru.coreui.adapter.BaseItem
 import kekmech.ru.timetable.R
 import kekmech.ru.timetable.view.items.MinCoupleItem
 import kekmech.ru.timetable.view.items.MinLunchItem
+import kekmech.ru.timetable.view.items.MinWeekendItem
 import kotlinx.android.synthetic.main.fragment_day.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -25,6 +26,7 @@ class DayFragment(
     private val adapter = BaseAdapter.Builder()
         .registerViewTypeFactory(MinCoupleItem.Factory())
         .registerViewTypeFactory(MinLunchItem.Factory())
+        .registerViewTypeFactory(MinWeekendItem.Factory())
         .build()
 
     override fun onCreateView(
@@ -39,7 +41,10 @@ class DayFragment(
             val awaitedCouples = couples()
             withContext(Dispatchers.Main) {
                 adapter.baseItems.clear()
-                adapter.baseItems.addAll(awaitedCouples)
+                if (awaitedCouples.isNotEmpty())
+                    adapter.baseItems.addAll(awaitedCouples)
+                else
+                    adapter.baseItems.add(MinWeekendItem())
                 adapter.notifyDataSetChanged()
             }
         }
