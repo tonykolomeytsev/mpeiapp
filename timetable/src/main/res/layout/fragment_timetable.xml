@@ -20,7 +20,7 @@
             android:background="@color/colorSecondary"
             android:minHeight="?attr/actionBarSize"
             android:theme="@style/Theme.Design.NoActionBar"
-            app:title="Расписание на неделю" />
+            tools:title="Расписание на неделю" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"

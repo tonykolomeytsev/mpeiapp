@@ -6,4 +6,5 @@ import androidx.lifecycle.LifecycleOwner
 interface TimetableFragmentView : LifecycleOwner {
     fun getChildFragmentManager(): FragmentManager
     fun setupViewPager()
+    fun setStatus(title: String, subtitle: String)
 }

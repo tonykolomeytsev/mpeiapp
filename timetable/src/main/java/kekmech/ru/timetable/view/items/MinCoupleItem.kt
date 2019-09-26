@@ -1,4 +1,4 @@
-package kekmech.ru.timetable
+package kekmech.ru.timetable.view.items
 
 import android.view.View
 import android.widget.TextView
@@ -7,6 +7,7 @@ import kekmech.ru.coreui.Resources
 import kekmech.ru.coreui.adapter.BaseFactory
 import kekmech.ru.coreui.adapter.BaseItem
 import kekmech.ru.coreui.adapter.BaseViewHolder
+import kekmech.ru.timetable.R
 
 class MinCoupleItem(val coupleNative: CoupleNative) : BaseItem<MinCoupleItem.ViewHolder>() {
 
@@ -30,7 +31,9 @@ class MinCoupleItem(val coupleNative: CoupleNative) : BaseItem<MinCoupleItem.Vie
             CoupleNative.COURSE -> 3
             else -> 4
         }
-        val coupleType = Resources.getStringArray(viewHolder.itemView.context, R.array.couple_types)[index]
+        val coupleType = Resources.getStringArray(viewHolder.itemView.context,
+            R.array.couple_types
+        )[index]
         val coupleTeacher = if (teacher.isNotBlank()) "- $teacher" else ""
         return "$coupleType $coupleTeacher"
     }
@@ -48,6 +51,7 @@ class MinCoupleItem(val coupleNative: CoupleNative) : BaseItem<MinCoupleItem.Vie
     }
 
     class Factory : BaseFactory(R.layout.item_couple_min_layout) {
-        override fun instance(view: View) = ViewHolder(view)
+        override fun instance(view: View) =
+            ViewHolder(view)
     }
 }

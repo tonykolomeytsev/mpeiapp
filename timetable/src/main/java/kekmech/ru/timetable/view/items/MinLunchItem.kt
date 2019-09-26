@@ -1,12 +1,11 @@
-package kekmech.ru.timetable
+package kekmech.ru.timetable.view.items
 
 import android.view.View
 import android.widget.TextView
-import kekmech.ru.core.dto.CoupleNative
-import kekmech.ru.coreui.Resources
 import kekmech.ru.coreui.adapter.BaseFactory
 import kekmech.ru.coreui.adapter.BaseItem
 import kekmech.ru.coreui.adapter.BaseViewHolder
+import kekmech.ru.timetable.R
 
 class MinLunchItem() : BaseItem<MinLunchItem.ViewHolder>() {
 
@@ -24,6 +23,7 @@ class MinLunchItem() : BaseItem<MinLunchItem.ViewHolder>() {
     }
 
     class Factory : BaseFactory(R.layout.item_lunch_min_layout) {
-        override fun instance(view: View) = ViewHolder(view)
+        override fun instance(view: View) =
+            ViewHolder(view)
     }
 }

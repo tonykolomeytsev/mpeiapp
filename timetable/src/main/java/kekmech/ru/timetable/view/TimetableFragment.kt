@@ -33,6 +33,14 @@ class TimetableFragment : DaggerFragment(), TimetableFragmentView {
         super.onResume()
         presenter.onResume(this)
         activity?.window?.statusBarColor = Resources.getColor(context, R.color.colorSecondary)
+        if (presenter.checkIsNecessaryDayOpened()) {
+            val necessaryDay = presenter.today.dayOfWeek - 2 // потому что Calendar.MONDAY == 2
+            if (necessaryDay in 0..6) {
+                viewPager?.postDelayed({
+                    viewPager?.setCurrentItem(necessaryDay, true)
+                }, 100)
+            }
+        }
     }
 
     override fun onPause() {
@@ -44,6 +52,13 @@ class TimetableFragment : DaggerFragment(), TimetableFragmentView {
         viewPager.adapter = presenter.weekAdapter
         tabLayout.setupWithViewPager(viewPager)
         tabLayout.tabMode = TabLayout.MODE_SCROLLABLE
+    }
+
+    override fun setStatus(title: String, subtitle: String) {
+        timetableToolbar?.post {
+            timetableToolbar?.title = title
+            timetableToolbar?.subtitle = subtitle
+        }
     }
 
 }

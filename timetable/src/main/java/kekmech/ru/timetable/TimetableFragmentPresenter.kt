@@ -2,6 +2,7 @@ package kekmech.ru.timetable
 
 import android.content.Context
 import kekmech.ru.core.Presenter
+import kekmech.ru.core.dto.Time
 import kekmech.ru.timetable.model.TimetableFragmentModel
 import kekmech.ru.timetable.view.TimetableFragmentView
 import kotlinx.coroutines.Dispatchers
@@ -16,6 +17,8 @@ class TimetableFragmentPresenter @Inject constructor(
 ) : Presenter<TimetableFragmentView> {
 
     lateinit var weekAdapter: WeekAdapter
+    private var isNecessaryDayOpened = false
+    val today get() = model.today
 
     /**
      * subscribe to view events
@@ -27,12 +30,26 @@ class TimetableFragmentPresenter @Inject constructor(
                 withContext(Dispatchers.Main) { view.setupViewPager() }
             }
         }
-
+        GlobalScope.launch(Dispatchers.IO) {
+            val title = "Группа ${model.groupNumber}"
+            val subtitle = "Идет ${model.currentWeekNumber} неделя (${getParity(today)})"
+            withContext(Dispatchers.Main) { view.setStatus(title, subtitle) }
+        }
     }
+
+    private fun getParity(today: Time) = if (today.parity == Time.Parity.EVEN) "четная" else "нечетная"
 
     /**
      * unsubscribe to view events
      */
     override fun onPause(view: TimetableFragmentView) = Unit
+
+    fun checkIsNecessaryDayOpened(): Boolean {
+        if (isNecessaryDayOpened) return false
+        else {
+            isNecessaryDayOpened = true
+            return true
+        }
+    }
 
 }
