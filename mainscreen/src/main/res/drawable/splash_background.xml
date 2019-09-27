@@ -2,6 +2,6 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:drawable="@color/colorAccent"/>
     <item>
-        <bitmap android:gravity="center" android:src="@drawable/thinking_face_emoji_large"/>
+        <bitmap android:gravity="center" android:src="@drawable/g4495"/>
     </item>
 </layer-list>
