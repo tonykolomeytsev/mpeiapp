@@ -19,6 +19,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+// FIXME: InstantiationException: Unable to instantiate fragment kekmech.ru.timetable.view.DayFragment: could not find Fragment constructor
 class DayFragment(
     private val couples: () -> List<BaseItem<*>>
 ) : Fragment() {
