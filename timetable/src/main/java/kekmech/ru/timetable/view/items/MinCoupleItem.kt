@@ -14,7 +14,7 @@ class MinCoupleItem(val coupleNative: CoupleNative) : BaseItem<MinCoupleItem.Vie
     override fun updateViewHolder(viewHolder: ViewHolder) {
         viewHolder.name.text = coupleNative.name
         viewHolder.place.text = coupleNative.place
-        viewHolder.type.text = getStringType(viewHolder, coupleNative.type, coupleNative.teacher)
+        viewHolder.type.text = getStringType(viewHolder, coupleNative.type)
         if (coupleNative.teacher.isNotBlank()) {
             viewHolder.teacher.text = coupleNative.teacher
             viewHolder.teacher.visibility = View.VISIBLE
@@ -27,8 +27,7 @@ class MinCoupleItem(val coupleNative: CoupleNative) : BaseItem<MinCoupleItem.Vie
 
     private fun getStringType(
         viewHolder: ViewHolder,
-        type: String,
-        teacher: String
+        type: String
     ): String {
         val index = when(type) {
             CoupleNative.LECTURE -> 0
