@@ -21,7 +21,7 @@ data class User(
     @Deprecated("Use SharedPreferences for store this data")
     @ColumnInfo(name = "night_mode")
     var nightMode: Boolean,
-    
+
     @ColumnInfo(name = "last_schedule_id")
     var lastScheduleId: Int     // последнее открытое расписание
 ) {

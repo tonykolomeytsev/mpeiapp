@@ -20,7 +20,7 @@ class FeedPresenter @Inject constructor(
     private val model: FeedModel,
     private val context: Context,
     private val router: Router
-) : Presenter<IFeedFragment> {
+) : Presenter<IFeedFragment>() {
 
     private var isNotifiedToRefresh: Boolean = false
     var view: IFeedFragment? = null

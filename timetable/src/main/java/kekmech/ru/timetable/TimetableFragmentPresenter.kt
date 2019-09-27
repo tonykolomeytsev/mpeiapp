@@ -14,7 +14,7 @@ import kotlinx.coroutines.GlobalScope
 class TimetableFragmentPresenter @Inject constructor(
     private val model: TimetableFragmentModel,
     private val context: Context
-) : Presenter<TimetableFragmentView> {
+) : Presenter<TimetableFragmentView>() {
 
     lateinit var weekAdapter: WeekAdapter
     private var isNecessaryDayOpened = false

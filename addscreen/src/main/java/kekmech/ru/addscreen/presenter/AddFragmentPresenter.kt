@@ -17,7 +17,7 @@ import javax.inject.Inject
 class AddFragmentPresenter @Inject constructor(
     private val saveScheduleUseCase: SaveScheduleUseCase,
     private val router: Router
-) : Presenter<IAddFragment> {
+) : Presenter<IAddFragment>() {
     private var view: IAddFragment? = null
     private var htmlWorker: HTMLWorker? = null
 

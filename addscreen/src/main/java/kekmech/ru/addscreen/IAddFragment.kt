@@ -1,8 +1,9 @@
 package kekmech.ru.addscreen
 
 import android.webkit.WebView
+import androidx.lifecycle.LifecycleOwner
 
-interface IAddFragment {
+interface IAddFragment : LifecycleOwner {
     val web: WebView
 
     var onSearchClickListener: (String) -> Unit

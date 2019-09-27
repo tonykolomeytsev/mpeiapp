@@ -1,16 +1,12 @@
 package kekmech.ru.core
 
-interface Presenter<T> {
+import androidx.lifecycle.LifecycleOwner
 
-    /**
-     * subscribe to view events
-     */
-    fun onResume(view: T)
+abstract class Presenter<T : LifecycleOwner> {
 
-    /**
-     * unsubscribe to view events
-     */
-    fun onPause(view: T)
+    open fun onCreate(view: T) = Unit
 
+    open fun onResume(view: T) = Unit
 
+    open fun onPause(view: T) = Unit
 }
