@@ -1,4 +1,4 @@
-package kekmech.ru.domain
+package kekmech.ru.domain.di
 
 import dagger.Component
 import kekmech.ru.core.ContextProvider

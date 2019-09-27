@@ -9,7 +9,7 @@ class SaveScheduleUseCaseImpl @Inject constructor(
     private val scheduleRepository: ScheduleRepository
 ) : SaveScheduleUseCase {
 
-    override fun save(schedule: Schedule) {
+    override operator fun invoke(schedule: Schedule) {
         scheduleRepository.saveSchedule(schedule)
     }
 

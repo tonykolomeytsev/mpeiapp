@@ -9,7 +9,7 @@ class GetTimetableScheduleUseCaseImpl @Inject constructor(
     private val scheduleRepository: ScheduleRepository
 ) : GetTimetableScheduleUseCase {
 
-    override fun execute(dayOfWeek: Int, weekNum: Int): List<CoupleNative> {
+    override operator fun invoke(dayOfWeek: Int, weekNum: Int): List<CoupleNative> {
         val schedule = scheduleRepository.getSchedule(false)
         val parity = if (weekNum % 2 == 0) CoupleNative.EVEN else CoupleNative.ODD
         return schedule.coupleList

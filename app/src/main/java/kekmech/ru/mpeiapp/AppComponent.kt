@@ -5,7 +5,7 @@ import dagger.Component
 import dagger.android.AndroidInjectionModule
 import kekmech.ru.core.InteractorProvider
 import kekmech.ru.core.RepositoryProvider
-import kekmech.ru.domain.InteractorComponent
+import kekmech.ru.domain.di.InteractorComponent
 import kekmech.ru.mainscreen.di.MainActivityModule
 import kekmech.ru.repository.di.RepositoryComponent
 import javax.inject.Singleton

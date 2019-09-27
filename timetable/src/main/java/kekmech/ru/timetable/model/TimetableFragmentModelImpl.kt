@@ -24,7 +24,7 @@ class TimetableFragmentModelImpl @Inject constructor(
      * Group number like "C-12-16"
      */
     override val groupNumber: String
-        get() = loadDayStatusUseCase.execute(0).groupNum.toUpperCase(Locale.getDefault())
+        get() = loadDayStatusUseCase(0).groupNum.toUpperCase(Locale.getDefault())
 
     /**
      * Current week number
@@ -37,7 +37,7 @@ class TimetableFragmentModelImpl @Inject constructor(
                 today.formattedAsMonthName(context, R.array.months)
 
     override fun getDaySchedule(dayOfWeek: Int, weekNum: Int): List<BaseItem<*>> {
-        val couples: MutableList<BaseItem<*>> = getTimetableScheduleUseCase.execute(dayOfWeek, weekNum)
+        val couples: MutableList<BaseItem<*>> = getTimetableScheduleUseCase(dayOfWeek, weekNum)
             .map { MinCoupleItem(it) }
             .toMutableList()
         // insert lunch

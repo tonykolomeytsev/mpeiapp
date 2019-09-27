@@ -1,4 +1,4 @@
-package kekmech.ru.domain.feed
+package kekmech.ru.domain
 
 import kekmech.ru.core.dto.CoupleNative
 import kekmech.ru.core.repositories.ScheduleRepository
@@ -9,7 +9,7 @@ class LoadOffsetScheduleUseCaseImpl @Inject constructor(
     private val repository: ScheduleRepository
 ) : LoadOffsetScheduleUseCase {
 
-    override fun execute(offset: Int, refresh: Boolean): List<CoupleNative> {
+    override operator fun invoke(offset: Int, refresh: Boolean): List<CoupleNative> {
         return repository.getOffsetCouples(offset, refresh)
     }
 }

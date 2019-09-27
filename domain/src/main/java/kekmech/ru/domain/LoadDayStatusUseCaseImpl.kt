@@ -1,4 +1,4 @@
-package kekmech.ru.domain.feed
+package kekmech.ru.domain
 
 import kekmech.ru.core.dto.DayStatus
 import kekmech.ru.core.dto.Time
@@ -12,7 +12,7 @@ class LoadDayStatusUseCaseImpl @Inject constructor(
 
     private val mapOfDays = mutableMapOf<Int, Time>()
 
-    override fun execute(offset: Int, refresh: Boolean): DayStatus {
+    override operator fun invoke(offset: Int, refresh: Boolean): DayStatus {
         if (refresh) mapOfDays.clear()
         if (mapOfDays[offset] == null) {
             val newDay = Time.today().getDayWithOffset(offset)

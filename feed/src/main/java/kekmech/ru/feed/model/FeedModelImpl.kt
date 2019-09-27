@@ -28,7 +28,7 @@ class FeedModelImpl @Inject constructor(
      * Group number like "C-12-16"
      */
     override val groupNumber: String
-        get() = loadDayStatusUseCase.execute(0).groupNum
+        get() = loadDayStatusUseCase(0).groupNum
 
     /**
      * Current week number
@@ -49,7 +49,7 @@ class FeedModelImpl @Inject constructor(
      */
     override suspend fun getDayCouples(offset: Int, refresh: Boolean): List<BaseItem<*>> {
         return withContext(Dispatchers.IO) {
-            val list = loadOffsetScheduleUseCase.execute(offset, refresh)
+            val list = loadOffsetScheduleUseCase(offset, refresh)
             if (list.isNotEmpty()) {
                 val couples = mutableListOf<BaseItem<*>>()
                 if (list.first().type == CoupleNative.WEEKEND) {
@@ -57,10 +57,10 @@ class FeedModelImpl @Inject constructor(
                     // если сегодня выходной, то пытаемся собрать все последующие выходные в стек и вернуть сразу все
                     var i = 1
                     val nativeCouples = mutableListOf<CoupleNative>()
-                    var nextDayCouples = loadOffsetScheduleUseCase.execute(offset + i, refresh)
+                    var nextDayCouples = loadOffsetScheduleUseCase(offset + i, refresh)
                     while (nextDayCouples.isNotEmpty() && nextDayCouples.first().type == CoupleNative.WEEKEND) {
                         nativeCouples.addAll(nextDayCouples)
-                        nextDayCouples = loadOffsetScheduleUseCase.execute(offset + (++i), refresh)
+                        nextDayCouples = loadOffsetScheduleUseCase(offset + (++i), refresh)
                     }
                     weekendOffset += i - 1
 

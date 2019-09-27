@@ -67,7 +67,7 @@ class AddFragmentPresenter @Inject constructor(
                     },
                     "Schedule"
                 )
-                saveScheduleUseCase.save(schedule)
+                saveScheduleUseCase(schedule)
                 withContext(Dispatchers.Main) { router.navigateTo(Screens.ADD_TO_FEED) }
 
             } catch (e: Exception) {
