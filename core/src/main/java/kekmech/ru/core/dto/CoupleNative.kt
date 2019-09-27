@@ -1,34 +1,53 @@
 package kekmech.ru.core.dto
 
-import androidx.room.*
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.Index
+import androidx.room.PrimaryKey
 
 /**
  * В таком виде приложение хранит информацию о занятиях
  */
 @Entity(
-//    foreignKeys = [ForeignKey(
-//        entity = ScheduleNative::class,
-//        parentColumns = ["id"],
-//        childColumns = ["schedule_id"])],
     tableName = "couples",
     indices = [Index(
         value = ["id", "schedule_id"],
         unique = true
-    )])
+    )]
+)
 class CoupleNative(
-//    @PrimaryKey(autoGenerate = true)    var id: Int,
-    @ColumnInfo(name = "schedule_id")   var scheduleId: Int,
-    @ColumnInfo(name = "name") var name: String,       // название предмета
-    @ColumnInfo(name = "teacher") var teacher: String,    // ФИО препода
-    @ColumnInfo(name = "place") var place: String,      // место проведения
-    @ColumnInfo(name = "time_start")    var timeStart: String,  // время начала
-    @ColumnInfo(name = "time_end")      var timeEnd: String,    // время конца
-    @ColumnInfo(name = "type") var type: String,       // тип занятия
-    @ColumnInfo(name = "num") var num: Int,           // номер пары
-    @ColumnInfo(name = "day") var day: Int,           // день проведения
-    @ColumnInfo(name = "week") var week: Int           // ODD\EVEN\BOTH
+    @ColumnInfo(name = "schedule_id")
+    var scheduleId: Int,
+
+    @ColumnInfo(name = "name")
+    var name: String,       // название предмета
+
+    @ColumnInfo(name = "teacher")
+    var teacher: String,    // ФИО препода
+
+    @ColumnInfo(name = "place")
+    var place: String,      // место проведения
+
+    @ColumnInfo(name = "time_start")
+    var timeStart: String,  // время начала
+
+    @ColumnInfo(name = "time_end")
+    var timeEnd: String,    // время конца
+
+    @ColumnInfo(name = "type")
+    var type: String,       // тип занятия
+
+    @ColumnInfo(name = "num")
+    var num: Int,           // номер пары
+
+    @ColumnInfo(name = "day")
+    var day: Int,           // день проведения
+
+    @ColumnInfo(name = "week")
+    var week: Int           // ODD\EVEN\BOTH
 ) {
-    @PrimaryKey(autoGenerate = true) var id: Int = 0
+    @PrimaryKey(autoGenerate = true)
+    var id: Int = 0
 
     companion object {
         const val LECTURE = "LECTURE"
@@ -44,6 +63,6 @@ class CoupleNative(
         const val EVEN = 2 // четный
 
         val dayOff: CoupleNative
-            get() = CoupleNative(0,"","","","","", WEEKEND, 0,0, 0)
+            get() = CoupleNative(0, "", "", "", "", "", WEEKEND, 0, 0, 0)
     }
 }

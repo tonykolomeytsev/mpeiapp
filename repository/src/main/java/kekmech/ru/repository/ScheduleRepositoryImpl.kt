@@ -1,17 +1,13 @@
 package kekmech.ru.repository
 
-import android.util.Log
 import kekmech.ru.core.dto.CoupleNative
 import kekmech.ru.core.dto.Schedule
 import kekmech.ru.core.dto.Time
 import kekmech.ru.core.gateways.ScheduleCacheGateway
-import kekmech.ru.core.gateways.ScheduleRemoteGateway
 import kekmech.ru.core.repositories.ScheduleRepository
-import java.util.*
 import javax.inject.Inject
 
 class ScheduleRepositoryImpl @Inject constructor(
-    private val scheduleRemoteGateway: ScheduleRemoteGateway,
     private val scheduleCacheGateway: ScheduleCacheGateway
 ) : ScheduleRepository {
 

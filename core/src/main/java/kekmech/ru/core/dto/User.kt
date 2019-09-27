@@ -7,11 +7,23 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "users")
 data class User(
-    @PrimaryKey(autoGenerate = true) var id: Int,
-    @ColumnInfo(name = "first_launch") var firstLaunchFlag: Boolean, // первый запуск
-    @ColumnInfo(name = "dev_mode") var developerMode: Boolean, // режим разработчика
-    @ColumnInfo(name = "night_mode") var nightMode: Boolean,
-    @ColumnInfo(name = "last_schedule_id") var lastScheduleId: Int // последнее открытое расписание
+    @PrimaryKey(autoGenerate = true)
+    var id: Int,
+
+    @Deprecated("Use SharedPreferences for store this data")
+    @ColumnInfo(name = "first_launch")
+    var firstLaunchFlag: Boolean,  // первый запуск
+
+    @Deprecated("Use SharedPreferences for store this data")
+    @ColumnInfo(name = "dev_mode")
+    var developerMode: Boolean, // режим разработчика
+
+    @Deprecated("Use SharedPreferences for store this data")
+    @ColumnInfo(name = "night_mode")
+    var nightMode: Boolean,
+    
+    @ColumnInfo(name = "last_schedule_id")
+    var lastScheduleId: Int     // последнее открытое расписание
 ) {
     companion object {
         fun defaultUser() = User(
