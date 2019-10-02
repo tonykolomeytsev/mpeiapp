@@ -3,11 +3,13 @@ package kekmech.ru.settings
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.*
 import dagger.android.support.DaggerFragment
 import kekmech.ru.core.Router
 import kekmech.ru.coreui.Resources
+import kekmech.ru.coreui.bs.BaseBottomSheetFragment
 import kekmech.ru.coreui.menu.BaseMenu
 import kekmech.ru.coreui.menu.ItemListener
 import kotlinx.android.synthetic.main.fragment_settings.view.*
@@ -63,6 +65,13 @@ class SettingsFragment : DaggerFragment(), ItemListener {
         return view
     }
 
+    override fun onResume() {
+        super.onResume()
+        TestBottomSheet()
+            .onClick(R.id.kek) { Log.d("KEK", "KEK") }
+            .show(activity?.supportFragmentManager!!, null)
+    }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         statusBarColor = activity!!.window.statusBarColor
@@ -73,5 +82,7 @@ class SettingsFragment : DaggerFragment(), ItemListener {
         super.onDetach()
         activity!!.window.statusBarColor = statusBarColor
     }
+
+    class TestBottomSheet : BaseBottomSheetFragment(R.layout.fragment_bottom_sheet_test)
 
 }
