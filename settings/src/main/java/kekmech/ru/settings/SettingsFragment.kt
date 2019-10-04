@@ -65,13 +65,6 @@ class SettingsFragment : DaggerFragment(), ItemListener {
         return view
     }
 
-    override fun onResume() {
-        super.onResume()
-        TestBottomSheet()
-            .onClick(R.id.kek) { Log.d("KEK", "KEK") }
-            .show(activity?.supportFragmentManager!!, null)
-    }
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         statusBarColor = activity!!.window.statusBarColor

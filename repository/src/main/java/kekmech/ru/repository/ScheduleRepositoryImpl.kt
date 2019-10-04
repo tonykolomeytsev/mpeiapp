@@ -16,8 +16,8 @@ class ScheduleRepositoryImpl @Inject constructor(
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun getSchedule(refresh: Boolean): Schedule {
-        return scheduleCacheGateway.getSchedule()!!
+    override fun getSchedule(refresh: Boolean): Schedule? {
+        return scheduleCacheGateway.getSchedule()
     }
 
     override fun getOffsetCouples(offset: Int, refresh: Boolean): List<CoupleNative> {

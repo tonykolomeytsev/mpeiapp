@@ -8,7 +8,7 @@ interface ScheduleRepository {
 
     fun getCurrentWeek(refresh: Boolean): Int
 
-    fun getSchedule(refresh: Boolean): Schedule
+    fun getSchedule(refresh: Boolean): Schedule?
 
     fun saveSchedule(schedule: Schedule)
 
