@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- ORIGINAL COLOR PALETTE -->
-    <color name="colorPrimary">#bf360c</color>
-    <color name="colorPrimaryDark">#870000</color>
-    <color name="colorAccent">#42a5f5</color>
-    <color name="colorSecondary">#42a5f5</color>
+    <color name="colorPrimary">#ff505c</color>
+    <color name="colorPrimaryDark">#FF361B</color>
+    <color name="colorAccent">#4F6496</color>
+    <color name="colorSecondary">#4F6496</color>
 
     <color name="primaryLightColor">#f9683a</color>
     <color name="secondaryLightColor">#80d6ff</color>
-    <color name="secondaryDarkColor">#0077c2</color>
-    <color name="primaryTextColor">#ffffff</color>
+    <color name="secondaryDarkColor">#484955</color>
+    <color name="primaryTextColor">#f7f6ee</color>
     <color name="secondaryTextColor">#000000</color>
     <color name="colorWhite">#ffffff</color>
 
@@ -22,7 +22,7 @@
     <color name="colorTransparent">#00000000</color>
     <color name="colorCollapsingToolbarTransparent">#0042a5f5</color>
     <color name="colorIconsTint">#464646</color>
-    <color name="colorLunchItem">#b4ffff</color>
+    <color name="colorLunchItem">@color/colorSecondary</color>
     <color name="colorFeedBackground">#EEEEEE</color>
     <color name="colorBlackMask">#1A000000</color>
 
