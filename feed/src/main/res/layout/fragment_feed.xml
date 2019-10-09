@@ -143,7 +143,7 @@
             tools:cardCornerRadius="4dp"
             tools:visibility="visible"
             tools:layout_height="300dp"
-            >
+            tools:ignore="RtlHardcoded">
 
         <FrameLayout
                 android:id="@+id/cardViewChild"

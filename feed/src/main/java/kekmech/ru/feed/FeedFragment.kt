@@ -107,6 +107,7 @@ class FeedFragment @Inject constructor() : DaggerFragment(), IFeedFragment {
         this.requiredAction = action
     }
 
+    @Deprecated("Menu will be deleted")
     override fun showMenu() {
         cardViewMenu.visibility = View.VISIBLE
         val w = recyclerViewMenu.measuredWidth
@@ -146,6 +147,7 @@ class FeedFragment @Inject constructor() : DaggerFragment(), IFeedFragment {
         frameLayoutMenuOverlay.setOnClickListener { hideMenu() }
     }
 
+    @Deprecated("Menu will be deleted")
     override fun hideMenu() {
         fab.animate()
             .alpha(1f)
