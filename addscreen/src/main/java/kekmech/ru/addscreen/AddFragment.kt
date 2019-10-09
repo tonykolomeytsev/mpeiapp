@@ -40,8 +40,10 @@ class AddFragment @Inject constructor() : DaggerFragment(), IAddFragment {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        textView2.setOnClickListener { editTextGroupName.setText("С-12-17") }
         GlobalScope.launch(Dispatchers.Main) {
             delay(100)
+            // TODO: FOR CHINESE LOLLIPOP DEVICES CATCH INFLATING EXCEPTION
             stub.inflate()
         }
     }

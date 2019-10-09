@@ -29,30 +29,30 @@ class MapFragment : DaggerFragment(), MapFragmentView, OnMapReadyCallback {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Needs to call MapsInitializer before doing any CameraUpdateFactory calls
-        try {
-            MapsInitializer.initialize(this.activity)
-        } catch (e: GooglePlayServicesNotAvailableException) {
-            e.printStackTrace()
-        }
-
+//        // Needs to call MapsInitializer before doing any CameraUpdateFactory calls
+//        try {
+//            MapsInitializer.initialize(this.activity)
+//        } catch (e: GooglePlayServicesNotAvailableException) {
+//            e.printStackTrace()
+//        }
+//
         // Inflate the layout for this fragment
         val v = inflater.inflate(R.layout.fragment_map, container, false)
-
-        // Gets the MapView from the XML layout and creates it
-        mapView = v.findViewById(R.id.mapView) as MapView
-        mapView.onCreate(savedInstanceState)
-
-        val typedValue = TypedValue()
-        val statusBarSize = if (activity?.theme?.resolveAttribute(android.R.attr.actionBarSize, typedValue, true) == true)
-            TypedValue.complexToDimensionPixelSize(typedValue.data, resources.displayMetrics)
-        else 0
-        val p = mapView.layoutParams as ViewGroup.MarginLayoutParams
-        p.topMargin = -statusBarSize
-        mapView.layoutParams = p
-
-        // Gets to GoogleMap from the MapView and does initialization stuff
-        mapView.getMapAsync(this)
+//
+//        // Gets the MapView from the XML layout and creates it
+//        mapView = v.findViewById(R.id.mapView) as MapView
+//        mapView.onCreate(savedInstanceState)
+//
+//        val typedValue = TypedValue()
+//        val statusBarSize = if (activity?.theme?.resolveAttribute(android.R.attr.actionBarSize, typedValue, true) == true)
+//            TypedValue.complexToDimensionPixelSize(typedValue.data, resources.displayMetrics)
+//        else 0
+//        val p = mapView.layoutParams as ViewGroup.MarginLayoutParams
+//        p.topMargin = -statusBarSize
+//        mapView.layoutParams = p
+//
+//        // Gets to GoogleMap from the MapView and does initialization stuff
+//        mapView.getMapAsync(this)
 
         return v
     }
@@ -71,24 +71,24 @@ class MapFragment : DaggerFragment(), MapFragmentView, OnMapReadyCallback {
     }
 
     override fun onResume() {
-        mapView.onResume()
+        //mapView.onResume()
         super.onResume()
-        activity?.window?.statusBarColor = Resources.getColor(context, android.R.color.transparent)
+        activity?.window?.statusBarColor = Resources.getColor(context, R.color.colorPrimary)
     }
 
     override fun onPause() {
-        mapView.onPause()
+        //mapView.onPause()
         super.onPause()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        mapView.onDestroy()
+        //mapView.onDestroy()
     }
 
     override fun onLowMemory() {
         super.onLowMemory()
-        mapView.onLowMemory()
+        //mapView.onLowMemory()
     }
 
 

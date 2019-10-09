@@ -59,9 +59,9 @@ class SettingsDevFragment : DaggerFragment(), ItemListener {
         val view = inflater.inflate(R.layout.fragment_settings_dev, container, false)
         view.recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
         view.recyclerView.adapter = adapter
-        view.toolbar.setNavigationOnClickListener {
-            it.postOnAnimation { router.popBackStack() }
-        }
+//        view.toolbar.setNavigationOnClickListener {
+//            it.postOnAnimation { router.popBackStack() }
+//        }
         return view
     }
 

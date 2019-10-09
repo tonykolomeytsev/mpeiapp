@@ -67,13 +67,13 @@ class SettingsFragment : DaggerFragment(), ItemListener {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        statusBarColor = activity!!.window.statusBarColor
+        //statusBarColor = activity!!.window.statusBarColor
         activity!!.window.statusBarColor = Resources.getColor(context, R.color.colorPrimary)
     }
 
     override fun onDetach() {
         super.onDetach()
-        activity!!.window.statusBarColor = statusBarColor
+        //activity!!.window.statusBarColor = statusBarColor
     }
 
     class TestBottomSheet : BaseBottomSheetFragment(R.layout.fragment_bottom_sheet_test)
