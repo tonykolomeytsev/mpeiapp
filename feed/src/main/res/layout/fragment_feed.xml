@@ -25,7 +25,7 @@
                 app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
                 app:expandedTitleGravity="top"
                 app:expandedTitleTextAppearance="@style/CollapsingToolbarLayoutExpandedTextStyle"
-                app:expandedTitleMarginTop="52dp"
+                app:expandedTitleMarginTop="48dp"
                 app:expandedTitleMarginStart="40dp"
                 app:contentScrim="@color/colorSecondary">
 
@@ -45,25 +45,43 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="40dp"
                         android:layout_marginBottom="16dp"
-                        android:fontFamily="sans-serif-medium"
+                        android:fontFamily="sans-serif-light"
                         tools:text="Чётная неделя"
                         android:textColor="@color/colorWhite"
                         android:textSize="14sp"
+                        android:alpha="0.75"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent" />
 
-                <TextView
-                        android:id="@+id/textViewDayInfo"
+                <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="40dp"
-                        android:layout_marginBottom="4dp"
-                        android:fontFamily="sans-serif-medium"
-                        tools:text="Сегодня 29 октября, пятница"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="14sp"
                         app:layout_constraintBottom_toTopOf="@+id/textViewWeekInfo"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginBottom="0dp"
+                        android:orientation="horizontal">
+
+                    <TextView
+                            android:id="@+id/textViewDayOfWeekInfo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-black"
+                            tools:text="Среда, "
+                            android:textColor="@color/colorWhite"
+                            android:textSize="18sp" />
+
+                    <TextView
+                            android:id="@+id/textViewDayOfMonthInfo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-light"
+                            tools:text="9 октября"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="18sp"/>
+
+                </LinearLayout>
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.appcompat.widget.Toolbar

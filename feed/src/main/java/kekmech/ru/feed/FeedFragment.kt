@@ -16,6 +16,7 @@ import kotlinx.android.synthetic.main.fragment_feed.view.*
 import javax.inject.Inject
 import androidx.core.widget.NestedScrollView
 import android.animation.ValueAnimator
+import android.annotation.SuppressLint
 import android.util.TypedValue
 import androidx.recyclerview.widget.RecyclerView
 
@@ -78,10 +79,12 @@ class FeedFragment @Inject constructor() : DaggerFragment(), IFeedFragment {
         dialog.show()
     }
 
+    @SuppressLint("SetTextI18n")
     override fun setStatus(title: String, dayInfo: String, weekInfo: String) {
         main_collapsing.title = title
         toolbar.title = title
-        textViewDayInfo.text = dayInfo
+        textViewDayOfWeekInfo.text = dayInfo.substringBefore(',') + ", "
+        textViewDayOfMonthInfo.text = dayInfo.substringAfter(',')
         textViewWeekInfo.text = weekInfo
     }
 

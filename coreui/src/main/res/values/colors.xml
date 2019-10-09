@@ -22,7 +22,7 @@
     <color name="colorTransparent">#00000000</color>
     <color name="colorCollapsingToolbarTransparent">#0042a5f5</color>
     <color name="colorIconsTint">#464646</color>
-    <color name="colorLunchItem">@color/colorSecondary</color>
+    <color name="colorLunchItem">#efefef</color>
     <color name="colorFeedBackground">#EEEEEE</color>
     <color name="colorBlackMask">#1A000000</color>
 
