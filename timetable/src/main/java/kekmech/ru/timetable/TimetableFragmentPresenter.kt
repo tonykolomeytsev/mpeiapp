@@ -55,7 +55,7 @@ class TimetableFragmentPresenter @Inject constructor(
             )
             view.setSubtitleStatus(
                 "Следующая ${model.currentWeekNumber + 1} неделя (${getParity(
-                    today.nextDay
+                    today.getDayWithOffset(7)
                 )})"
             )
         } else {
