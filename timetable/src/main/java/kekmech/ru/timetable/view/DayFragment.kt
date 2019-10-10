@@ -7,9 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import dagger.android.support.DaggerFragment
 import kekmech.ru.coreui.adapter.BaseAdapter
 import kekmech.ru.coreui.adapter.BaseItem
 import kekmech.ru.timetable.R
+import kekmech.ru.timetable.TimetableFragmentPresenter
+import kekmech.ru.timetable.model.TimetableFragmentModel
 import kekmech.ru.timetable.view.items.MinCoupleItem
 import kekmech.ru.timetable.view.items.MinLunchItem
 import kekmech.ru.timetable.view.items.MinWeekendItem
@@ -18,11 +21,19 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-// FIXME: InstantiationException: Unable to instantiate fragment kekmech.ru.timetable.view.DayFragment: could not find Fragment constructor
-class DayFragment(
-    private val couples: () -> List<BaseItem<*>>
-) : Fragment() {
+abstract class DayFragment : DaggerFragment() {
+
+    abstract val dayOfWeek: Int
+
+    @Inject
+    lateinit var model: TimetableFragmentModel
+
+    val couples: () -> List<BaseItem<*>>
+        get() = { model.getDaySchedule(dayOfWeek + 1, model.today.weekOfSemester) }
+
+    var weekOffset = 0 // Для переключения между четной и нечетной неделей
 
     private val adapter = BaseAdapter.Builder()
         .registerViewTypeFactory(MinCoupleItem.Factory())

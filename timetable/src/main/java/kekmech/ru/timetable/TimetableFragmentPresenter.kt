@@ -3,6 +3,7 @@ package kekmech.ru.timetable
 import android.content.Context
 import kekmech.ru.core.Presenter
 import kekmech.ru.core.dto.Time
+import kekmech.ru.coreui.adapter.BaseItem
 import kekmech.ru.timetable.model.TimetableFragmentModel
 import kekmech.ru.timetable.view.TimetableFragmentView
 import kotlinx.coroutines.Dispatchers
@@ -10,6 +11,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import kotlinx.coroutines.GlobalScope
+import java.util.*
 
 class TimetableFragmentPresenter @Inject constructor(
     private val model: TimetableFragmentModel,
@@ -50,6 +52,11 @@ class TimetableFragmentPresenter @Inject constructor(
             isNecessaryDayOpened = true
             return true
         }
+    }
+
+    companion object {
+        val locker = Object()
+        @Volatile var dayCouplesMap = mutableMapOf<Int, () -> (List<BaseItem<*>>)>()
     }
 
 }

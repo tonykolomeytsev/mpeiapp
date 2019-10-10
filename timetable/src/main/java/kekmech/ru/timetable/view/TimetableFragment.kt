@@ -50,6 +50,7 @@ class TimetableFragment : DaggerFragment(), TimetableFragmentView {
 
     override fun setupViewPager() {
         viewPager.adapter = presenter.weekAdapter
+        viewPager.offscreenPageLimit = 5
         tabLayout.setupWithViewPager(viewPager)
         tabLayout.tabMode = TabLayout.MODE_SCROLLABLE
     }
