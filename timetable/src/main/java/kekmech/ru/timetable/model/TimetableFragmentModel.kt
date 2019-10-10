@@ -1,5 +1,6 @@
 package kekmech.ru.timetable.model
 
+import androidx.lifecycle.LiveData
 import kekmech.ru.core.dto.Time
 import kekmech.ru.coreui.adapter.BaseItem
 
@@ -18,4 +19,6 @@ interface TimetableFragmentModel {
     val formattedTodayStatus: String
 
     fun getDaySchedule(dayOfWeek: Int, weekNum: Int): List<BaseItem<*>>
+
+    var weekOffset: LiveData<Int>
 }

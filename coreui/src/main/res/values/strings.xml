@@ -46,6 +46,9 @@
         <item>Очередная пара</item>
     </string-array>
 
+    <string name="timetable_show_next_week">Показать следующую неделю</string>
+    <string name="timetable_show_current_week">Вернуться к текущей неделе</string>
+
     <string name="couple_without_number">Очередная пара</string>
 
     <string name="lunch_name">Обеденный перерыв</string>

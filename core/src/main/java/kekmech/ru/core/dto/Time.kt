@@ -36,9 +36,7 @@ class Time(val calendar: Calendar = Calendar.getInstance()) {
     }
     val parity by lazy { if (weekOfSemester % 2 == 0) Parity.EVEN else Parity.ODD }
     val nextDay by lazy {
-        Time(Calendar.getInstance().apply {
-            timeInMillis = calendar.timeInMillis + MILLIS_IN_DAY
-        })
+        getDayWithOffset(1)
     }
     val prevDay by lazy {
         Time(Calendar.getInstance().apply {

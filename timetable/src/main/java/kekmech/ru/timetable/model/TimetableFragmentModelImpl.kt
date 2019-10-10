@@ -1,6 +1,8 @@
 package kekmech.ru.timetable.model
 
 import android.content.Context
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import kekmech.ru.core.dto.Time
 import kekmech.ru.core.usecases.GetTimetableScheduleUseCase
 import kekmech.ru.core.usecases.LoadDayStatusUseCase
@@ -47,5 +49,7 @@ class TimetableFragmentModelImpl @Inject constructor(
             couples.add(thirdCoupleIndex, MinLunchItem())
         return couples
     }
+
+    override var weekOffset: LiveData<Int> = MutableLiveData<Int>().apply { value = 0 }
 
 }

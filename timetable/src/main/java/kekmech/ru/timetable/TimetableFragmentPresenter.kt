@@ -1,8 +1,10 @@
 package kekmech.ru.timetable
 
 import android.content.Context
+import androidx.lifecycle.MutableLiveData
 import kekmech.ru.core.Presenter
 import kekmech.ru.core.dto.Time
+import kekmech.ru.coreui.Resources
 import kekmech.ru.coreui.adapter.BaseItem
 import kekmech.ru.timetable.model.TimetableFragmentModel
 import kekmech.ru.timetable.view.TimetableFragmentView
@@ -36,6 +38,35 @@ class TimetableFragmentPresenter @Inject constructor(
             val title = "Группа ${model.groupNumber}"
             val subtitle = "Идет ${model.currentWeekNumber} неделя (${getParity(today)})"
             withContext(Dispatchers.Main) { view.setStatus(title, subtitle) }
+        }
+        // Смотрим следующую неделю
+        view.onChangeParityClickListener = { onChangeParity(view) }
+    }
+
+    private fun onChangeParity(view: TimetableFragmentView) {
+        val ld = (model.weekOffset as MutableLiveData<Int>)
+        if (ld.value == 0) {
+            ld.value = 1
+            view.setBottomButtonText(
+                Resources.getString(
+                    context,
+                    R.string.timetable_show_current_week
+                )
+            )
+            view.setSubtitleStatus(
+                "Следующая ${model.currentWeekNumber + 1} неделя (${getParity(
+                    today.nextDay
+                )})"
+            )
+        } else {
+            ld.value = 0
+            view.setBottomButtonText(
+                Resources.getString(
+                    context,
+                    R.string.timetable_show_next_week
+                )
+            )
+            view.setSubtitleStatus("Идет ${model.currentWeekNumber} неделя (${getParity(today)})")
         }
     }
 

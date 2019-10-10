@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.android.support.DaggerFragment
@@ -31,9 +32,9 @@ abstract class DayFragment : DaggerFragment() {
     lateinit var model: TimetableFragmentModel
 
     val couples: () -> List<BaseItem<*>>
-        get() = { model.getDaySchedule(dayOfWeek + 1, model.today.weekOfSemester) }
-
-    var weekOffset = 0 // Для переключения между четной и нечетной неделей
+        get() = { model.getDaySchedule(
+            dayOfWeek = dayOfWeek + 1,
+            weekNum = model.today.weekOfSemester + (model.weekOffset.value ?: 0)) }
 
     private val adapter = BaseAdapter.Builder()
         .registerViewTypeFactory(MinCoupleItem.Factory())
@@ -49,6 +50,12 @@ abstract class DayFragment : DaggerFragment() {
         view.dayFragmentRecyclerView.layoutManager = LinearLayoutManager(context)
         view.dayFragmentRecyclerView.setRecycledViewPool(Companion.recycledViewPool)
         view.dayFragmentRecyclerView.adapter = adapter
+        model.weekOffset.observe(this, Observer { loadSchedule() })
+        // Inflate the layout for this fragment
+        return view
+    }
+
+    private fun loadSchedule() {
         GlobalScope.launch(Dispatchers.IO) {
             val awaitedCouples = couples()
             withContext(Dispatchers.Main) {
@@ -60,8 +67,10 @@ abstract class DayFragment : DaggerFragment() {
                 adapter.notifyDataSetChanged()
             }
         }
-        // Inflate the layout for this fragment
-        return view
+    }
+
+    fun showNextWeek() {
+
     }
 
     companion object {

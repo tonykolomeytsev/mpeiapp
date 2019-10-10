@@ -21,6 +21,8 @@ class TimetableFragment : DaggerFragment(), TimetableFragmentView {
     @Inject
     lateinit var presenter: TimetableFragmentPresenter
 
+    override var onChangeParityClickListener: () -> Unit = {}
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,6 +43,7 @@ class TimetableFragment : DaggerFragment(), TimetableFragmentView {
                 }, 100)
             }
         }
+        buttonChangeWeekParity?.setOnClickListener { onChangeParityClickListener() }
     }
 
     override fun onPause() {
@@ -60,6 +63,16 @@ class TimetableFragment : DaggerFragment(), TimetableFragmentView {
             timetableToolbar?.title = title
             timetableToolbar?.subtitle = subtitle
         }
+    }
+
+    override fun setSubtitleStatus(subtitle: String) {
+        timetableToolbar?.post {
+            timetableToolbar?.subtitle = subtitle
+        }
+    }
+
+    override fun setBottomButtonText(string: String) {
+        textViewChangeWeekParity.text = string
     }
 
 }
