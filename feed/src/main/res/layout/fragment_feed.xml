@@ -59,7 +59,7 @@
                         app:layout_constraintBottom_toTopOf="@+id/textViewWeekInfo"
                         app:layout_constraintStart_toStartOf="parent"
                         android:layout_marginStart="40dp"
-                        android:layout_marginBottom="0dp"
+                        android:layout_marginBottom="2dp"
                         android:orientation="horizontal">
 
                     <TextView
