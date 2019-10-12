@@ -21,6 +21,12 @@ import kotlinx.android.synthetic.main.fragment_map.*
 import javax.inject.Inject
 import android.R.attr.top
 import android.graphics.Rect
+import android.widget.FrameLayout
+import android.widget.TextView
+import com.yandex.mapkit.map.PlacemarkAnimation
+import com.yandex.mapkit.map.PlacemarkMapObject
+import com.yandex.runtime.image.ImageProvider
+import com.yandex.runtime.ui_view.ViewProvider
 
 
 class MapFragment : DaggerFragment(), MapFragmentView {
@@ -38,6 +44,22 @@ class MapFragment : DaggerFragment(), MapFragmentView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        mapView?.map?.move(
+            CameraPosition(Point(55.755060, 37.708431), 16.0f, 0.0f, 0.0f)
+        )
+        mapView?.map?.logo?.setAlignment(Alignment(HorizontalAlignment.RIGHT, VerticalAlignment.TOP))
+        mapView?.map?.apply {
+            mapObjects.addPlacemark(Point(55.755060, 37.708431), getVP())
+        }
+    }
+
+    fun getVP(): ViewProvider {
+        val v = LayoutInflater.from(context).inflate(R.layout.item_placemark_building, null)
+        v.findViewById<TextView>(R.id.textViewPlacemarkTitle).text = "В"
+        return ViewProvider(v)
+    }
+
+    private fun placeContentUnderStatusBar() {
         val rectangle = Rect(0, 0, 0, 0)
         val window = activity?.window
         window?.decorView?.getWindowVisibleDisplayFrame(rectangle)
@@ -45,17 +67,11 @@ class MapFragment : DaggerFragment(), MapFragmentView {
         val p = mapView.layoutParams as ViewGroup.MarginLayoutParams
         p.topMargin = -statusBarHeight
         mapView.layoutParams = p
-
-        mapView?.map?.move(
-            CameraPosition(Point(55.755060, 37.708431), 16.0f, 0.0f, 0.0f),
-            Animation(Animation.Type.SMOOTH, 0.5f),
-            null
-        )
-        mapView?.map?.logo?.setAlignment(Alignment(HorizontalAlignment.RIGHT, VerticalAlignment.TOP))
     }
 
     override fun onResume() {
         super.onResume()
+        placeContentUnderStatusBar()
         activity?.window?.statusBarColor = Resources.getColor(context, android.R.color.transparent)
     }
 
