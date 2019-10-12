@@ -3,11 +3,13 @@ package kekmech.ru.mainscreen
 import android.os.Bundle
 import android.view.View
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.yandex.mapkit.MapKitFactory
 import dagger.android.support.DaggerAppCompatActivity
 import kekmech.ru.core.Router
 import kekmech.ru.core.Screens
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
+import kekmech.ru.mainscreen.BuildConfig
 
 class MainActivity : DaggerAppCompatActivity() {
 
@@ -38,6 +40,10 @@ class MainActivity : DaggerAppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        MapKitFactory.setApiKey(BuildConfig.YandexMapsApiKey)
+        MapKitFactory.initialize(this)
+
         setContentView(R.layout.activity_main)
 
         nav_view.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)

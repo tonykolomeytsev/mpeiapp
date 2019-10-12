@@ -58,11 +58,8 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:2.1.0"
     implementation "androidx.navigation:navigation-ui-ktx:2.1.0"
 
-
-    // Google Play Services
-    implementation 'com.google.maps.android:android-maps-utils:0.5'
-    implementation 'com.google.android.gms:play-services-maps:17.0.0'
-    implementation 'com.google.android.gms:play-services-location:17.0.0'
+    // Основная библиотека MapKit. (Yandex Maps)
+    implementation 'com.yandex.android:mapkit:3.4.0'
 
     implementation 'androidx.room:room-runtime:2.2.0'
     kapt 'androidx.room:room-compiler:2.2.0'

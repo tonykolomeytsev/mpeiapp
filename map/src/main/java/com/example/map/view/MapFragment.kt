@@ -1,95 +1,74 @@
 package com.example.map.view
 
 
-import android.content.Context
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import com.example.map.MapFragmentPresenter
 import com.example.map.R
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException
-import com.google.android.gms.maps.*
-import com.google.android.gms.maps.model.LatLng
+import com.yandex.mapkit.Animation
+import com.yandex.mapkit.MapKitFactory
+import com.yandex.mapkit.geometry.Point
+import com.yandex.mapkit.logo.Alignment
+import com.yandex.mapkit.logo.HorizontalAlignment
+import com.yandex.mapkit.logo.VerticalAlignment
+import com.yandex.mapkit.map.CameraPosition
 import dagger.android.support.DaggerFragment
 import kekmech.ru.coreui.Resources
+import kotlinx.android.synthetic.main.fragment_map.*
 import javax.inject.Inject
+import android.R.attr.top
+import android.graphics.Rect
 
-class MapFragment : DaggerFragment(), MapFragmentView, OnMapReadyCallback {
+
+class MapFragment : DaggerFragment(), MapFragmentView {
 
     @Inject
     lateinit var presenter: MapFragmentPresenter
-
-    lateinit var mapView: MapView
-    lateinit var map: GoogleMap
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-//        // Needs to call MapsInitializer before doing any CameraUpdateFactory calls
-//        try {
-//            MapsInitializer.initialize(this.activity)
-//        } catch (e: GooglePlayServicesNotAvailableException) {
-//            e.printStackTrace()
-//        }
-//
-        // Inflate the layout for this fragment
-        val v = inflater.inflate(R.layout.fragment_map, container, false)
-//
-//        // Gets the MapView from the XML layout and creates it
-//        mapView = v.findViewById(R.id.mapView) as MapView
-//        mapView.onCreate(savedInstanceState)
-//
-//        val typedValue = TypedValue()
-//        val statusBarSize = if (activity?.theme?.resolveAttribute(android.R.attr.actionBarSize, typedValue, true) == true)
-//            TypedValue.complexToDimensionPixelSize(typedValue.data, resources.displayMetrics)
-//        else 0
-//        val p = mapView.layoutParams as ViewGroup.MarginLayoutParams
-//        p.topMargin = -statusBarSize
-//        mapView.layoutParams = p
-//
-//        // Gets to GoogleMap from the MapView and does initialization stuff
-//        mapView.getMapAsync(this)
-
-        return v
+        return inflater.inflate(R.layout.fragment_map, container, false)
     }
 
-    override fun onMapReady(map: GoogleMap?) {
-        map?.apply {
-            uiSettings.isMyLocationButtonEnabled = false
-            isMyLocationEnabled = false
-            isBuildingsEnabled = true
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
+        val rectangle = Rect(0, 0, 0, 0)
+        val window = activity?.window
+        window?.decorView?.getWindowVisibleDisplayFrame(rectangle)
+        val statusBarHeight = rectangle.top
+        val p = mapView.layoutParams as ViewGroup.MarginLayoutParams
+        p.topMargin = -statusBarHeight
+        mapView.layoutParams = p
 
-            // Updates the location and zoom of the MapView
-            val cameraUpdate = CameraUpdateFactory.newLatLngZoom(LatLng(55.754749, 37.707771), 17f)
-            animateCamera(cameraUpdate)
-        }
+        mapView?.map?.move(
+            CameraPosition(Point(55.755060, 37.708431), 16.0f, 0.0f, 0.0f),
+            Animation(Animation.Type.SMOOTH, 0.5f),
+            null
+        )
+        mapView?.map?.logo?.setAlignment(Alignment(HorizontalAlignment.RIGHT, VerticalAlignment.TOP))
     }
 
     override fun onResume() {
-        //mapView.onResume()
         super.onResume()
-        activity?.window?.statusBarColor = Resources.getColor(context, R.color.colorPrimary)
+        activity?.window?.statusBarColor = Resources.getColor(context, android.R.color.transparent)
     }
 
-    override fun onPause() {
-        //mapView.onPause()
-        super.onPause()
+    override fun onStart() {
+        super.onStart()
+        mapView?.onStart()
+        MapKitFactory.getInstance().onStart()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        //mapView.onDestroy()
+    override fun onStop() {
+        super.onStop()
+        mapView?.onStop()
+        MapKitFactory.getInstance().onStop()
     }
-
-    override fun onLowMemory() {
-        super.onLowMemory()
-        //mapView.onLowMemory()
-    }
-
 
 }
