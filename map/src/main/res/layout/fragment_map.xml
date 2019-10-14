@@ -57,6 +57,7 @@
 
                     <TextView
                             android:text="Общежития"
+                            android:alpha="0.75"
                             style="@style/TextViewMapTab"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -64,24 +65,24 @@
 
                     <TextView
                             android:text="Столовые"
+                            android:alpha="0.75"
                             style="@style/TextViewMapTab"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
 
                 </LinearLayout>
 
-                <LinearLayout
+                <FrameLayout
                         android:id="@+id/buildingsUi"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="90dp"
                         android:clipToPadding="false"
                         android:orientation="vertical">
 
                     <kekmech.ru.coreui.slider.EnumSlider
                             android:id="@+id/enumSliderBuildings"
                             android:layout_width="match_parent"
-                            android:layout_height="60dp"
-                            android:layout_gravity="center_vertical"/>
+                            android:layout_height="60dp"/>
 
                     <TextView
                             android:id="@+id/textViewBuildingsInfo"
@@ -89,9 +90,11 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:layout_marginTop="8dp"
-                            android:text="Hello world"
-                            android:layout_gravity="center_horizontal"/>
-                </LinearLayout>
+                            tools:text="Hello world"
+                            android:alpha="0.75"
+                            android:textColor="@color/colorBlack"
+                            android:layout_gravity="center_horizontal|bottom"/>
+                </FrameLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 

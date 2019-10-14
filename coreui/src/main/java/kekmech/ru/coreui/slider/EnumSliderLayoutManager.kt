@@ -1,6 +1,7 @@
 package kekmech.ru.coreui.slider
 
 import android.content.Context
+import android.media.RemoteControlClient
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlin.math.abs
@@ -10,7 +11,8 @@ import androidx.recyclerview.widget.LinearSmoothScroller
 class EnumSliderLayoutManager(
     private val context: Context,
     private val recyclerWidth: Int,
-    private val childWidth: Int
+    private val childWidth: Int,
+    private val selectedPositionListener: (Int) -> Unit
 ) : LinearLayoutManager(context, HORIZONTAL, false) {
 
     private val mShrinkAmount = 0.65f
@@ -72,7 +74,10 @@ class EnumSliderLayoutManager(
             }
         }
         lastSelectedPosition = maxAlphaIndex
-        postOnAnimation { smoothScrollToPosition(recyclerView, state, maxAlphaIndex) }
+        postOnAnimation {
+            smoothScrollToPosition(recyclerView, state, maxAlphaIndex)
+            selectedPositionListener(maxAlphaIndex)
+        }
     }
 
     fun initFirstState() {

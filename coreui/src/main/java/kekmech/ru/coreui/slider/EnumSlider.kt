@@ -26,6 +26,7 @@ class EnumSlider(context: Context, attrs: AttributeSet?, defStyle: Int) : Recycl
     var selectedPosition: Int
         get() = (layoutManager as EnumSliderLayoutManager).selectedPosition
         set(value) { (layoutManager as EnumSliderLayoutManager).selectedPosition = value }
+    var selectedPositionListener: (Int) -> Unit = {}
 
     init {
         val a = context.theme.obtainStyledAttributes(attrs, R.styleable.EnumSlider, 0, 0)
@@ -37,7 +38,7 @@ class EnumSlider(context: Context, attrs: AttributeSet?, defStyle: Int) : Recycl
         clipToPadding = false
         post {
             setPadding(measuredWidth / 2 - halfWidthOfItem, 0, measuredWidth / 2 - halfWidthOfItem, 0)
-            layoutManager = EnumSliderLayoutManager(context, measuredWidth, halfWidthOfItem*2)
+            layoutManager = EnumSliderLayoutManager(context, measuredWidth, halfWidthOfItem*2) { selectedPositionListener(it) }
             updateAdapter()
         }
         addOnScrollListener(object : RecyclerView.OnScrollListener() {

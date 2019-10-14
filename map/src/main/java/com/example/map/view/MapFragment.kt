@@ -23,6 +23,8 @@ class MapFragment : DaggerFragment(), MapFragmentView {
     @Inject
     lateinit var presenter: MapFragmentPresenter
 
+    override var onBuildingSelected: (Int) -> Unit = {}
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -34,6 +36,7 @@ class MapFragment : DaggerFragment(), MapFragmentView {
         super.onViewCreated(view, savedInstanceState)
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync(presenter)
+        enumSliderBuildings?.selectedPositionListener = { onBuildingSelected(it) }
         placeContentUnderStatusBar()
     }
 
@@ -73,5 +76,11 @@ class MapFragment : DaggerFragment(), MapFragmentView {
 
     override fun setBuildings(list: List<String>) {
         enumSliderBuildings?.items = list
+    }
+
+    override fun setBuildingDescription(description: String) {
+        textViewBuildingsInfo?.post {
+            textViewBuildingsInfo?.text = description
+        }
     }
 }

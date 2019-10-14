@@ -50,6 +50,7 @@ class PlacesRepositoryImpl @Inject constructor(): PlacesRepository {
             if (task.isSuccessful) {
                 mutableBuildings.value = task.result?.documents
                     ?.mapNotNull { it.toObject(Building::class.java) }
+                    ?.sortedBy { it.letter }
             } else {
                 Log.e("PlacesRepository", task.exception.toString())
             }

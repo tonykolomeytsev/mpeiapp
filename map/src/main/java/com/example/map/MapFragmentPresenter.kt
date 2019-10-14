@@ -43,7 +43,13 @@ class MapFragmentPresenter @Inject constructor(
     override fun onResume(view: MapFragmentView) {
         super.onResume(view)
         model.buildings.observe(view, Observer { it ->
-            view.setBuildings(it.sortedBy { it.letter }.map { it.letter })
+            val letters = it.map { it.letter }
+            val names = it.map { it.name }
+            view.setBuildings(letters)
+            view.onBuildingSelected = {index ->
+                view.setBuildingDescription(names[index])
+            }
+            view.setBuildingDescription(names[0])
         })
     }
 }
