@@ -2,14 +2,16 @@ package kekmech.ru.mainscreen
 
 import android.os.Bundle
 import android.view.View
+import com.crashlytics.android.Crashlytics
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException
+import com.google.android.gms.maps.MapsInitializer
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.yandex.mapkit.MapKitFactory
+import com.google.firebase.analytics.FirebaseAnalytics
 import dagger.android.support.DaggerAppCompatActivity
 import kekmech.ru.core.Router
 import kekmech.ru.core.Screens
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
-import kekmech.ru.mainscreen.BuildConfig
 
 class MainActivity : DaggerAppCompatActivity() {
 
@@ -41,9 +43,13 @@ class MainActivity : DaggerAppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        MapKitFactory.setApiKey(BuildConfig.YandexMapsApiKey)
-        MapKitFactory.initialize(this)
-
+        try {
+            MapsInitializer.initialize(this)
+        } catch (e: GooglePlayServicesNotAvailableException) {
+            e.printStackTrace()
+        }
+        FirebaseAnalytics.getInstance(this)
+        
         setContentView(R.layout.activity_main)
 
         nav_view.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
