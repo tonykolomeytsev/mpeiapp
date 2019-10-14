@@ -1,13 +1,13 @@
 package kekmech.ru.core.dto
 
-import android.location.Location
+import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.firestore.IgnoreExtraProperties
 import com.google.firebase.firestore.PropertyName
 
 @IgnoreExtraProperties
 data class Hostel(
     @PropertyName("name")
-    val name: String,
+    var name: String = "",
     @PropertyName("location")
-    val location: Location
+    var location: GeoPoint = GeoPoint(55.755060, 37.708431)
 )

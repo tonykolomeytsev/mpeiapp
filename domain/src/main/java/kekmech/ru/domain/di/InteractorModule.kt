@@ -22,4 +22,10 @@ abstract class InteractorModule {
 
     @Binds
     abstract fun provideGetBuildingsUseCase(useCaseImpl: GetBuildingsUseCaseImpl): GetBuildingsUseCase
+
+    @Binds
+    abstract fun provideGetHostelsUseCase(useCaseImpl: GetHostelsUseCaseImpl): GetHostelsUseCase
+
+    @Binds
+    abstract fun provideGetFoodsUseCase(useCaseImpl: GetFoodsUseCaseImpl): GetFoodsUseCase
 }

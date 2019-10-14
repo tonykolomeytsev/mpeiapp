@@ -8,4 +8,6 @@ interface InteractorProvider {
     fun provideSaveScheduleUseCase(): SaveScheduleUseCase
     fun provideGetTimetableScheduleUseCase(): GetTimetableScheduleUseCase
     fun provideGetBuildingsUseCase(): GetBuildingsUseCase
+    fun provideGetHostelsUseCase(): GetHostelsUseCase
+    fun provideGetFoodssUseCase(): GetFoodsUseCase
 }
