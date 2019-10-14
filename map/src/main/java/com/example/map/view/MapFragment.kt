@@ -70,4 +70,8 @@ class MapFragment : DaggerFragment(), MapFragmentView {
         mapView?.onDestroy()
         super.onDestroy()
     }
+
+    override fun setBuildings(list: List<String>) {
+        enumSliderBuildings?.items = list
+    }
 }

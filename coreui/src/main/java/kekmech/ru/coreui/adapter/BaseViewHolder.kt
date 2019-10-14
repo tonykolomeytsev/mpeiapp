@@ -15,7 +15,7 @@ abstract class BaseViewHolder : androidx.recyclerview.widget.RecyclerView.ViewHo
         this.onCreateView(itemView)
     }
 
-    abstract fun onCreateView(view: View)
+    open fun onCreateView(view: View) = Unit
 
     fun<D: View> bind(id: Int): ViewDelegate<D> {
         return ViewDelegate(id)

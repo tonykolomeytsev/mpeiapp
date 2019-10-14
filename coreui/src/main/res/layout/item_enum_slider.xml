@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="60dp"
+    android:clipToPadding="false"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/sliderNumber"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        tools:text="4"
+        android:textSize="45sp"
+        android:textColor="@color/colorBlack"
+        android:fontFamily="sans-serif-medium"
+        android:layout_height="wrap_content"/>
+
+</FrameLayout>

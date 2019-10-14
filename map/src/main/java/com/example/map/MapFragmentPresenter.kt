@@ -2,6 +2,7 @@ package com.example.map
 
 import android.content.Context
 import android.util.Log
+import androidx.lifecycle.Observer
 import com.example.map.model.MapFragmentModel
 import com.example.map.view.MapFragmentView
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -41,6 +42,8 @@ class MapFragmentPresenter @Inject constructor(
 
     override fun onResume(view: MapFragmentView) {
         super.onResume(view)
-        model.buildings
+        model.buildings.observe(view, Observer { it ->
+            view.setBuildings(it.sortedBy { it.letter }.map { it.letter })
+        })
     }
 }
