@@ -21,11 +21,7 @@ android {
     buildTypes {
         release {
             minifyEnabled true
-            buildConfigField('String', 'YandexMapsApiKey', mpeiapp_yandex_api_key)
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-        debug {
-            buildConfigField('String', 'YandexMapsApiKey', mpeiapp_yandex_api_key)
         }
     }
 
