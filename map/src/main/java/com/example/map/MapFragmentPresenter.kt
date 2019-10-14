@@ -38,4 +38,9 @@ class MapFragmentPresenter @Inject constructor(
             moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(55.755060, 37.708431), 17f))
         }
     }
+
+    override fun onResume(view: MapFragmentView) {
+        super.onResume(view)
+        model.buildings
+    }
 }

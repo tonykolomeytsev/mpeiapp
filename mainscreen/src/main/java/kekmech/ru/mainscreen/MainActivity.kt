@@ -49,7 +49,7 @@ class MainActivity : DaggerAppCompatActivity() {
             e.printStackTrace()
         }
         FirebaseAnalytics.getInstance(this)
-        
+
         setContentView(R.layout.activity_main)
 
         nav_view.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)

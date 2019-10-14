@@ -3,10 +3,7 @@ package kekmech.ru.domain.di
 import dagger.Binds
 import dagger.Module
 import kekmech.ru.core.usecases.*
-import kekmech.ru.domain.GetTimetableScheduleUseCaseImpl
-import kekmech.ru.domain.SaveScheduleUseCaseImpl
-import kekmech.ru.domain.LoadDayStatusUseCaseImpl
-import kekmech.ru.domain.LoadOffsetScheduleUseCaseImpl
+import kekmech.ru.domain.*
 
 @Module
 abstract class InteractorModule {
@@ -22,4 +19,7 @@ abstract class InteractorModule {
 
     @Binds
     abstract fun provideGetTimetableScheduleUseCase(useCaseImpl: GetTimetableScheduleUseCaseImpl): GetTimetableScheduleUseCase
+
+    @Binds
+    abstract fun provideGetBuildingsUseCase(useCaseImpl: GetBuildingsUseCaseImpl): GetBuildingsUseCase
 }
