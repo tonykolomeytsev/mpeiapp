@@ -40,7 +40,7 @@ class MapFragment : DaggerFragment(), MapFragmentView {
         placeContentUnderStatusBar()
     }
 
-    private fun placeContentUnderStatusBar() {
+    override fun placeContentUnderStatusBar() {
         val rectangle = Rect(0, 0, 0, 0)
         val window = activity?.window
         window?.decorView?.getWindowVisibleDisplayFrame(rectangle)

@@ -19,6 +19,7 @@ class MapFragmentPresenter @Inject constructor(
     private val context: Context
 ) : Presenter<MapFragmentView>(), OnMapReadyCallback {
     private var map: GoogleMap? = null
+    private var view: MapFragmentView? = null
 
     override fun onMapReady(map: GoogleMap?) {
         Log.d("MapFragmentPresenter", map.toString())
@@ -38,6 +39,7 @@ class MapFragmentPresenter @Inject constructor(
             }
             moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(55.755060, 37.708431), 17f))
         }
+        view?.placeContentUnderStatusBar()
     }
 
     override fun onResume(view: MapFragmentView) {
@@ -51,5 +53,11 @@ class MapFragmentPresenter @Inject constructor(
             }
             view.setBuildingDescription(names[0])
         })
+        this.view = view
+    }
+
+    override fun onPause(view: MapFragmentView) {
+        super.onPause(view)
+        this.view = null
     }
 }

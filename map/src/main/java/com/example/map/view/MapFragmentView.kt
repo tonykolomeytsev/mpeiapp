@@ -7,4 +7,5 @@ interface MapFragmentView : LifecycleOwner {
 
     fun setBuildings(list: List<String>)
     fun setBuildingDescription(description: String)
+    fun placeContentUnderStatusBar()
 }
