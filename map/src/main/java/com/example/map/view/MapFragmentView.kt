@@ -1,11 +1,13 @@
 package com.example.map.view
 
 import androidx.lifecycle.LifecycleOwner
+import kekmech.ru.core.dto.Building
 
 interface MapFragmentView : LifecycleOwner {
     var onBuildingSelected: (Int) -> Unit
 
-    fun setBuildings(list: List<String>)
+    fun selectBuilding(index: Int)
+    fun setBuildings(list: List<Building>)
     fun setBuildingDescription(description: String)
     fun placeContentUnderStatusBar()
 }

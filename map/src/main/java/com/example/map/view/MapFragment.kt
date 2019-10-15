@@ -13,8 +13,10 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException
 import com.google.android.gms.maps.MapsInitializer
 import com.google.android.gms.maps.SupportMapFragment
 import dagger.android.support.DaggerFragment
+import kekmech.ru.core.dto.Building
 import kekmech.ru.coreui.Resources
 import kotlinx.android.synthetic.main.fragment_map.*
+import java.lang.Exception
 import javax.inject.Inject
 
 
@@ -38,6 +40,12 @@ class MapFragment : DaggerFragment(), MapFragmentView {
         mapView.getMapAsync(presenter)
         enumSliderBuildings?.selectedPositionListener = { onBuildingSelected(it) }
         placeContentUnderStatusBar()
+    }
+
+    override fun selectBuilding(index: Int) {
+        enumSliderBuildings?.post {
+            enumSliderBuildings?.selectedPosition = index
+        }
     }
 
     override fun placeContentUnderStatusBar() {
@@ -74,8 +82,8 @@ class MapFragment : DaggerFragment(), MapFragmentView {
         super.onDestroy()
     }
 
-    override fun setBuildings(list: List<String>) {
-        enumSliderBuildings?.items = list
+    override fun setBuildings(list: List<Building>) {
+        enumSliderBuildings?.items = list.map { it.letter }
     }
 
     override fun setBuildingDescription(description: String) {
