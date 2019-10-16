@@ -56,12 +56,14 @@
                 android:fontFamily="sans-serif-light"
                 android:maxLength="10"
                 android:maxLines="1"
+                android:ellipsize="end"
                 android:paddingStart="16dp"
                 android:paddingTop="8dp"
                 android:paddingEnd="30dp"
                 android:paddingBottom="8dp"
                 android:textAlignment="center"
                 android:textSize="24sp"
+                android:inputType="textNoSuggestions"
                 tools:text="C-12-16"
                 tools:textAlignment="center" />
 
