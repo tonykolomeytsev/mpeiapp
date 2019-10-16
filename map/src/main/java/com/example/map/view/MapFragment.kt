@@ -27,6 +27,8 @@ class MapFragment : DaggerFragment(), MapFragmentView {
 
     override var onBuildingSelected: (Int) -> Unit = {}
 
+    override val contentView: ViewGroup get() = coordinator
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

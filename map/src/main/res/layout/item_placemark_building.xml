@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:background="@drawable/map_item_placemark"
         android:layout_height="32dp"
-        android:layout_width="32dp">
-    <TextView
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:id="@+id/textViewPlacemarkTitle"
-            tools:text="A"
-            android:layout_gravity="center"
-            android:textSize="14sp"
-            android:fontFamily="sans-serif-medium"
-            android:textColor="@color/colorWhite"/>
-</FrameLayout>
+        android:layout_width="32dp"
+        android:id="@+id/textViewPlacemarkTitle"
+    android:background="@drawable/map_item_placemark"
+        tools:text="A"
+        android:gravity="center"
+        android:textSize="14sp"
+        android:fontFamily="sans-serif-medium"
+        android:textColor="@color/colorWhite"/>

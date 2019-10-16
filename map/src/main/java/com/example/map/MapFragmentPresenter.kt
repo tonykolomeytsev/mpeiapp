@@ -1,18 +1,14 @@
 package com.example.map
 
-import android.app.ActionBar
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.Canvas
+import android.content.res.ColorStateList
 import android.util.Log
 import android.util.TypedValue
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.TextView
-import androidx.cardview.widget.CardView
 import androidx.lifecycle.Observer
 import com.example.map.model.MapFragmentModel
 import com.example.map.view.MapFragmentView
@@ -26,7 +22,11 @@ import kekmech.ru.core.dto.Building
 import javax.inject.Inject
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.MarkerOptions
-
+import kekmech.ru.coreui.Resources
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 class MapFragmentPresenter @Inject constructor(
@@ -65,7 +65,7 @@ class MapFragmentPresenter @Inject constructor(
             view.setBuildings(it)
             view.onBuildingSelected = {index ->
                 view.setBuildingDescription(it[index].name)
-                selectBuilding(it[index])
+                selectBuilding(it, index)
             }
             view.setBuildingDescription(it[0].name)
             placeMarkers(it)
@@ -78,6 +78,7 @@ class MapFragmentPresenter @Inject constructor(
         map?.apply {
             markers.forEach { it.remove() }
             markers.clear()
+            lastSelectedBuilding = -1
 
             it.forEach {place ->
                 val marker = LayoutInflater
@@ -85,44 +86,14 @@ class MapFragmentPresenter @Inject constructor(
                     .inflate(R.layout.item_placemark_building, FrameLayout(context), false)
                 (marker.findViewById<TextView>(R.id.textViewPlacemarkTitle)).text = place.letter
 
-                markers.add(addMarker(
-                    MarkerOptions()
+                if (view != null) markers.add(addMarker(
+                     MarkerOptions()
                         .position(place.location.toLatLng())
                         .title(place.name)
-                        .icon(createMarker(context, place.letter))
+                        .icon(getMarkerIcon(view!!.contentView, place.letter, false))
                 ))
             }
         }
-    }
-
-    fun createMarker(context: Context, text: String): BitmapDescriptor {
-        val marker = MarkerOptions()
-        val px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 32f, context.resources.displayMetrics).toInt()
-        val markerView =
-            (context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(
-                R.layout.item_placemark_building,
-                null
-            )
-        markerView.layoutParams = ViewGroup.LayoutParams(
-            px,
-            px
-        )
-        markerView.layout(0, 0, px, px)
-        markerView.buildDrawingCache()
-        val bedNumberTextView = markerView.findViewById<TextView>(R.id.textViewPlacemarkTitle)
-
-        val mDotMarkerBitmap = Bitmap.createBitmap(px, px, Bitmap.Config.ARGB_8888)
-        val canvas = Canvas(mDotMarkerBitmap)
-        bedNumberTextView.text = text
-        bedNumberTextView.layoutParams = ViewGroup.LayoutParams(
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
-        bedNumberTextView.measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        bedNumberTextView.layout(0,0,bedNumberTextView.measuredWidth,bedNumberTextView.measuredHeight)
-        bedNumberTextView.buildDrawingCache()
-        markerView.draw(canvas)
-        return BitmapDescriptorFactory.fromBitmap(mDotMarkerBitmap)
     }
 
     override fun onPause(view: MapFragmentView) {
@@ -130,12 +101,55 @@ class MapFragmentPresenter @Inject constructor(
         this.view = null
     }
 
-    private fun selectBuilding(building: Building) {
+
+    private var lastSelectedBuilding = -1
+    private fun selectBuilding(buildings: List<Building>, i: Int) {
+        val building = buildings[i]
         map?.apply {
             animateCamera(CameraUpdateFactory.newLatLngZoom(building.location.toLatLng(), 17f), 200, null)
+        }
+
+        val prevBuilding = buildings.getOrNull(lastSelectedBuilding)
+        markers.getOrNull(i)
+            ?.setIcon(getMarkerIcon(view!!.contentView, building.letter, true))
+
+        if (lastSelectedBuilding != i) {
+            if (prevBuilding != null) markers.getOrNull(lastSelectedBuilding)
+                ?.setIcon(getMarkerIcon(view!!.contentView, prevBuilding.letter, false))
+            lastSelectedBuilding = i
         }
     }
 
     private fun GeoPoint.toLatLng(): LatLng = LatLng(this.latitude, this.longitude)
+
+    fun getMarkerIcon(root: ViewGroup, text: String?, isSelected: Boolean): BitmapDescriptor? {
+        val markerView = CustomMarkerView(root, text, isSelected)
+        markerView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
+        markerView.layout(0, 0, markerView.measuredWidth, markerView.measuredHeight)
+        markerView.isDrawingCacheEnabled = true
+        markerView.invalidate()
+        markerView.buildDrawingCache(false)
+        return BitmapDescriptorFactory.fromBitmap(markerView.drawingCache)
+    }
+
+    private class CustomMarkerView(root: ViewGroup, text: String?, isSelected: Boolean) : FrameLayout(root.context) {
+        private var mTitle: TextView
+
+        init {
+            View.inflate(context, R.layout.item_placemark_building, this)
+            mTitle = findViewById(R.id.textViewPlacemarkTitle)
+            measure(MeasureSpec.UNSPECIFIED, MeasureSpec.UNSPECIFIED)
+            mTitle.text = text
+            if (isSelected) {
+                mTitle.backgroundTintList = ColorStateList.valueOf(Resources.getColor(context, R.color.colorPrimary))
+                mTitle.setTextColor(Resources.getColor(context, R.color.colorWhite))
+            } else {
+                mTitle.backgroundTintList = ColorStateList.valueOf(Resources.getColor(context, R.color.colorBlackTransparent))
+                mTitle.setTextColor(Resources.getColor(context, R.color.colorWhite))
+            }
+        }
+
+
+    }
 }
 
