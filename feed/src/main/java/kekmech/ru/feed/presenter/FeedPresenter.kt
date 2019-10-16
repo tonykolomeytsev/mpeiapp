@@ -85,7 +85,11 @@ class FeedPresenter @Inject constructor(
     }
 
     private fun onStatusEdit() {
-        view?.showMenu()
+        //view?.showMenu()
+        GlobalScope.launch(Dispatchers.Main){
+            delay(100)
+            router.navigateTo(Screens.ADD)
+        }
     }
 
     /**
