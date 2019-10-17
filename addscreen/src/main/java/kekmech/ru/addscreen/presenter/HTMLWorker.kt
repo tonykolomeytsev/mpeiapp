@@ -9,18 +9,8 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 import org.jsoup.Jsoup
-import java.net.URI
 
 class HTMLWorker {
-
-    private fun formSubmitScript(group: String) =
-        "document.getElementsByName('$TEXTBOX_NAME')[0].value = '$group';" +
-                "document.getElementsByName('$BUTTON_NAME')[0].click();"
-
-    private fun getHtmlScript() = "document.documentElement.outerHTML"
-
-    private fun timetableUrl(groupId: String, startDate: Time) =
-        "$MPEI_TIMETABLE?groupoid=$groupId&start=${startDate.formattedAsYearMonthDay}"
 
     suspend fun tryGroupAsync(group: String) = GlobalScope.async(Dispatchers.IO) {
         // загружаем страничку и вбиваем номер группы в форму
@@ -47,10 +37,6 @@ class HTMLWorker {
             .select("a[href]")
             .first()
             .attr("href")
-
-        val groupId = href
-            .let { URI.create(it).query }
-            .substringAfter("=")
 
         // загружаем первый
         withContext(Dispatchers.IO) {
@@ -82,22 +68,5 @@ class HTMLWorker {
                 firstMonday.calendar
             )
         }
-    }
-
-    private fun Regex.findGroupsIn(group: String) = this
-        .find(group)
-        .let { it?.groups?.toMutableList() }!!
-        .filterNotNull()
-
-    private fun String.getGroupId() = "id=(\\d+)".toRegex()
-        .findGroupsIn(this)
-        .first { it.value.matches("\\d+".toRegex()) }
-        .value
-
-    companion object {
-        const val MPEI_DEFAULT = "https://mpei.ru/Education/timetable/Pages/default.aspx"
-        const val MPEI_TIMETABLE = "https://mpei.ru/Education/timetable/Pages/table.aspx"
-        const val TEXTBOX_NAME = "ctl00\$ctl30\$g_f0649160_e72e_4671_a36b_743021868df5\$ctl03"
-        const val BUTTON_NAME =  "ctl00\$ctl30\$g_f0649160_e72e_4671_a36b_743021868df5\$ctl04"
     }
 }
