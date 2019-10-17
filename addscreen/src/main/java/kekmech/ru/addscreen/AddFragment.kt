@@ -45,7 +45,7 @@ class AddFragment @Inject constructor() : DaggerFragment(), IAddFragment {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         textView2.setOnClickListener { editTextGroupName.setText("С-12-17") }
-        editTextGroupName.setOnKeyListener(object : View.OnKeyListener {
+        editTextGroupName?.setOnKeyListener(object : View.OnKeyListener {
             override fun onKey(v: View, keyCode: Int, event: KeyEvent): Boolean {
                 // If the event is a key-down event on the "enter" button
                 if (event.action == KeyEvent.ACTION_DOWN && keyCode == KEYCODE_ENTER) {
@@ -61,7 +61,7 @@ class AddFragment @Inject constructor() : DaggerFragment(), IAddFragment {
         super.onResume()
         presenter.onResume(this)
         activity?.window?.statusBarColor = Resources.getColor(context, R.color.colorWhite)
-        buttonSelectGroup.setOnClickListener { onSearchClickListener(editTextGroupName.text.toString()) }
+        buttonSelectGroup?.setOnClickListener { onSearchClickListener(editTextGroupName.text.toString()) }
     }
 
     override fun onPause() {
@@ -70,46 +70,46 @@ class AddFragment @Inject constructor() : DaggerFragment(), IAddFragment {
     }
 
     override fun showLoadButton() {
-        buttonSelectGroup.isClickable = true
+        buttonSelectGroup?.isClickable = true
         buttonSelectGroup
-            .animate()
-            .alpha(1f)
-            .setDuration(200)
-            .start()
+            ?.animate()
+            ?.alpha(1f)
+            ?.setDuration(200)
+            ?.start()
     }
 
     override fun hideLoadButton() {
-        buttonSelectGroup.isClickable = false
+        buttonSelectGroup?.isClickable = false
         buttonSelectGroup
-            .animate()
-            .alpha(0f)
-            .setDuration(200)
-            .start()
+            ?.animate()
+            ?.alpha(0f)
+            ?.setDuration(200)
+            ?.start()
     }
 
     override fun disableEditText() {
-        editTextGroupName.clearFocus()
-        editTextGroupName.isEnabled = false
+        editTextGroupName?.clearFocus()
+        editTextGroupName?.isEnabled = false
     }
 
     override fun enableEditText() {
-        editTextGroupName.isEnabled = true
+        editTextGroupName?.isEnabled = true
     }
 
     override fun showLoading() {
-        frameLayoutLoading.animate()
-            .alpha(1f)
-            .setDuration(200)
-            .withStartAction { frameLayoutLoading.visibility = View.VISIBLE }
-            .start()
+        frameLayoutLoading?.animate()
+            ?.alpha(1f)
+            ?.setDuration(200)
+            ?.withStartAction { frameLayoutLoading?.visibility = View.VISIBLE }
+            ?.start()
     }
 
     override fun hideLoading() {
-        frameLayoutLoading.animate()
-            .alpha(1f)
-            .setDuration(200)
-            .withEndAction { frameLayoutLoading.visibility = View.INVISIBLE }
-            .start()
+        frameLayoutLoading?.animate()
+            ?.alpha(1f)
+            ?.setDuration(200)
+            ?.withEndAction { frameLayoutLoading?.visibility = View.INVISIBLE }
+            ?.start()
     }
 
 }
