@@ -114,13 +114,5 @@
                 />
     </FrameLayout>
 
-    <ViewStub
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/stub"
-            android:visibility="gone"
-            android:layout="@layout/web_view_stub"
-            />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -55,11 +55,6 @@ class AddFragment @Inject constructor() : DaggerFragment(), IAddFragment {
                 return false
             }
         })
-        GlobalScope.launch(Dispatchers.Main) {
-            delay(100)
-            // TODO: FOR CHINESE LOLLIPOP DEVICES CATCH INFLATING EXCEPTION
-            stub.inflate()
-        }
     }
 
     override fun onResume() {

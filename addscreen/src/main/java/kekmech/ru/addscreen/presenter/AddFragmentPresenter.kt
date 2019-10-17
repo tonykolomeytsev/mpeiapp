@@ -41,7 +41,7 @@ class AddFragmentPresenter @Inject constructor(
         view?.hideLoadButton()
         view?.disableEditText()
         view?.showLoading()
-        htmlWorker = HTMLWorker(view?.web!!)
+        htmlWorker = HTMLWorker()
         GlobalScope.launch(Dispatchers.IO) {
             try {
                 val parserSchedule = htmlWorker?.tryGroupAsync(group)?.await()!!

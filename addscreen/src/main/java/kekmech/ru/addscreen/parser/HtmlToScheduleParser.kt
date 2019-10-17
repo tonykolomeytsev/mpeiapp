@@ -10,11 +10,11 @@ class HtmlToScheduleParser {
     private val scheduleBuilder = ScheduleBuilder()
 
     fun parse(html: String): ParserSchedule {
-        val table = SCHEDULE_TABLE
+        val table = html.replace('\n', ' ') /*SCHEDULE_TABLE
             .find(html)
             .let { it?.groups?.toList() ?: emptyList() }
             .find { it?.value?.startsWith("<table") ?: false }
-            ?.value ?: throw IllegalArgumentException("Unable to find <table> with 'mpei-galaktika-lessons-grid-tbl' class")
+            ?.value ?: throw IllegalArgumentException("Unable to find <table> with 'mpei-galaktika-lessons-grid-tbl' class")*/
         "<tr>.*?</tr>".toRegex()
             .findAll(table)
             .iterator()
