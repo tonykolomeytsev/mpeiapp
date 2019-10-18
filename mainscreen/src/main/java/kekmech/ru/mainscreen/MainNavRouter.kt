@@ -17,12 +17,7 @@ class MainNavRouter @Inject constructor(): Router {
 
     override fun navigate(fragmentId: Screens) {
         when(fragmentId) {
-//            FEED -> navController?.navigate(FeedFragment::class, false)
-//            TIMETABLE -> navController?.navigate(TimetableFragment::class, false)
-//            SETTINGS -> navController?.navigate(SettingsFragment::class, false)
-//            MAP -> navController?.navigate(MapFragment::class, false)
-//
-//            ADD -> navController?.navigate(AddFragment::class, true)
+            // FEED SCOPE
             FEED_TO_ADD -> navController?.navigate(R.id.action_feedFragment_to_addFragment)
         }
     }
