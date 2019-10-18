@@ -6,6 +6,8 @@ import kekmech.ru.core.dto.DayStatus
 import kekmech.ru.core.dto.Schedule
 
 interface ScheduleRepository {
+    var isNeedToUpdateFeed: Boolean
+
     fun getOffsetCouples(offset:Int, refresh: Boolean): List<CoupleNative>
 
     fun getSchedule(refresh: Boolean): Schedule?

@@ -41,7 +41,10 @@ class FeedPresenter @Inject constructor(
      * subscribe to view events
      */
     override fun onResume(view: IFeedFragment) {
-        // TODO if (view.requiredAction == Screens.ADD_TO_FEED) notifyToRefresh()
+        if (model.isNeedToUpdate) {
+            model.isNeedToUpdate = false
+            notifyToRefresh()
+        }
         this.view = view
         model.groupNumber.observe(view, Observer {
             view.setStatus(

@@ -12,11 +12,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.*
 import javax.inject.Inject
 
 class ScheduleRepositoryImpl @Inject constructor(
     private val scheduleCacheGateway: ScheduleCacheGateway
 ) : ScheduleRepository {
+
+    override var isNeedToUpdateFeed: Boolean = false
 
 //    override fun getDayStatus(offset: Int): LiveData<DayStatus> {
 //        // update daystatus but return livedata
@@ -59,7 +62,9 @@ class ScheduleRepositoryImpl @Inject constructor(
     private val groupNumber = MutableLiveData<String>().apply { value = "" }
     override fun getGroupNum(): LiveData<String> {
         GlobalScope.launch(Dispatchers.Main) {
-            groupNumber.value = withContext(Dispatchers.IO) { scheduleCacheGateway.getGroupNum() }
+            groupNumber.value = withContext(Dispatchers.IO) {
+                scheduleCacheGateway.getGroupNum().toUpperCase(Locale.getDefault())
+            }
         }
         return groupNumber
     }

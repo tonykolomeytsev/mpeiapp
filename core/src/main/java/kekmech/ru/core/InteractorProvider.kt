@@ -10,4 +10,6 @@ interface InteractorProvider {
     fun provideGetBuildingsUseCase(): GetBuildingsUseCase
     fun provideGetHostelsUseCase(): GetHostelsUseCase
     fun provideGetFoodssUseCase(): GetFoodsUseCase
+    fun provideNeedUpdateUseCase(): IsNeedToUpdateFeedUseCase
+    fun provideSetNeedUpdateUseCase(): SetNeedToUpdateFeedUseCase
 }

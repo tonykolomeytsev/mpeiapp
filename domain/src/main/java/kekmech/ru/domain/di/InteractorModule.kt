@@ -28,4 +28,10 @@ abstract class InteractorModule {
 
     @Binds
     abstract fun provideGetGroupNameUseCase(useCaseImpl: GetGroupNumberUseCaseImpl): GetGroupNumberUseCase
+
+    @Binds
+    abstract fun provideUpdateFeedUseCase(useCaseImpl: IsNeedToUpdateFeedUseCaseImpl): IsNeedToUpdateFeedUseCase
+
+    @Binds
+    abstract fun provideSetUpdateFeedUseCase(useCaseImpl: SetNeedToUpdateFeedUseCaseImpl): SetNeedToUpdateFeedUseCase
 }

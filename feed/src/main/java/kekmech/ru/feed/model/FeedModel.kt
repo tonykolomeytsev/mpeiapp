@@ -28,6 +28,8 @@ interface FeedModel {
      */
     var weekendOffset: Int
 
+    var isNeedToUpdate: Boolean
+
     /**
      * Get couples for day
      * @param offset - 0 - today, 1 - yesterday etc.
