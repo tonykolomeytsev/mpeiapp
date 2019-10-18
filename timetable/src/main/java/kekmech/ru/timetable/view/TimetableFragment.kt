@@ -34,12 +34,12 @@ class TimetableFragment : DaggerFragment(), TimetableFragmentView {
     override fun onResume() {
         super.onResume()
         presenter.onResume(this)
-        if (true || presenter.checkIsNecessaryDayOpened()) {
+        if (presenter.checkIsNecessaryDayOpened()) {
             val necessaryDay = presenter.today.dayOfWeek - 2 // потому что Calendar.MONDAY == 2
             if (necessaryDay in 0..6) {
-                viewPager?.postDelayed({
+                viewPager?.post {
                     viewPager?.setCurrentItem(necessaryDay, true)
-                }, 100)
+                }
             }
         }
         buttonChangeWeekParity?.setOnClickListener { onChangeParityClickListener() }
@@ -58,16 +58,12 @@ class TimetableFragment : DaggerFragment(), TimetableFragmentView {
     }
 
     override fun setStatus(title: String, subtitle: String) {
-        timetableToolbar?.post {
-            timetableToolbar?.title = title
-            timetableToolbar?.subtitle = subtitle
-        }
+        timetableToolbar?.title = title
+        timetableToolbar?.subtitle = subtitle
     }
 
     override fun setSubtitleStatus(subtitle: String) {
-        timetableToolbar?.post {
-            timetableToolbar?.subtitle = subtitle
-        }
+        timetableToolbar?.subtitle = subtitle
     }
 
     override fun setBottomButtonText(string: String) {
