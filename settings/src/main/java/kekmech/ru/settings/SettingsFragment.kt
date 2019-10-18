@@ -3,8 +3,6 @@ package kekmech.ru.settings
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.*
 import dagger.android.support.DaggerFragment
 import kekmech.ru.core.Router
@@ -50,7 +48,7 @@ class SettingsFragment : DaggerFragment(), ItemListener {
 
     override fun onItemClick(itemId: String) {
         when(itemId) {
-            "DEV" -> router.navigateTo("DEV")
+            //"DEV" -> router.navigate()
         }
     }
 
@@ -68,7 +66,6 @@ class SettingsFragment : DaggerFragment(), ItemListener {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         //statusBarColor = activity!!.window.statusBarColor
-        activity!!.window.statusBarColor = Resources.getColor(context, R.color.colorPrimary)
     }
 
     override fun onDetach() {

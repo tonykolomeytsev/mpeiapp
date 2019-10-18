@@ -64,7 +64,6 @@ class FeedFragment @Inject constructor() : DaggerFragment(), IFeedFragment {
 
     override fun onResume() {
         super.onResume()
-        activity!!.window.statusBarColor = Resources.getColor(context, R.color.colorSecondary)
         unlock()
         presenter.onResume(this)
         requiredAction = ""

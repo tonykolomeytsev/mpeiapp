@@ -34,8 +34,7 @@ class TimetableFragment : DaggerFragment(), TimetableFragmentView {
     override fun onResume() {
         super.onResume()
         presenter.onResume(this)
-        activity?.window?.statusBarColor = Resources.getColor(context, R.color.colorSecondary)
-        if (presenter.checkIsNecessaryDayOpened()) {
+        if (true || presenter.checkIsNecessaryDayOpened()) {
             val necessaryDay = presenter.today.dayOfWeek - 2 // потому что Calendar.MONDAY == 2
             if (necessaryDay in 0..6) {
                 viewPager?.postDelayed({

@@ -1,6 +1,7 @@
 package kekmech.ru.timetable
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import kekmech.ru.core.Presenter
 import kekmech.ru.core.dto.Time
@@ -28,12 +29,13 @@ class TimetableFragmentPresenter @Inject constructor(
      * subscribe to view events
      */
     override fun onResume(view: TimetableFragmentView) {
-        if (!this::weekAdapter.isInitialized) {
+        Log.d("Timetable", "onResume")
+//        if (!this::weekAdapter.isInitialized) {
             GlobalScope.launch(Dispatchers.IO) {
                 weekAdapter = WeekAdapter(view.getChildFragmentManager(), model, context)
                 withContext(Dispatchers.Main) { view.setupViewPager() }
             }
-        }
+//        }
         GlobalScope.launch(Dispatchers.IO) {
             val title = "Группа ${model.groupNumber}"
             val subtitle = "Идет ${model.currentWeekNumber} неделя (${getParity(today)})"

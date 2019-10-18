@@ -1,13 +1,12 @@
 package kekmech.ru.feed.presenter
 
 import android.content.Context
-import android.widget.Toast
 import kekmech.ru.core.Presenter
 import kekmech.ru.core.Router
 import kekmech.ru.core.Screens
+import kekmech.ru.core.Screens.*
 import kekmech.ru.core.scopes.ActivityScope
 import kekmech.ru.coreui.adapter.BaseAdapter
-import kekmech.ru.feed.Dialogs
 import kekmech.ru.feed.IFeedFragment
 import kekmech.ru.feed.items.*
 import kekmech.ru.feed.model.FeedModel
@@ -42,7 +41,7 @@ class FeedPresenter @Inject constructor(
      * subscribe to view events
      */
     override fun onResume(view: IFeedFragment) {
-        if (view.requiredAction == Screens.ADD_TO_FEED) notifyToRefresh()
+        // TODO if (view.requiredAction == Screens.ADD_TO_FEED) notifyToRefresh()
         this.view = view
         GlobalScope.launch(Dispatchers.Main) {
             val group: String = withContext(Dispatchers.IO) { model.groupNumber }.toUpperCase(Locale.getDefault())
@@ -76,7 +75,7 @@ class FeedPresenter @Inject constructor(
                 clickListener = {
                     GlobalScope.launch(Dispatchers.Main){
                         delay(100)
-                        router.navigateTo(Screens.ADD)
+                        router.navigate(FEED_TO_ADD)
                     }
                 }
             }
@@ -88,7 +87,7 @@ class FeedPresenter @Inject constructor(
         //view?.showMenu()
         GlobalScope.launch(Dispatchers.Main){
             delay(100)
-            router.navigateTo(Screens.ADD)
+            router.navigate(FEED_TO_ADD)
         }
     }
 

@@ -65,7 +65,6 @@ class MapFragment : DaggerFragment(), MapFragmentView {
         super.onResume()
         presenter.onResume(this)
         placeContentUnderStatusBar()
-        activity?.window?.statusBarColor = Resources.getColor(context, android.R.color.transparent)
     }
 
     override fun onPause() {

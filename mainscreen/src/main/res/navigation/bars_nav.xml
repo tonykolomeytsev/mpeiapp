@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/bars_nav"
+        app:startDestination="@id/settingsFragment2">
+
+    <fragment
+            android:id="@+id/settingsFragment2"
+            android:name="kekmech.ru.settings.SettingsFragment"
+            android:label="SettingsFragment" />
+</navigation>

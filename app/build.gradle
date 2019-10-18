@@ -11,8 +11,8 @@ android {
         applicationId "kekmech.ru.mpeiapp"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 5
-        versionName "0.9.5"
+        versionCode 6
+        versionName "0.9.6"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -62,6 +62,8 @@ dependencies {
     // Kotlin
     implementation "androidx.navigation:navigation-fragment-ktx:2.1.0"
     implementation "androidx.navigation:navigation-ui-ktx:2.1.0"
+    implementation "androidx.navigation:navigation-runtime-ktx:2.1.0"
+    implementation "androidx.fragment:fragment-ktx:1.2.0-beta02"
 
     // Google Maps
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
