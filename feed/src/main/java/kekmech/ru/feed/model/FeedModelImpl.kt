@@ -1,22 +1,25 @@
 package kekmech.ru.feed.model
 
 import android.content.Context
+import androidx.lifecycle.LiveData
 import kekmech.ru.core.dto.CoupleNative
+import kekmech.ru.core.dto.DayStatus
 import kekmech.ru.core.dto.Time
 import kekmech.ru.core.scopes.ActivityScope
-import kekmech.ru.core.usecases.LoadDayStatusUseCase
+import kekmech.ru.core.usecases.GetGroupNumberUseCase
 import kekmech.ru.core.usecases.LoadOffsetScheduleUseCase
 import kekmech.ru.coreui.adapter.BaseItem
 import kekmech.ru.feed.R
 import kekmech.ru.feed.items.*
 import kotlinx.coroutines.*
+import java.util.*
 import javax.inject.Inject
 
 @ActivityScope
 class FeedModelImpl @Inject constructor(
     private val context: Context,
     private val loadOffsetScheduleUseCase: LoadOffsetScheduleUseCase,
-    private val loadDayStatusUseCase: LoadDayStatusUseCase
+    private val getGroupNumberUseCase: GetGroupNumberUseCase
 ) : FeedModel {
 
     override val today: Time
@@ -27,8 +30,7 @@ class FeedModelImpl @Inject constructor(
     /**
      * Group number like "C-12-16"
      */
-    override val groupNumber: String
-        get() = loadDayStatusUseCase(0).groupNum
+    override val groupNumber: LiveData<String> get() = getGroupNumberUseCase()
 
     /**
      * Current week number

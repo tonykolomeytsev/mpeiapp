@@ -1,9 +1,9 @@
 package kekmech.ru.feed.presenter
 
 import android.content.Context
+import androidx.lifecycle.Observer
 import kekmech.ru.core.Presenter
 import kekmech.ru.core.Router
-import kekmech.ru.core.Screens
 import kekmech.ru.core.Screens.*
 import kekmech.ru.core.scopes.ActivityScope
 import kekmech.ru.coreui.adapter.BaseAdapter
@@ -43,13 +43,14 @@ class FeedPresenter @Inject constructor(
     override fun onResume(view: IFeedFragment) {
         // TODO if (view.requiredAction == Screens.ADD_TO_FEED) notifyToRefresh()
         this.view = view
-        GlobalScope.launch(Dispatchers.Main) {
-            val group: String = withContext(Dispatchers.IO) { model.groupNumber }.toUpperCase(Locale.getDefault())
+        model.groupNumber.observe(view, Observer {
             view.setStatus(
-                "Группа $group",
+                "Группа $it",
                 model.formattedTodayStatus,
                 "Идет ${model.currentWeekNumber} учебная неделя"
             )
+        })
+        GlobalScope.launch(Dispatchers.Main) {
 
             //delay(100)
             view.updateAdapterIfNull(adapter)

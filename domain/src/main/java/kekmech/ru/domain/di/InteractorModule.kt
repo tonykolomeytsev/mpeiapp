@@ -12,9 +12,6 @@ abstract class InteractorModule {
     abstract fun provideLoadOffsetScheduleUseCase(useCaseImpl: LoadOffsetScheduleUseCaseImpl): LoadOffsetScheduleUseCase
 
     @Binds
-    abstract fun provideLoadDayStatusUseCase(useCase: LoadDayStatusUseCaseImpl): LoadDayStatusUseCase
-
-    @Binds
     abstract fun provideSaveSheduleUseCase(useCaseImpl: SaveScheduleUseCaseImpl): SaveScheduleUseCase
 
     @Binds
@@ -28,4 +25,7 @@ abstract class InteractorModule {
 
     @Binds
     abstract fun provideGetFoodsUseCase(useCaseImpl: GetFoodsUseCaseImpl): GetFoodsUseCase
+
+    @Binds
+    abstract fun provideGetGroupNameUseCase(useCaseImpl: GetGroupNumberUseCaseImpl): GetGroupNumberUseCase
 }

@@ -4,7 +4,7 @@ import kekmech.ru.core.usecases.*
 
 interface InteractorProvider {
     fun provideLoadOffsetScheduleUseCase(): LoadOffsetScheduleUseCase
-    fun provideLoadDayStatusUseCase(): LoadDayStatusUseCase
+    fun provideLoadGroupNameUseCase(): GetGroupNumberUseCase
     fun provideSaveScheduleUseCase(): SaveScheduleUseCase
     fun provideGetTimetableScheduleUseCase(): GetTimetableScheduleUseCase
     fun provideGetBuildingsUseCase(): GetBuildingsUseCase
