@@ -9,5 +9,6 @@ enum class Screens {
 
     // actions
     ADD_TO_FEED,
-    FEED_TO_ADD
+    FEED_TO_ADD,
+    FEED_TO_FORCE
 }

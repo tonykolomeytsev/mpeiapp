@@ -19,6 +19,9 @@ class MainNavRouter @Inject constructor(): Router {
         when(fragmentId) {
             // FEED SCOPE
             FEED_TO_ADD -> navController?.navigate(R.id.action_feedFragment_to_addFragment)
+            FEED_TO_FORCE -> try {
+                navController?.navigate(R.id.action_feedFragment_to_forceUpdateFragment)
+            } catch (e: Exception) { e.printStackTrace() }
         }
     }
 

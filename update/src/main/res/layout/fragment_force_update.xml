@@ -4,6 +4,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        tools:layout_height="match_parent"
         tools:background="#333333">
 
     <LinearLayout
@@ -13,12 +14,13 @@
             android:orientation="vertical"
             android:layout_marginTop="48dp"
             android:paddingTop="48dp"
-            android:paddingBottom="16dp"
+            android:paddingBottom="0dp"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
-            android:layout_marginBottom="8dp">
+            android:layout_marginBottom="16dp"
+            android:clipToPadding="false">
 
         <TextView
                 android:layout_width="match_parent"
@@ -31,11 +33,31 @@
                 android:gravity="center"
                 android:fontFamily="sans-serif-medium"/>
 
+        <TextView
+                android:visibility="visible"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:gravity="center"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="4dp"
+                android:text="Кто не обновит, тот лох"
+                android:textSize="14sp"
+                android:textColor="@color/colorBlack"
+                android:fontFamily="sans-serif-medium"/>
+
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="16dp">
+                android:clipToPadding="false"
+                android:layout_marginRight="-8dp"
+                android:layout_marginLeft="-8dp"
+                android:paddingTop="16dp"
+                android:paddingRight="8dp"
+                android:paddingLeft="8dp"
+                android:paddingBottom="16dp">
 
             <Button
                     android:id="@+id/buttonUpdateLater"
@@ -61,6 +83,7 @@
     <ImageView
             android:layout_width="96dp"
             android:layout_height="96dp"
+            android:scaleType="fitXY"
             android:src="@drawable/ic_launcher_force_update"
             android:layout_gravity="center_horizontal"/>
 

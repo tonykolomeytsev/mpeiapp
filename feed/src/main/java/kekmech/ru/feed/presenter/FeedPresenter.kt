@@ -70,6 +70,10 @@ class FeedPresenter @Inject constructor(
             view.unlock()
             setupMenu()
         }
+        GlobalScope.launch {
+            delay(1000)
+            router.navigate(FEED_TO_FORCE)
+        }
     }
 
     fun setupMenu() {

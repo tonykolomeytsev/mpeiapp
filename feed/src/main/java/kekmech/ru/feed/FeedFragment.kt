@@ -88,7 +88,7 @@ class FeedFragment @Inject constructor() : DaggerFragment(), IFeedFragment {
     }
 
     override fun updateAdapterIfNull(adapter: BaseAdapter) {
-        if (recyclerView.adapter == null) {
+        if (recyclerView != null && recyclerView.adapter == null) {
             recyclerView.adapter = adapter
             adapter.notifyDataSetChanged()
         }

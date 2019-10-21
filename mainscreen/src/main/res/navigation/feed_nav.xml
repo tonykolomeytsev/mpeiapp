@@ -15,9 +15,18 @@
                 app:destination="@id/addFragment"
                 app:enterAnim="@anim/enter_from_right"
                 app:exitAnim="@anim/exit_to_left" />
+        <action
+                android:id="@+id/action_feedFragment_to_forceUpdateFragment"
+                app:destination="@id/forceUpdateFragment" />
     </fragment>
     <fragment
             android:id="@+id/addFragment"
             android:name="kekmech.ru.addscreen.AddFragment"
-            android:label="AddFragment" />
+            android:label="AddFragment"
+            tools:layout="@layout/fragment_add"/>
+    <dialog
+            android:id="@+id/forceUpdateFragment"
+            android:name="kekmech.ru.update.view.ForceUpdateFragment"
+            android:label="ForceUpdateFragment"
+            tools:layout="@layout/fragment_force_update"/>
 </navigation>
