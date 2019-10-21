@@ -1,22 +1,19 @@
-package kekmech.ru.update
+package kekmech.ru.mainscreen
 
 import android.content.Context
 import android.content.pm.PackageManager
 import android.text.TextUtils
 import android.util.Log
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+import kekmech.ru.core.UpdateChecker
+import javax.inject.Inject
 
 
-class ForceUpdateChecker(
-    private val context: Context,
-    private val onUpdateNeededListener: OnUpdateNeededListener?
-) {
+class ForceUpdateChecker @Inject constructor(
+    private val context: Context
+) : UpdateChecker {
 
-    interface OnUpdateNeededListener {
-        fun onUpdateNeeded(updateUrl: String)
-    }
-
-    fun check() {
+    override fun check(onUpdateNeededListener: (String) -> Unit) {
         val remoteConfig = FirebaseRemoteConfig.getInstance()
 
         if (remoteConfig.getBoolean(KEY_UPDATE_REQUIRED)) {
@@ -24,8 +21,8 @@ class ForceUpdateChecker(
             val appVersion = getAppVersion(context)
             val updateUrl = remoteConfig.getString(KEY_UPDATE_URL)
 
-            if (!TextUtils.equals(currentVersion, appVersion) && onUpdateNeededListener != null) {
-                onUpdateNeededListener.onUpdateNeeded(updateUrl)
+            if (!TextUtils.equals(currentVersion, appVersion)) {
+                onUpdateNeededListener(updateUrl)
             }
         }
     }
@@ -45,26 +42,6 @@ class ForceUpdateChecker(
         return result
     }
 
-    class Builder(private val context: Context) {
-        private var onUpdateNeededListener: OnUpdateNeededListener? = null
-
-        fun onUpdateNeeded(onUpdateNeededListener: OnUpdateNeededListener): Builder {
-            this.onUpdateNeededListener = onUpdateNeededListener
-            return this
-        }
-
-        fun build(): ForceUpdateChecker {
-            return ForceUpdateChecker(context, onUpdateNeededListener)
-        }
-
-        fun check(): ForceUpdateChecker {
-            val forceUpdateChecker = build()
-            forceUpdateChecker.check()
-
-            return forceUpdateChecker
-        }
-    }
-
     companion object {
 
         private val TAG = ForceUpdateChecker::class.java.simpleName
@@ -73,8 +50,8 @@ class ForceUpdateChecker(
         val KEY_CURRENT_VERSION = "force_update_current_version"
         val KEY_UPDATE_URL = "force_update_store_url"
 
-        fun with(context: Context): Builder {
-            return Builder(context)
+        fun with(context: Context): ForceUpdateChecker {
+            return ForceUpdateChecker(context)
         }
     }
 }

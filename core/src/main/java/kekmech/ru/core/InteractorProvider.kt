@@ -12,4 +12,5 @@ interface InteractorProvider {
     fun provideGetFoodssUseCase(): GetFoodsUseCase
     fun provideNeedUpdateUseCase(): IsNeedToUpdateFeedUseCase
     fun provideSetNeedUpdateUseCase(): SetNeedToUpdateFeedUseCase
+    fun provideForceUpdateUseCase(): CheckUpdateUseCase
 }

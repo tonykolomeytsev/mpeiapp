@@ -19,12 +19,13 @@ import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.util.TypedValue
 import androidx.recyclerview.widget.RecyclerView
+import kekmech.ru.feed.presenter.FeedPresenter
 
 
 class FeedFragment @Inject constructor() : DaggerFragment(), IFeedFragment {
 
     @Inject
-    lateinit var presenter: Presenter<IFeedFragment>
+    lateinit var presenter: FeedPresenter
 
     @Volatile
     private var lock = true
@@ -72,6 +73,11 @@ class FeedFragment @Inject constructor() : DaggerFragment(), IFeedFragment {
     override fun onPause() {
         super.onPause()
         presenter.onPause(this)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        presenter.onActivityCreated()
     }
 
     override fun showEditDialog(dialog: AlertDialog) {

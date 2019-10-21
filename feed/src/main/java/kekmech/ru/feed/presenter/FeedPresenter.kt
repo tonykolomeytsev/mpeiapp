@@ -5,6 +5,7 @@ import androidx.lifecycle.Observer
 import kekmech.ru.core.Presenter
 import kekmech.ru.core.Router
 import kekmech.ru.core.Screens.*
+import kekmech.ru.core.UpdateChecker
 import kekmech.ru.core.scopes.ActivityScope
 import kekmech.ru.coreui.adapter.BaseAdapter
 import kekmech.ru.feed.IFeedFragment
@@ -18,7 +19,8 @@ import javax.inject.Inject
 class FeedPresenter @Inject constructor(
     private val model: FeedModel,
     private val context: Context,
-    private val router: Router
+    private val router: Router,
+    private val updateChecker: UpdateChecker
 ) : Presenter<IFeedFragment>() {
 
     private var isNotifiedToRefresh: Boolean = false
@@ -69,10 +71,6 @@ class FeedPresenter @Inject constructor(
             }
             view.unlock()
             setupMenu()
-        }
-        GlobalScope.launch {
-            delay(1000)
-            router.navigate(FEED_TO_FORCE)
         }
     }
 
@@ -142,6 +140,12 @@ class FeedPresenter @Inject constructor(
 
     fun notifyToRefresh() {
         isNotifiedToRefresh = true
+    }
+
+    fun onActivityCreated() {
+        updateChecker.check {
+            router.navigate(FEED_TO_FORCE)
+        }
     }
 
 }

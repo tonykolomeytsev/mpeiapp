@@ -1,7 +1,7 @@
 package kekmech.ru.mpeiapp
 
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
-import kekmech.ru.update.ForceUpdateChecker
+import kekmech.ru.mainscreen.ForceUpdateChecker
 
 object RemoteConfig {
     fun setup() {
