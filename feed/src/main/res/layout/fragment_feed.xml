@@ -27,8 +27,9 @@
                 app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
                 app:expandedTitleGravity="top"
                 app:expandedTitleTextAppearance="@style/CollapsingToolbarLayoutExpandedTextStyle"
-                app:expandedTitleMarginTop="48dp"
+                app:expandedTitleMarginTop="73dp"
                 app:expandedTitleMarginStart="40dp"
+                android:fitsSystemWindows="true"
                 app:statusBarScrim="@android:color/transparent"
                 app:contentScrim="@color/colorSecondary">
 
@@ -95,6 +96,7 @@
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                     tools:title="Группа C-12-16"
                     app:layout_collapseMode="pin"
+                    android:fitsSystemWindows="true"
                     />
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
