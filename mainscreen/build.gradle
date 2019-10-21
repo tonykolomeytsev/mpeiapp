@@ -77,6 +77,7 @@ dependencies {
     implementation project(path: ':settings')
     implementation project(path: ':addscreen')
     implementation project(path: ':map')
+    implementation project(path: ':update')
 
 }
 repositories {
