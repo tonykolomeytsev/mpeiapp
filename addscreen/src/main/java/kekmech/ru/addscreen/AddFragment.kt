@@ -60,7 +60,6 @@ class AddFragment @Inject constructor() : DaggerFragment(), IAddFragment {
     override fun onResume() {
         super.onResume()
         presenter.onResume(this)
-        activity?.window?.statusBarColor = Resources.getColor(context, R.color.colorWhite)
         buttonSelectGroup?.setOnClickListener { onSearchClickListener(editTextGroupName.text.toString()) }
     }
 

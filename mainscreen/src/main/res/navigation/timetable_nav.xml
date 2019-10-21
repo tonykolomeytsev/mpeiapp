@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/timetable_nav"
+        app:startDestination="@id/timetableFragment">
+
+    <fragment
+            android:id="@+id/timetableFragment"
+            android:name="kekmech.ru.timetable.view.TimetableFragment"
+            android:label="TimetableFragment" />
+</navigation>

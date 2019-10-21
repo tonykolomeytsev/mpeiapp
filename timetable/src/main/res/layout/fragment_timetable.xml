@@ -11,16 +11,25 @@
         android:id="@+id/appbarTimetable"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorSecondary"
+            android:fitsSystemWindows="true"
         android:theme="@style/Theme.Design.NoActionBar">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/timetableToolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorSecondary"
-            android:minHeight="?attr/actionBarSize"
-            android:theme="@style/Theme.Design.NoActionBar"
-            tools:title="Расписание на неделю" />
+        <FrameLayout
+                android:fitsSystemWindows="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/timetableToolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorSecondary"
+                    android:minHeight="?attr/actionBarSize"
+                    android:theme="@style/Theme.Design.NoActionBar"
+                    android:fitsSystemWindows="true"
+                    tools:title="Расписание на неделю" />
+        </FrameLayout>
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
@@ -28,6 +37,7 @@
             android:layout_height="wrap_content"
             android:background="@color/colorSecondary"
             android:minHeight="?attr/actionBarSize"
+                android:fitsSystemWindows="true"
             android:theme="@style/Theme.Design.NoActionBar" />
 
     </com.google.android.material.appbar.AppBarLayout>

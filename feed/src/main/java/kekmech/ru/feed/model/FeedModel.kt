@@ -14,7 +14,7 @@ interface FeedModel {
     /**
      * Group number like "C-12-16"
      */
-    val groupNumber: String
+    val groupNumber: LiveData<String>
 
     /**
      * Current week number
@@ -28,10 +28,14 @@ interface FeedModel {
      */
     var weekendOffset: Int
 
+    var isNeedToUpdate: Boolean
+
     /**
      * Get couples for day
      * @param offset - 0 - today, 1 - yesterday etc.
      * @return return today's couples if offset == 0
      */
     suspend fun getDayCouples(offset: Int, refresh: Boolean): List<BaseItem<*>>
+
+    fun saveForceUpdateArgs(url: String, description: String)
 }

@@ -1,9 +1,11 @@
 package kekmech.ru.mainscreen
 
+import androidx.navigation.NavController
 import com.example.map.view.MapFragment
 import kekmech.ru.addscreen.AddFragment
 import kekmech.ru.core.Router
 import kekmech.ru.core.Screens
+import kekmech.ru.core.Screens.*
 import kekmech.ru.feed.FeedFragment
 import kekmech.ru.settings.SettingsDevFragment
 import kekmech.ru.settings.SettingsFragment
@@ -11,28 +13,23 @@ import kekmech.ru.timetable.view.TimetableFragment
 import javax.inject.Inject
 
 class MainNavRouter @Inject constructor(): Router {
-    private var navController: MainNavController? = null
+    private var navController: NavController? = null
 
-    override fun navigateTo(fragmentId: String) {
+    override fun navigate(fragmentId: Screens) {
         when(fragmentId) {
-            Screens.FEED -> navController?.navigate(FeedFragment::class, false)
-            Screens.TIMETABLE -> navController?.navigate(TimetableFragment::class, false)
-            Screens.SETTINGS -> navController?.navigate(SettingsFragment::class, false)
-            Screens.DEV -> navController?.navigateWithTransition(SettingsDevFragment::class, true)
-            Screens.MAP -> navController?.navigate(MapFragment::class, false)
-
-            Screens.ADD -> navController?.navigate(AddFragment::class, true)
-            Screens.ADD_TO_FEED -> navController?.navigate(FeedFragment::class, false, action = Screens.ADD_TO_FEED)
+            // FEED SCOPE
+            FEED_TO_ADD -> navController?.navigate(R.id.action_feedFragment_to_addFragment)
+            FEED_TO_FORCE -> try {
+                navController?.navigate(R.id.action_feedFragment_to_forceUpdateFragment)
+            } catch (e: Exception) { e.printStackTrace() }
         }
     }
-
-    override fun replaceScreen(fragmentId: String) = navigateTo(fragmentId)
 
     override fun popBackStack() {
         navController?.popBackStack()
     }
 
-    fun registerNavController(navController: MainNavController) {
+    fun registerNavController(navController: NavController) {
         this.navController = navController
     }
 

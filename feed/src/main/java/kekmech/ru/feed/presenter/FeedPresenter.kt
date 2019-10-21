@@ -1,13 +1,13 @@
 package kekmech.ru.feed.presenter
 
 import android.content.Context
-import android.widget.Toast
+import androidx.lifecycle.Observer
 import kekmech.ru.core.Presenter
 import kekmech.ru.core.Router
-import kekmech.ru.core.Screens
+import kekmech.ru.core.Screens.*
+import kekmech.ru.core.UpdateChecker
 import kekmech.ru.core.scopes.ActivityScope
 import kekmech.ru.coreui.adapter.BaseAdapter
-import kekmech.ru.feed.Dialogs
 import kekmech.ru.feed.IFeedFragment
 import kekmech.ru.feed.items.*
 import kekmech.ru.feed.model.FeedModel
@@ -19,7 +19,8 @@ import javax.inject.Inject
 class FeedPresenter @Inject constructor(
     private val model: FeedModel,
     private val context: Context,
-    private val router: Router
+    private val router: Router,
+    private val updateChecker: UpdateChecker
 ) : Presenter<IFeedFragment>() {
 
     private var isNotifiedToRefresh: Boolean = false
@@ -42,15 +43,19 @@ class FeedPresenter @Inject constructor(
      * subscribe to view events
      */
     override fun onResume(view: IFeedFragment) {
-        if (view.requiredAction == Screens.ADD_TO_FEED) notifyToRefresh()
+        if (model.isNeedToUpdate) {
+            model.isNeedToUpdate = false
+            notifyToRefresh()
+        }
         this.view = view
-        GlobalScope.launch(Dispatchers.Main) {
-            val group: String = withContext(Dispatchers.IO) { model.groupNumber }.toUpperCase(Locale.getDefault())
+        model.groupNumber.observe(view, Observer {
             view.setStatus(
-                "Группа $group",
+                "Группа $it",
                 model.formattedTodayStatus,
                 "Идет ${model.currentWeekNumber} учебная неделя"
             )
+        })
+        GlobalScope.launch(Dispatchers.Main) {
 
             //delay(100)
             view.updateAdapterIfNull(adapter)
@@ -67,6 +72,13 @@ class FeedPresenter @Inject constructor(
             view.unlock()
             setupMenu()
         }
+        GlobalScope.launch(Dispatchers.Main) {
+            delay(1000)
+            updateChecker.check { url, desc ->
+                model.saveForceUpdateArgs(url, desc)
+                router.navigate(FEED_TO_FORCE)
+            }
+        }
     }
 
     fun setupMenu() {
@@ -76,7 +88,7 @@ class FeedPresenter @Inject constructor(
                 clickListener = {
                     GlobalScope.launch(Dispatchers.Main){
                         delay(100)
-                        router.navigateTo(Screens.ADD)
+                        router.navigate(FEED_TO_ADD)
                     }
                 }
             }
@@ -88,7 +100,7 @@ class FeedPresenter @Inject constructor(
         //view?.showMenu()
         GlobalScope.launch(Dispatchers.Main){
             delay(100)
-            router.navigateTo(Screens.ADD)
+            router.navigate(FEED_TO_ADD)
         }
     }
 

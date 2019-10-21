@@ -1,7 +1,9 @@
 package kekmech.ru.timetable
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import kekmech.ru.core.Presenter
 import kekmech.ru.core.dto.Time
 import kekmech.ru.coreui.Resources
@@ -13,7 +15,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import kotlinx.coroutines.GlobalScope
-import java.util.*
 
 class TimetableFragmentPresenter @Inject constructor(
     private val model: TimetableFragmentModel,
@@ -28,17 +29,16 @@ class TimetableFragmentPresenter @Inject constructor(
      * subscribe to view events
      */
     override fun onResume(view: TimetableFragmentView) {
-        if (!this::weekAdapter.isInitialized) {
-            GlobalScope.launch(Dispatchers.IO) {
-                weekAdapter = WeekAdapter(view.getChildFragmentManager(), model, context)
-                withContext(Dispatchers.Main) { view.setupViewPager() }
-            }
-        }
+        Log.d("Timetable", "onResume")
         GlobalScope.launch(Dispatchers.IO) {
-            val title = "Группа ${model.groupNumber}"
-            val subtitle = "Идет ${model.currentWeekNumber} неделя (${getParity(today)})"
-            withContext(Dispatchers.Main) { view.setStatus(title, subtitle) }
+            weekAdapter = WeekAdapter(view.getChildFragmentManager(), model, context)
+            withContext(Dispatchers.Main) { view.setupViewPager() }
         }
+        model.groupNumber.observe(view, Observer {
+            val title = "Группа $it"
+            val subtitle = "Идет ${model.currentWeekNumber} неделя (${getParity(today)})"
+            view.setStatus(title, subtitle)
+        })
         // Смотрим следующую неделю
         view.onChangeParityClickListener = { onChangeParity(view) }
     }
@@ -47,12 +47,7 @@ class TimetableFragmentPresenter @Inject constructor(
         val ld = (model.weekOffset as MutableLiveData<Int>)
         if (ld.value == 0) {
             ld.value = 1
-            view.setBottomButtonText(
-                Resources.getString(
-                    context,
-                    R.string.timetable_show_current_week
-                )
-            )
+            view.setBottomButtonText(Resources.getString(context, R.string.timetable_show_current_week))
             view.setSubtitleStatus(
                 "Следующая ${model.currentWeekNumber + 1} неделя (${getParity(
                     today.getDayWithOffset(7)
@@ -60,12 +55,7 @@ class TimetableFragmentPresenter @Inject constructor(
             )
         } else {
             ld.value = 0
-            view.setBottomButtonText(
-                Resources.getString(
-                    context,
-                    R.string.timetable_show_next_week
-                )
-            )
+            view.setBottomButtonText(Resources.getString(context, R.string.timetable_show_next_week))
             view.setSubtitleStatus("Идет ${model.currentWeekNumber} неделя (${getParity(today)})")
         }
     }

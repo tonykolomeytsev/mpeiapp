@@ -19,12 +19,13 @@ import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.util.TypedValue
 import androidx.recyclerview.widget.RecyclerView
+import kekmech.ru.feed.presenter.FeedPresenter
 
 
 class FeedFragment @Inject constructor() : DaggerFragment(), IFeedFragment {
 
     @Inject
-    lateinit var presenter: Presenter<IFeedFragment>
+    lateinit var presenter: FeedPresenter
 
     @Volatile
     private var lock = true
@@ -64,7 +65,6 @@ class FeedFragment @Inject constructor() : DaggerFragment(), IFeedFragment {
 
     override fun onResume() {
         super.onResume()
-        activity!!.window.statusBarColor = Resources.getColor(context, R.color.colorSecondary)
         unlock()
         presenter.onResume(this)
         requiredAction = ""
@@ -89,7 +89,7 @@ class FeedFragment @Inject constructor() : DaggerFragment(), IFeedFragment {
     }
 
     override fun updateAdapterIfNull(adapter: BaseAdapter) {
-        if (recyclerView.adapter == null) {
+        if (recyclerView != null && recyclerView.adapter == null) {
             recyclerView.adapter = adapter
             adapter.notifyDataSetChanged()
         }

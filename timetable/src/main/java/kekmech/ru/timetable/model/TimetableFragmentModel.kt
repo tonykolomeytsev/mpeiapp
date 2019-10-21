@@ -9,7 +9,7 @@ interface TimetableFragmentModel {
     /**
      * Group number like "C-12-16"
      */
-    val groupNumber: String
+    val groupNumber: LiveData<String>
 
     /**
      * Current week number

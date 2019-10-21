@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import kekmech.ru.core.dto.Time
+import kekmech.ru.core.usecases.GetGroupNumberUseCase
 import kekmech.ru.core.usecases.GetTimetableScheduleUseCase
-import kekmech.ru.core.usecases.LoadDayStatusUseCase
 import kekmech.ru.coreui.adapter.BaseItem
 import kekmech.ru.timetable.R
 import kekmech.ru.timetable.view.items.MinCoupleItem
@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 class TimetableFragmentModelImpl @Inject constructor(
     private val getTimetableScheduleUseCase: GetTimetableScheduleUseCase,
-    private val loadDayStatusUseCase: LoadDayStatusUseCase,
+    private val getGroupNumberUseCase: GetGroupNumberUseCase,
     private val context: Context
 ) : TimetableFragmentModel {
 
@@ -25,8 +25,7 @@ class TimetableFragmentModelImpl @Inject constructor(
     /**
      * Group number like "C-12-16"
      */
-    override val groupNumber: String
-        get() = loadDayStatusUseCase(0).groupNum.toUpperCase(Locale.getDefault())
+    override val groupNumber: LiveData<String> get() = getGroupNumberUseCase()
 
     /**
      * Current week number

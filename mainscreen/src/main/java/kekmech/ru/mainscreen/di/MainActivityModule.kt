@@ -7,6 +7,8 @@ import dagger.android.AndroidInjector
 import dagger.multibindings.ClassKey
 import dagger.multibindings.IntoMap
 import kekmech.ru.core.Router
+import kekmech.ru.core.UpdateChecker
+import kekmech.ru.mainscreen.ForceUpdateChecker
 import kekmech.ru.mainscreen.MainActivity
 import kekmech.ru.mainscreen.MainNavRouter
 import javax.inject.Singleton
@@ -21,4 +23,8 @@ abstract class MainActivityModule {
     @Binds
     @Singleton
     abstract fun provideNavRouter(routerImpl: MainNavRouter): Router
+
+    @Binds
+    @Singleton
+    abstract fun provideUpdateChecker(checkerImpl: ForceUpdateChecker): UpdateChecker
 }

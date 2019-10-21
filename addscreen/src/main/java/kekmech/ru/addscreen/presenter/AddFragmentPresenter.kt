@@ -8,6 +8,7 @@ import kekmech.ru.core.dto.CoupleNative
 import kekmech.ru.core.dto.Schedule
 import kekmech.ru.core.dto.Time
 import kekmech.ru.core.usecases.SaveScheduleUseCase
+import kekmech.ru.core.usecases.SetNeedToUpdateFeedUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -16,6 +17,7 @@ import javax.inject.Inject
 
 class AddFragmentPresenter @Inject constructor(
     private val saveScheduleUseCase: SaveScheduleUseCase,
+    private val setNeedToUpdateFeedUseCase: SetNeedToUpdateFeedUseCase,
     private val router: Router
 ) : Presenter<IAddFragment>() {
     private var view: IAddFragment? = null
@@ -68,7 +70,8 @@ class AddFragmentPresenter @Inject constructor(
                     "Schedule"
                 )
                 saveScheduleUseCase(schedule)
-                withContext(Dispatchers.Main) { router.navigateTo(Screens.ADD_TO_FEED) }
+                setNeedToUpdateFeedUseCase(true)
+                withContext(Dispatchers.Main) { router.popBackStack() }
 
             } catch (e: Exception) {
                 // todo вывести сообщение об ошибке
