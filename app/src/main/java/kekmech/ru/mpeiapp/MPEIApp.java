@@ -18,6 +18,7 @@ public class MPEIApp extends Application implements HasAndroidInjector {
         DaggerAppComponent.Companion
                 .init(this)
                 .inject(this);
+        RemoteConfig.INSTANCE.setup();
     }
 
     @Override

@@ -62,4 +62,5 @@ dependencies {
 
     implementation project(path: ':coreui')
     implementation project(path: ':core')
+    implementation 'com.google.firebase:firebase-config:19.0.3'
 }

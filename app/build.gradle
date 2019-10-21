@@ -93,4 +93,5 @@ dependencies {
     implementation project(path: ':addscreen')
     implementation project(path: ':map')
     implementation project(path: ':update')
+    implementation 'com.google.firebase:firebase-config:19.0.3'
 }

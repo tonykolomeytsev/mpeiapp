@@ -18,5 +18,5 @@
         <item name="android:textColor">@color/colorBlack</item>
         <item name="android:foreground">?attr/selectableItemBackground</item>
     </style>
-    
+
 </resources>
