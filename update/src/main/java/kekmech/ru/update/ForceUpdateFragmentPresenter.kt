@@ -29,7 +29,7 @@ class ForceUpdateFragmentPresenter @Inject constructor(
         val intent = Intent(ACTION_VIEW, Uri.parse(model.url))
         intent.addFlags(FLAG_ACTIVITY_NEW_TASK)
         context.startActivity(intent)
-        
+
         router.popBackStack()
     }
 }
