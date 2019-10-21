@@ -34,4 +34,10 @@ abstract class InteractorModule {
 
     @Binds
     abstract fun provideSetUpdateFeedUseCase(useCaseImpl: SetNeedToUpdateFeedUseCaseImpl): SetNeedToUpdateFeedUseCase
+
+    @Binds
+    abstract fun provideSetForceUpdateUseCase(useCaseImpl: SetForceUpdateDataUseCaseImpl): SetForceUpdateDataUseCase
+
+    @Binds
+    abstract fun provideGetForceUpdateUseCase(useCaseImpl: GetForceUpdateDataUseCaseImpl): GetForceUpdateDataUseCase
 }

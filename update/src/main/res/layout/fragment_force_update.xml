@@ -34,6 +34,7 @@
                 android:fontFamily="sans-serif-medium"/>
 
         <TextView
+                android:id="@+id/textDescription"
                 android:visibility="visible"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

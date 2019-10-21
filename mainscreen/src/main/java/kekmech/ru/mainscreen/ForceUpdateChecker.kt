@@ -2,7 +2,6 @@ package kekmech.ru.mainscreen
 
 import android.content.Context
 import android.content.pm.PackageManager
-import android.text.TextUtils
 import android.util.Log
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import kekmech.ru.core.UpdateChecker
@@ -13,16 +12,21 @@ class ForceUpdateChecker @Inject constructor(
     private val context: Context
 ) : UpdateChecker {
 
-    override fun check(onUpdateNeededListener: (String) -> Unit) {
+    override fun check(onUpdateNeededListener: (String, String) -> Unit) {
         val remoteConfig = FirebaseRemoteConfig.getInstance()
+
+        Log.d(TAG, remoteConfig.toString())
 
         if (remoteConfig.getBoolean(KEY_UPDATE_REQUIRED)) {
             val currentVersion = remoteConfig.getString(KEY_CURRENT_VERSION)
             val appVersion = getAppVersion(context)
             val updateUrl = remoteConfig.getString(KEY_UPDATE_URL)
+            val description = remoteConfig.getString(KEY_UPDATE_DESCRIPTION)
 
-            if (!TextUtils.equals(currentVersion, appVersion)) {
-                onUpdateNeededListener(updateUrl)
+            Log.d(TAG, "$currentVersion $appVersion $description")
+
+            if (currentVersion != appVersion) {
+                onUpdateNeededListener(updateUrl, description)
             }
         }
     }
@@ -47,8 +51,9 @@ class ForceUpdateChecker @Inject constructor(
         private val TAG = ForceUpdateChecker::class.java.simpleName
 
         val KEY_UPDATE_REQUIRED = "force_update_required"
-        val KEY_CURRENT_VERSION = "force_update_current_version"
-        val KEY_UPDATE_URL = "force_update_store_url"
+        val KEY_CURRENT_VERSION = "force_update_version"
+        val KEY_UPDATE_URL = "force_update_url"
+        val KEY_UPDATE_DESCRIPTION = "force_update_description"
 
         fun with(context: Context): ForceUpdateChecker {
             return ForceUpdateChecker(context)

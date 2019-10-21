@@ -9,6 +9,9 @@ class UserRepositoryImpl @Inject constructor(
     private val userCacheGateway: UserCacheGateway
 ) : UserRepository {
 
+    override var savedUpdateUrl: String = ""
+    override var savedUpdateDescription: String = ""
+
     override fun get(refresh: Boolean): User {
         val user = userCacheGateway.get()
         if (user == null) userCacheGateway.set(User.defaultUser())

@@ -75,11 +75,6 @@ class FeedFragment @Inject constructor() : DaggerFragment(), IFeedFragment {
         presenter.onPause(this)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        presenter.onActivityCreated()
-    }
-
     override fun showEditDialog(dialog: AlertDialog) {
         dialog.show()
     }

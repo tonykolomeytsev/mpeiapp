@@ -35,6 +35,12 @@ class ForceUpdateFragment : BottomSheetDialogFragment(), HasAndroidInjector, For
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         (view?.parent as View?)?.setBackgroundColor(Color.TRANSPARENT)
+        if (presenter.model.description.isNotBlank()) {
+            textDescription?.text = presenter.model.description
+            textDescription?.visibility = View.VISIBLE
+        } else {
+            textDescription?.visibility = View.GONE
+        }
     }
 
     override fun onAttach(context: Context) {

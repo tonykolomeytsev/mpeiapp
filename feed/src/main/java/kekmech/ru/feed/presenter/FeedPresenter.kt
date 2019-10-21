@@ -72,6 +72,13 @@ class FeedPresenter @Inject constructor(
             view.unlock()
             setupMenu()
         }
+        GlobalScope.launch(Dispatchers.Main) {
+            delay(1000)
+            updateChecker.check { url, desc ->
+                model.saveForceUpdateArgs(url, desc)
+                router.navigate(FEED_TO_FORCE)
+            }
+        }
     }
 
     fun setupMenu() {
@@ -140,12 +147,6 @@ class FeedPresenter @Inject constructor(
 
     fun notifyToRefresh() {
         isNotifiedToRefresh = true
-    }
-
-    fun onActivityCreated() {
-        updateChecker.check {
-            router.navigate(FEED_TO_FORCE)
-        }
     }
 
 }

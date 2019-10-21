@@ -36,4 +36,6 @@ interface FeedModel {
      * @return return today's couples if offset == 0
      */
     suspend fun getDayCouples(offset: Int, refresh: Boolean): List<BaseItem<*>>
+
+    fun saveForceUpdateArgs(url: String, description: String)
 }

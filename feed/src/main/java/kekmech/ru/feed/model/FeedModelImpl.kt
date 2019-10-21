@@ -6,10 +6,7 @@ import kekmech.ru.core.dto.CoupleNative
 import kekmech.ru.core.dto.DayStatus
 import kekmech.ru.core.dto.Time
 import kekmech.ru.core.scopes.ActivityScope
-import kekmech.ru.core.usecases.GetGroupNumberUseCase
-import kekmech.ru.core.usecases.IsNeedToUpdateFeedUseCase
-import kekmech.ru.core.usecases.LoadOffsetScheduleUseCase
-import kekmech.ru.core.usecases.SetNeedToUpdateFeedUseCase
+import kekmech.ru.core.usecases.*
 import kekmech.ru.coreui.adapter.BaseItem
 import kekmech.ru.feed.R
 import kekmech.ru.feed.items.*
@@ -23,7 +20,8 @@ class FeedModelImpl @Inject constructor(
     private val loadOffsetScheduleUseCase: LoadOffsetScheduleUseCase,
     private val getGroupNumberUseCase: GetGroupNumberUseCase,
     private val isNeedToUpdateFeedUseCase: IsNeedToUpdateFeedUseCase,
-    private val setNeedToUpdateFeedUseCase: SetNeedToUpdateFeedUseCase
+    private val setNeedToUpdateFeedUseCase: SetNeedToUpdateFeedUseCase,
+    private val setForceUpdateDataUseCase: SetForceUpdateDataUseCase
 ) : FeedModel {
 
     override val today: Time
@@ -124,4 +122,7 @@ class FeedModelImpl @Inject constructor(
         "${formattedAsDayName(context, R.array.days_of_week)}, $dayOfMonth " +
                 formattedAsMonthName(context, R.array.months)
 
+    override fun saveForceUpdateArgs(url: String, description: String) {
+        setForceUpdateDataUseCase(url, description)
+    }
 }
