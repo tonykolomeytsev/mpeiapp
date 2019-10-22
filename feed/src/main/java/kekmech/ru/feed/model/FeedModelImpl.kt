@@ -21,7 +21,8 @@ class FeedModelImpl @Inject constructor(
     private val getGroupNumberUseCase: GetGroupNumberUseCase,
     private val isNeedToUpdateFeedUseCase: IsNeedToUpdateFeedUseCase,
     private val setNeedToUpdateFeedUseCase: SetNeedToUpdateFeedUseCase,
-    private val setForceUpdateDataUseCase: SetForceUpdateDataUseCase
+    private val setForceUpdateDataUseCase: SetForceUpdateDataUseCase,
+    private val getAppLaunchCountUseCase: GetAppLaunchCountUseCase
 ) : FeedModel {
 
     override val today: Time
@@ -49,6 +50,9 @@ class FeedModelImpl @Inject constructor(
     override var isNeedToUpdate: Boolean
         get() = isNeedToUpdateFeedUseCase()
         set(value) { setNeedToUpdateFeedUseCase(value) }
+
+    override val appLaunchCount: Int
+        get() = getAppLaunchCountUseCase()
 
     /**
      * Get couples for day

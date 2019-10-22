@@ -10,12 +10,18 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.analytics.FirebaseAnalytics
 import dagger.android.support.DaggerAppCompatActivity
 import kekmech.ru.core.Router
+import kekmech.ru.core.usecases.IncrementAppLaunchCountUseCase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class MainActivity : DaggerAppCompatActivity() {
 
     @Inject lateinit var router: Router
     private var currentNavController: LiveData<NavController>? = null
+
+    @Inject lateinit var incrementAppLaunchCountUseCase: IncrementAppLaunchCountUseCase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +35,10 @@ class MainActivity : DaggerAppCompatActivity() {
         setContentView(R.layout.activity_main)
         if (savedInstanceState == null) {
             setupBottomNavigationBar()
+        }
+
+        GlobalScope.launch(Dispatchers.Main) {
+            incrementAppLaunchCountUseCase()
         }
     }
 

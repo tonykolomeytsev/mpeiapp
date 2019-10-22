@@ -40,4 +40,10 @@ abstract class InteractorModule {
 
     @Binds
     abstract fun provideGetForceUpdateUseCase(useCaseImpl: GetForceUpdateDataUseCaseImpl): GetForceUpdateDataUseCase
+
+    @Binds
+    abstract fun provideIncrementAppLaunchCountUseCase(useCaseImpl: IncrementAppLaunchCountUseCaseImpl): IncrementAppLaunchCountUseCase
+
+    @Binds
+    abstract fun provideGetAppLaunchCountUseCase(useCaseImpl: GetAppLaunchCountUseCaseImpl): GetAppLaunchCountUseCase
 }

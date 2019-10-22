@@ -30,6 +30,8 @@ interface FeedModel {
 
     var isNeedToUpdate: Boolean
 
+    val appLaunchCount: Int
+
     /**
      * Get couples for day
      * @param offset - 0 - today, 1 - yesterday etc.

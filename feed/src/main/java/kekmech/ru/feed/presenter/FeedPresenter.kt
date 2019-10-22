@@ -74,14 +74,16 @@ class FeedPresenter @Inject constructor(
         }
         GlobalScope.launch(Dispatchers.Main) {
             delay(1000)
-            updateChecker.check { url, desc ->
-                model.saveForceUpdateArgs(url, desc)
-                router.navigate(FEED_TO_FORCE)
+            if (model.appLaunchCount % 3 == 0) {
+                updateChecker.check { url, desc ->
+                    model.saveForceUpdateArgs(url, desc)
+                    router.navigate(FEED_TO_FORCE)
+                }
             }
         }
     }
 
-    fun setupMenu() {
+    private fun setupMenu() {
         menuAdapter.baseItems.clear()
         menuAdapter.baseItems.add(
             FeedMenuItem("Добавить группу").apply {
