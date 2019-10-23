@@ -4,28 +4,15 @@ package kekmech.ru.addscreen
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
-import android.text.InputFilter
 import android.util.TypedValue
 import android.view.KeyEvent
-import androidx.fragment.app.Fragment
+import android.view.KeyEvent.KEYCODE_ENTER
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
-import dagger.android.support.DaggerFragment
-import kekmech.ru.core.Presenter
-import kekmech.ru.coreui.Resources
-import kotlinx.android.synthetic.main.fragment_add.*
-import kotlinx.android.synthetic.main.web_view_stub.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import javax.inject.Inject
-import kotlin.coroutines.coroutineContext
-import android.view.KeyEvent.KEYCODE_ENTER
 import android.widget.FrameLayout
-import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -33,8 +20,10 @@ import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
 import dagger.android.support.AndroidSupportInjection
+import kekmech.ru.core.Presenter
 import kekmech.ru.coreui.adapter.BaseAdapter
-import java.lang.Exception
+import kotlinx.android.synthetic.main.fragment_add.*
+import javax.inject.Inject
 
 
 /**

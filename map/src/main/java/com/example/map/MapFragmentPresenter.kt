@@ -69,6 +69,8 @@ class MapFragmentPresenter @Inject constructor(
             }
             view.setBuildingDescription(it[0].name)
             placeMarkers(it)
+
+            if (!it.isNullOrEmpty()) view.selectBuilding(0)
         })
         // TODO сделать отображение общаг и столовок
         this.view = view
