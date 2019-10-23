@@ -70,8 +70,10 @@ class AddFragmentPresenter @Inject constructor(
                     "Schedule"
                 )
                 saveScheduleUseCase(schedule)
-                setNeedToUpdateFeedUseCase(true)
-                withContext(Dispatchers.Main) { router.popBackStack() }
+                withContext(Dispatchers.Main) {
+                    setNeedToUpdateFeedUseCase(true)
+                    router.popBackStack()
+                }
 
             } catch (e: Exception) {
                 // todo вывести сообщение об ошибке

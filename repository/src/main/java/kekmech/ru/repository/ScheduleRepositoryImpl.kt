@@ -19,7 +19,7 @@ class ScheduleRepositoryImpl @Inject constructor(
     private val scheduleCacheGateway: ScheduleCacheGateway
 ) : ScheduleRepository {
 
-    override var isNeedToUpdateFeed: Boolean = false
+    override var isNeedToUpdateFeed = MutableLiveData<Boolean>().apply { value = false }
 
 //    override fun getDayStatus(offset: Int): LiveData<DayStatus> {
 //        // update daystatus but return livedata

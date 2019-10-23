@@ -43,10 +43,19 @@ class FeedPresenter @Inject constructor(
      * subscribe to view events
      */
     override fun onResume(view: IFeedFragment) {
-        if (model.isNeedToUpdate) {
-            model.isNeedToUpdate = false
-            notifyToRefresh()
-        }
+        model.isNeedToUpdate.observe(view, Observer {
+            if (it == true) {
+                model.nitifyFeedUpdated()
+                refresh()
+                model.groupNumber.observe(view, Observer {
+                    view.setStatus(
+                        "Группа $it",
+                        model.formattedTodayStatus,
+                        "Идет ${model.currentWeekNumber} учебная неделя"
+                    )
+                })
+            }
+        })
         this.view = view
         model.groupNumber.observe(view, Observer {
             view.setStatus(

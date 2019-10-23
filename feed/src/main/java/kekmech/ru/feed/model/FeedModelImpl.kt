@@ -47,9 +47,8 @@ class FeedModelImpl @Inject constructor(
 
     override var weekendOffset: Int = 0
 
-    override var isNeedToUpdate: Boolean
+    override val isNeedToUpdate: LiveData<Boolean>
         get() = isNeedToUpdateFeedUseCase()
-        set(value) { setNeedToUpdateFeedUseCase(value) }
 
     override val appLaunchCount: Int
         get() = getAppLaunchCountUseCase()
@@ -130,5 +129,9 @@ class FeedModelImpl @Inject constructor(
 
     override fun saveForceUpdateArgs(url: String, description: String) {
         setForceUpdateDataUseCase(url, description)
+    }
+
+    override fun nitifyFeedUpdated() {
+        setNeedToUpdateFeedUseCase(false)
     }
 }

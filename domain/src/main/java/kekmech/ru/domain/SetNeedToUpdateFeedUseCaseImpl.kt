@@ -8,6 +8,6 @@ class SetNeedToUpdateFeedUseCaseImpl @Inject constructor(
     private val scheduleRepository: ScheduleRepository
 ) : SetNeedToUpdateFeedUseCase {
     override fun invoke(update: Boolean) {
-        scheduleRepository.isNeedToUpdateFeed = update
+        scheduleRepository.isNeedToUpdateFeed.value = update
     }
 }

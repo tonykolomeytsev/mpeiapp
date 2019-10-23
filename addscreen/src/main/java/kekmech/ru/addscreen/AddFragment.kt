@@ -81,14 +81,18 @@ class AddFragment @Inject constructor() : BottomSheetDialogFragment(), HasAndroi
                 return false
             }
         })
-        try {
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        dialog?.setOnShowListener {
             val bsInternal = dialog?.findViewById<FrameLayout>(com.google.android.material.R.id.design_bottom_sheet)
             BottomSheetBehavior.from(bsInternal).peekHeight = TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP,
                 500f,
                 resources.displayMetrics
             ).toInt()
-        } catch (e: Exception) { e.printStackTrace() }
+        }
     }
 
     override fun onResume() {

@@ -30,7 +30,7 @@ interface FeedModel {
      */
     var weekendOffset: Int
 
-    var isNeedToUpdate: Boolean
+    val isNeedToUpdate: LiveData<Boolean>
 
     val appLaunchCount: Int
 
@@ -42,4 +42,6 @@ interface FeedModel {
     suspend fun getDayCouples(offset: Int, refresh: Boolean): List<BaseItem<*>>
 
     fun saveForceUpdateArgs(url: String, description: String)
+
+    fun nitifyFeedUpdated()
 }
