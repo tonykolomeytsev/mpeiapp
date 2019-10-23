@@ -10,6 +10,7 @@ interface TimetableFragmentView : LifecycleOwner {
     fun getChildFragmentManager(): FragmentManager
     fun setupViewPager()
     fun setStatus(title: String, subtitle: String)
+    fun setTitle(title: String)
     fun setSubtitleStatus(subtitle: String)
     fun setBottomButtonText(string: String)
 }
