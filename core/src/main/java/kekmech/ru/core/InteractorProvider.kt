@@ -16,4 +16,6 @@ interface InteractorProvider {
     fun provideGetForceUpdateUseCase(): GetForceUpdateDataUseCase
     fun provideIncrementAppLaunchCountUseCase(): IncrementAppLaunchCountUseCase
     fun provideGetAppLaunchCountUseCase(): GetAppLaunchCountUseCase
+    fun provideGetAllShedulesUseCase(): GetAllSchedulesUseCase
+    fun provideChangeCurrentScheduleIdUseCase(): ChangeCurrentScheduleIdUseCase
 }

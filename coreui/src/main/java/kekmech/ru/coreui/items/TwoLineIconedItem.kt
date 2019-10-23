@@ -11,9 +11,8 @@ import kekmech.ru.coreui.adapter.BaseViewHolder
 class TwoLineIconedItem(
     private val header: String,
     private val description: String,
-    private val icon: Int,
-    itemId: String = ""
-) : BaseClickableItem<TwoLineIconedItem.ViewHolder>(itemId) {
+    private val icon: Int
+) : BaseClickableItem<TwoLineIconedItem.ViewHolder>() {
 
     override fun updateViewHolder(viewHolder: ViewHolder) {
         viewHolder.description.text = description

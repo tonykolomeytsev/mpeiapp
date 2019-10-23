@@ -46,4 +46,10 @@ abstract class InteractorModule {
 
     @Binds
     abstract fun provideGetAppLaunchCountUseCase(useCaseImpl: GetAppLaunchCountUseCaseImpl): GetAppLaunchCountUseCase
+
+    @Binds
+    abstract fun provideGetAllSchedulesUseCase(useCaseImpl: GetAllSchedulesUseCaseImpl): GetAllSchedulesUseCase
+
+    @Binds
+    abstract fun provideChangeCurrentScheduleIdUseCase(useCaseImpl: ChangeCurrentScheduleIdUseCaseImpl): ChangeCurrentScheduleIdUseCase
 }

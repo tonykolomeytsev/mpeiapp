@@ -26,12 +26,14 @@ import kotlin.coroutines.coroutineContext
 import android.view.KeyEvent.KEYCODE_ENTER
 import android.widget.FrameLayout
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
 import dagger.android.support.AndroidSupportInjection
+import kekmech.ru.coreui.adapter.BaseAdapter
 import java.lang.Exception
 
 
@@ -98,7 +100,7 @@ class AddFragment @Inject constructor() : BottomSheetDialogFragment(), HasAndroi
     override fun onResume() {
         super.onResume()
         presenter.onResume(this)
-        buttonSelectGroup.setOnClickListener { onSearchClickListener(editTextGroupName.text.toString()) }
+        buttonSelectGroup?.setOnClickListener { onSearchClickListener(editTextGroupName?.text.toString()) }
     }
 
     override fun onPause() {
@@ -107,46 +109,50 @@ class AddFragment @Inject constructor() : BottomSheetDialogFragment(), HasAndroi
     }
 
     override fun showLoadButton() {
-        buttonSelectGroup.isClickable = true
+        buttonSelectGroup?.isClickable = true
         buttonSelectGroup
-            .animate()
-            .alpha(1f)
-            .setDuration(200)
-            .start()
+            ?.animate()
+            ?.alpha(1f)
+            ?.setDuration(200)
+            ?.start()
     }
 
     override fun hideLoadButton() {
-        buttonSelectGroup.isClickable = false
+        buttonSelectGroup?.isClickable = false
         buttonSelectGroup
-            .animate()
-            .alpha(0f)
-            .setDuration(200)
-            .start()
+            ?.animate()
+            ?.alpha(0f)
+            ?.setDuration(200)
+            ?.start()
     }
 
     override fun disableEditText() {
-        editTextGroupName.clearFocus()
-        editTextGroupName.isEnabled = false
+        editTextGroupName?.clearFocus()
+        editTextGroupName?.isEnabled = false
     }
 
     override fun enableEditText() {
-        editTextGroupName.isEnabled = true
+        editTextGroupName?.isEnabled = true
     }
 
     override fun showLoading() {
-        frameLayoutLoading.animate()
-            .alpha(1f)
-            .setDuration(200)
-            .withStartAction { frameLayoutLoading.visibility = View.VISIBLE }
-            .start()
+        frameLayoutLoading?.animate()
+            ?.alpha(1f)
+            ?.setDuration(200)
+            ?.withStartAction { frameLayoutLoading?.visibility = View.VISIBLE }
+            ?.start()
+        nestedScrollGroups?.visibility = View.GONE
     }
 
     override fun hideLoading() {
-        frameLayoutLoading.animate()
-            .alpha(1f)
-            .setDuration(200)
-            .withEndAction { frameLayoutLoading.visibility = View.INVISIBLE }
-            .start()
+        frameLayoutLoading?.visibility = View.GONE
+        nestedScrollGroups?.visibility = View.VISIBLE
+    }
+
+    override fun setAdapter(adapter: BaseAdapter) {
+        progressBarGroups?.visibility = View.INVISIBLE
+        recyclerViewGroups?.layoutManager = LinearLayoutManager(context)
+        recyclerViewGroups?.adapter = adapter
     }
 
 }

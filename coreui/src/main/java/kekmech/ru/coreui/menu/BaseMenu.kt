@@ -10,6 +10,7 @@ import kekmech.ru.coreui.items.SingleLineItem
 import kekmech.ru.coreui.items.TwoLineIconedItem
 import java.util.*
 
+@Deprecated("")
 class BaseMenu(private var context: Context?) {
     val linkedList = LinkedList<BaseItem<*>>()
 
@@ -25,7 +26,6 @@ class BaseMenu(private var context: Context?) {
      * Two-line item with icon
      */
     fun item(header: String, description: String, icon: Int, itemId: String): BaseMenu {
-        linkedList.add(TwoLineIconedItem(header, description, icon, itemId))
         return this
     }
 
@@ -39,7 +39,6 @@ class BaseMenu(private var context: Context?) {
      * Single-line item without icon
      */
     fun item(header: String, itemId: String): BaseMenu {
-        linkedList.add(SingleLineItem(header, itemId))
         return this
     }
 
@@ -50,10 +49,6 @@ class BaseMenu(private var context: Context?) {
         .build()
         .apply {
             context = null
-            linkedList.forEach { item ->
-                if (item is BaseClickableItem<*>)
-                    item.clickListener = { itemId -> settingsItemListener.onItemClick(itemId) }
-            }
             baseItems.addAll(linkedList)
         }
 }

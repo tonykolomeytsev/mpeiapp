@@ -1,23 +1,25 @@
 package kekmech.ru.addscreen.presenter
 
 import kekmech.ru.addscreen.IAddFragment
+import kekmech.ru.addscreen.model.AddFragmentModel
 import kekmech.ru.core.Presenter
 import kekmech.ru.core.Router
 import kekmech.ru.core.Screens
+import kekmech.ru.core.dto.AcademGroup
 import kekmech.ru.core.dto.CoupleNative
 import kekmech.ru.core.dto.Schedule
 import kekmech.ru.core.dto.Time
 import kekmech.ru.core.usecases.SaveScheduleUseCase
 import kekmech.ru.core.usecases.SetNeedToUpdateFeedUseCase
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kekmech.ru.coreui.adapter.BaseAdapter
+import kekmech.ru.coreui.adapter.BaseClickableItem
+import kotlinx.coroutines.*
 import javax.inject.Inject
 
 class AddFragmentPresenter @Inject constructor(
     private val saveScheduleUseCase: SaveScheduleUseCase,
     private val setNeedToUpdateFeedUseCase: SetNeedToUpdateFeedUseCase,
+    private val model: AddFragmentModel,
     private val router: Router
 ) : Presenter<IAddFragment>() {
     private var view: IAddFragment? = null
@@ -29,6 +31,40 @@ class AddFragmentPresenter @Inject constructor(
     override fun onResume(view: IAddFragment) {
         this.view = view
         view.onSearchClickListener = this::onSearch
+        GlobalScope.launch(Dispatchers.Main) {
+            val groups = withContext(Dispatchers.IO) { model.getGroupsAsync() }
+            val groupSet = mutableListOf<AcademGroup>()
+            groups.reversed().forEach { raw ->
+                if (!groupSet.any { it.name == raw.name }) {
+                    groupSet.add(raw)
+                }
+            }
+
+            val adapter = BaseAdapter.Builder()
+                .registerViewTypeFactory(GroupItem.Factory())
+                .build()
+            adapter.baseItems.addAll(groupSet
+                .take(10)
+                .map(::GroupItem)
+                .onEach { it.clickListener = ::onGroupClick })
+            delay(100)
+            view.setAdapter(adapter)
+        }
+    }
+
+    private fun onGroupClick(groupItem: BaseClickableItem<*>) {
+        val group = (groupItem as GroupItem).group
+        try {
+            GlobalScope.launch(Dispatchers.IO) {
+                model.setCurrentGroup(group.id)
+                withContext(Dispatchers.Main) {
+                    setNeedToUpdateFeedUseCase(true)
+                    router.popBackStack()
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     /**

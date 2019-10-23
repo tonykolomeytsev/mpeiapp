@@ -2,6 +2,7 @@ package kekmech.ru.addscreen
 
 import android.webkit.WebView
 import androidx.lifecycle.LifecycleOwner
+import kekmech.ru.coreui.adapter.BaseAdapter
 
 interface IAddFragment : LifecycleOwner {
     val web: WebView
@@ -14,4 +15,6 @@ interface IAddFragment : LifecycleOwner {
     fun enableEditText()
     fun showLoading()
     fun hideLoading()
+
+    fun setAdapter(adapter: BaseAdapter)
 }

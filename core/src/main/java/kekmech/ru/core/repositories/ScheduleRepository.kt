@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import kekmech.ru.core.dto.CoupleNative
 import kekmech.ru.core.dto.Schedule
+import kekmech.ru.core.dto.ScheduleNative
 
 interface ScheduleRepository {
     var isNeedToUpdateFeed: MutableLiveData<Boolean>
@@ -15,4 +16,8 @@ interface ScheduleRepository {
     fun saveSchedule(schedule: Schedule)
 
     fun getGroupNum(): LiveData<String>
+
+    fun getAllSchedules(): List<ScheduleNative>
+
+    fun setCurrentScheduleId(id: Int)
 }

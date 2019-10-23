@@ -95,8 +95,8 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="32dp"
-            tools:visibility="visible"
-            android:visibility="invisible"
+            tools:visibility="gone"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/frameLayout">
@@ -115,6 +115,34 @@
                 android:textColor="@color/secondaryTextColor"
                 android:fontFamily="sans-serif-light"
                 />
+    </FrameLayout>
+
+    <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <ProgressBar
+                android:id="@+id/progressBarGroups"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginTop="32dp"
+                android:indeterminateTint="@color/colorSecondary"
+                android:layout_gravity="center_horizontal"
+                tools:visibility="invisible"/>
+
+        <androidx.core.widget.NestedScrollView
+                android:id="@+id/nestedScrollGroups"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewGroups"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:listitem="@layout/item_group"
+                    android:paddingBottom="32dp"/>
+
+        </androidx.core.widget.NestedScrollView>
     </FrameLayout>
 
 </LinearLayout>
