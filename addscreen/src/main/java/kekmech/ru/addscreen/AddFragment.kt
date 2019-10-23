@@ -2,8 +2,10 @@ package kekmech.ru.addscreen
 
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.text.InputFilter
+import android.util.TypedValue
 import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -22,18 +24,42 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.coroutines.coroutineContext
 import android.view.KeyEvent.KEYCODE_ENTER
+import android.widget.FrameLayout
 import android.widget.Toast
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasAndroidInjector
+import dagger.android.support.AndroidSupportInjection
+import java.lang.Exception
 
 
 /**
  * A simple [Fragment] subclass.
  */
-class AddFragment @Inject constructor() : DaggerFragment(), IAddFragment {
+class AddFragment @Inject constructor() : BottomSheetDialogFragment(), HasAndroidInjector, IAddFragment {
+
+    @Inject
+    @JvmField
+    public var androidInjector: DispatchingAndroidInjector<Any>? = null
 
     @Inject lateinit var presenter: Presenter<IAddFragment>
 
     override val web: WebView get() = view?.findViewById(R.id.webView)!!
     override lateinit var onSearchClickListener: (String) -> Unit
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        (view?.parent as View?)?.setBackgroundColor(Color.TRANSPARENT)
+    }
+
+    override fun onAttach(context: Context) {
+        AndroidSupportInjection.inject(this)
+        super.onAttach(context)
+    }
+
+    override fun androidInjector(): AndroidInjector<Any> = androidInjector!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,6 +81,14 @@ class AddFragment @Inject constructor() : DaggerFragment(), IAddFragment {
                 return false
             }
         })
+        try {
+            val bsInternal = dialog?.findViewById<FrameLayout>(com.google.android.material.R.id.design_bottom_sheet)
+            BottomSheetBehavior.from(bsInternal).peekHeight = TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                500f,
+                resources.displayMetrics
+            ).toInt()
+        } catch (e: Exception) { e.printStackTrace() }
     }
 
     override fun onResume() {

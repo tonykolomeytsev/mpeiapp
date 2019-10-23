@@ -19,7 +19,7 @@
                 android:id="@+id/action_feedFragment_to_forceUpdateFragment"
                 app:destination="@id/forceUpdateFragment" />
     </fragment>
-    <fragment
+    <dialog
             android:id="@+id/addFragment"
             android:name="kekmech.ru.addscreen.AddFragment"
             android:label="AddFragment"
