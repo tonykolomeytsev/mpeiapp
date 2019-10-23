@@ -8,6 +8,8 @@ import kekmech.ru.coreui.adapter.BaseItem
 
 interface FeedModel {
 
+    var isNotShowedUpdateDialog: Boolean
+
     val today: Time
 
     var scheduleInfoUpdateListener: (List<CoupleNative>) -> Unit

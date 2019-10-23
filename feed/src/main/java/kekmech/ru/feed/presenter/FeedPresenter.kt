@@ -74,10 +74,11 @@ class FeedPresenter @Inject constructor(
         }
         GlobalScope.launch(Dispatchers.Main) {
             delay(1000)
-            if (model.appLaunchCount % 3 == 0) {
+            if (model.appLaunchCount % 3 == 0 && model.isNotShowedUpdateDialog) {
                 updateChecker.check { url, desc ->
                     model.saveForceUpdateArgs(url, desc)
                     router.navigate(FEED_TO_FORCE)
+                    model.isNotShowedUpdateDialog = false
                 }
             }
         }

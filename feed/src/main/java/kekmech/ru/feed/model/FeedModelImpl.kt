@@ -54,6 +54,8 @@ class FeedModelImpl @Inject constructor(
     override val appLaunchCount: Int
         get() = getAppLaunchCountUseCase()
 
+    override var isNotShowedUpdateDialog: Boolean = true
+
     /**
      * Get couples for day
      * @param offset - 0 - today, 1 - yesterday etc.
