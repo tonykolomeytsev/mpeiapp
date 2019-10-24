@@ -1,5 +1,7 @@
 # MpeiX - приложение МЭИ здорового человека
 
+![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/tonykolomeytsev/mpeiapp?label=version)
+
 Расписание пар, карта корпусов и личный кабинет БАРС для студентов НИУ МЭИ. Самое правильное приложения с расписанием МЭИ. 
 
 + Бесконечная лента с расписанием
