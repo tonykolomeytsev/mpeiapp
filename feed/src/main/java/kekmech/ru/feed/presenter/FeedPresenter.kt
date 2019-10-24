@@ -43,10 +43,19 @@ class FeedPresenter @Inject constructor(
      * subscribe to view events
      */
     override fun onResume(view: IFeedFragment) {
-        if (model.isNeedToUpdate) {
-            model.isNeedToUpdate = false
-            notifyToRefresh()
-        }
+        model.isNeedToUpdate.observe(view, Observer {
+            if (it == true) {
+                model.nitifyFeedUpdated()
+                refresh()
+                model.groupNumber.observe(view, Observer {
+                    view.setStatus(
+                        "Группа $it",
+                        model.formattedTodayStatus,
+                        "Идет ${model.currentWeekNumber} учебная неделя"
+                    )
+                })
+            }
+        })
         this.view = view
         model.groupNumber.observe(view, Observer {
             view.setStatus(
@@ -74,14 +83,17 @@ class FeedPresenter @Inject constructor(
         }
         GlobalScope.launch(Dispatchers.Main) {
             delay(1000)
-            updateChecker.check { url, desc ->
-                model.saveForceUpdateArgs(url, desc)
-                router.navigate(FEED_TO_FORCE)
+            if (model.appLaunchCount % 3 == 0 && model.isNotShowedUpdateDialog) {
+                updateChecker.check { url, desc ->
+                    model.saveForceUpdateArgs(url, desc)
+                    router.navigate(FEED_TO_FORCE)
+                    model.isNotShowedUpdateDialog = false
+                }
             }
         }
     }
 
-    fun setupMenu() {
+    private fun setupMenu() {
         menuAdapter.baseItems.clear()
         menuAdapter.baseItems.add(
             FeedMenuItem("Добавить группу").apply {

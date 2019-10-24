@@ -6,9 +6,8 @@ import kekmech.ru.coreui.adapter.*
 import kekmech.ru.feed.R
 
 class FeedMenuItem(
-    val string: String,
-    itemId: String = ""
-) : BaseClickableItem<FeedMenuItem.ViewHolder>(itemId) {
+    val string: String
+) : BaseClickableItem<FeedMenuItem.ViewHolder>() {
 
     override fun updateViewHolder(viewHolder: ViewHolder) {
         viewHolder.textView.text = string

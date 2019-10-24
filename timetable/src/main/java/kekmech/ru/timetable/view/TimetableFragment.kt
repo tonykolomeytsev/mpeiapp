@@ -13,6 +13,7 @@ import kekmech.ru.timetable.R
 import kekmech.ru.timetable.TimetableFragmentPresenter
 import kekmech.ru.timetable.WeekAdapter
 import kotlinx.android.synthetic.main.fragment_timetable.*
+import java.util.*
 import javax.inject.Inject
 
 
@@ -36,9 +37,15 @@ class TimetableFragment : DaggerFragment(), TimetableFragmentView {
         presenter.onResume(this)
         if (presenter.checkIsNecessaryDayOpened()) {
             val necessaryDay = presenter.today.dayOfWeek - 2 // потому что Calendar.MONDAY == 2
-            if (necessaryDay in 0..6) {
+            if (necessaryDay in 0..5) {
                 viewPager?.post {
                     viewPager?.setCurrentItem(necessaryDay, true)
+                }
+            } else { // show next monday if today is saturday or sunday
+                onChangeParityClickListener()
+                viewPager?.post {
+                    viewPager?.setCurrentItem(0, true)
+                    presenter.lastWeekOffset = 1
                 }
             }
         }
@@ -68,6 +75,10 @@ class TimetableFragment : DaggerFragment(), TimetableFragmentView {
 
     override fun setBottomButtonText(string: String) {
         textViewChangeWeekParity.text = string
+    }
+
+    override fun setTitle(title: String) {
+        timetableToolbar?.title = title
     }
 
 }

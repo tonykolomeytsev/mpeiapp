@@ -6,9 +6,8 @@ import kekmech.ru.coreui.R
 import kekmech.ru.coreui.adapter.*
 
 class TwoLineItem(
-    val strings: Pair<String, String>,
-    itemId: String = ""
-) : BaseClickableItem<TwoLineItem.ViewHolder>(itemId) {
+    val strings: Pair<String, String>
+) : BaseClickableItem<TwoLineItem.ViewHolder>() {
 
     override fun updateViewHolder(viewHolder: ViewHolder) {
         viewHolder.textPrimary.text = strings.first

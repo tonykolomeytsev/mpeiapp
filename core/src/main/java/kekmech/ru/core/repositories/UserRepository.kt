@@ -5,6 +5,7 @@ import kekmech.ru.core.dto.User
 interface UserRepository {
     var savedUpdateUrl: String
     var savedUpdateDescription: String
+    var appLaunchCount: Int
 
     fun get(refresh: Boolean = false): User
 }

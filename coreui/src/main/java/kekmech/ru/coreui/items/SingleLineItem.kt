@@ -6,9 +6,8 @@ import kekmech.ru.coreui.R
 import kekmech.ru.coreui.adapter.*
 
 class SingleLineItem(
-    val string: String,
-    itemId: String = ""
-) : BaseClickableItem<SingleLineItem.ViewHolder>(itemId) {
+    val string: String
+) : BaseClickableItem<SingleLineItem.ViewHolder>() {
 
     override fun updateViewHolder(viewHolder: ViewHolder) {
         viewHolder.textView.text = string

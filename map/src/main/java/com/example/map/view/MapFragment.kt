@@ -45,9 +45,10 @@ class MapFragment : DaggerFragment(), MapFragmentView {
     }
 
     override fun selectBuilding(index: Int) {
-        enumSliderBuildings?.post {
+        enumSliderBuildings?.postDelayed({
             enumSliderBuildings?.selectedPosition = index
-        }
+            onBuildingSelected(index)
+        }, 100)
     }
 
     override fun placeContentUnderStatusBar() {

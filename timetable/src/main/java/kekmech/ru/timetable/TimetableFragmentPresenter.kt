@@ -24,6 +24,7 @@ class TimetableFragmentPresenter @Inject constructor(
     lateinit var weekAdapter: WeekAdapter
     private var isNecessaryDayOpened = false
     val today get() = model.today
+    var lastWeekOffset: Int = 0
 
     /**
      * subscribe to view events
@@ -36,27 +37,34 @@ class TimetableFragmentPresenter @Inject constructor(
         }
         model.groupNumber.observe(view, Observer {
             val title = "Группа $it"
-            val subtitle = "Идет ${model.currentWeekNumber} неделя (${getParity(today)})"
-            view.setStatus(title, subtitle)
+            view.setTitle(title)
         })
         // Смотрим следующую неделю
-        view.onChangeParityClickListener = { onChangeParity(view) }
+        view.onChangeParityClickListener = { onChangeParity() }
+        model.weekOffset.observe(view, Observer {
+            Log.d("PARITY", "onChangeParity $it")
+            lastWeekOffset = it
+            if (it == 1) {
+                view.setBottomButtonText(Resources.getString(context, R.string.timetable_show_current_week))
+                view.setSubtitleStatus(
+                    "Следующая ${model.currentWeekNumber + 1} неделя (${getParity(
+                        today.getDayWithOffset(7)
+                    )})"
+                )
+            } else {
+                view.setBottomButtonText(Resources.getString(context, R.string.timetable_show_next_week))
+                view.setSubtitleStatus("Идет ${model.currentWeekNumber} неделя (${getParity(today)})")
+            }
+        })
     }
 
-    private fun onChangeParity(view: TimetableFragmentView) {
-        val ld = (model.weekOffset as MutableLiveData<Int>)
-        if (ld.value == 0) {
-            ld.value = 1
-            view.setBottomButtonText(Resources.getString(context, R.string.timetable_show_current_week))
-            view.setSubtitleStatus(
-                "Следующая ${model.currentWeekNumber + 1} неделя (${getParity(
-                    today.getDayWithOffset(7)
-                )})"
-            )
+    fun onChangeParity() {
+        if (lastWeekOffset == 0) {
+            lastWeekOffset = 1
+            (model.weekOffset as MutableLiveData).value = 1
         } else {
-            ld.value = 0
-            view.setBottomButtonText(Resources.getString(context, R.string.timetable_show_next_week))
-            view.setSubtitleStatus("Идет ${model.currentWeekNumber} неделя (${getParity(today)})")
+            lastWeekOffset = 0
+            (model.weekOffset as MutableLiveData).value = 0
         }
     }
 

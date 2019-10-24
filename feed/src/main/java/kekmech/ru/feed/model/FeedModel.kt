@@ -8,6 +8,8 @@ import kekmech.ru.coreui.adapter.BaseItem
 
 interface FeedModel {
 
+    var isNotShowedUpdateDialog: Boolean
+
     val today: Time
 
     var scheduleInfoUpdateListener: (List<CoupleNative>) -> Unit
@@ -28,7 +30,9 @@ interface FeedModel {
      */
     var weekendOffset: Int
 
-    var isNeedToUpdate: Boolean
+    val isNeedToUpdate: LiveData<Boolean>
+
+    val appLaunchCount: Int
 
     /**
      * Get couples for day
@@ -38,4 +42,6 @@ interface FeedModel {
     suspend fun getDayCouples(offset: Int, refresh: Boolean): List<BaseItem<*>>
 
     fun saveForceUpdateArgs(url: String, description: String)
+
+    fun nitifyFeedUpdated()
 }

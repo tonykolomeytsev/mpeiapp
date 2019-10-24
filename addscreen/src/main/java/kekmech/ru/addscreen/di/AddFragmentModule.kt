@@ -7,6 +7,8 @@ import dagger.multibindings.ClassKey
 import dagger.multibindings.IntoMap
 import kekmech.ru.addscreen.AddFragment
 import kekmech.ru.addscreen.IAddFragment
+import kekmech.ru.addscreen.model.AddFragmentModel
+import kekmech.ru.addscreen.model.AddFragmentModelImpl
 import kekmech.ru.addscreen.presenter.AddFragmentPresenter
 import kekmech.ru.core.Presenter
 import kekmech.ru.core.scopes.ActivityScope
@@ -21,4 +23,8 @@ abstract class AddFragmentModule {
     @ActivityScope
     @Binds
     abstract fun providePresenter(presenter: AddFragmentPresenter): Presenter<IAddFragment>
+
+    @ActivityScope
+    @Binds
+    abstract fun provideModel(modelImpl: AddFragmentModelImpl): AddFragmentModel
 }

@@ -2,10 +2,7 @@ package kekmech.ru.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import kekmech.ru.core.dto.CoupleNative
-import kekmech.ru.core.dto.DayStatus
-import kekmech.ru.core.dto.Schedule
-import kekmech.ru.core.dto.Time
+import kekmech.ru.core.dto.*
 import kekmech.ru.core.gateways.ScheduleCacheGateway
 import kekmech.ru.core.repositories.ScheduleRepository
 import kotlinx.coroutines.Dispatchers
@@ -19,16 +16,7 @@ class ScheduleRepositoryImpl @Inject constructor(
     private val scheduleCacheGateway: ScheduleCacheGateway
 ) : ScheduleRepository {
 
-    override var isNeedToUpdateFeed: Boolean = false
-
-//    override fun getDayStatus(offset: Int): LiveData<DayStatus> {
-//        // update daystatus but return livedata
-//        GlobalScope.launch(Dispatchers.IO) {
-//            val newDay = Time.today().getDayWithOffset(offset)
-//            dayStatus.value = DayStatus(newDay, getGroupNum())
-//        }
-//        return dayStatus
-//    }
+    override var isNeedToUpdateFeed = MutableLiveData<Boolean>().apply { value = false }
 
     override fun getSchedule(refresh: Boolean): Schedule? {
         return scheduleCacheGateway.getSchedule()
@@ -68,5 +56,9 @@ class ScheduleRepositoryImpl @Inject constructor(
         }
         return groupNumber
     }
+
+    override fun getAllSchedules() = scheduleCacheGateway.getAllSchedules()
+
+    override fun setCurrentScheduleId(id: Int) = scheduleCacheGateway.setCurrentScheduleId(id)
 
 }
