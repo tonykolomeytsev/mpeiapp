@@ -8,25 +8,15 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import com.example.map.MapFragmentPresenter
 import com.example.map.R
-import com.example.map.view.MapFragmentView.Companion.PAGE_BUILDINGS
-import com.example.map.view.MapFragmentView.Companion.PAGE_FOODS
-import com.example.map.view.MapFragmentView.Companion.PAGE_HOSTELS
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException
-import com.google.android.gms.maps.MapsInitializer
-import com.google.android.gms.maps.SupportMapFragment
+import com.example.map.model.MapFragmentModel.Companion.PAGE_BUILDINGS
+import com.example.map.model.MapFragmentModel.Companion.PAGE_FOODS
+import com.example.map.model.MapFragmentModel.Companion.PAGE_HOSTELS
 import dagger.android.support.DaggerFragment
-import kekmech.ru.core.dto.Building
-import kekmech.ru.coreui.Resources
 import kotlinx.android.synthetic.main.fragment_map.*
-import java.lang.Exception
 import javax.inject.Inject
 
 
@@ -36,6 +26,8 @@ class MapFragment : DaggerFragment(), MapFragmentView {
     lateinit var presenter: MapFragmentPresenter
 
     override val contentView: ViewGroup get() = mapCoordinator
+
+    override var onChangeStateListener: (Int) -> Unit = {}
 
     private var viewPagerUI: ViewPager2? = null
 
@@ -57,7 +49,13 @@ class MapFragment : DaggerFragment(), MapFragmentView {
     }
 
     fun scrollUiTo(position: Int) {
+        onChangeStateListener(position)
         viewPagerUI?.setCurrentItem(position, true)
+
+    }
+
+    override fun setState(state: Int) {
+        viewPagerUI?.post { viewPagerUI?.setCurrentItem(state, false) }
     }
 
     override fun placeContentUnderStatusBar() {

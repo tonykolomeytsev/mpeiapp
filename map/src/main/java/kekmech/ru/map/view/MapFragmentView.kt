@@ -7,13 +7,9 @@ import kekmech.ru.core.dto.Building
 
 interface MapFragmentView : LifecycleOwner {
     val contentView: ViewGroup
+    var onChangeStateListener: (Int) -> Unit
 
     fun placeContentUnderStatusBar()
     fun setAdapter(mapUIAdapter: RecyclerView.Adapter<*>)
-
-    companion object {
-        const val PAGE_BUILDINGS = 0
-        const val PAGE_HOSTELS = 1
-        const val PAGE_FOODS = 2
-    }
+    fun setState(state: Int)
 }

@@ -3,6 +3,8 @@ package com.example.map
 import android.content.Context
 import android.util.Log
 import android.util.TypedValue
+import android.widget.TextView
+import androidx.lifecycle.Observer
 import com.example.map.model.MapFragmentModel
 import com.example.map.view.MapFragmentView
 import com.example.map.view.pages.BuildingsItem
@@ -13,7 +15,9 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.*
 import com.google.firebase.firestore.GeoPoint
 import kekmech.ru.core.Presenter
+import kekmech.ru.core.dto.Building
 import kekmech.ru.coreui.adapter.BaseAdapter
+import kekmech.ru.map.view.CustomMarkerView
 import javax.inject.Inject
 
 
@@ -42,6 +46,12 @@ class MapFragmentPresenter @Inject constructor(
         super.onResume(view)
         this.view = view
         view.setAdapter(mapUIAdapter)
+        view.setState(model.state)
+        view.onChangeStateListener = {
+            model.state = it
+            replaceMarkers(view)
+        }
+        replaceMarkers(view)
     }
 
     override fun onPause(view: MapFragmentView) {
@@ -54,26 +64,32 @@ class MapFragmentPresenter @Inject constructor(
 
     val GeoPoint.latLng get() = LatLng(this.latitude, this.longitude)
 
-/*    private fun placeMarkers(it: List<Building>) {
+
+    private fun placeBuildingMarkers(places: List<Building>) {
         map?.apply {
-            markers.forEach { it.remove() }
-            markers.clear()
-            lastSelectedBuilding = -1
+            model.markers.forEach { it.remove() }
+            model.markers.clear()
 
-            it.forEach {place ->
-                val marker = LayoutInflater
-                    .from(context)
-                    .inflate(R.layout.item_placemark_building, FrameLayout(context), false)
-                (marker.findViewById<TextView>(R.id.textViewPlacemarkTitle)).text = place.letter
-
-                if (view != null) markers.add(addMarker(
+            places.forEachIndexed { i, place ->
+                if (view != null) model.markers.add(addMarker(
                      MarkerOptions()
-                        .position(place.location.toLatLng())
+                        .position(place.location.latLng)
                         .title(place.name)
-                        .icon(getMarkerIcon(view!!.contentView, place.letter, false))
+                        .icon(CustomMarkerView(context, R.layout.item_placemark_building) {
+                            (it.findViewById<TextView>(R.id.textViewPlacemarkTitle)).text = place.letter
+                        }.getMarkerIcon())
                 ))
             }
         }
-    }*/
+    }
+
+    private fun replaceMarkers(view: MapFragmentView) {
+        if (model.state == MapFragmentModel.PAGE_BUILDINGS) {
+            model.buildings.observe(view, Observer { placeBuildingMarkers(it) })
+        } else {
+            model.markers.forEach { it.remove() }
+            model.markers.clear()
+        }
+    }
 }
 

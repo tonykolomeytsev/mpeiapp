@@ -52,4 +52,10 @@ abstract class InteractorModule {
 
     @Binds
     abstract fun provideChangeCurrentScheduleIdUseCase(useCaseImpl: ChangeCurrentScheduleIdUseCaseImpl): ChangeCurrentScheduleIdUseCase
+
+    @Binds
+    abstract fun provideGetMapStateUseCase(useCaseImpl: GetMapStateUseCaseImpl): GetMapStateUseCase
+
+    @Binds
+    abstract fun provideSetMapStateUseCase(useCaseImpl: SetMapStateUseCaseImpl): SetMapStateUseCase
 }
