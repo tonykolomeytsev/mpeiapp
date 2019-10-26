@@ -51,16 +51,6 @@ class MapFragment : DaggerFragment(), MapFragmentView {
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync(presenter)
         placeContentUnderStatusBar()
-        viewPagerUI = ViewPager2(requireContext())
-        viewPagerContainer?.removeAllViews()
-        viewPagerContainer?.addView(viewPagerUI)
-        viewPagerUI?.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                val tabs = listOf(tabBuildings, tabHostels, tabFoods)
-                tabs.filterNotNull().forEachIndexed { index, view -> redrawTabItem(view, position == index) }
-            }
-        })
         tabBuildings?.setOnClickListener { scrollUiTo(PAGE_BUILDINGS) }
         tabHostels?.setOnClickListener { scrollUiTo(PAGE_HOSTELS) }
         tabFoods?.setOnClickListener { scrollUiTo(PAGE_FOODS) }
@@ -81,13 +71,28 @@ class MapFragment : DaggerFragment(), MapFragmentView {
     }
 
     override fun onResume() {
+        Log.d("MapFragment", "onResume")
+        // dynamically load viewPager2
+        viewPagerUI = ViewPager2(requireContext())
+        viewPagerContainer?.removeAllViews()
+        viewPagerContainer?.addView(viewPagerUI)
+        viewPagerUI?.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                val tabs = listOf(tabBuildings, tabHostels, tabFoods)
+                tabs.filterNotNull().forEachIndexed { index, view -> redrawTabItem(view, position == index) }
+            }
+        })
+
         mapView?.onResume()
         super.onResume()
         presenter.onResume(this)
         placeContentUnderStatusBar()
+
     }
 
     override fun onPause() {
+        Log.d("MapFragment", "onPause")
         viewPagerContainer?.removeAllViews()
         viewPagerUI = null
         System.gc()
