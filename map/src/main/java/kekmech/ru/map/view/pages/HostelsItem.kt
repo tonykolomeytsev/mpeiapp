@@ -1,4 +1,4 @@
-package com.example.map.view.pages
+package kekmech.ru.map.view.pages
 
 import android.view.View
 import android.widget.ProgressBar
@@ -40,5 +40,5 @@ class HostelsItem(private val model: MapFragmentModel) : BaseItem<HostelsItem.Vi
         val progressBar by bind<ProgressBar>(R.id.progressBar)
     }
 
-    class Factory : BaseFactory(R.layout.item_hostels, ::ViewHolder)
+    class Factory : BaseFactory(R.layout.item_hostels, HostelsItem::ViewHolder)
 }

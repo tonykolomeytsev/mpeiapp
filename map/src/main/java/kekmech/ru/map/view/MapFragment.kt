@@ -1,4 +1,4 @@
-package com.example.map.view
+package kekmech.ru.map.view
 
 
 import android.graphics.Color
@@ -10,7 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
-import com.example.map.MapFragmentPresenter
+import kekmech.ru.map.MapFragmentPresenter
 import com.example.map.R
 import com.example.map.model.MapFragmentModel.Companion.PAGE_BUILDINGS
 import com.example.map.model.MapFragmentModel.Companion.PAGE_FOODS

@@ -1,4 +1,4 @@
-package com.example.map.view.pages
+package kekmech.ru.map.view.pages
 
 import android.view.View
 import android.widget.TextView

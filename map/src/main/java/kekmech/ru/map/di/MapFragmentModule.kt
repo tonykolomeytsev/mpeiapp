@@ -1,10 +1,10 @@
 package com.example.map.di
 
-import com.example.map.MapFragmentPresenter
+import kekmech.ru.map.MapFragmentPresenter
 import com.example.map.model.MapFragmentModel
-import com.example.map.model.MapFragmentModelImpl
-import com.example.map.view.MapFragment
-import com.example.map.view.MapFragmentView
+import kekmech.ru.map.model.MapFragmentModelImpl
+import kekmech.ru.map.view.MapFragment
+import kekmech.ru.map.view.MapFragmentView
 import dagger.Binds
 import dagger.Module
 import dagger.android.AndroidInjector

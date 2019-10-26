@@ -1,6 +1,7 @@
-package com.example.map
+package kekmech.ru.map
 
 import android.content.Context
+import com.example.map.R
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng

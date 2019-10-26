@@ -1,15 +1,16 @@
-package com.example.map
+package kekmech.ru.map
 
 import android.content.Context
 import android.util.Log
 import android.util.TypedValue
 import android.widget.TextView
 import androidx.lifecycle.Observer
+import com.example.map.R
 import com.example.map.model.MapFragmentModel
-import com.example.map.view.MapFragmentView
-import com.example.map.view.pages.BuildingsItem
-import com.example.map.view.pages.FoodsItem
-import com.example.map.view.pages.HostelsItem
+import kekmech.ru.map.view.MapFragmentView
+import kekmech.ru.map.view.pages.BuildingsItem
+import kekmech.ru.map.view.pages.FoodsItem
+import kekmech.ru.map.view.pages.HostelsItem
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.*

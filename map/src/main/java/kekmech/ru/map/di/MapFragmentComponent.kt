@@ -1,6 +1,6 @@
 package com.example.map.di
 
-import com.example.map.view.MapFragment
+import kekmech.ru.map.view.MapFragment
 import dagger.Subcomponent
 import dagger.android.AndroidInjector
 

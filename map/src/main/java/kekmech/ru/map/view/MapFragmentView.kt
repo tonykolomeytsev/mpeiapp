@@ -1,4 +1,4 @@
-package com.example.map.view
+package kekmech.ru.map.view
 
 import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner

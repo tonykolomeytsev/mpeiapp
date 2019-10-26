@@ -1,6 +1,7 @@
-package com.example.map.model
+package kekmech.ru.map.model
 
 import androidx.lifecycle.LiveData
+import com.example.map.model.MapFragmentModel
 import com.google.android.gms.maps.model.Marker
 import kekmech.ru.core.dto.Building
 import kekmech.ru.core.dto.Food
