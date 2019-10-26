@@ -9,5 +9,7 @@ data class Hostel(
     @PropertyName("name")
     var name: String = "",
     @PropertyName("location")
-    var location: GeoPoint = GeoPoint(55.755060, 37.708431)
+    var location: GeoPoint = GeoPoint(55.755060, 37.708431),
+    @PropertyName("address")
+    var address: String = ""
 )

@@ -35,7 +35,9 @@ class MapFragment : DaggerFragment(), MapFragmentView {
     @Inject
     lateinit var presenter: MapFragmentPresenter
 
-    override val contentView: ViewGroup get() = coordinator
+    override val contentView: ViewGroup get() = mapCoordinator
+
+    private var viewPagerUI: ViewPager2? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,6 +51,9 @@ class MapFragment : DaggerFragment(), MapFragmentView {
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync(presenter)
         placeContentUnderStatusBar()
+        viewPagerUI = ViewPager2(requireContext())
+        viewPagerContainer?.removeAllViews()
+        viewPagerContainer?.addView(viewPagerUI)
         viewPagerUI?.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
@@ -83,6 +88,9 @@ class MapFragment : DaggerFragment(), MapFragmentView {
     }
 
     override fun onPause() {
+        viewPagerContainer?.removeAllViews()
+        viewPagerUI = null
+        System.gc()
         mapView?.onPause()
         presenter.onPause(this)
         super.onPause()

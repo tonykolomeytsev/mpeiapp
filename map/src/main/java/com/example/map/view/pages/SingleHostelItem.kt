@@ -12,12 +12,14 @@ class SingleHostelItem(val hostel: Hostel) : BaseClickableItem<SingleHostelItem.
 
     override fun updateViewHolder(viewHolder: ViewHolder) {
         viewHolder.name.text = hostel.name
+        viewHolder.address.text = hostel.address
     }
 
     override fun approveFactory(factory: BaseFactory) = factory is Factory
 
     class ViewHolder(view: View) : BaseViewHolder(view) {
         val name by bind<TextView>(R.id.textViewPlaceName)
+        val address by bind<TextView>(R.id.textViewPlaceAddress)
     }
 
     class Factory : BaseFactory(R.layout.item_single_hostel,

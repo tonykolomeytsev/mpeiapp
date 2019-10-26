@@ -41,5 +41,9 @@ class BuildingsItem(private val model: MapFragmentModel) : BaseItem<BuildingsIte
         val progressBar by bind<ProgressBar>(R.id.progressBar)
     }
 
-    class Factory : BaseFactory(R.layout.item_buildings, ::ViewHolder)
+    class Factory : BaseFactory(R.layout.item_buildings) {
+        override fun instance(view: View): BaseViewHolder {
+            return ViewHolder(view)
+        }
+    }
 }

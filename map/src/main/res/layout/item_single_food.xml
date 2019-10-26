@@ -5,23 +5,56 @@
         android:id="@+id/item_place_root"
         android:layout_width="match_parent"
         android:background="?attr/selectableItemBackground"
-        android:layout_height="48dp">
+        android:layout_height="wrap_content">
 
     <TextView
-            android:id="@+id/textViewPlaceName"
+            android:id="@+id/textViewPlaceType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="Корпус С"
-            android:layout_gravity="center"
+            tools:text="КСБУ МЭИ"
+            android:textSize="12sp"
+            android:fontFamily="sans-serif-medium"
             android:textColor="@color/colorBlack"
-            android:alpha="0.85"
-            android:textSize="20sp"
-            android:fontFamily="sans-serif"/>
+            android:alpha="0.5"
+            android:layout_marginRight="8dp"
+            android:layout_gravity="center_vertical|right"/>
 
-    <View
+    <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/colorBlack"
-            android:alpha="0.2"
-            android:layout_gravity="bottom"/>
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        <TextView
+                android:id="@+id/textViewPlaceName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Столовая №10"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/colorBlack"
+                android:alpha="0.85"
+                android:textSize="18sp"
+                android:fontFamily="sans-serif-medium"
+                android:layout_marginTop="8dp"/>
+
+        <TextView
+                android:id="@+id/textViewPlaceAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="улица Лапина"
+                android:fontFamily="sans-serif"
+                android:textColor="@color/colorBlack"
+                android:textSize="14sp"
+                android:alpha="0.5"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="8dp"/>
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/colorBlack"
+                android:alpha="0.2"
+                android:layout_gravity="bottom"/>
+
+    </LinearLayout>
+
 </FrameLayout>

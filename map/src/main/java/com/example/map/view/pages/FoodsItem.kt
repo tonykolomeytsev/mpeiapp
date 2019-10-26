@@ -36,7 +36,7 @@ class FoodsItem(private val model: MapFragmentModel) : BaseItem<FoodsItem.ViewHo
     override fun approveFactory(factory: BaseFactory) = factory is Factory
 
     class ViewHolder(view: View) : BaseViewHolder(view) {
-        val recycler by bind<RecyclerView>(R.id.recyclerViewBuildings)
+        val recycler by bind<RecyclerView>(R.id.recyclerViewFoods)
         val progressBar by bind<ProgressBar>(R.id.progressBar)
     }
 
