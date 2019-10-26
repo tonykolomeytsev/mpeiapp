@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:id="@+id/item_place_root"
+        android:layout_width="match_parent"
+        android:background="?attr/selectableItemBackground"
+        android:layout_height="48dp">
+
+    <TextView
+            android:id="@+id/textViewPlaceName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Корпус С"
+            android:layout_gravity="center"
+            android:textColor="@color/colorBlack"
+            android:alpha="0.85"
+            android:textSize="20sp"
+            android:fontFamily="sans-serif"/>
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/colorBlack"
+            android:alpha="0.2"
+            android:layout_gravity="bottom"/>
+</FrameLayout>

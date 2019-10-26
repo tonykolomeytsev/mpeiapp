@@ -13,7 +13,9 @@ import dagger.multibindings.IntoMap
 import kekmech.ru.core.Presenter
 import kekmech.ru.core.scopes.ActivityScope
 
-@Module(subcomponents = [MapFragmentComponent::class])
+@Module(subcomponents = [
+    MapFragmentComponent::class
+])
 abstract class MapFragmentModule {
     @Binds
     @IntoMap
