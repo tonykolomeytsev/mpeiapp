@@ -2,18 +2,14 @@ package kekmech.ru.map
 
 import android.content.Context
 import android.util.Log
-import android.util.TypedValue
 import android.widget.TextView
 import androidx.lifecycle.Observer
 import com.example.map.R
-import com.example.map.model.MapFragmentModel
-import com.example.map.model.MapFragmentModel.Companion.PAGE_BUILDINGS
-import com.example.map.model.MapFragmentModel.Companion.PAGE_FOODS
-import com.example.map.model.MapFragmentModel.Companion.PAGE_HOSTELS
+import kekmech.ru.map.model.MapFragmentModel
+import kekmech.ru.map.model.MapFragmentModel.Companion.PAGE_BUILDINGS
+import kekmech.ru.map.model.MapFragmentModel.Companion.PAGE_FOODS
+import kekmech.ru.map.model.MapFragmentModel.Companion.PAGE_HOSTELS
 import kekmech.ru.map.view.MapFragmentView
-import kekmech.ru.map.view.pages.BuildingsItem
-import kekmech.ru.map.view.pages.FoodsItem
-import kekmech.ru.map.view.pages.HostelsItem
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.*
@@ -24,6 +20,7 @@ import kekmech.ru.core.dto.Food
 import kekmech.ru.core.dto.Hostel
 import kekmech.ru.coreui.adapter.BaseAdapter
 import kekmech.ru.map.view.CustomMarkerView
+import kekmech.ru.map.view.pages.*
 import javax.inject.Inject
 
 
@@ -61,6 +58,33 @@ class MapFragmentPresenter @Inject constructor(
                 replaceMarkers(view)
             }
         }
+        model.selectedPlace.observe(view, Observer {place ->
+            try {
+                when (place) {
+                    is SingleBuildingItem -> model.buildings.observe(view, Observer {
+                        model.markers[it.indexOf(place.building)].apply {
+                            showInfoWindow()
+                            mapCustomizer.animateCameraTo(map, this)
+                        }
+                    })
+                    is SingleHostelItem -> model.hostels.observe(view, Observer {
+                        model.markers[it.indexOf(place.hostel)].apply {
+                            showInfoWindow()
+                            mapCustomizer.animateCameraTo(map, this)
+                        }
+                    })
+                    is SingleFoodItem -> model.foods.observe(view, Observer {
+                        model.markers[it.indexOf(place.food)].apply {
+                            showInfoWindow()
+                            mapCustomizer.animateCameraTo(map, this)
+                        }
+                    })
+                    else -> if (place != null) {
+                        model.selectPlace(null)
+                    }
+                }
+            } catch (e: Exception) { e.printStackTrace() }
+        })
     }
 
     override fun onPause(view: MapFragmentView) {

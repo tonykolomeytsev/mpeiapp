@@ -1,7 +1,7 @@
 package com.example.map.di
 
 import kekmech.ru.map.MapFragmentPresenter
-import com.example.map.model.MapFragmentModel
+import kekmech.ru.map.model.MapFragmentModel
 import kekmech.ru.map.model.MapFragmentModelImpl
 import kekmech.ru.map.view.MapFragment
 import kekmech.ru.map.view.MapFragmentView

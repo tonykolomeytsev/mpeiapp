@@ -1,4 +1,4 @@
-package com.example.map.model
+package kekmech.ru.map.model
 
 import androidx.lifecycle.LiveData
 import com.google.android.gms.maps.model.Marker
@@ -14,6 +14,9 @@ interface MapFragmentModel {
     var state: Int
 
     val markers: MutableList<Marker>
+
+    val selectedPlace: LiveData<Any>
+    fun selectPlace(any: Any?)
 
     companion object {
         const val PAGE_BUILDINGS = 0

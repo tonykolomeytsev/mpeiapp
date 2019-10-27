@@ -5,7 +5,7 @@ import android.widget.ProgressBar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.map.R
-import com.example.map.model.MapFragmentModel
+import kekmech.ru.map.model.MapFragmentModel
 import kekmech.ru.coreui.adapter.BaseAdapter
 import kekmech.ru.coreui.adapter.BaseFactory
 import kekmech.ru.coreui.adapter.BaseItem
@@ -27,7 +27,9 @@ class FoodsItem(private val model: MapFragmentModel) : BaseItem<FoodsItem.ViewHo
             delay(100)
             model.foods.observeForever {
                 adapter.baseItems.clear()
-                adapter.baseItems.addAll(it.map(::SingleFoodItem))
+                adapter.baseItems.addAll(it
+                    .map(::SingleFoodItem)
+                    .onEach { item -> item.clickListener = model::selectPlace })
                 viewHolder.recycler.adapter = adapter
                 viewHolder.progressBar.visibility = View.INVISIBLE
             }

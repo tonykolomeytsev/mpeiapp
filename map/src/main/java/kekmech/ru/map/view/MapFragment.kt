@@ -12,9 +12,9 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import kekmech.ru.map.MapFragmentPresenter
 import com.example.map.R
-import com.example.map.model.MapFragmentModel.Companion.PAGE_BUILDINGS
-import com.example.map.model.MapFragmentModel.Companion.PAGE_FOODS
-import com.example.map.model.MapFragmentModel.Companion.PAGE_HOSTELS
+import kekmech.ru.map.model.MapFragmentModel.Companion.PAGE_BUILDINGS
+import kekmech.ru.map.model.MapFragmentModel.Companion.PAGE_FOODS
+import kekmech.ru.map.model.MapFragmentModel.Companion.PAGE_HOSTELS
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_map.*
 import javax.inject.Inject

@@ -7,6 +7,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
+import com.google.android.gms.maps.model.Marker
 
 class MapCustomizer(private val context: Context) {
     fun initMap(map: GoogleMap?) {
@@ -30,5 +31,17 @@ class MapCustomizer(private val context: Context) {
                 .build()
             moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
         }
+    }
+
+    fun animateCameraTo(map: GoogleMap?, marker: Marker) {
+        map?.apply {
+            val cameraPosition = CameraPosition.Builder()
+                .tilt(30f)
+                .zoom(17f)
+                .target(marker.position)
+                .build()
+            animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 200, null)
+        }
+
     }
 }

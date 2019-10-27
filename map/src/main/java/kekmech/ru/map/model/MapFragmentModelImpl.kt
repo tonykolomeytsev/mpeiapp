@@ -1,7 +1,7 @@
 package kekmech.ru.map.model
 
 import androidx.lifecycle.LiveData
-import com.example.map.model.MapFragmentModel
+import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.Marker
 import kekmech.ru.core.dto.Building
 import kekmech.ru.core.dto.Food
@@ -28,4 +28,10 @@ class MapFragmentModelImpl @Inject constructor(
         set(value) { setMapStateUseCase(value) }
 
     override val markers = mutableListOf<Marker>()
+
+    override val selectedPlace = MutableLiveData<Any>()
+
+    override fun selectPlace(any: Any?) {
+        selectedPlace.value = any
+    }
 }
