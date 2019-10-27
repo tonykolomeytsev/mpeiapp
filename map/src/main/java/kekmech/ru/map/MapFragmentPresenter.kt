@@ -7,6 +7,9 @@ import android.widget.TextView
 import androidx.lifecycle.Observer
 import com.example.map.R
 import com.example.map.model.MapFragmentModel
+import com.example.map.model.MapFragmentModel.Companion.PAGE_BUILDINGS
+import com.example.map.model.MapFragmentModel.Companion.PAGE_FOODS
+import com.example.map.model.MapFragmentModel.Companion.PAGE_HOSTELS
 import kekmech.ru.map.view.MapFragmentView
 import kekmech.ru.map.view.pages.BuildingsItem
 import kekmech.ru.map.view.pages.FoodsItem
@@ -17,6 +20,8 @@ import com.google.android.gms.maps.model.*
 import com.google.firebase.firestore.GeoPoint
 import kekmech.ru.core.Presenter
 import kekmech.ru.core.dto.Building
+import kekmech.ru.core.dto.Food
+import kekmech.ru.core.dto.Hostel
 import kekmech.ru.coreui.adapter.BaseAdapter
 import kekmech.ru.map.view.CustomMarkerView
 import javax.inject.Inject
@@ -82,12 +87,47 @@ class MapFragmentPresenter @Inject constructor(
         }
     }
 
-    private fun replaceMarkers(view: MapFragmentView) {
-        if (model.state == MapFragmentModel.PAGE_BUILDINGS) {
-            model.buildings.observe(view, Observer { placeBuildingMarkers(it) })
-        } else {
+    private fun placeFoodMarkers(places: List<Food>) {
+        map?.apply {
             model.markers.forEach { it.remove() }
             model.markers.clear()
+
+            places.forEachIndexed { i, food ->
+                if (view != null) model.markers.add(addMarker(
+                    MarkerOptions()
+                        .position(food.location.latLng)
+                        .title(food.name)
+                        .icon(CustomMarkerView(context, R.layout.item_placemark_food) {}.getMarkerIcon())
+                ))
+            }
+        }
+    }
+
+    private fun placeHostelMarkers(places: List<Hostel>) {
+        map?.apply {
+            model.markers.forEach { it.remove() }
+            model.markers.clear()
+
+            places.forEachIndexed { i, hostel ->
+                if (view != null) model.markers.add(addMarker(
+                    MarkerOptions()
+                        .position(hostel.location.latLng)
+                        .title(hostel.name)
+                        .icon(CustomMarkerView(context, R.layout.item_placemark_hostel) {}.getMarkerIcon())
+                ))
+            }
+        }
+    }
+
+    private fun replaceMarkers(view: MapFragmentView) {
+        when (model.state) {
+            PAGE_BUILDINGS -> model.buildings.observe(view, Observer { placeBuildingMarkers(it) })
+            PAGE_FOODS -> model.foods.observe(view, Observer { placeFoodMarkers(it) })
+            PAGE_HOSTELS -> model.hostels.observe(view, Observer { placeHostelMarkers(it) })
+            else -> {
+                model.markers.forEach { it.remove() }
+                model.markers.clear()
+            }
         }
     }
 }
