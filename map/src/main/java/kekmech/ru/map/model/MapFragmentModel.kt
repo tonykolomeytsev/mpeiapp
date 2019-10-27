@@ -15,8 +15,8 @@ interface MapFragmentModel {
 
     val markers: MutableList<Marker>
 
-    val selectedPlace: LiveData<Any>
-    fun selectPlace(any: Any?)
+    var selectedPlace: Any?
+    var selectedPlaceListener: (Any) -> Unit
 
     companion object {
         const val PAGE_BUILDINGS = 0

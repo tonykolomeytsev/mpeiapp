@@ -23,7 +23,6 @@ import kekmech.ru.map.view.CustomMarkerView
 import kekmech.ru.map.view.pages.*
 import javax.inject.Inject
 
-
 class MapFragmentPresenter @Inject constructor(
     private val model: MapFragmentModel,
     private val context: Context
@@ -58,33 +57,33 @@ class MapFragmentPresenter @Inject constructor(
                 replaceMarkers(view)
             }
         }
-        model.selectedPlace.observe(view, Observer {place ->
+        model.selectedPlaceListener = { place ->
+            Log.d("MapPresenter", "selectedPlace $place")
             try {
+                val markers = model.markers
                 when (place) {
-                    is SingleBuildingItem -> model.buildings.observe(view, Observer {
-                        model.markers[it.indexOf(place.building)].apply {
+                    is SingleBuildingItem -> {
+                        model.markers.find { it.title == place.building.name }?.apply {
+                            Log.d("MapPresenter", "selectedMarker ${this.title}")
                             showInfoWindow()
                             mapCustomizer.animateCameraTo(map, this)
                         }
-                    })
-                    is SingleHostelItem -> model.hostels.observe(view, Observer {
-                        model.markers[it.indexOf(place.hostel)].apply {
+                    }
+                    is SingleHostelItem -> {
+                        model.markers.find { it.title == place.hostel.name }?.apply {
                             showInfoWindow()
                             mapCustomizer.animateCameraTo(map, this)
                         }
-                    })
-                    is SingleFoodItem -> model.foods.observe(view, Observer {
-                        model.markers[it.indexOf(place.food)].apply {
+                    }
+                    is SingleFoodItem -> {
+                        model.markers.find { it.title == place.food.name }?.apply {
                             showInfoWindow()
                             mapCustomizer.animateCameraTo(map, this)
                         }
-                    })
-                    else -> if (place != null) {
-                        model.selectPlace(null)
                     }
                 }
             } catch (e: Exception) { e.printStackTrace() }
-        })
+        }
     }
 
     override fun onPause(view: MapFragmentView) {

@@ -29,7 +29,7 @@ class FoodsItem(private val model: MapFragmentModel) : BaseItem<FoodsItem.ViewHo
                 adapter.baseItems.clear()
                 adapter.baseItems.addAll(it
                     .map(::SingleFoodItem)
-                    .onEach { item -> item.clickListener = model::selectPlace })
+                    .onEach { item -> item.clickListener = { model.selectedPlaceListener(item) } })
                 viewHolder.recycler.adapter = adapter
                 viewHolder.progressBar.visibility = View.INVISIBLE
             }
