@@ -3,7 +3,8 @@ package kekmech.ru.mainscreen
 import androidx.navigation.NavController
 import kekmech.ru.core.Router
 import kekmech.ru.core.Screens
-import kekmech.ru.core.Screens.*
+import kekmech.ru.core.Screens.FEED_TO_ADD
+import kekmech.ru.core.Screens.FEED_TO_FORCE
 import javax.inject.Inject
 
 class MainNavRouter @Inject constructor(): Router {
