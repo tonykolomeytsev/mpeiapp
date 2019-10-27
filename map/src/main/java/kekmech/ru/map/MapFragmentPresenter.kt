@@ -41,27 +41,25 @@ class MapFragmentPresenter @Inject constructor(
         this.map = map
         mapCustomizer.initMap(map)
         view?.placeContentUnderStatusBar()
+        if (model.markers.isEmpty() && view != null) replaceMarkers(view!!)
     }
 
     override fun onResume(view: MapFragmentView) {
         super.onResume(view)
         this.view = view
+        //replaceMarkers(view)
         view.setAdapter(mapUIAdapter)
         view.setState(model.state)
         view.onChangeStateListener = {
             model.state = it
             replaceMarkers(view)
         }
-        replaceMarkers(view)
     }
 
     override fun onPause(view: MapFragmentView) {
         super.onPause(view)
         this.view = null
     }
-
-
-    val Number.dp get() = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this.toFloat(), context.resources.displayMetrics)
 
     val GeoPoint.latLng get() = LatLng(this.latitude, this.longitude)
 

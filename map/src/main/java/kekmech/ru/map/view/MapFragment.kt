@@ -55,7 +55,7 @@ class MapFragment : DaggerFragment(), MapFragmentView {
     }
 
     override fun setState(state: Int) {
-        viewPagerUI?.post { viewPagerUI?.setCurrentItem(state, false) }
+        viewPagerUI?.setCurrentItem(state, false)
     }
 
     override fun placeContentUnderStatusBar() {
