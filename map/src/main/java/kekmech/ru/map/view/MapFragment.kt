@@ -79,6 +79,7 @@ class MapFragment : DaggerFragment(), MapFragmentView {
                 super.onPageSelected(position)
                 val tabs = listOf(tabBuildings, tabHostels, tabFoods)
                 tabs.filterNotNull().forEachIndexed { index, view -> redrawTabItem(view, position == index) }
+                onChangeStateListener(position)
             }
         })
 

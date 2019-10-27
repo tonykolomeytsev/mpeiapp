@@ -56,8 +56,10 @@ class MapFragmentPresenter @Inject constructor(
         view.setAdapter(mapUIAdapter)
         view.setState(model.state)
         view.onChangeStateListener = {
-            model.state = it
-            replaceMarkers(view)
+            if (model.state != it) {
+                model.state = it
+                replaceMarkers(view)
+            }
         }
     }
 
