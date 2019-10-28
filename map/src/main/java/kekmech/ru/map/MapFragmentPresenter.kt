@@ -94,6 +94,8 @@ class MapFragmentPresenter @Inject constructor(
 
 
     private fun placeBuildingMarkers(places: List<Building>) {
+        Log.d("MapPresenter", "placeBuildingMarkers ${model.state}")
+        if (model.state != PAGE_BUILDINGS) return
         map?.apply {
             model.markers.forEach { it.remove() }
             model.markers.clear()
@@ -112,6 +114,8 @@ class MapFragmentPresenter @Inject constructor(
     }
 
     private fun placeFoodMarkers(places: List<Food>) {
+        Log.d("MapPresenter", "placeFoodMarkers ${model.state}")
+        if (model.state != PAGE_FOODS) return
         map?.apply {
             model.markers.forEach { it.remove() }
             model.markers.clear()
@@ -128,6 +132,8 @@ class MapFragmentPresenter @Inject constructor(
     }
 
     private fun placeHostelMarkers(places: List<Hostel>) {
+        Log.d("MapPresenter", "placeHostelMarkers ${model.state}")
+        if (model.state != PAGE_HOSTELS) return
         map?.apply {
             model.markers.forEach { it.remove() }
             model.markers.clear()

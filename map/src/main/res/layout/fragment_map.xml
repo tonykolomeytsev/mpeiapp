@@ -22,11 +22,11 @@
     <LinearLayout
             android:id="@+id/bottomMenu"
             android:layout_width="match_parent"
-            android:layout_height="356dp"
+            android:layout_height="348dp"
             app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
             app:behavior_peekHeight="106dp"
             app:behavior_hideable="false"
-            tools:behavior_peekHeight="356dp"
+            tools:behavior_peekHeight="348dp"
             android:background="@color/colorWhite"
             android:orientation="vertical"
             android:fitsSystemWindows="false"
