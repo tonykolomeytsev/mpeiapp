@@ -13,6 +13,7 @@
     <color name="secondaryTextColor">#000000</color>
     <color name="colorWhite">#ffffff</color>
     <color name="colorTeal">#009688</color>
+    <color name="colorLightGray">#dedede</color>
 
     <color name="colorChipLecture">#005005</color>
     <color name="colorChipPractice">#524c00</color>

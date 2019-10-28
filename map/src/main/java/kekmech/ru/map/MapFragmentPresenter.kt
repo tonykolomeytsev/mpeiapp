@@ -60,7 +60,6 @@ class MapFragmentPresenter @Inject constructor(
         model.selectedPlaceListener = { place ->
             Log.d("MapPresenter", "selectedPlace $place")
             try {
-                val markers = model.markers
                 when (place) {
                     is SingleBuildingItem -> {
                         model.markers.find { it.title == place.building.name }?.apply {
