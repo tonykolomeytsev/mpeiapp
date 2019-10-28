@@ -14,20 +14,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
+            android:alpha="0.75"
             android:textColor="@color/colorBlack"
             android:textSize="14sp"
-            android:alpha="0.75"
-            app:layout_constraintStart_toStartOf="@+id/textViewCoupleName"
-            app:layout_constraintTop_toBottomOf="@+id/textViewCoupleName"
+            app:layout_constraintStart_toStartOf="@+id/textViewCouplePlace"
+            app:layout_constraintTop_toBottomOf="@+id/textViewCouplePlace"
             tools:text="Кудин С.Ф." />
 
     <TextView
             android:id="@+id/textViewCoupleName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="72dp"
             android:layout_marginTop="32dp"
-            android:layout_marginEnd="64dp"
+            android:layout_marginEnd="32dp"
             android:fontFamily="sans-serif"
             android:textColor="#DE000000"
             android:textSize="18sp"
@@ -40,14 +40,12 @@
             android:id="@+id/textViewCouplePlace"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginTop="4dp"
+            android:fontFamily="sans-serif-medium"
             android:textColor="@color/colorBlack"
             android:textSize="14sp"
-            android:fontFamily="sans-serif"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/textViewCoupleName"
-            app:layout_constraintTop_toBottomOf="@+id/textViewCoupleTeacher"
+            app:layout_constraintTop_toBottomOf="@+id/textViewCoupleName"
             tools:text="Б-407" />
 
     <TextView
@@ -66,43 +64,38 @@
     <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
             android:layout_marginEnd="16dp"
-            android:gravity="center_horizontal"
+            android:gravity="right"
             android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintEnd_toStartOf="@+id/textViewCoupleName"
+            app:layout_constraintTop_toTopOf="@+id/textViewCoupleName">
 
         <TextView
                 android:id="@+id/textViewCoupleTimeStart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#99000000"
-                android:textSize="12sp"
-                tools:text="9:20" />
-
-        <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_marginTop="4dp"
                 android:layout_marginBottom="4dp"
-                android:src="@drawable/baseline_more_vert_black_18dp"
-                android:tint="#464646" />
+                android:textColor="#000000"
+                android:textSize="18sp"
+                tools:text="11:10" />
 
         <TextView
                 android:id="@+id/textViewCoupleTimeEnd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#99000000"
-                android:textSize="12sp"
-                tools:text="10:50" />
+                android:alpha="0.6"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                tools:text="12:45" />
     </LinearLayout>
 
     <View
-            app:layout_constraintBottom_toBottomOf="parent"
             android:layout_width="match_parent"
             android:layout_height="1px"
+            android:layout_marginTop="16dp"
+            android:alpha="0.15"
             android:background="@color/colorBlack"
-            android:alpha="0.15"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewCoupleTeacher" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
