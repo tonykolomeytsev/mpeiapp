@@ -5,6 +5,6 @@
 
     <fragment
             android:id="@+id/mapFragment"
-            android:name="com.example.map.view.MapFragment"
+            android:name="kekmech.ru.map.view.MapFragment"
             android:label="MapFragment" />
 </navigation>

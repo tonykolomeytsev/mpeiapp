@@ -18,7 +18,7 @@
             android:id="@+id/imageViewAvatar"
             android:layout_marginTop="16dp"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/outline_extension_black_48"
+            tools:src="@drawable/ic_outline_calendar_today_black_24dp"
             android:scaleType="centerInside"
             android:tintMode="src_atop"
             android:tint="#4d4d4d"

@@ -1,15 +1,10 @@
 package kekmech.ru.mainscreen
 
 import androidx.navigation.NavController
-import com.example.map.view.MapFragment
-import kekmech.ru.addscreen.AddFragment
 import kekmech.ru.core.Router
 import kekmech.ru.core.Screens
-import kekmech.ru.core.Screens.*
-import kekmech.ru.feed.FeedFragment
-import kekmech.ru.settings.SettingsDevFragment
-import kekmech.ru.settings.SettingsFragment
-import kekmech.ru.timetable.view.TimetableFragment
+import kekmech.ru.core.Screens.FEED_TO_ADD
+import kekmech.ru.core.Screens.FEED_TO_FORCE
 import javax.inject.Inject
 
 class MainNavRouter @Inject constructor(): Router {

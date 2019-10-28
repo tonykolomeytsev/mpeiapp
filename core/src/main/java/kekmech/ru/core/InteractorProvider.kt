@@ -18,4 +18,6 @@ interface InteractorProvider {
     fun provideGetAppLaunchCountUseCase(): GetAppLaunchCountUseCase
     fun provideGetAllShedulesUseCase(): GetAllSchedulesUseCase
     fun provideChangeCurrentScheduleIdUseCase(): ChangeCurrentScheduleIdUseCase
+    fun provideGetMapStateUseCase(): GetMapStateUseCase
+    fun provideSetMapStateUseCase(): SetMapStateUseCase
 }

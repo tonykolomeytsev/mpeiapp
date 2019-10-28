@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_height="32dp"
+        android:layout_width="32dp"
+        android:id="@+id/textViewPlacemarkTitle"
+        android:background="@drawable/ic_marker"
+        android:backgroundTint="@color/colorPrimary"
+        android:gravity="center_horizontal"
+        android:fontFamily="sans-serif-medium"
+        android:textColor="@color/colorWhite">
+
+    <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/baseline_restaurant_black_18"
+            android:tint="@color/colorWhite"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="4dp"/>
+
+</FrameLayout>

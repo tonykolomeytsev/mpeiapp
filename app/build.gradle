@@ -11,8 +11,8 @@ android {
         applicationId "kekmech.ru.mpeiapp"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 6
-        versionName "0.9.6"
+        versionCode 7
+        versionName "0.9.7"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -56,14 +56,14 @@ dependencies {
     implementation "com.google.dagger:dagger-android-support:2.24"
 
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
-
+    implementation "androidx.viewpager2:viewpager2:1.0.0-rc01"
 
     // android arch navigation for kotlin
     // Kotlin
     implementation "androidx.navigation:navigation-fragment-ktx:2.1.0"
     implementation "androidx.navigation:navigation-ui-ktx:2.1.0"
     implementation "androidx.navigation:navigation-runtime-ktx:2.1.0"
-    implementation "androidx.fragment:fragment-ktx:1.2.0-beta02"
+    implementation "androidx.fragment:fragment-ktx:1.2.0-rc01"
 
     // Google Maps
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
