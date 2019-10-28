@@ -7,5 +7,7 @@ interface UserRepository {
     var savedUpdateDescription: String
     var appLaunchCount: Int
 
+    var mapState: Int
+
     fun get(refresh: Boolean = false): User
 }

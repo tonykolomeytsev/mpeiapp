@@ -62,6 +62,7 @@ class PlacesRepositoryImpl @Inject constructor(): PlacesRepository {
             if (task.isSuccessful) {
                 mutableHostels.value = task.result?.documents
                     ?.mapNotNull { it.toObject(Hostel::class.java) }
+                    ?.sortedBy { it.name }
             } else {
                 Log.e("PlacesRepository", task.exception.toString())
             }
@@ -73,6 +74,7 @@ class PlacesRepositoryImpl @Inject constructor(): PlacesRepository {
             if (task.isSuccessful) {
                 mutableFoods.value = task.result?.documents
                     ?.mapNotNull { it.toObject(Food::class.java) }
+                    ?.sortedBy { it.name }
             } else {
                 Log.e("PlacesRepository", task.exception.toString())
             }

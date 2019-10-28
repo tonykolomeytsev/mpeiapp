@@ -23,27 +23,27 @@ class SettingsFragment : DaggerFragment(), ItemListener {
 
     val adapter = BaseMenu(context)
         .divider("Основные", isLineVisible=false)
-        .item(
-            "Хранилище данных",
-            "Локальные файлы и БД",
-            R.drawable.outline_data_usage_black_24,
-            "STORAGE")
-        .item(
-            "Работа с сетью",
-            "Параметры и правила передачи данных",
-            R.drawable.outline_language_black_24,
-            "NETWORK")
-        .item(
-            "Расход батареи",
-            "Планировщик задач",
-            R.drawable.outline_offline_bolt_black_24,
-            "BATTERY")
-        .divider("Отладка")
-        .item(
-            "Параметры разработчиков",
-            "Функции для отладки",
-            R.drawable.outline_extension_black_24,
-            "DEV")
+//        .item(
+//            "Хранилище данных",
+//            "Локальные файлы и БД",
+//            R.drawable.outline_data_usage_black_24,
+//            "STORAGE")
+//        .item(
+//            "Работа с сетью",
+//            "Параметры и правила передачи данных",
+//            R.drawable.outline_language_black_24,
+//            "NETWORK")
+//        .item(
+//            "Расход батареи",
+//            "Планировщик задач",
+//            R.drawable.outline_offline_bolt_black_24,
+//            "BATTERY")
+//        .divider("Отладка")
+//        .item(
+//            "Параметры разработчиков",
+//            "Функции для отладки",
+//            R.drawable.outline_extension_black_24,
+//            "DEV")
         .buildAdapter(this)
 
     override fun onItemClick(itemId: String) {

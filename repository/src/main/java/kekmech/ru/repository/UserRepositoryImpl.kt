@@ -25,6 +25,7 @@ class UserRepositoryImpl @Inject constructor(
                 .putInt("launch_count", value)
                 .apply()
         }
+    override var mapState: Int = 0
 
     override fun get(refresh: Boolean): User {
         val user = userCacheGateway.get()

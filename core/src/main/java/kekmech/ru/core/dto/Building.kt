@@ -11,5 +11,7 @@ data class Building(
     @PropertyName("location")
     var location: GeoPoint = GeoPoint(55.755060, 37.708431),
     @PropertyName("letter")
-    var letter: String = ""
+    var letter: String = "",
+    @PropertyName("address")
+    var address: String = ""
 )

@@ -17,6 +17,7 @@
 package kekmech.ru.mainscreen
 
 import android.content.Intent
+import android.util.Log
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -79,6 +80,7 @@ fun BottomNavigationView.setupWithNavController(
     var selectedItemTag = graphIdToTagMap[this.selectedItemId]
     val firstFragmentTag = graphIdToTagMap[firstFragmentGraphId]
     var isOnFirstFragment = selectedItemTag == firstFragmentTag
+    val eventFlowLimiter = EventFlowLimiter()
 
     // When a navigation item is selected
     setOnNavigationItemSelectedListener { item ->
@@ -86,44 +88,48 @@ fun BottomNavigationView.setupWithNavController(
         if (fragmentManager.isStateSaved) {
             false
         } else {
-            val newlySelectedItemTag = graphIdToTagMap[item.itemId]
-            if (selectedItemTag != newlySelectedItemTag) {
-                // Pop everything above the first fragment (the "fixed start destination")
-                fragmentManager.popBackStack(firstFragmentTag,
-                    FragmentManager.POP_BACK_STACK_INCLUSIVE)
-                val selectedFragment = fragmentManager.findFragmentByTag(newlySelectedItemTag)
-                    as NavHostFragment
+            eventFlowLimiter.fireEvent {
+                val newlySelectedItemTag = graphIdToTagMap[item.itemId]
+                if (selectedItemTag != newlySelectedItemTag) {
+                    // Pop everything above the first fragment (the "fixed start destination")
+                    fragmentManager.popBackStack(
+                        firstFragmentTag,
+                        FragmentManager.POP_BACK_STACK_INCLUSIVE
+                    )
+                    val selectedFragment = fragmentManager.findFragmentByTag(newlySelectedItemTag)
+                            as NavHostFragment
 
-                // Exclude the first fragment tag because it's always in the back stack.
-                if (firstFragmentTag != newlySelectedItemTag) {
-                    // Commit a transaction that cleans the back stack and adds the first fragment
-                    // to it, creating the fixed started destination.
-                    fragmentManager.beginTransaction()
-                        /*.setCustomAnimations(
-                            R.anim.nav_default_enter_anim,
-                            R.anim.nav_default_exit_anim,
-                            R.anim.nav_default_pop_enter_anim,
-                            R.anim.nav_default_pop_exit_anim)*/
-                        .attach(selectedFragment)
-                        .setPrimaryNavigationFragment(selectedFragment)
-                        .apply {
-                            // Detach all other Fragments
-                            graphIdToTagMap.forEach { (_, fragmentTagIter) ->
-                                if (fragmentTagIter != newlySelectedItemTag) {
-                                    detach(fragmentManager.findFragmentByTag(firstFragmentTag)!!)
+                    // Exclude the first fragment tag because it's always in the back stack.
+                    if (firstFragmentTag != newlySelectedItemTag) {
+                        // Commit a transaction that cleans the back stack and adds the first fragment
+                        // to it, creating the fixed started destination.
+                        fragmentManager.beginTransaction()
+                            /*.setCustomAnimations(
+                                R.anim.nav_default_enter_anim,
+                                R.anim.nav_default_exit_anim,
+                                R.anim.nav_default_pop_enter_anim,
+                                R.anim.nav_default_pop_exit_anim)*/
+                            .attach(selectedFragment)
+                            .setPrimaryNavigationFragment(selectedFragment)
+                            .apply {
+                                // Detach all other Fragments
+                                graphIdToTagMap.forEach { (_, fragmentTagIter) ->
+                                    if (fragmentTagIter != newlySelectedItemTag) {
+                                        detach(fragmentManager.findFragmentByTag(firstFragmentTag)!!)
+                                    }
                                 }
                             }
-                        }
-                        .addToBackStack(firstFragmentTag)
-                        .setReorderingAllowed(true)
-                        .commit()
+                            .addToBackStack(firstFragmentTag)
+                            .setReorderingAllowed(true)
+                            .commit()
+                    }
+                    selectedItemTag = newlySelectedItemTag
+                    isOnFirstFragment = selectedItemTag == firstFragmentTag
+                    selectedNavController.value = selectedFragment.navController
+                    true
+                } else {
+                    false
                 }
-                selectedItemTag = newlySelectedItemTag
-                isOnFirstFragment = selectedItemTag == firstFragmentTag
-                selectedNavController.value = selectedFragment.navController
-                true
-            } else {
-                false
             }
         }
     }
@@ -245,3 +251,19 @@ private fun FragmentManager.isOnBackStack(backStackName: String): Boolean {
 }
 
 private fun getFragmentTag(index: Int) = "bottomNavigation#$index"
+
+class EventFlowLimiter {
+    private var lastTimeMillis = 0L
+    // minimal time offset in milliseconds
+    var minTime = 300L
+    // limited event
+    fun fireEvent(event: () -> Boolean): Boolean {
+        if (System.currentTimeMillis() - lastTimeMillis > minTime) {
+            lastTimeMillis = System.currentTimeMillis()
+            return event.invoke()
+        } else {
+            Log.d("EventFlowLimiter", "Event $event was cancelled")
+            return false
+        }
+    }
+}

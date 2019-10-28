@@ -22,30 +22,30 @@ class SettingsDevFragment : DaggerFragment(), ItemListener {
 
     val adapter = BaseMenu(context)
         .divider("Realm", isLineVisible=false)
-        .item(
-            "Стереть базу данных",
-            "realm.deleteAll()",
-            R.drawable.outline_delete_forever_black_24,
-            "REALM_DELETE")
-        .item(
-            "Посмотреть содержимое User",
-            "realm.where(User).first()",
-            R.drawable.outline_announcement_black_24,
-            "REALM_WATCH")
-        .item(
-            "Инициализировать поля",
-            "new RealmObject()",
-            R.drawable.outline_refresh_black_24,
-            "REALM_FILL")
-        .item(
-            "Стереть номер группы",
-            "REALM_GROUP")
-        .divider("Retrofit")
-        .item(
-            "Получить тестовый JSON",
-            "Запрос на GitHub",
-            R.drawable.outline_cloud_download_black_24,
-            "RETROFIT_TEST")
+//        .item(
+//            "Стереть базу данных",
+//            "realm.deleteAll()",
+//            R.drawable.outline_delete_forever_black_24,
+//            "REALM_DELETE")
+//        .item(
+//            "Посмотреть содержимое User",
+//            "realm.where(User).first()",
+//            R.drawable.outline_announcement_black_24,
+//            "REALM_WATCH")
+//        .item(
+//            "Инициализировать поля",
+//            "new RealmObject()",
+//            R.drawable.outline_refresh_black_24,
+//            "REALM_FILL")
+//        .item(
+//            "Стереть номер группы",
+//            "REALM_GROUP")
+//        .divider("Retrofit")
+//        .item(
+//            "Получить тестовый JSON",
+//            "Запрос на GitHub",
+//            R.drawable.outline_cloud_download_black_24,
+//            "RETROFIT_TEST")
         .buildAdapter(this)
 
     @Inject

@@ -1,8 +1,11 @@
 package kekmech.ru.addscreen
 
 
+import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
+import android.graphics.drawable.Drawable
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.KeyEvent
@@ -21,9 +24,19 @@ import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
 import dagger.android.support.AndroidSupportInjection
 import kekmech.ru.core.Presenter
+import kekmech.ru.coreui.Resources
 import kekmech.ru.coreui.adapter.BaseAdapter
 import kotlinx.android.synthetic.main.fragment_add.*
 import javax.inject.Inject
+import android.graphics.drawable.GradientDrawable.RECTANGLE
+import android.graphics.drawable.LayerDrawable
+import android.os.Build
+import android.os.Build.VERSION_CODES.M
+import android.util.DisplayMetrics
+import androidx.annotation.NonNull
+import androidx.annotation.RequiresApi
+
+
 
 
 /**
@@ -83,6 +96,37 @@ class AddFragment @Inject constructor() : BottomSheetDialogFragment(), HasAndroi
                 500f,
                 resources.displayMetrics
             ).toInt()
+        }
+    }
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val dialog = super.onCreateDialog(savedInstanceState)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+            setWhiteNavigationBar(dialog)
+        }
+        return dialog
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private fun setWhiteNavigationBar(@NonNull dialog: Dialog) {
+        val window = dialog.window
+        if (window != null) {
+            val metrics = DisplayMetrics()
+            window.windowManager.defaultDisplay.getMetrics(metrics)
+
+            val dimDrawable = GradientDrawable()
+            // ...customize your dim effect here
+
+            val navigationBarDrawable = GradientDrawable()
+            navigationBarDrawable.shape = GradientDrawable.RECTANGLE
+            navigationBarDrawable.setColor(Resources.getColor(requireContext(), R.color.colorLightGray))
+
+            val layers = arrayOf<Drawable>(dimDrawable, navigationBarDrawable)
+
+            val windowBackground = LayerDrawable(layers)
+            windowBackground.setLayerInsetTop(1, metrics.heightPixels)
+
+            window.setBackgroundDrawable(windowBackground)
         }
     }
 
