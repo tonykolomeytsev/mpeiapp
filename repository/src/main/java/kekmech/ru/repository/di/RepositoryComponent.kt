@@ -10,7 +10,8 @@ import javax.inject.Singleton
     modules = [
         AppDatabaseModule::class,
         RepositoryModule::class,
-        GatewayModule::class
+        GatewayModule::class,
+        AuthModule::class
     ],
     dependencies = [
         ContextProvider::class
