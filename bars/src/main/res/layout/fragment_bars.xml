@@ -119,6 +119,8 @@
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <androidx.recyclerview.widget.RecyclerView
+                tools:visibility="invisible"
+                android:visibility="invisible"
                 android:id="@+id/recyclerDisciplines"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -139,16 +141,88 @@
 
     <FrameLayout
             tools:visibility="visible"
-            android:visibility="gone"
+            android:visibility="visible"
             android:id="@+id/loginLayout"
             android:layout_gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-        <EditText
-                android:layout_width="200dp"
-                android:layout_height="48dp"
-                android:layout_gravity="center_horizontal"/>
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Вход"
+                    android:textSize="34sp"
+                    android:fontFamily="sans-serif-light"
+                    android:textColor="@color/colorBlack"
+                    android:layout_marginBottom="24dp"/>
+
+            <EditText
+                    android:layout_width="240dp"
+                    android:layout_height="48dp"
+                    android:hint="Логин"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textSize="18sp"
+                    android:gravity="center"
+                    android:inputType="textNoSuggestions"
+                    android:background="@drawable/login_textview_bg"
+                    android:backgroundTint="@color/colorSearchView"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="24dp"/>
+
+            <EditText
+                    android:layout_width="240dp"
+                    android:layout_height="48dp"
+                    android:hint="Пароль"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:inputType="textPassword"
+                    android:textSize="18sp"
+                    android:gravity="center"
+                    android:background="@drawable/login_textview_bg"
+                    android:backgroundTint="@color/colorSearchView"
+                    android:layout_gravity="center_horizontal" />
+
+            <LinearLayout
+                    android:layout_width="220dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="8dp">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Я согласен с "
+                        android:textColor="@color/colorBlack"
+                        android:alpha="0.5"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="условиями"
+                        android:textColor="@color/colorSecondary"
+                        android:alpha="1" />
+
+            </LinearLayout>
+
+            <TextView
+                    android:layout_width="150dp"
+                    android:layout_height="48dp"
+                    android:text="Войти"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@color/colorBlack"
+                    android:layout_marginTop="16dp"/>
+
+        </LinearLayout>
 
     </FrameLayout>
 
