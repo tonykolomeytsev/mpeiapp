@@ -12,6 +12,7 @@ class BarsParser {
     private var currentAcademicDiscipline: AcademicDiscipline? = null
     private val academicDisciplines: MutableList<AcademicDiscipline> = mutableListOf()
     private var studentName: String = ""
+    private var studentGroup: String = ""
 
     var isCurrentControlFlag = false
 
@@ -35,15 +36,23 @@ class BarsParser {
             .first()
         pushStudentInfo(infoDiv)
 
-        return AcademicScore(disciplines = academicDisciplines, studentName = studentName)
+        return AcademicScore(
+            disciplines = academicDisciplines,
+            studentName = studentName,
+            studentGroup = studentGroup)
     }
 
     private fun pushStudentInfo(infoDiv: Element) {
-        studentName = infoDiv
+        val span = infoDiv
             .select("span")
             .html()
+        studentName = span
             .substringBefore('(')
             .trim()
+        studentGroup = span
+            .substringAfter(')')
+            .trim()
+
     }
 
     private fun pushDiscipline(div: Element) {
