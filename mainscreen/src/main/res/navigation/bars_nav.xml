@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/bars_nav"
-        app:startDestination="@id/settingsFragment2">
-
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/bars_nav"
+        app:startDestination="@id/barsFragment">
     <fragment
-            android:id="@+id/settingsFragment2"
-            android:name="kekmech.ru.settings.SettingsFragment"
-            android:label="SettingsFragment" />
+            android:id="@+id/barsFragment"
+            android:name="kekmech.ru.bars.main.view.BarsFragment"
+            android:label="BarsFragment"
+            tools:layout="@layout/fragment_bars"/>
 </navigation>
