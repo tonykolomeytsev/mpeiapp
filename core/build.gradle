@@ -50,6 +50,8 @@ dependencies {
     implementation 'androidx.room:room-runtime:2.2.1'
     kapt 'androidx.room:room-compiler:2.2.1'
 
+    // GSON
+    implementation 'com.google.code.gson:gson:2.8.6'
 
     // Firebase
     implementation 'com.google.firebase:firebase-firestore:21.2.1'
