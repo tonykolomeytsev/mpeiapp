@@ -11,8 +11,8 @@ android {
         applicationId "kekmech.ru.mpeiapp"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 7
-        versionName "0.9.7"
+        versionCode 8
+        versionName "0.9.8"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -94,4 +94,5 @@ dependencies {
     implementation project(path: ':map')
     implementation project(path: ':update')
     implementation 'com.google.firebase:firebase-config:19.0.3'
+    implementation project(path: ':bars')
 }
