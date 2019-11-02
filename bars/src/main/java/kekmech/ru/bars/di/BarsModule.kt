@@ -1,0 +1,30 @@
+package kekmech.ru.bars.di
+
+import dagger.Binds
+import dagger.Module
+import dagger.android.AndroidInjector
+import dagger.multibindings.ClassKey
+import dagger.multibindings.IntoMap
+import kekmech.ru.bars.main.BarsFragmentPresenter
+import kekmech.ru.bars.main.model.BarsFragmentModel
+import kekmech.ru.bars.main.model.BarsFragmentModelImpl
+import kekmech.ru.bars.main.view.BarsFragment
+import kekmech.ru.bars.main.view.BarsFragmentView
+import kekmech.ru.core.Presenter
+import kekmech.ru.core.scopes.ActivityScope
+
+@Module(subcomponents = [BarsFragmentComponent::class])
+abstract class BarsModule {
+    @Binds
+    @IntoMap
+    @ClassKey(BarsFragment::class)
+    abstract fun bindBarsFragmentInjectorFactory(factory: BarsFragmentComponent.Factory): AndroidInjector.Factory<*>
+
+    @ActivityScope
+    @Binds
+    abstract fun provideBarsFragmentPresenter(presenter: BarsFragmentPresenter): Presenter<BarsFragmentView>
+
+    @ActivityScope
+    @Binds
+    abstract fun provideBarsFragmentModel(model: BarsFragmentModelImpl): BarsFragmentModel
+}

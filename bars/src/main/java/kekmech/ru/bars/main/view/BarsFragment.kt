@@ -1,6 +1,7 @@
-package kekmech.ru.bars.main
+package kekmech.ru.bars.main.view
 
 import kekmech.ru.bars.R
+import kekmech.ru.bars.main.BarsFragmentPresenter
 import kekmech.ru.core.platform.BaseFragment
 import javax.inject.Inject
 

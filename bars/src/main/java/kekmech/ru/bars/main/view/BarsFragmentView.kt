@@ -1,4 +1,4 @@
-package kekmech.ru.bars.main
+package kekmech.ru.bars.main.view
 
 import androidx.lifecycle.LifecycleOwner
 
