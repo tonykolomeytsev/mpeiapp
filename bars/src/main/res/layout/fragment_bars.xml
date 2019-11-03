@@ -19,7 +19,7 @@
             app:elevation="0dp">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
-                android:id="@+id/main.collapsing"
+                android:id="@+id/main_collapsing"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_scrollFlags="exitUntilCollapsed|scroll|snap"
@@ -163,6 +163,7 @@
                     android:layout_marginBottom="24dp"/>
 
             <EditText
+                    android:id="@+id/textViewBarsLogin"
                     android:layout_width="240dp"
                     android:layout_height="48dp"
                     android:hint="Логин"
@@ -177,6 +178,7 @@
                     android:layout_marginBottom="24dp"/>
 
             <EditText
+                    android:id="@+id/textViewBarsPass"
                     android:layout_width="240dp"
                     android:layout_height="48dp"
                     android:hint="Пароль"
@@ -190,7 +192,7 @@
                     android:layout_gravity="center_horizontal" />
 
             <LinearLayout
-                    android:layout_width="220dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="center_horizontal"

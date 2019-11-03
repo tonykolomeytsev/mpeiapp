@@ -58,4 +58,10 @@ abstract class InteractorModule {
 
     @Binds
     abstract fun provideSetMapStateUseCase(useCaseImpl: SetMapStateUseCaseImpl): SetMapStateUseCase
+
+    @Binds
+    abstract fun provideIsLoggedInBarsUseCase(useCaseImpl: IsLoggedInBarsUseCaseImpl): IsLoggedInBarsUseCase
+
+    @Binds
+    abstract fun provideSaveUserSecretsUseCase(useCaseImpl: SaveUserSecretsUseCaseImpl): SaveUserSecretsUseCase
 }

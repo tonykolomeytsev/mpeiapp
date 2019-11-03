@@ -17,6 +17,9 @@ class BarsRepositoryImpl @Inject constructor(
 
     private val sharedPreferences = context.getSharedPreferences("mpeix", Context.MODE_PRIVATE)
 
+    override val isLoggedIn: Boolean
+        get() = sharedPreferences.getString("user1", "")?.isNotEmpty() ?: false
+
     override suspend fun getScoreAsync(forceRefresh: Boolean): AcademicScore? {
         return if (!forceRefresh)
             loadFromCache() ?: loadFromRemote()
@@ -93,7 +96,7 @@ class BarsRepositoryImpl @Inject constructor(
         return baseKeyStore.decrypt(password)
     }
 
-    private fun saveUserSecrets(username: String, password: String) {
+    override fun saveUserSecrets(username: String, password: String) {
         sharedPreferences
             .edit()
             .putString("user1", baseKeyStore.encrypt(username))

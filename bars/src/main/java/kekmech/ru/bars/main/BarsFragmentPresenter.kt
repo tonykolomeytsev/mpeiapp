@@ -22,10 +22,17 @@ class BarsFragmentPresenter @Inject constructor(
 
     override fun onResume(view: BarsFragmentView) {
         super.onResume(view)
-        GlobalScope.launch(Dispatchers.Main) {
-            delay(100)
-            adapter.baseItems.addAll((0..10).map { DisciplineItem(AcademicDiscipline()) })
-            view.setAdapter(adapter)
+        // change view state as fast as possible
+        if (model.isLoggedIn) {
+            view.state = BarsFragmentView.State.SCORE
+            GlobalScope.launch(Dispatchers.Main) {
+                delay(100)
+                adapter.baseItems.addAll((0..10).map { DisciplineItem(AcademicDiscipline()) })
+                view.setAdapter(adapter)
+            }
+        } else {
+            view.state = BarsFragmentView.State.LOGIN
         }
+        view.onLogInListener = model::logInUser
     }
 }
