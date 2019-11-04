@@ -4,6 +4,7 @@
         android:layout_height="wrap_content"
         android:paddingRight="4dp">
     <TextView
+            android:id="@+id/textViewMark"
             android:layout_width="wrap_content"
             android:layout_height="24dp"
             android:background="@drawable/mark_bg"
