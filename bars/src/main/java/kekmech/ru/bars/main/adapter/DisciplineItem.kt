@@ -10,6 +10,7 @@ import kekmech.ru.coreui.adapter.BaseAdapter
 import kekmech.ru.coreui.adapter.BaseClickableItem
 import kekmech.ru.coreui.adapter.BaseFactory
 import kekmech.ru.coreui.adapter.BaseViewHolder
+import kotlin.math.round
 
 class DisciplineItem(val discipline: AcademicDiscipline) :
     BaseClickableItem<DisciplineItem.ViewHolder>() {
@@ -52,11 +53,26 @@ class DisciplineItem(val discipline: AcademicDiscipline) :
             viewHolder.recyclerWeeks.visibility = View.GONE
             viewHolder.headerWeeks.visibility = View.GONE
         }
+        viewHolder.average.visibility = View.VISIBLE
+        if (discipline.finalFinalMark != -1f) {
+            viewHolder.average.text = formatFloat(discipline.finalFinalMark)
+        } else if (discipline.finalComputedMark != -1f) {
+            viewHolder.average.text = formatFloat(discipline.finalComputedMark)
+        } else if (discipline.examMark != -1f) {
+            viewHolder.average.text = formatFloat(discipline.examMark)
+        } else if (discipline.currentMark != -1f) {
+            viewHolder.average.text = formatFloat(discipline.currentMark)
+        } else {
+            viewHolder.average.visibility = View.INVISIBLE
+        }
     }
 
     private fun getFormattedName(name: String): String {
         return "\"(.+)\"".toRegex().find(name)?.groupValues?.getOrNull(1) ?: name
     }
+
+    private fun formatFloat(float: Float): String = if (round(float) == float) float.toInt().toString() else float.toString()
+
 
     override fun approveFactory(factory: BaseFactory) = factory is Factory
 
