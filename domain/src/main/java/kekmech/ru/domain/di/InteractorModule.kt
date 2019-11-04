@@ -64,4 +64,10 @@ abstract class InteractorModule {
 
     @Binds
     abstract fun provideSaveUserSecretsUseCase(useCaseImpl: SaveUserSecretsUseCaseImpl): SaveUserSecretsUseCase
+
+    @Binds
+    abstract fun provideGetRatingUseCase(useCaseImpl: GetRatingUseCaseImpl): GetRatingUseCase
+
+    @Binds
+    abstract fun provideLogOutUseCase(useCaseImpl: LogOutUseCaseImpl): LogOutUseCase
 }

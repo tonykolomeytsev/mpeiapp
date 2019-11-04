@@ -103,4 +103,12 @@ class BarsRepositoryImpl @Inject constructor(
             .putString("user2", baseKeyStore.encrypt(password))
             .apply()
     }
+
+    override fun clearUserSecrets() {
+        sharedPreferences
+            .edit()
+            .putString("user1", "")
+            .putString("user2", "")
+            .apply()
+    }
 }

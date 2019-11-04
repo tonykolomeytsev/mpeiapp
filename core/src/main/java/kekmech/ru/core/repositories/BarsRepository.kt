@@ -10,6 +10,8 @@ interface BarsRepository {
 
     fun saveUserSecrets(username: String, password: String)
 
+    fun clearUserSecrets()
+
     companion object {
         const val BARS_URL = "https://bars.mpei.ru/bars_web/"
     }

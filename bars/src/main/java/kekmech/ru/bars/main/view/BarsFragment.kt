@@ -19,6 +19,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.AppBarLayout.LayoutParams.*
+import kekmech.ru.core.dto.AcademicScore
 
 
 class BarsFragment : BaseFragment<BarsFragmentPresenter, BarsFragmentView>(
@@ -31,6 +32,10 @@ class BarsFragment : BaseFragment<BarsFragmentPresenter, BarsFragmentView>(
     override var onLogInListener: (String, String) -> Unit = {_,_->}
 
     override var onRightsClickListener: () -> Unit = {}
+
+    override var onLogoutListener: () -> Unit = {}
+
+    override var onRefreshListener: () -> Unit = {}
 
     override var state: State = LOGIN
         set(value) {
@@ -51,7 +56,12 @@ class BarsFragment : BaseFragment<BarsFragmentPresenter, BarsFragmentView>(
                 return false
             }
         })
+        buttonLogin?.setOnClickListener {
+            onLogInListener(textViewBarsLogin.text.toString(), textViewBarsPass.text.toString())
+        }
         layoutRights?.setOnClickListener { onRightsClickListener() }
+        buttonLogout?.setOnClickListener { onLogoutListener() }
+        buttonRefresh?.setOnClickListener { onRefreshListener() }
     }
 
     override fun setAdapter(adapter: RecyclerView.Adapter<*>) {
@@ -61,13 +71,17 @@ class BarsFragment : BaseFragment<BarsFragmentPresenter, BarsFragmentView>(
 
     private fun onStateChanged() {
         if (state == SCORE) {
-            loginLayout?.visibility = View.INVISIBLE
+            loginLayout?.visibility = View.GONE
             recyclerDisciplines?.visibility = View.VISIBLE
             main_collapsing?.setScrollFlags(SCROLL_FLAG_SCROLL.or(SCROLL_FLAG_EXIT_UNTIL_COLLAPSED).or(SCROLL_FLAG_SNAP))
+            barsLogoLayout?.visibility = View.GONE
+            statusLayout?.visibility = View.VISIBLE
         } else if (state == LOGIN) {
+            barsLogoLayout?.visibility = View.VISIBLE
+            statusLayout?.visibility = View.GONE
             progressBar?.visibility = View.INVISIBLE
             loginLayout?.visibility = View.VISIBLE
-            recyclerDisciplines?.visibility = View.INVISIBLE
+            recyclerDisciplines?.visibility = View.GONE
             main_collapsing?.setScrollFlags(SCROLL_FLAG_SNAP)
             main_appbar?.setExpanded(true)
         }
@@ -79,4 +93,15 @@ class BarsFragment : BaseFragment<BarsFragmentPresenter, BarsFragmentView>(
         this.layoutParams = params
     }
 
+    override fun setStatus(score: AcademicScore) {
+        textViewStudentName?.text = getFormattedName(score.studentName)
+        textViewStudentGroup?.text = score.studentGroup
+    }
+
+    private fun getFormattedName(name: String): String {
+        val fio = name.split(' ')
+        if (fio.size == 3) {
+            return "${fio[0]} ${fio[1]}"
+        } else return name
+    }
 }

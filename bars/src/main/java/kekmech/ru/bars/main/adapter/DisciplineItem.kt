@@ -12,7 +12,11 @@ import kekmech.ru.coreui.adapter.BaseViewHolder
 class DisciplineItem(val discipline: AcademicDiscipline) : BaseClickableItem<DisciplineItem.ViewHolder>() {
 
     override fun updateViewHolder(viewHolder: ViewHolder) {
-        viewHolder.name.text = "Гидро и пневмоприводы мехатронных и робототехнических устройств"
+        viewHolder.name.text = getFormattedName(discipline.name)
+    }
+
+    private fun getFormattedName(name: String): String {
+        return "\"(.+)\"".toRegex().find(name)?.groupValues?.getOrNull(1) ?: name
     }
 
     override fun approveFactory(factory: BaseFactory) = factory is Factory

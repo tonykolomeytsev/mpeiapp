@@ -34,7 +34,7 @@
 
 
             <LinearLayout
-                    tools:visibility="invisible"
+                    tools:visibility="visible"
                     android:visibility="invisible"
                     android:id="@+id/statusLayout"
                     android:layout_width="match_parent"
@@ -55,6 +55,7 @@
                         tools:text="Коломейцев Антон"
                         android:textColor="@color/colorWhite"
                         android:textSize="24sp"
+                        android:gravity="center"
                         android:layout_gravity="center_horizontal"/>
 
                 <TextView
@@ -62,11 +63,45 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         tools:text="С-12-16"
+                        android:maxLines="1"
+                        android:ellipsize="end"
                         android:textSize="18sp"
                         android:layout_gravity="center_horizontal"
                         android:textColor="@color/colorWhite"
                         android:fontFamily="sans-serif"
                         android:layout_marginBottom="16dp"/>
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_horizontal"
+                        android:layout_marginBottom="8dp">
+
+                    <TextView
+                            android:id="@+id/buttonRefresh"
+                            style="@style/BarsNavButtons"
+                            android:text="Обновить"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="8dp"
+                            android:paddingRight="8dp"
+                            android:paddingTop="6dp"
+                            android:paddingBottom="6dp"
+                            android:layout_marginRight="8dp"/>
+
+                    <TextView
+                            android:id="@+id/buttonLogout"
+                            style="@style/BarsNavButtons"
+                            android:text="Выйти"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="8dp"
+                            android:paddingRight="8dp"
+                            android:paddingTop="6dp"
+                            android:paddingBottom="6dp"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -81,10 +116,11 @@
                     android:minHeight="128dp"
                     android:fitsSystemWindows="true"
                     android:gravity="bottom"
-                    tools:visibility="visible"
-                    android:visibility="visible">
+                    tools:visibility="invisible"
+                    android:visibility="invisible">
 
                 <TextView
+                        android:id="@+id/textViewHeaderBars"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-black"
@@ -216,6 +252,7 @@
             </LinearLayout>
 
             <TextView
+                    android:id="@+id/buttonLogin"
                     android:layout_width="150dp"
                     android:layout_height="48dp"
                     android:text="Войти"

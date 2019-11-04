@@ -45,4 +45,12 @@
         <item name="android:layout_marginTop">4dp</item>
     </style>
 
+    <style name="BarsNavButtons">
+        <item name="android:alpha">0.8</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:background">@drawable/bars_button_bg</item>
+    </style>
+
 </resources>

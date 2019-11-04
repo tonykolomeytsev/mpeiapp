@@ -22,4 +22,6 @@ interface InteractorProvider {
     fun provideSetMapStateUseCase(): SetMapStateUseCase
     fun provideIsLoggedInBarsUseCase(): IsLoggedInBarsUseCase
     fun provideSaveUserSecretsUseCase(): SaveUserSecretsUseCase
+    fun provideGetRatingUseCase(): GetRatingUseCase
+    fun provideLogOutUseCase(): LogOutUseCase
 }

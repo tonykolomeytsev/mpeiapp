@@ -51,8 +51,8 @@ class BarsParser {
             .trim()
         studentGroup = span
             .substringAfter(')')
+            .substringBefore('\n')
             .trim()
-
     }
 
     private fun pushDiscipline(div: Element) {
@@ -75,7 +75,6 @@ class BarsParser {
     }
 
     private fun pushDisciplineRow(tr: Element) {
-        println("=======================\n$tr")
         if (tr.tagName() != "tr") return
         val html = tr.html()
         if (html.contains("Текущий контроль")) {
