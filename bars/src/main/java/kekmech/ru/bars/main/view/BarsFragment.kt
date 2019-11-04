@@ -1,5 +1,6 @@
 package kekmech.ru.bars.main.view
 
+import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,6 +21,7 @@ import javax.inject.Inject
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.AppBarLayout.LayoutParams.*
 import kekmech.ru.core.dto.AcademicScore
+import kekmech.ru.coreui.Resources
 
 
 class BarsFragment : BaseFragment<BarsFragmentPresenter, BarsFragmentView>(
@@ -61,7 +63,11 @@ class BarsFragment : BaseFragment<BarsFragmentPresenter, BarsFragmentView>(
         }
         layoutRights?.setOnClickListener { onRightsClickListener() }
         buttonLogout?.setOnClickListener { onLogoutListener() }
-        buttonRefresh?.setOnClickListener { onRefreshListener() }
+        swipeRefresh?.setOnRefreshListener { onRefreshListener() }
+        swipeRefresh?.setColorSchemeColors(
+            Resources.getColor(context, R.color.colorPrimary),
+            Resources.getColor(context, R.color.colorSecondary)
+        )
     }
 
     override fun setAdapter(adapter: RecyclerView.Adapter<*>) {
@@ -71,12 +77,14 @@ class BarsFragment : BaseFragment<BarsFragmentPresenter, BarsFragmentView>(
 
     private fun onStateChanged() {
         if (state == SCORE) {
+            swipeRefresh?.isEnabled = true
             loginLayout?.visibility = View.GONE
             recyclerDisciplines?.visibility = View.VISIBLE
             main_collapsing?.setScrollFlags(SCROLL_FLAG_SCROLL.or(SCROLL_FLAG_EXIT_UNTIL_COLLAPSED).or(SCROLL_FLAG_SNAP))
             barsLogoLayout?.visibility = View.GONE
             statusLayout?.visibility = View.VISIBLE
         } else if (state == LOGIN) {
+            swipeRefresh?.isEnabled = false
             barsLogoLayout?.visibility = View.VISIBLE
             statusLayout?.visibility = View.GONE
             progressBar?.visibility = View.INVISIBLE
@@ -94,6 +102,7 @@ class BarsFragment : BaseFragment<BarsFragmentPresenter, BarsFragmentView>(
     }
 
     override fun setStatus(score: AcademicScore) {
+        Log.d("Bars", "setstatus ${score.studentName}")
         textViewStudentName?.text = getFormattedName(score.studentName)
         textViewStudentGroup?.text = score.studentGroup
     }
@@ -103,5 +112,13 @@ class BarsFragment : BaseFragment<BarsFragmentPresenter, BarsFragmentView>(
         if (fio.size == 3) {
             return "${fio[0]} ${fio[1]}"
         } else return name
+    }
+
+    override fun hideLoading() {
+        swipeRefresh?.post { swipeRefresh?.isRefreshing = false }
+    }
+
+    override fun showLoading() {
+        swipeRefresh?.post { swipeRefresh?.isRefreshing = true }
     }
 }

@@ -43,6 +43,7 @@ class BarsFragmentPresenter @Inject constructor(
         view.onLogInListener = ::logInUser
         view.onRightsClickListener = { router.navigate(BARS_TO_RIGHTS) }
         view.onLogoutListener = {
+            Log.d("Bars", "LOGOUT")
             model.clearUserSecrets()
             view.state = BarsFragmentView.State.LOGIN
         }
@@ -80,5 +81,6 @@ class BarsFragmentPresenter @Inject constructor(
             view.setAdapter(adapter)
             view.setStatus(score)
         }
+        view.hideLoading()
     }
 }

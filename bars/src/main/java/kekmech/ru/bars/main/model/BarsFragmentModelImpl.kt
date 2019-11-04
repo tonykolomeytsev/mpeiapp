@@ -21,12 +21,12 @@ class BarsFragmentModelImpl @Inject constructor(
         saveUserSecretsUseCase(login, pass)
     }
 
-    override suspend fun getAcademicScore(): AcademicScore? {
-        return getRatingUseCase()
+    override suspend fun getAcademicScore(refresh: Boolean): AcademicScore? {
+        return getRatingUseCase(refresh)
     }
 
-    override suspend fun getAcademicScoreAsync(onRatingUpdatesListener: (AcademicScore?) -> Unit) {
-        onRatingUpdatesListener(getRatingUseCase())
+    override suspend fun getAcademicScoreAsync(refresh: Boolean, onRatingUpdatesListener: (AcademicScore?) -> Unit) {
+        if (!refresh) onRatingUpdatesListener(getRatingUseCase())
         onRatingUpdatesListener(getRatingUseCase(true))
     }
 

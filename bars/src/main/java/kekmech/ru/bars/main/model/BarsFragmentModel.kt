@@ -6,9 +6,9 @@ import kekmech.ru.core.dto.AcademicScore
 interface BarsFragmentModel {
     val isLoggedIn: Boolean
 
-    suspend fun getAcademicScoreAsync(onRatingUpdatesListener: (AcademicScore?) -> Unit)
+    suspend fun getAcademicScoreAsync(refresh: Boolean = false, onRatingUpdatesListener: (AcademicScore?) -> Unit)
 
-    suspend fun getAcademicScore(): AcademicScore?
+    suspend fun getAcademicScore(refresh: Boolean = false): AcademicScore?
 
     fun saveUserSecrets(login: String, pass: String)
 

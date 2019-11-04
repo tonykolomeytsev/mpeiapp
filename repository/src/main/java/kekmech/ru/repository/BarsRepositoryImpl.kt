@@ -108,7 +108,8 @@ class BarsRepositoryImpl @Inject constructor(
         sharedPreferences
             .edit()
             .putString("user1", "")
-            .putString("user2", "")
+            .putString("user2", "") // PerezhilovaYD uxi762e
+            .putString("score", "")
             .apply()
     }
 }

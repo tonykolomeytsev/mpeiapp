@@ -20,5 +20,9 @@ interface BarsFragmentView : LifecycleOwner {
 
     fun setStatus(score: AcademicScore)
 
+    fun hideLoading()
+
+    fun showLoading()
+
     enum class State { LOGIN, SCORE }
 }
