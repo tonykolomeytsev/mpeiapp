@@ -114,6 +114,7 @@ class AddFragmentPresenter @Inject constructor(
             } catch (e: Exception) {
                 // todo вывести сообщение об ошибке
                 e.printStackTrace()
+                withContext(Dispatchers.Main) { view?.showError() }
             }
             withContext(Dispatchers.Main) {
                 view?.showLoadButton()

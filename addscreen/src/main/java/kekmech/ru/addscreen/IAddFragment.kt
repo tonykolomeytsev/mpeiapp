@@ -17,4 +17,5 @@ interface IAddFragment : LifecycleOwner {
     fun hideLoading()
 
     fun setAdapter(adapter: BaseAdapter)
+    fun showError()
 }
