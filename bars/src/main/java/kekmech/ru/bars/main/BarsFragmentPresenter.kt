@@ -4,6 +4,9 @@ import kekmech.ru.bars.main.adapter.DisciplineItem
 import kekmech.ru.bars.main.model.BarsFragmentModel
 import kekmech.ru.bars.main.view.BarsFragmentView
 import kekmech.ru.core.Presenter
+import kekmech.ru.core.Router
+import kekmech.ru.core.Screens
+import kekmech.ru.core.Screens.BARS_TO_RIGHTS
 import kekmech.ru.core.dto.AcademicDiscipline
 import kekmech.ru.coreui.adapter.BaseAdapter
 import kotlinx.coroutines.Dispatchers
@@ -13,7 +16,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class BarsFragmentPresenter @Inject constructor(
-    private val model: BarsFragmentModel
+    private val model: BarsFragmentModel,
+    private val router: Router
 ) : Presenter<BarsFragmentView>() {
 
     private val adapter = BaseAdapter.Builder()
@@ -34,5 +38,6 @@ class BarsFragmentPresenter @Inject constructor(
             view.state = BarsFragmentView.State.LOGIN
         }
         view.onLogInListener = model::logInUser
+        view.onRightsClickListener = { router.navigate(BARS_TO_RIGHTS) }
     }
 }

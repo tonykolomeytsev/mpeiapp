@@ -3,8 +3,7 @@ package kekmech.ru.mainscreen
 import androidx.navigation.NavController
 import kekmech.ru.core.Router
 import kekmech.ru.core.Screens
-import kekmech.ru.core.Screens.FEED_TO_ADD
-import kekmech.ru.core.Screens.FEED_TO_FORCE
+import kekmech.ru.core.Screens.*
 import javax.inject.Inject
 
 class MainNavRouter @Inject constructor(): Router {
@@ -17,6 +16,7 @@ class MainNavRouter @Inject constructor(): Router {
             FEED_TO_FORCE -> try {
                 navController?.navigate(R.id.action_feedFragment_to_forceUpdateFragment)
             } catch (e: Exception) { e.printStackTrace() }
+            BARS_TO_RIGHTS -> navController?.navigate(R.id.action_barsFragment_to_rightsFragment)
         }
     }
 

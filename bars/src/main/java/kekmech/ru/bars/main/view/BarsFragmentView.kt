@@ -8,6 +8,8 @@ interface BarsFragmentView : LifecycleOwner {
 
     var onLogInListener: (String, String) -> Unit
 
+    var onRightsClickListener: () -> Unit
+
     fun setAdapter(adapter: RecyclerView.Adapter<*>)
 
     enum class State { LOGIN, SCORE }

@@ -6,4 +6,63 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+    <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="112dp">
+
+            <TextView
+                    style="@style/RightsHeader"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/rights_head"/>
+
+            <TextView
+                    style="@style/RightsSubheader"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/rights_sec_head"
+                    />
+
+            <TextView
+                    style="@style/RightsPar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/rights_sec_par1"/>
+
+            <TextView
+                    style="@style/RightsPar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/rights_sec_par2"/>
+
+            <TextView
+                    style="@style/RightsSubheader"
+                    android:text="@string/rights_cons_head"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            <TextView
+                    style="@style/RightsPar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/rights_cons_par1"/>
+
+            <TextView
+                    style="@style/RightsPar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/rights_cons_par2"/>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
