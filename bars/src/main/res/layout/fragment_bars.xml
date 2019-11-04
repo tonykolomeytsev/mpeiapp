@@ -182,6 +182,7 @@
                 android:orientation="vertical">
 
             <TextView
+                    android:layout_marginTop="25dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="24dp"
@@ -243,19 +244,44 @@
 
             </LinearLayout>
 
-            <TextView
-                    android:id="@+id/buttonLogin"
+            <FrameLayout
                     android:layout_width="150dp"
                     android:layout_height="48dp"
-                    android:layout_marginTop="8dp"
-                    android:background="?attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:fontFamily="sans-serif-light"
+                    android:layout_marginTop="8dp">
+
+                <TextView
+                        android:id="@+id/buttonLogin"
+                        android:layout_width="150dp"
+                        android:layout_height="48dp"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:fontFamily="sans-serif-light"
+                        android:gravity="center"
+                        android:text="Войти"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="18sp" />
+
+                <ProgressBar
+                        android:id="@+id/progressBarLogin"
+                        android:layout_gravity="center"
+                        android:indeterminateTint="@color/colorSecondary"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"/>
+
+            </FrameLayout>
+
+            <TextView
+                    android:id="@+id/textViewError"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:text="Не удалось войти в учетную запись"
                     android:gravity="center"
-                    android:text="Войти"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="18sp" />
+                    android:textSize="12sp"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:textColor="#E91E63"
+                    android:visibility="invisible"/>
 
         </LinearLayout>
 

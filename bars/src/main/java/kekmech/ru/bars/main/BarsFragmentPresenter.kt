@@ -60,17 +60,23 @@ class BarsFragmentPresenter @Inject constructor(
 
     private fun logInUser(login: String, pass: String) {
         model.saveUserSecrets(login, pass)
+        view?.setLoginFormEnabled(false)
         GlobalScope.launch(Dispatchers.Main) {
+            var error = false
             val score = withContext(Dispatchers.IO) { model.getAcademicScore() }
             if (score == null) {
                 Log.d("Bars", "Wrong User Credentials")
                 model.clearUserSecrets()
+                error = true
             } else {
                 if (view != null) {
                     view?.state = BarsFragmentView.State.SCORE
                     updateWithScore(view!!, score)
                 }
             }
+            view?.setLoginFormEnabled(true)
+            if (error)
+                view?.showError()
         }
     }
 

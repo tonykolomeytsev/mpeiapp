@@ -84,6 +84,7 @@ class BarsFragment : BaseFragment<BarsFragmentPresenter, BarsFragmentView>(
             barsLogoLayout?.visibility = View.GONE
             statusLayout?.visibility = View.VISIBLE
         } else if (state == LOGIN) {
+            setLoginFormEnabled(true)
             swipeRefresh?.isEnabled = false
             barsLogoLayout?.visibility = View.VISIBLE
             statusLayout?.visibility = View.GONE
@@ -120,5 +121,18 @@ class BarsFragment : BaseFragment<BarsFragmentPresenter, BarsFragmentView>(
 
     override fun showLoading() {
         swipeRefresh?.post { swipeRefresh?.isRefreshing = true }
+    }
+
+    override fun setLoginFormEnabled(boolean: Boolean) {
+        textViewError?.visibility = View.INVISIBLE
+        textViewBarsPass?.isEnabled = boolean
+        textViewBarsLogin?.isEnabled = boolean
+        progressBarLogin?.visibility = if (!boolean) View.VISIBLE else View.INVISIBLE
+        buttonLogin?.visibility = if (boolean) View.VISIBLE else View.INVISIBLE
+        buttonLogin?.isEnabled = boolean
+    }
+
+    override fun showError() {
+        textViewError?.visibility = View.VISIBLE
     }
 }
