@@ -1,17 +1,16 @@
 package kekmech.ru.bars.main.model
 
+import kekmech.ru.core.dto.AcademicDiscipline
 import kekmech.ru.core.dto.AcademicScore
-import kekmech.ru.core.usecases.GetRatingUseCase
-import kekmech.ru.core.usecases.IsLoggedInBarsUseCase
-import kekmech.ru.core.usecases.LogOutUseCase
-import kekmech.ru.core.usecases.SaveUserSecretsUseCase
+import kekmech.ru.core.usecases.*
 import javax.inject.Inject
 
 class BarsFragmentModelImpl @Inject constructor(
     private val isLoggedInBarsUseCase: IsLoggedInBarsUseCase,
     private val saveUserSecretsUseCase: SaveUserSecretsUseCase,
     private val getRatingUseCase: GetRatingUseCase,
-    private val logOutUseCase: LogOutUseCase
+    private val logOutUseCase: LogOutUseCase,
+    private val setDetailsDisciplineUseCase: SetDetailsDisciplineUseCase
 ) : BarsFragmentModel {
 
     override val isLoggedIn: Boolean
@@ -34,4 +33,7 @@ class BarsFragmentModelImpl @Inject constructor(
         logOutUseCase()
     }
 
+    override fun setCurrentDiscipline(discipline: AcademicDiscipline) {
+        setDetailsDisciplineUseCase(discipline)
+    }
 }

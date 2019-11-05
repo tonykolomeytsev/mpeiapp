@@ -13,5 +13,6 @@ enum class Screens {
     FEED_TO_FORCE,
 
     //bars deep nav
-    BARS_TO_RIGHTS
+    BARS_TO_RIGHTS,
+    BARS_TO_BARS_DETAILS
 }

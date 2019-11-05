@@ -16,10 +16,22 @@
                 app:exitAnim="@anim/exit_to_left"
                 app:popEnterAnim="@anim/enter_from_left"
                 app:popExitAnim="@anim/exit_to_right" />
+        <action
+                android:id="@+id/action_barsFragment_to_barsDetailsFragment"
+                app:destination="@id/barsDetailsFragment"
+                app:enterAnim="@anim/enter_from_right"
+                app:exitAnim="@anim/exit_to_left"
+                app:popEnterAnim="@anim/enter_from_left"
+                app:popExitAnim="@anim/exit_to_right"  />
     </fragment>
     <fragment
         android:id="@+id/rightsFragment"
         android:name="kekmech.ru.bars.rights.RightsFragment"
         android:label="RightsFragment"
         tools:layout="@layout/fragment_rights"/>
+    <fragment
+            android:id="@+id/barsDetailsFragment"
+            android:name="kekmech.ru.bars.details.view.BarsDetailsFragment"
+            android:label="BarsDetailsFragment"
+            tools:layout="@layout/fragment_bars_details"/>
 </navigation>

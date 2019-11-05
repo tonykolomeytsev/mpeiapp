@@ -17,6 +17,7 @@ class MainNavRouter @Inject constructor(): Router {
                 navController?.navigate(R.id.action_feedFragment_to_forceUpdateFragment)
             } catch (e: Exception) { e.printStackTrace() }
             BARS_TO_RIGHTS -> navController?.navigate(R.id.action_barsFragment_to_rightsFragment)
+            BARS_TO_BARS_DETAILS -> navController?.navigate(R.id.action_barsFragment_to_barsDetailsFragment)
         }
     }
 

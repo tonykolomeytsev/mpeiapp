@@ -70,4 +70,10 @@ abstract class InteractorModule {
 
     @Binds
     abstract fun provideLogOutUseCase(useCaseImpl: LogOutUseCaseImpl): LogOutUseCase
+
+    @Binds
+    abstract fun provideSetDetailsDisciplineUseCase(useCaseImpl: SetDetailsDisciplineUseCaseImpl): SetDetailsDisciplineUseCase
+
+    @Binds
+    abstract fun provideGetDetailsDisciplineUseCase(useCaseImpl: GetDetailsDisciplineUseCaseImpl): GetDetailsDisciplineUseCase
 }

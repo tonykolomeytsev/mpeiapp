@@ -2,6 +2,7 @@ package kekmech.ru.repository
 
 import android.content.Context
 import com.google.gson.GsonBuilder
+import kekmech.ru.core.dto.AcademicDiscipline
 import kekmech.ru.core.dto.AcademicScore
 import kekmech.ru.core.repositories.BarsRepository
 import kekmech.ru.core.repositories.BarsRepository.Companion.BARS_URL
@@ -14,6 +15,8 @@ class BarsRepositoryImpl @Inject constructor(
     private val context: Context,
     private val baseKeyStore: BaseKeyStore
 ) : BarsRepository {
+
+    override var currentAcademicDiscipline: AcademicDiscipline = AcademicDiscipline()
 
     private val sharedPreferences = context.getSharedPreferences("mpeix", Context.MODE_PRIVATE)
 

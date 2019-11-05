@@ -24,4 +24,6 @@ interface InteractorProvider {
     fun provideSaveUserSecretsUseCase(): SaveUserSecretsUseCase
     fun provideGetRatingUseCase(): GetRatingUseCase
     fun provideLogOutUseCase(): LogOutUseCase
+    fun provideSetDetailsDisciplineUseCase(): SetDetailsDisciplineUseCase
+    fun provideGetDetailsDisciplineUseCase(): GetDetailsDisciplineUseCase
 }

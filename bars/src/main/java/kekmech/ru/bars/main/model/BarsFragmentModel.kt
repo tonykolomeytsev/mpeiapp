@@ -1,6 +1,7 @@
 package kekmech.ru.bars.main.model
 
 import androidx.lifecycle.LiveData
+import kekmech.ru.core.dto.AcademicDiscipline
 import kekmech.ru.core.dto.AcademicScore
 
 interface BarsFragmentModel {
@@ -13,4 +14,6 @@ interface BarsFragmentModel {
     fun saveUserSecrets(login: String, pass: String)
 
     fun clearUserSecrets()
+
+    fun setCurrentDiscipline(discipline: AcademicDiscipline)
 }

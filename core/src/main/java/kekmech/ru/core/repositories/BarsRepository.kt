@@ -1,8 +1,11 @@
 package kekmech.ru.core.repositories
 
+import kekmech.ru.core.dto.AcademicDiscipline
 import kekmech.ru.core.dto.AcademicScore
 
 interface BarsRepository {
+
+    var currentAcademicDiscipline: AcademicDiscipline
 
     val isLoggedIn: Boolean
 

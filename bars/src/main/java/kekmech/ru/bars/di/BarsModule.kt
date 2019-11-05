@@ -5,6 +5,9 @@ import dagger.Module
 import dagger.android.AndroidInjector
 import dagger.multibindings.ClassKey
 import dagger.multibindings.IntoMap
+import kekmech.ru.bars.details.BarsDetailsFragmentPresenter
+import kekmech.ru.bars.details.view.BarsDetailsFragment
+import kekmech.ru.bars.details.view.BarsDetailsFragmentView
 import kekmech.ru.bars.main.BarsFragmentPresenter
 import kekmech.ru.bars.main.model.BarsFragmentModel
 import kekmech.ru.bars.main.model.BarsFragmentModelImpl
@@ -16,7 +19,11 @@ import kekmech.ru.bars.rights.RightsFragmentView
 import kekmech.ru.core.Presenter
 import kekmech.ru.core.scopes.ActivityScope
 
-@Module(subcomponents = [BarsFragmentComponent::class, RightsFragmentComponent::class])
+@Module(subcomponents = [
+    BarsFragmentComponent::class,
+    RightsFragmentComponent::class,
+    BarsDetailsFragmentComponent::class
+])
 abstract class BarsModule {
     @Binds
     @IntoMap
@@ -40,5 +47,16 @@ abstract class BarsModule {
     @ActivityScope
     @Binds
     abstract fun provideRightsFragmentPresenter(presenter: RightsFragmentPresenter): Presenter<RightsFragmentView>
+
+
+
+    @Binds
+    @IntoMap
+    @ClassKey(BarsDetailsFragment::class)
+    abstract fun bindBarsDetailsFragmentInjectorFactory(factory: BarsDetailsFragmentComponent.Factory): AndroidInjector.Factory<*>
+
+    @ActivityScope
+    @Binds
+    abstract fun provideBarsDetailsFragmentPresenter(presenter: BarsDetailsFragmentPresenter): Presenter<BarsDetailsFragmentView>
 
 }

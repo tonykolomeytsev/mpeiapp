@@ -6,10 +6,12 @@ import kekmech.ru.bars.main.model.BarsFragmentModel
 import kekmech.ru.bars.main.view.BarsFragmentView
 import kekmech.ru.core.Presenter
 import kekmech.ru.core.Router
+import kekmech.ru.core.Screens.BARS_TO_BARS_DETAILS
 import kekmech.ru.core.Screens.BARS_TO_RIGHTS
 import kekmech.ru.core.dto.AcademicDiscipline
 import kekmech.ru.core.dto.AcademicScore
 import kekmech.ru.coreui.adapter.BaseAdapter
+import kekmech.ru.coreui.adapter.BaseClickableItem
 import kotlinx.coroutines.*
 import javax.inject.Inject
 
@@ -48,7 +50,7 @@ class BarsFragmentPresenter @Inject constructor(
             view.state = BarsFragmentView.State.LOGIN
         }
         view.onRefreshListener = {
-            GlobalScope.launch(Dispatchers.IO) { model.getAcademicScoreAsync {
+            GlobalScope.launch(Dispatchers.IO) { model.getAcademicScoreAsync(true) {
                 GlobalScope.launch(Dispatchers.Main) { updateWithScore(view, it) } } }
         }
     }
@@ -83,10 +85,17 @@ class BarsFragmentPresenter @Inject constructor(
     private fun updateWithScore(view: BarsFragmentView, score: AcademicScore?) {
         if (score != null) {
             adapter.baseItems.clear()
-            adapter.baseItems.addAll(score.disciplines.map(::DisciplineItem))
+            adapter.baseItems.addAll(score.disciplines.map { DisciplineItem(it).apply { clickListener = ::onItemClick } })
             view.setAdapter(adapter)
             view.setStatus(score)
         }
         view.hideLoading()
+    }
+
+    private fun onItemClick(item: BaseClickableItem<*>) {
+        if (item is DisciplineItem) {
+            model.setCurrentDiscipline(item.discipline)
+            router.navigate(BARS_TO_BARS_DETAILS)
+        }
     }
 }
