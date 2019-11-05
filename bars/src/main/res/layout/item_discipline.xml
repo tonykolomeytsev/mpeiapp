@@ -65,13 +65,15 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerControlEvents"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="24dp"
                         android:orientation="horizontal"
                         android:layout_marginBottom="8dp"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         tools:itemCount="8"
-                        tools:listitem="@layout/item_mark" />
+                        tools:listitem="@layout/item_mark"
+                        android:clickable="false"
+                        android:focusable="false" />
 
                 <TextView
                         android:id="@+id/textViewControlWeeks"
@@ -87,12 +89,14 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerControlWeeks"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="24dp"
                         android:orientation="horizontal"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         tools:itemCount="3"
-                        tools:listitem="@layout/item_mark" />
+                        tools:listitem="@layout/item_mark"
+                        android:clickable="false"
+                        android:focusable="false"/>
 
 
             </LinearLayout>
