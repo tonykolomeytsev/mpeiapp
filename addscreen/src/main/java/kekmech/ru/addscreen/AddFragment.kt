@@ -33,6 +33,7 @@ import android.graphics.drawable.LayerDrawable
 import android.os.Build
 import android.os.Build.VERSION_CODES.M
 import android.util.DisplayMetrics
+import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.annotation.RequiresApi
 
@@ -186,6 +187,10 @@ class AddFragment @Inject constructor() : BottomSheetDialogFragment(), HasAndroi
         progressBarGroups?.visibility = View.INVISIBLE
         recyclerViewGroups?.layoutManager = LinearLayoutManager(context)
         recyclerViewGroups?.adapter = adapter
+    }
+
+    override fun showError() {
+        Toast.makeText(context, "Не удалозь загрузить группу", Toast.LENGTH_SHORT).show()
     }
 
 }

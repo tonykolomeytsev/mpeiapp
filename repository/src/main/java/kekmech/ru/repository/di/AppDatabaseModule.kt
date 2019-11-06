@@ -14,6 +14,7 @@ class AppDatabaseModule {
     @Singleton
     fun provideAppDatabase(context: Context): AppDatabase = Room
         .databaseBuilder(context, AppDatabase::class.java, "mpeiapp.db")
+        .addMigrations(AppDatabase.MIGRATION_V1_TO_V2)
         .build()
 
 }
