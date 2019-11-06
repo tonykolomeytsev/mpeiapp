@@ -33,6 +33,7 @@ class FeedPresenter @Inject constructor(
         .registerViewTypeFactory(LunchItem.Factory())
         .registerViewTypeFactory(WeekendItem.Factory())
         .registerViewTypeFactory(WeekendStackItem.Factory())
+        .registerViewTypeFactory(EmptyItem.Factory())
         .build()
     }
     val menuAdapter = BaseAdapter.Builder()

@@ -113,12 +113,11 @@ class BarsParser {
         } else if (html.contains("Итоговая оценка")) {
             val tds = tr.select("td")
             val bothMarks = tds[1].html().split("<br>")
-            val computedMark = extractMark(bothMarks[0].replace("[^0-9.,(]".toRegex(), ""))
-            val finalMark = extractMark(bothMarks[1].replace("[^0-9.,(]".toRegex(), ""))
-            currentAcademicDiscipline?.finalComputedMark = computedMark
+//            val computedMark = extractMark(bothMarks[0].replace("[^0-9.,(]".toRegex(), ""))
+            val finalMark = extractMark(bothMarks[0].replace("[^0-9.,(]".toRegex(), ""))
+//            currentAcademicDiscipline?.finalComputedMark = computedMark
             currentAcademicDiscipline?.finalFinalMark = finalMark
         }
-
     }
 
     private fun extractMark(string: String): Float {

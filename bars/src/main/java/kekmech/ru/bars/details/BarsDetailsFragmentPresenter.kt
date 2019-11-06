@@ -45,7 +45,7 @@ class BarsDetailsFragmentPresenter @Inject constructor(
                 .build()
             finalAdapter.baseItems.addAll(listOf(
                 FinalItem("Промежуточная аттестация", d.examMark),
-                FinalItem("Итоговая рассчитанная", d.finalComputedMark),
+//                FinalItem("Итоговая рассчитанная", d.finalComputedMark),
                 FinalItem("Итоговая проставленная", d.finalFinalMark)
             ))
             view.setFinalAdapter(finalAdapter)
