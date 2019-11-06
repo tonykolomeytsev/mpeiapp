@@ -70,7 +70,7 @@ class BarsParser {
         if (id.startsWith("s_ss")) {
             isCurrentControlFlag = false
             val rows = div.select("tr")
-            rows.forEach { pushDisciplineRow(it) }
+            rows.forEach { try { pushDisciplineRow(it) } catch (e: Exception) { e.printStackTrace() } }
         }
     }
 
