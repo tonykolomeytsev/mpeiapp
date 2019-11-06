@@ -20,4 +20,10 @@ interface InteractorProvider {
     fun provideChangeCurrentScheduleIdUseCase(): ChangeCurrentScheduleIdUseCase
     fun provideGetMapStateUseCase(): GetMapStateUseCase
     fun provideSetMapStateUseCase(): SetMapStateUseCase
+    fun provideIsLoggedInBarsUseCase(): IsLoggedInBarsUseCase
+    fun provideSaveUserSecretsUseCase(): SaveUserSecretsUseCase
+    fun provideGetRatingUseCase(): GetRatingUseCase
+    fun provideLogOutUseCase(): LogOutUseCase
+    fun provideSetDetailsDisciplineUseCase(): SetDetailsDisciplineUseCase
+    fun provideGetDetailsDisciplineUseCase(): GetDetailsDisciplineUseCase
 }

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:orientation="horizontal"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="?attr/selectableItemBackground">
+
+    <TextView
+            android:id="@+id/textViewMarkOverage"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/discipline_bg_average"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center"
+            android:textColor="@color/colorBlack"
+            android:textSize="16sp"
+            tools:text="4.75" />
+
+    <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="40dp"
+                android:orientation="vertical"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp">
+
+            <TextView
+                    android:id="@+id/textViewDisciplineName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Гидропневмопривод робототехнических и мехатронных устройств"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="18sp" />
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="4dp"
+                    android:orientation="vertical">
+
+                <TextView
+                        android:id="@+id/textViewCOntrolEvents"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:alpha="0.5"
+                        android:fontFamily="sans-serif-black"
+                        android:text="КОНТРОЛЬНЫЕ МЕРОПРИЯТИЯ:"
+                        android:layout_marginBottom="4dp"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="10sp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerControlEvents"
+                        android:layout_width="wrap_content"
+                        android:layout_height="24dp"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="8dp"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:itemCount="8"
+                        tools:listitem="@layout/item_mark"
+                        android:clickable="false"
+                        android:focusable="false" />
+
+                <TextView
+                        android:id="@+id/textViewControlWeeks"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginBottom="4dp"
+                        android:alpha="0.5"
+                        android:fontFamily="sans-serif-black"
+                        android:text="КОНТРОЛЬНЫЕ НЕДЕЛИ:"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="10sp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerControlWeeks"
+                        android:layout_width="wrap_content"
+                        android:layout_height="24dp"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:itemCount="3"
+                        tools:listitem="@layout/item_mark"
+                        android:clickable="false"
+                        android:focusable="false"/>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|right"
+                android:layout_marginRight="8dp"
+                android:src="@drawable/baseline_chevron_right_black_24"
+                android:tint="@color/colorIconsTint" />
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_gravity="bottom"
+                android:alpha="0.2"
+                android:background="@color/colorBlack" />
+    </FrameLayout>
+
+
+</LinearLayout>

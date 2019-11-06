@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="markRed">#D54949</color>
+    <color name="markYellow">#C58C23</color>
+    <color name="markGreen">#578B0F</color>
+    <color name="tableHeader">#E6E6E6</color>
+</resources>

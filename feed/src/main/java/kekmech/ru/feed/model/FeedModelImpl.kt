@@ -2,6 +2,8 @@ package kekmech.ru.feed.model
 
 import android.content.Context
 import androidx.lifecycle.LiveData
+import kekmech.ru.core.Router
+import kekmech.ru.core.Screens
 import kekmech.ru.core.dto.CoupleNative
 import kekmech.ru.core.dto.DayStatus
 import kekmech.ru.core.dto.Time
@@ -22,7 +24,8 @@ class FeedModelImpl @Inject constructor(
     private val isNeedToUpdateFeedUseCase: IsNeedToUpdateFeedUseCase,
     private val setNeedToUpdateFeedUseCase: SetNeedToUpdateFeedUseCase,
     private val setForceUpdateDataUseCase: SetForceUpdateDataUseCase,
-    private val getAppLaunchCountUseCase: GetAppLaunchCountUseCase
+    private val getAppLaunchCountUseCase: GetAppLaunchCountUseCase,
+    private val router: Router
 ) : FeedModel {
 
     override val today: Time
@@ -61,6 +64,7 @@ class FeedModelImpl @Inject constructor(
      * @return return today's couples if offset == 0
      */
     override suspend fun getDayCouples(offset: Int, refresh: Boolean): List<BaseItem<*>> {
+        if (offset > 14) return emptyList()
         return withContext(Dispatchers.IO) {
             val list = loadOffsetScheduleUseCase(offset, refresh)
             if (list.isNotEmpty()) {
@@ -113,11 +117,14 @@ class FeedModelImpl @Inject constructor(
             } else {
                 // TODO DEPRECATED
                 val couples = mutableListOf<BaseItem<*>>()
-                if (offset > 0) couples += FeedDividerItem(
-                    today.getDayWithOffset(offset).formatAsDivider(),
-                    offset == 0
-                )
-                couples += WeekendItem()
+//                if (offset > 0) couples += FeedDividerItem(
+//                    today.getDayWithOffset(offset).formatAsDivider(),
+//                    offset == 0
+//                )
+//                couples += WeekendItem()
+                if (offset == 0) {
+                    couples += EmptyItem { router.navigate(Screens.FEED_TO_ADD) }
+                }
                 return@withContext couples
             }
         }

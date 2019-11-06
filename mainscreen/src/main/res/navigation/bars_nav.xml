@@ -1,10 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/bars_nav"
-        app:startDestination="@id/settingsFragment2">
-
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/bars_nav"
+        app:startDestination="@id/barsFragment">
     <fragment
-            android:id="@+id/settingsFragment2"
-            android:name="kekmech.ru.settings.SettingsFragment"
-            android:label="SettingsFragment" />
+            android:id="@+id/barsFragment"
+            android:name="kekmech.ru.bars.main.view.BarsFragment"
+            android:label="BarsFragment"
+            tools:layout="@layout/fragment_bars">
+        <action
+                android:id="@+id/action_barsFragment_to_rightsFragment"
+                app:destination="@id/rightsFragment"
+                app:enterAnim="@anim/enter_from_right"
+                app:exitAnim="@anim/exit_to_left"
+                app:popEnterAnim="@anim/enter_from_left"
+                app:popExitAnim="@anim/exit_to_right" />
+        <action
+                android:id="@+id/action_barsFragment_to_barsDetailsFragment"
+                app:destination="@id/barsDetailsFragment"
+                app:enterAnim="@anim/enter_from_right"
+                app:exitAnim="@anim/exit_to_left"
+                app:popEnterAnim="@anim/enter_from_left"
+                app:popExitAnim="@anim/exit_to_right"  />
+    </fragment>
+    <fragment
+        android:id="@+id/rightsFragment"
+        android:name="kekmech.ru.bars.rights.RightsFragment"
+        android:label="RightsFragment"
+        tools:layout="@layout/fragment_rights"/>
+    <fragment
+            android:id="@+id/barsDetailsFragment"
+            android:name="kekmech.ru.bars.details.view.BarsDetailsFragment"
+            android:label="BarsDetailsFragment"
+            tools:layout="@layout/fragment_bars_details"/>
 </navigation>
