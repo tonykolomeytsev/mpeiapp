@@ -17,9 +17,11 @@ jobs:
         run: .ci/materialize.sh $GOOGLE_SERVICES app/google-services.json
         env:
           GOOGLE_SERVICES: ${{ secrets.GOOGLE_SERVICES }}
-      - name: Build with Gradle
-        run: ./gradlew -Pci assembleDebug
-        env:
-          BARS_KEY: ${{ secrets.BARS_KEY }}
-          BARS_IV: ${{ secrets.BARS_IV }}
-          MAP_KEY: ${{ secrets.MAP_KEY }}
+      - name: Check base64 params
+        run: base64 --help
+#      - name: Build with Gradle
+#        run: ./gradlew -Pci assembleDebug
+#        env:
+#          BARS_KEY: ${{ secrets.BARS_KEY }}
+#          BARS_IV: ${{ secrets.BARS_IV }}
+#          MAP_KEY: ${{ secrets.MAP_KEY }}
