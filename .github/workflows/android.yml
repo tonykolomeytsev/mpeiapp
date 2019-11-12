@@ -34,7 +34,6 @@ jobs:
           restore-keys: |
             ${{ runner.OS }}-gradle-${{ env.cache-name }}-
             ${{ runner.OS }}-gradle-
-            ${{ runner.OS }}-
       
       - name: Cache build files
         uses: actions/cache@v1
@@ -44,7 +43,6 @@ jobs:
           restore-keys: |
             ${{ runner.OS }}-build-${{ env.cache-name }}-
             ${{ runner.OS }}-build-
-            ${{ runner.OS }}-
 
       - name: Build with Gradle
         run: ./gradlew -Pci assembleDebug
