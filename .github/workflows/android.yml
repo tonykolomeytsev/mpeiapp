@@ -22,24 +22,20 @@ jobs:
         run: .ci/materialize.sh $GOOGLE_SERVICES app/google-services.json
         env:
           GOOGLE_SERVICES: ${{ secrets.GOOGLE_SERVICES }}
-      
-      - name: Setup Gradle home
-        run:  export GRADLE_USER_HOME=$(pwd)/.gradle
         
       - name: Cache gradle files
         uses: actions/cache@v1
         with:
-          path: .gradle/
-          key: ${{ runner.OS }}-gradle-${{ hashFiles('build.gradle') }}
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
           restore-keys: |
-            ${{ runner.OS }}-gradle-${{ env.cache-name }}-
-            ${{ runner.OS }}-gradle-
+            ${{ runner.os }}-gradle
       
       - name: Cache build files
         uses: actions/cache@v1
         with:
-          path: build/
-          key: ${{ runner.OS }}-build-${{ hashFiles('build.gradle') }}
+          path: build
+          key: ${{ runner.OS }}-build-${{ hashFiles('build/**') }}
           restore-keys: |
             ${{ runner.OS }}-build-${{ env.cache-name }}-
             ${{ runner.OS }}-build-
