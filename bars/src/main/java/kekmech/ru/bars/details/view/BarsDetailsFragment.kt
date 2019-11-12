@@ -1,5 +1,9 @@
 package kekmech.ru.bars.details.view
 
+import android.view.View
+import android.view.ViewGroup
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.bars.R
@@ -14,8 +18,11 @@ class BarsDetailsFragment : BaseFragment<BarsDetailsFragmentPresenter, BarsDetai
     @Inject
     override lateinit var presenter: BarsDetailsFragmentPresenter
 
+    override var onNavBackListener: () -> Unit = {}
+
     override fun onResume() {
         super.onResume()
+        toolbar?.setNavigationOnClickListener { onNavBackListener() }
         recyclerEvents?.layoutManager = LinearLayoutManager(context)
         recyclerWeeks?.layoutManager = LinearLayoutManager(context)
         recyclerFinal?.layoutManager = LinearLayoutManager(context)
