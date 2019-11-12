@@ -6,6 +6,7 @@ import kekmech.ru.bars.details.adapter.WeekItem
 import kekmech.ru.bars.details.view.BarsDetailsFragmentView
 import kekmech.ru.bars.main.adapter.MarkItem
 import kekmech.ru.core.Presenter
+import kekmech.ru.core.Router
 import kekmech.ru.core.usecases.GetDetailsDisciplineUseCase
 import kekmech.ru.coreui.adapter.BaseAdapter
 import kotlinx.coroutines.Dispatchers
@@ -15,12 +16,14 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class BarsDetailsFragmentPresenter @Inject constructor(
-    private val getDetailsDisciplineUseCase: GetDetailsDisciplineUseCase
+    private val getDetailsDisciplineUseCase: GetDetailsDisciplineUseCase,
+    private val router: Router
 ) : Presenter<BarsDetailsFragmentView>() {
 
     override fun onResume(view: BarsDetailsFragmentView) {
         super.onResume(view)
         val d = getDetailsDisciplineUseCase()
+        view.onNavBackListener = router::popBackStack
         view.setTitle(d.name)
         GlobalScope.launch(Dispatchers.Main) {
             delay(200)
