@@ -35,7 +35,7 @@ jobs:
         uses: actions/cache@v1
         with:
           path: build
-          key: ${{ runner.OS }}-build-${{ hashFiles('build/**') }}
+          key: ${{ runner.OS }}-build-${{ hashFiles('**/*.kt') }}
           restore-keys: |
             ${{ runner.OS }}-build-${{ env.cache-name }}-
             ${{ runner.OS }}-build-
