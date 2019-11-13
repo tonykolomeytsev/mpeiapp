@@ -5,20 +5,23 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import kekmech.ru.core.Presenter
+import kekmech.ru.core.Router
+import kekmech.ru.core.Screens
+import kekmech.ru.core.Screens.TIMETABLE_TO_FORCE
+import kekmech.ru.core.UpdateChecker
 import kekmech.ru.core.dto.Time
 import kekmech.ru.coreui.Resources
 import kekmech.ru.coreui.adapter.BaseItem
 import kekmech.ru.timetable.model.TimetableFragmentModel
 import kekmech.ru.timetable.view.TimetableFragmentView
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import javax.inject.Inject
-import kotlinx.coroutines.GlobalScope
 
 class TimetableFragmentPresenter @Inject constructor(
     private val model: TimetableFragmentModel,
-    private val context: Context
+    private val context: Context,
+    private val updateChecker: UpdateChecker,
+    private val router: Router
 ) : Presenter<TimetableFragmentView>() {
 
     lateinit var weekAdapter: WeekAdapter
@@ -56,6 +59,16 @@ class TimetableFragmentPresenter @Inject constructor(
                 view.setSubtitleStatus("Идет ${model.currentWeekNumber} неделя (${getParity(today)})")
             }
         })
+        GlobalScope.launch(Dispatchers.Main) {
+            delay(1000)
+            if (model.isNotShowedUpdateDialog) {
+                updateChecker.check { url, desc ->
+                    model.saveForceUpdateArgs(url, desc)
+                    router.navigate(TIMETABLE_TO_FORCE)
+                    model.isNotShowedUpdateDialog = false
+                }
+            }
+        }
     }
 
     fun onChangeParity() {

@@ -6,5 +6,13 @@
     <fragment
             android:id="@+id/timetableFragment"
             android:name="kekmech.ru.timetable.view.TimetableFragment"
-            android:label="TimetableFragment" />
+            android:label="TimetableFragment" >
+        <action
+                android:id="@+id/action_timetableFragment_to_forceUpdateFragment3"
+                app:destination="@id/forceUpdateFragment3" />
+    </fragment>
+    <dialog
+            android:id="@+id/forceUpdateFragment3"
+            android:name="kekmech.ru.update.view.ForceUpdateFragment"
+            android:label="ForceUpdateFragment" />
 </navigation>

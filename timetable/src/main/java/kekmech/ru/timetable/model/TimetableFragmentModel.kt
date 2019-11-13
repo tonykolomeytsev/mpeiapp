@@ -21,4 +21,8 @@ interface TimetableFragmentModel {
     fun getDaySchedule(dayOfWeek: Int, weekNum: Int): List<BaseItem<*>>
 
     var weekOffset: LiveData<Int>
+
+    var isNotShowedUpdateDialog: Boolean
+
+    fun saveForceUpdateArgs(url: String, description: String)
 }

@@ -40,8 +40,9 @@
                     android:id="@+id/textViewDisciplineName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Гидропневмопривод робототехнических и мехатронных устройств"
+                    tools:text="Гидропневмопривод робототехнических и мехатронных устройств"
                     android:textColor="@color/colorBlack"
+                    android:fontFamily="sans-serif"
                     android:textSize="18sp" />
 
             <LinearLayout

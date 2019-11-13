@@ -27,6 +27,8 @@ class UserRepositoryImpl @Inject constructor(
         }
     override var mapState: Int = 0
 
+    override var isShowedUpdateDialog: Boolean = true
+
     override fun get(refresh: Boolean): User {
         val user = userCacheGateway.get()
         if (user == null) userCacheGateway.set(User.defaultUser())

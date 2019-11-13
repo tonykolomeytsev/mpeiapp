@@ -14,5 +14,9 @@ enum class Screens {
 
     //bars deep nav
     BARS_TO_RIGHTS,
-    BARS_TO_BARS_DETAILS
+    BARS_TO_BARS_DETAILS,
+    BARS_TO_FORCE,
+
+    // timetable deep nav
+    TIMETABLE_TO_FORCE
 }

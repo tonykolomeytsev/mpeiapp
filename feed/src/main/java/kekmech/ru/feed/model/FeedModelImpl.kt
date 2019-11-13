@@ -25,6 +25,8 @@ class FeedModelImpl @Inject constructor(
     private val setNeedToUpdateFeedUseCase: SetNeedToUpdateFeedUseCase,
     private val setForceUpdateDataUseCase: SetForceUpdateDataUseCase,
     private val getAppLaunchCountUseCase: GetAppLaunchCountUseCase,
+    private val setIsShowedUpdateDialogUseCase: SetIsShowedUpdateDialogUseCase,
+    private val getIsShowedUpdateDialogUseCase: GetIsShowedUpdateDialogUseCase,
     private val router: Router
 ) : FeedModel {
 
@@ -56,7 +58,10 @@ class FeedModelImpl @Inject constructor(
     override val appLaunchCount: Int
         get() = getAppLaunchCountUseCase()
 
-    override var isNotShowedUpdateDialog: Boolean = true
+    override var isNotShowedUpdateDialog: Boolean
+        get() = getIsShowedUpdateDialogUseCase()
+        set(value) { setIsShowedUpdateDialogUseCase(value) }
+
 
     /**
      * Get couples for day
