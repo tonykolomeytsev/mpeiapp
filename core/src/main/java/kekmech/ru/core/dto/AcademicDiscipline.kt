@@ -16,5 +16,13 @@ data class AcademicDiscipline(
     @SerializedName("f_c_mark")
     var finalComputedMark: Float = -1f,
     @SerializedName("f_f_mark")
-    var finalFinalMark: Float = -1f
-)
+    var finalFinalMark: Float = -1f,
+    @SerializedName("exam_type")
+    var examType: String = ""
+) {
+    companion object {
+        const val EXAM_TYPE_EXAM = "exam"
+        const val EXAM_TYPE_TEST = "test"
+        const val EXAM_TYPE_COURSE = "course"
+    }
+}
