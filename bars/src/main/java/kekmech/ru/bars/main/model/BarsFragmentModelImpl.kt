@@ -10,8 +10,16 @@ class BarsFragmentModelImpl @Inject constructor(
     private val saveUserSecretsUseCase: SaveUserSecretsUseCase,
     private val getRatingUseCase: GetRatingUseCase,
     private val logOutUseCase: LogOutUseCase,
-    private val setDetailsDisciplineUseCase: SetDetailsDisciplineUseCase
+    private val setDetailsDisciplineUseCase: SetDetailsDisciplineUseCase,
+    private val setForceUpdateDataUseCase: SetForceUpdateDataUseCase,
+    private val getIsShowedUpdateDialogUseCase: GetIsShowedUpdateDialogUseCase,
+    private val setIsShowedUpdateDialogUseCase: SetIsShowedUpdateDialogUseCase
 ) : BarsFragmentModel {
+
+
+    override var isNotShowedUpdateDialog: Boolean
+        get() = getIsShowedUpdateDialogUseCase()
+        set(value) { setIsShowedUpdateDialogUseCase(value) }
 
     override val isLoggedIn: Boolean
         get() = isLoggedInBarsUseCase()
@@ -35,5 +43,9 @@ class BarsFragmentModelImpl @Inject constructor(
 
     override fun setCurrentDiscipline(discipline: AcademicDiscipline) {
         setDetailsDisciplineUseCase(discipline)
+    }
+
+    override fun saveForceUpdateArgs(url: String, description: String) {
+        setForceUpdateDataUseCase(url, description)
     }
 }

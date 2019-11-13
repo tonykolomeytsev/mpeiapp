@@ -23,6 +23,9 @@
                 app:exitAnim="@anim/exit_to_left"
                 app:popEnterAnim="@anim/enter_from_left"
                 app:popExitAnim="@anim/exit_to_right"  />
+        <action
+                android:id="@+id/action_barsFragment_to_forceUpdateFragment2"
+                app:destination="@id/forceUpdateFragment2" />
     </fragment>
     <fragment
         android:id="@+id/rightsFragment"
@@ -34,4 +37,9 @@
             android:name="kekmech.ru.bars.details.view.BarsDetailsFragment"
             android:label="BarsDetailsFragment"
             tools:layout="@layout/fragment_bars_details"/>
+    <dialog
+            android:id="@+id/forceUpdateFragment2"
+            android:name="kekmech.ru.update.view.ForceUpdateFragment"
+            android:label="ForceUpdateFragment"
+            tools:layout="@layout/fragment_force_update"/>
 </navigation>

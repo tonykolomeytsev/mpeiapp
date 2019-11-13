@@ -47,6 +47,7 @@ class BarsFragment : BaseFragment<BarsFragmentPresenter, BarsFragmentView>(
 
     override fun onResume() {
         super.onResume()
+        recyclerDisciplines?.setRecycledViewPool(presenter.recycledViewPool)
         recyclerDisciplines?.layoutManager = LinearLayoutManager(context)
         textViewBarsPass?.setOnKeyListener(object : View.OnKeyListener {
             override fun onKey(v: View, keyCode: Int, event: KeyEvent): Boolean {

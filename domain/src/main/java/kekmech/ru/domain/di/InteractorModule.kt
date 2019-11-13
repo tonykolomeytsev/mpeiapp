@@ -76,4 +76,10 @@ abstract class InteractorModule {
 
     @Binds
     abstract fun provideGetDetailsDisciplineUseCase(useCaseImpl: GetDetailsDisciplineUseCaseImpl): GetDetailsDisciplineUseCase
+
+    @Binds
+    abstract fun provideSetIsShowedUpdateDialogUseCase(useCaseImpl: SetIsShowedUpdateDialogUseCaseImpl): SetIsShowedUpdateDialogUseCase
+
+    @Binds
+    abstract fun provideGetIsShowedUpdateDialogUseCase(useCaseImpl: GetIsShowedUpdateDialogUseCaseImpl): GetIsShowedUpdateDialogUseCase
 }

@@ -26,4 +26,6 @@ interface InteractorProvider {
     fun provideLogOutUseCase(): LogOutUseCase
     fun provideSetDetailsDisciplineUseCase(): SetDetailsDisciplineUseCase
     fun provideGetDetailsDisciplineUseCase(): GetDetailsDisciplineUseCase
+    fun provideSetIsShowedUpdateDialogUseCase(): SetIsShowedUpdateDialogUseCase
+    fun provideGetIsShowedUpdateDialogUseCase(): GetIsShowedUpdateDialogUseCase
 }

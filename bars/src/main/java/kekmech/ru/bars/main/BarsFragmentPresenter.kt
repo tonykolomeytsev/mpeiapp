@@ -1,13 +1,15 @@
 package kekmech.ru.bars.main
 
 import android.util.Log
+import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.bars.main.adapter.DisciplineItem
 import kekmech.ru.bars.main.model.BarsFragmentModel
 import kekmech.ru.bars.main.view.BarsFragmentView
 import kekmech.ru.core.Presenter
 import kekmech.ru.core.Router
-import kekmech.ru.core.Screens.BARS_TO_BARS_DETAILS
-import kekmech.ru.core.Screens.BARS_TO_RIGHTS
+import kekmech.ru.core.Screens
+import kekmech.ru.core.Screens.*
+import kekmech.ru.core.UpdateChecker
 import kekmech.ru.core.dto.AcademicDiscipline
 import kekmech.ru.core.dto.AcademicScore
 import kekmech.ru.coreui.adapter.BaseAdapter
@@ -17,9 +19,11 @@ import javax.inject.Inject
 
 class BarsFragmentPresenter @Inject constructor(
     private val model: BarsFragmentModel,
-    private val router: Router
+    private val router: Router,
+    private val updateChecker: UpdateChecker
 ) : Presenter<BarsFragmentView>() {
 
+    val recycledViewPool = RecyclerView.RecycledViewPool()
     private val adapter = BaseAdapter.Builder()
         .registerViewTypeFactory(DisciplineItem.Factory())
         .build()
@@ -32,7 +36,7 @@ class BarsFragmentPresenter @Inject constructor(
         if (model.isLoggedIn) {
             view.state = BarsFragmentView.State.SCORE
             GlobalScope.launch(Dispatchers.IO) {
-                delay(100)
+                delay(50)
                 model.getAcademicScoreAsync { score ->
                     GlobalScope.launch(Dispatchers.Main) {
                         updateWithScore(view, score)
@@ -52,6 +56,16 @@ class BarsFragmentPresenter @Inject constructor(
         view.onRefreshListener = {
             GlobalScope.launch(Dispatchers.IO) { model.getAcademicScoreAsync(true) {
                 GlobalScope.launch(Dispatchers.Main) { updateWithScore(view, it) } } }
+        }
+        GlobalScope.launch(Dispatchers.Main) {
+            delay(1000)
+            if (model.isNotShowedUpdateDialog) {
+                updateChecker.check { url, desc ->
+                    model.saveForceUpdateArgs(url, desc)
+                    router.navigate(BARS_TO_FORCE)
+                    model.isNotShowedUpdateDialog = false
+                }
+            }
         }
     }
 

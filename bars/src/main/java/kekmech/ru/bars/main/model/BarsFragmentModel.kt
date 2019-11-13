@@ -7,6 +7,8 @@ import kekmech.ru.core.dto.AcademicScore
 interface BarsFragmentModel {
     val isLoggedIn: Boolean
 
+    var isNotShowedUpdateDialog: Boolean
+
     suspend fun getAcademicScoreAsync(refresh: Boolean = false, onRatingUpdatesListener: (AcademicScore?) -> Unit)
 
     suspend fun getAcademicScore(refresh: Boolean = false): AcademicScore?
@@ -16,4 +18,6 @@ interface BarsFragmentModel {
     fun clearUserSecrets()
 
     fun setCurrentDiscipline(discipline: AcademicDiscipline)
+
+    fun saveForceUpdateArgs(url: String, description: String)
 }

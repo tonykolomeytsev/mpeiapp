@@ -6,6 +6,7 @@ interface UserRepository {
     var savedUpdateUrl: String
     var savedUpdateDescription: String
     var appLaunchCount: Int
+    var isShowedUpdateDialog: Boolean
 
     var mapState: Int
 
