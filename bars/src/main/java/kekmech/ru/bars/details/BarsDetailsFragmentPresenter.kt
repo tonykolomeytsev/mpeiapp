@@ -8,6 +8,7 @@ import kekmech.ru.bars.details.view.BarsDetailsFragmentView
 import kekmech.ru.bars.main.adapter.MarkItem
 import kekmech.ru.core.Presenter
 import kekmech.ru.core.Router
+import kekmech.ru.core.dto.AcademicDiscipline
 import kekmech.ru.core.usecases.GetDetailsDisciplineUseCase
 import kekmech.ru.coreui.adapter.BaseAdapter
 import kotlinx.coroutines.Dispatchers
@@ -52,11 +53,17 @@ class BarsDetailsFragmentPresenter @Inject constructor(
                 .registerViewTypeFactory(FinalItem.Factory())
                 .build()
             finalAdapter.baseItems.addAll(listOf(
-                FinalItem("Промежуточная аттестация", d.examMark),
+                FinalItem("Промежуточная аттестация ${getExamType(d)}", d.examMark),
 //                FinalItem("Итоговая рассчитанная", d.finalComputedMark),
                 FinalItem("Итоговая проставленная", d.finalFinalMark)
             ))
             view.setFinalAdapter(finalAdapter)
         }
+    }
+
+    private fun getExamType(d: AcademicDiscipline): String {
+        if (d.examType.isNotEmpty()) {
+            return "\n(${d.examType})"
+        } else return ""
     }
 }

@@ -109,6 +109,10 @@ class BarsParser {
             val tds = tr.select("td")
             val examMark = floatOrI(tds[1].html())
             currentAcademicDiscipline?.examMark = examMark
+            try {
+                val examType = "\\((.+)\\)".toRegex().find(html)?.groupValues?.getOrNull(1) ?: ""
+                if (examType.length < 20) currentAcademicDiscipline?.examType = examType
+            } catch (e: Exception) { e.printStackTrace() }
 
         } else if (html.contains("Итоговая оценка")) {
             val tds = tr.select("td")
