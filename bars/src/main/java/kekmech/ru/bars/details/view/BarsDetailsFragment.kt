@@ -1,6 +1,8 @@
 package kekmech.ru.bars.details.view
 
+import android.os.Bundle
 import android.view.View
+import android.view.View.*
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
@@ -20,6 +22,13 @@ class BarsDetailsFragment : BaseFragment<BarsDetailsFragmentPresenter, BarsDetai
 
     override var onNavBackListener: () -> Unit = {}
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        textViewHeader1?.visibility = INVISIBLE
+        textViewHeader2?.visibility = INVISIBLE
+        textViewHeader3?.visibility = INVISIBLE
+    }
+
     override fun onResume() {
         super.onResume()
         toolbar?.setNavigationOnClickListener { onNavBackListener() }
@@ -29,14 +38,18 @@ class BarsDetailsFragment : BaseFragment<BarsDetailsFragmentPresenter, BarsDetai
     }
 
     override fun setEventsAdapter(adapter: RecyclerView.Adapter<*>) {
+        progressBar?.visibility = GONE
+        textViewHeader1?.visibility = VISIBLE
         recyclerEvents?.adapter = adapter
     }
 
     override fun setWeeksAdapter(adapter: RecyclerView.Adapter<*>) {
+        textViewHeader2?.visibility = VISIBLE
         recyclerWeeks?.adapter = adapter
     }
 
     override fun setFinalAdapter(adapter: RecyclerView.Adapter<*>) {
+        textViewHeader3?.visibility = VISIBLE
         recyclerFinal?.adapter = adapter
     }
 
