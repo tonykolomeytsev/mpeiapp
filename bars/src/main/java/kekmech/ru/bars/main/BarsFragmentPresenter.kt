@@ -78,7 +78,7 @@ class BarsFragmentPresenter @Inject constructor(
         view?.setLoginFormEnabled(false)
         GlobalScope.launch(Dispatchers.Main) {
             var error = false
-            val score = withContext(Dispatchers.IO) { model.getAcademicScore() }
+            val score = withContext(Dispatchers.IO) { model.getAcademicScore(true) }
             if (score == null) {
                 model.clearUserSecrets()
                 error = true

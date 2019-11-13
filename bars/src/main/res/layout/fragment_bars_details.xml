@@ -59,7 +59,16 @@
                     android:textSize="20sp"
                     tools:text="Дисциплина Гидропневмопривод мехатронных и робототехнических устройств (ЗЕТ - 5)"/>
 
+            <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:indeterminateTint="@color/colorSecondary"
+                    android:layout_marginTop="32dp"
+                    android:layout_gravity="center_horizontal"/>
+
             <TextView
+                    android:id="@+id/textViewHeader1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
@@ -90,6 +99,7 @@
 
 
             <TextView
+                    android:id="@+id/textViewHeader2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
@@ -112,6 +122,7 @@
                     android:overScrollMode="never"/>
 
             <TextView
+                    android:id="@+id/textViewHeader3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
@@ -121,7 +132,7 @@
                     android:textSize="16sp"
                     android:fontFamily="sans-serif-black"
                     android:layout_marginBottom="8dp"
-                    android:text="Итоговые оценки"/>
+                    android:text="Итоговые оценки" />
 
 
             <androidx.recyclerview.widget.RecyclerView
