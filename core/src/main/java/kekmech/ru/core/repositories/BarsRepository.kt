@@ -5,7 +5,7 @@ import kekmech.ru.core.dto.AcademicScore
 
 interface BarsRepository {
 
-    var currentAcademicDiscipline: AcademicDiscipline
+    var currentAcademicDiscipline: AcademicDiscipline?
 
     val isLoggedIn: Boolean
 

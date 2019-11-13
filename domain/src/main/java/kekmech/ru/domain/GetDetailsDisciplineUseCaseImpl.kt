@@ -9,7 +9,7 @@ import javax.inject.Inject
 class GetDetailsDisciplineUseCaseImpl @Inject constructor(
     private val barsRepository: BarsRepository
 ): GetDetailsDisciplineUseCase {
-    override fun invoke(): AcademicDiscipline {
+    override fun invoke(): AcademicDiscipline? {
         return barsRepository.currentAcademicDiscipline
     }
 }
