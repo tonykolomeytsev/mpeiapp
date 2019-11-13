@@ -1,6 +1,7 @@
 package kekmech.ru.repository
 
 import android.content.Context
+import android.util.Log
 import com.google.gson.GsonBuilder
 import kekmech.ru.core.dto.AcademicDiscipline
 import kekmech.ru.core.dto.AcademicScore
@@ -8,6 +9,7 @@ import kekmech.ru.core.repositories.BarsRepository
 import kekmech.ru.core.repositories.BarsRepository.Companion.BARS_URL
 import kekmech.ru.repository.auth.BaseKeyStore
 import kekmech.ru.repository.utils.BarsParser
+import kotlinx.coroutines.GlobalScope
 import org.jsoup.Jsoup
 import javax.inject.Inject
 
@@ -16,7 +18,38 @@ class BarsRepositoryImpl @Inject constructor(
     private val baseKeyStore: BaseKeyStore
 ) : BarsRepository {
 
-    override var currentAcademicDiscipline: AcademicDiscipline = AcademicDiscipline()
+    override var currentAcademicDiscipline: AcademicDiscipline? = null
+        set(value) {
+            if (value != null) {
+                field = value
+                saveCurrentAcademicDiscipline(value)
+            }
+        }
+        get() = if (field == null) loadCurrentAcademicDisciplineFromCache() else field
+
+    private fun saveCurrentAcademicDiscipline(value: AcademicDiscipline) {
+        val gson = GsonBuilder().create()
+        sharedPreferences
+            .edit()
+            .putString("current_discipline", gson.toJson(value))
+            .apply()
+    }
+
+    private fun loadCurrentAcademicDisciplineFromCache(): AcademicDiscipline? {
+        val disciplineJson = sharedPreferences.getString("current_discipline", null)
+        if (disciplineJson != null) {
+            val gson = GsonBuilder().create()
+            return try {
+                val discipline = gson.fromJson(disciplineJson, AcademicDiscipline::class.java)
+                discipline
+            } catch (e: Exception) {
+                e.printStackTrace()
+                null
+            }
+        } else {
+            return null
+        }
+    }
 
     private val sharedPreferences = context.getSharedPreferences("mpeix", Context.MODE_PRIVATE)
 

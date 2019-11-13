@@ -104,7 +104,6 @@ class BarsFragment : BaseFragment<BarsFragmentPresenter, BarsFragmentView>(
     }
 
     override fun setStatus(score: AcademicScore) {
-        Log.d("Bars", "setstatus ${score.studentName}")
         textViewStudentName?.text = getFormattedName(score.studentName)
         textViewStudentGroup?.text = score.studentGroup
     }

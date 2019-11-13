@@ -1,5 +1,6 @@
 package kekmech.ru.bars.details
 
+import android.util.Log
 import kekmech.ru.bars.details.adapter.EventItem
 import kekmech.ru.bars.details.adapter.FinalItem
 import kekmech.ru.bars.details.adapter.WeekItem
@@ -23,10 +24,14 @@ class BarsDetailsFragmentPresenter @Inject constructor(
     override fun onResume(view: BarsDetailsFragmentView) {
         super.onResume(view)
         val d = getDetailsDisciplineUseCase()
+        if (d == null) {
+            router.popBackStack() // если вдруг нам не вернулся рейтинг
+            return
+        }
         view.onNavBackListener = router::popBackStack
         view.setTitle(d.name)
         GlobalScope.launch(Dispatchers.Main) {
-            delay(200)
+            delay(150)
             val eventsAdapter = BaseAdapter.Builder()
                 .registerViewTypeFactory(EventItem.Factory())
                 .registerViewTypeFactory(FinalItem.Factory())

@@ -36,7 +36,7 @@ class BarsFragmentPresenter @Inject constructor(
         if (model.isLoggedIn) {
             view.state = BarsFragmentView.State.SCORE
             GlobalScope.launch(Dispatchers.IO) {
-                delay(50)
+                delay(150)
                 model.getAcademicScoreAsync { score ->
                     GlobalScope.launch(Dispatchers.Main) {
                         updateWithScore(view, score)
@@ -49,7 +49,6 @@ class BarsFragmentPresenter @Inject constructor(
         view.onLogInListener = ::logInUser
         view.onRightsClickListener = { router.navigate(BARS_TO_RIGHTS) }
         view.onLogoutListener = {
-            Log.d("Bars", "LOGOUT")
             model.clearUserSecrets()
             view.state = BarsFragmentView.State.LOGIN
         }
@@ -81,7 +80,6 @@ class BarsFragmentPresenter @Inject constructor(
             var error = false
             val score = withContext(Dispatchers.IO) { model.getAcademicScore() }
             if (score == null) {
-                Log.d("Bars", "Wrong User Credentials")
                 model.clearUserSecrets()
                 error = true
             } else {
