@@ -12,6 +12,8 @@ import kotlin.math.round
 
 class FinalItem(val text: String, val mk: Float) : BaseItem<FinalItem.ViewHolder>() {
 
+    var divider = true
+
     override fun updateViewHolder(viewHolder: ViewHolder) {
         if (mk == -1f) {
             viewHolder.mark.visibility = View.INVISIBLE
@@ -46,6 +48,7 @@ class FinalItem(val text: String, val mk: Float) : BaseItem<FinalItem.ViewHolder
             }
         }
         viewHolder.name.text = text
+        if (!divider) viewHolder.dividerBottom.visibility = View.INVISIBLE
     }
 
     private fun formatFloat(float: Float): String = if (round(float) == float) float.toInt().toString() else float.toString()
@@ -55,6 +58,7 @@ class FinalItem(val text: String, val mk: Float) : BaseItem<FinalItem.ViewHolder
     class ViewHolder(view: View) : BaseViewHolder(view) {
         val name by bind<TextView>(R.id.textViewDisciplineName)
         val mark by bind<TextView>(R.id.textViewMark)
+        val dividerBottom by bind<View>(R.id.divider)
     }
 
     class Factory : BaseFactory(R.layout.item_final_table, ::ViewHolder)

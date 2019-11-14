@@ -2,6 +2,7 @@ package kekmech.ru.bars.details.adapter
 
 import android.content.res.ColorStateList
 import android.view.View
+import android.view.View.INVISIBLE
 import android.widget.TextView
 import kekmech.ru.bars.R
 import kekmech.ru.core.dto.ControlEvent
@@ -12,6 +13,8 @@ import kekmech.ru.coreui.adapter.BaseViewHolder
 import kotlin.math.round
 
 class EventItem(val event: ControlEvent) : BaseItem<EventItem.ViewHolder>() {
+
+    var divider = true
 
     override fun updateViewHolder(viewHolder: ViewHolder) {
         val mk = event.mark
@@ -49,6 +52,7 @@ class EventItem(val event: ControlEvent) : BaseItem<EventItem.ViewHolder>() {
         }
         viewHolder.name.text = event.name
         viewHolder.weekNum.text = "${event.week} неделя"
+        if (!divider) viewHolder.dividerBottom.visibility = INVISIBLE
     }
 
     private fun formatFloat(float: Float): String = if (round(float) == float) float.toInt().toString() else float.toString()
@@ -59,6 +63,7 @@ class EventItem(val event: ControlEvent) : BaseItem<EventItem.ViewHolder>() {
         val name by bind<TextView>(R.id.textViewDisciplineName)
         val weekNum by bind<TextView>(R.id.textViewEventWeek)
         val mark by bind<TextView>(R.id.textViewMark)
+        val dividerBottom by bind<View>(R.id.divider)
     }
 
     class Factory : BaseFactory(R.layout.item_events_table, ::ViewHolder)

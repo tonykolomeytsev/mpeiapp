@@ -13,6 +13,8 @@ import kotlin.math.round
 
 class WeekItem(val week: ControlWeek, val weekNum: Int) : BaseItem<WeekItem.ViewHolder>() {
 
+    var divider = true
+
     override fun updateViewHolder(viewHolder: ViewHolder) {
         val mk = week.mark
         if (mk == -1f) {
@@ -48,6 +50,7 @@ class WeekItem(val week: ControlWeek, val weekNum: Int) : BaseItem<WeekItem.View
             }
         }
         viewHolder.name.text = "Контрольная неделя №${weekNum.toString()}"
+        if (!divider) viewHolder.dividerBottom.visibility = View.INVISIBLE
     }
 
     private fun formatFloat(float: Float): String = if (round(float) == float) float.toInt().toString() else float.toString()
@@ -57,6 +60,7 @@ class WeekItem(val week: ControlWeek, val weekNum: Int) : BaseItem<WeekItem.View
     class ViewHolder(view: View) : BaseViewHolder(view) {
         val name by bind<TextView>(R.id.textViewDisciplineName)
         val mark by bind<TextView>(R.id.textViewMark)
+        val dividerBottom by bind<View>(R.id.divider)
     }
 
     class Factory : BaseFactory(R.layout.item_weeks_table, ::ViewHolder)

@@ -40,7 +40,8 @@
             android:id="@+id/nestedScroll"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/colorFeedBackground">
 
         <LinearLayout
                 android:layout_width="match_parent"
@@ -67,82 +68,123 @@
                     android:layout_marginTop="32dp"
                     android:layout_gravity="center_horizontal"/>
 
-            <TextView
-                    android:id="@+id/textViewHeader1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
+            <androidx.cardview.widget.CardView
+                    android:id="@+id/container1"
+                    android:layout_marginBottom="16dp"
                     android:layout_marginTop="16dp"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="16sp"
-                    android:fontFamily="sans-serif-black"
-                    android:layout_marginBottom="8dp"
-                    android:text="Контрольные мероприятия"/>
-
-
-            <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerEvents"
+                <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:isScrollContainer="false"
-                        tools:listitem="@layout/item_events_table"
-                        tools:itemCount="3"
-                        android:overScrollMode="never"/>
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
-            </RelativeLayout>
-
-
-
-            <TextView
-                    android:id="@+id/textViewHeader2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginTop="16dp"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="16sp"
-                    android:fontFamily="sans-serif-black"
-                    android:layout_marginBottom="8dp"
-                    android:text="Контрольные недели"/>
+                    <TextView
+                            android:id="@+id/textViewHeader1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginRight="16dp"
+                            android:layout_marginTop="16dp"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="16sp"
+                            android:fontFamily="sans-serif"
+                            android:layout_marginBottom="8dp"
+                            android:text="Контрольные мероприятия"/>
 
 
-            <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerWeeks"
+                    <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/recyclerEvents"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:isScrollContainer="false"
+                                tools:listitem="@layout/item_events_table"
+                                tools:itemCount="3"
+                                android:overScrollMode="never"/>
+
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                    android:id="@+id/container2"
+                    android:layout_marginBottom="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                    <TextView
+                            android:visibility="gone"
+                            android:id="@+id/textViewHeader2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginRight="16dp"
+                            android:layout_marginTop="16dp"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="16sp"
+                            android:fontFamily="sans-serif"
+                            android:layout_marginBottom="8dp"
+                            android:text="Контрольные недели"/>
+
+
+                    <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyclerWeeks"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:isScrollContainer="false"
+                            tools:listitem="@layout/item_weeks_table"
+                            tools:itemCount="3"
+                            android:overScrollMode="never"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                    android:id="@+id/container3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:isScrollContainer="false"
-                    tools:listitem="@layout/item_weeks_table"
-                    tools:itemCount="3"
-                    android:overScrollMode="never"/>
+                    android:layout_marginBottom="16dp">
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
-            <TextView
-                    android:id="@+id/textViewHeader3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginTop="16dp"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="16sp"
-                    android:fontFamily="sans-serif-black"
-                    android:layout_marginBottom="8dp"
-                    android:text="Итоговые оценки" />
+                    <TextView
+                            android:id="@+id/textViewHeader3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginRight="16dp"
+                            android:layout_marginTop="16dp"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="16sp"
+                            android:fontFamily="sans-serif"
+                            android:layout_marginBottom="8dp"
+                            android:text="Итоговые оценки" />
 
 
-            <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerFinal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:isScrollContainer="false"
-                    tools:listitem="@layout/item_weeks_table"
-                    tools:itemCount="3"
-                    android:overScrollMode="never"/>
+                    <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyclerFinal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:isScrollContainer="false"
+                            tools:listitem="@layout/item_weeks_table"
+                            tools:itemCount="3"
+                            android:overScrollMode="never"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
 
 
