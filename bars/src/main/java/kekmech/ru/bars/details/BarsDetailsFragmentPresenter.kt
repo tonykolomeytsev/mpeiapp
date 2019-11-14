@@ -41,12 +41,18 @@ class BarsDetailsFragmentPresenter @Inject constructor(
 
             if (d.currentMark != -1f)
                 eventsAdapter.baseItems.add(FinalItem("Балл текущего контроля", d.currentMark))
+            val last1 = (eventsAdapter.baseItems.last())
+            if (last1 is EventItem) last1.divider = false
+            if (last1 is FinalItem) last1.divider = false
             view.setEventsAdapter(eventsAdapter)
 
             val weeksAdapter = BaseAdapter.Builder()
                 .registerViewTypeFactory(WeekItem.Factory())
                 .build()
             weeksAdapter.baseItems.addAll(d.controlWeeks.mapIndexed { i, it -> WeekItem(it, i+1) })
+            val last2 = (weeksAdapter.baseItems.last())
+            if (last2 is FinalItem) last2.divider = false
+            if (last2 is WeekItem) last2.divider = false
             view.setWeeksAdapter(weeksAdapter)
 
             val finalAdapter = BaseAdapter.Builder()
@@ -57,6 +63,7 @@ class BarsDetailsFragmentPresenter @Inject constructor(
 //                FinalItem("Итоговая рассчитанная", d.finalComputedMark),
                 FinalItem("Итоговая проставленная", d.finalFinalMark)
             ))
+            (finalAdapter.baseItems.last() as FinalItem).divider = false
             view.setFinalAdapter(finalAdapter)
         }
     }

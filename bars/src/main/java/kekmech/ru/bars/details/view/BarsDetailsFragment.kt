@@ -24,9 +24,9 @@ class BarsDetailsFragment : BaseFragment<BarsDetailsFragmentPresenter, BarsDetai
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        textViewHeader1?.visibility = INVISIBLE
-        textViewHeader2?.visibility = INVISIBLE
-        textViewHeader3?.visibility = INVISIBLE
+        container1?.visibility = INVISIBLE
+        container2?.visibility = INVISIBLE
+        container3?.visibility = INVISIBLE
     }
 
     override fun onResume() {
@@ -39,18 +39,19 @@ class BarsDetailsFragment : BaseFragment<BarsDetailsFragmentPresenter, BarsDetai
 
     override fun setEventsAdapter(adapter: RecyclerView.Adapter<*>) {
         progressBar?.visibility = GONE
-        textViewHeader1?.visibility = VISIBLE
+        container1?.visibility = VISIBLE
         recyclerEvents?.adapter = adapter
     }
 
     override fun setWeeksAdapter(adapter: RecyclerView.Adapter<*>) {
-        textViewHeader2?.visibility = VISIBLE
+        container2?.visibility = VISIBLE
         recyclerWeeks?.adapter = adapter
     }
 
     override fun setFinalAdapter(adapter: RecyclerView.Adapter<*>) {
-        textViewHeader3?.visibility = VISIBLE
+        container3?.visibility = VISIBLE
         recyclerFinal?.adapter = adapter
+        nestedScroll?.post { nestedScroll?.scrollTo(0, -1000) }
     }
 
     override fun setTitle(string: String) {
