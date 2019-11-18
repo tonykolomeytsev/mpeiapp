@@ -20,17 +20,5 @@ abstract class BaseBottomSheetFragment(
         savedInstanceState: Bundle?
     ): View? = inflater.inflate(layoutId, container, false)
 
-    override fun getTheme() = R.style.BottomSheetDialogTheme
-
     override fun onCreateDialog(savedInstanceState: Bundle?) = BottomSheetDialog(requireContext(), theme)
-
-    fun onClick(buttonId: Int, action: (View) -> Unit): BaseBottomSheetFragment {
-        val button = view?.findViewById<View>(buttonId)
-        if (button != null) {
-            button.setOnClickListener(action)
-        } else {
-            Log.e("BaseBottomSheetFragment", "Button with id $buttonId not found!")
-        }
-        return this
-    }
 }
