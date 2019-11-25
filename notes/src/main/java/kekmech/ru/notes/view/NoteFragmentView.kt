@@ -4,4 +4,6 @@ import androidx.lifecycle.LifecycleOwner
 
 interface NoteFragmentView : LifecycleOwner {
     var onBackNavClick: () -> Unit
+
+    fun showSaved()
 }

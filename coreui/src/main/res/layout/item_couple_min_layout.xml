@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -7,66 +7,16 @@
         android:background="?android:attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
-        android:gravity="center_vertical">
-
-    <TextView
-            android:id="@+id/textViewCoupleTeacher"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:alpha="0.75"
-            android:textColor="@color/colorBlack"
-            android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="@+id/textViewCouplePlace"
-            app:layout_constraintTop_toBottomOf="@+id/textViewCouplePlace"
-            tools:text="Кудин С.Ф." />
-
-    <TextView
-            android:id="@+id/textViewCoupleName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="72dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="32dp"
-            android:fontFamily="sans-serif"
-            android:textColor="#DE000000"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Линейная алгебра" />
-
-    <TextView
-            android:id="@+id/textViewCouplePlace"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:fontFamily="sans-serif-medium"
-            android:textColor="@color/colorBlack"
-            android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="@+id/textViewCoupleName"
-            app:layout_constraintTop_toBottomOf="@+id/textViewCoupleName"
-            tools:text="Б-407" />
-
-    <TextView
-            android:id="@+id/textViewCoupleType"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:fontFamily="sans-serif-black"
-            android:textAllCaps="true"
-            android:textColor="#99000000"
-            android:textSize="10sp"
-            app:layout_constraintBottom_toTopOf="@+id/textViewCoupleName"
-            app:layout_constraintStart_toStartOf="@+id/textViewCoupleName"
-            tools:text="практика" />
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
     <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="72dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
+            android:paddingRight="16dp"
             android:gravity="right"
             android:orientation="vertical"
+            android:layout_marginTop="34dp"
             app:layout_constraintEnd_toStartOf="@+id/textViewCoupleName"
             app:layout_constraintTop_toTopOf="@+id/textViewCoupleName">
 
@@ -89,13 +39,94 @@
                 tools:text="12:45" />
     </LinearLayout>
 
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="72dp"
+            android:layout_marginBottom="16dp">
+
+
+        <TextView
+                android:id="@+id/textViewCoupleType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:fontFamily="sans-serif-black"
+                android:textAllCaps="true"
+                android:textColor="#99000000"
+                android:textSize="10sp"
+                android:layout_marginTop="16dp"
+                tools:text="практика" />
+
+        <TextView
+                android:id="@+id/textViewCoupleName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
+                android:fontFamily="sans-serif"
+                android:textColor="#DE000000"
+                android:textSize="18sp"
+                tools:text="Линейная алгебра" />
+
+        <TextView
+                android:id="@+id/textViewCouplePlace"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="sans-serif-medium"
+                android:textColor="@color/colorBlack"
+                android:textSize="14sp"
+                tools:text="Б-407" />
+
+        <TextView
+                android:id="@+id/textViewCoupleTeacher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:alpha="0.75"
+                android:textColor="@color/colorBlack"
+                android:textSize="14sp"
+                android:layout_marginBottom="4dp"
+                tools:text="Кудин С.Ф." />
+
+        <LinearLayout
+                android:id="@+id/frameLayoutHasNote"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:layout_marginTop="2dp">
+
+            <!-- NOTE ICON -->
+            <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@drawable/ic_work_outline_24px"
+                    android:tint="@color/colorIconsTint"
+                    android:tintMode="src_in"
+                    android:visibility="visible"
+                    android:layout_marginRight="4dp"/>
+
+            <!-- NOTE TEXT -->
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#DE000000"
+                    android:textSize="14sp"
+                    tools:text="Есть домашнее задание" />
+        </LinearLayout>
+    </LinearLayout>
+
     <View
+            android:id="@+id/view"
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:layout_marginTop="16dp"
             android:alpha="0.15"
             android:background="@color/colorBlack"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewCoupleTeacher" />
+            android:layout_gravity="bottom" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

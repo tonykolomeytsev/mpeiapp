@@ -20,7 +20,7 @@ import kekmech.ru.notes.R
 import kotlinx.android.synthetic.main.fragment_note.*
 import javax.inject.Inject
 import androidx.core.content.ContextCompat.getSystemService
-
+import androidx.core.widget.addTextChangedListener
 
 
 class NoteFragment : BaseFragment<NoteFragmentPresenter, NoteFragmentView>(
@@ -40,17 +40,16 @@ class NoteFragment : BaseFragment<NoteFragmentPresenter, NoteFragmentView>(
         }
         textViewDisciplineName?.text = "Гидропневмоприводы мехатронных и робототехнических устройств"
         textViewDisciplineDate?.text = "15 неделя, среда, 3 пара"
+        editTextContent?.addTextChangedListener {
+            showSaved()
+        }
     }
 
-    fun showKeyboard() {
-        val inputMethodManager =
-            context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
-        inputMethodManager?.toggleSoftInput(SHOW_FORCED, 0)
-    }
-
-    fun closeKeyboard() {
-        val inputMethodManager =
-            context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
-        inputMethodManager?.toggleSoftInput(HIDE_IMPLICIT_ONLY, 0)
+    override fun showSaved() {
+        textViewSavingProgress?.alpha = 0.5f
+        textViewSavingProgress?.animate()
+            ?.alpha(0f)
+            ?.setDuration(5000L)
+            ?.start()
     }
 }

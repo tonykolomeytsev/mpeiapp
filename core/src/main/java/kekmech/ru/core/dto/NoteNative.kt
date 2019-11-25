@@ -29,5 +29,5 @@ data class NoteNative(
 
     @PrimaryKey(autoGenerate = true)
     @NotNull
-    var id: Int = 0
+    var id: Int = -1
 }
