@@ -11,6 +11,7 @@ import kekmech.ru.settings.di.SettingsFragmentModule
 import kekmech.ru.timetable.di.TimetableFragmentModule
 import com.example.map.di.MapFragmentModule
 import kekmech.ru.bars.di.BarsModule
+import kekmech.ru.notes.di.NoteFragmentModule
 import kekmech.ru.update.di.UpdateModule
 
 @ActivityScope
@@ -23,7 +24,8 @@ import kekmech.ru.update.di.UpdateModule
         AddFragmentModule::class,
         MapFragmentModule::class,
         UpdateModule::class,
-        BarsModule::class
+        BarsModule::class,
+        NoteFragmentModule::class
     ]
 )
 interface MainActivityComponent : AndroidInjector<MainActivity> {

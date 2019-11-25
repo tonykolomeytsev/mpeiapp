@@ -18,6 +18,9 @@
         <action
                 android:id="@+id/action_feedFragment_to_forceUpdateFragment"
                 app:destination="@id/forceUpdateFragment" />
+        <action
+                android:id="@+id/action_feedFragment_to_noteFragment"
+                app:destination="@id/noteFragment" />
     </fragment>
     <dialog
             android:id="@+id/addFragment"
@@ -29,4 +32,8 @@
             android:name="kekmech.ru.update.view.ForceUpdateFragment"
             android:label="ForceUpdateFragment"
             tools:layout="@layout/fragment_force_update"/>
+    <fragment
+            android:id="@+id/noteFragment"
+            android:name="kekmech.ru.notes.view.NoteFragment"
+            android:label="NoteFragment" />
 </navigation>

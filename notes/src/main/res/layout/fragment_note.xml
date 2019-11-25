@@ -1,6 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical" android:layout_width="match_parent"
-        android:layout_height="match_parent">
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
 
-</LinearLayout>
+    <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/main.appbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorSecondary"
+            android:fitsSystemWindows="true"
+            tools:layout_height="56dp"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fitsSystemWindows="true">
+
+            <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    tools:layout_height="56dp"
+                    app:elevation="0dp"
+                    app:layout_collapseMode="pin"
+                    app:navigationIcon="?attr/homeAsUpIndicator"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                    app:title="Домашнее задание" />
+
+        </FrameLayout>
+
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+            android:orientation="vertical">
+
+        <LinearLayout
+                android:elevation="1dp"
+                android:id="@+id/infoToolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/colorWhite"
+                android:paddingLeft="32dp"
+                android:paddingRight="32dp">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="ДИСЦИПЛИНА"
+                    android:textSize="12sp"
+                    android:textColor="@color/colorBlack"
+                    android:alpha="0.5"
+                    android:fontFamily="sans-serif-medium"/>
+
+            <TextView
+                    android:id="@+id/textViewDisciplineName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="20sp"
+                    android:layout_marginTop="4dp"
+                    tools:text="Гидропневмоприводы мехатронных и робототехнических устройств"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="ДАТА СДАЧИ"
+                    android:textSize="12sp"
+                    android:textColor="@color/colorBlack"
+                    android:alpha="0.5"
+                    android:fontFamily="sans-serif-medium"/>
+
+            <TextView
+                    android:id="@+id/textViewDisciplineDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="15 неделя, среда, 3 пара"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="16sp"
+                    />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="ЗАДАНИЕ"
+                    android:textSize="12sp"
+                    android:textColor="@color/colorBlack"
+                    android:alpha="0.5"
+                    android:fontFamily="sans-serif-medium"/>
+        </LinearLayout>
+
+        <EditText
+                android:elevation="1dp"
+                android:id="@+id/editTextContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorWhite"
+                tools:text="Номер 25-30 учебного пособия"
+                android:paddingLeft="32dp"
+                android:paddingRight="32dp"
+                android:paddingTop="4dp"
+                android:paddingBottom="16dp"
+                android:textSize="16sp"
+                android:gravity="top"
+                android:textColor="@color/colorBlack"
+                android:inputType="textMultiLine"
+                android:linksClickable="true"
+                android:hint="Начинайте вводить текст..."/>
+
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
