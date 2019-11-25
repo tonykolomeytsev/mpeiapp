@@ -7,12 +7,13 @@ import android.widget.TextView
 import kekmech.ru.core.dto.CoupleNative
 import kekmech.ru.coreui.Chip
 import kekmech.ru.coreui.Resources
+import kekmech.ru.coreui.adapter.BaseClickableItem
 import kekmech.ru.coreui.adapter.BaseFactory
 import kekmech.ru.coreui.adapter.BaseItem
 import kekmech.ru.coreui.adapter.BaseViewHolder
 import kekmech.ru.feed.R
 
-class CoupleItem(val couple: CoupleNative) : BaseItem<CoupleItem.ViewHolder>() {
+class CoupleItem(val couple: CoupleNative) : BaseClickableItem<CoupleItem.ViewHolder>() {
     var isDividerVisible = false
 
     @SuppressLint("DefaultLocale")

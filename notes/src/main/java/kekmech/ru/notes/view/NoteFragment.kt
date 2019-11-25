@@ -6,59 +6,51 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
+import android.view.inputmethod.InputMethodManager.*
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
 import dagger.android.support.AndroidSupportInjection
+import dagger.android.support.DaggerFragment
+import kekmech.ru.core.platform.BaseFragment
 import kekmech.ru.notes.NoteFragmentPresenter
 import kekmech.ru.notes.R
+import kotlinx.android.synthetic.main.fragment_note.*
 import javax.inject.Inject
+import androidx.core.content.ContextCompat.getSystemService
 
-class NoteFragment : BottomSheetDialogFragment(), HasAndroidInjector,
-    NoteFragmentView {
+
+
+class NoteFragment : BaseFragment<NoteFragmentPresenter, NoteFragmentView>(
+    layoutId = R.layout.fragment_note
+), NoteFragmentView {
 
     @Inject
-    @JvmField
-    public var androidInjector: DispatchingAndroidInjector<Any>? = null
+    override lateinit var presenter: NoteFragmentPresenter
 
-    @Inject
-    lateinit var presenter: NoteFragmentPresenter
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        (view?.parent as View?)?.setBackgroundColor(Color.TRANSPARENT)
-    }
-
-    override fun onAttach(context: Context) {
-        AndroidSupportInjection.inject(this)
-        super.onAttach(context)
-    }
-
-    override fun androidInjector(): AndroidInjector<Any> = androidInjector!!
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_note, container, false)
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        presenter.onCreate(this)
-    }
+    override var onBackNavClick: () -> Unit = {}
 
     override fun onResume() {
         super.onResume()
-        presenter.onResume(this)
+        toolbar?.setNavigationOnClickListener { onBackNavClick() }
+        editTextContent?.post {
+            editTextContent?.requestFocus()
+        }
+        textViewDisciplineName?.text = "Гидропневмоприводы мехатронных и робототехнических устройств"
+        textViewDisciplineDate?.text = "15 неделя, среда, 3 пара"
     }
 
-    override fun onPause() {
-        super.onPause()
-        presenter.onResume(this)
+    fun showKeyboard() {
+        val inputMethodManager =
+            context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+        inputMethodManager?.toggleSoftInput(SHOW_FORCED, 0)
     }
 
-
+    fun closeKeyboard() {
+        val inputMethodManager =
+            context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+        inputMethodManager?.toggleSoftInput(HIDE_IMPLICIT_ONLY, 0)
+    }
 }

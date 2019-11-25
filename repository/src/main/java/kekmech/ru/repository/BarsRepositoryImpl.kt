@@ -2,6 +2,7 @@ package kekmech.ru.repository
 
 import android.content.Context
 import android.util.Log
+import com.crashlytics.android.Crashlytics
 import com.google.gson.GsonBuilder
 import kekmech.ru.core.dto.AcademicDiscipline
 import kekmech.ru.core.dto.AcademicScore
@@ -81,6 +82,7 @@ class BarsRepositoryImpl @Inject constructor(
     }
 
     private fun loadFromRemote(): AcademicScore? {
+        var crashReport = ""
         try {
             val mainPage = Jsoup.connect(BARS_URL)
                 .get()
@@ -102,12 +104,15 @@ class BarsRepositoryImpl @Inject constructor(
                 .data("__RequestVerificationToken", requestVirificationToken)
                 .post()
 
+            crashReport = response.html()
             val barsParser = BarsParser()
             val score = barsParser.parse(response)
             saveToCache(score)
             return score
         } catch (e: Exception) {
             e.printStackTrace()
+            Crashlytics.log(1, "bars_parser", "ERROR while parsing: $crashReport")
+            Crashlytics.logException(e)
             return null
         }
     }
