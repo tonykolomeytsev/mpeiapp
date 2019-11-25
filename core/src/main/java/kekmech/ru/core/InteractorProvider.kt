@@ -28,4 +28,7 @@ interface InteractorProvider {
     fun provideGetDetailsDisciplineUseCase(): GetDetailsDisciplineUseCase
     fun provideSetIsShowedUpdateDialogUseCase(): SetIsShowedUpdateDialogUseCase
     fun provideGetIsShowedUpdateDialogUseCase(): GetIsShowedUpdateDialogUseCase
+    fun provideGetNoteByTimeUseCase(): GetNoteByTimeUseCase
+    fun provideRemoveNoteUseCase(): RemoveNoteUseCase
+    fun provideSaveNoteUseCase(): SaveNoteUseCase
 }

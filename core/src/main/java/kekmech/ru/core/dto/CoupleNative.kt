@@ -1,9 +1,6 @@
 package kekmech.ru.core.dto
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.Index
-import androidx.room.PrimaryKey
+import androidx.room.*
 
 /**
  * В таком виде приложение хранит информацию о занятиях
@@ -48,6 +45,9 @@ class CoupleNative(
 ) {
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0
+
+    @Ignore
+    var time: Time? = null
 
     companion object {
         const val LECTURE = "LECTURE"
