@@ -2,14 +2,8 @@ package kekmech.ru.repository.di
 
 import dagger.Binds
 import dagger.Module
-import kekmech.ru.core.repositories.BarsRepository
-import kekmech.ru.core.repositories.PlacesRepository
-import kekmech.ru.core.repositories.ScheduleRepository
-import kekmech.ru.core.repositories.UserRepository
-import kekmech.ru.repository.BarsRepositoryImpl
-import kekmech.ru.repository.PlacesRepositoryImpl
-import kekmech.ru.repository.ScheduleRepositoryImpl
-import kekmech.ru.repository.UserRepositoryImpl
+import kekmech.ru.core.repositories.*
+import kekmech.ru.repository.*
 import javax.inject.Singleton
 
 @Module
@@ -30,5 +24,9 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun provideBarsRepository(repoImpl: BarsRepositoryImpl): BarsRepository
+
+    @Binds
+    @Singleton
+    abstract fun provideNotesRepository(repoImpl: NotesRepositoryImpl): NotesRepository
 
 }

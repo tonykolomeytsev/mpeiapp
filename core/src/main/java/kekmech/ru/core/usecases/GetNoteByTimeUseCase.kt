@@ -4,5 +4,5 @@ import kekmech.ru.core.dto.NoteNative
 import kekmech.ru.core.dto.Time
 
 interface GetNoteByTimeUseCase {
-    operator fun invoke(time: Time): NoteNative
+    operator fun invoke(time: Time): NoteNative?
 }
