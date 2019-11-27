@@ -144,8 +144,8 @@ class FeedPresenter @Inject constructor(
     private suspend fun loadOffsetCouples(localOffset: Int, refresh: Boolean = false) = withContext(Dispatchers.Main) {
         val couples = model.getDayCouples(localOffset, refresh = refresh)
         couples.forEach {
-            if (it is CoupleItem)
-                it.clickListener = { router.navigate(FEED_TO_NOTE) }
+//            if (it is CoupleItem)
+//                it.clickListener = { router.navigate(FEED_TO_NOTE) }
 
             adapter.baseItems.add(it)
             adapter.notifyItemChanged(adapter.baseItems.size - 1)
