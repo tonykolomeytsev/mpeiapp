@@ -72,6 +72,15 @@ abstract class InteractorModule {
     abstract fun provideLogOutUseCase(useCaseImpl: LogOutUseCaseImpl): LogOutUseCase
 
     @Binds
+    abstract fun provideSaveNoteUseCase(useCaseImpl: SaveNoteUseCaseImpl): SaveNoteUseCase
+
+    @Binds
+    abstract fun provideRemoveNoteUseCase(useCaseImpl: RemoveNoteUseCaseImpl): RemoveNoteUseCase
+
+    @Binds
+    abstract fun provideGetNoteByTimeUseCase(useCaseImpl: GetNoteByTimeUseCaseImpl): GetNoteByTimeUseCase
+
+    @Binds
     abstract fun provideSetDetailsDisciplineUseCase(useCaseImpl: SetDetailsDisciplineUseCaseImpl): SetDetailsDisciplineUseCase
 
     @Binds
