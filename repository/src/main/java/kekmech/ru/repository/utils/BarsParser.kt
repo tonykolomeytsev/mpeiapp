@@ -1,5 +1,6 @@
 package kekmech.ru.repository.utils
 
+import com.crashlytics.android.Crashlytics
 import kekmech.ru.core.dto.AcademicDiscipline
 import kekmech.ru.core.dto.AcademicScore
 import kekmech.ru.core.dto.ControlEvent
@@ -11,8 +12,8 @@ class BarsParser {
 
     private var currentAcademicDiscipline: AcademicDiscipline? = null
     private val academicDisciplines: MutableList<AcademicDiscipline> = mutableListOf()
-    private var studentName: String = ""
-    private var studentGroup: String = ""
+    private var studentName: String = "Не удалось загрузить имя"
+    private var studentGroup: String = "Не удалось загрузить номер группы"
 
     var isCurrentControlFlag = false
 
@@ -33,8 +34,13 @@ class BarsParser {
 
         val infoDiv = response
             .select("div[id=div-FormHeader]")
-            .first()
-        pushStudentInfo(infoDiv)
+            .firstOrNull()
+        try {
+            if (infoDiv != null)
+                pushStudentInfo(infoDiv)
+        } catch (e: Exception) {
+            Crashlytics.log(1, "BarsParser", "pushStudentInfo ERROR $e \n ${infoDiv?.html()}")
+        }
 
         return AcademicScore(
             disciplines = academicDisciplines,
@@ -70,7 +76,9 @@ class BarsParser {
         if (id.startsWith("s_ss")) {
             isCurrentControlFlag = false
             val rows = div.select("tr")
-            rows.forEach { try { pushDisciplineRow(it) } catch (e: Exception) { e.printStackTrace() } }
+            rows.forEach { try { pushDisciplineRow(it) } catch (e: Exception) {
+                Crashlytics.log(1, "BarsParser", "pushDisciplineRow ERROR $e \n ${div.html()}")
+            } }
         }
     }
 
