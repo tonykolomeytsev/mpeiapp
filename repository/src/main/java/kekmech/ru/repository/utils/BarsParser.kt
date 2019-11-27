@@ -20,9 +20,10 @@ class BarsParser {
     fun parse(response: Document): AcademicScore {
         val contentDiv = response
             .select("div[id=div-StudyScore]")
+            .firstOrNull()
+            ?: throw LoginException()
         // внутри content div парсим каждый div
         contentDiv
-            .first()
             .children()
             .forEach { pushDiscipline(it) }
 
@@ -143,4 +144,6 @@ class BarsParser {
     private fun floatOrI(string: String) = string.trim().replace(',', '.').toFloatOrNull() ?: -1f
 
     private fun intOrI(string: String) = string.trim().replace(',', '.').toIntOrNull() ?: -1
+
+    class LoginException : RuntimeException("Не удалось залогиниться, неверные данные для входа")
 }

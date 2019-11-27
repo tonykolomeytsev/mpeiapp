@@ -109,6 +109,9 @@ class BarsRepositoryImpl @Inject constructor(
             val score = barsParser.parse(response)
             saveToCache(score)
             return score
+        } catch (e: BarsParser.LoginException) {
+            // do nothing
+            return null
         } catch (e: Exception) {
             e.printStackTrace()
             Crashlytics.log(1, "bars_parser", "ERROR while parsing: $crashReport")
