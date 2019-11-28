@@ -37,14 +37,14 @@ dependencies {
 
 
     // dagger
-    implementation 'com.google.dagger:dagger:2.25.2'
+    implementation 'com.google.dagger:dagger:2.24'
     kapt 'com.google.dagger:dagger-compiler:2.24'
     compileOnly 'javax.annotation:jsr250-api:1.0'
 
     // dagger android
     kapt "com.google.dagger:dagger-android-processor:2.24"
-    implementation "com.google.dagger:dagger-android:2.25.2"
-    implementation "com.google.dagger:dagger-android-support:2.25.2"
+    implementation "com.google.dagger:dagger-android:2.24"
+    implementation "com.google.dagger:dagger-android-support:2.24"
     implementation project(path: ':core')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
