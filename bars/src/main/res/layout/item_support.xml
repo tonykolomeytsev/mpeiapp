@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp">
+
+    <TextView
+            android:id="@+id/textViewSupport"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorBlack"
+            android:textSize="14sp"
+            android:layout_gravity="center_horizontal"
+            android:alpha="0.75"
+            android:gravity="center"
+            android:text="Обо всех неполадках, не стесняясь, сообщайте в лс группы"/>
+
+    <TextView
+            android:id="@+id/textViewHref"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorSecondary"
+            android:textSize="14sp"
+            android:layout_marginRight="32dp"
+            android:layout_marginLeft="32dp"
+            android:alpha="0.9"
+            android:gravity="center"
+            android:text="vk.com/kekmech"/>
+
+</LinearLayout>
