@@ -1,8 +1,10 @@
 package kekmech.ru.bars.main
 
+import android.content.Context
 import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.bars.main.adapter.DisciplineItem
+import kekmech.ru.bars.main.adapter.SupportItem
 import kekmech.ru.bars.main.model.BarsFragmentModel
 import kekmech.ru.bars.main.view.BarsFragmentView
 import kekmech.ru.core.Presenter
@@ -20,12 +22,14 @@ import javax.inject.Inject
 class BarsFragmentPresenter @Inject constructor(
     private val model: BarsFragmentModel,
     private val router: Router,
-    private val updateChecker: UpdateChecker
+    private val updateChecker: UpdateChecker,
+    private val context: Context
 ) : Presenter<BarsFragmentView>() {
 
     val recycledViewPool = RecyclerView.RecycledViewPool()
     private val adapter = BaseAdapter.Builder()
         .registerViewTypeFactory(DisciplineItem.Factory())
+        .registerViewTypeFactory(SupportItem.Factory())
         .build()
     private var view: BarsFragmentView? = null
 
@@ -98,6 +102,7 @@ class BarsFragmentPresenter @Inject constructor(
         if (score != null) {
             adapter.baseItems.clear()
             adapter.baseItems.addAll(score.disciplines.map { DisciplineItem(it).apply { clickListener = ::onItemClick } })
+            adapter.baseItems.add(SupportItem(context))
             view.setAdapter(adapter)
             view.setStatus(score)
         }
