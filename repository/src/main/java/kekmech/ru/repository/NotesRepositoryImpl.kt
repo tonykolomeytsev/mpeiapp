@@ -31,7 +31,7 @@ class NotesRepositoryImpl @Inject constructor(
     override fun saveNote(note: NoteNative, isNoteEmpty: Boolean) {
         val similarNote = notes.find { it.timestamp == note.timestamp && it.scheduleId == note.scheduleId }
         if (isNoteEmpty) {
-            if (similarNote != null) removeNote(note)
+            if (similarNote != null) removeNote(similarNote)
         } else {
             if (similarNote != null) {
                 note.id = similarNote.id
