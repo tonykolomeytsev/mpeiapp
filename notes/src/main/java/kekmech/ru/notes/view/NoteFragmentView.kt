@@ -7,6 +7,6 @@ interface NoteFragmentView : LifecycleOwner {
     var onTextEdit: (String) -> Unit
 
     fun showSaved()
-    fun setStatus(coupleName: String, coupleDate: String, coupleContent: String)
+    fun setStatus(coupleName: String, coupleDate: String)
     fun setContent(coupleContent: String)
 }

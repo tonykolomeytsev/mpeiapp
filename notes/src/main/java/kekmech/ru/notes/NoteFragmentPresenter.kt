@@ -2,6 +2,7 @@ package kekmech.ru.notes
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import kekmech.ru.core.Presenter
 import kekmech.ru.core.Router
 import kekmech.ru.core.dto.CoupleNative
@@ -10,13 +11,11 @@ import kekmech.ru.core.dto.Time
 import kekmech.ru.coreui.Resources.getStringArray
 import kekmech.ru.notes.model.NoteFragmentModel
 import kekmech.ru.notes.view.NoteFragmentView
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.util.*
 import javax.inject.Inject
 
 class NoteFragmentPresenter @Inject constructor(
@@ -27,6 +26,8 @@ class NoteFragmentPresenter @Inject constructor(
 
     private var realWeek: Int? = null
     private val locker = Any()
+    @Volatile
+    private var isWriteAllowed = false
 
     override fun onResume(view: NoteFragmentView) {
         super.onResume(view)
@@ -41,24 +42,26 @@ class NoteFragmentPresenter @Inject constructor(
             if (couple.noteId == -1) {
                 view.setStatus(
                     couple.name,
-                    couple.timestampReadable(),
-                    ""
+                    couple.timestampReadable()
                 )
+                isWriteAllowed = true
             } else {
                 view.setStatus(
                     couple.name,
-                    couple.timestampReadable(),
-                    ""
+                    couple.timestampReadable()
                 )
                 GlobalScope.launch(Main) {
                     val coupleContent = withContext(IO) { model.getNoteContentById(couple.noteId) }
                     view.setContent(coupleContent)
+                    isWriteAllowed = true
                 }
             }
         }
+
     }
 
     private fun onTextEdit(string: String) {
+        if (!isWriteAllowed) return
         GlobalScope.launch(IO) {
             synchronized(locker) {
                 val couple = model.transactedCouple ?: return@launch
@@ -73,6 +76,11 @@ class NoteFragmentPresenter @Inject constructor(
                 model.saveNote(note)
             }
         }
+    }
+
+    override fun onPause(view: NoteFragmentView) {
+        isWriteAllowed = false
+        super.onPause(view)
     }
 
     /**
