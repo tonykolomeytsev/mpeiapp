@@ -46,10 +46,9 @@ class NoteFragment : BaseFragment<NoteFragmentPresenter, NoteFragmentView>(
         }
     }
 
-    override fun setStatus(coupleName: String, coupleDate: String, coupleContent: String) {
+    override fun setStatus(coupleName: String, coupleDate: String) {
         textViewDisciplineName?.text = coupleName
         textViewDisciplineDate?.text = coupleDate
-        editTextContent?.setText(coupleContent)
     }
 
     override fun setContent(coupleContent: String) {
