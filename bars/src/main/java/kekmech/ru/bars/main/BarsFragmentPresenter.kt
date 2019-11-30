@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.bars.main.adapter.DisciplineItem
+import kekmech.ru.bars.main.adapter.RatingItem
 import kekmech.ru.bars.main.adapter.SupportItem
 import kekmech.ru.bars.main.model.BarsFragmentModel
 import kekmech.ru.bars.main.view.BarsFragmentView
@@ -30,6 +31,7 @@ class BarsFragmentPresenter @Inject constructor(
     private val adapter = BaseAdapter.Builder()
         .registerViewTypeFactory(DisciplineItem.Factory())
         .registerViewTypeFactory(SupportItem.Factory())
+        .registerViewTypeFactory(RatingItem.Factory())
         .build()
     private var view: BarsFragmentView? = null
 
@@ -101,6 +103,7 @@ class BarsFragmentPresenter @Inject constructor(
     private fun updateWithScore(view: BarsFragmentView, score: AcademicScore?) {
         if (score != null) {
             adapter.baseItems.clear()
+            adapter.baseItems.add(RatingItem(score.rating))
             adapter.baseItems.addAll(score.disciplines.map { DisciplineItem(it).apply { clickListener = ::onItemClick } })
             adapter.baseItems.add(SupportItem(context))
             view.setAdapter(adapter)

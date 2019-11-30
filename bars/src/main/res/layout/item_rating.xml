@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        android:id="@+id/rootLayout"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="center"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="?attr/selectableItemBackground">
+
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp">
+        <ImageView
+                android:src="@drawable/ic_poll_24px"
+                android:layout_width="18dp"
+                android:layout_height="18dp"/>
+
+        <TextView
+                android:id="@+id/textViewScoreTotal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="50"
+                android:fontFamily="sans-serif-medium"
+                android:textColor="@color/colorBlack"
+                android:layout_marginLeft="4dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp">
+        <ImageView
+                android:src="@drawable/ic_edit_24px"
+                android:layout_width="18dp"
+                android:layout_height="18dp"/>
+
+        <TextView
+                android:id="@+id/textViewScoreStudy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="31"
+                android:fontFamily="sans-serif-medium"
+                android:textColor="@color/colorBlack"
+                android:layout_marginLeft="4dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp">
+        <ImageView
+                android:src="@drawable/ic_school_24px"
+                android:layout_width="18dp"
+                android:layout_height="18dp"/>
+
+        <TextView
+                android:id="@+id/textViewScoreScience"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="45"
+                android:fontFamily="sans-serif-medium"
+                android:textColor="@color/colorBlack"
+                android:layout_marginLeft="4dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp">
+        <ImageView
+                android:src="@drawable/ic_share_24px"
+                android:layout_width="18dp"
+                android:layout_height="18dp"/>
+
+        <TextView
+                android:id="@+id/textViewScoreSocial"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12"
+                android:fontFamily="sans-serif-medium"
+                android:textColor="@color/colorBlack"
+                android:layout_marginLeft="4dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp">
+        <ImageView
+                android:src="@drawable/ic_sports_basketball_24px"
+                android:layout_width="18dp"
+                android:layout_height="18dp"/>
+
+        <TextView
+                android:id="@+id/textViewScoreSport"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="8"
+                android:fontFamily="sans-serif-medium"
+                android:textColor="@color/colorBlack"
+                android:layout_marginLeft="4dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp">
+        <ImageView
+                android:src="@drawable/ic_account_balance_24px"
+                android:layout_width="18dp"
+                android:layout_height="18dp"/>
+
+        <TextView
+                android:id="@+id/textViewScoreActivity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:fontFamily="sans-serif-medium"
+                android:textColor="@color/colorBlack"
+                android:layout_marginLeft="4dp"/>
+    </LinearLayout>
+</LinearLayout>
