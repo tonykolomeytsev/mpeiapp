@@ -2,6 +2,7 @@ package kekmech.ru.timetable.view.items
 
 import android.view.View
 import android.view.View.VISIBLE
+import android.widget.LinearLayout
 import android.widget.TextView
 import kekmech.ru.core.dto.CoupleNative
 import kekmech.ru.coreui.Resources
@@ -55,7 +56,7 @@ class MinCoupleItem(val coupleNative: CoupleNative) : BaseClickableItem<MinCoupl
         val teacher by bind<TextView>(R.id.textViewCoupleTeacher)
         val timeStart by bind<TextView>(R.id.textViewCoupleTimeStart)
         val timeEnd by bind<TextView>(R.id.textViewCoupleTimeEnd)
-        val hasNoteLayout by bind<TextView>(R.id.frameLayoutHasNote)
+        val hasNoteLayout by bind<LinearLayout>(R.id.frameLayoutHasNote)
 
         override fun onCreateView(view: View) = Unit
     }

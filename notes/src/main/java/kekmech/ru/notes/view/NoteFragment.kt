@@ -42,6 +42,7 @@ class NoteFragment : BaseFragment<NoteFragmentPresenter, NoteFragmentView>(
         }
         editTextContent?.addTextChangedListener {
             onTextEdit(it?.toString() ?: "")
+            showSaved()
         }
     }
 
@@ -51,11 +52,15 @@ class NoteFragment : BaseFragment<NoteFragmentPresenter, NoteFragmentView>(
         editTextContent?.setText(coupleContent)
     }
 
+    override fun setContent(coupleContent: String) {
+        editTextContent?.setText(coupleContent)
+    }
+
     override fun showSaved() {
         textViewSavingProgress?.alpha = 0.5f
         textViewSavingProgress?.animate()
             ?.alpha(0f)
-            ?.setDuration(5000L)
+            ?.setDuration(3000L)
             ?.start()
     }
 }

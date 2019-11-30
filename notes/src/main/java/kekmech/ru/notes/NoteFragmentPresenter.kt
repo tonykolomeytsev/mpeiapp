@@ -12,8 +12,10 @@ import kekmech.ru.notes.model.NoteFragmentModel
 import kekmech.ru.notes.view.NoteFragmentView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.*
 import javax.inject.Inject
 
@@ -43,12 +45,15 @@ class NoteFragmentPresenter @Inject constructor(
                     ""
                 )
             } else {
-                val coupleContent = model.getNoteContentById(couple.noteId)
                 view.setStatus(
                     couple.name,
                     couple.timestampReadable(),
-                    coupleContent
+                    ""
                 )
+                GlobalScope.launch(Main) {
+                    val coupleContent = withContext(IO) { model.getNoteContentById(couple.noteId) }
+                    view.setContent(coupleContent)
+                }
             }
         }
     }
