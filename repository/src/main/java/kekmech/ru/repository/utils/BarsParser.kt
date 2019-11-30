@@ -14,6 +14,7 @@ class BarsParser {
     private val academicDisciplines: MutableList<AcademicDiscipline> = mutableListOf()
     private var studentName: String = "Не удалось загрузить имя"
     private var studentGroup: String = "Не удалось загрузить номер группы"
+    private var rating = AcademicScore.Rating()
 
     var isCurrentControlFlag = false
 
@@ -42,11 +43,27 @@ class BarsParser {
         } catch (e: Exception) {
             Crashlytics.log(1, "BarsParser", "pushStudentInfo ERROR $e \n ${infoDiv?.html()}")
         }
+        try {
+            if (infoDiv != null)
+                pushRatingInfo(infoDiv)
+        } catch (e: Exception) {
+            Crashlytics.log(1, "BarsParser", "pushRatingInfo ERROR $e \n ${infoDiv?.html()}")
+        }
 
         return AcademicScore(
             disciplines = academicDisciplines,
             studentName = studentName,
-            studentGroup = studentGroup)
+            studentGroup = studentGroup,
+            rating = rating)
+    }
+
+    private fun pushRatingInfo(infoDiv: Element) {
+        rating.total = infoDiv.select("span[id=total_score]").html().trim().toIntOrNull() ?: 0
+        rating.study = infoDiv.select("span[id=study_score]").html().trim().toIntOrNull() ?: 0
+        rating.science = infoDiv.select("span[id=science_score]").html().trim().toIntOrNull() ?: 0
+        rating.social_total = infoDiv.select("span[id=social_score]").html().trim().toIntOrNull() ?: 0
+        rating.social_sport = infoDiv.select("span[id=sport_score]").html().trim().toIntOrNull() ?: 0
+        rating.social_act = infoDiv.select("span[id=social_activity_score]").html().trim().toIntOrNull() ?: 0
     }
 
     private fun pushStudentInfo(infoDiv: Element) {

@@ -7,16 +7,8 @@ data class AcademicScore(
     val studentName: String = "",
     @SerializedName("group")
     val studentGroup: String = "",
-    @SerializedName("s_ac")
-    val studentScoreAcademic: Float = -1f,
-    @SerializedName("s_sc")
-    val studentScoreScience: Float = -1f,
-    @SerializedName("s_so")
-    val studentScoreSocial: Float = -1f,
-    @SerializedName("s_sp")
-    val studentScoreSports: Float = -1f,
-    @SerializedName("s_so2")
-    val studentScoreSocial2: Float = -1f,
+    @SerializedName("r")
+    val rating: Rating = Rating(),
     @SerializedName("course")
     val studentCourse: Int = -1,
     @SerializedName("q")
@@ -25,4 +17,19 @@ data class AcademicScore(
     val studentStudyingStatus: String = "",
     @SerializedName("disc")
     val disciplines: List<AcademicDiscipline>
-)
+) {
+    data class Rating(
+        @SerializedName("t")
+        var total: Int = 0,
+        @SerializedName("e")
+        var study: Int = 0,
+        @SerializedName("s")
+        var science: Int = 0,
+        @SerializedName("st")
+        var social_total: Int = 0,
+        @SerializedName("ss")
+        var social_sport: Int = 0,
+        @SerializedName("sa")
+        var social_act: Int = 0
+    )
+}
