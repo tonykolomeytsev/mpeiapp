@@ -31,4 +31,7 @@ interface InteractorProvider {
     fun provideGetNoteByTimeUseCase(): GetNoteByTimeUseCase
     fun provideRemoveNoteUseCase(): RemoveNoteUseCase
     fun provideSaveNoteUseCase(): SaveNoteUseCase
+    fun provideSetCreateNoteTransactionUseCase(): SetCreateNoteTransactionUseCase
+    fun provideGetCreateNoteTransactionUseCase(): GetCreateNoteTransactionUseCase
+    fun provideGetNoteByIdUseCase(): GetNoteByIdUseCase
 }

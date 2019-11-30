@@ -18,6 +18,8 @@ class ScheduleRepositoryImpl @Inject constructor(
 
     override var isNeedToUpdateFeed = MutableLiveData<Boolean>().apply { value = false }
 
+    override val scheduleId: Int get() = scheduleCacheGateway.scheduleId
+
     override fun getSchedule(refresh: Boolean): Schedule? {
         return scheduleCacheGateway.getSchedule()
     }

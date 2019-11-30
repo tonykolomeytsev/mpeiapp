@@ -91,4 +91,13 @@ abstract class InteractorModule {
 
     @Binds
     abstract fun provideGetIsShowedUpdateDialogUseCase(useCaseImpl: GetIsShowedUpdateDialogUseCaseImpl): GetIsShowedUpdateDialogUseCase
+
+    @Binds
+    abstract fun provideSetCreateNoteTransactionUseCase(useCaseImpl: SetCreateNoteTransactionUseCaseImpl): SetCreateNoteTransactionUseCase
+
+    @Binds
+    abstract fun provideGetCreateNoteTransactionUseCase(useCaseImpl: GetCreateNoteTransactionUseCaseImpl): GetCreateNoteTransactionUseCase
+
+    @Binds
+    abstract fun provideGetNoteByIdUseCase(useCaseImpl: GetNoteByIdUseCaseImpl): GetNoteByIdUseCase
 }

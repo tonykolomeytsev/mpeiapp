@@ -1,9 +1,7 @@
 package kekmech.ru.core.dto
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.Index
-import androidx.room.PrimaryKey
+import androidx.room.*
+import com.google.gson.annotations.SerializedName
 import org.jetbrains.annotations.NotNull
 
 @Entity(
@@ -15,7 +13,7 @@ import org.jetbrains.annotations.NotNull
 )
 data class NoteNative(
     @ColumnInfo(name = "couple_id")
-    var coupleId: Int,
+    var scheduleId: Int,
 
     @ColumnInfo(name = "timestamp")
     var timestamp: String,
@@ -30,4 +28,15 @@ data class NoteNative(
     @PrimaryKey(autoGenerate = true)
     @NotNull
     var id: Int = -1
+
+    data class Note(
+        @SerializedName("t")
+        var text: String = "",
+        @SerializedName("w")
+        var weekNum: Int = 0,
+        @SerializedName("d")
+        var dayNum: Int = 0,
+        @SerializedName("c")
+        var coupleNum: Int = 0
+    )
 }

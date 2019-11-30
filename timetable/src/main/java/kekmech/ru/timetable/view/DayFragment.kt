@@ -9,6 +9,10 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.android.support.DaggerFragment
+import kekmech.ru.core.Router
+import kekmech.ru.core.Screens
+import kekmech.ru.core.Screens.TIMETABLE_TO_NOTE
+import kekmech.ru.core.dto.CoupleNative
 import kekmech.ru.coreui.adapter.BaseAdapter
 import kekmech.ru.coreui.adapter.BaseItem
 import kekmech.ru.timetable.R
@@ -30,6 +34,9 @@ abstract class DayFragment : DaggerFragment() {
 
     @Inject
     lateinit var model: TimetableFragmentModel
+
+    @Inject
+    lateinit var router: Router
 
     val couples: () -> List<BaseItem<*>>
         get() = { model.getDaySchedule(
@@ -58,6 +65,14 @@ abstract class DayFragment : DaggerFragment() {
     private fun loadSchedule() {
         GlobalScope.launch(Dispatchers.IO) {
             val awaitedCouples = couples()
+
+            // переход на добавление домашки
+            awaitedCouples.forEach { coupleItem ->
+                if (coupleItem is MinCoupleItem) {
+                    coupleItem.clickListener = { onCoupleClick(coupleItem.coupleNative) }
+                }
+            }
+
             withContext(Dispatchers.Main) {
                 adapter.baseItems.clear()
                 if (awaitedCouples.isNotEmpty())
@@ -69,8 +84,9 @@ abstract class DayFragment : DaggerFragment() {
         }
     }
 
-    fun showNextWeek() {
-
+    private fun onCoupleClick(coupleNative: CoupleNative) {
+        model.transactCouple(coupleNative)
+        router.navigate(TIMETABLE_TO_NOTE)
     }
 
     companion object {

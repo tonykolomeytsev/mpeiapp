@@ -10,9 +10,16 @@
         <action
                 android:id="@+id/action_timetableFragment_to_forceUpdateFragment3"
                 app:destination="@id/forceUpdateFragment3" />
+        <action
+                android:id="@+id/action_timetableFragment_to_noteFragment2"
+                app:destination="@id/noteFragment2" />
     </fragment>
     <dialog
             android:id="@+id/forceUpdateFragment3"
             android:name="kekmech.ru.update.view.ForceUpdateFragment"
             android:label="ForceUpdateFragment" />
+    <fragment
+            android:id="@+id/noteFragment2"
+            android:name="kekmech.ru.notes.view.NoteFragment"
+            android:label="NoteFragment" />
 </navigation>
