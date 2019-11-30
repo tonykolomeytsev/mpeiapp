@@ -37,7 +37,7 @@ class TimetableFragment : DaggerFragment(), TimetableFragmentView {
         presenter.onResume(this)
         if (presenter.checkIsNecessaryDayOpened()) {
             val necessaryDay = presenter.today.dayOfWeek - 2 // потому что Calendar.MONDAY == 2
-            if (necessaryDay in 0..5) {
+            if (necessaryDay in 0 until 5) {
                 viewPager?.post {
                     viewPager?.setCurrentItem(necessaryDay, true)
                 }
