@@ -28,4 +28,6 @@ interface TimetableFragmentModel {
     fun saveForceUpdateArgs(url: String, description: String)
 
     fun transactCouple(coupleNative: CoupleNative)
+
+    var selectedPage: Int
 }

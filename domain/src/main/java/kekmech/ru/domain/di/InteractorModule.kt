@@ -5,6 +5,7 @@ import dagger.Module
 import kekmech.ru.core.usecases.*
 import kekmech.ru.domain.*
 
+@Suppress("unused")
 @Module
 abstract class InteractorModule {
 
