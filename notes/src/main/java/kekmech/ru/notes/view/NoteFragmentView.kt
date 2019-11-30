@@ -8,4 +8,5 @@ interface NoteFragmentView : LifecycleOwner {
 
     fun showSaved()
     fun setStatus(coupleName: String, coupleDate: String, coupleContent: String)
+    fun setContent(coupleContent: String)
 }

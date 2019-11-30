@@ -27,7 +27,7 @@ data class NoteNative(
 
     @PrimaryKey(autoGenerate = true)
     @NotNull
-    var id: Int = -1
+    var id: Int = 0
 
     data class Note(
         @SerializedName("t")

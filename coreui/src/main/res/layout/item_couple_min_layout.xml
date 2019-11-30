@@ -98,14 +98,15 @@
                 android:gravity="center_vertical"
                 android:visibility="gone"
                 tools:visibility="visible"
-                android:layout_marginTop="2dp">
+                android:layout_marginTop="6dp"
+                android:layout_marginLeft="-1dp">
 
             <!-- NOTE ICON -->
             <ImageView
                     android:layout_width="18dp"
                     android:layout_height="18dp"
                     android:src="@drawable/ic_work_outline_24px"
-                    android:tint="@color/colorIconsTint"
+                    android:tint="@color/colorSecondary"
                     android:tintMode="src_in"
                     android:visibility="visible"
                     android:layout_marginRight="4dp"/>
@@ -114,9 +115,10 @@
             <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="#DE000000"
+                    android:textColor="@color/colorSecondary"
                     android:textSize="14sp"
-                    tools:text="Есть домашнее задание" />
+                    android:fontFamily="sans-serif-medium"
+                    android:text="Есть домашнее задание" />
         </LinearLayout>
     </LinearLayout>
 

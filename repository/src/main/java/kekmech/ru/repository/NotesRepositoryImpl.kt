@@ -29,13 +29,16 @@ class NotesRepositoryImpl @Inject constructor(
     }
 
     override fun saveNote(note: NoteNative, isNoteEmpty: Boolean) {
+        val similarNote = notes.find { it.timestamp == note.timestamp && it.scheduleId == note.scheduleId }
         if (isNoteEmpty) {
-            if (notes.containsById(note)) removeNote(note)
+            if (similarNote != null) removeNote(note)
         } else {
-            if (notes.containsById(note))
+            if (similarNote != null) {
+                note.id = similarNote.id
                 appdb.noteDao().update(note)
-            else
+            } else {
                 appdb.noteDao().insert(note)
+            }
             notes.clear()
             notes.addAll(appdb.noteDao().getAll())
             Log.d("NotesRepository", "note saved: notes=$notes")
