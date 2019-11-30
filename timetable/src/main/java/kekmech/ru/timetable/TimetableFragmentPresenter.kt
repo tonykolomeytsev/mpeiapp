@@ -28,6 +28,9 @@ class TimetableFragmentPresenter @Inject constructor(
     private var isNecessaryDayOpened = false
     val today get() = model.today
     var lastWeekOffset: Int = 0
+    var selectegPage
+        get() = model.selectedPage
+        set(value) { model.selectedPage = value }
 
     /**
      * subscribe to view events

@@ -67,4 +67,6 @@ class TimetableFragmentModelImpl @Inject constructor(
     override fun transactCouple(coupleNative: CoupleNative) {
         setCreateNoteTransactionUseCase(coupleNative)
     }
+
+    override var selectedPage: Int = 0
 }

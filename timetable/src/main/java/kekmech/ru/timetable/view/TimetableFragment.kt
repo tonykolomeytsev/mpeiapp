@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
+import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import dagger.android.support.DaggerFragment
 import kekmech.ru.coreui.Resources
@@ -41,14 +42,27 @@ class TimetableFragment : DaggerFragment(), TimetableFragmentView {
                 viewPager?.post {
                     viewPager?.setCurrentItem(necessaryDay, true)
                 }
+                presenter.selectegPage = necessaryDay
             } else { // show next monday if today is saturday or sunday
                 onChangeParityClickListener()
                 viewPager?.post {
                     viewPager?.setCurrentItem(0, true)
                     presenter.lastWeekOffset = 1
                 }
+                presenter.selectegPage = 0
+            }
+        } else {
+            viewPager?.post {
+                viewPager?.setCurrentItem(presenter.selectegPage, true)
             }
         }
+        viewPager?.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrollStateChanged(state: Int) = Unit
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) = Unit
+            override fun onPageSelected(position: Int) {
+                presenter.selectegPage = (position)
+            }
+        })
         buttonChangeWeekParity?.setOnClickListener { onChangeParityClickListener() }
     }
 
