@@ -9,6 +9,8 @@ import kekmech.ru.core.dto.ScheduleNative
 interface ScheduleRepository {
     var isNeedToUpdateFeed: MutableLiveData<Boolean>
 
+    val scheduleId: Int
+
     fun getOffsetCouples(offset:Int, refresh: Boolean): List<CoupleNative>
 
     fun getSchedule(refresh: Boolean): Schedule?

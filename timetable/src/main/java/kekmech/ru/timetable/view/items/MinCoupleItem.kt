@@ -1,15 +1,17 @@
 package kekmech.ru.timetable.view.items
 
 import android.view.View
+import android.view.View.VISIBLE
 import android.widget.TextView
 import kekmech.ru.core.dto.CoupleNative
 import kekmech.ru.coreui.Resources
+import kekmech.ru.coreui.adapter.BaseClickableItem
 import kekmech.ru.coreui.adapter.BaseFactory
 import kekmech.ru.coreui.adapter.BaseItem
 import kekmech.ru.coreui.adapter.BaseViewHolder
 import kekmech.ru.timetable.R
 
-class MinCoupleItem(val coupleNative: CoupleNative) : BaseItem<MinCoupleItem.ViewHolder>() {
+class MinCoupleItem(val coupleNative: CoupleNative) : BaseClickableItem<MinCoupleItem.ViewHolder>() {
 
     override fun updateViewHolder(viewHolder: ViewHolder) {
         viewHolder.name.text = coupleNative.name
@@ -23,6 +25,9 @@ class MinCoupleItem(val coupleNative: CoupleNative) : BaseItem<MinCoupleItem.Vie
         }
         viewHolder.timeStart.text = coupleNative.timeStart
         viewHolder.timeEnd.text = coupleNative.timeEnd
+
+        if (coupleNative.noteId != -1)
+            viewHolder.hasNoteLayout.visibility = VISIBLE
     }
 
     private fun getStringType(
@@ -50,6 +55,7 @@ class MinCoupleItem(val coupleNative: CoupleNative) : BaseItem<MinCoupleItem.Vie
         val teacher by bind<TextView>(R.id.textViewCoupleTeacher)
         val timeStart by bind<TextView>(R.id.textViewCoupleTimeStart)
         val timeEnd by bind<TextView>(R.id.textViewCoupleTimeEnd)
+        val hasNoteLayout by bind<TextView>(R.id.frameLayoutHasNote)
 
         override fun onCreateView(view: View) = Unit
     }

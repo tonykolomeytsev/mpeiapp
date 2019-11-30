@@ -29,6 +29,7 @@ class MainNavRouter @Inject constructor(): Router {
 
                 // TIMETABLE SCOPE
                 TIMETABLE_TO_FORCE -> navController?.navigate(R.id.action_timetableFragment_to_forceUpdateFragment3)
+                TIMETABLE_TO_NOTE -> navController?.navigate(R.id.action_timetableFragment_to_noteFragment2)
             }
         }catch (e: Exception) {
             Crashlytics.logException(e)

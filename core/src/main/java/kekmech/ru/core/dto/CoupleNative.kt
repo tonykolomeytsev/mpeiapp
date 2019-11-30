@@ -47,7 +47,7 @@ class CoupleNative(
     var id: Int = 0
 
     @Ignore
-    var time: Time? = null
+    var noteId: Int = -1
 
     companion object {
         const val LECTURE = "LECTURE"

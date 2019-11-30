@@ -8,6 +8,8 @@ import kekmech.ru.core.dto.ScheduleNative
  * Yes, it's just a another called repository
  */
 interface ScheduleCacheGateway {
+    var scheduleId: Int
+
     fun getSchedule(): Schedule?
 
     fun getCouples(dayNum: Int, odd: Boolean): List<CoupleNative>?

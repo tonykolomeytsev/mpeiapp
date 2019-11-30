@@ -32,17 +32,23 @@ class NoteFragment : BaseFragment<NoteFragmentPresenter, NoteFragmentView>(
 
     override var onBackNavClick: () -> Unit = {}
 
+    override var onTextEdit: (String) -> Unit = {}
+
     override fun onResume() {
         super.onResume()
         toolbar?.setNavigationOnClickListener { onBackNavClick() }
         editTextContent?.post {
             editTextContent?.requestFocus()
         }
-        textViewDisciplineName?.text = "Гидропневмоприводы мехатронных и робототехнических устройств"
-        textViewDisciplineDate?.text = "15 неделя, среда, 3 пара"
         editTextContent?.addTextChangedListener {
-            showSaved()
+            onTextEdit(it?.toString() ?: "")
         }
+    }
+
+    override fun setStatus(coupleName: String, coupleDate: String, coupleContent: String) {
+        textViewDisciplineName?.text = coupleName
+        textViewDisciplineDate?.text = coupleDate
+        editTextContent?.setText(coupleContent)
     }
 
     override fun showSaved() {

@@ -1,6 +1,7 @@
 package kekmech.ru.timetable.model
 
 import androidx.lifecycle.LiveData
+import kekmech.ru.core.dto.CoupleNative
 import kekmech.ru.core.dto.Time
 import kekmech.ru.coreui.adapter.BaseItem
 
@@ -25,4 +26,6 @@ interface TimetableFragmentModel {
     var isNotShowedUpdateDialog: Boolean
 
     fun saveForceUpdateArgs(url: String, description: String)
+
+    fun transactCouple(coupleNative: CoupleNative)
 }

@@ -3,6 +3,7 @@ package kekmech.ru.timetable.model
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import kekmech.ru.core.dto.CoupleNative
 import kekmech.ru.core.dto.Time
 import kekmech.ru.core.usecases.*
 import kekmech.ru.coreui.adapter.BaseItem
@@ -18,6 +19,7 @@ class TimetableFragmentModelImpl @Inject constructor(
     private val setIsShowedUpdateDialogUseCase: SetIsShowedUpdateDialogUseCase,
     private val getIsShowedUpdateDialogUseCase: GetIsShowedUpdateDialogUseCase,
     private val setForceUpdateDataUseCase: SetForceUpdateDataUseCase,
+    private val setCreateNoteTransactionUseCase: SetCreateNoteTransactionUseCase,
     private val context: Context
 ) : TimetableFragmentModel {
 
@@ -60,5 +62,9 @@ class TimetableFragmentModelImpl @Inject constructor(
 
     override fun saveForceUpdateArgs(url: String, description: String) {
         setForceUpdateDataUseCase(url, description)
+    }
+
+    override fun transactCouple(coupleNative: CoupleNative) {
+        setCreateNoteTransactionUseCase(coupleNative)
     }
 }

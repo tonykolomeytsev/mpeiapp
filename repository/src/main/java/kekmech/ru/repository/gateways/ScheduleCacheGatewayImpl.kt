@@ -6,6 +6,8 @@ import kekmech.ru.repository.room.AppDatabase
 import javax.inject.Inject
 
 class ScheduleCacheGatewayImpl @Inject constructor(val appdb: AppDatabase) : ScheduleCacheGateway {
+    override var scheduleId: Int = 0
+
     override fun getSchedule(): Schedule? {
         val users = appdb.userDao().getAll()
         if (users.isEmpty())
@@ -13,6 +15,7 @@ class ScheduleCacheGatewayImpl @Inject constructor(val appdb: AppDatabase) : Sch
                 .userDao()
                 .insert(User.defaultUser())
         val user = appdb.userDao().getAll().first()
+        scheduleId = user.lastScheduleId
         return appdb.scheduleDao()
             .getById(user.lastScheduleId)
             .let {
@@ -70,5 +73,6 @@ class ScheduleCacheGatewayImpl @Inject constructor(val appdb: AppDatabase) : Sch
     override fun setCurrentScheduleId(id: Int) {
         val user = appdb.userDao().getAll().first()
         appdb.userDao().update(user.apply { lastScheduleId = id })
+        scheduleId = id
     }
 }
