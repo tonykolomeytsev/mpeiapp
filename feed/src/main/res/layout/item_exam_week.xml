@@ -34,7 +34,7 @@
             android:gravity="center"
             android:fontFamily="sans-serif-medium"
             android:layout_marginBottom="8dp"
-            android:rotation="-1"/>
+            android:rotation="-3"/>
 
     <TextView
             android:layout_width="wrap_content"
@@ -45,18 +45,21 @@
             android:text="Не сдавайся, МЭИшник, всё буит хорошо!!! Почитай статьи по ссылкам ниже:"/>
 
     <TextView
+            android:id="@+id/textViewHowNotToDieSession"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="14sp"
             android:textColor="@color/colorSecondary"
             android:layout_marginTop="8dp"
             android:text="Как сдать сессию и не умереть"/>
+
     <TextView
+            android:id="@+id/textViewSessionRules"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="14sp"
             android:textColor="@color/colorSecondary"
             android:layout_marginTop="8dp"
-            android:text="Правила проведения сессии в МЭИ в 2к19/2к20 учебном году"/>
+            android:text="Про БАРС в 2к19/2к20 учебном году"/>
 
 </LinearLayout>

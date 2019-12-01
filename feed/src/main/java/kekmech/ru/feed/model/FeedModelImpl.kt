@@ -69,7 +69,7 @@ class FeedModelImpl @Inject constructor(
     override suspend fun getDayCouples(offset: Int, refresh: Boolean): List<BaseItem<*>> {
         if (offset > 14) return emptyList()
         if (today.getDayWithOffset(offset).weekOfSemester >= 17) {
-            return listOf(ExamWeekItem())
+            return listOf(ExamWeekItem(context))
         }
         return withContext(Dispatchers.IO) {
             val list = loadOffsetScheduleUseCase(offset, refresh)
