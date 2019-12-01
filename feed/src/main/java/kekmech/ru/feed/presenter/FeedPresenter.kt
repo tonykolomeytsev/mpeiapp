@@ -34,6 +34,7 @@ class FeedPresenter @Inject constructor(
         .registerViewTypeFactory(WeekendItem.Factory())
         .registerViewTypeFactory(WeekendStackItem.Factory())
         .registerViewTypeFactory(EmptyItem.Factory())
+        .registerViewTypeFactory(ExamWeekItem.Factory())
         .build()
     }
     val menuAdapter = BaseAdapter.Builder()
@@ -143,10 +144,11 @@ class FeedPresenter @Inject constructor(
 
     private suspend fun loadOffsetCouples(localOffset: Int, refresh: Boolean = false) = withContext(Dispatchers.Main) {
         val couples = model.getDayCouples(localOffset, refresh = refresh)
+        // после получения итемы с "Зачетной неделей" прекращаем добавлять новые карточки
+        if (couples.first() is ExamWeekItem) {
+            if (adapter.baseItems.any { it is ExamWeekItem }) return@withContext
+        }
         couples.forEach {
-//            if (it is CoupleItem)
-//                it.clickListener = { router.navigate(FEED_TO_NOTE) }
-
             adapter.baseItems.add(it)
             adapter.notifyItemChanged(adapter.baseItems.size - 1)
             delay(100) // TODO избавиться от задержки и придумать анимацию иначе

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="32dp"
+        android:paddingRight="32dp"
+        android:paddingTop="32dp"
+        android:paddingBottom="112dp"
+        android:gravity="center_horizontal">
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorBlack"
+            android:textSize="18sp"
+            android:text="В рот мне ноги! Да это же..."
+            android:layout_marginBottom="8dp"/>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+            android:src="@drawable/the_cat_meme"
+            android:layout_width="112dp"
+            android:layout_height="112dp"
+            android:scaleType="centerCrop"
+            android:layout_marginBottom="8dp"/>
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorBlack"
+            android:textSize="22sp"
+            android:text="зачётная неделя"
+            android:textAllCaps="true"
+            android:gravity="center"
+            android:fontFamily="sans-serif-medium"
+            android:layout_marginBottom="8dp"
+            android:rotation="-1"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@color/colorBlack"
+            android:alpha="0.8"
+            android:text="Не сдавайся, МЭИшник, всё буит хорошо!!! Почитай статьи по ссылкам ниже:"/>
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@color/colorSecondary"
+            android:layout_marginTop="8dp"
+            android:text="Как сдать сессию и не умереть"/>
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@color/colorSecondary"
+            android:layout_marginTop="8dp"
+            android:text="Правила проведения сессии в МЭИ в 2к19/2к20 учебном году"/>
+
+</LinearLayout>
