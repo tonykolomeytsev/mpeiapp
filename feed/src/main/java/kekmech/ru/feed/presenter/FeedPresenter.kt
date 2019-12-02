@@ -145,7 +145,7 @@ class FeedPresenter @Inject constructor(
     private suspend fun loadOffsetCouples(localOffset: Int, refresh: Boolean = false) = withContext(Dispatchers.Main) {
         val couples = model.getDayCouples(localOffset, refresh = refresh)
         // после получения итемы с "Зачетной неделей" прекращаем добавлять новые карточки
-        if (couples.first() is ExamWeekItem) {
+        if (couples.firstOrNull() is ExamWeekItem) {
             if (adapter.baseItems.any { it is ExamWeekItem }) return@withContext
         }
         couples.forEach {
