@@ -16,7 +16,9 @@ class NoteFragmentModelImpl @Inject constructor(
 ) : NoteFragmentModel {
     private val gson = GsonBuilder().create()
     override val transactedCouple: CoupleNative?
-        get() = getCreateNoteTransactionUseCase()
+        get() = getCreateNoteTransactionUseCase()?.coupleNative
+    override val transactedRealWeek: Int?
+        get() = getCreateNoteTransactionUseCase()?.realWeek
 
     override fun getNoteContentById(noteId: Int): String {
         val native = getNoteByIdUseCase(noteId)
