@@ -1,6 +1,7 @@
 package kekmech.ru.timetable.view.items
 
 import android.view.View
+import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -29,6 +30,8 @@ class MinCoupleItem(val coupleNative: CoupleNative) : BaseClickableItem<MinCoupl
 
         if (coupleNative.noteId != -1)
             viewHolder.hasNoteLayout.visibility = VISIBLE
+        else
+            viewHolder.hasNoteLayout.visibility = GONE
     }
 
     private fun getStringType(

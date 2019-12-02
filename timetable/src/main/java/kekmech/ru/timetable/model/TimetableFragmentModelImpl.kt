@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import kekmech.ru.core.dto.CoupleNative
+import kekmech.ru.core.dto.NoteTransaction
 import kekmech.ru.core.dto.Time
 import kekmech.ru.core.usecases.*
 import kekmech.ru.coreui.adapter.BaseItem
@@ -65,7 +66,7 @@ class TimetableFragmentModelImpl @Inject constructor(
     }
 
     override fun transactCouple(coupleNative: CoupleNative) {
-        setCreateNoteTransactionUseCase(coupleNative)
+        setCreateNoteTransactionUseCase(NoteTransaction(coupleNative, currentWeekNumber + (weekOffset.value ?: 0)))
     }
 
     override var selectedPage: Int = 0

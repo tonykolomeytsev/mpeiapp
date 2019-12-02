@@ -3,9 +3,13 @@ package kekmech.ru.repository
 import android.util.Log
 import kekmech.ru.core.dto.CoupleNative
 import kekmech.ru.core.dto.NoteNative
+import kekmech.ru.core.dto.NoteTransaction
 import kekmech.ru.core.dto.Time
 import kekmech.ru.core.repositories.NotesRepository
 import kekmech.ru.repository.room.AppDatabase
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class NotesRepositoryImpl @Inject constructor(
@@ -14,7 +18,19 @@ class NotesRepositoryImpl @Inject constructor(
 
     val notes: MutableList<NoteNative> by lazy { appdb.noteDao().getAll().toMutableList() }
 
-    override var noteCreationTransaction: CoupleNative? = null
+    override var noteCreationTransaction: NoteTransaction? = null
+
+
+    init {
+//        GlobalScope.launch(IO) {
+//            notes.forEach {
+//                appdb.noteDao().delete(it)
+//            }
+//            notes.clear()
+//            notes.addAll(appdb.noteDao().getAll())
+//            Log.d("NoteRepository", appdb.noteDao().getAll().toString())
+//        }
+    }
 
     override fun getNoteFor(time: Time): NoteNative? {
         return notes.firstOrNull { it.timestamp == time.timestamp() }
@@ -41,7 +57,7 @@ class NotesRepositoryImpl @Inject constructor(
             }
             notes.clear()
             notes.addAll(appdb.noteDao().getAll())
-            Log.d("NotesRepository", "note saved: notes=$notes")
+            Log.d("NotesRepository", "note saved: $note\n$similarNote, \nnotes=$notes")
         }
     }
 

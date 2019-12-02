@@ -7,5 +7,6 @@ interface NoteFragmentModel {
     fun getNoteContentById(noteId: Int): String
     fun saveNote(note: NoteNative.Note)
 
+    val transactedRealWeek: Int?
     val transactedCouple: CoupleNative?
 }

@@ -34,11 +34,11 @@ class NoteFragmentPresenter @Inject constructor(
         view.onBackNavClick = router::popBackStack
         view.onTextEdit = ::onTextEdit
         val couple = model.transactedCouple
+        this.realWeek = model.transactedRealWeek
         if (couple == null) {
             router.popBackStack()
             return
         } else {
-            realWeek = couple.realWeek
             if (couple.noteId == -1) {
                 view.setStatus(
                     couple.name,
@@ -61,6 +61,7 @@ class NoteFragmentPresenter @Inject constructor(
     }
 
     private fun onTextEdit(string: String) {
+        Log.d("NotePresenter", isWriteAllowed.toString())
         if (!isWriteAllowed) return
         GlobalScope.launch(IO) {
             synchronized(locker) {
@@ -102,9 +103,4 @@ class NoteFragmentPresenter @Inject constructor(
             "$w неделя, день ${day - 1}, $num пара"
         }
     }
-
-    private val CoupleNative.realWeek get() = Time().weekOfSemester + week - 1
-
-
-
 }
