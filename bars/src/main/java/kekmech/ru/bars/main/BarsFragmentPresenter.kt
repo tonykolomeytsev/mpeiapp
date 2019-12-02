@@ -103,13 +103,18 @@ class BarsFragmentPresenter @Inject constructor(
     private fun updateWithScore(view: BarsFragmentView, score: AcademicScore?) {
         if (score != null) {
             adapter.baseItems.clear()
-            adapter.baseItems.add(RatingItem(score.rating))
+            adapter.baseItems.add(RatingItem(score.rating).apply { clickListener = { onRatingClick(score) } })
             adapter.baseItems.addAll(score.disciplines.map { DisciplineItem(it).apply { clickListener = ::onItemClick } })
             adapter.baseItems.add(SupportItem(context))
             view.setAdapter(adapter)
             view.setStatus(score)
         }
         view.hideLoading()
+    }
+
+    private fun onRatingClick(score: AcademicScore) {
+        model.ratingDetails = score.rating
+        router.navigate(BARS_TO_RATING)
     }
 
     private fun onItemClick(item: BaseClickableItem<*>) {

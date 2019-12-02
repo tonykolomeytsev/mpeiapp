@@ -26,6 +26,9 @@
         <action
                 android:id="@+id/action_barsFragment_to_forceUpdateFragment2"
                 app:destination="@id/forceUpdateFragment2" />
+        <action
+                android:id="@+id/action_barsFragment_to_ratingFragment"
+                app:destination="@id/ratingFragment" />
     </fragment>
     <fragment
         android:id="@+id/rightsFragment"
@@ -42,4 +45,8 @@
             android:name="kekmech.ru.update.view.ForceUpdateFragment"
             android:label="ForceUpdateFragment"
             tools:layout="@layout/fragment_force_update"/>
+    <fragment
+            android:id="@+id/ratingFragment"
+            android:name="kekmech.ru.bars.rating.view.RatingFragment"
+            android:label="RatingFragment" />
 </navigation>

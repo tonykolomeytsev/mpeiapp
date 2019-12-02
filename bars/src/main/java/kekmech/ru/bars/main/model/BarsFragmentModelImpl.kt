@@ -24,6 +24,8 @@ class BarsFragmentModelImpl @Inject constructor(
     override val isLoggedIn: Boolean
         get() = isLoggedInBarsUseCase()
 
+    override var ratingDetails: AcademicScore.Rating? = null
+
     override fun saveUserSecrets(login: String, pass: String) {
         saveUserSecretsUseCase(login, pass)
     }

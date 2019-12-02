@@ -13,6 +13,9 @@ import kekmech.ru.bars.main.model.BarsFragmentModel
 import kekmech.ru.bars.main.model.BarsFragmentModelImpl
 import kekmech.ru.bars.main.view.BarsFragment
 import kekmech.ru.bars.main.view.BarsFragmentView
+import kekmech.ru.bars.rating.RatingFragmentPresenter
+import kekmech.ru.bars.rating.view.RatingFragment
+import kekmech.ru.bars.rating.view.RatingFragmentView
 import kekmech.ru.bars.rights.RightsFragment
 import kekmech.ru.bars.rights.RightsFragmentPresenter
 import kekmech.ru.bars.rights.RightsFragmentView
@@ -22,7 +25,8 @@ import kekmech.ru.core.scopes.ActivityScope
 @Module(subcomponents = [
     BarsFragmentComponent::class,
     RightsFragmentComponent::class,
-    BarsDetailsFragmentComponent::class
+    BarsDetailsFragmentComponent::class,
+    RatingFragmentComponent::class
 ])
 abstract class BarsModule {
     @Binds
@@ -58,5 +62,17 @@ abstract class BarsModule {
     @ActivityScope
     @Binds
     abstract fun provideBarsDetailsFragmentPresenter(presenter: BarsDetailsFragmentPresenter): Presenter<BarsDetailsFragmentView>
+
+
+    @Binds
+    @IntoMap
+    @ClassKey(RatingFragment::class)
+    abstract fun bindBarsRatingFragmentInjectorFactory(factory: RatingFragmentComponent.Factory): AndroidInjector.Factory<*>
+
+    @ActivityScope
+    @Binds
+    abstract fun provideRatingFragmentPresenter(presenter: RatingFragmentPresenter): Presenter<RatingFragmentView>
+
+
 
 }

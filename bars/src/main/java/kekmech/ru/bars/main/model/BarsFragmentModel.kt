@@ -9,6 +9,8 @@ interface BarsFragmentModel {
 
     var isNotShowedUpdateDialog: Boolean
 
+    var ratingDetails: AcademicScore.Rating?
+
     suspend fun getAcademicScoreAsync(refresh: Boolean = false, onRatingUpdatesListener: (AcademicScore?) -> Unit)
 
     suspend fun getAcademicScore(refresh: Boolean = false): AcademicScore?
