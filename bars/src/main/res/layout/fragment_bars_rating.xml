@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+
+    <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/main.appbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorSecondary"
+            android:fitsSystemWindows="true"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fitsSystemWindows="true">
+
+            <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:elevation="0dp"
+                    app:layout_collapseMode="pin"
+                    app:navigationIcon="?attr/homeAsUpIndicator"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                    app:title="Рейтинг" />
+
+        </FrameLayout>
+
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScroll"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorFeedBackground">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="112dp"
+                android:paddingLeft="32dp"
+                android:paddingRight="32dp"
+                android:paddingTop="16dp">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Общий рейтинг:"
+                    android:textSize="18sp"
+                    android:textColor="@color/colorBlack"/>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                <TextView
+                        android:id="@+id/textViewRatingTotal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="34"
+                        android:layout_marginRight="2dp"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="48sp"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="/100"
+                        android:alpha="0.5"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="48sp"/>
+
+            </LinearLayout>
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:textColor="@color/colorBlack"
+                    android:alpha="0.7"
+                    android:text="Общий рейтинг, на основании всех ниже перечисленных рейтингов."/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Учебный рейтинг:"
+                    android:textSize="18sp"
+                    android:layout_marginTop="32dp"
+                    android:textColor="@color/colorBlack"/>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                <TextView
+                        android:id="@+id/textViewRatingStudy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="61"
+                        android:layout_marginRight="2dp"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="36sp"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="/100"
+                        android:alpha="0.5"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="36sp"/>
+
+            </LinearLayout>
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:textColor="@color/colorBlack"
+                    android:alpha="0.7"
+                    android:text="Баллы за достижения в учебной деятельности. Формируются из успеваемости за семестр."/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Научный рейтинг:"
+                    android:textSize="18sp"
+                    android:layout_marginTop="32dp"
+                    android:textColor="@color/colorBlack"/>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                <TextView
+                        android:id="@+id/textViewRatingScience"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="15"
+                        android:layout_marginRight="2dp"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="36sp"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="/100"
+                        android:alpha="0.5"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="36sp"/>
+
+            </LinearLayout>
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:textColor="@color/colorBlack"
+                    android:alpha="0.7"
+                    android:text="Баллы за достижения в научной деятельности. Даются за конференции, публикации."/>
+
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Социальный рейтинг:"
+                    android:textSize="18sp"
+                    android:layout_marginTop="32dp"
+                    android:textColor="@color/colorBlack"/>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                <TextView
+                        android:id="@+id/textViewRatingSocial"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="7"
+                        android:layout_marginRight="2dp"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="36sp"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="/100"
+                        android:alpha="0.5"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="36sp"/>
+
+            </LinearLayout>
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:textColor="@color/colorBlack"
+                    android:alpha="0.7"
+                    android:text="Общий рейтинг, формирующийся на основании спортивного рейтинга и социальной активности."/>
+
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cпортивный рейтинг:"
+                    android:textSize="18sp"
+                    android:layout_marginTop="32dp"
+                    android:textColor="@color/colorBlack"/>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                <TextView
+                        android:id="@+id/textViewRatingSport"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="4"
+                        android:layout_marginRight="2dp"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="36sp"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="/100"
+                        android:alpha="0.5"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="36sp"/>
+
+            </LinearLayout>
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:textColor="@color/colorBlack"
+                    android:alpha="0.7"
+                    android:text="Баллы за внутривузовские и межвузовские соревнования."/>
+
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Социальная активность:"
+                    android:textSize="18sp"
+                    android:layout_marginTop="32dp"
+                    android:textColor="@color/colorBlack"/>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                <TextView
+                        android:id="@+id/textViewRatingActivity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="2"
+                        android:layout_marginRight="2dp"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="36sp"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="/100"
+                        android:alpha="0.5"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="36sp"/>
+
+            </LinearLayout>
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:textColor="@color/colorBlack"
+                    android:alpha="0.7"
+                    android:text="Баллы за помощь в организации мероприятий и волонтерстве."/>
+
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

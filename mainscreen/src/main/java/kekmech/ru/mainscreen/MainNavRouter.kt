@@ -26,6 +26,7 @@ class MainNavRouter @Inject constructor(): Router {
                 BARS_TO_RIGHTS -> navController?.navigate(R.id.action_barsFragment_to_rightsFragment)
                 BARS_TO_BARS_DETAILS -> navController?.navigate(R.id.action_barsFragment_to_barsDetailsFragment)
                 BARS_TO_FORCE -> navController?.navigate(R.id.action_barsFragment_to_forceUpdateFragment2)
+                BARS_TO_RATING -> navController?.navigate(R.id.action_barsFragment_to_ratingFragment)
 
                 // TIMETABLE SCOPE
                 TIMETABLE_TO_FORCE -> navController?.navigate(R.id.action_timetableFragment_to_forceUpdateFragment3)

@@ -17,6 +17,7 @@ enum class Screens {
     BARS_TO_RIGHTS,
     BARS_TO_BARS_DETAILS,
     BARS_TO_FORCE,
+    BARS_TO_RATING,
 
     // timetable deep nav
     TIMETABLE_TO_FORCE,
