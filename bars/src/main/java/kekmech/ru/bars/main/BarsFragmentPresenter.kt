@@ -103,7 +103,12 @@ class BarsFragmentPresenter @Inject constructor(
     private fun updateWithScore(view: BarsFragmentView, score: AcademicScore?) {
         if (score != null) {
             adapter.baseItems.clear()
-            adapter.baseItems.add(RatingItem(score.rating).apply { clickListener = { onRatingClick(score) } })
+            try {
+                val ri = RatingItem(score.rating).apply { clickListener = { onRatingClick(score) } }
+                adapter.baseItems.add(ri)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
             adapter.baseItems.addAll(score.disciplines.map { DisciplineItem(it).apply { clickListener = ::onItemClick } })
             adapter.baseItems.add(SupportItem(context))
             view.setAdapter(adapter)
