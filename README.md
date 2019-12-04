@@ -3,12 +3,14 @@
 ![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/tonykolomeytsev/mpeiapp?label=version) 
 ![](https://github.com/tonykolomeytsev/mpeiapp/workflows/Android%20build/badge.svg?branch=master)
 
-Расписание пар, карта корпусов и личный кабинет БАРС для студентов НИУ МЭИ. Самое правильное приложения с расписанием МЭИ. 
+Расписание пар, личный кабинет БАРС и крутая карта для студентов НИУ МЭИ. Самое функциональное и стабильное МЭИшное приложение.
 
-+ Бесконечная лента с расписанием
-+ Табличка с недельным расписанием
+**Фичи приложения:**
++ Лента с расписанием
++ Табличка с расписанием
 + Карта корпусов, общежитий, мест общепита
-+ Личный кабинет БАРС с просмотром оценок
++ Личный кабинет БАРС с просмотром оценок и рейтинга
++ Добавление домашних заданий к парам
 + Приємний дэсiгн 
 + Малый вес приложения 
 + Открiтый исходнiй код 
@@ -16,9 +18,11 @@
 
 Пулл реквесты приветствуются.
 
-[Скачать](https://play.google.com/store/apps/details?id=kekmech.ru.mpeiapp) приложение с Google Play.
+[![](https://github.com/tonykolomeytsev/mpeiapp/raw/master/screenshots/3.png)](https://play.google.com/store/apps/details?id=kekmech.ru.mpeiapp)
 
-![screenshots](https://github.com/tonykolomeytsev/mpeiapp/blob/master/screenshots/1.png)
+### Скриншоты
+
+![screenshots](https://github.com/tonykolomeytsev/mpeiapp/raw/master/screenshots/1.png)
 
 ### Требования приложения
 
@@ -46,7 +50,7 @@
 Приложение многомодульное, с жестким следованием Dependency Rule. Схема может быть не очень актуальной на момент прочтения (могут появится новые модули, или быть удалены старые), но суть должна быть понятна).
 Все фрагменты используют паттерн MVP.
 
-![screenshots](https://github.com/tonykolomeytsev/mpeiapp/blob/master/screenshots/2.jpg)
+![screenshots](https://github.com/tonykolomeytsev/mpeiapp/raw/master/screenshots/2.jpg)
 
 **Все модули зависят от `core`**
 
