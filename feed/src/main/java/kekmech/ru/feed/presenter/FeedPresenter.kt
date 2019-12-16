@@ -28,13 +28,7 @@ class FeedPresenter @Inject constructor(
     var offset = 0
     val daysToLoadOnStart = 3
     val adapter by lazy { BaseAdapter.Builder()
-        .registerViewTypeFactory(FeedDividerItem.Factory())
-        .registerViewTypeFactory(CoupleItem.Factory())
-        .registerViewTypeFactory(LunchItem.Factory())
-        .registerViewTypeFactory(WeekendItem.Factory())
-        .registerViewTypeFactory(WeekendStackItem.Factory())
-        .registerViewTypeFactory(EmptyItem.Factory())
-        .registerViewTypeFactory(ExamWeekItem.Factory())
+        .registerViewTypeFactory(SessionItem.Factory())
         .build()
     }
     val menuAdapter = BaseAdapter.Builder()
@@ -73,7 +67,6 @@ class FeedPresenter @Inject constructor(
             view.onEditListener = { onStatusEdit() }
             view.bottomReachListener = { onScrollEnd() }
 
-            delay(50)
             if (offset == 0) {
                 onScrollEnd()
             } else if (isNotifiedToRefresh) {
@@ -143,19 +136,22 @@ class FeedPresenter @Inject constructor(
     }
 
     private suspend fun loadOffsetCouples(localOffset: Int, refresh: Boolean = false) = withContext(Dispatchers.Main) {
-        val couples = model.getDayCouples(localOffset, refresh = refresh)
-        // после получения итемы с "Зачетной неделей" прекращаем добавлять новые карточки
-        if (couples.firstOrNull() is ExamWeekItem) {
-            if (adapter.baseItems.any { it is ExamWeekItem }) return@withContext
-        }
-        couples.forEach {
-            adapter.baseItems.add(it)
-            adapter.notifyItemChanged(adapter.baseItems.size - 1)
-            delay(100) // TODO избавиться от задержки и придумать анимацию иначе
-        }
-        view?.unlock()
-        if (offset < daysToLoadOnStart)
-            onScrollEnd()
+//        val couples = model.getDayCouples(localOffset, refresh = refresh)
+//        // после получения итемы с "Зачетной неделей" прекращаем добавлять новые карточки
+//        if (couples.firstOrNull() is ExamWeekItem) {
+//            if (adapter.baseItems.any { it is ExamWeekItem }) return@withContext
+//        }
+//        couples.forEach {
+//            adapter.baseItems.add(it)
+//            adapter.notifyItemChanged(adapter.baseItems.size - 1)
+//            delay(100) // TODO избавиться от задержки и придумать анимацию иначе
+//        }
+//        view?.unlock()
+//        if (offset < daysToLoadOnStart)
+//            onScrollEnd()
+        adapter.baseItems.clear()
+        adapter.baseItems.add(SessionItem())
+        adapter.notifyDataSetChanged()
     }
 
     private fun clearAdapter() {
