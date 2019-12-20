@@ -1,38 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:layout_marginTop="32dp">
+        android:layout_height="wrap_content">
 
-    <ImageView
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:src="@drawable/emoji_hm"
-            android:layout_marginBottom="8dp"/>
-
-    <TextView
-            android:textColor="@color/colorBlack"
-            android:layout_width="250dp"
+    <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-medium"
-            android:gravity="center"
-            android:text="Кажется, вы еще не выбрали группу, расписание которой хотите просматривать :3"/>
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            app:cardBackgroundColor="@color/colorWhite"
+            app:cardCornerRadius="4dp"
+            app:cardElevation="2dp">
 
-    <TextView
-            android:id="@+id/buttonSubmit"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:textColor="@color/colorSecondary"
-            android:fontFamily="sans-serif-medium"
-            android:gravity="center"
-            android:layout_marginTop="8dp"
-            android:paddingRight="16dp"
-            android:paddingLeft="16dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:background="@drawable/button_submit_shape_bg"
-            android:textAllCaps="true"
-            android:text="Выбрать группу"/>
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp">
+
+            <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/emoji_hm"
+                    android:layout_marginBottom="8dp"/>
+
+            <TextView
+                    android:textColor="@color/colorBlack"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-medium"
+                    android:gravity="center"
+                    android:text="Кажется, вы еще не выбрали группу, расписание которой хотите просматривать :3"/>
+
+            <TextView
+                    android:id="@+id/buttonSubmit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:textColor="@color/colorSecondary"
+                    android:fontFamily="sans-serif-medium"
+                    android:gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:paddingRight="16dp"
+                    android:paddingLeft="16dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground"
+                    android:textAllCaps="true"
+                    android:text="Выбрать группу"/>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
 </LinearLayout>

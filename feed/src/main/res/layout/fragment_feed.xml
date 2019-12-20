@@ -28,6 +28,7 @@
                 android:background="@color/colorSecondary">
 
             <ProgressBar
+                    android:id="@+id/progressBar"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:indeterminateTint="@color/colorWhite"

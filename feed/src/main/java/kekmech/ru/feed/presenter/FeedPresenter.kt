@@ -23,59 +23,29 @@ class FeedPresenter @Inject constructor(
     private val updateChecker: UpdateChecker
 ) : Presenter<IFeedFragment>() {
 
-    private var isNotifiedToRefresh: Boolean = false
     var view: IFeedFragment? = null
-    var offset = 0
-    val daysToLoadOnStart = 3
     val adapter by lazy { BaseAdapter.Builder()
         .registerViewTypeFactory(SessionItem.Factory())
+        .registerViewTypeFactory(CarouselItem.Factory())
+        .registerViewTypeFactory(EmptyItem.Factory())
         .build()
     }
-    val menuAdapter = BaseAdapter.Builder()
-        .registerViewTypeFactory(FeedMenuItem.Factory())
-        .build()
 
     /**
      * subscribe to view events
      */
     override fun onResume(view: IFeedFragment) {
-        model.isNeedToUpdate.observe(view, Observer {
-            if (it == true) {
-                model.nitifyFeedUpdated()
-                refresh()
-                model.groupNumber.observe(view, Observer {
-                    view.setStatus(
-                        "Группа $it",
-                        model.formattedTodayStatus,
-                        "Идет ${model.currentWeekNumber} учебная неделя"
-                    )
-                })
-            }
-        })
         this.view = view
-        model.groupNumber.observe(view, Observer {
-            view.setStatus(
-                "Группа $it",
-                model.formattedTodayStatus,
-                "Идет ${model.currentWeekNumber} учебная неделя"
-            )
-        })
-        GlobalScope.launch(Dispatchers.Main) {
 
-            //delay(100)
-            view.updateAdapterIfNull(adapter)
-            view.onEditListener = { onStatusEdit() }
-            view.bottomReachListener = { onScrollEnd() }
+        adapter.baseItems.clear()
+        adapter.baseItems.add(CarouselItem())
+        adapter.baseItems.add(EmptyItem(::onStatusEdit))
+        adapter.baseItems.add(SessionItem())
+        adapter.notifyDataSetChanged()
 
-            if (offset == 0) {
-                onScrollEnd()
-            } else if (isNotifiedToRefresh) {
-                isNotifiedToRefresh = false
-                refresh()
-            }
-            view.unlock()
-            setupMenu()
-        }
+        view.setAdapter(adapter)
+
+        // check for updates
         GlobalScope.launch(Dispatchers.Main) {
             delay(1000)
             if (model.isNotShowedUpdateDialog) {
@@ -86,21 +56,6 @@ class FeedPresenter @Inject constructor(
                 }
             }
         }
-    }
-
-    private fun setupMenu() {
-        menuAdapter.baseItems.clear()
-        menuAdapter.baseItems.add(
-            FeedMenuItem("Добавить группу").apply {
-                clickListener = {
-                    GlobalScope.launch(Dispatchers.Main){
-                        delay(100)
-                        router.navigate(FEED_TO_ADD)
-                    }
-                }
-            }
-        )
-        view?.updateMenu(menuAdapter)
     }
 
     private fun onStatusEdit() {
@@ -116,51 +71,6 @@ class FeedPresenter @Inject constructor(
      */
     override fun onPause(view: IFeedFragment) {
         this.view = null
-    }
-
-    private fun refresh() {
-        offset = 1
-        model.weekendOffset = 0
-        clearAdapter()
-        GlobalScope.launch(Dispatchers.Main) {
-            loadOffsetCouples(0)
-        }
-    }
-
-    private fun onScrollEnd() {
-        val localOffset = offset
-        offset++
-        GlobalScope.launch(Dispatchers.Main) {
-            loadOffsetCouples(localOffset + model.weekendOffset)
-        }
-    }
-
-    private suspend fun loadOffsetCouples(localOffset: Int, refresh: Boolean = false) = withContext(Dispatchers.Main) {
-//        val couples = model.getDayCouples(localOffset, refresh = refresh)
-//        // после получения итемы с "Зачетной неделей" прекращаем добавлять новые карточки
-//        if (couples.firstOrNull() is ExamWeekItem) {
-//            if (adapter.baseItems.any { it is ExamWeekItem }) return@withContext
-//        }
-//        couples.forEach {
-//            adapter.baseItems.add(it)
-//            adapter.notifyItemChanged(adapter.baseItems.size - 1)
-//            delay(100) // TODO избавиться от задержки и придумать анимацию иначе
-//        }
-//        view?.unlock()
-//        if (offset < daysToLoadOnStart)
-//            onScrollEnd()
-        adapter.baseItems.clear()
-        adapter.baseItems.add(SessionItem())
-        adapter.notifyDataSetChanged()
-    }
-
-    private fun clearAdapter() {
-        adapter.baseItems.clear()
-        adapter.notifyDataSetChanged()
-    }
-
-    fun notifyToRefresh() {
-        isNotifiedToRefresh = true
     }
 
 }
