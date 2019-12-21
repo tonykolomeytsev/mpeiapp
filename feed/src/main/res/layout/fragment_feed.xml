@@ -33,7 +33,7 @@
                     android:layout_height="32dp"
                     android:indeterminateTint="@color/colorWhite"
                     android:layout_gravity="center_horizontal|bottom"
-                    android:layout_marginBottom="32dp"/>
+                    android:layout_marginBottom="24dp"/>
         </FrameLayout>
 
                 <LinearLayout

@@ -19,6 +19,7 @@ import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.util.TypedValue
 import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.feed.presenter.FeedPresenter
 
@@ -66,6 +67,13 @@ class FeedFragment @Inject constructor() : DaggerFragment(), IFeedFragment {
 
     override fun setAdapter(adapter: BaseAdapter) {
         recyclerView?.adapter = adapter
+    }
+
+    override fun hideLoading() {
         progressBar?.visibility = INVISIBLE
+    }
+
+    override fun showLoading() {
+        progressBar?.visibility = VISIBLE
     }
 }

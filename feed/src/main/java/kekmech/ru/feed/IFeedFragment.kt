@@ -10,4 +10,8 @@ interface IFeedFragment : LifecycleOwner {
     fun setAdapter(adapter: BaseAdapter)
 
     fun withinContext(listener: (context: Context) -> Unit)
+
+    fun showLoading()
+
+    fun hideLoading()
 }

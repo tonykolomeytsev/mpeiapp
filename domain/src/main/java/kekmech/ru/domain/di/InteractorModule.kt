@@ -101,4 +101,10 @@ abstract class InteractorModule {
 
     @Binds
     abstract fun provideGetNoteByIdUseCase(useCaseImpl: GetNoteByIdUseCaseImpl): GetNoteByIdUseCase
+
+    @Binds
+    abstract fun provideIsSchedulesEmptyUseCase(useCaseImpl: IsSchedulesEmptyUseCaseImpl): IsSchedulesEmptyUseCase
+
+    @Binds
+    abstract fun provideGetAcademicSessionUseCase(useCaseImpl: GetAcademicSessionUseCaseImpl): GetAcademicSessionUseCase
 }

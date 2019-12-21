@@ -22,4 +22,7 @@ interface ScheduleDao {
 
     @Delete
     fun delete(scheduleNative: ScheduleNative)
+
+    @Query("SELECT * FROM schedules LIMIT 1")
+    fun getAnySchedule(): ScheduleNative?
 }
