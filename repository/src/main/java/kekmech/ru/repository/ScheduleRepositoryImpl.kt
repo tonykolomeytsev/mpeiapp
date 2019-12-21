@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import kekmech.ru.core.dto.*
 import kekmech.ru.core.gateways.ScheduleCacheGateway
 import kekmech.ru.core.repositories.ScheduleRepository
+import kekmech.ru.repository.room.AppDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -14,7 +15,8 @@ import java.util.*
 import javax.inject.Inject
 
 class ScheduleRepositoryImpl @Inject constructor(
-    private val scheduleCacheGateway: ScheduleCacheGateway
+    private val scheduleCacheGateway: ScheduleCacheGateway,
+    private val appdb: AppDatabase
 ) : ScheduleRepository {
 
     override var isNeedToUpdateFeed = MutableLiveData<Boolean>().apply { value = false }
@@ -64,7 +66,7 @@ class ScheduleRepositoryImpl @Inject constructor(
 
     override fun setCurrentScheduleId(id: Int) = scheduleCacheGateway.setCurrentScheduleId(id)
 
-    fun loadSessionFromRemote() {
+    override fun loadSessionFromRemote(): AcademicSession {
         val inputs = Jsoup.connect("https://mpei.ru/Education/timetable/Pages/default.aspx")
             .get()
             .select("input")
@@ -104,6 +106,11 @@ class ScheduleRepositoryImpl @Inject constructor(
             .followRedirects(true)
             .post()
         println(result.html())
+
+        return AcademicSession(emptyList())
     }
 
+    override fun isSchedulesEmpty(): Boolean {
+        return appdb.scheduleDao().getAnySchedule() == null
+    }
 }

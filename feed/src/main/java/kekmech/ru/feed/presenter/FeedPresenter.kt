@@ -39,11 +39,28 @@ class FeedPresenter @Inject constructor(
 
         adapter.baseItems.clear()
         adapter.baseItems.add(CarouselItem())
-        adapter.baseItems.add(EmptyItem(::onStatusEdit))
-        adapter.baseItems.add(SessionItem())
+        view.setAdapter(adapter)
         adapter.notifyDataSetChanged()
 
-        view.setAdapter(adapter)
+        GlobalScope.launch(Dispatchers.Main) {
+            if (withContext(Dispatchers.IO) { model.isSchedulesEmpty }) {
+                adapter.baseItems.add(EmptyItem(::onStatusEdit))
+                adapter.notifyItemInserted(adapter.baseItems.lastIndex)
+                view.hideLoading()
+            } else {
+                val academicSession = withContext(Dispatchers.IO) { model.getAcademicSession() }
+                if (academicSession != null) {
+                    adapter.baseItems.add(SessionItem())
+                    adapter.notifyItemInserted(adapter.baseItems.lastIndex)
+                }
+                if (adapter.baseItems.size == 1) {// если только карусель
+//                    adapter.baseItems.add(NothingToShowItem())
+//                    adapter.notifyItemInserted(adapter.baseItems.lastIndex)
+                }
+                view.hideLoading()
+            }
+        }
+
 
         // check for updates
         GlobalScope.launch(Dispatchers.Main) {

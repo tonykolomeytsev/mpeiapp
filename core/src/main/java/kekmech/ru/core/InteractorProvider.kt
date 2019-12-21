@@ -34,4 +34,6 @@ interface InteractorProvider {
     fun provideSetCreateNoteTransactionUseCase(): SetCreateNoteTransactionUseCase
     fun provideGetCreateNoteTransactionUseCase(): GetCreateNoteTransactionUseCase
     fun provideGetNoteByIdUseCase(): GetNoteByIdUseCase
+    fun provideIsSchedulesEmptyUseCase(): IsSchedulesEmptyUseCase
+    fun provideGetAcademicSessionUseCase(): GetAcademicSessionUseCase
 }

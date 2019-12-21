@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import kekmech.ru.core.dto.CoupleNative
 import kekmech.ru.core.dto.Schedule
 import kekmech.ru.core.dto.ScheduleNative
+import kekmech.ru.core.dto.AcademicSession
 
 interface ScheduleRepository {
     var isNeedToUpdateFeed: MutableLiveData<Boolean>
@@ -22,4 +23,8 @@ interface ScheduleRepository {
     fun getAllSchedules(): List<ScheduleNative>
 
     fun setCurrentScheduleId(id: Int)
+
+    fun loadSessionFromRemote(): AcademicSession
+
+    fun isSchedulesEmpty(): Boolean
 }
