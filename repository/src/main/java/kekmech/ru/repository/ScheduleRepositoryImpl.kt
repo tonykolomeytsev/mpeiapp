@@ -6,6 +6,7 @@ import kekmech.ru.core.dto.*
 import kekmech.ru.core.gateways.ScheduleCacheGateway
 import kekmech.ru.core.repositories.ScheduleRepository
 import kekmech.ru.repository.room.AppDatabase
+import kekmech.ru.repository.utils.SessionParser
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -105,9 +106,8 @@ class ScheduleRepositoryImpl @Inject constructor(
             .data("__EVENTTARGET", __EVENTTARGET)
             .followRedirects(true)
             .post()
-        println(result.html())
-
-        return AcademicSession(emptyList())
+        val scheduleTable = result.select("div[class=mpei-tt-grid-wrap]")
+        return SessionParser().parse(scheduleTable)
     }
 
     override fun isSchedulesEmpty(): Boolean {

@@ -1,7 +1,6 @@
 package kekmech.ru.feed.presenter
 
 import android.content.Context
-import androidx.lifecycle.Observer
 import kekmech.ru.core.Presenter
 import kekmech.ru.core.Router
 import kekmech.ru.core.Screens.*
@@ -12,7 +11,6 @@ import kekmech.ru.feed.IFeedFragment
 import kekmech.ru.feed.items.*
 import kekmech.ru.feed.model.FeedModel
 import kotlinx.coroutines.*
-import java.util.*
 import javax.inject.Inject
 
 @ActivityScope
@@ -50,7 +48,7 @@ class FeedPresenter @Inject constructor(
             } else {
                 val academicSession = withContext(Dispatchers.IO) { model.getAcademicSession() }
                 if (academicSession != null) {
-                    adapter.baseItems.add(SessionItem())
+                    adapter.baseItems.add(SessionItem(academicSession))
                     adapter.notifyItemInserted(adapter.baseItems.lastIndex)
                 }
                 if (adapter.baseItems.size == 1) {// если только карусель
