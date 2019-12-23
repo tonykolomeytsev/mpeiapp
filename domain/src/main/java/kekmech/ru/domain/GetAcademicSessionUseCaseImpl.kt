@@ -9,6 +9,10 @@ class GetAcademicSessionUseCaseImpl @Inject constructor(
     private val scheduleRepository: ScheduleRepository
 ) : GetAcademicSessionUseCase {
     override fun invoke(): AcademicSession? {
-        return scheduleRepository.loadSessionFromRemote()
+        try {
+            return scheduleRepository.loadSessionFromRemote()
+        } catch (e: Exception) {
+            return null
+        }
     }
 }

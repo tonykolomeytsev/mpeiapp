@@ -3,27 +3,21 @@ package kekmech.ru.feed.items
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kekmech.ru.core.dto.AcademicSession
 import kekmech.ru.coreui.adapter.BaseAdapter
 import kekmech.ru.coreui.adapter.BaseFactory
 import kekmech.ru.coreui.adapter.BaseItem
 import kekmech.ru.coreui.adapter.BaseViewHolder
 import kekmech.ru.feed.R
 
-class SessionItem : BaseItem<SessionItem.ViewHolder>() {
+class SessionItem(val academicSession: AcademicSession) : BaseItem<SessionItem.ViewHolder>() {
 
     val adapter = BaseAdapter.Builder()
         .registerViewTypeFactory(SessionDisciplineItem.Factory())
         .build()
 
     override fun updateViewHolder(viewHolder: ViewHolder) {
-        adapter.baseItems.addAll(listOf(
-            SessionDisciplineItem(),
-            SessionDisciplineItem(),
-            SessionDisciplineItem(),
-            SessionDisciplineItem(),
-            SessionDisciplineItem(),
-            SessionDisciplineItem()
-        ))
+        adapter.baseItems.addAll(academicSession.events.map { SessionDisciplineItem(it) })
         viewHolder.recycler.layoutManager = LinearLayoutManager(viewHolder.itemView.context)
         viewHolder.recycler.adapter = adapter
     }
