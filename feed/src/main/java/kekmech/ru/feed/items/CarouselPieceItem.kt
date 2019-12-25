@@ -4,21 +4,26 @@ import android.content.Intent
 import android.net.Uri
 import android.view.View
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.cardview.widget.CardView
+import kekmech.ru.core.dto.FeedCarousel
+import kekmech.ru.core.gateways.PicassoFirebaseInstance
 import kekmech.ru.coreui.adapter.BaseFactory
 import kekmech.ru.coreui.adapter.BaseItem
 import kekmech.ru.coreui.adapter.BaseViewHolder
 import kekmech.ru.feed.R
 
-class CarouselPieceItem(val name: String, val drawable: Int = 0, val link: String) : BaseItem<CarouselPieceItem.ViewHolder>() {
+class CarouselPieceItem(
+    val item: FeedCarousel.Item,
+    val picasso: PicassoFirebaseInstance
+) : BaseItem<CarouselPieceItem.ViewHolder>() {
 
     override fun updateViewHolder(viewHolder: ViewHolder) {
-        viewHolder.name.text = name
-        if (drawable != 0) viewHolder.img.setImageResource(drawable)
+        viewHolder.name.text = item.name
+        picasso.load(item.image_url, viewHolder.img)
         viewHolder.container.setOnClickListener {
             val i = Intent(Intent.ACTION_VIEW)
-            i.data = Uri.parse(link)
+            i.data = Uri.parse(item.link)
             i.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             viewHolder.container.context.startActivity(i)
         }
@@ -27,7 +32,7 @@ class CarouselPieceItem(val name: String, val drawable: Int = 0, val link: Strin
     override fun approveFactory(factory: BaseFactory) = factory is Factory
 
     class ViewHolder(view: View) : BaseViewHolder(view) {
-        val container by bind<LinearLayout>(R.id.container)
+        val container by bind<CardView>(R.id.container)
         val name by bind<TextView>(R.id.textViewPieceName)
         val img by bind<ImageView>(R.id.imageViewPiece)
     }

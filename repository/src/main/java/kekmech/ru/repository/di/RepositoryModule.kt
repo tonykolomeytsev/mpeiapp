@@ -19,6 +19,7 @@ val KoinRepositoryModule = module {
     single { PlacesRepositoryImpl() } bind PlacesRepository::class
     single { BarsRepositoryImpl(get(), get()) } bind BarsRepository::class
     single { NotesRepositoryImpl(get()) } bind NotesRepository::class
+    single { FeedRepositoryImpl(get()) } bind FeedRepository::class
 
     // additional dependencies
     single { AppDatabaseModule.provideAppDatabase(get()) } bind AppDatabase::class
