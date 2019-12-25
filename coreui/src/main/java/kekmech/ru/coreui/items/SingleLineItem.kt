@@ -1,22 +1,26 @@
 package kekmech.ru.coreui.items
 
 import android.view.View
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.widget.TextView
 import kekmech.ru.coreui.R
 import kekmech.ru.coreui.adapter.*
 
 class SingleLineItem(
-    val string: String
+    val string: String, val d: Boolean = true
 ) : BaseClickableItem<SingleLineItem.ViewHolder>() {
 
     override fun updateViewHolder(viewHolder: ViewHolder) {
         viewHolder.textView.text = string
+        viewHolder.divider.visibility = if (d) VISIBLE else INVISIBLE
     }
 
     override fun approveFactory(factory: BaseFactory) = factory is Factory
 
     class ViewHolder(view: View) : BaseViewHolder(view) {
         val textView by bind<TextView>(R.id.textViewPrimary)
+        val divider by bind<View>(R.id.divider)
         override fun onCreateView(view: View) = Unit
     }
 

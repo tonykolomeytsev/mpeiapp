@@ -33,6 +33,8 @@ class FeedPresenter constructor(
     override fun onResume(view: IFeedFragment) {
         this.view = view
 
+        view.onSettingsClick = { router.navigate(FEED_TO_SETTINGS) }
+
         view.showLoading()
         adapter.baseItems.clear()
         adapter.baseItems.add(CarouselItem())

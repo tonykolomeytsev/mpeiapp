@@ -18,6 +18,8 @@ class FeedFragment : Fragment(), IFeedFragment {
 
     val presenter: FeedPresenter by inject()
 
+    override var onSettingsClick: () -> Unit = {}
+
     init { retainInstance = true }
 
     override fun onCreateView(
@@ -43,6 +45,7 @@ class FeedFragment : Fragment(), IFeedFragment {
         super.onResume()
         recyclerView?.layoutManager = LinearLayoutManager(activity)
         presenter.onResume(this)
+        buttonSettings?.setOnClickListener { onSettingsClick() }
     }
 
     override fun onPause() {

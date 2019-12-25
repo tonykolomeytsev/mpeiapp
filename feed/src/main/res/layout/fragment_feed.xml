@@ -36,34 +36,53 @@
                     android:layout_marginBottom="24dp"/>
         </FrameLayout>
 
-                <LinearLayout
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginBottom="16dp">
+
+                <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:textColor="@color/colorWhite"
+                        android:text="Актуальное"
+                        android:textSize="34sp"
+                        android:layout_marginLeft="16dp"
+                        android:fontFamily="sans-serif-black"/>
 
-                    <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/colorWhite"
-                            android:text="Актуальное"
-                            android:textSize="34sp"
-                            android:fontFamily="sans-serif-black"
-                            android:layout_marginLeft="16dp"
-                            android:layout_marginRight="16dp"
-                            android:layout_marginTop="32dp"
-                            android:layout_marginBottom="16dp"/>
+                <ImageView
+                        android:id="@+id/buttonSettings"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:padding="12dp"
+                        android:layout_marginRight="4dp"
+                        android:src="@drawable/ic_settings_black"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:layout_gravity="right|bottom"
+                        android:layout_marginBottom="8dp"
+                        android:tint="@color/colorWhite"
+                        android:clickable="true"
+                        android:focusable="true"/>
+            </FrameLayout>
 
-                    <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/recyclerView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:clipToPadding="false"
-                            android:layoutAnimation="@anim/layout_animation_fall_down"
-                            android:paddingBottom="100dp"
-                            tools:itemCount="1"
-                            tools:listitem="@layout/item_session" />
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:layoutAnimation="@anim/layout_animation_fall_down"
+                    android:paddingBottom="100dp"
+                    tools:itemCount="1"
+                    tools:listitem="@layout/item_session" />
 
-                </LinearLayout>
+        </LinearLayout>
+
 
     </FrameLayout>
 

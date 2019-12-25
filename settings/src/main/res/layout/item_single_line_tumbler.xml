@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        app:cardCornerRadius="0dp"
-        app:cardElevation="2dp"
-        app:cardBackgroundColor="@color/colorWhite">
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
 
     <FrameLayout
+            android:id="@+id/rootView"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:background="?android:attr/selectableItemBackground"
+            android:background="?attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
             android:gravity="center_vertical">
@@ -26,16 +24,13 @@
                 android:layout_marginStart="24dp"
                 android:layout_gravity="center_vertical"/>
 
-
-        <View
-                android:id="@+id/divider"
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="#000000"
-                android:alpha="0.2"
-                android:layout_gravity="bottom"/>
+        <Switch
+                android:id="@+id/theSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:layout_gravity="center_vertical|right" />
 
     </FrameLayout>
 
 </androidx.cardview.widget.CardView>
-

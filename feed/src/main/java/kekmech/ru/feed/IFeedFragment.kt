@@ -7,6 +7,8 @@ import kekmech.ru.coreui.adapter.BaseAdapter
 
 interface IFeedFragment : LifecycleOwner {
 
+    var onSettingsClick: () -> Unit
+
     fun setAdapter(adapter: BaseAdapter)
 
     fun withinContext(listener: (context: Context) -> Unit)
