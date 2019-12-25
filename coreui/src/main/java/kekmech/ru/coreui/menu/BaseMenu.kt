@@ -15,7 +15,7 @@ class BaseMenu(private var context: Context?) {
     val linkedList = LinkedList<BaseItem<*>>()
 
     fun divider(header: String, isLineVisible: Boolean = true): BaseMenu {
-        linkedList.add(DividerItem(header, isLineVisible))
+        linkedList.add(DividerItem(header))
         return this
     }
 

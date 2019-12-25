@@ -20,6 +20,7 @@ class MainNavRouter : Router {
                     e.printStackTrace()
                 }
                 FEED_TO_NOTE -> navController?.navigate(R.id.action_feedFragment_to_noteFragment)
+                FEED_TO_SETTINGS -> navController?.navigate(R.id.action_feedFragment_to_settingsFragment)
 
                 // BARS SCOPE
                 BARS_TO_RIGHTS -> navController?.navigate(R.id.action_barsFragment_to_rightsFragment)
@@ -31,9 +32,7 @@ class MainNavRouter : Router {
                 TIMETABLE_TO_FORCE -> navController?.navigate(R.id.action_timetableFragment_to_forceUpdateFragment3)
                 TIMETABLE_TO_NOTE -> navController?.navigate(R.id.action_timetableFragment_to_noteFragment2)
             }
-        }catch (e: Exception) {
-            Crashlytics.logException(e)
-        }
+        }catch (e: Exception) { e.printStackTrace() }
     }
 
     override fun popBackStack() {
