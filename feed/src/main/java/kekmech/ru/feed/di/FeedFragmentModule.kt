@@ -9,5 +9,5 @@ import org.koin.dsl.module
 val KoinFeedFragmentModule = module {
     // feed MVP pattern
     single { FeedPresenter(get(), get(), get(), get()) }
-    single { FeedModelImpl(get(), get(), get(), get(), get(), get(), get(), get(), get()) } bind FeedModel::class
+    single { FeedModelImpl(get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get()) } bind FeedModel::class
 }

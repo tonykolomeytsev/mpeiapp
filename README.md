@@ -28,7 +28,7 @@
 
 ### Стек
  
-+ Многомодульная, упрощенная **Clean Architecture** с активным использованием **Dagger 2**.
++ Многомодульная, упрощенная **Clean Architecture** с активным использованием **Koin**.
 + Kotlin Coroutines
 + Android Arch 
   - Navigation Component

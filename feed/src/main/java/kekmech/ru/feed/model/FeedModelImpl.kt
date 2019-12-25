@@ -3,6 +3,8 @@ package kekmech.ru.feed.model
 import android.content.Context
 import androidx.lifecycle.LiveData
 import kekmech.ru.core.dto.AcademicSession
+import kekmech.ru.core.dto.FeedCarousel
+import kekmech.ru.core.gateways.PicassoFirebaseInstance
 import kekmech.ru.core.usecases.*
 
 class FeedModelImpl constructor(
@@ -14,7 +16,9 @@ class FeedModelImpl constructor(
     private val setIsShowedUpdateDialogUseCase: SetIsShowedUpdateDialogUseCase,
     private val getIsShowedUpdateDialogUseCase: GetIsShowedUpdateDialogUseCase,
     private val isSchedulesEmptyUseCase: IsSchedulesEmptyUseCase,
-    private val getAcademicSessionUseCase: GetAcademicSessionUseCase
+    private val getAcademicSessionUseCase: GetAcademicSessionUseCase,
+    private val getFeedCarouselUseCase: GetFeedCarouselUseCase,
+    private val getPicassoInstanceUseCase: GetPicassoInstanceUseCase
 ) : FeedModel {
 
     override val isSchedulesEmpty: Boolean
@@ -42,5 +46,13 @@ class FeedModelImpl constructor(
 
     override fun getAcademicSession(): AcademicSession? {
         return getAcademicSessionUseCase()
+    }
+
+    override fun getCarousel(): LiveData<FeedCarousel> {
+        return getFeedCarouselUseCase()
+    }
+
+    override fun getPicasso(): PicassoFirebaseInstance {
+        return getPicassoInstanceUseCase()
     }
 }

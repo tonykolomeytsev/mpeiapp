@@ -1,6 +1,7 @@
 package kekmech.ru.feed.presenter
 
 import android.content.Context
+import androidx.lifecycle.Observer
 import kekmech.ru.core.Presenter
 import kekmech.ru.core.Router
 import kekmech.ru.core.Screens.*
@@ -37,24 +38,38 @@ class FeedPresenter constructor(
 
         view.showLoading()
         adapter.baseItems.clear()
-        adapter.baseItems.add(CarouselItem())
         view.setAdapter(adapter)
-        adapter.notifyDataSetChanged()
 
         GlobalScope.launch(Dispatchers.Main) {
+            // carousel
+            withContext(Dispatchers.IO) { model.getCarousel() }.observe(view, Observer { carousel ->
+                if (carousel != null) {
+                    val notFirstTime = adapter.baseItems.any { it is CarouselItem }
+                    if (notFirstTime) {
+                        adapter.baseItems[0] = (CarouselItem(carousel, model.getPicasso()))
+                        adapter.notifyItemChanged(0)
+                    } else {
+                        adapter.baseItems.add(CarouselItem(carousel, model.getPicasso()))
+                        adapter.notifyItemInserted(0)
+                    }
+                }
+            })
+
             if (withContext(Dispatchers.IO) { model.isSchedulesEmpty }) {
                 adapter.baseItems.add(EmptyItem(::onStatusEdit))
                 adapter.notifyItemInserted(adapter.baseItems.lastIndex)
                 view.hideLoading()
             } else {
-                val academicSession = withContext(Dispatchers.IO) { model.getAcademicSession() }
+                var academicSession = withContext(Dispatchers.IO) { model.getAcademicSession() }
                 if (academicSession != null) {
-                    adapter.baseItems.add(1, SessionItem(academicSession))
-                    adapter.notifyItemInserted(1)
+                    val item = SessionItem(academicSession)
+                    adapter.baseItems.add(item)
+                    adapter.notifyItemInserted(adapter.baseItems.indexOf(item))
                 }
-                if (adapter.baseItems.size == 1) {// если только карусель
-                    adapter.baseItems.add(1, NothingToShowItem())
-                    adapter.notifyItemInserted(1)
+                if (adapter.baseItems.size == 0) {// если только карусель
+                    val item = NothingToShowItem()
+                    adapter.baseItems.add(item)
+                    adapter.notifyItemInserted(adapter.baseItems.indexOf(item))
                 }
                 view.hideLoading()
             }
