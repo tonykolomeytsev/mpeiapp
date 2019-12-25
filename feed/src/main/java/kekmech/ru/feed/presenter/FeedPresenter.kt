@@ -26,6 +26,7 @@ class FeedPresenter @Inject constructor(
         .registerViewTypeFactory(SessionItem.Factory())
         .registerViewTypeFactory(CarouselItem.Factory())
         .registerViewTypeFactory(EmptyItem.Factory())
+        .registerViewTypeFactory(NothingToShowItem.Factory())
         .build()
     }
 
@@ -35,6 +36,7 @@ class FeedPresenter @Inject constructor(
     override fun onResume(view: IFeedFragment) {
         this.view = view
 
+        view.showLoading()
         adapter.baseItems.clear()
         adapter.baseItems.add(CarouselItem())
         view.setAdapter(adapter)
@@ -48,12 +50,12 @@ class FeedPresenter @Inject constructor(
             } else {
                 val academicSession = withContext(Dispatchers.IO) { model.getAcademicSession() }
                 if (academicSession != null) {
-                    adapter.baseItems.add(SessionItem(academicSession))
-                    adapter.notifyItemInserted(adapter.baseItems.lastIndex)
+                    adapter.baseItems.add(1, SessionItem(academicSession))
+                    adapter.notifyItemInserted(1)
                 }
                 if (adapter.baseItems.size == 1) {// если только карусель
-//                    adapter.baseItems.add(NothingToShowItem())
-//                    adapter.notifyItemInserted(adapter.baseItems.lastIndex)
+                    adapter.baseItems.add(1, NothingToShowItem())
+                    adapter.notifyItemInserted(1)
                 }
                 view.hideLoading()
             }
