@@ -66,7 +66,7 @@ class FeedPresenter constructor(
                     adapter.baseItems.add(item)
                     adapter.notifyItemInserted(adapter.baseItems.indexOf(item))
                 }
-                if (adapter.baseItems.size == 0) {// если только карусель
+                if ((adapter.baseItems.size == 1 && adapter.baseItems.firstOrNull() is CarouselItem) or (adapter.baseItems.isEmpty())) {// если только карусель
                     val item = NothingToShowItem()
                     adapter.baseItems.add(item)
                     adapter.notifyItemInserted(adapter.baseItems.indexOf(item))
