@@ -9,6 +9,7 @@ import kekmech.ru.mainscreen.ForceUpdateChecker
 import kekmech.ru.mainscreen.MainNavRouter
 import kekmech.ru.map.di.KoinMapFragmentModule
 import kekmech.ru.notes.di.KoinNoteFragmentModule
+import kekmech.ru.settings.di.KoinSettingsModule
 import kekmech.ru.timetable.di.KoinTimetableFragmentModule
 import kekmech.ru.update.di.KoinUpdateModule
 import org.koin.core.context.loadKoinModules
@@ -28,6 +29,7 @@ val KoinMainActivityModule = module {
         KoinMapFragmentModule,
         KoinUpdateModule,
         KoinBarsModule,
-        KoinNoteFragmentModule
+        KoinNoteFragmentModule,
+        KoinSettingsModule
     ))
 }

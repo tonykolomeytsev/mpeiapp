@@ -42,6 +42,6 @@
             tools:layout="@layout/fragment_note"/>
     <fragment
             android:id="@+id/settingsFragment"
-            android:name="kekmech.ru.settings.SettingsFragment"
+            android:name="kekmech.ru.settings.view.SettingsFragment"
             android:label="SettingsFragment" />
 </navigation>
