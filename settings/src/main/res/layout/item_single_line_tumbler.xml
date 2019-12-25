@@ -4,7 +4,9 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent">
+        android:layout_width="match_parent"
+        app:cardBackgroundColor="@color/colorWhite"
+        app:cardElevation="1dp">
 
     <FrameLayout
             android:id="@+id/rootView"
