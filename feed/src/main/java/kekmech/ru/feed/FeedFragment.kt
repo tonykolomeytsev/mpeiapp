@@ -14,8 +14,7 @@ import kekmech.ru.feed.presenter.FeedPresenter
 import kotlinx.android.synthetic.main.fragment_feed.*
 import org.koin.android.ext.android.inject
 
-
-class FeedFragment constructor() : Fragment(), IFeedFragment {
+class FeedFragment : Fragment(), IFeedFragment {
 
     val presenter: FeedPresenter by inject()
 
