@@ -5,9 +5,8 @@ import com.crashlytics.android.Crashlytics
 import kekmech.ru.core.Router
 import kekmech.ru.core.Screens
 import kekmech.ru.core.Screens.*
-import javax.inject.Inject
 
-class MainNavRouter @Inject constructor(): Router {
+class MainNavRouter : Router {
     private var navController: NavController? = null
 
     override fun navigate(fragmentId: Screens) {

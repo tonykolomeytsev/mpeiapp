@@ -1,30 +1,33 @@
 package kekmech.ru.mainscreen.di
 
-import androidx.navigation.NavController
-import dagger.Binds
-import dagger.Module
-import dagger.android.AndroidInjector
-import dagger.multibindings.ClassKey
-import dagger.multibindings.IntoMap
+import kekmech.ru.addscreen.di.KoinAddFragmentModule
+import kekmech.ru.bars.di.KoinBarsModule
 import kekmech.ru.core.Router
 import kekmech.ru.core.UpdateChecker
+import kekmech.ru.feed.di.KoinFeedFragmentModule
 import kekmech.ru.mainscreen.ForceUpdateChecker
-import kekmech.ru.mainscreen.MainActivity
 import kekmech.ru.mainscreen.MainNavRouter
-import javax.inject.Singleton
+import kekmech.ru.map.di.KoinMapFragmentModule
+import kekmech.ru.notes.di.KoinNoteFragmentModule
+import kekmech.ru.timetable.di.KoinTimetableFragmentModule
+import kekmech.ru.update.di.KoinUpdateModule
+import org.koin.core.context.loadKoinModules
+import org.koin.dsl.bind
+import org.koin.dsl.module
 
-@Module(subcomponents = [MainActivityComponent::class])
-abstract class MainActivityModule {
-    @Binds
-    @IntoMap
-    @ClassKey(MainActivity::class)
-    abstract fun bindAndroidInjectorFactory(factory: MainActivityComponent.Factory): AndroidInjector.Factory<*>
+val KoinMainActivityModule = module {
+    // MainActivity scope
+    single { MainNavRouter() } bind Router::class
+    single { ForceUpdateChecker(get()) } bind UpdateChecker::class
 
-    @Binds
-    @Singleton
-    abstract fun provideNavRouter(routerImpl: MainNavRouter): Router
-
-    @Binds
-    @Singleton
-    abstract fun provideUpdateChecker(checkerImpl: ForceUpdateChecker): UpdateChecker
+    // fragment modules
+    loadKoinModules(listOf(
+        KoinFeedFragmentModule,
+        KoinTimetableFragmentModule,
+        KoinAddFragmentModule,
+        KoinMapFragmentModule,
+        KoinUpdateModule,
+        KoinBarsModule,
+        KoinNoteFragmentModule
+    ))
 }

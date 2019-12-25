@@ -4,22 +4,19 @@ package kekmech.ru.settings
 import android.content.Context
 import android.os.Bundle
 import android.view.*
-import dagger.android.support.DaggerFragment
+import androidx.fragment.app.Fragment
 import kekmech.ru.core.Router
-import kekmech.ru.coreui.Resources
-import kekmech.ru.coreui.bs.BaseBottomSheetFragment
 import kekmech.ru.coreui.menu.BaseMenu
 import kekmech.ru.coreui.menu.ItemListener
 import kotlinx.android.synthetic.main.fragment_settings.view.*
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
 
 
-class SettingsFragment : DaggerFragment(), ItemListener {
+class SettingsFragment : Fragment(), ItemListener {
 
     var statusBarColor: Int = 0
 
-    @Inject
-    lateinit var router: Router
+    val router: Router by inject()
 
     val adapter = BaseMenu(context)
         .divider("Основные", isLineVisible=false)
@@ -72,7 +69,5 @@ class SettingsFragment : DaggerFragment(), ItemListener {
         super.onDetach()
         //activity!!.window.statusBarColor = statusBarColor
     }
-
-    class TestBottomSheet : BaseBottomSheetFragment(R.layout.fragment_bottom_sheet_test)
 
 }

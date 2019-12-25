@@ -4,9 +4,8 @@ import kekmech.ru.core.dto.CoupleNative
 import kekmech.ru.core.repositories.NotesRepository
 import kekmech.ru.core.repositories.ScheduleRepository
 import kekmech.ru.core.usecases.GetTimetableScheduleUseCase
-import javax.inject.Inject
 
-class GetTimetableScheduleUseCaseImpl @Inject constructor(
+class GetTimetableScheduleUseCaseImpl constructor(
     private val scheduleRepository: ScheduleRepository,
     private val notesRepository: NotesRepository
 ) : GetTimetableScheduleUseCase {

@@ -5,16 +5,13 @@ import kekmech.ru.core.Presenter
 import kekmech.ru.core.Router
 import kekmech.ru.core.Screens.*
 import kekmech.ru.core.UpdateChecker
-import kekmech.ru.core.scopes.ActivityScope
 import kekmech.ru.coreui.adapter.BaseAdapter
 import kekmech.ru.feed.IFeedFragment
 import kekmech.ru.feed.items.*
 import kekmech.ru.feed.model.FeedModel
 import kotlinx.coroutines.*
-import javax.inject.Inject
 
-@ActivityScope
-class FeedPresenter @Inject constructor(
+class FeedPresenter constructor(
     private val model: FeedModel,
     private val context: Context,
     private val router: Router,

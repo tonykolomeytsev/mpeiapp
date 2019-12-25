@@ -4,9 +4,8 @@ import kekmech.ru.core.dto.AcademGroup
 import kekmech.ru.core.usecases.ChangeCurrentScheduleIdUseCase
 import kekmech.ru.core.usecases.GetAllSchedulesUseCase
 import java.util.*
-import javax.inject.Inject
 
-class AddFragmentModelImpl @Inject constructor(
+class AddFragmentModelImpl constructor(
     private val getAllSchedulesUseCase: GetAllSchedulesUseCase,
     private val changeCurrentScheduleIdUseCase: ChangeCurrentScheduleIdUseCase
 ) : AddFragmentModel {

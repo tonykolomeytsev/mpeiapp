@@ -1,32 +1,20 @@
 package kekmech.ru.update.view
 
-import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasAndroidInjector
-import dagger.android.support.AndroidSupportInjection
-import dagger.android.support.DaggerFragment
 import kekmech.ru.update.ForceUpdateFragmentPresenter
 import kekmech.ru.update.R
 import kotlinx.android.synthetic.main.fragment_force_update.*
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
 
-class ForceUpdateFragment : BottomSheetDialogFragment(), HasAndroidInjector, ForceUpdateFragmentView {
+class ForceUpdateFragment : BottomSheetDialogFragment(), ForceUpdateFragmentView {
 
-    @Inject
-    @JvmField
-    public var androidInjector: DispatchingAndroidInjector<Any>? = null
-
-    @Inject
-    lateinit var presenter: ForceUpdateFragmentPresenter
+    val presenter: ForceUpdateFragmentPresenter by inject()
 
     override var onUpdateNow: () -> Unit = {}
 
@@ -42,13 +30,6 @@ class ForceUpdateFragment : BottomSheetDialogFragment(), HasAndroidInjector, For
             textDescription?.visibility = View.GONE
         }
     }
-
-    override fun onAttach(context: Context) {
-        AndroidSupportInjection.inject(this)
-        super.onAttach(context)
-    }
-
-    override fun androidInjector(): AndroidInjector<Any> = androidInjector!!
 
     override fun onCreateView(
         inflater: LayoutInflater,

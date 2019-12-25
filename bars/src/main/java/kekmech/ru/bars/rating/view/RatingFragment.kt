@@ -4,18 +4,16 @@ import kekmech.ru.bars.R
 import kekmech.ru.bars.rating.RatingFragmentPresenter
 import kekmech.ru.core.dto.AcademicScore
 import kekmech.ru.core.platform.BaseFragment
-import kotlinx.android.synthetic.main.fragment_bars_details.*
 import kotlinx.android.synthetic.main.fragment_bars_details.toolbar
 import kotlinx.android.synthetic.main.fragment_bars_rating.*
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
 
 class RatingFragment : BaseFragment<RatingFragmentPresenter, RatingFragmentView>(
     R.layout.fragment_bars_rating
 ), RatingFragmentView {
 
     override var onBackNav: () -> Unit = {}
-    @Inject
-    override lateinit var presenter: RatingFragmentPresenter
+    override val presenter: RatingFragmentPresenter by inject()
 
     override fun onResume() {
         super.onResume()

@@ -4,7 +4,6 @@ import kekmech.ru.addscreen.IAddFragment
 import kekmech.ru.addscreen.model.AddFragmentModel
 import kekmech.ru.core.Presenter
 import kekmech.ru.core.Router
-import kekmech.ru.core.Screens
 import kekmech.ru.core.dto.AcademGroup
 import kekmech.ru.core.dto.CoupleNative
 import kekmech.ru.core.dto.Schedule
@@ -14,9 +13,8 @@ import kekmech.ru.core.usecases.SetNeedToUpdateFeedUseCase
 import kekmech.ru.coreui.adapter.BaseAdapter
 import kekmech.ru.coreui.adapter.BaseClickableItem
 import kotlinx.coroutines.*
-import javax.inject.Inject
 
-class AddFragmentPresenter @Inject constructor(
+class AddFragmentPresenter constructor(
     private val saveScheduleUseCase: SaveScheduleUseCase,
     private val setNeedToUpdateFeedUseCase: SetNeedToUpdateFeedUseCase,
     private val model: AddFragmentModel,

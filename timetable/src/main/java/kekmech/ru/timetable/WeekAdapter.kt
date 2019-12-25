@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import kekmech.ru.core.dto.CoupleNative
 import kekmech.ru.coreui.Resources
 import kekmech.ru.timetable.model.TimetableFragmentModel
 import kekmech.ru.timetable.view.DayFragment
@@ -26,7 +25,7 @@ class WeekAdapter(
         // val couples = { model.getDaySchedule(dayOfWeek, model.today.weekOfSemester) }
         return ((daysFragments[dayOfWeek - 1] ?: error("Can't create instance of DayFragment for day=$dayOfWeek"))
             .newInstance() as DayFragment)
-            .apply { this.model = this@WeekAdapter.model }
+            //.apply { this.model = this@WeekAdapter.model }
     }
 
     override fun getPageTitle(position: Int): CharSequence? {

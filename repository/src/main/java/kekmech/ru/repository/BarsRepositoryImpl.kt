@@ -12,9 +12,8 @@ import kekmech.ru.repository.auth.BaseKeyStore
 import kekmech.ru.repository.utils.BarsParser
 import kotlinx.coroutines.GlobalScope
 import org.jsoup.Jsoup
-import javax.inject.Inject
 
-class BarsRepositoryImpl @Inject constructor(
+class BarsRepositoryImpl constructor(
     private val context: Context,
     private val baseKeyStore: BaseKeyStore
 ) : BarsRepository {

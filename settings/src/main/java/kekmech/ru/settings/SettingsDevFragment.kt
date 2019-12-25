@@ -8,15 +8,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import dagger.android.support.DaggerFragment
+import androidx.fragment.app.Fragment
 import kekmech.ru.core.Router
 import kekmech.ru.coreui.Resources
 import kekmech.ru.coreui.menu.ItemListener
 import kekmech.ru.coreui.menu.BaseMenu
 import kotlinx.android.synthetic.main.fragment_settings.view.*
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
 
-class SettingsDevFragment : DaggerFragment(), ItemListener {
+class SettingsDevFragment : Fragment(), ItemListener {
 
     var statusBarColor: Int = 0
 
@@ -48,8 +48,7 @@ class SettingsDevFragment : DaggerFragment(), ItemListener {
 //            "RETROFIT_TEST")
         .buildAdapter(this)
 
-    @Inject
-    lateinit var router: Router
+    val router: Router by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

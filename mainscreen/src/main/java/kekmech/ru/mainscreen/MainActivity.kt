@@ -1,6 +1,7 @@
 package kekmech.ru.mainscreen
 
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
@@ -8,20 +9,19 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException
 import com.google.android.gms.maps.MapsInitializer
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.analytics.FirebaseAnalytics
-import dagger.android.support.DaggerAppCompatActivity
 import kekmech.ru.core.Router
 import kekmech.ru.core.usecases.IncrementAppLaunchCountUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
 
-class MainActivity : DaggerAppCompatActivity() {
+class MainActivity : AppCompatActivity() {
 
-    @Inject lateinit var router: Router
+    val router: Router by inject()
     private var currentNavController: LiveData<NavController>? = null
 
-    @Inject lateinit var incrementAppLaunchCountUseCase: IncrementAppLaunchCountUseCase
+    val incrementAppLaunchCountUseCase: IncrementAppLaunchCountUseCase by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

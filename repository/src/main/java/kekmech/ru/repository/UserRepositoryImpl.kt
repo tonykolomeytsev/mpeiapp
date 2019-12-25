@@ -2,13 +2,11 @@ package kekmech.ru.repository
 
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
-import android.content.SharedPreferences
+import kekmech.ru.core.dto.User
 import kekmech.ru.core.gateways.UserCacheGateway
 import kekmech.ru.core.repositories.UserRepository
-import kekmech.ru.core.dto.User
-import javax.inject.Inject
 
-class UserRepositoryImpl @Inject constructor(
+class UserRepositoryImpl constructor(
     private val userCacheGateway: UserCacheGateway,
     private val context: Context
 ) : UserRepository {

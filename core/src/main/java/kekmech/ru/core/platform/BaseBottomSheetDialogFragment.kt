@@ -1,6 +1,5 @@
 package kekmech.ru.core.platform
 
-import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.util.TypedValue
@@ -11,22 +10,13 @@ import android.widget.FrameLayout
 import androidx.lifecycle.LifecycleOwner
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasAndroidInjector
-import dagger.android.support.AndroidSupportInjection
 import kekmech.ru.core.Presenter
-import javax.inject.Inject
 
 @Suppress("UNCHECKED_CAST")
 abstract class BaseBottomSheetDialogFragment<P : Presenter<L>, L : LifecycleOwner>(
     private val layoutId: Int,
     private val peekHeight: Float  = -1f
-) : BottomSheetDialogFragment(), HasAndroidInjector {
-
-    @Inject
-    @JvmField
-    public var androidInjector: DispatchingAndroidInjector<Any>? = null
+) : BottomSheetDialogFragment() {
 
     abstract var presenter: P
 
@@ -34,13 +24,6 @@ abstract class BaseBottomSheetDialogFragment<P : Presenter<L>, L : LifecycleOwne
         super.onActivityCreated(savedInstanceState)
         (view?.parent as View?)?.setBackgroundColor(Color.TRANSPARENT)
     }
-
-    override fun onAttach(context: Context) {
-        AndroidSupportInjection.inject(this)
-        super.onAttach(context)
-    }
-
-    override fun androidInjector(): AndroidInjector<Any> = androidInjector!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

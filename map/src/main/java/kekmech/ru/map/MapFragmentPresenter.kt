@@ -21,9 +21,8 @@ import kekmech.ru.core.dto.Hostel
 import kekmech.ru.coreui.adapter.BaseAdapter
 import kekmech.ru.map.view.CustomMarkerView
 import kekmech.ru.map.view.pages.*
-import javax.inject.Inject
 
-class MapFragmentPresenter @Inject constructor(
+class MapFragmentPresenter constructor(
     private val model: MapFragmentModel,
     private val context: Context
 ) : Presenter<MapFragmentView>(), OnMapReadyCallback {

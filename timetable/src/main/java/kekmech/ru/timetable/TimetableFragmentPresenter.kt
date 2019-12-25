@@ -15,9 +15,8 @@ import kekmech.ru.coreui.adapter.BaseItem
 import kekmech.ru.timetable.model.TimetableFragmentModel
 import kekmech.ru.timetable.view.TimetableFragmentView
 import kotlinx.coroutines.*
-import javax.inject.Inject
 
-class TimetableFragmentPresenter @Inject constructor(
+class TimetableFragmentPresenter constructor(
     private val model: TimetableFragmentModel,
     private val context: Context,
     private val updateChecker: UpdateChecker,

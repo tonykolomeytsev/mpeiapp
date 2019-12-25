@@ -13,9 +13,8 @@ import kekmech.ru.core.repositories.PlacesRepository.Companion.FIELD_TYPE
 import kekmech.ru.core.repositories.PlacesRepository.Companion.TYPE_BUILDING
 import kekmech.ru.core.repositories.PlacesRepository.Companion.TYPE_FOOD
 import kekmech.ru.core.repositories.PlacesRepository.Companion.TYPE_HOSTEL
-import javax.inject.Inject
 
-class PlacesRepositoryImpl @Inject constructor(): PlacesRepository {
+class PlacesRepositoryImpl constructor(): PlacesRepository {
     private val mutableBuildings = MutableLiveData<List<Building>>()
     override val buildings: LiveData<List<Building>>
         get() {

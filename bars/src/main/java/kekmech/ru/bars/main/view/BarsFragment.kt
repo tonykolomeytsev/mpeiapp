@@ -13,23 +13,18 @@ import kekmech.ru.bars.main.view.BarsFragmentView.State.LOGIN
 import kekmech.ru.bars.main.view.BarsFragmentView.State.SCORE
 import kekmech.ru.core.platform.BaseFragment
 import kotlinx.android.synthetic.main.fragment_bars.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import javax.inject.Inject
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.AppBarLayout.LayoutParams.*
 import kekmech.ru.core.dto.AcademicScore
 import kekmech.ru.coreui.Resources
+import org.koin.android.ext.android.inject
 
 
 class BarsFragment : BaseFragment<BarsFragmentPresenter, BarsFragmentView>(
     layoutId = R.layout.fragment_bars
 ), BarsFragmentView {
 
-    @Inject
-    override lateinit var presenter: BarsFragmentPresenter
+    override val presenter: BarsFragmentPresenter by inject()
 
     override var onLogInListener: (String, String) -> Unit = {_,_->}
 

@@ -1,11 +1,9 @@
 package kekmech.ru.bars.details
 
-import android.util.Log
 import kekmech.ru.bars.details.adapter.EventItem
 import kekmech.ru.bars.details.adapter.FinalItem
 import kekmech.ru.bars.details.adapter.WeekItem
 import kekmech.ru.bars.details.view.BarsDetailsFragmentView
-import kekmech.ru.bars.main.adapter.MarkItem
 import kekmech.ru.core.Presenter
 import kekmech.ru.core.Router
 import kekmech.ru.core.dto.AcademicDiscipline
@@ -15,9 +13,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-class BarsDetailsFragmentPresenter @Inject constructor(
+class BarsDetailsFragmentPresenter constructor(
     private val getDetailsDisciplineUseCase: GetDetailsDisciplineUseCase,
     private val router: Router
 ) : Presenter<BarsDetailsFragmentView>() {

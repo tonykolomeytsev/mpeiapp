@@ -5,20 +5,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
-import dagger.android.support.DaggerFragment
 import kekmech.ru.core.Presenter
-import kekmech.ru.core.usecases.IncrementAppLaunchCountUseCase
-import javax.inject.Inject
 
 @Suppress("UNCHECKED_CAST")
 abstract class BaseFragment<P : Presenter<L>, L : LifecycleOwner>(
     private val layoutId: Int,
     private val statusBarColor: Int = Color.TRANSPARENT
-) : DaggerFragment() {
-    abstract var presenter: P
-    @Inject
-    lateinit var useCase: IncrementAppLaunchCountUseCase
+) : Fragment() {
+    abstract val presenter: P
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
