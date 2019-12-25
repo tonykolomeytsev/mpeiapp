@@ -18,4 +18,11 @@
             android:gravity="center"
             tools:text="Mpeix v0.9.92 (13) for Android"/>
 
+    <ImageView
+            android:layout_marginTop="8dp"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="@drawable/emoji_heart"
+            android:layout_gravity="center_horizontal"/>
+
 </LinearLayout>
