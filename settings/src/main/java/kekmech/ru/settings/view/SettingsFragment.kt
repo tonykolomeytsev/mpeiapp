@@ -1,7 +1,6 @@
-package kekmech.ru.settings
+package kekmech.ru.settings.view
 
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,9 +8,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import kekmech.ru.core.Router
 import kekmech.ru.coreui.adapter.BaseAdapter
+import kekmech.ru.coreui.adapter.BaseClickableItem
 import kekmech.ru.coreui.items.DividerItem
 import kekmech.ru.coreui.items.SingleLineItem
 import kekmech.ru.coreui.items.TwoLineItem
+import kekmech.ru.settings.R
+import kekmech.ru.settings.SettingsPresenter
+import kekmech.ru.settings.adapter.SingleLineTumblerItem
+import kekmech.ru.settings.adapter.VersionItem
 import kotlinx.android.synthetic.main.fragment_settings.view.*
 import org.koin.android.ext.android.inject
 
@@ -27,6 +31,7 @@ class SettingsFragment : Fragment() {
         .build()
 
     val router: Router by inject()
+    val presenter: SettingsPresenter by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,19 +48,23 @@ class SettingsFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         adapter.baseItems.clear()
-        adapter.baseItems.addAll(listOf(
-            SingleLineTumblerItem("Тёмная тема"),
-            DividerItem("Хранилище"),
-            TwoLineItem("Удалить все расписания" to "Расписаний на устройстве: 4"),
-            TwoLineItem("Удалить все домашние задания" to "Домашних заданий на устройстве: 16", false),
-            DividerItem("Личный кабинет БАРС"),
-            SingleLineItem("Выйти из кабинета и стереть все данные", false),
-            DividerItem("Поддержка приложения"),
-            TwoLineItem("Присоединиться к разработке" to "https://github.com/tonykolomeytsev/mpeiapp"),
-            TwoLineItem("Задать вопрос" to "https://vk.com/kekmech"),
-            VersionItem()
-        ))
+        adapter.baseItems.addAll(
+            listOf(
+                SingleLineTumblerItem("Тёмная тема"),
+                DividerItem("Хранилище"),
+                TwoLineItem("Удалить все расписания" to "Расписаний на устройстве: 4", presenter::clearSchedules),
+                TwoLineItem("Удалить все домашние задания" to "Домашних заданий на устройстве: 16", presenter::clearNotes, false),
+                DividerItem("Личный кабинет БАРС"),
+                SingleLineItem("Выйти из кабинета и стереть все данные", presenter::logout, false),
+                DividerItem("Поддержка приложения"),
+                TwoLineItem("Присоединиться к разработке" to "https://github.com/tonykolomeytsev/mpeiapp", presenter::github),
+                TwoLineItem("Задать вопрос" to "https://vk.com/kekmech", presenter::vk, false),
+                VersionItem()
+            )
+        )
         adapter.notifyDataSetChanged()
     }
 
+    private fun BaseClickableItem<*>.oncl(action: (BaseClickableItem<*>) -> Unit) =
+        this.apply { clickListener = { action(it) } }
 }

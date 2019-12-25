@@ -1,10 +1,11 @@
-package kekmech.ru.settings
+package kekmech.ru.settings.adapter
 
 import android.view.View
 import android.widget.TextView
 import kekmech.ru.coreui.adapter.BaseFactory
 import kekmech.ru.coreui.adapter.BaseItem
 import kekmech.ru.coreui.adapter.BaseViewHolder
+import kekmech.ru.settings.R
 
 class VersionItem : BaseItem<VersionItem.ViewHolder>() {
 
@@ -20,5 +21,8 @@ class VersionItem : BaseItem<VersionItem.ViewHolder>() {
         val title by bind<TextView>(R.id.textViewVersion)
     }
 
-    class Factory : BaseFactory(R.layout.item_version, ::ViewHolder)
+    class Factory : BaseFactory(
+        R.layout.item_version,
+        VersionItem::ViewHolder
+    )
 }

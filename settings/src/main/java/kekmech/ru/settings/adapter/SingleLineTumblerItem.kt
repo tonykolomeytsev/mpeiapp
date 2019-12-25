@@ -1,4 +1,4 @@
-package kekmech.ru.settings
+package kekmech.ru.settings.adapter
 
 import android.view.View
 import android.widget.FrameLayout
@@ -6,6 +6,7 @@ import android.widget.Switch
 import android.widget.TextView
 import android.widget.Toast
 import kekmech.ru.coreui.adapter.*
+import kekmech.ru.settings.R
 
 class SingleLineTumblerItem(
     val string: String
@@ -37,7 +38,8 @@ class SingleLineTumblerItem(
     }
 
     class Factory : BaseFactory(R.layout.item_single_line_tumbler) {
-        override fun instance(view: View) = ViewHolder(view)
+        override fun instance(view: View) =
+            ViewHolder(view)
     }
 
     companion object {
