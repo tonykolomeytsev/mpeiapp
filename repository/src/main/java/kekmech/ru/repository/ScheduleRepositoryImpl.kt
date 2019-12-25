@@ -68,6 +68,7 @@ class ScheduleRepositoryImpl @Inject constructor(
     override fun setCurrentScheduleId(id: Int) = scheduleCacheGateway.setCurrentScheduleId(id)
 
     override fun loadSessionFromRemote(): AcademicSession {
+        val groupName = scheduleCacheGateway.getGroupNum().toUpperCase(Locale.getDefault())
         val inputs = Jsoup.connect("https://mpei.ru/Education/timetable/Pages/default.aspx")
             .get()
             .select("input")
@@ -80,7 +81,7 @@ class ScheduleRepositoryImpl @Inject constructor(
         val href = Jsoup.connect("https://mpei.ru/Education/timetable/Pages/default.aspx")
             .data(eventValidationInput.attr("name"), eventValidationInput.attr("value"))
             .data(viewStateInput.attr("name"), viewStateInput.attr("value"))
-            .data(groupNameInput.attr("name"), "С-12-16")
+            .data(groupNameInput.attr("name"), groupName)
             .data(groupSubmitInput.attr("name"), groupSubmitInput.attr("value"))
             .header("Content-Type", "application/x-www-form-urlencoded")
             .followRedirects(false)

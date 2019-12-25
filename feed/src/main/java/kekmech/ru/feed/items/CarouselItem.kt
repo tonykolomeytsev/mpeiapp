@@ -16,10 +16,9 @@ class CarouselItem : BaseItem<CarouselItem.ViewHolder>() {
         .build()
 
     override fun updateViewHolder(viewHolder: ViewHolder) {
-        adapter.baseItems.add(CarouselPieceItem("БАРС", R.drawable.bars_carousel_piece))
-        adapter.baseItems.add(CarouselPieceItem("Расписание", R.drawable.timetable_carousel_piece))
-        adapter.baseItems.add(CarouselPieceItem("Карта", R.drawable.map_carousel_piece))
-        adapter.baseItems.add(CarouselPieceItem("Кекмех"))
+        adapter.baseItems.add(CarouselPieceItem("Правила БАРС в этом семестре", R.drawable.bars_carousel_piece, "https://vk.com/@in_mpei-ballno-reitingovaya-sistema-v-mei"))
+        adapter.baseItems.add(CarouselPieceItem("Как сдать сессию и не умереть", R.drawable.timetable_carousel_piece, "https://vk.com/thevyshka?w=wall-66036248_33757"))
+        adapter.baseItems.add(CarouselPieceItem("Кекмех\nОбратная связь", 0, "https://vk.com/kekmech"))
         viewHolder.recycler.layoutManager = LinearLayoutManager(viewHolder.recycler.context, LinearLayoutManager.HORIZONTAL, false)
         viewHolder.recycler.adapter = adapter
     }
