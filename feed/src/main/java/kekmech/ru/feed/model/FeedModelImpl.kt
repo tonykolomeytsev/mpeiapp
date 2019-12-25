@@ -2,21 +2,10 @@ package kekmech.ru.feed.model
 
 import android.content.Context
 import androidx.lifecycle.LiveData
-import kekmech.ru.core.Router
-import kekmech.ru.core.Screens
 import kekmech.ru.core.dto.AcademicSession
-import kekmech.ru.core.dto.CoupleNative
-import kekmech.ru.core.dto.Time
-import kekmech.ru.core.scopes.ActivityScope
 import kekmech.ru.core.usecases.*
-import kekmech.ru.coreui.adapter.BaseItem
-import kekmech.ru.feed.R
-import kekmech.ru.feed.items.*
-import kotlinx.coroutines.*
-import javax.inject.Inject
 
-@ActivityScope
-class FeedModelImpl @Inject constructor(
+class FeedModelImpl constructor(
     private val context: Context,
     private val getGroupNumberUseCase: GetGroupNumberUseCase,
     private val isNeedToUpdateFeedUseCase: IsNeedToUpdateFeedUseCase,

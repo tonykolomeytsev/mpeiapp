@@ -5,10 +5,8 @@ import android.content.pm.PackageManager
 import android.util.Log
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import kekmech.ru.core.UpdateChecker
-import javax.inject.Inject
 
-
-class ForceUpdateChecker @Inject constructor(
+class ForceUpdateChecker constructor(
     private val context: Context
 ) : UpdateChecker {
 

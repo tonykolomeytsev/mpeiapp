@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import kekmech.ru.map.MapFragmentPresenter
@@ -15,15 +16,13 @@ import com.example.map.R
 import kekmech.ru.map.model.MapFragmentModel.Companion.PAGE_BUILDINGS
 import kekmech.ru.map.model.MapFragmentModel.Companion.PAGE_FOODS
 import kekmech.ru.map.model.MapFragmentModel.Companion.PAGE_HOSTELS
-import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_map.*
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
 
 
-class MapFragment : DaggerFragment(), MapFragmentView {
+class MapFragment : Fragment(), MapFragmentView {
 
-    @Inject
-    lateinit var presenter: MapFragmentPresenter
+    val presenter: MapFragmentPresenter by inject()
 
     override val contentView: ViewGroup get() = mapCoordinator
 

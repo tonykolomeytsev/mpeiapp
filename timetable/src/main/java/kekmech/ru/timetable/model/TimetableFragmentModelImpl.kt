@@ -12,9 +12,8 @@ import kekmech.ru.timetable.R
 import kekmech.ru.timetable.view.items.MinCoupleItem
 import kekmech.ru.timetable.view.items.MinLunchItem
 import java.util.*
-import javax.inject.Inject
 
-class TimetableFragmentModelImpl @Inject constructor(
+class TimetableFragmentModelImpl constructor(
     private val getTimetableScheduleUseCase: GetTimetableScheduleUseCase,
     private val getGroupNumberUseCase: GetGroupNumberUseCase,
     private val setIsShowedUpdateDialogUseCase: SetIsShowedUpdateDialogUseCase,

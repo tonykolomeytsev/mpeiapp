@@ -13,9 +13,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.jsoup.Jsoup
 import java.util.*
-import javax.inject.Inject
 
-class ScheduleRepositoryImpl @Inject constructor(
+class ScheduleRepositoryImpl constructor(
     private val scheduleCacheGateway: ScheduleCacheGateway,
     private val appdb: AppDatabase
 ) : ScheduleRepository {

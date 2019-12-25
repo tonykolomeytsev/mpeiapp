@@ -5,23 +5,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
-import dagger.android.support.DaggerFragment
-import kekmech.ru.coreui.Resources
 import kekmech.ru.timetable.R
 import kekmech.ru.timetable.TimetableFragmentPresenter
-import kekmech.ru.timetable.WeekAdapter
 import kotlinx.android.synthetic.main.fragment_timetable.*
-import java.util.*
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
 
+class TimetableFragment : Fragment(), TimetableFragmentView {
 
-class TimetableFragment : DaggerFragment(), TimetableFragmentView {
-
-    @Inject
-    lateinit var presenter: TimetableFragmentPresenter
+    val presenter: TimetableFragmentPresenter by inject()
 
     override var onChangeParityClickListener: () -> Unit = {}
 
