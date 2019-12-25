@@ -52,8 +52,8 @@ class SettingsFragment : Fragment() {
             listOf(
                 SingleLineTumblerItem("Тёмная тема"),
                 DividerItem("Хранилище"),
-                TwoLineItem("Удалить все расписания" to "Расписаний на устройстве: 4", presenter::clearSchedules),
-                TwoLineItem("Удалить все домашние задания" to "Домашних заданий на устройстве: 16", presenter::clearNotes, false),
+                TwoLineItem("Удалить все расписания" to "Будут также удалены и домашние задания", presenter::clearSchedules),
+                SingleLineItem("Удалить все домашние задания", presenter::clearNotes, false),
                 DividerItem("Личный кабинет БАРС"),
                 SingleLineItem("Выйти из кабинета и стереть все данные", presenter::logout, false),
                 DividerItem("Поддержка приложения"),
