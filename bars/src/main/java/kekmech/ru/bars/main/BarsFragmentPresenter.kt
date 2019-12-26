@@ -1,7 +1,6 @@
 package kekmech.ru.bars.main
 
 import android.content.Context
-import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.bars.main.adapter.DisciplineItem
 import kekmech.ru.bars.main.adapter.RatingItem
@@ -10,17 +9,14 @@ import kekmech.ru.bars.main.model.BarsFragmentModel
 import kekmech.ru.bars.main.view.BarsFragmentView
 import kekmech.ru.core.Presenter
 import kekmech.ru.core.Router
-import kekmech.ru.core.Screens
 import kekmech.ru.core.Screens.*
 import kekmech.ru.core.UpdateChecker
-import kekmech.ru.core.dto.AcademicDiscipline
 import kekmech.ru.core.dto.AcademicScore
 import kekmech.ru.coreui.adapter.BaseAdapter
 import kekmech.ru.coreui.adapter.BaseClickableItem
 import kotlinx.coroutines.*
-import javax.inject.Inject
 
-class BarsFragmentPresenter @Inject constructor(
+class BarsFragmentPresenter constructor(
     private val model: BarsFragmentModel,
     private val router: Router,
     private val updateChecker: UpdateChecker,

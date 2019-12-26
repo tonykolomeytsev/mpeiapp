@@ -1,32 +1,29 @@
 package kekmech.ru.repository.di
 
-import dagger.Binds
-import dagger.Module
+import kekmech.ru.core.gateways.ScheduleCacheGateway
+import kekmech.ru.core.gateways.UserCacheGateway
 import kekmech.ru.core.repositories.*
 import kekmech.ru.repository.*
-import javax.inject.Singleton
+import kekmech.ru.repository.auth.BaseKeyStore
+import kekmech.ru.repository.auth.BaseKeyStoreV21
+import kekmech.ru.repository.gateways.ScheduleCacheGatewayImpl
+import kekmech.ru.repository.gateways.UserCacheGatewayImpl
+import kekmech.ru.repository.room.AppDatabase
+import org.koin.dsl.bind
+import org.koin.dsl.module
 
-@Module
-abstract class RepositoryModule {
+val KoinRepositoryModule = module {
+    // repos
+    single { ScheduleRepositoryImpl(get(), get()) } bind ScheduleRepository::class
+    single { UserRepositoryImpl(get(), get()) } bind UserRepository::class
+    single { PlacesRepositoryImpl() } bind PlacesRepository::class
+    single { BarsRepositoryImpl(get(), get()) } bind BarsRepository::class
+    single { NotesRepositoryImpl(get()) } bind NotesRepository::class
+    single { FeedRepositoryImpl(get()) } bind FeedRepository::class
 
-    @Binds
-    @Singleton
-    abstract fun provideScheduleRepository(repoImpl: ScheduleRepositoryImpl): ScheduleRepository
-
-    @Binds
-    @Singleton
-    abstract fun provideUserRepository(repoImpl: UserRepositoryImpl): UserRepository
-
-    @Binds
-    @Singleton
-    abstract fun providePlacesRepository(repoImpl: PlacesRepositoryImpl): PlacesRepository
-
-    @Binds
-    @Singleton
-    abstract fun provideBarsRepository(repoImpl: BarsRepositoryImpl): BarsRepository
-
-    @Binds
-    @Singleton
-    abstract fun provideNotesRepository(repoImpl: NotesRepositoryImpl): NotesRepository
-
+    // additional dependencies
+    single { AppDatabaseModule.provideAppDatabase(get()) } bind AppDatabase::class
+    single { BaseKeyStoreV21() } bind BaseKeyStore::class
+    single { ScheduleCacheGatewayImpl(get()) } bind ScheduleCacheGateway::class
+    single { UserCacheGatewayImpl(get()) } bind UserCacheGateway::class
 }

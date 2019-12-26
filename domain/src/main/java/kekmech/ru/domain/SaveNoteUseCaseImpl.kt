@@ -4,9 +4,8 @@ import kekmech.ru.core.dto.NoteNative
 import kekmech.ru.core.repositories.NotesRepository
 import kekmech.ru.core.repositories.ScheduleRepository
 import kekmech.ru.core.usecases.SaveNoteUseCase
-import javax.inject.Inject
 
-class SaveNoteUseCaseImpl @Inject constructor(
+class SaveNoteUseCaseImpl constructor(
     private val notesRepository: NotesRepository,
     private val scheduleRepository: ScheduleRepository
 ) : SaveNoteUseCase {

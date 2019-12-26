@@ -8,20 +8,17 @@ import kekmech.ru.coreui.adapter.BaseItem
 import kekmech.ru.coreui.adapter.BaseViewHolder
 
 class DividerItem(
-    private val header: String,
-    private val isLineVisible: Boolean = true
+    private val header: String
 ) : BaseItem<DividerItem.ViewHolder>() {
 
     override fun updateViewHolder(viewHolder: ViewHolder) {
         viewHolder.header.text = header
-        viewHolder.line.visibility = if (isLineVisible) View.VISIBLE else View.INVISIBLE
     }
 
     override fun approveFactory(factory: BaseFactory) = factory is Factory
 
     class ViewHolder(view: View) : BaseViewHolder(view) {
         val header by bind<TextView>(R.id.textViewDivider)
-        val line by bind<View>(R.id.viewDivider)
         override fun onCreateView(view: View) = Unit
     }
 

@@ -7,25 +7,13 @@ import kekmech.ru.coreui.adapter.BaseAdapter
 
 interface IFeedFragment : LifecycleOwner {
 
-    var requiredAction: String
+    var onSettingsClick: () -> Unit
 
-    var onEditListener: () -> Unit
-
-    var bottomReachListener: () -> Unit
+    fun setAdapter(adapter: BaseAdapter)
 
     fun withinContext(listener: (context: Context) -> Unit)
 
-    fun setStatus(title: String, dayInfo: String, weekInfo: String)
+    fun showLoading()
 
-    fun showEditDialog(dialog: AlertDialog)
-
-    fun updateAdapterIfNull(adapter: BaseAdapter)
-
-    fun unlock()
-
-    fun showMenu()
-
-    fun hideMenu()
-
-    fun updateMenu(menuAdapter: BaseAdapter)
+    fun hideLoading()
 }

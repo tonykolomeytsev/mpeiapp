@@ -1,17 +1,20 @@
 package kekmech.ru.coreui.items
 
 import android.view.View
+import android.widget.FrameLayout
 import android.widget.TextView
 import kekmech.ru.coreui.R
 import kekmech.ru.coreui.adapter.*
 
 class TwoLineItem(
-    val strings: Pair<String, String>
+    var strings: Pair<String, String>, var onClick: (BaseItem<*>) -> Unit = {}, val d: Boolean = true
 ) : BaseClickableItem<TwoLineItem.ViewHolder>() {
 
     override fun updateViewHolder(viewHolder: ViewHolder) {
         viewHolder.textPrimary.text = strings.first
         viewHolder.textSecondary.text = strings.second
+        viewHolder.divider.visibility = if (d) View.VISIBLE else View.INVISIBLE
+        viewHolder.root.setOnClickListener { onClick(this) }
     }
 
     override fun approveFactory(factory: BaseFactory) = factory is Factory
@@ -19,6 +22,8 @@ class TwoLineItem(
     class ViewHolder(view: View) : BaseViewHolder(view) {
         val textPrimary by bind<TextView>(R.id.textViewPrimary)
         val textSecondary by bind<TextView>(R.id.textViewSecondary)
+        val divider by bind<View>(R.id.divider)
+        val root by bind<FrameLayout>(R.id.rootView)
         override fun onCreateView(view: View) = Unit
     }
 

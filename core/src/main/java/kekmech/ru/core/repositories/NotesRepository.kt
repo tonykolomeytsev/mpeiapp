@@ -13,4 +13,5 @@ interface NotesRepository {
     fun getNoteDyId(id: Int): NoteNative?
     fun saveNote(note: NoteNative, isNoteEmpty: Boolean = false)
     fun removeNote(note: NoteNative)
+    fun getAll(): List<NoteNative>
 }

@@ -6,4 +6,5 @@ interface AddFragmentModel {
     suspend fun getGroupsAsync(): List<AcademGroup>
 
     suspend fun setCurrentGroup(id: Int)
+    fun getGroupNumber()
 }

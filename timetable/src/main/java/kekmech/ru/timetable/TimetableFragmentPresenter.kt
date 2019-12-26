@@ -15,9 +15,9 @@ import kekmech.ru.coreui.adapter.BaseItem
 import kekmech.ru.timetable.model.TimetableFragmentModel
 import kekmech.ru.timetable.view.TimetableFragmentView
 import kotlinx.coroutines.*
-import javax.inject.Inject
+import java.util.*
 
-class TimetableFragmentPresenter @Inject constructor(
+class TimetableFragmentPresenter constructor(
     private val model: TimetableFragmentModel,
     private val context: Context,
     private val updateChecker: UpdateChecker,
@@ -50,16 +50,42 @@ class TimetableFragmentPresenter @Inject constructor(
         model.weekOffset.observe(view, Observer {
             Log.d("PARITY", "onChangeParity $it")
             lastWeekOffset = it
-            if (it == 1) {
-                view.setBottomButtonText(Resources.getString(context, R.string.timetable_show_current_week))
-                view.setSubtitleStatus(
-                    "Следующая ${model.currentWeekNumber + 1} неделя (${getParity(
-                        today.getDayWithOffset(7)
-                    )})"
-                )
+            if (model.currentWeekNumber in 1..16) {
+                if (it == 1) {
+                    view.setBottomButtonText(
+                        Resources.getString(
+                            context,
+                            R.string.timetable_show_current_week
+                        )
+                    )
+                    view.setSubtitleStatus(
+                        "Следующая ${model.currentWeekNumber + 1} неделя (${getParity(
+                            today.getDayWithOffset(7)
+                        )})"
+                    )
+                } else {
+                    view.setBottomButtonText(
+                        Resources.getString(
+                            context,
+                            R.string.timetable_show_next_week
+                        )
+                    )
+                    view.setSubtitleStatus(
+                        "Идет ${model.currentWeekNumber} неделя (${getParity(
+                            today
+                        )})"
+                    )
+                }
             } else {
-                view.setBottomButtonText(Resources.getString(context, R.string.timetable_show_next_week))
-                view.setSubtitleStatus("Идет ${model.currentWeekNumber} неделя (${getParity(today)})")
+                if (it == 1) {
+                    view.setBottomButtonText(Resources.getString(context, R.string.timetable_show_current_week))
+                    view.setSubtitleStatus(
+                        "${getParity(today.getDayWithOffset(7)).capitalize()} неделя")
+                } else {
+                    view.setBottomButtonText(Resources.getString(context, R.string.timetable_show_next_week))
+                    view.setSubtitleStatus(
+                        "${getParity(today).capitalize()} неделя")
+                }
             }
         })
         GlobalScope.launch(Dispatchers.Main) {

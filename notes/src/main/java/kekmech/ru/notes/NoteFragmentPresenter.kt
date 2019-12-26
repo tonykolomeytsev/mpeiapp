@@ -7,7 +7,6 @@ import kekmech.ru.core.Presenter
 import kekmech.ru.core.Router
 import kekmech.ru.core.dto.CoupleNative
 import kekmech.ru.core.dto.NoteNative
-import kekmech.ru.core.dto.Time
 import kekmech.ru.coreui.Resources.getStringArray
 import kekmech.ru.notes.model.NoteFragmentModel
 import kekmech.ru.notes.view.NoteFragmentView
@@ -16,9 +15,8 @@ import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
-class NoteFragmentPresenter @Inject constructor(
+class NoteFragmentPresenter constructor(
     private val model: NoteFragmentModel,
     private val router: Router,
     private val context: Context

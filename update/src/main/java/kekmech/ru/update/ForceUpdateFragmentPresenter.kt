@@ -6,14 +6,12 @@ import kekmech.ru.core.Presenter
 import kekmech.ru.core.Router
 import kekmech.ru.update.model.ForceUpdateFragmentModel
 import kekmech.ru.update.view.ForceUpdateFragmentView
-import javax.inject.Inject
-import androidx.core.content.ContextCompat.startActivity
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.content.Intent.ACTION_VIEW
 import android.net.Uri
 
 
-class ForceUpdateFragmentPresenter @Inject constructor(
+class ForceUpdateFragmentPresenter constructor(
     val model: ForceUpdateFragmentModel,
     private val router: Router,
     private val context: Context
