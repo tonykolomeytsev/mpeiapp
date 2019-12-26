@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.recyclerview.widget.RecyclerView android:id="@+id/recyclerView"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="76dp"
+        tools:itemCount="1"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:clipToPadding="false"
+        tools:listitem="@layout/item_carousel_piece"
+        xmlns:tools="http://schemas.android.com/tools">
+
+</androidx.recyclerview.widget.RecyclerView>

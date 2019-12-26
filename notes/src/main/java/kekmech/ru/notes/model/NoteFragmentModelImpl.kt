@@ -7,9 +7,8 @@ import kekmech.ru.core.dto.NoteNative
 import kekmech.ru.core.usecases.GetCreateNoteTransactionUseCase
 import kekmech.ru.core.usecases.GetNoteByIdUseCase
 import kekmech.ru.core.usecases.SaveNoteUseCase
-import javax.inject.Inject
 
-class NoteFragmentModelImpl @Inject constructor(
+class NoteFragmentModelImpl constructor(
     private val getCreateNoteTransactionUseCase: GetCreateNoteTransactionUseCase,
     private val getNoteByIdUseCase: GetNoteByIdUseCase,
     private val saveNoteUseCase: SaveNoteUseCase

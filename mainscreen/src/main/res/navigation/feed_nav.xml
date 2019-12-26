@@ -21,6 +21,9 @@
         <action
                 android:id="@+id/action_feedFragment_to_noteFragment"
                 app:destination="@id/noteFragment" />
+        <action
+                android:id="@+id/action_feedFragment_to_settingsFragment"
+                app:destination="@id/settingsFragment" />
     </fragment>
     <dialog
             android:id="@+id/addFragment"
@@ -35,5 +38,14 @@
     <fragment
             android:id="@+id/noteFragment"
             android:name="kekmech.ru.notes.view.NoteFragment"
-            android:label="NoteFragment" />
+            android:label="NoteFragment"
+            tools:layout="@layout/fragment_note"/>
+    <fragment
+            android:id="@+id/settingsFragment"
+            android:name="kekmech.ru.settings.view.SettingsFragment"
+            android:label="SettingsFragment" >
+        <action
+                android:id="@+id/action_settingsFragment_to_addFragment"
+                app:destination="@id/addFragment" />
+    </fragment>
 </navigation>

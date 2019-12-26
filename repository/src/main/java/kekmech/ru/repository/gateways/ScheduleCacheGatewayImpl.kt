@@ -3,9 +3,8 @@ package kekmech.ru.repository.gateways
 import kekmech.ru.core.dto.*
 import kekmech.ru.core.gateways.ScheduleCacheGateway
 import kekmech.ru.repository.room.AppDatabase
-import javax.inject.Inject
 
-class ScheduleCacheGatewayImpl @Inject constructor(val appdb: AppDatabase) : ScheduleCacheGateway {
+class ScheduleCacheGatewayImpl constructor(val appdb: AppDatabase) : ScheduleCacheGateway {
     override var scheduleId: Int = 0
 
     override fun getSchedule(): Schedule? {

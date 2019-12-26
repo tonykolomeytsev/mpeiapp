@@ -12,13 +12,13 @@ import kekmech.ru.bars.R
 import kekmech.ru.bars.details.BarsDetailsFragmentPresenter
 import kekmech.ru.core.platform.BaseFragment
 import kotlinx.android.synthetic.main.fragment_bars_details.*
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
 
 class BarsDetailsFragment : BaseFragment<BarsDetailsFragmentPresenter, BarsDetailsFragmentView>(
     layoutId = R.layout.fragment_bars_details
 ), BarsDetailsFragmentView {
-    @Inject
-    override lateinit var presenter: BarsDetailsFragmentPresenter
+
+    override val presenter: BarsDetailsFragmentPresenter by inject()
 
     override var onNavBackListener: () -> Unit = {}
 

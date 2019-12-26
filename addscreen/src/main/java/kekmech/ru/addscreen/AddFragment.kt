@@ -19,16 +19,10 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasAndroidInjector
-import dagger.android.support.AndroidSupportInjection
 import kekmech.ru.core.Presenter
 import kekmech.ru.coreui.Resources
 import kekmech.ru.coreui.adapter.BaseAdapter
 import kotlinx.android.synthetic.main.fragment_add.*
-import javax.inject.Inject
-import android.graphics.drawable.GradientDrawable.RECTANGLE
 import android.graphics.drawable.LayerDrawable
 import android.os.Build
 import android.os.Build.VERSION_CODES.M
@@ -36,20 +30,16 @@ import android.util.DisplayMetrics
 import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.annotation.RequiresApi
-
-
+import kekmech.ru.addscreen.presenter.AddFragmentPresenter
+import org.koin.android.ext.android.inject
 
 
 /**
  * A simple [Fragment] subclass.
  */
-class AddFragment @Inject constructor() : BottomSheetDialogFragment(), HasAndroidInjector, IAddFragment {
+class AddFragment : BottomSheetDialogFragment(), IAddFragment {
 
-    @Inject
-    @JvmField
-    public var androidInjector: DispatchingAndroidInjector<Any>? = null
-
-    @Inject lateinit var presenter: Presenter<IAddFragment>
+    val presenter: AddFragmentPresenter by inject()
 
     override val web: WebView get() = view?.findViewById(R.id.webView)!!
     override lateinit var onSearchClickListener: (String) -> Unit
@@ -58,13 +48,6 @@ class AddFragment @Inject constructor() : BottomSheetDialogFragment(), HasAndroi
         super.onActivityCreated(savedInstanceState)
         (view?.parent as View?)?.setBackgroundColor(Color.TRANSPARENT)
     }
-
-    override fun onAttach(context: Context) {
-        AndroidSupportInjection.inject(this)
-        super.onAttach(context)
-    }
-
-    override fun androidInjector(): AndroidInjector<Any> = androidInjector!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -3,9 +3,8 @@ package kekmech.ru.bars.main.model
 import kekmech.ru.core.dto.AcademicDiscipline
 import kekmech.ru.core.dto.AcademicScore
 import kekmech.ru.core.usecases.*
-import javax.inject.Inject
 
-class BarsFragmentModelImpl @Inject constructor(
+class BarsFragmentModelImpl constructor(
     private val isLoggedInBarsUseCase: IsLoggedInBarsUseCase,
     private val saveUserSecretsUseCase: SaveUserSecretsUseCase,
     private val getRatingUseCase: GetRatingUseCase,

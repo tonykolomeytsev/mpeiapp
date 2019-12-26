@@ -8,15 +8,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import dagger.android.support.DaggerFragment
 import kekmech.ru.core.Router
-import kekmech.ru.core.Screens
 import kekmech.ru.core.Screens.TIMETABLE_TO_NOTE
 import kekmech.ru.core.dto.CoupleNative
 import kekmech.ru.coreui.adapter.BaseAdapter
 import kekmech.ru.coreui.adapter.BaseItem
 import kekmech.ru.timetable.R
-import kekmech.ru.timetable.TimetableFragmentPresenter
 import kekmech.ru.timetable.model.TimetableFragmentModel
 import kekmech.ru.timetable.view.items.MinCoupleItem
 import kekmech.ru.timetable.view.items.MinLunchItem
@@ -26,17 +23,15 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
 
-abstract class DayFragment : DaggerFragment() {
+abstract class DayFragment : Fragment() {
 
     abstract val dayOfWeek: Int
 
-    @Inject
-    lateinit var model: TimetableFragmentModel
+    val model: TimetableFragmentModel by inject()
 
-    @Inject
-    lateinit var router: Router
+    val router: Router by inject()
 
     val couples: () -> List<BaseItem<*>>
         get() = { model.getDaySchedule(

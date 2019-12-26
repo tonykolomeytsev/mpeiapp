@@ -6,83 +6,74 @@ import kekmech.ru.core.Presenter
 import kekmech.ru.core.Router
 import kekmech.ru.core.Screens.*
 import kekmech.ru.core.UpdateChecker
-import kekmech.ru.core.scopes.ActivityScope
 import kekmech.ru.coreui.adapter.BaseAdapter
 import kekmech.ru.feed.IFeedFragment
 import kekmech.ru.feed.items.*
 import kekmech.ru.feed.model.FeedModel
 import kotlinx.coroutines.*
-import java.util.*
-import javax.inject.Inject
 
-@ActivityScope
-class FeedPresenter @Inject constructor(
+class FeedPresenter constructor(
     private val model: FeedModel,
     private val context: Context,
     private val router: Router,
     private val updateChecker: UpdateChecker
 ) : Presenter<IFeedFragment>() {
 
-    private var isNotifiedToRefresh: Boolean = false
     var view: IFeedFragment? = null
-    var offset = 0
-    val daysToLoadOnStart = 3
     val adapter by lazy { BaseAdapter.Builder()
-        .registerViewTypeFactory(FeedDividerItem.Factory())
-        .registerViewTypeFactory(CoupleItem.Factory())
-        .registerViewTypeFactory(LunchItem.Factory())
-        .registerViewTypeFactory(WeekendItem.Factory())
-        .registerViewTypeFactory(WeekendStackItem.Factory())
+        .registerViewTypeFactory(SessionItem.Factory())
+        .registerViewTypeFactory(CarouselItem.Factory())
         .registerViewTypeFactory(EmptyItem.Factory())
-        .registerViewTypeFactory(ExamWeekItem.Factory())
+        .registerViewTypeFactory(NothingToShowItem.Factory())
         .build()
     }
-    val menuAdapter = BaseAdapter.Builder()
-        .registerViewTypeFactory(FeedMenuItem.Factory())
-        .build()
 
     /**
      * subscribe to view events
      */
     override fun onResume(view: IFeedFragment) {
-        model.isNeedToUpdate.observe(view, Observer {
-            if (it == true) {
-                model.nitifyFeedUpdated()
-                refresh()
-                model.groupNumber.observe(view, Observer {
-                    view.setStatus(
-                        "Группа $it",
-                        model.formattedTodayStatus,
-                        "Идет ${model.currentWeekNumber} учебная неделя"
-                    )
-                })
-            }
-        })
         this.view = view
-        model.groupNumber.observe(view, Observer {
-            view.setStatus(
-                "Группа $it",
-                model.formattedTodayStatus,
-                "Идет ${model.currentWeekNumber} учебная неделя"
-            )
-        })
+
+        view.onSettingsClick = { router.navigate(FEED_TO_SETTINGS) }
+
+        view.showLoading()
+        adapter.baseItems.clear()
+        view.setAdapter(adapter)
+
         GlobalScope.launch(Dispatchers.Main) {
+            // carousel
+            withContext(Dispatchers.IO) { model.getCarousel() }.observe(view, Observer { carousel ->
+                if (carousel != null) {
+                    val notFirstTime = adapter.baseItems.any { it is CarouselItem }
+                    if (notFirstTime) {
+                        adapter.baseItems[0] = (CarouselItem(carousel, model.getPicasso()))
+                        adapter.notifyItemChanged(0)
+                    } else {
+                        adapter.baseItems.add(0, CarouselItem(carousel, model.getPicasso()))
+                        adapter.notifyItemInserted(0)
+                    }
+                }
+            })
 
-            //delay(100)
-            view.updateAdapterIfNull(adapter)
-            view.onEditListener = { onStatusEdit() }
-            view.bottomReachListener = { onScrollEnd() }
-
-            delay(50)
-            if (offset == 0) {
-                onScrollEnd()
-            } else if (isNotifiedToRefresh) {
-                isNotifiedToRefresh = false
-                refresh()
+            if (withContext(Dispatchers.IO) { model.isSchedulesEmpty }) {
+                adapter.baseItems.add(EmptyItem(::onStatusEdit))
+                adapter.notifyItemInserted(adapter.baseItems.lastIndex)
+                view.hideLoading()
+                withContext(Dispatchers.IO) { model.groupNumber }.observe(view, Observer {
+                    if (it != null && it.isNotEmpty() && adapter.baseItems.any { e -> e is EmptyItem }) GlobalScope.launch(Dispatchers.Main) {
+                        adapter.baseItems.remove(adapter.baseItems.find { e -> e is EmptyItem })
+                        adapter.notifyDataSetChanged()
+                        view.showLoading()
+                        loadAcademicContent(view)
+                    }
+                })
+            } else {
+                loadAcademicContent(view)
             }
-            view.unlock()
-            setupMenu()
         }
+
+
+        // check for updates
         GlobalScope.launch(Dispatchers.Main) {
             delay(1000)
             if (model.isNotShowedUpdateDialog) {
@@ -95,19 +86,19 @@ class FeedPresenter @Inject constructor(
         }
     }
 
-    private fun setupMenu() {
-        menuAdapter.baseItems.clear()
-        menuAdapter.baseItems.add(
-            FeedMenuItem("Добавить группу").apply {
-                clickListener = {
-                    GlobalScope.launch(Dispatchers.Main){
-                        delay(100)
-                        router.navigate(FEED_TO_ADD)
-                    }
-                }
-            }
-        )
-        view?.updateMenu(menuAdapter)
+    private suspend fun loadAcademicContent(view: IFeedFragment) {
+        val academicSession = withContext(Dispatchers.IO) { model.getAcademicSession() }
+        if (academicSession != null) {
+            val item = SessionItem(academicSession)
+            adapter.baseItems.add(item)
+            adapter.notifyItemInserted(adapter.baseItems.indexOf(item))
+        }
+        if ((adapter.baseItems.size == 1 && adapter.baseItems.firstOrNull() is CarouselItem) or (adapter.baseItems.isEmpty())) {// если только карусель
+            val item = NothingToShowItem()
+            adapter.baseItems.add(item)
+            adapter.notifyItemInserted(adapter.baseItems.indexOf(item))
+        }
+        view.hideLoading()
     }
 
     private fun onStatusEdit() {
@@ -123,48 +114,6 @@ class FeedPresenter @Inject constructor(
      */
     override fun onPause(view: IFeedFragment) {
         this.view = null
-    }
-
-    private fun refresh() {
-        offset = 1
-        model.weekendOffset = 0
-        clearAdapter()
-        GlobalScope.launch(Dispatchers.Main) {
-            loadOffsetCouples(0)
-        }
-    }
-
-    private fun onScrollEnd() {
-        val localOffset = offset
-        offset++
-        GlobalScope.launch(Dispatchers.Main) {
-            loadOffsetCouples(localOffset + model.weekendOffset)
-        }
-    }
-
-    private suspend fun loadOffsetCouples(localOffset: Int, refresh: Boolean = false) = withContext(Dispatchers.Main) {
-        val couples = model.getDayCouples(localOffset, refresh = refresh)
-        // после получения итемы с "Зачетной неделей" прекращаем добавлять новые карточки
-        if (couples.firstOrNull() is ExamWeekItem) {
-            if (adapter.baseItems.any { it is ExamWeekItem }) return@withContext
-        }
-        couples.forEach {
-            adapter.baseItems.add(it)
-            adapter.notifyItemChanged(adapter.baseItems.size - 1)
-            delay(100) // TODO избавиться от задержки и придумать анимацию иначе
-        }
-        view?.unlock()
-        if (offset < daysToLoadOnStart)
-            onScrollEnd()
-    }
-
-    private fun clearAdapter() {
-        adapter.baseItems.clear()
-        adapter.notifyDataSetChanged()
-    }
-
-    fun notifyToRefresh() {
-        isNotifiedToRefresh = true
     }
 
 }

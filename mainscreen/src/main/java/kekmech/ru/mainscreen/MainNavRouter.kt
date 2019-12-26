@@ -5,9 +5,8 @@ import com.crashlytics.android.Crashlytics
 import kekmech.ru.core.Router
 import kekmech.ru.core.Screens
 import kekmech.ru.core.Screens.*
-import javax.inject.Inject
 
-class MainNavRouter @Inject constructor(): Router {
+class MainNavRouter : Router {
     private var navController: NavController? = null
 
     override fun navigate(fragmentId: Screens) {
@@ -21,6 +20,10 @@ class MainNavRouter @Inject constructor(): Router {
                     e.printStackTrace()
                 }
                 FEED_TO_NOTE -> navController?.navigate(R.id.action_feedFragment_to_noteFragment)
+                FEED_TO_SETTINGS -> navController?.navigate(R.id.action_feedFragment_to_settingsFragment)
+
+                // settings
+                SETTINGS_TO_ADD -> navController?.navigate(R.id.action_settingsFragment_to_addFragment)
 
                 // BARS SCOPE
                 BARS_TO_RIGHTS -> navController?.navigate(R.id.action_barsFragment_to_rightsFragment)
@@ -32,9 +35,7 @@ class MainNavRouter @Inject constructor(): Router {
                 TIMETABLE_TO_FORCE -> navController?.navigate(R.id.action_timetableFragment_to_forceUpdateFragment3)
                 TIMETABLE_TO_NOTE -> navController?.navigate(R.id.action_timetableFragment_to_noteFragment2)
             }
-        }catch (e: Exception) {
-            Crashlytics.logException(e)
-        }
+        }catch (e: Exception) { e.printStackTrace() }
     }
 
     override fun popBackStack() {

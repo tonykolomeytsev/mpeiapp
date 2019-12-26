@@ -3,9 +3,8 @@ package kekmech.ru.domain
 import kekmech.ru.core.dto.CoupleNative
 import kekmech.ru.core.repositories.ScheduleRepository
 import kekmech.ru.core.usecases.LoadOffsetScheduleUseCase
-import javax.inject.Inject
 
-class LoadOffsetScheduleUseCaseImpl @Inject constructor(
+class LoadOffsetScheduleUseCaseImpl constructor(
     private val repository: ScheduleRepository
 ) : LoadOffsetScheduleUseCase {
 
