@@ -49,7 +49,7 @@ class FeedPresenter constructor(
                         adapter.baseItems[0] = (CarouselItem(carousel, model.getPicasso()))
                         adapter.notifyItemChanged(0)
                     } else {
-                        adapter.baseItems.add(CarouselItem(carousel, model.getPicasso()))
+                        adapter.baseItems.add(0, CarouselItem(carousel, model.getPicasso()))
                         adapter.notifyItemInserted(0)
                     }
                 }
@@ -59,19 +59,16 @@ class FeedPresenter constructor(
                 adapter.baseItems.add(EmptyItem(::onStatusEdit))
                 adapter.notifyItemInserted(adapter.baseItems.lastIndex)
                 view.hideLoading()
+                withContext(Dispatchers.IO) { model.groupNumber }.observe(view, Observer {
+                    if (it != null && it.isNotEmpty() && adapter.baseItems.any { e -> e is EmptyItem }) GlobalScope.launch(Dispatchers.Main) {
+                        adapter.baseItems.remove(adapter.baseItems.find { e -> e is EmptyItem })
+                        adapter.notifyDataSetChanged()
+                        view.showLoading()
+                        loadAcademicContent(view)
+                    }
+                })
             } else {
-                var academicSession = withContext(Dispatchers.IO) { model.getAcademicSession() }
-                if (academicSession != null) {
-                    val item = SessionItem(academicSession)
-                    adapter.baseItems.add(item)
-                    adapter.notifyItemInserted(adapter.baseItems.indexOf(item))
-                }
-                if ((adapter.baseItems.size == 1 && adapter.baseItems.firstOrNull() is CarouselItem) or (adapter.baseItems.isEmpty())) {// если только карусель
-                    val item = NothingToShowItem()
-                    adapter.baseItems.add(item)
-                    adapter.notifyItemInserted(adapter.baseItems.indexOf(item))
-                }
-                view.hideLoading()
+                loadAcademicContent(view)
             }
         }
 
@@ -87,6 +84,21 @@ class FeedPresenter constructor(
                 }
             }
         }
+    }
+
+    private suspend fun loadAcademicContent(view: IFeedFragment) {
+        val academicSession = withContext(Dispatchers.IO) { model.getAcademicSession() }
+        if (academicSession != null) {
+            val item = SessionItem(academicSession)
+            adapter.baseItems.add(item)
+            adapter.notifyItemInserted(adapter.baseItems.indexOf(item))
+        }
+        if ((adapter.baseItems.size == 1 && adapter.baseItems.firstOrNull() is CarouselItem) or (adapter.baseItems.isEmpty())) {// если только карусель
+            val item = NothingToShowItem()
+            adapter.baseItems.add(item)
+            adapter.notifyItemInserted(adapter.baseItems.indexOf(item))
+        }
+        view.hideLoading()
     }
 
     private fun onStatusEdit() {

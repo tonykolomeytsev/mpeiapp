@@ -57,4 +57,8 @@ class NotesRepositoryImpl constructor(
     private fun List<NoteNative>.containsById(note: NoteNative) = this.any { it.id == note.id }
 
     private fun Time.timestamp(): String = this.formattedAsYearMonthDay
+
+    override fun getAll(): List<NoteNative> {
+        return appdb.noteDao().getAll()
+    }
 }

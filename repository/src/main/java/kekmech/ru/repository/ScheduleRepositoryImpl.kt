@@ -113,4 +113,8 @@ class ScheduleRepositoryImpl constructor(
     override fun isSchedulesEmpty(): Boolean {
         return appdb.scheduleDao().getAnySchedule() == null
     }
+
+    override fun removeSchedule(schedule: ScheduleNative) {
+        appdb.scheduleDao().delete(schedule)
+    }
 }
