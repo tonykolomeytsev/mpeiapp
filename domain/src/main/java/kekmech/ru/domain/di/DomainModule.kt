@@ -52,4 +52,7 @@ val KoinDomainModule = module {
 
     single { GetFeedCarouselUseCaseImpl(get()) } bind GetFeedCarouselUseCase::class
     single { GetPicassoInstanceUseCaseImpl(get()) } bind GetPicassoInstanceUseCase::class
+    single { RemoveAllSchedulesUseCaseImpl(get(), get()) } bind RemoveAllSchedulesUseCase::class
+
+    single { RemoveAllNotesUseCaseImpl(get()) } bind RemoveAllNotesUseCase::class
 }

@@ -7,7 +7,7 @@ import kekmech.ru.coreui.R
 import kekmech.ru.coreui.adapter.*
 
 class TwoLineItem(
-    val strings: Pair<String, String>, val onClick: (BaseItem<*>) -> Unit = {}, val d: Boolean = true
+    var strings: Pair<String, String>, var onClick: (BaseItem<*>) -> Unit = {}, val d: Boolean = true
 ) : BaseClickableItem<TwoLineItem.ViewHolder>() {
 
     override fun updateViewHolder(viewHolder: ViewHolder) {

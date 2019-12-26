@@ -22,6 +22,9 @@ class MainNavRouter : Router {
                 FEED_TO_NOTE -> navController?.navigate(R.id.action_feedFragment_to_noteFragment)
                 FEED_TO_SETTINGS -> navController?.navigate(R.id.action_feedFragment_to_settingsFragment)
 
+                // settings
+                SETTINGS_TO_ADD -> navController?.navigate(R.id.action_settingsFragment_to_addFragment)
+
                 // BARS SCOPE
                 BARS_TO_RIGHTS -> navController?.navigate(R.id.action_barsFragment_to_rightsFragment)
                 BARS_TO_BARS_DETAILS -> navController?.navigate(R.id.action_barsFragment_to_barsDetailsFragment)

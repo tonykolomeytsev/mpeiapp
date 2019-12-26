@@ -59,6 +59,7 @@ class AddFragmentPresenter constructor(
                     setNeedToUpdateFeedUseCase(true)
                     router.popBackStack()
                 }
+                model.getGroupNumber()
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -110,7 +111,6 @@ class AddFragmentPresenter constructor(
                 }
 
             } catch (e: Exception) {
-                // todo вывести сообщение об ошибке
                 e.printStackTrace()
                 withContext(Dispatchers.Main) { view?.showError() }
             }
@@ -119,6 +119,7 @@ class AddFragmentPresenter constructor(
                 view?.enableEditText()
                 view?.hideLoading()
             }
+            model.getGroupNumber()
         }
     }
 }

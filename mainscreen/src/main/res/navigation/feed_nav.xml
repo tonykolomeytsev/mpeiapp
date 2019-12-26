@@ -43,5 +43,9 @@
     <fragment
             android:id="@+id/settingsFragment"
             android:name="kekmech.ru.settings.view.SettingsFragment"
-            android:label="SettingsFragment" />
+            android:label="SettingsFragment" >
+        <action
+                android:id="@+id/action_settingsFragment_to_addFragment"
+                app:destination="@id/addFragment" />
+    </fragment>
 </navigation>

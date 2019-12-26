@@ -15,5 +15,8 @@ enum class Screens {
 
     // timetable deep nav
     TIMETABLE_TO_FORCE,
-    TIMETABLE_TO_NOTE
+    TIMETABLE_TO_NOTE,
+
+    // settings
+    SETTINGS_TO_ADD
 }

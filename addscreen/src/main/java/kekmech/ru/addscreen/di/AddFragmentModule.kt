@@ -9,5 +9,5 @@ import org.koin.dsl.module
 val KoinAddFragmentModule = module {
     // addfragment MVP pattern
     single { AddFragmentPresenter(get(), get(), get(), get()) }
-    single { AddFragmentModelImpl(get(), get()) } bind AddFragmentModel::class
+    single { AddFragmentModelImpl(get(), get(), get()) } bind AddFragmentModel::class
 }
