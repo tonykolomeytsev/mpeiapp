@@ -40,11 +40,6 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-    // retrofit
-    implementation "com.squareup.retrofit2:retrofit:2.6.2"
-    implementation "com.squareup.retrofit2:adapter-rxjava2:2.3.0"
-    implementation "com.squareup.retrofit2:converter-gson:2.6.2"
-
     // rxandroid
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
@@ -55,6 +50,7 @@ dependencies {
     // room
     implementation 'androidx.room:room-runtime:2.2.3'
     kapt 'androidx.room:room-compiler:2.2.3'
+    implementation 'androidx.room:room-ktx:2.2.3'
 
     // Firebase
     implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
@@ -64,10 +60,6 @@ dependencies {
 
     // Picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
-
-    // rxjava (cos room dont wanna work without rx)
-    implementation 'io.reactivex.rxjava2:rxjava:2.1.14'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
 
     // JSOUP
     implementation 'org.jsoup:jsoup:1.12.1'
