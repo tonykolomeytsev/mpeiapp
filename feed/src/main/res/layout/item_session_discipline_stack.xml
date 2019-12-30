@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="16dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp">
+
+
+        <TextView
+                android:id="@+id/textViewCoupleName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="sans-serif"
+                android:textColor="#DE000000"
+                android:textSize="18sp"
+                tools:text="Линейная алгебра" />
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp">
+
+            <TextView
+                    android:layout_width="110dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="14sp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="Консультация"/>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp">
+
+                <TextView
+                        android:id="@+id/textViewCouplePlace1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="14sp"
+                        tools:text="Б-407" />
+
+                <TextView
+                        android:id="@+id/textViewCoupleTeacher1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:alpha="0.75"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="14sp"
+                        android:layout_marginBottom="4dp"
+                        tools:text="Кудин С.Ф." />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp">
+
+            <TextView
+                    android:layout_width="110dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="14sp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="Экзамен"/>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp">
+
+                <TextView
+                        android:id="@+id/textViewCouplePlace2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="14sp"
+                        tools:text="Б-407" />
+
+                <TextView
+                        android:id="@+id/textViewCoupleTeacher2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:alpha="0.75"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="14sp"
+                        android:layout_marginBottom="4dp"
+                        tools:text="Кудин С.Ф." />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginTop="16dp"
+            android:alpha="0.15"
+            android:background="@color/colorBlack"
+            android:layout_gravity="bottom" />
+
+</FrameLayout>
