@@ -10,8 +10,8 @@ import kekmech.ru.settings.R
 class VersionItem : BaseItem<VersionItem.ViewHolder>() {
 
     override fun updateViewHolder(viewHolder: ViewHolder) {
-        val versionName = "0.9.92"
-        val versionNum = "13"
+        val versionName = "0.9.94"
+        val versionNum = "15"
         viewHolder.title.text = "Mpeix v$versionName ($versionNum) for Android"
     }
 
