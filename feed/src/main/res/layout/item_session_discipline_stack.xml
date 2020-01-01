@@ -15,8 +15,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginBottom="16dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp">
+            android:paddingLeft="16dp">
 
 
         <TextView
@@ -33,22 +32,45 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="8dp">
+                android:layout_marginTop="16dp">
 
-            <TextView
-                    android:layout_width="110dp"
+            <LinearLayout
+                    android:layout_width="70dp"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="14sp"
-                    android:fontFamily="sans-serif-medium"
-                    android:text="Консультация"/>
+                    android:orientation="vertical"
+                    android:layout_marginRight="12dp">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="11 Янв"
+                        android:textSize="16sp"
+                        android:layout_gravity="right"
+                        android:textColor="@color/colorBlack"
+                        android:fontFamily="sans-serif-medium"/>
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="11:10"
+                        android:textSize="14sp"
+                        android:layout_gravity="right"
+                        android:textColor="@color/colorBlack"
+                        android:fontFamily="sans-serif-medium"/>
+            </LinearLayout>
 
             <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp">
+                    android:paddingLeft="16dp">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="16sp"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="Консультация"/>
 
                 <TextView
                         android:id="@+id/textViewCouplePlace1"
@@ -63,15 +85,21 @@
                         android:id="@+id/textViewCoupleTeacher1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
                         android:alpha="0.75"
                         android:textColor="@color/colorBlack"
                         android:textSize="14sp"
-                        android:layout_marginBottom="4dp"
                         tools:text="Кудин С.Ф." />
             </LinearLayout>
 
         </LinearLayout>
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/colorBlack"
+                android:alpha="0.2"
+                android:layout_marginTop="12dp"
+                android:layout_marginLeft="92dp"/>
 
         <LinearLayout
                 android:layout_width="match_parent"
@@ -79,20 +107,43 @@
                 android:orientation="horizontal"
                 android:layout_marginTop="8dp">
 
-            <TextView
-                    android:layout_width="110dp"
+            <LinearLayout
+                    android:layout_width="70dp"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="14sp"
-                    android:fontFamily="sans-serif-medium"
-                    android:text="Экзамен"/>
+                    android:orientation="vertical"
+                    android:layout_marginRight="12dp">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="12 Янв"
+                        android:textSize="16sp"
+                        android:layout_gravity="right"
+                        android:textColor="@color/colorBlack"
+                        android:fontFamily="sans-serif-medium"/>
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="9:20"
+                        android:textSize="14sp"
+                        android:layout_gravity="right"
+                        android:textColor="@color/colorBlack"
+                        android:fontFamily="sans-serif-medium"/>
+            </LinearLayout>
 
             <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp">
+                    android:paddingLeft="16dp">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="16sp"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="Экзамен"/>
 
                 <TextView
                         android:id="@+id/textViewCouplePlace2"
@@ -107,15 +158,14 @@
                         android:id="@+id/textViewCoupleTeacher2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
                         android:alpha="0.75"
                         android:textColor="@color/colorBlack"
                         android:textSize="14sp"
-                        android:layout_marginBottom="4dp"
                         tools:text="Кудин С.Ф." />
             </LinearLayout>
 
         </LinearLayout>
+
 
     </LinearLayout>
 
