@@ -14,10 +14,30 @@ class SessionItem(val academicSession: AcademicSession) : BaseItem<SessionItem.V
 
     val adapter = BaseAdapter.Builder()
         .registerViewTypeFactory(SessionDisciplineItem.Factory())
+        .registerViewTypeFactory(SessionDisciplineStackItem.Factory())
         .build()
+    val items = mutableListOf<BaseItem<*>>()
+
+    init {
+        items.clear()
+        val evs = academicSession.events
+
+        var i = 0
+        while (i < evs.size) {
+            val name1 = evs[i].name.substringBefore('(').trim()
+            val name2 = evs.getOrNull(i + 1)?.name?.substringBefore('(')?.trim() ?: ""
+            if (name1 == name2) {
+                items += SessionDisciplineStackItem(Pair(evs[i], evs[i + 1]))
+                i += 2
+            } else {
+                items += SessionDisciplineStackItem(Pair(evs[i], null))
+                i++
+            }
+        }
+    }
 
     override fun updateViewHolder(viewHolder: ViewHolder) {
-        adapter.baseItems.addAll(academicSession.events.map { SessionDisciplineItem(it) })
+        adapter.baseItems.addAll(items)
         viewHolder.recycler.layoutManager = LinearLayoutManager(viewHolder.itemView.context)
         viewHolder.recycler.adapter = adapter
     }
