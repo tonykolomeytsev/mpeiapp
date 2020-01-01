@@ -55,11 +55,16 @@ class FeedPresenter constructor(
                 }
             })
 
+            // если у нас нету расписаний
             if (withContext(Dispatchers.IO) { model.isSchedulesEmpty }) {
-                adapter.baseItems.add(EmptyItem(::onStatusEdit))
+                adapter.baseItems.add(EmptyItem(::onStatusEdit)) // то покажем плиточку с выбором расписания
                 adapter.notifyItemInserted(adapter.baseItems.lastIndex)
                 view.hideLoading()
+
+                // и будем дожидаться пока кто-то введет расписание
                 withContext(Dispatchers.IO) { model.groupNumber }.observe(view, Observer {
+                    // если нам прилетел номер группы, и есть карточка EmptyItem в ленте
+                    // PS номер группы поменяется только если расписание будет загружено
                     if (it != null && it.isNotEmpty() && adapter.baseItems.any { e -> e is EmptyItem }) GlobalScope.launch(Dispatchers.Main) {
                         adapter.baseItems.remove(adapter.baseItems.find { e -> e is EmptyItem })
                         adapter.notifyDataSetChanged()

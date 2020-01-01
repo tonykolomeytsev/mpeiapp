@@ -26,7 +26,8 @@
                 android:fontFamily="sans-serif"
                 android:textColor="#DE000000"
                 android:textSize="18sp"
-                tools:text="Линейная алгебра" />
+                tools:text="Линейная алгебра"
+                android:layout_marginRight="16dp"/>
 
         <LinearLayout
                 android:layout_width="match_parent"
@@ -41,6 +42,7 @@
                     android:layout_marginRight="12dp">
 
                 <TextView
+                        android:id="@+id/textViewEventDate1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         tools:text="11 Янв"
@@ -49,6 +51,7 @@
                         android:textColor="@color/colorBlack"
                         android:fontFamily="sans-serif-medium"/>
                 <TextView
+                        android:id="@+id/textViewEventTime1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         tools:text="11:10"
@@ -65,6 +68,7 @@
                     android:paddingLeft="16dp">
 
                 <TextView
+                        android:id="@+id/textViewEventType1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/colorBlack"
@@ -93,15 +97,8 @@
 
         </LinearLayout>
 
-        <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@color/colorBlack"
-                android:alpha="0.2"
-                android:layout_marginTop="12dp"
-                android:layout_marginLeft="92dp"/>
-
         <LinearLayout
+                android:id="@+id/linearLayoutSecondSection"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -113,7 +110,16 @@
                     android:orientation="vertical"
                     android:layout_marginRight="12dp">
 
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:background="@color/colorTransparent"
+                        android:alpha="0.2"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"/>
+
                 <TextView
+                        android:id="@+id/textViewEventDate2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         tools:text="12 Янв"
@@ -122,6 +128,7 @@
                         android:textColor="@color/colorBlack"
                         android:fontFamily="sans-serif-medium"/>
                 <TextView
+                        android:id="@+id/textViewEventTime2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         tools:text="9:20"
@@ -135,9 +142,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:paddingLeft="16dp">
+                    android:paddingLeft="16dp"
+                    android:clipToPadding="false">
+
+
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:background="@color/colorBlack"
+                        android:alpha="0.2"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginLeft="-8dp"/>
 
                 <TextView
+                        android:id="@+id/textViewEventType2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/colorBlack"
