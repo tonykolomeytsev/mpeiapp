@@ -55,4 +55,5 @@ val KoinDomainModule = module {
     single { RemoveAllSchedulesUseCaseImpl(get(), get()) } bind RemoveAllSchedulesUseCase::class
 
     single { RemoveAllNotesUseCaseImpl(get()) } bind RemoveAllNotesUseCase::class
+    single { GetTomorrowCouplesUseCaseImpl() } bind GetTomorrowCouplesUseCase::class
 }

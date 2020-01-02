@@ -20,7 +20,7 @@ class FeedModelImpl constructor(
     private val getAcademicSessionUseCase: GetAcademicSessionUseCase,
     private val getFeedCarouselUseCase: GetFeedCarouselUseCase,
     private val getPicassoInstanceUseCase: GetPicassoInstanceUseCase,
-    private val getTimetableScheduleUseCase: GetTimetableScheduleUseCase
+    private val getTomorrowCouplesUseCase: GetTomorrowCouplesUseCase
 ) : FeedModel {
 
     override val isSchedulesEmpty: Boolean
@@ -59,6 +59,6 @@ class FeedModelImpl constructor(
     }
 
     override fun getTomorrowSchedhule(): List<CoupleNative> {
-        return getTimetableScheduleUseCase(5, 17)
+        return getTomorrowCouplesUseCase()
     }
 }
