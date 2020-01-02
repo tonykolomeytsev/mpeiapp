@@ -30,7 +30,8 @@ class SettingsPresenter(
     private val router: Router,
     private val getGroupNumberUseCase: GetGroupNumberUseCase,
     private val removeAllNotesUseCase: RemoveAllNotesUseCase,
-    private val removeAllSchedulesUseCase: RemoveAllSchedulesUseCase
+    private val removeAllSchedulesUseCase: RemoveAllSchedulesUseCase,
+    private val getAppVersionUseCase: GetAppVersionUseCase
 ) : Presenter<SettingsFragmentView>() {
     val adapter = BaseAdapter.Builder()
         .registerViewTypeFactory(SingleLineItem.Factory())
@@ -54,7 +55,7 @@ class SettingsPresenter(
             DividerItem("Поддержка приложения"),
             TwoLineItem("Присоединиться к разработке" to "https://github.com/tonykolomeytsev/mpeiapp", ::github),
             TwoLineItem("Задать вопрос" to "https://vk.com/kekmech", ::vk, false),
-            VersionItem()
+            VersionItem(getAppVersionUseCase())
         )
 
         adapter.baseItems.clear()
