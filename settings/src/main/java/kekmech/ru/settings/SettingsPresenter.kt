@@ -48,7 +48,7 @@ class SettingsPresenter(
 
         val items = listOf(
             SingleLineTumblerItem("Тёмная тема", isDarkThemeEnabledUseCase()) { setDarkThemeEnabledUseCase(it, view.recreatingActivity) },
-            TwoLineItem("Сменить группу" to "Загрузка...", ::changeGroup),
+            TwoLineItem("Сменить группу" to "Загрузка...", ::changeGroup, false),
             DividerItem("Хранилище"),
             TwoLineItem("Удалить все расписания" to "Будут также удалены и домашние задания", ::clearSchedules),
             SingleLineItem("Удалить все домашние задания", ::clearNotes, false),

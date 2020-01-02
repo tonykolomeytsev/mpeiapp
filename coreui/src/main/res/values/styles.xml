@@ -24,6 +24,7 @@
         <item name="themeColorBottomNavBackground">?android:attr/windowBackground</item>
         <item name="themeColorBottomNavTint">@color/colorBottomNavLight</item>
         <item name="themeColorLunchItem">@color/colorLunchItem</item>
+        <item name="themeColorBarsAvMark">@color/colorBarsAvMark</item>
     </style>
 
     <style name="AppTheme.Dark" parent="Theme.AppCompat.Light.NoActionBar">
@@ -49,6 +50,7 @@
         <item name="themeColorBottomNavBackground">@color/colorBottomNavBackgroundDark</item>
         <item name="themeColorBottomNavTint">@color/colorBottomNavDark</item>
         <item name="themeColorLunchItem">@color/colorLunchItemDark</item>
+        <item name="themeColorBarsAvMark">@color/colorBarsAvMarkDark</item>
 
     </style>
 

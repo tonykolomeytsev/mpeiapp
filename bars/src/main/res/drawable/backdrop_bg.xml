@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools">
     <corners android:topLeftRadius="8dp" android:topRightRadius="8dp"/>
-    <solid android:color="#ffffff"/>
+    <solid android:color="?attr/themeColorCardView" tools:color="#ffffff"/>
 </shape>
