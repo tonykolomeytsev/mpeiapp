@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="16dp"
+            android:paddingLeft="16dp">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="16dp">
+
+            <LinearLayout
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginRight="12dp">
+
+                <TextView
+                        android:id="@+id/textViewCoupleNumber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="2 пара"
+                        android:textSize="16sp"
+                        android:layout_gravity="right"
+                        android:textColor="@color/colorBlack"
+                        android:fontFamily="sans-serif-medium"/>
+                <TextView
+                        android:id="@+id/textViewCoupleTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="11:10"
+                        android:textSize="14sp"
+                        android:layout_gravity="right"
+                        android:textColor="@color/colorBlack"
+                        android:fontFamily="sans-serif-medium"/>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingLeft="16dp">
+
+                <TextView
+                        android:id="@+id/textViewCoupleName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="16sp"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="Линейная алгебра"/>
+
+                <TextView
+                        android:id="@+id/textViewCouplePlace"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="14sp"
+                        tools:text="Б-407" />
+
+                <TextView
+                        android:id="@+id/textViewCoupleTeacher"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:alpha="0.75"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="14sp"
+                        tools:text="Кудин С.Ф." />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginTop="16dp"
+            android:alpha="0.15"
+            android:background="@color/colorBlack"
+            android:layout_gravity="bottom" />
+
+</FrameLayout>

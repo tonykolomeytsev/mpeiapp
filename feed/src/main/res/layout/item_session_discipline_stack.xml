@@ -22,7 +22,7 @@
                 android:id="@+id/textViewCoupleName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:fontFamily="sans-serif"
                 android:textColor="#DE000000"
                 android:textSize="18sp"
@@ -36,7 +36,7 @@
                 android:layout_marginTop="16dp">
 
             <LinearLayout
-                    android:layout_width="70dp"
+                    android:layout_width="60dp"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_marginRight="12dp">
@@ -105,7 +105,7 @@
                 android:layout_marginTop="8dp">
 
             <LinearLayout
-                    android:layout_width="70dp"
+                    android:layout_width="60dp"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_marginRight="12dp">

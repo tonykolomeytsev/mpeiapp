@@ -30,4 +30,5 @@ interface FeedModel {
     fun getAcademicSession(): AcademicSession?
     fun getCarousel(): LiveData<FeedCarousel>
     fun getPicasso(): PicassoFirebaseInstance
+    fun getTomorrowSchedhule(): List<CoupleNative>
 }
