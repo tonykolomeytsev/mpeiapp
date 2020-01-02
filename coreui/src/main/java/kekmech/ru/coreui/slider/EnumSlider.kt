@@ -54,7 +54,7 @@ class EnumSlider(context: Context, attrs: AttributeSet?, defStyle: Int) : Recycl
     private fun updateAdapter() {
         adapter = baseAdapter.apply {
             baseItems.clear()
-            baseItems.addAll(items.map { EnumSliderItem(it) })
+            baseItems.addAll(this@EnumSlider.items.map { EnumSliderItem(it) })
             notifyDataSetChanged()
         }
         viewTreeObserver.addOnGlobalLayoutListener(this::onItemsLayOut)
