@@ -11,7 +11,7 @@
         android:orientation="horizontal">
 
     <LinearLayout
-            android:layout_width="72dp"
+            android:layout_width="76dp"
             android:layout_height="wrap_content"
             android:paddingRight="16dp"
             android:gravity="right"
@@ -25,7 +25,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
-                android:textColor="#000000"
+                tools:textColor="#DE000000"
+                android:textColor="?attr/themeColorBlack"
                 android:textSize="18sp"
                 tools:text="11:10" />
 
@@ -34,7 +35,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:alpha="0.6"
-                android:textColor="#000000"
+                tools:textColor="#DE000000"
+                android:textColor="?attr/themeColorBlack"
                 android:textSize="14sp"
                 tools:text="12:45" />
     </LinearLayout>
@@ -43,7 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginLeft="72dp"
+            android:layout_marginLeft="76dp"
             android:layout_marginBottom="16dp">
 
 
@@ -54,7 +56,9 @@
                 android:layout_marginBottom="4dp"
                 android:fontFamily="sans-serif-black"
                 android:textAllCaps="true"
-                android:textColor="#99000000"
+                tools:textColor="#DE000000"
+                android:textColor="?attr/themeColorBlack"
+                android:alpha="0.65"
                 android:textSize="10sp"
                 android:layout_marginTop="16dp"
                 tools:text="практика" />
@@ -65,7 +69,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="32dp"
                 android:fontFamily="sans-serif"
-                android:textColor="#DE000000"
+                tools:textColor="#DE000000"
+                android:textColor="?attr/themeColorBlack"
                 android:textSize="18sp"
                 tools:text="Линейная алгебра" />
 
@@ -75,7 +80,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:fontFamily="sans-serif-medium"
-                android:textColor="@color/colorBlack"
+                tools:textColor="#DE000000"
+                android:textColor="?attr/themeColorBlack"
                 android:textSize="14sp"
                 tools:text="Б-407" />
 
@@ -85,7 +91,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:alpha="0.75"
-                android:textColor="@color/colorBlack"
+                tools:textColor="#DE000000"
+                android:textColor="?attr/themeColorBlack"
                 android:textSize="14sp"
                 android:layout_marginBottom="4dp"
                 tools:text="Кудин С.Ф." />
@@ -128,7 +135,8 @@
             android:layout_height="1px"
             android:layout_marginTop="16dp"
             android:alpha="0.15"
-            android:background="@color/colorBlack"
+            tools:background="@color/colorBlack"
+            android:background="?attr/themeColorBlack"
             android:layout_gravity="bottom" />
 
 </FrameLayout>

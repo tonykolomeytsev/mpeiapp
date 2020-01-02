@@ -8,4 +8,13 @@
     <declare-styleable name="EnumSlider">
         <attr name="itemsCount" format="integer"/>
     </declare-styleable>
+
+    <attr name="themeColorWhite" format="reference"/>
+    <attr name="themeColorBlack" format="reference"/>
+    <attr name="themeColorCardView" format="reference"/>
+    <attr name="themeColorToolbar" format="reference"/>
+    <attr name="themeColorFeedBackground" format="reference"/>
+    <attr name="themeColorBottomNavBackground" format="reference"/>
+    <attr name="themeColorBottomNavTint" format="reference"/>
+    <attr name="themeColorLunchItem" format="reference"/>
 </resources>

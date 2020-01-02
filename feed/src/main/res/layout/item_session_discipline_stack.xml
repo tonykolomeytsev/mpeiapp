@@ -24,7 +24,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:fontFamily="sans-serif"
-                android:textColor="#DE000000"
+                tools:textColor="#DE000000"
+                android:textColor="?themeColorBlack"
                 android:textSize="18sp"
                 tools:text="Линейная алгебра"
                 android:layout_marginRight="16dp"/>
@@ -48,7 +49,8 @@
                         tools:text="11 Янв"
                         android:textSize="16sp"
                         android:layout_gravity="right"
-                        android:textColor="@color/colorBlack"
+                        tools:textColor="@color/colorBlack"
+                        android:textColor="?themeColorBlack"
                         android:fontFamily="sans-serif-medium"/>
                 <TextView
                         android:id="@+id/textViewEventTime1"
@@ -57,7 +59,8 @@
                         tools:text="11:10"
                         android:textSize="14sp"
                         android:layout_gravity="right"
-                        android:textColor="@color/colorBlack"
+                        tools:textColor="@color/colorBlack"
+                        android:textColor="?themeColorBlack"
                         android:fontFamily="sans-serif-medium"/>
             </LinearLayout>
 
@@ -71,7 +74,8 @@
                         android:id="@+id/textViewEventType1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/colorBlack"
+                        tools:textColor="@color/colorBlack"
+                        android:textColor="?themeColorBlack"
                         android:textSize="16sp"
                         android:fontFamily="sans-serif-medium"
                         android:text="Консультация"/>
@@ -81,7 +85,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-medium"
-                        android:textColor="@color/colorBlack"
+                        tools:textColor="@color/colorBlack"
+                        android:textColor="?themeColorBlack"
                         android:textSize="14sp"
                         tools:text="Б-407" />
 
@@ -90,7 +95,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:alpha="0.75"
-                        android:textColor="@color/colorBlack"
+                        tools:textColor="@color/colorBlack"
+                        android:textColor="?themeColorBlack"
                         android:textSize="14sp"
                         tools:text="Кудин С.Ф." />
             </LinearLayout>
@@ -125,7 +131,8 @@
                         tools:text="12 Янв"
                         android:textSize="16sp"
                         android:layout_gravity="right"
-                        android:textColor="@color/colorBlack"
+                        tools:textColor="@color/colorBlack"
+                        android:textColor="?themeColorBlack"
                         android:fontFamily="sans-serif-medium"/>
                 <TextView
                         android:id="@+id/textViewEventTime2"
@@ -134,7 +141,8 @@
                         tools:text="9:20"
                         android:textSize="14sp"
                         android:layout_gravity="right"
-                        android:textColor="@color/colorBlack"
+                        tools:textColor="@color/colorBlack"
+                        android:textColor="?themeColorBlack"
                         android:fontFamily="sans-serif-medium"/>
             </LinearLayout>
 
@@ -149,7 +157,8 @@
                 <View
                         android:layout_width="match_parent"
                         android:layout_height="1px"
-                        android:background="@color/colorBlack"
+                        tools:background="@color/colorBlack"
+                        android:background="?themeColorBlack"
                         android:alpha="0.2"
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="8dp"
@@ -159,7 +168,8 @@
                         android:id="@+id/textViewEventType2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/colorBlack"
+                        tools:textColor="@color/colorBlack"
+                        android:textColor="?themeColorBlack"
                         android:textSize="16sp"
                         android:fontFamily="sans-serif-medium"
                         android:text="Экзамен"/>
@@ -169,7 +179,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-medium"
-                        android:textColor="@color/colorBlack"
+                        tools:textColor="@color/colorBlack"
+                        android:textColor="?themeColorBlack"
                         android:textSize="14sp"
                         tools:text="Б-407" />
 
@@ -178,7 +189,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:alpha="0.75"
-                        android:textColor="@color/colorBlack"
+                        tools:textColor="@color/colorBlack"
+                        android:textColor="?themeColorBlack"
                         android:textSize="14sp"
                         tools:text="Кудин С.Ф." />
             </LinearLayout>
@@ -194,7 +206,8 @@
             android:layout_height="1px"
             android:layout_marginTop="16dp"
             android:alpha="0.15"
-            android:background="@color/colorBlack"
+            tools:background="@color/colorBlack"
+            android:background="?themeColorBlack"
             android:layout_gravity="bottom" />
 
 </FrameLayout>

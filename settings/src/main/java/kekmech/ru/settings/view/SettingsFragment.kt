@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import kekmech.ru.core.Router
 import kekmech.ru.core.platform.BaseFragment
@@ -38,4 +39,7 @@ class SettingsFragment : BaseFragment<SettingsPresenter, SettingsFragmentView>(
 
     private fun BaseClickableItem<*>.oncl(action: (BaseClickableItem<*>) -> Unit) =
         this.apply { clickListener = { action(it) } }
+
+    override val recreatingActivity: AppCompatActivity
+        get() = activity as AppCompatActivity
 }

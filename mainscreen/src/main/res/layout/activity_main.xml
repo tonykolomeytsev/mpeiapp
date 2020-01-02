@@ -6,7 +6,8 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity">
+        tools:context=".MainActivity"
+        tools:theme="@style/AppTheme">
 
     <androidx.fragment.app.FragmentContainerView
             android:id="@+id/nav_host_container"
@@ -21,7 +22,9 @@
             android:layout_marginStart="0dp"
             app:labelVisibilityMode="unlabeled"
             app:itemHorizontalTranslationEnabled="false"
-            android:background="?android:attr/windowBackground"
+            tools:background="?android:attr/windowBackground"
+            android:background="?themeColorBottomNavBackground"
+            app:itemIconTint="@drawable/bottom_nav_selector"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"

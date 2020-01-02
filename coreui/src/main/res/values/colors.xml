@@ -24,13 +24,17 @@
     <color name="colorTransparent">#00000000</color>
     <color name="colorCollapsingToolbarTransparent">#0042a5f5</color>
     <color name="colorIconsTint">#464646</color>
-    <color name="colorLunchItem">#efefef</color>
+    <color name="colorLunchItem">#09000000</color>
     <color name="colorFeedBackground">#EEEEEE</color>
     <color name="colorBlackMask">#1A000000</color>
 
     <!-- DARK COLOR PALETTE -->
-    <color name="colorPrimary_Inverse">#bf360c</color>
-    <color name="colorPrimaryDark_Inverse">#870000</color>
-    <color name="colorAccent_Inverse">#42a5f5</color>
-    <color name="colorSecondary_Inverse">#42a5f5</color>
+    <color name="colorCardViewBlack">#2e2e2e</color>
+    <color name="colorToolbarBlack">#212121</color>
+    <color name="colorFeedBackgroundDark">#101010</color>
+    <color name="colorBottomNavBackgroundDark">#333333</color>
+    <color name="colorBottomNavLight">#737373</color>
+    <color name="colorBottomNavDark">#ffffff</color>
+    <color name="colorLunchItemDark">#09ffffff</color>
+
 </resources>
