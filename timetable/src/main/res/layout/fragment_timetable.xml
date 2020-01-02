@@ -5,14 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".view.TimetableFragment">
+    tools:context=".view.TimetableFragment"
+        android:background="?attr/themeColorFeedBackground">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbarTimetable"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorSecondary"
-            android:fitsSystemWindows="true"
+        tools:background="@color/colorSecondary"
+        android:background="?attr/themeColorToolbar"
+        android:fitsSystemWindows="true"
         android:theme="@style/Theme.Design.NoActionBar">
 
         <FrameLayout
@@ -24,7 +26,8 @@
                     android:id="@+id/timetableToolbar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/colorSecondary"
+                    tools:background="@color/colorSecondary"
+                    android:background="?attr/themeColorToolbar"
                     android:minHeight="?attr/actionBarSize"
                     android:theme="@style/Theme.Design.NoActionBar"
                     android:fitsSystemWindows="true"
@@ -35,7 +38,8 @@
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorSecondary"
+            android:background="?attr/themeColorToolbar"
+            tools:background="@color/colorSecondary"
             android:minHeight="?attr/actionBarSize"
                 android:fitsSystemWindows="true"
             android:theme="@style/Theme.Design.NoActionBar" />
@@ -59,7 +63,9 @@
             android:layout_height="40dp"
             android:layout_gravity="bottom|center_horizontal"
             android:layout_marginBottom="32dp"
-            app:cardCornerRadius="20dp">
+            app:cardCornerRadius="20dp"
+                app:cardBackgroundColor="?attr/themeColorCardView"
+                tools:cardBackgroundColor="@color/colorWhite">
 
             <FrameLayout
                 android:id="@+id/buttonChangeWeekParity"
@@ -80,7 +86,8 @@
                     android:gravity="center"
                     android:fontFamily="sans-serif-medium"
                     android:text="@string/timetable_show_next_week"
-                    android:textColor="#ef000000" />
+                        android:textColor="?attr/themeColorBlack"
+                        tools:textColor="@color/colorBlack"/>
             </FrameLayout>
         </androidx.cardview.widget.CardView>
     </FrameLayout>

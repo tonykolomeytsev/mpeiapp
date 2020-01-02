@@ -13,9 +13,42 @@
         <!--<item name="android:statusBarColor">#4D000000</item>-->
         <item name="android:windowTranslucentStatus">false</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
+
+
+
+        <item name="themeColorWhite">@color/colorWhite</item>
+        <item name="themeColorBlack">@color/colorBlack</item>
+        <item name="themeColorCardView">@color/colorWhite</item>
+        <item name="themeColorToolbar">@color/colorSecondary</item>
+        <item name="themeColorFeedBackground">@color/colorFeedBackground</item>
+        <item name="themeColorBottomNavBackground">?android:attr/windowBackground</item>
+        <item name="themeColorBottomNavTint">@color/colorBottomNavLight</item>
+        <item name="themeColorLunchItem">@color/colorLunchItem</item>
     </style>
 
-    <style name="AppTheme.Dark">
+    <style name="AppTheme.Dark" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColor">@color/colorWhite</item>
+
+        <!-- Transparent statusBar -->
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <!--<item name="android:statusBarColor">#4D000000</item>-->
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+
+
+
+        <item name="themeColorWhite">@color/colorBlack</item>
+        <item name="themeColorBlack">@color/colorWhite</item>
+        <item name="themeColorCardView">@color/colorCardViewBlack</item>
+        <item name="themeColorToolbar">@color/colorToolbarBlack</item>
+        <item name="themeColorFeedBackground">@color/colorFeedBackgroundDark</item>
+        <item name="themeColorBottomNavBackground">@color/colorBottomNavBackgroundDark</item>
+        <item name="themeColorBottomNavTint">@color/colorBottomNavDark</item>
+        <item name="themeColorLunchItem">@color/colorLunchItemDark</item>
 
     </style>
 

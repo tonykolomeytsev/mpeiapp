@@ -11,6 +11,7 @@ class ForceUpdateChecker constructor(
 ) : UpdateChecker {
 
     override fun check(onUpdateNeededListener: (String, String) -> Unit) {
+        if (BuildConfig.DEBUG) return
         val remoteConfig = FirebaseRemoteConfig.getInstance()
 
         Log.d(TAG, remoteConfig.toString())

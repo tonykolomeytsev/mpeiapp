@@ -5,8 +5,9 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        app:cardBackgroundColor="@color/colorWhite"
-        app:cardElevation="1dp">
+        app:cardBackgroundColor="?themeColorCardView"
+        app:cardElevation="1dp"
+        app:cardCornerRadius="0dp">
 
     <FrameLayout
             android:id="@+id/rootView"
@@ -19,7 +20,8 @@
 
         <TextView android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#DE000000"
+                tools:textColor="#DE000000"
+                android:textColor="?themeColorBlack"
                 android:textSize="16sp"
                 tools:text="Single-line item"
                 android:id="@+id/textViewPrimary"
@@ -36,7 +38,8 @@
         <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="#000000"
+                tools:background="#000000"
+                android:background="?themeColorBlack"
                 android:alpha="0.2"
                 android:layout_gravity="bottom"/>
 

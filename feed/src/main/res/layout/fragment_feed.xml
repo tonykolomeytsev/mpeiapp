@@ -6,7 +6,8 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorFeedBackground"
+        android:background="?themeColorFeedBackground"
+        tools:background="@color/colorFeedBackground"
         android:fitsSystemWindows="true"
         >
 
@@ -25,7 +26,8 @@
                 android:fitsSystemWindows="true"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
-                android:background="@color/colorSecondary">
+                android:background="?themeColorToolbar"
+                tools:background="@color/colorSecondary">
 
             <ProgressBar
                     android:id="@+id/progressBar"

@@ -11,6 +11,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.analytics.FirebaseAnalytics
 import kekmech.ru.core.Router
 import kekmech.ru.core.usecases.IncrementAppLaunchCountUseCase
+import kekmech.ru.core.usecases.IsDarkThemeEnabledUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -22,6 +23,7 @@ class MainActivity : AppCompatActivity() {
     private var currentNavController: LiveData<NavController>? = null
 
     val incrementAppLaunchCountUseCase: IncrementAppLaunchCountUseCase by inject()
+    val isDarkThemeEnabledUseCase: IsDarkThemeEnabledUseCase by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +34,10 @@ class MainActivity : AppCompatActivity() {
             e.printStackTrace()
         }
         FirebaseAnalytics.getInstance(this)
+
+        if (isDarkThemeEnabledUseCase()) setTheme(R.style.AppTheme_Dark)
+        else setTheme(R.style.AppTheme)
+
         setContentView(R.layout.activity_main)
         if (savedInstanceState == null) {
             setupBottomNavigationBar()

@@ -31,7 +31,9 @@ class SettingsPresenter(
     private val getGroupNumberUseCase: GetGroupNumberUseCase,
     private val removeAllNotesUseCase: RemoveAllNotesUseCase,
     private val removeAllSchedulesUseCase: RemoveAllSchedulesUseCase,
-    private val getAppVersionUseCase: GetAppVersionUseCase
+    private val getAppVersionUseCase: GetAppVersionUseCase,
+    private val isDarkThemeEnabledUseCase: IsDarkThemeEnabledUseCase,
+    private val setDarkThemeEnabledUseCase: SetDarkThemeEnabledUseCase
 ) : Presenter<SettingsFragmentView>() {
     val adapter = BaseAdapter.Builder()
         .registerViewTypeFactory(SingleLineItem.Factory())
@@ -45,7 +47,7 @@ class SettingsPresenter(
         super.onResume(view)
 
         val items = listOf(
-            SingleLineTumblerItem("Тёмная тема"),
+            SingleLineTumblerItem("Тёмная тема", isDarkThemeEnabledUseCase()) { setDarkThemeEnabledUseCase(it, view.recreatingActivity) },
             TwoLineItem("Сменить группу" to "Загрузка...", ::changeGroup),
             DividerItem("Хранилище"),
             TwoLineItem("Удалить все расписания" to "Будут также удалены и домашние задания", ::clearSchedules),

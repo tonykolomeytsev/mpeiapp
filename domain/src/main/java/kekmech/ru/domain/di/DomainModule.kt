@@ -56,4 +56,7 @@ val KoinDomainModule = module {
 
     single { RemoveAllNotesUseCaseImpl(get()) } bind RemoveAllNotesUseCase::class
     single { GetTomorrowCouplesUseCaseImpl() } bind GetTomorrowCouplesUseCase::class
+    single { IsDarkThemeEnabledUseCaseImpl(get()) } bind IsDarkThemeEnabledUseCase::class
+
+    single { SetDarkThemeEnabledUseCaseImpl(get()) } bind SetDarkThemeEnabledUseCase::class
 }
