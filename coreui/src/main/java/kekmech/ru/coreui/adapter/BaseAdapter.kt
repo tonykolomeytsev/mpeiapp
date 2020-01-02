@@ -11,11 +11,11 @@ import java.util.zip.Inflater
  * Created by Kolomeytsev Anton on 09.07.2016.
  * This class is a part of Mr. Captain project.
  */
-open class BaseAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<BaseViewHolder>() {
+open class BaseAdapter : RecyclerView.Adapter<BaseViewHolder>() {
 
     internal val viewFactories = hashMapOf<Int, BaseFactory>()
-    private val viewCache = hashMapOf<Int, View>()
     val baseItems: MutableList<BaseItem<*>> = ArrayList()
+    val items get() = baseItems // для сокращения кода
     var inflater: LayoutInflater? = null
 
     override fun getItemViewType(position: Int): Int {
@@ -31,6 +31,16 @@ open class BaseAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<BaseV
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         if (inflater == null) inflater = LayoutInflater.from(parent.context)
         return viewFactories[viewType]!!.instanceNative(parent, inflater!!)
+    }
+
+    /**
+     * Добавляет элемент в позицию [index] если baseItems.size < [index].
+     * В противном случае, добавляет элемент в конец.
+     * В обоих случаях запустит notifyItemInserted с нужным индексом.
+     */
+    open fun addItem(index: Int, baseItem: BaseItem<*>) {
+        baseItems.add(if (index < itemCount) index else itemCount, baseItem)
+        notifyItemInserted(baseItems.indexOf(baseItem))
     }
 
     class Builder {
