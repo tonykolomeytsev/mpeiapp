@@ -43,6 +43,11 @@ open class BaseAdapter : RecyclerView.Adapter<BaseViewHolder>() {
         notifyItemInserted(baseItems.indexOf(baseItem))
     }
 
+    open fun addItem(baseItem: BaseItem<*>) {
+        baseItems.add(baseItem)
+        notifyItemInserted(baseItems.indexOf(baseItem))
+    }
+
     class Builder {
         private val adapter = BaseAdapter()
 
