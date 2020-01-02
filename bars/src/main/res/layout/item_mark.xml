@@ -15,7 +15,7 @@
             android:fontFamily="sans-serif-medium"
             style="@style/Mark"
             android:text="4"
-            android:alpha="0.8"
+            android:alpha="0.9"
             android:paddingLeft="6dp"
             android:paddingRight="6dp"
             android:backgroundTint="#578B0F"/>

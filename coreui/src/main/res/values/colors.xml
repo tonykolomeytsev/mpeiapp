@@ -36,5 +36,7 @@
     <color name="colorBottomNavLight">#737373</color>
     <color name="colorBottomNavDark">#ffffff</color>
     <color name="colorLunchItemDark">#09ffffff</color>
+    <color name="colorBarsAvMark">#dcdcdc</color>
+    <color name="colorBarsAvMarkDark">#19FFFFFF</color>
 
 </resources>
