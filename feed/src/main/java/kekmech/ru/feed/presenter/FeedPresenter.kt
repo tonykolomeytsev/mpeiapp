@@ -6,7 +6,7 @@ import kekmech.ru.core.Presenter
 import kekmech.ru.core.Router
 import kekmech.ru.core.Screens.*
 import kekmech.ru.core.UpdateChecker
-import kekmech.ru.coreui.adapter.BaseAdapter
+import kekmech.ru.coreui.adapter.BaseSortedAdapter
 import kekmech.ru.feed.IFeedFragment
 import kekmech.ru.feed.items.*
 import kekmech.ru.feed.model.FeedModel
@@ -20,11 +20,21 @@ class FeedPresenter constructor(
 ) : Presenter<IFeedFragment>() {
 
     var view: IFeedFragment? = null
-    val adapter by lazy { BaseAdapter.Builder()
+    val adapter by lazy { BaseSortedAdapter.Builder()
         .registerViewTypeFactory(SessionItem.Factory())
         .registerViewTypeFactory(CarouselItem.Factory())
         .registerViewTypeFactory(EmptyItem.Factory())
         .registerViewTypeFactory(NothingToShowItem.Factory())
+        .registerViewTypeFactory(TomorrowCouplesItem.Factory())
+        .addItemsOrder(listOf(
+            CarouselItem::class, // карусель с новостями с Firebase
+            TomorrowCouplesItem::class, // расписание на завтра
+            SessionItem::class, // расписание сессии
+
+            /* вспомогательные */
+            NothingToShowItem::class, // показывается если нету инета или произошла ошибка
+            EmptyItem::class // показывается если нету расписаний (не выбрана группа)
+        ))
         .build()
     }
 
@@ -49,16 +59,14 @@ class FeedPresenter constructor(
                         adapter.baseItems[0] = (CarouselItem(carousel, model.getPicasso()))
                         adapter.notifyItemChanged(0)
                     } else {
-                        adapter.baseItems.add(0, CarouselItem(carousel, model.getPicasso()))
-                        adapter.notifyItemInserted(0)
+                        adapter.addItem(CarouselItem(carousel, model.getPicasso()))
                     }
                 }
             })
 
             // если у нас нету расписаний
             if (withContext(Dispatchers.IO) { model.isSchedulesEmpty }) {
-                adapter.baseItems.add(EmptyItem(::onStatusEdit)) // то покажем плиточку с выбором расписания
-                adapter.notifyItemInserted(adapter.baseItems.lastIndex)
+                adapter.addItem(EmptyItem(::onStatusEdit)) // то покажем плиточку с выбором расписания
                 view.hideLoading()
 
                 // и будем дожидаться пока кто-то введет расписание
@@ -92,17 +100,24 @@ class FeedPresenter constructor(
     }
 
     private suspend fun loadAcademicContent(view: IFeedFragment) {
-        val academicSession = withContext(Dispatchers.IO) { model.getAcademicSession() }
-        if (academicSession != null) {
-            val item = SessionItem(academicSession)
-            adapter.baseItems.add(item)
-            adapter.notifyItemInserted(adapter.baseItems.indexOf(item))
+        val tasks = listOf(
+            async {
+                val academicSession = withContext(Dispatchers.IO) { model.getAcademicSession() }
+                if (academicSession != null)
+                    adapter.addItem(SessionItem(academicSession))
+            },
+            async {
+                val couplesForTomorrow = withContext(Dispatchers.IO) { model.getTomorrowSchedhule() }
+                if (couplesForTomorrow.isNotEmpty())
+                    adapter.addItem(TomorrowCouplesItem(couplesForTomorrow))
+            }
+        )
+
+        tasks.awaitAll()
+        if ((adapter.itemCount == 1 && adapter.baseItems.firstOrNull() is CarouselItem) or (adapter.baseItems.isEmpty())) {// если только карусель
+            adapter.addItem(NothingToShowItem())
         }
-        if ((adapter.baseItems.size == 1 && adapter.baseItems.firstOrNull() is CarouselItem) or (adapter.baseItems.isEmpty())) {// если только карусель
-            val item = NothingToShowItem()
-            adapter.baseItems.add(item)
-            adapter.notifyItemInserted(adapter.baseItems.indexOf(item))
-        }
+
         view.hideLoading()
     }
 
@@ -113,6 +128,8 @@ class FeedPresenter constructor(
             router.navigate(FEED_TO_ADD)
         }
     }
+
+    private suspend fun<T> async(action: suspend CoroutineScope.() -> T) = GlobalScope.async(Dispatchers.Main, block = action)
 
     /**
      * unsubscribe to view events

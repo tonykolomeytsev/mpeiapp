@@ -13,7 +13,6 @@ import kekmech.ru.feed.R
 class SessionItem(val academicSession: AcademicSession) : BaseItem<SessionItem.ViewHolder>() {
 
     val adapter = BaseAdapter.Builder()
-        .registerViewTypeFactory(SessionDisciplineItem.Factory())
         .registerViewTypeFactory(SessionDisciplineStackItem.Factory())
         .build()
     val items = mutableListOf<BaseItem<*>>()
@@ -48,5 +47,5 @@ class SessionItem(val academicSession: AcademicSession) : BaseItem<SessionItem.V
         val recycler by bind<RecyclerView>(R.id.recyclerView)
     }
 
-    class Factory : BaseFactory(R.layout.item_session, ::ViewHolder)
+    class Factory : BaseFactory(R.layout.item_card_with_recycler, ::ViewHolder)
 }

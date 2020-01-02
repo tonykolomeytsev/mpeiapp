@@ -79,7 +79,7 @@
                     android:layoutAnimation="@anim/layout_animation_fall_down"
                     android:paddingBottom="100dp"
                     tools:itemCount="1"
-                    tools:listitem="@layout/item_session" />
+                    tools:listitem="@layout/item_card_with_recycler" />
 
         </LinearLayout>
 
