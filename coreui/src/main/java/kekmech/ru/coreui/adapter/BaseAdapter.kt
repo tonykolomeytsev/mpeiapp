@@ -29,7 +29,7 @@ open class BaseAdapter : RecyclerView.Adapter<BaseViewHolder>() {
     override fun getItemCount() = baseItems.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
-        if (inflater == null) inflater = LayoutInflater.from(parent.context)
+        /*if (inflater == null) */inflater = LayoutInflater.from(parent.context)
         return viewFactories[viewType]!!.instanceNative(parent, inflater!!)
     }
 
