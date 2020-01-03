@@ -88,6 +88,7 @@ class BarsFragmentPresenter constructor(
                 if (view != null) {
                     view?.state = BarsFragmentView.State.SCORE
                     updateWithScore(view!!, score)
+                    view?.clearLoginFields()
                 }
             }
             view?.setLoginFormEnabled(true)
