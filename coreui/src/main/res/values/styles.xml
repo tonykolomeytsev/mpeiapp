@@ -37,6 +37,7 @@
         <item name="themeColorForceUpdateBg">@color/colorWhite</item>
         <item name="themeColorForceUpdateBtnLater">@color/colorUpdateDtnLater</item>
         <item name="themeColorSearchViewIconsTint">@color/colorIconsTint</item>
+        <item name="themeColorCoupleNumber">@color/colorCoupleNumber</item>
     </style>
 
     <style name="AppTheme.Dark" parent="Theme.AppCompat.Light.NoActionBar">
@@ -76,6 +77,7 @@
         <item name="themeColorForceUpdateBg">@color/colorUpdateBgDark</item>
         <item name="themeColorForceUpdateBtnLater">@color/colorUpdateDtnLaterDark</item>
         <item name="themeColorSearchViewIconsTint">@color/colorIconsTintDark</item>
+        <item name="themeColorCoupleNumber">@color/colorCoupleNumberDark</item>
     </style>
 
     <style name="PrimaryFlatButton" parent="Theme.AppCompat.Light">

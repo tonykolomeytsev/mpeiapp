@@ -53,5 +53,7 @@
     <color name="colorUpdateDtnLater">#dedede</color>
     <color name="colorUpdateDtnLaterDark">#4f4f4f</color>
     <color name="colorIconsTintDark">#d0d0d0</color>
+    <color name="colorCoupleNumber">#ededed</color>
+    <color name="colorCoupleNumberDark">#454545</color>
 
 </resources>

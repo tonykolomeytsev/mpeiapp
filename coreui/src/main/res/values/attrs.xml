@@ -30,4 +30,5 @@
     <attr name="themeColorForceUpdateBg" format="reference"/>
     <attr name="themeColorForceUpdateBtnLater" format="reference"/>
     <attr name="themeColorSearchViewIconsTint" format="reference"/>
+    <attr name="themeColorCoupleNumber" format="reference"/>
 </resources>
