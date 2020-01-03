@@ -46,7 +46,11 @@ class FeedRepositoryImpl(
     private fun Picasso.toPicassoFirebaseInstance() = object : PicassoFirebaseInstance {
         override fun load(link: String, imageView: ImageView) {
             if (link.isNotEmpty())
-                this@toPicassoFirebaseInstance.load(link).into(imageView)
+                this@toPicassoFirebaseInstance
+                    .load(link)
+                    .placeholder(R.drawable.thumbnail_carousel)
+                    .into(imageView)
+
         }
     }
 }

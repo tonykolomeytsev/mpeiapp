@@ -54,14 +54,8 @@ class FeedPresenter constructor(
         GlobalScope.launch(Dispatchers.Main) {
             // carousel
             withContext(Dispatchers.IO) { model.getCarousel() }.observe(view, Observer { carousel ->
-                if (carousel != null) {
-                    val notFirstTime = adapter.baseItems.any { it is CarouselItem }
-                    if (notFirstTime) {
-                        adapter.baseItems[0] = (CarouselItem(carousel, model.getPicasso()))
-                        adapter.notifyItemChanged(0)
-                    } else {
-                        adapter.addItem(CarouselItem(carousel, model.getPicasso()))
-                    }
+                if (carousel != null && carousel.items.isNotEmpty()) {
+                    adapter.addItem(CarouselItem(carousel, model.getPicasso()))
                 }
             })
 
@@ -130,7 +124,7 @@ class FeedPresenter constructor(
         }
     }
 
-    private suspend fun<T> async(action: suspend CoroutineScope.() -> T) = GlobalScope.async(Dispatchers.Main, block = action)
+    private fun<T> async(action: suspend CoroutineScope.() -> T) = GlobalScope.async(Dispatchers.Main, block = action)
 
     /**
      * unsubscribe to view events
