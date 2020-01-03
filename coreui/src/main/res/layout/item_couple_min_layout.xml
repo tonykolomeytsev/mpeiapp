@@ -10,8 +10,26 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
+    <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="false"
+            android:focusable="false"
+            android:background="?attr/themeColorTimetableCard"
+            android:layout_marginTop="6dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
+            android:layout_marginBottom="2dp"/>
+
+    <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="false"
+            android:focusable="false"
+            android:background="?attr/themeColorTimetableBackground"/>
+
     <LinearLayout
-            android:layout_width="76dp"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:paddingRight="16dp"
             android:gravity="right"
@@ -45,7 +63,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginLeft="76dp"
+            android:layout_marginLeft="80dp"
             android:layout_marginBottom="16dp">
 
 
@@ -136,7 +154,7 @@
             android:layout_marginTop="16dp"
             android:alpha="0.15"
             tools:background="@color/colorBlack"
-            android:background="?attr/themeColorBlack"
+            android:background="?attr/themeColorDivider"
             android:layout_gravity="bottom" />
 
 </FrameLayout>

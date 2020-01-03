@@ -23,12 +23,14 @@
         <item name="themeColorFeedBackground">@color/colorFeedBackground</item>
         <item name="themeColorBottomNavBackground">?android:attr/windowBackground</item>
         <item name="themeColorBottomNavTint">@color/colorBottomNavLight</item>
-        <item name="themeColorLunchItem">@color/colorLunchItem</item>
         <item name="themeColorBarsAvMark">@color/colorBarsAvMark</item>
         <item name="themeColorProgressBar">@color/colorProgressBar</item>
         <item name="themeColorBackdrop">@color/colorBackdrop</item>
         <item name="themeColorDivider">@color/colorBlack</item>
         <item name="themeColorInfoBlock">@color/colorTransparent</item>
+        <item name="themeColorTimetableCard">@color/colorTransparent</item>
+        <item name="themeColorTimetableBackground">@color/colorWhite</item>
+        <item name="themeColorTimetableLunchBackground">@color/colorLunchItem</item>
     </style>
 
     <style name="AppTheme.Dark" parent="Theme.AppCompat.Light.NoActionBar">
@@ -54,12 +56,14 @@
         <item name="themeColorFeedBackground">@color/colorFeedBackgroundDark</item>
         <item name="themeColorBottomNavBackground">@color/colorBottomNavBackgroundDark</item>
         <item name="themeColorBottomNavTint">@color/colorBottomNavDark</item>
-        <item name="themeColorLunchItem">@color/colorLunchItemDark</item>
         <item name="themeColorBarsAvMark">@color/colorBarsAvMarkDark</item>
         <item name="themeColorProgressBar">@color/colorProgressBarDark</item>
         <item name="themeColorBackdrop">@color/colorBackdropDark</item>
         <item name="themeColorDivider">@color/colorTransparent</item>
         <item name="themeColorInfoBlock">@color/colorInfoBlock</item>
+        <item name="themeColorTimetableCard">@drawable/bg_timetable_card_decor</item>
+        <item name="themeColorTimetableBackground">@color/colorTransparent</item>
+        <item name="themeColorTimetableLunchBackground">@color/colorTransparent</item>
     </style>
 
     <style name="PrimaryFlatButton" parent="Theme.AppCompat.Light">

@@ -6,12 +6,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:background="@color/colorLunchItem"
-        android:background="?attr/themeColorLunchItem"
+        android:background="?attr/themeColorTimetableLunchBackground"
         android:clickable="true"
         android:focusable="true"
         android:gravity="center_vertical"
         android:clipToPadding="false">
-
 
     <!--OVERLINE-->
     <TextView android:layout_width="wrap_content"
