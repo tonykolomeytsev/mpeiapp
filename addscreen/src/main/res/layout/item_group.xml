@@ -6,7 +6,8 @@
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
-        android:background="?attr/selectableItemBackground">
+        android:background="?attr/selectableItemBackground"
+        tools:theme="@style/AppTheme">
 
     <TextView
             android:id="@+id/textViewGroupName"
@@ -15,7 +16,7 @@
             tools:text="С-12-16"
             android:fontFamily="sans-serif-light"
             android:textSize="24sp"
-            android:textColor="@color/colorBlack"
+            android:textColor="?attr/themeColorBlack"
             android:layout_gravity="center"/>
 
 </FrameLayout>

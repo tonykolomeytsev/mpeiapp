@@ -52,5 +52,6 @@
     <color name="colorUpdateBgDark">#3f3f3f</color>
     <color name="colorUpdateDtnLater">#dedede</color>
     <color name="colorUpdateDtnLaterDark">#4f4f4f</color>
+    <color name="colorIconsTintDark">#d0d0d0</color>
 
 </resources>
