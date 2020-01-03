@@ -98,7 +98,8 @@
                     android:id="@+id/barsLogoLayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/colorSecondary"
+                    tools:background="@color/colorSecondary"
+                    android:background="?attr/themeColorToolbar"
                     android:fitsSystemWindows="true"
                     android:gravity="bottom"
                     android:minHeight="128dp"
@@ -193,7 +194,8 @@
                     android:layout_marginBottom="24dp"
                     android:fontFamily="sans-serif-light"
                     android:text="Вход"
-                    android:textColor="@color/colorBlack"
+                    tools:textColor="@color/colorBlack"
+                    android:textColor="?attr/themeColorBlack"
                     android:textSize="34sp" />
 
             <EditText
@@ -203,11 +205,15 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="24dp"
                     android:background="@drawable/login_textview_bg"
-                    android:backgroundTint="@color/colorSearchView"
+                    tools:backgroundTint="@color/colorSearchView"
+                    android:backgroundTint="?attr/themeColorSearchView"
                     android:ellipsize="end"
                     android:gravity="center"
                     android:hint="Логин"
+                    tools:textColor="@color/colorBlack"
+                    android:textColor="?attr/themeColorBlack"
                     android:inputType="textNoSuggestions"
+                    android:textColorHint="?attr/themeColorSearchViewHint"
                     android:maxLines="1"
                     android:textSize="18sp" />
 
@@ -217,10 +223,14 @@
                     android:layout_height="48dp"
                     android:layout_gravity="center_horizontal"
                     android:background="@drawable/login_textview_bg"
-                    android:backgroundTint="@color/colorSearchView"
+                    tools:backgroundTint="@color/colorSearchView"
+                    android:backgroundTint="?attr/themeColorSearchView"
                     android:ellipsize="end"
                     android:gravity="center"
                     android:hint="Пароль"
+                    tools:textColor="@color/colorBlack"
+                    android:textColor="?attr/themeColorBlack"
+                    android:textColorHint="?attr/themeColorSearchViewHint"
                     android:inputType="textPassword"
                     android:maxLines="1"
                     android:textSize="18sp" />
@@ -238,7 +248,8 @@
                         android:layout_height="wrap_content"
                         android:alpha="0.5"
                         android:text="Я согласен с "
-                        android:textColor="@color/colorBlack" />
+                        tools:textColor="@color/colorBlack"
+                        android:textColor="?attr/themeColorBlack" />
 
                 <TextView
                         android:layout_width="wrap_content"
@@ -264,13 +275,15 @@
                         android:fontFamily="sans-serif-light"
                         android:gravity="center"
                         android:text="Войти"
-                        android:textColor="@color/colorBlack"
+                        tools:textColor="@color/colorBlack"
+                        android:textColor="?attr/themeColorBlack"
                         android:textSize="18sp" />
 
                 <ProgressBar
                         android:id="@+id/progressBarLogin"
                         android:layout_gravity="center"
-                        android:indeterminateTint="@color/colorSecondary"
+                        tools:indeterminateTint="@color/colorSecondary"
+                        android:indeterminateTint="?attr/themeColorProgressBar"
                         android:layout_width="32dp"
                         android:layout_height="32dp"/>
 
