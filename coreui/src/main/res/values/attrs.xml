@@ -18,4 +18,5 @@
     <attr name="themeColorBottomNavTint" format="reference"/>
     <attr name="themeColorLunchItem" format="reference"/>
     <attr name="themeColorBarsAvMark" format="reference"/>
+    <attr name="themeColorProgressBar" format="reference"/>
 </resources>

@@ -25,6 +25,7 @@
         <item name="themeColorBottomNavTint">@color/colorBottomNavLight</item>
         <item name="themeColorLunchItem">@color/colorLunchItem</item>
         <item name="themeColorBarsAvMark">@color/colorBarsAvMark</item>
+        <item name="themeColorProgressBar">@color/colorProgressBar</item>
     </style>
 
     <style name="AppTheme.Dark" parent="Theme.AppCompat.Light.NoActionBar">
@@ -51,6 +52,7 @@
         <item name="themeColorBottomNavTint">@color/colorBottomNavDark</item>
         <item name="themeColorLunchItem">@color/colorLunchItemDark</item>
         <item name="themeColorBarsAvMark">@color/colorBarsAvMarkDark</item>
+        <item name="themeColorProgressBar">@color/colorProgressBarDark</item>
 
     </style>
 
