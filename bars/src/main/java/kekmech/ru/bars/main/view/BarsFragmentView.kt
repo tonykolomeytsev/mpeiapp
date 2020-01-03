@@ -28,5 +28,7 @@ interface BarsFragmentView : LifecycleOwner {
 
     fun showError()
 
+    fun clearLoginFields()
+
     enum class State { LOGIN, SCORE }
 }
