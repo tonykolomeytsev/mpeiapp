@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:background="?attr/selectableItemBackground"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme">
+        tools:theme="@style/AppTheme">
 
     <TextView
             android:id="@+id/textViewPlaceName"
@@ -35,7 +35,7 @@
     <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:textColor="?attr/themeColorBlack"
+            android:background="?attr/themeColorBlack"
             android:alpha="0.2"
             android:layout_gravity="bottom"/>
 </LinearLayout>
