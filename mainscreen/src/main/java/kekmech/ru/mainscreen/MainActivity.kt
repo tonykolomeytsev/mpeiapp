@@ -1,5 +1,6 @@
 package kekmech.ru.mainscreen
 
+import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
@@ -12,6 +13,7 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import kekmech.ru.core.Router
 import kekmech.ru.core.usecases.IncrementAppLaunchCountUseCase
 import kekmech.ru.core.usecases.IsDarkThemeEnabledUseCase
+import kekmech.ru.coreui.Resources
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -35,8 +37,11 @@ class MainActivity : AppCompatActivity() {
         }
         FirebaseAnalytics.getInstance(this)
 
-        if (isDarkThemeEnabledUseCase()) setTheme(R.style.AppTheme_Dark)
-        else setTheme(R.style.AppTheme)
+        if (isDarkThemeEnabledUseCase()) {
+            setTheme(R.style.AppTheme_Dark)
+        } else {
+            setTheme(R.style.AppTheme)
+        }
 
         setContentView(R.layout.activity_main)
         if (savedInstanceState == null) {
