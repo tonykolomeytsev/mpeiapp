@@ -26,4 +26,5 @@
     <attr name="themeColorTimetableLunchBackground" format="reference"/>
     <attr name="themeColorSearchView" format="reference"/>
     <attr name="themeColorSearchViewHint" format="reference"/>
+    <attr name="themeColorMapTab" format="reference"/>
 </resources>

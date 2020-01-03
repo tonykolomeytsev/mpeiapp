@@ -33,6 +33,7 @@
         <item name="themeColorTimetableLunchBackground">@color/colorLunchItem</item>
         <item name="themeColorSearchView">@color/colorSearchView</item>
         <item name="themeColorSearchViewHint">@color/colorSearchViewHint</item>
+        <item name="themeColorMapTab">@color/colorMapTab</item>
     </style>
 
     <style name="AppTheme.Dark" parent="Theme.AppCompat.Light.NoActionBar">
@@ -68,6 +69,7 @@
         <item name="themeColorTimetableLunchBackground">@color/colorTransparent</item>
         <item name="themeColorSearchView">@color/colorSearchViewDark</item>
         <item name="themeColorSearchViewHint">@color/colorSearchViewHintDark</item>
+        <item name="themeColorMapTab">@color/colorMapTabDark</item>
     </style>
 
     <style name="PrimaryFlatButton" parent="Theme.AppCompat.Light">
@@ -102,7 +104,7 @@
         <item name="android:paddingRight">12dp</item>
         <item name="android:textSize">13sp</item>
         <item name="android:fontFamily">sans-serif-medium</item>
-        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:textColor">?attr/themeColorBlack</item>
     </style>
 
     <style name="BottomSheetDialogTheme" parent="BaseBottomSheetDialog" />

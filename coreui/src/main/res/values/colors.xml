@@ -47,5 +47,7 @@
     <color name="colorInfoBlock">#0AFFFFFF</color>
     <color name="colorSearchViewDark">#11ffffff</color>
     <color name="colorSearchViewHintDark">#80FFFFFF</color>
+    <color name="colorMapTab">#ededed</color>
+    <color name="colorMapTabDark">#454545</color>
 
 </resources>

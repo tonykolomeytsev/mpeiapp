@@ -3,13 +3,14 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        xmlns:tools="http://schemas.android.com/tools">
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:theme="@style/AppTheme">
 
     <ProgressBar
             android:id="@+id/progressBar"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:indeterminateTint="@color/colorSecondary"
+            android:indeterminateTint="?attr/themeColorProgressBar"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="32dp"/>
 
