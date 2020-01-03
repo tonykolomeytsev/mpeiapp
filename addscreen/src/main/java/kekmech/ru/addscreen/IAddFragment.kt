@@ -5,7 +5,6 @@ import androidx.lifecycle.LifecycleOwner
 import kekmech.ru.coreui.adapter.BaseAdapter
 
 interface IAddFragment : LifecycleOwner {
-    val web: WebView
 
     var onSearchClickListener: (String) -> Unit
 
