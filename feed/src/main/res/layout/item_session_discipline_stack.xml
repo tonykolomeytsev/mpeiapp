@@ -8,21 +8,28 @@
         android:clickable="true"
         android:focusable="true"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        tools:background="#d0d0d0">
 
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginBottom="16dp"
-            android:paddingLeft="16dp">
+            android:layout_marginBottom="8dp"
+            android:paddingBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:paddingLeft="16dp"
+            android:layout_marginRight="8dp"
+            android:paddingRight="16dp"
+            android:background="@drawable/bg_info_block"
+            android:clipToPadding="false">
 
 
         <TextView
                 android:id="@+id/textViewCoupleName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:fontFamily="sans-serif"
                 tools:textColor="#DE000000"
                 android:textColor="?themeColorBlack"
@@ -108,7 +115,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="8dp">
+                android:layout_marginTop="8dp"
+                android:clipToPadding="false">
 
             <LinearLayout
                     android:layout_width="60dp"
@@ -150,15 +158,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:paddingLeft="16dp"
-                    android:clipToPadding="false">
+                    android:paddingLeft="16dp">
 
 
                 <View
                         android:layout_width="match_parent"
                         android:layout_height="1px"
                         tools:background="@color/colorBlack"
-                        android:background="?themeColorBlack"
+                        android:background="?themeColorDivider"
                         android:alpha="0.2"
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="8dp"
@@ -207,7 +214,7 @@
             android:layout_marginTop="16dp"
             android:alpha="0.15"
             tools:background="@color/colorBlack"
-            android:background="?themeColorBlack"
+            android:background="?themeColorDivider"
             android:layout_gravity="bottom" />
 
 </FrameLayout>

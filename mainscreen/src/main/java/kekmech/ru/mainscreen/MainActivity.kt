@@ -1,6 +1,5 @@
 package kekmech.ru.mainscreen
 
-import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
@@ -13,7 +12,6 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import kekmech.ru.core.Router
 import kekmech.ru.core.usecases.IncrementAppLaunchCountUseCase
 import kekmech.ru.core.usecases.IsDarkThemeEnabledUseCase
-import kekmech.ru.coreui.Resources
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -21,7 +19,7 @@ import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
 
-    val router: Router by inject()
+    private val router: Router by inject()
     private var currentNavController: LiveData<NavController>? = null
 
     val incrementAppLaunchCountUseCase: IncrementAppLaunchCountUseCase by inject()

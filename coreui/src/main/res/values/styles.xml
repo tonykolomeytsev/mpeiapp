@@ -26,6 +26,9 @@
         <item name="themeColorLunchItem">@color/colorLunchItem</item>
         <item name="themeColorBarsAvMark">@color/colorBarsAvMark</item>
         <item name="themeColorProgressBar">@color/colorProgressBar</item>
+        <item name="themeColorBackdrop">@color/colorBackdrop</item>
+        <item name="themeColorDivider">@color/colorBlack</item>
+        <item name="themeColorInfoBlock">@color/colorTransparent</item>
     </style>
 
     <style name="AppTheme.Dark" parent="Theme.AppCompat.Light.NoActionBar">
@@ -45,7 +48,7 @@
 
 
         <item name="themeColorWhite">@color/colorBlack</item>
-        <item name="themeColorBlack">@color/colorWhite</item>
+        <item name="themeColorBlack">@color/colorWhiteSlack</item>
         <item name="themeColorCardView">@color/colorCardViewBlack</item>
         <item name="themeColorToolbar">@color/colorToolbarBlack</item>
         <item name="themeColorFeedBackground">@color/colorFeedBackgroundDark</item>
@@ -54,7 +57,9 @@
         <item name="themeColorLunchItem">@color/colorLunchItemDark</item>
         <item name="themeColorBarsAvMark">@color/colorBarsAvMarkDark</item>
         <item name="themeColorProgressBar">@color/colorProgressBarDark</item>
-
+        <item name="themeColorBackdrop">@color/colorBackdropDark</item>
+        <item name="themeColorDivider">@color/colorTransparent</item>
+        <item name="themeColorInfoBlock">@color/colorInfoBlock</item>
     </style>
 
     <style name="PrimaryFlatButton" parent="Theme.AppCompat.Light">
