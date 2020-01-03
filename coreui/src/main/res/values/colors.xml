@@ -21,6 +21,7 @@
     <color name="colorBlack">#000000</color>
     <color name="colorBlackTransparent">#4D000000</color>
     <color name="colorSearchView">#11000000</color>
+    <color name="colorSearchViewHint">#80000000</color>
     <color name="colorTransparent">#00000000</color>
     <color name="colorCollapsingToolbarTransparent">#0042a5f5</color>
     <color name="colorIconsTint">#464646</color>
@@ -44,5 +45,7 @@
     <color name="colorBackdropDark">#2e2e2e</color>
     <color name="colorWhiteSlack">#e2e2e2</color>
     <color name="colorInfoBlock">#0AFFFFFF</color>
+    <color name="colorSearchViewDark">#11ffffff</color>
+    <color name="colorSearchViewHintDark">#80FFFFFF</color>
 
 </resources>

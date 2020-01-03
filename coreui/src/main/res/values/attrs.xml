@@ -24,4 +24,6 @@
     <attr name="themeColorTimetableCard" format="reference"/>
     <attr name="themeColorTimetableBackground" format="reference"/>
     <attr name="themeColorTimetableLunchBackground" format="reference"/>
+    <attr name="themeColorSearchView" format="reference"/>
+    <attr name="themeColorSearchViewHint" format="reference"/>
 </resources>

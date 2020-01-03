@@ -31,6 +31,8 @@
         <item name="themeColorTimetableCard">@color/colorTransparent</item>
         <item name="themeColorTimetableBackground">@color/colorWhite</item>
         <item name="themeColorTimetableLunchBackground">@color/colorLunchItem</item>
+        <item name="themeColorSearchView">@color/colorSearchView</item>
+        <item name="themeColorSearchViewHint">@color/colorSearchViewHint</item>
     </style>
 
     <style name="AppTheme.Dark" parent="Theme.AppCompat.Light.NoActionBar">
@@ -64,6 +66,8 @@
         <item name="themeColorTimetableCard">@drawable/bg_timetable_card_decor</item>
         <item name="themeColorTimetableBackground">@color/colorTransparent</item>
         <item name="themeColorTimetableLunchBackground">@color/colorTransparent</item>
+        <item name="themeColorSearchView">@color/colorSearchViewDark</item>
+        <item name="themeColorSearchViewHint">@color/colorSearchViewHintDark</item>
     </style>
 
     <style name="PrimaryFlatButton" parent="Theme.AppCompat.Light">
