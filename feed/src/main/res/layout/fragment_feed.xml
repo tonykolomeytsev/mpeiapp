@@ -9,11 +9,13 @@
         android:background="?themeColorFeedBackground"
         tools:background="@color/colorFeedBackground"
         android:fitsSystemWindows="true"
+        tools:theme="@style/AppTheme"
         >
 
         <androidx.core.widget.NestedScrollView
                 android:id="@+id/nestedScroll"
                 android:fitsSystemWindows="true"
+                android:overScrollMode="never"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -81,6 +83,7 @@
                     android:layoutAnimation="@anim/layout_animation_fall_down"
                     android:paddingBottom="100dp"
                     tools:itemCount="1"
+                    android:overScrollMode="never"
                     tools:listitem="@layout/item_card_with_recycler" />
 
         </LinearLayout>
