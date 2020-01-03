@@ -35,7 +35,7 @@
     <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:textColor="?attr/themeColorBlack"
+            android:background="?attr/themeColorBlack"
             android:alpha="0.2"
             android:layout_gravity="bottom"/>
 </LinearLayout>
