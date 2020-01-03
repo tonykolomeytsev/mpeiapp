@@ -7,7 +7,8 @@
     tools:context="kekmech.ru.map.view.MapFragment"
     android:fitsSystemWindows="true"
         android:id="@+id/mapCoordinator"
-    android:clipToPadding="false">
+    android:clipToPadding="false"
+        tools:theme="@style/AppTheme">
 
     <com.google.android.gms.maps.MapView
             android:id="@+id/mapView"
@@ -27,7 +28,7 @@
             app:behavior_peekHeight="106dp"
             app:behavior_hideable="false"
             tools:behavior_peekHeight="348dp"
-            android:background="@color/colorWhite"
+            android:background="?attr/themeColorCardView"
             android:orientation="vertical"
             android:fitsSystemWindows="false"
             android:paddingTop="0dp"
