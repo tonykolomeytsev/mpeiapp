@@ -11,7 +11,8 @@
             android:id="@+id/main.appbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorSecondary"
+            android:background="?attr/themeColorToolbar"
+            tools:background="@color/colorSecondary"
             android:fitsSystemWindows="true"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
@@ -41,7 +42,8 @@
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorFeedBackground">
+            tools:background="@color/colorFeedBackground"
+            android:background="?attr/themeColorFeedBackground">
 
         <LinearLayout
                 android:layout_width="match_parent"
@@ -52,7 +54,8 @@
             <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/colorWhite"
+                    tools:cardBackgroundColor="@color/colorWhite"
+                    app:cardBackgroundColor="?attr/themeColorCardView"
                     app:cardElevation="2dp">
                 <LinearLayout
                         android:layout_width="match_parent"
@@ -68,7 +71,8 @@
                             android:layout_height="wrap_content"
                             android:text="Ваш рейтинг:"
                             android:textSize="18sp"
-                            android:textColor="@color/colorBlack"/>
+                            android:textColor="?attr/themeColorBlack"
+                            tools:textColor="@color/colorBlack"/>
 
                     <LinearLayout
                             android:layout_width="wrap_content"
@@ -81,7 +85,8 @@
                                 android:layout_height="wrap_content"
                                 tools:text="34"
                                 android:layout_marginRight="2dp"
-                                android:textColor="@color/colorBlack"
+                                android:textColor="?attr/themeColorBlack"
+                                tools:textColor="@color/colorBlack"
                                 android:textSize="48sp"/>
 
                         <TextView
@@ -89,7 +94,8 @@
                                 android:layout_height="wrap_content"
                                 android:text="/100"
                                 android:alpha="0.5"
-                                android:textColor="@color/colorBlack"
+                                android:textColor="?attr/themeColorBlack"
+                                tools:textColor="@color/colorBlack"
                                 android:textSize="48sp"/>
                     </LinearLayout>
 
@@ -97,7 +103,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textSize="14sp"
-                            android:textColor="@color/colorBlack"
+                            android:textColor="?attr/themeColorBlack"
+                            tools:textColor="@color/colorBlack"
                             android:alpha="0.7"
                             android:gravity="center"
                             android:text="Общий рейтинг формируетсяя на основе учебного, научного и социального рейтинга."/>
@@ -110,7 +117,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    app:cardBackgroundColor="@color/colorWhite"
+                    tools:cardBackgroundColor="@color/colorWhite"
+                    app:cardBackgroundColor="?attr/themeColorCardView"
                     app:cardElevation="2dp">
                 <LinearLayout
                         android:layout_width="match_parent"
@@ -132,7 +140,8 @@
                                 android:text="Учебный рейтинг:"
                                 android:textSize="18sp"
                                 android:layout_marginTop="16dp"
-                                android:textColor="@color/colorBlack"/>
+                                android:textColor="?attr/themeColorBlack"
+                                tools:textColor="@color/colorBlack"/>
 
                         <LinearLayout
                                 android:layout_width="wrap_content"
@@ -145,7 +154,8 @@
                                     android:layout_height="wrap_content"
                                     tools:text="61"
                                     android:layout_marginRight="2dp"
-                                    android:textColor="@color/colorBlack"
+                                    android:textColor="?attr/themeColorBlack"
+                                    tools:textColor="@color/colorBlack"
                                     android:textSize="36sp"/>
 
                             <TextView
@@ -153,7 +163,8 @@
                                     android:layout_height="wrap_content"
                                     android:text="/100"
                                     android:alpha="0.5"
-                                    android:textColor="@color/colorBlack"
+                                    android:textColor="?attr/themeColorBlack"
+                                    tools:textColor="@color/colorBlack"
                                     android:textSize="36sp"/>
 
                         </LinearLayout>
@@ -162,7 +173,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:textSize="14sp"
-                                android:textColor="@color/colorBlack"
+                                android:textColor="?attr/themeColorBlack"
+                                tools:textColor="@color/colorBlack"
                                 android:alpha="0.7"
                                 android:layout_marginLeft="8dp"
                                 android:layout_marginRight="8dp"
@@ -184,7 +196,8 @@
                                 android:text="Научный рейтинг:"
                                 android:textSize="18sp"
                                 android:layout_marginTop="16dp"
-                                android:textColor="@color/colorBlack"/>
+                                android:textColor="?attr/themeColorBlack"
+                                tools:textColor="@color/colorBlack"/>
 
                         <LinearLayout
                                 android:layout_width="wrap_content"
@@ -197,7 +210,8 @@
                                     android:layout_height="wrap_content"
                                     tools:text="15"
                                     android:layout_marginRight="2dp"
-                                    android:textColor="@color/colorBlack"
+                                    android:textColor="?attr/themeColorBlack"
+                                    tools:textColor="@color/colorBlack"
                                     android:textSize="36sp"/>
 
                             <TextView
@@ -205,7 +219,8 @@
                                     android:layout_height="wrap_content"
                                     android:text="/100"
                                     android:alpha="0.5"
-                                    android:textColor="@color/colorBlack"
+                                    android:textColor="?attr/themeColorBlack"
+                                    tools:textColor="@color/colorBlack"
                                     android:textSize="36sp"/>
 
                         </LinearLayout>
@@ -214,7 +229,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:textSize="14sp"
-                                android:textColor="@color/colorBlack"
+                                android:textColor="?attr/themeColorBlack"
+                                tools:textColor="@color/colorBlack"
                                 android:alpha="0.7"
                                 android:layout_marginLeft="8dp"
                                 android:layout_marginRight="8dp"
@@ -232,7 +248,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardElevation="2dp"
-                    app:cardBackgroundColor="@color/colorWhite">
+                    tools:cardBackgroundColor="@color/colorWhite"
+                    app:cardBackgroundColor="?attr/themeColorCardView">
 
                 <LinearLayout
                         android:layout_width="match_parent"
@@ -247,7 +264,8 @@
                             android:text="Социальный рейтинг:"
                             android:textSize="18sp"
                             android:layout_marginTop="16dp"
-                            android:textColor="@color/colorBlack"/>
+                            android:textColor="?attr/themeColorBlack"
+                            tools:textColor="@color/colorBlack"/>
 
                     <LinearLayout
                             android:layout_width="wrap_content"
@@ -260,7 +278,8 @@
                                 android:layout_height="wrap_content"
                                 tools:text="7"
                                 android:layout_marginRight="2dp"
-                                android:textColor="@color/colorBlack"
+                                android:textColor="?attr/themeColorBlack"
+                                tools:textColor="@color/colorBlack"
                                 android:textSize="36sp"/>
 
                         <TextView
@@ -268,7 +287,8 @@
                                 android:layout_height="wrap_content"
                                 android:text="/100"
                                 android:alpha="0.5"
-                                android:textColor="@color/colorBlack"
+                                android:textColor="?attr/themeColorBlack"
+                                tools:textColor="@color/colorBlack"
                                 android:textSize="36sp"/>
 
                     </LinearLayout>
@@ -277,7 +297,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textSize="14sp"
-                            android:textColor="@color/colorBlack"
+                            android:textColor="?attr/themeColorBlack"
+                            tools:textColor="@color/colorBlack"
                             android:alpha="0.7"
                             android:paddingLeft="16dp"
                             android:paddingRight="16dp"
@@ -297,7 +318,8 @@
                                 android:text="Cпортивный рейтинг:"
                                 android:textSize="18sp"
                                 android:layout_marginRight="4dp"
-                                android:textColor="@color/colorBlack"/>
+                                android:textColor="?attr/themeColorBlack"
+                                tools:textColor="@color/colorBlack"/>
 
                         <TextView
                                 android:id="@+id/textViewRatingSport"
@@ -305,7 +327,8 @@
                                 android:layout_height="wrap_content"
                                 tools:text="4"
                                 android:layout_marginRight="2dp"
-                                android:textColor="@color/colorBlack"
+                                android:textColor="?attr/themeColorBlack"
+                                tools:textColor="@color/colorBlack"
                                 android:textSize="18sp"/>
 
                         <TextView
@@ -313,7 +336,8 @@
                                 android:layout_height="wrap_content"
                                 android:text="/100"
                                 android:alpha="0.5"
-                                android:textColor="@color/colorBlack"
+                                android:textColor="?attr/themeColorBlack"
+                                tools:textColor="@color/colorBlack"
                                 android:textSize="18sp"/>
 
                     </LinearLayout>
@@ -322,7 +346,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textSize="14sp"
-                            android:textColor="@color/colorBlack"
+                            android:textColor="?attr/themeColorBlack"
+                            tools:textColor="@color/colorBlack"
                             android:layout_marginRight="16dp"
                             android:layout_marginLeft="16dp"
                             android:gravity="center"
@@ -341,7 +366,8 @@
                                 android:text="Социальная активность:"
                                 android:textSize="18sp"
                                 android:layout_marginRight="4dp"
-                                android:textColor="@color/colorBlack"/>
+                                android:textColor="?attr/themeColorBlack"
+                                tools:textColor="@color/colorBlack"/>
 
 
                         <TextView
@@ -350,7 +376,8 @@
                                 android:layout_height="wrap_content"
                                 tools:text="2"
                                 android:layout_marginRight="2dp"
-                                android:textColor="@color/colorBlack"
+                                android:textColor="?attr/themeColorBlack"
+                                tools:textColor="@color/colorBlack"
                                 android:textSize="18sp"/>
 
                         <TextView
@@ -358,7 +385,8 @@
                                 android:layout_height="wrap_content"
                                 android:text="/100"
                                 android:alpha="0.5"
-                                android:textColor="@color/colorBlack"
+                                android:textColor="?attr/themeColorBlack"
+                                tools:textColor="@color/colorBlack"
                                 android:textSize="18sp"/>
 
                     </LinearLayout>
@@ -367,7 +395,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textSize="14sp"
-                            android:textColor="@color/colorBlack"
+                            android:textColor="?attr/themeColorBlack"
+                            tools:textColor="@color/colorBlack"
                             android:alpha="0.7"
                             android:layout_marginLeft="16dp"
                             android:layout_marginRight="16dp"
