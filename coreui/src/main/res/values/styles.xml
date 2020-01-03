@@ -34,6 +34,8 @@
         <item name="themeColorSearchView">@color/colorSearchView</item>
         <item name="themeColorSearchViewHint">@color/colorSearchViewHint</item>
         <item name="themeColorMapTab">@color/colorMapTab</item>
+        <item name="themeColorForceUpdateBg">@color/colorWhite</item>
+        <item name="themeColorForceUpdateBtnLater">@color/colorUpdateDtnLater</item>
     </style>
 
     <style name="AppTheme.Dark" parent="Theme.AppCompat.Light.NoActionBar">
@@ -70,6 +72,8 @@
         <item name="themeColorSearchView">@color/colorSearchViewDark</item>
         <item name="themeColorSearchViewHint">@color/colorSearchViewHintDark</item>
         <item name="themeColorMapTab">@color/colorMapTabDark</item>
+        <item name="themeColorForceUpdateBg">@color/colorUpdateBgDark</item>
+        <item name="themeColorForceUpdateBtnLater">@color/colorUpdateDtnLaterDark</item>
     </style>
 
     <style name="PrimaryFlatButton" parent="Theme.AppCompat.Light">
