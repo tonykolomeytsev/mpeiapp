@@ -27,4 +27,6 @@
     <attr name="themeColorSearchView" format="reference"/>
     <attr name="themeColorSearchViewHint" format="reference"/>
     <attr name="themeColorMapTab" format="reference"/>
+    <attr name="themeColorForceUpdateBg" format="reference"/>
+    <attr name="themeColorForceUpdateBtnLater" format="reference"/>
 </resources>

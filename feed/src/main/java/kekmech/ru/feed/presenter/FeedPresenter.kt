@@ -35,6 +35,7 @@ class FeedPresenter constructor(
             NothingToShowItem::class, // показывается если нету инета или произошла ошибка
             EmptyItem::class // показывается если нету расписаний (не выбрана группа)
         ))
+        .allowOnlyUniqueItems()
         .build()
     }
 
@@ -47,7 +48,7 @@ class FeedPresenter constructor(
         view.onSettingsClick = { router.navigate(FEED_TO_SETTINGS) }
 
         view.showLoading()
-        adapter.baseItems.clear()
+        //adapter.baseItems.clear()
         view.setAdapter(adapter)
 
         GlobalScope.launch(Dispatchers.Main) {
