@@ -8,7 +8,8 @@
         tools:background="@color/colorSecondary"
         android:background="?attr/themeColorToolbar"
         android:fitsSystemWindows="true"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:theme="@style/AppTheme">
 
     <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/main.appbar"
@@ -138,7 +139,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-            tools:layout_marginTop="175dp">
+            >
 
         <androidx.core.widget.NestedScrollView
                 android:id="@+id/nestedScroll"
