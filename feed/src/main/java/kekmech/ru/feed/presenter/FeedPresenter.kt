@@ -26,6 +26,7 @@ class FeedPresenter constructor(
         .registerViewTypeFactory(EmptyItem.Factory())
         .registerViewTypeFactory(NothingToShowItem.Factory())
         .registerViewTypeFactory(TomorrowCouplesItem.Factory())
+        .registerViewTypeFactory(TodayCouplesItem.Factory())
         .addItemsOrder(listOf(
             CarouselItem::class, // карусель с новостями с Firebase
             TomorrowCouplesItem::class, // расписание на завтра
@@ -102,9 +103,13 @@ class FeedPresenter constructor(
                     adapter.addItem(SessionItem(academicSession))
             },
             async {
-                val couplesForTomorrow = withContext(Dispatchers.IO) { model.getTomorrowSchedhule() }
-                if (couplesForTomorrow.isNotEmpty())
-                    adapter.addItem(TomorrowCouplesItem(couplesForTomorrow))
+                if (model.isEvening) {
+                    val actualCouples = withContext(Dispatchers.IO) { model.getTomorrowSchedule() }
+                    if (actualCouples.isNotEmpty()) adapter.addItem(TomorrowCouplesItem(actualCouples))
+                } else {
+                    val actualCouples = withContext(Dispatchers.IO) { model.getTodaySchedule() }
+                    if (actualCouples.isNotEmpty()) adapter.addItem(TodayCouplesItem(actualCouples))
+                }
             }
         )
 

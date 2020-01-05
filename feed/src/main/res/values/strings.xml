@@ -14,4 +14,16 @@
         <item>Окт</item>
         <item>Дек</item>
     </string-array>
+
+    <string name="tomorrow_couples_header">Расписание на завтра</string>
+    <string-array name="tomorrow_couples_offer">
+        <item>Вам завтра к первой паре</item>
+        <item>Вам завтра ко второй паре</item>
+        <item>Вам завтра к третьей паре</item>
+        <item>Вам завтра к четвертой паре</item>
+        <item>Вам завтра к пятой паре</item>
+        <item>Вам завтра к шестой паре</item>
+        <item>Вам завтра к седьмой паре</item>
+    </string-array>
+    <string name="today_couples_header">Сегодняшнее расписание</string>
 </resources>
