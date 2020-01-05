@@ -12,7 +12,6 @@ class FeedModelImpl constructor(
     private val context: Context,
     private val getGroupNumberUseCase: GetGroupNumberUseCase,
     private val isNeedToUpdateFeedUseCase: IsNeedToUpdateFeedUseCase,
-    private val setNeedToUpdateFeedUseCase: SetNeedToUpdateFeedUseCase,
     private val setForceUpdateDataUseCase: SetForceUpdateDataUseCase,
     private val setIsShowedUpdateDialogUseCase: SetIsShowedUpdateDialogUseCase,
     private val getIsShowedUpdateDialogUseCase: GetIsShowedUpdateDialogUseCase,
