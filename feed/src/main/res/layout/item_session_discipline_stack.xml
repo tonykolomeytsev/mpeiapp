@@ -9,6 +9,7 @@
         android:focusable="true"
         android:gravity="center_vertical"
         android:orientation="horizontal"
+        tools:theme="@style/AppTheme"
         tools:background="#d0d0d0">
 
     <LinearLayout
@@ -31,7 +32,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:fontFamily="sans-serif"
-                tools:textColor="#DE000000"
                 android:textColor="?themeColorBlack"
                 android:textSize="18sp"
                 tools:text="Линейная алгебра"

@@ -18,6 +18,8 @@ interface FeedModel {
 
     val isNeedToUpdate: LiveData<Boolean>
 
+    val isEvening: Boolean
+
     /**
      * Get couples for day
      * @param offset - 0 - today, 1 - yesterday etc.
@@ -25,10 +27,9 @@ interface FeedModel {
      */
     fun saveForceUpdateArgs(url: String, description: String)
 
-    fun nitifyFeedUpdated()
-
     fun getAcademicSession(): AcademicSession?
     fun getCarousel(): LiveData<FeedCarousel>
     fun getPicasso(): PicassoFirebaseInstance
-    fun getTomorrowSchedhule(): List<CoupleNative>
+    fun getTomorrowSchedule(): List<CoupleNative>
+    fun getTodaySchedule(): List<CoupleNative>
 }

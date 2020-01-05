@@ -20,7 +20,9 @@ class FeedModelImpl constructor(
     private val getAcademicSessionUseCase: GetAcademicSessionUseCase,
     private val getFeedCarouselUseCase: GetFeedCarouselUseCase,
     private val getPicassoInstanceUseCase: GetPicassoInstanceUseCase,
-    private val getTomorrowCouplesUseCase: GetTomorrowCouplesUseCase
+    private val getTomorrowCouplesUseCase: GetTomorrowCouplesUseCase,
+    private val getTodayCouplesUseCase: GetTodayCouplesUseCase,
+    private val isEveningUseCase: IsEveningUseCase
 ) : FeedModel {
 
     override val isSchedulesEmpty: Boolean
@@ -34,6 +36,9 @@ class FeedModelImpl constructor(
     override val isNeedToUpdate: LiveData<Boolean>
         get() = isNeedToUpdateFeedUseCase()
 
+    override val isEvening: Boolean
+        get() = isEveningUseCase()
+
     override var isNotShowedUpdateDialog: Boolean
         get() = getIsShowedUpdateDialogUseCase()
         set(value) { setIsShowedUpdateDialogUseCase(value) }
@@ -41,11 +46,7 @@ class FeedModelImpl constructor(
     override fun saveForceUpdateArgs(url: String, description: String) {
         setForceUpdateDataUseCase(url, description)
     }
-
-    override fun nitifyFeedUpdated() {
-        setNeedToUpdateFeedUseCase(false)
-    }
-
+    
     override fun getAcademicSession(): AcademicSession? {
         return getAcademicSessionUseCase()
     }
@@ -58,7 +59,11 @@ class FeedModelImpl constructor(
         return getPicassoInstanceUseCase()
     }
 
-    override fun getTomorrowSchedhule(): List<CoupleNative> {
+    override fun getTomorrowSchedule(): List<CoupleNative> {
         return getTomorrowCouplesUseCase()
+    }
+
+    override fun getTodaySchedule(): List<CoupleNative> {
+        return getTodayCouplesUseCase()
     }
 }
