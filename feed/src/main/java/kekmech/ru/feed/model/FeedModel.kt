@@ -20,6 +20,8 @@ interface FeedModel {
 
     val isEvening: Boolean
 
+    val isSemesterStart: Boolean
+
     /**
      * Get couples for day
      * @param offset - 0 - today, 1 - yesterday etc.

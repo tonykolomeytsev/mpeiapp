@@ -19,6 +19,26 @@ class FeedPresenter constructor(
     private val updateChecker: UpdateChecker
 ) : Presenter<IFeedFragment>() {
 
+    private val onStartSemesterOrder = listOf(
+        CarouselItem::class, // карусель с новостями с Firebase
+        TomorrowCouplesItem::class, // расписание на завтра
+        SessionItem::class, // расписание сессии
+
+        /* вспомогательные */
+        NothingToShowItem::class, // показывается если нету инета или произошла ошибка
+        EmptyItem::class // показывается если нету расписаний (не выбрана группа)
+    )
+    private val onEndSemesterOrder = listOf(
+        CarouselItem::class, // карусель с новостями с Firebase
+        SessionItem::class, // расписание сессии
+        TomorrowCouplesItem::class, // расписание на завтра
+
+        /* вспомогательные */
+        NothingToShowItem::class, // показывается если нету инета или произошла ошибка
+        EmptyItem::class // показывается если нету расписаний (не выбрана группа)
+    )
+
+
     var view: IFeedFragment? = null
     val adapter by lazy { BaseSortedAdapter.Builder()
         .registerViewTypeFactory(SessionItem.Factory())
@@ -27,15 +47,7 @@ class FeedPresenter constructor(
         .registerViewTypeFactory(NothingToShowItem.Factory())
         .registerViewTypeFactory(TomorrowCouplesItem.Factory())
         .registerViewTypeFactory(TodayCouplesItem.Factory())
-        .addItemsOrder(listOf(
-            CarouselItem::class, // карусель с новостями с Firebase
-            TomorrowCouplesItem::class, // расписание на завтра
-            SessionItem::class, // расписание сессии
-
-            /* вспомогательные */
-            NothingToShowItem::class, // показывается если нету инета или произошла ошибка
-            EmptyItem::class // показывается если нету расписаний (не выбрана группа)
-        ))
+        .addItemsOrder(if (model.isSemesterStart) onStartSemesterOrder else onEndSemesterOrder)
         .allowOnlyUniqueItems()
         .build()
     }
