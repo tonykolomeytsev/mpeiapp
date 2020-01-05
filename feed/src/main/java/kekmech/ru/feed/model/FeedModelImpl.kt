@@ -21,7 +21,8 @@ class FeedModelImpl constructor(
     private val getPicassoInstanceUseCase: GetPicassoInstanceUseCase,
     private val getTomorrowCouplesUseCase: GetTomorrowCouplesUseCase,
     private val getTodayCouplesUseCase: GetTodayCouplesUseCase,
-    private val isEveningUseCase: IsEveningUseCase
+    private val isEveningUseCase: IsEveningUseCase,
+    private val isSemesterStartUseCase: IsSemesterStartUseCase
 ) : FeedModel {
 
     override val isSchedulesEmpty: Boolean
@@ -37,6 +38,9 @@ class FeedModelImpl constructor(
 
     override val isEvening: Boolean
         get() = isEveningUseCase()
+
+    override val isSemesterStart: Boolean
+        get() = isSemesterStartUseCase()
 
     override var isNotShowedUpdateDialog: Boolean
         get() = getIsShowedUpdateDialogUseCase()
