@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.core.Router
 import kekmech.ru.core.Screens.TIMETABLE_TO_NOTE
 import kekmech.ru.core.dto.CoupleNative
+import kekmech.ru.core.dto.Time
 import kekmech.ru.coreui.adapter.BaseAdapter
 import kekmech.ru.coreui.adapter.BaseItem
 import kekmech.ru.timetable.R
@@ -36,7 +37,7 @@ abstract class DayFragment : Fragment() {
     val couples: () -> List<BaseItem<*>>
         get() = { model.getDaySchedule(
             dayOfWeek = dayOfWeek + 1,
-            weekNum = model.today.weekOfSemester + (model.weekOffset.value ?: 0)) }
+            weekNum = Time.today().weekOfYear + (model.weekOffset.value ?: 0) ) } // будет либо 1, либо 2
 
     private val adapter = BaseAdapter.Builder()
         .registerViewTypeFactory(MinCoupleItem.Factory())

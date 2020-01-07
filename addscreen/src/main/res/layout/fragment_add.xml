@@ -105,7 +105,8 @@
 
         <ProgressBar
                 android:layout_width="24dp"
-                android:layout_height="24dp" />
+                android:layout_height="24dp"
+                android:indeterminateTint="?themeColorProgressBar"/>
 
         <TextView
                 android:layout_marginLeft="32dp"
@@ -114,7 +115,7 @@
                 android:layout_height="wrap_content"
                 android:text="Загружаем расписание с сайта МЭИ"
                 android:layout_gravity="center_vertical"
-                android:textColor="@color/secondaryTextColor"
+                android:textColor="?themeColorBlack"
                 android:fontFamily="sans-serif-light"
                 />
     </FrameLayout>

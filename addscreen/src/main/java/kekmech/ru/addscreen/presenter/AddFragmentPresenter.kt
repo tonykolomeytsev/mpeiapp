@@ -78,33 +78,9 @@ class AddFragmentPresenter constructor(
         view?.hideLoadButton()
         view?.disableEditText()
         view?.showLoading()
-        htmlWorker = HTMLWorker()
         GlobalScope.launch(Dispatchers.IO) {
             try {
-                val parserSchedule = htmlWorker?.tryGroupAsync(group)?.await()!!
-                val universityWeek = Time(parserSchedule.firstCoupleDay)
-                val schedule = Schedule(
-                    0,
-                    group,
-                    universityWeek.weekOfYear,
-                    universityWeek.weekOfSemester,
-                    parserSchedule.couples.map {
-                        CoupleNative(
-                            0,
-                            it.name,
-                            it.teacher,
-                            it.place,
-                            it.timeStart,
-                            it.timeEnd,
-                            it.type,
-                            it.num,
-                            it.day,
-                            it.week
-                        )
-                    },
-                    "Schedule"
-                )
-                saveScheduleUseCase(schedule)
+                model.loadNewSchedule(group)
                 withContext(Dispatchers.Main) {
                     setNeedToUpdateFeedUseCase(true)
                     router.popBackStack()
