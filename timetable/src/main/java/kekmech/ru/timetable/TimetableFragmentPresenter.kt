@@ -27,7 +27,7 @@ class TimetableFragmentPresenter constructor(
     lateinit var weekAdapter: WeekAdapter
     private var isNecessaryDayOpened = false
     val today get() = model.today
-    var lastWeekOffset: Int = 0
+    var lastWeekOffset: Int = -1
     var selectegPage
         get() = model.selectedPage
         set(value) { model.selectedPage = value }
@@ -40,6 +40,7 @@ class TimetableFragmentPresenter constructor(
         GlobalScope.launch(Dispatchers.IO) {
             weekAdapter = WeekAdapter(view.getChildFragmentManager(), model, context)
             withContext(Dispatchers.Main) { view.setupViewPager() }
+            model.updateScheduleFromRemote()
         }
         model.groupNumber.observe(view, Observer {
             val title = "Группа $it"
@@ -48,8 +49,9 @@ class TimetableFragmentPresenter constructor(
         // Смотрим следующую неделю
         view.onChangeParityClickListener = { onChangeParity() }
         model.weekOffset.observe(view, Observer {
-            Log.d("PARITY", "onChangeParity $it")
+            if (lastWeekOffset == it) return@Observer
             lastWeekOffset = it
+            Log.d("PARITY", "onChangeParity $it")
             if (model.currentWeekNumber in 1..16) {
                 if (it == 1) {
                     view.setBottomButtonText(
@@ -103,10 +105,8 @@ class TimetableFragmentPresenter constructor(
 
     fun onChangeParity() {
         if (lastWeekOffset == 0) {
-            lastWeekOffset = 1
             (model.weekOffset as MutableLiveData).value = 1
         } else {
-            lastWeekOffset = 0
             (model.weekOffset as MutableLiveData).value = 0
         }
     }

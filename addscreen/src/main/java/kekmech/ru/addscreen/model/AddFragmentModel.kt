@@ -7,4 +7,6 @@ interface AddFragmentModel {
 
     suspend fun setCurrentGroup(id: Int)
     fun getGroupNumber()
+
+    suspend fun loadNewSchedule(groupNum: String)
 }

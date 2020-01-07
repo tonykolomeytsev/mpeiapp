@@ -131,7 +131,7 @@ class ScheduleRepositoryImpl constructor(
             .data(groupNameInput.attr("name"), groupName)
             .data(groupSubmitInput.attr("name"), groupSubmitInput.attr("value"))
             .header("Content-Type", "application/x-www-form-urlencoded")
-            .followRedirects(false)
+            .followRedirects(true)
             .post()
         // скрапим первую страничку
         val firstWeekHtml = currentWeekPage
@@ -139,7 +139,7 @@ class ScheduleRepositoryImpl constructor(
             .html()
         val nextWeekHref = currentWeekPage
             .select("span[class*=mpei-galaktika-lessons-grid-nav]")
-            .select("a[href]")
+            .select("a")
             .last()
             .attr("href")
 
@@ -161,7 +161,8 @@ class ScheduleRepositoryImpl constructor(
             joinedCouples,
             firstMonday.calendar
         )
-        val schedule = Schedule(
+
+        return Schedule(
             0,
             groupName.toUpperCase(Locale.getDefault()),
             Time.today().weekOfYear,
@@ -182,7 +183,6 @@ class ScheduleRepositoryImpl constructor(
             },
             "sch_v2"
         )
-        return schedule
     }
 
     override fun updateScheduleByGroupNum(schedule: Schedule) {
