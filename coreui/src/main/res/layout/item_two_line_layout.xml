@@ -6,7 +6,9 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         app:cardElevation="1dp"
-        app:cardBackgroundColor="@color/colorWhite">
+        app:cardBackgroundColor="?themeColorCardView"
+        tools:cardBackgroundColor="@color/colorWhite"
+        app:cardCornerRadius="0dp">
 
     <FrameLayout
             android:id="@+id/rootView"
@@ -24,7 +26,8 @@
 
             <TextView android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#DE000000"
+                    android:textColor="?themeColorBlack"
+                    tools:textColor="#DE000000"
                     android:textSize="16sp"
                     tools:text="Two-line item"
                     android:id="@+id/textViewPrimary"
@@ -34,8 +37,10 @@
 
             <TextView android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#99000000"
+                    android:textColor="?themeColorBlack"
+                    tools:textColor="#DE000000"
                     tools:text="Secondary text"
+                    android:alpha="0.5"
                     android:textSize="14sp"
                     android:layout_marginStart="24dp"
                     app:layout_constraintStart_toStartOf="@+id/textViewPrimary"
@@ -56,7 +61,8 @@
                 android:id="@+id/divider"
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="#000000"
+                android:background="?themeColorBlack"
+                tools:background="@color/colorBlack"
                 android:alpha="0.2"
                 android:layout_gravity="bottom"/>
 

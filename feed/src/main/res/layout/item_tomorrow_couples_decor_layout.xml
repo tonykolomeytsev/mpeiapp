@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp"
+        tools:theme="@style/AppTheme"
+        tools:background="?themeColorCardView">
+
+    <TextView
+            android:id="@+id/textViewCoupleName"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_gravity="center_horizontal"
+            tools:text="Вам завтра ко второй паре"
+            android:background="@drawable/bg_tab_decor"
+            android:textColor="?themeColorBlack"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:gravity="center"
+            android:backgroundTint="?themeColorMapTab"/>
+</LinearLayout>

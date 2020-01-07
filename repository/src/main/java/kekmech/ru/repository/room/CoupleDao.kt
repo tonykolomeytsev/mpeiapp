@@ -22,4 +22,7 @@ interface CoupleDao {
 
     @Delete
     fun delete(coupleNative: CoupleNative)
+
+    @Query("delete from couples where schedule_id = :scheduleId")
+    fun deleteByScheduleId(scheduleId: Int)
 }

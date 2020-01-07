@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import kekmech.ru.core.Router
 import kekmech.ru.core.platform.BaseFragment
 import kekmech.ru.coreui.adapter.BaseAdapter
@@ -31,11 +33,11 @@ class SettingsFragment : BaseFragment<SettingsPresenter, SettingsFragmentView>(
 
     override fun onResume() {
         super.onResume()
-        recyclerView?.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
+        recyclerView?.layoutManager = LinearLayoutManager(context)
         recyclerView?.adapter = presenter.adapter
         toolbar?.setNavigationOnClickListener { router.popBackStack() }
     }
 
-    private fun BaseClickableItem<*>.oncl(action: (BaseClickableItem<*>) -> Unit) =
-        this.apply { clickListener = { action(it) } }
+    override val recreatingActivity: AppCompatActivity
+        get() = activity as AppCompatActivity
 }

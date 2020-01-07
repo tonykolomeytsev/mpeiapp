@@ -130,4 +130,9 @@ class BarsFragment : BaseFragment<BarsFragmentPresenter, BarsFragmentView>(
     override fun showError() {
         textViewError?.visibility = View.VISIBLE
     }
+
+    override fun clearLoginFields() {
+        textViewBarsLogin?.setText("")
+        textViewBarsPass?.setText("")
+    }
 }

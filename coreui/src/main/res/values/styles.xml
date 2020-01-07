@@ -13,10 +13,71 @@
         <!--<item name="android:statusBarColor">#4D000000</item>-->
         <item name="android:windowTranslucentStatus">false</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
+
+
+
+        <item name="themeColorWhite">@color/colorWhite</item>
+        <item name="themeColorBlack">@color/colorBlack</item>
+        <item name="themeColorCardView">@color/colorWhite</item>
+        <item name="themeColorToolbar">@color/colorSecondary</item>
+        <item name="themeColorFeedBackground">@color/colorFeedBackground</item>
+        <item name="themeColorBottomNavBackground">?android:attr/windowBackground</item>
+        <item name="themeColorBottomNavTint">@color/colorBottomNavLight</item>
+        <item name="themeColorBarsAvMark">@color/colorBarsAvMark</item>
+        <item name="themeColorProgressBar">@color/colorProgressBar</item>
+        <item name="themeColorBackdrop">@color/colorBackdrop</item>
+        <item name="themeColorDivider">@color/colorBlack</item>
+        <item name="themeColorInfoBlock">@color/colorTransparent</item>
+        <item name="themeColorTimetableCard">@color/colorTransparent</item>
+        <item name="themeColorTimetableBackground">@color/colorWhite</item>
+        <item name="themeColorTimetableLunchBackground">@color/colorLunchItem</item>
+        <item name="themeColorSearchView">@color/colorSearchView</item>
+        <item name="themeColorSearchViewHint">@color/colorSearchViewHint</item>
+        <item name="themeColorMapTab">@color/colorMapTab</item>
+        <item name="themeColorForceUpdateBg">@color/colorWhite</item>
+        <item name="themeColorForceUpdateBtnLater">@color/colorUpdateDtnLater</item>
+        <item name="themeColorSearchViewIconsTint">@color/colorIconsTint</item>
+        <item name="themeColorCoupleNumber">@color/colorCoupleNumber</item>
     </style>
 
-    <style name="AppTheme.Dark">
+    <style name="AppTheme.Dark" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColor">@color/colorWhite</item>
 
+        <!-- Transparent statusBar -->
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <!--<item name="android:statusBarColor">#4D000000</item>-->
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@color/colorBlack</item>
+
+
+
+        <item name="themeColorWhite">@color/colorBlack</item>
+        <item name="themeColorBlack">@color/colorWhiteSlack</item>
+        <item name="themeColorCardView">@color/colorCardViewBlack</item>
+        <item name="themeColorToolbar">@color/colorToolbarBlack</item>
+        <item name="themeColorFeedBackground">@color/colorFeedBackgroundDark</item>
+        <item name="themeColorBottomNavBackground">@color/colorBottomNavBackgroundDark</item>
+        <item name="themeColorBottomNavTint">@color/colorBottomNavDark</item>
+        <item name="themeColorBarsAvMark">@color/colorBarsAvMarkDark</item>
+        <item name="themeColorProgressBar">@color/colorProgressBarDark</item>
+        <item name="themeColorBackdrop">@color/colorBackdropDark</item>
+        <item name="themeColorDivider">@color/colorTransparent</item>
+        <item name="themeColorInfoBlock">@color/colorInfoBlock</item>
+        <item name="themeColorTimetableCard">@drawable/bg_timetable_card_decor</item>
+        <item name="themeColorTimetableBackground">@color/colorTransparent</item>
+        <item name="themeColorTimetableLunchBackground">@color/colorTransparent</item>
+        <item name="themeColorSearchView">@color/colorSearchViewDark</item>
+        <item name="themeColorSearchViewHint">@color/colorSearchViewHintDark</item>
+        <item name="themeColorMapTab">@color/colorMapTabDark</item>
+        <item name="themeColorForceUpdateBg">@color/colorUpdateBgDark</item>
+        <item name="themeColorForceUpdateBtnLater">@color/colorUpdateDtnLaterDark</item>
+        <item name="themeColorSearchViewIconsTint">@color/colorIconsTintDark</item>
+        <item name="themeColorCoupleNumber">@color/colorCoupleNumberDark</item>
     </style>
 
     <style name="PrimaryFlatButton" parent="Theme.AppCompat.Light">
@@ -51,7 +112,7 @@
         <item name="android:paddingRight">12dp</item>
         <item name="android:textSize">13sp</item>
         <item name="android:fontFamily">sans-serif-medium</item>
-        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:textColor">?attr/themeColorBlack</item>
     </style>
 
     <style name="BottomSheetDialogTheme" parent="BaseBottomSheetDialog" />

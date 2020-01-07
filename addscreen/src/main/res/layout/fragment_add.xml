@@ -9,7 +9,8 @@
         tools:context=".AddFragment"
         android:orientation="vertical"
         android:fitsSystemWindows="true"
-        android:background="@drawable/add_background">
+        android:background="@drawable/add_background"
+        tools:theme="@style/AppTheme">
 
     <TextView
             android:id="@+id/textView"
@@ -19,7 +20,7 @@
             android:layout_marginTop="24dp"
             android:fontFamily="sans-serif-light"
             android:text="Выбрать группу"
-            android:textColor="@color/secondaryTextColor"
+            android:textColor="?attr/themeColorBlack"
             android:textSize="28sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -33,7 +34,7 @@
             android:layout_marginEnd="32dp"
             android:fontFamily="sans-serif-light"
             android:text="Введите номер группы, расписание которой хотите просматривать. Например, С-12-17."
-            android:textColor="@color/secondaryTextColor"
+            android:textColor="?attr/themeColorBlack"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -55,7 +56,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/item_search_drawable"
-                android:backgroundTint="@color/colorSearchView"
+                android:backgroundTint="?attr/themeColorSearchView"
                 android:fontFamily="sans-serif-light"
                 android:maxLength="10"
                 android:maxLines="1"
@@ -67,6 +68,7 @@
                 android:textAlignment="center"
                 android:textSize="24sp"
                 android:inputType="textNoSuggestions"
+                android:textColor="?attr/themeColorBlack"
                 tools:text="C-12-16"
                 tools:textAlignment="center" />
 
@@ -84,7 +86,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:src="@drawable/outline_search_black_24"
-                    android:tint="@color/colorIconsTint" />
+                    android:tint="?attr/themeColorSearchViewIconsTint" />
         </FrameLayout>
     </FrameLayout>
 
@@ -103,7 +105,8 @@
 
         <ProgressBar
                 android:layout_width="24dp"
-                android:layout_height="24dp" />
+                android:layout_height="24dp"
+                android:indeterminateTint="?themeColorProgressBar"/>
 
         <TextView
                 android:layout_marginLeft="32dp"
@@ -112,7 +115,7 @@
                 android:layout_height="wrap_content"
                 android:text="Загружаем расписание с сайта МЭИ"
                 android:layout_gravity="center_vertical"
-                android:textColor="@color/secondaryTextColor"
+                android:textColor="?themeColorBlack"
                 android:fontFamily="sans-serif-light"
                 />
     </FrameLayout>

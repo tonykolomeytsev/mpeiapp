@@ -29,5 +29,7 @@ interface TimetableFragmentModel {
 
     fun transactCouple(coupleNative: CoupleNative)
 
+    suspend fun updateScheduleFromRemote()
+
     var selectedPage: Int
 }

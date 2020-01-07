@@ -20,6 +20,7 @@ class TimetableFragmentModelImpl constructor(
     private val getIsShowedUpdateDialogUseCase: GetIsShowedUpdateDialogUseCase,
     private val setForceUpdateDataUseCase: SetForceUpdateDataUseCase,
     private val setCreateNoteTransactionUseCase: SetCreateNoteTransactionUseCase,
+    private val invokeUpdateScheduleUseCase: InvokeUpdateScheduleUseCase,
     private val context: Context
 ) : TimetableFragmentModel {
 
@@ -66,6 +67,15 @@ class TimetableFragmentModelImpl constructor(
 
     override fun transactCouple(coupleNative: CoupleNative) {
         setCreateNoteTransactionUseCase(NoteTransaction(coupleNative, currentWeekNumber + (weekOffset.value ?: 0)))
+    }
+
+    override suspend fun updateScheduleFromRemote() {
+        try {
+            invokeUpdateScheduleUseCase()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
     }
 
     override var selectedPage: Int = 0

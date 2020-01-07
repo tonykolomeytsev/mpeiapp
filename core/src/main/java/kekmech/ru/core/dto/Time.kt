@@ -20,6 +20,8 @@ class Time(val calendar: Calendar = Calendar.getInstance()) {
     private val hoursMinutesFormatter = SimpleDateFormat("hh:mm", Locale.ENGLISH)
     private val yearMonthDayFormatter = SimpleDateFormat("yyyy.MM.dd", Locale.ENGLISH)
 
+    val hours24 by lazy { calendar.get(Calendar.HOUR_OF_DAY) }
+    val hours12 by lazy { calendar.get(Calendar.HOUR) }
     val dayOfWeek by lazy { calendar.get(Calendar.DAY_OF_WEEK) }
     val dayOfMonth by lazy { calendar.get(Calendar.DAY_OF_MONTH) }
     val dayOfYear by lazy { calendar.get(Calendar.DAY_OF_YEAR) }

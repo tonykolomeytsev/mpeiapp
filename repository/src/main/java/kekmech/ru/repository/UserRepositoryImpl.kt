@@ -33,5 +33,9 @@ class UserRepositoryImpl constructor(
         return userCacheGateway.get()!!
     }
 
+    override var isDarkThemeEnabled: Boolean
+        get() = sharedPreferences.getBoolean("dark_theme", false)
+        set(value) { sharedPreferences.edit().putBoolean("dark_theme", value).apply() }
+
 }
 

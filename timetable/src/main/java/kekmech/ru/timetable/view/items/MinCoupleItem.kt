@@ -27,6 +27,7 @@ class MinCoupleItem(val coupleNative: CoupleNative) : BaseClickableItem<MinCoupl
         }
         viewHolder.timeStart.text = coupleNative.timeStart
         viewHolder.timeEnd.text = coupleNative.timeEnd
+        viewHolder.number.text = "${coupleNative.num} ПАРА"
 
         if (coupleNative.noteId != -1)
             viewHolder.hasNoteLayout.visibility = VISIBLE
@@ -60,6 +61,7 @@ class MinCoupleItem(val coupleNative: CoupleNative) : BaseClickableItem<MinCoupl
         val timeStart by bind<TextView>(R.id.textViewCoupleTimeStart)
         val timeEnd by bind<TextView>(R.id.textViewCoupleTimeEnd)
         val hasNoteLayout by bind<LinearLayout>(R.id.frameLayoutHasNote)
+        val number by bind<TextView>(R.id.textViewCoupleNumber)
 
         override fun onCreateView(view: View) = Unit
     }

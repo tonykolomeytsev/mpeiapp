@@ -55,4 +55,14 @@ val KoinDomainModule = module {
     single { RemoveAllSchedulesUseCaseImpl(get(), get()) } bind RemoveAllSchedulesUseCase::class
 
     single { RemoveAllNotesUseCaseImpl(get()) } bind RemoveAllNotesUseCase::class
+    single { GetTomorrowCouplesUseCaseImpl(get()) } bind GetTomorrowCouplesUseCase::class
+    single { IsDarkThemeEnabledUseCaseImpl(get()) } bind IsDarkThemeEnabledUseCase::class
+
+    single { SetDarkThemeEnabledUseCaseImpl(get()) } bind SetDarkThemeEnabledUseCase::class
+    single { IsSemesterStartUseCaseImpl() } bind IsSemesterStartUseCase::class
+    single { IsEveningUseCaseImpl() } bind IsEveningUseCase::class
+
+    single { GetTodayCouplesUseCaseImpl(get()) } bind GetTodayCouplesUseCase::class
+    single { InvokeUpdateScheduleUseCaseImpl(get()) } bind InvokeUpdateScheduleUseCase::class
+    single { LoadNewScheduleUseCaseImpl(get()) } bind LoadNewScheduleUseCase::class
 }

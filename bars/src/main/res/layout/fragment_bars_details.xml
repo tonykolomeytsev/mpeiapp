@@ -5,13 +5,15 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+        android:fitsSystemWindows="true"
+        tools:theme="@style/AppTheme">
 
     <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/main.appbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorSecondary"
+            tools:background="@color/colorSecondary"
+            android:background="?attr/themeColorToolbar"
             android:fitsSystemWindows="true"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
@@ -41,7 +43,8 @@
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorFeedBackground">
+            tools:background="@color/colorFeedBackground"
+            android:background="?attr/themeColorFeedBackground">
 
         <LinearLayout
                 android:layout_width="match_parent"
@@ -56,7 +59,8 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:layout_marginTop="16dp"
-                    android:textColor="@color/colorBlack"
+                    tools:textColor="@color/colorBlack"
+                    android:textColor="?attr/themeColorBlack"
                     android:textSize="20sp"
                     tools:text="Дисциплина Гидропневмопривод мехатронных и робототехнических устройств (ЗЕТ - 5)"/>
 
@@ -64,7 +68,8 @@
                     android:id="@+id/progressBar"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
-                    android:indeterminateTint="@color/colorSecondary"
+                    tools:indeterminateTint="@color/colorSecondary"
+                    android:indeterminateTint="?attr/themeColorProgressBar"
                     android:layout_marginTop="32dp"
                     android:layout_gravity="center_horizontal"/>
 
@@ -73,7 +78,9 @@
                     android:layout_marginBottom="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    tools:cardBackgroundColor="@color/colorWhite"
+                    app:cardBackgroundColor="?attr/themeColorCardView">
 
                 <LinearLayout
                         android:layout_width="match_parent"
@@ -87,7 +94,8 @@
                             android:layout_marginLeft="16dp"
                             android:layout_marginRight="16dp"
                             android:layout_marginTop="16dp"
-                            android:textColor="@color/colorBlack"
+                            tools:textColor="@color/colorBlack"
+                            android:textColor="?attr/themeColorBlack"
                             android:textSize="16sp"
                             android:fontFamily="sans-serif"
                             android:layout_marginBottom="8dp"
@@ -119,7 +127,9 @@
                     android:id="@+id/container2"
                     android:layout_marginBottom="16dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    tools:cardBackgroundColor="@color/colorWhite"
+                    app:cardBackgroundColor="?attr/themeColorCardView">
                 <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -155,7 +165,9 @@
                     android:id="@+id/container3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp">
+                    android:layout_marginBottom="16dp"
+                    tools:cardBackgroundColor="@color/colorWhite"
+                    app:cardBackgroundColor="?attr/themeColorCardView">
                 <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -168,7 +180,8 @@
                             android:layout_marginLeft="16dp"
                             android:layout_marginRight="16dp"
                             android:layout_marginTop="16dp"
-                            android:textColor="@color/colorBlack"
+                            tools:textColor="@color/colorBlack"
+                            android:textColor="?attr/themeColorBlack"
                             android:textSize="16sp"
                             android:fontFamily="sans-serif"
                             android:layout_marginBottom="8dp"

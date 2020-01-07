@@ -11,6 +11,9 @@ interface ScheduleDao {
     @Query("select * from schedules where id = :id")
     fun getById(id: Int): ScheduleNative?
 
+    @Query("select * from schedules where `group` = :groupNum LIMIT 1")
+    fun getByGroupNum(groupNum: String): ScheduleNative?
+
     @Query("select * from schedules where user_id = :userId")
     fun getAllByUserId(userId: Int): List<ScheduleNative>
 

@@ -31,6 +31,7 @@ import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.annotation.RequiresApi
 import kekmech.ru.addscreen.presenter.AddFragmentPresenter
+import kekmech.ru.core.usecases.IsDarkThemeEnabledUseCase
 import org.koin.android.ext.android.inject
 
 
@@ -39,9 +40,9 @@ import org.koin.android.ext.android.inject
  */
 class AddFragment : BottomSheetDialogFragment(), IAddFragment {
 
-    val presenter: AddFragmentPresenter by inject()
+    private val presenter: AddFragmentPresenter by inject()
+    private val isDarkThemeEnabledUseCase: IsDarkThemeEnabledUseCase by inject()
 
-    override val web: WebView get() = view?.findViewById(R.id.webView)!!
     override lateinit var onSearchClickListener: (String) -> Unit
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -85,7 +86,7 @@ class AddFragment : BottomSheetDialogFragment(), IAddFragment {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1 && !isDarkThemeEnabledUseCase()) {
             setWhiteNavigationBar(dialog)
         }
         return dialog

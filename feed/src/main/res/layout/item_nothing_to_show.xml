@@ -5,14 +5,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         xmlns:tools="http://schemas.android.com/tools"
-        tools:background="#cecece">
+        tools:background="#cecece"
+        tools:theme="@style/AppTheme.Dark">
 
     <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            app:cardBackgroundColor="@color/colorWhite"
+            app:cardBackgroundColor="?attr/themeColorCardView"
             app:cardElevation="2dp"
             app:cardCornerRadius="4dp"
             android:layout_marginTop="4dp"
@@ -43,17 +44,17 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="16dp"
-                        android:textColor="@color/colorBlack"
+                        android:textColor="?attr/themeColorBlack"
                         android:textSize="16sp"
                         android:fontFamily="sans-serif-medium"
-                        android:text="ߛϠߚϞϠϩϞߚϩϞϿϩ"/>
+                        tools:text="ߛϠߚϞϠϩϞߚϩϞϿϩ"/>
 
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="16dp"
-                        android:textColor="@color/colorBlack"
+                        android:textColor="?attr/themeColorBlack"
                         android:textSize="16sp"
                         android:alpha="0.75"
                         android:layout_marginTop="8dp"

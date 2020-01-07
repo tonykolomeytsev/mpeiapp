@@ -5,7 +5,8 @@
         android:id="@+id/item_place_root"
         android:layout_width="match_parent"
         android:background="?attr/selectableItemBackground"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        tools:theme="@style/AppTheme">
 
     <TextView
             android:id="@+id/textViewPlaceType"
@@ -14,7 +15,7 @@
             tools:text="КСБУ МЭИ"
             android:textSize="12sp"
             android:fontFamily="sans-serif-medium"
-            android:textColor="@color/colorBlack"
+            android:textColor="?attr/themeColorBlack"
             android:alpha="0.5"
             android:layout_marginRight="8dp"
             android:layout_gravity="center_vertical|right"/>
@@ -30,7 +31,7 @@
                 android:layout_height="wrap_content"
                 tools:text="Столовая №10"
                 android:layout_gravity="center_horizontal"
-                android:textColor="@color/colorBlack"
+                android:textColor="?attr/themeColorBlack"
                 android:alpha="0.85"
                 android:textSize="18sp"
                 android:fontFamily="sans-serif-medium"
@@ -42,7 +43,7 @@
                 android:layout_height="wrap_content"
                 tools:text="улица Лапина"
                 android:fontFamily="sans-serif"
-                android:textColor="@color/colorBlack"
+                android:textColor="?attr/themeColorBlack"
                 android:textSize="14sp"
                 android:alpha="0.5"
                 android:layout_gravity="center_horizontal"
@@ -51,7 +52,7 @@
         <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/colorBlack"
+                android:background="?attr/themeColorBlack"
                 android:alpha="0.2"
                 android:layout_gravity="bottom"/>
 
