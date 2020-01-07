@@ -26,6 +26,8 @@ interface ScheduleRepository {
 
     fun loadSessionFromRemote(): AcademicSession
 
+    fun updateScheduleFromRemote(groupName: String)
+
     fun isSchedulesEmpty(): Boolean
 
     fun removeSchedule(schedule: ScheduleNative)

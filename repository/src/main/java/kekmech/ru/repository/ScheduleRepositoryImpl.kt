@@ -110,6 +110,10 @@ class ScheduleRepositoryImpl constructor(
         return SessionParser().parse(scheduleTable)
     }
 
+    override fun updateScheduleFromRemote(groupName: String) {
+
+    }
+
     override fun isSchedulesEmpty(): Boolean {
         return appdb.scheduleDao().getAnySchedule() == null
     }
