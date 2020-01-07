@@ -9,22 +9,24 @@ import kekmech.ru.coreui.adapter.*
 import kekmech.ru.settings.R
 
 class SingleLineTumblerItem(
-    val string: String
+    val string: String,
+    var enabled: Boolean = false,
+    val tumblerListener: (Boolean) -> Unit = {}
 ) : BaseItem<SingleLineTumblerItem.ViewHolder>() {
 
     private val nopes = listOf("Nope", "No", "Nooo", "Не", "Нет", "Неа", "Нiт", "Ноу")
 
     override fun updateViewHolder(viewHolder: ViewHolder) {
         viewHolder.textView.text = string
-        viewHolder.tumbler.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked) {
-                viewHolder.tumbler.post { viewHolder.tumbler.isChecked = false }
-
-            }
-            Toast.makeText(viewHolder.itemView.context, nopes.random(), Toast.LENGTH_SHORT).show()
+        viewHolder.tumbler.isChecked = enabled
+        viewHolder.tumbler.setOnCheckedChangeListener { _, isChecked ->
+            enabled = isChecked
+            tumblerListener(isChecked)
         }
         viewHolder.root.setOnClickListener {
-            Toast.makeText(viewHolder.itemView.context, nopes.random(), Toast.LENGTH_SHORT).show()
+            viewHolder.tumbler.post {
+                viewHolder.tumbler.isChecked = !viewHolder.tumbler.isChecked
+            }
         }
     }
 

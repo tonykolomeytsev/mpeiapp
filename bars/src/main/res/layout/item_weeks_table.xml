@@ -22,7 +22,8 @@
                 tools:text="Контрольная неделя №1"
                 android:textSize="13sp"
                 android:fontFamily="sans-serif"
-                android:textColor="@color/colorBlack"
+                tools:textColor="@color/colorBlack"
+                android:textColor="?attr/themeColorBlack"
                 android:layout_weight="1"/>
 
         <LinearLayout
@@ -53,7 +54,8 @@
             android:id="@+id/divider"
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="@color/colorBlack"
+            tools:background="@color/colorBlack"
+            android:background="?attr/themeColorBlack"
             android:alpha="0.2"
             android:layout_gravity="bottom"/>
 

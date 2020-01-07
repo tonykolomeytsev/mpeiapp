@@ -30,7 +30,10 @@ class SettingsPresenter(
     private val router: Router,
     private val getGroupNumberUseCase: GetGroupNumberUseCase,
     private val removeAllNotesUseCase: RemoveAllNotesUseCase,
-    private val removeAllSchedulesUseCase: RemoveAllSchedulesUseCase
+    private val removeAllSchedulesUseCase: RemoveAllSchedulesUseCase,
+    private val getAppVersionUseCase: GetAppVersionUseCase,
+    private val isDarkThemeEnabledUseCase: IsDarkThemeEnabledUseCase,
+    private val setDarkThemeEnabledUseCase: SetDarkThemeEnabledUseCase
 ) : Presenter<SettingsFragmentView>() {
     val adapter = BaseAdapter.Builder()
         .registerViewTypeFactory(SingleLineItem.Factory())
@@ -44,8 +47,8 @@ class SettingsPresenter(
         super.onResume(view)
 
         val items = listOf(
-            SingleLineTumblerItem("Тёмная тема"),
-            TwoLineItem("Сменить группу" to "Загрузка...", ::changeGroup),
+            SingleLineTumblerItem("Тёмная тема", isDarkThemeEnabledUseCase()) { setDarkThemeEnabledUseCase(it, view.recreatingActivity) },
+            TwoLineItem("Сменить группу" to "Загрузка...", ::changeGroup, false),
             DividerItem("Хранилище"),
             TwoLineItem("Удалить все расписания" to "Будут также удалены и домашние задания", ::clearSchedules),
             SingleLineItem("Удалить все домашние задания", ::clearNotes, false),
@@ -54,7 +57,7 @@ class SettingsPresenter(
             DividerItem("Поддержка приложения"),
             TwoLineItem("Присоединиться к разработке" to "https://github.com/tonykolomeytsev/mpeiapp", ::github),
             TwoLineItem("Задать вопрос" to "https://vk.com/kekmech", ::vk, false),
-            VersionItem()
+            VersionItem(getAppVersionUseCase())
         )
 
         adapter.baseItems.clear()

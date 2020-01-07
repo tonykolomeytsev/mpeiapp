@@ -12,7 +12,7 @@
             android:id="@+id/main.appbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorSecondary"
+            android:background="?themeColorToolbar"
             android:fitsSystemWindows="true"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
@@ -42,7 +42,8 @@
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorFeedBackground">
+            tools:background="@color/colorFeedBackground"
+            android:background="?themeColorFeedBackground">
 
         <androidx.recyclerview.widget.RecyclerView
                 android:overScrollMode="never"

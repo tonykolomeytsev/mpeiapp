@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        tools:theme="@style/AppTheme.Dark">
 
     <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -12,7 +14,7 @@
             android:layout_marginRight="16dp"
             android:layout_marginTop="4dp"
             android:layout_marginBottom="4dp"
-            app:cardBackgroundColor="@color/colorWhite"
+            app:cardBackgroundColor="?attr/themeColorCardView"
             app:cardCornerRadius="4dp"
             app:cardElevation="2dp">
 
@@ -31,7 +33,7 @@
                     android:layout_marginBottom="8dp"/>
 
             <TextView
-                    android:textColor="@color/colorBlack"
+                    android:textColor="?attr/themeColorBlack"
                     android:layout_width="250dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-medium"
@@ -42,7 +44,7 @@
                     android:id="@+id/buttonSubmit"
                     android:layout_width="wrap_content"
                     android:layout_height="48dp"
-                    android:textColor="@color/colorSecondary"
+                    android:textColor="@color/colorPrimary"
                     android:fontFamily="sans-serif-medium"
                     android:gravity="center"
                     android:layout_marginTop="8dp"

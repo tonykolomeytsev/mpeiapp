@@ -20,7 +20,8 @@
             android:background="@drawable/discipline_bg_average"
             android:fontFamily="sans-serif-medium"
             android:gravity="center"
-            android:textColor="@color/colorBlack"
+            android:textColor="?attr/themeColorBlack"
+            tools:textColor="@color/colorBlack"
             android:textSize="16sp"
             tools:text="4.75" />
 
@@ -41,7 +42,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     tools:text="Гидропневмопривод робототехнических и мехатронных устройств"
-                    android:textColor="@color/colorBlack"
+                    android:textColor="?attr/themeColorBlack"
+                    tools:textColor="@color/colorBlack"
                     android:fontFamily="sans-serif"
                     android:textSize="18sp" />
 
@@ -61,7 +63,8 @@
                         android:fontFamily="sans-serif-black"
                         android:text="КОНТРОЛЬНЫЕ МЕРОПРИЯТИЯ:"
                         android:layout_marginBottom="4dp"
-                        android:textColor="@color/colorBlack"
+                        android:textColor="?attr/themeColorBlack"
+                        tools:textColor="@color/colorBlack"
                         android:textSize="10sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -85,7 +88,8 @@
                         android:alpha="0.5"
                         android:fontFamily="sans-serif-black"
                         android:text="КОНТРОЛЬНЫЕ НЕДЕЛИ:"
-                        android:textColor="@color/colorBlack"
+                        android:textColor="?attr/themeColorBlack"
+                        tools:textColor="@color/colorBlack"
                         android:textSize="10sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -117,7 +121,8 @@
                 android:layout_height="1px"
                 android:layout_gravity="bottom"
                 android:alpha="0.2"
-                android:background="@color/colorBlack" />
+                android:background="?attr/themeColorBlack"
+                tools:background="@color/colorBlack" />
     </FrameLayout>
 
 

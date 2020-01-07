@@ -5,7 +5,8 @@
         android:id="@+id/item_place_root"
         android:layout_width="match_parent"
         android:background="?attr/selectableItemBackground"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        tools:theme="@style/AppTheme">
 
     <TextView
             android:id="@+id/textViewPlaceName"
@@ -13,7 +14,7 @@
             android:layout_height="wrap_content"
             tools:text="Десяточка"
             android:layout_gravity="center_horizontal"
-            android:textColor="@color/colorBlack"
+            android:textColor="?attr/themeColorBlack"
             android:alpha="0.85"
             android:textSize="18sp"
             android:fontFamily="sans-serif-medium"
@@ -25,7 +26,7 @@
             android:layout_height="wrap_content"
             tools:text="Энергетическая 10к1"
             android:fontFamily="sans-serif"
-            android:textColor="@color/colorBlack"
+            android:textColor="?attr/themeColorBlack"
             android:alpha="0.5"
             android:textSize="14sp"
             android:layout_gravity="center_horizontal"
@@ -34,7 +35,7 @@
     <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="@color/colorBlack"
+            android:background="?attr/themeColorBlack"
             android:alpha="0.2"
             android:layout_gravity="bottom"/>
 </LinearLayout>

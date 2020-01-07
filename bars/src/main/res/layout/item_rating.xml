@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-        android:id="@+id/rootLayout"
+<LinearLayout android:id="@+id/rootLayout"
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -8,7 +7,9 @@
         android:gravity="center"
         android:clickable="true"
         android:focusable="true"
-        android:background="?attr/selectableItemBackground">
+        android:background="?attr/selectableItemBackground"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:alpha="0.85">
 
     <LinearLayout
             android:layout_width="wrap_content"
@@ -19,6 +20,7 @@
             android:layout_marginRight="8dp">
         <ImageView
                 android:src="@drawable/ic_poll_24px"
+                android:tint="?attr/themeColorBlack"
                 android:layout_width="18dp"
                 android:layout_height="18dp"/>
 
@@ -28,7 +30,8 @@
                 android:layout_height="wrap_content"
                 android:text="50"
                 android:fontFamily="sans-serif-medium"
-                android:textColor="@color/colorBlack"
+                android:textColor="?attr/themeColorBlack"
+                tools:textColor="@color/colorBlack"
                 android:layout_marginLeft="4dp"/>
     </LinearLayout>
 
@@ -41,6 +44,7 @@
             android:layout_marginRight="8dp">
         <ImageView
                 android:src="@drawable/ic_edit_24px"
+                android:tint="?attr/themeColorBlack"
                 android:layout_width="18dp"
                 android:layout_height="18dp"/>
 
@@ -50,7 +54,8 @@
                 android:layout_height="wrap_content"
                 android:text="31"
                 android:fontFamily="sans-serif-medium"
-                android:textColor="@color/colorBlack"
+                android:textColor="?attr/themeColorBlack"
+                tools:textColor="@color/colorBlack"
                 android:layout_marginLeft="4dp"/>
     </LinearLayout>
 
@@ -63,6 +68,7 @@
             android:layout_marginRight="8dp">
         <ImageView
                 android:src="@drawable/ic_school_24px"
+                android:tint="?attr/themeColorBlack"
                 android:layout_width="18dp"
                 android:layout_height="18dp"/>
 
@@ -72,7 +78,8 @@
                 android:layout_height="wrap_content"
                 android:text="45"
                 android:fontFamily="sans-serif-medium"
-                android:textColor="@color/colorBlack"
+                android:textColor="?attr/themeColorBlack"
+                tools:textColor="@color/colorBlack"
                 android:layout_marginLeft="4dp"/>
     </LinearLayout>
 
@@ -85,6 +92,7 @@
             android:layout_marginRight="8dp">
         <ImageView
                 android:src="@drawable/ic_share_24px"
+                android:tint="?attr/themeColorBlack"
                 android:layout_width="18dp"
                 android:layout_height="18dp"/>
 
@@ -94,7 +102,8 @@
                 android:layout_height="wrap_content"
                 android:text="12"
                 android:fontFamily="sans-serif-medium"
-                android:textColor="@color/colorBlack"
+                android:textColor="?attr/themeColorBlack"
+                tools:textColor="@color/colorBlack"
                 android:layout_marginLeft="4dp"/>
     </LinearLayout>
 
@@ -107,6 +116,7 @@
             android:layout_marginRight="8dp">
         <ImageView
                 android:src="@drawable/ic_sports_basketball_24px"
+                android:tint="?attr/themeColorBlack"
                 android:layout_width="18dp"
                 android:layout_height="18dp"/>
 
@@ -116,7 +126,8 @@
                 android:layout_height="wrap_content"
                 android:text="8"
                 android:fontFamily="sans-serif-medium"
-                android:textColor="@color/colorBlack"
+                android:textColor="?attr/themeColorBlack"
+                tools:textColor="@color/colorBlack"
                 android:layout_marginLeft="4dp"/>
     </LinearLayout>
 
@@ -129,6 +140,7 @@
             android:layout_marginRight="8dp">
         <ImageView
                 android:src="@drawable/ic_account_balance_24px"
+                android:tint="?attr/themeColorBlack"
                 android:layout_width="18dp"
                 android:layout_height="18dp"/>
 
@@ -138,7 +150,8 @@
                 android:layout_height="wrap_content"
                 android:text="0"
                 android:fontFamily="sans-serif-medium"
-                android:textColor="@color/colorBlack"
+                android:textColor="?attr/themeColorBlack"
+                tools:textColor="@color/colorBlack"
                 android:layout_marginLeft="4dp"/>
     </LinearLayout>
 </LinearLayout>

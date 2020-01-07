@@ -10,5 +10,7 @@ interface UserRepository {
 
     var mapState: Int
 
+    var isDarkThemeEnabled: Boolean
+
     fun get(refresh: Boolean = false): User
 }
