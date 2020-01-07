@@ -36,7 +36,7 @@ class SessionItem(val academicSession: AcademicSession) : BaseItem<SessionItem.V
     }
 
     override fun updateViewHolder(viewHolder: ViewHolder) {
-        adapter.baseItems.addAll(items)
+        if (adapter.items.isEmpty()) adapter.baseItems.addAll(items)
         viewHolder.recycler.layoutManager = LinearLayoutManager(viewHolder.itemView.context)
         viewHolder.recycler.adapter = adapter
     }
