@@ -1,5 +1,6 @@
 package kekmech.ru.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import kekmech.ru.core.dto.*
@@ -110,7 +111,7 @@ class ScheduleRepositoryImpl constructor(
         return SessionParser().parse(scheduleTable)
     }
 
-    override suspend fun updateScheduleFromRemote(groupName: String) {
+    override suspend fun loadScheduleFromRemote(groupName: String): Schedule {
         // загружаем страничку и вбиваем номер группы в форму
         val inputs = Jsoup.connect("https://mpei.ru/Education/timetable/Pages/default.aspx")
             .get()
@@ -181,6 +182,28 @@ class ScheduleRepositoryImpl constructor(
             },
             "sch_v2"
         )
+        return schedule
+    }
+
+    override fun updateScheduleByGroupNum(schedule: Schedule) {
+        val similarSchedule = appdb.scheduleDao().getByGroupNum(schedule.group)
+        if (similarSchedule == null) {
+            scheduleCacheGateway.newSchedule(schedule)
+
+            Log.d("ScheduleRepository", "Schedule created")
+        } else {
+            // тут надо очистить все пары и добавить их заново, а у schedule поменять calendarWeek на свежий
+            val scheduleId = similarSchedule.id
+            appdb.coupleDao().deleteByScheduleId(scheduleId) // очищаем все пары
+            // устанавливаем свежую дату
+            similarSchedule.calendarWeek = schedule.calendarWeek
+            similarSchedule.universityWeek = schedule.universityWeek
+            // достаём новые пары
+            val newCouples = schedule.coupleList.map { it.apply { this.scheduleId = scheduleId } }
+            newCouples.forEach(appdb.coupleDao()::insert) // пишем новые пары в базу
+
+            Log.d("ScheduleRepository", "Schedule updated")
+        }
     }
 
     private fun<T> async(action: suspend CoroutineScope.() -> T) = GlobalScope.async(Dispatchers.IO, block = action)
@@ -190,6 +213,7 @@ class ScheduleRepositoryImpl constructor(
     }
 
     override fun removeSchedule(schedule: ScheduleNative) {
+        appdb.coupleDao().deleteByScheduleId(schedule.id)
         appdb.scheduleDao().delete(schedule)
     }
 }
