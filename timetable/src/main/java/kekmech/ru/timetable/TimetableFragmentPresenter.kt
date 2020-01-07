@@ -88,6 +88,7 @@ class TimetableFragmentPresenter constructor(
                 }
             }
         })
+        // проверка обновлений
         GlobalScope.launch(Dispatchers.Main) {
             delay(1000)
             if (model.isNotShowedUpdateDialog) {
@@ -123,11 +124,6 @@ class TimetableFragmentPresenter constructor(
             isNecessaryDayOpened = true
             return true
         }
-    }
-
-    companion object {
-        val locker = Object()
-        @Volatile var dayCouplesMap = mutableMapOf<Int, () -> (List<BaseItem<*>>)>()
     }
 
 }

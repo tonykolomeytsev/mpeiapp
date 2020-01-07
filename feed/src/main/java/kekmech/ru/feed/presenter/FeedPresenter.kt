@@ -22,6 +22,7 @@ class FeedPresenter constructor(
     private val onStartSemesterOrder = listOf(
         CarouselItem::class, // карусель с новостями с Firebase
         TomorrowCouplesItem::class, // расписание на завтра
+        TodayCouplesItem::class,
         SessionItem::class, // расписание сессии
 
         /* вспомогательные */
@@ -32,6 +33,7 @@ class FeedPresenter constructor(
         CarouselItem::class, // карусель с новостями с Firebase
         SessionItem::class, // расписание сессии
         TomorrowCouplesItem::class, // расписание на завтра
+        TodayCouplesItem::class,
 
         /* вспомогательные */
         NothingToShowItem::class, // показывается если нету инета или произошла ошибка
@@ -78,7 +80,7 @@ class FeedPresenter constructor(
                 view.hideLoading()
 
                 // и будем дожидаться пока кто-то введет расписание
-                withContext(Dispatchers.IO) { model.groupNumber }.observe(view, Observer {
+                model.groupNumber.observe(view, Observer {
                     // если нам прилетел номер группы, и есть карточка EmptyItem в ленте
                     // PS номер группы поменяется только если расписание будет загружено
                     if (it != null && it.isNotEmpty() && adapter.baseItems.any { e -> e is EmptyItem }) GlobalScope.launch(Dispatchers.Main) {
@@ -116,9 +118,11 @@ class FeedPresenter constructor(
             },
             async {
                 if (model.isEvening) {
+                    adapter.removeItemByClass(TodayCouplesItem::class)
                     val actualCouples = withContext(Dispatchers.IO) { model.getTomorrowSchedule() }
                     if (actualCouples.isNotEmpty()) adapter.addItem(TomorrowCouplesItem(actualCouples))
                 } else {
+                    adapter.removeItemByClass(TomorrowCouplesItem::class)
                     val actualCouples = withContext(Dispatchers.IO) { model.getTodaySchedule() }
                     if (actualCouples.isNotEmpty()) adapter.addItem(TodayCouplesItem(actualCouples))
                 }

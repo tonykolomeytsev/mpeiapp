@@ -27,6 +27,14 @@ open class BaseSortedAdapter : BaseAdapter() {
         }
     }
 
+    fun removeItemByClass(kClass: KClass<out BaseItem<*>>) {
+        val index = items.indexOfFirst { it.javaClass == kClass.java }
+        if (index != -1) {
+            items.removeAt(index)
+            notifyItemRemoved(index)
+        }
+    }
+
     class Builder {
         private val adapter = BaseSortedAdapter()
 
