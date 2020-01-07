@@ -37,6 +37,7 @@ class TimetableFragmentPresenter constructor(
      */
     override fun onResume(view: TimetableFragmentView) {
         Log.d("Timetable", "onResume")
+        lastWeekOffset = -1
         GlobalScope.launch(Dispatchers.IO) {
             weekAdapter = WeekAdapter(view.getChildFragmentManager(), model, context)
             withContext(Dispatchers.Main) { view.setupViewPager() }
