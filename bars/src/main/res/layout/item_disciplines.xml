@@ -7,6 +7,7 @@
         tools:theme="@style/AppTheme.Dark"
         tools:itemCount="3"
         tools:listitem="@layout/item_discipline"
+        android:id="@+id/recyclerView"
         tools:background="?themeColorFeedBackground">
 
 </androidx.recyclerview.widget.RecyclerView>

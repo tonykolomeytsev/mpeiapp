@@ -1,5 +1,6 @@
 package kekmech.ru.bars.main.model
 
+import androidx.lifecycle.LiveData
 import kekmech.ru.core.dto.AcademicDiscipline
 import kekmech.ru.core.dto.AcademicScore
 import kekmech.ru.core.usecases.*
@@ -12,7 +13,9 @@ class BarsFragmentModelImpl constructor(
     private val setDetailsDisciplineUseCase: SetDetailsDisciplineUseCase,
     private val setForceUpdateDataUseCase: SetForceUpdateDataUseCase,
     private val getIsShowedUpdateDialogUseCase: GetIsShowedUpdateDialogUseCase,
-    private val setIsShowedUpdateDialogUseCase: SetIsShowedUpdateDialogUseCase
+    private val setIsShowedUpdateDialogUseCase: SetIsShowedUpdateDialogUseCase,
+    private val getRatingLiveDataUseCase: GetRatingLiveDataUseCase,
+    private val updateRatingUseCase: UpdateRatingUseCase
 ) : BarsFragmentModel {
 
 
@@ -24,6 +27,9 @@ class BarsFragmentModelImpl constructor(
         get() = isLoggedInBarsUseCase()
 
     override var ratingDetails: AcademicScore.Rating? = null
+
+    override val score: LiveData<AcademicScore>
+        get() = getRatingLiveDataUseCase()
 
     override fun saveUserSecrets(login: String, pass: String) {
         saveUserSecretsUseCase(login, pass)
@@ -49,4 +55,6 @@ class BarsFragmentModelImpl constructor(
     override fun saveForceUpdateArgs(url: String, description: String) {
         setForceUpdateDataUseCase(url, description)
     }
+
+    override suspend fun updateScore() = updateRatingUseCase()
 }
