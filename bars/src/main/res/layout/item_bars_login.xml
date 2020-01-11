@@ -116,6 +116,7 @@
             <ProgressBar
                     android:id="@+id/progressBarLogin"
                     android:layout_gravity="center"
+                    android:visibility="invisible"
                     android:indeterminateTint="?attr/themeColorProgressBar"
                     android:layout_width="32dp"
                     android:layout_height="32dp"/>

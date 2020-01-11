@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:focusable="false"
+        android:paddingRight="4dp">
+    <View
+            android:id="@+id/viewMark"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:background="@drawable/mark_bg"
+            style="@style/Mark"
+            android:alpha="0.9"
+            android:backgroundTint="#578B0F"/>
+</LinearLayout>

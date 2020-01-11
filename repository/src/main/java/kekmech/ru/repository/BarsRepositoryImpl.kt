@@ -1,7 +1,7 @@
 package kekmech.ru.repository
 
 import android.content.Context
-import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import com.crashlytics.android.Crashlytics
 import com.google.gson.GsonBuilder
 import kekmech.ru.core.dto.AcademicDiscipline
@@ -10,7 +10,10 @@ import kekmech.ru.core.repositories.BarsRepository
 import kekmech.ru.core.repositories.BarsRepository.Companion.BARS_URL
 import kekmech.ru.repository.auth.BaseKeyStore
 import kekmech.ru.repository.utils.BarsParser
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.jsoup.Jsoup
 
 class BarsRepositoryImpl constructor(
@@ -34,6 +37,8 @@ class BarsRepositoryImpl constructor(
             .putString("current_discipline", gson.toJson(value))
             .apply()
     }
+
+    override val score = MutableLiveData<AcademicScore>()
 
     private fun loadCurrentAcademicDisciplineFromCache(): AcademicDiscipline? {
         val disciplineJson = sharedPreferences.getString("current_discipline", null)
@@ -120,6 +125,7 @@ class BarsRepositoryImpl constructor(
     }
 
     private fun saveToCache(score: AcademicScore) {
+        GlobalScope.launch(Dispatchers.Main) { this@BarsRepositoryImpl.score.value = score }
         val gson = GsonBuilder().create()
         sharedPreferences
             .edit()
@@ -154,5 +160,10 @@ class BarsRepositoryImpl constructor(
             .putString("user2", "") // PerezhilovaYD uxi762e
             .putString("score", "")
             .apply()
+    }
+
+    override suspend fun updateScore() {
+        if (score.value == null) loadFromCache()?.let { withContext(Dispatchers.Main) { score.value = it } }
+        loadFromRemote()
     }
 }

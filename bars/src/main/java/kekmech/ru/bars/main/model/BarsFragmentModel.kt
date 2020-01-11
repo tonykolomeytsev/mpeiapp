@@ -11,6 +11,8 @@ interface BarsFragmentModel {
 
     var ratingDetails: AcademicScore.Rating?
 
+    val score: LiveData<AcademicScore>
+
     suspend fun getAcademicScoreAsync(refresh: Boolean = false, onRatingUpdatesListener: (AcademicScore?) -> Unit)
 
     suspend fun getAcademicScore(refresh: Boolean = false): AcademicScore?
@@ -22,4 +24,6 @@ interface BarsFragmentModel {
     fun setCurrentDiscipline(discipline: AcademicDiscipline)
 
     fun saveForceUpdateArgs(url: String, description: String)
+
+    suspend fun updateScore()
 }
