@@ -9,7 +9,6 @@ import kekmech.ru.coreui.adapter.BaseAdapter
 import kekmech.ru.coreui.adapter.BaseFactory
 import kekmech.ru.coreui.adapter.BaseItem
 import kekmech.ru.coreui.adapter.BaseViewHolder2
-import kotlinx.coroutines.suspendAtomicCancellableCoroutine
 
 class ProfileItem(val academicScore: AcademicScore, val logoutListener: (View) -> Unit) : BaseItem<ProfileItem.ViewHolder>() {
 
@@ -21,8 +20,8 @@ class ProfileItem(val academicScore: AcademicScore, val logoutListener: (View) -
                 .registerViewTypeFactory(ProfilePieceItem.Factory())
                 .build()
             adapter.addItem(ProfilePieceItem("ГРУППА", academicScore.studentGroup))
-            adapter.addItem(ProfilePieceItem("ПИСОС", "50 см"))
-            adapter.addItem(ProfilePieceItem("КУМИР", "ЗУЕВ"))
+            if (academicScore.studentQualification.isNotBlank())
+                adapter.addItem(ProfilePieceItem("УРОВЕНЬ", academicScore.studentQualification))
             recycler.layoutManager = LinearLayoutManager(viewHolder.itemView.context, LinearLayoutManager.HORIZONTAL, false)
             recycler.adapter = adapter
         }
