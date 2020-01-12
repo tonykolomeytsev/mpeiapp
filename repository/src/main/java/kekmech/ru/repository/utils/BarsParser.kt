@@ -13,7 +13,8 @@ class BarsParser {
     private var currentAcademicDiscipline: AcademicDiscipline? = null
     private val academicDisciplines: MutableList<AcademicDiscipline> = mutableListOf()
     private var studentName: String = "Не удалось загрузить имя"
-    private var studentGroup: String = "Не удалось загрузить номер группы"
+    private var studentGroup: String = "Ошибка"
+    private var studentQualification: String = ""
     private var rating = AcademicScore.Rating()
 
     var isCurrentControlFlag = false
@@ -54,6 +55,7 @@ class BarsParser {
             disciplines = academicDisciplines,
             studentName = studentName,
             studentGroup = studentGroup,
+            studentQualification = studentQualification,
             rating = rating)
     }
 
@@ -69,14 +71,22 @@ class BarsParser {
     private fun pushStudentInfo(infoDiv: Element) {
         val span = infoDiv
             .select("span")
-            .html()
-        studentName = span
-            .substringBefore('(')
-            .trim()
-        studentGroup = span
-            .substringAfter(')')
-            .substringBefore('\n')
-            .trim()
+            ?.html() ?: ""
+        if (span.isNotEmpty()) {
+            studentName = span
+                .substringBefore('(')
+                .trim()
+            studentGroup = span
+                .substringAfter(')')
+                .substringBefore('\n')
+                .trim()
+        }
+        val q = infoDiv
+            .select("li")
+            ?.find { li -> li.html().contains("Ква") }
+            ?.select("strong")
+            ?.html() ?: ""
+        if (q.isNotEmpty()) studentQualification = q.trim()
     }
 
     private fun pushDiscipline(div: Element) {

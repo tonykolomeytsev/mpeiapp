@@ -2,12 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:orientation="vertical"
-        android:layout_width="144dp"
-        android:layout_height="72dp"
+        android:layout_width="112dp"
+        android:layout_height="56dp"
         android:layout_marginBottom="4dp"
         android:layout_marginTop="4dp"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
         android:layout_marginRight="4dp"
         android:layout_marginLeft="4dp"
         tools:theme="@style/AppTheme.Dark"
@@ -21,8 +19,10 @@
             android:textColor="@color/colorWhite"
             tools:text="ГРУППА"
             android:fontFamily="sans-serif-medium"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:alpha="0.5"
+            android:maxLines="1"
+            android:ellipsize="end"
             />
 
     <TextView
@@ -32,8 +32,10 @@
             android:textColor="@color/colorWhite"
             tools:text="C-12-16"
             android:fontFamily="sans-serif-medium"
-            android:textSize="20sp"
-            android:layout_marginTop="4dp"
+            android:textSize="16sp"
+            android:layout_marginTop="2dp"
+            android:maxLines="1"
+            android:ellipsize="end"
             />
 
 </LinearLayout>

@@ -45,7 +45,6 @@ class BarsFragmentPresenter constructor(
         super.onResume(view)
         if (adapter.itemCount == 0) GlobalScope.launch(Dispatchers.IO) { model.updateScore() }
         this.view = view
-        // change view state as fast as possible
         if (model.isLoggedIn) model.score.observe(view, Observer {
             if (it == null) return@Observer
             updateWithScore(it)

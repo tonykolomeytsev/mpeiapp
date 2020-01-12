@@ -53,11 +53,12 @@
             <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView"
                     android:layout_width="match_parent"
-                    android:layout_height="80dp"
+                    android:layout_height="wrap_content"
                     tools:orientation="horizontal"
                     tools:listitem="@layout/item_profile_piece"
                     android:paddingLeft="12dp"
                     android:paddingRight="12dp"
+                    tools:itemCount="1"
                     android:layout_marginBottom="4dp"
                     android:clipToPadding="false"/>
 
