@@ -12,23 +12,29 @@ import kotlin.math.round
 class DisciplineItem(val discipline: AcademicDiscipline) :
     BaseClickableItem<DisciplineItem.ViewHolder>() {
 
+    private val marksAdapter = BaseAdapter.Builder()
+        .registerViewTypeFactory(MarkItem.Factory())
+        .build()
+
     override fun updateViewHolder(viewHolder: ViewHolder) {
         viewHolder.apply {
             name = getFormattedName(discipline.name)
             if (discipline.controlEvents.isNotEmpty() && !discipline.controlEvents.all { it.mark == -1f }) {
                 recyclerEvents.visibility = View.VISIBLE
+                recyclerEvents.setRecycledViewPool(Companion.eventsRecyclerViewPool)
+                recyclerEvents.setItemViewCacheSize(10)
+                recyclerEvents.setHasFixedSize(true)
+                recyclerEvents.isEnabled = false
                 isHeaderEventsVisible = true
 
                 recyclerEvents.apply {
                     layoutManager = LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
-                    val marksAdapter = BaseAdapter.Builder()
-                        .registerViewTypeFactory(MarkItem.Factory())
-                        .build()
-                        .apply {
-                            baseItems.addAll(discipline.controlEvents
-                                .filter { it.mark != -1f }
-                                .map { MarkItem(it.mark) })
-                        }
+
+                    marksAdapter.items.clear()
+                    marksAdapter.items.addAll(discipline.controlEvents
+                        .filter { it.mark != -1f }
+                        .map { MarkItem(it.mark) })
+
                     adapter = marksAdapter
                 }
             } else {
@@ -78,4 +84,8 @@ class DisciplineItem(val discipline: AcademicDiscipline) :
     }
 
     class Factory : BaseFactory(R.layout.item_discipline, ::ViewHolder)
+
+    companion object {
+        private val eventsRecyclerViewPool = RecyclerView.RecycledViewPool()
+    }
 }

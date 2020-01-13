@@ -9,14 +9,14 @@ import kekmech.ru.coreui.adapter.BaseFactory
 import kekmech.ru.coreui.adapter.BaseItem
 import kekmech.ru.coreui.adapter.BaseViewHolder
 
-class DisciplinesItem(val disciplineItems: List<DisciplineItem>) : BaseItem<DisciplinesItem.ViewHolder>() {
+class DisciplinesItem(var disciplineItems: List<DisciplineItem>) : BaseItem<DisciplinesItem.ViewHolder>() {
 
     val adapter = BaseAdapter.Builder()
         .registerViewTypeFactory(DisciplineItem.Factory())
         .build()
 
     override fun updateViewHolder(viewHolder: ViewHolder) {
-        adapter.baseItems.clear()
+        adapter.items.clear()
         adapter.baseItems.addAll(disciplineItems)
         viewHolder.recycler.layoutManager = LinearLayoutManager(viewHolder.itemView.context)
         viewHolder.recycler.adapter = adapter

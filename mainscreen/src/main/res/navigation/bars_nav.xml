@@ -18,11 +18,7 @@
                 app:popExitAnim="@anim/exit_to_right" />
         <action
                 android:id="@+id/action_barsFragment_to_barsDetailsFragment"
-                app:destination="@id/barsDetailsFragment"
-                app:enterAnim="@anim/enter_from_right"
-                app:exitAnim="@anim/exit_to_left"
-                app:popEnterAnim="@anim/enter_from_left"
-                app:popExitAnim="@anim/exit_to_right"  />
+                app:destination="@id/barsDetailsFragment"  />
         <action
                 android:id="@+id/action_barsFragment_to_forceUpdateFragment2"
                 app:destination="@id/forceUpdateFragment2" />

@@ -17,15 +17,19 @@ class BarsFragment : BaseFragment<BarsFragmentPresenter, BarsFragmentView>(
     layoutId = R.layout.fragment_bars
 ), BarsFragmentView {
 
+    init {
+        retainInstance = true
+    }
+
     override val presenter: BarsFragmentPresenter by inject()
 
     override var onRefreshListener: () -> Unit = {}
 
     override fun onResume() {
         super.onResume()
-        recyclerView?.setRecycledViewPool(presenter.recycledViewPool)
         recyclerView?.layoutManager = LinearLayoutManager(context)
         recyclerView?.adapter = presenter.adapter
+        recyclerView?.itemAnimator = null
 
         swipeRefresh?.setProgressViewEndTarget(false, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 144f, resources.displayMetrics).toInt())
         swipeRefresh?.setOnRefreshListener { onRefreshListener() }
@@ -53,5 +57,14 @@ class BarsFragment : BaseFragment<BarsFragmentPresenter, BarsFragmentView>(
             insets
         }
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    override fun setLoginState(boolean: Boolean) {
+        if (boolean) {
+            swipeRefresh?.isRefreshing = false
+            swipeRefresh?.isEnabled = false
+        } else {
+            swipeRefresh?.isEnabled = true
+        }
     }
 }

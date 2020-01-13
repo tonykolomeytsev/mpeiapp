@@ -3,27 +3,35 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:theme="@style/AppTheme.Dark"
-        android:background="?themeColorToolbar">
+        android:layout_height="wrap_content"
+        tools:theme="@style/AppTheme.Dark">
 
-    <TextView
+    <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorWhite"
-            android:text="Личный кабинет БАРС"
-            android:textSize="24sp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginBottom="4dp"
-            android:fontFamily="sans-serif-black"
-            android:layout_marginRight="64dp"
-            android:layout_marginTop="64dp" />
+            android:background="?themeColorToolbar"
+            android:paddingBottom="16dp"
+            android:layout_marginBottom="-16dp">
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorWhite"
+                android:text="Личный кабинет БАРС"
+                android:textSize="24sp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginBottom="4dp"
+                android:fontFamily="sans-serif-black"
+                android:layout_marginRight="64dp"
+                android:layout_marginTop="92dp" />
+    </FrameLayout>
 
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/backdrop_bg"
             android:orientation="vertical"
+            android:paddingBottom="16dp"
             android:gravity="center_horizontal">
 
         <TextView

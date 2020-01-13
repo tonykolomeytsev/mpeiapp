@@ -67,8 +67,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="40dp"
                     android:orientation="vertical"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp">
+                    android:paddingTop="8dp">
 
                 <TextView
                         android:id="@+id/textViewDisciplineName"
@@ -100,8 +99,8 @@
 
                     <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/recyclerControlEvents"
-                            android:layout_width="wrap_content"
-                            android:layout_height="24dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="28dp"
                             android:orientation="horizontal"
                             android:layout_marginBottom="8dp"
                             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
