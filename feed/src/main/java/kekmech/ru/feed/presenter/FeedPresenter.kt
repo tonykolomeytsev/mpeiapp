@@ -133,6 +133,8 @@ class FeedPresenter constructor(
         tasks.awaitAll()
         if ((adapter.itemCount == 1 && adapter.baseItems.firstOrNull() is CarouselItem) or (adapter.baseItems.isEmpty())) {// если только карусель
             adapter.addItem(NothingToShowItem())
+        } else {
+            adapter.removeItemByClass(NothingToShowItem::class)
         }
 
         view.hideLoading()
