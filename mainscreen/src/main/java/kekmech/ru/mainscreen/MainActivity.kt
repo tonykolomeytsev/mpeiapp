@@ -10,6 +10,7 @@ import com.google.android.gms.maps.MapsInitializer
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.analytics.FirebaseAnalytics
 import kekmech.ru.core.Router
+import kekmech.ru.core.repositories.ScheduleRepository
 import kekmech.ru.core.usecases.IncrementAppLaunchCountUseCase
 import kekmech.ru.core.usecases.InvokeUpdateScheduleUseCase
 import kekmech.ru.core.usecases.IsDarkThemeEnabledUseCase
@@ -17,6 +18,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
+import java.lang.Exception
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,7 +27,7 @@ class MainActivity : AppCompatActivity() {
 
     val incrementAppLaunchCountUseCase: IncrementAppLaunchCountUseCase by inject()
     val isDarkThemeEnabledUseCase: IsDarkThemeEnabledUseCase by inject()
-    val invokeUpdateScheduleUseCase: InvokeUpdateScheduleUseCase by inject()
+    val scheduleRepository: ScheduleRepository by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +55,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         try {
-            GlobalScope.launch(Dispatchers.IO) { invokeUpdateScheduleUseCase() }
+            scheduleRepository
         } catch (e: Exception) { e.printStackTrace() }
     }
 

@@ -60,6 +60,7 @@ class FeedPresenter constructor(
     override fun onResume(view: IFeedFragment) {
         this.view = view
 
+        model.updateScheduleFromRemote()
         view.onSettingsClick = { router.navigate(FEED_TO_SETTINGS) }
 
         view.showLoading()

@@ -1,12 +1,17 @@
 package kekmech.ru.feed.model
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import kekmech.ru.core.dto.AcademicSession
 import kekmech.ru.core.dto.CoupleNative
 import kekmech.ru.core.dto.FeedCarousel
 import kekmech.ru.core.gateways.PicassoFirebaseInstance
 import kekmech.ru.core.usecases.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class FeedModelImpl constructor(
     private val context: Context,
@@ -22,7 +27,8 @@ class FeedModelImpl constructor(
     private val getTomorrowCouplesUseCase: GetTomorrowCouplesUseCase,
     private val getTodayCouplesUseCase: GetTodayCouplesUseCase,
     private val isEveningUseCase: IsEveningUseCase,
-    private val isSemesterStartUseCase: IsSemesterStartUseCase
+    private val isSemesterStartUseCase: IsSemesterStartUseCase,
+    private val invokeUpdateScheduleUseCase: InvokeUpdateScheduleUseCase
 ) : FeedModel {
 
     override val isSchedulesEmpty: Boolean
@@ -68,5 +74,23 @@ class FeedModelImpl constructor(
 
     override fun getTodaySchedule(): List<CoupleNative> {
         return getTodayCouplesUseCase()
+    }
+
+    private var isNotUpdated = true
+    override fun updateScheduleFromRemote() {
+        if (isNotUpdated) GlobalScope.launch(Dispatchers.IO) {
+            var attempts = 0
+            while (isNotUpdated && attempts < 5) {
+                try {
+                    invokeUpdateScheduleUseCase()
+                    isNotUpdated = false
+                    Log.d("FeedModel", "ScheduleUpdated")
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+                attempts++
+                delay(1000)
+            }
+        }
     }
 }
