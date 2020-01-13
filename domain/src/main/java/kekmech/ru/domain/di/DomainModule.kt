@@ -68,4 +68,5 @@ val KoinDomainModule = module {
 
     single { GetRatingLiveDataUseCaseImpl(get()) } bind GetRatingLiveDataUseCase::class
     single { UpdateRatingUseCaseImpl(get()) } bind UpdateRatingUseCase::class
+    single { GetTimetableScheduleLiveDataUseCaseImpl(get()) } bind GetTimetableScheduleLiveDataUseCase::class
 }
