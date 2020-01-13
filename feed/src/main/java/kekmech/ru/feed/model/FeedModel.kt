@@ -34,4 +34,6 @@ interface FeedModel {
     fun getPicasso(): PicassoFirebaseInstance
     fun getTomorrowSchedule(): List<CoupleNative>
     fun getTodaySchedule(): List<CoupleNative>
+
+    fun updateScheduleFromRemote()
 }
