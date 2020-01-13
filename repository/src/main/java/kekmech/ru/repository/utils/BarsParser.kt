@@ -15,6 +15,7 @@ class BarsParser {
     private var studentName: String = "Не удалось загрузить имя"
     private var studentGroup: String = "Ошибка"
     private var studentQualification: String = ""
+    private var studentSemester: String = ""
     private var rating = AcademicScore.Rating()
 
     var isCurrentControlFlag = false
@@ -56,6 +57,7 @@ class BarsParser {
             studentName = studentName,
             studentGroup = studentGroup,
             studentQualification = studentQualification,
+            studentSemester = studentSemester,
             rating = rating)
     }
 
@@ -87,6 +89,17 @@ class BarsParser {
             ?.select("strong")
             ?.html() ?: ""
         if (q.isNotEmpty()) studentQualification = q.trim()
+
+        val s = infoDiv
+            .select("option")
+            .firstOrNull()
+            ?.html()
+            ?.let { when {
+                it.contains("Осе") -> "Осенний"
+                it.contains("Весе") -> "Весенний"
+                else -> ""
+            } } ?: ""
+        if (s.isNotEmpty()) studentSemester = s
     }
 
     private fun pushDiscipline(div: Element) {

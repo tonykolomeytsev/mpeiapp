@@ -10,4 +10,6 @@ interface BarsFragmentView : LifecycleOwner {
     fun hideLoading()
 
     fun showLoading()
+
+    fun setLoginState(boolean: Boolean)
 }

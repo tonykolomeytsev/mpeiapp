@@ -10,7 +10,7 @@ import kekmech.ru.coreui.adapter.BaseFactory
 import kekmech.ru.coreui.adapter.BaseItem
 import kekmech.ru.coreui.adapter.BaseViewHolder2
 
-class ProfileItem(val academicScore: AcademicScore, val logoutListener: (View) -> Unit) : BaseItem<ProfileItem.ViewHolder>() {
+class ProfileItem(var academicScore: AcademicScore, val logoutListener: (View) -> Unit) : BaseItem<ProfileItem.ViewHolder>() {
 
     override fun updateViewHolder(viewHolder: ViewHolder) {
         viewHolder.apply {
@@ -22,6 +22,8 @@ class ProfileItem(val academicScore: AcademicScore, val logoutListener: (View) -
             adapter.addItem(ProfilePieceItem("ГРУППА", academicScore.studentGroup))
             if (academicScore.studentQualification.isNotBlank())
                 adapter.addItem(ProfilePieceItem("УРОВЕНЬ", academicScore.studentQualification))
+            if (academicScore.studentSemester.isNotBlank())
+                adapter.addItem(ProfilePieceItem("СЕМЕСТР", academicScore.studentSemester))
             recycler.layoutManager = LinearLayoutManager(viewHolder.itemView.context, LinearLayoutManager.HORIZONTAL, false)
             recycler.adapter = adapter
         }

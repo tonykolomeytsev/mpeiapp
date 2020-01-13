@@ -14,7 +14,7 @@ data class AcademicScore(
     @SerializedName("q")
     val studentQualification: String = "",
     @SerializedName("stat")
-    val studentStudyingStatus: String = "",
+    val studentSemester: String = "",
     @SerializedName("disc")
     val disciplines: List<AcademicDiscipline>
 ) {

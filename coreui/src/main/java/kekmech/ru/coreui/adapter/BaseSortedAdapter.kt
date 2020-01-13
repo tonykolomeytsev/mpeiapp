@@ -1,5 +1,6 @@
 package kekmech.ru.coreui.adapter
 
+import androidx.recyclerview.widget.RecyclerView
 import kotlin.reflect.KClass
 
 open class BaseSortedAdapter : BaseAdapter() {
@@ -33,6 +34,10 @@ open class BaseSortedAdapter : BaseAdapter() {
             items.removeAt(index)
             notifyItemRemoved(index)
         }
+    }
+
+    override fun getItemId(position: Int): Long {
+        return order[items[position]::class.java]?.toLong() ?: RecyclerView.NO_ID
     }
 
     class Builder {

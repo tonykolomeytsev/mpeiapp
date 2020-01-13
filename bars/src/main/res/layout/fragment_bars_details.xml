@@ -197,9 +197,8 @@
                             tools:itemCount="3"
                             android:overScrollMode="never"/>
                 </LinearLayout>
+
             </androidx.cardview.widget.CardView>
-
-
 
         </LinearLayout>
 

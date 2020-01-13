@@ -40,16 +40,28 @@ class BarsFragmentPresenter constructor(
         ))
         .build()
     private var view: BarsFragmentView? = null
+    private var cachedDisciplinesItem = DisciplinesItem(emptyList())
 
     override fun onResume(view: BarsFragmentView) {
         super.onResume(view)
-        if (adapter.itemCount == 0) GlobalScope.launch(Dispatchers.IO) { model.updateScore() }
         this.view = view
-        if (model.isLoggedIn) model.score.observe(view, Observer {
-            if (it == null) return@Observer
-            updateWithScore(it)
-            view.hideLoading()
-        }) else navigateToLogin()
+        if (model.isLoggedIn) {
+            view.setLoginState(false)
+            if (adapter.itemCount == 0) {
+                adapter.setHasStableIds(true)
+                GlobalScope.launch(Dispatchers.IO) {
+                    model.updateScore()
+                    view.hideLoading()
+                }
+            }
+            model.score.observe(view, Observer {
+                if (it == null) return@Observer
+                updateWithScore(it)
+                view.hideLoading()
+            })
+        } else {
+            navigateToLogin()
+        }
 
         view.onRefreshListener = {
             GlobalScope.launch(Dispatchers.IO) { model.updateScore() }
@@ -71,7 +83,11 @@ class BarsFragmentPresenter constructor(
         adapter.removeItemByClass(RatingItem::class)
         adapter.removeItemByClass(DisciplinesItem::class)
         adapter.removeItemByClass(SupportItem::class)
-        adapter.addItem(BarsLoginItem(::logInUser, ::onRightsClick))
+        GlobalScope.launch(Dispatchers.Main) {
+            delay(100)
+            adapter.addItem(BarsLoginItem(::logInUser, ::onRightsClick))
+        }
+        view?.setLoginState(true)
     }
 
     private fun onRightsClick() {
@@ -91,21 +107,26 @@ class BarsFragmentPresenter constructor(
                 model.clearUserSecrets()
                 showError()
             } else {
-                if (view != null) updateWithScore(score)
+                view?.setLoginState(false)
+                updateWithScore(score)
             }
         }
     }
 
     private fun updateWithScore(score: AcademicScore) {
-        adapter.removeItemByClass(BarsLoginItem::class)
-        try {
-            val ri = RatingItem(score.rating).apply { clickListener = { onRatingClick(score) } }
-            adapter.addItem(ri)
-        } catch (e: Exception) { e.printStackTrace() }
-        adapter.addItem(ProfileItem(score, ::logout))
-        val disciplines = score.disciplines.map { DisciplineItem(it).apply { clickListener = ::onItemClick } }
-        adapter.addItem(DisciplinesItem(disciplines))
-        adapter.addItem(SupportItem(context))
+        GlobalScope.launch(Dispatchers.Main) {
+            adapter.removeItemByClass(BarsLoginItem::class)
+            delay(100)
+            try {
+                val ri = RatingItem(score.rating).apply { clickListener = { onRatingClick(score) } }
+                adapter.addItem(ri)
+            } catch (e: Exception) { e.printStackTrace() }
+
+            adapter.addItem(ProfileItem(score, ::logout))
+            val disciplines = score.disciplines.map { DisciplineItem(it).apply { clickListener = ::onItemClick } }
+            adapter.addItem(DisciplinesItem(disciplines))
+            adapter.addItem(SupportItem(context))
+        }
     }
 
     private fun onRatingClick(score: AcademicScore) {

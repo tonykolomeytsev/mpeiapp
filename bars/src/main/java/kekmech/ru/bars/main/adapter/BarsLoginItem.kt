@@ -1,12 +1,18 @@
 package kekmech.ru.bars.main.adapter
 
+import android.content.Context
+import android.graphics.Point
 import android.view.KeyEvent
 import android.view.View
+import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.EditText
+import android.widget.LinearLayout
 import kekmech.ru.bars.R
 import kekmech.ru.coreui.adapter.BaseFactory
 import kekmech.ru.coreui.adapter.BaseItem
 import kekmech.ru.coreui.adapter.BaseViewHolder2
+
 
 class BarsLoginItem(
     val logInAction: (login: String, pass: String, showError: () -> Unit) -> Unit,
@@ -14,7 +20,17 @@ class BarsLoginItem(
 ) : BaseItem<BarsLoginItem.ViewHolder>() {
 
     override fun updateViewHolder(viewHolder: ViewHolder) {
+//        (viewHolder.itemView.context.getSystemService(Context.WINDOW_SERVICE) as WindowManager).apply {
+//            val size = Point()
+//            defaultDisplay.getSize(size)
+//            viewHolder.itemView.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, size.y)
+//        }
+
         viewHolder.apply {
+            pass = ""
+            setState(true)
+            isErrorVisible = false
+
             rights = { rightsAction() }
             btlLogin = {
                 setState(false)
@@ -24,6 +40,7 @@ class BarsLoginItem(
                 override fun onKey(v: View, keyCode: Int, event: KeyEvent): Boolean {
                     // If the event is a key-down event on the "enter" button
                     if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+                        setState(false)
                         logInAction(login, pass) OnError@{ setState(true) }
                         return true
                     }
@@ -45,7 +62,7 @@ class BarsLoginItem(
 
     class ViewHolder(view: View) : BaseViewHolder2(view) {
         val login by bindText(R.id.textViewBarsLogin)
-        val pass by bindText(R.id.textViewBarsPass)
+        var pass by bindText(R.id.textViewBarsPass)
         val textViewPass by bind<EditText>(R.id.textViewBarsPass)
         var isLoginEnabled by bindEnabled(R.id.textViewBarsLogin)
         var isPassEnabled by bindEnabled(R.id.textViewBarsPass)

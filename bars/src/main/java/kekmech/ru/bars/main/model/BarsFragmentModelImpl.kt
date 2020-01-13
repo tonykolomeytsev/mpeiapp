@@ -31,6 +31,10 @@ class BarsFragmentModelImpl constructor(
     override val score: LiveData<AcademicScore>
         get() = getRatingLiveDataUseCase()
 
+    override var realUpdateIndex: Int = 0
+
+    override var lastUpdateIndex: Int = -1
+
     override fun saveUserSecrets(login: String, pass: String) {
         saveUserSecretsUseCase(login, pass)
     }
@@ -56,5 +60,8 @@ class BarsFragmentModelImpl constructor(
         setForceUpdateDataUseCase(url, description)
     }
 
-    override suspend fun updateScore() = updateRatingUseCase()
+    override suspend fun updateScore() {
+        realUpdateIndex++
+        updateRatingUseCase()
+    }
 }
