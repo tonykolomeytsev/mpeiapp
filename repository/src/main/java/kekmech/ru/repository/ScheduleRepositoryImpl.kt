@@ -24,6 +24,15 @@ class ScheduleRepositoryImpl constructor(
 
     override val scheduleId: Int get() = scheduleCacheGateway.scheduleId
 
+    override val scheduleLiveData = MutableLiveData<Schedule>()
+        get() {
+            if (field.value == null) GlobalScope.launch(Dispatchers.IO) {
+                val value = getSchedule(true)
+                if (value != null) withContext(Dispatchers.Main) { field.value = value }
+            }
+            return field
+        }
+
     override fun getSchedule(refresh: Boolean): Schedule? {
         return scheduleCacheGateway.getSchedule()
     }
@@ -65,7 +74,13 @@ class ScheduleRepositoryImpl constructor(
 
     override fun getAllSchedules() = scheduleCacheGateway.getAllSchedules()
 
-    override fun setCurrentScheduleId(id: Int) = scheduleCacheGateway.setCurrentScheduleId(id)
+    override fun setCurrentScheduleId(id: Int) {
+        scheduleCacheGateway.setCurrentScheduleId(id)
+        GlobalScope.launch(Dispatchers.IO) {
+            val value = getSchedule(true)
+            if (value != null) withContext(Dispatchers.Main) { scheduleLiveData.value = value }
+        }
+    }
 
     override fun loadSessionFromRemote(): AcademicSession {
         val groupName = scheduleCacheGateway.getGroupNum().toUpperCase(Locale.getDefault())
@@ -204,6 +219,7 @@ class ScheduleRepositoryImpl constructor(
 
             Log.d("ScheduleRepository", "Schedule updated")
         }
+        scheduleLiveData.value = schedule
     }
 
     private fun<T> async(action: suspend CoroutineScope.() -> T) = GlobalScope.async(Dispatchers.IO, block = action)

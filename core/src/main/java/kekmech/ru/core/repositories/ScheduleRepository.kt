@@ -12,6 +12,8 @@ interface ScheduleRepository {
 
     val scheduleId: Int
 
+    val scheduleLiveData: MutableLiveData<Schedule>
+
     fun getOffsetCouples(offset:Int, refresh: Boolean): List<CoupleNative>
 
     fun getSchedule(refresh: Boolean): Schedule?
