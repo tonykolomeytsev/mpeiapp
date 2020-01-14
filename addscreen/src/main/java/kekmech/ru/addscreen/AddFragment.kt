@@ -2,36 +2,32 @@ package kekmech.ru.addscreen
 
 
 import android.app.Dialog
-import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
+import android.graphics.drawable.LayerDrawable
+import android.os.Build
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.util.TypedValue
 import android.view.KeyEvent
 import android.view.KeyEvent.KEYCODE_ENTER
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebView
 import android.widget.FrameLayout
+import android.widget.Toast
+import androidx.annotation.NonNull
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import kekmech.ru.core.Presenter
+import kekmech.ru.addscreen.presenter.AddFragmentPresenter
+import kekmech.ru.core.usecases.IsDarkThemeEnabledUseCase
 import kekmech.ru.coreui.Resources
 import kekmech.ru.coreui.adapter.BaseAdapter
 import kotlinx.android.synthetic.main.fragment_add.*
-import android.graphics.drawable.LayerDrawable
-import android.os.Build
-import android.os.Build.VERSION_CODES.M
-import android.util.DisplayMetrics
-import android.widget.Toast
-import androidx.annotation.NonNull
-import androidx.annotation.RequiresApi
-import kekmech.ru.addscreen.presenter.AddFragmentPresenter
-import kekmech.ru.core.usecases.IsDarkThemeEnabledUseCase
 import org.koin.android.ext.android.inject
 
 
@@ -59,7 +55,7 @@ class AddFragment : BottomSheetDialogFragment(), IAddFragment {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        textView2.setOnClickListener { editTextGroupName.setText("С-12-17") }
+        textView2.setOnClickListener { editTextGroupName.setText(R.string.default_group_name) }
         editTextGroupName.setOnKeyListener(object : View.OnKeyListener {
             override fun onKey(v: View, keyCode: Int, event: KeyEvent): Boolean {
                 // If the event is a key-down event on the "enter" button

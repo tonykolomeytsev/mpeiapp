@@ -19,7 +19,7 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="24dp"
             android:fontFamily="sans-serif-light"
-            android:text="Выбрать группу"
+            android:text="@string/fragment_add_header"
             android:textColor="?attr/themeColorBlack"
             android:textSize="28sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -33,7 +33,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="32dp"
             android:fontFamily="sans-serif-light"
-            android:text="Введите номер группы, расписание которой хотите просматривать. Например, С-12-17."
+            android:text="@string/fragment_add_description"
             android:textColor="?attr/themeColorBlack"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -70,7 +70,8 @@
                 android:inputType="textNoSuggestions"
                 android:textColor="?attr/themeColorBlack"
                 tools:text="C-12-16"
-                tools:textAlignment="center" />
+                tools:textAlignment="center"
+                tools:ignore="Autofill,LabelFor" />
 
         <FrameLayout
                 android:id="@+id/buttonSelectGroup"
@@ -79,14 +80,16 @@
                 android:layout_gravity="right"
                 android:background="?attr/selectableItemBackground"
                 android:clickable="true"
-                android:focusable="true">
+                android:focusable="true"
+                tools:ignore="RtlHardcoded">
 
             <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:src="@drawable/outline_search_black_24"
-                    android:tint="?attr/themeColorSearchViewIconsTint" />
+                    android:tint="?attr/themeColorSearchViewIconsTint"
+                    android:contentDescription="@string/fragment_add_button_search_description" />
         </FrameLayout>
     </FrameLayout>
 
@@ -113,11 +116,11 @@
                 android:textSize="16sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Загружаем расписание с сайта МЭИ"
+                android:text="@string/fragment_add_loading_status_text"
                 android:layout_gravity="center_vertical"
                 android:textColor="?themeColorBlack"
                 android:fontFamily="sans-serif-light"
-                />
+                tools:ignore="RtlHardcoded" />
     </FrameLayout>
 
     <FrameLayout
@@ -138,7 +141,7 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
-                android:text="Не удалось загрузить расписание этой группы"
+                android:text="@string/fragment_add_loading_error_text"
                 android:gravity="center"
                 android:textSize="12sp"
                 android:fontFamily="sans-serif-medium"
