@@ -5,23 +5,17 @@ import kekmech.ru.addscreen.model.AddFragmentModel
 import kekmech.ru.core.Presenter
 import kekmech.ru.core.Router
 import kekmech.ru.core.dto.AcademGroup
-import kekmech.ru.core.dto.CoupleNative
-import kekmech.ru.core.dto.Schedule
-import kekmech.ru.core.dto.Time
-import kekmech.ru.core.usecases.SaveScheduleUseCase
 import kekmech.ru.core.usecases.SetNeedToUpdateFeedUseCase
 import kekmech.ru.coreui.adapter.BaseAdapter
 import kekmech.ru.coreui.adapter.BaseClickableItem
 import kotlinx.coroutines.*
 
 class AddFragmentPresenter constructor(
-    private val saveScheduleUseCase: SaveScheduleUseCase,
     private val setNeedToUpdateFeedUseCase: SetNeedToUpdateFeedUseCase,
     private val model: AddFragmentModel,
     private val router: Router
 ) : Presenter<IAddFragment>() {
     private var view: IAddFragment? = null
-    private var htmlWorker: HTMLWorker? = null
 
     /**
      * subscribe to view events
@@ -71,7 +65,6 @@ class AddFragmentPresenter constructor(
      */
     override fun onPause(view: IAddFragment) {
         this.view = null
-        htmlWorker = null
     }
 
     private fun onSearch(group: String) {

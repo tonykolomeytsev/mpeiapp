@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">addscreen</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="default_group_name" translatable="false">С-12-17</string>
+    <string name="fragment_add_header">Выбрать группу</string>
+    <string name="fragment_add_description">Введите номер группы, расписание которой хотите просматривать. Например, С-12-17.</string>
+    <string name="fragment_add_button_search_description">загрузить расписание для группы</string>
+    <string name="fragment_add_loading_status_text">Загружаем расписание с сайта МЭИ</string>
+    <string name="fragment_add_loading_error_text">Не удалось загрузить расписание этой группы</string>
 </resources>
