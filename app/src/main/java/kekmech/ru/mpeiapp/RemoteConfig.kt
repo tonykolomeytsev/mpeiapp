@@ -18,11 +18,11 @@ object RemoteConfig {
             .addOnCompleteListener {
                 if (it.isSuccessful) {
                     firebaseRemoteConfig.fetch(60) // fetch every minutes
-                        .addOnCompleteListener{
-                            if (it.isSuccessful) {
+                        .addOnCompleteListener{ task ->
+                            if (task.isSuccessful) {
                                 firebaseRemoteConfig.activate()
                             } else {
-                                it.exception?.printStackTrace()
+                                task.exception?.printStackTrace()
                             }
                         }
                 } else {
