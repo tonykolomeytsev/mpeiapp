@@ -3,6 +3,7 @@ package kekmech.ru.repository
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import kekmech.ru.core.dto.*
 import kekmech.ru.core.gateways.ScheduleCacheGateway
 import kekmech.ru.core.repositories.ScheduleRepository
@@ -62,15 +63,8 @@ class ScheduleRepositoryImpl constructor(
         scheduleCacheGateway.newSchedule(schedule)
     }
 
-    private val groupNumber = MutableLiveData<String>().apply { value = "" }
-    override fun getGroupNum(): LiveData<String> {
-        GlobalScope.launch(Dispatchers.Main) {
-            groupNumber.value = withContext(Dispatchers.IO) {
-                scheduleCacheGateway.getGroupNum().toUpperCase(Locale.getDefault())
-            }
-        }
-        return groupNumber
-    }
+    private val groupNumber = Transformations.map(scheduleLiveData) { it?.group?.toUpperCase(Locale.getDefault()) ?: "" }
+    override fun getGroupNum(): LiveData<String> = groupNumber
 
     override fun getAllSchedules() = scheduleCacheGateway.getAllSchedules()
 
@@ -219,7 +213,7 @@ class ScheduleRepositoryImpl constructor(
 
             Log.d("ScheduleRepository", "Schedule updated")
         }
-        scheduleLiveData.value = schedule
+        GlobalScope.launch(Dispatchers.Main) { scheduleLiveData.value = schedule }
     }
 
     private fun<T> async(action: suspend CoroutineScope.() -> T) = GlobalScope.async(Dispatchers.IO, block = action)
