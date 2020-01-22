@@ -26,6 +26,8 @@ interface ScheduleRepository {
 
     fun setCurrentScheduleId(id: Int)
 
+    fun loadSessionLiveData(): LiveData<AcademicSession>
+
     fun loadSessionFromRemote(): AcademicSession
 
     fun updateScheduleByGroupNum(schedule: Schedule)

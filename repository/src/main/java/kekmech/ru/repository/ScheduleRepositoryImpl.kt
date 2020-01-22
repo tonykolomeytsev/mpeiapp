@@ -1,12 +1,16 @@
 package kekmech.ru.repository
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
+import com.google.gson.GsonBuilder
 import kekmech.ru.core.dto.*
 import kekmech.ru.core.gateways.ScheduleCacheGateway
 import kekmech.ru.core.repositories.ScheduleRepository
+import kekmech.ru.repository.gateways.State
+import kekmech.ru.repository.gateways.StateFactory
 import kekmech.ru.repository.room.AppDatabase
 import kekmech.ru.repository.utils.HtmlToScheduleParser
 import kekmech.ru.repository.utils.ParserCouple
@@ -18,8 +22,15 @@ import java.util.*
 
 class ScheduleRepositoryImpl constructor(
     private val scheduleCacheGateway: ScheduleCacheGateway,
-    private val appdb: AppDatabase
+    private val appdb: AppDatabase,
+    private val context: Context
 ) : ScheduleRepository {
+
+    private val sharedPreferences = context.getSharedPreferences("mpeix", Context.MODE_PRIVATE)
+    private val gson = GsonBuilder().create()
+
+    private val stateFactory = StateFactory(sharedPreferences, gson)
+    private val sessionSchedule: State<AcademicSession> = stateFactory.build("session_schedule")
 
     override var isNeedToUpdateFeed = MutableLiveData<Boolean>().apply { value = false }
 
@@ -76,6 +87,15 @@ class ScheduleRepositoryImpl constructor(
         }
     }
 
+    override fun loadSessionLiveData(): LiveData<AcademicSession> {
+        GlobalScope.launch(Dispatchers.IO) {
+            try {
+                sessionSchedule %= loadSessionFromRemote()
+            } catch (e: Exception) { e.printStackTrace() }
+        }
+        return sessionSchedule.liveData
+    }
+
     override fun loadSessionFromRemote(): AcademicSession {
         val groupName = scheduleCacheGateway.getGroupNum().toUpperCase(Locale.getDefault())
         val inputs = Jsoup.connect("https://mpei.ru/Education/timetable/Pages/default.aspx")
@@ -87,20 +107,15 @@ class ScheduleRepositoryImpl constructor(
         val groupSubmitInput = inputs.find { it.attr("name").matches("ctl00\\\$ctl30.*ctl04".toRegex()) }!!
 
 
-        val href = Jsoup.connect("https://mpei.ru/Education/timetable/Pages/default.aspx")
+        val timetable = Jsoup.connect("https://mpei.ru/Education/timetable/Pages/default.aspx")
             .data(eventValidationInput.attr("name"), eventValidationInput.attr("value"))
             .data(viewStateInput.attr("name"), viewStateInput.attr("value"))
             .data(groupNameInput.attr("name"), groupName)
             .data(groupSubmitInput.attr("name"), groupSubmitInput.attr("value"))
             .header("Content-Type", "application/x-www-form-urlencoded")
-            .followRedirects(false)
+            .followRedirects(true)
             .post()
-            .select("a[href]")
-            .first()
-            .attr("href")
 
-        val timetable = Jsoup.connect(href)
-            .post()
         val __EVENTVALIDATION = timetable.select("input[name=__EVENTVALIDATION]").attr("value")
         val __VIEWSTATE = timetable.select("input[name=__VIEWSTATE]").attr("value")
         val __EVENTARGUMENT = "0"
@@ -108,7 +123,7 @@ class ScheduleRepositoryImpl constructor(
         val __EVENTTARGET = timetable.select("div[class=mpei-tt-outer-wrap]").select("a").attr("href").let {
             ".*'(.*)'.*'.*'.*".toRegex().find(it)?.groups?.get(1)?.value ?: ""
         }
-        val result = Jsoup.connect(href)
+        val result = Jsoup.connect(timetable.location())
             .data("__EVENTVALIDATION", __EVENTVALIDATION)
             .data("__VIEWSTATE", __VIEWSTATE)
             .data("__EVENTARGUMENT", __EVENTARGUMENT)
