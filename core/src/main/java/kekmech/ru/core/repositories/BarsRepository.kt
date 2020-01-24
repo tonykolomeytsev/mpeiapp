@@ -24,5 +24,6 @@ interface BarsRepository {
 
     companion object {
         const val BARS_URL = "https://bars.mpei.ru/bars_web/"
+        const val BARS_LIST_OF_STUDENTS = "https://bars.mpei.ru/bars_web/Student/ListStudent"
     }
 }

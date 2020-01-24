@@ -7,6 +7,7 @@ import com.google.gson.GsonBuilder
 import kekmech.ru.core.dto.AcademicDiscipline
 import kekmech.ru.core.dto.AcademicScore
 import kekmech.ru.core.repositories.BarsRepository
+import kekmech.ru.core.repositories.BarsRepository.Companion.BARS_LIST_OF_STUDENTS
 import kekmech.ru.core.repositories.BarsRepository.Companion.BARS_URL
 import kekmech.ru.repository.auth.BaseKeyStore
 import kekmech.ru.repository.utils.BarsParser
@@ -14,7 +15,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.jsoup.Connection
 import org.jsoup.Jsoup
+import org.jsoup.nodes.Document
 
 class BarsRepositoryImpl constructor(
     private val context: Context,
@@ -106,22 +109,55 @@ class BarsRepositoryImpl constructor(
                 .data("Remember", "false")
                 .data("SToken", stoken)
                 .data("__RequestVerificationToken", requestVirificationToken)
-                .post()
+                .method(Connection.Method.POST)
+                .execute()
 
-            crashReport = response.html()
-            val barsParser = BarsParser()
-            val score = barsParser.parse(response)
-            saveToCache(score)
-            return score
+            // если нас сразу редиректнуло на страницу ведомости
+            if (response.url()?.path?.startsWith("/bars_web/Student/Part1") == true) {
+                val barsParser = BarsParser()
+                val score = barsParser.parse(response.parse())
+                saveToCache(score)
+                return score
+            } else { // если зачетки две и нас редиректнуло на страничку выбора
+                val listOfBars = Jsoup.connect(BARS_LIST_OF_STUDENTS)
+                    .cookies(response.cookies())
+                    .get()
+                val href = getStudentUrl(listOfBars)
+                val studentBarsPage = Jsoup.connect(href)
+                    .cookies(response.cookies())
+                    .get()
+
+                val barsParser = BarsParser()
+                val score = barsParser.parse(studentBarsPage)
+                saveToCache(score)
+                return score
+            }
         } catch (e: BarsParser.LoginException) {
             // do nothing
             return null
         } catch (e: Exception) {
             e.printStackTrace()
-            Crashlytics.log(1, "bars_parser", "ERROR while parsing: $crashReport")
-            Crashlytics.logException(e)
             return null
         }
+    }
+
+    private fun getStudentUrl(listOfBarsContent: Document): String {
+        val trs = listOfBarsContent.select("table[id*=tbl__PartialListStudent]")
+            .select("tbody")
+            .select("tr")
+        var maxYear = 0
+        var maxYearStudentLink = ""
+        // ищем максимальный год группы, чтобы открыть ссылку именно на последнюю группу обучения для этого студента
+        trs.forEach { tr ->
+            val tds = tr.select("td")
+            val groupName = tds[2].html()
+            val groupYear = (".*-.*-(.*)".toRegex().find(groupName)?.groups?.get(1)?.value ?: "0").toInt()
+            if (groupYear > maxYear) {
+                maxYear = groupYear
+                maxYearStudentLink = "https://bars.mpei.ru" + tds[4].select("a").attr("href")
+            }
+        }
+        return maxYearStudentLink
     }
 
     private fun saveToCache(score: AcademicScore) {
