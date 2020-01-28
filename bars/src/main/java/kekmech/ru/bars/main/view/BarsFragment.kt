@@ -3,6 +3,7 @@ package kekmech.ru.bars.main.view
 import android.content.Context
 import android.os.Bundle
 import android.util.TypedValue
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -39,6 +40,16 @@ class BarsFragment : BaseFragment<BarsFragmentPresenter, BarsFragmentView>(
             Resources.getColor(context, R.color.colorPrimary),
             Resources.getColor(context, R.color.colorSecondary)
         )
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        if (savedView?.parent != null) (savedView?.parent as ViewGroup?)?.removeView(savedView)
+        if (savedView == null) savedView = super.onCreateView(inflater, container, savedInstanceState)
+        return savedView!!
     }
 
     override fun hideLoading() {
@@ -78,6 +89,7 @@ class BarsFragment : BaseFragment<BarsFragmentPresenter, BarsFragmentView>(
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if (savedInstanceState != null) {
+            if (recyclerView?.layoutManager == null) recyclerView?.layoutManager = LinearLayoutManager(context)
             recyclerView?.layoutManager?.onRestoreInstanceState(
                 savedInstanceState.getParcelable("main_rv")
             )
@@ -87,5 +99,9 @@ class BarsFragment : BaseFragment<BarsFragmentPresenter, BarsFragmentView>(
     override fun onAttach(context: Context) {
         retainInstance = true
         super.onAttach(context)
+    }
+
+    companion object {
+        private var savedView: View? = null
     }
 }

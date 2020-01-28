@@ -4,7 +4,7 @@ import android.content.Context
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.ListUpdateCallback
 import kekmech.ru.bars.main.adapter.*
 import kekmech.ru.bars.main.model.BarsFragmentModel
 import kekmech.ru.bars.main.view.BarsFragmentView
@@ -25,11 +25,9 @@ class BarsFragmentPresenter constructor(
     private val context: Context
 ) : Presenter<BarsFragmentView>() {
 
-    val recycledViewPool = RecyclerView.RecycledViewPool()
     val adapter = BaseAdapter.Builder()
         .registerViewTypeFactory(ProfileItem.Factory())
         .registerViewTypeFactory(RatingItem.Factory())
-        .registerViewTypeFactory(DisciplinesItem.Factory())
         .registerViewTypeFactory(DisciplineItem.Factory())
         .registerViewTypeFactory(SupportItem.Factory())
         .registerViewTypeFactory(BarsLoginItem.Factory())
@@ -136,7 +134,15 @@ class BarsFragmentPresenter constructor(
             adapter.items.clear()
             adapter.items.addAll(newListOfItems)
             diffResult.dispatchUpdatesTo(adapter)
+            diffResult.dispatchUpdatesTo(object : ListUpdateCallback {
+                override fun onChanged(position: Int, count: Int, payload: Any?) = println("onChanged: $position $count")
 
+                override fun onMoved(fromPosition: Int, toPosition: Int) = println("onMoved: $fromPosition $toPosition")
+
+                override fun onInserted(position: Int, count: Int) = println("onInserted: $position $count")
+
+                override fun onRemoved(position: Int, count: Int) = println("onRemoved: $position $count")
+            })
         }
     }
 
