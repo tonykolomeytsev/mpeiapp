@@ -99,7 +99,7 @@
 
                     <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/recyclerControlEvents"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="28dp"
                             android:orientation="horizontal"
                             android:layout_marginBottom="8dp"
