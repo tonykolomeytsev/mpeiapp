@@ -3,6 +3,7 @@ package kekmech.ru.bars.main
 import android.content.Context
 import android.view.View
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.bars.main.adapter.*
 import kekmech.ru.bars.main.model.BarsFragmentModel
@@ -12,8 +13,9 @@ import kekmech.ru.core.Router
 import kekmech.ru.core.Screens.*
 import kekmech.ru.core.UpdateChecker
 import kekmech.ru.core.dto.AcademicScore
+import kekmech.ru.coreui.adapter.BaseAdapter
 import kekmech.ru.coreui.adapter.BaseClickableItem
-import kekmech.ru.coreui.adapter.BaseSortedAdapter
+import kekmech.ru.coreui.adapter.BaseItem
 import kotlinx.coroutines.*
 
 class BarsFragmentPresenter constructor(
@@ -24,23 +26,24 @@ class BarsFragmentPresenter constructor(
 ) : Presenter<BarsFragmentView>() {
 
     val recycledViewPool = RecyclerView.RecycledViewPool()
-    val adapter = BaseSortedAdapter.Builder()
+    val adapter = BaseAdapter.Builder()
         .registerViewTypeFactory(ProfileItem.Factory())
         .registerViewTypeFactory(RatingItem.Factory())
         .registerViewTypeFactory(DisciplinesItem.Factory())
+        .registerViewTypeFactory(DisciplineItem.Factory())
         .registerViewTypeFactory(SupportItem.Factory())
         .registerViewTypeFactory(BarsLoginItem.Factory())
-        .allowOnlyUniqueItems()
-        .addItemsOrder(listOf(
-            BarsLoginItem::class,
-            ProfileItem::class,
-            RatingItem::class,
-            DisciplinesItem::class,
-            SupportItem::class
-        ))
         .build()
     private var view: BarsFragmentView? = null
-    private var cachedDisciplinesItem = DisciplinesItem(emptyList())
+    private fun getDiffCallbackFor(newListOfItems: List<BaseItem<*>>) = object : DiffUtil.Callback() {
+        override fun getNewListSize() = newListOfItems.size
+        override fun getOldListSize() = adapter.items.size
+        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) =
+            adapter.items[oldItemPosition].javaClass == newListOfItems[newItemPosition].javaClass
+
+        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) =
+            adapter.items[oldItemPosition] == newListOfItems[newItemPosition]
+    }
 
     override fun onResume(view: BarsFragmentView) {
         super.onResume(view)
@@ -79,15 +82,16 @@ class BarsFragmentPresenter constructor(
     }
 
     private fun navigateToLogin() {
-        adapter.removeItemByClass(ProfileItem::class)
-        adapter.removeItemByClass(RatingItem::class)
-        adapter.removeItemByClass(DisciplinesItem::class)
-        adapter.removeItemByClass(SupportItem::class)
         GlobalScope.launch(Dispatchers.Main) {
-            delay(100)
-            adapter.addItem(BarsLoginItem(::logInUser, ::onRightsClick))
+            val newListOfItems = mutableListOf<BaseItem<*>>(BarsLoginItem(::logInUser, ::onRightsClick))
+            val diffResult = withContext(Dispatchers.Default) {
+                DiffUtil.calculateDiff(getDiffCallbackFor(newListOfItems), true)
+            }
+            adapter.items.clear()
+            adapter.items.addAll(newListOfItems)
+            diffResult.dispatchUpdatesTo(adapter)
+            view?.setLoginState(true)
         }
-        view?.setLoginState(true)
     }
 
     private fun onRightsClick() {
@@ -115,17 +119,24 @@ class BarsFragmentPresenter constructor(
 
     private fun updateWithScore(score: AcademicScore) {
         GlobalScope.launch(Dispatchers.Main) {
-            adapter.removeItemByClass(BarsLoginItem::class)
-            delay(100)
+
+            val newListOfItems = mutableListOf<BaseItem<*>>()
+            newListOfItems += ProfileItem(score, ::logout)
             try {
                 val ri = RatingItem(score.rating).apply { clickListener = { onRatingClick(score) } }
-                adapter.addItem(ri)
+                newListOfItems += ri
             } catch (e: Exception) { e.printStackTrace() }
 
-            adapter.addItem(ProfileItem(score, ::logout))
-            val disciplines = score.disciplines.map { DisciplineItem(it).apply { clickListener = ::onItemClick } }
-            adapter.addItem(DisciplinesItem(disciplines))
-            adapter.addItem(SupportItem(context))
+            newListOfItems += score.disciplines.map { DisciplineItem(it).apply { clickListener = ::onItemClick } }
+            newListOfItems += SupportItem(context)
+
+            val diffResult = withContext(Dispatchers.Main) {
+                DiffUtil.calculateDiff(getDiffCallbackFor(newListOfItems), true)
+            }
+            adapter.items.clear()
+            adapter.items.addAll(newListOfItems)
+            diffResult.dispatchUpdatesTo(adapter)
+
         }
     }
 

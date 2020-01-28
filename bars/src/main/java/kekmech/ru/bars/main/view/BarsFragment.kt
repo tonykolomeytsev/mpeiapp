@@ -32,7 +32,6 @@ class BarsFragment : BaseFragment<BarsFragmentPresenter, BarsFragmentView>(
             recyclerView?.layoutManager = LinearLayoutManager(context)
         if (recyclerView?.adapter == null)
             recyclerView?.adapter = presenter.adapter
-        recyclerView?.itemAnimator = null
 
         swipeRefresh?.setProgressViewEndTarget(false, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 144f, resources.displayMetrics).toInt())
         swipeRefresh?.setOnRefreshListener { onRefreshListener() }

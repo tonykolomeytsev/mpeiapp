@@ -74,4 +74,7 @@ class BarsLoginItem(
     }
 
     class Factory : BaseFactory(R.layout.item_bars_login, ::ViewHolder)
+
+    override fun equals(other: Any?) = other is BarsLoginItem
+    override fun hashCode() = javaClass.hashCode()
 }

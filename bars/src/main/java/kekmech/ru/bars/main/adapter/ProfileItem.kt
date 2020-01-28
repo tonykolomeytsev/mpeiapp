@@ -45,4 +45,12 @@ class ProfileItem(var academicScore: AcademicScore, val logoutListener: (View) -
     }
 
     class Factory : BaseFactory(R.layout.item_profile, ::ViewHolder)
+
+
+    /**
+     * Для оптимизации главного экрана БАРСа
+     */
+    override fun equals(other: Any?) = if (other is ProfileItem) academicScore.profileInfo == other.academicScore.profileInfo else false
+    override fun hashCode() = academicScore.profileInfo.hashCode()
+    private val AcademicScore.profileInfo get() = "$studentName $studentGroup $studentQualification $studentSemester"
 }

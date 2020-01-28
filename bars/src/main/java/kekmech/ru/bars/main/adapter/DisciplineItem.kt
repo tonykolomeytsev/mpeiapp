@@ -88,4 +88,11 @@ class DisciplineItem(val discipline: AcademicDiscipline) :
     companion object {
         private val eventsRecyclerViewPool = RecyclerView.RecycledViewPool()
     }
+
+
+    /**
+     * Для оптимизации главного экрана БАРСа
+     */
+    override fun equals(other: Any?) = if (other is DisciplineItem) this.discipline == other.discipline else false
+    override fun hashCode() = discipline.hashCode()
 }

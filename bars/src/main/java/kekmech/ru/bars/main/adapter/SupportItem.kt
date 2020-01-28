@@ -32,4 +32,11 @@ class SupportItem(private val context: Context) : BaseClickableItem<SupportItem.
     }
 
     class Factory : BaseFactory(R.layout.item_support, ::ViewHolder)
+
+
+    /**
+     * Для оптимизации главного экрана БАРСа
+     */
+    override fun equals(other: Any?) = other is SupportItem
+    override fun hashCode() = javaClass.hashCode()
 }
