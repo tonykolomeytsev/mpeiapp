@@ -1,5 +1,6 @@
 package kekmech.ru.bars.main.view
 
+import android.content.Context
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.View
@@ -27,8 +28,10 @@ class BarsFragment : BaseFragment<BarsFragmentPresenter, BarsFragmentView>(
 
     override fun onResume() {
         super.onResume()
-        recyclerView?.layoutManager = LinearLayoutManager(context)
-        recyclerView?.adapter = presenter.adapter
+        if (recyclerView?.layoutManager == null)
+            recyclerView?.layoutManager = LinearLayoutManager(context)
+        if (recyclerView?.adapter == null)
+            recyclerView?.adapter = presenter.adapter
         recyclerView?.itemAnimator = null
 
         swipeRefresh?.setProgressViewEndTarget(false, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 144f, resources.displayMetrics).toInt())
@@ -66,5 +69,24 @@ class BarsFragment : BaseFragment<BarsFragmentPresenter, BarsFragmentView>(
         } else {
             swipeRefresh?.isEnabled = true
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putParcelable("main_rv", recyclerView?.layoutManager?.onSaveInstanceState())
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        if (savedInstanceState != null) {
+            recyclerView?.layoutManager?.onRestoreInstanceState(
+                savedInstanceState.getParcelable("main_rv")
+            )
+        }
+    }
+
+    override fun onAttach(context: Context) {
+        retainInstance = true
+        super.onAttach(context)
     }
 }
