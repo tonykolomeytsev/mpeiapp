@@ -31,4 +31,10 @@ class RatingItem(val rating: AcademicScore.Rating): BaseClickableItem<RatingItem
     }
 
     class Factory : BaseFactory(R.layout.item_rating, ::ViewHolder)
+
+    /**
+     * Для оптимизации главного экрана БАРСа
+     */
+    override fun equals(other: Any?) = if (other is RatingItem) other.rating == rating else false
+    override fun hashCode() = rating.hashCode()
 }
