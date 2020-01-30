@@ -5,14 +5,12 @@ import kekmech.ru.addscreen.model.AddFragmentModel
 import kekmech.ru.core.Presenter
 import kekmech.ru.core.Router
 import kekmech.ru.core.dto.AcademGroup
-import kekmech.ru.core.usecases.SetNeedToUpdateFeedUseCase
 import kekmech.ru.coreui.adapter.BaseAdapter
 import kekmech.ru.coreui.adapter.BaseClickableItem
 import kotlinx.coroutines.*
 import java.util.*
 
 class AddFragmentPresenter constructor(
-    private val setNeedToUpdateFeedUseCase: SetNeedToUpdateFeedUseCase,
     private val model: AddFragmentModel,
     private val router: Router
 ) : Presenter<IAddFragment>() {
@@ -49,9 +47,8 @@ class AddFragmentPresenter constructor(
         val group = (groupItem as GroupItem).group
         try {
             GlobalScope.launch(Dispatchers.IO) {
-                model.setCurrentGroup(group.name)
+                model.setCurrentGroup(group.name) /// FIXME ОЖИДАЕТ СИНХРОНИЗАЦИИ ЭТО ПЛОХО
                 withContext(Dispatchers.Main) {
-                    setNeedToUpdateFeedUseCase(true)
                     router.popBackStack()
                 }
                 model.getGroupNumber()
@@ -74,9 +71,8 @@ class AddFragmentPresenter constructor(
         view?.showLoading()
         GlobalScope.launch(Dispatchers.IO) {
             try {
-                model.loadNewSchedule(group.toUpperCase(Locale.getDefault()))
+                model.loadNewSchedule(group.toUpperCase(Locale.getDefault())) // FIXME не видит ошибку
                 withContext(Dispatchers.Main) {
-                    setNeedToUpdateFeedUseCase(true)
                     router.popBackStack()
                 }
 

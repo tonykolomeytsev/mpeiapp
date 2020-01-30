@@ -8,6 +8,6 @@ import org.koin.dsl.module
 
 val KoinAddFragmentModule = module {
     // addfragment MVP pattern
-    single { AddFragmentPresenter(get(), get(), get()) }
+    single { AddFragmentPresenter(get(), get()) }
     single { AddFragmentModelImpl(get(), get(), get(), get()) } bind AddFragmentModel::class
 }

@@ -1,10 +1,7 @@
 package kekmech.ru.addscreen.model
 
 import kekmech.ru.core.dto.AcademGroup
-import kekmech.ru.core.usecases.ChangeCurrentScheduleUseCase
-import kekmech.ru.core.usecases.GetAllSchedulesUseCase
-import kekmech.ru.core.usecases.GetGroupNumberUseCase
-import kekmech.ru.core.usecases.LoadNewScheduleUseCase
+import kekmech.ru.core.usecases.*
 import java.util.*
 
 class AddFragmentModelImpl constructor(

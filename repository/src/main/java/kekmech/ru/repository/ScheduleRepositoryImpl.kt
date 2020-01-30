@@ -75,21 +75,24 @@ class ScheduleRepositoryImpl(
     /**
      * Загрузка нового расписания по номеру группы,
      * если расписание для этой группы уже существует, то будет сначала загружено из кэша,
-     * после чего асинхронно запустится синхронизация с сайтом
+     * после чего асинхронно запустится синхронизация с сайтом (если sync == true)
      */
-    override suspend fun addSchedule(groupNumber: String) {
-        appdb.scheduleDao().getByGroupNum(groupNumber)?.let { schedule ->
-            setCurrentScheduleId(schedule.id)
-            syncronize()
+    override suspend fun addSchedule(groupNumber: String, sync: Boolean) {
+        if (sync) {
+            try {
+                val s = LoadScheduleFromRemoteInteractor(groupNumber)
+                    .setAttempts(3)
+                    .setDelay(1000)
+                    .invoke()
+                withContext(Main) { schedule.value = s!! }
+                saveScheduleToCache(s!!) // кэшируем загруженное расписание
+            } catch (e: Exception) { Log.e("ScheduleRepository", "Unable to load semester schedule: $e") }
+        } else {
+            appdb.scheduleDao().getByGroupNum(groupNumber)?.let { schedule ->
+                setCurrentScheduleId(schedule.id)
+                loadScheduleFromCache()?.let { withContext(Main) { this@ScheduleRepositoryImpl.schedule.value = it } }
+            }
         }
-        try {
-            val s = LoadScheduleFromRemoteInteractor(groupNumber)
-                .setAttempts(3)
-                .setDelay(1000)
-                .invoke()
-            withContext(Main) { schedule.value = s!! }
-            saveScheduleToCache(s!!) // кэшируем загруженное расписание
-        } catch (e: Exception) { Log.e("ScheduleRepository", "Unable to load semester schedule: $e") }
     }
 
     /**
