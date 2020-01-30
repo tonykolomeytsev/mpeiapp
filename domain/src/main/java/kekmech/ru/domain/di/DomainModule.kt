@@ -7,16 +7,14 @@ import org.koin.dsl.module
 
 val KoinDomainModule = module {
     single { LoadOffsetScheduleUseCaseImpl(get()) } bind LoadOffsetScheduleUseCase::class
-    single { SaveScheduleUseCaseImpl(get()) } bind SaveScheduleUseCase::class
     single { GetTimetableScheduleUseCaseImpl(get(), get()) } bind GetTimetableScheduleUseCase::class
-
     single { GetBuildingsUseCaseImpl(get()) } bind GetBuildingsUseCase::class
+
     single { GetFoodsUseCaseImpl(get()) } bind GetFoodsUseCase::class
     single { GetHostelsUseCaseImpl(get()) } bind GetHostelsUseCase::class
-
     single { GetGroupNumberUseCaseImpl(get()) } bind GetGroupNumberUseCase::class
+
     single { IsNeedToUpdateFeedUseCaseImpl(get()) } bind IsNeedToUpdateFeedUseCase::class
-    single { SetNeedToUpdateFeedUseCaseImpl(get()) } bind SetNeedToUpdateFeedUseCase::class
 
     single { SetForceUpdateDataUseCaseImpl(get()) } bind SetForceUpdateDataUseCase::class
     single { GetForceUpdateDataUseCaseImpl(get()) } bind GetForceUpdateDataUseCase::class
@@ -24,7 +22,7 @@ val KoinDomainModule = module {
 
     single { GetAppLaunchCountUseCaseImpl(get()) } bind GetAppLaunchCountUseCase::class
     single { GetAllSchedulesUseCaseImpl(get()) } bind GetAllSchedulesUseCase::class
-    single { ChangeCurrentScheduleIdUseCaseImpl(get()) } bind ChangeCurrentScheduleIdUseCase::class
+    single { ChangeCurrentScheduleUseCaseImpl(get()) } bind ChangeCurrentScheduleUseCase::class
 
     single { GetMapStateUseCaseImpl(get()) } bind GetMapStateUseCase::class
     single { SetMapStateUseCaseImpl(get()) } bind SetMapStateUseCase::class

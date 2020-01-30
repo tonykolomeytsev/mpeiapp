@@ -26,10 +26,6 @@ class LoadScheduleFromRemoteInteractor(val groupNumber: String) : Interactor<Sch
         val groupNameInput = inputs.find { it.attr("name").matches("ctl00\\\$ctl30.*ctl03".toRegex()) }!!
         val groupSubmitInput = inputs.find { it.attr("name").matches("ctl00\\\$ctl30.*ctl04".toRegex()) }!!
 
-        // вычисляем первый понедельник семестра и второй понедельник семестра
-        val firstMonday = Time.firstSemesterDay().gotoMonday()
-        val secondMonday = firstMonday.getDayWithOffset(7)
-
         val currentWeekPage = Jsoup.connect("https://mpei.ru/Education/timetable/Pages/default.aspx")
             .data(eventValidationInput.attr("name"), eventValidationInput.attr("value"))
             .data(viewStateInput.attr("name"), viewStateInput.attr("value"))
@@ -63,8 +59,7 @@ class LoadScheduleFromRemoteInteractor(val groupNumber: String) : Interactor<Sch
         joinedCouples.addAll(firstWeekSchedule.await().couples.onEach { couple -> couple.week = 1 })
         joinedCouples.addAll(secondWeekShedule.await().couples.onEach { couple -> couple.week = 2 })
         val finalParserSchedule = ParserSchedule(
-            joinedCouples,
-            firstMonday.calendar
+            joinedCouples
         )
 
         return Schedule(

@@ -7,6 +7,7 @@ import kekmech.ru.core.dto.Schedule
 import kekmech.ru.core.dto.ScheduleNative
 import kekmech.ru.core.dto.AcademicSession
 
+@Deprecated("Use ScheduleRepository instead", replaceWith = ReplaceWith("ScheduleRepository"))
 interface OldScheduleRepository {
     var isNeedToUpdateFeed: MutableLiveData<Boolean>
 

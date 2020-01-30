@@ -9,6 +9,7 @@ import kekmech.ru.core.usecases.SetNeedToUpdateFeedUseCase
 import kekmech.ru.coreui.adapter.BaseAdapter
 import kekmech.ru.coreui.adapter.BaseClickableItem
 import kotlinx.coroutines.*
+import java.util.*
 
 class AddFragmentPresenter constructor(
     private val setNeedToUpdateFeedUseCase: SetNeedToUpdateFeedUseCase,
@@ -48,7 +49,7 @@ class AddFragmentPresenter constructor(
         val group = (groupItem as GroupItem).group
         try {
             GlobalScope.launch(Dispatchers.IO) {
-                model.setCurrentGroup(group.id)
+                model.setCurrentGroup(group.name)
                 withContext(Dispatchers.Main) {
                     setNeedToUpdateFeedUseCase(true)
                     router.popBackStack()
@@ -73,7 +74,7 @@ class AddFragmentPresenter constructor(
         view?.showLoading()
         GlobalScope.launch(Dispatchers.IO) {
             try {
-                model.loadNewSchedule(group)
+                model.loadNewSchedule(group.toUpperCase(Locale.getDefault()))
                 withContext(Dispatchers.Main) {
                     setNeedToUpdateFeedUseCase(true)
                     router.popBackStack()

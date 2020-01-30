@@ -5,13 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import androidx.lifecycle.Transformations
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.core.Router
 import kekmech.ru.core.Screens.TIMETABLE_TO_NOTE
 import kekmech.ru.core.dto.CoupleNative
 import kekmech.ru.core.dto.Time
+import kekmech.ru.core.usecases.GetTimetableScheduleLiveDataUseCase
+import kekmech.ru.core.zip
 import kekmech.ru.coreui.adapter.BaseAdapter
 import kekmech.ru.coreui.adapter.BaseItem
 import kekmech.ru.timetable.R
@@ -34,10 +39,7 @@ abstract class DayFragment : Fragment() {
 
     val router: Router by inject()
 
-    val couples: () -> List<BaseItem<*>>
-        get() = { model.getDaySchedule(
-            dayOfWeek = dayOfWeek + 1,
-            weekNum = Time.today().weekOfYear + (model.weekOffset.value ?: 0) ) } // будет либо 1, либо 2
+    fun getCouples(): LiveData<List<BaseItem<*>>> = model.getCouplesForDay(dayOfWeek + 1)
 
     private val adapter = BaseAdapter.Builder()
         .registerViewTypeFactory(MinCoupleItem.Factory())
@@ -51,33 +53,44 @@ abstract class DayFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_day, container, false)
         view.dayFragmentRecyclerView.layoutManager = LinearLayoutManager(context)
-        view.dayFragmentRecyclerView.setRecycledViewPool(Companion.recycledViewPool)
+        //view.dayFragmentRecyclerView.setRecycledViewPool(Companion.recycledViewPool)
         view.dayFragmentRecyclerView.adapter = adapter
-        model.weekOffset.observe(this, Observer { loadSchedule() })
         // Inflate the layout for this fragment
         return view
     }
 
+    override fun onResume() {
+        super.onResume()
+        loadSchedule()
+    }
+
     private fun loadSchedule() {
-        GlobalScope.launch(Dispatchers.IO) {
-            val awaitedCouples = couples()
-
+        zip(getCouples(), model.weekOffset).observe(this, Observer { (couples, offset) ->
             // переход на добавление домашки
-            awaitedCouples.forEach { coupleItem ->
-                if (coupleItem is MinCoupleItem) {
-                    coupleItem.clickListener = { onCoupleClick(coupleItem.coupleNative) }
+            val newListOfItems = couples
+                .filter { if (it is MinCoupleItem) it.coupleNative.week % 2 != offset % 2 else true }
+                .onEach { coupleItem ->
+                    if (coupleItem is MinCoupleItem) {
+                        coupleItem.clickListener = { onCoupleClick(coupleItem.coupleNative) }
+                    }
                 }
-            }
+                .toMutableList()
 
-            withContext(Dispatchers.Main) {
-                adapter.baseItems.clear()
-                if (awaitedCouples.isNotEmpty())
-                    adapter.baseItems.addAll(awaitedCouples)
-                else
-                    adapter.baseItems.add(MinWeekendItem())
-                adapter.notifyDataSetChanged()
+            if (newListOfItems.all { it is MinLunchItem }) newListOfItems.clear() // костыль
+            if (newListOfItems.isEmpty()) newListOfItems.add(MinWeekendItem())
+            val diffCallback = object : DiffUtil.Callback() {
+                override fun getOldListSize() = adapter.items.size
+                override fun getNewListSize() = newListOfItems.size
+                override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) =
+                    adapter.items[oldItemPosition].javaClass == newListOfItems[newItemPosition].javaClass
+                override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) =
+                    adapter.items[oldItemPosition] == newListOfItems[newItemPosition]
             }
-        }
+            val diffResult = DiffUtil.calculateDiff(diffCallback, true)
+            adapter.items.clear()
+            adapter.items.addAll(newListOfItems)
+            diffResult.dispatchUpdatesTo(adapter)
+        })
     }
 
     private fun onCoupleClick(coupleNative: CoupleNative) {

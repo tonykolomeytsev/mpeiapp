@@ -7,8 +7,6 @@ import kekmech.ru.coreui.adapter.BaseItem
 
 interface FeedModel {
 
-    val isSchedulesEmpty: Boolean
-
     var isNotShowedUpdateDialog: Boolean
 
     /**
@@ -32,8 +30,9 @@ interface FeedModel {
     fun getAcademicSession(): AcademicSession?
     fun getCarousel(): LiveData<FeedCarousel>
     fun getPicasso(): PicassoFirebaseInstance
-    fun getTomorrowSchedule(): List<CoupleNative>
-    fun getTodaySchedule(): List<CoupleNative>
+    fun getTomorrowSchedule(): LiveData<List<CoupleNative>>
+    fun getTodaySchedule(): LiveData<List<CoupleNative>>
 
     fun updateScheduleFromRemote()
+    suspend fun isSchedulesEmpty(): Boolean
 }

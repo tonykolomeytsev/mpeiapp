@@ -1,5 +1,6 @@
 package kekmech.ru.core.usecases
 
+import androidx.lifecycle.LiveData
 import kekmech.ru.core.dto.CoupleNative
 
 /**
@@ -7,5 +8,5 @@ import kekmech.ru.core.dto.CoupleNative
  * Возвращает пустой список во время сессии и в недели, номера которых не от 1 до 17
  */
 interface GetTomorrowCouplesUseCase {
-    operator fun invoke(): List<CoupleNative>
+    operator fun invoke(): LiveData<List<CoupleNative>>
 }

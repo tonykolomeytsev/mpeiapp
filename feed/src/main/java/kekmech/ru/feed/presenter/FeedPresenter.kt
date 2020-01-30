@@ -76,7 +76,7 @@ class FeedPresenter constructor(
             })
 
             // если у нас нету расписаний
-            if (withContext(Dispatchers.IO) { model.isSchedulesEmpty }) {
+            if (withContext(Dispatchers.IO) { model.isSchedulesEmpty() }) {
                 adapter.addItem(EmptyItem(::onStatusEdit)) // то покажем плиточку с выбором расписания
                 view.hideLoading()
 
@@ -120,12 +120,14 @@ class FeedPresenter constructor(
             async {
                 if (model.isEvening) {
                     adapter.removeItemByClass(TodayCouplesItem::class)
-                    val actualCouples = withContext(Dispatchers.IO) { model.getTomorrowSchedule() }
-                    if (actualCouples.isNotEmpty()) adapter.addItem(TomorrowCouplesItem(actualCouples))
+                    model.getTomorrowSchedule().observe(view, Observer {
+                        if (it != null && it.isNotEmpty()) adapter.addItem(TomorrowCouplesItem(it))
+                    })
                 } else {
                     adapter.removeItemByClass(TomorrowCouplesItem::class)
-                    val actualCouples = withContext(Dispatchers.IO) { model.getTodaySchedule() }
-                    if (actualCouples.isNotEmpty()) adapter.addItem(TodayCouplesItem(actualCouples))
+                    model.getTodaySchedule().observe(view, Observer {
+                        if (it != null && it.isNotEmpty()) adapter.addItem(TodayCouplesItem(it))
+                    })
                 }
             }
         )

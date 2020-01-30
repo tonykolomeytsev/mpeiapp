@@ -1,12 +1,13 @@
 package kekmech.ru.domain
 
 import kekmech.ru.core.repositories.OldScheduleRepository
+import kekmech.ru.core.repositories.ScheduleRepository
 import kekmech.ru.core.usecases.IsSchedulesEmptyUseCase
 
 class IsSchedulesEmptyUseCaseImpl constructor(
-    private val scheduleRepository: OldScheduleRepository
+    private val scheduleRepository: ScheduleRepository
 ) : IsSchedulesEmptyUseCase {
-    override fun invoke(): Boolean {
+    override suspend operator fun invoke(): Boolean {
         return scheduleRepository.isSchedulesEmpty()
     }
 }

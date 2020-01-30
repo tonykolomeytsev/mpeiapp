@@ -31,6 +31,7 @@ class TimetableFragmentPresenter constructor(
     var selectegPage
         get() = model.selectedPage
         set(value) { model.selectedPage = value }
+    val limiter = EventFlowLimiter()
 
     /**
      * subscribe to view events
@@ -105,10 +106,13 @@ class TimetableFragmentPresenter constructor(
     }
 
     fun onChangeParity() {
-        if (lastWeekOffset == 0) {
-            (model.weekOffset as MutableLiveData).value = 1
-        } else {
-            (model.weekOffset as MutableLiveData).value = 0
+        limiter.fireEvent {
+            if (lastWeekOffset == 0) {
+                (model.weekOffset as MutableLiveData).value = 1
+            } else {
+                (model.weekOffset as MutableLiveData).value = 0
+            }
+            true
         }
     }
 
@@ -124,6 +128,22 @@ class TimetableFragmentPresenter constructor(
         else {
             isNecessaryDayOpened = true
             return true
+        }
+    }
+
+    class EventFlowLimiter {
+        private var lastTimeMillis = 0L
+        // minimal time offset in milliseconds
+        var minTime = 300L
+        // limited event
+        fun fireEvent(event: () -> Boolean): Boolean {
+            if (System.currentTimeMillis() - lastTimeMillis > minTime) {
+                lastTimeMillis = System.currentTimeMillis()
+                return event.invoke()
+            } else {
+                Log.d("EventFlowLimiter", "Event $event was cancelled")
+                return false
+            }
         }
     }
 

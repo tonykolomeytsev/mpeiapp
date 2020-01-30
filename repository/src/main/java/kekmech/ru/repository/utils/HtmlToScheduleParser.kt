@@ -185,7 +185,7 @@ class HtmlToScheduleParser {
     class ScheduleBuilder {
         private var couples = mutableListOf<ParserCouple>()
 
-        fun build() = ParserSchedule(couples, Calendar.getInstance())
+        fun build() = ParserSchedule(couples)
 
         var firstCoupleDay: Calendar? = null
 

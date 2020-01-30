@@ -13,6 +13,7 @@ import kekmech.ru.repository.gateways.LoadSessionFromRemoteInteractor
 import kekmech.ru.repository.room.AppDatabase
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
 
 class ScheduleRepositoryImpl(
     private val appdb: AppDatabase,
@@ -34,15 +35,15 @@ class ScheduleRepositoryImpl(
      * Загружается и семестровое расписание, и сессионное
      */
     override suspend fun syncronize() = withContext(IO) {
-        loadScheduleFromCache()?.let { schedule.value = it } // грузим расписание из кэша
+        loadScheduleFromCache()?.let { withContext(Main) { schedule.value = it } } // грузим расписание из кэша
         launch {
             try {
                 val s = LoadScheduleFromRemoteInteractor(groupNumber.value!!)
                     .setAttempts(3)
                     .setDelay(1000)
                     .invoke()
-                schedule.value = s!!
-                saveScheduleToCache(s) // кэшируем загруженное расписание
+                withContext(Main) { schedule.value = s!! }
+                saveScheduleToCache(s!!) // кэшируем загруженное расписание
             } catch (e: Exception) { Log.e("ScheduleRepository", "Unable to load semester schedule: $e") }
         }
         launch {
@@ -51,7 +52,7 @@ class ScheduleRepositoryImpl(
                     .setAttempts(1)
                     .setDelay(1000)
                     .invoke()
-                sessionSchedule.value = s
+                withContext(Main) { sessionSchedule.value = s }
                 // TODO кэшировать
             } catch (e: Exception) { Log.e("ScheduleRepository", "Unable to load session schedule: $e") }
         }
@@ -65,8 +66,10 @@ class ScheduleRepositoryImpl(
     override suspend fun removeAllSchedules() {
         appdb.scheduleDao().getAll().forEach(appdb.scheduleDao()::delete)
         appdb.coupleDao().getAll().forEach(appdb.coupleDao()::delete)
-        schedule.value = null
-        sessionSchedule.value = null
+        withContext(Main) {
+            schedule.value = null
+            sessionSchedule.value = null
+        }
     }
 
     /**
@@ -84,8 +87,8 @@ class ScheduleRepositoryImpl(
                 .setAttempts(3)
                 .setDelay(1000)
                 .invoke()
-            schedule.value = s!!
-            saveScheduleToCache(s) // кэшируем загруженное расписание
+            withContext(Main) { schedule.value = s!! }
+            saveScheduleToCache(s!!) // кэшируем загруженное расписание
         } catch (e: Exception) { Log.e("ScheduleRepository", "Unable to load semester schedule: $e") }
     }
 
@@ -93,6 +96,13 @@ class ScheduleRepositoryImpl(
      * Получить все расписания
      */
     override suspend fun getAllSchedules() = appdb.scheduleDao().getAll()
+
+    /**
+     * Есть ли вообще расписания
+     */
+    override suspend fun isSchedulesEmpty(): Boolean {
+        return appdb.scheduleDao().getAnySchedule() == null
+    }
 
     private suspend fun getCurrentScheduleId(): Int {
         val users = appdb.userDao().getAll()
