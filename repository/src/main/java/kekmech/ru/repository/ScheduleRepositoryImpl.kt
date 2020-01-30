@@ -77,7 +77,7 @@ class ScheduleRepositoryImpl(
      * если расписание для этой группы уже существует, то будет сначала загружено из кэша,
      * после чего асинхронно запустится синхронизация с сайтом (если sync == true)
      */
-    override suspend fun addSchedule(groupNumber: String, sync: Boolean) {
+    override suspend fun addSchedule(groupNumber: String, sync: Boolean): Boolean {
         if (sync) {
             try {
                 val s = LoadScheduleFromRemoteInteractor(groupNumber)
@@ -86,13 +86,16 @@ class ScheduleRepositoryImpl(
                     .invoke()
                 saveScheduleToCache(s!!) // кэшируем загруженное расписание
                 withContext(Main) { schedule.value = s }
+                return true
             } catch (e: Exception) { Log.e("ScheduleRepository", "Unable to load semester schedule: $e") }
         } else {
             appdb.scheduleDao().getByGroupNum(groupNumber)?.let { schedule ->
                 setCurrentScheduleId(schedule.id)
                 loadScheduleFromCache()?.let { withContext(Main) { this@ScheduleRepositoryImpl.schedule.value = it } }
             }
+            return true
         }
+        return false
     }
 
     /**

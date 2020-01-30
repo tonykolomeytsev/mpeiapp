@@ -6,5 +6,7 @@ import kekmech.ru.core.usecases.ChangeCurrentScheduleUseCase
 class ChangeCurrentScheduleUseCaseImpl constructor(
     private val scheduleRepository: ScheduleRepository
 ) : ChangeCurrentScheduleUseCase {
-    override suspend operator fun invoke(groupNumber: String) = scheduleRepository.addSchedule(groupNumber, false)
+    override suspend operator fun invoke(groupNumber: String) {
+        scheduleRepository.addSchedule(groupNumber, false)
+    }
 }

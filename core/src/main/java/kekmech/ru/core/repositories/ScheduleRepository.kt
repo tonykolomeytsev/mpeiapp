@@ -34,7 +34,7 @@ interface ScheduleRepository {
      * после чего асинхронно запустится синхронизация с сайтом
      * @param sync если true, то после доставания из кэша запустит синхронизацию
      */
-    suspend fun addSchedule(groupNumber: String, sync: Boolean = true)
+    suspend fun addSchedule(groupNumber: String, sync: Boolean = true): Boolean
 
     /**
      * Удаление всех расписаний

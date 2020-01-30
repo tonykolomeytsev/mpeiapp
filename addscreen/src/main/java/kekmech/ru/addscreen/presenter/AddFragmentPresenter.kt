@@ -8,6 +8,7 @@ import kekmech.ru.core.dto.AcademGroup
 import kekmech.ru.coreui.adapter.BaseAdapter
 import kekmech.ru.coreui.adapter.BaseClickableItem
 import kotlinx.coroutines.*
+import java.lang.RuntimeException
 import java.util.*
 
 class AddFragmentPresenter constructor(
@@ -71,7 +72,8 @@ class AddFragmentPresenter constructor(
         view?.showLoading()
         GlobalScope.launch(Dispatchers.IO) {
             try {
-                model.loadNewSchedule(group.toUpperCase(Locale.getDefault())) // FIXME не видит ошибку
+                val result = model.loadNewSchedule(group.toUpperCase(Locale.getDefault())) // FIXME не видит ошибку
+                if (!result) throw RuntimeException("Error while loading schedule")
                 withContext(Dispatchers.Main) {
                     router.popBackStack()
                 }
