@@ -71,6 +71,8 @@ class MinCoupleItem(val coupleNative: CoupleNative) : BaseClickableItem<MinCoupl
     /**
      * Оптимизация и анимация
      */
-    override fun equals(other: Any?) = if (other is MinCoupleItem) other.coupleNative == coupleNative else false
-    override fun hashCode() = coupleNative.hashCode()
+    override fun equals(other: Any?) = if (other is MinCoupleItem) other.coupleNative.content == coupleNative.content else false
+    override fun hashCode() = coupleNative.content.hashCode()
+
+    private val CoupleNative.content get() = "$name $teacher $place $timeStart $timeEnd $type $day $noteId"
 }
