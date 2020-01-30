@@ -24,6 +24,6 @@ class AddFragmentModelImpl constructor(
         getGroupNumberUseCase() // just
     }
 
-    override suspend fun loadNewSchedule(groupNum: String) = loadNewScheduleUseCase(groupNum)
+    override suspend fun loadNewSchedule(groupNum: String): Boolean = loadNewScheduleUseCase(groupNum)
 
 }
