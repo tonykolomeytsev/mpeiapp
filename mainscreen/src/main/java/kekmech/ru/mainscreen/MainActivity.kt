@@ -10,9 +10,8 @@ import com.google.android.gms.maps.MapsInitializer
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.analytics.FirebaseAnalytics
 import kekmech.ru.core.Router
-import kekmech.ru.core.repositories.ScheduleRepository
+import kekmech.ru.core.repositories.OldScheduleRepository
 import kekmech.ru.core.usecases.IncrementAppLaunchCountUseCase
-import kekmech.ru.core.usecases.InvokeUpdateScheduleUseCase
 import kekmech.ru.core.usecases.IsDarkThemeEnabledUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -27,7 +26,7 @@ class MainActivity : AppCompatActivity() {
 
     val incrementAppLaunchCountUseCase: IncrementAppLaunchCountUseCase by inject()
     val isDarkThemeEnabledUseCase: IsDarkThemeEnabledUseCase by inject()
-    val scheduleRepository: ScheduleRepository by inject()
+    val scheduleRepository: OldScheduleRepository by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

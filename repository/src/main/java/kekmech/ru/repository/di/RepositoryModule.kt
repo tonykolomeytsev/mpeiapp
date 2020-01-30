@@ -14,7 +14,7 @@ import org.koin.dsl.module
 
 val KoinRepositoryModule = module {
     // repos
-    single { ScheduleRepositoryImpl(get(), get(), get()) } bind ScheduleRepository::class
+    single { OldScheduleRepositoryImpl(get(), get(), get()) } bind OldScheduleRepository::class
     single { UserRepositoryImpl(get(), get()) } bind UserRepository::class
     single { PlacesRepositoryImpl() } bind PlacesRepository::class
     single { BarsRepositoryImpl(get(), get()) } bind BarsRepository::class

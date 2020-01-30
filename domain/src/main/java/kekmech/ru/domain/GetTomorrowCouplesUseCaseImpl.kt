@@ -2,11 +2,11 @@ package kekmech.ru.domain
 
 import kekmech.ru.core.dto.CoupleNative
 import kekmech.ru.core.dto.Time
-import kekmech.ru.core.repositories.ScheduleRepository
+import kekmech.ru.core.repositories.OldScheduleRepository
 import kekmech.ru.core.usecases.GetTomorrowCouplesUseCase
 
 class GetTomorrowCouplesUseCaseImpl(
-    private val scheduleRepository: ScheduleRepository
+    private val scheduleRepository: OldScheduleRepository
 ) : GetTomorrowCouplesUseCase {
     override fun invoke(): List<CoupleNative> {
         // посмотрим в завтрашний день
