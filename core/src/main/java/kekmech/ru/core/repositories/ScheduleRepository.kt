@@ -2,39 +2,44 @@ package kekmech.ru.core.repositories
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import kekmech.ru.core.dto.CoupleNative
+import kekmech.ru.core.dto.AcademicSession
 import kekmech.ru.core.dto.Schedule
 import kekmech.ru.core.dto.ScheduleNative
-import kekmech.ru.core.dto.AcademicSession
 
 interface ScheduleRepository {
-    var isNeedToUpdateFeed: MutableLiveData<Boolean>
 
-    val scheduleId: Int
+    /**
+     * Расписание семестра
+     */
+    val schedule: MutableLiveData<Schedule>
+    /**
+     * Номер академической группы, подтягивается из [schedule]
+     */
+    val groupNumber: LiveData<String>
 
-    val scheduleLiveData: MutableLiveData<Schedule>
+    /**
+     * Расписание сессии
+     */
+    val sessionSchedule: MutableLiveData<AcademicSession>
 
-    fun getOffsetCouples(offset:Int, refresh: Boolean): List<CoupleNative>
+    /**
+     * Запуск синхронизации данных с сайтом.
+     * Загружается и семестровое расписание, и сессионное
+     */
+    suspend fun syncronize()
 
-    fun getSchedule(refresh: Boolean): Schedule?
+    /**
+     * Загрузка нового расписания по номеру группы
+     */
+    suspend fun addSchedule(groupNumber: String)
 
-    fun saveSchedule(schedule: Schedule)
+    /**
+     * Удаление всех расписаний
+     */
+    suspend fun removeAllSchedules()
 
-    fun getGroupNum(): LiveData<String>
-
-    fun getAllSchedules(): List<ScheduleNative>
-
-    fun setCurrentScheduleId(id: Int)
-
-    fun loadSessionLiveData(): LiveData<AcademicSession>
-
-    fun loadSessionFromRemote(): AcademicSession
-
-    fun updateScheduleByGroupNum(schedule: Schedule)
-
-    suspend fun loadScheduleFromRemote(groupName: String): Schedule
-
-    fun isSchedulesEmpty(): Boolean
-
-    fun removeSchedule(schedule: ScheduleNative)
+    /**
+     * Получить все расписания
+     */
+    suspend fun getAllSchedules(): List<ScheduleNative>
 }

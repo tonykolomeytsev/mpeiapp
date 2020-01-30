@@ -1,13 +1,12 @@
 package kekmech.ru.domain
 
 import kekmech.ru.core.dto.CoupleNative
-import kekmech.ru.core.dto.Time
 import kekmech.ru.core.repositories.NotesRepository
-import kekmech.ru.core.repositories.ScheduleRepository
+import kekmech.ru.core.repositories.OldScheduleRepository
 import kekmech.ru.core.usecases.GetTimetableScheduleUseCase
 
 class GetTimetableScheduleUseCaseImpl constructor(
-    private val scheduleRepository: ScheduleRepository,
+    private val scheduleRepository: OldScheduleRepository,
     private val notesRepository: NotesRepository
 ) : GetTimetableScheduleUseCase {
 
