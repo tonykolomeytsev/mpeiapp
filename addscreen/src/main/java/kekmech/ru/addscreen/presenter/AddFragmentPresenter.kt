@@ -47,7 +47,7 @@ class AddFragmentPresenter constructor(
         val group = (groupItem as GroupItem).group
         try {
             GlobalScope.launch(Dispatchers.IO) {
-                model.setCurrentGroup(group.name) /// FIXME ОЖИДАЕТ СИНХРОНИЗАЦИИ ЭТО ПЛОХО
+                model.setCurrentGroup(group.name)
                 withContext(Dispatchers.Main) {
                     router.popBackStack()
                 }
