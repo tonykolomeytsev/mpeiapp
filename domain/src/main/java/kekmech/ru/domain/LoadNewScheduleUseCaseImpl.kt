@@ -7,6 +7,6 @@ class LoadNewScheduleUseCaseImpl(
     private val scheduleRepository: ScheduleRepository
 ) : LoadNewScheduleUseCase {
     override suspend fun invoke(groupNum: String) {
-        scheduleRepository.addSchedule(groupNum)
+        scheduleRepository.addSchedule(groupNum, true)
     }
 }

@@ -32,8 +32,9 @@ interface ScheduleRepository {
      * Загрузка нового расписания по номеру группы,
      * если расписание для этой группы уже существует, то будет сначала загружено из кэша,
      * после чего асинхронно запустится синхронизация с сайтом
+     * @param sync если true, то после доставания из кэша запустит синхронизацию
      */
-    suspend fun addSchedule(groupNumber: String)
+    suspend fun addSchedule(groupNumber: String, sync: Boolean = true)
 
     /**
      * Удаление всех расписаний
