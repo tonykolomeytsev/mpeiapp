@@ -29,7 +29,12 @@ class ScheduleRepositoryImpl(
 
     override val sessionSchedule = MutableLiveData<AcademicSession>()
 
+    /**
+     * Запуск синхронизации данных с сайтом.
+     * Загружается и семестровое расписание, и сессионное
+     */
     override suspend fun syncronize() = withContext(IO) {
+        loadScheduleFromCache()?.let { schedule.value = it } // грузим расписание из кэша
         launch {
             try {
                 val s = LoadScheduleFromRemoteInteractor(groupNumber.value!!)
@@ -37,7 +42,7 @@ class ScheduleRepositoryImpl(
                     .setDelay(1000)
                     .invoke()
                 schedule.value = s!!
-                // TODO кэшировать
+                saveScheduleToCache(s) // кэшируем загруженное расписание
             } catch (e: Exception) { Log.e("ScheduleRepository", "Unable to load semester schedule: $e") }
         }
         launch {
@@ -54,6 +59,9 @@ class ScheduleRepositoryImpl(
         Unit
     }
 
+    /**
+     * Удаление всех расписаний
+     */
     override suspend fun removeAllSchedules() {
         appdb.scheduleDao().getAll().forEach(appdb.scheduleDao()::delete)
         appdb.coupleDao().getAll().forEach(appdb.coupleDao()::delete)
@@ -61,27 +69,34 @@ class ScheduleRepositoryImpl(
         sessionSchedule.value = null
     }
 
+    /**
+     * Загрузка нового расписания по номеру группы,
+     * если расписание для этой группы уже существует, то будет сначала загружено из кэша,
+     * после чего асинхронно запустится синхронизация с сайтом
+     */
     override suspend fun addSchedule(groupNumber: String) {
+        appdb.scheduleDao().getByGroupNum(groupNumber)?.let { schedule ->
+            setCurrentScheduleId(schedule.id)
+            syncronize()
+        }
         try {
             val s = LoadScheduleFromRemoteInteractor(groupNumber)
                 .setAttempts(3)
                 .setDelay(1000)
                 .invoke()
             schedule.value = s!!
-            // TODO кэшировать
+            saveScheduleToCache(s) // кэшируем загруженное расписание
         } catch (e: Exception) { Log.e("ScheduleRepository", "Unable to load semester schedule: $e") }
     }
 
-    override suspend fun getAllSchedules(): List<ScheduleNative> {
-        return appdb.scheduleDao().getAll()
-    }
+    /**
+     * Получить все расписания
+     */
+    override suspend fun getAllSchedules() = appdb.scheduleDao().getAll()
 
     private suspend fun getCurrentScheduleId(): Int {
         val users = appdb.userDao().getAll()
-        if (users.isEmpty())
-            appdb
-                .userDao()
-                .insert(User.defaultUser())
+        if (users.isEmpty()) appdb.userDao().insert(User.defaultUser())
         val user = appdb.userDao().getAll().first()
         return user.lastScheduleId
     }
@@ -89,6 +104,64 @@ class ScheduleRepositoryImpl(
     private suspend fun setCurrentScheduleId(id: Int) {
         val user = appdb.userDao().getAll().first()
         appdb.userDao().update(user.apply { lastScheduleId = id })
+    }
+
+    /**
+     * Загрузка ПОСЛЕДНЕГО просматриваемого расписания из кэша
+     */
+    private suspend fun loadScheduleFromCache(): Schedule? {
+        return appdb.scheduleDao()
+            .getById(getCurrentScheduleId())
+            .let {
+                if (it != null) Schedule(
+                    it.id,
+                    it.group,
+                    it.calendarWeek,
+                    it.universityWeek,
+                    appdb.coupleDao().getAllByScheduleId(it.id),
+                    it.name
+                ) else null
+            }
+    }
+
+    /**
+     * Кэширование расписания
+     * Если расписание с таким номером группы уже существует, его пары будут перезаписаны,
+     * иначе, будет создано новое расписание
+     */
+    private suspend fun saveScheduleToCache(schedule: Schedule) {
+        val similarSchedule = appdb.scheduleDao().getByGroupNum(schedule.group)
+        if (similarSchedule == null) {
+            createNewSchedule(schedule)
+            Log.d("ScheduleRepository", "Schedule created")
+        } else {
+            // тут надо очистить все пары и добавить их заново, а у schedule поменять calendarWeek на свежий
+            val scheduleId = similarSchedule.id
+            appdb.coupleDao().deleteByScheduleId(scheduleId) // очищаем все пары
+            // устанавливаем свежую дату
+            similarSchedule.calendarWeek = schedule.calendarWeek
+            similarSchedule.universityWeek = schedule.universityWeek
+            // достаём новые пары
+            val newCouples = schedule.coupleList.map { it.apply { this.scheduleId = scheduleId } }
+            newCouples.forEach(appdb.coupleDao()::insert) // пишем новые пары в базу
+
+            Log.d("ScheduleRepository", "Schedule updated")
+        }
+    }
+
+    private suspend fun createNewSchedule(schedule: Schedule) {
+        val native = ScheduleNative(
+            0,
+            schedule.group,
+            schedule.calendarWeek,
+            schedule.universityWeek,
+            schedule.name
+        )
+
+        appdb.scheduleDao().insert(native)
+        val id = appdb.scheduleDao().getByGroupNum(schedule.group)!!.id
+        schedule.coupleList.forEach { appdb.coupleDao().insert(it.apply { this.scheduleId = id }) }
+        setCurrentScheduleId(id)
     }
 
     private fun<T> async(action: suspend CoroutineScope.() -> T) = GlobalScope.async(Dispatchers.IO, block = action)
