@@ -11,7 +11,7 @@ android {
         applicationId "kekmech.ru.mpeiapp"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 17
+        versionCode 18
         versionName "0.9.95"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -51,10 +51,10 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 
     // android arch navigation for kotlin
-    implementation "androidx.navigation:navigation-fragment-ktx:2.1.0"
-    implementation "androidx.navigation:navigation-ui-ktx:2.1.0"
-    implementation "androidx.navigation:navigation-runtime-ktx:2.1.0"
-    implementation "androidx.fragment:fragment-ktx:1.2.0-rc04"
+    implementation "androidx.navigation:navigation-fragment-ktx:2.2.0"
+    implementation "androidx.navigation:navigation-ui-ktx:2.2.0"
+    implementation "androidx.navigation:navigation-runtime-ktx:2.2.0"
+    implementation "androidx.fragment:fragment-ktx:1.2.0"
 
     // Google Maps
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
