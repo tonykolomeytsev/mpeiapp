@@ -182,8 +182,7 @@ class OldScheduleRepositoryImpl constructor(
         joinedCouples.addAll(firstWeekSchedule.await().couples.onEach { couple -> couple.week = 1 })
         joinedCouples.addAll(secondWeekShedule.await().couples.onEach { couple -> couple.week = 2 })
         val finalParserSchedule = ParserSchedule(
-            joinedCouples,
-            firstMonday.calendar
+            joinedCouples
         )
 
         return Schedule(

@@ -44,4 +44,9 @@ interface ScheduleRepository {
      * Получить все расписания
      */
     suspend fun getAllSchedules(): List<ScheduleNative>
+
+    /**
+     * Есть ли вообще расписания
+     */
+    suspend fun isSchedulesEmpty(): Boolean
 }

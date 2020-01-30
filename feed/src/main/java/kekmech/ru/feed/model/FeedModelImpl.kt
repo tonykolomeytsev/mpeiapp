@@ -31,9 +31,6 @@ class FeedModelImpl constructor(
     private val invokeUpdateScheduleUseCase: InvokeUpdateScheduleUseCase
 ) : FeedModel {
 
-    override val isSchedulesEmpty: Boolean
-        get() = isSchedulesEmptyUseCase()
-
     /**
      * Group number like "C-12-16"
      */
@@ -68,11 +65,11 @@ class FeedModelImpl constructor(
         return getPicassoInstanceUseCase()
     }
 
-    override fun getTomorrowSchedule(): List<CoupleNative> {
+    override fun getTomorrowSchedule(): LiveData<List<CoupleNative>> {
         return getTomorrowCouplesUseCase()
     }
 
-    override fun getTodaySchedule(): List<CoupleNative> {
+    override fun getTodaySchedule(): LiveData<List<CoupleNative>> {
         return getTodayCouplesUseCase()
     }
 
@@ -93,4 +90,6 @@ class FeedModelImpl constructor(
             }
         }
     }
+
+    override suspend fun isSchedulesEmpty() = isSchedulesEmptyUseCase()
 }

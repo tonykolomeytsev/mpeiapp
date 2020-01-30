@@ -5,7 +5,7 @@ import kekmech.ru.core.dto.AcademGroup
 interface AddFragmentModel {
     suspend fun getGroupsAsync(): List<AcademGroup>
 
-    suspend fun setCurrentGroup(id: Int)
+    suspend fun setCurrentGroup(groupNumber: String)
     fun getGroupNumber()
 
     suspend fun loadNewSchedule(groupNum: String)

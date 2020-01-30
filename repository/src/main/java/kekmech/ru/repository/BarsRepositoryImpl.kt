@@ -89,7 +89,6 @@ class BarsRepositoryImpl constructor(
     }
 
     private fun loadFromRemote(): AcademicScore? {
-        var crashReport = ""
         try {
             val mainPage = Jsoup.connect(BARS_URL)
                 .get()

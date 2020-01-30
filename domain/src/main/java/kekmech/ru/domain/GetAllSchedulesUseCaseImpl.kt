@@ -1,10 +1,10 @@
 package kekmech.ru.domain
 
-import kekmech.ru.core.repositories.OldScheduleRepository
+import kekmech.ru.core.repositories.ScheduleRepository
 import kekmech.ru.core.usecases.GetAllSchedulesUseCase
 
 class GetAllSchedulesUseCaseImpl constructor(
-    private val scheduleRepository: OldScheduleRepository
+    private val scheduleRepository: ScheduleRepository
 ) : GetAllSchedulesUseCase {
-    override fun invoke() = scheduleRepository.getAllSchedules()
+    override suspend operator fun invoke() = scheduleRepository.getAllSchedules()
 }

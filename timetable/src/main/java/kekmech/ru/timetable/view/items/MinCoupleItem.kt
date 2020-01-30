@@ -66,8 +66,11 @@ class MinCoupleItem(val coupleNative: CoupleNative) : BaseClickableItem<MinCoupl
         override fun onCreateView(view: View) = Unit
     }
 
-    class Factory : BaseFactory(R.layout.item_couple_min_layout) {
-        override fun instance(view: View) =
-            ViewHolder(view)
-    }
+    class Factory : BaseFactory(R.layout.item_couple_min_layout, ::ViewHolder)
+
+    /**
+     * Оптимизация и анимация
+     */
+    override fun equals(other: Any?) = if (other is MinCoupleItem) other.coupleNative == coupleNative else false
+    override fun hashCode() = coupleNative.hashCode()
 }

@@ -22,8 +22,11 @@ class MinLunchItem() : BaseItem<MinLunchItem.ViewHolder>() {
         override fun onCreateView(view: View) = Unit
     }
 
-    class Factory : BaseFactory(R.layout.item_lunch_min_layout) {
-        override fun instance(view: View) =
-            ViewHolder(view)
-    }
+    class Factory : BaseFactory(R.layout.item_lunch_min_layout, ::ViewHolder)
+
+    /**
+     * Оптимизация и анимация
+     */
+    override fun equals(other: Any?) = other is MinLunchItem
+    override fun hashCode() = "THIS IS THE LUNCH, DOOMER".hashCode()
 }

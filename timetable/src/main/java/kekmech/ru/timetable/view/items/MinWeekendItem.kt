@@ -32,4 +32,10 @@ class MinWeekendItem : BaseItem<MinWeekendItem.ViewHolder>() {
     class Factory: BaseFactory(R.layout.item_weekend_min_layout) {
         override fun instance(view: View) = ViewHolder(view)
     }
+
+    /**
+     * Оптимизация и анимация
+     */
+    override fun equals(other: Any?) = other is MinWeekendItem
+    override fun hashCode() = "THIS IS THE WEEKEND" .hashCode()
 }

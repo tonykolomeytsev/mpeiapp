@@ -26,7 +26,6 @@ class MainActivity : AppCompatActivity() {
 
     val incrementAppLaunchCountUseCase: IncrementAppLaunchCountUseCase by inject()
     val isDarkThemeEnabledUseCase: IsDarkThemeEnabledUseCase by inject()
-    val scheduleRepository: OldScheduleRepository by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,10 +51,6 @@ class MainActivity : AppCompatActivity() {
         GlobalScope.launch(Dispatchers.Main) {
             incrementAppLaunchCountUseCase()
         }
-
-        try {
-            scheduleRepository
-        } catch (e: Exception) { e.printStackTrace() }
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {

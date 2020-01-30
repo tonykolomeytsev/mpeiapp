@@ -3,8 +3,10 @@ package kekmech.ru.timetable.model
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import kekmech.ru.core.dto.CoupleNative
 import kekmech.ru.core.dto.NoteTransaction
+import kekmech.ru.core.dto.Schedule
 import kekmech.ru.core.dto.Time
 import kekmech.ru.core.usecases.*
 import kekmech.ru.coreui.adapter.BaseItem
@@ -21,6 +23,7 @@ class TimetableFragmentModelImpl constructor(
     private val setForceUpdateDataUseCase: SetForceUpdateDataUseCase,
     private val setCreateNoteTransactionUseCase: SetCreateNoteTransactionUseCase,
     private val invokeUpdateScheduleUseCase: InvokeUpdateScheduleUseCase,
+    private val getTimetableScheduleLiveDataUseCase: GetTimetableScheduleLiveDataUseCase,
     private val context: Context
 ) : TimetableFragmentModel {
 
@@ -79,4 +82,21 @@ class TimetableFragmentModelImpl constructor(
     }
 
     override var selectedPage: Int = 0
+
+    override val schedule: LiveData<Schedule>
+        get() = getTimetableScheduleLiveDataUseCase()
+
+    override fun getCouplesForDay(dayOfWeek: Int): LiveData<List<BaseItem<*>>> = Transformations.map(schedule) { schedule ->
+        val couples: MutableList<BaseItem<*>> = schedule
+            .coupleList
+            .filter { it.day == dayOfWeek }
+            .map { MinCoupleItem(it) }
+            .toMutableList()
+        // insert lunch
+        val thirdCoupleIndex = couples
+            .indexOfFirst { (it as MinCoupleItem).coupleNative.num == 3 }
+        if (thirdCoupleIndex != -1 && (couples.first() as MinCoupleItem).coupleNative.num != 3)
+            couples.add(thirdCoupleIndex, MinLunchItem())
+        return@map couples
+    }
 }
