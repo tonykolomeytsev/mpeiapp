@@ -42,8 +42,8 @@ class ScheduleRepositoryImpl(
                     .setAttempts(3)
                     .setDelay(1000)
                     .invoke()
-                withContext(Main) { schedule.value = s!! }
                 saveScheduleToCache(s!!) // кэшируем загруженное расписание
+                withContext(Main) { schedule.value = s }
             } catch (e: Exception) { Log.e("ScheduleRepository", "Unable to load semester schedule: $e") }
         }
         launch {
@@ -84,8 +84,8 @@ class ScheduleRepositoryImpl(
                     .setAttempts(3)
                     .setDelay(1000)
                     .invoke()
-                withContext(Main) { schedule.value = s!! }
                 saveScheduleToCache(s!!) // кэшируем загруженное расписание
+                withContext(Main) { schedule.value = s }
             } catch (e: Exception) { Log.e("ScheduleRepository", "Unable to load semester schedule: $e") }
         } else {
             appdb.scheduleDao().getByGroupNum(groupNumber)?.let { schedule ->
