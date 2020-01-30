@@ -20,8 +20,6 @@ interface TimetableFragmentModel {
 
     val formattedTodayStatus: String
 
-    fun getDaySchedule(dayOfWeek: Int, weekNum: Int): List<BaseItem<*>>
-
     var weekOffset: LiveData<Int>
 
     var isNotShowedUpdateDialog: Boolean
@@ -35,6 +33,4 @@ interface TimetableFragmentModel {
     var selectedPage: Int
 
     val schedule: LiveData<Schedule>
-
-    fun getCouplesForDay(dayOfWeek: Int): LiveData<List<BaseItem<*>>>
 }

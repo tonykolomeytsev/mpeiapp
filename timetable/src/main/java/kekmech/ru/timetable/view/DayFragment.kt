@@ -39,8 +39,6 @@ abstract class DayFragment : Fragment() {
 
     val router: Router by inject()
 
-    fun getCouples(): LiveData<List<BaseItem<*>>> = model.getCouplesForDay(dayOfWeek + 1)
-
     private val adapter = BaseAdapter.Builder()
         .registerViewTypeFactory(MinCoupleItem.Factory())
         .registerViewTypeFactory(MinLunchItem.Factory())
@@ -65,10 +63,22 @@ abstract class DayFragment : Fragment() {
     }
 
     private fun loadSchedule() {
-        zip(getCouples(), model.weekOffset).observe(this, Observer { (couples, offset) ->
-            // переход на добавление домашки
+        zip(model.schedule, model.weekOffset).observe(this, Observer { (schedule, offset) ->
+            val today = Time.today()
+            val necessaryWeekNum = ((if (today.weekOfYear % 2 == schedule.calendarWeek % 2) 1 else 2) + offset) % 3
+
+            val couples: MutableList<BaseItem<*>> = schedule
+                .coupleList
+                .filter { (it.day == dayOfWeek + 1) and (it.week == necessaryWeekNum) }
+                .map { MinCoupleItem(it) }
+                .toMutableList()
+            // insert lunch
+            val thirdCoupleIndex = couples
+                .indexOfFirst { (it as MinCoupleItem).coupleNative.num == 3 }
+            if (thirdCoupleIndex != -1 && (couples.first() as MinCoupleItem).coupleNative.num != 3)
+                couples.add(thirdCoupleIndex, MinLunchItem())
+
             val newListOfItems = couples
-                .filter { if (it is MinCoupleItem) it.coupleNative.week % 2 != offset % 2 else true }
                 .onEach { coupleItem ->
                     if (coupleItem is MinCoupleItem) {
                         coupleItem.clickListener = { onCoupleClick(coupleItem.coupleNative) }
@@ -96,9 +106,5 @@ abstract class DayFragment : Fragment() {
     private fun onCoupleClick(coupleNative: CoupleNative) {
 //        model.transactCouple(coupleNative)
 //        router.navigate(TIMETABLE_TO_NOTE)
-    }
-
-    companion object {
-        private val recycledViewPool by lazy { RecyclerView.RecycledViewPool() }
     }
 }

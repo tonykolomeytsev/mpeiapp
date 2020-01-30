@@ -16,7 +16,6 @@ import kekmech.ru.timetable.view.items.MinLunchItem
 import java.util.*
 
 class TimetableFragmentModelImpl constructor(
-    private val getTimetableScheduleUseCase: GetTimetableScheduleUseCase,
     private val getGroupNumberUseCase: GetGroupNumberUseCase,
     private val setIsShowedUpdateDialogUseCase: SetIsShowedUpdateDialogUseCase,
     private val getIsShowedUpdateDialogUseCase: GetIsShowedUpdateDialogUseCase,
@@ -50,18 +49,6 @@ class TimetableFragmentModelImpl constructor(
         get() = getIsShowedUpdateDialogUseCase()
         set(value) { setIsShowedUpdateDialogUseCase(value) }
 
-    override fun getDaySchedule(dayOfWeek: Int, weekNum: Int): List<BaseItem<*>> {
-        val couples: MutableList<BaseItem<*>> = getTimetableScheduleUseCase(dayOfWeek, weekNum)
-            .map { MinCoupleItem(it) }
-            .toMutableList()
-        // insert lunch
-        val thirdCoupleIndex = couples
-            .indexOfFirst { (it as MinCoupleItem).coupleNative.num == 3 }
-        if (thirdCoupleIndex != -1 && (couples.first() as MinCoupleItem).coupleNative.num != 3)
-            couples.add(thirdCoupleIndex, MinLunchItem())
-        return couples
-    }
-
     override var weekOffset: LiveData<Int> = MutableLiveData<Int>().apply { value = 0 }
 
     override fun saveForceUpdateArgs(url: String, description: String) {
@@ -78,25 +65,10 @@ class TimetableFragmentModelImpl constructor(
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
     }
 
     override var selectedPage: Int = 0
 
     override val schedule: LiveData<Schedule>
         get() = getTimetableScheduleLiveDataUseCase()
-
-    override fun getCouplesForDay(dayOfWeek: Int): LiveData<List<BaseItem<*>>> = Transformations.map(schedule) { schedule ->
-        val couples: MutableList<BaseItem<*>> = schedule
-            .coupleList
-            .filter { it.day == dayOfWeek }
-            .map { MinCoupleItem(it) }
-            .toMutableList()
-        // insert lunch
-        val thirdCoupleIndex = couples
-            .indexOfFirst { (it as MinCoupleItem).coupleNative.num == 3 }
-        if (thirdCoupleIndex != -1 && (couples.first() as MinCoupleItem).coupleNative.num != 3)
-            couples.add(thirdCoupleIndex, MinLunchItem())
-        return@map couples
-    }
 }
