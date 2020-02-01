@@ -18,7 +18,7 @@ abstract class BaseBottomSheetDialogFragment<P : Presenter<L>, L : LifecycleOwne
     private val peekHeight: Float  = -1f
 ) : BottomSheetDialogFragment() {
 
-    abstract var presenter: P
+    abstract val presenter: P
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)

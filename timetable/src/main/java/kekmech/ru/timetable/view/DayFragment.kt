@@ -100,7 +100,7 @@ abstract class DayFragment : Fragment() {
     }
 
     private fun onCoupleClick(coupleNative: CoupleNative) {
-//        model.transactCouple(coupleNative)
-//        router.navigate(TIMETABLE_TO_NOTE)
+        model.transactCouple(coupleNative)
+        router.navigate(TIMETABLE_TO_NOTE)
     }
 }
