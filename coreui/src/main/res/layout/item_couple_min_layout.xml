@@ -84,7 +84,6 @@
                     android:textSize="10sp"
                     tools:text="2 ПАРА"
                     android:background="@drawable/bg_item_couple_min_decor"
-                    android:gravity="center_vertical|right"
                     android:fontFamily="sans-serif-black"
                     android:textColor="?attr/themeColorBlack"/>
 
@@ -92,12 +91,27 @@
                     android:id="@+id/textViewCoupleType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="8dp"
                     android:fontFamily="sans-serif-black"
                     android:textAllCaps="true"
                     android:textColor="?attr/themeColorBlack"
                     android:alpha="0.65"
                     android:textSize="10sp"
                     tools:text="практика" />
+
+            <TextView
+                    android:id="@+id/frameLayoutHasNote"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="8dp"
+                    android:paddingLeft="8dp"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp"
+                    android:textSize="10sp"
+                    android:text="ЕСТЬ ЗАМЕТКА"
+                    android:background="@drawable/bg_item_couple_min_decor2"
+                    android:fontFamily="sans-serif-black"
+                    android:textColor="?attr/themeColorWhite"/>
         </LinearLayout>
 
         <TextView
@@ -130,37 +144,6 @@
                 android:textSize="14sp"
                 android:layout_marginBottom="4dp"
                 tools:text="Кудин С.Ф." />
-
-        <LinearLayout
-                android:id="@+id/frameLayoutHasNote"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:visibility="gone"
-                tools:visibility="visible"
-                android:layout_marginTop="6dp"
-                android:layout_marginLeft="-1dp">
-
-            <!-- NOTE ICON -->
-            <ImageView
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
-                    android:src="@drawable/ic_work_outline_24px"
-                    android:tint="@color/colorSecondary"
-                    android:tintMode="src_in"
-                    android:visibility="visible"
-                    android:layout_marginRight="4dp"/>
-
-            <!-- NOTE TEXT -->
-            <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/colorSecondary"
-                    android:textSize="14sp"
-                    android:fontFamily="sans-serif-medium"
-                    android:text="Есть домашнее задание" />
-        </LinearLayout>
     </LinearLayout>
 
     <View

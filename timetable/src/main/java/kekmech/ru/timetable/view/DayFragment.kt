@@ -53,13 +53,9 @@ abstract class DayFragment : Fragment() {
         view.dayFragmentRecyclerView.layoutManager = LinearLayoutManager(context)
         //view.dayFragmentRecyclerView.setRecycledViewPool(Companion.recycledViewPool)
         view.dayFragmentRecyclerView.adapter = adapter
+        loadSchedule()
         // Inflate the layout for this fragment
         return view
-    }
-
-    override fun onResume() {
-        super.onResume()
-        loadSchedule()
     }
 
     private fun loadSchedule() {

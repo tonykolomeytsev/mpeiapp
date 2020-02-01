@@ -67,7 +67,7 @@ class TimetableFragment : Fragment(), TimetableFragmentView {
 
     override fun setupViewPager() {
         viewPager.adapter = presenter.weekAdapter
-        viewPager.offscreenPageLimit = 5
+        viewPager.offscreenPageLimit = 7
         tabLayout.setupWithViewPager(viewPager)
         tabLayout.tabMode = TabLayout.MODE_SCROLLABLE
     }
