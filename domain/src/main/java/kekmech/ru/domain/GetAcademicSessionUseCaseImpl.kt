@@ -1,17 +1,12 @@
 package kekmech.ru.domain
 
+import androidx.lifecycle.LiveData
 import kekmech.ru.core.dto.AcademicSession
-import kekmech.ru.core.repositories.OldScheduleRepository
+import kekmech.ru.core.repositories.ScheduleRepository
 import kekmech.ru.core.usecases.GetAcademicSessionUseCase
 
 class GetAcademicSessionUseCaseImpl constructor(
-    private val scheduleRepository: OldScheduleRepository
+    private val scheduleRepository: ScheduleRepository
 ) : GetAcademicSessionUseCase {
-    override fun invoke(): AcademicSession? {
-        try {
-            return scheduleRepository.loadSessionFromRemote()
-        } catch (e: Exception) {
-            return null
-        }
-    }
+    override fun invoke(): LiveData<AcademicSession> = scheduleRepository.sessionSchedule
 }

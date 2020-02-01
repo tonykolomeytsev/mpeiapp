@@ -14,9 +14,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class FeedModelImpl constructor(
-    private val context: Context,
     private val getGroupNumberUseCase: GetGroupNumberUseCase,
-    private val isNeedToUpdateFeedUseCase: IsNeedToUpdateFeedUseCase,
     private val setForceUpdateDataUseCase: SetForceUpdateDataUseCase,
     private val setIsShowedUpdateDialogUseCase: SetIsShowedUpdateDialogUseCase,
     private val getIsShowedUpdateDialogUseCase: GetIsShowedUpdateDialogUseCase,
@@ -36,9 +34,6 @@ class FeedModelImpl constructor(
      */
     override val groupNumber: LiveData<String> get() = getGroupNumberUseCase()
 
-    override val isNeedToUpdate: LiveData<Boolean>
-        get() = isNeedToUpdateFeedUseCase()
-
     override val isEvening: Boolean
         get() = isEveningUseCase()
 
@@ -53,7 +48,7 @@ class FeedModelImpl constructor(
         setForceUpdateDataUseCase(url, description)
     }
     
-    override fun getAcademicSession(): AcademicSession? {
+    override fun getAcademicSession(): LiveData<AcademicSession> {
         return getAcademicSessionUseCase()
     }
 

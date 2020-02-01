@@ -1,7 +1,6 @@
 package kekmech.ru.domain
 
 import androidx.lifecycle.LiveData
-import kekmech.ru.core.repositories.OldScheduleRepository
 import kekmech.ru.core.repositories.ScheduleRepository
 import kekmech.ru.core.usecases.GetGroupNumberUseCase
 

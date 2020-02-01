@@ -36,8 +36,9 @@ class MinCoupleItem(val coupleNative: CoupleNative) : BaseClickableItem<MinCoupl
         viewHolder.timeEnd = coupleNative.timeEnd
         viewHolder.number = "${coupleNative.num} ПАРА"
 
-        note.observeForever { note ->
-            viewHolder.isHasNote = note != null
+        viewHolder.isHasNote = false
+        note.observeForever {
+            viewHolder.isHasNote = it != null
         }
     }
 
@@ -66,7 +67,7 @@ class MinCoupleItem(val coupleNative: CoupleNative) : BaseClickableItem<MinCoupl
         val teacher by bind<TextView>(R.id.textViewCoupleTeacher)
         var timeStart by bindText(R.id.textViewCoupleTimeStart)
         var timeEnd by bindText(R.id.textViewCoupleTimeEnd)
-        var isHasNote by bindVisibility(R.id.frameLayoutHasNote)
+        var isHasNote by bindVisibility(R.id.frameLayoutHasNote, true)
         var number by bindText(R.id.textViewCoupleNumber)
 
         override fun onCreateView(view: View) = Unit
