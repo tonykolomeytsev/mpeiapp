@@ -1,19 +1,14 @@
 package kekmech.ru.timetable.view.items
 
 import android.view.View
-import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.lifecycle.MutableLiveData
 import kekmech.ru.core.dto.CoupleNative
-import kekmech.ru.core.dto.NoteNative
 import kekmech.ru.coreui.Resources
 import kekmech.ru.coreui.adapter.*
 import kekmech.ru.timetable.R
 
 class MinCoupleItem(val coupleNative: CoupleNative) : BaseClickableItem<MinCoupleItem.ViewHolder>() {
-    val note = MutableLiveData<NoteNative>()
 
     override fun updateViewHolder(viewHolder: ViewHolder) {
         viewHolder.name = coupleNative.name
@@ -36,9 +31,16 @@ class MinCoupleItem(val coupleNative: CoupleNative) : BaseClickableItem<MinCoupl
         viewHolder.timeEnd = coupleNative.timeEnd
         viewHolder.number = "${coupleNative.num} ПАРА"
 
-        viewHolder.isHasNote = false
-        note.observeForever {
-            viewHolder.isHasNote = it != null
+        coupleNative.noteLiveData.observeForever {
+            animateView(viewHolder.hasNote, it != null)
+        }
+    }
+
+    private fun animateView(view: View, visibility: Boolean) {
+        if (view.alpha != 1f && visibility) {
+            view.animate().alpha(1f).setDuration(200).start()
+        } else if (view.alpha == 1f && !visibility) {
+            view.animate().alpha(0f).setDuration(200).start()
         }
     }
 
@@ -67,7 +69,7 @@ class MinCoupleItem(val coupleNative: CoupleNative) : BaseClickableItem<MinCoupl
         val teacher by bind<TextView>(R.id.textViewCoupleTeacher)
         var timeStart by bindText(R.id.textViewCoupleTimeStart)
         var timeEnd by bindText(R.id.textViewCoupleTimeEnd)
-        var isHasNote by bindVisibility(R.id.frameLayoutHasNote, true)
+        var hasNote by bind<TextView>(R.id.frameLayoutHasNote)
         var number by bindText(R.id.textViewCoupleNumber)
 
         override fun onCreateView(view: View) = Unit

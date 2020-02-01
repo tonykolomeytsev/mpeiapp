@@ -109,6 +109,8 @@
                     android:paddingBottom="2dp"
                     android:textSize="10sp"
                     android:text="ЕСТЬ ЗАМЕТКА"
+                    android:alpha="0"
+                    tools:alpha="1"
                     android:background="@drawable/bg_item_couple_min_decor2"
                     android:fontFamily="sans-serif-black"
                     android:textColor="?attr/themeColorWhite"/>
