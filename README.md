@@ -22,7 +22,7 @@
 
 ### Скриншоты
 
-![screenshots](https://github.com/tonykolomeytsev/mpeiapp/raw/master/screenshots/1.png)
+![screenshots](https://github.com/tonykolomeytsev/mpeiapp/raw/master/screenshots/0.png)
 
 ### Требования приложения
 
