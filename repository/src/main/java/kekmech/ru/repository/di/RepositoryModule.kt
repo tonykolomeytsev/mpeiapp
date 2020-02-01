@@ -1,12 +1,10 @@
 package kekmech.ru.repository.di
 
-import kekmech.ru.core.gateways.ScheduleCacheGateway
 import kekmech.ru.core.gateways.UserCacheGateway
 import kekmech.ru.core.repositories.*
 import kekmech.ru.repository.*
 import kekmech.ru.repository.auth.BaseKeyStore
 import kekmech.ru.repository.auth.BaseKeyStoreV21
-import kekmech.ru.repository.gateways.ScheduleCacheGatewayImpl
 import kekmech.ru.repository.gateways.UserCacheGatewayImpl
 import kekmech.ru.repository.room.AppDatabase
 import org.koin.dsl.bind
@@ -24,6 +22,5 @@ val KoinRepositoryModule = module {
     // additional dependencies
     single { AppDatabaseModule.provideAppDatabase(get()) } bind AppDatabase::class
     single { BaseKeyStoreV21() } bind BaseKeyStore::class
-    single { ScheduleCacheGatewayImpl(get()) } bind ScheduleCacheGateway::class
     single { UserCacheGatewayImpl(get()) } bind UserCacheGateway::class
 }
