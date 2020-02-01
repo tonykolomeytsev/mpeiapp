@@ -22,15 +22,6 @@ class TimetableFragment : BaseFragment<TimetableFragmentPresenter, TimetableFrag
     override val presenter: TimetableFragmentPresenter by inject()
     override var onChangeParityClickListener: () -> Unit = {}
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        if (savedView?.parent != null) (savedView?.parent as ViewGroup?)?.removeView(savedView)
-        if (savedView == null) savedView = super.onCreateView(inflater, container, savedInstanceState)
-        return savedView!!
-    }
-
     override fun onResume() {
         super.onResume()
         if (presenter.checkIsNecessaryDayOpened()) {

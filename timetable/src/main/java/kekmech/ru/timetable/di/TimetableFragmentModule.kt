@@ -9,5 +9,5 @@ import org.koin.dsl.module
 val KoinTimetableFragmentModule = module {
     // timetable MVP pattern
     single { TimetableFragmentPresenter(get(), get(), get(), get()) }
-    single { TimetableFragmentModelImpl(get(), get(), get(), get(), get(), get(), get(), get()) } bind TimetableFragmentModel::class
+    single { TimetableFragmentModelImpl(get(), get(), get(), get(), get(), get(), get(), get(), get()) } bind TimetableFragmentModel::class
 }

@@ -8,6 +8,6 @@ class GetNoteByIdUseCaseImpl constructor(
     private val notesRepository: NotesRepository
 ): GetNoteByIdUseCase {
     override fun invoke(id: Int): NoteNative? {
-        return notesRepository.getNoteDyId(id)
+        return notesRepository.getAll().firstOrNull { it.id == id }
     }
 }

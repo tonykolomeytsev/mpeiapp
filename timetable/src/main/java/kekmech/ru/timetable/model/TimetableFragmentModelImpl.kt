@@ -3,17 +3,9 @@ package kekmech.ru.timetable.model
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import kekmech.ru.core.dto.CoupleNative
-import kekmech.ru.core.dto.NoteTransaction
-import kekmech.ru.core.dto.Schedule
-import kekmech.ru.core.dto.Time
+import kekmech.ru.core.dto.*
 import kekmech.ru.core.usecases.*
-import kekmech.ru.coreui.adapter.BaseItem
 import kekmech.ru.timetable.R
-import kekmech.ru.timetable.view.items.MinCoupleItem
-import kekmech.ru.timetable.view.items.MinLunchItem
-import java.util.*
 
 class TimetableFragmentModelImpl constructor(
     private val getGroupNumberUseCase: GetGroupNumberUseCase,
@@ -23,6 +15,7 @@ class TimetableFragmentModelImpl constructor(
     private val setCreateNoteTransactionUseCase: SetCreateNoteTransactionUseCase,
     private val invokeUpdateScheduleUseCase: InvokeUpdateScheduleUseCase,
     private val getTimetableScheduleLiveDataUseCase: GetTimetableScheduleLiveDataUseCase,
+    private val getNoteByTimestampUseCase: GetNoteByTimestampUseCase,
     private val context: Context
 ) : TimetableFragmentModel {
 
@@ -55,8 +48,15 @@ class TimetableFragmentModelImpl constructor(
         setForceUpdateDataUseCase(url, description)
     }
 
-    override fun transactCouple(coupleNative: CoupleNative) {
-        setCreateNoteTransactionUseCase(NoteTransaction(coupleNative, currentWeekNumber + (weekOffset.value ?: 0)))
+    override fun transactCouple(coupleNative: CoupleNative, offset: Int) {
+        setCreateNoteTransactionUseCase(NoteTransaction(coupleNative, Time.today().weekOfYear + offset))
+    }
+
+    override fun getNote(coupleNative: CoupleNative, offset: Int): NoteNative? {
+        try {
+            return getNoteByTimestampUseCase(NoteTimestamp.from(coupleNative, offset))
+        } catch (e: Exception) { e.printStackTrace() }
+        return null
     }
 
     override suspend fun updateScheduleFromRemote() {

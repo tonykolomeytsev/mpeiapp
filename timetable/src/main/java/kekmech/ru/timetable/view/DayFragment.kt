@@ -5,17 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
-import androidx.lifecycle.Transformations
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.core.Router
 import kekmech.ru.core.Screens.TIMETABLE_TO_NOTE
 import kekmech.ru.core.dto.CoupleNative
 import kekmech.ru.core.dto.Time
-import kekmech.ru.core.usecases.GetTimetableScheduleLiveDataUseCase
 import kekmech.ru.core.zip
 import kekmech.ru.coreui.adapter.BaseAdapter
 import kekmech.ru.coreui.adapter.BaseItem
@@ -25,7 +21,9 @@ import kekmech.ru.timetable.view.items.MinCoupleItem
 import kekmech.ru.timetable.view.items.MinLunchItem
 import kekmech.ru.timetable.view.items.MinWeekendItem
 import kotlinx.android.synthetic.main.fragment_day.view.*
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.Default
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -77,7 +75,7 @@ abstract class DayFragment : Fragment() {
             val newListOfItems = couples
                 .onEach { coupleItem ->
                     if (coupleItem is MinCoupleItem) {
-                        coupleItem.clickListener = { onCoupleClick(coupleItem.coupleNative) }
+                        coupleItem.clickListener = { onCoupleClick(coupleItem.coupleNative, offset) }
                     }
                 }
                 .toMutableList()
@@ -96,11 +94,27 @@ abstract class DayFragment : Fragment() {
             adapter.items.clear()
             adapter.items.addAll(newListOfItems)
             diffResult.dispatchUpdatesTo(adapter)
+
+            loadNotes(newListOfItems, offset)
         })
     }
 
-    private fun onCoupleClick(coupleNative: CoupleNative) {
-        model.transactCouple(coupleNative)
+    private fun loadNotes(
+        newListOfItems: MutableList<BaseItem<*>>,
+        offset: Int
+    ) {
+        GlobalScope.launch(Default) {
+            newListOfItems
+                .mapNotNull { if (it is MinCoupleItem) it to it.coupleNative else null }
+                .onEach { (item, couple) ->
+                    val note = model.getNote(couple, offset)
+                    if (note != null) withContext(Main) { item.note.value = note }
+                }
+        }
+    }
+
+    private fun onCoupleClick(coupleNative: CoupleNative, offset: Int) {
+        model.transactCouple(coupleNative, offset)
         router.navigate(TIMETABLE_TO_NOTE)
     }
 }
