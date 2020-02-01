@@ -54,7 +54,7 @@ class TimetableFragmentModelImpl constructor(
 
     override fun getNote(coupleNative: CoupleNative, offset: Int): NoteNative? {
         try {
-            return getNoteByTimestampUseCase(NoteTimestamp.from(coupleNative, offset))
+            return getNoteByTimestampUseCase(coupleNative.scheduleId, NoteTimestamp.from(coupleNative, offset))
         } catch (e: Exception) { e.printStackTrace() }
         return null
     }

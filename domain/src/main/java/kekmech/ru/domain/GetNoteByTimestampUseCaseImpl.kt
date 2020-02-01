@@ -7,9 +7,8 @@ import kekmech.ru.core.repositories.ScheduleRepository
 import kekmech.ru.core.usecases.GetNoteByTimestampUseCase
 
 class GetNoteByTimestampUseCaseImpl constructor(
-    private val notesRepository: NotesRepository,
-    private val scheduleRepository: ScheduleRepository
+    private val notesRepository: NotesRepository
 ) : GetNoteByTimestampUseCase {
-    override fun invoke(timestamp: String): NoteNative? =
-        notesRepository.getNoteFor(scheduleRepository.schedule.value!!.id, timestamp)
+    override fun invoke(scheduleId: Int, timestamp: String): NoteNative? =
+        notesRepository.getNoteFor(scheduleId, timestamp)
 }
