@@ -146,5 +146,11 @@ class Time(val calendar: Calendar = Calendar.getInstance()) {
                 else
                     springSemesterFirstDay()
             }
+
+        fun byWeekOfYear(weekOfYear: Int): Time {
+            val calendar = Calendar.getInstance()
+            calendar.set(Calendar.WEEK_OF_YEAR, weekOfYear)
+            return Time(calendar)
+        }
     }
 }
