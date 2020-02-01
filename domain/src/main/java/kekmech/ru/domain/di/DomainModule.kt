@@ -6,15 +6,11 @@ import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val KoinDomainModule = module {
-    single { LoadOffsetScheduleUseCaseImpl(get()) } bind LoadOffsetScheduleUseCase::class
-    single { GetTimetableScheduleUseCaseImpl(get(), get()) } bind GetTimetableScheduleUseCase::class
     single { GetBuildingsUseCaseImpl(get()) } bind GetBuildingsUseCase::class
 
     single { GetFoodsUseCaseImpl(get()) } bind GetFoodsUseCase::class
     single { GetHostelsUseCaseImpl(get()) } bind GetHostelsUseCase::class
     single { GetGroupNumberUseCaseImpl(get()) } bind GetGroupNumberUseCase::class
-
-    single { IsNeedToUpdateFeedUseCaseImpl(get()) } bind IsNeedToUpdateFeedUseCase::class
 
     single { SetForceUpdateDataUseCaseImpl(get()) } bind SetForceUpdateDataUseCase::class
     single { GetForceUpdateDataUseCaseImpl(get()) } bind GetForceUpdateDataUseCase::class

@@ -1,6 +1,5 @@
 package kekmech.ru.domain
 
-import kekmech.ru.core.repositories.OldScheduleRepository
 import kekmech.ru.core.repositories.ScheduleRepository
 import kekmech.ru.core.usecases.IsSchedulesEmptyUseCase
 

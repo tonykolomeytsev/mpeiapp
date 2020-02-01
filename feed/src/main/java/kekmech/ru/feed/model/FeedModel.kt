@@ -14,8 +14,6 @@ interface FeedModel {
      */
     val groupNumber: LiveData<String>
 
-    val isNeedToUpdate: LiveData<Boolean>
-
     val isEvening: Boolean
 
     val isSemesterStart: Boolean
@@ -27,7 +25,7 @@ interface FeedModel {
      */
     fun saveForceUpdateArgs(url: String, description: String)
 
-    fun getAcademicSession(): AcademicSession?
+    fun getAcademicSession(): LiveData<AcademicSession>
     fun getCarousel(): LiveData<FeedCarousel>
     fun getPicasso(): PicassoFirebaseInstance
     fun getTomorrowSchedule(): LiveData<List<CoupleNative>>

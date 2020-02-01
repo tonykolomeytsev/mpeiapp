@@ -113,9 +113,9 @@ class FeedPresenter constructor(
     private suspend fun loadAcademicContent(view: IFeedFragment) {
         val tasks = listOf(
             async {
-                val academicSession = withContext(Dispatchers.IO) { model.getAcademicSession() }
-                if (academicSession != null)
-                    adapter.addItem(SessionItem(academicSession))
+                model.getAcademicSession().observe(view, Observer {
+                    if (it != null) adapter.addItem(SessionItem(it))
+                })
             },
             async {
                 if (model.isEvening) {

@@ -10,14 +10,12 @@ import com.google.android.gms.maps.MapsInitializer
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.analytics.FirebaseAnalytics
 import kekmech.ru.core.Router
-import kekmech.ru.core.repositories.OldScheduleRepository
 import kekmech.ru.core.usecases.IncrementAppLaunchCountUseCase
 import kekmech.ru.core.usecases.IsDarkThemeEnabledUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
-import java.lang.Exception
 
 class MainActivity : AppCompatActivity() {
 

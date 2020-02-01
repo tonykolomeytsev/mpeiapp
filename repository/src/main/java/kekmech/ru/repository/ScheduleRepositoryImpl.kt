@@ -38,7 +38,7 @@ class ScheduleRepositoryImpl(
         loadScheduleFromCache()?.let { withContext(Main) { schedule.value = it } } // грузим расписание из кэша
         launch {
             try {
-                val s = LoadScheduleFromRemoteInteractor(groupNumber.value!!)
+                val s = LoadScheduleFromRemoteInteractor(schedule.value!!.group)
                     .setAttempts(3)
                     .setDelay(1000)
                     .invoke()
@@ -48,13 +48,15 @@ class ScheduleRepositoryImpl(
         }
         launch {
             try {
-                val s = LoadSessionFromRemoteInteractor(groupNumber.value!!)
+                val s = LoadSessionFromRemoteInteractor(schedule.value!!.group)
                     .setAttempts(1)
                     .setDelay(1000)
                     .invoke()
                 withContext(Main) { sessionSchedule.value = s }
                 // TODO кэшировать
-            } catch (e: Exception) { Log.e("ScheduleRepository", "Unable to load session schedule: $e") }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Log.e("ScheduleRepository", "Unable to load session schedule: $e") }
         }
 
         Unit
