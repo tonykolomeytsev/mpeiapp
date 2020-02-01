@@ -99,16 +99,23 @@ abstract class DayFragment : Fragment() {
         })
     }
 
+    override fun onResume() {
+        super.onResume()
+        try {
+            loadNotes(adapter.items, model.weekOffset.value!!)
+        } catch (e: Exception) { e.printStackTrace() }
+    }
+
     private fun loadNotes(
         newListOfItems: MutableList<BaseItem<*>>,
         offset: Int
     ) {
         GlobalScope.launch(Default) {
             newListOfItems
-                .mapNotNull { if (it is MinCoupleItem) it to it.coupleNative else null }
-                .onEach { (item, couple) ->
+                .mapNotNull { if (it is MinCoupleItem) it.coupleNative else null }
+                .onEach { couple ->
                     val note = model.getNote(couple, offset)
-                    if (note != null) withContext(Main) { item.note.value = note }
+                    if (note != null) withContext(Main) { couple.noteLiveData.value = note }
                 }
         }
     }

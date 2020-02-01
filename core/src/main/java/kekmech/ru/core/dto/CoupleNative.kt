@@ -1,5 +1,6 @@
 package kekmech.ru.core.dto
 
+import androidx.lifecycle.MutableLiveData
 import androidx.room.*
 
 /**
@@ -48,6 +49,9 @@ class CoupleNative(
 
     @Ignore
     var noteId: Int = -1
+
+    @Ignore
+    var noteLiveData = MutableLiveData<NoteNative>()
 
     companion object {
         const val LECTURE = "LECTURE"

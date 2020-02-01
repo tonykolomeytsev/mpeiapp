@@ -81,10 +81,11 @@
 
             <ImageView
                     android:id="@+id/buttonExpand"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:padding="8dp"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:padding="6dp"
                     android:layout_marginRight="8dp"
+                    android:layout_marginTop="-1dp"
                     android:tint="?themeColorSearchViewIconsTint"
                     android:src="@drawable/ic_expand_less_24px"
                     android:layout_gravity="right|center_vertical"/>

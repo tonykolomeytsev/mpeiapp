@@ -9,6 +9,10 @@ import kekmech.ru.core.usecases.GetCreateNoteTransactionUseCase
 import kekmech.ru.core.usecases.GetNoteByIdUseCase
 import kekmech.ru.core.usecases.GetNoteByTimestampUseCase
 import kekmech.ru.core.usecases.SaveNoteUseCase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class NoteFragmentModelImpl constructor(
     private val getCreateNoteTransactionUseCase: GetCreateNoteTransactionUseCase,
@@ -36,6 +40,13 @@ class NoteFragmentModelImpl constructor(
         val encoded = toBase64(gson.toJson(note))
         val native = NoteNative(-1, timestamp(), encoded, "")
         saveNoteUseCase(native, note.text.isBlank())
+        GlobalScope.launch(Main) {
+            if (note.text.isNotBlank()) {
+                transactedCouple?.noteLiveData?.value = native
+            } else {
+                transactedCouple?.noteLiveData?.value = null
+            }
+        }
     }
 
     private fun fromBase64(string: String): String {
