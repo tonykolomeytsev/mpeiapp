@@ -7,6 +7,7 @@ import kekmech.ru.core.Presenter
 import kekmech.ru.core.Router
 import kekmech.ru.core.dto.CoupleNative
 import kekmech.ru.core.dto.NoteNative
+import kekmech.ru.core.dto.Time
 import kekmech.ru.coreui.Resources.getStringArray
 import kekmech.ru.notes.model.NoteFragmentModel
 import kekmech.ru.notes.view.NoteFragmentView
@@ -15,6 +16,7 @@ import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.*
 
 class NoteFragmentPresenter constructor(
     private val model: NoteFragmentModel,
@@ -86,7 +88,7 @@ class NoteFragmentPresenter constructor(
 
     @SuppressLint("DefaultLocale")
     private fun CoupleNative.timestampReadable(): String {
-        val w = this@NoteFragmentPresenter.realWeek
+        val w = Time.byWeekOfYear(this@NoteFragmentPresenter.realWeek!!).weekOfSemester
         return try {
             "$w неделя, ${day.formattedAsDayName(context, R.array.days_of_week).decapitalize()}, $num пара"
         } catch (e: Exception) {
