@@ -91,11 +91,13 @@ class BarsRepositoryImpl constructor(
     private fun loadFromRemote(): AcademicScore? {
         try {
             val mainPage = Jsoup.connect(BARS_URL)
-                .get()
-            val stoken = mainPage
+                .method(Connection.Method.GET)
+                .execute()
+            val mainPageDocument = mainPage.parse()
+            val stoken = mainPageDocument
                 .select("input[name=SToken]")
                 .`val`()
-            val requestVirificationToken = mainPage
+            val requestVirificationToken = mainPageDocument
                 .select("input[name=__RequestVerificationToken]")
                 .`val`()
             println(stoken)
@@ -103,11 +105,16 @@ class BarsRepositoryImpl constructor(
 
             val response = Jsoup.connect(BARS_URL)
                 .header("Content-Type", "application/x-www-form-urlencoded")
+                .header("Origin", "https://bars.mpei.ru")
+                .header("Upgrade-Insecure-Requests", "1")
+                .header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36 OPR/66.0.3515.60")
+                .header("Sec-Fetch-User", "?1")
                 .data("Password", getPassword())
                 .data("Username", getUsername())
                 .data("Remember", "false")
                 .data("SToken", stoken)
                 .data("__RequestVerificationToken", requestVirificationToken)
+                .cookies(mainPage.cookies())
                 .method(Connection.Method.POST)
                 .execute()
 

@@ -4,46 +4,16 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
-        tools:theme="@style/AppTheme.Dark">
-
-    <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/main.appbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/themeColorToolbar"
-            android:fitsSystemWindows="true"
-            tools:layout_height="56dp"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-
-        <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fitsSystemWindows="true">
-
-            <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    tools:layout_height="56dp"
-                    app:elevation="0dp"
-                    app:layout_collapseMode="pin"
-                    app:navigationIcon="?attr/homeAsUpIndicator"
-                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                    app:title="Домашнее задание" />
-
-        </FrameLayout>
-
-
-    </com.google.android.material.appbar.AppBarLayout>
+        android:minHeight="500dp"
+        tools:theme="@style/AppTheme.Dark"
+        android:background="@drawable/note_background">
 
     <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-            android:orientation="vertical"
-            android:background="?themeColorFeedBackground">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
         <LinearLayout
                 android:elevation="1dp"
@@ -51,7 +21,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:background="?themeColorCardView"
                 android:paddingLeft="32dp"
                 android:paddingRight="32dp">
 
@@ -79,7 +48,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="ДАТА СДАЧИ"
+                    android:text="ДАТА"
                     android:textSize="12sp"
                     android:textColor="?themeColorBlack"
                     android:alpha="0.5"
@@ -105,7 +74,7 @@
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="ЗАДАНИЕ"
+                        android:text="ЗАМЕТКА"
                         android:textSize="12sp"
                         android:textColor="?themeColorBlack"
                         android:alpha="0.5"
