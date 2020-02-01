@@ -5,34 +5,40 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.lifecycle.MutableLiveData
 import kekmech.ru.core.dto.CoupleNative
+import kekmech.ru.core.dto.NoteNative
 import kekmech.ru.coreui.Resources
-import kekmech.ru.coreui.adapter.BaseClickableItem
-import kekmech.ru.coreui.adapter.BaseFactory
-import kekmech.ru.coreui.adapter.BaseItem
-import kekmech.ru.coreui.adapter.BaseViewHolder
+import kekmech.ru.coreui.adapter.*
 import kekmech.ru.timetable.R
 
 class MinCoupleItem(val coupleNative: CoupleNative) : BaseClickableItem<MinCoupleItem.ViewHolder>() {
+    val note = MutableLiveData<NoteNative>()
 
     override fun updateViewHolder(viewHolder: ViewHolder) {
-        viewHolder.name.text = coupleNative.name
-        viewHolder.place.text = coupleNative.place
-        viewHolder.type.text = getStringType(viewHolder, coupleNative.type)
+        viewHolder.name = coupleNative.name
+        viewHolder.type = getStringType(viewHolder, coupleNative.type)
+
+        if (coupleNative.place.isNotBlank()) {
+            viewHolder.place.text = coupleNative.place
+            viewHolder.place.visibility = View.VISIBLE
+        } else {
+            viewHolder.place.visibility = View.GONE
+        }
         if (coupleNative.teacher.isNotBlank()) {
             viewHolder.teacher.text = coupleNative.teacher
             viewHolder.teacher.visibility = View.VISIBLE
         } else {
             viewHolder.teacher.visibility = View.GONE
         }
-        viewHolder.timeStart.text = coupleNative.timeStart
-        viewHolder.timeEnd.text = coupleNative.timeEnd
-        viewHolder.number.text = "${coupleNative.num} ПАРА"
 
-        if (coupleNative.noteId != -1)
-            viewHolder.hasNoteLayout.visibility = VISIBLE
-        else
-            viewHolder.hasNoteLayout.visibility = GONE
+        viewHolder.timeStart = coupleNative.timeStart
+        viewHolder.timeEnd = coupleNative.timeEnd
+        viewHolder.number = "${coupleNative.num} ПАРА"
+
+        note.observeForever { note ->
+            viewHolder.isHasNote = note != null
+        }
     }
 
     private fun getStringType(
@@ -53,15 +59,15 @@ class MinCoupleItem(val coupleNative: CoupleNative) : BaseClickableItem<MinCoupl
 
     override fun approveFactory(factory: BaseFactory) = factory is Factory
 
-    class ViewHolder(view: View) : BaseViewHolder(view) {
-        val name by bind<TextView>(R.id.textViewCoupleName)
+    class ViewHolder(view: View) : BaseViewHolder2(view) {
+        var name by bindText(R.id.textViewCoupleName)
         val place by bind<TextView>(R.id.textViewCouplePlace)
-        val type by bind<TextView>(R.id.textViewCoupleType)
+        var type by bindText(R.id.textViewCoupleType)
         val teacher by bind<TextView>(R.id.textViewCoupleTeacher)
-        val timeStart by bind<TextView>(R.id.textViewCoupleTimeStart)
-        val timeEnd by bind<TextView>(R.id.textViewCoupleTimeEnd)
-        val hasNoteLayout by bind<LinearLayout>(R.id.frameLayoutHasNote)
-        val number by bind<TextView>(R.id.textViewCoupleNumber)
+        var timeStart by bindText(R.id.textViewCoupleTimeStart)
+        var timeEnd by bindText(R.id.textViewCoupleTimeEnd)
+        var isHasNote by bindVisibility(R.id.frameLayoutHasNote)
+        var number by bindText(R.id.textViewCoupleNumber)
 
         override fun onCreateView(view: View) = Unit
     }
