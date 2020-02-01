@@ -4,6 +4,7 @@ package kekmech.ru.map.view
 import android.graphics.Color
 import android.graphics.Rect
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,9 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import kekmech.ru.map.MapFragmentPresenter
 import com.example.map.R
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_COLLAPSED
+import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED
 import kekmech.ru.map.model.MapFragmentModel.Companion.PAGE_BUILDINGS
 import kekmech.ru.map.model.MapFragmentModel.Companion.PAGE_FOODS
 import kekmech.ru.map.model.MapFragmentModel.Companion.PAGE_HOSTELS
@@ -25,9 +29,7 @@ class MapFragment : Fragment(), MapFragmentView {
     val presenter: MapFragmentPresenter by inject()
 
     override val contentView: ViewGroup get() = mapCoordinator
-
     override var onChangeStateListener: (Int) -> Unit = {}
-
     private var viewPagerUI: ViewPager2? = null
 
     override fun onCreateView(
@@ -87,6 +89,33 @@ class MapFragment : Fragment(), MapFragmentView {
         presenter.onResume(this)
         placeContentUnderStatusBar()
 
+        setupBottomMenu()
+    }
+
+    private fun setupBottomMenu() {
+        val behavior = BottomSheetBehavior.from(bottomMenu)
+        behavior.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+            override fun onSlide(v: View, p: Float) {
+                buttonExpand?.rotation = 180f * p
+            }
+
+            override fun onStateChanged(v: View, s: Int) {
+                if (s == STATE_COLLAPSED) buttonExpand?.rotation = 0f
+                if (s == STATE_EXPANDED) buttonExpand?.rotation = 180f
+            }
+        })
+        buttonExpand?.rotation = if (behavior.state == STATE_COLLAPSED) 0f else 180f
+        buttonExpand?.setOnClickListener {
+            behavior.state = if (behavior.state == STATE_COLLAPSED) STATE_EXPANDED else STATE_COLLAPSED
+        }
+        // привлекаем внимание
+        object : CountDownTimer(3*1000, 500) {
+            override fun onFinish() = Unit
+            override fun onTick(p0: Long) {
+                buttonExpand?.alpha = 0.5f
+                buttonExpand?.animate()?.alpha(1f)?.setDuration(300)?.start()
+            }
+        }.start()
     }
 
     override fun onPause() {
