@@ -58,7 +58,7 @@
                 android:background="@drawable/item_search_drawable"
                 android:backgroundTint="?attr/themeColorSearchView"
                 android:fontFamily="sans-serif-light"
-                android:maxLength="10"
+                android:maxLength="12"
                 android:maxLines="1"
                 android:ellipsize="end"
                 android:paddingStart="16dp"

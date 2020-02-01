@@ -11,6 +11,9 @@ interface NoteDao {
     @Query("select * from notes where id = :id")
     fun getById(id: Int): NoteNative?
 
+    @Query("select * from notes where couple_id = :id")
+    fun getAllByScheduleId(id: Int): List<NoteNative>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(noteNative: NoteNative)
 

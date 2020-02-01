@@ -37,22 +37,14 @@ class NoteFragmentPresenter constructor(
             router.popBackStack()
             return
         } else {
-            if (couple.noteId == -1) {
-                view.setStatus(
-                    couple.name,
-                    couple.timestampReadable()
-                )
+            view.setStatus(
+                couple.name,
+                couple.timestampReadable()
+            )
+            GlobalScope.launch(Main) {
+                val coupleContent = withContext(IO) { model.getNoteContent() }
+                view.setContent(coupleContent)
                 isWriteAllowed = true
-            } else {
-                view.setStatus(
-                    couple.name,
-                    couple.timestampReadable()
-                )
-                GlobalScope.launch(Main) {
-                    val coupleContent = withContext(IO) { model.getNoteContentById(couple.noteId) }
-                    view.setContent(coupleContent)
-                    isWriteAllowed = true
-                }
             }
         }
 

@@ -30,7 +30,7 @@ val KoinDomainModule = module {
 
     single { SaveNoteUseCaseImpl(get(), get()) } bind SaveNoteUseCase::class
     single { RemoveNoteUseCaseImpl(get()) } bind RemoveNoteUseCase::class
-    single { GetNoteByTimeUseCaseImpl(get()) } bind GetNoteByTimeUseCase::class
+    single { GetNoteByTimestampUseCaseImpl(get(), get()) } bind GetNoteByTimestampUseCase::class
 
     single { SetDetailsDisciplineUseCaseImpl(get()) } bind SetDetailsDisciplineUseCase::class
     single { GetDetailsDisciplineUseCaseImpl(get()) } bind GetDetailsDisciplineUseCase::class

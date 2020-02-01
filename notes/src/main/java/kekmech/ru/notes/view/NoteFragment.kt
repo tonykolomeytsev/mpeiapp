@@ -34,9 +34,9 @@ class NoteFragment : BaseBottomSheetDialogFragment<NoteFragmentPresenter, NoteFr
 
     override fun onResume() {
         super.onResume()
-        editTextContent?.post {
+        editTextContent?.postDelayed({
             editTextContent?.requestFocus()
-        }
+        }, 500)
         editTextContent?.addTextChangedListener {
             onTextEdit(it?.toString() ?: "")
             showSaved()

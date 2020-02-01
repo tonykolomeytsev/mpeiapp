@@ -2,9 +2,9 @@ package kekmech.ru.timetable.model
 
 import androidx.lifecycle.LiveData
 import kekmech.ru.core.dto.CoupleNative
+import kekmech.ru.core.dto.NoteNative
 import kekmech.ru.core.dto.Schedule
 import kekmech.ru.core.dto.Time
-import kekmech.ru.coreui.adapter.BaseItem
 
 interface TimetableFragmentModel {
     val today: Time
@@ -26,9 +26,11 @@ interface TimetableFragmentModel {
 
     fun saveForceUpdateArgs(url: String, description: String)
 
-    fun transactCouple(coupleNative: CoupleNative)
+    fun transactCouple(coupleNative: CoupleNative, offset: Int)
 
     suspend fun updateScheduleFromRemote()
+
+    fun getNote(coupleNative: CoupleNative, offset: Int): NoteNative?
 
     var selectedPage: Int
 
