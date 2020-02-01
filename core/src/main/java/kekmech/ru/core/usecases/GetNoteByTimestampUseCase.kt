@@ -4,5 +4,5 @@ import kekmech.ru.core.dto.NoteNative
 import kekmech.ru.core.dto.Time
 
 interface GetNoteByTimestampUseCase {
-    operator fun invoke(timestamp: String): NoteNative?
+    operator fun invoke(scheduleId: Int, timestamp: String): NoteNative?
 }

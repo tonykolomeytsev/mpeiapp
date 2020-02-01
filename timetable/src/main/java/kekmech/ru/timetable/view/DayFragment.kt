@@ -1,6 +1,7 @@
 package kekmech.ru.timetable.view
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,12 +22,10 @@ import kekmech.ru.timetable.view.items.MinCoupleItem
 import kekmech.ru.timetable.view.items.MinLunchItem
 import kekmech.ru.timetable.view.items.MinWeekendItem
 import kotlinx.android.synthetic.main.fragment_day.view.*
+import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.Default
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.koin.android.ext.android.inject
 
 abstract class DayFragment : Fragment() {
@@ -99,13 +98,6 @@ abstract class DayFragment : Fragment() {
         })
     }
 
-    override fun onResume() {
-        super.onResume()
-        try {
-            loadNotes(adapter.items, model.weekOffset.value!!)
-        } catch (e: Exception) { e.printStackTrace() }
-    }
-
     private fun loadNotes(
         newListOfItems: MutableList<BaseItem<*>>,
         offset: Int
@@ -115,7 +107,8 @@ abstract class DayFragment : Fragment() {
                 .mapNotNull { if (it is MinCoupleItem) it.coupleNative else null }
                 .onEach { couple ->
                     val note = model.getNote(couple, offset)
-                    if (note != null) withContext(Main) { couple.noteLiveData.value = note }
+                    if (note != null)
+                        withContext(Main) { couple.noteLiveData.value = note }
                 }
         }
     }

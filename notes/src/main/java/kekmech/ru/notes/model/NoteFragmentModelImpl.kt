@@ -26,7 +26,7 @@ class NoteFragmentModelImpl constructor(
         get() = getCreateNoteTransactionUseCase()?.realWeek
 
     override fun getNoteContent(): String {
-        val native = getNoteByTimestampUseCase(timestamp())
+        val native = getNoteByTimestampUseCase(transactedCouple?.scheduleId ?: -1, timestamp())
         if (native == null) {
             return ""
         } else {
@@ -38,7 +38,7 @@ class NoteFragmentModelImpl constructor(
 
     override fun saveNote(note: NoteNative.Note) {
         val encoded = toBase64(gson.toJson(note))
-        val native = NoteNative(-1, timestamp(), encoded, "")
+        val native = NoteNative(transactedCouple!!.scheduleId, timestamp(), encoded, "")
         saveNoteUseCase(native, note.text.isBlank())
         GlobalScope.launch(Main) {
             if (note.text.isNotBlank()) {
