@@ -112,14 +112,14 @@ class ScheduleRepositoryImpl(
         return appdb.scheduleDao().getAnySchedule() == null
     }
 
-    private suspend fun getCurrentScheduleId(): Int {
+    private fun getCurrentScheduleId(): Int {
         val users = appdb.userDao().getAll()
         if (users.isEmpty()) appdb.userDao().insert(User.defaultUser())
         val user = appdb.userDao().getAll().first()
         return user.lastScheduleId
     }
 
-    private suspend fun setCurrentScheduleId(id: Int) {
+    private fun setCurrentScheduleId(id: Int) {
         val user = appdb.userDao().getAll().first()
         appdb.userDao().update(user.apply { lastScheduleId = id })
     }
@@ -127,7 +127,8 @@ class ScheduleRepositoryImpl(
     /**
      * Загрузка ПОСЛЕДНЕГО просматриваемого расписания из кэша
      */
-    private suspend fun loadScheduleFromCache(): Schedule? {
+    private fun loadScheduleFromCache(): Schedule? {
+        val scheduleId = getCurrentScheduleId()
         return appdb.scheduleDao()
             .getById(getCurrentScheduleId())
             .let {
@@ -136,7 +137,7 @@ class ScheduleRepositoryImpl(
                     it.group,
                     it.calendarWeek,
                     it.universityWeek,
-                    appdb.coupleDao().getAllByScheduleId(it.id),
+                    appdb.coupleDao().getAllByScheduleId(scheduleId),
                     it.name
                 ) else null
             }
@@ -147,7 +148,7 @@ class ScheduleRepositoryImpl(
      * Если расписание с таким номером группы уже существует, его пары будут перезаписаны,
      * иначе, будет создано новое расписание
      */
-    private suspend fun saveScheduleToCache(schedule: Schedule) {
+    private fun saveScheduleToCache(schedule: Schedule) {
         val similarSchedule = appdb.scheduleDao().getByGroupNum(schedule.group)
         if (similarSchedule == null) {
             createNewSchedule(schedule)
@@ -162,12 +163,13 @@ class ScheduleRepositoryImpl(
             // достаём новые пары
             val newCouples = schedule.coupleList.map { it.apply { this.scheduleId = scheduleId } }
             newCouples.forEach(appdb.coupleDao()::insert) // пишем новые пары в базу
+            appdb.scheduleDao().update(similarSchedule)
 
             Log.d("ScheduleRepository", "Schedule updated")
         }
     }
 
-    private suspend fun createNewSchedule(schedule: Schedule) {
+    private fun createNewSchedule(schedule: Schedule) {
         val native = ScheduleNative(
             0,
             schedule.group,

@@ -5,7 +5,7 @@ import android.util.Log
 import java.text.SimpleDateFormat
 import java.util.*
 
-class Time(val calendar: Calendar = Calendar.getInstance()) {
+class Time(val calendar: Calendar = Calendar.getInstance(Locale.getDefault())) {
 
     constructor(date: Date) : this(Calendar.getInstance().apply { time = date })
 
@@ -118,7 +118,7 @@ class Time(val calendar: Calendar = Calendar.getInstance()) {
         const val SECONDS_IN_DAY = MINUTES_IN_DAY * 60
         const val MILLIS_IN_DAY = SECONDS_IN_DAY * 1000
 
-        fun today() = Time(Calendar.getInstance())
+        fun today() = Time(Calendar.getInstance(Locale.getDefault()))
 
         /**
          * Всегда первое сентября

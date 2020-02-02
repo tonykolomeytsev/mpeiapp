@@ -36,6 +36,8 @@ abstract class DayFragment : Fragment() {
 
     val router: Router by inject()
 
+    var lastOffset = 0
+
     private val adapter = BaseAdapter.Builder()
         .registerViewTypeFactory(MinCoupleItem.Factory())
         .registerViewTypeFactory(MinLunchItem.Factory())
@@ -58,7 +60,7 @@ abstract class DayFragment : Fragment() {
     private fun loadSchedule() {
         zip(model.schedule, model.weekOffset).observe(this, Observer { (schedule, offset) ->
             val today = Time.today()
-            val necessaryWeekNum = ((if (today.weekOfYear % 2 == schedule.calendarWeek % 2) 1 else 2) + offset) % 3
+            val necessaryWeekNum = if (today.weekOfYear % 2 == schedule.calendarWeek % 2) (if (offset == 0) 1 else 2) else (if (offset == 0) 2 else 1)
 
             val couples: MutableList<BaseItem<*>> = schedule
                 .coupleList
