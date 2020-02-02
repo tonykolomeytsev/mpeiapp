@@ -1,8 +1,7 @@
 package kekmech.ru.addscreen
 
-import android.webkit.WebView
 import androidx.lifecycle.LifecycleOwner
-import kekmech.ru.coreui.adapter.BaseAdapter
+import androidx.recyclerview.widget.RecyclerView
 
 interface IAddFragment : LifecycleOwner {
 
@@ -15,6 +14,6 @@ interface IAddFragment : LifecycleOwner {
     fun showLoading()
     fun hideLoading()
 
-    fun setAdapter(adapter: BaseAdapter)
+    fun setAdapter(adapter: RecyclerView.Adapter<*>)
     fun showError()
 }
