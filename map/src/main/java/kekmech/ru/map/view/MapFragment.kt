@@ -108,14 +108,6 @@ class MapFragment : Fragment(), MapFragmentView {
         buttonExpand?.setOnClickListener {
             behavior.state = if (behavior.state == STATE_COLLAPSED) STATE_EXPANDED else STATE_COLLAPSED
         }
-        // привлекаем внимание
-        object : CountDownTimer(3*1000, 500) {
-            override fun onFinish() = Unit
-            override fun onTick(p0: Long) {
-                buttonExpand?.alpha = 0.5f
-                buttonExpand?.animate()?.alpha(1f)?.setDuration(300)?.start()
-            }
-        }.start()
     }
 
     override fun onPause() {
