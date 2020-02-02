@@ -4,6 +4,7 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import java.util.*
 import java.util.zip.Inflater
 
@@ -46,6 +47,18 @@ open class BaseAdapter : RecyclerView.Adapter<BaseViewHolder>() {
     open fun addItem(baseItem: BaseItem<*>) {
         baseItems.add(baseItem)
         notifyItemInserted(baseItems.indexOf(baseItem))
+    }
+
+    open fun getDiffResult(newListOfItems: List<BaseItem<*>>): DiffUtil.DiffResult {
+        val diffCallback = object : DiffUtil.Callback() {
+            override fun getOldListSize() = items.size
+            override fun getNewListSize() = newListOfItems.size
+            override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) =
+                items[oldItemPosition].javaClass == newListOfItems[newItemPosition].javaClass
+            override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) =
+                items[oldItemPosition] == newListOfItems[newItemPosition]
+        }
+        return DiffUtil.calculateDiff(diffCallback)
     }
 
     class Builder {

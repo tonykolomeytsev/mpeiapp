@@ -21,12 +21,12 @@ import androidx.annotation.NonNull
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kekmech.ru.addscreen.presenter.AddFragmentPresenter
 import kekmech.ru.core.usecases.IsDarkThemeEnabledUseCase
 import kekmech.ru.coreui.Resources
-import kekmech.ru.coreui.adapter.BaseAdapter
 import kotlinx.android.synthetic.main.fragment_add.*
 import org.koin.android.ext.android.inject
 
@@ -163,7 +163,7 @@ class AddFragment : BottomSheetDialogFragment(), IAddFragment {
         nestedScrollGroups?.visibility = View.VISIBLE
     }
 
-    override fun setAdapter(adapter: BaseAdapter) {
+    override fun setAdapter(adapter: RecyclerView.Adapter<*>) {
         progressBarGroups?.visibility = View.INVISIBLE
         recyclerViewGroups?.layoutManager = LinearLayoutManager(context)
         recyclerViewGroups?.adapter = adapter

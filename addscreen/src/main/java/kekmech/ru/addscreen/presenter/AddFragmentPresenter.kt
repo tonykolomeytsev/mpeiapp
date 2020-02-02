@@ -5,8 +5,8 @@ import kekmech.ru.addscreen.model.AddFragmentModel
 import kekmech.ru.core.Presenter
 import kekmech.ru.core.Router
 import kekmech.ru.core.dto.AcademGroup
-import kekmech.ru.coreui.adapter.BaseAdapter
-import kekmech.ru.coreui.adapter.BaseClickableItem
+import kekmech.ru.coreui.adapter2.BaseAdapter2
+import kekmech.ru.coreui.adapter2.BaseItem2
 import kotlinx.coroutines.*
 import java.lang.RuntimeException
 import java.util.*
@@ -32,11 +32,11 @@ class AddFragmentPresenter constructor(
                 }
             }
 
-            val adapter = BaseAdapter.Builder()
-                .registerViewTypeFactory(GroupItem.Factory())
+            val adapter = BaseAdapter2.Builder()
+                .registerItemTypes(GroupItem::class)
                 .build()
-            adapter.baseItems.addAll(groupSet
-                .take(10)
+            adapter.items.addAll(groupSet
+                //.take(10) снимаем ограничение
                 .map(::GroupItem)
                 .onEach { it.clickListener = ::onGroupClick })
             delay(100)
@@ -44,7 +44,7 @@ class AddFragmentPresenter constructor(
         }
     }
 
-    private fun onGroupClick(groupItem: BaseClickableItem<*>) {
+    private fun onGroupClick(groupItem: BaseItem2<*>) {
         val group = (groupItem as GroupItem).group
         try {
             GlobalScope.launch(Dispatchers.IO) {
