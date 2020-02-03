@@ -9,7 +9,7 @@
         android:focusable="true"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        tools:theme="@style/AppTheme.Dark"
+        tools:theme="@style/AppTheme"
         tools:background="?themeColorCardView">
 
     <FrameLayout
@@ -63,7 +63,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:paddingLeft="16dp">
+                    android:paddingLeft="16dp"
+                    android:layout_marginRight="8dp">
 
                 <TextView
                         android:id="@+id/textViewCoupleName"

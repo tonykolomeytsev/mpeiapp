@@ -95,7 +95,7 @@ class SettingsPresenter(
     fun clearNotes(item: BaseItem<*>) {
         GlobalScope.launch(Dispatchers.Main) {
             withContext(Dispatchers.IO) { removeAllNotesUseCase() }
-            Toast.makeText(context, "Все домашние задания стёрты", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, "Все заметки стёрты", Toast.LENGTH_LONG).show()
         }
     }
 
