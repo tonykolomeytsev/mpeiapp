@@ -1,17 +1,13 @@
 package kekmech.ru.feed.items
 
-import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import kekmech.ru.coreui.adapter.BaseFactory
-import kekmech.ru.coreui.adapter.BaseItem
 import kekmech.ru.coreui.adapter.BaseViewHolder
+import kekmech.ru.coreui.adapter2.BaseItem2
 import kekmech.ru.feed.R
 
-class NothingToShowItem : BaseItem<NothingToShowItem.ViewHolder>() {
+class NothingToShowItem : BaseItem2<NothingToShowItem.ViewHolder>(R.layout.item_nothing_to_show, ViewHolder::class) {
 
     private val replices = listOf(
         R.drawable.emoji_alien to "ߛϠߚϞϠϩϞߚϩϞϿϩ",
@@ -23,18 +19,23 @@ class NothingToShowItem : BaseItem<NothingToShowItem.ViewHolder>() {
         R.drawable.emoji_russkie to "Русские вперед!"
     )
 
-    override fun updateViewHolder(viewHolder: ViewHolder) {
-        val randomMeme = replices.random()
-        viewHolder.img.setImageResource(randomMeme.first)
-        viewHolder.title.text = randomMeme.second
-    }
+    private val descriptions = listOf(
+        "Нам пока нечего показать вам) Как насчёт полистать мемы?",
+        "Чем меньше знаешь, тем крепче спишь. Оберегаем ваше сон)",
+        "Что-то не получилось у нас ничего загрузить. Ну и пофиг.",
+        "Даже роботы иногда факапят, прямо на ваших глазах 0_о..."
+    )
 
-    override fun approveFactory(factory: BaseFactory) = factory is Factory
+    override fun updateViewHolder(vh: ViewHolder) {
+        val randomMeme = replices.random()
+        vh.img.setImageResource(randomMeme.first)
+        vh.title.text = randomMeme.second
+        vh.description.text = descriptions.random()
+    }
 
     class ViewHolder(view: View) : BaseViewHolder(view) {
         val title by bind<TextView>(R.id.textViewHeader1)
+        val description by bind<TextView>(R.id.textViewMessageNothingToShow)
         val img by bind<ImageView>(R.id.imageViewMeme)
     }
-
-    class Factory : BaseFactory(R.layout.item_nothing_to_show, ::ViewHolder)
 }

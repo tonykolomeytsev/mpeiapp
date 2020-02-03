@@ -18,6 +18,10 @@ interface FeedModel {
 
     val isSemesterStart: Boolean
 
+    val actualSchedule: LiveData<List<CoupleNative>>
+
+    val isSchedulesEmpty: LiveData<Boolean>
+
     /**
      * Get couples for day
      * @param offset - 0 - today, 1 - yesterday etc.
@@ -32,5 +36,5 @@ interface FeedModel {
     fun getTodaySchedule(): LiveData<List<CoupleNative>>
 
     fun updateScheduleFromRemote()
-    suspend fun isSchedulesEmpty(): Boolean
+    fun checkIsSchedulesEmpty()
 }

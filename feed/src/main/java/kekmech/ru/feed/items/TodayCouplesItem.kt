@@ -7,29 +7,29 @@ import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.core.dto.CoupleNative
 import kekmech.ru.coreui.adapter.BaseAdapter
 import kekmech.ru.coreui.adapter.BaseFactory
-import kekmech.ru.coreui.adapter.BaseItem
 import kekmech.ru.coreui.adapter.BaseViewHolder
+import kekmech.ru.coreui.adapter2.BaseItem2
 import kekmech.ru.feed.R
 
-class TodayCouplesItem(val couples: List<CoupleNative>) : BaseItem<TodayCouplesItem.ViewHolder>() {
+class TodayCouplesItem(val couples: List<CoupleNative>) : BaseItem2<TodayCouplesItem.ViewHolder>(R.layout.item_card_with_recycler, ViewHolder::class) {
 
-    override fun updateViewHolder(viewHolder: ViewHolder) {
+    override fun updateViewHolder(vh: ViewHolder) {
         val adapter = BaseAdapter.Builder()
             .registerViewTypeFactory(TomorrowCouplesDisciplineItem.Factory())
             .build()
 
         adapter.baseItems += couples.map(::TomorrowCouplesDisciplineItem)
-        viewHolder.recyclerView.layoutManager = LinearLayoutManager(viewHolder.itemView.context)
-        viewHolder.recyclerView.adapter = adapter
-        viewHolder.header.setText(R.string.today_couples_header)
+        vh.recyclerView.layoutManager = LinearLayoutManager(vh.itemView.context)
+        vh.recyclerView.adapter = adapter
+        vh.header.setText(R.string.today_couples_header)
     }
-
-    override fun approveFactory(factory: BaseFactory) = factory is Factory
 
     class ViewHolder(itemView: View) : BaseViewHolder(itemView) {
         val recyclerView by bind<RecyclerView>(R.id.recyclerView)
         val header by bind<TextView>(R.id.textViewHeader1)
     }
 
-    class Factory: BaseFactory(R.layout.item_card_with_recycler, ::ViewHolder)
+
+    override fun equals(other: Any?) = if (other is TodayCouplesItem) other.couples == couples else false
+    override fun hashCode() = couples.hashCode()
 }
