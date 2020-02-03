@@ -48,14 +48,14 @@ class BaseAdapter2(
 
     class Builder {
         private val listOfTypes = mutableListOf<KClass<BaseItem2<*>>>()
-        private var diffUtilProcessor: DiffUtilProcessor? = null
+        private var diffUtilProcessor: DiffUtilProcessor? = StandartDiffUtilProcessor()
 
         fun registerItemTypes(vararg kClass: KClass<out BaseItem2<*>>): Builder {
             listOfTypes.addAll(kClass.map { it as KClass<BaseItem2<*>>})
             return this
         }
 
-        fun setDiffUtilProcessor(diffUtilProcessor: DiffUtilProcessor): Builder {
+        fun setDiffUtilProcessor(diffUtilProcessor: DiffUtilProcessor?): Builder {
             this.diffUtilProcessor = diffUtilProcessor
             return this
         }
@@ -64,6 +64,6 @@ class BaseAdapter2(
     }
 
     interface DiffUtilProcessor {
-        operator fun invoke(oldItems: List<BaseItem2<*>>, newItems: List<BaseItem2<*>>, adapter: RecyclerView.Adapter<*>)
+        operator fun invoke(oldItems: List<BaseItem2<*>>, newItems: List<BaseItem2<*>>, adapter: BaseAdapter2)
     }
 }

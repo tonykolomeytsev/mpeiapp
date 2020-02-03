@@ -50,6 +50,7 @@
                         tools:text="ߛϠߚϞϠϩϞߚϩϞϿϩ"/>
 
                 <TextView
+                        android:id="@+id/textViewMessageNothingToShow"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="16dp"
@@ -59,7 +60,7 @@
                         android:alpha="0.75"
                         android:layout_marginTop="8dp"
                         android:fontFamily="sans-serif"
-                        android:text="Не удалось загрузить ленту с актуальными данными"/>
+                        android:text="Нам пока нечего показать вам) Как насчёт полистать мемы?"/>
 
             </LinearLayout>
 

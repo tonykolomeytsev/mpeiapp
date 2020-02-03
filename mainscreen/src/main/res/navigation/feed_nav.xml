@@ -7,7 +7,7 @@
 
     <fragment
             android:id="@+id/feedFragment"
-            android:name="kekmech.ru.feed.FeedFragment"
+            android:name="kekmech.ru.feed.view.FeedFragment"
             android:label="FeedFragment"
             tools:layout="@layout/fragment_feed">
         <action

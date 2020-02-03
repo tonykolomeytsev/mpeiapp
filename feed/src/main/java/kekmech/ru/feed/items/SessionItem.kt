@@ -5,12 +5,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.core.dto.AcademicSession
 import kekmech.ru.coreui.adapter.BaseAdapter
-import kekmech.ru.coreui.adapter.BaseFactory
 import kekmech.ru.coreui.adapter.BaseItem
 import kekmech.ru.coreui.adapter.BaseViewHolder
+import kekmech.ru.coreui.adapter2.BaseItem2
 import kekmech.ru.feed.R
 
-class SessionItem(val academicSession: AcademicSession) : BaseItem<SessionItem.ViewHolder>() {
+class SessionItem(val academicSession: AcademicSession) : BaseItem2<SessionItem.ViewHolder>(R.layout.item_card_with_recycler, ViewHolder::class) {
 
     val adapter = BaseAdapter.Builder()
         .registerViewTypeFactory(SessionDisciplineStackItem.Factory())
@@ -35,17 +35,17 @@ class SessionItem(val academicSession: AcademicSession) : BaseItem<SessionItem.V
         }
     }
 
-    override fun updateViewHolder(viewHolder: ViewHolder) {
+    override fun updateViewHolder(vh: ViewHolder) {
         if (adapter.items.isEmpty()) adapter.baseItems.addAll(items)
-        viewHolder.recycler.layoutManager = LinearLayoutManager(viewHolder.itemView.context)
-        viewHolder.recycler.adapter = adapter
+        vh.recycler.layoutManager = LinearLayoutManager(vh.itemView.context)
+        vh.recycler.adapter = adapter
     }
-
-    override fun approveFactory(factory: BaseFactory) = factory is Factory
 
     class ViewHolder(view: View) : BaseViewHolder(view) {
         val recycler by bind<RecyclerView>(R.id.recyclerView)
     }
 
-    class Factory : BaseFactory(R.layout.item_card_with_recycler, ::ViewHolder)
+
+    override fun equals(other: Any?) = if (other is SessionItem) other.academicSession == academicSession else false
+    override fun hashCode() = academicSession.hashCode()
 }

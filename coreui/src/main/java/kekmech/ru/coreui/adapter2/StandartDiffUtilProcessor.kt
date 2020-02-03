@@ -1,14 +1,13 @@
 package kekmech.ru.coreui.adapter2
 
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.RecyclerView
 
 class StandartDiffUtilProcessor : BaseAdapter2.DiffUtilProcessor {
 
     override fun invoke(
         oldItems: List<BaseItem2<*>>,
         newItems: List<BaseItem2<*>>,
-        adapter: RecyclerView.Adapter<*>
+        adapter: BaseAdapter2
     ) {
         val diffCallback = object : DiffUtil.Callback() {
             override fun getOldListSize() = oldItems.size
@@ -19,6 +18,8 @@ class StandartDiffUtilProcessor : BaseAdapter2.DiffUtilProcessor {
                 oldItems[oldItemPosition] == newItems[newItemPosition]
         }
         val result = DiffUtil.calculateDiff(diffCallback)
+        adapter.items.clear()
+        adapter.items.addAll(newItems)
         result.dispatchUpdatesTo(adapter)
     }
 }
