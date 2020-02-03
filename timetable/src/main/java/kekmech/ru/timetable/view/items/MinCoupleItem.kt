@@ -1,5 +1,6 @@
 package kekmech.ru.timetable.view.items
 
+import android.os.Handler
 import android.view.View
 import android.view.View.VISIBLE
 import android.widget.TextView
@@ -31,9 +32,10 @@ class MinCoupleItem(val coupleNative: CoupleNative) : BaseClickableItem<MinCoupl
         viewHolder.timeEnd = coupleNative.timeEnd
         viewHolder.number = "${coupleNative.num} ПАРА"
 
-        coupleNative.noteLiveData.observeForever {
+        viewHolder.hasNote.alpha = 0f
+        Handler().postDelayed({ coupleNative.noteLiveData.observeForever {
             animateView(viewHolder.hasNote, it != null)
-        }
+        }}, 50)
     }
 
     private fun animateView(view: View, visibility: Boolean) {
@@ -83,5 +85,5 @@ class MinCoupleItem(val coupleNative: CoupleNative) : BaseClickableItem<MinCoupl
     override fun equals(other: Any?) = if (other is MinCoupleItem) other.coupleNative.content == coupleNative.content else false
     override fun hashCode() = coupleNative.content.hashCode()
 
-    private val CoupleNative.content get() = "$name $teacher $place $timeStart $timeEnd $type $day $noteId"
+    private val CoupleNative.content get() = "$name $teacher $place $timeStart $timeEnd $type $day ${noteLiveData.value}"
 }
