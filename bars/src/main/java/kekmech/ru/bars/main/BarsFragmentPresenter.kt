@@ -17,6 +17,7 @@ import kekmech.ru.coreui.adapter.BaseAdapter
 import kekmech.ru.coreui.adapter.BaseClickableItem
 import kekmech.ru.coreui.adapter.BaseItem
 import kotlinx.coroutines.*
+import kotlin.random.Random
 
 class BarsFragmentPresenter constructor(
     private val model: BarsFragmentModel,
@@ -49,7 +50,6 @@ class BarsFragmentPresenter constructor(
         if (model.isLoggedIn) {
             view.setLoginState(false)
             if (adapter.itemCount == 0) {
-                adapter.setHasStableIds(true)
                 GlobalScope.launch(Dispatchers.IO) {
                     model.updateScore()
                     view.hideLoading()
