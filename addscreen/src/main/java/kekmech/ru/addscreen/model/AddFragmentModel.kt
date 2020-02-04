@@ -12,4 +12,6 @@ interface AddFragmentModel {
      * Returns false if error
      */
     suspend fun loadNewSchedule(groupNum: String): Boolean
+
+    fun launchUpdate()
 }
