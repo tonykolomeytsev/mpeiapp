@@ -63,6 +63,7 @@ class AddFragmentPresenter constructor(
      * unsubscribe to view events
      */
     override fun onPause(view: IAddFragment) {
+        model.launchUpdate()
         this.view = null
     }
 

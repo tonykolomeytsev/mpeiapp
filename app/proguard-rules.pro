@@ -21,3 +21,9 @@
 #-renamesourcefileattribute SourceFile
 
 -keep class kekmech.ru.core.dto.** { *; }
+-keep class kekmech.ru.coreui.adapter2.** { *; }
+
+-keep class * extends kekmech.ru.coreui.adapter2.BaseItem2 { *; }
+-keepclassmembers class * extends kekmech.ru.coreui.adapter2.BaseItem2 { *; }
+-keep class * extends kekmech.ru.coreui.adapter.** { *; }
+-keepclassmembers class * extends kekmech.ru.coreui.adapter.** { *; }

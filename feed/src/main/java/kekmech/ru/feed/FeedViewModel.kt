@@ -60,7 +60,7 @@ class FeedViewModel constructor(
         model.getCarousel(),
         model.actualSchedule,
         model.getAcademicSession(),
-        model.isSchedulesEmpty)
+        model.groupNumber)
     ) { (carousel, actualSchedule, sessionSchedule, emptySchedule) ->
         val newListOfItems = mutableListOf<BaseItem2<*>>()
 
@@ -70,7 +70,7 @@ class FeedViewModel constructor(
         if (actualSchedule?.isNotEmpty() == true)
             newListOfItems.add(if (model.isEvening) TomorrowCouplesItem(actualSchedule) else TodayCouplesItem(actualSchedule))
         if (sessionSchedule != null ) newListOfItems.add(SessionItem(sessionSchedule))
-        if (emptySchedule == true) newListOfItems.add(EmptyItem(::navigateToAdd))
+        if (emptySchedule.isNullOrEmpty()) newListOfItems.add(EmptyItem(::navigateToAdd))
         if (newListOfItems.isEmpty() || newListOfItems.all { it is CarouselItem })
             if (!isLoadingLocal) newListOfItems.add(NothingToShowItem())
 
