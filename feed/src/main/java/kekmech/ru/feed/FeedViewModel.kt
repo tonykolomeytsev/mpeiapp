@@ -67,7 +67,7 @@ class FeedViewModel constructor(
         val isLoadingLocal = (carousel == null) || (actualSchedule == null && sessionSchedule == null && emptySchedule == null)
         isLoading.value = isLoadingLocal
         if (carousel != null) newListOfItems.add(CarouselItem(carousel, model.getPicasso()))
-        if (actualSchedule?.isNotEmpty() == true)
+        if (!actualSchedule.isNullOrEmpty())
             newListOfItems.add(if (model.isEvening) TomorrowCouplesItem(actualSchedule) else TodayCouplesItem(actualSchedule))
         if (sessionSchedule != null ) newListOfItems.add(SessionItem(sessionSchedule))
         if (emptySchedule.isNullOrEmpty()) newListOfItems.add(EmptyItem(::navigateToAdd))
@@ -99,6 +99,8 @@ class FeedViewModel constructor(
     fun navigateToSettings() = router.navigate(FEED_TO_SETTINGS)
 
     fun updateSchedules() = model.updateScheduleFromRemote()
+
+    fun updateActualSchedules() = model.updateActualSchedule()
 
     private fun List<BaseItem2<*>>.sortedByClass(sortOrder: List<KClass<out BaseItem2<*>>>) =
         this.sortedBy { sortOrder.indexOf(it::class).let { i -> if (i == -1) 999 else i } }

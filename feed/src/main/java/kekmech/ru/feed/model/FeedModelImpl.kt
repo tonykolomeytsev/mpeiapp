@@ -4,11 +4,13 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import kekmech.ru.core.dto.AcademicSession
 import kekmech.ru.core.dto.CoupleNative
 import kekmech.ru.core.dto.FeedCarousel
 import kekmech.ru.core.gateways.PicassoFirebaseInstance
 import kekmech.ru.core.usecases.*
+import kekmech.ru.core.zipNullable
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
@@ -88,12 +90,18 @@ class FeedModelImpl constructor(
         }
     }
 
-    override val actualSchedule: LiveData<List<CoupleNative>>
-        get() = if (isEvening) getTomorrowSchedule() else getTodaySchedule()
+    private val isEveningLiveData = MutableLiveData<Boolean>().apply { value = isEvening }
+    override val actualSchedule: LiveData<List<CoupleNative>> = Transformations.switchMap(isEveningLiveData) {
+        if (it == true) getTomorrowSchedule() else getTodaySchedule()
+    }
 
     override fun checkIsSchedulesEmpty() {
         GlobalScope.launch(Main) {
             isSchedulesEmpty.value = withContext(IO) { isSchedulesEmptyUseCase() }
         }
+    }
+
+    override fun updateActualSchedule() {
+        isEveningLiveData.value = isEvening
     }
 }

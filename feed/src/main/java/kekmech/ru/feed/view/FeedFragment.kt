@@ -36,6 +36,7 @@ class FeedFragment : Fragment(R.layout.fragment_feed) {
         viewModel.updateSchedules()
         viewModel.checkForEmptyChedule()
         viewModel.checkForUpdates()
+        viewModel.updateActualSchedules()
 
         recyclerView?.layoutManager = LinearLayoutManager(activity)
         recyclerView?.adapter = viewModel.adapter
