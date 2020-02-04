@@ -37,4 +37,5 @@ interface FeedModel {
 
     fun updateScheduleFromRemote()
     fun checkIsSchedulesEmpty()
+    fun updateActualSchedule()
 }
