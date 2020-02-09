@@ -55,10 +55,10 @@ class TimetableFragment : BaseFragment<TimetableFragmentPresenter, TimetableFrag
     }
 
     override fun setupViewPager() {
-        viewPager.adapter = presenter.weekAdapter
-        viewPager.offscreenPageLimit = 7
-        tabLayout.setupWithViewPager(viewPager)
-        tabLayout.tabMode = TabLayout.MODE_SCROLLABLE
+        viewPager?.adapter = presenter.weekAdapter
+        viewPager?.offscreenPageLimit = 7
+        tabLayout?.setupWithViewPager(viewPager)
+        tabLayout?.tabMode = TabLayout.MODE_SCROLLABLE
     }
 
     override fun setStatus(title: String, subtitle: String) {
@@ -81,9 +81,5 @@ class TimetableFragment : BaseFragment<TimetableFragmentPresenter, TimetableFrag
     override fun onAttach(context: Context) {
         retainInstance = true
         super.onAttach(context)
-    }
-
-    companion object {
-        private var savedView: View? = null
     }
 }
