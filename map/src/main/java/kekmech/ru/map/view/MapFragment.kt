@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.viewpager2.widget.ViewPager2
@@ -102,6 +103,10 @@ class MapFragment : Fragment(R.layout.fragment_map) {
         buttonExpand?.setOnClickListener {
             behavior.state = if (behavior.state == STATE_COLLAPSED) STATE_EXPANDED else STATE_COLLAPSED
         }
+        bottomMenu?.setOnApplyWindowInsetsListener { v, insets ->
+            v.updatePadding(0, 0, 0, 0)
+            insets
+        } // костыль
     }
 
     override fun onPause() {
