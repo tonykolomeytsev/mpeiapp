@@ -13,7 +13,7 @@
 
     <item
             android:id="@+id/map_nav"
-            android:icon="@drawable/outline_room_24"
+            android:icon="@drawable/outline_place_24"
             android:title="@string/title_map"/>
 
     <item
