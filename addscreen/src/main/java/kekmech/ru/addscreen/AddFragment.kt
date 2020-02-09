@@ -23,6 +23,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kekmech.ru.addscreen.presenter.AddFragmentPresenter
 import kekmech.ru.core.usecases.IsDarkThemeEnabledUseCase
@@ -81,11 +82,17 @@ class AddFragment : BottomSheetDialogFragment(), IAddFragment {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val dialog = super.onCreateDialog(savedInstanceState)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1 && !isDarkThemeEnabledUseCase()) {
-            setWhiteNavigationBar(dialog)
+        val bottomSheetDialog = super.onCreateDialog(savedInstanceState) as BottomSheetDialog
+        bottomSheetDialog.setOnShowListener {
+            val bottomSheet = bottomSheetDialog.findViewById<FrameLayout>(com.google.android.material.R.id.design_bottom_sheet)
+            val behavior = BottomSheetBehavior.from(bottomSheet)
+            behavior.skipCollapsed = true
+            behavior.state = BottomSheetBehavior.STATE_EXPANDED
         }
-        return dialog
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1 && !isDarkThemeEnabledUseCase()) {
+            setWhiteNavigationBar(bottomSheetDialog)
+        }
+        return bottomSheetDialog
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
