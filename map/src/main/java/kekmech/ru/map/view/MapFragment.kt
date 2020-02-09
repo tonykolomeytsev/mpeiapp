@@ -4,19 +4,18 @@ package kekmech.ru.map.view
 import android.graphics.Color
 import android.graphics.Rect
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
+import androidx.lifecycle.Observer
 import androidx.viewpager2.widget.ViewPager2
-import kekmech.ru.map.MapFragmentPresenter
 import com.example.map.R
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_COLLAPSED
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED
+import kekmech.ru.map.MapViewModel
+import kekmech.ru.map.MapViewModel.MarkersFilter.*
 import kekmech.ru.map.model.MapFragmentModel.Companion.PAGE_BUILDINGS
 import kekmech.ru.map.model.MapFragmentModel.Companion.PAGE_FOODS
 import kekmech.ru.map.model.MapFragmentModel.Companion.PAGE_HOSTELS
@@ -24,73 +23,68 @@ import kotlinx.android.synthetic.main.fragment_map.*
 import org.koin.android.ext.android.inject
 
 
-class MapFragment : Fragment(), MapFragmentView {
+class MapFragment : Fragment(R.layout.fragment_map) {
 
-    val presenter: MapFragmentPresenter by inject()
-
-    override val contentView: ViewGroup get() = mapCoordinator
-    override var onChangeStateListener: (Int) -> Unit = {}
+    private val viewModel: MapViewModel by inject()
     private var viewPagerUI: ViewPager2? = null
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_map, container, false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        mapView.onCreate(savedInstanceState)
-        mapView.getMapAsync(presenter)
-        placeContentUnderStatusBar()
-        tabBuildings?.setOnClickListener { scrollUiTo(PAGE_BUILDINGS) }
-        tabHostels?.setOnClickListener { scrollUiTo(PAGE_HOSTELS) }
-        tabFoods?.setOnClickListener { scrollUiTo(PAGE_FOODS) }
-    }
-
-    fun scrollUiTo(position: Int) {
-        onChangeStateListener(position)
-        viewPagerUI?.setCurrentItem(position, true)
-
-    }
-
-    override fun setState(state: Int) {
-        viewPagerUI?.setCurrentItem(state, false)
-    }
-
-    override fun placeContentUnderStatusBar() {
-        val rectangle = Rect(0, 0, 0, 0)
-        val window = activity?.window
-        window?.decorView?.getWindowVisibleDisplayFrame(rectangle)
-        val statusBarHeight = rectangle.top
-        val p = mapView?.layoutParams as ViewGroup.MarginLayoutParams?
-        p?.topMargin = -statusBarHeight
-        mapView?.layoutParams = p
-    }
-
     override fun onResume() {
-        Log.d("MapFragment", "onResume")
-        // dynamically load viewPager2
+        super.onResume()
+        // dynamically load viewPager2 (coz viewpager2 issue)
         viewPagerUI = ViewPager2(requireContext())
         viewPagerContainer?.removeAllViews()
         viewPagerContainer?.addView(viewPagerUI)
-        viewPagerUI?.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                val tabs = listOf(tabBuildings, tabHostels, tabFoods)
-                tabs.filterNotNull().forEachIndexed { index, view -> redrawTabItem(view, position == index) }
-                onChangeStateListener(position)
+        viewPagerUI?.registerOnPageChangeCallback(viewPagerOnPageChangeCallback)
+        viewPagerUI?.adapter = viewModel.mapUIAdapter
+
+        viewModel.currentMapFilter.observe(this, Observer {
+            val directPage = when (it ?: BUILDINGS) {
+                BUILDINGS -> (PAGE_BUILDINGS)
+                HOSTELS -> (PAGE_HOSTELS)
+                FOODS -> (PAGE_FOODS)
             }
+            if (directPage != viewPagerUI?.currentItem) scrollUiTo(directPage)
+        })
+        viewModel.currentMapMarkers.observe(this, Observer {
+            Log.d("MapFragment", "Map markers changed")
         })
 
-        mapView?.onResume()
-        super.onResume()
-        presenter.onResume(this)
-        placeContentUnderStatusBar()
+        tabBuildings?.setOnClickListener { viewModel.changeMapFilterTo(BUILDINGS) }
+        tabHostels?.setOnClickListener { viewModel.changeMapFilterTo(HOSTELS) }
+        tabFoods?.setOnClickListener { viewModel.changeMapFilterTo(FOODS) }
 
+        mapView?.onResume()
         setupBottomMenu()
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        view.setOnApplyWindowInsetsListener { _, insets ->
+            val statusBarSize = insets.systemWindowInsetTop
+            val p = mapView?.layoutParams as ViewGroup.MarginLayoutParams?
+            p?.topMargin = -statusBarSize
+            mapView?.layoutParams = p
+            mapView?.setPadding(0, statusBarSize, 0, 0)
+            insets
+        }
+        super.onViewCreated(view, savedInstanceState)
+        mapView.onCreate(savedInstanceState)
+        mapView.getMapAsync(viewModel)
+    }
+
+    private val viewPagerOnPageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
+        override fun onPageSelected(position: Int) {
+            super.onPageSelected(position)
+            val tabs = listOf(tabBuildings, tabHostels, tabFoods)
+            tabs.filterNotNull().forEachIndexed { index, view -> redrawTabItem(view, position == index) }
+            viewModel.changeMapFilterTo(when(position) {
+                PAGE_BUILDINGS -> BUILDINGS
+                PAGE_HOSTELS -> HOSTELS
+                else -> FOODS
+            })
+        }
+    }
+
+    private fun scrollUiTo(position: Int) = viewPagerUI?.setCurrentItem(position, true)
 
     private fun setupBottomMenu() {
         val behavior = BottomSheetBehavior.from(bottomMenu)
@@ -111,13 +105,11 @@ class MapFragment : Fragment(), MapFragmentView {
     }
 
     override fun onPause() {
-        Log.d("MapFragment", "onPause")
+        super.onPause()
         viewPagerContainer?.removeAllViews()
         viewPagerUI = null
         System.gc()
         mapView?.onPause()
-        presenter.onPause(this)
-        super.onPause()
     }
 
     override fun onLowMemory() {
@@ -128,10 +120,6 @@ class MapFragment : Fragment(), MapFragmentView {
     override fun onDestroy() {
         mapView?.onDestroy()
         super.onDestroy()
-    }
-
-    override fun setAdapter(mapUIAdapter: RecyclerView.Adapter<*>) {
-        viewPagerUI?.adapter = mapUIAdapter
     }
 
     private fun redrawTabItem(item: View, selected: Boolean) {

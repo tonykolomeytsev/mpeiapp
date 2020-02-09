@@ -11,11 +11,8 @@ interface MapFragmentModel {
     val hostels: LiveData<List<Hostel>>
     val foods: LiveData<List<Food>>
 
-    var state: Int
+    var markers: List<Marker>
 
-    val markers: MutableList<Marker>
-
-    var selectedPlace: Any?
     var selectedPlaceListener: (Any) -> Unit
 
     companion object {

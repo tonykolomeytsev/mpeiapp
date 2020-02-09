@@ -10,9 +10,7 @@ import kekmech.ru.core.usecases.*
 class MapFragmentModelImpl constructor(
     private val getBuildingsUseCase: GetBuildingsUseCase,
     private val getHostelsUseCase: GetHostelsUseCase,
-    private val getFoodsUseCase: GetFoodsUseCase,
-    private val getMapStateUseCase: GetMapStateUseCase,
-    private val setMapStateUseCase: SetMapStateUseCase
+    private val getFoodsUseCase: GetFoodsUseCase
 ) : MapFragmentModel {
     override val buildings: LiveData<List<Building>>
         get() = getBuildingsUseCase()
@@ -21,16 +19,6 @@ class MapFragmentModelImpl constructor(
     override val foods: LiveData<List<Food>>
         get() = getFoodsUseCase()
 
-    override var state: Int
-        get() = getMapStateUseCase()
-        set(value) { setMapStateUseCase(value) }
-
-    override val markers = mutableListOf<Marker>()
-
-    override var selectedPlace: Any? = Any()
-        set(value) {
-            field = value
-            if (value != null) selectedPlaceListener(value)
-        }
+    override var markers = listOf<Marker>()
     override var selectedPlaceListener: (Any) -> Unit = {}
 }
