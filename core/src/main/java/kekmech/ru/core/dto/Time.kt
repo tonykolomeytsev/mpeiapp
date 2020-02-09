@@ -5,11 +5,12 @@ import android.util.Log
 import java.text.SimpleDateFormat
 import java.util.*
 
-class Time(val calendar: Calendar = Calendar.getInstance(Locale.getDefault())) {
+class Time(val calendar: Calendar = Calendar.getInstance(Locale("ru"))) {
 
-    constructor(date: Date) : this(Calendar.getInstance().apply { time = date })
+    constructor(date: Date) : this(Calendar.getInstance(Locale("ru")).apply { time = date })
 
     constructor(year: Int, month: Int, dayOfMonth: Int) : this(Calendar.getInstance().apply {
+        minimalDaysInFirstWeek = 1
         set(
             year,
             month,
@@ -41,7 +42,7 @@ class Time(val calendar: Calendar = Calendar.getInstance(Locale.getDefault())) {
         getDayWithOffset(1)
     }
     val prevDay by lazy {
-        Time(Calendar.getInstance().apply {
+        Time(Calendar.getInstance(Locale("ru")).apply {
             timeInMillis = calendar.timeInMillis - MILLIS_IN_DAY
         })
     }
@@ -118,7 +119,7 @@ class Time(val calendar: Calendar = Calendar.getInstance(Locale.getDefault())) {
         const val SECONDS_IN_DAY = MINUTES_IN_DAY * 60
         const val MILLIS_IN_DAY = SECONDS_IN_DAY * 1000
 
-        fun today() = Time(Calendar.getInstance(Locale.getDefault()))
+        fun today() = Time(Calendar.getInstance(Locale("ru")))
 
         /**
          * Всегда первое сентября
@@ -148,7 +149,7 @@ class Time(val calendar: Calendar = Calendar.getInstance(Locale.getDefault())) {
             }
 
         fun byWeekOfYear(weekOfYear: Int): Time {
-            val calendar = Calendar.getInstance()
+            val calendar = Calendar.getInstance(Locale("ru"))
             calendar.set(Calendar.WEEK_OF_YEAR, weekOfYear)
             return Time(calendar)
         }
