@@ -72,7 +72,7 @@ class AddFragment : BottomSheetDialogFragment(), IAddFragment {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         dialog?.setOnShowListener {
-            val bsInternal = dialog?.findViewById<FrameLayout>(com.google.android.material.R.id.design_bottom_sheet)
+            val bsInternal = dialog?.findViewById<FrameLayout>(com.google.android.material.R.id.design_bottom_sheet) ?: return@setOnShowListener
             BottomSheetBehavior.from(bsInternal).peekHeight = TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP,
                 500f,
@@ -84,7 +84,7 @@ class AddFragment : BottomSheetDialogFragment(), IAddFragment {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val bottomSheetDialog = super.onCreateDialog(savedInstanceState) as BottomSheetDialog
         bottomSheetDialog.setOnShowListener {
-            val bottomSheet = bottomSheetDialog.findViewById<FrameLayout>(com.google.android.material.R.id.design_bottom_sheet)
+            val bottomSheet = bottomSheetDialog.findViewById<FrameLayout>(com.google.android.material.R.id.design_bottom_sheet) ?: return@setOnShowListener
             val behavior = BottomSheetBehavior.from(bottomSheet)
             behavior.skipCollapsed = true
             behavior.state = BottomSheetBehavior.STATE_EXPANDED

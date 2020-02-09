@@ -29,8 +29,8 @@ abstract class BaseBottomSheetDialogFragment<P : Presenter<L>, L : LifecycleOwne
         super.onCreate(savedInstanceState)
         if (peekHeight != -1f) {
             dialog?.setOnShowListener {
-                val bsInternal =
-                    dialog?.findViewById<FrameLayout>(com.google.android.material.R.id.design_bottom_sheet)
+                val bsInternal = dialog?.findViewById<FrameLayout>(com.google.android.material.R.id.design_bottom_sheet)
+                    ?: return@setOnShowListener
                 BottomSheetBehavior.from(bsInternal).peekHeight = TypedValue.applyDimension(
                     TypedValue.COMPLEX_UNIT_DIP,
                     peekHeight,
