@@ -115,6 +115,41 @@ fun <A, B, C> zip(a: LiveData<A>, b: LiveData<B>, c: LiveData<C>): LiveData<Trip
     }
 }
 
+fun <A, B, C, D> zip(a: LiveData<A>, b: LiveData<B>, c: LiveData<C>, d: LiveData<D>): LiveData<Quadro<A, B, C, D>> {
+    return MediatorLiveData<Quadro<A, B, C, D>>().apply {
+        var lastA: A? = null
+        var lastB: B? = null
+        var lastC: C? = null
+        var lastD: D? = null
+
+        fun update() {
+            val localLastA = lastA
+            val localLastB = lastB
+            val localLastC = lastC
+            val localLastD = lastD
+            if (localLastA != null && localLastB != null && localLastC != null && localLastD != null)
+                this.value = Quadro(localLastA, localLastB, localLastC, localLastD)
+        }
+
+        addSource(a) {
+            lastA = it
+            update()
+        }
+        addSource(b) {
+            lastB = it
+            update()
+        }
+        addSource(c) {
+            lastC = it
+            update()
+        }
+        addSource(d) {
+            lastD = it
+            update()
+        }
+    }
+}
+
 fun <A, B, C> zipNullable(a: LiveData<A>, b: LiveData<B>, c: LiveData<C>): LiveData<Triple<A?, B?, C?>> {
     return MediatorLiveData<Triple<A?, B?, C?>>().apply {
         var lastA: A? = null
@@ -173,6 +208,46 @@ fun <A, B, C, D> zipNullable(a: LiveData<A>, b: LiveData<B>, c: LiveData<C>, d: 
         }
         addSource(d) {
             lastD = it
+            update()
+        }
+    }
+}
+data class Penta<A, B, C, D, E>(val a: A, val b: B, val c: C, val d: D, val e: E)
+fun <A, B, C, D, E> zipNullable(a: LiveData<A>, b: LiveData<B>, c: LiveData<C>, d: LiveData<D>, e: LiveData<E>): LiveData<Penta<A?, B?, C?, D?, E?>> {
+    return MediatorLiveData<Penta<A?, B?, C?, D?, E?>>().apply {
+        var lastA: A? = null
+        var lastB: B? = null
+        var lastC: C? = null
+        var lastD: D? = null
+        var lastE: E? = null
+
+        fun update() {
+            val localLastA = lastA
+            val localLastB = lastB
+            val localLastC = lastC
+            val localLastD = lastD
+            val localLastE = lastE
+            this.value = Penta(localLastA, localLastB, localLastC, localLastD, localLastE)
+        }
+
+        addSource(a) {
+            lastA = it
+            update()
+        }
+        addSource(b) {
+            lastB = it
+            update()
+        }
+        addSource(c) {
+            lastC = it
+            update()
+        }
+        addSource(d) {
+            lastD = it
+            update()
+        }
+        addSource(e) {
+            lastE = it
             update()
         }
     }
