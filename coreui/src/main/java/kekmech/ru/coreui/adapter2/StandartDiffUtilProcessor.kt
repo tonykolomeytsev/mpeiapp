@@ -20,6 +20,10 @@ class StandartDiffUtilProcessor : BaseAdapter2.DiffUtilProcessor {
         val result = DiffUtil.calculateDiff(diffCallback)
         adapter.items.clear()
         adapter.items.addAll(newItems)
-        result.dispatchUpdatesTo(adapter)
+        try {
+            result.dispatchUpdatesTo(adapter)
+        } catch (e: Exception) {
+            adapter.notifyDataSetChanged()
+        }
     }
 }
