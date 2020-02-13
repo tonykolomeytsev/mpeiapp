@@ -36,7 +36,7 @@ class AddFragmentPresenter constructor(
                 .registerItemTypes(GroupItem::class)
                 .build()
             adapter.items.addAll(groupSet
-                .take(10) // ограничение
+                //.take(10) // ограничение
                 .map(::GroupItem)
                 .onEach { it.clickListener = ::onGroupClick })
             delay(100)

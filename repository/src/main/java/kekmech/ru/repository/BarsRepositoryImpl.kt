@@ -122,13 +122,13 @@ class BarsRepositoryImpl constructor(
 
     private fun getUsername(): String {
         val username = sharedPreferences
-            .getString("user1", null) ?: throw RuntimeException("User is not logged in")
+            .getString("user1", null) ?: return ""
         return baseKeyStore.decrypt(username)
     }
 
     private fun getPassword(): String {
         val password = sharedPreferences
-            .getString("user2", null) ?: throw RuntimeException("User is not logged in")
+            .getString("user2", null) ?: return ""
         return baseKeyStore.decrypt(password)
     }
 
@@ -155,12 +155,12 @@ class BarsRepositoryImpl constructor(
         }
     }
 
-    override fun getLoginScript(): String =
+    override fun getLoginScript(): String = if (getUsername().isNotBlank())
         """
             document.getElementById('UserName').value='${getUsername()}';
             document.getElementById('Password').value='${getPassword()}';
             document.getElementsByTagName('button')[0].click()
-        """.trimIndent()
+        """.trimIndent() else ""
 
     override suspend fun updateScore() {
         if (score.value == null) loadFromCache()?.let { withContext(Dispatchers.Main) { score.value = it } }
