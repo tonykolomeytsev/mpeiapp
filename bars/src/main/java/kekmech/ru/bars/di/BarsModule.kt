@@ -1,7 +1,7 @@
 package kekmech.ru.bars.di
 
 import kekmech.ru.bars.details.BarsDetailsFragmentPresenter
-import kekmech.ru.bars.main.BarsFragmentPresenter
+import kekmech.ru.bars.main.BarsViewModel
 import kekmech.ru.bars.main.model.BarsFragmentModel
 import kekmech.ru.bars.main.model.BarsFragmentModelImpl
 import kekmech.ru.bars.rating.RatingFragmentPresenter
@@ -11,8 +11,8 @@ import org.koin.dsl.module
 
 val KoinBarsModule = module {
     // bars fragment MVP
-    single { BarsFragmentPresenter(get(), get(), get(), get()) }
-    single { BarsFragmentModelImpl(get(), get(), get(), get(), get(), get(), get(), get(), get(), get()) } bind BarsFragmentModel::class
+    single { BarsViewModel(get(), get(), get(), get()) }
+    single { BarsFragmentModelImpl(get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get()) } bind BarsFragmentModel::class
 
     // Rights fragment MVP
     single { RightsFragmentPresenter() }

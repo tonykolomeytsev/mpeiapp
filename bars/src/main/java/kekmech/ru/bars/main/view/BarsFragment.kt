@@ -6,62 +6,95 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.CookieManager
+import android.webkit.CookieSyncManager
+import android.webkit.WebView
+import android.webkit.WebViewClient
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import kekmech.ru.bars.R
-import kekmech.ru.bars.main.BarsFragmentPresenter
-import kekmech.ru.core.platform.BaseFragment
+import kekmech.ru.bars.main.BarsViewModel
 import kekmech.ru.coreui.Resources
 import kotlinx.android.synthetic.main.fragment_bars.*
 import org.koin.android.ext.android.inject
 
 
-class BarsFragment : BaseFragment<BarsFragmentPresenter, BarsFragmentView>(
-    layoutId = R.layout.fragment_bars
-), BarsFragmentView {
+class BarsFragment : Fragment(R.layout.fragment_bars) {
 
     init {
         retainInstance = true
     }
 
-    override val presenter: BarsFragmentPresenter by inject()
-
-    override var onRefreshListener: () -> Unit = {}
+    private val viewModel: BarsViewModel by inject()
 
     override fun onResume() {
         super.onResume()
+        viewModel.checkForUpdates()
+        viewModel.refresh()
+
         if (recyclerView?.layoutManager == null)
             recyclerView?.layoutManager = LinearLayoutManager(context)
         if (recyclerView?.adapter == null)
-            recyclerView?.adapter = presenter.adapter
-
+            recyclerView?.adapter = viewModel.adapter
         swipeRefresh?.setProgressViewEndTarget(false, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 144f, resources.displayMetrics).toInt())
-        swipeRefresh?.setOnRefreshListener { onRefreshListener() }
+        swipeRefresh?.setOnRefreshListener { viewModel.refresh() }
         swipeRefresh?.setColorSchemeColors(
             Resources.getColor(context, R.color.colorPrimary),
             Resources.getColor(context, R.color.colorSecondary)
         )
+        CookieManager.getInstance().apply {
+            setAcceptCookie(true)
+            setAcceptThirdPartyCookies(webView, true)
+        }
+        webView?.settings?.loadsImagesAutomatically = false
+
+        viewModel.barsState.observe(this, Observer {
+            if (it == true) swipeRefresh?.isEnabled = true
+            else {
+                swipeRefresh?.isRefreshing = false
+                swipeRefresh?.isEnabled = false
+            }
+        })
+        viewModel.contentItems.observe(this, Observer {
+            viewModel.updateAdapter(it ?: emptyList())
+            hideLoading()
+        })
+        viewModel.loadUrl.observe(this, Observer {
+            val (url, listener) = it ?: return@Observer
+            webView?.webViewClient = object : WebViewClient() {
+                override fun onPageFinished(view: WebView?, url: String?){
+                    CookieSyncManager.getInstance().sync()
+                    listener(url ?: "")
+                }
+            }
+            webView?.loadUrl(url)
+        })
+        viewModel.executeScript.observe(this, Observer {
+            val (script, callback, pageListener) = it ?: return@Observer
+            webView?.settings?.javaScriptEnabled = true
+            webView?.webViewClient = object : WebViewClient() {
+                override fun onPageFinished(view: WebView?, url: String?) {
+                    pageListener(url ?: "")
+                }
+            }
+            webView?.evaluateJavascript(script) {
+                callback(it ?: "")
+                webView?.settings?.javaScriptEnabled = false
+            }
+        })
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         if (savedView?.parent != null) (savedView?.parent as ViewGroup?)?.removeView(savedView)
         if (savedView == null) savedView = super.onCreateView(inflater, container, savedInstanceState)
         return savedView!!
     }
 
-    override fun hideLoading() {
-        swipeRefresh?.post { swipeRefresh?.isRefreshing = false }
-    }
-
-    override fun showLoading() {
-        swipeRefresh?.post { swipeRefresh?.isRefreshing = true }
-    }
+    private fun hideLoading() = swipeRefresh?.post { swipeRefresh?.isRefreshing = false }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        view.setOnApplyWindowInsetsListener { view, insets ->
+        view.setOnApplyWindowInsetsListener { _, insets ->
             val statusBarSize = insets.systemWindowInsetTop
             val p = swipeRefresh?.layoutParams as ViewGroup.MarginLayoutParams?
             p?.topMargin = -statusBarSize
@@ -70,15 +103,6 @@ class BarsFragment : BaseFragment<BarsFragmentPresenter, BarsFragmentView>(
             insets
         }
         super.onViewCreated(view, savedInstanceState)
-    }
-
-    override fun setLoginState(boolean: Boolean) {
-        if (boolean) {
-            swipeRefresh?.isRefreshing = false
-            swipeRefresh?.isEnabled = false
-        } else {
-            swipeRefresh?.isEnabled = true
-        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -90,9 +114,7 @@ class BarsFragment : BaseFragment<BarsFragmentPresenter, BarsFragmentView>(
         super.onActivityCreated(savedInstanceState)
         if (savedInstanceState != null) {
             if (recyclerView?.layoutManager == null) recyclerView?.layoutManager = LinearLayoutManager(context)
-            recyclerView?.layoutManager?.onRestoreInstanceState(
-                savedInstanceState.getParcelable("main_rv")
-            )
+            recyclerView?.layoutManager?.onRestoreInstanceState(savedInstanceState.getParcelable("main_rv"))
         }
     }
 

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/coordinatorLayout"
+<androidx.coordinatorlayout.widget.CoordinatorLayout android:id="@+id/coordinatorLayout"
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -10,7 +9,7 @@
         android:fitsSystemWindows="true"
         tools:theme="@style/AppTheme"
         android:paddingBottom="56dp"
-        >
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipeRefresh"
@@ -44,5 +43,26 @@
         </androidx.core.widget.NestedScrollView>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <LinearLayout
+            android:id="@+id/bottomMenu"
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+            app:behavior_peekHeight="500dp"
+            app:behavior_hideable="true"
+            android:background="?attr/themeColorCardView"
+            android:orientation="vertical"
+            android:fitsSystemWindows="false"
+            android:paddingTop="0dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_marginTop="0dp">
+
+        <kekmech.ru.bars.main.view.FixedWebView
+                android:id="@+id/webView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+    </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

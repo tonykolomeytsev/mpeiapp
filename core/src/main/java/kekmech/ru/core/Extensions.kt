@@ -1,9 +1,6 @@
 package kekmech.ru.core
 
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.Observer
+import androidx.lifecycle.*
 
 fun <A> observe(
     liveData1: LiveData<A>,
@@ -251,4 +248,14 @@ fun <A, B, C, D, E> zipNullable(a: LiveData<A>, b: LiveData<B>, c: LiveData<C>, 
             update()
         }
     }
+}
+
+
+class LiveEvent<T> : MutableLiveData<T>() {
+
+    override fun setValue(value: T) {
+        super.setValue(value)
+    }
+
+    operator fun invoke(value: T) = setValue(value)
 }
