@@ -51,6 +51,7 @@
             app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
             app:behavior_peekHeight="500dp"
             app:behavior_hideable="true"
+            app:behavior_skipCollapsed="true"
             android:background="?attr/themeColorCardView"
             android:orientation="vertical"
             android:fitsSystemWindows="false"
@@ -59,7 +60,7 @@
             android:focusable="true"
             android:layout_marginTop="0dp">
 
-        <kekmech.ru.bars.main.view.FixedWebView
+        <kekmech.ru.bars.main.view.BarsWebView
                 android:id="@+id/webView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>

@@ -11,6 +11,7 @@ import kekmech.ru.repository.gateways.BarsHttpClient
 import kekmech.ru.repository.gateways.BarsJsoupUtils
 import kekmech.ru.repository.utils.BarsParser
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -143,10 +144,10 @@ class BarsRepositoryImpl constructor(
         sharedPreferences
             .edit()
             .putString("user1", "")
-            .putString("user2", "") // PerezhilovaYD uxi762e
+            .putString("user2", "")
             .putString("score", "")
             .apply()
-        this.isLoggedIn.value = false
+        GlobalScope.launch(Main) { isLoggedIn.value = false }
     }
 
     override fun getLoginScript(): String =

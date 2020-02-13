@@ -15,6 +15,7 @@ import kekmech.ru.bars.main.model.BarsFragmentModel
 import kekmech.ru.core.*
 import kekmech.ru.core.Screens.*
 import kekmech.ru.core.dto.AcademicScore
+import kekmech.ru.core.exceptions.NotLoggedInBarsException
 import kekmech.ru.coreui.adapter.BaseAdapter
 import kekmech.ru.coreui.adapter.BaseClickableItem
 import kekmech.ru.coreui.adapter.BaseItem
@@ -78,18 +79,13 @@ class BarsViewModel constructor(
     private fun onRightsClick() = router.navigate(BARS_TO_RIGHTS)
 
     private fun logInUser(login: String, pass: String, showError: () -> Unit) {
-
-/*        model.saveUserSecrets(login, pass)
-        GlobalScope.launch(Dispatchers.Main) {
-            val score = withContext(Dispatchers.IO) { model.getAcademicScore(true) }
-            if (score == null) {
-                model.clearUserSecrets()
-                showError()
-            } else {
-                view?.setLoginState(false)
-                scoreItems(score)
-            }
-        }*/
+        model.saveUserSecrets(login, pass)
+        try {
+            logInBars()
+        } catch (e: NotLoggedInBarsException) {
+            showError()
+            model.logout()
+        }
     }
 
     private fun scoreItems(score: AcademicScore) = listOfNotNull(
@@ -118,25 +114,23 @@ class BarsViewModel constructor(
         if (model.isLoggedIn.value == true) GlobalScope.launch(IO) {
             model.updateScore()
         } else {
-            val barsMainPage = "https://bars.mpei.ru/bars_web/"
-            loadUrl(barsMainPage to { url ->
-                Log.d("BarsViewModel", "loaded url: $url")
-                if (url == barsMainPage) executeScript(Triple(
-                    model.getLoginScript(),
-                    { e -> Log.d("BarsViewModel", "script: " + e) },
-                    { redirectUrl ->
-                        Log.d("BarsViewModel", "redirect url: $redirectUrl")
-                        if (redirectUrl.contains(".*Part1.*".toRegex()) || redirectUrl.contains(".*Auth.*".toRegex())) GlobalScope.launch(IO) {
-                            model.updateScore()
-                        }
-                    }
-                )) else {
-                    if (url.contains(".*Part1.*".toRegex()) || url.contains(".*Auth.*".toRegex())) GlobalScope.launch(IO) {
-                        model.updateScore()
-                    }
-                }
-            })
+            try { logInBars() } catch (e: NotLoggedInBarsException) { e.printStackTrace() }
         }
+    }
+
+    private fun logInBars() {
+        val barsMainPage = "https://bars.mpei.ru/bars_web/"
+        loadUrl(barsMainPage to { url ->
+            if (url == barsMainPage) executeScript(Triple(
+                model.getLoginScript(),
+                { _->},
+                { _->}
+            )) else {
+                if (url.contains(".*Part1.*".toRegex()) || url.contains(".*Auth.*".toRegex())) GlobalScope.launch(IO) {
+                    model.updateScore()
+                }
+            }
+        })
     }
 
     fun updateAdapter(listOfItems: List<BaseItem<*>>) {

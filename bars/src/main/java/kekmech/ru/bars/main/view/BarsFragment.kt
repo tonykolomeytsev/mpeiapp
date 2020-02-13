@@ -13,6 +13,7 @@ import android.webkit.WebViewClient
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kekmech.ru.bars.R
 import kekmech.ru.bars.main.BarsViewModel
 import kekmech.ru.coreui.Resources
@@ -47,6 +48,7 @@ class BarsFragment : Fragment(R.layout.fragment_bars) {
             setAcceptCookie(true)
             setAcceptThirdPartyCookies(webView, true)
         }
+        BottomSheetBehavior.from(bottomMenu).state = BottomSheetBehavior.STATE_HIDDEN
         webView?.settings?.loadsImagesAutomatically = false
 
         viewModel.barsState.observe(this, Observer {

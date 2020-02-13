@@ -15,4 +15,7 @@ class SyncInProgressItem : BaseItem<SyncInProgressItem.ViewHolder>() {
     class ViewHolder(view: View) : BaseViewHolder2(view)
 
     class Factory : BaseFactory(R.layout.item_sync_in_progress, ::ViewHolder)
+
+    override fun equals(other: Any?) = other is SyncInProgressItem
+    override fun hashCode() = javaClass.hashCode()
 }

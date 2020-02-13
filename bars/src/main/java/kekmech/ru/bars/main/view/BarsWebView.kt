@@ -5,7 +5,7 @@ import android.content.res.Configuration
 import android.util.AttributeSet
 import android.webkit.WebView
 
-class FixedWebView @JvmOverloads constructor(
+class BarsWebView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0,
