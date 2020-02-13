@@ -61,8 +61,10 @@ dependencies {
     // Picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
 
-    // JSOUP
+    // JSOUP and OKHTTP
     implementation 'org.jsoup:jsoup:1.12.1'
+    implementation 'com.squareup.okhttp3:okhttp:4.3.1'
+    implementation 'com.squareup.okhttp3:okhttp-urlconnection:4.3.1'
 
     // GSON
     implementation 'com.google.code.gson:gson:2.8.6'

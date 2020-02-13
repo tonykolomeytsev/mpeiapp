@@ -1,5 +1,7 @@
 package kekmech.ru.core.repositories
 
+import android.webkit.WebView
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import kekmech.ru.core.dto.AcademicDiscipline
 import kekmech.ru.core.dto.AcademicScore
@@ -9,17 +11,17 @@ interface BarsRepository {
 
     var currentAcademicDiscipline: AcademicDiscipline?
 
-    val isLoggedIn: Boolean
+    val hasUserCredentials: Boolean
 
-    val score: MutableLiveData<AcademicScore>
+    val isLoggedIn: LiveData<Boolean>
+
+    val score: LiveData<AcademicScore>
 
     suspend fun updateScore()
-
     suspend fun getScoreAsync(forceRefresh: Boolean): AcademicScore?
-
     fun saveUserSecrets(username: String, password: String)
-
     fun clearUserSecrets()
+    fun getLoginScript(): String
 
 
     companion object {

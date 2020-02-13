@@ -7,6 +7,8 @@ import org.koin.dsl.module
 
 val KoinDomainModule = module {
     single { GetBuildingsUseCaseImpl(get()) } bind GetBuildingsUseCase::class
+    single { GetLoginScriptUseCaseImpl(get()) } bind GetLoginScriptUseCase::class
+    single { HasUserCredentialsUseCaseImpl(get()) } bind HasUserCredentialsUseCase::class
 
     single { GetFoodsUseCaseImpl(get()) } bind GetFoodsUseCase::class
     single { GetHostelsUseCaseImpl(get()) } bind GetHostelsUseCase::class

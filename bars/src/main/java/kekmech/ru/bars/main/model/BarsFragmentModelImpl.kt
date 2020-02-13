@@ -15,7 +15,9 @@ class BarsFragmentModelImpl constructor(
     private val getIsShowedUpdateDialogUseCase: GetIsShowedUpdateDialogUseCase,
     private val setIsShowedUpdateDialogUseCase: SetIsShowedUpdateDialogUseCase,
     private val getRatingLiveDataUseCase: GetRatingLiveDataUseCase,
-    private val updateRatingUseCase: UpdateRatingUseCase
+    private val updateRatingUseCase: UpdateRatingUseCase,
+    private val getLoginScriptUseCase: GetLoginScriptUseCase,
+    private val hasUserCredentialsUseCase: HasUserCredentialsUseCase
 ) : BarsFragmentModel {
 
 
@@ -23,7 +25,7 @@ class BarsFragmentModelImpl constructor(
         get() = getIsShowedUpdateDialogUseCase()
         set(value) { setIsShowedUpdateDialogUseCase(value) }
 
-    override val isLoggedIn: Boolean
+    override val isLoggedIn: LiveData<Boolean>
         get() = isLoggedInBarsUseCase()
 
     override var ratingDetails: AcademicScore.Rating? = null
@@ -35,9 +37,14 @@ class BarsFragmentModelImpl constructor(
 
     override var lastUpdateIndex: Int = -1
 
+    override val hasUserCredentials: Boolean
+        get() = hasUserCredentialsUseCase()
+
     override fun saveUserSecrets(login: String, pass: String) {
         saveUserSecretsUseCase(login, pass)
     }
+
+    override fun getLoginScript() = getLoginScriptUseCase()
 
     override suspend fun getAcademicScore(refresh: Boolean): AcademicScore? {
         return getRatingUseCase(refresh)
@@ -48,7 +55,7 @@ class BarsFragmentModelImpl constructor(
         onRatingUpdatesListener(getRatingUseCase(true))
     }
 
-    override fun clearUserSecrets() {
+    override fun logout() {
         logOutUseCase()
     }
 
