@@ -69,6 +69,7 @@
                 android:textSize="24sp"
                 android:inputType="textNoSuggestions"
                 android:textColor="?attr/themeColorBlack"
+                android:gravity="center"
                 tools:text="C-12-16"
                 tools:textAlignment="center"
                 tools:ignore="Autofill,LabelFor" />

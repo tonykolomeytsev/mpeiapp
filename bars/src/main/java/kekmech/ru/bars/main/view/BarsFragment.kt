@@ -49,7 +49,7 @@ class BarsFragment : Fragment(R.layout.fragment_bars) {
             setAcceptCookie(true)
             setAcceptThirdPartyCookies(webView, true)
         }
-        //BottomSheetBehavior.from(bottomMenu).state = BottomSheetBehavior.STATE_HIDDEN
+        BottomSheetBehavior.from(bottomMenu).state = BottomSheetBehavior.STATE_HIDDEN
         webView?.settings?.loadsImagesAutomatically = false
         webView?.settings?.javaScriptEnabled = true
 
