@@ -46,7 +46,7 @@ class ScheduleRepositoryImpl(
                 withContext(Main) { schedule.value = s }
             } catch (e: Exception) { Log.e("ScheduleRepository", "Unable to load semester schedule: $e") }
         }
-        launch {
+        /*launch { // сессии больше нет)))
             try {
                 val s = LoadSessionFromRemoteInteractor(schedule.value!!.group)
                     .setAttempts(1)
@@ -57,7 +57,7 @@ class ScheduleRepositoryImpl(
             } catch (e: Exception) {
                 e.printStackTrace()
                 Log.e("ScheduleRepository", "Unable to load session schedule: $e") }
-        }
+        }*/
 
         Unit
     }
