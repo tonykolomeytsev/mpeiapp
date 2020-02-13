@@ -147,7 +147,12 @@ class BarsRepositoryImpl constructor(
             .putString("user2", "")
             .putString("score", "")
             .apply()
-        GlobalScope.launch(Main) { isLoggedIn.value = false }
+        GlobalScope.launch(Main) {
+            isLoggedIn.value = false
+            score.value = null
+            client.clearCookies()
+            client.studentId = ""
+        }
     }
 
     override fun getLoginScript(): String =
@@ -160,5 +165,9 @@ class BarsRepositoryImpl constructor(
     override suspend fun updateScore() {
         if (score.value == null) loadFromCache()?.let { withContext(Dispatchers.Main) { score.value = it } }
         loadFromRemote()
+    }
+
+    override fun setUserAgent(us: String) {
+        client.defaultUserAgent = us
     }
 }

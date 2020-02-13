@@ -25,7 +25,9 @@
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp">
 
             <TextView
                     android:id="@+id/textViewMarkOverage"

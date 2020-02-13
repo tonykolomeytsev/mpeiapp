@@ -34,4 +34,5 @@ interface BarsFragmentModel {
     suspend fun updateScore()
 
     fun getLoginScript(): String
+    fun setUserAgent(ua: String)
 }

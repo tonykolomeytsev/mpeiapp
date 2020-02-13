@@ -19,17 +19,18 @@ class BarsLoginItem(
     val rightsAction: () -> Unit
 ) : BaseItem<BarsLoginItem.ViewHolder>() {
 
+    var dumbError: () -> Unit = {}
+
     override fun updateViewHolder(viewHolder: ViewHolder) {
-//        (viewHolder.itemView.context.getSystemService(Context.WINDOW_SERVICE) as WindowManager).apply {
-//            val size = Point()
-//            defaultDisplay.getSize(size)
-//            viewHolder.itemView.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, size.y)
-//        }
 
         viewHolder.apply {
             pass = ""
             setState(true)
             isErrorVisible = false
+
+            dumbError = {
+                setState(true)
+            }
 
             rights = { rightsAction() }
             btlLogin = {
@@ -48,6 +49,10 @@ class BarsLoginItem(
                 }
             })
         }
+    }
+
+    fun error() {
+        dumbError()
     }
 
     private fun ViewHolder.setState(state: Boolean) {

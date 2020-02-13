@@ -30,6 +30,7 @@ class BarsFragment : Fragment(R.layout.fragment_bars) {
     private val viewModel: BarsViewModel by inject()
 
     override fun onResume() {
+        viewModel.setUserAgent(webView.settings.userAgentString)
         super.onResume()
         viewModel.checkForUpdates()
         viewModel.refresh()
@@ -48,8 +49,9 @@ class BarsFragment : Fragment(R.layout.fragment_bars) {
             setAcceptCookie(true)
             setAcceptThirdPartyCookies(webView, true)
         }
-        BottomSheetBehavior.from(bottomMenu).state = BottomSheetBehavior.STATE_HIDDEN
+        //BottomSheetBehavior.from(bottomMenu).state = BottomSheetBehavior.STATE_HIDDEN
         webView?.settings?.loadsImagesAutomatically = false
+        webView?.settings?.javaScriptEnabled = true
 
         viewModel.barsState.observe(this, Observer {
             if (it == true) swipeRefresh?.isEnabled = true
@@ -63,6 +65,7 @@ class BarsFragment : Fragment(R.layout.fragment_bars) {
             hideLoading()
         })
         viewModel.loadUrl.observe(this, Observer {
+            viewModel.setUserAgent(webView.settings.userAgentString)
             val (url, listener) = it ?: return@Observer
             webView?.webViewClient = object : WebViewClient() {
                 override fun onPageFinished(view: WebView?, url: String?){
@@ -73,16 +76,16 @@ class BarsFragment : Fragment(R.layout.fragment_bars) {
             webView?.loadUrl(url)
         })
         viewModel.executeScript.observe(this, Observer {
+            viewModel.setUserAgent(webView.settings.userAgentString)
             val (script, callback, pageListener) = it ?: return@Observer
-            webView?.settings?.javaScriptEnabled = true
             webView?.webViewClient = object : WebViewClient() {
                 override fun onPageFinished(view: WebView?, url: String?) {
+                    CookieSyncManager.getInstance().sync()
                     pageListener(url ?: "")
                 }
             }
             webView?.evaluateJavascript(script) {
                 callback(it ?: "")
-                webView?.settings?.javaScriptEnabled = false
             }
         })
     }

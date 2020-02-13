@@ -12,7 +12,7 @@ import org.koin.dsl.module
 val KoinBarsModule = module {
     // bars fragment MVP
     single { BarsViewModel(get(), get(), get(), get()) }
-    single { BarsFragmentModelImpl(get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get()) } bind BarsFragmentModel::class
+    single { BarsFragmentModelImpl(get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get()) } bind BarsFragmentModel::class
 
     // Rights fragment MVP
     single { RightsFragmentPresenter() }

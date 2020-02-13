@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit
 
 class BarsHttpClient(
     private val debug: Boolean = false,
-    private val defaultUserAgent: String = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36",
+    var defaultUserAgent: String = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36",
     private val hiddenFieldsExtractor: (String) -> Map<String, String> = { emptyMap() },
     private val studentPageLocationExtractor: (String) -> String = { "" },
     private val semesterListExtractor: (String) -> Map<String, String> = { emptyMap() }
@@ -35,7 +35,7 @@ class BarsHttpClient(
         .addInterceptor(UnzippingInterceptor())
         .cookieJar(cookieStore) //JavaNetCookieJar(CookieManager().apply { setCookiePolicy(ACCEPT_ALL) })
         .build()
-    private val baseHeaders = arrayListOf(
+    private val baseHeaders get() = arrayListOf(
         "Host", "bars.mpei.ru",
         "Origin", BARS_MAIN_DOMAIN,
         "Connection", "keep-alive",
@@ -215,4 +215,10 @@ class BarsHttpClient(
     }
 
     private fun String.getStudentId(): String = ".*student..=(.*).*".toRegex().find(this)?.groups?.get(1)?.value ?: ""
+
+    fun clearCookies() {
+        cookies.clear()
+//        android.webkit.CookieManager.getInstance().setCookie("bars.mpei.ru", "")
+//        android.webkit.CookieManager.getInstance().removeSessionCookies(null)
+    }
 }

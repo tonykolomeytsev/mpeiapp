@@ -17,7 +17,8 @@ class BarsFragmentModelImpl constructor(
     private val getRatingLiveDataUseCase: GetRatingLiveDataUseCase,
     private val updateRatingUseCase: UpdateRatingUseCase,
     private val getLoginScriptUseCase: GetLoginScriptUseCase,
-    private val hasUserCredentialsUseCase: HasUserCredentialsUseCase
+    private val hasUserCredentialsUseCase: HasUserCredentialsUseCase,
+    private val setUserAgentUseCase: SetUserAgentUseCase
 ) : BarsFragmentModel {
 
 
@@ -39,6 +40,10 @@ class BarsFragmentModelImpl constructor(
 
     override val hasUserCredentials: Boolean
         get() = hasUserCredentialsUseCase()
+
+    override fun setUserAgent(ua: String) {
+        setUserAgentUseCase(ua)
+    }
 
     override fun saveUserSecrets(login: String, pass: String) {
         saveUserSecretsUseCase(login, pass)
