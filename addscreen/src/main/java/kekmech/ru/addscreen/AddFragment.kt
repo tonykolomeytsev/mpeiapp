@@ -2,6 +2,7 @@ package kekmech.ru.addscreen
 
 
 import android.app.Dialog
+import android.content.res.Configuration.ORIENTATION_LANDSCAPE
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
@@ -83,7 +84,7 @@ class AddFragment : BottomSheetDialogFragment(), IAddFragment {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val bottomSheetDialog = super.onCreateDialog(savedInstanceState) as BottomSheetDialog
-        bottomSheetDialog.setOnShowListener {
+        if (resources.configuration.orientation == ORIENTATION_LANDSCAPE) bottomSheetDialog.setOnShowListener {
             val bottomSheet = bottomSheetDialog.findViewById<FrameLayout>(com.google.android.material.R.id.design_bottom_sheet) ?: return@setOnShowListener
             val behavior = BottomSheetBehavior.from(bottomSheet)
             behavior.skipCollapsed = true

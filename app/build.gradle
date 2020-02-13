@@ -11,8 +11,8 @@ android {
         applicationId "kekmech.ru.mpeiapp"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 22
-        versionName "0.9.98"
+        versionCode 23
+        versionName "0.9.99"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
