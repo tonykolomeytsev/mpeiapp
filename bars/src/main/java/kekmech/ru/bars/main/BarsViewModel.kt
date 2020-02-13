@@ -38,7 +38,8 @@ class BarsViewModel constructor(
         .registerViewTypeFactory(SyncInProgressItem.Factory())
         .build()
     val barsState = MutableLiveData<Boolean>().apply { value = false }
-    val contentItems: LiveData<List<BaseItem<*>>> = Transformations.map(zipNullable(model.isLoggedIn, model.score)) { (isLoggedIn, score) ->
+    val alert = MutableLiveData<Boolean>().apply { value = true }
+    val contentItems: LiveData<List<BaseItem<*>>> = Transformations.map(zipNullable(model.isLoggedIn, model.score, alert)) { (isLoggedIn, score, _) ->
         if (isLoggedIn == true && score != null) {
             barsState.value = true
             scoreItems(score)
@@ -52,6 +53,7 @@ class BarsViewModel constructor(
     }
     val loadUrl = LiveEvent<Pair<String, (String) -> Unit>>()
     val executeScript = LiveEvent<Triple<String, (String) -> Unit, (String) -> Unit>>()
+    var onErrorListener: () -> Unit = {}
 
     private fun getDiffCallbackFor(newListOfItems: List<BaseItem<*>>) = object : DiffUtil.Callback() {
         override fun getNewListSize() = newListOfItems.size
@@ -79,6 +81,7 @@ class BarsViewModel constructor(
     private fun onRightsClick() = router.navigate(BARS_TO_RIGHTS)
 
     private fun logInUser(login: String, pass: String, showError: () -> Unit) {
+        onErrorListener = showError
         model.saveUserSecrets(login, pass)
         try {
             logInBars()
@@ -108,7 +111,10 @@ class BarsViewModel constructor(
     }
 
     @Suppress("UNUSED_PARAMETER")
-    private fun logout(v: View) = model.logout()
+    private fun logout(v: View) {
+        model.logout()
+        loadUrl("https://bars.mpei.ru/bars_web/Auth/Exit" to {_->})
+    }
 
     fun refresh() {
         if (model.isLoggedIn.value == true) GlobalScope.launch(IO) {
@@ -118,13 +124,31 @@ class BarsViewModel constructor(
         }
     }
 
+    fun setUserAgent(ua: String) {
+        model.setUserAgent(ua)
+    }
+
     private fun logInBars() {
         val barsMainPage = "https://bars.mpei.ru/bars_web/"
         loadUrl(barsMainPage to { url ->
             if (url == barsMainPage) executeScript(Triple(
                 model.getLoginScript(),
                 { _->},
-                { _->}
+                { url ->
+                    if (url.contains(".*Part1.*".toRegex()) || url.contains(".*Auth.*".toRegex())) GlobalScope.launch(IO) {
+                        model.updateScore()
+                    } else {
+                        adapter.items.firstOrNull { it is BarsLoginItem }
+                            ?.let { (it as BarsLoginItem).error() }
+                        onErrorListener()
+                        executeScript(Triple("!!(document.querySelector('div[class*=alert]'))", { result ->
+                            if (result == "true") {
+                                model.logout()
+                                alert.value = !(alert.value == true)
+                            }
+                        }, {_->}))
+                    }
+                }
             )) else {
                 if (url.contains(".*Part1.*".toRegex()) || url.contains(".*Auth.*".toRegex())) GlobalScope.launch(IO) {
                     model.updateScore()

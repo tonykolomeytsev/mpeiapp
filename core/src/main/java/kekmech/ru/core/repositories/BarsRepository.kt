@@ -22,6 +22,7 @@ interface BarsRepository {
     fun saveUserSecrets(username: String, password: String)
     fun clearUserSecrets()
     fun getLoginScript(): String
+    fun setUserAgent(us: String)
 
 
     companion object {
