@@ -53,7 +53,8 @@ class FeedViewModel constructor(
             EmptyItem::class,
             NothingToShowItem::class,
             TomorrowCouplesItem::class,
-            TodayCouplesItem::class
+            TodayCouplesItem::class,
+            WeekendItem::class
         ).build()
     }
     val feedItems = Transformations.map(zipNullable(
@@ -69,9 +70,11 @@ class FeedViewModel constructor(
         if (carousel != null) newListOfItems.add(CarouselItem(carousel, model.getPicasso()))
         if (!actualSchedule.isNullOrEmpty())
             newListOfItems.add(if (model.isEvening) TomorrowCouplesItem(actualSchedule) else TodayCouplesItem(actualSchedule))
+        if (actualSchedule.isNullOrEmpty() && !emptySchedule.isNullOrEmpty())
+            newListOfItems.add(if (model.isEvening) WeekendItem("Завтра") else WeekendItem("Сегодня"))
         if (sessionSchedule != null ) newListOfItems.add(SessionItem(sessionSchedule))
         if (emptySchedule.isNullOrEmpty()) newListOfItems.add(EmptyItem(::navigateToAdd))
-        if (newListOfItems.isEmpty() || newListOfItems.all { it is CarouselItem })
+        if (newListOfItems.isEmpty() || newListOfItems.all { it is CarouselItem }) 
             if (!isLoadingLocal) newListOfItems.add(NothingToShowItem())
 
         newListOfItems.sortedByClass(if (model.isSemesterStart) onStartSemesterOrder else onEndSemesterOrder)
