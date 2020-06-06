@@ -28,20 +28,19 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
+    testImplementation tests.junit
+    androidTestImplementation androidx.test.runner
+    androidTestImplementation androidx.test.espresso
 
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-
+    implementation androidx.appcompat
 
     // Koin for Kotlin Android
-    implementation "org.koin:koin-core:2.0.1"
-    implementation "org.koin:koin-android:2.0.1"
+    implementation koin.core
+    implementation koin.android
 
 
     implementation project(path: ':core')
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 repositories {
     mavenCentral()

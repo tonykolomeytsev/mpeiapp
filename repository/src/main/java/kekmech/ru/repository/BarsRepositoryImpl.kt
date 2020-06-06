@@ -98,6 +98,7 @@ class BarsRepositoryImpl constructor(
         try {
             if (client.studentId.isEmpty())
                 client.loginWithWebkitCookies()
+//            client.login()
 
             GlobalScope.launch(Dispatchers.Main) { isLoggedIn.value = client.isLoggedIn }
 
@@ -159,7 +160,7 @@ class BarsRepositoryImpl constructor(
         """
             document.getElementById('UserName').value='${getUsername()}';
             document.getElementById('Password').value='${getPassword()}';
-            document.getElementsByTagName('button')[0].click()
+            /*document.forms[0].submit();*/
         """.trimIndent() else ""
 
     override suspend fun updateScore() {

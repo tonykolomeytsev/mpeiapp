@@ -10,4 +10,10 @@ class BarsWebView @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0,
     defStyleRes: Int = 0
-) : WebView(context.createConfigurationContext(Configuration()), attrs, defStyleAttr, defStyleRes)
+) : WebView(context.createConfigurationContext(Configuration()), attrs, defStyleAttr, defStyleRes) {
+
+
+    override fun loadUrl(url: String?) {
+        super.loadUrl(url, mapOf("X-Requested-With" to ""))
+    }
+}
