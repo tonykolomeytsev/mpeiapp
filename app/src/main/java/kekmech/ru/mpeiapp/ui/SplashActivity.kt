@@ -1,4 +1,4 @@
-package kekmech.ru.mainscreen
+package kekmech.ru.mpeiapp.ui
 
 import android.content.Intent
 import android.os.Bundle
