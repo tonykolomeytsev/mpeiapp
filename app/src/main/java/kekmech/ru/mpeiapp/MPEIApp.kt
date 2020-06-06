@@ -11,6 +11,7 @@ import org.koin.core.context.startKoin
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
+
 class MPEIApp : Application() {
     override fun onCreate() {
         super.onCreate()
@@ -27,5 +28,19 @@ class MPEIApp : Application() {
                 }
             ))
         }
+    }
+
+    override fun getPackageName(): String {
+        try {
+            val stackTrace = Thread.currentThread().stackTrace
+            for (element in stackTrace) {
+                if ("org.chromium.base.BuildInfo".equals(element.className, true)) {
+                    if ("getAll".equals(element.methodName, ignoreCase = true))
+                        return ""
+                    break
+                }
+            }
+        } catch (e: Exception) { }
+        return super.getPackageName()
     }
 }
