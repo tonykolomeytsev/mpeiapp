@@ -5,7 +5,7 @@ buildscript {
 
     ext {
         versions = [
-                kotlin              : "1.3.50",
+                kotlin              : "1.3.72",
                 gradle              : "3.6.3",
                 recyclerview        : "1.1.0",
                 constraintlayout    : "1.1.3",
@@ -15,7 +15,8 @@ buildscript {
                 material            : "1.1.0",
                 room                : "2.2.5",
                 cardview            : "1.0.0",
-                swiperefreshlayout  : "1.0.0"
+                swiperefreshlayout  : "1.0.0",
+                fragmentktx         : "1.2.4"
         ]
 
         androidx = [
@@ -25,7 +26,8 @@ buildscript {
                 recyclerview        : "androidx.recyclerview:recyclerview:${versions.recyclerview}",
                 cardview            : "androidx.cardview:cardview:${versions.cardview}",
                 swiperefreshlayout  : "androidx.swiperefreshlayout:swiperefreshlayout:${versions.swiperefreshlayout}",
-                material            : "com.google.android.material:material:${versions.material}",
+                fragmentKtx         : "androidx.fragment:fragment-ktx:1.2.4",
+                coreKtx             : "androidx.core:core-ktx:1.3.0",
                 test: [
                         runner      : "androidx.test:runner:1.2.0",
                         espresso    : "androidx.test.espresso:espresso-core:3.2.0"
@@ -35,6 +37,10 @@ buildscript {
                         ktx         : "androidx.room:room-ktx:${versions.room}",
                         compiler    : "androidx.room:room-compiler:${versions.room}"
                 ]
+        ]
+
+        google = [
+                material            : "com.google.android.material:material:${versions.material}",
         ]
 
         koin = [
@@ -64,7 +70,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.3'
+        classpath 'com.android.tools.build:gradle:3.6.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.1.0"
         classpath 'com.google.gms:google-services:4.3.3'

@@ -27,15 +27,9 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
-    testImplementation tests.junit
-    androidTestImplementation androidx.test.runner
-    androidTestImplementation androidx.test.espresso
 
+    implementation google.material
     implementation androidx.appcompat
-    implementation androidx.material
-
     implementation androidx.room.runtime
     implementation androidx.room.ktx
     kapt androidx.room.compiler

@@ -37,11 +37,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
     testImplementation tests.junit
-    androidTestImplementation androidx.test.runner
-    androidTestImplementation androidx.test.espresso
 
     // Koin for Kotlin Android
     implementation koin.core
@@ -77,13 +73,14 @@ dependencies {
     implementation project(path: ':domain')
     implementation project(path: ':repository')
     implementation project(path: ':mainscreen')
-    implementation project(path: ':feed')
+    implementation project(path: ':feature_feed')
     implementation project(path: ':timetable')
     implementation project(path: ':settings')
     implementation project(path: ':coreui')
-    implementation project(path: ':addscreen')
-    implementation project(path: ':map')
+    implementation project(path: ':feature_addscreen')
+    implementation project(path: ':feature_map')
     implementation project(path: ':update')
-    implementation project(path: ':bars')
+    implementation project(path: ':feature_bars')
     implementation project(path: ':notes')
+    implementation project(path: ':common_navigation')
 }
