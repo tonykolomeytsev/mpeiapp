@@ -27,20 +27,14 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
-    testImplementation tests.junit
-    androidTestImplementation androidx.test.runner
-    androidTestImplementation androidx.test.espresso
-
     // Koin for Kotlin Android
     implementation koin.core
     implementation koin.android
     implementation "org.koin:koin-android-viewmodel:2.0.1"
 
     // support widgets
+    implementation google.material
     implementation androidx.appcompat
-    implementation androidx.material
     implementation androidx.recyclerview
     implementation androidx.constraintlayout
     implementation "androidx.viewpager2:viewpager2:1.0.0"
@@ -66,14 +60,14 @@ dependencies {
 
     implementation project(path: ':core')
     implementation project(path: ':coreui')
-    implementation project(path: ':feed')
+    implementation project(path: ':feature_feed')
     implementation project(path: ':timetable')
     implementation project(path: ':settings')
-    implementation project(path: ':addscreen')
-    implementation project(path: ':map')
+    implementation project(path: ':feature_addscreen')
+    implementation project(path: ':feature_map')
     implementation project(path: ':update')
     implementation 'com.google.firebase:firebase-config:19.1.0'
-    implementation project(path: ':bars')
+    implementation project(path: ':feature_bars')
     implementation project(path: ':notes')
 
 }
