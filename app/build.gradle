@@ -38,6 +38,7 @@ android {
 
 dependencies {
     testImplementation tests.junit
+    androidTestImplementation androidx.test.runner
 
     // Koin for Kotlin Android
     implementation koin.core
@@ -65,6 +66,9 @@ dependencies {
     implementation firebase.analytics
     implementation firebase.config
 
+    implementation rx.java
+    implementation rx.android
+    implementation rx.kotlin
 
     // JSOUP
     implementation 'org.jsoup:jsoup:1.12.1'
@@ -74,13 +78,16 @@ dependencies {
     implementation project(path: ':repository')
     implementation project(path: ':mainscreen')
     implementation project(path: ':feature_feed')
-    implementation project(path: ':timetable')
-    implementation project(path: ':settings')
+    implementation project(path: ':feature_timetable')
+    implementation project(path: ':feature_settings')
     implementation project(path: ':coreui')
     implementation project(path: ':feature_addscreen')
     implementation project(path: ':feature_map')
-    implementation project(path: ':update')
+    implementation project(path: ':feature_force_update')
     implementation project(path: ':feature_bars')
-    implementation project(path: ':notes')
+    implementation project(path: ':feature_notes')
     implementation project(path: ':common_navigation')
+    implementation project(path: ':common_android')
+    implementation project(path: ':common_di')
+    implementation project(path: ':common_kotlin')
 }

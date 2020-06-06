@@ -1,4 +1,4 @@
-package kekmech.ru.core
+package kekmech.ru.common_di
 
 import org.koin.dsl.ModuleDeclaration
 import org.koin.dsl.module

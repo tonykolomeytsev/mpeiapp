@@ -1,2 +1,5 @@
-include ':app', ':core', ':coreui', ':repository', ':feature_feed', ':domain', ':mainscreen', ':timetable', ':settings', ':feature_addscreen', ':feature_map', ':update', ':feature_bars', ':notes'
+include ':app', ':core', ':coreui', ':repository', ':feature_feed', ':domain', ':mainscreen', ':feature_timetable', ':feature_settings', ':feature_addscreen', ':feature_map', ':feature_force_update', ':feature_bars', ':feature_notes'
 include ':common_navigation'
+include ':common_android'
+include ':common_di'
+include ':common_kotlin'

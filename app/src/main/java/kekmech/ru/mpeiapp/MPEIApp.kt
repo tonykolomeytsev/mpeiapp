@@ -1,21 +1,25 @@
 package kekmech.ru.mpeiapp
 
 import android.app.Application
+import kekmech.ru.addscreen.di.KoinAddFragmentModule
+import kekmech.ru.bars.di.KoinBarsModule
+import kekmech.ru.common_android.di.CommonAndroidModule
+import kekmech.ru.common_di.modules
 import kekmech.ru.common_navigation.Router
 import kekmech.ru.common_navigation.di.NavigationModule
 import kekmech.ru.common_navigation.di.RouterHolder
-import kekmech.ru.core.usecases.GetAppVersionUseCase
-import kekmech.ru.domain.di.KoinDomainModule
-import kekmech.ru.mainscreen.di.KoinMainActivityModule
-import kekmech.ru.repository.di.KoinRepositoryModule
+import kekmech.ru.domain.di.DomainModule
+import kekmech.ru.feed.di.KoinFeedFragmentModule
+import kekmech.ru.map.di.KoinMapFragmentModule
+import kekmech.ru.notes.di.KoinNoteFragmentModule
+import kekmech.ru.repository.di.RepositoryModule
+import kekmech.ru.settings.di.KoinSettingsModule
+import kekmech.ru.timetable.di.KoinTimetableFragmentModule
+import kekmech.ru.update.di.KoinUpdateModule
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
-import org.koin.core.Koin
-import org.koin.core.KoinApplication
 import org.koin.core.context.startKoin
-import org.koin.dsl.bind
-import org.koin.dsl.module
 
 
 class MPEIApp : Application(),
@@ -33,13 +37,18 @@ class MPEIApp : Application(),
         androidLogger()
         androidContext(this@MPEIApp)
         modules(listOf(
-            KoinMainActivityModule,
-            KoinRepositoryModule,
-            KoinDomainModule,
-            NavigationModule.provider,
-            module {
-                single { GetAppVersionUseCaseImpl() } bind GetAppVersionUseCase::class
-            }
+            KoinFeedFragmentModule,
+            KoinTimetableFragmentModule,
+            KoinAddFragmentModule,
+            KoinMapFragmentModule,
+            KoinUpdateModule,
+            KoinBarsModule,
+            KoinNoteFragmentModule,
+            KoinSettingsModule,
+            RepositoryModule,
+            DomainModule,
+            NavigationModule,
+            CommonAndroidModule
         ))
     }
 

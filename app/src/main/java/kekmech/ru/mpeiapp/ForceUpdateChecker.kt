@@ -1,4 +1,4 @@
-package kekmech.ru.mainscreen
+package kekmech.ru.mpeiapp
 
 import android.content.Context
 import android.content.pm.PackageManager

@@ -1,11 +1,10 @@
 package kekmech.ru.domain.di
 
+import kekmech.ru.common_di.ModuleProvider
 import kekmech.ru.core.usecases.*
 import kekmech.ru.domain.*
-import org.koin.dsl.bind
-import org.koin.dsl.module
 
-val KoinDomainModule = module {
+object DomainModule : ModuleProvider({
     single { GetBuildingsUseCaseImpl(get()) } bind GetBuildingsUseCase::class
     single { GetLoginScriptUseCaseImpl(get()) } bind GetLoginScriptUseCase::class
     single { HasUserCredentialsUseCaseImpl(get()) } bind HasUserCredentialsUseCase::class
@@ -67,4 +66,4 @@ val KoinDomainModule = module {
     single { GetTimetableScheduleLiveDataUseCaseImpl(get()) } bind GetTimetableScheduleLiveDataUseCase::class
 
     single { SetUserAgentUseCaseImpl(get()) } bind SetUserAgentUseCase::class
-}
+})
