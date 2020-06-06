@@ -47,9 +47,9 @@
     <LinearLayout
             android:id="@+id/bottomMenu"
             android:layout_width="match_parent"
-            android:layout_height="500dp"
+            android:layout_height="600dp"
             app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-            app:behavior_peekHeight="500dp"
+            app:behavior_peekHeight="600dp"
             app:behavior_hideable="true"
             app:behavior_skipCollapsed="true"
             android:background="?attr/themeColorCardView"
@@ -62,6 +62,8 @@
 
         <kekmech.ru.bars.main.view.BarsWebView
                 android:id="@+id/webView"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
     </LinearLayout>

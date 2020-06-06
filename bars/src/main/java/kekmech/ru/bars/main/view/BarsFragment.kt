@@ -30,7 +30,8 @@ class BarsFragment : Fragment(R.layout.fragment_bars) {
     private val viewModel: BarsViewModel by inject()
 
     override fun onResume() {
-        viewModel.setUserAgent(webView.settings.userAgentString)
+        webView?.settings?.userAgentString = viewModel.userAgent
+        viewModel.setUserAgent(viewModel.userAgent)
         super.onResume()
         viewModel.checkForUpdates()
         viewModel.refresh()
@@ -49,9 +50,10 @@ class BarsFragment : Fragment(R.layout.fragment_bars) {
             setAcceptCookie(true)
             setAcceptThirdPartyCookies(webView, true)
         }
-        BottomSheetBehavior.from(bottomMenu).state = BottomSheetBehavior.STATE_HIDDEN
-        webView?.settings?.loadsImagesAutomatically = false
+        //BottomSheetBehavior.from(bottomMenu).state = BottomSheetBehavior.STATE_HIDDEN
+        //webView?.settings?.loadsImagesAutomatically = false
         webView?.settings?.javaScriptEnabled = true
+        webView?.loadUrl("https://bars.mpei.ru/")
 
         viewModel.barsState.observe(this, Observer {
             if (it == true) swipeRefresh?.isEnabled = true
