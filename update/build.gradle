@@ -28,13 +28,6 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
-    testImplementation tests.junit
-    androidTestImplementation androidx.test.runner
-    androidTestImplementation androidx.test.espresso
-
-
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.core:core-ktx:1.1.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
