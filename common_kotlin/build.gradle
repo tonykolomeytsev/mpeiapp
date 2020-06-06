@@ -1,25 +1,24 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 28
-
+    compileSdkVersion 29
+    buildToolsVersion "29.0.3"
 
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
+        consumerProguardFiles 'consumer-rules.pro'
     }
 
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -27,17 +26,7 @@ android {
 }
 
 dependencies {
-
     implementation androidx.appcompat
-
-    // Koin for Kotlin Android
-    implementation koin.core
-    implementation koin.android
-
-
-    implementation project(path: ':core')
-    implementation project(path: ':common_di')
-}
-repositories {
-    mavenCentral()
+    implementation androidx.coreKtx
+    implementation kotlinReflect
 }

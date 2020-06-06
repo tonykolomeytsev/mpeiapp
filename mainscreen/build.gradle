@@ -56,19 +56,19 @@ dependencies {
     // (Recommended) Add Analytics
     implementation firebase.analytics
     implementation firebase.crashlytics
+    implementation firebase.config
 
 
     implementation project(path: ':core')
     implementation project(path: ':coreui')
     implementation project(path: ':feature_feed')
-    implementation project(path: ':timetable')
-    implementation project(path: ':settings')
+    implementation project(path: ':feature_timetable')
+    implementation project(path: ':feature_settings')
     implementation project(path: ':feature_addscreen')
     implementation project(path: ':feature_map')
-    implementation project(path: ':update')
-    implementation 'com.google.firebase:firebase-config:19.1.0'
+    implementation project(path: ':feature_force_update')
     implementation project(path: ':feature_bars')
-    implementation project(path: ':notes')
+    implementation project(path: ':feature_notes')
 
 }
 repositories {
