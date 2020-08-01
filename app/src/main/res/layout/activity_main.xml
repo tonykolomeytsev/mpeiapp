@@ -4,7 +4,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="kekmech.ru.mpeiapp.ui.MainActivity"
+        tools:context="kekmech.ru.mpeiapp.MainActivity"
         tools:theme="@style/AppTheme"
         android:fitsSystemWindows="true">
 

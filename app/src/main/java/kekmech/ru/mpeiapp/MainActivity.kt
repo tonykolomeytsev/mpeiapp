@@ -1,4 +1,4 @@
-package kekmech.ru.mpeiapp.ui
+package kekmech.ru.mpeiapp
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,13 +9,16 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import kekmech.ru.common_android.onActivityResult
 import kekmech.ru.common_navigation.BackButtonListener
 import kekmech.ru.common_navigation.NavigationHolder
+import kekmech.ru.common_navigation.NewRoot
+import kekmech.ru.common_navigation.Router
 import kekmech.ru.core.usecases.IsDarkThemeEnabledUseCase
-import kekmech.ru.mpeiapp.R
+import kekmech.ru.mpeiapp.ui.main.MainFragment
 import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
 
     private val navigationHolder: NavigationHolder by inject()
+    private val router: Router by inject()
 
     val isDarkThemeEnabledUseCase: IsDarkThemeEnabledUseCase by inject()
 
@@ -36,16 +39,20 @@ class MainActivity : AppCompatActivity() {
         }
 
         setContentView(R.layout.activity_main)
+
+        if (savedInstanceState == null) {
+            router.executeCommand(NewRoot { MainFragment.newInstance() })
+        }
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onResumeFragments() {
+        super.onResumeFragments()
         navigationHolder.subscribe(this)
     }
 
-    override fun onStop() {
-        super.onStop()
+    override fun onPause() {
         navigationHolder.unsubscribe()
+        super.onPause()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
