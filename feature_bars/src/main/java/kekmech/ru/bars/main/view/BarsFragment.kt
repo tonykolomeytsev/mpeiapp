@@ -92,7 +92,11 @@ class BarsFragment : Fragment(R.layout.fragment_bars) {
         })
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    final override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         if (savedView?.parent != null) (savedView?.parent as ViewGroup?)?.removeView(savedView)
         if (savedView == null) savedView = super.onCreateView(inflater, container, savedInstanceState)
         return savedView!!

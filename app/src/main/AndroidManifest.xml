@@ -29,7 +29,7 @@
                 android:name="com.google.android.geo.API_KEY"
                 android:value="@string/google_maps_api_key"/>
         <activity
-                android:name="kekmech.ru.mpeiapp.ui.MainActivity"
+                android:name="kekmech.ru.mpeiapp.MainActivity"
                 android:label="@string/title_activity_main"
                 android:theme="@style/AppTheme"
                 android:windowSoftInputMode="adjustPan"/>

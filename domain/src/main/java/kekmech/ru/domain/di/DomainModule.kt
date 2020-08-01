@@ -3,6 +3,7 @@ package kekmech.ru.domain.di
 import kekmech.ru.common_di.ModuleProvider
 import kekmech.ru.core.usecases.*
 import kekmech.ru.domain.*
+import org.koin.dsl.bind
 
 object DomainModule : ModuleProvider({
     single { GetBuildingsUseCaseImpl(get()) } bind GetBuildingsUseCase::class

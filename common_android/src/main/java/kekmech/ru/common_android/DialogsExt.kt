@@ -4,7 +4,6 @@ import android.app.Dialog
 import android.widget.FrameLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialog
 
 fun Dialog.setExpandedBottomSheet(): Dialog = apply {
     setOnShowListener {
