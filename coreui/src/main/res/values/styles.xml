@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorAccent">@color/C3</item>
         <item name="colorPrimary">@color/C6</item>
@@ -9,6 +9,7 @@
         <item name="colorControlNormal">@color/C9</item>
         <item name="colorControlHighlight">@color/C6</item>
         <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
 
         <!-- Transparent statusBar -->
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
@@ -16,32 +17,31 @@
         <item name="android:windowTranslucentStatus">false</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
 
-
-
-        <item name="themeColorWhite">@color/colorWhite</item>
-        <item name="themeColorBlack">@color/colorBlack</item>
-        <item name="themeColorCardView">@color/colorWhite</item>
-        <item name="themeColorToolbar">@color/colorSecondary</item>
-        <item name="themeColorFeedBackground">@color/colorFeedBackground</item>
-        <item name="themeColorBottomNavBackground">?android:attr/windowBackground</item>
-        <item name="themeColorBottomNavTint">@color/colorBottomNavLight</item>
-        <item name="themeColorBarsAvMark">@color/colorBarsAvMark</item>
-        <item name="themeColorProgressBar">@color/colorProgressBar</item>
-        <item name="themeColorBackdrop">@color/colorBackdrop</item>
-        <item name="themeColorDivider">@color/colorBlack</item>
-        <item name="themeColorInfoBlock">@color/colorTransparent</item>
-        <item name="themeColorTimetableCard">@color/colorTransparent</item>
-        <item name="themeColorTimetableBackground">@color/colorWhite</item>
-        <item name="themeColorTimetableLunchBackground">@color/colorLunchItem</item>
-        <item name="themeColorSearchView">@color/colorSearchView</item>
-        <item name="themeColorSearchViewHint">@color/colorSearchViewHint</item>
-        <item name="themeColorMapTab">@color/colorMapTab</item>
-        <item name="themeColorForceUpdateBg">@color/colorWhite</item>
-        <item name="themeColorForceUpdateBtnLater">@color/colorUpdateDtnLater</item>
-        <item name="themeColorSearchViewIconsTint">@color/colorIconsTint</item>
-        <item name="themeColorCoupleNumber">@color/colorCoupleNumber</item>
+<!--        <item name="themeColorWhite">@color/colorWhite</item>-->
+<!--        <item name="themeColorBlack">@color/colorBlack</item>-->
+<!--        <item name="themeColorCardView">@color/colorWhite</item>-->
+<!--        <item name="themeColorToolbar">@color/colorSecondary</item>-->
+<!--        <item name="themeColorFeedBackground">@color/colorFeedBackground</item>-->
+<!--        <item name="themeColorBottomNavBackground">?android:attr/windowBackground</item>-->
+<!--        <item name="themeColorBottomNavTint">@color/colorBottomNavLight</item>-->
+<!--        <item name="themeColorBarsAvMark">@color/colorBarsAvMark</item>-->
+<!--        <item name="themeColorProgressBar">@color/colorProgressBar</item>-->
+<!--        <item name="themeColorBackdrop">@color/colorBackdrop</item>-->
+<!--        <item name="themeColorDivider">@color/colorBlack</item>-->
+<!--        <item name="themeColorInfoBlock">@color/colorTransparent</item>-->
+<!--        <item name="themeColorTimetableCard">@color/colorTransparent</item>-->
+<!--        <item name="themeColorTimetableBackground">@color/colorWhite</item>-->
+<!--        <item name="themeColorTimetableLunchBackground">@color/colorLunchItem</item>-->
+<!--        <item name="themeColorSearchView">@color/colorSearchView</item>-->
+<!--        <item name="themeColorSearchViewHint">@color/colorSearchViewHint</item>-->
+<!--        <item name="themeColorMapTab">@color/colorMapTab</item>-->
+<!--        <item name="themeColorForceUpdateBg">@color/colorWhite</item>-->
+<!--        <item name="themeColorForceUpdateBtnLater">@color/colorUpdateDtnLater</item>-->
+<!--        <item name="themeColorSearchViewIconsTint">@color/colorIconsTint</item>-->
+<!--        <item name="themeColorCoupleNumber">@color/colorCoupleNumber</item>-->
 
         <item name="materialButtonStyle">@style/Button.Primary</item>
+        <item name="buttonStyle">@style/Button.Primary</item>
     </style>
 
     <style name="AppTheme.Dark" parent="Theme.AppCompat.Light.NoActionBar">
@@ -84,15 +84,19 @@
         <item name="themeColorCoupleNumber">@color/colorCoupleNumberDark</item>
     </style>
 
+    <style name="AppTheme.Base" parent="AppTheme">
+
+    </style>
+
     <style name="PrimaryFlatButton" parent="Theme.AppCompat.Light">
-        <item name="android:buttonStyle">@style/Widget.AppCompat.Button.Borderless.Colored</item>
-        <item name="colorControlHighlight">#22000000</item>
-        <item name="colorAccent">@color/colorPrimary</item>
+<!--        <item name="android:buttonStyle">@style/Widget.AppCompat.Button.Borderless.Colored</item>-->
+<!--        <item name="colorControlHighlight">#22000000</item>-->
+<!--        <item name="colorAccent">@color/colorPrimary</item>-->
     </style>
 
     <style name="PrimaryActionButton" parent="Theme.AppCompat.Light">
-        <item name="colorAccent">@color/colorWhite</item>
-        <item name="colorControlHighlight">#22000000</item>
+<!--        <item name="colorAccent">@color/colorWhite</item>-->
+<!--        <item name="colorControlHighlight">#22000000</item>-->
     </style>
 
     <style name="CollapsingToolbarLayoutExpandedTextStyle" parent="AppTheme">

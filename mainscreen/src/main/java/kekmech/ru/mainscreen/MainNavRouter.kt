@@ -1,7 +1,6 @@
 package kekmech.ru.mainscreen
 
 import androidx.navigation.NavController
-import com.crashlytics.android.Crashlytics
 import kekmech.ru.core.Router
 import kekmech.ru.core.Screens
 import kekmech.ru.core.Screens.*

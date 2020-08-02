@@ -9,7 +9,7 @@ class DeviceIdProvider(private val context: Context) {
     private var deviceId: String? = null
 
     @Synchronized
-    override fun getDeviceId(): String {
+    fun getDeviceId(): String {
         if (deviceId == null) {
             val sharedPrefs = context.getSharedPreferences(
                 "pref_device_id",
