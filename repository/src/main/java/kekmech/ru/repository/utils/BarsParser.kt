@@ -1,6 +1,5 @@
 package kekmech.ru.repository.utils
 
-import com.crashlytics.android.Crashlytics
 import kekmech.ru.core.dto.AcademicDiscipline
 import kekmech.ru.core.dto.AcademicScore
 import kekmech.ru.core.dto.ControlEvent
@@ -43,13 +42,13 @@ class BarsParser {
             if (infoDiv != null)
                 pushStudentInfo(infoDiv)
         } catch (e: Exception) {
-            Crashlytics.log(1, "BarsParser", "pushStudentInfo ERROR $e \n ${infoDiv?.html()}")
+            // Crashlytics.log(1, "BarsParser", "pushStudentInfo ERROR $e \n ${infoDiv?.html()}")
         }
         try {
             if (infoDiv != null)
                 pushRatingInfo(infoDiv)
         } catch (e: Exception) {
-            Crashlytics.log(1, "BarsParser", "pushRatingInfo ERROR $e \n ${infoDiv?.html()}")
+            // Crashlytics.log(1, "BarsParser", "pushRatingInfo ERROR $e \n ${infoDiv?.html()}")
         }
 
         return AcademicScore(
@@ -118,7 +117,7 @@ class BarsParser {
             isCurrentControlFlag = false
             val rows = div.select("tr")
             rows.forEach { try { pushDisciplineRow(it) } catch (e: Exception) {
-                Crashlytics.log(1, "BarsParser", "pushDisciplineRow ERROR $e \n ${div.html()}")
+                // Crashlytics.log(1, "BarsParser", "pushDisciplineRow ERROR $e \n ${div.html()}")
             } }
         }
     }

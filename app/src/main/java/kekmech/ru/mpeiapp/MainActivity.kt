@@ -33,11 +33,11 @@ class MainActivity : AppCompatActivity() {
         }
         FirebaseAnalytics.getInstance(this)
 
-        if (isDarkThemeEnabledUseCase()) {
-            setTheme(R.style.AppTheme_Dark)
-        } else {
+//        if (isDarkThemeEnabledUseCase()) {
+//            setTheme(R.style.AppTheme_Dark)
+//        } else {
             setTheme(R.style.AppTheme)
-        }
+//        }
 
         setContentView(R.layout.activity_main)
 
