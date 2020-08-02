@@ -11,6 +11,7 @@ import kekmech.ru.common_navigation.di.RouterHolder
 import kekmech.ru.domain.di.DomainModule
 import kekmech.ru.feed.di.KoinFeedFragmentModule
 import kekmech.ru.map.di.KoinMapFragmentModule
+import kekmech.ru.mpeiapp.di.AppModule
 import kekmech.ru.mpeiapp.ui.main.di.MainScreenModule
 import kekmech.ru.notes.di.KoinNoteFragmentModule
 import kekmech.ru.repository.di.RepositoryModule
@@ -38,6 +39,7 @@ class MPEIApp : Application(),
         androidLogger()
         androidContext(this@MPEIApp)
         modules(listOf(
+            AppModule,
             KoinFeedFragmentModule,
             KoinTimetableFragmentModule,
             KoinAddFragmentModule,

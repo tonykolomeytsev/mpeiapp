@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.google.gms.google-services' // Firebase
-apply plugin: 'io.fabric'
+apply plugin: 'com.google.firebase.crashlytics'
 
 android {
     compileSdkVersion 28
@@ -50,6 +50,8 @@ dependencies {
     implementation androidx.recyclerview
     implementation androidx.appcompat
     implementation androidx.constraintlayout
+    implementation androidx.coreKtx
+    implementation google.material
 
     // android arch navigation for kotlin
     implementation "androidx.navigation:navigation-fragment-ktx:2.2.1"
@@ -70,8 +72,11 @@ dependencies {
     implementation rx.android
     implementation rx.kotlin
 
-    // JSOUP
-    implementation 'org.jsoup:jsoup:1.12.1'
+    implementation squareup.retrofit
+    implementation squareup.retrofit_rxJava2
+    implementation squareup.retrofit_gson
+    implementation squareup.okhttp
+    implementation squareup.okhttpLogger
 
     implementation project(path: ':core')
     implementation project(path: ':domain')
@@ -80,6 +85,7 @@ dependencies {
     implementation project(path: ':feature_feed')
     implementation project(path: ':feature_timetable')
     implementation project(path: ':feature_settings')
+    implementation project(path: ':feature_onboarding')
     implementation project(path: ':coreui')
     implementation project(path: ':feature_addscreen')
     implementation project(path: ':feature_map')
