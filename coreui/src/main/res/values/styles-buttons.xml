@@ -10,7 +10,7 @@
         <item name="rippleColor">?attr/colorControlHighlight</item>
     </style>
 
-    <style name="Button.Primary">
+    <style name="Button.Primary" parent="Button">
         <item name="android:fontFamily">@font/roboto_medium</item>
         <item name="android:textAppearance">@style/H4.C6</item>
         <item name="android:minHeight">48dp</item>

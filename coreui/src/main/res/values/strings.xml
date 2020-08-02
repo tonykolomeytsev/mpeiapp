@@ -54,4 +54,6 @@
     <string name="lunch_name">Обеденный перерыв</string>
     <string name="weekend_name">День самостоятельных занятий</string>
     <string name="onboarding_welcome_start_using">Начать пользоваться</string>
+    <string name="onboarding_welcome_mpeix">Добро пожаловать в MPEIX</string>
+    <string name="onboarding_welcome_mpeix_2">Пожалуй, лучшее, что могло случиться с приложением для МЭИ</string>
 </resources>

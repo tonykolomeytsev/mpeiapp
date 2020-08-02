@@ -5,7 +5,43 @@
         android:layout_height="match_parent"
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/buttonStart"
+            app:layout_constraintTop_toTopOf="parent">
+
+        <View
+                android:id="@+id/view2"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:background="@drawable/onboarding_carousel_stub"
+                android:layout_marginBottom="24dp"/>
+
+        <TextView
+                android:id="@+id/textView"
+                style="@style/H2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/onboarding_welcome_mpeix"
+                android:layout_marginBottom="24dp"/>
+
+        <TextView
+                android:id="@+id/textView2"
+                style="@style/H6.C8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="64dp"
+                android:layout_marginEnd="64dp"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:text="@string/onboarding_welcome_mpeix_2" />
+    </LinearLayout>
+
     <Button
+            android:id="@+id/buttonStart"
             style="@style/Button.Primary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

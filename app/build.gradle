@@ -6,13 +6,13 @@ apply plugin: 'com.google.gms.google-services' // Firebase
 apply plugin: 'com.google.firebase.crashlytics'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     defaultConfig {
         applicationId "kekmech.ru.mpeiapp"
         minSdkVersion 21
-        targetSdkVersion 28
-        versionCode 23
-        versionName "0.9.99"
+        targetSdkVersion 29
+        versionCode 24
+        versionName "1.0.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -34,6 +34,7 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
+    buildToolsVersion '29.0.3'
 }
 
 dependencies {
