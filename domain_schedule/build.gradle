@@ -1,0 +1,17 @@
+apply plugin: 'java-library'
+apply plugin: 'kotlin'
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation kotlinStdLib
+
+    implementation squareup.retrofit
+    implementation squareup.retrofit_rxJava2
+    implementation squareup.retrofit_gson
+
+    implementation project(path: ":common_di")
+    implementation project(path: ":common_annotations")
+}
+
+sourceCompatibility = "8"
+targetCompatibility = "8"

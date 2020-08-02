@@ -56,4 +56,18 @@
     <color name="colorCoupleNumber">#ededed</color>
     <color name="colorCoupleNumberDark">#454545</color>
 
+    <color name="C1">#2A467A</color>
+    <color name="C2">#8AB3FF</color>
+    <color name="C3">#587FC7</color>
+    <color name="C4">#EDB53B</color>
+    <color name="C5">#FFC954</color>
+    <color name="C6">#FFFFFF</color>
+    <color name="C7">#2A2A2A</color>
+    <color name="C8">#898989</color>
+    <color name="C9">#D0D0D0</color>
+    <color name="C10">#F6F6F6</color>
+    <color name="C11">#DB4437</color>
+    <color name="C12">#578B0F</color>
+    <color name="C13">#FF505C</color>
+
 </resources>

@@ -10,20 +10,20 @@ import io.reactivex.android.schedulers.AndroidSchedulers.mainThread
 import timber.log.Timber
 import kekmech.ru.common_mvi.util.DisposableDelegate
 import kekmech.ru.common_mvi.util.DisposableDelegateImpl
-import kekmech.ru.common_mvi.Feature as MviStore
+import kekmech.ru.common_mvi.Feature as MviFeature
 
-abstract class BaseBottomSheetDialogFragment<Event, Effect, State, Store : MviStore<Event, Effect, State>> :
+abstract class BaseBottomSheetDialogFragment<State : Any, Event : Any, Effect : Any, Feature : MviFeature<State, Event, Effect>> :
     BottomSheetDialogFragment(),
     DisposableDelegate by DisposableDelegateImpl() {
 
-    private val effects by lazy { store.effects }
+    private val effects by lazy { feature.effects }
 
-    protected lateinit var store: Store
+    protected lateinit var feature: Feature
     protected abstract val initEvent: Event
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        store = createStore().apply { accept(initEvent) }
+        feature = createStore().apply { accept(initEvent) }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
@@ -36,7 +36,7 @@ abstract class BaseBottomSheetDialogFragment<Event, Effect, State, Store : MviSt
 
         onViewCreatedInternal(view, savedInstanceState)
 
-        render(store.states.blockingFirst())
+        render(feature.states.blockingFirst())
     }
 
     override fun onDestroyView() {
@@ -46,21 +46,15 @@ abstract class BaseBottomSheetDialogFragment<Event, Effect, State, Store : MviSt
 
     override fun onDestroy() {
         super.onDestroy()
-        store.dispose()
+        feature.dispose()
     }
 
-    fun getCurrentState(): State {
-        return store.states.blockingFirst()
-    }
-
-    protected open fun onViewCreatedInternal(view: View, savedInstanceState: Bundle?) {
-        // empty
-    }
+    protected open fun onViewCreatedInternal(view: View, savedInstanceState: Bundle?) = Unit
 
     @LayoutRes
     protected abstract fun getLayoutRes(): Int
 
-    protected abstract fun createStore(): Store
+    protected abstract fun createStore(): Feature
 
     protected abstract fun render(state: State)
 
@@ -69,7 +63,7 @@ abstract class BaseBottomSheetDialogFragment<Event, Effect, State, Store : MviSt
     }
 
     private fun observeState() {
-        store.states
+        feature.states
             .skip(1) // skipped first state, because we need to avoid rendering initial state twice
             .observeOn(mainThread())
             .subscribe({

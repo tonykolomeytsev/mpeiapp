@@ -12,6 +12,7 @@ import kekmech.ru.common_navigation.NavigationHolder
 import kekmech.ru.common_navigation.NewRoot
 import kekmech.ru.common_navigation.Router
 import kekmech.ru.core.usecases.IsDarkThemeEnabledUseCase
+import kekmech.ru.feature_onboarding.WelcomeFragment
 import kekmech.ru.mpeiapp.ui.main.MainFragment
 import org.koin.android.ext.android.inject
 
@@ -41,7 +42,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         if (savedInstanceState == null) {
-            router.executeCommand(NewRoot { MainFragment.newInstance() })
+            //router.executeCommand(NewRoot { MainFragment.newInstance() })
+            router.executeCommand(NewRoot { WelcomeFragment() })
         }
     }
 

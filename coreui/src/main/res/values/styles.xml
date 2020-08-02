@@ -3,9 +3,11 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/C3</item>
+        <item name="colorPrimary">@color/C6</item>
+        <item name="colorPrimaryDark">@color/C9</item>
+        <item name="colorControlNormal">@color/C9</item>
+        <item name="colorControlHighlight">@color/C6</item>
         <item name="android:textColor">@color/colorWhite</item>
 
         <!-- Transparent statusBar -->
@@ -38,6 +40,8 @@
         <item name="themeColorForceUpdateBtnLater">@color/colorUpdateDtnLater</item>
         <item name="themeColorSearchViewIconsTint">@color/colorIconsTint</item>
         <item name="themeColorCoupleNumber">@color/colorCoupleNumber</item>
+
+        <item name="materialButtonStyle">@style/Button.Primary</item>
     </style>
 
     <style name="AppTheme.Dark" parent="Theme.AppCompat.Light.NoActionBar">

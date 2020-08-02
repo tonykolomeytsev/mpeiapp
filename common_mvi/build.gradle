@@ -27,6 +27,7 @@ android {
 dependencies {
     implementation androidx.appcompat
     implementation androidx.coreKtx
+    implementation google.material
     implementation kotlinReflect
 
     implementation rx.java
@@ -34,4 +35,5 @@ dependencies {
     implementation rx.kotlin
 
     implementation timber
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
 }
