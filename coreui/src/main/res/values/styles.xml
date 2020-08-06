@@ -42,6 +42,9 @@
 
         <item name="materialButtonStyle">@style/Button.Primary</item>
         <item name="buttonStyle">@style/Button.Primary</item>
+        <item name="toolbarStyle">@style/Toolbar</item>
+        <item name="editTextStyle">@style/EditText</item>
+        <item name="textInputStyle">@style/TextInputLayout</item>
     </style>
 
     <style name="AppTheme.Dark" parent="Theme.AppCompat.Light.NoActionBar">

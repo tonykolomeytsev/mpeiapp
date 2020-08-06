@@ -41,12 +41,22 @@ dependencies {
     implementation kotlinStdLib
 
     implementation koin.core
+    implementation koin.android
     implementation timber
     implementation rx.java
     implementation rx.kotlin
     implementation rx.android
+    implementation squareup.retrofit
+    implementation androidx.appcompat
+    implementation androidx.coreKtx
+    implementation androidx.constraintlayout
+    implementation google.material
 
     implementation project(path: ':domain_schedule')
     implementation project(path: ':common_di')
     implementation project(path: ':common_network')
+    implementation project(path: ':common_mvi')
+    implementation project(path: ':common_navigation')
+    implementation project(path: ':common_android')
+    implementation project(path: ':coreui')
 }
