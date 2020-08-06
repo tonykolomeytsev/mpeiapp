@@ -2,6 +2,7 @@ package kekmech.ru.mpeiapp
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException
 import com.google.android.gms.maps.MapsInitializer
@@ -40,6 +41,7 @@ class MainActivity : AppCompatActivity() {
 //        }
 
         setContentView(R.layout.activity_main)
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
         if (savedInstanceState == null) {
             //router.executeCommand(NewRoot { MainFragment.newInstance() })
