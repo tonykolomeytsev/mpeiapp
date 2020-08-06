@@ -8,7 +8,10 @@ import kekmech.ru.common_di.modules
 import kekmech.ru.common_navigation.Router
 import kekmech.ru.common_navigation.di.NavigationModule
 import kekmech.ru.common_navigation.di.RouterHolder
+import kekmech.ru.common_network.di.NetworkModule
 import kekmech.ru.domain.di.DomainModule
+import kekmech.ru.feature_onboarding.di.OnboardingModule
+import kekmech.ru.feature_schedule.di.ScheduleModule
 import kekmech.ru.feed.di.KoinFeedFragmentModule
 import kekmech.ru.map.di.KoinMapFragmentModule
 import kekmech.ru.mpeiapp.di.AppModule
@@ -22,6 +25,8 @@ import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
+import timber.log.Timber
+import timber.log.Timber.DebugTree
 
 
 class MPEIApp : Application(),
@@ -33,6 +38,7 @@ class MPEIApp : Application(),
         super.onCreate()
         RemoteConfig.setup()
         initKoin()
+        initTimber()
     }
 
     private fun initKoin() = startKoin {
@@ -52,8 +58,17 @@ class MPEIApp : Application(),
             DomainModule,
             NavigationModule,
             CommonAndroidModule,
-            MainScreenModule
+            MainScreenModule,
+            OnboardingModule,
+            ScheduleModule,
+            NetworkModule
         ))
+    }
+
+    private fun initTimber() {
+        if (BuildConfig.DEBUG) {
+            Timber.plant(DebugTree())
+        }
     }
 
     override fun getPackageName(): String {

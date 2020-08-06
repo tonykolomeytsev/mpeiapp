@@ -46,6 +46,8 @@ dependencies {
     implementation koin.android
     implementation "org.koin:koin-android-viewmodel:2.0.1"
 
+    implementation timber
+
     // Android widgets
     implementation "androidx.viewpager2:viewpager2:1.0.0"
     implementation androidx.recyclerview
@@ -89,6 +91,7 @@ dependencies {
     implementation project(path: ':feature_onboarding')
     implementation project(path: ':coreui')
     implementation project(path: ':feature_addscreen')
+    implementation project(path: ':feature_schedule')
     implementation project(path: ':feature_map')
     implementation project(path: ':feature_force_update')
     implementation project(path: ':feature_bars')
@@ -98,4 +101,5 @@ dependencies {
     implementation project(path: ':common_di')
     implementation project(path: ':common_kotlin')
     implementation project(path: ':common_mvi')
+    implementation project(path: ':common_network')
 }
