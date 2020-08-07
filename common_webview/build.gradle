@@ -38,28 +38,27 @@ android {
 
 dependencies {
     coreLibraryDesugaring desugaring
-
     implementation kotlinStdLib
-    implementation androidx.appcompat
-    implementation androidx.constraintlayout
-    implementation androidx.coordinatorlayout
-    implementation androidx.coreKtx
-    implementation google.material
+
+    implementation squareup.okhttp
+    implementation squareup.okhttpLogger
+
     implementation koin.core
     implementation koin.android
     implementation timber
     implementation rx.java
     implementation rx.kotlin
     implementation rx.android
+    implementation androidx.appcompat
+    implementation androidx.coreKtx
+    implementation androidx.constraintlayout
+    implementation google.material
 
-    implementation project(path: ':domain_onboarding')
-    implementation project(path: ':domain_schedule')
     implementation project(path: ':common_di')
+    implementation project(path: ':common_annotations')
     implementation project(path: ':common_android')
-    implementation project(path: ':common_network')
     implementation project(path: ':common_kotlin')
-    implementation project(path: ':common_navigation')
-    implementation project(path: ':common_webview')
     implementation project(path: ':common_mvi')
+    implementation project(path: ':common_navigation')
     implementation project(path: ':coreui')
 }
