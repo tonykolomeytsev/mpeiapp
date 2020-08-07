@@ -18,4 +18,5 @@ object ScheduleModule : ModuleProvider({
     single { FindScheduleActor(get()) } bind FindScheduleActor::class
 
     factory { FindScheduleFeatureFactory(get()) } bind FindScheduleFeatureFactory::class
+    factory { ScheduleDependencies(get()) } bind ScheduleDependencies::class
 })
