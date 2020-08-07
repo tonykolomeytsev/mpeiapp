@@ -32,6 +32,7 @@ sealed class FindScheduleEvent {
 
 sealed class FindScheduleEffect {
     object ShowError : FindScheduleEffect()
+    object ShowSomethingWentWrongError : FindScheduleEffect()
 }
 
 sealed class FindScheduleAction {

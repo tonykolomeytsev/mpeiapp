@@ -7,6 +7,8 @@ import kekmech.ru.feature_schedule.find_schedule.presentation.FindScheduleEvent.
 
 typealias FindScheduleResult = Result<FindScheduleState, FindScheduleEffect, FindScheduleAction>
 
+private const val MESSAGE_BAD_REQUEST = "HTTP 400 Bad Request"
+
 class FindScheduleReducer : BaseReducer<FindScheduleState, FindScheduleEvent, FindScheduleEffect, FindScheduleAction> {
 
     override fun reduce(
@@ -37,8 +39,16 @@ class FindScheduleReducer : BaseReducer<FindScheduleState, FindScheduleEvent, Fi
         event: News,
         state: FindScheduleState
     ): FindScheduleResult = when (event) {
-        is News.GroupLoadingError -> Result(state = state.copy(isLoading = false))
+        is News.GroupLoadingError -> Result(
+            state = state.copy(isLoading = false),
+            effect = calculateErrorEffect(event.throwable)
+        )
         is News.GroupLoadedSuccessfully -> Result(state = state.copy(isLoading = false))
+    }
+
+    private fun calculateErrorEffect(throwable: Throwable): FindScheduleEffect = when {
+        throwable.message == MESSAGE_BAD_REQUEST -> FindScheduleEffect.ShowError
+        else -> FindScheduleEffect.ShowSomethingWentWrongError
     }
 
     private fun String.isValidGroupNumber() =

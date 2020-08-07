@@ -19,7 +19,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:text="Введите номер группы"
+            android:text="@string/schedule_find_header"
             app:layout_constraintTop_toBottomOf="@id/toolbar"/>
 
     <TextView
@@ -30,7 +30,7 @@
             android:layout_marginTop="24dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:text="Мы прямо сейчас загрузим расписание этой группы на ваше устройство"
+            android:text="@string/schedule_find_description"
             app:layout_constraintTop_toBottomOf="@id/header"/>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -40,7 +40,7 @@
             android:layout_marginTop="24dp"
             android:layout_marginStart="16sp"
             android:layout_marginEnd="16dp"
-            android:hint="Номер группы"
+            android:hint="@string/schedule_find_hint"
             app:endIconMode="clear_text"
             app:layout_constraintTop_toBottomOf="@id/description">
 
@@ -57,7 +57,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
-            app:text="Продожлить"
+            app:text="@string/schedule_find_button_continue"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
