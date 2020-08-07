@@ -3,6 +3,7 @@ package kekmech.ru.feature_schedule.find_schedule
 import android.os.Bundle
 import android.view.View
 import kekmech.ru.common_android.afterTextChanged
+import kekmech.ru.common_android.clearErrorAfterChange
 import kekmech.ru.common_android.showKeyboard
 import kekmech.ru.common_mvi.ui.BaseFragment
 import kekmech.ru.feature_schedule.R
@@ -23,17 +24,21 @@ class FindScheduleFragment : BaseFragment<FindScheduleEvent, FindScheduleEffect,
         super.onViewCreatedInternal(view, savedInstanceState)
         toolbar.init()
         groupText.showKeyboard()
-        groupText.afterTextChanged { groupTextLayout.setError(null) }
+        groupText.afterTextChanged {
+            groupTextLayout.error = null
+            feature.accept(Wish.Action.GroupNumberChanged(groupText.text?.toString().orEmpty()))
+        }
         buttonContinue.setOnClickListener {
-            groupTextLayout.setError("Группа не найдена")
+            feature.accept(Wish.Click.Continue(groupText.text?.toString().orEmpty()))
         }
     }
 
     override fun handleEffect(effect: FindScheduleEffect) = Unit
 
-    override fun render(state: FindScheduleState) = Unit
-
-
+    override fun render(state: FindScheduleState) {
+        buttonContinue.isEnabled = state.isContinueButtonEnabled
+        buttonContinue.setLoading(state.isLoading)
+    }
 
     companion object {
         fun newInstance() = FindScheduleFragment()

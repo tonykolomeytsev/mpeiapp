@@ -12,10 +12,10 @@ data class Result<State, Effect, Action>(
     constructor(
         state: State,
         effect: Effect? = null,
-        actions: Action? = null
+        action: Action? = null
     ) : this(
         state,
         effect?.let(::listOf) ?: emptyList(),
-        actions?.let(::listOf) ?: emptyList()
+        action?.let(::listOf) ?: emptyList()
     )
 }
