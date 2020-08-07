@@ -5,7 +5,8 @@ import kekmech.ru.common_mvi.Feature
 typealias FindScheduleFeature = Feature<FindScheduleState, FindScheduleEvent, FindScheduleEffect>
 
 data class FindScheduleState(
-    val isLoading: Boolean = false
+    val isLoading: Boolean = false,
+    val isContinueButtonEnabled: Boolean = false
 )
 
 sealed class FindScheduleEvent {
@@ -16,6 +17,10 @@ sealed class FindScheduleEvent {
 
         object Click {
             data class Continue(val groupName: String) : Wish()
+        }
+
+        object Action {
+            data class GroupNumberChanged(val groupName: String) : Wish()
         }
     }
 
