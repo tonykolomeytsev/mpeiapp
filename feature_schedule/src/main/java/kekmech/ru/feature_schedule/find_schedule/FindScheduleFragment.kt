@@ -3,7 +3,6 @@ package kekmech.ru.feature_schedule.find_schedule
 import android.os.Bundle
 import android.view.View
 import kekmech.ru.common_android.afterTextChanged
-import kekmech.ru.common_android.clearErrorAfterChange
 import kekmech.ru.common_android.showKeyboard
 import kekmech.ru.common_mvi.ui.BaseFragment
 import kekmech.ru.feature_schedule.R
@@ -33,7 +32,11 @@ class FindScheduleFragment : BaseFragment<FindScheduleEvent, FindScheduleEffect,
         }
     }
 
-    override fun handleEffect(effect: FindScheduleEffect) = Unit
+    override fun handleEffect(effect: FindScheduleEffect) = when (effect) {
+        is FindScheduleEffect.ShowError ->
+            groupTextLayout.setError("Не удалось загрузить расписание для данной группы")
+        is FindScheduleEffect.ShowSomethingWentWrongError -> Unit // todo handle other errors
+    }
 
     override fun render(state: FindScheduleState) {
         buttonContinue.isEnabled = state.isContinueButtonEnabled
