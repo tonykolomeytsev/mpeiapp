@@ -39,10 +39,10 @@ fun <T : Fragment> T.withArguments(vararg args: Pair<String, Any?>): T = apply {
 
 inline fun <reified T : Any> Fragment.getArgument(key: String): T = arguments.getargument(key)
 
-inline fun <reified T : Any> Fragment.findArgumant(key: String): T? = arguments.findArgument(key)
+inline fun <reified T : Any> Fragment.findArgument(key: String): T? = arguments.findArgument(key)
 
 inline fun <reified T : Any> Fragment.findAndRemoveArgument(key: String): T? =
-    findArgumant<T>(key).also { arguments?.remove(key) }
+    findArgument<T>(key).also { arguments?.remove(key) }
 
 fun <T : Fragment> T.withResultFor(target: Fragment, requestCode: Int): T {
     return also { it.setTargetFragment(target, requestCode) }

@@ -9,6 +9,7 @@ import kekmech.ru.common_navigation.Router
 import kekmech.ru.common_navigation.di.NavigationModule
 import kekmech.ru.common_navigation.di.RouterHolder
 import kekmech.ru.common_network.di.NetworkModule
+import kekmech.ru.common_webview.di.WebViewModule
 import kekmech.ru.domain.di.DomainModule
 import kekmech.ru.feature_onboarding.di.OnboardingModule
 import kekmech.ru.feature_schedule.di.ScheduleModule
@@ -61,7 +62,8 @@ class MPEIApp : Application(),
             MainScreenModule,
             OnboardingModule,
             ScheduleModule,
-            NetworkModule
+            NetworkModule,
+            WebViewModule
         ))
     }
 
