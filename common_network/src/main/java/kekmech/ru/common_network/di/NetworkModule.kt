@@ -13,6 +13,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.logging.HttpLoggingInterceptor.Level
 import org.koin.dsl.bind
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.text.DateFormat
 import java.time.LocalDate
@@ -53,5 +54,6 @@ private fun provideRetrofitBuilder(
 ) = Retrofit.Builder()
     .client(okHttpClient)
     .addConverterFactory(GsonConverterFactory.create(gson))
+    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
 
 private fun provideDeviceId(deviceIdProvider: DeviceIdProvider) = deviceIdProvider.getDeviceId()

@@ -3,6 +3,7 @@ package kekmech.ru.common_android
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
+import com.google.android.material.textfield.TextInputLayout
 
 fun EditText.showKeyboard() {
     requestFocus()
@@ -17,4 +18,8 @@ fun EditText.afterTextChanged(callback: (text: String) -> Unit) {
             callback(s.toString())
         }
     })
+}
+
+fun TextInputLayout.clearErrorAfterChange() {
+    editText?.afterTextChanged { error = null }
 }

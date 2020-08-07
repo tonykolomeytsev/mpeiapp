@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <attr name="text" format="string"/>
+
     <declare-styleable name="Chip">
         <attr name="accentColor" format="color"/>
-        <attr name="text" format="string"/>
+        <attr name="text"/>
         <attr name="thumbnail" format="integer"/>
     </declare-styleable>
+
     <declare-styleable name="EnumSlider">
         <attr name="itemsCount" format="integer"/>
+    </declare-styleable>
+
+    <declare-styleable name="ProgressButton">
+        <attr name="text"/>
+        <attr name="enabled" format="boolean"/>
     </declare-styleable>
 
     <attr name="themeColorWhite" format="reference"/>
