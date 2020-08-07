@@ -43,7 +43,6 @@ class WebViewFragment : BaseFragment<WebViewEvent, WebViewEffect, WebViewState, 
     }
 
     override fun render(state: WebViewState) {
-        webView.loadUrl(state.url)
         // show loading state
         if (state.isLoading) {
             progressBar.animate()
@@ -57,6 +56,7 @@ class WebViewFragment : BaseFragment<WebViewEvent, WebViewEffect, WebViewState, 
 
     override fun handleEffect(effect: WebViewEffect) = when (effect) {
         is WebViewEffect.CloseScreen -> close()
+        is WebViewEffect.LoadUrl -> webView.loadUrl(effect.url)
     }
 
     private fun initWebView() {
@@ -81,20 +81,22 @@ class WebViewFragment : BaseFragment<WebViewEvent, WebViewEffect, WebViewState, 
 
                 override fun onPageFinished(view: WebView?, url: String?) {
                     toolbar.title = url.orEmpty()
+                    // feature.accept(Wish.Action.LoadingProgressChanged(100))
                 }
             }
 
             webChromeClient = object : WebChromeClient() {
 
                 override fun onProgressChanged(view: WebView?, newProgress: Int) {
-                    feature.accept(Wish.Action.LoadingProgressChanged(newProgress))
+                    // feature.accept(Wish.Action.LoadingProgressChanged(newProgress))
                 }
             }
         }
     }
 
     private fun handleRequest(url: Uri): Boolean {
-        return !allowedUrls.any { it.matches(url.toString()) } // block url if non matches
+        return allowedUrls.isNotEmpty() &&
+            !allowedUrls.any { it.matches(url.toString()) } // block url if non matches
     }
 
     override fun onBackPressed(): Boolean {
