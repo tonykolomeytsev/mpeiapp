@@ -15,6 +15,7 @@ sealed class WebViewAction {
 
 sealed class WebViewEffect {
     object CloseScreen : WebViewEffect()
+    data class LoadUrl(val url: String) : WebViewEffect()
 }
 
 sealed class WebViewEvent {

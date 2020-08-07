@@ -19,7 +19,10 @@ class WebViewReducer : BaseReducer<WebViewState, WebViewEvent, WebViewEffect, We
         event: Wish,
         state: WebViewState
     ): Result<WebViewState, WebViewEffect, WebViewAction> = when (event) {
-        is Wish.Init -> Result(state = state)
+        is Wish.Init -> Result(
+            state = state,
+            effect = WebViewEffect.LoadUrl(state.url)
+        )
         is Wish.Action.SecretsGranted -> TODO()
         is Wish.Click.OnBack -> Result(
             state = state,
