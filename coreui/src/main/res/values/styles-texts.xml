@@ -33,6 +33,10 @@
         <item name="android:textColor">@color/C6</item>
     </style>
 
+    <style name="H4.C3">
+        <item name="android:textColor">@color/C3</item>
+    </style>
+
     <style name="H5">
         <item name="android:textSize">16sp</item>
         <item name="lineHeight">22sp</item>

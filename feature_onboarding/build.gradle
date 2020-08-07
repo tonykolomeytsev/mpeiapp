@@ -42,6 +42,7 @@ dependencies {
     implementation kotlinStdLib
     implementation androidx.appcompat
     implementation androidx.constraintlayout
+    implementation androidx.coordinatorlayout
     implementation androidx.coreKtx
     implementation google.material
     implementation koin.core
@@ -54,7 +55,9 @@ dependencies {
     implementation project(path: ':domain_onboarding')
     implementation project(path: ':domain_schedule')
     implementation project(path: ':common_di')
+    implementation project(path: ':common_android')
     implementation project(path: ':common_network')
     implementation project(path: ':common_kotlin')
+    implementation project(path: ':common_navigation')
     implementation project(path: ':coreui')
 }
