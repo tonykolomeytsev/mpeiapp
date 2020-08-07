@@ -2,22 +2,31 @@ package kekmech.ru.feature_schedule.find_schedule
 
 import android.os.Bundle
 import android.view.View
-import kekmech.ru.common_android.afterTextChanged
-import kekmech.ru.common_android.showKeyboard
+import kekmech.ru.common_android.*
+import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.ui.BaseFragment
+import kekmech.ru.domain_schedule.*
 import kekmech.ru.feature_schedule.R
+import kekmech.ru.feature_schedule.di.ScheduleDependencies
 import kekmech.ru.feature_schedule.find_schedule.presentation.*
 import kekmech.ru.feature_schedule.find_schedule.presentation.FindScheduleEvent.Wish
 import kotlinx.android.synthetic.main.fragment_find_schedule.*
 import org.koin.android.ext.android.inject
 
+private const val CONTINUE_TO_ARG = "ContinueTo"
+
 class FindScheduleFragment : BaseFragment<FindScheduleEvent, FindScheduleEffect, FindScheduleState, FindScheduleFeature>() {
 
     override val initEvent = Wish.Init
 
-    override fun createFeature() = inject<FindScheduleFeatureFactory>().value.create()
+    override fun createFeature() = inject<FindScheduleFeatureFactory>().value.create(
+        getArgument(CONTINUE_TO_ARG)
+    )
 
     override var layoutId = R.layout.fragment_find_schedule
+
+    private val dependencies by inject<ScheduleDependencies>()
+    private val onboardingFeatureLauncher by fastLazy { dependencies.onboardingFeatureLauncher }
 
     override fun onViewCreatedInternal(view: View, savedInstanceState: Bundle?) {
         super.onViewCreatedInternal(view, savedInstanceState)
@@ -36,6 +45,12 @@ class FindScheduleFragment : BaseFragment<FindScheduleEvent, FindScheduleEffect,
         is FindScheduleEffect.ShowError ->
             groupTextLayout.setError("Не удалось загрузить расписание для данной группы")
         is FindScheduleEffect.ShowSomethingWentWrongError -> Unit // todo handle other errors
+        is FindScheduleEffect.NavigateNextFragment -> when (effect.continueTo) {
+            CONTINUE_TO_BACK_STACK -> close()
+            CONTINUE_TO_BARS_ONBOARDING -> onboardingFeatureLauncher.launchBarsPage()
+            CONTINUE_TO_DASHBOARD -> Unit // todo
+            else -> Unit
+        }
     }
 
     override fun render(state: FindScheduleState) {
@@ -44,6 +59,8 @@ class FindScheduleFragment : BaseFragment<FindScheduleEvent, FindScheduleEffect,
     }
 
     companion object {
-        fun newInstance() = FindScheduleFragment()
+        fun newInstance(
+            continueTo: String = CONTINUE_TO_BACK_STACK
+        ) = FindScheduleFragment().withArguments(CONTINUE_TO_ARG to continueTo)
     }
 }

@@ -9,7 +9,7 @@ class ScheduleFeatureLauncherImpl(
     private val router: Router
 ) : ScheduleFeatureLauncher {
 
-    override fun launchSearchGroup() {
-        router.executeCommand(AddScreenForward { FindScheduleFragment.newInstance() })
+    override fun launchSearchGroup(continueTo: String) {
+        router.executeCommand(AddScreenForward { FindScheduleFragment.newInstance(continueTo) })
     }
 }

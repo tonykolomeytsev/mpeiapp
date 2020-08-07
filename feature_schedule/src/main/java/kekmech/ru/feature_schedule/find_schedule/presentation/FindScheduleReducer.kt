@@ -43,7 +43,10 @@ class FindScheduleReducer : BaseReducer<FindScheduleState, FindScheduleEvent, Fi
             state = state.copy(isLoading = false),
             effect = calculateErrorEffect(event.throwable)
         )
-        is News.GroupLoadedSuccessfully -> Result(state = state.copy(isLoading = false))
+        is News.GroupLoadedSuccessfully -> Result(
+            state = state.copy(isLoading = false),
+            effect = FindScheduleEffect.NavigateNextFragment(state.continueTo)
+        )
     }
 
     private fun calculateErrorEffect(throwable: Throwable): FindScheduleEffect = when {

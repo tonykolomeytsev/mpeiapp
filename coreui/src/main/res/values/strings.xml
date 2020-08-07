@@ -61,4 +61,8 @@
     <string name="schedule_find_description">Мы загрузим расписание выбранной группы на устройство</string>
     <string name="schedule_find_hint">Номер группы</string>
     <string name="schedule_find_button_continue">Продолжить</string>
+    <string name="onboarding_bars_header">Вход в БАРС</string>
+    <string name="onboarding_bars_description">Вы можете совершить вход в систему БАРС, чтобы получить возможность просматривать оценки из приложения</string>
+    <string name="onboarding_bars_button_skip">Пропустить</string>
+    <string name="onboarding_bars_button_signin">Войти</string>
 </resources>

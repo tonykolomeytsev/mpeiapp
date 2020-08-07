@@ -13,8 +13,7 @@ import kekmech.ru.common_navigation.NavigationHolder
 import kekmech.ru.common_navigation.NewRoot
 import kekmech.ru.common_navigation.Router
 import kekmech.ru.core.usecases.IsDarkThemeEnabledUseCase
-import kekmech.ru.feature_onboarding.WelcomeFragment
-import kekmech.ru.mpeiapp.ui.main.MainFragment
+import kekmech.ru.feature_onboarding.screens.WelcomeFragment
 import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {

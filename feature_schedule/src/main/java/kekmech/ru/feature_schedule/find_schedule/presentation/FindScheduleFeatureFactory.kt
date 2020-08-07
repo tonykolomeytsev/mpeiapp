@@ -6,8 +6,8 @@ class FindScheduleFeatureFactory(
     private val findScheduleActor: FindScheduleActor
 ) {
 
-    fun create(): FindScheduleFeature = BaseFeature(
-        initialState = FindScheduleState(),
+    fun create(continueTo: String): FindScheduleFeature = BaseFeature(
+        initialState = FindScheduleState(continueTo = continueTo),
         reducer = FindScheduleReducer(),
         actor = findScheduleActor
     ).start()

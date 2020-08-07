@@ -5,6 +5,7 @@ import kekmech.ru.common_mvi.Feature
 typealias FindScheduleFeature = Feature<FindScheduleState, FindScheduleEvent, FindScheduleEffect>
 
 data class FindScheduleState(
+    val continueTo: String,
     val isLoading: Boolean = false,
     val isContinueButtonEnabled: Boolean = false
 )
@@ -33,6 +34,7 @@ sealed class FindScheduleEvent {
 sealed class FindScheduleEffect {
     object ShowError : FindScheduleEffect()
     object ShowSomethingWentWrongError : FindScheduleEffect()
+    data class NavigateNextFragment(val continueTo: String) : FindScheduleEffect()
 }
 
 sealed class FindScheduleAction {
