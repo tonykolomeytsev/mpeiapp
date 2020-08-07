@@ -101,5 +101,6 @@ dependencies {
     implementation project(path: ':common_di')
     implementation project(path: ':common_kotlin')
     implementation project(path: ':common_mvi')
+    implementation project(path: ':common_webview')
     implementation project(path: ':common_network')
 }

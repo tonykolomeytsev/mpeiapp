@@ -1,3 +1,4 @@
+include ':common_webview'
 include ':feature_onboarding'
 include ':feature_schedule'
 include ':common_annotations'
