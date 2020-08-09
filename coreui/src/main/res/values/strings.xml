@@ -23,6 +23,16 @@
         <item>Суббота</item>
     </string-array>
 
+    <string-array name="days_of_week_short">
+        <item>ВС</item>
+        <item>ПН</item>
+        <item>ВТ</item>
+        <item>СР</item>
+        <item>ЧТ</item>
+        <item>ПТ</item>
+        <item>СБ</item>
+    </string-array>
+
     <string-array name="months">
         <item>января</item>
         <item>февраля</item>
