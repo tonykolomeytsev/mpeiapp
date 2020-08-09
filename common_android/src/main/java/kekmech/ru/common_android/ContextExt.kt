@@ -25,3 +25,6 @@ fun Context.getThemeAccentColor() = getThemeColor(R.attr.colorAccent)
 
 @ColorInt
 fun Context.getThemeSurfaceColor() = getThemeColor(R.attr.colorSurface)
+
+fun Context.getStringArray(@ArrayRes stringRes: Int): Array<String> =
+    resources.getStringArray(stringRes)
