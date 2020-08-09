@@ -123,7 +123,7 @@
         <item name="android:paddingRight">12dp</item>
         <item name="android:textSize">13sp</item>
         <item name="android:fontFamily">sans-serif-medium</item>
-        <item name="android:textColor">?attr/themeColorBlack</item>
+        <item name="android:textColor">@color/C7</item>
     </style>
 
     <style name="BottomSheetDialogTheme" parent="BaseBottomSheetDialog" />
