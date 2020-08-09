@@ -14,7 +14,7 @@
             android:layout_height="wrap_content"
             tools:text="Корпус С"
             android:layout_gravity="center_horizontal"
-            android:textColor="?attr/themeColorBlack"
+            android:textColor="@color/C7"
             android:alpha="0.85"
             android:textSize="18sp"
             android:fontFamily="sans-serif-medium"
@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             tools:text="Красноказарменная 13С"
             android:fontFamily="sans-serif"
-            android:textColor="?attr/themeColorBlack"
+            android:textColor="@color/C7"
             android:alpha="0.5"
             android:textSize="14sp"
             android:layout_gravity="center_horizontal"
@@ -35,7 +35,7 @@
     <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="?attr/themeColorBlack"
+            android:background="@color/C7"
             android:alpha="0.2"
             android:layout_gravity="bottom"/>
 </LinearLayout>

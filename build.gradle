@@ -33,8 +33,8 @@ buildscript {
                 recyclerview        : "androidx.recyclerview:recyclerview:${versions.recyclerview}",
                 cardview            : "androidx.cardview:cardview:${versions.cardview}",
                 swiperefreshlayout  : "androidx.swiperefreshlayout:swiperefreshlayout:${versions.swiperefreshlayout}",
-                fragmentKtx         : "androidx.fragment:fragment-ktx:1.2.4",
-                coreKtx             : "androidx.core:core-ktx:1.3.0",
+                fragmentKtx         : "androidx.fragment:fragment-ktx:1.2.5",
+                coreKtx             : "androidx.core:core-ktx:1.3.1",
                 test: [
                         runner      : "androidx.test:runner:1.2.0",
                         espresso    : "androidx.test.espresso:espresso-core:3.2.0"

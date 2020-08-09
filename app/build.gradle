@@ -44,7 +44,6 @@ dependencies {
     // Koin for Kotlin Android
     implementation koin.core
     implementation koin.android
-    implementation "org.koin:koin-android-viewmodel:2.0.1"
 
     implementation timber
 
@@ -53,6 +52,7 @@ dependencies {
     implementation androidx.recyclerview
     implementation androidx.appcompat
     implementation androidx.constraintlayout
+    implementation androidx.coordinatorlayout
     implementation androidx.coreKtx
     implementation google.material
 
@@ -89,13 +89,14 @@ dependencies {
     implementation project(path: ':feature_timetable')
     implementation project(path: ':feature_settings')
     implementation project(path: ':feature_onboarding')
-    implementation project(path: ':coreui')
+    implementation project(path: ':feature_dashboard')
     implementation project(path: ':feature_addscreen')
     implementation project(path: ':feature_schedule')
     implementation project(path: ':feature_map')
     implementation project(path: ':feature_force_update')
     implementation project(path: ':feature_bars')
     implementation project(path: ':feature_notes')
+    implementation project(path: ':coreui')
     implementation project(path: ':common_navigation')
     implementation project(path: ':common_android')
     implementation project(path: ':common_di')
