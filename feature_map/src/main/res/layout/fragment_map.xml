@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="kekmech.ru.map.view.MapFragment"
-    android:fitsSystemWindows="true"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        tools:context="kekmech.ru.map.view.MapFragment"
+        android:fitsSystemWindows="true"
         android:id="@+id/mapCoordinator"
-    android:clipToPadding="false"
+        android:clipToPadding="false"
         tools:theme="@style/AppTheme">
 
     <com.google.android.gms.maps.MapView
             android:id="@+id/mapView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".MapsActivity"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_marginBottom="56dp"
             android:paddingBottom="50dp"
@@ -28,7 +27,7 @@
             app:behavior_peekHeight="106dp"
             app:behavior_hideable="false"
             tools:behavior_peekHeight="348dp"
-            android:background="?attr/themeColorCardView"
+            android:background="@color/C6"
             android:orientation="vertical"
             android:fitsSystemWindows="false"
             android:paddingTop="0dp"
@@ -85,7 +84,7 @@
                     android:padding="6dp"
                     android:layout_marginRight="8dp"
                     android:layout_marginTop="-1dp"
-                    android:tint="?themeColorSearchViewIconsTint"
+                    android:tint="@color/C7"
                     android:src="@drawable/ic_expand_less_24px"
                     android:layout_gravity="right|center_vertical"/>
         </FrameLayout>

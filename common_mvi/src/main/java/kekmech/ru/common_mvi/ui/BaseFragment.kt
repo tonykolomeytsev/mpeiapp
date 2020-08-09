@@ -8,9 +8,9 @@ import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import io.reactivex.android.schedulers.AndroidSchedulers.mainThread
 import kekmech.ru.common_mvi.util.DisposableDelegate
 import kekmech.ru.common_mvi.util.DisposableDelegateImpl
-import io.reactivex.android.schedulers.AndroidSchedulers.mainThread
 import timber.log.Timber
 import kekmech.ru.common_mvi.Feature as MviFeature
 
@@ -92,4 +92,6 @@ abstract class BaseFragment<Event : Any, Effect : Any, State : Any, Feature : Mv
             })
             .bind()
     }
+
+
 }
