@@ -36,20 +36,16 @@ android {
     }
 }
 
-androidExtensions {
-    experimental = true
-}
-
-
 dependencies {
     coreLibraryDesugaring desugaring
     implementation kotlinStdLib
-
+    implementation timber
+    implementation rx.java
+    implementation rx.kotlin
+    implementation rx.android
     implementation squareup.retrofit
-    implementation squareup.retrofit_rxJava2
-    implementation squareup.retrofit_gson
+    implementation androidx.appcompat
+    implementation androidx.coreKtx
 
-    implementation project(path: ":common_di")
-    implementation project(path: ":common_annotations")
-    implementation project(path: ":common_shared_preferences")
+    implementation project(path: ":common_kotlin")
 }
