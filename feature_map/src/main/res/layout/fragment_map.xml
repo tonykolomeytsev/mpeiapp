@@ -27,7 +27,7 @@
             app:behavior_peekHeight="106dp"
             app:behavior_hideable="false"
             tools:behavior_peekHeight="348dp"
-            android:background="@color/C6"
+            android:background="@color/colorWhite"
             android:orientation="vertical"
             android:fitsSystemWindows="false"
             android:paddingTop="0dp"
@@ -84,7 +84,7 @@
                     android:padding="6dp"
                     android:layout_marginRight="8dp"
                     android:layout_marginTop="-1dp"
-                    android:tint="@color/C7"
+                    android:tint="@color/colorGray90"
                     android:src="@drawable/ic_expand_less_24px"
                     android:layout_gravity="right|center_vertical"/>
         </FrameLayout>

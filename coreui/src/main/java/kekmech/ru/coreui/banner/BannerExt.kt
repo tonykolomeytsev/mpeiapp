@@ -6,9 +6,9 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import kekmech.ru.coreui.R
 
-fun Fragment.showBanner(@StringRes resId: Int, @ColorRes color: Int = R.color.C11) =
+fun Fragment.showBanner(@StringRes resId: Int, @ColorRes color: Int = R.color.colorRed) =
     showBanner(getString(resId, color))
-fun Fragment.showBanner(text: String, @ColorRes color: Int = R.color.C11) {
+fun Fragment.showBanner(text: String, @ColorRes color: Int = R.color.colorRed) {
     val container = findBanner() ?: error("Add BannerContainer to $this layout")
     val bannerBackgroundColor = ContextCompat.getColor(requireContext(), color)
     container.show(Banner(text, bannerBackgroundColor))

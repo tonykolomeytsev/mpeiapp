@@ -48,6 +48,21 @@
         <item>декабря</item>
     </string-array>
 
+    <string-array name="months_short">
+        <item>янв</item>
+        <item>фев</item>
+        <item>мар</item>
+        <item>апр</item>
+        <item>мая</item>
+        <item>июн</item>
+        <item>июл</item>
+        <item>авг</item>
+        <item>сен</item>
+        <item>окт</item>
+        <item>ноя</item>
+        <item>дек</item>
+    </string-array>
+
     <string-array name="couple_types">
         <item>Лекция</item>
         <item>Практика</item>
