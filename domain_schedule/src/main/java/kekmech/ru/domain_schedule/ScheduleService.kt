@@ -10,12 +10,9 @@ import retrofit2.http.POST
 @EndpointUrl("https://api.kekmech.com/mpeix/")
 interface ScheduleService {
 
-    @POST("schedule/getSchedule")
+    @POST("schedule/getGroupSchedule")
     fun getSchedule(
         @Body body: GetScheduleBody
     ): Single<Schedule>
 
-    companion object {
-        const val ENDPOINT = "https://api.kekmech.com/mpeix/"
-    }
 }
