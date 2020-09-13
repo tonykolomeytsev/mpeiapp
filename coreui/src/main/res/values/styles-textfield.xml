@@ -17,7 +17,7 @@
         <item name="boxStrokeColor">@color/text_input_stroke_color</item>
         <item name="boxBackgroundColor">@color/text_input_background_color</item>
         <item name="materialThemeOverlay">@style/ThemeOverlay.TextInputEditText</item>
-        <item name="endIconTint">@color/C8</item>
+        <item name="endIconTint">@color/colorGray70</item>
     </style>
 
     <style name="ThemeOverlay.TextInputEditText" parent="ThemeOverlay.MaterialComponents.TextInputEditText">
@@ -32,16 +32,16 @@
     </style>
 
     <style name="TextInputEditText.Hint" parent="H8.C8">
-        <item name="android:textColor">@color/C8</item>
+        <item name="android:textColor">@color/colorGray70</item>
         <item name="android:fontFamily">@font/roboto_medium</item>
     </style>
 
     <style name="TextInputEditText.Error" parent="H8.C11">
-        <item name="android:textColor">@color/C11</item>
+        <item name="android:textColor">@color/colorRed</item>
     </style>
 
     <style name="TextInputEditText.Counter" parent="H8.C8">
-        <item name="android:textColor">@color/C8</item>
+        <item name="android:textColor">@color/colorGray70</item>
     </style>
 
 </resources>

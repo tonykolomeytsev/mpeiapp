@@ -3,11 +3,11 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorAccent">@color/C3</item>
-        <item name="colorPrimary">@color/C6</item>
-        <item name="colorPrimaryDark">@color/C9</item>
-        <item name="colorControlNormal">@color/C9</item>
-        <item name="colorControlHighlight">@color/C6</item>
+        <item name="colorAccent">@color/colorMain</item>
+        <item name="colorPrimary">@color/colorWhite</item>
+        <item name="colorPrimaryDark">@color/colorGray30</item>
+        <item name="colorControlNormal">@color/colorGray30</item>
+        <item name="colorControlHighlight">@color/colorWhite</item>
         <item name="android:textColor">@color/colorWhite</item>
         <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
 
@@ -45,6 +45,21 @@
         <item name="toolbarStyle">@style/Toolbar</item>
         <item name="editTextStyle">@style/EditText</item>
         <item name="textInputStyle">@style/TextInputLayout</item>
+
+        <!-- THEME COLORS -->
+        <item name="colorMainDark">@color/colorMainDark</item>
+        <item name="colorMainLight">@color/colorMainLight</item>
+        <item name="colorMain">@color/colorMain</item>
+        <item name="colorYellowDark">@color/colorYellowDark</item>
+        <item name="colorYellowLight">@color/colorYellowLight</item>
+        <item name="colorWhite">@color/colorWhite</item>
+        <item name="colorGray90">@color/colorGray90</item>
+        <item name="colorGray70">@color/colorGray70</item>
+        <item name="colorGray30">@color/colorGray30</item>
+        <item name="colorGray10">@color/colorGray10</item>
+        <item name="colorRed">@color/colorRed</item>
+        <item name="colorGreen">@color/colorGreen</item>
+        <item name="colorPink">@color/colorPink</item>
     </style>
 
     <style name="AppTheme.Dark" parent="Theme.AppCompat.Light.NoActionBar">
@@ -85,6 +100,22 @@
         <item name="themeColorForceUpdateBtnLater">@color/colorUpdateDtnLaterDark</item>
         <item name="themeColorSearchViewIconsTint">@color/colorIconsTintDark</item>
         <item name="themeColorCoupleNumber">@color/colorCoupleNumberDark</item>
+
+
+        <!-- THEME COLORS -->
+        <item name="colorMainDark">@color/colorMainDark</item>
+        <item name="colorMainLight">@color/colorMainLight</item>
+        <item name="colorMain">@color/colorMain</item>
+        <item name="colorYellowDark">@color/colorYellowDark</item>
+        <item name="colorYellowLight">@color/colorYellowLight</item>
+        <item name="colorWhite">@color/colorWhite</item>
+        <item name="colorGray90">@color/colorGray90</item>
+        <item name="colorGray70">@color/colorGray70</item>
+        <item name="colorGray30">@color/colorGray30</item>
+        <item name="colorGray10">@color/colorGray10</item>
+        <item name="colorRed">@color/colorRed</item>
+        <item name="colorGreen">@color/colorGreen</item>
+        <item name="colorPink">@color/colorPink</item>
     </style>
 
     <style name="AppTheme.Base" parent="AppTheme">
@@ -123,7 +154,7 @@
         <item name="android:paddingRight">12dp</item>
         <item name="android:textSize">13sp</item>
         <item name="android:fontFamily">sans-serif-medium</item>
-        <item name="android:textColor">@color/C7</item>
+        <item name="android:textColor">@color/colorGray90</item>
     </style>
 
     <style name="BottomSheetDialogTheme" parent="BaseBottomSheetDialog" />

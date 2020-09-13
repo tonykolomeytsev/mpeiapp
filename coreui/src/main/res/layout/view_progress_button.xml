@@ -19,7 +19,7 @@
             android:layout_gravity="center"
             android:visibility="gone"
             android:background="@drawable/circle_solid_white"
-            android:backgroundTint="@color/C6"
+            android:backgroundTint="@color/colorWhite"
             tools:visibility="visible"
             android:layout_marginEnd="24dp"/>
 
@@ -30,7 +30,7 @@
             android:layout_gravity="center"
             android:visibility="gone"
             android:background="@drawable/circle_solid_white"
-            android:backgroundTint="@color/C6"
+            android:backgroundTint="@color/colorWhite"
             tools:visibility="visible"/>
 
     <View
@@ -40,7 +40,7 @@
             android:layout_gravity="center"
             android:visibility="gone"
             android:background="@drawable/circle_solid_white"
-            android:backgroundTint="@color/C6"
+            android:backgroundTint="@color/colorWhite"
             tools:visibility="visible"
             android:layout_marginStart="24dp"/>
 </merge>
