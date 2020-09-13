@@ -11,7 +11,6 @@
     <color name="secondaryDarkColor">#484955</color>
     <color name="primaryTextColor">#f7f6ee</color>
     <color name="secondaryTextColor">#000000</color>
-    <color name="colorWhite">#ffffff</color>
     <color name="colorTeal">#009688</color>
     <color name="colorLightGray">#dedede</color>
 
@@ -56,18 +55,18 @@
     <color name="colorCoupleNumber">#ededed</color>
     <color name="colorCoupleNumberDark">#454545</color>
 
-    <color name="C1">#2A467A</color>
-    <color name="C2">#8AB3FF</color>
-    <color name="C3">#587FC7</color>
-    <color name="C4">#EDB53B</color>
-    <color name="C5">#FFC954</color>
-    <color name="C6">#FFFFFF</color>
-    <color name="C7">#2A2A2A</color>
-    <color name="C8">#898989</color>
-    <color name="C9">#D0D0D0</color>
-    <color name="C10">#F6F6F6</color>
-    <color name="C11">#DB4437</color>
-    <color name="C12">#578B0F</color>
-    <color name="C13">#FF505C</color>
+    <color name="colorMainDark">#2A467A</color>
+    <color name="colorMainLight">#8AB3FF</color>
+    <color name="colorMain">#587FC7</color>
+    <color name="colorYellowDark">#EDB53B</color>
+    <color name="colorYellowLight">#FFC954</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorGray90">#2A2A2A</color>
+    <color name="colorGray70">#898989</color>
+    <color name="colorGray30">#D0D0D0</color>
+    <color name="colorGray10">#F6F6F6</color>
+    <color name="colorRed">#DB4437</color>
+    <color name="colorGreen">#578B0F</color>
+    <color name="colorPink">#FF505C</color>
 
 </resources>

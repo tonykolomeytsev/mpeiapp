@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.ui.BaseFragment
+import kekmech.ru.coreui.banner.showBanner
 import kekmech.ru.feature_schedule.R
 import kekmech.ru.feature_schedule.di.ScheduleDependencies
 import kekmech.ru.feature_schedule.main.presentation.*
@@ -24,36 +25,50 @@ class ScheduleFragment : BaseFragment<ScheduleEvent, ScheduleEffect, ScheduleSta
 
     private val dependencies by inject<ScheduleDependencies>()
 
+    private var infiniteScrollAdapter: InfiniteScrollAdapter? = null
+    private val infiniteLayoutManager by fastLazy { LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false) }
     private val infiniteWeekDaysSnapHelper by fastLazy { PagerSnapHelper() }
     private val infiniteScrollHelper by fastLazy { InfiniteScrollHelper() }
 
     override fun onViewCreatedInternal(view: View, savedInstanceState: Bundle?) {
-        recyclerDayItems.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        infiniteLayoutManager.initialPrefetchItemCount = 3
+        infiniteLayoutManager.isItemPrefetchEnabled = true
+        recyclerDayItems.layoutManager = infiniteLayoutManager
         recyclerDayItems.scrollToPosition(Int.MAX_VALUE / 2)
+        recyclerDayItems.setHasFixedSize(true)
+        recyclerDayItems.setItemViewCacheSize(10)
         infiniteWeekDaysSnapHelper.attachToRecyclerView(recyclerDayItems)
         infiniteScrollHelper.attach(recyclerDayItems)
+
+//        viewPagerClasses.adapter =
     }
 
-    override fun handleEffect(effect: ScheduleEffect) {
-
+    override fun handleEffect(effect: ScheduleEffect) = when (effect) {
+        is ScheduleEffect.SelectDay -> (recyclerDayItems.adapter as InfiniteScrollAdapter).selectDay(effect.localDate)
+        is ScheduleEffect.ShowWeekLoadingError -> showBanner(R.string.something_went_wrong_error)
     }
 
     override fun render(state: ScheduleState) {
         if (recyclerDayItems.adapter == null && state.firstDayOfCurrentWeek != null) {
-            recyclerDayItems.adapter = createInfiniteWeekDayAdapter { weekOffset ->
-                val firstDayOfWeek = state.firstDayOfCurrentWeek.let { if (weekOffset != 0) it.plusWeeks(weekOffset.toLong()) else it }
-                listOf(firstDayOfWeek, *Array(5) { firstDayOfWeek.plusDays(it + 1L) })
-            }
+            initInfiniteRecyclerView(state.firstDayOfCurrentWeek)
         }
+        infiniteScrollAdapter?.selectDay(state.selectedDay)
     }
 
-    private fun createInfiniteWeekDayAdapter(localDatesGenerator: (Int) -> List<LocalDate>) =
-        InfiniteScrollAdapter(localDatesGenerator).apply {
-            setOnStartReached {
-                println("Left reached $it")
-                feature.accept(Wish.Action.WeekDaysStartReached(it)) }
-            setOnEndReached {
-                println("Right reached $it")
-                feature.accept(Wish.Action.WeekDaysEndReached(it)) }
+    private fun initInfiniteRecyclerView(firstDayOfCurrentWeek: LocalDate) {
+        val localDatesGenerator = { weekOffset: Int ->
+            val firstDayOfWeek = firstDayOfCurrentWeek.plusWeeks(weekOffset.toLong())
+            listOf(firstDayOfWeek, *Array(5) { firstDayOfWeek.plusDays(it + 1L) })
         }
+        infiniteScrollAdapter = createInfiniteWeekDayAdapter(localDatesGenerator) {
+            feature.accept(Wish.Click.OnDayClick(it))
+        }
+        recyclerDayItems.adapter = infiniteScrollAdapter
+    }
+
+    private fun createInfiniteWeekDayAdapter(
+        localDatesGenerator: (Int) -> List<LocalDate>,
+        onDayClickListener: (LocalDate) -> Unit
+    ) =
+        InfiniteScrollAdapter(localDatesGenerator, onDayClickListener)
 }

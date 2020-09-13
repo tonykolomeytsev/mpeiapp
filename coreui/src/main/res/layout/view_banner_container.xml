@@ -14,7 +14,7 @@
             android:paddingEnd="32dp"
             android:paddingTop="16dp"
             android:paddingBottom="16dp"
-            tools:background="@color/C11"
+            tools:background="@color/colorRed"
             tools:text="Somethind went wrong"
             />
 </merge>

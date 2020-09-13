@@ -54,6 +54,7 @@ dependencies {
     implementation androidx.appcompat
     implementation androidx.coreKtx
     implementation androidx.constraintlayout
+    implementation androidx.viewPager2
     implementation google.material
 
     implementation project(path: ':domain_schedule')

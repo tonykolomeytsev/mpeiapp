@@ -11,7 +11,8 @@ data class ScheduleState(
     val weekOffset: Int = 0,
     val isLoading: Boolean = true,
     val schedule: MutableMap<Int, Schedule> = mutableMapOf(), // weekOffset -> schedule
-    val firstDayOfCurrentWeek: LocalDate? = null
+    val firstDayOfCurrentWeek: LocalDate? = null,
+    val selectedDay: LocalDate = LocalDate.now()
 ) {
 
 }
@@ -24,6 +25,10 @@ sealed class ScheduleEvent {
             data class WeekDaysStartReached(val leftOffset: Int) : Wish()
             data class WeekDaysEndReached(val rightOffset: Int) : Wish()
         }
+
+        object Click {
+            data class OnDayClick(val localDate: LocalDate) : Wish()
+        }
     }
 
     sealed class News : ScheduleEvent() {
@@ -34,6 +39,7 @@ sealed class ScheduleEvent {
 
 sealed class ScheduleEffect {
     data class ShowWeekLoadingError(val throwable: Throwable) : ScheduleEffect()
+    data class SelectDay(val localDate: LocalDate) : ScheduleEffect()
 }
 
 sealed class ScheduleAction {

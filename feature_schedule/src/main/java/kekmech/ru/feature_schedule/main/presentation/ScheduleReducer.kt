@@ -53,6 +53,9 @@ class ScheduleReducer : BaseReducer<ScheduleState, ScheduleEvent, ScheduleEffect
                 state = state.copy()
             )
         }
+        is Wish.Click.OnDayClick -> Result(
+            state = state.copy(selectedDay = event.localDate)
+        )
     }
 
     private fun getCurrentSchedule(state: ScheduleState) = state.schedule[state.weekOffset]!!

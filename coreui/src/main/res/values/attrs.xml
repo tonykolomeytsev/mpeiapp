@@ -39,4 +39,19 @@
     <attr name="themeColorForceUpdateBtnLater" format="reference"/>
     <attr name="themeColorSearchViewIconsTint" format="reference"/>
     <attr name="themeColorCoupleNumber" format="reference"/>
+
+    <attr name="colorMainDark" format="reference"/>
+    <attr name="colorMainLight" format="reference"/>
+    <attr name="colorMain" format="reference"/>
+    <attr name="colorYellowDark" format="reference"/>
+    <attr name="colorYellowLight" format="reference"/>
+    <attr name="colorWhite" format="reference"/>
+    <attr name="colorGray90" format="reference"/>
+    <attr name="colorGray70" format="reference"/>
+    <attr name="colorGray30" format="reference"/>
+    <attr name="colorGray10" format="reference"/>
+    <attr name="colorRed" format="reference"/>
+    <attr name="colorGreen" format="reference"/>
+    <attr name="colorPink" format="reference"/>
+
 </resources>
