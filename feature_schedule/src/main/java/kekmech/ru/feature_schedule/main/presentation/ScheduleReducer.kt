@@ -2,6 +2,7 @@ package kekmech.ru.feature_schedule.main.presentation
 
 import kekmech.ru.common_mvi.BaseReducer
 import kekmech.ru.common_mvi.Result
+import kekmech.ru.domain_schedule.dto.Schedule
 import kekmech.ru.feature_schedule.main.presentation.ScheduleEvent.News
 import kekmech.ru.feature_schedule.main.presentation.ScheduleEvent.Wish
 
@@ -21,7 +22,17 @@ class ScheduleReducer : BaseReducer<ScheduleState, ScheduleEvent, ScheduleEffect
         event: News,
         state: ScheduleState
     ): ScheduleResult = when (event) {
-        else -> Result(state = state)
+        is News.ScheduleWeekLoadSuccess -> {
+            state.schedule[event.weekOffset] = event.schedule
+            val firstDayOfWeek = getFirstDayOfWeek(event.schedule)
+            Result(
+                state = state.copy(firstDayOfCurrentWeek = firstDayOfWeek)
+            )
+        }
+        is News.ScheduleWeekLoadError -> Result(
+            state = state,
+            effect = ScheduleEffect.ShowWeekLoadingError(event.throwable)
+        )
     }
 
     private fun reduceWish(
@@ -30,7 +41,21 @@ class ScheduleReducer : BaseReducer<ScheduleState, ScheduleEvent, ScheduleEffect
     ): ScheduleResult = when (event) {
         is Wish.Init -> Result(
             state = state.copy(isLoading = true),
-            action = ScheduleAction.ObserveSchedule(state.weekOffset)
+            action = ScheduleAction.LoadSchedule(state.weekOffset)
         )
+        is Wish.Action.WeekDaysStartReached -> {
+            Result(
+                state = state.copy()
+            )
+        }
+        is Wish.Action.WeekDaysEndReached -> {
+            Result(
+                state = state.copy()
+            )
+        }
     }
+
+    private fun getCurrentSchedule(state: ScheduleState) = state.schedule[state.weekOffset]!!
+
+    private fun getFirstDayOfWeek(schedule: Schedule) = schedule.weeks.first().firstDayOfWeek
 }

@@ -26,7 +26,7 @@ sealed class FindScheduleEvent {
     }
 
     sealed class News : FindScheduleEvent() {
-        object GroupLoadedSuccessfully : News()
+        data class GroupLoadedSuccessfully(val groupName: String) : News()
         data class GroupLoadingError(val throwable: Throwable) : News()
     }
 }
@@ -39,4 +39,5 @@ sealed class FindScheduleEffect {
 
 sealed class FindScheduleAction {
     data class FindGroup(val groupName: String) : FindScheduleAction()
+    data class SelectGroup(val groupName: String) : FindScheduleAction()
 }

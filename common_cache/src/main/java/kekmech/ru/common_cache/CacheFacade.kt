@@ -65,8 +65,7 @@ class CacheFacade<T : Any>(
     }
 }
 
-fun <T : Any> LifetimeCache.create(dataSource: () -> Observable<T>): CacheFacade<T> =
+fun <T : Any> LifetimeCache.create(dataSource: () -> Single<T>): CacheFacade<T> =
     CacheFacade(
-        LifetimeCacheUnitImpl(UUID.randomUUID().toString(), this),
-        dataSource
-    )
+        LifetimeCacheUnitImpl(UUID.randomUUID().toString(), this)
+    ) {dataSource().toObservable()}

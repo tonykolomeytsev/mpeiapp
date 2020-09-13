@@ -96,6 +96,7 @@ dependencies {
     implementation project(path: ':feature_force_update')
     implementation project(path: ':feature_bars')
     implementation project(path: ':feature_notes')
+
     implementation project(path: ':coreui')
     implementation project(path: ':common_navigation')
     implementation project(path: ':common_android')
@@ -104,4 +105,5 @@ dependencies {
     implementation project(path: ':common_mvi')
     implementation project(path: ':common_webview')
     implementation project(path: ':common_network')
+    implementation project(path: ':common_cache')
 }

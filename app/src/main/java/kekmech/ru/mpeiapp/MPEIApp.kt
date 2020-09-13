@@ -4,6 +4,7 @@ import android.app.Application
 import kekmech.ru.addscreen.di.KoinAddFragmentModule
 import kekmech.ru.bars.di.KoinBarsModule
 import kekmech.ru.common_android.di.CommonAndroidModule
+import kekmech.ru.common_cache.di.CacheModule
 import kekmech.ru.common_di.modules
 import kekmech.ru.common_navigation.Router
 import kekmech.ru.common_navigation.di.NavigationModule
@@ -63,7 +64,8 @@ class MPEIApp : Application(),
             OnboardingModule,
             ScheduleModule,
             NetworkModule,
-            WebViewModule
+            WebViewModule,
+            CacheModule
         ))
     }
 

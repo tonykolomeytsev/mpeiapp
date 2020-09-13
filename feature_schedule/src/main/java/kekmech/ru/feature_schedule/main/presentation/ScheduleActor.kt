@@ -9,6 +9,11 @@ class ScheduleActor(
 ) : Actor<ScheduleAction, ScheduleEvent> {
 
     override fun execute(action: ScheduleAction): Observable<ScheduleEvent> = when (action) {
-        is ScheduleAction.ObserveSchedule -> scheduleRepository.observeSchedule(action.weekOffset)
+        is ScheduleAction.LoadSchedule -> scheduleRepository
+            .loadSchedule(weekOffset = action.weekOffset)
+            .mapEvents(
+                successEventMapper = { ScheduleEvent.News.ScheduleWeekLoadSuccess(action.weekOffset, it) },
+                failureEvent = ScheduleEvent.News::ScheduleWeekLoadError
+            )
     }
 }
