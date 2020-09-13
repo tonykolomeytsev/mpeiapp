@@ -52,4 +52,5 @@ dependencies {
     implementation project(path: ":common_di")
     implementation project(path: ":common_annotations")
     implementation project(path: ":common_shared_preferences")
+    implementation project(path: ":common_cache")
 }

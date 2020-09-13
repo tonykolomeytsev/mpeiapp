@@ -45,7 +45,8 @@ class FindScheduleReducer : BaseReducer<FindScheduleState, FindScheduleEvent, Fi
         )
         is News.GroupLoadedSuccessfully -> Result(
             state = state.copy(isLoading = false),
-            effect = FindScheduleEffect.NavigateNextFragment(state.continueTo)
+            effect = FindScheduleEffect.NavigateNextFragment(state.continueTo),
+            action = FindScheduleAction.SelectGroup(event.groupName)
         )
     }
 
