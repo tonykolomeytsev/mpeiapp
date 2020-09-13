@@ -12,6 +12,9 @@ class FindScheduleActor(
     override fun execute(action: FindScheduleAction): Observable<FindScheduleEvent> = when (action) {
         is FindScheduleAction.FindGroup -> scheduleRepository
             .loadSchedule(action.groupName)
-            .mapEvents(News.GroupLoadedSuccessfully, News::GroupLoadingError)
+            .mapEvents(News.GroupLoadedSuccessfully(action.groupName), News::GroupLoadingError)
+        is FindScheduleAction.SelectGroup -> scheduleRepository
+            .selectGroup(action.groupName)
+            .toObservable()
     }
 }
