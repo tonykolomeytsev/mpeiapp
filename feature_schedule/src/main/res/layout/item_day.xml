@@ -1,28 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="40dp"
-        android:layout_height="56dp"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:layout_width="match_parent"
+        android:layout_height="56dp">
 
-    <TextView
-            android:id="@+id/textDayOfWeek"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto_medium"
-            android:textSize="16sp"
-            tools:text="ВТ"
-            android:textColor="@color/C7"/>
+    <LinearLayout
+            android:id="@+id/linearLayoutContainer"
+            android:layout_width="40dp"
+            android:layout_height="56dp"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_gravity="center"
+            tools:ignore="UselessParent">
 
-    <TextView
-            android:id="@+id/textDayOfMonth"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto_medium"
-            android:textSize="16sp"
-            tools:text="16"
-            android:textColor="@color/C7"/>
+        <TextView
+                android:id="@+id/textDayOfWeek"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
+                android:textSize="16sp"
+                tools:text="ВТ"
+                android:textColor="@color/C7"
+                android:layout_gravity="center_horizontal"/>
 
-</LinearLayout>
+        <TextView
+                android:id="@+id/textDayOfMonth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
+                android:textSize="16sp"
+                tools:text="16"
+                android:textColor="@color/C7"
+                android:layout_gravity="center_horizontal"/>
+
+    </LinearLayout>
+
+</FrameLayout>

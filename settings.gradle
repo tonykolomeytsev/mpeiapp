@@ -1,3 +1,5 @@
+include ':common_cache'
+include ':common_shared_preferences'
 include ':common_adapter'
 include ':feature_dashboard'
 include ':common_webview'

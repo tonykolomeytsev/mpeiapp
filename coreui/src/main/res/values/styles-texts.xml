@@ -51,6 +51,10 @@
         <item name="android:textColor">@color/colorBlack</item>
     </style>
 
+    <style name="H6.C6">
+        <item name="android:textColor">@color/C6</item>
+    </style>
+
     <style name="H6.C8">
         <item name="android:textColor">@color/C8</item>
     </style>

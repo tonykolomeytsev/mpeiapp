@@ -5,7 +5,10 @@ import android.view.View
 import kekmech.ru.common_android.*
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.ui.BaseFragment
-import kekmech.ru.domain_schedule.*
+import kekmech.ru.coreui.banner.showBanner
+import kekmech.ru.domain_schedule.CONTINUE_TO_BACK_STACK
+import kekmech.ru.domain_schedule.CONTINUE_TO_BARS_ONBOARDING
+import kekmech.ru.domain_schedule.CONTINUE_TO_DASHBOARD
 import kekmech.ru.feature_schedule.R
 import kekmech.ru.feature_schedule.di.ScheduleDependencies
 import kekmech.ru.feature_schedule.find_schedule.presentation.*
@@ -43,8 +46,8 @@ class FindScheduleFragment : BaseFragment<FindScheduleEvent, FindScheduleEffect,
 
     override fun handleEffect(effect: FindScheduleEffect) = when (effect) {
         is FindScheduleEffect.ShowError ->
-            groupTextLayout.setError("Не удалось загрузить расписание для данной группы")
-        is FindScheduleEffect.ShowSomethingWentWrongError -> Unit // todo handle other errors
+            groupTextLayout.setError(getString(R.string.schedule_find_error_loading, groupText.text?.toString().orEmpty()))
+        is FindScheduleEffect.ShowSomethingWentWrongError -> showBanner(R.string.something_went_wrong_error)
         is FindScheduleEffect.NavigateNextFragment -> when (effect.continueTo) {
             CONTINUE_TO_BACK_STACK -> close()
             CONTINUE_TO_BARS_ONBOARDING -> onboardingFeatureLauncher.launchBarsPage()

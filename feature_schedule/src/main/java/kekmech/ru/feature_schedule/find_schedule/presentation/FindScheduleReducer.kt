@@ -7,7 +7,7 @@ import kekmech.ru.feature_schedule.find_schedule.presentation.FindScheduleEvent.
 
 typealias FindScheduleResult = Result<FindScheduleState, FindScheduleEffect, FindScheduleAction>
 
-private const val MESSAGE_BAD_REQUEST = "HTTP 400 Bad Request"
+private const val MESSAGE_BAD_REQUEST = "HTTP 503 Service Unavailable"
 
 class FindScheduleReducer : BaseReducer<FindScheduleState, FindScheduleEvent, FindScheduleEffect, FindScheduleAction> {
 

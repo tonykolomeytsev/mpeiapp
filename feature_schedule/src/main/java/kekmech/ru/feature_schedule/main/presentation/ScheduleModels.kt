@@ -14,11 +14,11 @@ data class ScheduleState(
 
 sealed class ScheduleEvent {
 
-    sealed class Wish {
-
+    sealed class Wish : ScheduleEvent() {
+        object Init : Wish()
     }
 
-    sealed class News {
+    sealed class News : ScheduleEvent() {
 
     }
 }
@@ -28,5 +28,5 @@ sealed class ScheduleEffect {
 }
 
 sealed class ScheduleAction {
-
+    data class ObserveSchedule(val weekOffset: Int) : ScheduleAction()
 }

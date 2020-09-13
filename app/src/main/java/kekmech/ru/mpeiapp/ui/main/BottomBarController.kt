@@ -5,6 +5,7 @@ import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kekmech.ru.common_navigation.BottomTab
 import kekmech.ru.feature_dashboard.DashboardFragment
+import kekmech.ru.feature_schedule.main.ScheduleFragment
 import kekmech.ru.map.view.MapFragment
 import kekmech.ru.mpeiapp.R
 import java.util.concurrent.TimeUnit
@@ -85,7 +86,7 @@ class BottomBarController(
 
     private fun createTabFragment(tab: BottomTab): Fragment = when (tab) {
         BottomTab.DASHBOARD -> DashboardFragment()
-        BottomTab.SCHEDULE -> TODO()
+        BottomTab.SCHEDULE -> ScheduleFragment()
         BottomTab.MAP -> MapFragment()
         BottomTab.PROFILE -> TODO()
     }
