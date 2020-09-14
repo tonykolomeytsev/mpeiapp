@@ -90,6 +90,8 @@
     <string name="schedule_find_hint">Номер группы</string>
     <string name="schedule_find_button_continue">Продолжить</string>
     <string name="schedule_find_error_loading">Не удалось загрузить расписание для группы %s</string>
+    <string name="schedule_semester_week">%d учебная неделя</string>
+    <string name="schedule_weekend_week">Неучебная неделя</string>
     <string name="onboarding_bars_header">Вход в БАРС</string>
     <string name="onboarding_bars_description">Вы можете совершить вход в систему БАРС, чтобы получить возможность просматривать оценки из приложения</string>
     <string name="onboarding_bars_button_skip">Пропустить</string>

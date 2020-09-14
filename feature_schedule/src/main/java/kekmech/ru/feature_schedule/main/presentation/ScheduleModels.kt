@@ -13,8 +13,10 @@ data class ScheduleState(
     val isLoading: Boolean = true,
     val schedule: MutableMap<Int, Schedule> = mutableMapOf(), // weekOffset -> schedule
     val currentWeekMonday: LocalDate? = null,
-    val selectedDay: LocalDate? = null
-)
+    val selectedDay: LocalDate = LocalDate.now()
+) {
+    val nullWeekSemesterNumber = schedule[0]?.weeks?.firstOrNull()?.weekOfSemester
+}
 
 sealed class ScheduleEvent {
 
