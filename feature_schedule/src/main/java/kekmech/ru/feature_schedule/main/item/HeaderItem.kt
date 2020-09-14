@@ -69,6 +69,7 @@ class HeaderItemBinder(
         weeksScrollHelper.currentWeekMonday = model.currentWeekMonday
         vh.setHeader(getFormattedDay(model.selectedDay))
         vh.bindHelper(weeksScrollHelper)
+        vh.setDescription(getFormattedWeek(model.selectedWeekNumber))
     }
 
     override fun update(
