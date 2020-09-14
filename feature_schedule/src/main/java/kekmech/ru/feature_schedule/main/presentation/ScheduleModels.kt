@@ -8,22 +8,20 @@ typealias ScheduleFeature =
         Feature<ScheduleState, ScheduleEvent, ScheduleEffect>
 
 data class ScheduleState(
+    val isFirstLoading: Boolean = true,
     val weekOffset: Int = 0,
     val isLoading: Boolean = true,
     val schedule: MutableMap<Int, Schedule> = mutableMapOf(), // weekOffset -> schedule
-    val firstDayOfCurrentWeek: LocalDate? = null,
-    val selectedDay: LocalDate = LocalDate.now()
-) {
-
-}
+    val currentWeekMonday: LocalDate? = null,
+    val selectedDay: LocalDate? = null
+)
 
 sealed class ScheduleEvent {
 
     sealed class Wish : ScheduleEvent() {
         object Init : Wish()
         object Action {
-            data class WeekDaysStartReached(val leftOffset: Int) : Wish()
-            data class WeekDaysEndReached(val rightOffset: Int) : Wish()
+            data class SelectWeek(val weekOffset: Int) : Wish()
         }
 
         object Click {

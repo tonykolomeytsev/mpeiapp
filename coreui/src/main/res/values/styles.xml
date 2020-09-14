@@ -37,6 +37,7 @@
         <item name="colorRed">@color/colorRed</item>
         <item name="colorGreen">@color/colorGreen</item>
         <item name="colorPink">@color/colorPink</item>
+        <item name="shimmerColor">@color/colorGray20</item>
     </style>
 
     <style name="AppTheme.Dark" parent="Theme.AppCompat.Light.NoActionBar">
@@ -93,6 +94,7 @@
         <item name="colorRed">@color/colorRed</item>
         <item name="colorGreen">@color/colorGreen</item>
         <item name="colorPink">@color/colorPink</item>
+        <item name="shimmerColor">@color/colorGray80</item>
     </style>
 
     <style name="AppTheme.Base" parent="AppTheme">

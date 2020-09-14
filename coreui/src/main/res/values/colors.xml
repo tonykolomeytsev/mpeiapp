@@ -65,6 +65,7 @@
     <color name="colorGray80">#3C3C3C</color>
     <color name="colorGray70">#898989</color>
     <color name="colorGray30">#D0D0D0</color>
+    <color name="colorGray20">#DfDfDf</color>
     <color name="colorGray10">#F6F6F6</color>
     <color name="colorRed">#DB4437</color>
     <color name="colorGreen">#578B0F</color>

@@ -56,6 +56,7 @@ dependencies {
     implementation androidx.constraintlayout
     implementation androidx.viewPager2
     implementation google.material
+    implementation facebook.shimmer
 
     implementation project(path: ':domain_schedule')
     implementation project(path: ':domain_onboarding')
