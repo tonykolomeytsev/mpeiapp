@@ -23,6 +23,7 @@
             android:layout_marginTop="4dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
             tools:text="Сейчас идет четная неделя №12"/>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -30,7 +31,6 @@
             android:layout_width="match_parent"
             android:layout_height="72dp"
             android:orientation="horizontal"
-            android:layout_marginTop="4dp"
             android:layout_marginBottom="8dp"
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
