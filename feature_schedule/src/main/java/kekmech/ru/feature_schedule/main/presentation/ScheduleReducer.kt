@@ -31,6 +31,7 @@ class ScheduleReducer : BaseReducer<ScheduleState, ScheduleEvent, ScheduleEffect
                     state = state.copy(
                         currentWeekMonday = firstDayOfWeek,
                         selectedDay = LocalDate.now(),
+                        isFirstLoading = false,
                         isLoading = false
                     )
                 )
