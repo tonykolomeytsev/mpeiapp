@@ -18,8 +18,8 @@ data class HeaderItem(
     var selectedWeekNumber: Int = -1
 ) {
 
-    override fun equals(other: Any?) = other is HeaderItem
-    override fun hashCode() = javaClass.hashCode()
+//    override fun equals(other: Any?) = other is HeaderItem
+//    override fun hashCode() = javaClass.hashCode()
 }
 
 interface HeaderViewHolder {
@@ -77,13 +77,23 @@ class HeaderItemBinder(
         position: Int,
         payloads: List<Any>
     ) {
-        vh.setHeader(getFormattedDay(model.selectedDay))
+        val newModel = payloads.first() as HeaderItem
+        vh.setHeader(getFormattedDay(newModel.selectedDay))
+        vh.setDescription(getFormattedWeek(newModel.selectedWeekNumber))
     }
 
     private fun getFormattedDay(day: LocalDate): String {
         val dayOfWeekName = context.getStringArray(R.array.days_of_week).getOrElse(day.dayOfWeek.value - 1) { "" }
         val dayOfMonthName = context.getStringArray(R.array.months).getOrElse(day.monthValue - 1) { "" }
         return "$dayOfWeekName, ${day.dayOfMonth} $dayOfMonthName"
+    }
+
+    private fun getFormattedWeek(weekNumber: Int): String {
+        if (weekNumber != -1) {
+            return context.getString(R.string.schedule_semester_week, weekNumber)
+        } else {
+            return context.getString(R.string.schedule_weekend_week)
+        }
     }
 
 }
@@ -96,5 +106,8 @@ class HeaderAdapterItem(
     isType = { it is HeaderItem },
     viewHolderGenerator = ::HeaderItemViewHolderImpl,
     layoutRes = R.layout.item_header,
-    itemBinder = HeaderItemBinder(context, onWeekSelectListener, onDaySelectListener)
+    itemBinder = HeaderItemBinder(context, onWeekSelectListener, onDaySelectListener),
+    areItemsTheSame = { a, b -> a.javaClass == b.javaClass },
+    equals = { a, b -> a.selectedDay == b.selectedDay && a.selectedWeekNumber == b.selectedWeekNumber },
+    changePayload = { _, b -> b }
 )
