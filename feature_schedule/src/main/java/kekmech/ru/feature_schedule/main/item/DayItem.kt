@@ -1,10 +1,12 @@
 package kekmech.ru.feature_schedule.main.item
 
+import android.content.Context
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseItemBinder
+import kekmech.ru.common_android.getStringArray
 import kekmech.ru.common_android.getThemeColor
 import kekmech.ru.feature_schedule.R
 import kekmech.ru.feature_schedule.main.helpers.DayItemStateHelper
@@ -70,13 +72,13 @@ class DayViewHolderImpl(
 }
 
 class DayItemBinder(
-    private val dayNames: List<String>,
-    private val monthNames: List<String>,
+    context: Context,
     private val currentDate: LocalDate,
-    private val selectedDay: () -> LocalDate,
-    private val dayClickListener: (LocalDate) -> Unit,
-    private val helper: DayItemStateHelper
+    private val onDayClickListener: (DayItem) -> Unit
 ) : BaseItemBinder<DayViewHolder, DayItem>() {
+
+    private val dayNames = context.getStringArray(R.array.days_of_week_short)
+    private val monthNames = context.getStringArray(R.array.months_short)
 
     override fun bind(vh: DayViewHolder, model: DayItem, position: Int) {
         val dayName = dayNames.getOrNull(model.date.dayOfWeek.value).orEmpty()
@@ -85,24 +87,24 @@ class DayItemBinder(
         vh.setDayOfMonthNumber(model.date.dayOfMonth)
         vh.setMonthName(monthName)
         vh.setOnClickListener {
-            dayClickListener(model.date)
-            helper.clearOldSelectionAndRun {
+            DayItemStateHelper.clearOldSelectionAndRun(model) {
                 vh.setIsSelected(true)
             }
-            helper.subscribeToClearSelection {
+            DayItemStateHelper.subscribeToClearSelection {
                 vh.setIsSelected(false)
             }
-        }
-        if (model.date == selectedDay()) {
-            vh.setIsSelected(true)
-            helper.subscribeToClearSelection {
-                vh.setIsSelected(false)
-            }
+            onDayClickListener(model)
         }
         if (model.date == currentDate) {
             vh.setIsCurrentDay(true)
         }
-        val s = selectedDay()
+        val s = DayItemStateHelper.selectedDay.date
+        if (model.date == s) {
+            vh.setIsSelected(true)
+            DayItemStateHelper.subscribeToClearSelection {
+                vh.setIsSelected(false)
+            }
+        }
         when {
             model.date == s && !vh.isSelected -> vh.setIsSelected(true)
             model.date != s && vh.isSelected -> vh.setIsSelected(false)
@@ -111,15 +113,12 @@ class DayItemBinder(
 }
 
 class DayAdapterItem(
-    dayNames: List<String>,
-    monthNames: List<String>,
-    selectedDay: () -> LocalDate,
-    dayClickListener: (LocalDate) -> Unit,
-    helper: DayItemStateHelper
+    context: Context,
+    onDayClickListener: (DayItem) -> Unit
 ) : AdapterItem<DayViewHolder, DayItem>(
     isType = { it is DayItem },
     layoutRes = R.layout.item_day,
-    itemBinder = DayItemBinder(dayNames, monthNames, LocalDate.now(), selectedDay, dayClickListener, helper),
+    itemBinder = DayItemBinder(context, LocalDate.now(), onDayClickListener),
     viewHolderGenerator = ::DayViewHolderImpl,
     areItemsTheSame = { a, b -> a.date == b.date },
     equals = { a, b -> a.date == b.date }

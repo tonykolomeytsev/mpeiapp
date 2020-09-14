@@ -3,7 +3,8 @@
 
 
     <!-- НУМЕРАЦИЯ ПАР-->
-    <string-array name="couples_numbers">
+    <string-array name="classes_numbers">
+        <item>Очередная пара</item>
         <item>Первая пара</item>
         <item>Вторая пара</item>
         <item>Третья пара</item>
@@ -14,13 +15,13 @@
     </string-array>
 
     <string-array name="days_of_week">
-        <item>Воскресенье</item>
         <item>Понедельник</item>
         <item>Вторник</item>
         <item>Среда</item>
         <item>Четверг</item>
         <item>Пятница</item>
         <item>Суббота</item>
+        <item>Воскресенье</item>
     </string-array>
 
     <string-array name="days_of_week_short">
@@ -63,12 +64,12 @@
         <item>дек</item>
     </string-array>
 
-    <string-array name="couple_types">
+    <string-array name="classes_types">
+        <item>Очередная пара</item>
         <item>Лекция</item>
         <item>Практика</item>
         <item>Лабораторная</item>
         <item>Курсовая</item>
-        <item>Очередная пара</item>
     </string-array>
 
     <string name="timetable_show_next_week">Показать следующую неделю</string>
