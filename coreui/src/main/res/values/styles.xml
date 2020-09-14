@@ -17,29 +17,6 @@
         <item name="android:windowTranslucentStatus">false</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
 
-<!--        <item name="themeColorWhite">@color/colorWhite</item>-->
-<!--        <item name="themeColorBlack">@color/colorBlack</item>-->
-<!--        <item name="themeColorCardView">@color/colorWhite</item>-->
-<!--        <item name="themeColorToolbar">@color/colorSecondary</item>-->
-<!--        <item name="themeColorFeedBackground">@color/colorFeedBackground</item>-->
-<!--        <item name="themeColorBottomNavBackground">?android:attr/windowBackground</item>-->
-<!--        <item name="themeColorBottomNavTint">@color/colorBottomNavLight</item>-->
-<!--        <item name="themeColorBarsAvMark">@color/colorBarsAvMark</item>-->
-<!--        <item name="themeColorProgressBar">@color/colorProgressBar</item>-->
-<!--        <item name="themeColorBackdrop">@color/colorBackdrop</item>-->
-<!--        <item name="themeColorDivider">@color/colorBlack</item>-->
-<!--        <item name="themeColorInfoBlock">@color/colorTransparent</item>-->
-<!--        <item name="themeColorTimetableCard">@color/colorTransparent</item>-->
-<!--        <item name="themeColorTimetableBackground">@color/colorWhite</item>-->
-<!--        <item name="themeColorTimetableLunchBackground">@color/colorLunchItem</item>-->
-<!--        <item name="themeColorSearchView">@color/colorSearchView</item>-->
-<!--        <item name="themeColorSearchViewHint">@color/colorSearchViewHint</item>-->
-<!--        <item name="themeColorMapTab">@color/colorMapTab</item>-->
-<!--        <item name="themeColorForceUpdateBg">@color/colorWhite</item>-->
-<!--        <item name="themeColorForceUpdateBtnLater">@color/colorUpdateDtnLater</item>-->
-<!--        <item name="themeColorSearchViewIconsTint">@color/colorIconsTint</item>-->
-<!--        <item name="themeColorCoupleNumber">@color/colorCoupleNumber</item>-->
-
         <item name="materialButtonStyle">@style/Button.Primary</item>
         <item name="buttonStyle">@style/Button.Primary</item>
         <item name="toolbarStyle">@style/Toolbar</item>
@@ -103,16 +80,16 @@
 
 
         <!-- THEME COLORS -->
-        <item name="colorMainDark">@color/colorMainDark</item>
-        <item name="colorMainLight">@color/colorMainLight</item>
+        <item name="colorMainDark">@color/colorGray30</item>
+        <item name="colorMainLight">@color/colorGray30</item>
         <item name="colorMain">@color/colorMain</item>
         <item name="colorYellowDark">@color/colorYellowDark</item>
         <item name="colorYellowLight">@color/colorYellowLight</item>
-        <item name="colorWhite">@color/colorWhite</item>
-        <item name="colorGray90">@color/colorGray90</item>
-        <item name="colorGray70">@color/colorGray70</item>
-        <item name="colorGray30">@color/colorGray30</item>
-        <item name="colorGray10">@color/colorGray10</item>
+        <item name="colorWhite">@color/colorBlack</item>
+        <item name="colorGray90">@color/colorGray10</item>
+        <item name="colorGray70">@color/colorGray30</item>
+        <item name="colorGray30">@color/colorGray80</item>
+        <item name="colorGray10">@color/colorGray90</item>
         <item name="colorRed">@color/colorRed</item>
         <item name="colorGreen">@color/colorGreen</item>
         <item name="colorPink">@color/colorPink</item>

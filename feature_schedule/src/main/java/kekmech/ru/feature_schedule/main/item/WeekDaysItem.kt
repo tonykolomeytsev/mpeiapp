@@ -1,5 +1,6 @@
 package kekmech.ru.feature_schedule.main.item
 
+import android.os.Handler
 import android.view.View
 import androidx.annotation.ArrayRes
 import androidx.recyclerview.widget.GridLayoutManager
@@ -31,12 +32,21 @@ class WeekDaysViewHolderImpl(
 ) : RecyclerView.ViewHolder(containerView), WeekDaysViewHolder, LayoutContainer {
 
     val adapter by fastLazy { createAdapter() }
-    var items: List<DayItem> = emptyList()
+    var items: List<Any> = Array(6) { DayShimmerItem }.asList()
+    var onlyShimmers = true
 
     override fun setLocalDates(localDates: List<LocalDate>) {
         if (recyclerView.adapter == null) recyclerView.adapter = adapter
         if (recyclerView.layoutManager == null) recyclerView.layoutManager = GridLayoutManager(containerView.context, 6)
-        items = localDates.map(::DayItem)
+        if (onlyShimmers) {
+            Handler().post {
+                items = localDates.map(::DayItem)
+                adapter.update(items)
+            }
+            onlyShimmers = false
+        } else {
+            items = localDates.map(::DayItem)
+        }
         adapter.update(items)
     }
 
@@ -47,7 +57,8 @@ class WeekDaysViewHolderImpl(
             selectedDay,
             dayClickListener,
             helper
-        )
+        ),
+        DayShimmerAdapterItem()
     )
 
     private fun extractStringList(@ArrayRes resId: Int) = containerView.context.getStringArray(resId).asList()
