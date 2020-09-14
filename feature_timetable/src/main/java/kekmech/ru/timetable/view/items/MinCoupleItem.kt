@@ -2,11 +2,12 @@ package kekmech.ru.timetable.view.items
 
 import android.os.Handler
 import android.view.View
-import android.view.View.VISIBLE
 import android.widget.TextView
 import kekmech.ru.core.dto.CoupleNative
 import kekmech.ru.coreui.Resources
-import kekmech.ru.coreui.adapter.*
+import kekmech.ru.coreui.adapter.BaseClickableItem
+import kekmech.ru.coreui.adapter.BaseFactory
+import kekmech.ru.coreui.adapter.BaseViewHolder2
 import kekmech.ru.timetable.R
 
 class MinCoupleItem(val coupleNative: CoupleNative) : BaseClickableItem<MinCoupleItem.ViewHolder>() {
@@ -58,7 +59,7 @@ class MinCoupleItem(val coupleNative: CoupleNative) : BaseClickableItem<MinCoupl
             else -> 4
         }
         return Resources.getStringArray(viewHolder.itemView.context,
-            R.array.couple_types
+            R.array.classes_types
         )[index]
     }
 

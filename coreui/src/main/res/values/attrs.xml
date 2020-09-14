@@ -53,5 +53,6 @@
     <attr name="colorRed" format="reference"/>
     <attr name="colorGreen" format="reference"/>
     <attr name="colorPink" format="reference"/>
+    <attr name="shimmerColor" format="reference"/>
 
 </resources>

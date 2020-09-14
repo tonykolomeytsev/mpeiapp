@@ -9,7 +9,7 @@ class BaseDiffUtil(
     override fun areItemsTheSame(oldItem: Any, newItem: Any): Boolean {
         if (oldItem::class != newItem::class) return false
         val oldAdapterItem = oldItem.adapterItem
-        if (oldAdapterItem == newItem.adapterItem) return false
+        if (oldAdapterItem != newItem.adapterItem) return false
         return oldAdapterItem.areItemsTheSame(oldItem, newItem)
     }
 
