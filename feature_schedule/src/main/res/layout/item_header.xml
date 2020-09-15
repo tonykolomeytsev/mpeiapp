@@ -32,8 +32,6 @@
             android:layout_height="72dp"
             android:orientation="horizontal"
             android:layout_marginBottom="8dp"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
             android:clipToPadding="false"
             tools:layoutManager="LinearLayoutManager"
             tools:itemCount="6"
