@@ -1,10 +1,11 @@
-package kekmech.ru.feature_schedule.main
+package kekmech.ru.feature_schedule.main.helpers
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.feature_schedule.main.adapter.WeeksScrollAdapter
+import kekmech.ru.feature_schedule.main.adapter.WeeksScrollLayoutManager
 import kekmech.ru.feature_schedule.main.item.DayItem
 import java.time.LocalDate
 import java.util.*
@@ -16,7 +17,11 @@ class WeeksScrollHelper(
     val onDayClickListeners = mutableListOf(onDayClickListener)
     val onWeekSelectListeners = mutableListOf(onWeekSelectListener)
     var currentWeekMonday: LocalDate = LocalDate.now()
-    private val localDatesGenerator by fastLazy { LocalDatesGenerator(currentWeekMonday) }
+    private val localDatesGenerator by fastLazy {
+        LocalDatesGenerator(
+            currentWeekMonday
+        )
+    }
     private val pagerSnapHelper = PagerSnapHelper()
     private var position: Int = 0
     private val adapter by fastLazy { WeeksScrollAdapter(localDatesGenerator) }
@@ -33,7 +38,7 @@ class WeeksScrollHelper(
         }
         recyclerView.apply {
             addOnScrollListener(scrollListener)
-            if (layoutManager == null) layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            if (layoutManager == null) layoutManager = WeeksScrollLayoutManager(context)
             if (adapter == null) adapter = this@WeeksScrollHelper.adapter
             setHasFixedSize(true)
             setItemViewCacheSize(10)
@@ -50,6 +55,7 @@ class WeeksScrollHelper(
     private fun calculateNewPosition(recyclerView: RecyclerView) {
         val layoutManager = recyclerView.layoutManager as LinearLayoutManager
         val adapterPosition = layoutManager.findFirstCompletelyVisibleItemPosition()
+        if (adapterPosition == -1) return
         val realPosition = -((Int.MAX_VALUE / 2) - adapterPosition)
         position = realPosition
         onWeekSelectListeners.forEach { it(realPosition) }

@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.feature_schedule.R
-import kekmech.ru.feature_schedule.main.WeeksScrollHelper
+import kekmech.ru.feature_schedule.main.helpers.WeeksScrollHelper
 import kekmech.ru.feature_schedule.main.item.DayItem
 import kekmech.ru.feature_schedule.main.item.WeekItem
 import kekmech.ru.feature_schedule.main.item.WeekItemBinder
@@ -19,7 +19,8 @@ class WeeksScrollAdapter(
 
     private val weakWeekItems = WeakHashMap<Int, WeekItem>()
     val items: List<WeekItem> get() = weakWeekItems.map { (_, v) -> v }
-    private val weekItemBinder = WeekItemBinder { onDayClickListener(it) }
+    private val recycledViewPool = RecyclerView.RecycledViewPool().apply { setMaxRecycledViews(0, 200) }
+    private val weekItemBinder = WeekItemBinder(recycledViewPool) { onDayClickListener(it) }
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         recyclerView.scrollToPosition(Int.MAX_VALUE / 2)
