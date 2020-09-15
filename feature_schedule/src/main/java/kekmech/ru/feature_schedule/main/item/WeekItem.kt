@@ -19,6 +19,7 @@ interface WeekViewHolder {
     fun createAdapterIfNull()
     fun setDays(items: List<Any>)
     fun setOnDayClickListener(listener: (DayItem) -> Unit)
+    fun setRecycledViewPool(recycledViewPool: RecyclerView.RecycledViewPool)
 }
 
 class WeekViewHolderImpl(
@@ -31,6 +32,7 @@ class WeekViewHolderImpl(
     override fun setDays(items: List<Any>) {
         if (recyclerView.adapter == null) recyclerView.adapter = adapter
         if (recyclerView.layoutManager == null) recyclerView.layoutManager = GridLayoutManager(containerView.context, 6)
+        recyclerView.setHasFixedSize(true)
         adapter?.update(items)
     }
 
@@ -46,13 +48,19 @@ class WeekViewHolderImpl(
             )
         )
     }
+
+    override fun setRecycledViewPool(recycledViewPool: RecyclerView.RecycledViewPool) {
+        recyclerView.setRecycledViewPool(recycledViewPool)
+    }
 }
 
 class WeekItemBinder(
+    private val recycledViewPool: RecyclerView.RecycledViewPool,
     private val onDayClickListener: (DayItem) -> Unit
 ) : BaseItemBinder<WeekViewHolder, WeekItem>() {
 
     override fun bind(vh: WeekViewHolder, model: WeekItem, position: Int) {
+        vh.setRecycledViewPool(recycledViewPool)
         vh.createAdapterIfNull()
         vh.setDays(model.dayItems)
         vh.setOnDayClickListener(onDayClickListener)
