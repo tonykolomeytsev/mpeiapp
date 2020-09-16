@@ -88,14 +88,14 @@ class ClassesItemBinder(context: Context) : BaseItemBinder<ClassesViewHolder, Cl
             ClassesType.COURSE to context.getThemeColor(R.attr.colorGray30)
         )
     }
-    private val timeFormatter = DateTimeFormatter.ISO_LOCAL_TIME
+    private val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
 
     override fun bind(vh: ClassesViewHolder, model: Classes, position: Int) {
         vh.setDisciplineName(model.name)
         vh.setPersonName(model.person)
         vh.setPlace(model.place)
-        vh.setNumberName(classesNumbers.getOrElse(model.number) { classesNumbers[0] })
-        vh.setTypeName(classesTypes[model.type].orEmpty())
+        vh.setNumberName(classesNumbers.getOrElse(model.number) { classesNumbers[0] }.toUpperCase())
+        vh.setTypeName(classesTypes[model.type].orEmpty().toUpperCase())
         vh.setTagColor(colorTags.getValue(model.type))
         vh.setStartTime(model.time.start.format(timeFormatter))
         vh.setEndTime(model.time.end.format(timeFormatter))

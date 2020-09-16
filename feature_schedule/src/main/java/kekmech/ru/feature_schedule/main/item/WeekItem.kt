@@ -3,8 +3,10 @@ package kekmech.ru.feature_schedule.main.item
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_adapter.BaseItemBinder
+import kekmech.ru.feature_schedule.R
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_week_days.*
 import java.time.LocalDate
@@ -66,3 +68,12 @@ class WeekItemBinder(
         vh.setOnDayClickListener(onDayClickListener)
     }
 }
+
+class WeekAdapterItem(
+    onDayClickListener: (DayItem) -> Unit
+) : AdapterItem<WeekViewHolder, WeekItem>(
+    isType = { it is WeekItem },
+    layoutRes = R.layout.item_week_days,
+    viewHolderGenerator = ::WeekViewHolderImpl,
+    itemBinder = WeekItemBinder(RecyclerView.RecycledViewPool(), onDayClickListener)
+)
