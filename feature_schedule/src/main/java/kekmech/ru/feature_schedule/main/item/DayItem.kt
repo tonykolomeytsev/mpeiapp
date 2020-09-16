@@ -9,14 +9,19 @@ import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.common_android.getStringArray
 import kekmech.ru.common_android.getThemeColor
 import kekmech.ru.feature_schedule.R
-import kekmech.ru.feature_schedule.main.helpers.DayItemStateHelper
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_day.*
 import java.time.LocalDate
 
 data class DayItem(
-    val date: LocalDate
-)
+    val date: LocalDate,
+    val weekOffset: Int,
+    val isSelected: Boolean
+) {
+    val dayOfWeek get() = date.dayOfWeek.value
+
+    fun plusDays(int: Int): DayItem = copy(date = date.plusDays(int.toLong()))
+}
 
 interface DayViewHolder {
     var isSelected: Boolean
@@ -26,7 +31,7 @@ interface DayViewHolder {
     fun setMonthName(name: String)
     fun setIsCurrentDay(isCurrentDay: Boolean)
     fun setIsSelected(isSelected: Boolean)
-    fun setOnClickListener(listener: () -> Unit)
+    fun setOnClickListener(listener: (View) -> Unit)
 }
 
 class DayViewHolderImpl(
@@ -66,8 +71,8 @@ class DayViewHolderImpl(
         }
     }
 
-    override fun setOnClickListener(listener: () -> Unit) {
-        linearLayoutContainer.setOnClickListener { listener() }
+    override fun setOnClickListener(listener: (View) -> Unit) {
+        linearLayoutContainer.setOnClickListener(listener)
     }
 }
 
@@ -86,29 +91,9 @@ class DayItemBinder(
         vh.setDayOfWeekName(dayName)
         vh.setDayOfMonthNumber(model.date.dayOfMonth)
         vh.setMonthName(monthName)
-        vh.setOnClickListener {
-            DayItemStateHelper.clearOldSelectionAndRun(model) {
-                vh.setIsSelected(true)
-            }
-            DayItemStateHelper.subscribeToClearSelection {
-                vh.setIsSelected(false)
-            }
-            onDayClickListener(model)
-        }
-        if (model.date == currentDate) {
-            vh.setIsCurrentDay(true)
-        }
-        val s = DayItemStateHelper.selectedDay.date
-        if (model.date == s) {
-            vh.setIsSelected(true)
-            DayItemStateHelper.subscribeToClearSelection {
-                vh.setIsSelected(false)
-            }
-        }
-        when {
-            model.date == s && !vh.isSelected -> vh.setIsSelected(true)
-            model.date != s && vh.isSelected -> vh.setIsSelected(false)
-        }
+        vh.setOnClickListener { onDayClickListener(model) }
+        vh.setIsCurrentDay(model.date == currentDate)
+        if (model.isSelected != vh.isSelected) vh.setIsSelected(model.isSelected)
     }
 }
 

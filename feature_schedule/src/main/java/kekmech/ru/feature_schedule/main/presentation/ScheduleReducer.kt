@@ -2,10 +2,12 @@ package kekmech.ru.feature_schedule.main.presentation
 
 import kekmech.ru.common_mvi.BaseReducer
 import kekmech.ru.common_mvi.Result
-import kekmech.ru.domain_schedule.dto.Schedule
+import kekmech.ru.feature_schedule.main.item.DayItem
+import kekmech.ru.feature_schedule.main.item.WeekItem
 import kekmech.ru.feature_schedule.main.presentation.ScheduleEvent.News
 import kekmech.ru.feature_schedule.main.presentation.ScheduleEvent.Wish
 import java.time.LocalDate
+import java.util.*
 
 typealias ScheduleResult = Result<ScheduleState, ScheduleEffect, ScheduleAction>
 
@@ -24,29 +26,38 @@ class ScheduleReducer : BaseReducer<ScheduleState, ScheduleEvent, ScheduleEffect
         state: ScheduleState
     ): ScheduleResult = when (event) {
         is News.ScheduleWeekLoadSuccess -> {
-            state.schedule[event.weekOffset] = event.schedule
+            val stateCopy = state.copy()
+            val schedule = stateCopy.schedule.apply { put(event.weekOffset, event.schedule) }
             if (state.isFirstLoading) {
-                val firstDayOfWeek = getFirstDayOfWeek(event.schedule)
+                val firstDayOfWeek = event.schedule.weeks.first().firstDayOfWeek
+                val weekItems = HashMap(mapOf(
+                    -1 to createWeekItem(-1, firstDayOfWeek),
+                    0 to createWeekItem(0, firstDayOfWeek),
+                    1 to createWeekItem(1, firstDayOfWeek)
+                ))
                 Result(
                     state = state.copy(
                         currentWeekMonday = firstDayOfWeek,
-                        selectedDay = LocalDate.now(),
                         isFirstLoading = false,
-                        isLoading = false
+                        isLoading = false,
+                        schedule = schedule,
+                        weekItems = weekItems
                     )
                 )
             } else {
                 Result(
                     state = state.copy(
                         isLoading = false,
-                        isFirstLoading = false
+                        isFirstLoading = false,
+                        schedule = schedule,
+                        hash = UUID.randomUUID().toString()
                     )
                 )
             }
         }
         is News.ScheduleWeekLoadError -> Result(
             state = state.copy(isLoading = false),
-            effect = ScheduleEffect.ShowWeekLoadingError(event.throwable)
+            effect = ScheduleEffect.ShowLoadingError(event.throwable)
         )
     }
 
@@ -58,14 +69,68 @@ class ScheduleReducer : BaseReducer<ScheduleState, ScheduleEvent, ScheduleEffect
             state = state.copy(isLoading = true),
             action = ScheduleAction.LoadSchedule(state.weekOffset)
         )
-        is Wish.Action.SelectWeek -> Result(
-            state = state.copy(weekOffset = event.weekOffset),
-            action = ScheduleAction.LoadSchedule(event.weekOffset)
-        )
+        is Wish.Action.SelectWeek -> generateSelectedWeekResult(state, event)
         is Wish.Click.OnDayClick -> Result(
-            state = state.copy(selectedDay = event.localDate)
+            state = state.copy(
+                selectedDay = event.dayItem
+            )
+        )
+        is Wish.Action.OnPageChanged -> {
+            val oldSelectedDay = state.selectedDay.dayOfWeek
+            val newSelectedDay = event.page + 1
+            Result(
+                state = state.copy(
+                    selectedDay = state.selectedDay.plusDays(newSelectedDay - oldSelectedDay)
+                )
+            )
+        }
+    }
+
+    private fun generateSelectedWeekResult(
+        state: ScheduleState,
+        event: Wish.Action.SelectWeek
+    ): Result<ScheduleState, ScheduleEffect, ScheduleAction> {
+        val copyOfState = state.copy()
+        val weekItems = copyOfState.weekItems
+        // prefetch next week WeekItem
+        when {
+            event.weekOffset < 0 -> {
+                val nextWeekOffset = event.weekOffset - 1
+                weekItems.getOrPut(nextWeekOffset) {
+                    createWeekItem(
+                        weekOffset = nextWeekOffset,
+                        firstDayOfWeek = checkNotNull(state.currentWeekMonday).plusWeeks(
+                            nextWeekOffset.toLong()
+                        )
+                    )
+                }
+            }
+            event.weekOffset > 0 -> {
+                val nextWeekOffset = event.weekOffset + 1
+                weekItems.getOrPut(nextWeekOffset) {
+                    createWeekItem(
+                        weekOffset = nextWeekOffset,
+                        firstDayOfWeek = checkNotNull(state.currentWeekMonday).plusWeeks(
+                            nextWeekOffset.toLong()
+                        )
+                    )
+                }
+            }
+        }
+        return Result(
+            state = state.copy(
+                weekOffset = event.weekOffset,
+                weekItems = weekItems
+            ),
+            action = ScheduleAction.LoadSchedule(event.weekOffset)
         )
     }
 
-    private fun getFirstDayOfWeek(schedule: Schedule) = schedule.weeks.first().firstDayOfWeek
+    private fun createWeekItem(weekOffset: Int, firstDayOfWeek: LocalDate) =
+        WeekItem(weekOffset, firstDayOfWeek.plusWeeks(weekOffset.toLong()), getDayItemsFor(weekOffset, firstDayOfWeek))
+
+    private fun getDayItemsFor(weekOffset: Int, firstDayOfWeek: LocalDate): List<DayItem> {
+        val selectedWeek = firstDayOfWeek.plusWeeks(weekOffset.toLong())
+        return List(6) { selectedWeek.plusDays(it.toLong()) }.map { DayItem(it, weekOffset, false) }
+    }
 }
