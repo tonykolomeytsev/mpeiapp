@@ -50,8 +50,4 @@ open class ShimmerAdapterItem(id: Int, @LayoutRes layout: Int) : AdapterItem<Shi
     itemBinder = ShimmerItemBinder()
 )
 
-class DayShimmerAdapterItem : ShimmerAdapterItem(DAY_SHIMMER_ITEM, R.layout.item_day_shimmer)
-
-class HeaderShimmerAdapterItem : ShimmerAdapterItem(HEADER_SHIMMER_ITEM, R.layout.item_header_shimmer)
-
-class ClassesShimmerAdapterItem : ShimmerAdapterItem(CLASSES_SHIMMER_ITEM, R.layout.item_classes_shimmer)
+class ClassesShimmerAdapterItem : ShimmerAdapterItem(CLASSES_SHIMMER_ITEM, R.layout.item_working_day_shimmer)

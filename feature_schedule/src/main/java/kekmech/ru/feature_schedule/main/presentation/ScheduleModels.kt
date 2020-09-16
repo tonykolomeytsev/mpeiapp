@@ -2,7 +2,10 @@ package kekmech.ru.feature_schedule.main.presentation
 
 import kekmech.ru.common_mvi.Feature
 import kekmech.ru.domain_schedule.dto.Schedule
+import kekmech.ru.feature_schedule.main.item.DayItem
+import kekmech.ru.feature_schedule.main.item.WeekItem
 import java.time.LocalDate
+import java.util.*
 
 typealias ScheduleFeature =
         Feature<ScheduleState, ScheduleEvent, ScheduleEffect>
@@ -13,9 +16,15 @@ data class ScheduleState(
     val isLoading: Boolean = true,
     val schedule: MutableMap<Int, Schedule> = mutableMapOf(), // weekOffset -> schedule
     val currentWeekMonday: LocalDate? = null,
-    val selectedDay: LocalDate = LocalDate.now()
+    val selectedDay: DayItem = DayItem(LocalDate.now(), 0, false),
+    val weekItems: HashMap<Int, WeekItem> = hashMapOf(),
+    val hash: String = ""
 ) {
-    val nullWeekSemesterNumber = schedule[0]?.weeks?.firstOrNull()?.weekOfSemester
+    /**
+     * Get weekOfSemester number by weekOffset
+     * @param n - weekOffset
+     */
+    val weekOfSemester get() = schedule[0]?.weeks?.firstOrNull()?.weekOfSemester?.plus(weekOffset)
 }
 
 sealed class ScheduleEvent {
@@ -24,10 +33,11 @@ sealed class ScheduleEvent {
         object Init : Wish()
         object Action {
             data class SelectWeek(val weekOffset: Int) : Wish()
+            data class OnPageChanged(val page: Int) : Wish()
         }
 
         object Click {
-            data class OnDayClick(val localDate: LocalDate) : Wish()
+            data class OnDayClick(val dayItem: DayItem) : Wish()
         }
     }
 
@@ -38,8 +48,7 @@ sealed class ScheduleEvent {
 }
 
 sealed class ScheduleEffect {
-    data class ShowWeekLoadingError(val throwable: Throwable) : ScheduleEffect()
-    data class SelectDay(val localDate: LocalDate) : ScheduleEffect()
+    data class ShowLoadingError(val throwable: Throwable) : ScheduleEffect()
 }
 
 sealed class ScheduleAction {
