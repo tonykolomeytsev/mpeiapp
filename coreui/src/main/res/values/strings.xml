@@ -85,13 +85,22 @@
     <string name="onboarding_welcome_start_using">Начать пользоваться</string>
     <string name="onboarding_welcome_mpeix">Добро пожаловать в MPEIX</string>
     <string name="onboarding_welcome_mpeix_2">Пожалуй, лучшее, что могло случиться с приложением для МЭИ</string>
+
     <string name="schedule_find_header">Введите номер группы</string>
     <string name="schedule_find_description">Мы загрузим расписание выбранной группы на устройство</string>
     <string name="schedule_find_hint">Номер группы</string>
     <string name="schedule_find_button_continue">Продолжить</string>
     <string name="schedule_find_error_loading">Не удалось загрузить расписание для группы %s</string>
-    <string name="schedule_semester_week">%d учебная неделя</string>
+
+    <string name="schedule_semester_week">Учебная неделя №%d</string>
     <string name="schedule_weekend_week">Неучебная неделя</string>
+    <string name="schedule_item_lunch_header">Обеденный перерыв</string>
+    <string name="schedule_item_lunch_description">Здесь будет диплинк на карту</string>
+    <string name="schedule_item_lunch_time_start">12:45</string>
+    <string name="schedule_item_lunch_time_end">13:45</string>
+    <string name="schedule_item_self_study_header">День самостоятельных занятий</string>
+    <string name="schedule_item_self_study_description">Потратьте этот день с пользой, начните проходить курсы на Hexlet.io и получите нормальную работу</string>
+
     <string name="onboarding_bars_header">Вход в БАРС</string>
     <string name="onboarding_bars_description">Вы можете совершить вход в систему БАРС, чтобы получить возможность просматривать оценки из приложения</string>
     <string name="onboarding_bars_button_skip">Пропустить</string>

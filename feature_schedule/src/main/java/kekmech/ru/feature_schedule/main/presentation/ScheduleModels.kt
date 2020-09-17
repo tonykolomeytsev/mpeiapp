@@ -49,6 +49,7 @@ sealed class ScheduleEvent {
 
 sealed class ScheduleEffect {
     data class ShowLoadingError(val throwable: Throwable) : ScheduleEffect()
+    object ShowViewPager : ScheduleEffect()
 }
 
 sealed class ScheduleAction {
