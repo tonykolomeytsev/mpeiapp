@@ -12,7 +12,6 @@ object ScheduleClassesListConverter {
     private val shimmerItems = List(6) { ShimmerItem.classes() }
 
     fun map(state: ScheduleState): List<Any> {
-        println(state)
         val selectedWeekSchedule = state.schedule[state.selectedDay.weekOffset]?.weeks?.first()
         return when {
             state.isLoading || selectedWeekSchedule == null -> shimmerItems

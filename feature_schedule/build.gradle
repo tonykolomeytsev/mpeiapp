@@ -40,9 +40,17 @@ androidExtensions {
     experimental = true
 }
 
+tasks.withType(Test) {
+    useJUnitPlatform()
+}
+
 dependencies {
     coreLibraryDesugaring desugaring
     implementation kotlinStdLib
+
+    testImplementation kotest.runner
+    testImplementation kotest.assertions
+    testImplementation kotest.property
 
     implementation koin.core
     implementation koin.android
