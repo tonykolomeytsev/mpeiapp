@@ -72,7 +72,7 @@ class ScheduleReducer : BaseReducer<ScheduleState, ScheduleEvent, ScheduleEffect
         is Wish.Action.SelectWeek -> generateSelectedWeekResult(state, event)
         is Wish.Click.OnDayClick -> Result(
             state = state.copy(
-                selectedDay = event.dayItem
+                selectedDay = event.dayItem.copy()
             )
         )
         is Wish.Action.OnPageChanged -> {
@@ -120,7 +120,14 @@ class ScheduleReducer : BaseReducer<ScheduleState, ScheduleEvent, ScheduleEffect
         return Result(
             state = state.copy(
                 weekOffset = event.weekOffset,
-                weekItems = weekItems
+                weekItems = weekItems/*,
+                selectedDay = state.selectedDay.let {
+                    it.copy(
+                        date = it.date.plusWeeks(1),
+                        weekOffset = event.weekOffset,
+                        isSelected = true
+                    )
+                }*/
             ),
             action = ScheduleAction.LoadSchedule(event.weekOffset)
         )

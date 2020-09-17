@@ -14,6 +14,7 @@ import kekmech.ru.feature_schedule.R
 import kekmech.ru.feature_schedule.di.ScheduleDependencies
 import kekmech.ru.feature_schedule.main.adapter.WeeksScrollAdapter
 import kekmech.ru.feature_schedule.main.helpers.WeeksScrollHelper
+import kekmech.ru.feature_schedule.main.helpers.ignoreFirst
 import kekmech.ru.feature_schedule.main.item.*
 import kekmech.ru.feature_schedule.main.presentation.*
 import kekmech.ru.feature_schedule.main.presentation.ScheduleEvent.Wish
@@ -35,16 +36,20 @@ class ScheduleFragment : BaseFragment<ScheduleEvent, ScheduleEffect, ScheduleSta
     private val weeksScrollAdapter by fastLazy { createWeekScrollAdapter() }
     private val weeksScrollHelper by fastLazy { createWeekDaysHelper() }
 
+    private var viewPagerPositionToBeSelected: Int? = null
+
     override fun onViewCreatedInternal(view: View, savedInstanceState: Bundle?) {
         weeksScrollHelper.attach(recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         recyclerView.adapter = weeksScrollAdapter
+        recyclerView.itemAnimator = null
         viewPager.adapter = viewPagerAdapter
         viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
-                feature.accept(Wish.Action.OnPageChanged(position))
+                ignoreFirst { feature.accept(Wish.Action.OnPageChanged(position)) }
             }
         })
+        appBarLayout.outlineProvider = null
     }
 
     override fun handleEffect(effect: ScheduleEffect) = when (effect) {
@@ -60,11 +65,16 @@ class ScheduleFragment : BaseFragment<ScheduleEvent, ScheduleEffect, ScheduleSta
         textViewDescription.text = state.weekOfSemester?.let { getFormattedWeek(it) }.orEmpty()
 
         weeksScrollAdapter.update(state.weekItems)
+        weeksScrollAdapter.selectDay(state.selectedDay)
         viewPagerAdapter.update(ScheduleClassesListConverter.map(state))
 
-        val selectedItem = state.selectedDay.dayOfWeek - 1
-        if (selectedItem != viewPager.currentItem) viewPager.post {
-            if (selectedItem in 0..5) viewPager.setCurrentItem(selectedItem, true)
+        if (viewPagerPositionToBeSelected != state.selectedDay.dayOfWeek) {
+            val smoothScroll = viewPagerPositionToBeSelected != null
+            viewPagerPositionToBeSelected = state.selectedDay.dayOfWeek
+            val selectedItem = state.selectedDay.dayOfWeek - 1
+            if (selectedItem != viewPager.currentItem) viewPager.post {
+                if (selectedItem in 0..5) viewPager.setCurrentItem(selectedItem, smoothScroll)
+            }
         }
     }
 

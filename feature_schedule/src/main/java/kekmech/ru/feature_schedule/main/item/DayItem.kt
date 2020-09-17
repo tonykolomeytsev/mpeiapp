@@ -93,7 +93,11 @@ class DayItemBinder(
         vh.setMonthName(monthName)
         vh.setOnClickListener { onDayClickListener(model) }
         vh.setIsCurrentDay(model.date == currentDate)
-        if (model.isSelected != vh.isSelected) vh.setIsSelected(model.isSelected)
+        vh.setIsSelected(model.isSelected)
+    }
+
+    override fun update(vh: DayViewHolder, model: DayItem, position: Int, payloads: List<Any>) {
+        vh.setIsSelected(model.isSelected)
     }
 }
 
@@ -106,5 +110,6 @@ class DayAdapterItem(
     itemBinder = DayItemBinder(context, LocalDate.now(), onDayClickListener),
     viewHolderGenerator = ::DayViewHolderImpl,
     areItemsTheSame = { a, b -> a.date == b.date },
-    equals = { a, b -> a.date == b.date }
+    equals = { a, b -> a.date == b.date && a.isSelected == b.isSelected },
+    changePayload = { _, b -> b } // if selection is not equals
 )
