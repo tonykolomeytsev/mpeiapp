@@ -14,7 +14,6 @@ import kekmech.ru.feature_schedule.R
 import kekmech.ru.feature_schedule.di.ScheduleDependencies
 import kekmech.ru.feature_schedule.main.adapter.WeeksScrollAdapter
 import kekmech.ru.feature_schedule.main.helpers.WeeksScrollHelper
-import kekmech.ru.feature_schedule.main.helpers.ignoreFirst
 import kekmech.ru.feature_schedule.main.item.*
 import kekmech.ru.feature_schedule.main.presentation.*
 import kekmech.ru.feature_schedule.main.presentation.ScheduleEvent.Wish
@@ -36,6 +35,7 @@ class ScheduleFragment : BaseFragment<ScheduleEvent, ScheduleEffect, ScheduleSta
     private val weeksScrollAdapter by fastLazy { createWeekScrollAdapter() }
     private val weeksScrollHelper by fastLazy { createWeekDaysHelper() }
 
+    // for viewPager sliding debounce
     private var viewPagerPositionToBeSelected: Int? = null
 
     override fun onViewCreatedInternal(view: View, savedInstanceState: Bundle?) {
@@ -43,10 +43,12 @@ class ScheduleFragment : BaseFragment<ScheduleEvent, ScheduleEffect, ScheduleSta
         recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         recyclerView.adapter = weeksScrollAdapter
         recyclerView.itemAnimator = null
+        recyclerView.setHasFixedSize(true)
         viewPager.adapter = viewPagerAdapter
+        viewPager.visibility = View.INVISIBLE
         viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
-                ignoreFirst { feature.accept(Wish.Action.OnPageChanged(position)) }
+                feature.accept(Wish.Action.OnPageChanged(position))
             }
         })
         appBarLayout.outlineProvider = null
@@ -54,6 +56,7 @@ class ScheduleFragment : BaseFragment<ScheduleEvent, ScheduleEffect, ScheduleSta
 
     override fun handleEffect(effect: ScheduleEffect) = when (effect) {
         is ScheduleEffect.ShowLoadingError -> showBanner(R.string.something_went_wrong_error)
+        is ScheduleEffect.ShowViewPager -> viewPager.visibility = View.VISIBLE
     }
 
     override fun render(state: ScheduleState) {

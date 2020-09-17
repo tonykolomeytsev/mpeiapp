@@ -24,7 +24,7 @@ data class WorkingDayItem(
 
 interface WorkingDayViewHolder {
     fun setItems(list: List<Any>)
-    fun initAdapter()
+    fun initAdapter(recycledViewPool: RecyclerView.RecycledViewPool)
 }
 
 class WorkingDayViewHolderImpl(
@@ -32,23 +32,28 @@ class WorkingDayViewHolderImpl(
 ) : WorkingDayViewHolder, RecyclerView.ViewHolder(containerView), LayoutContainer {
 
     private val adapter = BaseAdapter(
-        ClassesAdapterItem(containerView.context)
+        ClassesAdapterItem(containerView.context), // viewType = 0
+        SelfStudyAdapterItem(),
+        LunchAdapterItem()
     )
 
     override fun setItems(list: List<Any>) {
         adapter.update(list)
     }
 
-    override fun initAdapter() {
+    override fun initAdapter(recycledViewPool: RecyclerView.RecycledViewPool) {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(containerView.context)
+        recyclerView.setRecycledViewPool(recycledViewPool)
     }
 }
 
-class WorkingDayItemBinder : BaseItemBinder<WorkingDayViewHolder, WorkingDayItem>() {
+class WorkingDayItemBinder(
+    private val recycledViewPool: RecyclerView.RecycledViewPool
+) : BaseItemBinder<WorkingDayViewHolder, WorkingDayItem>() {
 
     override fun bind(vh: WorkingDayViewHolder, model: WorkingDayItem, position: Int) {
-        vh.initAdapter()
+        vh.initAdapter(recycledViewPool)
         vh.setItems(model.items)
     }
 
@@ -68,7 +73,9 @@ class WorkingDayAdapterItem(
     isType = { it is WorkingDayItem && it.dayOfWeek == dayOfWeek },
     layoutRes = R.layout.item_working_day,
     viewHolderGenerator = ::WorkingDayViewHolderImpl,
-    itemBinder = WorkingDayItemBinder(),
+    itemBinder = WorkingDayItemBinder(
+        recycledViewPool = RecyclerView.RecycledViewPool().apply { setMaxRecycledViews(0, 200) }
+    ),
     areItemsTheSame = { a, b -> a.dayOfWeek == b.dayOfWeek },
     equals = { a, b -> a.items == b.items },
     changePayload = { a, b -> b.items }

@@ -34,7 +34,6 @@ class WeekViewHolderImpl(
     override fun setDays(items: List<Any>) {
         if (recyclerView.adapter == null) recyclerView.adapter = adapter
         if (recyclerView.layoutManager == null) recyclerView.layoutManager = GridLayoutManager(containerView.context, 6)
-        recyclerView.setHasFixedSize(true)
         adapter?.update(items)
     }
 
@@ -43,12 +42,15 @@ class WeekViewHolderImpl(
     }
 
     override fun createAdapterIfNull() {
-        if (adapter == null) adapter = BaseAdapter(
-            DayAdapterItem(
-                context = containerView.context,
-                onDayClickListener = { onDayClickListener(it) }
+        if (adapter == null) {
+            adapter = BaseAdapter(
+                DayAdapterItem(
+                    context = containerView.context,
+                    onDayClickListener = { onDayClickListener(it) }
+                )
             )
-        )
+            recyclerView.setHasFixedSize(true)
+        }
     }
 
     override fun setRecycledViewPool(recycledViewPool: RecyclerView.RecycledViewPool) {
@@ -75,5 +77,8 @@ class WeekAdapterItem(
     isType = { it is WeekItem },
     layoutRes = R.layout.item_week_days,
     viewHolderGenerator = ::WeekViewHolderImpl,
-    itemBinder = WeekItemBinder(RecyclerView.RecycledViewPool(), onDayClickListener)
+    itemBinder = WeekItemBinder(
+        recycledViewPool = RecyclerView.RecycledViewPool().apply { setMaxRecycledViews(0, 200) },
+        onDayClickListener = onDayClickListener
+    )
 )
