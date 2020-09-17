@@ -13,6 +13,8 @@ typealias ScheduleResult = Result<ScheduleState, ScheduleEffect, ScheduleAction>
 
 class ScheduleReducer : BaseReducer<ScheduleState, ScheduleEvent, ScheduleEffect, ScheduleAction> {
 
+    private var isFirstPageChangeIgnored = false
+
     override fun reduce(
         event: ScheduleEvent,
         state: ScheduleState
@@ -76,13 +78,19 @@ class ScheduleReducer : BaseReducer<ScheduleState, ScheduleEvent, ScheduleEffect
             )
         )
         is Wish.Action.OnPageChanged -> {
-            val oldSelectedDay = state.selectedDay.dayOfWeek
-            val newSelectedDay = event.page + 1
-            Result(
-                state = state.copy(
-                    selectedDay = state.selectedDay.plusDays(newSelectedDay - oldSelectedDay)
+            if (!isFirstPageChangeIgnored) {
+                isFirstPageChangeIgnored = true
+                Result(state = state)
+            } else {
+                val oldSelectedDay = state.selectedDay.dayOfWeek
+                val newSelectedDay = event.page + 1
+                ScheduleResult(
+                    state = state.copy(
+                        selectedDay = state.selectedDay.plusDays(newSelectedDay - oldSelectedDay)
+                    ),
+                    effect = ScheduleEffect.ShowViewPager
                 )
-            )
+            }
         }
     }
 
