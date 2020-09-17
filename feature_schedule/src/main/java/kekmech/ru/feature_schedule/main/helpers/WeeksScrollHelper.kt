@@ -3,6 +3,7 @@ package kekmech.ru.feature_schedule.main.helpers
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.SCROLL_STATE_IDLE
 
 class WeeksScrollHelper(
     private val onWeekSelectListener: (Int) -> Unit
@@ -13,13 +14,14 @@ class WeeksScrollHelper(
     private var position: Int = 0
     private val scrollListener = object : RecyclerView.OnScrollListener() {
         override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-            if (newState == RecyclerView.SCROLL_STATE_IDLE) calculateNewPosition(recyclerView)
+            if (newState == SCROLL_STATE_IDLE) calculateNewPosition(recyclerView)
         }
     }
 
     fun attach(recyclerView: RecyclerView) {
         pagerSnapHelper.attachToRecyclerView(recyclerView)
         recyclerView.addOnScrollListener(scrollListener)
+        recyclerView.isNestedScrollingEnabled = false
         onWeekSelectListener(0)
         recyclerView.scrollToPosition(Int.MAX_VALUE / 2)
     }
