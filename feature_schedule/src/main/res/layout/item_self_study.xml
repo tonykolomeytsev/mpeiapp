@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:background="?attr/colorWhite"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -27,7 +28,7 @@
             android:text="@string/schedule_item_self_study_header"/>
 
     <TextView
-            android:textSize="16dp"
+            android:textSize="16sp"
             android:fontFamily="@font/roboto_regular"
             android:textColor="?attr/colorGray70"
             android:layout_width="match_parent"
