@@ -1,6 +1,7 @@
 package kekmech.ru.feature_schedule.main
 
 import kekmech.ru.domain_schedule.dto.Classes
+import kekmech.ru.domain_schedule.dto.ClassesStackType
 import kekmech.ru.feature_schedule.main.item.LunchItem
 import kekmech.ru.feature_schedule.main.item.SelfStudyItem
 import kekmech.ru.feature_schedule.main.item.ShimmerItem
@@ -23,6 +24,7 @@ object ScheduleClassesListConverter {
                 } else {
                     withLunchItem(rawClasses)
                 }
+                detectStackClasses(modifiedClasses)
                 WorkingDayItem(
                     dayOfWeek = dayOfWeek,
                     items = modifiedClasses
@@ -39,6 +41,20 @@ object ScheduleClassesListConverter {
             modifiedClasses
         } else {
             rawClasses
+        }
+    }
+
+    private fun detectStackClasses(classes: List<Any>) {
+        for (i in classes.indices) {
+            val currentItem = classes[i] as? Classes
+            val nextItem = classes.getOrNull(i + 1) as? Classes
+            if (currentItem != null && nextItem != null && currentItem.number == nextItem.number) {
+                currentItem.stackType = ClassesStackType.START
+                nextItem.stackType = ClassesStackType.MIDDLE
+            }
+            if (currentItem != null && currentItem.number != nextItem?.number && currentItem.stackType == ClassesStackType.MIDDLE) {
+                currentItem.stackType = ClassesStackType.END
+            }
         }
     }
 }
