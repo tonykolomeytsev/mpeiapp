@@ -33,6 +33,9 @@ class WorkingDayViewHolderImpl(
 
     private val adapter = BaseAdapter(
         ClassesAdapterItem(containerView.context), // viewType = 0
+        ClassesStackStartAdapterItem(containerView.context),
+        ClassesStackMiddleAdapterItem(containerView.context),
+        ClassesStackEndAdapterItem(containerView.context),
         SelfStudyAdapterItem(),
         LunchAdapterItem()
     )
