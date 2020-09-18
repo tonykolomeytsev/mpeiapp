@@ -4,9 +4,9 @@ import android.view.View
 import android.widget.TextView
 import kekmech.ru.bars.R
 import kekmech.ru.core.dto.AcademicScore
-import kekmech.ru.coreui.adapter.BaseClickableItem
-import kekmech.ru.coreui.adapter.BaseFactory
-import kekmech.ru.coreui.adapter.BaseViewHolder
+import kekmech.ru.coreui.deprecated.adapter.BaseClickableItem
+import kekmech.ru.coreui.deprecated.adapter.BaseFactory
+import kekmech.ru.coreui.deprecated.adapter.BaseViewHolder
 
 class RatingItem(val rating: AcademicScore.Rating): BaseClickableItem<RatingItem.ViewHolder>() {
 

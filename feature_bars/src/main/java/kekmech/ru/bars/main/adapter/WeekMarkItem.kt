@@ -2,13 +2,11 @@ package kekmech.ru.bars.main.adapter
 
 import android.content.res.ColorStateList
 import android.view.View
-import android.widget.TextView
 import kekmech.ru.bars.R
 import kekmech.ru.coreui.Resources
-import kekmech.ru.coreui.adapter.BaseFactory
-import kekmech.ru.coreui.adapter.BaseItem
-import kekmech.ru.coreui.adapter.BaseViewHolder
-import kotlin.math.round
+import kekmech.ru.coreui.deprecated.adapter.BaseFactory
+import kekmech.ru.coreui.deprecated.adapter.BaseItem
+import kekmech.ru.coreui.deprecated.adapter.BaseViewHolder
 
 class WeekMarkItem(val mk: Float) : BaseItem<WeekMarkItem.ViewHolder>() {
 
