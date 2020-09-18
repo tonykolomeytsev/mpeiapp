@@ -81,7 +81,6 @@ dependencies {
     implementation project(path: ':feature_settings')
     implementation project(path: ':feature_onboarding')
     implementation project(path: ':feature_dashboard')
-    implementation project(path: ':feature_addscreen')
     implementation project(path: ':feature_schedule')
     implementation project(path: ':feature_map')
     implementation project(path: ':feature_force_update')
