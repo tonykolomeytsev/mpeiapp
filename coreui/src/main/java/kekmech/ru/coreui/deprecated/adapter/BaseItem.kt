@@ -1,7 +1,6 @@
-package kekmech.ru.coreui.adapter
+package kekmech.ru.coreui.deprecated.adapter
 
 import java.util.*
-import kotlin.collections.any
 
 /**
  * Created by Kolomeytsev Anton on 09.07.2016.

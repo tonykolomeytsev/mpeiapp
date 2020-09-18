@@ -2,9 +2,9 @@ package kekmech.ru.bars.details.adapter
 
 import android.view.View
 import kekmech.ru.bars.R
-import kekmech.ru.coreui.adapter.BaseFactory
-import kekmech.ru.coreui.adapter.BaseItem
-import kekmech.ru.coreui.adapter.BaseViewHolder
+import kekmech.ru.coreui.deprecated.adapter.BaseFactory
+import kekmech.ru.coreui.deprecated.adapter.BaseItem
+import kekmech.ru.coreui.deprecated.adapter.BaseViewHolder
 
 class EventHeaderItem : BaseItem<EventHeaderItem.ViewHolder>() {
 

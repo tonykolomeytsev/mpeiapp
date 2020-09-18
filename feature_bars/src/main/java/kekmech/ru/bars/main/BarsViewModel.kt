@@ -1,10 +1,7 @@
 package kekmech.ru.bars.main
 
 import android.content.Context
-import android.util.Log
 import android.view.View
-import android.webkit.WebView
-import android.webkit.WebViewClient
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -12,15 +9,21 @@ import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.DiffUtil
 import kekmech.ru.bars.main.adapter.*
 import kekmech.ru.bars.main.model.BarsFragmentModel
-import kekmech.ru.core.*
+import kekmech.ru.core.LiveEvent
+import kekmech.ru.core.Router
 import kekmech.ru.core.Screens.*
+import kekmech.ru.core.UpdateChecker
 import kekmech.ru.core.dto.AcademicScore
 import kekmech.ru.core.exceptions.NotLoggedInBarsException
-import kekmech.ru.coreui.adapter.BaseAdapter
-import kekmech.ru.coreui.adapter.BaseClickableItem
-import kekmech.ru.coreui.adapter.BaseItem
-import kotlinx.coroutines.*
+import kekmech.ru.core.zipNullable
+import kekmech.ru.coreui.deprecated.adapter.BaseAdapter
+import kekmech.ru.coreui.deprecated.adapter.BaseClickableItem
+import kekmech.ru.coreui.deprecated.adapter.BaseItem
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class BarsViewModel constructor(
     private val model: BarsFragmentModel,

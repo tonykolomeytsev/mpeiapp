@@ -8,7 +8,7 @@ import kekmech.ru.core.Presenter
 import kekmech.ru.core.Router
 import kekmech.ru.core.dto.AcademicDiscipline
 import kekmech.ru.core.usecases.GetDetailsDisciplineUseCase
-import kekmech.ru.coreui.adapter.BaseAdapter
+import kekmech.ru.coreui.deprecated.adapter.BaseAdapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay

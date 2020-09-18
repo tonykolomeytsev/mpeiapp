@@ -4,9 +4,9 @@ import android.view.View
 import android.widget.TextView
 import com.example.map.R
 import kekmech.ru.core.dto.Building
-import kekmech.ru.coreui.adapter.BaseClickableItem
-import kekmech.ru.coreui.adapter.BaseFactory
-import kekmech.ru.coreui.adapter.BaseViewHolder
+import kekmech.ru.coreui.deprecated.adapter.BaseClickableItem
+import kekmech.ru.coreui.deprecated.adapter.BaseFactory
+import kekmech.ru.coreui.deprecated.adapter.BaseViewHolder
 
 class SingleBuildingItem(val building: Building) : BaseClickableItem<SingleBuildingItem.ViewHolder>() {
 

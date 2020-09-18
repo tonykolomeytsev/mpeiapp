@@ -1,4 +1,4 @@
-package kekmech.ru.coreui.adapter2
+package kekmech.ru.coreui.deprecated.adapter2
 
 import androidx.recyclerview.widget.RecyclerView
 import kotlin.reflect.KClass
