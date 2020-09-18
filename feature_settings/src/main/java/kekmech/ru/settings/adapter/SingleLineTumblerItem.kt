@@ -4,8 +4,10 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.Switch
 import android.widget.TextView
-import android.widget.Toast
-import kekmech.ru.coreui.adapter.*
+import kekmech.ru.coreui.deprecated.adapter.BaseAdapter
+import kekmech.ru.coreui.deprecated.adapter.BaseFactory
+import kekmech.ru.coreui.deprecated.adapter.BaseItem
+import kekmech.ru.coreui.deprecated.adapter.BaseViewHolder
 import kekmech.ru.settings.R
 
 class SingleLineTumblerItem(

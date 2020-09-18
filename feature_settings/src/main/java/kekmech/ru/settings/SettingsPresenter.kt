@@ -11,11 +11,11 @@ import kekmech.ru.core.Presenter
 import kekmech.ru.core.Router
 import kekmech.ru.core.Screens
 import kekmech.ru.core.usecases.*
-import kekmech.ru.coreui.adapter.BaseAdapter
-import kekmech.ru.coreui.adapter.BaseItem
-import kekmech.ru.coreui.items.DividerItem
-import kekmech.ru.coreui.items.SingleLineItem
-import kekmech.ru.coreui.items.TwoLineItem
+import kekmech.ru.coreui.deprecated.adapter.BaseAdapter
+import kekmech.ru.coreui.deprecated.adapter.BaseItem
+import kekmech.ru.coreui.deprecated.items.DividerItem
+import kekmech.ru.coreui.deprecated.items.SingleLineItem
+import kekmech.ru.coreui.deprecated.items.TwoLineItem
 import kekmech.ru.settings.adapter.SingleLineTumblerItem
 import kekmech.ru.settings.adapter.VersionItem
 import kekmech.ru.settings.view.SettingsFragmentView

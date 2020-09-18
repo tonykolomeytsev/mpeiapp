@@ -2,15 +2,15 @@ package kekmech.ru.bars.main.adapter
 
 import android.content.Context
 import android.content.Intent
-import android.view.View
-import android.widget.TextView
-import kekmech.ru.bars.R
-import kekmech.ru.coreui.adapter.BaseClickableItem
-import kekmech.ru.coreui.adapter.BaseFactory
-import kekmech.ru.coreui.adapter.BaseViewHolder
 import android.content.Intent.ACTION_VIEW
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.net.Uri
+import android.view.View
+import android.widget.TextView
+import kekmech.ru.bars.R
+import kekmech.ru.coreui.deprecated.adapter.BaseClickableItem
+import kekmech.ru.coreui.deprecated.adapter.BaseFactory
+import kekmech.ru.coreui.deprecated.adapter.BaseViewHolder
 
 
 class SupportItem(private val context: Context) : BaseClickableItem<SupportItem.ViewHolder>() {

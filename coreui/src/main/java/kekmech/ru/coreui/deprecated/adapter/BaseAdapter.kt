@@ -1,12 +1,10 @@
-package kekmech.ru.coreui.adapter
+package kekmech.ru.coreui.deprecated.adapter
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
 import java.util.*
-import java.util.zip.Inflater
 
 /**
  * Created by Kolomeytsev Anton on 09.07.2016.

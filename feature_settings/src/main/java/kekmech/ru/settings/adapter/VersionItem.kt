@@ -3,9 +3,9 @@ package kekmech.ru.settings.adapter
 import android.view.View
 import android.widget.TextView
 import kekmech.ru.core.dto.AppVersion
-import kekmech.ru.coreui.adapter.BaseFactory
-import kekmech.ru.coreui.adapter.BaseItem
-import kekmech.ru.coreui.adapter.BaseViewHolder
+import kekmech.ru.coreui.deprecated.adapter.BaseFactory
+import kekmech.ru.coreui.deprecated.adapter.BaseItem
+import kekmech.ru.coreui.deprecated.adapter.BaseViewHolder
 import kekmech.ru.settings.R
 
 class VersionItem(val appVersion: AppVersion) : BaseItem<VersionItem.ViewHolder>() {

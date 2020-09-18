@@ -1,6 +1,5 @@
-package kekmech.ru.coreui.adapter
+package kekmech.ru.coreui.deprecated.adapter
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import kotlin.reflect.KProperty
 

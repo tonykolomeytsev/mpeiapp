@@ -5,9 +5,9 @@ import android.view.View
 import android.widget.TextView
 import kekmech.ru.bars.R
 import kekmech.ru.coreui.Resources
-import kekmech.ru.coreui.adapter.BaseFactory
-import kekmech.ru.coreui.adapter.BaseItem
-import kekmech.ru.coreui.adapter.BaseViewHolder
+import kekmech.ru.coreui.deprecated.adapter.BaseFactory
+import kekmech.ru.coreui.deprecated.adapter.BaseItem
+import kekmech.ru.coreui.deprecated.adapter.BaseViewHolder
 import kotlin.math.round
 
 class FinalItem(val text: String, val mk: Float) : BaseItem<FinalItem.ViewHolder>() {

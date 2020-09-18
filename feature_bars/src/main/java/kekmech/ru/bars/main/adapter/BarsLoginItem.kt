@@ -1,17 +1,12 @@
 package kekmech.ru.bars.main.adapter
 
-import android.content.Context
-import android.graphics.Point
 import android.view.KeyEvent
 import android.view.View
-import android.view.ViewGroup
-import android.view.WindowManager
 import android.widget.EditText
-import android.widget.LinearLayout
 import kekmech.ru.bars.R
-import kekmech.ru.coreui.adapter.BaseFactory
-import kekmech.ru.coreui.adapter.BaseItem
-import kekmech.ru.coreui.adapter.BaseViewHolder2
+import kekmech.ru.coreui.deprecated.adapter.BaseFactory
+import kekmech.ru.coreui.deprecated.adapter.BaseItem
+import kekmech.ru.coreui.deprecated.adapter.BaseViewHolder2
 
 
 class BarsLoginItem(

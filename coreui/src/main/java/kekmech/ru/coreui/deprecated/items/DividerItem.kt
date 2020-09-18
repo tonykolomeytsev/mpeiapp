@@ -1,11 +1,11 @@
-package kekmech.ru.coreui.items
+package kekmech.ru.coreui.deprecated.items
 
 import android.view.View
 import android.widget.TextView
 import kekmech.ru.coreui.R
-import kekmech.ru.coreui.adapter.BaseFactory
-import kekmech.ru.coreui.adapter.BaseItem
-import kekmech.ru.coreui.adapter.BaseViewHolder
+import kekmech.ru.coreui.deprecated.adapter.BaseFactory
+import kekmech.ru.coreui.deprecated.adapter.BaseItem
+import kekmech.ru.coreui.deprecated.adapter.BaseViewHolder
 
 class DividerItem(
     private val header: String

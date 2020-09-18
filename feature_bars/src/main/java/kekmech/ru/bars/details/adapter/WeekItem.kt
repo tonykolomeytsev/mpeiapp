@@ -6,9 +6,9 @@ import android.widget.TextView
 import kekmech.ru.bars.R
 import kekmech.ru.core.dto.ControlWeek
 import kekmech.ru.coreui.Resources
-import kekmech.ru.coreui.adapter.BaseFactory
-import kekmech.ru.coreui.adapter.BaseItem
-import kekmech.ru.coreui.adapter.BaseViewHolder
+import kekmech.ru.coreui.deprecated.adapter.BaseFactory
+import kekmech.ru.coreui.deprecated.adapter.BaseItem
+import kekmech.ru.coreui.deprecated.adapter.BaseViewHolder
 import kotlin.math.round
 
 class WeekItem(val week: ControlWeek, val weekNum: Int) : BaseItem<WeekItem.ViewHolder>() {

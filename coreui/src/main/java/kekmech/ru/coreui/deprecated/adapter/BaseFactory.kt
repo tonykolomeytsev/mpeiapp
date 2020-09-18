@@ -1,4 +1,4 @@
-package kekmech.ru.coreui.adapter
+package kekmech.ru.coreui.deprecated.adapter
 
 import android.view.LayoutInflater
 import android.view.View

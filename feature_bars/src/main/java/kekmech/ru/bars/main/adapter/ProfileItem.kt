@@ -5,10 +5,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.bars.R
 import kekmech.ru.core.dto.AcademicScore
-import kekmech.ru.coreui.adapter.BaseAdapter
-import kekmech.ru.coreui.adapter.BaseFactory
-import kekmech.ru.coreui.adapter.BaseItem
-import kekmech.ru.coreui.adapter.BaseViewHolder2
+import kekmech.ru.coreui.deprecated.adapter.BaseAdapter
+import kekmech.ru.coreui.deprecated.adapter.BaseFactory
+import kekmech.ru.coreui.deprecated.adapter.BaseItem
+import kekmech.ru.coreui.deprecated.adapter.BaseViewHolder2
 
 class ProfileItem(var academicScore: AcademicScore, val logoutListener: (View) -> Unit) : BaseItem<ProfileItem.ViewHolder>() {
 

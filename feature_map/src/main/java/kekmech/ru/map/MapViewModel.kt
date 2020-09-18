@@ -17,7 +17,7 @@ import kekmech.ru.core.dto.Building
 import kekmech.ru.core.dto.Food
 import kekmech.ru.core.dto.Hostel
 import kekmech.ru.core.zipNullable
-import kekmech.ru.coreui.adapter.BaseAdapter
+import kekmech.ru.coreui.deprecated.adapter.BaseAdapter
 import kekmech.ru.map.MapViewModel.MarkersFilter.*
 import kekmech.ru.map.model.MapFragmentModel
 import kekmech.ru.map.view.CustomMarkerView

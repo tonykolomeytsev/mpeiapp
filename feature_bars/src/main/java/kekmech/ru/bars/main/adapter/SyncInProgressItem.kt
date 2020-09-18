@@ -2,9 +2,9 @@ package kekmech.ru.bars.main.adapter
 
 import android.view.View
 import kekmech.ru.bars.R
-import kekmech.ru.coreui.adapter.BaseFactory
-import kekmech.ru.coreui.adapter.BaseItem
-import kekmech.ru.coreui.adapter.BaseViewHolder2
+import kekmech.ru.coreui.deprecated.adapter.BaseFactory
+import kekmech.ru.coreui.deprecated.adapter.BaseItem
+import kekmech.ru.coreui.deprecated.adapter.BaseViewHolder2
 
 class SyncInProgressItem : BaseItem<SyncInProgressItem.ViewHolder>() {
 

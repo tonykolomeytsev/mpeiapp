@@ -1,12 +1,14 @@
 package kekmech.ru.bars.main.adapter
 
 import android.view.View
-import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.bars.R
 import kekmech.ru.core.dto.AcademicDiscipline
-import kekmech.ru.coreui.adapter.*
+import kekmech.ru.coreui.deprecated.adapter.BaseAdapter
+import kekmech.ru.coreui.deprecated.adapter.BaseClickableItem
+import kekmech.ru.coreui.deprecated.adapter.BaseFactory
+import kekmech.ru.coreui.deprecated.adapter.BaseViewHolder2
 import kotlin.math.round
 
 class DisciplineItem(val discipline: AcademicDiscipline) :
