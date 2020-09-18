@@ -1,7 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-kapt'
 apply plugin: 'com.google.gms.google-services' // Firebase
 apply plugin: 'com.google.firebase.crashlytics'
 
@@ -24,6 +23,7 @@ android {
         }
         debug {
             resValue('string', 'google_maps_api_key', mpeiapp_google_maps_api_key)
+            applicationIdSuffix ".dev"
         }
     }
 
@@ -56,12 +56,6 @@ dependencies {
     implementation androidx.coreKtx
     implementation google.material
 
-    // android arch navigation for kotlin
-    implementation "androidx.navigation:navigation-fragment-ktx:2.2.1"
-    implementation "androidx.navigation:navigation-ui-ktx:2.2.1"
-    implementation "androidx.navigation:navigation-runtime-ktx:2.2.1"
-    implementation "androidx.fragment:fragment-ktx:1.2.1"
-
     // Google Maps
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
 
@@ -84,9 +78,6 @@ dependencies {
     implementation project(path: ':core')
     implementation project(path: ':domain')
     implementation project(path: ':repository')
-    implementation project(path: ':mainscreen')
-    implementation project(path: ':feature_feed')
-    implementation project(path: ':feature_timetable')
     implementation project(path: ':feature_settings')
     implementation project(path: ':feature_onboarding')
     implementation project(path: ':feature_dashboard')
@@ -96,6 +87,8 @@ dependencies {
     implementation project(path: ':feature_force_update')
     implementation project(path: ':feature_bars')
     implementation project(path: ':feature_notes')
+
+    implementation project(path: ':domain_schedule')
 
     implementation project(path: ':coreui')
     implementation project(path: ':common_navigation')

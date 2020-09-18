@@ -33,6 +33,8 @@ class MainFragment : BaseFragment<MainScreenEvent, MainScreenEffect, MainScreenS
         if (savedInstanceState == null) {
             // start observing data
         }
+
+        dependencies.prefetcher.prefetch()
     }
 
     override fun onViewCreatedInternal(view: View, savedInstanceState: Bundle?) {

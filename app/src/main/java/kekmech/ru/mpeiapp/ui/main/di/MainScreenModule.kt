@@ -9,7 +9,7 @@ import org.koin.dsl.bind
 
 object MainScreenModule : ModuleProvider({
     single { BottomTabsSwitcherImpl } bind BottomTabsSwitcher::class
-    single { MainScreenDependencies(get()) } bind MainScreenDependencies::class
+    single { MainScreenDependencies(get(), get()) } bind MainScreenDependencies::class
 
     val mainFragmentHolder = object : MainFragmentHolder {
         override fun invoke() = MainFragment.newInstance()

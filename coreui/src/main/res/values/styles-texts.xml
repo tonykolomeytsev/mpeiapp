@@ -5,92 +5,92 @@
         <item name="android:textSize">32sp</item>
         <item name="lineHeight">38sp</item>
         <item name="android:fontFamily">@font/roboto_bold</item>
-        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:textColor">?attr/colorBlack</item>
     </style>
 
     <style name="H2">
         <item name="android:fontFamily">@font/roboto_bold</item>
         <item name="lineHeight">28sp</item>
         <item name="android:textSize">24sp</item>
-        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:textColor">?attr/colorBlack</item>
     </style>
 
     <style name="H3">
         <item name="android:fontFamily">@font/roboto_bold</item>
         <item name="lineHeight">23dp</item>
         <item name="android:textSize">20sp</item>
-        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:textColor">?attr/colorBlack</item>
     </style>
     
     <style name="H4">
         <item name="android:textSize">16sp</item>
         <item name="lineHeight">22sp</item>
         <item name="android:fontFamily">@font/roboto_medium</item>
-        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:textColor">?attr/colorBlack</item>
     </style>
     
     <style name="H4.C6">
-        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textColor">?attr/colorWhite</item>
     </style>
 
     <style name="H4.C3">
-        <item name="android:textColor">@color/colorMain</item>
+        <item name="android:textColor">?attr/colorMain</item>
     </style>
 
     <style name="H5">
         <item name="android:textSize">16sp</item>
         <item name="lineHeight">22sp</item>
         <item name="android:fontFamily">@font/roboto_regular</item>
-        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:textColor">?attr/colorBlack</item>
     </style>
 
     <style name="H6">
         <item name="android:textSize">14sp</item>
         <item name="lineHeight">19sp</item>
         <item name="android:fontFamily">@font/roboto_medium</item>
-        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:textColor">?attr/colorBlack</item>
     </style>
 
     <style name="H6.C6">
-        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textColor">?attr/colorWhite</item>
     </style>
 
     <style name="H6.C8">
-        <item name="android:textColor">@color/colorGray70</item>
+        <item name="android:textColor">?attr/colorGray70</item>
     </style>
 
     <style name="H6.C11">
-        <item name="android:textColor">@color/colorRed</item>
+        <item name="android:textColor">?attr/colorRed</item>
     </style>
 
     <style name="H7">
         <item name="android:textSize">14sp</item>
         <item name="lineHeight">19sp</item>
         <item name="android:fontFamily">@font/roboto_regular</item>
-        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:textColor">?attr/colorBlack</item>
     </style>
 
     <style name="H7.C8">
-        <item name="android:textColor">@color/colorGray70</item>
+        <item name="android:textColor">?attr/colorGray70</item>
     </style>
 
     <style name="H7.C11">
-        <item name="android:textColor">@color/colorRed</item>
+        <item name="android:textColor">?attr/colorRed</item>
     </style>
 
     <style name="H8">
         <item name="android:textSize">12sp</item>
         <item name="lineHeight">16sp</item>
         <item name="android:fontFamily">@font/roboto_regular</item>
-        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:textColor">?attr/colorBlack</item>
     </style>
 
     <style name="H8.C8">
-        <item name="android:textColor">@color/colorGray70</item>
+        <item name="android:textColor">?attr/colorGray70</item>
     </style>
 
     <style name="H8.C11">
-        <item name="android:textColor">@color/colorRed</item>
+        <item name="android:textColor">?attr/colorRed</item>
     </style>
 
 </resources>

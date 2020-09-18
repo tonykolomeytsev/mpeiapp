@@ -46,6 +46,7 @@
     <attr name="colorYellowDark" format="reference"/>
     <attr name="colorYellowLight" format="reference"/>
     <attr name="colorWhite" format="reference"/>
+    <attr name="colorBlack" format="reference"/>
     <attr name="colorGray90" format="reference"/>
     <attr name="colorGray70" format="reference"/>
     <attr name="colorGray30" format="reference"/>
@@ -54,5 +55,8 @@
     <attr name="colorGreen" format="reference"/>
     <attr name="colorPink" format="reference"/>
     <attr name="shimmerColor" format="reference"/>
+
+    <!--Additional theme colors-->
+    <attr name="themeBoxBackgroundColor" format="reference"/>
 
 </resources>

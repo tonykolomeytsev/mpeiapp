@@ -14,14 +14,12 @@ import kekmech.ru.common_webview.di.WebViewModule
 import kekmech.ru.domain.di.DomainModule
 import kekmech.ru.feature_onboarding.di.OnboardingModule
 import kekmech.ru.feature_schedule.di.ScheduleModule
-import kekmech.ru.feed.di.KoinFeedFragmentModule
 import kekmech.ru.map.di.KoinMapFragmentModule
 import kekmech.ru.mpeiapp.di.AppModule
 import kekmech.ru.mpeiapp.ui.main.di.MainScreenModule
 import kekmech.ru.notes.di.KoinNoteFragmentModule
 import kekmech.ru.repository.di.RepositoryModule
 import kekmech.ru.settings.di.KoinSettingsModule
-import kekmech.ru.timetable.di.KoinTimetableFragmentModule
 import kekmech.ru.update.di.KoinUpdateModule
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
@@ -48,8 +46,6 @@ class MPEIApp : Application(),
         androidContext(this@MPEIApp)
         modules(listOf(
             AppModule,
-            KoinFeedFragmentModule,
-            KoinTimetableFragmentModule,
             KoinAddFragmentModule,
             KoinMapFragmentModule,
             KoinUpdateModule,

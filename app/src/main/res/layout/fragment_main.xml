@@ -5,7 +5,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical"
         xmlns:tools="http://schemas.android.com/tools"
-        tools:theme="@style/AppTheme">
+        android:background="?attr/colorWhite">
 
     <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fragmentContainer"
@@ -22,8 +22,8 @@
             android:layout_marginStart="0dp"
             app:labelVisibilityMode="unlabeled"
             app:itemHorizontalTranslationEnabled="false"
-            tools:background="@color/colorWhite"
-            android:background="@color/colorWhite"
+            tools:background="?attr/colorWhite"
+            android:background="?attr/colorWhite"
             app:itemIconTint="@drawable/bottom_nav_selector"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"

@@ -55,7 +55,7 @@ class ScheduleFragment : BaseFragment<ScheduleEvent, ScheduleEffect, ScheduleSta
     }
 
     override fun handleEffect(effect: ScheduleEffect) = when (effect) {
-        is ScheduleEffect.ShowLoadingError -> showBanner(R.string.something_went_wrong_error)
+        is ScheduleEffect.ShowLoadingError -> showBanner(R.string.schedule_loading_error)
         is ScheduleEffect.ShowViewPager -> viewPager.visibility = View.VISIBLE
     }
 
