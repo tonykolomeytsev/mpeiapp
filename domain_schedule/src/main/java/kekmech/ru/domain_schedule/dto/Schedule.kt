@@ -1,7 +1,8 @@
 package kekmech.ru.domain_schedule.dto
 
-import java.io.*
-import java.time.*
+import java.io.Serializable
+import java.time.LocalDate
+import java.time.LocalTime
 
 data class Schedule(
     val groupNumber: String = "",
@@ -30,7 +31,9 @@ data class Classes(
     val person: String = "",
     val time: Time = Time(),
     val number: Int
-) : Serializable
+) : Serializable {
+    @Transient var stackType: ClassesStackType? = null
+}
 
 data class Time(
     val start: LocalTime = LocalTime.now(),
@@ -38,3 +41,5 @@ data class Time(
 ) : Serializable
 
 enum class ClassesType : Serializable { UNDEFINED, LECTURE, PRACTICE, LAB, COURSE }
+
+enum class ClassesStackType { START, MIDDLE, END }

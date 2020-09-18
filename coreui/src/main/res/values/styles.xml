@@ -70,7 +70,7 @@
         <!-- THEME COLORS -->
         <item name="colorMainDark">@color/colorGray30</item>
         <item name="colorMainLight">@color/colorGray30</item>
-        <item name="colorMain">@color/colorGray30</item>
+        <item name="colorMain">@color/colorGray10</item>
         <item name="colorYellowDark">@color/colorYellowLight</item>
         <item name="colorYellowLight">@color/colorYellowDark</item>
         <item name="colorWhite">@color/colorBlack</item>
