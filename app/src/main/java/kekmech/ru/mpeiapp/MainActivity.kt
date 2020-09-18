@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
 //        if (isDarkThemeEnabledUseCase()) {
 //            setTheme(R.style.AppTheme_Dark)
 //        } else {
-            setTheme(R.style.AppTheme)
+            setTheme(R.style.AppTheme_Dark)
 //        }
 
         setContentView(R.layout.activity_main)

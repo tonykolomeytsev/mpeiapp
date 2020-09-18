@@ -94,6 +94,7 @@
 
     <string name="schedule_semester_week">Учебная неделя №%d</string>
     <string name="schedule_weekend_week">Неучебная неделя</string>
+    <string name="schedule_loading_error">При загрузке расписания произошла ошибка</string>
     <string name="schedule_item_lunch_header">Обеденный перерыв</string>
     <string name="schedule_item_lunch_description">Здесь будет диплинк на карту</string>
     <string name="schedule_item_lunch_time_start">12:45</string>
@@ -105,4 +106,7 @@
     <string name="onboarding_bars_description">Вы можете совершить вход в систему БАРС, чтобы получить возможность просматривать оценки из приложения</string>
     <string name="onboarding_bars_button_skip">Пропустить</string>
     <string name="onboarding_bars_button_signin">Войти</string>
+    <string name="navigation_name_dashboard">Dashboard</string>
+    <string name="navigation_name_schedule">Schedule</string>
+    <string name="navigation_name_map">Map</string>
 </resources>

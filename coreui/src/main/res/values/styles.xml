@@ -30,6 +30,7 @@
         <item name="colorYellowDark">@color/colorYellowDark</item>
         <item name="colorYellowLight">@color/colorYellowLight</item>
         <item name="colorWhite">@color/colorWhite</item>
+        <item name="colorBlack">@color/colorBlack</item>
         <item name="colorGray90">@color/colorGray90</item>
         <item name="colorGray70">@color/colorGray70</item>
         <item name="colorGray30">@color/colorGray30</item>
@@ -38,55 +39,42 @@
         <item name="colorGreen">@color/colorGreen</item>
         <item name="colorPink">@color/colorPink</item>
         <item name="shimmerColor">@color/colorGray20</item>
+
+        <!--Additional theme colors-->
+        <item name="themeBoxBackgroundColor">@color/colorGray10</item>
     </style>
 
-    <style name="AppTheme.Dark" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme.Dark" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:textColor">@color/colorWhite</item>
+        <item name="colorAccent">@color/colorMain</item>
+        <item name="colorPrimary">@color/colorWhite</item>
+        <item name="colorPrimaryDark">@color/colorGray30</item>
+        <item name="colorControlNormal">@color/colorGray30</item>
+        <item name="colorControlHighlight">@color/colorWhite</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
 
         <!-- Transparent statusBar -->
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <!--<item name="android:statusBarColor">#4D000000</item>-->
         <item name="android:windowTranslucentStatus">false</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:statusBarColor">@color/colorBlack</item>
         <item name="android:navigationBarColor">@color/colorBlack</item>
 
-
-
-        <item name="themeColorWhite">@color/colorBlack</item>
-        <item name="themeColorBlack">@color/colorWhiteSlack</item>
-        <item name="themeColorCardView">@color/colorCardViewBlack</item>
-        <item name="themeColorToolbar">@color/colorToolbarBlack</item>
-        <item name="themeColorFeedBackground">@color/colorFeedBackgroundDark</item>
-        <item name="themeColorBottomNavBackground">@color/colorBottomNavBackgroundDark</item>
-        <item name="themeColorBottomNavTint">@color/colorBottomNavDark</item>
-        <item name="themeColorBarsAvMark">@color/colorBarsAvMarkDark</item>
-        <item name="themeColorProgressBar">@color/colorProgressBarDark</item>
-        <item name="themeColorBackdrop">@color/colorBackdropDark</item>
-        <item name="themeColorDivider">@color/colorTransparent</item>
-        <item name="themeColorInfoBlock">@color/colorInfoBlock</item>
-        <item name="themeColorTimetableCard">@drawable/bg_timetable_card_decor</item>
-        <item name="themeColorTimetableBackground">@color/colorTransparent</item>
-        <item name="themeColorTimetableLunchBackground">@color/colorTransparent</item>
-        <item name="themeColorSearchView">@color/colorSearchViewDark</item>
-        <item name="themeColorSearchViewHint">@color/colorSearchViewHintDark</item>
-        <item name="themeColorMapTab">@color/colorMapTabDark</item>
-        <item name="themeColorForceUpdateBg">@color/colorUpdateBgDark</item>
-        <item name="themeColorForceUpdateBtnLater">@color/colorUpdateDtnLaterDark</item>
-        <item name="themeColorSearchViewIconsTint">@color/colorIconsTintDark</item>
-        <item name="themeColorCoupleNumber">@color/colorCoupleNumberDark</item>
-
+        <item name="materialButtonStyle">@style/Button.Primary</item>
+        <item name="buttonStyle">@style/Button.Primary</item>
+        <item name="toolbarStyle">@style/Toolbar</item>
+        <item name="editTextStyle">@style/EditText</item>
+        <item name="textInputStyle">@style/TextInputLayout</item>
 
         <!-- THEME COLORS -->
         <item name="colorMainDark">@color/colorGray30</item>
         <item name="colorMainLight">@color/colorGray30</item>
-        <item name="colorMain">@color/colorMain</item>
-        <item name="colorYellowDark">@color/colorYellowDark</item>
-        <item name="colorYellowLight">@color/colorYellowLight</item>
+        <item name="colorMain">@color/colorGray30</item>
+        <item name="colorYellowDark">@color/colorYellowLight</item>
+        <item name="colorYellowLight">@color/colorYellowDark</item>
         <item name="colorWhite">@color/colorBlack</item>
+        <item name="colorBlack">@color/colorWhite</item>
         <item name="colorGray90">@color/colorGray10</item>
         <item name="colorGray70">@color/colorGray30</item>
         <item name="colorGray30">@color/colorGray80</item>
@@ -95,10 +83,9 @@
         <item name="colorGreen">@color/colorGreen</item>
         <item name="colorPink">@color/colorPink</item>
         <item name="shimmerColor">@color/colorGray80</item>
-    </style>
 
-    <style name="AppTheme.Base" parent="AppTheme">
-
+        <!--Additional theme colors-->
+        <item name="themeBoxBackgroundColor">@color/colorGray90</item>
     </style>
 
     <style name="PrimaryFlatButton" parent="Theme.AppCompat.Light">
