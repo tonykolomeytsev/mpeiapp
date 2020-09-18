@@ -6,6 +6,7 @@
         android:layout_height="match_parent"
         tools:context="kekmech.ru.mpeiapp.MainActivity"
         tools:theme="@style/AppTheme"
+        android:background="?attr/colorWhite"
         android:fitsSystemWindows="true">
 
     <include layout="@layout/layout_container"/>

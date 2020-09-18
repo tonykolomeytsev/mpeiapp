@@ -13,6 +13,7 @@ import kekmech.ru.feature_schedule.R
 import kekmech.ru.feature_schedule.di.ScheduleDependencies
 import kekmech.ru.feature_schedule.find_schedule.presentation.*
 import kekmech.ru.feature_schedule.find_schedule.presentation.FindScheduleEvent.Wish
+import kekmech.ru.feature_schedule.find_schedule.utils.GroupFormatTextWatcher
 import kotlinx.android.synthetic.main.fragment_find_schedule.*
 import org.koin.android.ext.android.inject
 
@@ -39,6 +40,7 @@ class FindScheduleFragment : BaseFragment<FindScheduleEvent, FindScheduleEffect,
             groupTextLayout.error = null
             feature.accept(Wish.Action.GroupNumberChanged(groupText.text?.toString().orEmpty()))
         }
+        groupText.addTextChangedListener(GroupFormatTextWatcher(groupText))
         buttonContinue.setOnClickListener {
             feature.accept(Wish.Click.Continue(groupText.text?.toString().orEmpty()))
         }
