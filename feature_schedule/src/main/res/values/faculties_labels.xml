@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="faculties_labels">
+        <item>С</item>
+        <item>ЭЛ</item>
+        <item>А</item>
+        <item>ГП</item>
+        <item>ТФ</item>
+        <item>ЭР</item>
+        <item>Э</item>
+        <item>ИЭ</item>
+        <item>ФП</item>
+        <item>ИГ</item>
+    </string-array>
+</resources>
