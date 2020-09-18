@@ -1,7 +1,6 @@
 package kekmech.ru.mpeiapp
 
 import android.app.Application
-import kekmech.ru.addscreen.di.KoinAddFragmentModule
 import kekmech.ru.bars.di.KoinBarsModule
 import kekmech.ru.common_android.di.CommonAndroidModule
 import kekmech.ru.common_cache.di.CacheModule
@@ -46,7 +45,6 @@ class MPEIApp : Application(),
         androidContext(this@MPEIApp)
         modules(listOf(
             AppModule,
-            KoinAddFragmentModule,
             KoinMapFragmentModule,
             KoinUpdateModule,
             KoinBarsModule,
