@@ -24,7 +24,7 @@
     <style name="Button.Secondary">
         <item name="android:fontFamily">@font/roboto_medium</item>
         <item name="android:textAppearance">@style/H4.C3</item>
-        <item name="android:textColor">@color/colorMain</item>
+        <item name="android:textColor">?attr/colorMain</item>
         <item name="android:minHeight">48dp</item>
         <item name="android:paddingTop">14dp</item>
         <item name="android:paddingBottom">14dp</item>

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MpeiX</string>
+    <string name="navigation_name_profile">Profile</string>
 </resources>

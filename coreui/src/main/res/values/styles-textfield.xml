@@ -7,41 +7,42 @@
 
         <item name="hintEnabled">true</item>
         <item name="hintTextAppearance">@style/TextInputEditText.Hint</item>
-        <item name="hintTextColor">@color/colorAccent</item>
+        <item name="hintTextColor">?attr/colorMain</item>
         <item name="errorTextAppearance">@style/TextInputEditText.Error</item>
         <item name="counterTextAppearance">@style/TextInputEditText.Counter</item>
 
         <item name="boxCornerRadiusTopStart">4dp</item>
         <item name="boxCornerRadiusTopEnd">4dp</item>
         <item name="boxStrokeWidth">1dp</item>
-        <item name="boxStrokeColor">@color/text_input_stroke_color</item>
-        <item name="boxBackgroundColor">@color/text_input_background_color</item>
+        <item name="boxStrokeColor">?attr/colorMain</item>
+        <item name="boxBackgroundColor">?attr/themeBoxBackgroundColor</item>
         <item name="materialThemeOverlay">@style/ThemeOverlay.TextInputEditText</item>
-        <item name="endIconTint">@color/colorGray70</item>
+        <item name="endIconTint">?attr/colorGray70</item>
     </style>
 
     <style name="ThemeOverlay.TextInputEditText" parent="ThemeOverlay.MaterialComponents.TextInputEditText">
-        <item name="colorControlActivated">@color/colorAccent</item>
+        <item name="colorControlActivated">?attr/colorMain</item>
         <item name="editTextStyle">@style/TextInputEditText</item>
     </style>
 
     <style name="TextInputEditText" parent="Widget.MaterialComponents.TextInputEditText.FilledBox">
         <item name="android:textAppearance">@style/H4</item>
+        <item name="android:textColor">?attr/colorBlack</item>
         <item name="android:paddingBottom">8dp</item>
         <item name="android:fontFamily">@font/roboto_regular</item>
     </style>
 
     <style name="TextInputEditText.Hint" parent="H8.C8">
-        <item name="android:textColor">@color/colorGray70</item>
+        <item name="android:textColor">?attr/colorGray70</item>
         <item name="android:fontFamily">@font/roboto_medium</item>
     </style>
 
     <style name="TextInputEditText.Error" parent="H8.C11">
-        <item name="android:textColor">@color/colorRed</item>
+        <item name="android:textColor">?attr/colorRed</item>
     </style>
 
     <style name="TextInputEditText.Counter" parent="H8.C8">
-        <item name="android:textColor">@color/colorGray70</item>
+        <item name="android:textColor">?attr/colorGray70</item>
     </style>
 
 </resources>
