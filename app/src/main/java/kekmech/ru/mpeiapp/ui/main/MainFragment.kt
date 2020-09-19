@@ -66,7 +66,7 @@ class MainFragment : BaseFragment<MainScreenEvent, MainScreenEffect, MainScreenS
     }
 
     override fun onBackPressed(): Boolean {
-        return bottomBarController?.popStack() != true
+        return bottomBarController?.popStack() == true
     }
 
     companion object {

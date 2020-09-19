@@ -10,11 +10,8 @@ class DashboardActor(
 ) : Actor<DashboardAction, DashboardEvent> {
 
     override fun execute(action: DashboardAction): Observable<DashboardEvent> = when (action) {
-        is DashboardAction.LoadTodaySchedule -> scheduleRepository.loadSchedule()
-            .flatMapObservable { Observable.fromIterable(it.weeks.first().days) }
-            .filter { it.dayOfWeek == 3 /*LocalDate.now().dayOfWeek.value*/ }
-            .firstOrError()
-            .mapEvents({ day -> News.TodayScheduleLoaded(day.classes) }, News::TodayScheduleLoadError)
+        is DashboardAction.LoadSchedule -> scheduleRepository.loadSchedule()
+            .mapEvents({ News.ScheduleLoaded(it, action.weekOffset) }, News::ScheduleLoadError)
 
     }
 }

@@ -12,10 +12,7 @@ import kekmech.ru.coreui.items.NoteAdapterItem
 import kekmech.ru.coreui.items.SectionHeaderAdapterItem
 import kekmech.ru.coreui.items.SpaceAdapterItem
 import kekmech.ru.feature_dashboard.di.DashboardDependencies
-import kekmech.ru.feature_dashboard.items.BannerLunchAdapterItem
-import kekmech.ru.feature_dashboard.items.DashboardClassesAdapterItem
-import kekmech.ru.feature_dashboard.items.DashboardClassesMinAdapterItem
-import kekmech.ru.feature_dashboard.items.SearchFieldAdapterItem
+import kekmech.ru.feature_dashboard.items.*
 import kekmech.ru.feature_dashboard.presentation.DashboardEffect
 import kekmech.ru.feature_dashboard.presentation.DashboardEvent
 import kekmech.ru.feature_dashboard.presentation.DashboardEvent.Wish
@@ -39,10 +36,14 @@ class DashboardFragment : BaseFragment<DashboardEvent, DashboardEffect, Dashboar
     override fun onViewCreatedInternal(view: View, savedInstanceState: Bundle?) {
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
+        swipeRefresh.setOnRefreshListener { feature.accept(Wish.Action.OnSwipeRefresh) }
     }
 
     override fun render(state: DashboardState) {
         adapter.update(DashboardListConverter(requireContext()).map(state))
+        swipeRefresh.post {
+            swipeRefresh.isRefreshing = state.isSwipeRefreshLoadingAnimation
+        }
     }
 
     override fun handleEffect(effect: DashboardEffect) = when (effect) {
@@ -58,6 +59,7 @@ class DashboardFragment : BaseFragment<DashboardEvent, DashboardEffect, Dashboar
         SectionHeaderAdapterItem(SECTION_HEADER_REMINDERS),
         NoteAdapterItem(requireContext()),
         AddActionAdapterItem(),
+        DayStatusAdapterItem(),
         DashboardClassesAdapterItem(requireContext()),
         DashboardClassesMinAdapterItem(requireContext())
     )

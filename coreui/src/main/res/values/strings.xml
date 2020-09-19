@@ -104,9 +104,13 @@
 
     <string name="dashboard_section_header_events">Ближайшие события</string>
     <string name="dashboard_section_header_notes">Заметки</string>
+    <string name="dashboard_events_today">Сегодняшние пары</string>
+    <string name="dashboard_events_tomorrow">Завтрашние пары</string>
     <string name="dashboard_banner_lunch_header">Судя по всему, сейчас обеденный перерыв</string>
     <string name="dashboard_banner_lunch_description">Найти столовые на карте</string>
     <string name="dashboard_search_field_text">Искать места, преподавателей, заметки…</string>
+    <string name="dashboard_day_status_semester">Идет %d учебная неделя</string>
+    <string name="dashboard_day_status_not_semester">Неучебная неделя</string>
 
     <string name="navigation_name_dashboard">Dashboard</string>
     <string name="navigation_name_schedule">Schedule</string>

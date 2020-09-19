@@ -5,12 +5,11 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseItemBinder
-import kekmech.ru.common_android.getStringArray
+import kekmech.ru.coreui.PrettyDateFormatter
 import kekmech.ru.coreui.R
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_note.*
 import java.time.LocalDate
-import java.time.temporal.ChronoUnit
 
 data class NoteItem(
     val content: String,
@@ -55,7 +54,7 @@ class NoteItemBinder(
     override fun bind(vh: NoteViewHolder, model: NoteItem, position: Int) {
         vh.setDisciplineName(model.disciplineName)
         vh.setContent(model.content)
-        vh.setDate(prettyDateFormatter.format(model.date))
+        vh.setDate(prettyDateFormatter.formatRelative(model.date))
         vh.setOnClickListener { onClickListener?.invoke(model) }
     }
 }
@@ -69,33 +68,3 @@ class NoteAdapterItem(
     viewHolderGenerator = ::NoteViewHolderImpl,
     itemBinder = NoteItemBinder(context, onClickListener)
 )
-
-private class PrettyDateFormatter(context: Context) {
-    private val listOfDayNames = context.getStringArray(R.array.days_of_week)
-    private val listOfMonths = context.getStringArray(R.array.months)
-    private val today = context.getString(R.string.today)
-    private val tomorrow = context.getString(R.string.tomorrow)
-    private val afterTomorrow = context.getString(R.string.after_tomorrow)
-
-    fun format(date: LocalDate): String {
-        val now = LocalDate.now()
-        val deltaDays = ChronoUnit.DAYS.between(now, date)
-        return when (deltaDays) {
-            0L -> today
-            1L -> tomorrow
-            2L -> afterTomorrow
-            else -> {
-                val dayOfWeek = listOfDayNames
-                    .getOrNull(date.dayOfWeek.value - 1)
-                    .orEmpty()
-
-                val month = listOfMonths
-                    .getOrNull(date.monthValue - 1)
-                    .orEmpty()
-
-                val dayOfMonth = date.dayOfMonth
-                "$dayOfWeek, $dayOfMonth $month"
-            }
-        }
-    }
-}
