@@ -52,6 +52,7 @@ dependencies {
     implementation androidx.appcompat
     implementation androidx.coreKtx
     implementation androidx.constraintlayout
+    implementation androidx.swiperefreshlayout
     implementation google.material
 
     implementation project(path: ':domain_schedule')
