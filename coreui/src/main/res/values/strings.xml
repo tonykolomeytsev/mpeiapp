@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">coreui</string>
 
-
     <!-- НУМЕРАЦИЯ ПАР-->
     <string-array name="classes_numbers">
         <item>Очередная пара</item>
@@ -72,13 +71,9 @@
         <item>Курсовая</item>
     </string-array>
 
-    <string name="timetable_show_next_week">Показать следующую неделю</string>
-    <string name="timetable_show_current_week">Вернуться к текущей неделе</string>
-
-    <string name="couple_without_number">Очередная пара</string>
-
-    <string name="lunch_name">Обеденный перерыв</string>
-    <string name="weekend_name">День самостоятельных занятий</string>
+    <string name="today">Сегодня</string>
+    <string name="tomorrow">Завтра</string>
+    <string name="after_tomorrow">Послезавтра</string>
 
     <string name="something_went_wrong_error">Что-то пошло не так…</string>
 

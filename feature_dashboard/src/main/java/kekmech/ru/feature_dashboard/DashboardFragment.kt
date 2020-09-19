@@ -7,6 +7,7 @@ import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.ui.BaseFragment
 import kekmech.ru.coreui.banner.showBanner
+import kekmech.ru.coreui.items.AddActionAdapterItem
 import kekmech.ru.coreui.items.NoteAdapterItem
 import kekmech.ru.coreui.items.SectionHeaderAdapterItem
 import kekmech.ru.coreui.items.SpaceAdapterItem
@@ -55,7 +56,8 @@ class DashboardFragment : BaseFragment<DashboardEvent, DashboardEffect, Dashboar
         SectionHeaderAdapterItem(SECTION_HEADER_EVENTS),
         SectionHeaderAdapterItem(SECTION_HEADER_NOTES),
         SectionHeaderAdapterItem(SECTION_HEADER_REMINDERS),
-        NoteAdapterItem(),
+        NoteAdapterItem(requireContext()),
+        AddActionAdapterItem(),
         DashboardClassesAdapterItem(requireContext()),
         DashboardClassesMinAdapterItem(requireContext())
     )
