@@ -39,6 +39,7 @@
         <item name="colorGreen">@color/colorGreen</item>
         <item name="colorPink">@color/colorPink</item>
         <item name="shimmerColor">@color/colorGray20</item>
+        <item name="cardViewColor">@color/colorWhite</item>
 
         <!--Additional theme colors-->
         <item name="themeBoxBackgroundColor">@color/colorGray10</item>
@@ -83,6 +84,7 @@
         <item name="colorGreen">@color/colorGreen</item>
         <item name="colorPink">@color/colorPink</item>
         <item name="shimmerColor">@color/colorGray80</item>
+        <item name="cardViewColor">@color/colorGray80</item>
 
         <!--Additional theme colors-->
         <item name="themeBoxBackgroundColor">@color/colorGray90</item>
