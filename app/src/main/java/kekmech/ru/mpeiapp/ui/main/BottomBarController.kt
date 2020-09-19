@@ -53,7 +53,7 @@ class BottomBarController(
         bottomNavView?.let { it.selectedItemId = getItemByTab(tab) }
     }
 
-    fun popStack(): Boolean = backStack.popAndPeek()?.let { switchTab(it); true } ?: false
+    fun popStack(): Boolean = backStack.popAndPeek()?.let { switchTab(it) } != null
 
     private fun selectTab(tab: BottomTab) {
         val currentFragment = currentTabFragment
