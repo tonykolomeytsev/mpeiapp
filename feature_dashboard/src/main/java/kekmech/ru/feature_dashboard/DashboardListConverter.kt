@@ -10,6 +10,7 @@ import kekmech.ru.coreui.items.SpaceItem
 import kekmech.ru.domain_schedule.dto.Classes
 import kekmech.ru.domain_schedule.dto.ClassesStackType
 import kekmech.ru.feature_dashboard.items.BannerLunchItem
+import kekmech.ru.feature_dashboard.items.BannerOpenSourceItem
 import kekmech.ru.feature_dashboard.items.DayStatusItem
 import kekmech.ru.feature_dashboard.items.SearchFieldItem
 import kekmech.ru.feature_dashboard.presentation.DashboardState
@@ -39,8 +40,9 @@ class DashboardListConverter(
             add(SearchFieldItem)
             add(SpaceItem.VERTICAL_24)
             add(BannerLunchItem)
+            add(BannerOpenSourceItem)
             createClassesEventsItems(state)?.let { (header, classes) ->
-                add(SpaceItem.VERTICAL_24)
+                add(SpaceItem.VERTICAL_16)
                 add(header)
                 add(SpaceItem.VERTICAL_12)
                 addAll(classes)
