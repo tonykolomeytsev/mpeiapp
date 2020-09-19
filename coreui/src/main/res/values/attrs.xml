@@ -55,6 +55,7 @@
     <attr name="colorGreen" format="reference"/>
     <attr name="colorPink" format="reference"/>
     <attr name="shimmerColor" format="reference"/>
+    <attr name="cardViewColor" format="reference"/>
 
     <!--Additional theme colors-->
     <attr name="themeBoxBackgroundColor" format="reference"/>
