@@ -4,6 +4,9 @@ import android.content.Context
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.common_adapter.AdapterItem
+import kekmech.ru.coreui.items.ClassesItemBinder
+import kekmech.ru.coreui.items.ClassesViewHolder
+import kekmech.ru.coreui.items.ClassesViewHolderImpl
 import kekmech.ru.domain_schedule.dto.Classes
 import kekmech.ru.domain_schedule.dto.ClassesStackType
 import kekmech.ru.feature_schedule.R

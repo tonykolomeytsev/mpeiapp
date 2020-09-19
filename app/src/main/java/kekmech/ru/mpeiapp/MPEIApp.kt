@@ -11,6 +11,7 @@ import kekmech.ru.common_navigation.di.RouterHolder
 import kekmech.ru.common_network.di.NetworkModule
 import kekmech.ru.common_webview.di.WebViewModule
 import kekmech.ru.domain.di.DomainModule
+import kekmech.ru.feature_dashboard.di.DashboardModule
 import kekmech.ru.feature_onboarding.di.OnboardingModule
 import kekmech.ru.feature_schedule.di.ScheduleModule
 import kekmech.ru.map.di.KoinMapFragmentModule
@@ -55,11 +56,13 @@ class MPEIApp : Application(),
             NavigationModule,
             CommonAndroidModule,
             MainScreenModule,
-            OnboardingModule,
-            ScheduleModule,
             NetworkModule,
             WebViewModule,
-            CacheModule
+            CacheModule,
+            // features
+            OnboardingModule,
+            DashboardModule,
+            ScheduleModule
         ))
     }
 

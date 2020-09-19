@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_adapter.BaseItemBinder
+import kekmech.ru.coreui.items.ClassesAdapterItem
 import kekmech.ru.feature_schedule.R
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_week_days.*

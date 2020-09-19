@@ -1,4 +1,4 @@
-package kekmech.ru.feature_schedule.main.item
+package kekmech.ru.coreui.items
 
 import android.content.Context
 import android.content.res.ColorStateList
@@ -11,9 +11,9 @@ import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.common_android.getStringArray
 import kekmech.ru.common_android.getThemeColor
 import kekmech.ru.common_kotlin.fastLazy
+import kekmech.ru.coreui.R
 import kekmech.ru.domain_schedule.dto.Classes
 import kekmech.ru.domain_schedule.dto.ClassesType
-import kekmech.ru.feature_schedule.R
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_classes.*
 import java.time.format.DateTimeFormatter
