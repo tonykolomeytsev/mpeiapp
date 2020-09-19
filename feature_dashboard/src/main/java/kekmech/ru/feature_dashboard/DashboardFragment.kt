@@ -54,6 +54,7 @@ class DashboardFragment : BaseFragment<DashboardEvent, DashboardEffect, Dashboar
         SpaceAdapterItem(),
         SearchFieldAdapterItem { /* on click search field */ },
         BannerLunchAdapterItem { /* on click lunch banner */ },
+        BannerOpenSourceAdapterItem { /* on click github banner */ },
         SectionHeaderAdapterItem(SECTION_HEADER_EVENTS),
         SectionHeaderAdapterItem(SECTION_HEADER_NOTES),
         SectionHeaderAdapterItem(SECTION_HEADER_REMINDERS),
