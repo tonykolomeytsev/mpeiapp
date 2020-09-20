@@ -10,10 +10,6 @@ import kekmech.ru.coreui.deprecated.adapter.BaseFactory
 import kekmech.ru.coreui.deprecated.adapter.BaseItem
 import kekmech.ru.coreui.deprecated.adapter.BaseViewHolder
 import kekmech.ru.map.model.MapFragmentModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 class FoodsItem(private val model: MapFragmentModel) : BaseItem<FoodsItem.ViewHolder>() {
 
@@ -23,17 +19,18 @@ class FoodsItem(private val model: MapFragmentModel) : BaseItem<FoodsItem.ViewHo
 
     override fun updateViewHolder(viewHolder: ViewHolder) {
         viewHolder.recycler.layoutManager = LinearLayoutManager(viewHolder.itemView.context)
-        GlobalScope.launch(Dispatchers.Main) {
-            delay(100)
-            model.foods.observeForever {
-                adapter.baseItems.clear()
-                adapter.baseItems.addAll(it
-                    .map(::SingleFoodItem)
-                    .onEach { item -> item.clickListener = { model.selectedPlaceListener(item) } })
-                viewHolder.recycler.adapter = adapter
-                viewHolder.progressBar.visibility = View.INVISIBLE
-            }
-        }
+
+//        GlobalScope.launch(Dispatchers.Main) {
+//            delay(100)
+//            model.foods.observeForever {
+//                adapter.baseItems.clear()
+//                adapter.baseItems.addAll(it
+//                    .map(::SingleFoodItem)
+//                    .onEach { item -> item.clickListener = { model.selectedPlaceListener(item) } })
+//                viewHolder.recycler.adapter = adapter
+//                viewHolder.progressBar.visibility = View.INVISIBLE
+//            }
+//        }
     }
     override fun approveFactory(factory: BaseFactory) = factory is Factory
 
