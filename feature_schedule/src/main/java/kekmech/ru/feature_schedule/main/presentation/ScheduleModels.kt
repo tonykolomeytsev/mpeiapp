@@ -16,7 +16,7 @@ data class ScheduleState(
     val isLoading: Boolean = true,
     val schedule: MutableMap<Int, Schedule> = mutableMapOf(), // weekOffset -> schedule
     val currentWeekMonday: LocalDate? = null,
-    val selectedDay: DayItem = DayItem(LocalDate.now(), 0, false),
+    val selectedDay: DayItem = DayItem(LocalDate.now(), 0, true),
     val weekItems: HashMap<Int, WeekItem> = hashMapOf(),
     val hash: String = ""
 ) {
