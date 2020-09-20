@@ -90,8 +90,7 @@ class ScheduleReducer : BaseReducer<ScheduleState, ScheduleEvent, ScheduleEffect
                 ScheduleResult(
                     state = state.copy(
                         selectedDay = state.selectedDay.plusDays(newSelectedDay - oldSelectedDay)
-                    ),
-                    effect = ScheduleEffect.ShowViewPager
+                    )
                 )
             }
         }
