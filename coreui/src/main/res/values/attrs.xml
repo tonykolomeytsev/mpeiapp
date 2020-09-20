@@ -2,12 +2,6 @@
 <resources>
     <attr name="text" format="string"/>
 
-    <declare-styleable name="Chip">
-        <attr name="accentColor" format="color"/>
-        <attr name="text"/>
-        <attr name="thumbnail" format="integer"/>
-    </declare-styleable>
-
     <declare-styleable name="EnumSlider">
         <attr name="itemsCount" format="integer"/>
     </declare-styleable>

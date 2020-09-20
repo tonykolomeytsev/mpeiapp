@@ -5,7 +5,6 @@
         android:layout_height="match_parent"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         tools:context="kekmech.ru.map.view.MapFragment"
-        android:fitsSystemWindows="true"
         android:id="@+id/mapCoordinator"
         android:clipToPadding="false"
         tools:theme="@style/AppTheme">
@@ -29,7 +28,6 @@
             tools:behavior_peekHeight="348dp"
             android:background="@color/colorWhite"
             android:orientation="vertical"
-            android:fitsSystemWindows="false"
             android:paddingTop="0dp"
             android:clickable="true"
             android:focusable="true"
@@ -37,8 +35,7 @@
 
         <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fitsSystemWindows="false">
+                android:layout_height="wrap_content">
 
 
             <LinearLayout
@@ -47,7 +44,6 @@
                     android:orientation="horizontal"
                     android:gravity="center_horizontal"
                     android:padding="8dp"
-                    android:fitsSystemWindows="false"
                     android:layout_marginBottom="6dp">
 
                 <TextView

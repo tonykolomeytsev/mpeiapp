@@ -82,5 +82,5 @@ class WorkingDayAdapterItem(
     ),
     areItemsTheSame = { a, b -> a.dayOfWeek == b.dayOfWeek },
     equals = { a, b -> a.items == b.items },
-    changePayload = { a, b -> b.items }
+    changePayload = { _, b -> b.items }
 )

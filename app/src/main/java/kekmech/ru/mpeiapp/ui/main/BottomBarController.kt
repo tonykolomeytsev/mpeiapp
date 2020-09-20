@@ -56,6 +56,7 @@ class BottomBarController(
 
     fun popStack(): Boolean = backStack.popAndPeek()?.let { switchTab(it) } != null
 
+    @Suppress("DEPRECATION")
     private fun selectTab(tab: BottomTab) {
         val currentFragment = currentTabFragment
         val newFragment = childFragmentManager.findFragmentByTag(tab.name)
