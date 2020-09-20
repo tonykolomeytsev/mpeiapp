@@ -1,6 +1,5 @@
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
 
 android {
     compileSdkVersion 29
@@ -13,13 +12,13 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles 'consumer-rules.pro'
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
         release {
             minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
         }
         debug {
             minifyEnabled false
@@ -38,7 +37,7 @@ android {
 
 dependencies {
     coreLibraryDesugaring desugaring
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${versions.kotlin}"
+    implementation kotlinStdLib
 
     implementation squareup.retrofit
     implementation squareup.retrofit_rxJava2
@@ -49,6 +48,6 @@ dependencies {
     implementation koin.core
     implementation timber
 
-    implementation project(path: ':common_di')
-    implementation project(path: ':common_annotations')
+    implementation project(path: ":common_di")
+    implementation project(path: ":common_annotations")
 }

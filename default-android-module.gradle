@@ -1,5 +1,6 @@
 apply plugin: "com.android.library"
 apply plugin: "kotlin-android"
+apply plugin: "kotlin-android-extensions"
 
 android {
     compileSdkVersion 29
@@ -8,8 +9,8 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        versionCode appVersionCode
+        versionName appVersionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -17,12 +18,16 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+        }
+        debug {
+            minifyEnabled false
         }
     }
 
     compileOptions {
+        coreLibraryDesugaringEnabled true
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
@@ -31,21 +36,10 @@ android {
     }
 }
 
-dependencies {
-    implementation androidx.appcompat
-    implementation androidx.fragmentKtx
-    implementation androidx.coreKtx
+androidExtensions {
+    experimental = true
+}
 
-    implementation google.material
-
-    implementation koin.core
-    implementation koin.android
-
-    implementation kotlinReflect
-
-    implementation rx.java
-    implementation rx.android
-    implementation rx.kotlin
-
-    implementation project(path: ":common_di")
+tasks.withType(Test) {
+    useJUnitPlatform()
 }

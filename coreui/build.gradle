@@ -1,40 +1,4 @@
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
-
-android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.3"
-
-    defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles 'consumer-rules.pro'
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-        debug {
-            minifyEnabled false
-        }
-    }
-
-    compileOptions {
-        coreLibraryDesugaringEnabled true
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
-    }
-}
+apply from: "../default-android-module.gradle"
 
 dependencies {
     coreLibraryDesugaring desugaring
@@ -46,22 +10,9 @@ dependencies {
     implementation androidx.coreKtx
     implementation google.material
 
-    // Koin for Kotlin Android
-    implementation koin.core
-    implementation koin.android
+    implementation project(path: ":domain_schedule")
 
-    implementation project(path: ':domain_schedule')
-
-    implementation project(path: ':common_android')
-    implementation project(path: ':common_adapter')
-    implementation project(path: ':common_kotlin')
-
-}
-
-repositories {
-    mavenCentral()
-}
-
-androidExtensions {
-    experimental = true
+    implementation project(path: ":common_android")
+    implementation project(path: ":common_adapter")
+    implementation project(path: ":common_kotlin")
 }
