@@ -9,6 +9,7 @@ import kekmech.ru.common_android.onActivityResult
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.ui.BaseFragment
 import kekmech.ru.common_navigation.BackButtonListener
+import kekmech.ru.common_navigation.BottomTab
 import kekmech.ru.mpeiapp.R
 import kekmech.ru.mpeiapp.ui.main.di.MainScreenDependencies
 import kekmech.ru.mpeiapp.ui.main.presentation.*
@@ -16,6 +17,10 @@ import kotlinx.android.synthetic.main.fragment_main.*
 import org.koin.android.ext.android.inject
 
 class MainFragment : BaseFragment<MainScreenEvent, MainScreenEffect, MainScreenState, MainScreenFeature>(), BackButtonListener {
+
+    init {
+
+    }
 
     override val initEvent: MainScreenEvent get() = MainScreenEvent.Wish.Init
     override var layoutId: Int = R.layout.fragment_main
@@ -43,6 +48,9 @@ class MainFragment : BaseFragment<MainScreenEvent, MainScreenEffect, MainScreenS
         val controller = bottomBarController ?: BottomBarController(this)
         controller.init(this, bottomNavigation)
         bottomBarController = controller
+        savedInstanceState?.let {
+            bottomBarController?.switchTab(it.get("lastSelectedTab") as BottomTab)
+        }
     }
 
     override fun onResume() {
@@ -58,6 +66,12 @@ class MainFragment : BaseFragment<MainScreenEvent, MainScreenEffect, MainScreenS
     override fun onPause() {
         super.onPause()
         tabsSwitcherDisposable?.dispose()
+        parentFragmentManager.saveFragmentInstanceState(this)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putSerializable("lastSelectedTab", bottomBarController?.lastSelectedTab)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
