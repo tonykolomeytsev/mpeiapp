@@ -2,6 +2,7 @@ package kekmech.ru.feature_app_settings.presentation
 
 import io.reactivex.Observable
 import kekmech.ru.common_mvi.Actor
+import kekmech.ru.domain_app_settings.AppSettings
 import kekmech.ru.domain_app_settings.AppSettingsRepository
 
 class AppSettingsActor(
@@ -9,6 +10,11 @@ class AppSettingsActor(
 ) : Actor<AppSettingsAction, AppSettingsEvent> {
 
     override fun execute(action: AppSettingsAction): Observable<AppSettingsEvent> = when (action) {
-        else -> TODO()
+        is AppSettingsAction.LoadAppSettings -> Observable
+            .just(appSettingsRepository as AppSettings)
+            .mapSuccessEvent(withSkippingError = true) { AppSettingsEvent.News.AppSettingsLoaded(it) }
+        is AppSettingsAction.SetDarkThemeEnabled -> appSettingsRepository
+            .complete { isDarkThemeEnabled = action.isEnabled }
+            .mapSuccessEvent(AppSettingsEvent.News.AppSettingsChanged)
     }
 }

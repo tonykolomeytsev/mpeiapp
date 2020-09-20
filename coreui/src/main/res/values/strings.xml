@@ -113,6 +113,11 @@
     <string name="dashboard_day_status_not_semester">Неучебная неделя</string>
 
     <string name="app_settings_screen_title">Настройки</string>
+    <string name="app_settings_header_schedule">Расписание</string>
+    <string name="app_settings_dark_theme">Темная тема</string>
+    <string name="app_settings_dark_theme_description">Вы можете сменить визуальное оформление со светлого на темное и наоборот</string>
+    <string name="app_settings_change_day_after_change_week">Менять день при смене недели</string>
+    <string name="app_settings_change_day_after_change_week_description">При переходе на другую неделю автоматически переключаться на 7 дней вперед, либо 7 дней назад</string>
 
     <string name="navigation_name_dashboard">Dashboard</string>
     <string name="navigation_name_schedule">Schedule</string>

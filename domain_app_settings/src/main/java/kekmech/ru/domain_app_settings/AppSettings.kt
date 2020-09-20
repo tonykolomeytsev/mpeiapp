@@ -1,7 +1,10 @@
 package kekmech.ru.domain_app_settings
 
 interface AppSettings {
-    //schedule
+    // all app
+    val isDarkThemeEnabled: Boolean
+
+    // schedule
     val changeDayAfterChangeWeek: Boolean
     val autoScrollToTheNextWeek: Boolean
 }
