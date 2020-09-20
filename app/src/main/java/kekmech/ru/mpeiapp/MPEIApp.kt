@@ -11,6 +11,7 @@ import kekmech.ru.common_navigation.di.RouterHolder
 import kekmech.ru.common_network.di.NetworkModule
 import kekmech.ru.common_webview.di.WebViewModule
 import kekmech.ru.domain.di.DomainModule
+import kekmech.ru.feature_app_settings.di.AppSettingsModule
 import kekmech.ru.feature_dashboard.di.DashboardModule
 import kekmech.ru.feature_onboarding.di.OnboardingModule
 import kekmech.ru.feature_schedule.di.ScheduleModule
@@ -19,7 +20,6 @@ import kekmech.ru.mpeiapp.di.AppModule
 import kekmech.ru.mpeiapp.ui.main.di.MainScreenModule
 import kekmech.ru.notes.di.KoinNoteFragmentModule
 import kekmech.ru.repository.di.RepositoryModule
-import kekmech.ru.settings.di.KoinSettingsModule
 import kekmech.ru.update.di.KoinUpdateModule
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
@@ -50,7 +50,6 @@ class MPEIApp : Application(),
             KoinUpdateModule,
             KoinBarsModule,
             KoinNoteFragmentModule,
-            KoinSettingsModule,
             RepositoryModule,
             DomainModule,
             NavigationModule,
@@ -62,7 +61,8 @@ class MPEIApp : Application(),
             // features
             OnboardingModule,
             DashboardModule,
-            ScheduleModule
+            ScheduleModule,
+            AppSettingsModule
         ))
     }
 

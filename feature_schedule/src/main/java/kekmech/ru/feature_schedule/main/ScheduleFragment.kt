@@ -45,7 +45,6 @@ class ScheduleFragment : BaseFragment<ScheduleEvent, ScheduleEffect, ScheduleSta
         recyclerView.itemAnimator = null
         recyclerView.setHasFixedSize(true)
         viewPager.adapter = viewPagerAdapter
-        viewPager.visibility = View.INVISIBLE
         viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 feature.accept(Wish.Action.OnPageChanged(position))
@@ -56,7 +55,6 @@ class ScheduleFragment : BaseFragment<ScheduleEvent, ScheduleEffect, ScheduleSta
 
     override fun handleEffect(effect: ScheduleEffect) = when (effect) {
         is ScheduleEffect.ShowLoadingError -> showBanner(R.string.schedule_loading_error)
-        is ScheduleEffect.ShowViewPager -> viewPager.visibility = View.VISIBLE
     }
 
     override fun render(state: ScheduleState) {

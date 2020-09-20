@@ -4,6 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kekmech.ru.common_navigation.BottomTab
+import kekmech.ru.feature_app_settings.AppSettingsFragment
 import kekmech.ru.feature_dashboard.DashboardFragment
 import kekmech.ru.feature_schedule.main.ScheduleFragment
 import kekmech.ru.map.view.MapFragment
@@ -88,6 +89,6 @@ class BottomBarController(
         BottomTab.DASHBOARD -> DashboardFragment()
         BottomTab.SCHEDULE -> ScheduleFragment()
         BottomTab.MAP -> MapFragment()
-        BottomTab.PROFILE -> TODO()
+        BottomTab.PROFILE -> AppSettingsFragment()
     }
 }

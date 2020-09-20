@@ -12,7 +12,6 @@ import kekmech.ru.common_navigation.BackButtonListener
 import kekmech.ru.common_navigation.NavigationHolder
 import kekmech.ru.common_navigation.NewRoot
 import kekmech.ru.common_navigation.Router
-import kekmech.ru.core.usecases.IsDarkThemeEnabledUseCase
 import kekmech.ru.feature_onboarding.screens.WelcomeFragment
 import org.koin.android.ext.android.inject
 
@@ -20,8 +19,6 @@ class MainActivity : AppCompatActivity() {
 
     private val navigationHolder: NavigationHolder by inject()
     private val router: Router by inject()
-
-    val isDarkThemeEnabledUseCase: IsDarkThemeEnabledUseCase by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +33,7 @@ class MainActivity : AppCompatActivity() {
 //        if (isDarkThemeEnabledUseCase()) {
 //            setTheme(R.style.AppTheme_Dark)
 //        } else {
-            setTheme(R.style.AppTheme_Dark)
+            setTheme(R.style.AppTheme)
 //        }
 
         setContentView(R.layout.activity_main)
