@@ -5,6 +5,7 @@ import kekmech.ru.common_mvi.Result
 import kekmech.ru.feature_schedule.main.presentation.ScheduleEvent.News
 import kekmech.ru.feature_schedule.main.presentation.ScheduleEvent.Wish
 import kekmech.ru.feature_schedule.main.utils.TimeUtils.createWeekItem
+import java.time.DayOfWeek
 import java.util.*
 
 typealias ScheduleResult = Result<ScheduleState, ScheduleEffect, ScheduleAction>
@@ -40,13 +41,16 @@ class ScheduleReducer : BaseReducer<ScheduleState, ScheduleEvent, ScheduleEffect
                     2 to createWeekItem(2, firstDayOfWeek.plusWeeks(2)),
                     3 to createWeekItem(3, firstDayOfWeek.plusWeeks(3))
                 )
+                val actualSelectedDay = state.selectedDay
+                    .takeIf { it.date.dayOfWeek != DayOfWeek.SUNDAY } ?: state.selectedDay.plusDays(-1)
                 Result(
                     state = state.copy(
                         currentWeekMonday = firstDayOfWeek,
                         isFirstLoading = false,
                         isLoading = false,
                         schedule = schedule,
-                        weekItems = weekItems
+                        weekItems = weekItems,
+                        selectedDay = actualSelectedDay
                     )
                 )
             } else {
