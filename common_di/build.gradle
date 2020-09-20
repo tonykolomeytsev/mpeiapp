@@ -1,15 +1,6 @@
-apply plugin: 'java'
-apply plugin: 'java-library'
-apply plugin: 'kotlin'
+apply from: "../kotlin-module.gradle"
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-
-    implementation androidx.appcompat
-    implementation androidx.coreKtx
+    implementation kotlinStdLib
     implementation koin.core
-    implementation koin.android
 }
-
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8

@@ -10,8 +10,8 @@ android {
         applicationId "kekmech.ru.mpeiapp"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 24
-        versionName "1.0.0"
+        versionCode appVersionCode
+        versionName appVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -34,7 +34,7 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
-    buildToolsVersion '29.0.3'
+    buildToolsVersion "29.0.3"
 }
 
 dependencies {
@@ -78,10 +78,10 @@ dependencies {
     implementation project(path: ':core')
     implementation project(path: ':domain')
     implementation project(path: ':repository')
-    implementation project(path: ':feature_settings')
     implementation project(path: ':feature_onboarding')
     implementation project(path: ':feature_dashboard')
     implementation project(path: ':feature_schedule')
+    implementation project(path: ':feature_app_settings')
     implementation project(path: ':feature_map')
     implementation project(path: ':feature_force_update')
     implementation project(path: ':feature_bars')

@@ -1,6 +1,6 @@
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+apply plugin: "kotlin-android-extensions"
 
 android {
     compileSdkVersion 29
@@ -13,13 +13,13 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles 'consumer-rules.pro'
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
         release {
             minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
         }
         debug {
             minifyEnabled false
@@ -36,21 +36,20 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
+    implementation kotlinStdLib
     testImplementation tests.junit
     androidTestImplementation androidx.test.runner
     androidTestImplementation androidx.test.espresso
 
 
-    implementation 'androidx.core:core-ktx:1.1.0'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation "androidx.legacy:legacy-support-v4:1.0.0"
+    implementation androidx.coreKtx
     implementation google.material
     implementation androidx.appcompat
     implementation androidx.constraintlayout
     implementation androidx.recyclerview
     implementation androidx.coordinatorlayout
-    implementation "androidx.viewpager2:viewpager2:1.0.0"
+    implementation androidx.viewPager2
 
     // Koin for Kotlin Android
     implementation koin.core
@@ -64,8 +63,8 @@ dependencies {
     implementation firebase.firestore
 
     // Google Maps
-    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    implementation "com.google.android.gms:play-services-maps:17.0.0"
 
-    implementation project(path: ':coreui')
-    implementation project(path: ':core')
+    implementation project(path: ":coreui")
+    implementation project(path: ":core")
 }

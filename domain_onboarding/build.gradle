@@ -1,10 +1,5 @@
-apply plugin: 'java-library'
-apply plugin: 'kotlin'
+apply from: "../kotlin-module.gradle"
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation kotlinStdLib
 }
-
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
