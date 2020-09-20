@@ -1,5 +1,7 @@
 package kekmech.ru.common_navigation
 
-enum class BottomTab {
+import java.io.Serializable
+
+enum class BottomTab : Serializable {
     DASHBOARD, SCHEDULE, MAP, PROFILE
 }
