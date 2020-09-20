@@ -1,6 +1,7 @@
 package kekmech.ru.coreui.items
 
 import android.view.View
+import androidx.annotation.StringRes
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.common_adapter.AdapterItem
@@ -12,13 +13,15 @@ import kotlinx.android.synthetic.main.item_section_header.*
 private const val ITEM_SECTION_HEADER_DEFAULT_ID = 0
 
 data class SectionHeaderItem(
-    val title: String,
+    val title: String? = null,
+    @StringRes val titleRes: Int? = null,
     val subtitle: String? = null,
     val itemId: Int = ITEM_SECTION_HEADER_DEFAULT_ID
 )
 
 interface SectionHeaderViewHolder {
     fun setTitle(title: String)
+    fun setTitle(@StringRes resId: Int)
     fun setSubtitle(subtitle: String)
     fun setSubtitleVisibility(isVisible: Boolean)
 }
@@ -29,6 +32,10 @@ class SectionHeaderViewHolderImpl(
 
     override fun setTitle(title: String) {
         textViewTitle.text = title
+    }
+
+    override fun setTitle(@StringRes resId: Int) {
+        textViewTitle.setText(resId)
     }
 
     override fun setSubtitle(subtitle: String) {
@@ -45,7 +52,8 @@ class SectionHeaderItemBinder : BaseItemBinder<SectionHeaderViewHolder, SectionH
     override fun bind(vh: SectionHeaderViewHolder, model: SectionHeaderItem, position: Int) {
         vh.setSubtitleVisibility(model.subtitle != null)
         model.subtitle?.let(vh::setSubtitle)
-        vh.setTitle(model.title)
+        model.title?.let(vh::setTitle)
+        model.titleRes?.let(vh::setTitle)
     }
 }
 
@@ -56,5 +64,5 @@ class SectionHeaderAdapterItem(
     layoutRes = R.layout.item_section_header,
     viewHolderGenerator = ::SectionHeaderViewHolderImpl,
     itemBinder = SectionHeaderItemBinder(),
-    areItemsTheSame = { a, b -> a.title == b.title }
+    areItemsTheSame = { a, b -> a.title == b.title && a.titleRes == b.titleRes }
 )

@@ -22,7 +22,7 @@ data class DashboardState(
         val dayOfWeek = LocalDate.now().dayOfWeek
         if (dayOfWeek == DayOfWeek.SUNDAY) {
             return nextWeekSchedule?.weeks?.first()?.days
-                ?.first { it.dayOfWeek == DayOfWeek.MONDAY.value }
+                ?.find { it.dayOfWeek == DayOfWeek.MONDAY.value }
                 ?.classes
         } else {
             return currentWeekSchedule?.weeks?.first()?.days

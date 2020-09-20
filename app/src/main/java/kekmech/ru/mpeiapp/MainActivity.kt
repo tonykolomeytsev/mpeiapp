@@ -12,6 +12,7 @@ import kekmech.ru.common_navigation.BackButtonListener
 import kekmech.ru.common_navigation.NavigationHolder
 import kekmech.ru.common_navigation.NewRoot
 import kekmech.ru.common_navigation.Router
+import kekmech.ru.domain_app_settings.AppSettings
 import kekmech.ru.feature_onboarding.screens.WelcomeFragment
 import org.koin.android.ext.android.inject
 
@@ -19,6 +20,7 @@ class MainActivity : AppCompatActivity() {
 
     private val navigationHolder: NavigationHolder by inject()
     private val router: Router by inject()
+    private val appSettings: AppSettings by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,11 +32,11 @@ class MainActivity : AppCompatActivity() {
         }
         FirebaseAnalytics.getInstance(this)
 
-//        if (isDarkThemeEnabledUseCase()) {
-//            setTheme(R.style.AppTheme_Dark)
-//        } else {
+        if (appSettings.isDarkThemeEnabled) {
+            setTheme(R.style.AppTheme_Dark)
+        } else {
             setTheme(R.style.AppTheme)
-//        }
+        }
 
         setContentView(R.layout.activity_main)
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);

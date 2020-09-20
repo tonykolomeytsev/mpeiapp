@@ -1,6 +1,7 @@
 package kekmech.ru.feature_app_settings
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import kekmech.ru.common_adapter.BaseAdapter
@@ -8,6 +9,9 @@ import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.ui.BaseFragment
 import kekmech.ru.coreui.attachScrollListenerForAppBarLayoutShadow
 import kekmech.ru.coreui.items.SectionHeaderAdapterItem
+import kekmech.ru.coreui.items.SectionTextAdapterItem
+import kekmech.ru.coreui.items.SpaceAdapterItem
+import kekmech.ru.coreui.items.ToggleAdapterItem
 import kekmech.ru.feature_app_settings.di.AppSettingDependencies
 import kekmech.ru.feature_app_settings.presentation.AppSettingsEffect
 import kekmech.ru.feature_app_settings.presentation.AppSettingsEvent
@@ -35,13 +39,28 @@ class AppSettingsFragment : BaseFragment<AppSettingsEvent, AppSettingsEffect, Ap
         recyclerView.attachScrollListenerForAppBarLayoutShadow(appBarLayout)
     }
 
+    override fun render(state: AppSettingsState) {
+        adapter.update(AppSettingsListConverter().map(state))
+    }
+
+    override fun handleEffect(effect: AppSettingsEffect) = when (effect) {
+        is AppSettingsEffect.RecreateActivity -> {
+            Handler().postDelayed({ activity?.recreate() }, 200); Unit
+        }
+    }
+
     private fun createAdapter() = BaseAdapter(
         SectionHeaderAdapterItem(itemId = SECTION_HEADER_SCHEDULE),
-
+        ToggleAdapterItem(TOGGLE_DARK_THEME) { feature.accept(Wish.Action.SetDarkThemeEnabled(it)) },
+        ToggleAdapterItem(TOGGLE_CHANGE_DAY_AFTER_CHANGE_WEEK) { /* nothing */ },
+        SectionTextAdapterItem(),
+        SpaceAdapterItem()
     )
 
     companion object {
-
         const val SECTION_HEADER_SCHEDULE = 0
+
+        const val TOGGLE_DARK_THEME = 0
+        const val TOGGLE_CHANGE_DAY_AFTER_CHANGE_WEEK = 1
     }
 }
