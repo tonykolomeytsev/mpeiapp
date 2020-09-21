@@ -2,6 +2,7 @@ package kekmech.ru.feature_schedule.main.presentation
 
 import kekmech.ru.common_mvi.BaseReducer
 import kekmech.ru.common_mvi.Result
+import kekmech.ru.feature_schedule.main.item.DayItem
 import kekmech.ru.feature_schedule.main.presentation.ScheduleEvent.News
 import kekmech.ru.feature_schedule.main.presentation.ScheduleEvent.Wish
 import kekmech.ru.feature_schedule.main.utils.TimeUtils.createWeekItem
@@ -130,9 +131,24 @@ class ScheduleReducer : BaseReducer<ScheduleState, ScheduleEvent, ScheduleEffect
         return Result(
             state = state.copy(
                 weekOffset = event.weekOffset,
-                weekItems = weekItems
+                weekItems = weekItems,
+                selectedDay = selectNecessaryDay(state, event.weekOffset)
             ),
             action = ScheduleAction.LoadSchedule(event.weekOffset)
         )
+    }
+
+    private fun selectNecessaryDay(state: ScheduleState, newWeekOffset: Int): DayItem {
+        val oldSelectedDay = state.selectedDay
+        if (!state.appSettings.changeDayAfterChangeWeek) {
+            return oldSelectedDay
+        } else {
+            val oldWeekOffset = state.selectedDay.weekOffset.toLong()
+            return DayItem(
+                date = oldSelectedDay.date.plusWeeks(newWeekOffset - oldWeekOffset),
+                weekOffset = newWeekOffset,
+                isSelected = true
+            )
+        }
     }
 }

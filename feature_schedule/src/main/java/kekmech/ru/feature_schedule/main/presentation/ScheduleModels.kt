@@ -1,6 +1,7 @@
 package kekmech.ru.feature_schedule.main.presentation
 
 import kekmech.ru.common_mvi.Feature
+import kekmech.ru.domain_app_settings.AppSettings
 import kekmech.ru.domain_schedule.dto.Schedule
 import kekmech.ru.feature_schedule.main.item.DayItem
 import kekmech.ru.feature_schedule.main.item.WeekItem
@@ -18,7 +19,8 @@ data class ScheduleState(
     val currentWeekMonday: LocalDate? = null,
     val selectedDay: DayItem = DayItem(LocalDate.now(), 0, true),
     val weekItems: HashMap<Int, WeekItem> = hashMapOf(),
-    val hash: String = ""
+    val hash: String = "",
+    val appSettings: AppSettings
 ) {
     /**
      * Get weekOfSemester number by weekOffset
