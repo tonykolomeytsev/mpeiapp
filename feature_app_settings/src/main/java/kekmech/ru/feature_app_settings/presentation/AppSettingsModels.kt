@@ -18,6 +18,7 @@ sealed class AppSettingsEvent {
 
         object Action {
             data class SetDarkThemeEnabled(val isEnabled: Boolean) : Wish()
+            data class SetChangeDayAfterChangeWeek(val isEnabled: Boolean) : Wish()
         }
     }
 
@@ -31,6 +32,7 @@ sealed class AppSettingsAction {
     object LoadAppSettings : AppSettingsAction()
 
     data class SetDarkThemeEnabled(val isEnabled: Boolean) : AppSettingsAction()
+    data class SetChangeDayAfterChangeWeek(val isEnabled: Boolean) : AppSettingsAction()
 }
 
 sealed class AppSettingsEffect {

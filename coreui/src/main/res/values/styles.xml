@@ -13,9 +13,9 @@
 
         <!-- Transparent statusBar -->
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <!--<item name="android:statusBarColor">#4D000000</item>-->
         <item name="android:windowTranslucentStatus">false</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
 
         <item name="materialButtonStyle">@style/Button.Primary</item>
         <item name="buttonStyle">@style/Button.Primary</item>
@@ -57,10 +57,9 @@
 
         <!-- Transparent statusBar -->
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <!--<item name="android:statusBarColor">#4D000000</item>-->
         <item name="android:windowTranslucentStatus">false</item>
-        <item name="android:statusBarColor">@color/colorBlack</item>
-        <item name="android:navigationBarColor">@color/colorBlack</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
 
         <item name="materialButtonStyle">@style/Button.Primary</item>
         <item name="buttonStyle">@style/Button.Primary</item>

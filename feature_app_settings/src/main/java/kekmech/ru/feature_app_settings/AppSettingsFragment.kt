@@ -8,10 +8,7 @@ import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.ui.BaseFragment
 import kekmech.ru.coreui.attachScrollListenerForAppBarLayoutShadow
-import kekmech.ru.coreui.items.SectionHeaderAdapterItem
-import kekmech.ru.coreui.items.SectionTextAdapterItem
-import kekmech.ru.coreui.items.SpaceAdapterItem
-import kekmech.ru.coreui.items.ToggleAdapterItem
+import kekmech.ru.coreui.items.*
 import kekmech.ru.feature_app_settings.di.AppSettingDependencies
 import kekmech.ru.feature_app_settings.presentation.AppSettingsEffect
 import kekmech.ru.feature_app_settings.presentation.AppSettingsEvent
@@ -51,14 +48,17 @@ class AppSettingsFragment : BaseFragment<AppSettingsEvent, AppSettingsEffect, Ap
 
     private fun createAdapter() = BaseAdapter(
         SectionHeaderAdapterItem(itemId = SECTION_HEADER_SCHEDULE),
+        SectionHeaderAdapterItem(itemId = SECTION_HEADER_SUPPORT),
         ToggleAdapterItem(TOGGLE_DARK_THEME) { feature.accept(Wish.Action.SetDarkThemeEnabled(it)) },
-        ToggleAdapterItem(TOGGLE_CHANGE_DAY_AFTER_CHANGE_WEEK) { /* nothing */ },
+        ToggleAdapterItem(TOGGLE_CHANGE_DAY_AFTER_CHANGE_WEEK) { feature.accept(Wish.Action.SetChangeDayAfterChangeWeek(it)) },
         SectionTextAdapterItem(),
-        SpaceAdapterItem()
+        SpaceAdapterItem(),
+        BottomLabeledTextAdapterItem()
     )
 
     companion object {
         const val SECTION_HEADER_SCHEDULE = 0
+        const val SECTION_HEADER_SUPPORT = 1
 
         const val TOGGLE_DARK_THEME = 0
         const val TOGGLE_CHANGE_DAY_AFTER_CHANGE_WEEK = 1
