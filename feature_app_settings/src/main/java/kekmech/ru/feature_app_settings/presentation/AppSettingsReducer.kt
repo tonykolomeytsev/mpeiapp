@@ -45,6 +45,10 @@ class AppSettingsReducer : BaseReducer<AppSettingsState, AppSettingsEvent, AppSe
             effect = AppSettingsEffect.RecreateActivity
                 .takeIf { event.isEnabled != state.appSettings?.isDarkThemeEnabled }
         )
+        is Wish.Action.SetChangeDayAfterChangeWeek -> Result(
+            state = state,
+            action = AppSettingsAction.SetChangeDayAfterChangeWeek(event.isEnabled)
+        )
     }
 
 }

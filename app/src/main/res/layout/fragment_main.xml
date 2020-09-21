@@ -4,8 +4,7 @@
         android:layout_height="match_parent"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:background="?attr/colorWhite">
+        xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fragmentContainer"

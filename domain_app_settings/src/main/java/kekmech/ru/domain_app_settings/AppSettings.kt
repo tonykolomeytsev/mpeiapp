@@ -6,5 +6,4 @@ interface AppSettings {
 
     // schedule
     val changeDayAfterChangeWeek: Boolean
-    val autoScrollToTheNextWeek: Boolean
 }
