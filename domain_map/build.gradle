@@ -17,16 +17,31 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
         }
+        debug {
+            minifyEnabled false
+        }
+    }
+
+    compileOptions {
+        coreLibraryDesugaringEnabled true
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 }
 
 dependencies {
+    coreLibraryDesugaring desugaring
     implementation kotlinStdLib
-    implementation androidx.appcompat
-    implementation androidx.coreKtx
-    implementation google.material
-    implementation timber
+
+    implementation squareup.retrofit
+    implementation squareup.retrofit_rxJava2
+
+    implementation project(path: ":common_annotations")
+    implementation project(path: ":common_cache")
 }
