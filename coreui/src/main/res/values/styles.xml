@@ -7,7 +7,7 @@
         <item name="colorPrimary">@color/colorWhite</item>
         <item name="colorPrimaryDark">@color/colorGray30</item>
         <item name="colorControlNormal">@color/colorGray30</item>
-        <item name="colorControlHighlight">@color/colorWhite</item>
+        <item name="colorControlHighlight">#50CDCDCD</item>
         <item name="android:textColor">@color/colorWhite</item>
         <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
 
@@ -51,7 +51,7 @@
         <item name="colorPrimary">@color/colorWhite</item>
         <item name="colorPrimaryDark">@color/colorGray30</item>
         <item name="colorControlNormal">@color/colorGray30</item>
-        <item name="colorControlHighlight">@color/colorWhite</item>
+        <item name="colorControlHighlight">#50BABABA</item>
         <item name="android:textColor">@color/colorBlack</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
 
@@ -76,7 +76,7 @@
         <item name="colorWhite">@color/colorBlack</item>
         <item name="colorBlack">@color/colorWhite</item>
         <item name="colorGray90">@color/colorGray10</item>
-        <item name="colorGray70">@color/colorGray30</item>
+        <item name="colorGray70">@color/colorGray40</item>
         <item name="colorGray30">@color/colorGray80</item>
         <item name="colorGray10">@color/colorGray90</item>
         <item name="colorRed">@color/colorRed</item>
