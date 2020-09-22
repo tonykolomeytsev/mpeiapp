@@ -143,7 +143,7 @@ class ScheduleReducer : BaseReducer<ScheduleState, ScheduleEvent, ScheduleEffect
         if (!state.appSettings.changeDayAfterChangeWeek) {
             return oldSelectedDay
         } else {
-            val oldWeekOffset = state.selectedDay.weekOffset.toLong()
+            val oldWeekOffset = oldSelectedDay.weekOffset.toLong()
             return DayItem(
                 date = oldSelectedDay.date.plusWeeks(newWeekOffset - oldWeekOffset),
                 weekOffset = newWeekOffset,
