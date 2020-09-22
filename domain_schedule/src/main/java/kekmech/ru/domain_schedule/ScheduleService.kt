@@ -7,10 +7,10 @@ import kekmech.ru.domain_schedule.dto.Schedule
 import retrofit2.http.Body
 import retrofit2.http.POST
 
-@EndpointUrl("https://api.kekmech.com/mpeix/")
+@EndpointUrl("https://api.kekmech.com/mpeix/schedule/")
 interface ScheduleService {
 
-    @POST("schedule/getGroupSchedule")
+    @POST("getGroupSchedule")
     fun getSchedule(
         @Body body: GetScheduleBody
     ): Single<Schedule>
