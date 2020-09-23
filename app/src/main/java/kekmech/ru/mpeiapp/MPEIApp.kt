@@ -15,11 +15,10 @@ import kekmech.ru.feature_app_settings.di.AppSettingsModule
 import kekmech.ru.feature_dashboard.di.DashboardModule
 import kekmech.ru.feature_onboarding.di.OnboardingModule
 import kekmech.ru.feature_schedule.di.ScheduleModule
-import kekmech.ru.map.di.KoinMapFragmentModule
+import kekmech.ru.map.di.MapModule
 import kekmech.ru.mpeiapp.di.AppModule
 import kekmech.ru.mpeiapp.ui.main.di.MainScreenModule
 import kekmech.ru.notes.di.KoinNoteFragmentModule
-import kekmech.ru.repository.di.RepositoryModule
 import kekmech.ru.update.di.KoinUpdateModule
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
@@ -46,11 +45,9 @@ class MPEIApp : Application(),
         androidContext(this@MPEIApp)
         modules(listOf(
             AppModule,
-            KoinMapFragmentModule,
             KoinUpdateModule,
             KoinBarsModule,
             KoinNoteFragmentModule,
-            RepositoryModule,
             DomainModule,
             NavigationModule,
             CommonAndroidModule,
@@ -62,7 +59,8 @@ class MPEIApp : Application(),
             OnboardingModule,
             DashboardModule,
             ScheduleModule,
-            AppSettingsModule
+            AppSettingsModule,
+            MapModule
         ))
     }
 

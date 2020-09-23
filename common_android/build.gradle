@@ -23,6 +23,7 @@ android {
     }
 
     compileOptions {
+        coreLibraryDesugaringEnabled true
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
@@ -32,6 +33,8 @@ android {
 }
 
 dependencies {
+    coreLibraryDesugaring desugaring
+    implementation kotlinStdLib
     implementation androidx.appcompat
     implementation androidx.fragmentKtx
     implementation androidx.coreKtx
