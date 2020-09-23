@@ -3,7 +3,6 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         tools:context="kekmech.ru.map.view.MapFragment"
         android:id="@+id/mapCoordinator"
         android:clipToPadding="false"
@@ -14,83 +13,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:name="com.google.android.gms.maps.SupportMapFragment"
-            android:layout_marginBottom="56dp"
-            android:paddingBottom="50dp"
             tools:background="#ebe8d9"/>
-
-    <LinearLayout
-            android:id="@+id/bottomMenu"
-            android:layout_width="match_parent"
-            android:layout_height="348dp"
-            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-            app:behavior_peekHeight="106dp"
-            app:behavior_hideable="false"
-            tools:behavior_peekHeight="348dp"
-            android:background="@color/colorWhite"
-            android:orientation="vertical"
-            android:paddingTop="0dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:layout_marginTop="0dp">
-
-        <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_horizontal"
-                    android:padding="8dp"
-                    android:layout_marginBottom="6dp">
-
-                <TextView
-                        android:id="@+id/tabBuildings"
-                        android:background="@drawable/map_tab_selected"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Корпуса"
-                        style="@style/TextViewMapTab"
-                        android:layout_marginRight="8dp"/>
-
-                <TextView
-                        android:id="@+id/tabHostels"
-                        android:text="Общежития"
-                        android:alpha="0.75"
-                        style="@style/TextViewMapTab"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="8dp"/>
-
-                <TextView
-                        android:id="@+id/tabFoods"
-                        android:text="Столовые"
-                        android:alpha="0.75"
-                        style="@style/TextViewMapTab"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-            </LinearLayout>
-
-            <ImageView
-                    android:id="@+id/buttonExpand"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:padding="6dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_marginTop="-1dp"
-                    android:tint="@color/colorGray90"
-                    android:src="@drawable/ic_expand_less_24px"
-                    android:layout_gravity="right|center_vertical"/>
-        </FrameLayout>
-
-        <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/viewPagerContainer"
-                android:layout_marginBottom="56dp"/>
-
-    </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
