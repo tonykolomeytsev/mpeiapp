@@ -7,7 +7,7 @@ import kekmech.ru.common_navigation.BottomTab
 import kekmech.ru.feature_app_settings.AppSettingsFragment
 import kekmech.ru.feature_dashboard.DashboardFragment
 import kekmech.ru.feature_schedule.main.ScheduleFragment
-import kekmech.ru.map.view.MapFragment
+import kekmech.ru.map.MapFragment
 import kekmech.ru.mpeiapp.R
 import java.util.concurrent.TimeUnit
 
