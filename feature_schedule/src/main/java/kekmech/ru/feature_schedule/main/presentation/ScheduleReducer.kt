@@ -86,7 +86,7 @@ class ScheduleReducer : BaseReducer<ScheduleState, ScheduleEvent, ScheduleEffect
             )
         )
         is Wish.Action.OnPageChanged -> {
-            if (!isFirstPageChangeIgnored) {
+            if (!isFirstPageChangeIgnored || state.isLoading) {
                 isFirstPageChangeIgnored = true
                 Result(state = state)
             } else {
@@ -132,7 +132,8 @@ class ScheduleReducer : BaseReducer<ScheduleState, ScheduleEvent, ScheduleEffect
             state = state.copy(
                 weekOffset = event.weekOffset,
                 weekItems = weekItems,
-                selectedDay = selectNecessaryDay(state, event.weekOffset)
+                selectedDay = selectNecessaryDay(state, event.weekOffset),
+                isLoading = true
             ),
             action = ScheduleAction.LoadSchedule(event.weekOffset)
         )

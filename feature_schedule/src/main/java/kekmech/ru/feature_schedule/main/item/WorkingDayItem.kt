@@ -38,7 +38,8 @@ class WorkingDayViewHolderImpl(
         ClassesStackMiddleAdapterItem(containerView.context),
         ClassesStackEndAdapterItem(containerView.context),
         SelfStudyAdapterItem(),
-        LunchAdapterItem()
+        LunchAdapterItem(),
+        ClassesShimmerAdapterItem()
     )
 
     override fun setItems(list: List<Any>) {
