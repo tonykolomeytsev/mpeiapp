@@ -1,7 +1,6 @@
 package kekmech.ru.mpeiapp
 
 import android.app.Application
-import kekmech.ru.bars.di.KoinBarsModule
 import kekmech.ru.common_android.di.CommonAndroidModule
 import kekmech.ru.common_cache.di.CacheModule
 import kekmech.ru.common_di.modules
@@ -18,7 +17,6 @@ import kekmech.ru.feature_schedule.di.ScheduleModule
 import kekmech.ru.map.di.MapModule
 import kekmech.ru.mpeiapp.di.AppModule
 import kekmech.ru.mpeiapp.ui.main.di.MainScreenModule
-import kekmech.ru.notes.di.KoinNoteFragmentModule
 import kekmech.ru.update.di.KoinUpdateModule
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
@@ -46,8 +44,6 @@ class MPEIApp : Application(),
         modules(listOf(
             AppModule,
             KoinUpdateModule,
-            KoinBarsModule,
-            KoinNoteFragmentModule,
             DomainModule,
             NavigationModule,
             CommonAndroidModule,

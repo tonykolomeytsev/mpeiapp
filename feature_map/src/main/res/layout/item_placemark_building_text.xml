@@ -5,7 +5,7 @@
         android:layout_width="32dp"
         android:id="@+id/textViewPlacemarkTitle"
         android:background="@drawable/ic_marker"
-        android:backgroundTint="@color/colorSecondary"
+        android:backgroundTint="@color/colorMain"
         tools:text="A"
         android:gravity="center_horizontal"
         android:paddingTop="2dp"

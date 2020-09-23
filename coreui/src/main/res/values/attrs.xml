@@ -2,37 +2,10 @@
 <resources>
     <attr name="text" format="string"/>
 
-    <declare-styleable name="EnumSlider">
-        <attr name="itemsCount" format="integer"/>
-    </declare-styleable>
-
     <declare-styleable name="ProgressButton">
         <attr name="text"/>
         <attr name="enabled" format="boolean"/>
     </declare-styleable>
-
-    <attr name="themeColorWhite" format="reference"/>
-    <attr name="themeColorBlack" format="reference"/>
-    <attr name="themeColorCardView" format="reference"/>
-    <attr name="themeColorToolbar" format="reference"/>
-    <attr name="themeColorFeedBackground" format="reference"/>
-    <attr name="themeColorBottomNavBackground" format="reference"/>
-    <attr name="themeColorBottomNavTint" format="reference"/>
-    <attr name="themeColorBarsAvMark" format="reference"/>
-    <attr name="themeColorProgressBar" format="reference"/>
-    <attr name="themeColorBackdrop" format="reference"/>
-    <attr name="themeColorDivider" format="reference"/>
-    <attr name="themeColorInfoBlock" format="reference"/>
-    <attr name="themeColorTimetableCard" format="reference"/>
-    <attr name="themeColorTimetableBackground" format="reference"/>
-    <attr name="themeColorTimetableLunchBackground" format="reference"/>
-    <attr name="themeColorSearchView" format="reference"/>
-    <attr name="themeColorSearchViewHint" format="reference"/>
-    <attr name="themeColorMapTab" format="reference"/>
-    <attr name="themeColorForceUpdateBg" format="reference"/>
-    <attr name="themeColorForceUpdateBtnLater" format="reference"/>
-    <attr name="themeColorSearchViewIconsTint" format="reference"/>
-    <attr name="themeColorCoupleNumber" format="reference"/>
 
     <attr name="colorMainDark" format="reference"/>
     <attr name="colorMainLight" format="reference"/>

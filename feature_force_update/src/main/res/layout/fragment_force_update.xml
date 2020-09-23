@@ -5,8 +5,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:layout_height="match_parent"
-        tools:background="#333333"
-        tools:theme="@style/AppTheme.Dark">
+        tools:background="#333333">
 
     <LinearLayout
             android:layout_width="match_parent"
@@ -27,7 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Доступна новая версия приложения"
-                android:textColor="?attr/themeColorBlack"
+                android:textColor="?attr/colorBlack"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:textSize="22sp"
@@ -46,7 +45,7 @@
                 android:layout_marginBottom="4dp"
                 android:text="Кто не обновит, тот лох"
                 android:textSize="14sp"
-                android:textColor="?attr/themeColorBlack"
+                android:textColor="?attr/colorBlack"
                 android:fontFamily="sans-serif-medium"/>
 
         <LinearLayout
@@ -63,7 +62,7 @@
 
             <Button
                     android:id="@+id/buttonUpdateLater"
-                    style="@style/ForceUpdateButtonLater"
+                    style="@style/Button.Secondary"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:layout_weight="1"
@@ -72,7 +71,7 @@
 
             <Button
                     android:id="@+id/buttonUpdateNow"
-                    style="@style/ForceUpdateButtonUpdate"
+                    style="@style/Button.Primary"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:layout_weight="1"
