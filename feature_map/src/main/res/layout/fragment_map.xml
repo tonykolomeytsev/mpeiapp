@@ -3,7 +3,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="kekmech.ru.map.view.MapFragment"
+        tools:context="kekmech.ru.map.MapFragment"
         android:id="@+id/mapCoordinator"
         android:clipToPadding="false"
         tools:theme="@style/AppTheme">
