@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
+import kekmech.ru.common_android.addSystemBottomPadding
 import kekmech.ru.common_android.onActivityResult
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.ui.BaseFragment
@@ -44,6 +45,7 @@ class MainFragment : BaseFragment<MainScreenEvent, MainScreenEffect, MainScreenS
 
     override fun onViewCreatedInternal(view: View, savedInstanceState: Bundle?) {
         super.onViewCreatedInternal(view, savedInstanceState)
+        bottomNavigation.addSystemBottomPadding()
 
         val controller = bottomBarController ?: BottomBarController(this)
         controller.init(this, bottomNavigation)

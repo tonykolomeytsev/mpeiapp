@@ -4,6 +4,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import kekmech.ru.common_adapter.BaseAdapter
+import kekmech.ru.common_android.addSystemVerticalPadding
+import kekmech.ru.common_android.doOnApplyWindowInsets
+import kekmech.ru.common_android.views.setProgressViewOffset
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.ui.BaseFragment
 import kekmech.ru.coreui.banner.showBanner
@@ -36,7 +39,13 @@ class DashboardFragment : BaseFragment<DashboardEvent, DashboardEffect, Dashboar
     override fun onViewCreatedInternal(view: View, savedInstanceState: Bundle?) {
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
-        swipeRefresh.setOnRefreshListener { feature.accept(Wish.Action.OnSwipeRefresh) }
+        recyclerView.addSystemVerticalPadding()
+        swipeRefresh.apply {
+            setOnRefreshListener { feature.accept(Wish.Action.OnSwipeRefresh) }
+            doOnApplyWindowInsets { _, windowInsets, _ ->
+                setProgressViewOffset(windowInsets.systemWindowInsetTop)
+            }
+        }
     }
 
     override fun render(state: DashboardState) {

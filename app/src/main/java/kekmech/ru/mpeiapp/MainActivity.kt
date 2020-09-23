@@ -35,9 +35,9 @@ class MainActivity : AppCompatActivity() {
 
         setTheme()
         setContentView(R.layout.activity_main)
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
         enableEdgeToEdge()
 
-        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
         if (savedInstanceState == null) {
             //router.executeCommand(NewRoot { MainFragment.newInstance() })

@@ -38,6 +38,7 @@ dependencies {
     implementation androidx.appcompat
     implementation androidx.fragmentKtx
     implementation androidx.coreKtx
+    implementation androidx.swiperefreshlayout
 
     implementation google.material
 

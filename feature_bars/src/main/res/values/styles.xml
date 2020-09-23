@@ -21,7 +21,7 @@
     </style>
 
     <style name="RightsHeader">
-        <item name="android:textColor">?attr/themeColorBlack</item>
+        <item name="android:textColor">?attr/colorBlack</item>
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textSize">24sp</item>
         <item name="android:layout_marginBottom">16dp</item>
@@ -29,7 +29,7 @@
     </style>
 
     <style name="RightsSubheader">
-        <item name="android:textColor">?attr/themeColorBlack</item>
+        <item name="android:textColor">?attr/colorBlack</item>
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textSize">20sp</item>
         <item name="android:layout_marginBottom">8dp</item>
@@ -37,7 +37,7 @@
     </style>
 
     <style name="RightsPar">
-        <item name="android:textColor">?attr/themeColorBlack</item>
+        <item name="android:textColor">?attr/colorBlack</item>
         <item name="android:alpha">0.75</item>
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:textSize">16sp</item>
