@@ -9,6 +9,7 @@ import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.Marker
+import kekmech.ru.common_android.dpToPx
 
 @SuppressLint("MissingPermission")
 fun GoogleMap.init(context: Context) {
@@ -18,6 +19,7 @@ fun GoogleMap.init(context: Context) {
     isTrafficEnabled = false
     isIndoorEnabled = true
     mapType = GoogleMap.MAP_TYPE_NORMAL
+    setPadding(0, 0, 0, context.resources.dpToPx(120f))
     uiSettings.apply {
         isCompassEnabled = false
         isMyLocationButtonEnabled = false

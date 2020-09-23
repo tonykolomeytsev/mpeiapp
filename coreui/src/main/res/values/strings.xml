@@ -112,6 +112,12 @@
     <string name="dashboard_day_status_semester">Идет %d учебная неделя</string>
     <string name="dashboard_day_status_not_semester">Неучебная неделя</string>
 
+    <string name="map_tab_name_eat">Еда</string>
+    <string name="map_tab_name_buildings">Корпуса</string>
+    <string name="map_tab_name_hostels">Общаги</string>
+    <string name="map_tab_name_others">Места</string>
+    <string name="map_tab_name_structures">Кафедры</string>
+
     <string name="app_settings_screen_title">Настройки</string>
     <string name="app_settings_header_schedule">Расписание</string>
     <string name="app_settings_dark_theme">Темная тема</string>
