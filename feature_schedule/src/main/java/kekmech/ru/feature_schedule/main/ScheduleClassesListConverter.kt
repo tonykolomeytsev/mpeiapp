@@ -10,12 +10,16 @@ import kekmech.ru.feature_schedule.main.presentation.ScheduleState
 
 object ScheduleClassesListConverter {
 
-    private val shimmerItems = List(6) { ShimmerItem.classes() }
-
     fun map(state: ScheduleState): List<Any> {
         val selectedWeekSchedule = state.schedule[state.selectedDay.weekOffset]?.weeks?.first()
         return when {
-            state.isLoading || selectedWeekSchedule == null -> shimmerItems
+            (state.isLoading && state.appSettings.changeDayAfterChangeWeek) || selectedWeekSchedule == null -> List(6) {
+                val dayOfWeek = it + 1
+                WorkingDayItem(
+                    dayOfWeek = dayOfWeek,
+                    items = listOf(ShimmerItem.classes())
+                )
+            }
             else -> List(6) {
                 val dayOfWeek = it + 1
                 val rawClasses = selectedWeekSchedule.days.find { day -> day.dayOfWeek == dayOfWeek }?.classes ?: emptyList()
