@@ -1,32 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- ORIGINAL COLOR PALETTE -->
-    <color name="colorPrimary">#ff505c</color>
-    <color name="colorPrimaryDark">#FF361B</color>
-    <color name="colorAccent">#4F6496</color>
-    <color name="colorSecondary">#4F6496</color>
-
-    <color name="primaryLightColor">#f9683a</color>
-    <color name="secondaryLightColor">#80d6ff</color>
-    <color name="secondaryDarkColor">#484955</color>
-    <color name="primaryTextColor">#f7f6ee</color>
-    <color name="secondaryTextColor">#000000</color>
-    <color name="colorTeal">#009688</color>
-    <color name="colorLightGray">#dedede</color>
-
-    <color name="colorChipLecture">#005005</color>
-    <color name="colorChipPractice">#524c00</color>
-    <color name="colorChipLab">#870000</color>
-    <color name="colorBlack">#1a1a1a</color>
-    <color name="colorBlackTransparent">#4D000000</color>
-    <color name="colorSearchView">#11000000</color>
-    <color name="colorSearchViewHint">#80000000</color>
     <color name="colorTransparent">#00000000</color>
-    <color name="colorCollapsingToolbarTransparent">#0042a5f5</color>
-    <color name="colorIconsTint">#464646</color>
-    <color name="colorLunchItem">#09000000</color>
-    <color name="colorFeedBackground">#EEEEEE</color>
-    <color name="colorBlackMask">#1A000000</color>
+    <color name="colorNavigationLight">#40ffffff</color>
+    <color name="colorNavigationDark">#40000000</color>
 
     <!-- DARK COLOR PALETTE -->
     <color name="colorCardViewBlack">#2e2e2e</color>
@@ -61,6 +38,7 @@
     <color name="colorYellowDark">#EDB53B</color>
     <color name="colorYellowLight">#FFC954</color>
     <color name="colorWhite">#FFFFFF</color>
+    <color name="colorBlack">#1a1a1a</color>
     <color name="colorGray90">#2A2A2A</color>
     <color name="colorGray80">#3C3C3C</color>
     <color name="colorGray70">#898989</color>

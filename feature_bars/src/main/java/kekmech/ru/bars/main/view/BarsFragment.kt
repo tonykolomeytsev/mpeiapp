@@ -43,8 +43,8 @@ class BarsFragment : Fragment(R.layout.fragment_bars) {
         swipeRefresh?.setProgressViewEndTarget(false, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 144f, resources.displayMetrics).toInt())
         swipeRefresh?.setOnRefreshListener { viewModel.refresh() }
         swipeRefresh?.setColorSchemeColors(
-            Resources.getColor(context, R.color.colorPrimary),
-            Resources.getColor(context, R.color.colorSecondary)
+            Resources.getColor(context, R.color.colorMain),
+            Resources.getColor(context, R.color.colorMainLight)
         )
         CookieManager.getInstance().apply {
             setAcceptCookie(true)

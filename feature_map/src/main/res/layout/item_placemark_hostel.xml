@@ -4,7 +4,7 @@
         android:layout_width="32dp"
         android:id="@+id/textViewPlacemarkTitle"
         android:background="@drawable/ic_marker"
-        android:backgroundTint="@color/colorTeal"
+        android:backgroundTint="@color/colorGray80"
         android:gravity="center_horizontal">
 
     <ImageView
