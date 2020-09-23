@@ -15,6 +15,10 @@ sealed class MapEvent {
 
     sealed class Wish : MapEvent() {
         object Init : Wish()
+
+        object Action {
+            data class OnMapReady(val map: GoogleMap) : Wish()
+        }
     }
 
     sealed class News : MapEvent() {

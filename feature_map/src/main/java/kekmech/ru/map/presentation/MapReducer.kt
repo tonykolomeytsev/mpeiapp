@@ -25,6 +25,11 @@ class MapReducer : BaseReducer<MapState, MapEvent, MapEffect, MapAction> {
             state = state,
             action = MapAction.ObserveMarkers
         )
+        is Wish.Action.OnMapReady -> Result(
+            state = state.copy(
+                map = event.map
+            )
+        )
     }
 
     private fun reduceNews(
