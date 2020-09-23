@@ -7,9 +7,12 @@ import kekmech.ru.domain_map.dto.MapMarker
 typealias MapFeature = Feature<MapState, MapEvent, MapEffect>
 
 data class MapState(
+    val selectedTab: FilterTab = FilterTab.FOOD,
     val markers: List<MapMarker> = emptyList(),
     val map: GoogleMap? = null
 )
+
+enum class FilterTab { FOOD, BUILDINGS, HOSTELS, OTHERS, STRUCTURES }
 
 sealed class MapEvent {
 

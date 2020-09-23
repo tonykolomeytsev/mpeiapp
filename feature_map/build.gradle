@@ -35,6 +35,10 @@ android {
     }
 }
 
+androidExtensions {
+    experimental = true
+}
+
 dependencies {
     implementation kotlinStdLib
 
