@@ -1,11 +1,9 @@
 package kekmech.ru.feature_schedule.main
 
+import kekmech.ru.common_kotlin.addIf
 import kekmech.ru.domain_schedule.dto.Classes
 import kekmech.ru.domain_schedule.dto.ClassesStackType
-import kekmech.ru.feature_schedule.main.item.LunchItem
-import kekmech.ru.feature_schedule.main.item.SelfStudyItem
-import kekmech.ru.feature_schedule.main.item.ShimmerItem
-import kekmech.ru.feature_schedule.main.item.WorkingDayItem
+import kekmech.ru.feature_schedule.main.item.*
 import kekmech.ru.feature_schedule.main.presentation.ScheduleState
 
 object ScheduleClassesListConverter {
@@ -26,7 +24,7 @@ object ScheduleClassesListConverter {
                 val modifiedClasses = if (rawClasses.isEmpty()) {
                     listOf(SelfStudyItem)
                 } else {
-                    withLunchItem(rawClasses)
+                    withLunchAndWindowItems(rawClasses)
                 }
                 detectStackClasses(modifiedClasses)
                 WorkingDayItem(
@@ -37,15 +35,34 @@ object ScheduleClassesListConverter {
         }
     }
 
-    private fun withLunchItem(rawClasses: List<Classes>): List<Any> {
+    private fun withLunchAndWindowItems(rawClasses: List<Classes>): List<Any> {
         val hasSecondAndThirdClasses = rawClasses.any { it.number == 2 } && rawClasses.any { it.number == 3 }
-        return if (hasSecondAndThirdClasses) {
-            val modifiedClasses = mutableListOf<Any>().apply { addAll(rawClasses) }
-            modifiedClasses.add(rawClasses.indexOfLast { it.number == 2 } + 1, LunchItem)
-            modifiedClasses
-        } else {
-            rawClasses
+        val modifiedClasses = classesWithWindows(rawClasses)
+        if (hasSecondAndThirdClasses) {
+            val indexForLunchItem = modifiedClasses.indexOfLast { it is Classes && it.number == 2 } + 1
+            modifiedClasses.add(indexForLunchItem, LunchItem)
         }
+        return modifiedClasses
+    }
+
+    private fun classesWithWindows(rawClasses: List<Classes>): MutableList<Any> {
+        val modifiedClasses = mutableListOf<Any>()
+        if (rawClasses.size > 1) {
+            for (i in 1 until rawClasses.size) {
+                val currClasses = rawClasses[i]
+                val prevClasses = rawClasses[i - 1]
+                modifiedClasses.addIf(
+                    WindowItem(
+                        timeStart = prevClasses.time.end,
+                        timeEnd = currClasses.time.start
+                    )
+                ) { rawClasses[i].number - rawClasses[i - 1].number > 1 }
+                modifiedClasses.add(rawClasses[i])
+            }
+        } else {
+            modifiedClasses.addAll(rawClasses)
+        }
+        return modifiedClasses
     }
 
     private fun detectStackClasses(classes: List<Any>) {
