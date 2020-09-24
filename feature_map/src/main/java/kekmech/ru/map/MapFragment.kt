@@ -19,6 +19,7 @@ import kekmech.ru.map.di.MapDependencies
 import kekmech.ru.map.items.FilterTabItem
 import kekmech.ru.map.items.MapMarkerAdapterItem
 import kekmech.ru.map.items.TabBarAdapterItem
+import kekmech.ru.map.items.TagSectionAdapterItem
 import kekmech.ru.map.presentation.*
 import kekmech.ru.map.presentation.MapEvent.Wish
 import kekmech.ru.map.view.ControlledScrollingLayoutManager
@@ -93,13 +94,10 @@ class MapFragment : BaseFragment<MapEvent, MapEffect, MapState, MapFeature>() {
             tabs = createTabs(),
             onClickListener = { feature.accept(Wish.Action.SelectTab(it)) }
         ),
-        SectionHeaderAdapterItem(FilterTab.FOOD.ordinal),
-        SectionHeaderAdapterItem(FilterTab.BUILDINGS.ordinal),
-        SectionHeaderAdapterItem(FilterTab.HOSTELS.ordinal),
-        SectionHeaderAdapterItem(FilterTab.OTHERS.ordinal),
-        SectionHeaderAdapterItem(FilterTab.STRUCTURES.ordinal),
+        SectionHeaderAdapterItem(),
         SpaceAdapterItem(),
-        MapMarkerAdapterItem { /* no-op */ }
+        MapMarkerAdapterItem { /* no-op */ },
+        TagSectionAdapterItem()
     )
 
     private fun createTabs() = listOf(

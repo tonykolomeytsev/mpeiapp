@@ -122,6 +122,7 @@
     <string name="map_section_name_others">Места</string>
     <string name="map_tab_name_structures">Кафедры</string>
     <string name="map_section_name_structures">Кафедры</string>
+    <string name="map_section_tag_others">Остальные места</string>
 
     <string name="app_settings_screen_title">Настройки</string>
     <string name="app_settings_header_schedule">Расписание</string>
