@@ -12,7 +12,8 @@ data class DashboardState(
     val isLoading: Boolean = false,
     val isAfterError: Boolean = false,
     val currentWeekSchedule: Schedule? = null,
-    val nextWeekSchedule: Schedule? = null
+    val nextWeekSchedule: Schedule? = null,
+    val selectedGroupName: String? = null
 ) {
     val weekOfSemester get() = currentWeekSchedule?.weeks?.first()?.weekOfSemester
     val todayClasses: List<Classes>? get() = currentWeekSchedule?.weeks?.first()?.days
@@ -46,6 +47,7 @@ sealed class DashboardEvent {
     sealed class News : DashboardEvent() {
         data class ScheduleLoaded(val schedule: Schedule, val weekOffset: Int) : News()
         data class ScheduleLoadError(val throwable: Throwable) : News()
+        data class SelectedGroupNameLoaded(val groupName: String) : News()
     }
 }
 
@@ -54,5 +56,6 @@ sealed class DashboardEffect {
 }
 
 sealed class DashboardAction {
+    object GetSelectedGroupName : DashboardAction()
     data class LoadSchedule(val weekOffset: Int) : DashboardAction()
 }

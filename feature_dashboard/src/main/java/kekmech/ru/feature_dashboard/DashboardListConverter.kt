@@ -1,6 +1,8 @@
 package kekmech.ru.feature_dashboard
 
 import android.content.Context
+import kekmech.ru.common_android.moscowLocalDate
+import kekmech.ru.common_android.moscowLocalTime
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.coreui.PrettyDateFormatter
 import kekmech.ru.coreui.items.AddActionItem
@@ -9,10 +11,7 @@ import kekmech.ru.coreui.items.SectionHeaderItem
 import kekmech.ru.coreui.items.SpaceItem
 import kekmech.ru.domain_schedule.dto.Classes
 import kekmech.ru.domain_schedule.dto.ClassesStackType
-import kekmech.ru.feature_dashboard.items.BannerLunchItem
-import kekmech.ru.feature_dashboard.items.BannerOpenSourceItem
-import kekmech.ru.feature_dashboard.items.DayStatusItem
-import kekmech.ru.feature_dashboard.items.SearchFieldItem
+import kekmech.ru.feature_dashboard.items.*
 import kekmech.ru.feature_dashboard.presentation.DashboardState
 import java.time.DayOfWeek
 import java.time.LocalDate
@@ -23,11 +22,13 @@ class DashboardListConverter(
 ) {
 
     private val notesHeader by fastLazy { SectionHeaderItem(
-        title = context.getString(R.string.dashboard_section_header_notes),
-        itemId = DashboardFragment.SECTION_HEADER_NOTES
+        title = context.getString(R.string.dashboard_section_header_notes)
     ) }
 
     private val formatter = PrettyDateFormatter(context)
+
+    private val lunchStartTime = LocalTime.of(12, 45) // 12:45
+    private val lunchEndTime = LocalTime.of(13, 45) // 13:45
 
     fun map(state: DashboardState): List<Any> {
 
@@ -38,16 +39,29 @@ class DashboardListConverter(
                 add(SpaceItem.VERTICAL_24)
             }
             add(SearchFieldItem)
-            add(SpaceItem.VERTICAL_24)
-            add(BannerLunchItem)
-            add(BannerOpenSourceItem)
+            add(SpaceItem.VERTICAL_12)
+            state.selectedGroupName?.let {
+                add(ChangeGroupItem(it))
+                add(SpaceItem.VERTICAL_12)
+            }
+
+            listOfNotNull(
+                BannerLunchItem.takeIf { moscowLocalTime() in lunchStartTime..lunchEndTime },
+                BannerOpenSourceItem.takeIf { moscowLocalDate().dayOfWeek in DayOfWeek.SATURDAY..DayOfWeek.SUNDAY }
+            ).let {
+                if (it.isNotEmpty()) {
+                    add(SpaceItem.VERTICAL_16)
+                    addAll(it)
+                    add(SpaceItem.VERTICAL_16)
+                }
+            }
+
             createClassesEventsItems(state)?.let { (header, classes) ->
-                add(SpaceItem.VERTICAL_16)
                 add(header)
                 add(SpaceItem.VERTICAL_12)
                 addAll(classes)
             }
-            add(SpaceItem.VERTICAL_24)
+            add(SpaceItem.VERTICAL_16)
             add(notesHeader)
             add(SpaceItem.VERTICAL_12)
             addAll(listOf(
@@ -77,8 +91,8 @@ class DashboardListConverter(
     }
 
     private fun createClassesEventsItems(state: DashboardState): Pair<SectionHeaderItem, List<Any>>? {
-        val nowDate = LocalDate.now()
-        val nowTime = LocalTime.now()
+        val nowDate = moscowLocalDate()
+        val nowTime = moscowLocalTime()
 
         val isSunday = nowDate.dayOfWeek == DayOfWeek.SUNDAY
         val isEvening = state.todayClasses?.lastOrNull()?.time?.end?.let { it < nowTime } ?: false
@@ -110,7 +124,6 @@ class DashboardListConverter(
 
     private fun createHeaderItem(subtitle: String) = SectionHeaderItem(
         title = context.getString(R.string.dashboard_section_header_events),
-        subtitle = subtitle,
-        itemId = DashboardFragment.SECTION_HEADER_EVENTS
+        subtitle = subtitle
     )
 }
