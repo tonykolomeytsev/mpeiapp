@@ -102,6 +102,8 @@
     <string name="onboarding_bars_button_skip">Пропустить</string>
     <string name="onboarding_bars_button_signin">Войти</string>
 
+    <string name="dashboard_loading_error">Произошла ошибка при загрузке данных с сервера</string>
+    <string name="dashboard_item_change_group">Группа %s</string>
     <string name="dashboard_section_header_events">Ближайшие события</string>
     <string name="dashboard_section_header_notes">Заметки</string>
     <string name="dashboard_events_today">Сегодняшние пары</string>

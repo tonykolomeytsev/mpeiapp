@@ -2,6 +2,7 @@ package kekmech.ru.domain_schedule
 
 import android.content.SharedPreferences
 import io.reactivex.Completable
+import io.reactivex.Single
 import kekmech.ru.common_shared_preferences.string
 import kekmech.ru.domain_schedule.dto.GetScheduleBody
 
@@ -20,4 +21,6 @@ class ScheduleRepository(
         selectedGroup = groupName
         return Completable.complete()
     }
+
+    fun getSelectedGroup() = Single.just(selectedGroup)
 }

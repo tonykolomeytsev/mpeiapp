@@ -4,6 +4,7 @@ import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 import kekmech.ru.common_kotlin.Option
 import kekmech.ru.common_navigation.BottomTab
+import kekmech.ru.common_navigation.BottomTabsSwitcher
 
 object BottomTabsSwitcherImpl : BottomTabsSwitcher {
 

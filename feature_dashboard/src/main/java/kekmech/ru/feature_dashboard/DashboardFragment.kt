@@ -4,11 +4,14 @@ import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import kekmech.ru.common_adapter.BaseAdapter
+import kekmech.ru.common_android.addSystemTopPadding
 import kekmech.ru.common_android.addSystemVerticalPadding
 import kekmech.ru.common_android.doOnApplyWindowInsets
+import kekmech.ru.common_android.openLinkExternal
 import kekmech.ru.common_android.views.setProgressViewOffset
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.ui.BaseFragment
+import kekmech.ru.common_navigation.BottomTab
 import kekmech.ru.coreui.banner.showBanner
 import kekmech.ru.coreui.items.AddActionAdapterItem
 import kekmech.ru.coreui.items.NoteAdapterItem
@@ -40,6 +43,7 @@ class DashboardFragment : BaseFragment<DashboardEvent, DashboardEffect, Dashboar
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
         recyclerView.addSystemVerticalPadding()
+        bannerContainer.addSystemTopPadding()
         swipeRefresh.apply {
             setOnRefreshListener { feature.accept(Wish.Action.OnSwipeRefresh) }
             doOnApplyWindowInsets { _, windowInsets, _ ->
@@ -56,27 +60,31 @@ class DashboardFragment : BaseFragment<DashboardEvent, DashboardEffect, Dashboar
     }
 
     override fun handleEffect(effect: DashboardEffect) = when (effect) {
-        is DashboardEffect.ShowLoadingError -> showBanner(R.string.something_went_wrong_error)
+        is DashboardEffect.ShowLoadingError -> showBanner(R.string.dashboard_loading_error)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        feature.accept(Wish.Action.OnSwipeRefresh)
     }
 
     private fun createAdapter() = BaseAdapter(
         SpaceAdapterItem(),
         SearchFieldAdapterItem { /* on click search field */ },
-        BannerLunchAdapterItem { /* on click lunch banner */ },
-        BannerOpenSourceAdapterItem { /* on click github banner */ },
-        SectionHeaderAdapterItem(SECTION_HEADER_EVENTS),
-        SectionHeaderAdapterItem(SECTION_HEADER_NOTES),
-        SectionHeaderAdapterItem(SECTION_HEADER_REMINDERS),
+        BannerLunchAdapterItem {
+            dependencies.bottomTabsSwitcher.changeTab(BottomTab.MAP)
+        },
+        BannerOpenSourceAdapterItem {
+            requireContext().openLinkExternal("https://vk.com/kekmech")
+        },
+        SectionHeaderAdapterItem(),
         NoteAdapterItem(requireContext()),
         AddActionAdapterItem(),
         DayStatusAdapterItem(),
         DashboardClassesAdapterItem(requireContext()),
-        DashboardClassesMinAdapterItem(requireContext())
+        DashboardClassesMinAdapterItem(requireContext()),
+        ChangeGroupAdapterItem {
+            dependencies.scheduleFeatureLauncher.launchSearchGroup()
+        }
     )
-
-    companion object {
-        const val SECTION_HEADER_EVENTS = 0
-        const val SECTION_HEADER_NOTES = 1
-        const val SECTION_HEADER_REMINDERS = 2
-    }
 }

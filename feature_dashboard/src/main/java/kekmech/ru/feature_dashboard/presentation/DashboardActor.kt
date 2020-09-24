@@ -12,6 +12,7 @@ class DashboardActor(
     override fun execute(action: DashboardAction): Observable<DashboardEvent> = when (action) {
         is DashboardAction.LoadSchedule -> scheduleRepository.loadSchedule(weekOffset = action.weekOffset)
             .mapEvents({ News.ScheduleLoaded(it, action.weekOffset) }, News::ScheduleLoadError)
-
+        is DashboardAction.GetSelectedGroupName -> scheduleRepository.getSelectedGroup()
+            .mapSuccessEvent(News::SelectedGroupNameLoaded)
     }
 }

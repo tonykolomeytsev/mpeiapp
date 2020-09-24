@@ -38,6 +38,9 @@ class DashboardReducer : BaseReducer<DashboardState, DashboardEvent, DashboardEf
             ),
             effect = DashboardEffect.ShowLoadingError
         )
+        is News.SelectedGroupNameLoaded -> Result(
+            state = state.copy(selectedGroupName = event.groupName)
+        )
     }
 
     private fun reduceWish(
@@ -50,6 +53,7 @@ class DashboardReducer : BaseReducer<DashboardState, DashboardEvent, DashboardEf
             ),
             effects = emptyList(), // костыль
             actions = listOfNotNull(
+                DashboardAction.GetSelectedGroupName,
                 DashboardAction.LoadSchedule(0),
                 DashboardAction.LoadSchedule(1)
                     .takeIf { LocalDate.now().dayOfWeek == DayOfWeek.SUNDAY }
@@ -61,6 +65,7 @@ class DashboardReducer : BaseReducer<DashboardState, DashboardEvent, DashboardEf
             ),
             effects = emptyList(),
             actions = listOfNotNull(
+                DashboardAction.GetSelectedGroupName,
                 DashboardAction.LoadSchedule(0),
                 DashboardAction.LoadSchedule(1)
                     .takeIf { LocalDate.now().dayOfWeek == DayOfWeek.SUNDAY }

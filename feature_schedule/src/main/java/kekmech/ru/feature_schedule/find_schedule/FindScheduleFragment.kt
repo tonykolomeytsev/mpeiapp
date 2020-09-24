@@ -7,6 +7,7 @@ import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.ui.BaseFragment
 import kekmech.ru.coreui.banner.showBanner
 import kekmech.ru.domain_schedule.CONTINUE_TO_BACK_STACK
+import kekmech.ru.domain_schedule.CONTINUE_TO_BACK_STACK_WITH_RESULT
 import kekmech.ru.domain_schedule.CONTINUE_TO_BARS_ONBOARDING
 import kekmech.ru.domain_schedule.CONTINUE_TO_DASHBOARD
 import kekmech.ru.feature_schedule.R
@@ -54,6 +55,7 @@ class FindScheduleFragment : BaseFragment<FindScheduleEvent, FindScheduleEffect,
             CONTINUE_TO_BACK_STACK -> close()
             CONTINUE_TO_BARS_ONBOARDING -> onboardingFeatureLauncher.launchBarsPage()
             CONTINUE_TO_DASHBOARD -> Unit // todo
+            CONTINUE_TO_BACK_STACK_WITH_RESULT -> closeWithSuccess()
             else -> Unit
         }
     }

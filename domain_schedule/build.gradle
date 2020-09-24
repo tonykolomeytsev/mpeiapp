@@ -39,6 +39,7 @@ dependencies {
     coreLibraryDesugaring desugaring
     implementation kotlinStdLib
 
+    implementation androidx.appcompat
     implementation squareup.retrofit
     implementation squareup.retrofit_rxJava2
 

@@ -14,20 +14,23 @@ interface LabeledTextItem {
     val mainTextResId: Int?
     val label: String?
     val labelResId: Int?
+    val itemId: Int?
 }
 
 data class TopLabeledTextItem(
     override val mainText: String? = null,
     @StringRes override val mainTextResId: Int? = null,
     override val label: String? = null,
-    @StringRes override val labelResId: Int? = null
+    @StringRes override val labelResId: Int? = null,
+    override val itemId: Int? = null
 ) : LabeledTextItem
 
 data class BottomLabeledTextItem(
     override val mainText: String? = null,
     @StringRes override val mainTextResId: Int? = null,
     override val label: String? = null,
-    @StringRes override val labelResId: Int? = null
+    @StringRes override val labelResId: Int? = null,
+    override val itemId: Int? = null
 ) : LabeledTextItem
 
 interface LabeledTextViewHolder : ClickableItemViewHolder {

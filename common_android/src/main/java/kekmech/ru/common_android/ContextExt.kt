@@ -1,6 +1,8 @@
 package kekmech.ru.common_android
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.util.TypedValue
 import androidx.annotation.*
 import androidx.core.content.ContextCompat
@@ -28,3 +30,10 @@ fun Context.getThemeSurfaceColor() = getThemeColor(R.attr.colorSurface)
 
 fun Context.getStringArray(@ArrayRes stringRes: Int): Array<String> =
     resources.getStringArray(stringRes)
+
+fun Context.openLinkExternal(link: String) =
+    openLinkExternal(Uri.parse(link))
+
+fun Context.openLinkExternal(link: Uri) {
+    startActivity(Intent(Intent.ACTION_VIEW, link))
+}
