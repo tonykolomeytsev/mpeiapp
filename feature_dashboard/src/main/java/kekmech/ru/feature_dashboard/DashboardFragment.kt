@@ -66,7 +66,7 @@ class DashboardFragment : BaseFragment<DashboardEvent, DashboardEffect, Dashboar
 
     private fun createAdapter() = BaseAdapter(
         SpaceAdapterItem(),
-        SearchFieldAdapterItem { /* on click search field */ },
+        SearchFieldAdapterItem { dependencies.scheduleFeatureLauncher.launchSearchGroup() },
         BannerLunchAdapterItem {
             dependencies.bottomTabsSwitcher.changeTab(BottomTab.MAP)
         },
@@ -79,7 +79,7 @@ class DashboardFragment : BaseFragment<DashboardEvent, DashboardEffect, Dashboar
         DayStatusAdapterItem(),
         DashboardClassesAdapterItem(requireContext()),
         DashboardClassesMinAdapterItem(requireContext()),
-        ChangeGroupAdapterItem {
+        EventsHeaderAdapterItem {
             dependencies.scheduleFeatureLauncher.launchSearchGroup(
                 continueTo = CONTINUE_TO_BACK_STACK_WITH_RESULT,
                 targetFragment = parentFragment,
