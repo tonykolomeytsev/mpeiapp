@@ -14,7 +14,7 @@ import kekmech.ru.common_navigation.NavigationHolder
 import kekmech.ru.common_navigation.NewRoot
 import kekmech.ru.common_navigation.Router
 import kekmech.ru.domain_app_settings.AppSettings
-import kekmech.ru.feature_onboarding.screens.WelcomeFragment
+import kekmech.ru.mpeiapp.ui.main.MainFragment
 import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
@@ -40,8 +40,8 @@ class MainActivity : AppCompatActivity() {
 
 
         if (savedInstanceState == null) {
-            //router.executeCommand(NewRoot { MainFragment.newInstance() })
-            router.executeCommand(NewRoot { WelcomeFragment() })
+            router.executeCommand(NewRoot { MainFragment.newInstance() })
+            //router.executeCommand(NewRoot { WelcomeFragment() })
         }
     }
 

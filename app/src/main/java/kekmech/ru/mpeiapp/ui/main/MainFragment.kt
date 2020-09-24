@@ -3,6 +3,7 @@ package kekmech.ru.mpeiapp.ui.main
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.setPadding
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
 import kekmech.ru.common_android.addSystemBottomPadding
@@ -18,10 +19,6 @@ import kotlinx.android.synthetic.main.fragment_main.*
 import org.koin.android.ext.android.inject
 
 class MainFragment : BaseFragment<MainScreenEvent, MainScreenEffect, MainScreenState, MainScreenFeature>(), BackButtonListener {
-
-    init {
-
-    }
 
     override val initEvent: MainScreenEvent get() = MainScreenEvent.Wish.Init
     override var layoutId: Int = R.layout.fragment_main
@@ -45,7 +42,9 @@ class MainFragment : BaseFragment<MainScreenEvent, MainScreenEffect, MainScreenS
 
     override fun onViewCreatedInternal(view: View, savedInstanceState: Bundle?) {
         super.onViewCreatedInternal(view, savedInstanceState)
-        bottomNavigation.addSystemBottomPadding()
+        bottomNavigation.setOnApplyWindowInsetsListener(null)
+        bottomNavigation.setPadding(0)
+        view.addSystemBottomPadding()
 
         val controller = bottomBarController ?: BottomBarController(this)
         controller.init(this, bottomNavigation)

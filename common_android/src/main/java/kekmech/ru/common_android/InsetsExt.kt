@@ -4,7 +4,6 @@ import android.view.View
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
-import com.google.android.material.bottomnavigation.BottomNavigationView
 
 fun View.doOnApplyWindowInsets(f: (View, WindowInsetsCompat, InitialPadding) -> Unit) {
     val initialPadding = recordInitialPaddingForView(this)
@@ -45,8 +44,15 @@ fun View.addSystemVerticalPadding() {
     }
 }
 
-fun BottomNavigationView.addSystemBottomPadding() {
+fun View.addSystemBottomPadding() {
     doOnApplyWindowInsets { view, insets, padding ->
         view.updatePadding(bottom = padding.bottom + insets.systemWindowInsetBottom)
+    }
+}
+
+fun View.addSystemTopPadding(afterUpdate: (() -> Unit)? = null) {
+    doOnApplyWindowInsets { view, insets, padding ->
+        view.updatePadding(top = padding.top + insets.systemWindowInsetTop)
+        afterUpdate?.invoke()
     }
 }
