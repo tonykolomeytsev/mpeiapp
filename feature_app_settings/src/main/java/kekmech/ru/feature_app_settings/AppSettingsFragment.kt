@@ -5,6 +5,7 @@ import android.os.Handler
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import kekmech.ru.common_adapter.BaseAdapter
+import kekmech.ru.common_android.addSystemTopPadding
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.ui.BaseFragment
 import kekmech.ru.coreui.attachScrollListenerForAppBarLayoutShadow
@@ -34,6 +35,7 @@ class AppSettingsFragment : BaseFragment<AppSettingsEvent, AppSettingsEffect, Ap
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
         recyclerView.attachScrollListenerForAppBarLayoutShadow(appBarLayout)
+        appBarLayout.addSystemTopPadding()
     }
 
     override fun render(state: AppSettingsState) {

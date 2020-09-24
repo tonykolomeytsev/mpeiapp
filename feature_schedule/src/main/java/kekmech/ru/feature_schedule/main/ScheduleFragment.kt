@@ -6,6 +6,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import kekmech.ru.common_adapter.BaseAdapter
+import kekmech.ru.common_android.addSystemTopPadding
 import kekmech.ru.common_android.getStringArray
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.ui.BaseFragment
@@ -51,6 +52,7 @@ class ScheduleFragment : BaseFragment<ScheduleEvent, ScheduleEffect, ScheduleSta
             }
         })
         appBarLayout.outlineProvider = null
+        appBarLayout.addSystemTopPadding()
     }
 
     override fun handleEffect(effect: ScheduleEffect) = when (effect) {
