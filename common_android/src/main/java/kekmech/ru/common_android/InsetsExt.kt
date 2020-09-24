@@ -50,9 +50,8 @@ fun View.addSystemBottomPadding() {
     }
 }
 
-fun View.addSystemTopPadding(afterUpdate: (() -> Unit)? = null) {
+fun View.addSystemTopPadding() {
     doOnApplyWindowInsets { view, insets, padding ->
         view.updatePadding(top = padding.top + insets.systemWindowInsetTop)
-        afterUpdate?.invoke()
     }
 }

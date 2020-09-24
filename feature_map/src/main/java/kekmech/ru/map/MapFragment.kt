@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.map.R
 import com.google.android.gms.maps.SupportMapFragment
 import kekmech.ru.common_adapter.BaseAdapter
+import kekmech.ru.common_android.doOnApplyWindowInsets
+import kekmech.ru.common_android.views.setMargins
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.ui.BaseFragment
 import kekmech.ru.coreui.items.PullAdapterItem
@@ -38,6 +40,9 @@ class MapFragment : BaseFragment<MapEvent, MapEffect, MapState, MapFeature>() {
         Handler().postDelayed({ createMap() }, 50L)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
+        view.doOnApplyWindowInsets { _, insets, padding ->
+            coordinatorLayout.setMargins(top = insets.systemWindowInsetTop + padding.top)
+        }
     }
 
     private fun createMap() {
