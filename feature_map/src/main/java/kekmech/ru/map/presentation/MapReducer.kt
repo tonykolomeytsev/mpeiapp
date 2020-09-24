@@ -26,9 +26,13 @@ class MapReducer : BaseReducer<MapState, MapEvent, MapEffect, MapAction> {
             action = MapAction.ObserveMarkers
         )
         is Wish.Action.OnMapReady -> Result(
-            state = state.copy(
-                map = event.map
-            )
+            state = state.copy(map = event.map)
+        )
+        is Wish.Action.SelectTab -> Result(
+            state = state.copy(selectedTab = event.tab)
+        )
+        is Wish.Action.BottomSheetStateChanged -> Result(
+            state = state.copy(bottomSheetState = event.newState)
         )
     }
 

@@ -12,7 +12,8 @@
             android:layout_height="56dp"
             app:cardBackgroundColor="?attr/colorGray10"
             app:cardElevation="0dp"
-            app:cardCornerRadius="8dp">
+            app:cardCornerRadius="8dp"
+            android:foreground="?attr/selectableItemBackground">
 
         <ImageView
                 android:id="@+id/imageViewIcon"
