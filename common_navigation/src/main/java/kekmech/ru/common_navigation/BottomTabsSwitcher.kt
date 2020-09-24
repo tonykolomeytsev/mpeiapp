@@ -1,8 +1,7 @@
-package kekmech.ru.mpeiapp.ui.main
+package kekmech.ru.common_navigation
 
 import io.reactivex.Observable
 import kekmech.ru.common_kotlin.Option
-import kekmech.ru.common_navigation.BottomTab
 
 interface BottomTabsSwitcher {
 

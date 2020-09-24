@@ -8,6 +8,9 @@
     <TextView
             android:id="@+id/bannerText"
             style="@style/H6.C6"
+            android:fontFamily="@font/roboto_medium"
+            android:textSize="14sp"
+            android:textColor="@color/colorWhite"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="32dp"

@@ -3,7 +3,7 @@
     <!-- ORIGINAL COLOR PALETTE -->
     <color name="colorTransparent">#00000000</color>
     <color name="colorNavigationLight">#40ffffff</color>
-    <color name="colorNavigationDark">#40000000</color>
+    <color name="colorNavigationDark">#401a1a1a</color>
 
     <!-- DARK COLOR PALETTE -->
     <color name="colorCardViewBlack">#2e2e2e</color>
