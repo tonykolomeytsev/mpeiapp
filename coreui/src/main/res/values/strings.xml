@@ -90,6 +90,8 @@
     <string name="schedule_semester_week">Учебная неделя №%d</string>
     <string name="schedule_weekend_week">Неучебная неделя</string>
     <string name="schedule_loading_error">При загрузке расписания произошла ошибка</string>
+    <string name="schedule_item_window_header">Окно между парами</string>
+    <string name="schedule_item_window_description">Проведите его с пользой</string>
     <string name="schedule_item_lunch_header">Обеденный перерыв</string>
     <string name="schedule_item_lunch_description">Здесь будет диплинк на карту</string>
     <string name="schedule_item_lunch_time_start">12:45</string>
