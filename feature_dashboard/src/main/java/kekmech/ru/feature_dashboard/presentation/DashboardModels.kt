@@ -13,7 +13,7 @@ data class DashboardState(
     val isAfterError: Boolean = false,
     val currentWeekSchedule: Schedule? = null,
     val nextWeekSchedule: Schedule? = null,
-    val selectedGroupName: String? = null
+    val selectedGroupName: String = ""
 ) {
     val weekOfSemester get() = currentWeekSchedule?.weeks?.first()?.weekOfSemester
     val todayClasses: List<Classes>? get() = currentWeekSchedule?.weeks?.first()?.days

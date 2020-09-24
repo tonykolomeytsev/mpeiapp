@@ -40,10 +40,6 @@ class DashboardListConverter(
             }
             add(SearchFieldItem)
             add(SpaceItem.VERTICAL_12)
-            state.selectedGroupName?.let {
-                add(ChangeGroupItem(it))
-                add(SpaceItem.VERTICAL_12)
-            }
 
             listOfNotNull(
                 BannerLunchItem.takeIf { moscowLocalTime() in lunchStartTime..lunchEndTime },
@@ -90,7 +86,7 @@ class DashboardListConverter(
         )
     }
 
-    private fun createClassesEventsItems(state: DashboardState): Pair<SectionHeaderItem, List<Any>>? {
+    private fun createClassesEventsItems(state: DashboardState): Pair<Any, List<Any>>? {
         val nowDate = moscowLocalDate()
         val nowTime = moscowLocalTime()
 
@@ -100,13 +96,13 @@ class DashboardListConverter(
 
         when {
             isSunday || isEvening || hasNoClassesToday -> {
-                val headerItem = createHeaderItem(context.getString(R.string.dashboard_events_tomorrow))
+                val headerItem = createEventsHeaderItem(context.getString(R.string.dashboard_events_tomorrow), state.selectedGroupName)
                 val tomorrowClasses = state.tomorrowClasses
                     ?.paintClasses() ?: return null // если на завтра пар тоже нет, то не возвращаем вообще ничего
                 return headerItem to tomorrowClasses
             }
             else -> {
-                val headerItem = createHeaderItem(context.getString(R.string.dashboard_events_today))
+                val headerItem = createEventsHeaderItem(context.getString(R.string.dashboard_events_today), state.selectedGroupName)
                 val nextTodayClasses = state.todayClasses
                     ?.filter { it.time.end > nowTime } // не берем прошедшие пары
                     ?.paintClasses() ?: return null // если на сегодня пар нет, то не возвращаем ничего
@@ -122,8 +118,9 @@ class DashboardListConverter(
         e.stackType = if (index == 0) null else ClassesStackType.MIDDLE; e
     }
 
-    private fun createHeaderItem(subtitle: String) = SectionHeaderItem(
+    private fun createEventsHeaderItem(subtitle: String, groupName: String) = EventsHeaderItem(
         title = context.getString(R.string.dashboard_section_header_events),
-        subtitle = subtitle
+        subtitle = subtitle,
+        groupName = groupName
     )
 }
