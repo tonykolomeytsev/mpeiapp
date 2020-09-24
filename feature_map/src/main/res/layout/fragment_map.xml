@@ -35,12 +35,12 @@
             tools:background="#F4D6BB"/>
 
     <View
-            android:id="@+id/textViewFade"
+            android:id="@+id/viewFade"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:alpha="0"
             tools:alpha="0.5"
-            android:background="@color/colorBlack"/>
+            android:background="?attr/colorWhite"/>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:id="@+id/coordinatorLayout"
@@ -55,7 +55,9 @@
                 app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
                 app:behavior_hideable="false"
                 app:behavior_peekHeight="120dp"
+                android:overScrollMode="never"
                 android:paddingTop="8dp"
+                android:clipToPadding="false"
                 android:background="@drawable/background_bottom_sheet"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

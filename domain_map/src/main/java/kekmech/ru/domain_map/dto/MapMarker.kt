@@ -6,15 +6,18 @@ data class MapMarker(
     val location: Location,
     val name: String,
     val type: MarkerType,
-    val icon: String
+    val icon: String,
+    val tag: String
 )
 
 data class Location(val lat: Double, val lng: Double)
 
 enum class MarkerType {
-    BUILDING,
     FOOD,
+    BUILDING,
     HOSTEL,
+    OTHER,
+    STRUCTURE,
 
     UNDEFINED
 }
