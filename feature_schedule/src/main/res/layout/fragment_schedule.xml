@@ -5,7 +5,7 @@
         android:layout_height="match_parent"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:fitsSystemWindows="true">
+        android:clipToPadding="false">
 
     <com.google.android.material.appbar.AppBarLayout
             app:layout_constraintTop_toTopOf="parent"
@@ -175,6 +175,7 @@
                     app:layout_constraintStart_toStartOf="parent"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </com.facebook.shimmer.ShimmerFrameLayout>
 
     <androidx.viewpager2.widget.ViewPager2
