@@ -7,15 +7,9 @@ import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.coreui.PrettyDateFormatter
 import kekmech.ru.coreui.R
+import kekmech.ru.domain_notes.dto.Note
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_note.*
-import java.time.LocalDate
-
-data class NoteItem(
-    val content: String,
-    val date: LocalDate,
-    val disciplineName: String
-)
 
 interface NoteViewHolder : ClickableItemViewHolder {
     fun setContent(content: String)
@@ -46,24 +40,24 @@ class NoteViewHolderImpl(
 
 class NoteItemBinder(
     context: Context,
-    private val onClickListener: ((NoteItem) -> Unit)?
-) : BaseItemBinder<NoteViewHolder, NoteItem>() {
+    private val onClickListener: ((Note) -> Unit)?
+) : BaseItemBinder<NoteViewHolder, Note>() {
 
     private val prettyDateFormatter = PrettyDateFormatter(context)
 
-    override fun bind(vh: NoteViewHolder, model: NoteItem, position: Int) {
-        vh.setDisciplineName(model.disciplineName)
+    override fun bind(vh: NoteViewHolder, model: Note, position: Int) {
+        vh.setDisciplineName(model.classesName)
         vh.setContent(model.content)
-        vh.setDate(prettyDateFormatter.formatRelative(model.date))
+        vh.setDate(prettyDateFormatter.formatRelative(model.dateTime.toLocalDate()))
         vh.setOnClickListener { onClickListener?.invoke(model) }
     }
 }
 
 class NoteAdapterItem(
     context: Context,
-    onClickListener: ((NoteItem) -> Unit)? = null
-) : AdapterItem<NoteViewHolder, NoteItem>(
-    isType = { it is NoteItem },
+    onClickListener: ((Note) -> Unit)? = null
+) : AdapterItem<NoteViewHolder, Note>(
+    isType = { it is Note },
     layoutRes = R.layout.item_note,
     viewHolderGenerator = ::NoteViewHolderImpl,
     itemBinder = NoteItemBinder(context, onClickListener)

@@ -17,6 +17,7 @@ import kekmech.ru.feature_schedule.di.ScheduleModule
 import kekmech.ru.map.di.MapModule
 import kekmech.ru.mpeiapp.di.AppModule
 import kekmech.ru.mpeiapp.ui.main.di.MainScreenModule
+import kekmech.ru.notes.di.NotesModule
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -55,7 +56,8 @@ class MPEIApp : Application(),
             DashboardModule,
             ScheduleModule,
             AppSettingsModule,
-            MapModule
+            MapModule,
+            NotesModule
         ))
     }
 

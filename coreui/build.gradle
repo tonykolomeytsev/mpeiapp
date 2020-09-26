@@ -11,6 +11,7 @@ dependencies {
     implementation google.material
 
     implementation project(path: ":domain_schedule")
+    implementation project(path: ":domain_notes")
 
     implementation project(path: ":common_android")
     implementation project(path: ":common_adapter")

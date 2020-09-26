@@ -40,7 +40,7 @@ object ScheduleClassesListConverter {
         val modifiedClasses = classesWithWindows(rawClasses)
         if (hasSecondAndThirdClasses) {
             val indexForLunchItem = modifiedClasses.indexOfLast { it is Classes && it.number == 2 } + 1
-            modifiedClasses.add(indexForLunchItem, LunchItem)
+            modifiedClasses.addAll(indexForLunchItem, listOf(LunchItem))
         }
         return modifiedClasses
     }
