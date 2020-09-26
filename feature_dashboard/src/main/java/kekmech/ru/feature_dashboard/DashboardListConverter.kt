@@ -6,7 +6,6 @@ import kekmech.ru.common_android.moscowLocalTime
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.coreui.PrettyDateFormatter
 import kekmech.ru.coreui.items.AddActionItem
-import kekmech.ru.coreui.items.NoteItem
 import kekmech.ru.coreui.items.SectionHeaderItem
 import kekmech.ru.coreui.items.SpaceItem
 import kekmech.ru.domain_schedule.dto.Classes
@@ -59,13 +58,18 @@ class DashboardListConverter(
             }
             add(SpaceItem.VERTICAL_16)
             add(notesHeader)
-            add(SpaceItem.VERTICAL_12)
-            addAll(listOf(
-                NoteItem("Сдать типовой расчет №1", LocalDate.now().plusDays(1), "Вычислительная ммеханика"),
-                NoteItem("Лабораторная работа №1, принести бланки", LocalDate.now().plusDays(2), "Вычислительная ммеханика"),
-                NoteItem("Сдать типовой расчет №2", LocalDate.now().plusDays(3), "Теория колебаний"),
-                NoteItem("Подготовиться к контрольной", LocalDate.now().plusDays(4), "Физика")
-            ))
+            state.notes?.let {
+                add(SpaceItem.VERTICAL_12)
+                addAll(it)
+            }
+
+//            addAll(listOf(
+//                NoteItem("Сдать типовой расчет №1", LocalDate.now().plusDays(1), "Вычислительная ммеханика"),
+//                NoteItem("Лабораторная работа №1, принести бланки", LocalDate.now().plusDays(2), "Вычислительная ммеханика"),
+//                NoteItem("Сдать типовой расчет №2", LocalDate.now().plusDays(3), "Теория колебаний"),
+//                NoteItem("Подготовиться к контрольной", LocalDate.now().plusDays(4), "Физика")
+//            ))
+
             add(SpaceItem.VERTICAL_24)
             add(AddActionItem("СОЗДАТЬ ЗАМЕТКУ"))
             add(SpaceItem.VERTICAL_24)

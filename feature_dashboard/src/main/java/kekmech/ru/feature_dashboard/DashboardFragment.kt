@@ -62,6 +62,7 @@ class DashboardFragment : BaseFragment<DashboardEvent, DashboardEffect, Dashboar
 
     override fun handleEffect(effect: DashboardEffect) = when (effect) {
         is DashboardEffect.ShowLoadingError -> showBanner(R.string.dashboard_loading_error)
+        is DashboardEffect.ShowNotesLoadingError -> showBanner(R.string.something_went_wrong_error)
     }
 
     private fun createAdapter() = BaseAdapter(

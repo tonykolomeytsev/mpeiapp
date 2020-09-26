@@ -13,7 +13,7 @@ class NotesRepository(
 
     fun getNotes(): Single<List<Note>> = scheduleRepository
         .getSelectedGroup()
-        .map { notesSource.getAll(it.toUpperCase()) }
+        .map { notesSource.getAll(it) }
 
     fun putNote(note: Note): Completable = scheduleRepository
         .getSelectedGroup()
