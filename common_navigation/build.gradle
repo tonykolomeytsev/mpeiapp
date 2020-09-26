@@ -17,8 +17,11 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+        }
+        debug {
+            minifyEnabled false
         }
     }
 
@@ -39,7 +42,6 @@ dependencies {
     implementation koin.android
     implementation rx.java
 
-    implementation project(path: ":core")
     implementation project(path: ":common_di")
     implementation project(path: ":common_kotlin")
 }

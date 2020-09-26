@@ -20,10 +20,9 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
--keep class kekmech.ru.core.dto.** { *; }
--keep class kekmech.ru.coreui.deprecated.adapter2.** { *; }
+-keep class *.dto.** { *; }
 
--keep class * extends kekmech.ru.coreui.deprecated.adapter2.BaseItem2 { *; }
--keepclassmembers class * extends kekmech.ru.coreui.deprecated.adapter2.BaseItem2 { *; }
--keep class * extends kekmech.ru.coreui.deprecated.adapter.** { *; }
--keepclassmembers class * extends kekmech.ru.coreui.deprecated.adapter.** { *; }
+#-keep class * extends kekmech.ru.coreui.deprecated.adapter2.BaseItem2 { *; }
+#-keepclassmembers class * extends kekmech.ru.coreui.deprecated.adapter2.BaseItem2 { *; }
+#-keep class * extends kekmech.ru.coreui.deprecated.adapter.** { *; }
+#-keepclassmembers class * extends kekmech.ru.coreui.deprecated.adapter.** { *; }
