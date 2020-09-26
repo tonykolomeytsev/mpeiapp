@@ -4,13 +4,12 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.util.Log
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
-import kekmech.ru.core.UpdateChecker
 
 class ForceUpdateChecker constructor(
     private val context: Context
-) : UpdateChecker {
+) {
 
-    override fun check(onUpdateNeededListener: (String, String) -> Unit) {
+    fun check(onUpdateNeededListener: (String, String) -> Unit) {
         //if (BuildConfig.DEBUG) return
         val remoteConfig = FirebaseRemoteConfig.getInstance()
 

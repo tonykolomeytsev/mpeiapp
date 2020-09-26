@@ -10,12 +10,9 @@ import kekmech.ru.core.dto.NoteNative
 import kekmech.ru.core.dto.ScheduleNative
 import kekmech.ru.core.dto.User
 
-@Database(entities = [User::class, ScheduleNative::class, CoupleNative::class, NoteNative::class], version = 2, exportSchema = false)
-@TypeConverters(Converters::class)
+@Database(entities = [NoteNative::class], version = 3, exportSchema = false)
+// @TypeConverters()
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun userDao(): UserDao
-    abstract fun scheduleDao(): ScheduleDao
-    abstract fun coupleDao(): CoupleDao
     abstract fun noteDao(): NoteDao
 
     companion object {
@@ -33,6 +30,14 @@ abstract class AppDatabase : RoomDatabase() {
                 database.execSQL("""
                     CREATE UNIQUE INDEX index_notes_id ON notes (id)
                 """)
+            }
+        }
+        val MIGRATION_V2_TO_V3 = object : Migration(2, 3) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("DROP TABLE users;")
+                database.execSQL("DROP TABLE schedules;")
+                database.execSQL("DROP TABLE couples;")
+                database.execSQL("DROP TABLE notes;")
             }
         }
     }

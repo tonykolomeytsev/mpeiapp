@@ -60,7 +60,6 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
 
     // Firebase
-    implementation firebase.firestore
     implementation firebase.crashlytics
     implementation firebase.analytics
     implementation firebase.config
@@ -75,17 +74,14 @@ dependencies {
     implementation squareup.okhttp
     implementation squareup.okhttpLogger
 
-    implementation project(path: ':core')
-    implementation project(path: ':domain')
-    implementation project(path: ':repository')
     implementation project(path: ':feature_onboarding')
     implementation project(path: ':feature_dashboard')
     implementation project(path: ':feature_schedule')
     implementation project(path: ':feature_app_settings')
     implementation project(path: ':feature_map')
-    implementation project(path: ':feature_force_update')
+//    implementation project(path: ':feature_force_update')
 //    implementation project(path: ':feature_bars')
-//    implementation project(path: ':feature_notes')
+    implementation project(path: ':feature_notes')
 
     implementation project(path: ':domain_schedule')
     implementation project(path: ':domain_app_settings')
@@ -99,4 +95,5 @@ dependencies {
     implementation project(path: ':common_webview')
     implementation project(path: ':common_network')
     implementation project(path: ':common_cache')
+    implementation project(path: ':common_app_database')
 }
