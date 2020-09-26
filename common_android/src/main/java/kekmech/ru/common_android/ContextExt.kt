@@ -37,3 +37,6 @@ fun Context.openLinkExternal(link: String) =
 fun Context.openLinkExternal(link: Uri) {
     startActivity(Intent(Intent.ACTION_VIEW, link))
 }
+
+fun Context.getRawText(@RawRes rawResId: Int) =
+    resources.openRawResource(rawResId).readBytes().decodeToString()
