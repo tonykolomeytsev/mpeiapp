@@ -80,6 +80,4 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: App Release
-          path: |
-            app/build/**/*.aab
-            app/build/**/*.apk
+          path: app/build/**/*.(aab|apk)
