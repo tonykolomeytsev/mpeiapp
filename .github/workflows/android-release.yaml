@@ -81,5 +81,5 @@ jobs:
         with:
           name: App Release
           path: |
-            app/build/outputs/**/*release.aab
-            app/build/outputs/**/*signed.apk
+            app/build/**/*.aab
+            app/build/**/*.apk
