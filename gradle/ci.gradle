@@ -1,5 +1,3 @@
 if (project.hasProperty("ci")) {
     ext.mpeiapp_google_maps_api_key = System.getenv('MAP_KEY')
-    ext.mpeiapp_bars_auth_key = System.getenv('BARS_KEY')
-    ext.mpeiapp_bars_auth_iv = System.getenv('BARS_IV')
 }
