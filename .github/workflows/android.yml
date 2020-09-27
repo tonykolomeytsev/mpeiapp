@@ -34,7 +34,7 @@ jobs:
 
       - name: Materialize google services
         run: |
-          mkdir app/src/debug/
+          mkdir -p app/src/debug
           echo 'hello' > app/src/debug/stub.kek
           .ci/materialize.sh $GOOGLE_SERVICES_DEBUG app/src/debug/google-services.json
         env:
