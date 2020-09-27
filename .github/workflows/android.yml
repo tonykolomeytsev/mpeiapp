@@ -33,7 +33,7 @@ jobs:
           java-version: 1.8
 
       - name: Materialize google services
-        run: mkdir app/src/debug && .ci/materialize.sh $GOOGLE_SERVICES_DEBUG app/src/debug/google-services.json
+        run: ls app/src/debug && mkdir app/src/debug && ls app/src/debug && .ci/materialize.sh $GOOGLE_SERVICES_DEBUG app/src/debug/google-services.json
         env:
           GOOGLE_SERVICES: ${{ secrets.GOOGLE_SERVICES_DEBUG }}
 
