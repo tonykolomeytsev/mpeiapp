@@ -1,13 +1,11 @@
-name: Android Build
+name: Android Debug Build
 
 on:
   push:
     branches:
-      - master
       - dev
   pull_request:
     branches:
-      - master
       - dev
 
 jobs:
@@ -25,6 +23,7 @@ jobs:
         run: ./gradlew test --stacktrace
 
   build:
+    name: Debug Build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -34,9 +33,9 @@ jobs:
           java-version: 1.8
 
       - name: Materialize google services
-        run: .ci/materialize.sh $GOOGLE_SERVICES app/google-services.json
+        run: .ci/materialize.sh $GOOGLE_SERVICES_DEBUG app/src/debug/google-services.json
         env:
-          GOOGLE_SERVICES: ${{ secrets.GOOGLE_SERVICES }}
+          GOOGLE_SERVICES: ${{ secrets.GOOGLE_SERVICES_DEBUG }}
 
       - name: Cache gradle files
         uses: actions/cache@v1
@@ -59,7 +58,8 @@ jobs:
         run: ./gradlew -Pci assembleDebug
         env:
           MAP_KEY: ${{ secrets.MAP_KEY }}
-      - name: Upload APK
+
+      - name: Upload Debug APK
         uses: actions/upload-artifact@v1
         with:
           name: app
