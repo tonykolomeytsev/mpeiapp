@@ -15,5 +15,5 @@ class NoteEditFeatureFactory(
         initialState = NoteEditState(note, classes),
         reducer = NoteEditReducer(),
         actor = actor
-    )
+    ).start()
 }

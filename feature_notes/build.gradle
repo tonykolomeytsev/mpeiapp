@@ -12,6 +12,7 @@ dependencies {
     implementation "androidx.legacy:legacy-support-v4:1.0.0"
 
     implementation androidx.appcompat
+    implementation androidx.coreKtx
     implementation google.material
     implementation androidx.constraintlayout
     implementation androidx.recyclerview

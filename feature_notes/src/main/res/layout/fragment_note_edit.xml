@@ -8,7 +8,8 @@
             android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/colorWhite">
+            android:background="?attr/colorWhite"
+            app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -18,5 +19,55 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScroll"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintTop_toBottomOf="@id/appBarLayout"
+            app:layout_constraintBottom_toTopOf="@id/buttonSave">
+
+        <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_gravity="bottom">
+
+            <EditText
+                    android:id="@+id/editTextContent"
+                    android:textColor="?attr/colorBlack"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="16dp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="24dp"
+                    android:autoLink="email|phone|web"
+                    android:inputType="textMultiLine"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_note"/>
+
+            <View
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:background="@drawable/background_note_curve"
+                    android:layout_gravity="end|top"/>
+
+        </FrameLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <Button
+            style="@style/Button.Primary"
+            android:id="@+id/buttonSave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/note_edit_button_save"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

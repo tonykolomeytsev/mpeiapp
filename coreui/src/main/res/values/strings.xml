@@ -134,10 +134,11 @@
     <plurals name="note_list_section_subtitle">
         <item quantity="one">У этой пары одна заметка</item>
         <item quantity="two">У этой пары две заметки</item>
-        <item quantity="other">Заметок у пары: $d</item>
+        <item quantity="other">Заметок у пары: %d</item>
     </plurals>
 
-    <style name="note_edit_screen_title">Заметка</style>
+    <string name="note_edit_screen_title">Заметка</string>
+    <string name="note_edit_button_save">Сохранить</string>
 
     <string name="app_settings_screen_title">Настройки</string>
     <string name="app_settings_header_schedule">Расписание</string>

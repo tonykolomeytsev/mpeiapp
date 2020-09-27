@@ -8,6 +8,7 @@
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
         android:paddingTop="8dp"
+        android:paddingBottom="16dp"
         android:clipToPadding="false"
         android:overScrollMode="never"
         android:minHeight="500dp"

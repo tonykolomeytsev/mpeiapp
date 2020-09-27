@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import kekmech.ru.common_adapter.BaseAdapter
+import kekmech.ru.common_android.close
 import kekmech.ru.common_android.getArgument
 import kekmech.ru.common_android.withArguments
 import kekmech.ru.common_kotlin.fastLazy
@@ -55,6 +56,7 @@ class NoteListFragment : BaseBottomSheetDialogFragment<NoteListEvent, NoteListEf
         is NoteListEffect.ShowNoteLoadError -> Toast
             .makeText(requireContext(), R.string.something_went_wrong_error, Toast.LENGTH_SHORT).show()
         is NoteListEffect.OpenNoteEdit -> {
+            close()
             addScreenForward {
                 NoteEditFragment.newInstance(effect.note, effect.classes)
             }
