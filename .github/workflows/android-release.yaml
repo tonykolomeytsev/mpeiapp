@@ -81,5 +81,4 @@ jobs:
         with:
           name: App Release
           path: |
-            app/build/outputs/bundle/release/
-            app/build/outputs/apk/release/
+            app/build/outputs/
