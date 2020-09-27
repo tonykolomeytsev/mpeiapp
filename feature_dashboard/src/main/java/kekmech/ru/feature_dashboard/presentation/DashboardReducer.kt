@@ -1,11 +1,14 @@
 package kekmech.ru.feature_dashboard.presentation
 
+import kekmech.ru.common_android.moscowLocalDate
 import kekmech.ru.common_mvi.BaseReducer
 import kekmech.ru.common_mvi.Result
+import kekmech.ru.domain_notes.dto.Note
 import kekmech.ru.feature_dashboard.presentation.DashboardEvent.News
 import kekmech.ru.feature_dashboard.presentation.DashboardEvent.Wish
 import java.time.DayOfWeek
 import java.time.LocalDate
+import java.time.temporal.ChronoUnit
 
 typealias DashboardResult = Result<DashboardState, DashboardEffect, DashboardAction>
 
@@ -42,7 +45,7 @@ class DashboardReducer : BaseReducer<DashboardState, DashboardEvent, DashboardEf
             state = state.copy(selectedGroupName = event.groupName)
         )
         is News.NotesLoaded -> Result(
-            state = state.copy(notes = event.notes)
+            state = state.copy(notes = getImportantNotes(event.notes))
         )
         is News.NotesLoadError -> Result(
             state = state,
@@ -64,7 +67,7 @@ class DashboardReducer : BaseReducer<DashboardState, DashboardEvent, DashboardEf
                 DashboardAction.LoadNotes,
                 DashboardAction.LoadSchedule(0),
                 DashboardAction.LoadSchedule(1)
-                    .takeIf { LocalDate.now().dayOfWeek == DayOfWeek.SUNDAY }
+                    .takeIf { moscowLocalDate().dayOfWeek == DayOfWeek.SUNDAY }
             )
         )
         is Wish.Action.OnSwipeRefresh -> Result(
@@ -77,8 +80,14 @@ class DashboardReducer : BaseReducer<DashboardState, DashboardEvent, DashboardEf
                 DashboardAction.LoadNotes,
                 DashboardAction.LoadSchedule(0),
                 DashboardAction.LoadSchedule(1)
-                    .takeIf { LocalDate.now().dayOfWeek == DayOfWeek.SUNDAY }
+                    .takeIf { moscowLocalDate().dayOfWeek == DayOfWeek.SUNDAY }
             )
         )
     }
+
+    private fun getImportantNotes(notes: List<Note>): List<Note> =
+        notes
+            .filter { ChronoUnit.DAYS.between(LocalDate.now(), it.dateTime.toLocalDate()) in 0..7 } // todo make with settings
+            .sortedBy { it.dateTime }
+            .take(5) // todo make with settings
 }

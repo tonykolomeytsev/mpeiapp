@@ -10,7 +10,7 @@ private const val KEY_SELECTED_GROUP = "selected_group"
 
 class ScheduleRepository(
     private val scheduleService: ScheduleService,
-    private val sharedPreferences: SharedPreferences
+    sharedPreferences: SharedPreferences
 ) {
     private var selectedGroup by sharedPreferences.string(KEY_SELECTED_GROUP)
 
