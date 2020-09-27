@@ -65,3 +65,10 @@ jobs:
         with:
           name: App Release
           path: app/build/outputs/bundle/release/app-release.aab
+
+      - name: Send Telegram message
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: Push to *master* successfully passed!
