@@ -128,6 +128,17 @@
     <string name="map_section_name_structures">Кафедры</string>
     <string name="map_section_tag_others">Остальные места</string>
 
+    <string name="note_list_section_add">СОЗДАТЬ ЗАМЕТКУ</string>
+    <string name="note_list_section_header">Прикрепленные заметки</string>
+    <string name="note_list_section_subtitle_empty">У этой пары нет заметок</string>
+    <plurals name="note_list_section_subtitle">
+        <item quantity="one">У этой пары одна заметка</item>
+        <item quantity="two">У этой пары две заметки</item>
+        <item quantity="other">Заметок у пары: $d</item>
+    </plurals>
+
+    <style name="note_edit_screen_title">Заметка</style>
+
     <string name="app_settings_screen_title">Настройки</string>
     <string name="app_settings_header_schedule">Расписание</string>
     <string name="app_settings_dark_theme">Темная тема</string>

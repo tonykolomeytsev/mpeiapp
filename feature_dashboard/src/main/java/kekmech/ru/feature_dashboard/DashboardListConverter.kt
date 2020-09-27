@@ -55,6 +55,8 @@ class DashboardListConverter(
                 add(header)
                 add(SpaceItem.VERTICAL_12)
                 addAll(classes)
+            } ?: run {
+                add(createEventsHeaderItem("Пока ничего интересного", state.selectedGroupName))
             }
             add(SpaceItem.VERTICAL_16)
             add(notesHeader)

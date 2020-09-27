@@ -99,6 +99,10 @@ class ScheduleReducer : BaseReducer<ScheduleState, ScheduleEvent, ScheduleEffect
                 )
             }
         }
+        is Wish.Click.OnClassesClick -> Result(
+            state = state,
+            effect = ScheduleEffect.NavigateToNoteList(event.classes, state.selectedDay.date)
+        )
     }
 
     private fun generateSelectedWeekResult(

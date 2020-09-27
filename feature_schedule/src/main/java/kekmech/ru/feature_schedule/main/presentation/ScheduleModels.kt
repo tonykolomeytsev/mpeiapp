@@ -2,6 +2,7 @@ package kekmech.ru.feature_schedule.main.presentation
 
 import kekmech.ru.common_mvi.Feature
 import kekmech.ru.domain_app_settings.AppSettings
+import kekmech.ru.domain_schedule.dto.Classes
 import kekmech.ru.domain_schedule.dto.Schedule
 import kekmech.ru.feature_schedule.main.item.DayItem
 import kekmech.ru.feature_schedule.main.item.WeekItem
@@ -40,6 +41,7 @@ sealed class ScheduleEvent {
 
         object Click {
             data class OnDayClick(val dayItem: DayItem) : Wish()
+            data class OnClassesClick(val classes: Classes) : Wish()
         }
     }
 
@@ -51,6 +53,7 @@ sealed class ScheduleEvent {
 
 sealed class ScheduleEffect {
     data class ShowLoadingError(val throwable: Throwable) : ScheduleEffect()
+    data class NavigateToNoteList(val classes: Classes, val date: LocalDate) : ScheduleEffect()
 }
 
 sealed class ScheduleAction {

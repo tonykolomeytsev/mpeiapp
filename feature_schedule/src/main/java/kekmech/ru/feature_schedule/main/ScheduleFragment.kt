@@ -11,6 +11,7 @@ import kekmech.ru.common_android.getStringArray
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.ui.BaseFragment
 import kekmech.ru.coreui.banner.showBanner
+import kekmech.ru.domain_schedule.dto.Classes
 import kekmech.ru.feature_schedule.R
 import kekmech.ru.feature_schedule.di.ScheduleDependencies
 import kekmech.ru.feature_schedule.main.adapter.WeeksScrollAdapter
@@ -57,6 +58,9 @@ class ScheduleFragment : BaseFragment<ScheduleEvent, ScheduleEffect, ScheduleSta
 
     override fun handleEffect(effect: ScheduleEffect) = when (effect) {
         is ScheduleEffect.ShowLoadingError -> showBanner(R.string.schedule_loading_error)
+        is ScheduleEffect.NavigateToNoteList -> {
+            dependencies.notesFeatureLauncher.launchNoteList(effect.classes, effect.date)
+        }
     }
 
     override fun render(state: ScheduleState) {
@@ -82,14 +86,18 @@ class ScheduleFragment : BaseFragment<ScheduleEvent, ScheduleEffect, ScheduleSta
     }
 
     private fun createViewPagerAdapter() = BaseAdapter(
-        WorkingDayAdapterItem(DAY_OF_WEEK_MONDAY),
-        WorkingDayAdapterItem(DAY_OF_WEEK_TUESDAY),
-        WorkingDayAdapterItem(DAY_OF_WEEK_WEDNESDAY),
-        WorkingDayAdapterItem(DAY_OF_WEEK_THURSDAY),
-        WorkingDayAdapterItem(DAY_OF_WEEK_FRIDAY),
-        WorkingDayAdapterItem(DAY_OF_WEEK_SATURDAY),
+        WorkingDayAdapterItem(DAY_OF_WEEK_MONDAY, ::onClassesClick),
+        WorkingDayAdapterItem(DAY_OF_WEEK_TUESDAY, ::onClassesClick),
+        WorkingDayAdapterItem(DAY_OF_WEEK_WEDNESDAY, ::onClassesClick),
+        WorkingDayAdapterItem(DAY_OF_WEEK_THURSDAY, ::onClassesClick),
+        WorkingDayAdapterItem(DAY_OF_WEEK_FRIDAY, ::onClassesClick),
+        WorkingDayAdapterItem(DAY_OF_WEEK_SATURDAY, ::onClassesClick),
         ClassesShimmerAdapterItem()
     )
+
+    private fun onClassesClick(classes: Classes) {
+        feature.accept(Wish.Click.OnClassesClick(classes))
+    }
 
     private fun createWeekDaysHelper() = WeeksScrollHelper(
         onWeekSelectListener = { feature.accept(Wish.Action.SelectWeek(it)) }
