@@ -95,4 +95,5 @@ jobs:
         with:
           to: ${{ secrets.TELEGRAM_BOT_ID }}
           token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          message: We notify you of a successful build on the *dev* branch.
+          format: markdown
+          message: We notify you of a successful build on the *dev* branch with ${{ github.event_name }} event.
