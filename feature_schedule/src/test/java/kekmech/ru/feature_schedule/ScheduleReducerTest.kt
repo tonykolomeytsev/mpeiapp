@@ -1,13 +1,14 @@
 package kekmech.ru.feature_schedule
 
 import io.kotest.core.spec.style.BehaviorSpec
+import kekmech.ru.domain_app_settings.AppSettings
 import kekmech.ru.domain_schedule.dto.Day
 import kekmech.ru.domain_schedule.dto.Schedule
 import kekmech.ru.domain_schedule.dto.Week
-import kekmech.ru.feature_schedule.main.item.DayItem
 import kekmech.ru.feature_schedule.main.presentation.*
 import kekmech.ru.feature_schedule.main.utils.TimeUtils.createWeekItem
 import org.junit.jupiter.api.Assertions.assertEquals
+import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.Month
 
@@ -55,7 +56,8 @@ class ScheduleReducerTest : BehaviorSpec({
                 assertEquals(
                     state.copy(
                         weekOffset = -1,
-                        weekItems = AFTER_SCROLL_BACK_WEEK_ITEMS
+                        weekItems = AFTER_SCROLL_BACK_WEEK_ITEMS,
+                        isLoading = true
                     ),
                     result.state
                 )
@@ -73,7 +75,8 @@ class ScheduleReducerTest : BehaviorSpec({
                 assertEquals(
                     state.copy(
                         weekOffset = 1,
-                        weekItems = AFTER_SCROLL_FORWARD_WEEK_ITEMS
+                        weekItems = AFTER_SCROLL_FORWARD_WEEK_ITEMS,
+                        isLoading = true
                     ),
                     result.state
                 )
@@ -88,7 +91,11 @@ class ScheduleReducerTest : BehaviorSpec({
     }
 }) {
     companion object {
-        private val INITIAL_STATE = ScheduleState()
+        private val APP_SETTINGS = object : AppSettings {
+            override val changeDayAfterChangeWeek: Boolean get() = false
+            override val isDarkThemeEnabled: Boolean get() = false
+        }
+        private val INITIAL_STATE = ScheduleState(appSettings = APP_SETTINGS)
         private val CURRENT_MONDAY = LocalDate.of(2020, Month.SEPTEMBER, 14)
         private val SCHEDULE = Schedule(
             groupNumber = "C-12-16",
@@ -141,7 +148,8 @@ class ScheduleReducerTest : BehaviorSpec({
             weekOffset = 0,
             schedule = mutableMapOf(0 to SCHEDULE),
             currentWeekMonday = CURRENT_MONDAY,
-            selectedDay = DayItem(LocalDate.now(), 0, false),
+            selectedDay = INITIAL_STATE.selectedDay
+                .takeIf { it.date.dayOfWeek != DayOfWeek.SUNDAY } ?: INITIAL_STATE.selectedDay.plusDays(-1),
             weekItems = INITIAL_WEEK_ITEMS
         )
     }
