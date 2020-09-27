@@ -51,3 +51,10 @@ jobs:
           releaseFile: app/build/outputs/bundle/release/app-release.aab
           track: alpha
 
+      - name: Send Telegram message
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: Deploy to Google Play Store!!!
+
