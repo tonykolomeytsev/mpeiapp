@@ -56,9 +56,9 @@ jobs:
           java-version: 1.8
 
       - name: Materialize google services
-        run: .ci/materialize.sh $GOOGLE_SERVICES app/google-services.json
+        run: .ci/materialize.sh $GOOGLE_SERVICES_DEBUG app/google-services.json
         env:
-          GOOGLE_SERVICES: ${{ secrets.GOOGLE_SERVICES }}
+          GOOGLE_SERVICES: ${{ secrets.GOOGLE_SERVICES_DEBUG }}
 
       - name: Cache gradle files
         uses: actions/cache@v1
@@ -78,7 +78,7 @@ jobs:
             ${{ runner.OS }}-build-
 
       - name: Build with Gradle
-        run: ./gradlew -Pci assemble
+        run: ./gradlew -Pci assembleDebug
         env:
           MAP_KEY: ${{ secrets.MAP_KEY }}
 
