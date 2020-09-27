@@ -1,12 +1,9 @@
-name: Build release for Google Play
+name: Deploy release-alpha to Google Play
 
 on:
   push:
     branches:
-      - master
-  pull_request:
-    branches:
-      - master
+      - release/**
 
 jobs:
   build:
@@ -23,23 +20,6 @@ jobs:
         run: .ci/materialize.sh $GOOGLE_SERVICES app/google-services.json
         env:
           GOOGLE_SERVICES: ${{ secrets.GOOGLE_SERVICES }}
-
-      - name: Cache gradle files
-        uses: actions/cache@v1
-        with:
-          path: ~/.gradle/caches
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle
-
-      - name: Cache build files
-        uses: actions/cache@v1
-        with:
-          path: build
-          key: ${{ runner.OS }}-build-${{ hashFiles('**/*.kt') }}
-          restore-keys: |
-            ${{ runner.OS }}-build-${{ env.cache-name }}-
-            ${{ runner.OS }}-build-
 
       - name: Release tests
         run: ./gradlew -Pci testReleaseUnitTest
@@ -60,8 +40,14 @@ jobs:
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
 
-      - name: Upload Release AAB
-        uses: actions/upload-artifact@v1
+      - name: Create service_account.json
+        run: echo '${{ secrets.SERVICE_ACCOUNT_JSON }}' > service_account.json
+
+      - name: Deploy to Google Play (ALPHA)
+        uses: r0adkll/upload-google-play@v1
         with:
-          name: App Release
-          path: app/build/outputs/bundle/release/app-release.aab
+          serviceAccountJson: service_account.json
+          packageName: kekmech.ru.mpeiapp
+          releaseFile: app/build/outputs/bundle/release/app-release.aab
+          track: alpha
+
