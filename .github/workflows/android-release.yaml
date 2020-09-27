@@ -43,16 +43,6 @@ jobs:
             ${{ runner.OS }}-build-${{ env.cache-name }}-
             ${{ runner.OS }}-build-
 
-      - name: Build with Gradle
-        run: ./gradlew -Pci build
-        env:
-          MAP_KEY: ${{ secrets.MAP_KEY }}
-
-      - name: Run tests
-        run: ./gradlew -Pci test
-        env:
-          MAP_KEY: ${{ secrets.MAP_KEY }}
-
       - name: Build Release APK
         run: ./gradlew -Pci assembleRelease
         env:
