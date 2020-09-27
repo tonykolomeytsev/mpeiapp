@@ -7,6 +7,7 @@ import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.coreui.items.ClassesAdapterItem
+import kekmech.ru.domain_schedule.dto.Classes
 import kekmech.ru.feature_schedule.R
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_week_days.*
@@ -25,29 +26,36 @@ data class WorkingDayItem(
 
 interface WorkingDayViewHolder {
     fun setItems(list: List<Any>)
-    fun initAdapter(recycledViewPool: RecyclerView.RecycledViewPool)
+    fun initAdapter(
+        recycledViewPool: RecyclerView.RecycledViewPool,
+        onClickListener: (Classes) -> Unit
+    )
 }
 
 class WorkingDayViewHolderImpl(
     override val containerView: View
 ) : WorkingDayViewHolder, RecyclerView.ViewHolder(containerView), LayoutContainer {
 
-    private val adapter = BaseAdapter(
-        ClassesAdapterItem(containerView.context), // viewType = 0
-        ClassesStackStartAdapterItem(containerView.context),
-        ClassesStackMiddleAdapterItem(containerView.context),
-        ClassesStackEndAdapterItem(containerView.context),
-        SelfStudyAdapterItem(),
-        LunchAdapterItem(),
-        ClassesShimmerAdapterItem(),
-        WindowAdapterItem()
-    )
+    private var adapter: BaseAdapter? = null
 
     override fun setItems(list: List<Any>) {
-        adapter.update(list)
+        adapter?.update(list)
     }
 
-    override fun initAdapter(recycledViewPool: RecyclerView.RecycledViewPool) {
+    override fun initAdapter(
+        recycledViewPool: RecyclerView.RecycledViewPool,
+        onClickListener: (Classes) -> Unit
+    ) {
+        adapter = BaseAdapter(
+            ClassesAdapterItem(containerView.context, onClickListener), // viewType = 0
+            ClassesStackStartAdapterItem(containerView.context),
+            ClassesStackMiddleAdapterItem(containerView.context),
+            ClassesStackEndAdapterItem(containerView.context),
+            SelfStudyAdapterItem(),
+            LunchAdapterItem(),
+            ClassesShimmerAdapterItem(),
+            WindowAdapterItem()
+        )
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(containerView.context)
         recyclerView.setRecycledViewPool(recycledViewPool)
@@ -55,11 +63,12 @@ class WorkingDayViewHolderImpl(
 }
 
 class WorkingDayItemBinder(
-    private val recycledViewPool: RecyclerView.RecycledViewPool
+    private val recycledViewPool: RecyclerView.RecycledViewPool,
+    private val onClickListener: (Classes) -> Unit
 ) : BaseItemBinder<WorkingDayViewHolder, WorkingDayItem>() {
 
     override fun bind(vh: WorkingDayViewHolder, model: WorkingDayItem, position: Int) {
-        vh.initAdapter(recycledViewPool)
+        vh.initAdapter(recycledViewPool, onClickListener)
         vh.setItems(model.items)
     }
 
@@ -74,13 +83,15 @@ class WorkingDayItemBinder(
 }
 
 class WorkingDayAdapterItem(
-    dayOfWeek: Int
+    dayOfWeek: Int,
+    onClickListener: (Classes) -> Unit
 ) : AdapterItem<WorkingDayViewHolder, WorkingDayItem>(
     isType = { it is WorkingDayItem && it.dayOfWeek == dayOfWeek },
     layoutRes = R.layout.item_working_day,
     viewHolderGenerator = ::WorkingDayViewHolderImpl,
     itemBinder = WorkingDayItemBinder(
-        recycledViewPool = RecyclerView.RecycledViewPool().apply { setMaxRecycledViews(0, 200) }
+        recycledViewPool = RecyclerView.RecycledViewPool().apply { setMaxRecycledViews(0, 200) },
+        onClickListener = onClickListener
     ),
     areItemsTheSame = { a, b -> a.dayOfWeek == b.dayOfWeek },
     equals = { a, b -> a.items == b.items },

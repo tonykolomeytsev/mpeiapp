@@ -1,18 +1,21 @@
 package kekmech.ru.common_mvi.ui
 
+import android.app.Dialog
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import io.reactivex.android.schedulers.AndroidSchedulers.mainThread
-import timber.log.Timber
 import kekmech.ru.common_mvi.util.DisposableDelegate
 import kekmech.ru.common_mvi.util.DisposableDelegateImpl
+import timber.log.Timber
 import kekmech.ru.common_mvi.Feature as MviFeature
 
-abstract class BaseBottomSheetDialogFragment<State : Any, Event : Any, Effect : Any, Feature : MviFeature<State, Event, Effect>> :
+abstract class BaseBottomSheetDialogFragment<Event : Any, Effect : Any, State : Any, Feature : MviFeature<State, Event, Effect>> :
     BottomSheetDialogFragment(),
     DisposableDelegate by DisposableDelegateImpl() {
 
@@ -20,14 +23,19 @@ abstract class BaseBottomSheetDialogFragment<State : Any, Event : Any, Effect : 
 
     protected lateinit var feature: Feature
     protected abstract val initEvent: Event
+    @LayoutRes
+    open var layoutId: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        feature = createStore().apply { accept(initEvent) }
+        feature = createFeature().apply { accept(initEvent) }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-        inflater.inflate(getLayoutRes(), container, false)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? = inflater.inflate(layoutId, container, false)
 
     final override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -49,12 +57,19 @@ abstract class BaseBottomSheetDialogFragment<State : Any, Event : Any, Effect : 
         feature.dispose()
     }
 
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val dialog = super.onCreateDialog(savedInstanceState)
+        dialog.setOnShowListener { dialogInterface ->
+            dialogInterface as BottomSheetDialog
+            dialogInterface.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+                ?.setBackgroundColor(Color.TRANSPARENT)
+        }
+        return dialog
+    }
+
     protected open fun onViewCreatedInternal(view: View, savedInstanceState: Bundle?) = Unit
 
-    @LayoutRes
-    protected abstract fun getLayoutRes(): Int
-
-    protected abstract fun createStore(): Feature
+    protected abstract fun createFeature(): Feature
 
     protected abstract fun render(state: State)
 

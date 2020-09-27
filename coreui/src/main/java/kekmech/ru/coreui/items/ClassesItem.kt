@@ -18,7 +18,7 @@ import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_classes.*
 import java.time.format.DateTimeFormatter
 
-interface ClassesViewHolder {
+interface ClassesViewHolder : ClickableItemViewHolder {
     fun setDisciplineName(name: String)
     fun setPersonName(name: String?)
     fun setPlace(name: String)
@@ -31,7 +31,11 @@ interface ClassesViewHolder {
 
 open class ClassesViewHolderImpl(
     override val containerView: View
-) : ClassesViewHolder, RecyclerView.ViewHolder(containerView), LayoutContainer {
+) :
+    ClassesViewHolder,
+    ClickableItemViewHolder by ClickableItemViewHolderImpl(containerView),
+    RecyclerView.ViewHolder(containerView),
+    LayoutContainer {
 
     override fun setDisciplineName(name: String) {
         textViewClassesName.text = name
@@ -71,7 +75,10 @@ open class ClassesViewHolderImpl(
     }
 }
 
-class ClassesItemBinder(context: Context) : BaseItemBinder<ClassesViewHolder, Classes>() {
+class ClassesItemBinder(
+    context: Context,
+    private val onClickListener: ((Classes) -> Unit)? = null
+) : BaseItemBinder<ClassesViewHolder, Classes>() {
 
     private val classesNumbers by fastLazy { context.getStringArray(R.array.classes_numbers) }
     private val classesTypes by fastLazy {
@@ -105,12 +112,16 @@ class ClassesItemBinder(context: Context) : BaseItemBinder<ClassesViewHolder, Cl
         vh.setTagColor(colorTags.getValue(model.type))
         vh.setStartTime(model.time.start.format(timeFormatter))
         vh.setEndTime(model.time.end.format(timeFormatter))
+        vh.setOnClickListener { onClickListener?.invoke(model) }
     }
 }
 
-class ClassesAdapterItem(context: Context) : AdapterItem<ClassesViewHolder, Classes>(
+class ClassesAdapterItem(
+    context: Context,
+    onClickListener: ((Classes) -> Unit)? = null
+) : AdapterItem<ClassesViewHolder, Classes>(
     isType = { it is Classes && it.stackType == null },
     layoutRes = R.layout.item_classes,
     viewHolderGenerator = ::ClassesViewHolderImpl,
-    itemBinder = ClassesItemBinder(context)
+    itemBinder = ClassesItemBinder(context, onClickListener)
 )

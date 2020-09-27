@@ -1,6 +1,7 @@
 package kekmech.ru.mpeiapp
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
@@ -14,6 +15,7 @@ import kekmech.ru.common_navigation.NavigationHolder
 import kekmech.ru.common_navigation.NewRoot
 import kekmech.ru.common_navigation.Router
 import kekmech.ru.domain_app_settings.AppSettings
+import kekmech.ru.feature_onboarding.screens.WelcomeFragment
 import kekmech.ru.mpeiapp.ui.main.MainFragment
 import org.koin.android.ext.android.inject
 
@@ -22,6 +24,7 @@ class MainActivity : AppCompatActivity() {
     private val navigationHolder: NavigationHolder by inject()
     private val router: Router by inject()
     private val appSettings: AppSettings by inject()
+    private val sharedPreferences: SharedPreferences by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,8 +43,11 @@ class MainActivity : AppCompatActivity() {
 
 
         if (savedInstanceState == null) {
-            router.executeCommand(NewRoot { MainFragment.newInstance() })
-            //router.executeCommand(NewRoot { WelcomeFragment() })
+            if (sharedPreferences.contains("selected_group")) {
+                router.executeCommand(NewRoot { MainFragment.newInstance() })
+            } else {
+                router.executeCommand(NewRoot { WelcomeFragment() })
+            }
         }
     }
 

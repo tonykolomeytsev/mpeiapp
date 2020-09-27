@@ -23,6 +23,7 @@ dependencies {
     implementation facebook.shimmer
 
     implementation project(path: ':domain_schedule')
+    implementation project(path: ':domain_notes')
     implementation project(path: ':domain_onboarding')
     implementation project(path: ':domain_app_settings')
 

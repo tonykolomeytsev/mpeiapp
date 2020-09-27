@@ -1,5 +1,6 @@
 package kekmech.ru.domain_notes.dto
 
+import java.io.Serializable
 import java.time.LocalDateTime
 
 data class Note(
@@ -7,4 +8,4 @@ data class Note(
     val dateTime: LocalDateTime,
     val classesName: String,
     val id: Int = -1
-)
+) : Serializable
