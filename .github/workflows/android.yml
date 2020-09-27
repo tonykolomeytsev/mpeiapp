@@ -44,6 +44,8 @@ jobs:
 
       - name: Unit tests
         run: ./gradlew test --stacktrace
+        env:
+          MAP_KEY: ${{ secrets.MAP_KEY }}
 
   build:
     name: Debug Build
