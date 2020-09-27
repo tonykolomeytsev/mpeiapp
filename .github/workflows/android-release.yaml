@@ -4,11 +4,9 @@ on:
   push:
     branches:
       - master
-      - release/**
   pull_request:
     branches:
       - master
-      - release/**
 
 jobs:
   build:
@@ -48,24 +46,10 @@ jobs:
         env:
           MAP_KEY: ${{ secrets.MAP_KEY }}
 
-      - name: Build Release APK
-        run: ./gradlew -Pci assembleRelease
-        env:
-          MAP_KEY: ${{ secrets.MAP_KEY }}
-
       - name: Build Release AAB
         run: ./gradlew -Pci bundleRelease
         env:
           MAP_KEY: ${{ secrets.MAP_KEY }}
-
-      - name: Sign APK
-        uses: r0adkll/sign-android-release@v1
-        with:
-          releaseDirectory: app/build/outputs/apk/release
-          signingKeyBase64: ${{ secrets.KEY_STORE_FILE }}
-          alias: ${{ secrets.ALIAS }}
-          keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
-          keyPassword: ${{ secrets.KEY_PASSWORD }}
 
       - name: Sign AAB
         uses: r0adkll/sign-android-release@v1
@@ -76,8 +60,8 @@ jobs:
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
 
-      - name: Upload Release APK and AAB
+      - name: Upload Release AAB
         uses: actions/upload-artifact@v1
         with:
           name: App Release
-          path: app/build/***/*.(aab|apk)
+          path: app/build/outputs/bundle/release/app-release.aab
