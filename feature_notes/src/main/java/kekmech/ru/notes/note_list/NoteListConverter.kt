@@ -28,7 +28,7 @@ class NoteListConverter(private val context: Context) {
                     titleRes = R.string.note_list_section_header,
                     subtitle = context.resources.getQuantityString(R.plurals.note_list_section_subtitle, size, size)
                 ))
-                add(SpaceItem.VERTICAL_12)
+                add(SpaceItem.VERTICAL_16)
                 addAll(state.notes)
             }
 

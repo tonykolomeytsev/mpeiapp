@@ -18,8 +18,15 @@ class NoteEditReducer : BaseReducer<NoteEditState, NoteEditEvent, NoteEditEffect
     private fun reduceNews(
         event: News,
         state: NoteEditState
-    ): Result<NoteEditState, NoteEditEffect, NoteEditAction> {
-        TODO("Not yet implemented")
+    ): Result<NoteEditState, NoteEditEffect, NoteEditAction> = when (event) {
+        is News.NoteSavedSuccessfully -> Result(
+            state = state,
+            effect = NoteEditEffect.CloseWithSuccess
+        )
+        is News.NoteSaveError -> Result(
+            state = state,
+            effect = NoteEditEffect.ShowError
+        )
     }
 
     private fun reduceWish(
@@ -27,5 +34,16 @@ class NoteEditReducer : BaseReducer<NoteEditState, NoteEditEvent, NoteEditEffect
         state: NoteEditState
     ): Result<NoteEditState, NoteEditEffect, NoteEditAction> = when (event) {
         is Wish.Init -> Result(state = state)
+        is Wish.Click.SaveNote -> {
+            val newState = state.copy(
+                note = state.note.copy(
+                    content = event.content
+                )
+            )
+            Result(
+                state = newState,
+                action = NoteEditAction.SaveNote(newState.note)
+            )
+        }
     }
 }
