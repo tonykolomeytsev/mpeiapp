@@ -47,6 +47,14 @@ jobs:
         env:
           MAP_KEY: ${{ secrets.MAP_KEY }}
 
+      - name: Send Telegram message
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_BOT_ID }}
+          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          format: markdown
+          message: Tests passed on the *dev* branch during ${{ github.event_name }} event.
+
   build:
     name: Debug Build
     runs-on: ubuntu-latest
@@ -96,4 +104,4 @@ jobs:
           to: ${{ secrets.TELEGRAM_BOT_ID }}
           token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           format: markdown
-          message: We notify you of a successful build on the *dev* branch with ${{ github.event_name }} event.
+          message: Successful build on the *dev* branch during ${{ github.event_name }} event.
