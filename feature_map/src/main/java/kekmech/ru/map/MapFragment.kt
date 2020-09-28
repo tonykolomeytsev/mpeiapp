@@ -38,11 +38,14 @@ class MapFragment : BaseFragment<MapEvent, MapEffect, MapState, MapFeature>() {
 
     private val adapter by fastLazy { createAdapter() }
 
+    private val analytics: MapAnalytics by inject()
+
     override fun onViewCreatedInternal(view: View, savedInstanceState: Bundle?) {
         Handler().postDelayed({ createMap() }, 50L)
         recyclerView.layoutManager = ControlledScrollingLayoutManager(requireContext())
         recyclerView.adapter = adapter
         createBottomSheet(view)
+        analytics.sendScreenShown()
     }
 
     private fun createBottomSheet(view: View) {
@@ -91,7 +94,10 @@ class MapFragment : BaseFragment<MapEvent, MapEffect, MapState, MapFeature>() {
         PullAdapterItem(),
         TabBarAdapterItem(
             tabs = createTabs(),
-            onClickListener = { feature.accept(Wish.Action.SelectTab(it)) }
+            onClickListener = {
+                analytics.sendClick("Tab_$it")
+                feature.accept(Wish.Action.SelectTab(it))
+            }
         ),
         SectionHeaderAdapterItem(),
         SpaceAdapterItem(),
