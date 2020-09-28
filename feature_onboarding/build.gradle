@@ -25,5 +25,6 @@ dependencies {
     implementation project(path: ":common_navigation")
     implementation project(path: ":common_webview")
     implementation project(path: ":common_mvi")
+    implementation project(path: ":common_analytics")
     implementation project(path: ":coreui")
 }

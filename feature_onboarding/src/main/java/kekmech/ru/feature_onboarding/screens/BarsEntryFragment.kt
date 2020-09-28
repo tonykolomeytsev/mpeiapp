@@ -11,6 +11,7 @@ import kekmech.ru.common_navigation.addScreenForward
 import kekmech.ru.common_navigation.di.MainFragmentHolder
 import kekmech.ru.common_navigation.newRoot
 import kekmech.ru.common_webview.WebViewFragment
+import kekmech.ru.feature_onboarding.BarsEntryScreenAnalytics
 import kekmech.ru.feature_onboarding.R
 import kotlinx.android.synthetic.main.fragment_bars_entry.*
 import org.koin.android.ext.android.inject
@@ -21,21 +22,25 @@ private const val REQUEST_CODE = 2910
 class BarsEntryFragment : Fragment(R.layout.fragment_bars_entry) {
 
     val mainFragmentHolder: MainFragmentHolder by inject()
+    val analytics: BarsEntryScreenAnalytics by inject()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         hideKeyboard()
         toolbar.setNavigationOnClickListener { close() }
         buttonSkip.setOnClickListener {
+            analytics.sendClick("SkipLoginBars")
             newRoot { mainFragmentHolder.invoke() }
         }
         buttonStart.setOnClickListener {
+            analytics.sendClick("LoginBars")
             addScreenForward {
                 WebViewFragment
                     .newInstance("https://bars.mpei.ru/bars_web/", enableJs = true)
                     .withResultFor(this, REQUEST_CODE)
             }
         }
+        analytics.sendScreenShown()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
