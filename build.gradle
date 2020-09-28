@@ -59,11 +59,9 @@ buildscript {
         ]
 
         firebase = [
-                analytics           : "com.google.firebase:firebase-analytics:17.2.2",
-                firestore           : "com.google.firebase:firebase-firestore:21.4.3",
-                config              : "com.google.firebase:firebase-config:19.1.1",
-                crashlytics         : "com.google.firebase:firebase-crashlytics:17.1.1",
-                storage             : "com.google.firebase:firebase-storage:19.1.1"
+                analytics           : "com.google.firebase:firebase-analytics:17.5.0",
+                config              : "com.google.firebase:firebase-config:19.2.0",
+                crashlytics         : "com.google.firebase:firebase-crashlytics:17.2.1"
         ]
 
         tests = [
