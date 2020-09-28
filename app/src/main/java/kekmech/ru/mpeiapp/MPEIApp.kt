@@ -1,6 +1,7 @@
 package kekmech.ru.mpeiapp
 
 import android.app.Application
+import kekmech.ru.common_analytics.di.AnalyticsModule
 import kekmech.ru.common_android.di.CommonAndroidModule
 import kekmech.ru.common_app_database.di.AppDatabaseModule
 import kekmech.ru.common_cache.di.CacheModule
@@ -51,6 +52,7 @@ class MPEIApp : Application(),
             WebViewModule,
             CacheModule,
             AppDatabaseModule,
+            AnalyticsModule,
             // features
             OnboardingModule,
             DashboardModule,

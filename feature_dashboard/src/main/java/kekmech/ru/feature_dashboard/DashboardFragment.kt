@@ -40,6 +40,8 @@ class DashboardFragment : BaseFragment<DashboardEvent, DashboardEffect, Dashboar
 
     private val adapter by fastLazy { createAdapter() }
 
+    private val analytics: DashboardAnalytics by inject()
+
     override fun onViewCreatedInternal(view: View, savedInstanceState: Bundle?) {
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
@@ -51,6 +53,7 @@ class DashboardFragment : BaseFragment<DashboardEvent, DashboardEffect, Dashboar
                 setProgressViewOffset(windowInsets.systemWindowInsetTop)
             }
         }
+        analytics.sendScreenShown()
     }
 
     override fun render(state: DashboardState) {
@@ -69,9 +72,11 @@ class DashboardFragment : BaseFragment<DashboardEvent, DashboardEffect, Dashboar
         SpaceAdapterItem(),
         SearchFieldAdapterItem { dependencies.scheduleFeatureLauncher.launchSearchGroup() },
         BannerLunchAdapterItem {
+            analytics.sendClick("BannerLunch")
             dependencies.bottomTabsSwitcher.changeTab(BottomTab.MAP)
         },
         BannerOpenSourceAdapterItem {
+            analytics.sendClick("BannerOpenSource")
             requireContext().openLinkExternal("https://vk.com/kekmech")
         },
         SectionHeaderAdapterItem(),
@@ -81,6 +86,7 @@ class DashboardFragment : BaseFragment<DashboardEvent, DashboardEffect, Dashboar
         DashboardClassesAdapterItem(requireContext()),
         DashboardClassesMinAdapterItem(requireContext()),
         EventsHeaderAdapterItem {
+            analytics.sendClick("ChangeGroup")
             dependencies.scheduleFeatureLauncher.launchSearchGroup(
                 continueTo = CONTINUE_TO_BACK_STACK_WITH_RESULT,
                 targetFragment = parentFragment,

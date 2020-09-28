@@ -24,6 +24,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
+            minifyEnabled false
             resValue('string', 'google_maps_api_key', mpeiapp_google_maps_api_key)
             applicationIdSuffix ".dev"
         }
@@ -49,7 +50,7 @@ dependencies {
     implementation timber
 
     // Android widgets
-    implementation "androidx.viewpager2:viewpager2:1.0.0"
+    implementation androidx.viewPager2
     implementation androidx.recyclerview
     implementation androidx.appcompat
     implementation androidx.constraintlayout
@@ -97,4 +98,5 @@ dependencies {
     implementation project(path: ':common_network')
     implementation project(path: ':common_cache')
     implementation project(path: ':common_app_database')
+    implementation project(path: ':common_analytics')
 }
