@@ -43,9 +43,12 @@ class NoteListFragment : BaseBottomSheetDialogFragment<NoteListEvent, NoteListEf
 
     private val adapter by fastLazy { createAdapter() }
 
+    private val analytics: NoteListAnalytics by inject()
+
     override fun onViewCreatedInternal(view: View, savedInstanceState: Bundle?) {
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
+        analytics.sendScreenShown()
     }
 
     override fun render(state: NoteListState) {
@@ -67,7 +70,10 @@ class NoteListFragment : BaseBottomSheetDialogFragment<NoteListEvent, NoteListEf
         PullAdapterItem(),
         SectionHeaderAdapterItem(),
         NoteAdapterItem(requireContext()),
-        AddActionAdapterItem { feature.accept(Wish.Click.CreateNewNote) },
+        AddActionAdapterItem {
+            analytics.sendClick("NewNote")
+            feature.accept(Wish.Click.CreateNewNote)
+        },
         SpaceAdapterItem()
     )
 

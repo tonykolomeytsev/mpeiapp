@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import kekmech.ru.common_adapter.BaseAdapter
+import kekmech.ru.common_analytics.addScrollAnalytics
 import kekmech.ru.common_android.*
 import kekmech.ru.common_android.views.setProgressViewOffset
 import kekmech.ru.common_kotlin.fastLazy
@@ -46,6 +47,7 @@ class DashboardFragment : BaseFragment<DashboardEvent, DashboardEffect, Dashboar
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
         recyclerView.addSystemVerticalPadding()
+        recyclerView.addScrollAnalytics(analytics, "RecyclerView")
         bannerContainer.addSystemTopPadding()
         swipeRefresh.apply {
             setOnRefreshListener { feature.accept(Wish.Action.OnSwipeRefresh) }
