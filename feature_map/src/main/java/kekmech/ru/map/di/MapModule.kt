@@ -4,6 +4,7 @@ import kekmech.ru.common_di.ModuleProvider
 import kekmech.ru.common_network.retrofit.buildApi
 import kekmech.ru.domain_map.MapRepository
 import kekmech.ru.domain_map.MapService
+import kekmech.ru.map.MapAnalytics
 import kekmech.ru.map.presentation.MapActor
 import kekmech.ru.map.presentation.MapFeatureFactory
 import org.koin.dsl.bind
@@ -15,4 +16,5 @@ object MapModule : ModuleProvider({
     factory { MapFeatureFactory(get()) } bind MapFeatureFactory::class
     factory { MapActor(get()) } bind MapActor::class
     factory { MapDependencies(get()) } bind MapDependencies::class
+    factory { MapAnalytics(get()) } bind MapAnalytics::class
 })
