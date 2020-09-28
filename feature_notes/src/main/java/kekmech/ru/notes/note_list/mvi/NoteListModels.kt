@@ -20,6 +20,7 @@ sealed class NoteListEvent {
 
         object Click {
             object CreateNewNote : Wish()
+            data class EditNote(val note: Note) : Wish()
         }
     }
 
@@ -31,7 +32,7 @@ sealed class NoteListEvent {
 
 sealed class NoteListEffect {
     object ShowNoteLoadError : NoteListEffect()
-    data class OpenNoteEdit(val note: Note, val classes: Classes) : NoteListEffect()
+    data class OpenNoteEdit(val note: Note) : NoteListEffect()
 }
 
 sealed class NoteListAction {
