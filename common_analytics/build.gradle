@@ -24,35 +24,11 @@ android {
             minifyEnabled false
         }
     }
-
-    compileOptions {
-        coreLibraryDesugaringEnabled true
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
-    }
 }
 
 dependencies {
-    coreLibraryDesugaring desugaring
-    implementation kotlinStdLib
-    implementation androidx.appcompat
-    implementation androidx.fragmentKtx
-    implementation androidx.coreKtx
-    implementation androidx.swiperefreshlayout
-
-    implementation google.material
-
+    implementation firebase.analytics
     implementation koin.core
-    implementation koin.android
-
-    implementation kotlinReflect
-
-    implementation rx.java
-    implementation rx.android
-    implementation rx.kotlin
 
     implementation project(path: ":common_di")
 }
