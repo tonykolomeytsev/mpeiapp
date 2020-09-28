@@ -56,6 +56,7 @@ class MapFragment : BaseFragment<MapEvent, MapEffect, MapState, MapFeature>() {
             addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
 
                 override fun onStateChanged(bottomSheet: View, newState: Int) {
+                    if (newState == BottomSheetBehavior.STATE_DRAGGING) analytics.sendScroll("BottomSheet")
                     feature.accept(Wish.Action.BottomSheetStateChanged(newState))
                 }
 

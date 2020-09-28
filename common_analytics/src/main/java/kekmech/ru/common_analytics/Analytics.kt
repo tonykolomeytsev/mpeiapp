@@ -13,6 +13,8 @@ interface Analytics {
     fun sendClick(elementName: String)
     fun sendChangeSetting(settingName: String, settingValue: String)
     fun sendErrorEvent(errorMessage: String)
+    fun sendScroll(elementName: String)
+    fun sendCustomAction(actionName: String)
 }
 
 class AnalyticsImpl(
@@ -46,5 +48,13 @@ class AnalyticsImpl(
 
     override fun sendErrorEvent(errorMessage: String) {
         wrapper.sendEvent(AnalyticsEvent.ErrorEvent(screenName, errorMessage))
+    }
+
+    override fun sendScroll(elementName: String) {
+        wrapper.sendEvent(AnalyticsEvent.Scroll(screenName, elementName))
+    }
+
+    override fun sendCustomAction(actionName: String) {
+        wrapper.sendEvent(AnalyticsEvent.CustomAction(screenName, actionName))
     }
 }

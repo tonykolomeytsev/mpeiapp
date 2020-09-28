@@ -33,11 +33,17 @@ class NoteEditFragment : BaseFragment<NoteEditEvent, NoteEditEffect, NoteEditSta
 
     override var layoutId: Int = R.layout.fragment_note_edit
 
+    private val analytics: NoteEditAnalytics by inject()
+
     override fun onViewCreatedInternal(view: View, savedInstanceState: Bundle?) {
         view.addSystemVerticalPadding()
         toolbar.init()
         editTextContent.showKeyboard()
-        buttonSave.setOnClickListener { feature.accept(Wish.Click.SaveNote(editTextContent.text.toString())) }
+        buttonSave.setOnClickListener {
+            analytics.sendClick("SaveNote")
+            feature.accept(Wish.Click.SaveNote(editTextContent.text.toString()))
+        }
+        analytics.sendScreenShown()
     }
 
     override fun render(state: NoteEditState) {

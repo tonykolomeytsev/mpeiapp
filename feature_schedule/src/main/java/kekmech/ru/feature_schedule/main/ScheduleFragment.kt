@@ -6,6 +6,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import kekmech.ru.common_adapter.BaseAdapter
+import kekmech.ru.common_analytics.addScrollAnalytics
 import kekmech.ru.common_android.addSystemTopPadding
 import kekmech.ru.common_android.getStringArray
 import kekmech.ru.common_kotlin.fastLazy
@@ -48,12 +49,14 @@ class ScheduleFragment : BaseFragment<ScheduleEvent, ScheduleEffect, ScheduleSta
         recyclerView.adapter = weeksScrollAdapter
         recyclerView.itemAnimator = null
         recyclerView.setHasFixedSize(true)
+        recyclerView.addScrollAnalytics(analytics, "WeeksRecyclerView")
         viewPager.adapter = viewPagerAdapter
         viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 feature.accept(Wish.Action.OnPageChanged(position))
             }
         })
+        viewPager.addScrollAnalytics(analytics, "WorkingDaysViewPager")
         appBarLayout.outlineProvider = null
         appBarLayout.addSystemTopPadding()
         analytics.sendScreenShown()
@@ -99,6 +102,7 @@ class ScheduleFragment : BaseFragment<ScheduleEvent, ScheduleEffect, ScheduleSta
     )
 
     private fun onClassesClick(classes: Classes) {
+        analytics.sendClick("Classes")
         feature.accept(Wish.Click.OnClassesClick(classes))
     }
 

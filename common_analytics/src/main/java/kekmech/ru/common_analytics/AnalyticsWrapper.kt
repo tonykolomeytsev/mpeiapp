@@ -34,6 +34,13 @@ class AnalyticsWrapper(
                 Param.SCREEN_NAME to event.screenName,
                 "error_message" to event.errorMessage
             ))
+            is AnalyticsEvent.Scroll -> firebaseAnalytics.logEvent("scroll", mapOf(
+                Param.SCREEN_NAME to event.screenName,
+                "element_name" to event.elementName
+            ))
+            is AnalyticsEvent.CustomAction -> firebaseAnalytics.logEvent(event.actionName, mapOf(
+                Param.SCREEN_NAME to event.screenName
+            ))
         }
     }
 
