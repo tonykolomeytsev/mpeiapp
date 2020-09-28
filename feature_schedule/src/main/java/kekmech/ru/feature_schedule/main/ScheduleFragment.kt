@@ -37,6 +37,8 @@ class ScheduleFragment : BaseFragment<ScheduleEvent, ScheduleEffect, ScheduleSta
     private val weeksScrollAdapter by fastLazy { createWeekScrollAdapter() }
     private val weeksScrollHelper by fastLazy { createWeekDaysHelper() }
 
+    private val analytics: ScheduleAnalytics by inject()
+
     // for viewPager sliding debounce
     private var viewPagerPositionToBeSelected: Int? = null
 
@@ -54,6 +56,7 @@ class ScheduleFragment : BaseFragment<ScheduleEvent, ScheduleEffect, ScheduleSta
         })
         appBarLayout.outlineProvider = null
         appBarLayout.addSystemTopPadding()
+        analytics.sendScreenShown()
     }
 
     override fun handleEffect(effect: ScheduleEffect) = when (effect) {
@@ -100,12 +103,18 @@ class ScheduleFragment : BaseFragment<ScheduleEvent, ScheduleEffect, ScheduleSta
     }
 
     private fun createWeekDaysHelper() = WeeksScrollHelper(
-        onWeekSelectListener = { feature.accept(Wish.Action.SelectWeek(it)) }
+        onWeekSelectListener = {
+            analytics.sendClick("Week_$it")
+            feature.accept(Wish.Action.SelectWeek(it))
+        }
     )
 
     private fun createWeekScrollAdapter() = WeeksScrollAdapter(
         WeekAdapterItem(
-            onDayClickListener = { feature.accept(Wish.Click.OnDayClick(it)) }
+            onDayClickListener = {
+                analytics.sendClick("Day_${it.date}")
+                feature.accept(Wish.Click.OnDayClick(it))
+            }
         )
     )
 

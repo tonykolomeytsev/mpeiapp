@@ -32,6 +32,7 @@ class FindScheduleFragment : BaseFragment<FindScheduleEvent, FindScheduleEffect,
 
     private val dependencies by inject<ScheduleDependencies>()
     private val onboardingFeatureLauncher by fastLazy { dependencies.onboardingFeatureLauncher }
+    private val analytics: FindScheduleAnalytics by inject()
 
     override fun onViewCreatedInternal(view: View, savedInstanceState: Bundle?) {
         super.onViewCreatedInternal(view, savedInstanceState)
@@ -43,8 +44,10 @@ class FindScheduleFragment : BaseFragment<FindScheduleEvent, FindScheduleEffect,
         }
         groupText.addTextChangedListener(GroupFormatTextWatcher(groupText))
         buttonContinue.setOnClickListener {
+            analytics.sendClick("Continue")
             feature.accept(Wish.Click.Continue(groupText.text?.toString().orEmpty()))
         }
+        analytics.sendScreenShown()
     }
 
     override fun handleEffect(effect: FindScheduleEffect) = when (effect) {
