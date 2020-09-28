@@ -6,7 +6,6 @@ import kekmech.ru.common_android.*
 import kekmech.ru.common_mvi.ui.BaseFragment
 import kekmech.ru.coreui.banner.showBanner
 import kekmech.ru.domain_notes.dto.Note
-import kekmech.ru.domain_schedule.dto.Classes
 import kekmech.ru.notes.R
 import kekmech.ru.notes.di.NotesDependencies
 import kekmech.ru.notes.edit.mvi.NoteEditEffect
@@ -18,7 +17,6 @@ import kotlinx.android.synthetic.main.fragment_note_edit.*
 import org.koin.android.ext.android.inject
 
 private const val ARG_NOTE = "Arg.Note"
-private const val ARG_CLASSES = "Arg.Classes"
 
 class NoteEditFragment : BaseFragment<NoteEditEvent, NoteEditEffect, NoteEditState, NoteEditFeature>() {
 
@@ -27,8 +25,7 @@ class NoteEditFragment : BaseFragment<NoteEditEvent, NoteEditEffect, NoteEditSta
     private val dependencies: NotesDependencies by inject()
 
     override fun createFeature() = dependencies.noteEditFeatureFactory.create(
-        note = getArgument(ARG_NOTE),
-        classes = getArgument(ARG_CLASSES)
+        note = getArgument(ARG_NOTE)
     )
 
     override var layoutId: Int = R.layout.fragment_note_edit
@@ -58,12 +55,10 @@ class NoteEditFragment : BaseFragment<NoteEditEvent, NoteEditEffect, NoteEditSta
     companion object {
 
         fun newInstance(
-            note: Note,
-            classes: Classes
+            note: Note
         ) = NoteEditFragment()
             .withArguments(
-                ARG_NOTE to note,
-                ARG_CLASSES to classes
+                ARG_NOTE to note
             )
     }
 }

@@ -50,9 +50,12 @@ class NoteListReducer : BaseReducer<NoteListState, NoteListEvent, NoteListEffect
                     content = "",
                     dateTime = LocalDateTime.of(state.selectedDate, state.selectedClasses.time.start),
                     classesName = state.selectedClasses.name
-                ),
-                classes = state.selectedClasses
+                )
             )
+        )
+        is Wish.Click.EditNote -> Result(
+            state = state,
+            effect = NoteListEffect.OpenNoteEdit(event.note)
         )
     }
 

@@ -61,7 +61,7 @@ class NoteListFragment : BaseBottomSheetDialogFragment<NoteListEvent, NoteListEf
         is NoteListEffect.OpenNoteEdit -> {
             close()
             addScreenForward {
-                NoteEditFragment.newInstance(effect.note, effect.classes)
+                NoteEditFragment.newInstance(effect.note)
             }
         }
     }
@@ -69,7 +69,10 @@ class NoteListFragment : BaseBottomSheetDialogFragment<NoteListEvent, NoteListEf
     private fun createAdapter() = BaseAdapter(
         PullAdapterItem(),
         SectionHeaderAdapterItem(),
-        NoteAdapterItem(requireContext()),
+        NoteAdapterItem(requireContext()) {
+            analytics.sendClick("EditNote")
+            feature.accept(Wish.Click.EditNote(it))
+        },
         AddActionAdapterItem {
             analytics.sendClick("NewNote")
             feature.accept(Wish.Click.CreateNewNote)

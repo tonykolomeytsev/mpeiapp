@@ -36,8 +36,7 @@ class NotesSource(
                     datetime='$dateTime',
                     cls_name='$classesName',
                     grp_name='$groupName'
-                where _id=${note.id}
-                limit 1;
+                where _id=${note.id};
             """)
         }
     }

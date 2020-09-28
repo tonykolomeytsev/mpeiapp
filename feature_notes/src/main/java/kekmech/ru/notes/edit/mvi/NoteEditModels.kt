@@ -2,13 +2,11 @@ package kekmech.ru.notes.edit.mvi
 
 import kekmech.ru.common_mvi.Feature
 import kekmech.ru.domain_notes.dto.Note
-import kekmech.ru.domain_schedule.dto.Classes
 
 typealias NoteEditFeature = Feature<NoteEditState, NoteEditEvent, NoteEditEffect>
 
 data class NoteEditState(
-    val note: Note,
-    val classes: Classes
+    val note: Note
 )
 
 sealed class NoteEditEvent {
