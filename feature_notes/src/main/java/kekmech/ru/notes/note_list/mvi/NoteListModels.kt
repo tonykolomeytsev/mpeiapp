@@ -22,6 +22,10 @@ sealed class NoteListEvent {
             object CreateNewNote : Wish()
             data class EditNote(val note: Note) : Wish()
         }
+
+        object Action {
+            data class DeleteNote(val note: Note) : Wish()
+        }
     }
 
     sealed class News : NoteListEvent() {
@@ -37,4 +41,5 @@ sealed class NoteListEffect {
 
 sealed class NoteListAction {
     data class LoadNotesForClasses(val classes: Classes) : NoteListAction()
+    data class DeleteNote(val note: Note) : NoteListAction()
 }

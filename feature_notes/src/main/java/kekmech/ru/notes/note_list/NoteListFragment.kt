@@ -12,6 +12,8 @@ import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.ui.BaseBottomSheetDialogFragment
 import kekmech.ru.common_navigation.addScreenForward
 import kekmech.ru.coreui.items.*
+import kekmech.ru.coreui.touch_helpers.attachSwipeToDeleteCallback
+import kekmech.ru.domain_notes.dto.Note
 import kekmech.ru.domain_schedule.dto.Classes
 import kekmech.ru.notes.R
 import kekmech.ru.notes.di.NotesDependencies
@@ -48,6 +50,15 @@ class NoteListFragment : BaseBottomSheetDialogFragment<NoteListEvent, NoteListEf
     override fun onViewCreatedInternal(view: View, savedInstanceState: Bundle?) {
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
+        recyclerView.attachSwipeToDeleteCallback(
+            isTypeForDelete = { adapter.allData.getOrNull(it) is Note }
+        ) { adapterPosition ->
+            val noteToDelete = adapter.allData.getOrNull(adapterPosition) as? Note
+            noteToDelete?.let {
+                analytics.sendClick("DeleteNote")
+                feature.accept(Wish.Action.DeleteNote(it))
+            }
+        }
         analytics.sendScreenShown()
     }
 

@@ -11,5 +11,7 @@ class NoteListActor(
     override fun execute(action: NoteListAction): Observable<NoteListEvent> = when (action) {
         is NoteListAction.LoadNotesForClasses -> notesRepository.getNotes()
             .mapEvents(NoteListEvent.News::NotesLoaded, NoteListEvent.News::NotesLoadError)
+        is NoteListAction.DeleteNote -> notesRepository.deleteNote(action.note)
+            .toObservable() // todo error handling
     }
 }

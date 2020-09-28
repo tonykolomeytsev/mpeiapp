@@ -57,6 +57,10 @@ class NoteListReducer : BaseReducer<NoteListState, NoteListEvent, NoteListEffect
             state = state,
             effect = NoteListEffect.OpenNoteEdit(event.note)
         )
+        is Wish.Action.DeleteNote -> Result(
+            state = state.copy(notes = state.notes.filter { it != event.note }),
+            action = NoteListAction.DeleteNote(event.note)
+        )
     }
 
     private fun matchesPredicate(note: Note, classes: Classes, date: LocalDate): Boolean {
