@@ -6,8 +6,10 @@ import kekmech.ru.domain_schedule.ScheduleFeatureLauncher
 import kekmech.ru.domain_schedule.ScheduleRepository
 import kekmech.ru.domain_schedule.ScheduleService
 import kekmech.ru.feature_schedule.ScheduleFeatureLauncherImpl
+import kekmech.ru.feature_schedule.find_schedule.FindScheduleAnalytics
 import kekmech.ru.feature_schedule.find_schedule.presentation.FindScheduleActor
 import kekmech.ru.feature_schedule.find_schedule.presentation.FindScheduleFeatureFactory
+import kekmech.ru.feature_schedule.main.ScheduleAnalytics
 import kekmech.ru.feature_schedule.main.presentation.ScheduleFeatureFactory
 import org.koin.dsl.bind
 import retrofit2.Retrofit
@@ -21,4 +23,6 @@ object ScheduleModule : ModuleProvider({
     factory { FindScheduleFeatureFactory(get()) } bind FindScheduleFeatureFactory::class
     factory { ScheduleFeatureFactory(get(), get()) } bind ScheduleFeatureFactory::class
     factory { ScheduleDependencies(get(), get()) } bind ScheduleDependencies::class
+    factory { ScheduleAnalytics(get()) } bind ScheduleAnalytics::class
+    factory { FindScheduleAnalytics(get()) } bind ScheduleAnalytics::class
 })
