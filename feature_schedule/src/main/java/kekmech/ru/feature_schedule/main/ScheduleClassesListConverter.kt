@@ -1,6 +1,7 @@
 package kekmech.ru.feature_schedule.main
 
 import kekmech.ru.common_kotlin.addIf
+import kekmech.ru.common_kotlin.get
 import kekmech.ru.domain_schedule.dto.Classes
 import kekmech.ru.domain_schedule.dto.ClassesStackType
 import kekmech.ru.feature_schedule.main.item.*
@@ -40,7 +41,8 @@ object ScheduleClassesListConverter {
         val modifiedClasses = classesWithWindows(rawClasses)
         if (hasSecondAndThirdClasses) {
             val indexForLunchItem = modifiedClasses.indexOfLast { it is Classes && it.number == 2 } + 1
-            modifiedClasses.addAll(indexForLunchItem, listOf(LunchItem))
+            return modifiedClasses[0..indexForLunchItem] +
+                    listOf(LunchItem) + modifiedClasses[indexForLunchItem..modifiedClasses.size]
         }
         return modifiedClasses
     }
@@ -48,6 +50,7 @@ object ScheduleClassesListConverter {
     private fun classesWithWindows(rawClasses: List<Classes>): MutableList<Any> {
         val modifiedClasses = mutableListOf<Any>()
         if (rawClasses.size > 1) {
+            modifiedClasses.add(rawClasses.first())
             for (i in 1 until rawClasses.size) {
                 val currClasses = rawClasses[i]
                 val prevClasses = rawClasses[i - 1]
@@ -56,8 +59,8 @@ object ScheduleClassesListConverter {
                         timeStart = prevClasses.time.end,
                         timeEnd = currClasses.time.start
                     )
-                ) { rawClasses[i].number - rawClasses[i - 1].number > 1 }
-                modifiedClasses.add(rawClasses[i])
+                ) { currClasses.number - prevClasses.number > 1 }
+                modifiedClasses.add(currClasses)
             }
         } else {
             modifiedClasses.addAll(rawClasses)
