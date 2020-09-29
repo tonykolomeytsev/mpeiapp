@@ -6,41 +6,22 @@ import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.feature_schedule.R
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.item_window.*
 import java.time.LocalTime
-import java.time.format.DateTimeFormatter
 
 data class WindowItem(
     val timeStart: LocalTime,
     val timeEnd: LocalTime
 )
 
-interface WindowViewHolder {
-    fun setTimeStart(text: String)
-    fun setTimeEnd(text: String)
-}
+interface WindowViewHolder
 
 class WindowViewHolderImpl(
     override val containerView: View
-) : RecyclerView.ViewHolder(containerView), WindowViewHolder, LayoutContainer {
-
-    override fun setTimeStart(text: String) {
-        textViewTimeStart.text = text
-    }
-
-    override fun setTimeEnd(text: String) {
-        textViewTimeEnd.text = text
-    }
-}
+) : RecyclerView.ViewHolder(containerView), WindowViewHolder, LayoutContainer
 
 class WindowItemBinder : BaseItemBinder<WindowViewHolder, WindowItem>() {
 
-    private val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
-
-    override fun bind(vh: WindowViewHolder, model: WindowItem, position: Int) {
-        vh.setTimeStart(model.timeStart.format(timeFormatter))
-        vh.setTimeEnd(model.timeEnd.format(timeFormatter))
-    }
+    override fun bind(vh: WindowViewHolder, model: WindowItem, position: Int) = Unit
 }
 
 class WindowAdapterItem : AdapterItem<WindowViewHolder, WindowItem>(
