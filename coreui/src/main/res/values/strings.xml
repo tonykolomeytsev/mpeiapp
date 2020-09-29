@@ -108,6 +108,7 @@
     <string name="dashboard_item_change_group">Группа %s</string>
     <string name="dashboard_section_header_events">Ближайшие события</string>
     <string name="dashboard_section_header_notes">Заметки</string>
+    <string name="dashboard_section_header_notes_action">ПОКАЗАТЬ ВСЕ</string>
     <string name="dashboard_events_today">Сегодняшние пары</string>
     <string name="dashboard_events_tomorrow">Завтрашние пары</string>
     <string name="dashboard_banner_lunch_header">Судя по всему, сейчас обеденный перерыв</string>

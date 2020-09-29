@@ -1,0 +1,2 @@
+package kekmech.ru.notes
+

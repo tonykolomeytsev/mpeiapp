@@ -16,7 +16,8 @@ data class SectionHeaderItem(
     val title: String? = null,
     @StringRes val titleRes: Int? = null,
     val subtitle: String? = null,
-    val itemId: Int = ITEM_SECTION_HEADER_DEFAULT_ID
+    val itemId: Int = ITEM_SECTION_HEADER_DEFAULT_ID,
+    @StringRes val actionNameRes: Int? = null
 )
 
 interface SectionHeaderViewHolder {
@@ -24,6 +25,8 @@ interface SectionHeaderViewHolder {
     fun setTitle(@StringRes resId: Int)
     fun setSubtitle(subtitle: String)
     fun setSubtitleVisibility(isVisible: Boolean)
+    fun setActionName(actionNameRes: Int)
+    fun setOnActionClickListener(listener: (View) -> Unit)
 }
 
 class SectionHeaderViewHolderImpl(
@@ -45,24 +48,37 @@ class SectionHeaderViewHolderImpl(
     override fun setSubtitleVisibility(isVisible: Boolean) {
         textViewSubtitle.isVisible = isVisible
     }
+
+    override fun setActionName(actionNameRes: Int) {
+        textViewAction.setText(actionNameRes)
+    }
+
+    override fun setOnActionClickListener(listener: (View) -> Unit) {
+        textViewAction.setOnClickListener(listener)
+    }
 }
 
-class SectionHeaderItemBinder : BaseItemBinder<SectionHeaderViewHolder, SectionHeaderItem>() {
+class SectionHeaderItemBinder(
+    private val onActionClickListener: ((SectionHeaderItem) -> Unit)?
+) : BaseItemBinder<SectionHeaderViewHolder, SectionHeaderItem>() {
 
     override fun bind(vh: SectionHeaderViewHolder, model: SectionHeaderItem, position: Int) {
         vh.setSubtitleVisibility(model.subtitle != null)
         model.subtitle?.let(vh::setSubtitle)
         model.title?.let(vh::setTitle)
         model.titleRes?.let(vh::setTitle)
+        model.actionNameRes?.let(vh::setActionName)
+        vh.setOnActionClickListener { onActionClickListener?.invoke(model) }
     }
 }
 
 class SectionHeaderAdapterItem(
-    itemId: Int = ITEM_SECTION_HEADER_DEFAULT_ID
+    itemId: Int = ITEM_SECTION_HEADER_DEFAULT_ID,
+    onActionClickListener: ((SectionHeaderItem) -> Unit)? = null
 ) : AdapterItem<SectionHeaderViewHolder, SectionHeaderItem>(
     isType = { it is SectionHeaderItem && it.itemId == itemId },
     layoutRes = R.layout.item_section_header,
     viewHolderGenerator = ::SectionHeaderViewHolderImpl,
-    itemBinder = SectionHeaderItemBinder(),
+    itemBinder = SectionHeaderItemBinder(onActionClickListener),
     areItemsTheSame = { a, b -> a.title == b.title && a.titleRes == b.titleRes }
 )
