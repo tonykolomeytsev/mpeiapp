@@ -12,10 +12,7 @@ import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.ui.BaseFragment
 import kekmech.ru.common_navigation.BottomTab
 import kekmech.ru.coreui.banner.showBanner
-import kekmech.ru.coreui.items.AddActionAdapterItem
-import kekmech.ru.coreui.items.NoteAdapterItem
-import kekmech.ru.coreui.items.SectionHeaderAdapterItem
-import kekmech.ru.coreui.items.SpaceAdapterItem
+import kekmech.ru.coreui.items.*
 import kekmech.ru.domain_schedule.CONTINUE_TO_BACK_STACK_WITH_RESULT
 import kekmech.ru.feature_dashboard.di.DashboardDependencies
 import kekmech.ru.feature_dashboard.items.*
@@ -97,7 +94,8 @@ class DashboardFragment : BaseFragment<DashboardEvent, DashboardEffect, Dashboar
                 targetFragment = parentFragment,
                 requestCode = REQUEST_CODE_FIND_SCHEDULE
             )
-        }
+        },
+        EmptyStateAdapterItem()
     )
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

@@ -13,9 +13,7 @@ import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.ui.BaseFragment
 import kekmech.ru.common_navigation.addScreenForward
 import kekmech.ru.coreui.attachScrollListenerForAppBarLayoutShadow
-import kekmech.ru.coreui.items.NoteAdapterItem
-import kekmech.ru.coreui.items.SectionHeaderAdapterItem
-import kekmech.ru.coreui.items.SpaceAdapterItem
+import kekmech.ru.coreui.items.*
 import kekmech.ru.coreui.touch_helpers.attachSwipeToDeleteCallback
 import kekmech.ru.domain_notes.dto.Note
 import kekmech.ru.notes.R
@@ -69,7 +67,9 @@ class AllNotesFragment : BaseFragment<AllNotesEvent, AllNotesEffect, AllNotesSta
             analytics.sendClick("EditNote")
             navigateToNoteEdit(it)
         },
-        SectionHeaderAdapterItem()
+        SectionHeaderAdapterItem(),
+        ShimmerAdapterItem(0, R.layout.item_note_shimmer),
+        EmptyStateAdapterItem()
     )
 
     private fun navigateToNoteEdit(note: Note) = addScreenForward {
