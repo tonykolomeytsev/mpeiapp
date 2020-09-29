@@ -35,15 +35,16 @@ class NoteEditReducer : BaseReducer<NoteEditState, NoteEditEvent, NoteEditEffect
     ): Result<NoteEditState, NoteEditEffect, NoteEditAction> = when (event) {
         is Wish.Init -> Result(state = state)
         is Wish.Click.SaveNote -> {
-            val newState = state.copy(
-                note = state.note.copy(
-                    content = event.content
-                )
-            )
             Result(
-                state = newState,
-                action = NoteEditAction.SaveNote(newState.note)
+                state = state,
+                action = NoteEditAction.SaveNote(state.note)
             )
+        }
+        is Wish.Action.NoteContentChanged -> {
+            val newState = state.copy(
+                note = state.note.copy(content = event.content)
+            )
+            Result(state = newState)
         }
     }
 }
