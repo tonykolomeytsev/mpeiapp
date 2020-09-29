@@ -8,6 +8,7 @@ import kekmech.ru.common_navigation.ShowDialog
 import kekmech.ru.domain_notes.NotesFeatureLauncher
 import kekmech.ru.domain_notes.dto.Note
 import kekmech.ru.domain_schedule.dto.Classes
+import kekmech.ru.notes.all_notes.AllNotesFragment
 import kekmech.ru.notes.edit.NoteEditFragment
 import kekmech.ru.notes.note_list.NoteListFragment
 import java.time.LocalDate
@@ -43,5 +44,9 @@ class NotesFeatureLauncherImpl(
                 }
             }
         })
+    }
+
+    override fun launchAllNotes() {
+        router.executeCommand(AddScreenForward { AllNotesFragment() })
     }
 }

@@ -5,7 +5,6 @@ import kekmech.ru.common_android.moscowLocalDate
 import kekmech.ru.common_android.moscowLocalTime
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.coreui.PrettyDateFormatter
-import kekmech.ru.coreui.items.AddActionItem
 import kekmech.ru.coreui.items.SectionHeaderItem
 import kekmech.ru.coreui.items.SpaceItem
 import kekmech.ru.domain_schedule.dto.Classes
@@ -21,7 +20,8 @@ class DashboardListConverter(
 ) {
 
     private val notesHeader by fastLazy { SectionHeaderItem(
-        title = context.getString(R.string.dashboard_section_header_notes)
+        titleRes = R.string.dashboard_section_header_notes,
+        actionNameRes = R.string.dashboard_section_header_notes_action
     ) }
 
     private val formatter = PrettyDateFormatter(context)
@@ -65,15 +65,6 @@ class DashboardListConverter(
                 addAll(it)
             }
 
-//            addAll(listOf(
-//                NoteItem("Сдать типовой расчет №1", LocalDate.now().plusDays(1), "Вычислительная ммеханика"),
-//                NoteItem("Лабораторная работа №1, принести бланки", LocalDate.now().plusDays(2), "Вычислительная ммеханика"),
-//                NoteItem("Сдать типовой расчет №2", LocalDate.now().plusDays(3), "Теория колебаний"),
-//                NoteItem("Подготовиться к контрольной", LocalDate.now().plusDays(4), "Физика")
-//            ))
-
-            add(SpaceItem.VERTICAL_24)
-            add(AddActionItem("СОЗДАТЬ ЗАМЕТКУ"))
             add(SpaceItem.VERTICAL_24)
         }
     }

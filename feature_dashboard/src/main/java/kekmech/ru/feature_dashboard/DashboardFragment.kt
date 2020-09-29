@@ -81,7 +81,10 @@ class DashboardFragment : BaseFragment<DashboardEvent, DashboardEffect, Dashboar
             analytics.sendClick("BannerOpenSource")
             requireContext().openLinkExternal("https://vk.com/kekmech")
         },
-        SectionHeaderAdapterItem(),
+        SectionHeaderAdapterItem {
+            analytics.sendClick("ShowAllNotes")
+            dependencies.notesFeatureLauncher.launchAllNotes()
+        },
         NoteAdapterItem(requireContext()),
         AddActionAdapterItem(),
         DayStatusAdapterItem(),

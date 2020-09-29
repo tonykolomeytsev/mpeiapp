@@ -19,4 +19,6 @@ interface NotesFeatureLauncher {
         targetFragment: Fragment? = null,
         requestCode: Int? = null
     )
+
+    fun launchAllNotes()
 }

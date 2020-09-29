@@ -5,6 +5,9 @@ import kekmech.ru.domain_notes.NotesFeatureLauncher
 import kekmech.ru.domain_notes.NotesRepository
 import kekmech.ru.domain_notes.NotesSource
 import kekmech.ru.notes.NotesFeatureLauncherImpl
+import kekmech.ru.notes.all_notes.AllNotesAnalytics
+import kekmech.ru.notes.all_notes.mvi.AllNotesActor
+import kekmech.ru.notes.all_notes.mvi.AllNotesFeatureFactory
 import kekmech.ru.notes.edit.NoteEditAnalytics
 import kekmech.ru.notes.edit.mvi.NoteEditActor
 import kekmech.ru.notes.edit.mvi.NoteEditFeatureFactory
@@ -16,7 +19,7 @@ import org.koin.dsl.bind
 object NotesModule : ModuleProvider({
     factory { NotesSource(get()) } bind NotesSource::class
     factory { NotesRepository(get(), get()) } bind NotesRepository::class
-    factory { NotesDependencies(get(), get()) } bind NotesDependencies::class
+    factory { NotesDependencies(get(), get(), get()) } bind NotesDependencies::class
     factory { NotesFeatureLauncherImpl(get()) } bind NotesFeatureLauncher::class
 
     factory { NoteListFeatureFactory(get()) } bind NoteListFeatureFactory::class
@@ -25,6 +28,10 @@ object NotesModule : ModuleProvider({
     factory { NoteEditFeatureFactory(get()) } bind NoteEditFeatureFactory::class
     factory { NoteEditActor(get()) } bind NoteEditActor::class
 
+    factory { AllNotesFeatureFactory(get()) } bind AllNotesFeatureFactory::class
+    factory { AllNotesActor(get()) } bind AllNotesActor::class
+
     factory { NoteListAnalytics(get()) } bind NoteListAnalytics::class
     factory { NoteEditAnalytics(get()) } bind NoteEditAnalytics::class
+    factory { AllNotesAnalytics(get()) } bind AllNotesAnalytics::class
 })
