@@ -5,7 +5,12 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import com.example.map.R
+import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_android.doOnApplyWindowInsets
@@ -15,13 +20,17 @@ import kekmech.ru.common_mvi.ui.BaseFragment
 import kekmech.ru.coreui.items.PullAdapterItem
 import kekmech.ru.coreui.items.SectionHeaderAdapterItem
 import kekmech.ru.coreui.items.SpaceAdapterItem
+import kekmech.ru.domain_map.dto.MapMarker
 import kekmech.ru.map.di.MapDependencies
+import kekmech.ru.map.ext.init
+import kekmech.ru.map.ext.toMarkerType
 import kekmech.ru.map.items.FilterTabItem
 import kekmech.ru.map.items.MapMarkerAdapterItem
 import kekmech.ru.map.items.TabBarAdapterItem
 import kekmech.ru.map.presentation.*
 import kekmech.ru.map.presentation.MapEvent.Wish
 import kekmech.ru.map.view.ControlledScrollingLayoutManager
+import kekmech.ru.map.view.MarkersBitmapFactory
 import kotlinx.android.synthetic.main.fragment_map.*
 import org.koin.android.ext.android.inject
 
@@ -39,6 +48,8 @@ class MapFragment : BaseFragment<MapEvent, MapEffect, MapState, MapFeature>() {
     private val adapter by fastLazy { createAdapter() }
 
     private val analytics: MapAnalytics by inject()
+
+    private val markersBitmapFactory: MarkersBitmapFactory by inject()
 
     override fun onViewCreatedInternal(view: View, savedInstanceState: Bundle?) {
         Handler().postDelayed({ createMap() }, 50L)
@@ -87,8 +98,32 @@ class MapFragment : BaseFragment<MapEvent, MapEffect, MapState, MapFeature>() {
         }
     }
 
-    override fun handleEffect(effect: MapEffect) {
+    override fun handleEffect(effect: MapEffect) = when (effect) {
+        is MapEffect.GenerateGoogleMapMarkers -> {
+            val markers = generateGoogleMapMarkers(effect.map, effect.markers, effect.googleMapMarkers, effect.selectedTab)
+            feature.accept(Wish.Action.GoogleMapMarkersGenerated(markers))
+        }
+    }
 
+    private fun generateGoogleMapMarkers(
+        map: GoogleMap?,
+        markers: List<MapMarker>?,
+        googleMapMarkers: List<Marker>,
+        selectedTab: FilterTab
+    ): List<Marker> {
+        if (markers.isNullOrEmpty() || map == null) return emptyList()
+        googleMapMarkers.forEach { it.remove() }
+        return markers
+            .filter { it.type == selectedTab.toMarkerType() }
+            .map { map.addMarker(
+                MarkerOptions()
+                    .title(it.name)
+                    .position(LatLng(it.location.lat, it.location.lng))
+                    .icon(
+                        BitmapDescriptorFactory.fromBitmap(
+                        markersBitmapFactory.getBitmap(it)
+                    ))
+            ) }
     }
 
     private fun createAdapter() = BaseAdapter(

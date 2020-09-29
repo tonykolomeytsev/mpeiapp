@@ -5,7 +5,7 @@ import kekmech.ru.coreui.items.PullItem
 import kekmech.ru.coreui.items.SectionHeaderItem
 import kekmech.ru.coreui.items.SpaceItem
 import kekmech.ru.domain_map.dto.MapMarker
-import kekmech.ru.domain_map.dto.MarkerType
+import kekmech.ru.map.ext.toMarkerType
 import kekmech.ru.map.items.TabBarItem
 import kekmech.ru.map.presentation.FilterTab
 import kekmech.ru.map.presentation.MapState
@@ -49,14 +49,6 @@ class MapListConverter {
         FilterTab.STRUCTURES -> SectionHeaderItem(
             titleRes = R.string.map_section_name_structures
         )
-    }
-
-    private fun FilterTab.toMarkerType() = when (this) {
-        FilterTab.FOOD -> MarkerType.FOOD
-        FilterTab.BUILDINGS -> MarkerType.BUILDING
-        FilterTab.HOSTELS -> MarkerType.HOSTEL
-        FilterTab.OTHERS -> MarkerType.OTHER
-        FilterTab.STRUCTURES -> MarkerType.STRUCTURE
     }
 
     private fun createListWithSections(markers: List<MapMarker>): List<Any> {

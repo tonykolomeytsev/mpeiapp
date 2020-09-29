@@ -1,6 +1,7 @@
 package kekmech.ru.map.presentation
 
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.model.Marker
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kekmech.ru.common_mvi.Feature
 import kekmech.ru.domain_map.dto.MapMarker
@@ -11,7 +12,8 @@ data class MapState(
     val selectedTab: FilterTab = FilterTab.FOOD,
     val markers: List<MapMarker> = emptyList(),
     val map: GoogleMap? = null,
-    val bottomSheetState: Int = BottomSheetBehavior.STATE_COLLAPSED
+    val bottomSheetState: Int = BottomSheetBehavior.STATE_COLLAPSED,
+    val googleMapMarkers: List<Marker> = emptyList()
 )
 
 enum class FilterTab { FOOD, BUILDINGS, HOSTELS, OTHERS, STRUCTURES }
@@ -25,6 +27,7 @@ sealed class MapEvent {
             data class OnMapReady(val map: GoogleMap) : Wish()
             data class SelectTab(val tab: FilterTab) : Wish()
             data class BottomSheetStateChanged(val newState: Int) : Wish()
+            data class GoogleMapMarkersGenerated(val googleMapMarkers: List<Marker>) : Wish()
         }
     }
 
@@ -35,7 +38,12 @@ sealed class MapEvent {
 }
 
 sealed class MapEffect {
-
+    data class GenerateGoogleMapMarkers(
+        val map: GoogleMap?,
+        val markers: List<MapMarker>?,
+        val googleMapMarkers: List<Marker>,
+        val selectedTab: FilterTab
+    ) : MapEffect()
 }
 
 sealed class MapAction {
