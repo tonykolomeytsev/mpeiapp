@@ -5,6 +5,7 @@ import kekmech.ru.common_android.moscowLocalDate
 import kekmech.ru.common_android.moscowLocalTime
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.coreui.PrettyDateFormatter
+import kekmech.ru.coreui.items.EmptyStateItem
 import kekmech.ru.coreui.items.SectionHeaderItem
 import kekmech.ru.coreui.items.SpaceItem
 import kekmech.ru.domain_schedule.dto.Classes
@@ -60,9 +61,14 @@ class DashboardListConverter(
             }
             add(SpaceItem.VERTICAL_16)
             add(notesHeader)
-            state.notes?.let {
+            state.notes?.takeIf { it.isNotEmpty() }?.let {
                 add(SpaceItem.VERTICAL_12)
                 addAll(it)
+            } ?: run {
+                add(EmptyStateItem(
+                    titleRes = R.string.all_notes_empty_state_title,
+                    subtitleRes = R.string.all_notes_empty_state_subtitle
+                ))
             }
 
             add(SpaceItem.VERTICAL_24)

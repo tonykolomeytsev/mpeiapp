@@ -9,6 +9,7 @@ dependencies {
     implementation androidx.recyclerview
     implementation androidx.coreKtx
     implementation google.material
+    implementation facebook.shimmer
 
     implementation project(path: ":domain_schedule")
     implementation project(path: ":domain_notes")

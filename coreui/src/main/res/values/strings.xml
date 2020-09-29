@@ -144,8 +144,10 @@
     <string name="note_edit_button_save">Сохранить</string>
 
     <string name="all_notes_screen_title">Все заметки</string>
-    <string name="all_notes_section_header_forthcoming">Предстоящие заметки</string>
+    <string name="all_notes_section_header_forthcoming">Актуальные заметки</string>
     <string name="all_notes_section_header_past">Прошедшие заметки</string>
+    <string name="all_notes_empty_state_title">Вы пока не создали ни одной заметки</string>
+    <string name="all_notes_empty_state_subtitle">Для создания заметки нажмите на любую пару в разделе расписания</string>
 
     <string name="app_settings_screen_title">Настройки</string>
     <string name="app_settings_header_schedule">Расписание</string>
