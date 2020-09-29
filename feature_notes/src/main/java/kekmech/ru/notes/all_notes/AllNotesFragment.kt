@@ -1,13 +1,17 @@
 package kekmech.ru.notes.all_notes
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_analytics.addScrollAnalytics
+import kekmech.ru.common_android.ActivityResultListener
 import kekmech.ru.common_android.addSystemVerticalPadding
+import kekmech.ru.common_android.withResultFor
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.ui.BaseFragment
+import kekmech.ru.common_navigation.addScreenForward
 import kekmech.ru.coreui.attachScrollListenerForAppBarLayoutShadow
 import kekmech.ru.coreui.items.NoteAdapterItem
 import kekmech.ru.coreui.items.SectionHeaderAdapterItem
@@ -21,10 +25,13 @@ import kekmech.ru.notes.all_notes.mvi.AllNotesEvent.Wish
 import kekmech.ru.notes.all_notes.mvi.AllNotesFeature
 import kekmech.ru.notes.all_notes.mvi.AllNotesState
 import kekmech.ru.notes.di.NotesDependencies
+import kekmech.ru.notes.edit.NoteEditFragment
 import kotlinx.android.synthetic.main.fragment_all_notes.*
 import org.koin.android.ext.android.inject
 
-class AllNotesFragment : BaseFragment<AllNotesEvent, AllNotesEffect, AllNotesState, AllNotesFeature>() {
+const val NOTE_EDIT_REQUEST_CODE = 54692
+
+class AllNotesFragment : BaseFragment<AllNotesEvent, AllNotesEffect, AllNotesState, AllNotesFeature>(), ActivityResultListener {
 
     override val initEvent = Wish.Init
 
@@ -45,14 +52,9 @@ class AllNotesFragment : BaseFragment<AllNotesEvent, AllNotesEffect, AllNotesSta
         recyclerView.adapter = adapter
         recyclerView.attachScrollListenerForAppBarLayoutShadow(appBarLayout)
         recyclerView.addScrollAnalytics(analytics, "RecyclerView")
-        recyclerView.attachSwipeToDeleteCallback(
-            isTypeForDelete = { adapter.allData.getOrNull(it) is Note }
-        ) { adapterPosition ->
-            val noteToDelete = adapter.allData.getOrNull(adapterPosition) as? Note
-            noteToDelete?.let {
-                analytics.sendClick("DeleteNote")
-                feature.accept(Wish.Action.DeleteNote(it))
-            }
+        recyclerView.attachSwipeToDeleteCallback(isItemForDelete = { it is Note }) { note ->
+            analytics.sendClick("DeleteNote")
+            feature.accept(Wish.Action.DeleteNote(note as Note))
         }
         analytics.sendScreenShown()
     }
@@ -61,13 +63,23 @@ class AllNotesFragment : BaseFragment<AllNotesEvent, AllNotesEffect, AllNotesSta
         adapter.update(AllNotesListConverter().map(state))
     }
 
-    override fun handleEffect(effect: AllNotesEffect) {
-
-    }
-
     private fun createAdapter() = BaseAdapter(
         SpaceAdapterItem(),
-        NoteAdapterItem(requireContext()),
+        NoteAdapterItem(requireContext()) {
+            analytics.sendClick("EditNote")
+            navigateToNoteEdit(it)
+        },
         SectionHeaderAdapterItem()
     )
+
+    private fun navigateToNoteEdit(note: Note) = addScreenForward {
+        NoteEditFragment.newInstance(note)
+            .withResultFor(this, NOTE_EDIT_REQUEST_CODE)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == NOTE_EDIT_REQUEST_CODE) {
+            feature.accept(Wish.Init)
+        }
+    }
 }
