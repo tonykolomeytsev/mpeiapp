@@ -1,4 +1,4 @@
-package kekmech.ru.map
+package kekmech.ru.map.ext
 
 import android.annotation.SuppressLint
 import android.content.Context

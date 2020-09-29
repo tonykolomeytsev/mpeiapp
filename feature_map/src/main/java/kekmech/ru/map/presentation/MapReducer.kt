@@ -4,10 +4,13 @@ import kekmech.ru.common_mvi.BaseReducer
 import kekmech.ru.common_mvi.Result
 import kekmech.ru.map.presentation.MapEvent.News
 import kekmech.ru.map.presentation.MapEvent.Wish
+import kekmech.ru.map.view.MarkersBitmapFactory
 
 typealias MapResult = Result<MapState, MapEffect, MapAction>
 
-class MapReducer : BaseReducer<MapState, MapEvent, MapEffect, MapAction> {
+class MapReducer(
+    private val markersBitmapFactory: MarkersBitmapFactory
+) : BaseReducer<MapState, MapEvent, MapEffect, MapAction> {
 
     override fun reduce(
         event: MapEvent,
@@ -26,13 +29,22 @@ class MapReducer : BaseReducer<MapState, MapEvent, MapEffect, MapAction> {
             action = MapAction.ObserveMarkers
         )
         is Wish.Action.OnMapReady -> Result(
-            state = state.copy(map = event.map)
+            state = state.copy(
+                map = event.map
+            ),
+            effect = MapEffect.GenerateGoogleMapMarkers(event.map, state.markers, state.googleMapMarkers, state.selectedTab)
         )
         is Wish.Action.SelectTab -> Result(
-            state = state.copy(selectedTab = event.tab)
+            state = state.copy(
+                selectedTab = event.tab
+            ),
+            effect = MapEffect.GenerateGoogleMapMarkers(state.map, state.markers, state.googleMapMarkers, event.tab)
         )
         is Wish.Action.BottomSheetStateChanged -> Result(
             state = state.copy(bottomSheetState = event.newState)
+        )
+        is Wish.Action.GoogleMapMarkersGenerated -> Result(
+            state = state.copy(googleMapMarkers = event.googleMapMarkers)
         )
     }
 
