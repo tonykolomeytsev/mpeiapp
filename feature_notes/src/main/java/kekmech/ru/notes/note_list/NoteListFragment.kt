@@ -50,14 +50,9 @@ class NoteListFragment : BaseBottomSheetDialogFragment<NoteListEvent, NoteListEf
     override fun onViewCreatedInternal(view: View, savedInstanceState: Bundle?) {
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
-        recyclerView.attachSwipeToDeleteCallback(
-            isTypeForDelete = { adapter.allData.getOrNull(it) is Note }
-        ) { adapterPosition ->
-            val noteToDelete = adapter.allData.getOrNull(adapterPosition) as? Note
-            noteToDelete?.let {
-                analytics.sendClick("DeleteNote")
-                feature.accept(Wish.Action.DeleteNote(it))
-            }
+        recyclerView.attachSwipeToDeleteCallback(isItemForDelete = { it is Note }) { note ->
+            analytics.sendClick("DeleteNote")
+            feature.accept(Wish.Action.DeleteNote(note as Note))
         }
         analytics.sendScreenShown()
     }

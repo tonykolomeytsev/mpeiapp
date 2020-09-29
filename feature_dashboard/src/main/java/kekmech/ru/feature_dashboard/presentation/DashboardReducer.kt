@@ -7,7 +7,6 @@ import kekmech.ru.domain_notes.dto.Note
 import kekmech.ru.feature_dashboard.presentation.DashboardEvent.News
 import kekmech.ru.feature_dashboard.presentation.DashboardEvent.Wish
 import java.time.DayOfWeek
-import java.time.LocalDate
 import java.time.temporal.ChronoUnit
 
 typealias DashboardResult = Result<DashboardState, DashboardEffect, DashboardAction>
@@ -87,7 +86,7 @@ class DashboardReducer : BaseReducer<DashboardState, DashboardEvent, DashboardEf
 
     private fun getImportantNotes(notes: List<Note>): List<Note> =
         notes
-            .filter { ChronoUnit.DAYS.between(LocalDate.now(), it.dateTime.toLocalDate()) in 0..7 } // todo make with settings
+            .filter { ChronoUnit.DAYS.between(moscowLocalDate(), it.dateTime.toLocalDate()) in 0..7 } // todo make with settings
             .sortedBy { it.dateTime }
             .take(5) // todo make with settings
 }

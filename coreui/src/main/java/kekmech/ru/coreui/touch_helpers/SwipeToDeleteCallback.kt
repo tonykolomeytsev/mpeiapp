@@ -9,6 +9,7 @@ import android.graphics.drawable.ColorDrawable
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_android.getResColor
 import kekmech.ru.common_android.getThemeColor
 import kekmech.ru.coreui.R
@@ -17,8 +18,7 @@ import kekmech.ru.coreui.R
  * According to https://medium.com/@kitek/recyclerview-swipe-to-delete-easier-than-you-thought-cff67ff5e5f6
  */
 abstract class SwipeToDeleteCallback(
-    context: Context,
-    private val isTypeForDelete: (adapterPosition: Int) -> Boolean = { true }
+    context: Context
 ) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
 
     private val deleteIcon = ContextCompat.getDrawable(context, R.drawable.ic_delete_24px)!!
@@ -39,7 +39,7 @@ abstract class SwipeToDeleteCallback(
          * if (viewHolder?.itemViewType == YourAdapter.SOME_TYPE) return 0
          * if (viewHolder?.adapterPosition == 0) return 0
          */
-        if (!isTypeForDelete(viewHolder.adapterPosition)) return 0
+        if (!isTypeForDelete(viewHolder.adapterPosition, viewHolder.itemViewType)) return 0
         return super.getMovementFlags(recyclerView, viewHolder)
     }
 
@@ -91,16 +91,26 @@ abstract class SwipeToDeleteCallback(
     private fun clearCanvas(c: Canvas?, left: Float, top: Float, right: Float, bottom: Float) {
         c?.drawRect(left, top, right, bottom, clearPaint)
     }
+
+    abstract fun isTypeForDelete(adapterPosition: Int, itemViewType: Int): Boolean
 }
 
 fun RecyclerView.attachSwipeToDeleteCallback(
-    isTypeForDelete: (adapterPosition: Int) -> Boolean = { true },
-    callback: ((adapterPosition: Int) -> Unit)
+    isItemForDelete: (Any) -> Boolean,
+    callback: (Any) -> Unit
 ) {
-    val swipeHandler = object : SwipeToDeleteCallback(context, isTypeForDelete) {
+    val baseAdapter = (adapter as? BaseAdapter)
+        ?: error("This function can only be used with RecyclerView with BaseAdapter. Your adapter is ${adapter?.javaClass?.simpleName}.")
+    val swipeHandler = object : SwipeToDeleteCallback(context) {
 
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-            callback.invoke(viewHolder.adapterPosition)
+            val item = baseAdapter.allData.getOrNull(viewHolder.adapterPosition)
+            item?.let(callback)
+        }
+
+        override fun isTypeForDelete(adapterPosition: Int, itemViewType: Int): Boolean {
+            val item = baseAdapter.allData.getOrNull(adapterPosition)
+            return item?.let(isItemForDelete) ?: false
         }
     }
     val itemTouchHelper = ItemTouchHelper(swipeHandler)

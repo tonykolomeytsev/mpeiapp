@@ -141,6 +141,10 @@
     <string name="note_edit_screen_title">Заметка</string>
     <string name="note_edit_button_save">Сохранить</string>
 
+    <string name="all_notes_screen_title">Все заметки</string>
+    <string name="all_notes_section_header_forthcoming">Предстоящие заметки</string>
+    <string name="all_notes_section_header_past">Прошедшие заметки</string>
+
     <string name="app_settings_screen_title">Настройки</string>
     <string name="app_settings_header_schedule">Расписание</string>
     <string name="app_settings_dark_theme">Темная тема</string>
