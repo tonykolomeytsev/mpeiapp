@@ -15,7 +15,11 @@ sealed class NoteEditEvent {
         object Init : Wish()
 
         object Click {
-            data class SaveNote(val content: String) : Wish()
+            object SaveNote : Wish()
+        }
+
+        object Action {
+            data class NoteContentChanged(val content: String) : Wish()
         }
     }
 

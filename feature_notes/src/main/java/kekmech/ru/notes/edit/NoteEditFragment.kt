@@ -2,8 +2,16 @@ package kekmech.ru.notes.edit
 
 import android.os.Bundle
 import android.view.View
-import kekmech.ru.common_android.*
+import androidx.recyclerview.widget.LinearLayoutManager
+import kekmech.ru.common_adapter.BaseAdapter
+import kekmech.ru.common_android.addSystemVerticalPadding
+import kekmech.ru.common_android.closeWithSuccess
+import kekmech.ru.common_android.getArgument
+import kekmech.ru.common_android.withArguments
+import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.ui.BaseFragment
+import kekmech.ru.coreui.PrettyDateFormatter
+import kekmech.ru.coreui.attachScrollListenerForAppBarLayoutShadow
 import kekmech.ru.coreui.banner.showBanner
 import kekmech.ru.domain_notes.dto.Note
 import kekmech.ru.notes.R
@@ -32,24 +40,41 @@ class NoteEditFragment : BaseFragment<NoteEditEvent, NoteEditEffect, NoteEditSta
 
     private val analytics: NoteEditAnalytics by inject()
 
+    private val adapter by fastLazy {
+        BaseAdapter(NoteEditAdapterItem(::onNoteContentChanged))
+    }
+
+    private val formatter by fastLazy { PrettyDateFormatter(requireContext()) }
+
     override fun onViewCreatedInternal(view: View, savedInstanceState: Bundle?) {
         view.addSystemVerticalPadding()
         toolbar.init()
-        editTextContent.showKeyboard()
         buttonSave.setOnClickListener {
             analytics.sendClick("SaveNote")
-            feature.accept(Wish.Click.SaveNote(editTextContent.text.toString()))
+            feature.accept(Wish.Click.SaveNote)
         }
+        recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, true)
+        recyclerView.adapter = adapter
+        recyclerView.itemAnimator = null
+        recyclerView.attachScrollListenerForAppBarLayoutShadow(appBarLayout)
         analytics.sendScreenShown()
     }
 
     override fun render(state: NoteEditState) {
-        editTextContent.setText(state.note.content)
+        if (adapter.allData.isEmpty())
+            adapter.update(listOf(state.note))
+        textViewNoteDiscipline.text = state.note.classesName
+        textViewNoteDate.text = formatter.formatRelative(state.note.dateTime.toLocalDate())
     }
 
     override fun handleEffect(effect: NoteEditEffect) = when (effect) {
         is NoteEditEffect.CloseWithSuccess -> closeWithSuccess()
         is NoteEditEffect.ShowError -> showBanner(R.string.something_went_wrong_error)
+    }
+
+    private fun onNoteContentChanged(content: String) {
+        appBarLayout.isSelected = recyclerView.canScrollVertically(-1)
+        feature.accept(Wish.Action.NoteContentChanged(content))
     }
 
     companion object {

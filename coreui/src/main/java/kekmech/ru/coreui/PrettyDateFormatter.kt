@@ -11,6 +11,8 @@ class PrettyDateFormatter(context: Context) {
     private val today = context.getString(R.string.today)
     private val tomorrow = context.getString(R.string.tomorrow)
     private val afterTomorrow = context.getString(R.string.after_tomorrow)
+    private val yesterday = context.getString(R.string.yesterday)
+    private val beforeYesterday = context.getString(R.string.before_yesterday)
 
     fun formatRelative(date: LocalDate): String {
         val now = LocalDate.now()
@@ -19,6 +21,8 @@ class PrettyDateFormatter(context: Context) {
             0L -> today
             1L -> tomorrow
             2L -> afterTomorrow
+            -1L -> yesterday
+            -2L -> beforeYesterday
             else -> {
                 val dayOfWeek = listOfDayNames
                     .getOrNull(date.dayOfWeek.value - 1)

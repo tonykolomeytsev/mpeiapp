@@ -74,6 +74,8 @@
     <string name="today">Сегодня</string>
     <string name="tomorrow">Завтра</string>
     <string name="after_tomorrow">Послезавтра</string>
+    <string name="yesterday">Вчера</string>
+    <string name="before_yesterday">Позавчера</string>
 
     <string name="something_went_wrong_error">Что-то пошло не так…</string>
 
