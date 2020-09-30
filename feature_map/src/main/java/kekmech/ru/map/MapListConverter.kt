@@ -1,6 +1,5 @@
 package kekmech.ru.map
 
-import com.example.map.R
 import kekmech.ru.coreui.items.PullItem
 import kekmech.ru.coreui.items.SectionHeaderItem
 import kekmech.ru.coreui.items.SpaceItem

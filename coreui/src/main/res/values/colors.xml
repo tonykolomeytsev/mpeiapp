@@ -49,5 +49,7 @@
     <color name="colorRed">#DB4437</color>
     <color name="colorGreen">#578B0F</color>
     <color name="colorPink">#FF505C</color>
+    <color name="colorPurple">#673AB7</color>
+    <color name="colorTeal">#009688</color>
 
 </resources>
