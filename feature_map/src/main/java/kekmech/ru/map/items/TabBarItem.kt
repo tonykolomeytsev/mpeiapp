@@ -3,10 +3,10 @@ package kekmech.ru.map.items
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.map.R
 import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_adapter.BaseItemBinder
+import kekmech.ru.map.R
 import kekmech.ru.map.presentation.FilterTab
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_tab_bar.*
