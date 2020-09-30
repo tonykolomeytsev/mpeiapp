@@ -4,7 +4,6 @@ package kekmech.ru.map
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
-import com.example.map.R
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.BitmapDescriptorFactory

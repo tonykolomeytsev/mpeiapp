@@ -2,7 +2,6 @@ package kekmech.ru.map.ext
 
 import android.annotation.SuppressLint
 import android.content.Context
-import com.example.map.R
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.CameraPosition
@@ -10,6 +9,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.Marker
 import kekmech.ru.common_android.dpToPx
+import kekmech.ru.map.R
 
 @SuppressLint("MissingPermission")
 fun GoogleMap.init(context: Context) {

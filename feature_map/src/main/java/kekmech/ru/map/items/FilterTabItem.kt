@@ -4,11 +4,11 @@ import android.view.View
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.recyclerview.widget.RecyclerView
-import com.example.map.R
 import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.coreui.items.ClickableItemViewHolder
 import kekmech.ru.coreui.items.ClickableItemViewHolderImpl
+import kekmech.ru.map.R
 import kekmech.ru.map.presentation.FilterTab
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_filter_tab.*

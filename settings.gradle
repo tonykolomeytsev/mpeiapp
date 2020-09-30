@@ -1,5 +1,3 @@
-include ':common_analytics'
-include ':domain_notes'
 include ':app'
 
 include ':common_cache'
@@ -14,6 +12,9 @@ include ':common_kotlin'
 include ':common_mvi'
 include ':common_network'
 include ':common_app_database'
+include ':common_emoji'
+include ':common_analytics'
+include ':domain_notes'
 
 include ':domain_onboarding'
 include ':domain_schedule'

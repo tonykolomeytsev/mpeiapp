@@ -6,7 +6,7 @@
         "saturation": 15
       },
       {
-        "lightness": -10
+        "lightness": -5
       }
     ]
   },
@@ -24,7 +24,6 @@
   },
   {
     "featureType": "poi",
-    "elementType": "labels.text",
     "stylers": [
       {
         "visibility": "off"
