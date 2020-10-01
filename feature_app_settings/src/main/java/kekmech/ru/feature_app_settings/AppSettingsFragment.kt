@@ -49,20 +49,18 @@ class AppSettingsFragment : BaseFragment<AppSettingsEvent, AppSettingsEffect, Ap
     }
 
     private fun createAdapter() = BaseAdapter(
-        SectionHeaderAdapterItem(itemId = SECTION_HEADER_SCHEDULE),
-        SectionHeaderAdapterItem(itemId = SECTION_HEADER_SUPPORT),
+        SectionHeaderAdapterItem(),
         ToggleAdapterItem(TOGGLE_DARK_THEME) { feature.accept(Wish.Action.SetDarkThemeEnabled(it)) },
         ToggleAdapterItem(TOGGLE_CHANGE_DAY_AFTER_CHANGE_WEEK) { feature.accept(Wish.Action.SetChangeDayAfterChangeWeek(it)) },
+        ToggleAdapterItem(TOGGLE_AUTO_HIDE_BOTTOM_SHEET) { feature.accept(Wish.Action.SetAutoHideBottomSheet(it)) },
         SectionTextAdapterItem(),
         SpaceAdapterItem(),
         BottomLabeledTextAdapterItem()
     )
 
     companion object {
-        const val SECTION_HEADER_SCHEDULE = 0
-        const val SECTION_HEADER_SUPPORT = 1
-
         const val TOGGLE_DARK_THEME = 0
         const val TOGGLE_CHANGE_DAY_AFTER_CHANGE_WEEK = 1
+        const val TOGGLE_AUTO_HIDE_BOTTOM_SHEET = 2
     }
 }

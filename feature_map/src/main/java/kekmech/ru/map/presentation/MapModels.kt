@@ -4,6 +4,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.Marker
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kekmech.ru.common_mvi.Feature
+import kekmech.ru.domain_app_settings.AppSettings
 import kekmech.ru.domain_map.dto.MapMarker
 
 typealias MapFeature = Feature<MapState, MapEvent, MapEffect>
@@ -13,7 +14,8 @@ data class MapState(
     val markers: List<MapMarker> = emptyList(),
     val map: GoogleMap? = null,
     val bottomSheetState: Int = BottomSheetBehavior.STATE_COLLAPSED,
-    val googleMapMarkers: List<Marker> = emptyList()
+    val googleMapMarkers: List<Marker> = emptyList(),
+    val appSettings: AppSettings
 )
 
 enum class FilterTab { FOOD, BUILDINGS, HOSTELS, OTHERS, STRUCTURES }

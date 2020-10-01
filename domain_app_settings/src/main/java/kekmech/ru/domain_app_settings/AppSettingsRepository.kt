@@ -12,6 +12,8 @@ class AppSettingsRepository(
 
     override var changeDayAfterChangeWeek by preferences.boolean("schedule_change_day_after_change_week", false)
 
+    override var autoHideBottomSheet by preferences.boolean("map_auto_hide_bottom_sheet", true)
+
     fun complete(runnable: AppSettingsRepository.() -> Unit): Completable =
         Completable.fromRunnable { runnable() }
 }
