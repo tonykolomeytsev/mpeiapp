@@ -1,6 +1,5 @@
 package kekmech.ru.map.presentation
 
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kekmech.ru.common_mvi.BaseReducer
 import kekmech.ru.common_mvi.Result
 import kekmech.ru.map.presentation.MapEvent.News
@@ -44,17 +43,17 @@ class MapReducer : BaseReducer<MapState, MapEvent, MapEffect, MapAction> {
         is Wish.Action.GoogleMapMarkersGenerated -> Result(
             state = state.copy(googleMapMarkers = event.googleMapMarkers)
         )
-        is Wish.Action.OnListMarkerSelected -> {
-            val newBottomSheetState = if (state.appSettings.autoHideBottomSheet) {
-                BottomSheetBehavior.STATE_COLLAPSED
-            } else {
-                state.bottomSheetState
+        is Wish.Action.OnListMarkerSelected -> Result(
+            state = state,
+            effect = state.map?.let { map ->
+                MapEffect.AnimateCameraToPlace(
+                    map = map,
+                    googleMapMarkers = state.googleMapMarkers,
+                    mapMarker = event.mapMarker,
+                    collapseBottomSheet = state.appSettings.autoHideBottomSheet
+                )
             }
-            Result(
-                state = state.copy(bottomSheetState = newBottomSheetState),
-                effect = state.map?.let { MapEffect.AnimateCameraToPlace(it, state.googleMapMarkers, event.mapMarker) }
-            )
-        }
+        )
     }
 
     private fun reduceNews(
