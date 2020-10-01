@@ -11,5 +11,4 @@ open class PersistentCacheInteractor {
     fun readBytes(file: File): ByteArray {
         return file.readBytes()
     }
-
 }

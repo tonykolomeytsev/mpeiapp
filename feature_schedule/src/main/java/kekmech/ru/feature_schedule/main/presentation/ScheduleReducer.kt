@@ -58,6 +58,7 @@ class ScheduleReducer : BaseReducer<ScheduleState, ScheduleEvent, ScheduleEffect
                 Result(
                     state = state.copy(
                         isLoading = false,
+                        isAfterError = false,
                         isFirstLoading = false,
                         schedule = schedule,
                         hash = UUID.randomUUID().toString()
@@ -66,8 +67,10 @@ class ScheduleReducer : BaseReducer<ScheduleState, ScheduleEvent, ScheduleEffect
             }
         }
         is News.ScheduleWeekLoadError -> Result(
-            state = state.copy(isLoading = false),
-            effect = ScheduleEffect.ShowLoadingError(event.throwable)
+            state = state.copy(
+                isLoading = false,
+                isAfterError = true
+            ),
         )
     }
 
