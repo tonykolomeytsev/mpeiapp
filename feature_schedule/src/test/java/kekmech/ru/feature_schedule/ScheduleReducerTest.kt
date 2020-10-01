@@ -94,6 +94,7 @@ class ScheduleReducerTest : BehaviorSpec({
         private val APP_SETTINGS = object : AppSettings {
             override val changeDayAfterChangeWeek: Boolean get() = false
             override val isDarkThemeEnabled: Boolean get() = false
+            override val autoHideBottomSheet: Boolean get() = false
         }
         private val INITIAL_STATE = ScheduleState(appSettings = APP_SETTINGS)
         private val CURRENT_MONDAY = LocalDate.of(2020, Month.SEPTEMBER, 14)
