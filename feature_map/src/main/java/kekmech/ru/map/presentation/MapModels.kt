@@ -28,6 +28,7 @@ sealed class MapEvent {
             data class SelectTab(val tab: FilterTab) : Wish()
             data class BottomSheetStateChanged(val newState: Int) : Wish()
             data class GoogleMapMarkersGenerated(val googleMapMarkers: List<Marker>) : Wish()
+            data class OnListMarkerSelected(val mapMarker: MapMarker) : Wish()
         }
     }
 
@@ -43,6 +44,11 @@ sealed class MapEffect {
         val markers: List<MapMarker>?,
         val googleMapMarkers: List<Marker>,
         val selectedTab: FilterTab
+    ) : MapEffect()
+    data class AnimateCameraToPlace(
+        val map: GoogleMap,
+        val googleMapMarkers: List<Marker>,
+        val mapMarker: MapMarker
     ) : MapEffect()
 }
 

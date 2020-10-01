@@ -21,6 +21,7 @@ import kekmech.ru.coreui.items.SectionHeaderAdapterItem
 import kekmech.ru.coreui.items.SpaceAdapterItem
 import kekmech.ru.domain_map.dto.MapMarker
 import kekmech.ru.map.di.MapDependencies
+import kekmech.ru.map.ext.animateCameraTo
 import kekmech.ru.map.ext.init
 import kekmech.ru.map.ext.toMarkerType
 import kekmech.ru.map.items.FilterTabItem
@@ -91,16 +92,22 @@ class MapFragment : BaseFragment<MapEvent, MapEffect, MapState, MapFeature>() {
 
     override fun render(state: MapState) {
         adapter.update(MapListConverter().map(state))
-        (recyclerView.layoutManager as ControlledScrollingLayoutManager).apply {
-            val realState = BottomSheetBehavior.from(recyclerView).state
-            isScrollingEnabled = realState != BottomSheetBehavior.STATE_COLLAPSED
-        }
+        val behavior = BottomSheetBehavior.from(recyclerView)
+        if (behavior.state != state.bottomSheetState) behavior.state = state.bottomSheetState
+        (recyclerView.layoutManager as ControlledScrollingLayoutManager)
+            .isScrollingEnabled = behavior.state != BottomSheetBehavior.STATE_COLLAPSED
     }
 
     override fun handleEffect(effect: MapEffect) = when (effect) {
         is MapEffect.GenerateGoogleMapMarkers -> {
             val markers = generateGoogleMapMarkers(effect.map, effect.markers, effect.googleMapMarkers, effect.selectedTab)
             feature.accept(Wish.Action.GoogleMapMarkersGenerated(markers))
+        }
+        is MapEffect.AnimateCameraToPlace -> {
+            effect.googleMapMarkers.find { it.title == effect.mapMarker.name }?.let { marker ->
+                effect.map.animateCameraTo(marker)
+                marker.showInfoWindow()
+            } ?: Unit // wtf?
         }
     }
 
@@ -136,7 +143,10 @@ class MapFragment : BaseFragment<MapEvent, MapEffect, MapState, MapFeature>() {
         ),
         SectionHeaderAdapterItem(),
         SpaceAdapterItem(),
-        MapMarkerAdapterItem { /* no-op */ }
+        MapMarkerAdapterItem {
+            analytics.sendClick("ListMarker_(${it.name})")
+            feature.accept(Wish.Action.OnListMarkerSelected(it))
+        }
     )
 
     private fun createTabs() = listOf(

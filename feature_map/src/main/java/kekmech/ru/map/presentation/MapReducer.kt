@@ -1,16 +1,14 @@
 package kekmech.ru.map.presentation
 
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kekmech.ru.common_mvi.BaseReducer
 import kekmech.ru.common_mvi.Result
 import kekmech.ru.map.presentation.MapEvent.News
 import kekmech.ru.map.presentation.MapEvent.Wish
-import kekmech.ru.map.view.MarkersBitmapFactory
 
 typealias MapResult = Result<MapState, MapEffect, MapAction>
 
-class MapReducer(
-    private val markersBitmapFactory: MarkersBitmapFactory
-) : BaseReducer<MapState, MapEvent, MapEffect, MapAction> {
+class MapReducer : BaseReducer<MapState, MapEvent, MapEffect, MapAction> {
 
     override fun reduce(
         event: MapEvent,
@@ -45,6 +43,10 @@ class MapReducer(
         )
         is Wish.Action.GoogleMapMarkersGenerated -> Result(
             state = state.copy(googleMapMarkers = event.googleMapMarkers)
+        )
+        is Wish.Action.OnListMarkerSelected -> Result(
+            state = state.copy(bottomSheetState = BottomSheetBehavior.STATE_COLLAPSED),
+            effect = state.map?.let { MapEffect.AnimateCameraToPlace(it, state.googleMapMarkers, event.mapMarker) }
         )
     }
 
