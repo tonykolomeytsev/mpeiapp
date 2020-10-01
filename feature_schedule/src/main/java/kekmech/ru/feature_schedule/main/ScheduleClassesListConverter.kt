@@ -2,8 +2,11 @@ package kekmech.ru.feature_schedule.main
 
 import kekmech.ru.common_kotlin.addIf
 import kekmech.ru.common_kotlin.get
+import kekmech.ru.coreui.items.EmptyStateItem
+import kekmech.ru.coreui.items.SpaceItem
 import kekmech.ru.domain_schedule.dto.Classes
 import kekmech.ru.domain_schedule.dto.ClassesStackType
+import kekmech.ru.feature_schedule.R
 import kekmech.ru.feature_schedule.main.item.*
 import kekmech.ru.feature_schedule.main.presentation.ScheduleState
 
@@ -12,6 +15,13 @@ object ScheduleClassesListConverter {
     fun map(state: ScheduleState): List<Any> {
         val selectedWeekSchedule = state.schedule[state.selectedDay.weekOffset]?.weeks?.first()
         return when {
+            (!state.isLoading && state.isAfterError && selectedWeekSchedule == null) -> List(6) {
+                val dayOfWeek = it + 1
+                WorkingDayItem(
+                    dayOfWeek = dayOfWeek,
+                    items = listOf(SpaceItem.VERTICAL_24, getEmptyStateItem())
+                )
+            }
             (state.isLoading && state.appSettings.changeDayAfterChangeWeek) || selectedWeekSchedule == null -> List(6) {
                 val dayOfWeek = it + 1
                 WorkingDayItem(
@@ -81,4 +91,9 @@ object ScheduleClassesListConverter {
             }
         }
     }
+
+    private fun getEmptyStateItem() = EmptyStateItem(
+        titleRes = R.string.schedule_empty_state_title,
+        subtitleRes = R.string.schedule_empty_state_subtitle
+    )
 }

@@ -7,6 +7,8 @@ import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.coreui.items.ClassesAdapterItem
+import kekmech.ru.coreui.items.EmptyStateAdapterItem
+import kekmech.ru.coreui.items.SpaceAdapterItem
 import kekmech.ru.domain_schedule.dto.Classes
 import kekmech.ru.feature_schedule.R
 import kotlinx.android.extensions.LayoutContainer
@@ -54,7 +56,9 @@ class WorkingDayViewHolderImpl(
             SelfStudyAdapterItem(),
             LunchAdapterItem(),
             ClassesShimmerAdapterItem(),
-            WindowAdapterItem()
+            WindowAdapterItem(),
+            EmptyStateAdapterItem(),
+            SpaceAdapterItem()
         )
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(containerView.context)
