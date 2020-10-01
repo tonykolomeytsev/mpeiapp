@@ -17,8 +17,7 @@ class AppSettingsListConverter {
             add(SpaceItem.VERTICAL_24)
 
             add(SectionHeaderItem(
-                titleRes = R.string.app_settings_header_schedule,
-                itemId = AppSettingsFragment.SECTION_HEADER_SCHEDULE
+                titleRes = R.string.app_settings_header_schedule
             ))
             add(ToggleItem(
                 itemId = AppSettingsFragment.TOGGLE_CHANGE_DAY_AFTER_CHANGE_WEEK,
@@ -26,12 +25,20 @@ class AppSettingsListConverter {
                 isChecked = appSettings.changeDayAfterChangeWeek
             ))
             add(SectionTextItem(resId = R.string.app_settings_change_day_after_change_week_description))
+            add(SpaceItem.VERTICAL_24)
+
+            add(SectionHeaderItem(
+                titleRes = R.string.app_settings_header_map
+            ))
+            add(ToggleItem(
+                itemId = AppSettingsFragment.TOGGLE_AUTO_HIDE_BOTTOM_SHEET,
+                titleRes = R.string.app_settings_auto_hide_bottom_sheet,
+                isChecked = appSettings.autoHideBottomSheet
+            ))
+            add(SectionTextItem(resId = R.string.app_settings_auto_hide_bottom_sheet_description))
 
             add(SpaceItem.VERTICAL_24)
-            add(SectionHeaderItem(
-                title = "Поддержка",
-                itemId = AppSettingsFragment.SECTION_HEADER_SUPPORT
-            ))
+            add(SectionHeaderItem(title = "Поддержка"))
             add(SpaceItem.VERTICAL_12)
             add(BottomLabeledTextItem(
                 mainText = "Задать вопрос в группу",
