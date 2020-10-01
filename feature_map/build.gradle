@@ -62,6 +62,7 @@ dependencies {
     implementation google.maps
 
     implementation project(path: ':domain_map')
+    implementation project(path: ':domain_app_settings')
 
     implementation project(path: ':common_di')
     implementation project(path: ':common_network')

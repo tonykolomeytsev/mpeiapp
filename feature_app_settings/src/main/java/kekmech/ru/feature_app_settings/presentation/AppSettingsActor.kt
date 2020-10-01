@@ -19,5 +19,8 @@ class AppSettingsActor(
         is AppSettingsAction.SetChangeDayAfterChangeWeek -> appSettingsRepository
             .complete { changeDayAfterChangeWeek = action.isEnabled }
             .mapSuccessEvent(AppSettingsEvent.News.AppSettingsChanged)
+        is AppSettingsAction.SetAutoHideBottomSheet -> appSettingsRepository
+            .complete { autoHideBottomSheet = action.isEnabled }
+            .mapSuccessEvent(AppSettingsEvent.News.AppSettingsChanged)
     }
 }

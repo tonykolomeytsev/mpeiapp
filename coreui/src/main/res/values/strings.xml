@@ -151,10 +151,13 @@
 
     <string name="app_settings_screen_title">Настройки</string>
     <string name="app_settings_header_schedule">Расписание</string>
+    <string name="app_settings_header_map">Карта</string>
     <string name="app_settings_dark_theme">Темная тема</string>
     <string name="app_settings_dark_theme_description">Вы можете сменить визуальное оформление со светлого на темное и наоборот</string>
     <string name="app_settings_change_day_after_change_week">Менять день при смене недели</string>
     <string name="app_settings_change_day_after_change_week_description">При переходе на другую неделю автоматически переключаться на 7 дней вперед, либо 7 дней назад</string>
+    <string name="app_settings_auto_hide_bottom_sheet">Скрывать список по клику</string>
+    <string name="app_settings_auto_hide_bottom_sheet_description">При включенной настройке, на экране карты нажатие на любой адрес в списке автоматически свернет список и переместит камеру к указанному адресу</string>
 
     <string name="navigation_name_dashboard">Dashboard</string>
     <string name="navigation_name_schedule">Schedule</string>

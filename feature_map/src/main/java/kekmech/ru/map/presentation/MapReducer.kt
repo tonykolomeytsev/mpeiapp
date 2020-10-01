@@ -44,10 +44,17 @@ class MapReducer : BaseReducer<MapState, MapEvent, MapEffect, MapAction> {
         is Wish.Action.GoogleMapMarkersGenerated -> Result(
             state = state.copy(googleMapMarkers = event.googleMapMarkers)
         )
-        is Wish.Action.OnListMarkerSelected -> Result(
-            state = state.copy(bottomSheetState = BottomSheetBehavior.STATE_COLLAPSED),
-            effect = state.map?.let { MapEffect.AnimateCameraToPlace(it, state.googleMapMarkers, event.mapMarker) }
-        )
+        is Wish.Action.OnListMarkerSelected -> {
+            val newBottomSheetState = if (state.appSettings.autoHideBottomSheet) {
+                BottomSheetBehavior.STATE_COLLAPSED
+            } else {
+                state.bottomSheetState
+            }
+            Result(
+                state = state.copy(bottomSheetState = newBottomSheetState),
+                effect = state.map?.let { MapEffect.AnimateCameraToPlace(it, state.googleMapMarkers, event.mapMarker) }
+            )
+        }
     }
 
     private fun reduceNews(

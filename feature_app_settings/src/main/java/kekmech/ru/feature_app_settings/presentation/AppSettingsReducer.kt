@@ -49,6 +49,10 @@ class AppSettingsReducer : BaseReducer<AppSettingsState, AppSettingsEvent, AppSe
             state = state,
             action = AppSettingsAction.SetChangeDayAfterChangeWeek(event.isEnabled)
         )
+        is Wish.Action.SetAutoHideBottomSheet -> Result(
+            state = state,
+            action = AppSettingsAction.SetAutoHideBottomSheet(event.isEnabled)
+        )
     }
 
 }
