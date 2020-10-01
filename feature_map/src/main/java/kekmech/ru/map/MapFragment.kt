@@ -120,6 +120,7 @@ class MapFragment : BaseFragment<MapEvent, MapEffect, MapState, MapFeature>() {
     ): List<Marker> {
         if (markers.isNullOrEmpty() || map == null) return emptyList()
         googleMapMarkers.forEach { it.remove() }
+        map.clear()
         return markers
             .filter { it.type == selectedTab.toMarkerType() }
             .map { map.addMarker(
