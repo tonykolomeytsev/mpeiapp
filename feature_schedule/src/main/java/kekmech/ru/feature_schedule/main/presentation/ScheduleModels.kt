@@ -21,7 +21,8 @@ data class ScheduleState(
     val selectedDay: DayItem = DayItem(LocalDate.now(), 0, true),
     val weekItems: HashMap<Int, WeekItem> = hashMapOf(),
     val hash: String = "",
-    val appSettings: AppSettings
+    val appSettings: AppSettings,
+    val isAfterError: Boolean = false
 ) {
     /**
      * Get weekOfSemester number by weekOffset
@@ -52,7 +53,6 @@ sealed class ScheduleEvent {
 }
 
 sealed class ScheduleEffect {
-    data class ShowLoadingError(val throwable: Throwable) : ScheduleEffect()
     data class NavigateToNoteList(val classes: Classes, val date: LocalDate) : ScheduleEffect()
 }
 

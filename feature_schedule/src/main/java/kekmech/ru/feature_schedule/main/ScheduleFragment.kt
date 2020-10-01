@@ -11,7 +11,6 @@ import kekmech.ru.common_android.addSystemTopPadding
 import kekmech.ru.common_android.getStringArray
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.ui.BaseFragment
-import kekmech.ru.coreui.banner.showBanner
 import kekmech.ru.domain_schedule.dto.Classes
 import kekmech.ru.feature_schedule.R
 import kekmech.ru.feature_schedule.di.ScheduleDependencies
@@ -63,7 +62,6 @@ class ScheduleFragment : BaseFragment<ScheduleEvent, ScheduleEffect, ScheduleSta
     }
 
     override fun handleEffect(effect: ScheduleEffect) = when (effect) {
-        is ScheduleEffect.ShowLoadingError -> showBanner(R.string.schedule_loading_error)
         is ScheduleEffect.NavigateToNoteList -> {
             dependencies.notesFeatureLauncher.launchNoteList(effect.classes, effect.date)
         }
