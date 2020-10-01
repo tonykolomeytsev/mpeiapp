@@ -93,8 +93,6 @@ class MapFragment : BaseFragment<MapEvent, MapEffect, MapState, MapFeature>() {
     override fun render(state: MapState) {
         adapter.update(MapListConverter().map(state))
         val behavior = BottomSheetBehavior.from(recyclerView)
-        if (behavior.state != state.bottomSheetState)
-            behavior.state = state.bottomSheetState
         (recyclerView.layoutManager as ControlledScrollingLayoutManager)
             .isScrollingEnabled = behavior.state != BottomSheetBehavior.STATE_COLLAPSED
     }
@@ -108,7 +106,10 @@ class MapFragment : BaseFragment<MapEvent, MapEffect, MapState, MapFeature>() {
             effect.googleMapMarkers.find { it.title == effect.mapMarker.name }?.let { marker ->
                 effect.map.animateCameraTo(marker)
                 marker.showInfoWindow()
-            } ?: Unit // wtf?
+            }
+            if (effect.collapseBottomSheet) BottomSheetBehavior.from(recyclerView)
+                .state = BottomSheetBehavior.STATE_COLLAPSED
+            Unit
         }
     }
 
