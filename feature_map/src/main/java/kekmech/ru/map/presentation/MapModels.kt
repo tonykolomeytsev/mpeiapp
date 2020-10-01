@@ -50,7 +50,8 @@ sealed class MapEffect {
     data class AnimateCameraToPlace(
         val map: GoogleMap,
         val googleMapMarkers: List<Marker>,
-        val mapMarker: MapMarker
+        val mapMarker: MapMarker,
+        val collapseBottomSheet: Boolean
     ) : MapEffect()
 }
 
