@@ -42,8 +42,11 @@ dependencies {
     implementation androidx.appcompat
     implementation squareup.retrofit
     implementation squareup.retrofit_rxJava2
+    implementation google.gson
 
     implementation project(path: ":common_annotations")
     implementation project(path: ":common_shared_preferences")
     implementation project(path: ":common_cache")
+    implementation project(path: ":common_android")
+    implementation project(path: ":common_persistent_cache")
 }
