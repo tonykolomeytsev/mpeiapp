@@ -33,6 +33,7 @@ data class Classes(
     val number: Int
 ) : Serializable {
     @Transient var stackType: ClassesStackType? = null
+    @Transient var hasAttachedNote: Boolean = false
 }
 
 data class Time(

@@ -22,7 +22,7 @@ object ScheduleModule : ModuleProvider({
     single { FindScheduleActor(get()) } bind FindScheduleActor::class
 
     factory { FindScheduleFeatureFactory(get()) } bind FindScheduleFeatureFactory::class
-    factory { ScheduleFeatureFactory(get(), get()) } bind ScheduleFeatureFactory::class
+    factory { ScheduleFeatureFactory(get(), get(), get()) } bind ScheduleFeatureFactory::class
     factory { ScheduleDependencies(get(), get()) } bind ScheduleDependencies::class
     factory { ScheduleAnalytics(get()) } bind ScheduleAnalytics::class
     factory { FindScheduleAnalytics(get()) } bind ScheduleAnalytics::class

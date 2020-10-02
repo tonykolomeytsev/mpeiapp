@@ -28,6 +28,8 @@ class ClassesStackMiddleViewHolderImpl(
     override fun setEndTime(time: String) = Unit
 
     override fun setNumberName(name: String) = Unit
+
+    override fun setHasAttachments(hasAttachments: Boolean) = Unit
 }
 
 class ClassesStackEndViewHolderImpl(
@@ -43,6 +45,8 @@ class ClassesStackEndViewHolderImpl(
     override fun setEndTime(time: String) = Unit
 
     override fun setNumberName(name: String) = Unit
+
+    override fun setHasAttachments(hasAttachments: Boolean) = Unit
 }
 
 class ClassesStackStartAdapterItem(context: Context) : AdapterItem<ClassesViewHolder, Classes>(
