@@ -48,6 +48,11 @@ fun <T : Fragment> T.withResultFor(target: Fragment, requestCode: Int): T {
     return also { it.setTargetFragment(target, requestCode) }
 }
 
+fun <S : Fragment, T : Fragment> T.withTheSameResultAs(provider: S): T = also {
+    val fragment = provider.targetFragment
+    if (fragment != null) it.withResultFor(fragment, provider.targetRequestCode)
+}
+
 fun Fragment.hideKeyboard() {
     view?.let { KeyboardUtils.hideSoftInput(it) }
 }

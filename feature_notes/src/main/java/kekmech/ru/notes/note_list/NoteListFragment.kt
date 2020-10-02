@@ -70,11 +70,7 @@ class NoteListFragment : BaseBottomSheetDialogFragment<NoteListEvent, NoteListEf
         is NoteListEffect.OpenNoteEdit -> {
             close()
             addScreenForward {
-                NoteEditFragment.newInstance(effect.note)
-                    .also {
-                        val fragment = targetFragment
-                        if (fragment != null) it.withResultFor(fragment, targetRequestCode)
-                    }
+                NoteEditFragment.newInstance(effect.note).withTheSameResultAs(this)
             }
         }
     }
