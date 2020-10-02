@@ -30,10 +30,10 @@ data class Classes(
     val groups: String = "",
     val person: String = "",
     val time: Time = Time(),
-    val number: Int
+    val number: Int,
+    @Transient var hasAttachedNote: Boolean = false
 ) : Serializable {
     @Transient var stackType: ClassesStackType? = null
-    @Transient var hasAttachedNote: Boolean = false
 }
 
 data class Time(

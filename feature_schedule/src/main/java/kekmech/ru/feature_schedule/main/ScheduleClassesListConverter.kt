@@ -22,7 +22,7 @@ object ScheduleClassesListConverter {
                     items = listOf(SpaceItem.VERTICAL_24, getEmptyStateItem())
                 )
             }
-            (state.isLoading && state.appSettings.changeDayAfterChangeWeek) || selectedWeekSchedule == null -> List(6) {
+            selectedWeekSchedule == null -> List(6) {
                 val dayOfWeek = it + 1
                 WorkingDayItem(
                     dayOfWeek = dayOfWeek,

@@ -29,8 +29,7 @@ class ScheduleReducer : BaseReducer<ScheduleState, ScheduleEvent, ScheduleEffect
         state: ScheduleState
     ): ScheduleResult = when (event) {
         is News.ScheduleWeekLoadSuccess -> {
-            val stateCopy = state.copy()
-            val schedule = stateCopy.schedule.apply { put(event.weekOffset, event.schedule) }
+            val schedule = state.schedule.apply { put(event.weekOffset, event.schedule) }
             if (state.isFirstLoading) {
                 val firstDayOfWeek = event.schedule.weeks.first().firstDayOfWeek
                 val weekItems = hashMapOf(
@@ -105,6 +104,10 @@ class ScheduleReducer : BaseReducer<ScheduleState, ScheduleEvent, ScheduleEffect
         is Wish.Click.OnClassesClick -> Result(
             state = state,
             effect = ScheduleEffect.NavigateToNoteList(event.classes, state.selectedDay.date)
+        )
+        is Wish.Action.OnNotesUpdated -> Result(
+            state = state.copy(isLoading = true),
+            action = ScheduleAction.LoadSchedule(state.weekOffset)
         )
     }
 
