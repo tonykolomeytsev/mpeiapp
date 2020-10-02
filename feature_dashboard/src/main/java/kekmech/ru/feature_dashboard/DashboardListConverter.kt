@@ -8,8 +8,6 @@ import kekmech.ru.coreui.PrettyDateFormatter
 import kekmech.ru.coreui.items.EmptyStateItem
 import kekmech.ru.coreui.items.SectionHeaderItem
 import kekmech.ru.coreui.items.SpaceItem
-import kekmech.ru.domain_schedule.dto.Classes
-import kekmech.ru.domain_schedule.dto.ClassesStackType
 import kekmech.ru.feature_dashboard.items.*
 import kekmech.ru.feature_dashboard.presentation.DashboardState
 import java.time.DayOfWeek
@@ -52,23 +50,37 @@ class DashboardListConverter(
                 }
             }
 
+            // ближайшие события
             createClassesEventsItems(state)?.let { (header, classes) ->
                 add(header)
                 add(SpaceItem.VERTICAL_12)
                 addAll(classes)
             } ?: run {
-                add(createEventsHeaderItem("Пока ничего интересного", state.selectedGroupName))
-            }
-            add(SpaceItem.VERTICAL_16)
-            add(notesHeader)
-            state.notes?.takeIf { it.isNotEmpty() }?.let {
+                // если нечего показывать в разделе ближайших событий, покажем EmptyStateItem
+                add(createEventsHeaderItem(
+                    subtitle = context.getString(R.string.dashboard_events_empty_state_title),
+                    groupName = state.selectedGroupName)
+                )
                 add(SpaceItem.VERTICAL_12)
-                addAll(it)
-            } ?: run {
                 add(EmptyStateItem(
-                    titleRes = R.string.all_notes_empty_state_title,
-                    subtitleRes = R.string.all_notes_empty_state_subtitle
+                    titleRes = R.string.dashboard_events_empty_state_title,
+                    subtitleRes = R.string.dashboard_events_empty_state_subtitle
                 ))
+            }
+
+            // актуальные заметки
+            state.notes?.let {
+                add(SpaceItem.VERTICAL_16)
+                add(notesHeader)
+                add(SpaceItem.VERTICAL_12)
+                if (it.isNotEmpty()) {
+                    addAll(it)
+                } else {
+                    add(EmptyStateItem(
+                        titleRes = R.string.dashboard_actual_notes_empty_state_title,
+                        subtitleRes = R.string.all_notes_empty_state_subtitle
+                    ))
+                }
             }
 
             add(SpaceItem.VERTICAL_24)
@@ -101,24 +113,17 @@ class DashboardListConverter(
             isSunday || isEvening || hasNoClassesToday -> {
                 val headerItem = createEventsHeaderItem(context.getString(R.string.dashboard_events_tomorrow), state.selectedGroupName)
                 val tomorrowClasses = state.tomorrowClasses
-                    ?.paintClasses() ?: return null // если на завтра пар тоже нет, то не возвращаем вообще ничего
+                    ?: return null // если на завтра пар тоже нет, то не возвращаем вообще ничего
                 return headerItem to tomorrowClasses
             }
             else -> {
                 val headerItem = createEventsHeaderItem(context.getString(R.string.dashboard_events_today), state.selectedGroupName)
                 val nextTodayClasses = state.todayClasses
                     ?.filter { it.time.end > nowTime } // не берем прошедшие пары
-                    ?.paintClasses() ?: return null // если на сегодня пар нет, то не возвращаем ничего
+                    ?: return null // если на сегодня пар нет, то не возвращаем ничего
                 return headerItem to nextTodayClasses
             }
         }
-    }
-
-    /**
-     *  Все кроме первой пары в списке будут с меньшим количеством подробностей
-     */
-    private fun List<Classes>.paintClasses() = mapIndexed { index, e ->
-        e.stackType = if (index == 0) null else ClassesStackType.MIDDLE; e
     }
 
     private fun createEventsHeaderItem(subtitle: String, groupName: String) = EventsHeaderItem(
