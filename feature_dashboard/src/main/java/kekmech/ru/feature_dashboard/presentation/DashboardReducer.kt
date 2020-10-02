@@ -30,7 +30,8 @@ class DashboardReducer : BaseReducer<DashboardState, DashboardEvent, DashboardEf
                 currentWeekSchedule = event.schedule.takeIf { event.weekOffset == 0 } ?: state.currentWeekSchedule,
                 nextWeekSchedule = event.schedule.takeIf { event.weekOffset == 1 } ?: state.nextWeekSchedule,
                 isAfterError = false,
-                isLoading = false
+                isLoading = false,
+                dateForScheduleView = moscowLocalDate()
             )
         )
         is News.ScheduleLoadError -> Result(
@@ -69,6 +70,10 @@ class DashboardReducer : BaseReducer<DashboardState, DashboardEvent, DashboardEf
             ),
             effects = emptyList(),
             actions = refreshActions()
+        )
+        is Wish.Click.OnClasses -> Result(
+            state = state,
+            effect = DashboardEffect.NavigateToNotesList(event.classes, state.dateForScheduleView)
         )
     }
 

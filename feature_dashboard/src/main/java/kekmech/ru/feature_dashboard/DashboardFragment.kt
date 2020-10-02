@@ -24,7 +24,7 @@ import kekmech.ru.feature_dashboard.presentation.DashboardState
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 import org.koin.android.ext.android.inject
 
-private const val REQUEST_CODE_FIND_SCHEDULE = 2910
+private const val REQUEST_CODE_UPDATE_DATA = 2910
 
 class DashboardFragment : BaseFragment<DashboardEvent, DashboardEffect, DashboardState, DashboardFeature>(), ActivityResultListener {
 
@@ -65,6 +65,14 @@ class DashboardFragment : BaseFragment<DashboardEvent, DashboardEffect, Dashboar
     override fun handleEffect(effect: DashboardEffect) = when (effect) {
         is DashboardEffect.ShowLoadingError -> showBanner(R.string.dashboard_loading_error)
         is DashboardEffect.ShowNotesLoadingError -> showBanner(R.string.something_went_wrong_error)
+        is DashboardEffect.NavigateToNotesList -> {
+            dependencies.notesFeatureLauncher.launchNoteList(
+                selectedClasses = effect.classes,
+                selectedDate = effect.date,
+                targetFragment = parentFragment,
+                requestCode = REQUEST_CODE_UPDATE_DATA
+            )
+        }
     }
 
     private fun createAdapter() = BaseAdapter(
@@ -82,23 +90,33 @@ class DashboardFragment : BaseFragment<DashboardEvent, DashboardEffect, Dashboar
             analytics.sendClick("ShowAllNotes")
             dependencies.notesFeatureLauncher.launchAllNotes()
         },
-        NoteAdapterItem(requireContext()),
+        NoteAdapterItem(requireContext()) {
+            analytics.sendClick("EditNote")
+            dependencies.notesFeatureLauncher.launchNoteEdit(
+                note = it,
+                targetFragment = parentFragment,
+                requestCode = REQUEST_CODE_UPDATE_DATA
+            )
+        },
         AddActionAdapterItem(),
         DayStatusAdapterItem(),
-        DashboardClassesAdapterItem(requireContext()),
+        DashboardClassesAdapterItem(requireContext()) {
+            analytics.sendClick("Classes")
+            feature.accept(Wish.Click.OnClasses(it))
+        },
         EventsHeaderAdapterItem {
             analytics.sendClick("ChangeGroup")
             dependencies.scheduleFeatureLauncher.launchSearchGroup(
                 continueTo = CONTINUE_TO_BACK_STACK_WITH_RESULT,
                 targetFragment = parentFragment,
-                requestCode = REQUEST_CODE_FIND_SCHEDULE
+                requestCode = REQUEST_CODE_UPDATE_DATA
             )
         },
         EmptyStateAdapterItem()
     )
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_CODE_FIND_SCHEDULE) {
+        if (requestCode == REQUEST_CODE_UPDATE_DATA) {
             feature.accept(Wish.Action.OnSwipeRefresh)
         }
     }

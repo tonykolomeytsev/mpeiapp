@@ -8,9 +8,12 @@ import kekmech.ru.coreui.items.ClassesViewHolderImpl
 import kekmech.ru.domain_schedule.dto.Classes
 import kekmech.ru.feature_dashboard.R
 
-class DashboardClassesAdapterItem(context: Context) : AdapterItem<ClassesViewHolder, Classes>(
+class DashboardClassesAdapterItem(
+    context: Context,
+    onClickListener: ((Classes) -> Unit)? = null
+) : AdapterItem<ClassesViewHolder, Classes>(
     isType = { it is Classes && it.stackType == null },
     layoutRes = R.layout.item_dashboard_classes,
     viewHolderGenerator = ::ClassesViewHolderImpl,
-    itemBinder = ClassesItemBinder(context)
+    itemBinder = ClassesItemBinder(context, onClickListener)
 )
