@@ -1,13 +1,12 @@
 package kekmech.ru.notes.note_list
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import kekmech.ru.common_adapter.BaseAdapter
-import kekmech.ru.common_android.close
-import kekmech.ru.common_android.getArgument
-import kekmech.ru.common_android.withArguments
+import kekmech.ru.common_android.*
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.ui.BaseBottomSheetDialogFragment
 import kekmech.ru.common_navigation.addScreenForward
@@ -57,6 +56,10 @@ class NoteListFragment : BaseBottomSheetDialogFragment<NoteListEvent, NoteListEf
         analytics.sendScreenShown()
     }
 
+    override fun onCancel(dialog: DialogInterface) {
+        closeWithSuccess()
+    }
+
     override fun render(state: NoteListState) {
         adapter.update(NoteListConverter(requireContext()).map(state))
     }
@@ -68,6 +71,10 @@ class NoteListFragment : BaseBottomSheetDialogFragment<NoteListEvent, NoteListEf
             close()
             addScreenForward {
                 NoteEditFragment.newInstance(effect.note)
+                    .also {
+                        val fragment = targetFragment
+                        if (fragment != null) it.withResultFor(fragment, targetRequestCode)
+                    }
             }
         }
     }

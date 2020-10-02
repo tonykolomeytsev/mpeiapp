@@ -1,7 +1,12 @@
 package kekmech.ru.notes.di
 
 import kekmech.ru.common_di.ModuleProvider
-import kekmech.ru.domain_notes.*
+import kekmech.ru.domain_notes.NotesFeatureLauncher
+import kekmech.ru.domain_notes.NotesRepository
+import kekmech.ru.domain_notes.NotesScheduleTransformer
+import kekmech.ru.domain_notes.sources.CachedNotesSource
+import kekmech.ru.domain_notes.sources.NotesSource
+import kekmech.ru.domain_notes.sources.NotesSourceImpl
 import kekmech.ru.notes.NotesFeatureLauncherImpl
 import kekmech.ru.notes.all_notes.AllNotesAnalytics
 import kekmech.ru.notes.all_notes.mvi.AllNotesActor

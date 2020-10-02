@@ -1,5 +1,6 @@
 package kekmech.ru.feature_schedule.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
@@ -7,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_analytics.addScrollAnalytics
+import kekmech.ru.common_android.ActivityResultListener
 import kekmech.ru.common_android.addSystemTopPadding
 import kekmech.ru.common_android.getStringArray
 import kekmech.ru.common_kotlin.fastLazy
@@ -23,7 +25,9 @@ import kotlinx.android.synthetic.main.fragment_schedule.*
 import org.koin.android.ext.android.inject
 import java.time.LocalDate
 
-class ScheduleFragment : BaseFragment<ScheduleEvent, ScheduleEffect, ScheduleState, ScheduleFeature>() {
+private const val REQUEST_CODE_NOTES_UPDATED = 9328
+
+class ScheduleFragment : BaseFragment<ScheduleEvent, ScheduleEffect, ScheduleState, ScheduleFeature>(), ActivityResultListener {
 
     init { retainInstance = true }
 
@@ -66,7 +70,8 @@ class ScheduleFragment : BaseFragment<ScheduleEvent, ScheduleEffect, ScheduleSta
 
     override fun handleEffect(effect: ScheduleEffect) = when (effect) {
         is ScheduleEffect.NavigateToNoteList -> {
-            dependencies.notesFeatureLauncher.launchNoteList(effect.classes, effect.date)
+            dependencies.notesFeatureLauncher
+                .launchNoteList(effect.classes, effect.date, parentFragment, REQUEST_CODE_NOTES_UPDATED)
         }
     }
 
@@ -123,6 +128,12 @@ class ScheduleFragment : BaseFragment<ScheduleEvent, ScheduleEffect, ScheduleSta
             }
         )
     )
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == REQUEST_CODE_NOTES_UPDATED) {
+            feature.accept(Wish.Action.OnNotesUpdated)
+        }
+    }
 
     private fun getFormattedDay(day: LocalDate): String {
         val dayOfWeekName = requireContext().getStringArray(R.array.days_of_week).getOrElse(day.dayOfWeek.value - 1) { "" }
