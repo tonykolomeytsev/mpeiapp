@@ -18,12 +18,12 @@ class WeeksScrollHelper(
         }
     }
 
-    fun attach(recyclerView: RecyclerView) {
+    fun attach(recyclerView: RecyclerView, initialPosition: Int = 0) {
         pagerSnapHelper.attachToRecyclerView(recyclerView)
         recyclerView.addOnScrollListener(scrollListener)
         recyclerView.isNestedScrollingEnabled = false
-        onWeekSelectListener(0)
-        recyclerView.scrollToPosition(Int.MAX_VALUE / 2)
+        onWeekSelectListener(initialPosition)
+        recyclerView.scrollToPosition(Int.MAX_VALUE / 2 + initialPosition)
     }
 
     fun detach(recyclerView: RecyclerView) {
