@@ -27,6 +27,7 @@ interface ClassesViewHolder : ClickableItemViewHolder {
     fun setTagColor(@ColorInt color: Int)
     fun setStartTime(time: String)
     fun setEndTime(time: String)
+    fun setHasAttachments(hasAttachments: Boolean)
 }
 
 open class ClassesViewHolderImpl(
@@ -73,6 +74,10 @@ open class ClassesViewHolderImpl(
     override fun setEndTime(time: String) {
         textViewTimeEnd.text = time
     }
+
+    override fun setHasAttachments(hasAttachments: Boolean) {
+        imageViewAttachment.visibility = if (hasAttachments) View.VISIBLE else View.INVISIBLE
+    }
 }
 
 class ClassesItemBinder(
@@ -113,6 +118,7 @@ class ClassesItemBinder(
         vh.setStartTime(model.time.start.format(timeFormatter))
         vh.setEndTime(model.time.end.format(timeFormatter))
         vh.setOnClickListener { onClickListener?.invoke(model) }
+        vh.setHasAttachments(model.hasAttachedNote)
     }
 }
 

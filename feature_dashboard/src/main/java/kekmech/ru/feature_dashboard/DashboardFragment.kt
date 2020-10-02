@@ -86,7 +86,6 @@ class DashboardFragment : BaseFragment<DashboardEvent, DashboardEffect, Dashboar
         AddActionAdapterItem(),
         DayStatusAdapterItem(),
         DashboardClassesAdapterItem(requireContext()),
-        DashboardClassesMinAdapterItem(requireContext()),
         EventsHeaderAdapterItem {
             analytics.sendClick("ChangeGroup")
             dependencies.scheduleFeatureLauncher.launchSearchGroup(

@@ -16,9 +16,10 @@ import org.koin.dsl.bind
 
 object NotesModule : ModuleProvider({
     single { CachedNotesSource(NotesSourceImpl(get())) } bind NotesSource::class
-    factory { NotesRepository(get(), get()) } bind NotesRepository::class
+    single { NotesRepository(get(), get()) } bind NotesRepository::class
     factory { NotesDependencies(get(), get(), get()) } bind NotesDependencies::class
     factory { NotesFeatureLauncherImpl(get()) } bind NotesFeatureLauncher::class
+    factory { NotesScheduleTransformer(get()) }
 
     factory { NoteListFeatureFactory(get()) } bind NoteListFeatureFactory::class
     factory { NoteListActor(get()) } bind NoteListActor::class
