@@ -25,6 +25,8 @@ import java.time.LocalDate
 
 class ScheduleFragment : BaseFragment<ScheduleEvent, ScheduleEffect, ScheduleState, ScheduleFeature>() {
 
+    init { retainInstance = true }
+
     override val initEvent = Wish.Init
 
     override fun createFeature() = inject<ScheduleFeatureFactory>().value.create()
@@ -41,9 +43,10 @@ class ScheduleFragment : BaseFragment<ScheduleEvent, ScheduleEffect, ScheduleSta
 
     // for viewPager sliding debounce
     private var viewPagerPositionToBeSelected: Int? = null
+    private var weekOffsetToBeSelected: Int = 0
 
     override fun onViewCreatedInternal(view: View, savedInstanceState: Bundle?) {
-        weeksScrollHelper.attach(recyclerView)
+        weeksScrollHelper.attach(recyclerView, weekOffsetToBeSelected)
         recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         recyclerView.adapter = weeksScrollAdapter
         recyclerView.itemAnimator = null
@@ -68,6 +71,7 @@ class ScheduleFragment : BaseFragment<ScheduleEvent, ScheduleEffect, ScheduleSta
     }
 
     override fun render(state: ScheduleState) {
+        weekOffsetToBeSelected = state.weekOffset
         shimmerViewContainer.isVisible = state.isLoading
         appBarLayoutGroup.isVisible = !state.isLoading
         if (state.isLoading) shimmerViewContainer.startShimmer() else shimmerViewContainer.stopShimmer()
