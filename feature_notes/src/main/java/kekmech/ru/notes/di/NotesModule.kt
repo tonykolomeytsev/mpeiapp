@@ -1,9 +1,7 @@
 package kekmech.ru.notes.di
 
 import kekmech.ru.common_di.ModuleProvider
-import kekmech.ru.domain_notes.NotesFeatureLauncher
-import kekmech.ru.domain_notes.NotesRepository
-import kekmech.ru.domain_notes.NotesSource
+import kekmech.ru.domain_notes.*
 import kekmech.ru.notes.NotesFeatureLauncherImpl
 import kekmech.ru.notes.all_notes.AllNotesAnalytics
 import kekmech.ru.notes.all_notes.mvi.AllNotesActor
@@ -17,7 +15,7 @@ import kekmech.ru.notes.note_list.mvi.NoteListFeatureFactory
 import org.koin.dsl.bind
 
 object NotesModule : ModuleProvider({
-    factory { NotesSource(get()) } bind NotesSource::class
+    single { CachedNotesSource(NotesSourceImpl(get())) } bind NotesSource::class
     factory { NotesRepository(get(), get()) } bind NotesRepository::class
     factory { NotesDependencies(get(), get(), get()) } bind NotesDependencies::class
     factory { NotesFeatureLauncherImpl(get()) } bind NotesFeatureLauncher::class
