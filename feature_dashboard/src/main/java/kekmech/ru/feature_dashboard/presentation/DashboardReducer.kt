@@ -61,26 +61,24 @@ class DashboardReducer : BaseReducer<DashboardState, DashboardEvent, DashboardEf
                 isLoading = true
             ),
             effects = emptyList(), // костыль
-            actions = listOfNotNull(
-                DashboardAction.GetSelectedGroupName,
-                DashboardAction.LoadNotes,
-                DashboardAction.LoadSchedule(0),
-                DashboardAction.LoadSchedule(1)
-                    .takeIf { moscowLocalDate().dayOfWeek == DayOfWeek.SUNDAY }
-            )
+            actions = refreshActions()
         )
         is Wish.Action.OnSwipeRefresh -> Result(
             state = state.copy(
                 isLoading = true
             ),
             effects = emptyList(),
-            actions = listOfNotNull(
-                DashboardAction.GetSelectedGroupName,
-                DashboardAction.LoadNotes,
-                DashboardAction.LoadSchedule(0),
-                DashboardAction.LoadSchedule(1)
-                    .takeIf { moscowLocalDate().dayOfWeek == DayOfWeek.SUNDAY }
-            )
+            actions = refreshActions()
+        )
+    }
+
+    private fun refreshActions(): List<DashboardAction> {
+        return listOfNotNull(
+            DashboardAction.GetSelectedGroupName,
+            DashboardAction.LoadNotes,
+            DashboardAction.LoadSchedule(0),
+            DashboardAction.LoadSchedule(1)
+                .takeIf { moscowLocalDate().dayOfWeek == DayOfWeek.SUNDAY }
         )
     }
 
