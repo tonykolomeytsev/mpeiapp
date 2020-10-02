@@ -111,8 +111,11 @@
     <string name="dashboard_loading_error">Произошла ошибка при загрузке данных с сервера</string>
     <string name="dashboard_item_change_group">Группа %s</string>
     <string name="dashboard_section_header_events">Ближайшие события</string>
+    <string name="dashboard_events_empty_state_title">Пока ничего интересного</string>
+    <string name="dashboard_events_empty_state_subtitle">В ближайшие сутки не запланировано никаких событий</string>
     <string name="dashboard_section_header_notes">Заметки</string>
     <string name="dashboard_section_header_notes_action">ПОКАЗАТЬ ВСЕ</string>
+    <string name="dashboard_actual_notes_empty_state_title">Нет ни одной актуальной заметки для вас</string>
     <string name="dashboard_events_today">Сегодняшние пары</string>
     <string name="dashboard_events_tomorrow">Завтрашние пары</string>
     <string name="dashboard_banner_lunch_header">Судя по всему, сейчас обеденный перерыв</string>
