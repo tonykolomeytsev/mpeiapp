@@ -1,4 +1,4 @@
-package kekmech.ru.domain_notes
+package kekmech.ru.domain_notes.sources
 
 import kekmech.ru.domain_notes.dto.Note
 

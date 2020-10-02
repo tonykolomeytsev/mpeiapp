@@ -1,4 +1,4 @@
-package kekmech.ru.domain_notes
+package kekmech.ru.domain_notes.sources
 
 import kekmech.ru.common_android.fromBase64
 import kekmech.ru.common_android.toBase64
