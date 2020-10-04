@@ -1,6 +1,5 @@
 package kekmech.ru.feature_dashboard.presentation
 
-import kekmech.ru.common_android.moscowLocalDate
 import kekmech.ru.common_mvi.Feature
 import kekmech.ru.domain_notes.dto.Note
 import kekmech.ru.domain_schedule.dto.Classes
@@ -16,8 +15,7 @@ data class DashboardState(
     val currentWeekSchedule: Schedule? = null,
     val nextWeekSchedule: Schedule? = null,
     val selectedGroupName: String = "",
-    val notes: List<Note>? = null,
-    val dateForScheduleView: LocalDate = moscowLocalDate()
+    val notes: List<Note>? = null
 ) {
     val weekOfSemester get() = currentWeekSchedule?.weeks?.first()?.weekOfSemester
     val todayClasses: List<Classes>? get() = currentWeekSchedule?.weeks?.first()?.days
