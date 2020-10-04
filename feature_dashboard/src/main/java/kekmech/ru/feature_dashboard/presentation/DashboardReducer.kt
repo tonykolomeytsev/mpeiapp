@@ -4,6 +4,7 @@ import kekmech.ru.common_android.moscowLocalDate
 import kekmech.ru.common_mvi.BaseReducer
 import kekmech.ru.common_mvi.Result
 import kekmech.ru.domain_notes.dto.Note
+import kekmech.ru.feature_dashboard.getActualScheduleDayForView
 import kekmech.ru.feature_dashboard.presentation.DashboardEvent.News
 import kekmech.ru.feature_dashboard.presentation.DashboardEvent.Wish
 import java.time.DayOfWeek
@@ -72,7 +73,7 @@ class DashboardReducer : BaseReducer<DashboardState, DashboardEvent, DashboardEf
         )
         is Wish.Click.OnClasses -> Result(
             state = state,
-            effect = null // DashboardEffect.NavigateToNotesList(event.classes, state.dateForScheduleView) fixme!!!
+            effect = state.getActualScheduleDayForView()?.let { day -> DashboardEffect.NavigateToNotesList(event.classes, day.date) }
         )
     }
 

@@ -3,6 +3,7 @@ package kekmech.ru.feature_dashboard.presentation
 import kekmech.ru.common_mvi.Feature
 import kekmech.ru.domain_notes.dto.Note
 import kekmech.ru.domain_schedule.dto.Classes
+import kekmech.ru.domain_schedule.dto.Day
 import kekmech.ru.domain_schedule.dto.Schedule
 import java.time.DayOfWeek
 import java.time.LocalDate
@@ -18,21 +19,20 @@ data class DashboardState(
     val notes: List<Note>? = null
 ) {
     val weekOfSemester get() = currentWeekSchedule?.weeks?.first()?.weekOfSemester
-    val todayClasses: List<Classes>? get() = currentWeekSchedule?.weeks?.first()?.days
+    val today: Day? get() = currentWeekSchedule?.weeks?.first()?.days
         ?.find { it.dayOfWeek == LocalDate.now().dayOfWeek.value }
-        ?.classes
-    val tomorrowClasses: List<Classes>? get() {
+    val todayClasses: List<Classes>? get() = today?.classes
+    val tomorrow: Day? get() {
         val dayOfWeek = LocalDate.now().dayOfWeek
         if (dayOfWeek == DayOfWeek.SUNDAY) {
             return nextWeekSchedule?.weeks?.first()?.days
                 ?.find { it.dayOfWeek == DayOfWeek.MONDAY.value }
-                ?.classes
         } else {
             return currentWeekSchedule?.weeks?.first()?.days
                 ?.find { it.dayOfWeek == dayOfWeek.value + 1 }
-                ?.classes
         }
     }
+    val tomorrowClasses: List<Classes>? get() = tomorrow?.classes
     val isSwipeRefreshLoadingAnimation = isLoading && currentWeekSchedule != null
 }
 

@@ -115,7 +115,7 @@ class ScheduleReducer : BaseReducer<ScheduleState, ScheduleEvent, ScheduleEffect
         state: ScheduleState,
         event: Wish.Action.SelectWeek
     ): Result<ScheduleState, ScheduleEffect, ScheduleAction> {
-        if (state.weekOffset == event.weekOffset) return Result(state)
+        if (state.weekOffset == event.weekOffset || state.currentWeekMonday == null) return Result(state)
         val copyOfState = state.copy()
         val weekItems = copyOfState.weekItems
         // prefetch next week WeekItem
