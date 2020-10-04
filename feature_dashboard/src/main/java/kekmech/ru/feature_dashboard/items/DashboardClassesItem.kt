@@ -13,7 +13,7 @@ class DashboardClassesAdapterItem(
     onClickListener: ((Classes) -> Unit)? = null
 ) : AdapterItem<ClassesViewHolder, Classes>(
     isType = { it is Classes && it.stackType == null },
-    layoutRes = R.layout.item_dashboard_classes,
+    layoutRes = R.layout.item_classes,
     viewHolderGenerator = ::ClassesViewHolderImpl,
     itemBinder = ClassesItemBinder(context, onClickListener)
 )
