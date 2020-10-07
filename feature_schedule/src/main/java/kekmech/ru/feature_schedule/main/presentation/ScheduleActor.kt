@@ -5,7 +5,7 @@ import kekmech.ru.common_mvi.Actor
 import kekmech.ru.domain_notes.NotesScheduleTransformer
 import kekmech.ru.domain_schedule.ScheduleRepository
 
-class ScheduleActor(
+internal class ScheduleActor(
     private val scheduleRepository: ScheduleRepository,
     private val notesScheduleTransformer: NotesScheduleTransformer
 ) : Actor<ScheduleAction, ScheduleEvent> {

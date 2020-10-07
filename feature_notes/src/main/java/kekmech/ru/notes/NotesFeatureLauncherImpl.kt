@@ -13,7 +13,7 @@ import kekmech.ru.notes.edit.NoteEditFragment
 import kekmech.ru.notes.note_list.NoteListFragment
 import java.time.LocalDate
 
-class NotesFeatureLauncherImpl(
+internal class NotesFeatureLauncherImpl(
     private val router: Router
 ) : NotesFeatureLauncher {
 

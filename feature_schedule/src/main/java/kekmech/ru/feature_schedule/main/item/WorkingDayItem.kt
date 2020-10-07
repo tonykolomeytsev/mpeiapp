@@ -21,12 +21,12 @@ const val DAY_OF_WEEK_THURSDAY = 4
 const val DAY_OF_WEEK_FRIDAY = 5
 const val DAY_OF_WEEK_SATURDAY = 6
 
-data class WorkingDayItem(
+internal data class WorkingDayItem(
     val dayOfWeek: Int,
     val items: List<Any> = emptyList()
 )
 
-interface WorkingDayViewHolder {
+internal interface WorkingDayViewHolder {
     fun setItems(list: List<Any>)
     fun initAdapter(
         recycledViewPool: RecyclerView.RecycledViewPool,
@@ -34,7 +34,7 @@ interface WorkingDayViewHolder {
     )
 }
 
-class WorkingDayViewHolderImpl(
+internal class WorkingDayViewHolderImpl(
     override val containerView: View
 ) : WorkingDayViewHolder, RecyclerView.ViewHolder(containerView), LayoutContainer {
 
@@ -66,7 +66,7 @@ class WorkingDayViewHolderImpl(
     }
 }
 
-class WorkingDayItemBinder(
+internal class WorkingDayItemBinder(
     private val recycledViewPool: RecyclerView.RecycledViewPool,
     private val onClickListener: (Classes) -> Unit
 ) : BaseItemBinder<WorkingDayViewHolder, WorkingDayItem>() {
@@ -86,7 +86,7 @@ class WorkingDayItemBinder(
     }
 }
 
-class WorkingDayAdapterItem(
+internal class WorkingDayAdapterItem(
     dayOfWeek: Int,
     onClickListener: (Classes) -> Unit
 ) : AdapterItem<WorkingDayViewHolder, WorkingDayItem>(

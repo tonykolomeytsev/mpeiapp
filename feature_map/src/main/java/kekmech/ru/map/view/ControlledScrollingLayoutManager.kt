@@ -3,7 +3,7 @@ package kekmech.ru.map.view
 import android.content.Context
 import androidx.recyclerview.widget.LinearLayoutManager
 
-class ControlledScrollingLayoutManager(context: Context) : LinearLayoutManager(context) {
+internal class ControlledScrollingLayoutManager(context: Context) : LinearLayoutManager(context) {
 
     var isScrollingEnabled = true
 

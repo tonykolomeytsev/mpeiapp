@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 
 open class BaseAdapter(
-    vararg val adapterItems: AdapterItem<*, *>
+    private vararg val adapterItems: AdapterItem<*, *>
 ) : ListAdapter<Any, RecyclerView.ViewHolder>(BaseDiffUtil(adapterItems)) {
 
     var allData: List<Any> = mutableListOf()

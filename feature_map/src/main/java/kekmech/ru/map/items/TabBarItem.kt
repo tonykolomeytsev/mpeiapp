@@ -11,15 +11,15 @@ import kekmech.ru.map.presentation.FilterTab
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_tab_bar.*
 
-object TabBarItem
+internal object TabBarItem
 
-interface TabBarViewHolder {
+internal interface TabBarViewHolder {
     fun createAdapterIfNull()
     fun updateItems(items: List<Any>)
     fun setOnClickListener(listener: (FilterTab) -> Unit)
 }
 
-class TabBarViewHolderImpl(
+internal class TabBarViewHolderImpl(
     override val containerView: View
 ) : RecyclerView.ViewHolder(containerView), TabBarViewHolder, LayoutContainer {
 
@@ -45,7 +45,7 @@ class TabBarViewHolderImpl(
     }
 }
 
-class TabBarItemBinder(
+internal class TabBarItemBinder(
     private val tabs: List<FilterTabItem>,
     private val onClickListener: ((FilterTab) -> Unit)?
 ) : BaseItemBinder<TabBarViewHolder, TabBarItem>() {
@@ -57,7 +57,7 @@ class TabBarItemBinder(
     }
 }
 
-class TabBarAdapterItem(
+internal class TabBarAdapterItem(
     tabs: List<FilterTabItem>,
     onClickListener: ((FilterTab) -> Unit)?
 ) : AdapterItem<TabBarViewHolder, TabBarItem>(

@@ -4,7 +4,7 @@ import io.reactivex.Observable
 import kekmech.ru.common_mvi.Actor
 import kekmech.ru.domain_notes.NotesRepository
 
-class AllNotesActor(
+internal class AllNotesActor(
     private val notesRepository: NotesRepository
 ) : Actor<AllNotesAction, AllNotesEvent> {
 

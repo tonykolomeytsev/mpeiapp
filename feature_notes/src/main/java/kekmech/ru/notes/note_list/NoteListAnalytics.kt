@@ -4,6 +4,6 @@ import kekmech.ru.common_analytics.Analytics
 import kekmech.ru.common_analytics.AnalyticsImpl
 import kekmech.ru.common_analytics.AnalyticsWrapper
 
-class NoteListAnalytics(
+internal class NoteListAnalytics(
     wrapper: AnalyticsWrapper
 ) : Analytics by AnalyticsImpl(wrapper, "NoteList")

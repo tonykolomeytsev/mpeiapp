@@ -11,7 +11,7 @@ import java.util.*
 
 typealias ScheduleResult = Result<ScheduleState, ScheduleEffect, ScheduleAction>
 
-class ScheduleReducer : BaseReducer<ScheduleState, ScheduleEvent, ScheduleEffect, ScheduleAction> {
+internal class ScheduleReducer : BaseReducer<ScheduleState, ScheduleEvent, ScheduleEffect, ScheduleAction> {
 
     private val prefetchWeekBuffer = 3
     private var isFirstPageChangeIgnored = false

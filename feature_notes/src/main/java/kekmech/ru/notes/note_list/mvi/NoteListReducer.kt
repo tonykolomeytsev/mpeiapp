@@ -9,7 +9,7 @@ import kekmech.ru.notes.note_list.mvi.NoteListEvent.Wish
 import java.time.LocalDate
 import java.time.LocalDateTime
 
-class NoteListReducer : BaseReducer<NoteListState, NoteListEvent, NoteListEffect, NoteListAction> {
+internal class NoteListReducer : BaseReducer<NoteListState, NoteListEvent, NoteListEffect, NoteListAction> {
 
     override fun reduce(
         event: NoteListEvent,

@@ -12,7 +12,7 @@ import kekmech.ru.domain_map.dto.MapMarker
 import kekmech.ru.domain_map.dto.MarkerType
 import kekmech.ru.map.R
 
-class MarkersBitmapFactory(
+internal class MarkersBitmapFactory(
     context: Context,
     private val emojiProvider: EmojiProvider
 ) {

@@ -8,7 +8,7 @@ import java.util.*
 
 typealias AppSettingsResult = Result<AppSettingsState, AppSettingsEffect, AppSettingsAction>
 
-class AppSettingsReducer : BaseReducer<AppSettingsState, AppSettingsEvent, AppSettingsEffect, AppSettingsAction> {
+internal class AppSettingsReducer : BaseReducer<AppSettingsState, AppSettingsEvent, AppSettingsEffect, AppSettingsAction> {
 
     override fun reduce(
         event: AppSettingsEvent,

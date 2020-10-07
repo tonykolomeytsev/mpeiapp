@@ -3,7 +3,7 @@ package kekmech.ru.map.presentation
 import kekmech.ru.common_mvi.BaseFeature
 import kekmech.ru.domain_app_settings.AppSettings
 
-class MapFeatureFactory(
+internal class MapFeatureFactory(
     private val actor: MapActor,
     private val appSettings: AppSettings
 ) {

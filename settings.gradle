@@ -1,3 +1,4 @@
+include ':domain_force_update'
 include ':common_persistent_cache'
 include ':app'
 
@@ -27,7 +28,7 @@ include ':feature_dashboard'
 include ':feature_onboarding'
 include ':feature_schedule'
 include ':feature_map'
-// include ':feature_force_update'
+include ':feature_force_update'
 // include ':feature_bars'
 include ':feature_notes'
 include ':coreui'

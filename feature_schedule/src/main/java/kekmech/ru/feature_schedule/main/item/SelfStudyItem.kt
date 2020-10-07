@@ -7,20 +7,20 @@ import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.feature_schedule.R
 import kotlinx.android.extensions.LayoutContainer
 
-object SelfStudyItem
+internal object SelfStudyItem
 
-interface SelfStudyViewHolder
+internal interface SelfStudyViewHolder
 
-class SelfStudyViewHolderImpl(
+internal class SelfStudyViewHolderImpl(
     override val containerView: View
 ) : SelfStudyViewHolder, RecyclerView.ViewHolder(containerView), LayoutContainer
 
-class SelfStudyItemBinder : BaseItemBinder<SelfStudyViewHolder, SelfStudyItem>() {
+internal class SelfStudyItemBinder : BaseItemBinder<SelfStudyViewHolder, SelfStudyItem>() {
 
     override fun bind(vh: SelfStudyViewHolder, model: SelfStudyItem, position: Int) = Unit
 }
 
-class SelfStudyAdapterItem : AdapterItem<SelfStudyViewHolder, SelfStudyItem>(
+internal class SelfStudyAdapterItem : AdapterItem<SelfStudyViewHolder, SelfStudyItem>(
     isType = { it is SelfStudyItem },
     layoutRes = R.layout.item_self_study,
     viewHolderGenerator = ::SelfStudyViewHolderImpl,

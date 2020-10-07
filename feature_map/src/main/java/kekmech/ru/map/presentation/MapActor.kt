@@ -4,7 +4,7 @@ import io.reactivex.Observable
 import kekmech.ru.common_mvi.Actor
 import kekmech.ru.domain_map.MapRepository
 
-class MapActor(
+internal class MapActor(
     private val mapRepository: MapRepository
 ) : Actor<MapAction, MapEvent> {
 

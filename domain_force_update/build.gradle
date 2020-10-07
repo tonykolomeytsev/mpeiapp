@@ -30,19 +30,10 @@ android {
 }
 
 dependencies {
-    implementation androidx.appcompat
-    implementation androidx.coreKtx
-    implementation androidx.constraintlayout
-    implementation google.material
-
-    // Koin for Kotlin Android
-    implementation koin.core
-    implementation koin.android
-
     // Firebase
     implementation firebase.config
 
-    implementation project(path: ":domain_force_update")
+    implementation rx.java
 
     implementation project(path: ":coreui")
 

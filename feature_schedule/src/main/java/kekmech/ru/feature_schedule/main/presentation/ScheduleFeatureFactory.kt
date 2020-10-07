@@ -3,7 +3,7 @@ package kekmech.ru.feature_schedule.main.presentation
 import kekmech.ru.common_mvi.BaseFeature
 import kekmech.ru.domain_app_settings.AppSettings
 
-class ScheduleFeatureFactory(
+internal class ScheduleFeatureFactory(
     private val actor: ScheduleActor,
     private val appSettings: AppSettings,
 ) {

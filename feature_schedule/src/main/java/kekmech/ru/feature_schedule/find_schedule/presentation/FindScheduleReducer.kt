@@ -5,11 +5,11 @@ import kekmech.ru.common_mvi.Result
 import kekmech.ru.feature_schedule.find_schedule.presentation.FindScheduleEvent.News
 import kekmech.ru.feature_schedule.find_schedule.presentation.FindScheduleEvent.Wish
 
-typealias FindScheduleResult = Result<FindScheduleState, FindScheduleEffect, FindScheduleAction>
+internal typealias FindScheduleResult = Result<FindScheduleState, FindScheduleEffect, FindScheduleAction>
 
 private const val MESSAGE_BAD_REQUEST = "HTTP 503 Service Unavailable"
 
-class FindScheduleReducer : BaseReducer<FindScheduleState, FindScheduleEvent, FindScheduleEffect, FindScheduleAction> {
+internal class FindScheduleReducer : BaseReducer<FindScheduleState, FindScheduleEvent, FindScheduleEffect, FindScheduleAction> {
 
     override fun reduce(
         event: FindScheduleEvent,

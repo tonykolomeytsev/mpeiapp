@@ -11,13 +11,13 @@ import kekmech.ru.notes.R
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_note_edit.*
 
-interface NoteEditViewHolder {
+internal interface NoteEditViewHolder {
     fun showKeyboard()
     fun setContent(content: String)
     fun afterTextChanged(listener: (String) -> Unit)
 }
 
-class NoteEditViewHolderImpl(
+internal class NoteEditViewHolderImpl(
     override val containerView: View
 ) : NoteEditViewHolder, RecyclerView.ViewHolder(containerView), LayoutContainer {
 
@@ -36,7 +36,7 @@ class NoteEditViewHolderImpl(
     }
 }
 
-class NoteEditItemBinder(
+internal class NoteEditItemBinder(
     private val listener: (String) -> Unit
 ) : BaseItemBinder<NoteEditViewHolder, Note>() {
 
@@ -49,7 +49,7 @@ class NoteEditItemBinder(
     override fun update(vh: NoteEditViewHolder, model: Note, position: Int, payloads: List<Any>) = Unit
 }
 
-class NoteEditAdapterItem(
+internal class NoteEditAdapterItem(
     listener: (String) -> Unit
 ) : AdapterItem<NoteEditViewHolder, Note>(
     isType = { it is Note },

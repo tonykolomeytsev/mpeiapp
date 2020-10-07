@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.SCROLL_STATE_IDLE
 
-class WeeksScrollHelper(
+internal class WeeksScrollHelper(
     private val onWeekSelectListener: (Int) -> Unit
 ) {
 
