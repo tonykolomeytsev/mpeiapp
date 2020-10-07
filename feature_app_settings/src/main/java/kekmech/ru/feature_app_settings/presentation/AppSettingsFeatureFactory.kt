@@ -2,7 +2,7 @@ package kekmech.ru.feature_app_settings.presentation
 
 import kekmech.ru.common_mvi.BaseFeature
 
-class AppSettingsFeatureFactory(
+internal class AppSettingsFeatureFactory(
     private val actor: AppSettingsActor
 ) {
 

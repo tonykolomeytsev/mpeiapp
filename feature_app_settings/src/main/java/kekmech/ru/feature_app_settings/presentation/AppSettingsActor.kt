@@ -5,7 +5,7 @@ import kekmech.ru.common_mvi.Actor
 import kekmech.ru.domain_app_settings.AppSettings
 import kekmech.ru.domain_app_settings.AppSettingsRepository
 
-class AppSettingsActor(
+internal class AppSettingsActor(
     private val appSettingsRepository: AppSettingsRepository
 ) : Actor<AppSettingsAction, AppSettingsEvent> {
 

@@ -3,7 +3,7 @@ package kekmech.ru.feature_app_settings
 import kekmech.ru.coreui.items.*
 import kekmech.ru.feature_app_settings.presentation.AppSettingsState
 
-class AppSettingsListConverter {
+internal class AppSettingsListConverter {
 
     fun map(state: AppSettingsState): List<Any> {
         val appSettings = state.appSettings ?: return emptyList()

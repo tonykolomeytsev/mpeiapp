@@ -2,7 +2,7 @@ package kekmech.ru.feature_schedule.find_schedule.presentation
 
 import kekmech.ru.common_mvi.BaseFeature
 
-class FindScheduleFeatureFactory(
+internal class FindScheduleFeatureFactory(
     private val findScheduleActor: FindScheduleActor
 ) {
 

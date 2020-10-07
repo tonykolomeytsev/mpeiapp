@@ -5,7 +5,7 @@ import kekmech.ru.common_mvi.Result
 import kekmech.ru.notes.edit.mvi.NoteEditEvent.News
 import kekmech.ru.notes.edit.mvi.NoteEditEvent.Wish
 
-class NoteEditReducer : BaseReducer<NoteEditState, NoteEditEvent, NoteEditEffect, NoteEditAction> {
+internal class NoteEditReducer : BaseReducer<NoteEditState, NoteEditEvent, NoteEditEffect, NoteEditAction> {
 
     override fun reduce(
         event: NoteEditEvent,

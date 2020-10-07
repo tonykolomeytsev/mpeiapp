@@ -8,7 +8,7 @@ import kekmech.ru.feature_schedule.main.item.WeekAdapterItem
 import kekmech.ru.feature_schedule.main.item.WeekItem
 import kekmech.ru.feature_schedule.main.item.WeekViewHolderImpl
 
-class WeeksScrollAdapter(
+internal class WeeksScrollAdapter(
     private val weekAdapterItem: WeekAdapterItem
 ) : RecyclerView.Adapter<WeekViewHolderImpl>() {
 

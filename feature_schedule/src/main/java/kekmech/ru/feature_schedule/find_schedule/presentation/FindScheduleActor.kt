@@ -5,7 +5,7 @@ import kekmech.ru.common_mvi.Actor
 import kekmech.ru.domain_schedule.ScheduleRepository
 import kekmech.ru.feature_schedule.find_schedule.presentation.FindScheduleEvent.News
 
-class FindScheduleActor(
+internal class FindScheduleActor(
     private val scheduleRepository: ScheduleRepository
 ) : Actor<FindScheduleAction, FindScheduleEvent> {
 

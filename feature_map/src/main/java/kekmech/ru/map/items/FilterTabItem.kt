@@ -13,18 +13,18 @@ import kekmech.ru.map.presentation.FilterTab
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_filter_tab.*
 
-data class FilterTabItem(
+internal data class FilterTabItem(
     @DrawableRes val drawableResId: Int,
     @StringRes val nameResId: Int,
     val tab: FilterTab
 )
 
-interface FilterTabViewHolder : ClickableItemViewHolder {
+internal interface FilterTabViewHolder : ClickableItemViewHolder {
     fun setName(@StringRes nameResId: Int)
     fun setIcon(@DrawableRes drawableResId: Int)
 }
 
-class FilterTabViewHolderImpl(
+internal class FilterTabViewHolderImpl(
     override val containerView: View
 ) :
     FilterTabViewHolder,
@@ -41,7 +41,7 @@ class FilterTabViewHolderImpl(
     }
 }
 
-class FilterTabItemBinder(
+internal class FilterTabItemBinder(
     private val onClickListener: ((FilterTab) -> Unit)?
 ) : BaseItemBinder<FilterTabViewHolder, FilterTabItem>() {
 
@@ -52,7 +52,7 @@ class FilterTabItemBinder(
     }
 }
 
-class FilterTabAdapterItem(
+internal class FilterTabAdapterItem(
     onClickListener: ((FilterTab) -> Unit)? = null
 ) : AdapterItem<FilterTabViewHolder, FilterTabItem>(
     isType = { it is FilterTabItem },

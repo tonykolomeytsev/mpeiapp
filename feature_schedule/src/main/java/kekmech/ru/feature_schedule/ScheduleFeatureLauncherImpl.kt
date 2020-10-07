@@ -7,7 +7,7 @@ import kekmech.ru.common_navigation.Router
 import kekmech.ru.domain_schedule.ScheduleFeatureLauncher
 import kekmech.ru.feature_schedule.find_schedule.FindScheduleFragment
 
-class ScheduleFeatureLauncherImpl(
+internal class ScheduleFeatureLauncherImpl(
     private val router: Router
 ) : ScheduleFeatureLauncher {
 

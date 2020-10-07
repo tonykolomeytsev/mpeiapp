@@ -2,7 +2,7 @@ package kekmech.ru.notes.all_notes.mvi
 
 import kekmech.ru.common_mvi.BaseFeature
 
-class AllNotesFeatureFactory(
+internal class AllNotesFeatureFactory(
     private val actor: AllNotesActor
 ) {
 

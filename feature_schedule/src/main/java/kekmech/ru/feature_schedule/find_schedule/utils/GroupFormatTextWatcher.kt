@@ -6,7 +6,7 @@ import android.widget.EditText
 import kekmech.ru.common_android.getStringArray
 import kekmech.ru.feature_schedule.R
 
-class GroupFormatTextWatcher(
+internal class GroupFormatTextWatcher(
     private val editText: EditText
 ) : TextWatcher {
 

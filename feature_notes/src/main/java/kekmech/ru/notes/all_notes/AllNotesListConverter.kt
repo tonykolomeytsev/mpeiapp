@@ -10,7 +10,7 @@ import kekmech.ru.notes.R
 import kekmech.ru.notes.all_notes.mvi.AllNotesState
 import java.time.temporal.ChronoUnit
 
-class AllNotesListConverter {
+internal class AllNotesListConverter {
 
     fun map(state: AllNotesState): List<Any> {
 

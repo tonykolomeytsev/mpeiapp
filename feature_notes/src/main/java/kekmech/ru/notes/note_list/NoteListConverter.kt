@@ -8,7 +8,7 @@ import kekmech.ru.coreui.items.SpaceItem
 import kekmech.ru.notes.R
 import kekmech.ru.notes.note_list.mvi.NoteListState
 
-class NoteListConverter(private val context: Context) {
+internal class NoteListConverter(private val context: Context) {
 
     private val addNoteItem = AddActionItem(context.getString(R.string.note_list_section_add))
 

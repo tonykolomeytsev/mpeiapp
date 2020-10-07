@@ -7,20 +7,20 @@ import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.feature_schedule.R
 import kotlinx.android.extensions.LayoutContainer
 
-object LunchItem
+internal object LunchItem
 
-interface LunchViewHolder
+internal interface LunchViewHolder
 
-class LunchViewHolderImpl(
+internal class LunchViewHolderImpl(
     override val containerView: View
 ) : LunchViewHolder, RecyclerView.ViewHolder(containerView), LayoutContainer
 
-class LunchItemBinder : BaseItemBinder<SelfStudyViewHolder, LunchItem>() {
+internal class LunchItemBinder : BaseItemBinder<SelfStudyViewHolder, LunchItem>() {
 
     override fun bind(vh: SelfStudyViewHolder, model: LunchItem, position: Int) = Unit
 }
 
-class LunchAdapterItem : AdapterItem<SelfStudyViewHolder, LunchItem>(
+internal class LunchAdapterItem : AdapterItem<SelfStudyViewHolder, LunchItem>(
     isType = { it is LunchItem },
     layoutRes = R.layout.item_lunch,
     viewHolderGenerator = ::SelfStudyViewHolderImpl,

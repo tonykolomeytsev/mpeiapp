@@ -2,7 +2,7 @@ package kekmech.ru.common_adapter
 
 import androidx.recyclerview.widget.DiffUtil
 
-class BaseDiffUtil(
+internal class BaseDiffUtil(
     private val adapterItems: Array<out AdapterItem<*, *>>
 ) : DiffUtil.ItemCallback<Any>() {
 

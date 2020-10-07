@@ -9,7 +9,7 @@ import kekmech.ru.map.items.TabBarItem
 import kekmech.ru.map.presentation.FilterTab
 import kekmech.ru.map.presentation.MapState
 
-class MapListConverter {
+internal class MapListConverter {
 
     fun map(state: MapState): List<Any> {
 

@@ -4,7 +4,7 @@ import kekmech.ru.common_mvi.BaseFeature
 import kekmech.ru.domain_schedule.dto.Classes
 import java.time.LocalDate
 
-class NoteListFeatureFactory(
+internal class NoteListFeatureFactory(
     private val actor: NoteListActor
 ) {
 

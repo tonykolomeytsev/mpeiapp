@@ -5,7 +5,7 @@ import kekmech.ru.common_mvi.Result
 import kekmech.ru.notes.all_notes.mvi.AllNotesEvent.News
 import kekmech.ru.notes.all_notes.mvi.AllNotesEvent.Wish
 
-class AllNotesReducer : BaseReducer<AllNotesState, AllNotesEvent, AllNotesEffect, AllNotesAction> {
+internal class AllNotesReducer : BaseReducer<AllNotesState, AllNotesEvent, AllNotesEffect, AllNotesAction> {
 
     override fun reduce(
         event: AllNotesEvent,

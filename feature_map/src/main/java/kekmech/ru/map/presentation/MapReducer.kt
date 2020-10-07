@@ -7,7 +7,7 @@ import kekmech.ru.map.presentation.MapEvent.Wish
 
 typealias MapResult = Result<MapState, MapEffect, MapAction>
 
-class MapReducer : BaseReducer<MapState, MapEvent, MapEffect, MapAction> {
+internal class MapReducer : BaseReducer<MapState, MapEvent, MapEffect, MapAction> {
 
     override fun reduce(
         event: MapEvent,
