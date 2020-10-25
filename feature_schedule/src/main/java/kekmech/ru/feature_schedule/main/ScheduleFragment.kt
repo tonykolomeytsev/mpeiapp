@@ -27,7 +27,7 @@ import java.time.LocalDate
 
 private const val REQUEST_CODE_NOTES_UPDATED = 9328
 
-class ScheduleFragment : BaseFragment<ScheduleEvent, ScheduleEffect, ScheduleState, ScheduleFeature>(), ActivityResultListener {
+internal class ScheduleFragment : BaseFragment<ScheduleEvent, ScheduleEffect, ScheduleState, ScheduleFeature>(), ActivityResultListener {
 
     init { retainInstance = true }
 

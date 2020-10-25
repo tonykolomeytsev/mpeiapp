@@ -1,7 +1,6 @@
-apply from: "../default-android-module.gradle"
+apply from: "../feature-android-module.gradle"
 
 dependencies {
-    coreLibraryDesugaring desugaring
     implementation kotlinStdLib
 
     // Android Widget
@@ -15,7 +14,12 @@ dependencies {
     implementation koin.core
     implementation koin.android
 
+    implementation project(path: ':domain_bars')
+
     implementation project(path: ':common_di')
+    implementation project(path: ':common_android')
+    implementation project(path: ':common_kotlin')
+    implementation project(path: ':common_mvi')
 
     implementation project(path: ':coreui')
 }

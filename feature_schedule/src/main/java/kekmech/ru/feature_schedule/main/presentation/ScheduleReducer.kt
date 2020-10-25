@@ -9,7 +9,7 @@ import kekmech.ru.feature_schedule.main.utils.TimeUtils.createWeekItem
 import java.time.DayOfWeek
 import java.util.*
 
-typealias ScheduleResult = Result<ScheduleState, ScheduleEffect, ScheduleAction>
+internal typealias ScheduleResult = Result<ScheduleState, ScheduleEffect, ScheduleAction>
 
 internal class ScheduleReducer : BaseReducer<ScheduleState, ScheduleEvent, ScheduleEffect, ScheduleAction> {
 

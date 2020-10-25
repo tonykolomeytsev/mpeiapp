@@ -5,15 +5,15 @@ import kekmech.ru.domain_notes.dto.Note
 import kekmech.ru.domain_schedule.dto.Classes
 import java.time.LocalDate
 
-typealias NoteListFeature = Feature<NoteListState, NoteListEvent, NoteListEffect>
+internal typealias NoteListFeature = Feature<NoteListState, NoteListEvent, NoteListEffect>
 
-data class NoteListState(
+internal data class NoteListState(
     val selectedClasses: Classes,
     val selectedDate: LocalDate,
     val notes: List<Note> = emptyList()
 )
 
-sealed class NoteListEvent {
+internal sealed class NoteListEvent {
 
     sealed class Wish : NoteListEvent() {
         object Init : Wish()
@@ -34,12 +34,12 @@ sealed class NoteListEvent {
     }
 }
 
-sealed class NoteListEffect {
+internal sealed class NoteListEffect {
     object ShowNoteLoadError : NoteListEffect()
     data class OpenNoteEdit(val note: Note) : NoteListEffect()
 }
 
-sealed class NoteListAction {
+internal sealed class NoteListAction {
     data class LoadNotesForClasses(val classes: Classes) : NoteListAction()
     data class DeleteNote(val note: Note) : NoteListAction()
 }

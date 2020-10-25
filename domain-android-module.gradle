@@ -1,6 +1,5 @@
 apply plugin: "com.android.library"
 apply plugin: "kotlin-android"
-apply plugin: "kotlin-android-extensions"
 
 android {
     compileSdkVersion 29
@@ -36,10 +35,10 @@ android {
     }
 }
 
-androidExtensions {
-    experimental = true
-}
-
 tasks.withType(Test) {
     useJUnitPlatform()
+}
+
+dependencies {
+    coreLibraryDesugaring desugaring
 }

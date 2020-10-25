@@ -2,15 +2,15 @@ package kekmech.ru.feature_schedule.find_schedule.presentation
 
 import kekmech.ru.common_mvi.Feature
 
-typealias FindScheduleFeature = Feature<FindScheduleState, FindScheduleEvent, FindScheduleEffect>
+internal typealias FindScheduleFeature = Feature<FindScheduleState, FindScheduleEvent, FindScheduleEffect>
 
-data class FindScheduleState(
+internal data class FindScheduleState(
     val continueTo: String,
     val isLoading: Boolean = false,
     val isContinueButtonEnabled: Boolean = false
 )
 
-sealed class FindScheduleEvent {
+internal sealed class FindScheduleEvent {
 
     sealed class Wish : FindScheduleEvent() {
 
@@ -31,13 +31,13 @@ sealed class FindScheduleEvent {
     }
 }
 
-sealed class FindScheduleEffect {
+internal sealed class FindScheduleEffect {
     object ShowError : FindScheduleEffect()
     object ShowSomethingWentWrongError : FindScheduleEffect()
     data class NavigateNextFragment(val continueTo: String) : FindScheduleEffect()
 }
 
-sealed class FindScheduleAction {
+internal sealed class FindScheduleAction {
     data class FindGroup(val groupName: String) : FindScheduleAction()
     data class SelectGroup(val groupName: String) : FindScheduleAction()
 }

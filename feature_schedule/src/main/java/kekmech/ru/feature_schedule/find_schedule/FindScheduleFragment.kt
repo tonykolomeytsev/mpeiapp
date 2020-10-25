@@ -20,7 +20,7 @@ import org.koin.android.ext.android.inject
 
 private const val CONTINUE_TO_ARG = "ContinueTo"
 
-class FindScheduleFragment : BaseFragment<FindScheduleEvent, FindScheduleEffect, FindScheduleState, FindScheduleFeature>() {
+internal class FindScheduleFragment : BaseFragment<FindScheduleEvent, FindScheduleEffect, FindScheduleState, FindScheduleFeature>() {
 
     override val initEvent = Wish.Init
 

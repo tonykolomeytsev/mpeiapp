@@ -1,4 +1,4 @@
-apply from: "../default-android-module.gradle"
+apply from: "../feature-android-module.gradle"
 
 dependencies {
     coreLibraryDesugaring desugaring

@@ -3,13 +3,13 @@ package kekmech.ru.notes.edit.mvi
 import kekmech.ru.common_mvi.Feature
 import kekmech.ru.domain_notes.dto.Note
 
-typealias NoteEditFeature = Feature<NoteEditState, NoteEditEvent, NoteEditEffect>
+internal typealias NoteEditFeature = Feature<NoteEditState, NoteEditEvent, NoteEditEffect>
 
-data class NoteEditState(
+internal data class NoteEditState(
     val note: Note
 )
 
-sealed class NoteEditEvent {
+internal sealed class NoteEditEvent {
 
     sealed class Wish : NoteEditEvent() {
         object Init : Wish()
@@ -29,11 +29,11 @@ sealed class NoteEditEvent {
     }
 }
 
-sealed class NoteEditEffect {
+internal sealed class NoteEditEffect {
     object CloseWithSuccess : NoteEditEffect()
     object ShowError : NoteEditEffect()
 }
 
-sealed class NoteEditAction {
+internal sealed class NoteEditAction {
     data class SaveNote(val note: Note) : NoteEditAction()
 }
