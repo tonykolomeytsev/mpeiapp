@@ -1,5 +1,6 @@
 package kekmech.ru.feature_dashboard.presentation
 
+import kekmech.ru.common_android.moscowLocalDate
 import kekmech.ru.common_mvi.Feature
 import kekmech.ru.domain_notes.dto.Note
 import kekmech.ru.domain_schedule.dto.Classes
@@ -20,10 +21,10 @@ data class DashboardState(
 ) {
     val weekOfSemester get() = currentWeekSchedule?.weeks?.first()?.weekOfSemester
     val today: Day? get() = currentWeekSchedule?.weeks?.first()?.days
-        ?.find { it.dayOfWeek == LocalDate.now().dayOfWeek.value }
+        ?.find { it.date == moscowLocalDate() }
     val todayClasses: List<Classes>? get() = today?.classes
     val tomorrow: Day? get() {
-        val dayOfWeek = LocalDate.now().dayOfWeek
+        val dayOfWeek = moscowLocalDate().dayOfWeek
         if (dayOfWeek == DayOfWeek.SUNDAY) {
             return nextWeekSchedule?.weeks?.first()?.days
                 ?.find { it.dayOfWeek == DayOfWeek.MONDAY.value }

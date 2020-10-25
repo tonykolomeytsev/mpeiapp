@@ -13,7 +13,7 @@ fun DashboardState.getActualScheduleDayForView(): Day? {
     val isSunday = nowDate.dayOfWeek == DayOfWeek.SUNDAY
     val isEvening = todayClasses?.lastOrNull()?.time?.end?.let { it < nowTime } ?: false
     val hasNoClassesToday = todayClasses.isNullOrEmpty()
-    val realToday = listOfNotNull(tomorrow, today).first { it.date == nowDate }
+    val realToday = listOfNotNull(tomorrow, today).find { it.date == nowDate }
 
     return when {
         isSunday || isEvening || hasNoClassesToday -> tomorrow
