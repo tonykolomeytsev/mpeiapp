@@ -12,7 +12,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"/>
 
-    <WebView
+    <kekmech.ru.common_webview.V21StableWebView
             android:id="@+id/webView"
             android:layout_width="match_parent"
             android:layout_height="0dp"

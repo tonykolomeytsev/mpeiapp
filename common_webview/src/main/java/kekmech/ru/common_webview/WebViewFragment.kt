@@ -38,7 +38,7 @@ class WebViewFragment : BaseFragment<WebViewEvent, WebViewEffect, WebViewState, 
     override var layoutId = R.layout.fragment_web_view
 
     override fun onViewCreatedInternal(view: View, savedInstanceState: Bundle?) {
-        initWebView()
+        webView.init()
         toolbar.init()
     }
 
@@ -59,37 +59,35 @@ class WebViewFragment : BaseFragment<WebViewEvent, WebViewEffect, WebViewState, 
         is WebViewEffect.LoadUrl -> webView.loadUrl(effect.url)
     }
 
-    private fun initWebView() {
-        webView.apply {
-            settings.apply {
-                javaScriptEnabled = isJavascriptEnabled
-                javaScriptCanOpenWindowsAutomatically = false
-                domStorageEnabled = false
-                allowFileAccess = false
-            }
-            webViewClient = object : WebViewClient() {
+    private fun WebView.init() {
+        settings.apply {
+            javaScriptEnabled = isJavascriptEnabled
+            javaScriptCanOpenWindowsAutomatically = false
+            domStorageEnabled = false
+            allowFileAccess = false
+        }
+        webViewClient = object : WebViewClient() {
 
-                @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-                override fun shouldOverrideUrlLoading(
-                    view: WebView?,
-                    request: WebResourceRequest
-                ): Boolean = handleRequest(request.url) // allow to load if return false
+            @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+            override fun shouldOverrideUrlLoading(
+                view: WebView?,
+                request: WebResourceRequest
+            ): Boolean = handleRequest(request.url) // allow to load if return false
 
-                override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
-                    return url != null && handleRequest(Uri.parse(url)) // allow to load if return false
-                }
-
-                override fun onPageFinished(view: WebView?, url: String?) {
-                    toolbar.title = url.orEmpty()
-                    // feature.accept(Wish.Action.LoadingProgressChanged(100))
-                }
+            override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
+                return url != null && handleRequest(Uri.parse(url)) // allow to load if return false
             }
 
-            webChromeClient = object : WebChromeClient() {
+            override fun onPageFinished(view: WebView?, url: String?) {
+                toolbar.title = url.orEmpty()
+                // feature.accept(Wish.Action.LoadingProgressChanged(100))
+            }
+        }
 
-                override fun onProgressChanged(view: WebView?, newProgress: Int) {
-                    // feature.accept(Wish.Action.LoadingProgressChanged(newProgress))
-                }
+        webChromeClient = object : WebChromeClient() {
+
+            override fun onProgressChanged(view: WebView?, newProgress: Int) {
+                // feature.accept(Wish.Action.LoadingProgressChanged(newProgress))
             }
         }
     }

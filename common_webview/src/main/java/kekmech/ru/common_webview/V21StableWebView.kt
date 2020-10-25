@@ -1,11 +1,11 @@
-package kekmech.ru.bars.main.view
+package kekmech.ru.common_webview
 
 import android.content.Context
 import android.content.res.Configuration
 import android.util.AttributeSet
 import android.webkit.WebView
 
-class BarsWebView @JvmOverloads constructor(
+internal class V21StableWebView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0,

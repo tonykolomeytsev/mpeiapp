@@ -5,5 +5,5 @@ import kekmech.ru.common_webview.presentation.WebViewFeatureFactory
 import org.koin.dsl.bind
 
 object WebViewModule : ModuleProvider({
-    single { WebViewFeatureFactory } bind WebViewFeatureFactory::class
+    factory { WebViewFeatureFactory } bind WebViewFeatureFactory::class
 })
