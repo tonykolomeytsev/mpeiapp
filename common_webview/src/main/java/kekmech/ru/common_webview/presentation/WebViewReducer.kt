@@ -5,7 +5,7 @@ import kekmech.ru.common_mvi.Result
 import kekmech.ru.common_webview.presentation.WebViewEvent.News
 import kekmech.ru.common_webview.presentation.WebViewEvent.Wish
 
-class WebViewReducer : BaseReducer<WebViewState, WebViewEvent, WebViewEffect, WebViewAction> {
+internal class WebViewReducer : BaseReducer<WebViewState, WebViewEvent, WebViewEffect, WebViewAction> {
 
     override fun reduce(
         event: WebViewEvent,

@@ -82,7 +82,7 @@ dependencies {
     implementation project(path: ':feature_app_settings')
     implementation project(path: ':feature_map')
     implementation project(path: ':feature_force_update')
-//    implementation project(path: ':feature_bars')
+    implementation project(path: ':feature_bars')
     implementation project(path: ':feature_notes')
 
     implementation project(path: ':domain_schedule')

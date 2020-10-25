@@ -2,7 +2,7 @@ package kekmech.ru.common_webview.presentation
 
 import kekmech.ru.common_mvi.BaseFeature
 
-object WebViewFeatureFactory {
+internal object WebViewFeatureFactory {
 
     fun create(url: String): WebViewFeature = BaseFeature(
         initialState = WebViewState(url = url),
