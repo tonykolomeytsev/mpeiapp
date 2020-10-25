@@ -1,7 +1,6 @@
-apply from: "../default-android-module.gradle"
+apply from: "../feature-android-module.gradle"
 
 dependencies {
-    coreLibraryDesugaring desugaring
     implementation kotlinStdLib
 
     implementation androidx.appcompat

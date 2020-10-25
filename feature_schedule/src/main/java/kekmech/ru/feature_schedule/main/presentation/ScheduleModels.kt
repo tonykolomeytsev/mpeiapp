@@ -9,10 +9,10 @@ import kekmech.ru.feature_schedule.main.item.WeekItem
 import java.time.LocalDate
 import java.util.*
 
-typealias ScheduleFeature =
+internal typealias ScheduleFeature =
         Feature<ScheduleState, ScheduleEvent, ScheduleEffect>
 
-data class ScheduleState(
+internal data class ScheduleState(
     val isFirstLoading: Boolean = true,
     val weekOffset: Int = 0,
     val isLoading: Boolean = true,
@@ -31,7 +31,7 @@ data class ScheduleState(
     val weekOfSemester get() = schedule[0]?.weeks?.firstOrNull()?.weekOfSemester?.plus(weekOffset)
 }
 
-sealed class ScheduleEvent {
+internal sealed class ScheduleEvent {
 
     sealed class Wish : ScheduleEvent() {
         object Init : Wish()
@@ -53,10 +53,10 @@ sealed class ScheduleEvent {
     }
 }
 
-sealed class ScheduleEffect {
+internal sealed class ScheduleEffect {
     data class NavigateToNoteList(val classes: Classes, val date: LocalDate) : ScheduleEffect()
 }
 
-sealed class ScheduleAction {
+internal sealed class ScheduleAction {
     data class LoadSchedule(val weekOffset: Int) : ScheduleAction()
 }

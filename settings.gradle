@@ -22,6 +22,7 @@ include ':domain_schedule'
 include ':domain_app_settings'
 include ':domain_map'
 include ':domain_force_update'
+include ':domain_bars'
 
 include ':feature_app_settings'
 include ':feature_dashboard'

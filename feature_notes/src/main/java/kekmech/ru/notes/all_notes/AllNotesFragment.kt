@@ -27,9 +27,9 @@ import kekmech.ru.notes.edit.NoteEditFragment
 import kotlinx.android.synthetic.main.fragment_all_notes.*
 import org.koin.android.ext.android.inject
 
-const val NOTE_EDIT_REQUEST_CODE = 54692
+private const val NOTE_EDIT_REQUEST_CODE = 54692
 
-class AllNotesFragment : BaseFragment<AllNotesEvent, AllNotesEffect, AllNotesState, AllNotesFeature>(), ActivityResultListener {
+internal class AllNotesFragment : BaseFragment<AllNotesEvent, AllNotesEffect, AllNotesState, AllNotesFeature>(), ActivityResultListener {
 
     override val initEvent = Wish.Init
 

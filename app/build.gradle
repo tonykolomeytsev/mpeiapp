@@ -88,6 +88,7 @@ dependencies {
     implementation project(path: ':domain_schedule')
     implementation project(path: ':domain_app_settings')
     implementation project(path: ':domain_force_update')
+    implementation project(path: ':domain_bars')
 
     implementation project(path: ':coreui')
     implementation project(path: ':common_navigation')

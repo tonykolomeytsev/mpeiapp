@@ -46,7 +46,11 @@ class MainFragment : BaseFragment<MainScreenEvent, MainScreenEffect, MainScreenS
         bottomNavigation.setPadding(0)
         view.addSystemBottomPadding()
 
-        val controller = bottomBarController ?: BottomBarController(this)
+        val controller = bottomBarController ?: BottomBarController(
+            this,
+            dependencies.scheduleFeatureLauncher,
+            dependencies.barsFeatureLauncher
+        )
         controller.init(this, bottomNavigation)
         bottomBarController = controller
         savedInstanceState?.let {

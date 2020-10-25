@@ -26,7 +26,7 @@ import org.koin.android.ext.android.inject
 
 private const val ARG_NOTE = "Arg.Note"
 
-class NoteEditFragment : BaseFragment<NoteEditEvent, NoteEditEffect, NoteEditState, NoteEditFeature>() {
+internal class NoteEditFragment : BaseFragment<NoteEditEvent, NoteEditEffect, NoteEditState, NoteEditFeature>() {
 
     override val initEvent = Wish.Init
 

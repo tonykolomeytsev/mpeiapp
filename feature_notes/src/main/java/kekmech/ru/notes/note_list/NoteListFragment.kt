@@ -26,10 +26,10 @@ import kotlinx.android.synthetic.main.fragment_note_list.*
 import org.koin.android.ext.android.inject
 import java.time.LocalDate
 
-const val ARG_SELECTED_CLASSES = "Arg.SelectedClasses"
-const val ARG_SELECTED_DATE = "Arg.SelectedDate"
+private const val ARG_SELECTED_CLASSES = "Arg.SelectedClasses"
+private const val ARG_SELECTED_DATE = "Arg.SelectedDate"
 
-class NoteListFragment : BaseBottomSheetDialogFragment<NoteListEvent, NoteListEffect, NoteListState, NoteListFeature>() {
+internal class NoteListFragment : BaseBottomSheetDialogFragment<NoteListEvent, NoteListEffect, NoteListState, NoteListFeature>() {
 
     override val initEvent = Wish.Init
 

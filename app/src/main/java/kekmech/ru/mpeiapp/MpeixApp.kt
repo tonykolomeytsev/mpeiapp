@@ -1,6 +1,7 @@
 package kekmech.ru.mpeiapp
 
 import android.app.Application
+import kekmech.ru.bars.di.BarsModule
 import kekmech.ru.common_analytics.di.AnalyticsModule
 import kekmech.ru.common_android.di.CommonAndroidModule
 import kekmech.ru.common_app_database.di.AppDatabaseModule
@@ -28,7 +29,7 @@ import timber.log.Timber
 import timber.log.Timber.DebugTree
 
 
-class MPEIApp : Application(),
+class MpeixApp : Application(),
     RouterHolder {
 
     override val router by inject<Router>()
@@ -42,7 +43,7 @@ class MPEIApp : Application(),
 
     private fun initKoin() = startKoin {
         androidLogger()
-        androidContext(this@MPEIApp)
+        androidContext(this@MpeixApp)
         modules(listOf(
             AppModule,
             MainScreenModule,
@@ -61,7 +62,8 @@ class MPEIApp : Application(),
             AppSettingsModule,
             MapModule,
             NotesModule,
-            ForceUpdateModule
+            ForceUpdateModule,
+            BarsModule
         ))
     }
 
