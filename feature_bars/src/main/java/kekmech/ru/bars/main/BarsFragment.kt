@@ -5,7 +5,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import kekmech.ru.bars.R
 
-class BarsFragment : Fragment(R.layout.fragment_bars) {
+internal class BarsFragment : Fragment(R.layout.fragment_bars) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
