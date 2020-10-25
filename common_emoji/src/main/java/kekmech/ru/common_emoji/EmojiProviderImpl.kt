@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.annotation.DrawableRes
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 
-class EmojiProviderImpl(private val context: Context) : EmojiProvider {
+internal class EmojiProviderImpl(private val context: Context) : EmojiProvider {
 
     override fun provideEmoji(emojiName: String): VectorDrawableCompat? = when (emojiName) {
         ":swimming_pool:" -> getFromRes(R.drawable.ic_emoji_swimming_pool)
@@ -17,6 +17,7 @@ class EmojiProviderImpl(private val context: Context) : EmojiProvider {
         ":force:" -> getFromRes(R.drawable.ic_emoji_force)
         ":stadium:" -> getFromRes(R.drawable.ic_emoji_stadium)
         ":hostels:" -> getFromRes(R.drawable.ic_emoji_hostels)
+        ":massage:" -> getFromRes(R.drawable.ic_emoji_massage)
 
         else -> null
     }
