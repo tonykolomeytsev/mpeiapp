@@ -36,6 +36,7 @@ class AppSettingsFragment : BaseFragment<AppSettingsEvent, AppSettingsEffect, Ap
         recyclerView.adapter = adapter
         recyclerView.attachScrollListenerForAppBarLayoutShadow(appBarLayout)
         appBarLayout.addSystemTopPadding()
+        toolbar.init(R.string.app_settings_screen_title)
     }
 
     override fun render(state: AppSettingsState) {

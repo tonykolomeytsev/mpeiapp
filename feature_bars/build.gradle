@@ -14,12 +14,16 @@ dependencies {
     implementation koin.core
     implementation koin.android
 
-    implementation project(path: ':domain_bars')
+    implementation rx.java
 
-    implementation project(path: ':common_di')
-    implementation project(path: ':common_android')
-    implementation project(path: ':common_kotlin')
-    implementation project(path: ':common_mvi')
+    implementation project(path: ":domain_bars")
+    implementation project(path: ":domain_schedule")
+    implementation project(path: ":domain_app_settings")
 
-    implementation project(path: ':coreui')
+    implementation project(path: ":common_di")
+    implementation project(path: ":common_android")
+    implementation project(path: ":common_kotlin")
+    implementation project(path: ":common_mvi")
+
+    implementation project(path: ":coreui")
 }
