@@ -53,8 +53,8 @@ class MainFragment : BaseFragment<MainScreenEvent, MainScreenEffect, MainScreenS
         )
         controller.init(this, bottomNavigation)
         bottomBarController = controller
-        savedInstanceState?.let {
-            bottomBarController?.switchTab(it.get("lastSelectedTab") as BottomTab)
+        savedInstanceState?.get("lastSelectedTab")?.let {
+            bottomBarController?.switchTab(it as BottomTab)
         }
     }
 
@@ -76,7 +76,9 @@ class MainFragment : BaseFragment<MainScreenEvent, MainScreenEffect, MainScreenS
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putSerializable("lastSelectedTab", bottomBarController?.lastSelectedTab)
+        bottomBarController?.lastSelectedTab?.let {
+            outState.putSerializable("lastSelectedTab", it)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
