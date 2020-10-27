@@ -15,6 +15,7 @@ import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.ui.BaseFragment
 import kekmech.ru.coreui.items.NoteAdapterItem
 import kekmech.ru.coreui.items.SectionHeaderAdapterItem
+import kekmech.ru.coreui.items.SpaceAdapterItem
 import kekmech.ru.feature_search.di.SearchDependencies
 import kekmech.ru.feature_search.item.MapMarkerAdapterItem
 import kekmech.ru.feature_search.mvi.SearchEffect
@@ -59,6 +60,7 @@ internal class SearchFragment : BaseFragment<SearchEvent, SearchEffect, SearchSt
     }
 
     private fun createAdapter() = BaseAdapter(
+        SpaceAdapterItem(),
         SectionHeaderAdapterItem(),
         NoteAdapterItem(requireContext()) { /* no-op */ },
         MapMarkerAdapterItem()
