@@ -9,31 +9,40 @@ import timber.log.Timber
 @Suppress("ComplexInterface", "TooManyFunctions")
 interface MappingActor<Event : Any> {
 
-    fun Completable.mapEvents(successEvent: Event, failureEvent: Event): Observable<Event> =
-        mapSuccessEvent(successEvent).mapErrorEvent { failureEvent }
+    fun Completable.mapEvents(
+        successEvent: Event,
+        failureEvent: Event
+    ): Observable<Event> = mapSuccessEvent(successEvent).mapErrorEvent { failureEvent }
 
-    fun Completable.mapEvents(successEvent: Event, failureEvent: (Throwable) -> Event): Observable<Event> =
-        mapSuccessEvent(successEvent).mapErrorEvent(failureEvent)
+    fun Completable.mapEvents(
+        successEvent: Event,
+        failureEvent: (Throwable) -> Event
+    ): Observable<Event> = mapSuccessEvent(successEvent).mapErrorEvent(failureEvent)
 
-    fun <T : Any> Observable<T>.mapEvents(successEventMapper: (T) -> Event, failureEvent: Event): Observable<Event> =
-        mapSuccessEvent(false, successEventMapper).mapErrorEvent { failureEvent }
+    fun <T : Any> Observable<T>.mapEvents(
+        successEventMapper: (T) -> Event,
+        failureEvent: Event
+    ): Observable<Event> = mapSuccessEvent(successEventMapper).mapErrorEvent { failureEvent }
 
     fun <T : Any> Observable<T>.mapEvents(
         successEventMapper: (T) -> Event,
         failureEventMapper: (throwable: Throwable) -> Event
-    ): Observable<Event> = mapSuccessEvent(false, successEventMapper).mapErrorEvent(failureEventMapper)
+    ): Observable<Event> = mapSuccessEvent(successEventMapper).mapErrorEvent(failureEventMapper)
 
-    fun <T : Any> Single<T>.mapEvents(successEvent: Event, failureEvent: (Throwable) -> Event): Observable<Event> =
-        mapSuccessEvent(successEvent).mapErrorEvent(failureEvent)
+    fun <T : Any> Single<T>.mapEvents(
+        successEvent: Event,
+        failureEvent: (Throwable) -> Event
+    ): Observable<Event> = mapSuccessEvent(successEvent).mapErrorEvent(failureEvent)
 
-    fun <T : Any> Single<T>.mapEvents(successEventMapper: (T) -> Event, failureEvent: Event): Observable<Event> =
-        mapSuccessEvent(successEventMapper).mapErrorEvent { failureEvent }
+    fun <T : Any> Single<T>.mapEvents(
+        successEventMapper: (T) -> Event,
+        failureEvent: Event
+    ): Observable<Event> = mapSuccessEvent(successEventMapper).mapErrorEvent { failureEvent }
 
     fun <T : Any> Single<T>.mapEvents(
         successEventMapper: (T) -> Event,
         failureEvent: (Throwable) -> Event
-    ): Observable<Event> =
-        mapSuccessEvent(successEventMapper).mapErrorEvent(failureEvent)
+    ): Observable<Event> = mapSuccessEvent(successEventMapper).mapErrorEvent(failureEvent)
 
     fun <T, R : Any> Single<T>.mapSuccessEvent(successEvent: R): Observable<R> =
         map { successEvent }.doOnSuccess { it.logSuccessEvent() }.toObservable()
@@ -57,25 +66,19 @@ interface MappingActor<Event : Any> {
         .mapErrorEvent(failureEventMapper)
 
     fun <T, R : Any> Single<T>.mapSuccessEvent(successEventMapper: (T) -> R): Observable<R> =
-        map(successEventMapper).doOnSuccess { it.logSuccessEvent() }.toObservable()
+        map(successEventMapper)
+            .doOnSuccess { it.logSuccessEvent() }
+            .toObservable()
 
     fun <T, R : Any> Observable<T>.mapSuccessEvent(
-        withSkippingError: Boolean = false,
         successEventMapper: (T) -> R
     ): Observable<R> =
-        map(successEventMapper).doOnNext { it.logSuccessEvent() }.let {
-            return if (withSkippingError) {
-                it.onErrorResumeNext { error: Throwable ->
-                    Observable.empty<R>().also { Timber.e(error) }
-                }
-            } else {
-                it
-            }
-        }
+        map(successEventMapper)
+            .doOnNext { it.logSuccessEvent() }
 
     fun <T : Any> Completable.mapSuccessEvent(successEvent: T): Observable<T> =
         andThen(
-            Observable.just<T>(successEvent).doOnComplete { successEvent.logSuccessEvent() }
+            Observable.just(successEvent).doOnComplete { successEvent.logSuccessEvent() }
         )
 
     fun <T, R : Any> Maybe<T>.mapSuccessEvent(successEventMapper: (T?) -> R): Observable<R> =
