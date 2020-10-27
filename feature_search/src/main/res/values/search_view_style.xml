@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="SearchView" parent="Widget.AppCompat.EditText">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">?attr/colorBlack</item>
+        <item name="fontFamily">@font/roboto_regular</item>
+        <item name="android:drawableStart">@drawable/ic_search_18</item>
+        <item name="android:background">@drawable/background_search_view</item>
+        <item name="android:drawablePadding">12dp</item>
+        <item name="android:paddingLeft">12dp</item>
+    </style>
+</resources>

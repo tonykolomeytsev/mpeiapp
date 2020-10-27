@@ -1,8 +1,10 @@
 apply from: "../feature-android-module.gradle"
 
 dependencies {
+    implementation google.material
     implementation androidx.appcompat
     implementation androidx.recyclerview
+    implementation androidx.constraintlayout
     implementation koin.core
     implementation koin.android
     implementation rx.java
@@ -16,4 +18,5 @@ dependencies {
     implementation project(path: ":common_mvi")
     implementation project(path: ":common_di")
     implementation project(path: ":common_navigation")
+    implementation project(path: ":coreui")
 }
