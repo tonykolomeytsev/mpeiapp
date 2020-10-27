@@ -16,6 +16,7 @@ import kekmech.ru.feature_app_settings.di.AppSettingsModule
 import kekmech.ru.feature_dashboard.di.DashboardModule
 import kekmech.ru.feature_onboarding.di.OnboardingModule
 import kekmech.ru.feature_schedule.di.ScheduleModule
+import kekmech.ru.feature_search.di.SearchFeatureModule
 import kekmech.ru.map.di.MapModule
 import kekmech.ru.mpeiapp.di.AppModule
 import kekmech.ru.mpeiapp.ui.main.di.MainScreenModule
@@ -63,7 +64,8 @@ class MpeixApp : Application(),
             MapModule,
             NotesModule,
             ForceUpdateModule,
-            BarsModule
+            BarsModule,
+            SearchFeatureModule
         ))
     }
 

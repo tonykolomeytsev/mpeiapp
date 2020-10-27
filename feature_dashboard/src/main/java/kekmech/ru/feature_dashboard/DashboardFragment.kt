@@ -77,7 +77,7 @@ class DashboardFragment : BaseFragment<DashboardEvent, DashboardEffect, Dashboar
 
     private fun createAdapter() = BaseAdapter(
         SpaceAdapterItem(),
-        SearchFieldAdapterItem { dependencies.scheduleFeatureLauncher.launchSearchGroup() },
+        SearchFieldAdapterItem { dependencies.searchFeatureLauncher.launch() },
         BannerLunchAdapterItem {
             analytics.sendClick("BannerLunch")
             dependencies.bottomTabsSwitcher.changeTab(BottomTab.MAP)

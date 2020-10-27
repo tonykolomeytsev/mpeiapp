@@ -2,6 +2,7 @@ apply from: "../feature-android-module.gradle"
 
 dependencies {
     implementation androidx.appcompat
+    implementation androidx.recyclerview
     implementation koin.core
     implementation koin.android
     implementation rx.java
@@ -9,8 +10,10 @@ dependencies {
     implementation project(path: ":domain_schedule")
     implementation project(path: ":domain_notes")
     implementation project(path: ":domain_map")
+    implementation project(path: ":domain_search")
 
     implementation project(path: ":common_android")
     implementation project(path: ":common_mvi")
     implementation project(path: ":common_di")
+    implementation project(path: ":common_navigation")
 }
