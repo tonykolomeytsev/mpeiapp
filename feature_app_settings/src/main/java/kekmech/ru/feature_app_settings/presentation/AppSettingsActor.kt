@@ -12,7 +12,7 @@ internal class AppSettingsActor(
     override fun execute(action: AppSettingsAction): Observable<AppSettingsEvent> = when (action) {
         is AppSettingsAction.LoadAppSettings -> Observable
             .just(appSettingsRepository as AppSettings)
-            .mapSuccessEvent(withSkippingError = true) { AppSettingsEvent.News.AppSettingsLoaded(it) }
+            .mapSuccessEvent { AppSettingsEvent.News.AppSettingsLoaded(it) }
         is AppSettingsAction.SetDarkThemeEnabled -> appSettingsRepository
             .complete { isDarkThemeEnabled = action.isEnabled }
             .mapSuccessEvent(AppSettingsEvent.News.AppSettingsChanged)

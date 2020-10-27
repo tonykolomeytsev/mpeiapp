@@ -169,6 +169,9 @@
     <string name="app_settings_auto_hide_bottom_sheet">Скрывать список по клику</string>
     <string name="app_settings_auto_hide_bottom_sheet_description">При включенной настройке, на экране карты нажатие на любой адрес в списке автоматически свернет список и переместит камеру к указанному адресу</string>
 
+    <string name="search_section_title_map">Карта</string>
+    <string name="search_section_title_notes">Заметки</string>
+
     <string name="navigation_name_dashboard">Dashboard</string>
     <string name="navigation_name_schedule">Schedule</string>
     <string name="navigation_name_map">Map</string>
