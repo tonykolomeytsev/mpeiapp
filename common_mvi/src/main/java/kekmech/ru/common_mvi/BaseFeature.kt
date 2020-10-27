@@ -1,13 +1,14 @@
 package kekmech.ru.common_mvi
 
+import io.reactivex.Observable
+import io.reactivex.schedulers.Schedulers
+import io.reactivex.schedulers.Schedulers.io
+import io.reactivex.subjects.BehaviorSubject
+import io.reactivex.subjects.PublishSubject
 import kekmech.ru.common_mvi.util.DisposableDelegate
 import kekmech.ru.common_mvi.util.DisposableDelegateImpl
 import kekmech.ru.common_mvi.util.EffectsBuffer
-import io.reactivex.Observable
-import io.reactivex.schedulers.Schedulers.io
-import io.reactivex.schedulers.Schedulers
-import io.reactivex.subjects.BehaviorSubject
-import io.reactivex.subjects.PublishSubject
+import timber.log.Timber
 
 class BaseFeature<State : Any, Event : Any, Effect : Any, Action : Any>(
     initialState: State,
@@ -50,7 +51,12 @@ class BaseFeature<State : Any, Event : Any, Effect : Any, Action : Any>(
             .bind()
 
         commandsInternal
-            .flatMap { actor.execute(it).subscribeOn(io()) }
+            .flatMap {
+                actor.execute(it)
+                    .doOnError(Timber::e)
+                    .onErrorResumeNext(Observable.empty())
+                    .subscribeOn(io())
+            }
             .subscribe(eventsInternal::onNext) {
                 error(Exception("You must handle all errors inside actor $actor", it))
             }
