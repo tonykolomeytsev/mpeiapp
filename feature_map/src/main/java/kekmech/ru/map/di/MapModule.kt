@@ -3,6 +3,7 @@ package kekmech.ru.map.di
 import kekmech.ru.common_di.ModuleProvider
 import kekmech.ru.common_emoji.EmojiModule
 import kekmech.ru.common_network.retrofit.buildApi
+import kekmech.ru.domain_map.MapPersistentCache
 import kekmech.ru.domain_map.MapRepository
 import kekmech.ru.domain_map.MapService
 import kekmech.ru.map.MapAnalytics
@@ -24,4 +25,5 @@ object MapModule : ModuleProvider({
     factory { MapDependencies(get()) } bind MapDependencies::class
     factory { MapAnalytics(get()) } bind MapAnalytics::class
     factory { MarkersBitmapFactory(androidContext(), get()) } bind MarkersBitmapFactory::class
+    factory { MapPersistentCache(get(), get()) } bind MapPersistentCache::class
 })

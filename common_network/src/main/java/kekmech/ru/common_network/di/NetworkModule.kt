@@ -3,11 +3,11 @@ package kekmech.ru.common_network.di
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import kekmech.ru.common_di.ModuleProvider
+import kekmech.ru.common_network.BuildConfig
 import kekmech.ru.common_network.device_id.DeviceIdProvider
 import kekmech.ru.common_network.gson.*
+import kekmech.ru.common_network.okhttp.NoConnectionInterceptor
 import kekmech.ru.common_network.okhttp.RequiredHeadersInterceptor
-import kekmech.ru.common_network.retrofit.buildApi
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.logging.HttpLoggingInterceptor.Level
@@ -23,8 +23,9 @@ import java.util.concurrent.TimeUnit
 
 object NetworkModule : ModuleProvider({
     single { provideGson() } bind Gson::class
-    single { RequiredHeadersInterceptor(deviceId = provideDeviceId(get()), appVersion = "1.0.0") }
-    single { provideOkHttpClient(get()) } bind OkHttpClient::class
+    single { RequiredHeadersInterceptor(deviceId = provideDeviceId(get()), appVersion = BuildConfig.VERSION_NAME) }
+    single { NoConnectionInterceptor(get()) }
+    single { provideOkHttpClient(get(), get()) } bind OkHttpClient::class
     single { provideRetrofitBuilder(get(), get()) } bind Retrofit.Builder::class
     single { DeviceIdProvider(get()) } bind DeviceIdProvider::class
 })
@@ -39,10 +40,12 @@ private fun provideGson() = GsonBuilder()
     .create()
 
 private fun provideOkHttpClient(
-    requiredHeadersInterceptor: RequiredHeadersInterceptor
+    requiredHeadersInterceptor: RequiredHeadersInterceptor,
+    noConnectionInterceptor: NoConnectionInterceptor
 ) = OkHttpClient.Builder()
     .addNetworkInterceptor(HttpLoggingInterceptor().apply { level = Level.BODY })
     .addInterceptor(requiredHeadersInterceptor)
+    .addInterceptor(noConnectionInterceptor)
     .readTimeout(15, TimeUnit.SECONDS)
     .writeTimeout(15, TimeUnit.SECONDS)
     .connectTimeout(15, TimeUnit.SECONDS)

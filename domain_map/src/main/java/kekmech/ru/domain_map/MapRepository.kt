@@ -1,13 +1,11 @@
 package kekmech.ru.domain_map
 
-import kekmech.ru.common_cache.core.LifetimeCache
-import kekmech.ru.common_cache.create
+import kekmech.ru.common_persistent_cache.orFromCache
 
 class MapRepository(
     private val mapService: MapService,
-    lifetimeCache: LifetimeCache
+    private val mapPersistentCache: MapPersistentCache
 ) {
-    private val markersCache = lifetimeCache.create { mapService.getMapMarkers() }
-
-    fun observeMarkers() = markersCache.asObservable()
+    fun observeMarkers() = mapService.getMapMarkers()
+        .orFromCache(Unit, mapPersistentCache)
 }
