@@ -44,6 +44,7 @@ internal class SearchFragment : BaseFragment<SearchEvent, SearchEffect, SearchSt
         searchView.showKeyboard()
         searchView.observeChanges()
             .debounce(400, TimeUnit.MILLISECONDS)
+            .distinctUntilChanged()
             .subscribeOn(AndroidSchedulers.mainThread())
             .subscribe { feature.accept(SearchEvent.Wish.Action.SearchContent(it)) }
             .bind()
