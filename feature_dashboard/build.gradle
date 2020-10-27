@@ -21,6 +21,7 @@ dependencies {
 
     implementation project(path: ':domain_schedule')
     implementation project(path: ':domain_notes')
+    implementation project(path: ':domain_search')
 
     implementation project(path: ':common_di')
     implementation project(path: ':common_annotations')
