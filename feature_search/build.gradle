@@ -1,0 +1,16 @@
+apply from: "../feature-android-module.gradle"
+
+dependencies {
+    implementation androidx.appcompat
+    implementation koin.core
+    implementation koin.android
+    implementation rx.java
+
+    implementation project(path: ":domain_schedule")
+    implementation project(path: ":domain_notes")
+    implementation project(path: ":domain_map")
+
+    implementation project(path: ":common_android")
+    implementation project(path: ":common_mvi")
+    implementation project(path: ":common_di")
+}

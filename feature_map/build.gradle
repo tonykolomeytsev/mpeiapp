@@ -21,6 +21,7 @@ dependencies {
 
     implementation squareup.retrofit
     implementation google.maps
+    implementation google.gson
 
     implementation project(path: ':domain_map')
     implementation project(path: ':domain_app_settings')

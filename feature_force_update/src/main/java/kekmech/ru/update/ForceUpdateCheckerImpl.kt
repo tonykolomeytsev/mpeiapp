@@ -1,7 +1,8 @@
-package kekmech.ru.domain_force_update
+package kekmech.ru.update
 
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import io.reactivex.Single
+import kekmech.ru.domain_force_update.ForceUpdateChecker
 import kekmech.ru.domain_force_update.ForceUpdateChecker.Companion.KEY_CURRENT_VERSION
 import kekmech.ru.domain_force_update.ForceUpdateChecker.Companion.KEY_UPDATE_DESCRIPTION
 import kekmech.ru.domain_force_update.ForceUpdateChecker.Companion.KEY_UPDATE_REQUIRED
@@ -9,7 +10,7 @@ import kekmech.ru.domain_force_update.ForceUpdateChecker.Companion.KEY_UPDATE_UR
 import kekmech.ru.domain_force_update.dto.AppVersion
 import kekmech.ru.domain_force_update.dto.ForceUpdateInfo
 
-class ForceUpdateCheckerImpl : ForceUpdateChecker {
+internal class ForceUpdateCheckerImpl : ForceUpdateChecker {
 
     override fun isNeedToUpdate(): Single<ForceUpdateInfo> = Single.create { emitter ->
         val remoteConfig = FirebaseRemoteConfig.getInstance()
