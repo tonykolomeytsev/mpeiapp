@@ -32,17 +32,32 @@ internal class SearchReducer : BaseReducer<SearchState, SearchEvent, SearchEffec
         event: Wish,
         state: SearchState
     ): Result<SearchState, SearchEffect, SearchAction> = when (event) {
-        is Wish.Init -> Result(state = state)
+        is Wish.Init -> {
+            if (state.query.isEmpty()) {
+                Result(state = state)
+            } else {
+                val simplifiedQuery = state.query.simplify()
+                Result(
+                    state = state.copy(query = state.query),
+                    effects = listOf(SearchEffect.SetInitialQuery(state.query)),
+                    actions = getLoadActions(simplifiedQuery)
+                )
+            }
+        }
         is Wish.Action.SearchContent -> {
             val simplifiedQuery = event.query.simplify()
             Result(
                 state = state.copy(query = event.query),
                 effects = emptyList(),
-                actions = listOf(
-                    SearchAction.SearchNotes(simplifiedQuery),
-                    SearchAction.SearchMap(simplifiedQuery)
-                ).takeIf { simplifiedQuery.isNotEmpty() } ?: emptyList()
+                actions = getLoadActions(simplifiedQuery)
             )
         }
+    }
+
+    private fun getLoadActions(simplifiedQuery: String): List<SearchAction> {
+        return listOf(
+            SearchAction.SearchNotes(simplifiedQuery),
+            SearchAction.SearchMap(simplifiedQuery)
+        ).takeIf { simplifiedQuery.isNotEmpty() } ?: emptyList()
     }
 }

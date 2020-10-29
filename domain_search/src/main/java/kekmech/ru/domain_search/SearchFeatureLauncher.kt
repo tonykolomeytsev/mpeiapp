@@ -1,5 +1,5 @@
 package kekmech.ru.domain_search
 
 interface SearchFeatureLauncher {
-    fun launch()
+    fun launch(query: String = "")
 }

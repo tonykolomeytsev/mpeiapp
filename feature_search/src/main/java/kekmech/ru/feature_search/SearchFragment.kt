@@ -7,10 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kekmech.ru.common_adapter.BaseAdapter
-import kekmech.ru.common_android.addSystemVerticalPadding
-import kekmech.ru.common_android.afterTextChanged
-import kekmech.ru.common_android.close
-import kekmech.ru.common_android.showKeyboard
+import kekmech.ru.common_android.*
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.ui.BaseFragment
 import kekmech.ru.coreui.items.EmptyStateAdapterItem
@@ -27,13 +24,16 @@ import kotlinx.android.synthetic.main.fragment_search.*
 import org.koin.android.ext.android.inject
 import java.util.concurrent.TimeUnit
 
+private const val ARG_QUERY = "Arg.Query"
+
 internal class SearchFragment : BaseFragment<SearchEvent, SearchEffect, SearchState, SearchFeature>() {
 
     override val initEvent get() = SearchEvent.Wish.Init
 
     private val dependencies by inject<SearchDependencies>()
 
-    override fun createFeature(): SearchFeature = dependencies.searchFeatureFactory.create()
+    override fun createFeature(): SearchFeature = dependencies.searchFeatureFactory
+        .create(getArgument(ARG_QUERY))
 
     override var layoutId: Int = R.layout.fragment_search
 
@@ -57,6 +57,13 @@ internal class SearchFragment : BaseFragment<SearchEvent, SearchEffect, SearchSt
         adapter.update(SearchListConverter().map(state))
     }
 
+    override fun handleEffect(effect: SearchEffect) = when (effect) {
+        is SearchEffect.SetInitialQuery -> {
+            searchView.setText(effect.query)
+            searchView.setSelection(effect.query.length)
+        }
+    }
+
     private fun EditText.observeChanges() = Observable.create<String> { emitter ->
         afterTextChanged { emitter.onNext(it) }
     }
@@ -68,4 +75,10 @@ internal class SearchFragment : BaseFragment<SearchEvent, SearchEffect, SearchSt
         MapMarkerAdapterItem(),
         EmptyStateAdapterItem()
     )
+
+    companion object {
+
+        fun newInstance(query: String) = SearchFragment()
+            .withArguments(ARG_QUERY to query)
+    }
 }
