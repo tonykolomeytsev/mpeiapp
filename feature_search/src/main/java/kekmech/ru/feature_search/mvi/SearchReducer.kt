@@ -41,7 +41,7 @@ internal class SearchReducer : BaseReducer<SearchState, SearchEvent, SearchEffec
                 actions = listOf(
                     SearchAction.SearchNotes(simplifiedQuery),
                     SearchAction.SearchMap(simplifiedQuery)
-                )
+                ).takeIf { simplifiedQuery.isNotEmpty() } ?: emptyList()
             )
         }
     }

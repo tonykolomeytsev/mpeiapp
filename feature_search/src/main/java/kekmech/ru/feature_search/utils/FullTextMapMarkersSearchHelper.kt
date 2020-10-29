@@ -13,7 +13,8 @@ internal class FullTextMapMarkersSearchHelper(
     companion object {
         private val predicates = listOf<(MapMarker, String) -> Boolean>(
             { n, q -> q in n.name.simplify() },
-            { n, q -> q in n.address.simplify() }
+            { n, q -> q in n.address.simplify() },
+            { n, q -> q in n.tag.simplify() }
         )
     }
 }

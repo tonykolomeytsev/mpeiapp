@@ -171,6 +171,10 @@
 
     <string name="search_section_title_map">Карта</string>
     <string name="search_section_title_notes">Заметки</string>
+    <string name="search_empty_state_title">Введите текст чтобы начать поиск</string>
+    <string name="search_empty_state_subtitle">Вы можете искать заметки и места на карте. Уже скоро можно будет искать преподавателей и расписания!</string>
+    <string name="search_not_found_state_title">По вашему запросу ничего не найдено</string>
+    <string name="search_not_found_state_subtitle">Вы можете искать заметки по контенту и названиям дисциплин, а также места на карте по названию, адресу и категории</string>
 
     <string name="navigation_name_dashboard">Dashboard</string>
     <string name="navigation_name_schedule">Schedule</string>
