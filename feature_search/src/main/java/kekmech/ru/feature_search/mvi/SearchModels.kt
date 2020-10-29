@@ -5,7 +5,7 @@ import kekmech.ru.common_mvi.Feature
 internal typealias SearchFeature = Feature<SearchState, SearchEvent, SearchEffect>
 
 internal data class SearchState(
-    val query: String = "",
+    val query: String,
     val searchResultsMap: List<Any> = emptyList(),
     val searchResultsNotes: List<Any> = emptyList()
 )
@@ -26,7 +26,9 @@ internal sealed class SearchEvent {
     }
 }
 
-internal sealed class SearchEffect
+internal sealed class SearchEffect {
+    data class SetInitialQuery(val query: String) : SearchEffect()
+}
 
 internal sealed class SearchAction {
     data class SearchNotes(val query: String) : SearchAction()

@@ -9,7 +9,7 @@ internal class SearchFeatureLauncherImpl(
     private val router: Router
 ) : SearchFeatureLauncher {
 
-    override fun launch() {
-        router.executeCommand(AddScreenForward { SearchFragment() })
+    override fun launch(query: String) {
+        router.executeCommand(AddScreenForward { SearchFragment.newInstance(query) })
     }
 }

@@ -18,6 +18,7 @@ import kekmech.ru.feature_onboarding.di.OnboardingModule
 import kekmech.ru.feature_schedule.di.ScheduleModule
 import kekmech.ru.feature_search.di.SearchFeatureModule
 import kekmech.ru.map.di.MapModule
+import kekmech.ru.mpeiapp.deeplink.di.DeeplinkModule
 import kekmech.ru.mpeiapp.di.AppModule
 import kekmech.ru.mpeiapp.ui.main.di.MainScreenModule
 import kekmech.ru.notes.di.NotesModule
@@ -48,6 +49,7 @@ class MpeixApp : Application(),
         modules(listOf(
             AppModule,
             MainScreenModule,
+            DeeplinkModule,
             // commons
             NavigationModule,
             CommonAndroidModule,

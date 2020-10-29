@@ -62,18 +62,8 @@ class MainActivity : AppCompatActivity() {
     private fun setTheme() {
         if (appSettings.isDarkThemeEnabled) {
             setTheme(R.style.AppTheme_Dark)
-
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-//                window.decorView.apply {
-//                    systemUiVisibility = systemUiVisibility xor View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-//                }
         } else {
             setTheme(R.style.AppTheme)
-
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-//                window.decorView.apply {
-//                    systemUiVisibility = systemUiVisibility or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-//                }
         }
     }
 

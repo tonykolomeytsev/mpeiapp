@@ -6,8 +6,8 @@ internal class SearchFeatureFactory(
     private val actor: SearchActor
 ) {
 
-    fun create() = BaseFeature(
-        initialState = SearchState(),
+    fun create(query: String) = BaseFeature(
+        initialState = SearchState(query),
         reducer = SearchReducer(),
         actor = actor
     ).start()
