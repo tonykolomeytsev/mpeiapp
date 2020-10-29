@@ -13,6 +13,7 @@ import kekmech.ru.common_android.close
 import kekmech.ru.common_android.showKeyboard
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.ui.BaseFragment
+import kekmech.ru.coreui.items.EmptyStateAdapterItem
 import kekmech.ru.coreui.items.NoteAdapterItem
 import kekmech.ru.coreui.items.SectionHeaderAdapterItem
 import kekmech.ru.coreui.items.SpaceAdapterItem
@@ -43,11 +44,11 @@ internal class SearchFragment : BaseFragment<SearchEvent, SearchEffect, SearchSt
         navBackButton.setOnClickListener { close() }
         searchView.showKeyboard()
         searchView.observeChanges()
-            .debounce(400, TimeUnit.MILLISECONDS)
+            .debounce(300, TimeUnit.MILLISECONDS)
             .distinctUntilChanged()
             .subscribeOn(AndroidSchedulers.mainThread())
             .subscribe { feature.accept(SearchEvent.Wish.Action.SearchContent(it)) }
-            .bind()
+            .let {}
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
     }
@@ -64,11 +65,7 @@ internal class SearchFragment : BaseFragment<SearchEvent, SearchEffect, SearchSt
         SpaceAdapterItem(),
         SectionHeaderAdapterItem(),
         NoteAdapterItem(requireContext()) { /* no-op */ },
-        MapMarkerAdapterItem()
+        MapMarkerAdapterItem(),
+        EmptyStateAdapterItem()
     )
-
-    override fun onStop() {
-        dispose()
-        super.onStop()
-    }
 }

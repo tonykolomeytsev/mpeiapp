@@ -1,5 +1,6 @@
 package kekmech.ru.feature_search
 
+import kekmech.ru.coreui.items.EmptyStateItem
 import kekmech.ru.coreui.items.SectionHeaderItem
 import kekmech.ru.coreui.items.SpaceItem
 import kekmech.ru.feature_search.mvi.SearchState
@@ -8,7 +9,12 @@ internal class SearchListConverter {
 
     fun map(state: SearchState): List<Any> {
         return when {
-            state.query.isEmpty() -> emptyList<Any>()
+            state.query.isEmpty() -> listOf(
+                EmptyStateItem(
+                    titleRes = R.string.search_empty_state_title,
+                    subtitleRes = R.string.search_empty_state_subtitle
+                )
+            )
             else -> mutableListOf<Any>().apply {
                 if (state.searchResultsNotes.isNotEmpty()) {
                     add(SpaceItem.VERTICAL_12)
@@ -23,6 +29,11 @@ internal class SearchListConverter {
                     addAll(state.searchResultsMap)
                 }
             }
+                .takeIf { it.isNotEmpty() }
+                ?: listOf(EmptyStateItem(
+                    titleRes = R.string.search_not_found_state_title,
+                    subtitleRes = R.string.search_not_found_state_subtitle
+                ))
         }
     }
 }
