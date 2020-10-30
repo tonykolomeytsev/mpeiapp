@@ -7,7 +7,7 @@ import kekmech.ru.domain_onboarding.OnboardingFeatureLauncher
 import kekmech.ru.feature_onboarding.screens.BarsEntryFragment
 import kekmech.ru.feature_onboarding.screens.WelcomeFragment
 
-class OnboardingFeatureLauncherImpl(
+internal class OnboardingFeatureLauncherImpl(
     private val router: Router
 ) : OnboardingFeatureLauncher {
 

@@ -53,6 +53,10 @@ internal class AppSettingsReducer : BaseReducer<AppSettingsState, AppSettingsEve
             state = state,
             action = AppSettingsAction.SetAutoHideBottomSheet(event.isEnabled)
         )
+        is Wish.Action.ClearSelectedGroup -> Result(
+            state = state,
+            action = AppSettingsAction.ClearSelectedGroup
+        )
     }
 
 }

@@ -20,8 +20,8 @@ object AppSettingsModule : ModuleProvider({
         androidContext().getSharedPreferences(MPEIX_PREFERENCES_NAME, Context.MODE_PRIVATE)
     } bind SharedPreferences::class
     factory { AppSettingsRepository(get()) } binds arrayOf(AppSettingsRepository::class, AppSettings::class)
-    factory { AppSettingsActor(get()) } bind AppSettingsActor::class
+    factory { AppSettingsActor(get(), get()) } bind AppSettingsActor::class
     factory { AppSettingsFeatureFactory(get()) } bind AppSettingsFeatureFactory::class
-    factory { AppSettingDependencies(get()) } bind AppSettingDependencies::class
+    factory { AppSettingDependencies(get(), get()) } bind AppSettingDependencies::class
     factory { AppSettingsFeatureLauncherImpl(get()) } bind AppSettingsFeatureLauncher::class
 })

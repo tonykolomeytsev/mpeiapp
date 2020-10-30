@@ -57,7 +57,7 @@ internal class FindScheduleFragment : BaseFragment<FindScheduleEvent, FindSchedu
         is FindScheduleEffect.NavigateNextFragment -> when (effect.continueTo) {
             CONTINUE_TO_BACK_STACK -> close()
             CONTINUE_TO_BARS_ONBOARDING -> onboardingFeatureLauncher.launchBarsPage()
-            CONTINUE_TO_DASHBOARD -> Unit // todo
+            CONTINUE_TO_DASHBOARD -> dependencies.mainScreenLauncher.launch()
             CONTINUE_TO_BACK_STACK_WITH_RESULT -> closeWithSuccess()
             else -> Unit
         }

@@ -25,7 +25,7 @@ object ScheduleModule : ModuleProvider({
     factory { FindScheduleFeatureFactory(get()) } bind FindScheduleFeatureFactory::class
     factory { ScheduleFeatureFactory(get(), get()) } bind ScheduleFeatureFactory::class
     factory { ScheduleActor(get(), get()) }
-    factory { ScheduleDependencies(get(), get()) }
+    factory { ScheduleDependencies(get(), get(), get()) }
     factory { ScheduleAnalytics(get()) } bind ScheduleAnalytics::class
     factory { FindScheduleAnalytics(get()) } bind FindScheduleAnalytics::class
     factory { SchedulePersistentCache(get(), get(), get()) } bind SchedulePersistentCache::class

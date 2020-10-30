@@ -48,6 +48,17 @@ internal class AppSettingsListConverter {
                 mainText = "Завести Issue или Pull Request",
                 label = "github.com/tonykolomeytsev/mpeiapp"
             ))
+
+            if (BuildConfig.DEBUG) {
+                add(SpaceItem.VERTICAL_24)
+                add(SectionHeaderItem(title = "Дебаг"))
+                add(SpaceItem.VERTICAL_12)
+                add(BottomLabeledTextItem(
+                    mainText = "Очистить поле selected_group",
+                    label = "После очистки будет открыт онбординг",
+                    itemId = AppSettingsFragment.ITEM_DEBUG_CLEAR_SELECTED_GROUP
+                ))
+            }
         }
     }
 }
