@@ -15,7 +15,7 @@ import kekmech.ru.common_navigation.NavigationHolder
 import kekmech.ru.common_navigation.NewRoot
 import kekmech.ru.common_navigation.Router
 import kekmech.ru.domain_app_settings.AppSettings
-import kekmech.ru.feature_onboarding.screens.WelcomeFragment
+import kekmech.ru.domain_onboarding.OnboardingFeatureLauncher
 import kekmech.ru.mpeiapp.ui.main.MainFragment
 import org.koin.android.ext.android.inject
 
@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
     private val router: Router by inject()
     private val appSettings: AppSettings by inject()
     private val sharedPreferences: SharedPreferences by inject()
+    private val onboardingFeatureLauncher: OnboardingFeatureLauncher by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,10 +44,10 @@ class MainActivity : AppCompatActivity() {
 
 
         if (savedInstanceState == null) {
-            if (sharedPreferences.contains("selected_group")) {
+            if (!sharedPreferences.getString("selected_group", "").isNullOrEmpty()) {
                 router.executeCommand(NewRoot { MainFragment.newInstance() })
             } else {
-                router.executeCommand(NewRoot { WelcomeFragment() })
+                onboardingFeatureLauncher.launchWelcomePage(true)
             }
         }
     }

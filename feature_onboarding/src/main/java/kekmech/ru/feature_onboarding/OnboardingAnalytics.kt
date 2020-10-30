@@ -4,10 +4,10 @@ import kekmech.ru.common_analytics.Analytics
 import kekmech.ru.common_analytics.AnalyticsImpl
 import kekmech.ru.common_analytics.AnalyticsWrapper
 
-class WelcomeScreenAnalytics(
+internal class WelcomeScreenAnalytics(
     wrapper: AnalyticsWrapper
 ) : Analytics by AnalyticsImpl(wrapper, "OnboardingWelcome")
 
-class BarsEntryScreenAnalytics(
+internal class BarsEntryScreenAnalytics(
     wrapper: AnalyticsWrapper
 ) : Analytics by AnalyticsImpl(wrapper, "OnboardingBarsEntry")

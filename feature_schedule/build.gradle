@@ -26,6 +26,7 @@ dependencies {
     implementation project(path: ':domain_notes')
     implementation project(path: ':domain_onboarding')
     implementation project(path: ':domain_app_settings')
+    implementation project(path: ':domain_main_screen')
 
     implementation project(path: ':common_di')
     implementation project(path: ':common_network')

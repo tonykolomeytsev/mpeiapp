@@ -4,9 +4,11 @@ import io.reactivex.Observable
 import kekmech.ru.common_mvi.Actor
 import kekmech.ru.domain_app_settings.AppSettings
 import kekmech.ru.domain_app_settings.AppSettingsRepository
+import kekmech.ru.domain_schedule.ScheduleRepository
 
 internal class AppSettingsActor(
-    private val appSettingsRepository: AppSettingsRepository
+    private val appSettingsRepository: AppSettingsRepository,
+    private val scheduleRepository: ScheduleRepository
 ) : Actor<AppSettingsAction, AppSettingsEvent> {
 
     override fun execute(action: AppSettingsAction): Observable<AppSettingsEvent> = when (action) {
@@ -22,5 +24,8 @@ internal class AppSettingsActor(
         is AppSettingsAction.SetAutoHideBottomSheet -> appSettingsRepository
             .complete { autoHideBottomSheet = action.isEnabled }
             .mapSuccessEvent(AppSettingsEvent.News.AppSettingsChanged)
+        is AppSettingsAction.ClearSelectedGroup -> appSettingsRepository
+            .complete { scheduleRepository.debugClearSelectedGroup() }
+            .toObservable()
     }
 }

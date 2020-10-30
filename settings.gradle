@@ -24,6 +24,7 @@ include ':domain_map'
 include ':domain_force_update'
 include ':domain_bars'
 include ':domain_search'
+include ':domain_main_screen'
 
 include ':feature_app_settings'
 include ':feature_dashboard'

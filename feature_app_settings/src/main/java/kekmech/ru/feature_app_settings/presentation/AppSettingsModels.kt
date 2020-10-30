@@ -20,6 +20,7 @@ sealed class AppSettingsEvent {
             data class SetDarkThemeEnabled(val isEnabled: Boolean) : Wish()
             data class SetChangeDayAfterChangeWeek(val isEnabled: Boolean) : Wish()
             data class SetAutoHideBottomSheet(val isEnabled: Boolean) : Wish()
+            object ClearSelectedGroup : Wish()
         }
     }
 
@@ -35,6 +36,7 @@ sealed class AppSettingsAction {
     data class SetDarkThemeEnabled(val isEnabled: Boolean) : AppSettingsAction()
     data class SetChangeDayAfterChangeWeek(val isEnabled: Boolean) : AppSettingsAction()
     data class SetAutoHideBottomSheet(val isEnabled: Boolean) : AppSettingsAction()
+    object ClearSelectedGroup : AppSettingsAction()
 }
 
 sealed class AppSettingsEffect {

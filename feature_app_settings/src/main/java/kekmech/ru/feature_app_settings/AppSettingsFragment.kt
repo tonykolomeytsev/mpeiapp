@@ -56,12 +56,22 @@ class AppSettingsFragment : BaseFragment<AppSettingsEvent, AppSettingsEffect, Ap
         ToggleAdapterItem(TOGGLE_AUTO_HIDE_BOTTOM_SHEET) { feature.accept(Wish.Action.SetAutoHideBottomSheet(it)) },
         SectionTextAdapterItem(),
         SpaceAdapterItem(),
-        BottomLabeledTextAdapterItem()
+        BottomLabeledTextAdapterItem { onItemClick(it.itemId) }
     )
+
+    private fun onItemClick(itemId: Int?) = when (itemId) {
+        ITEM_DEBUG_CLEAR_SELECTED_GROUP -> {
+            feature.accept(Wish.Action.ClearSelectedGroup)
+            dependencies.onboardingFeatureLauncher.launchWelcomePage(true)
+        }
+        else -> { /* no-op */ }
+    }
 
     companion object {
         const val TOGGLE_DARK_THEME = 0
         const val TOGGLE_CHANGE_DAY_AFTER_CHANGE_WEEK = 1
         const val TOGGLE_AUTO_HIDE_BOTTOM_SHEET = 2
+
+        const val ITEM_DEBUG_CLEAR_SELECTED_GROUP = 0
     }
 }

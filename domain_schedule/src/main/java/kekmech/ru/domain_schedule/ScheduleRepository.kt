@@ -26,4 +26,12 @@ class ScheduleRepository(
     }
 
     fun getSelectedGroup() = Single.just(selectedGroup)
+
+    fun debugClearSelectedGroup() {
+        if (BuildConfig.DEBUG) {
+            selectedGroup = ""
+        } else {
+            error("Method call is allowed only in debug mode!")
+        }
+    }
 }

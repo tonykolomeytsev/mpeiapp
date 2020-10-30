@@ -8,9 +8,8 @@ import kekmech.ru.common_android.close
 import kekmech.ru.common_android.hideKeyboard
 import kekmech.ru.common_android.withResultFor
 import kekmech.ru.common_navigation.addScreenForward
-import kekmech.ru.common_navigation.di.MainFragmentHolder
-import kekmech.ru.common_navigation.newRoot
 import kekmech.ru.common_webview.WebViewFragment
+import kekmech.ru.domain_main_screen.MainScreenLauncher
 import kekmech.ru.feature_onboarding.BarsEntryScreenAnalytics
 import kekmech.ru.feature_onboarding.R
 import kotlinx.android.synthetic.main.fragment_bars_entry.*
@@ -19,10 +18,10 @@ import timber.log.Timber
 
 private const val REQUEST_CODE = 2910
 
-class BarsEntryFragment : Fragment(R.layout.fragment_bars_entry) {
+internal class BarsEntryFragment : Fragment(R.layout.fragment_bars_entry) {
 
-    val mainFragmentHolder: MainFragmentHolder by inject()
-    val analytics: BarsEntryScreenAnalytics by inject()
+    private val mainScreenLauncher: MainScreenLauncher by inject()
+    private val analytics: BarsEntryScreenAnalytics by inject()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -30,7 +29,8 @@ class BarsEntryFragment : Fragment(R.layout.fragment_bars_entry) {
         toolbar.setNavigationOnClickListener { close() }
         buttonSkip.setOnClickListener {
             analytics.sendClick("SkipLoginBars")
-            newRoot { mainFragmentHolder.invoke() }
+            mainScreenLauncher.launch()
+            close()
         }
         buttonStart.setOnClickListener {
             analytics.sendClick("LoginBars")
