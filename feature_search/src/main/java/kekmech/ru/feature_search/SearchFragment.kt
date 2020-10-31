@@ -39,6 +39,8 @@ internal class SearchFragment : BaseFragment<SearchEvent, SearchEffect, SearchSt
 
     private val adapter by fastLazy { createAdapter() }
 
+    private val analytics by inject<SearchAnalytics>()
+
     override fun onViewCreatedInternal(view: View, savedInstanceState: Bundle?) {
         view.addSystemVerticalPadding()
         navBackButton.setOnClickListener { close() }
@@ -51,6 +53,7 @@ internal class SearchFragment : BaseFragment<SearchEvent, SearchEffect, SearchSt
             .let {}
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
+        analytics.sendScreenShown()
     }
 
     override fun render(state: SearchState) {
@@ -71,7 +74,7 @@ internal class SearchFragment : BaseFragment<SearchEvent, SearchEffect, SearchSt
     private fun createAdapter() = BaseAdapter(
         SpaceAdapterItem(),
         SectionHeaderAdapterItem(),
-        NoteAdapterItem(requireContext()) { /* no-op */ },
+        NoteAdapterItem(requireContext()) { dependencies.notesFeatureLauncher.launchAllNotes(it) },
         MapMarkerAdapterItem(),
         EmptyStateAdapterItem()
     )

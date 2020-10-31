@@ -46,7 +46,7 @@ internal class NotesFeatureLauncherImpl(
         })
     }
 
-    override fun launchAllNotes() {
-        router.executeCommand(AddScreenForward { AllNotesFragment() })
+    override fun launchAllNotes(selectedNote: Note?) {
+        router.executeCommand(AddScreenForward { AllNotesFragment.newInstance(selectedNote) })
     }
 }
