@@ -7,9 +7,9 @@ import kekmech.ru.common_mvi.Feature
 import kekmech.ru.domain_app_settings.AppSettings
 import kekmech.ru.domain_map.dto.MapMarker
 
-typealias MapFeature = Feature<MapState, MapEvent, MapEffect>
+internal typealias MapFeature = Feature<MapState, MapEvent, MapEffect>
 
-data class MapState(
+internal data class MapState(
     val selectedTab: FilterTab = FilterTab.FOOD,
     val markers: List<MapMarker> = emptyList(),
     val map: GoogleMap? = null,
@@ -18,9 +18,9 @@ data class MapState(
     val appSettings: AppSettings
 )
 
-enum class FilterTab { FOOD, BUILDINGS, HOSTELS, OTHERS, STRUCTURES }
+internal enum class FilterTab { FOOD, BUILDINGS, HOSTELS, OTHERS, STRUCTURES }
 
-sealed class MapEvent {
+internal sealed class MapEvent {
 
     sealed class Wish : MapEvent() {
         object Init : Wish()
@@ -40,7 +40,7 @@ sealed class MapEvent {
     }
 }
 
-sealed class MapEffect {
+internal sealed class MapEffect {
     data class GenerateGoogleMapMarkers(
         val map: GoogleMap?,
         val markers: List<MapMarker>?,
@@ -55,6 +55,6 @@ sealed class MapEffect {
     ) : MapEffect()
 }
 
-sealed class MapAction {
+internal sealed class MapAction {
     object ObserveMarkers : MapAction()
 }

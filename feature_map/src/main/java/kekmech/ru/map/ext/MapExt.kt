@@ -12,7 +12,7 @@ import kekmech.ru.common_android.dpToPx
 import kekmech.ru.map.R
 
 @SuppressLint("MissingPermission")
-fun GoogleMap.init(context: Context) {
+internal fun GoogleMap.init(context: Context) {
     setMapStyle(MapStyleOptions.loadRawResourceStyle(context, R.raw.google_map_style))
     isMyLocationEnabled = false
     isBuildingsEnabled = true
@@ -34,7 +34,7 @@ fun GoogleMap.init(context: Context) {
     moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
 }
 
-fun GoogleMap.animateCameraTo(marker: Marker) {
+internal fun GoogleMap.animateCameraTo(marker: Marker) {
     val cameraPosition = CameraPosition.Builder()
         .tilt(30f)
         .zoom(17f)

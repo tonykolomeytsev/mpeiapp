@@ -23,6 +23,7 @@ import kekmech.ru.domain_map.dto.MapMarker
 import kekmech.ru.map.di.MapDependencies
 import kekmech.ru.map.ext.animateCameraTo
 import kekmech.ru.map.ext.init
+import kekmech.ru.map.ext.toFilterTab
 import kekmech.ru.map.ext.toMarkerType
 import kekmech.ru.map.items.FilterTabItem
 import kekmech.ru.map.items.MapMarkerAdapterItem
@@ -35,7 +36,7 @@ import kotlinx.android.synthetic.main.fragment_map.*
 import org.koin.android.ext.android.inject
 
 
-class MapFragment : BaseFragment<MapEvent, MapEffect, MapState, MapFeature>() {
+internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState, MapFeature>() {
 
     override val initEvent = Wish.Init
 
@@ -95,6 +96,24 @@ class MapFragment : BaseFragment<MapEvent, MapEffect, MapState, MapFeature>() {
         val behavior = BottomSheetBehavior.from(recyclerView)
         (recyclerView.layoutManager as ControlledScrollingLayoutManager)
             .isScrollingEnabled = behavior.state != BottomSheetBehavior.STATE_COLLAPSED
+
+        selectPlaceIfNecessary(state)
+    }
+
+    private fun selectPlaceIfNecessary(state: MapState) {
+        state.googleMapMarkers.takeIf { it.isNotEmpty() } ?: return
+        state.map ?: return
+        val selectedPlaceUid = dependencies.selectedPlaceDelegate.get() ?: return
+        val selectedMarker = state.markers.find { it.uid == selectedPlaceUid } ?: return
+        val necessarySelectedTab = selectedMarker.type.toFilterTab() ?: return
+
+        if (state.selectedTab != necessarySelectedTab) {
+            feature.accept(Wish.Action.SelectTab(necessarySelectedTab))
+            return
+        }
+
+        feature.accept(Wish.Action.OnListMarkerSelected(selectedMarker))
+        dependencies.selectedPlaceDelegate.clear()
     }
 
     override fun handleEffect(effect: MapEffect) = when (effect) {

@@ -49,7 +49,8 @@ class MainFragment : BaseFragment<MainScreenEvent, MainScreenEffect, MainScreenS
         val controller = bottomBarController ?: BottomBarController(
             this,
             dependencies.scheduleFeatureLauncher,
-            dependencies.barsFeatureLauncher
+            dependencies.barsFeatureLauncher,
+            dependencies.mapFeatureLauncher
         )
         controller.init(this, bottomNavigation)
         bottomBarController = controller

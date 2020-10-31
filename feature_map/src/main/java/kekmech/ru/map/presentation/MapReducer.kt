@@ -5,7 +5,7 @@ import kekmech.ru.common_mvi.Result
 import kekmech.ru.map.presentation.MapEvent.News
 import kekmech.ru.map.presentation.MapEvent.Wish
 
-typealias MapResult = Result<MapState, MapEffect, MapAction>
+internal typealias MapResult = Result<MapState, MapEffect, MapAction>
 
 internal class MapReducer : BaseReducer<MapState, MapEvent, MapEffect, MapAction> {
 
