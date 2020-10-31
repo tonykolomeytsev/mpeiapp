@@ -93,6 +93,7 @@ dependencies {
     implementation project(path: ':domain_search')
     implementation project(path: ':domain_main_screen')
     implementation project(path: ':domain_onboarding')
+    implementation project(path: ':domain_map')
 
     implementation project(path: ':coreui')
     implementation project(path: ':common_navigation')

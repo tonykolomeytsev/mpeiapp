@@ -5,16 +5,17 @@ import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kekmech.ru.common_navigation.BottomTab
 import kekmech.ru.domain_bars.BarsFeatureLauncher
+import kekmech.ru.domain_map.MapFeatureLauncher
 import kekmech.ru.domain_schedule.ScheduleFeatureLauncher
 import kekmech.ru.feature_dashboard.DashboardFragment
-import kekmech.ru.map.MapFragment
 import kekmech.ru.mpeiapp.R
 import java.util.concurrent.TimeUnit
 
 class BottomBarController(
     fragment: Fragment,
     private val scheduleFeatureLauncher: ScheduleFeatureLauncher,
-    private val barsFeatureLauncher: BarsFeatureLauncher
+    private val barsFeatureLauncher: BarsFeatureLauncher,
+    private val mapFeatureLauncher: MapFeatureLauncher
 ) {
 
     private val childFragmentManager: FragmentManager = fragment.childFragmentManager
@@ -91,7 +92,7 @@ class BottomBarController(
     private fun createTabFragment(tab: BottomTab): Fragment = when (tab) {
         BottomTab.DASHBOARD -> DashboardFragment()
         BottomTab.SCHEDULE -> scheduleFeatureLauncher.launchMain()
-        BottomTab.MAP -> MapFragment()
+        BottomTab.MAP -> mapFeatureLauncher.launchMain()
         BottomTab.PROFILE -> barsFeatureLauncher.launchMain()
     }
 }
