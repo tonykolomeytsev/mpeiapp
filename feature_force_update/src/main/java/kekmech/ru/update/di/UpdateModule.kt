@@ -6,5 +6,5 @@ import kekmech.ru.update.ForceUpdateCheckerImpl
 import org.koin.dsl.bind
 
 object ForceUpdateModule : ModuleProvider({
-    factory { ForceUpdateCheckerImpl() } bind ForceUpdateChecker::class
+    factory { ForceUpdateCheckerImpl(get()) } bind ForceUpdateChecker::class
 })

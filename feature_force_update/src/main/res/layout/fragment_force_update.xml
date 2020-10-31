@@ -19,7 +19,6 @@
             android:paddingRight="16dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
-            android:layout_marginBottom="16dp"
             android:clipToPadding="false">
 
         <TextView
@@ -64,18 +63,18 @@
                     android:id="@+id/buttonUpdateLater"
                     style="@style/Button.Secondary"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_marginRight="8dp"
+                    android:layout_marginEnd="8dp"
                     android:text="Не сейчас"/>
 
             <Button
                     android:id="@+id/buttonUpdateNow"
                     style="@style/Button.Primary"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
                     android:text="Обновить"/>
 
         </LinearLayout>

@@ -1,11 +1,8 @@
 package kekmech.ru.domain_force_update
 
-import io.reactivex.Single
-import kekmech.ru.domain_force_update.dto.ForceUpdateInfo
-
 interface ForceUpdateChecker {
 
-    fun isNeedToUpdate(): Single<ForceUpdateInfo>
+    fun check()
 
     companion object {
         const val KEY_UPDATE_REQUIRED = "force_update_required"
