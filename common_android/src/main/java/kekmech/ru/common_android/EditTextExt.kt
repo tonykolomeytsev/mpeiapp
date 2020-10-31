@@ -10,6 +10,10 @@ fun EditText.showKeyboard() {
     post { KeyboardUtils.showSoftInput(this) }
 }
 
+fun EditText.hideKeyboard() {
+    post { KeyboardUtils.hideSoftInput(this) }
+}
+
 fun EditText.afterTextChanged(callback: (text: String) -> Unit) {
     this.addTextChangedListener(object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit

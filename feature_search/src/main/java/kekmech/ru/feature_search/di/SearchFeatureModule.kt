@@ -11,7 +11,7 @@ import org.koin.dsl.bind
 object SearchFeatureModule : ModuleProvider({
     factory { SearchAnalytics(get()) }
     factory { SearchFeatureLauncherImpl(get()) } bind SearchFeatureLauncher::class
-    factory { SearchDependencies(get(), get()) }
+    factory { SearchDependencies(get(), get(), get()) }
     factory { SearchFeatureFactory(get()) }
     factory { SearchActor(get(), get()) }
 })

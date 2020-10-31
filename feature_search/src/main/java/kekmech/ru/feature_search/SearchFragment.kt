@@ -10,10 +10,13 @@ import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_android.*
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.ui.BaseFragment
+import kekmech.ru.common_navigation.BottomTab
+import kekmech.ru.common_navigation.BottomTabsSwitcher
 import kekmech.ru.coreui.items.EmptyStateAdapterItem
 import kekmech.ru.coreui.items.NoteAdapterItem
 import kekmech.ru.coreui.items.SectionHeaderAdapterItem
 import kekmech.ru.coreui.items.SpaceAdapterItem
+import kekmech.ru.domain_map.dto.MapMarker
 import kekmech.ru.feature_search.di.SearchDependencies
 import kekmech.ru.feature_search.item.MapMarkerAdapterItem
 import kekmech.ru.feature_search.mvi.SearchEffect
@@ -40,6 +43,8 @@ internal class SearchFragment : BaseFragment<SearchEvent, SearchEffect, SearchSt
     private val adapter by fastLazy { createAdapter() }
 
     private val analytics by inject<SearchAnalytics>()
+
+    private val bottomTabsSwitcher by inject<BottomTabsSwitcher>()
 
     override fun onViewCreatedInternal(view: View, savedInstanceState: Bundle?) {
         view.addSystemVerticalPadding()
@@ -75,9 +80,16 @@ internal class SearchFragment : BaseFragment<SearchEvent, SearchEffect, SearchSt
         SpaceAdapterItem(),
         SectionHeaderAdapterItem(),
         NoteAdapterItem(requireContext()) { dependencies.notesFeatureLauncher.launchAllNotes(it) },
-        MapMarkerAdapterItem(),
+        MapMarkerAdapterItem { navigateToMapMarker(it) },
         EmptyStateAdapterItem()
     )
+
+    private fun navigateToMapMarker(marker: MapMarker) {
+        dependencies.mapFeatureLauncher.selectPlace(marker.uid)
+        bottomTabsSwitcher.changeTab(BottomTab.MAP)
+        searchView.hideKeyboard()
+        close()
+    }
 
     companion object {
 

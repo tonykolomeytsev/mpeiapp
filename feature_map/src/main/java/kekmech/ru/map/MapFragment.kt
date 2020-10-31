@@ -35,6 +35,7 @@ import kekmech.ru.map.view.MarkersBitmapFactory
 import kotlinx.android.synthetic.main.fragment_map.*
 import org.koin.android.ext.android.inject
 
+private const val DEFAULT_NAVIGATION_DELAY = 1000L
 
 internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState, MapFeature>() {
 
@@ -112,7 +113,9 @@ internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState, MapFeat
             return
         }
 
-        feature.accept(Wish.Action.OnListMarkerSelected(selectedMarker))
+        Handler().postDelayed({
+            feature.accept(Wish.Action.OnListMarkerSelected(selectedMarker))
+        }, DEFAULT_NAVIGATION_DELAY)
         dependencies.selectedPlaceDelegate.clear()
     }
 
