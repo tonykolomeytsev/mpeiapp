@@ -7,4 +7,5 @@ dependencies {
 
     implementation project(path: ":common_annotations")
     implementation project(path: ":common_persistent_cache")
+    implementation project(path: ":common_cache")
 }

@@ -19,7 +19,7 @@ object MapModule : ModuleProvider({
     loadKoinModules(EmojiModule.provider)
 
     single { get<Retrofit.Builder>().buildApi<MapService>() } bind MapService::class
-    single { MapRepository(get(), get()) } bind MapRepository::class
+    single { MapRepository(get(), get(), get()) } bind MapRepository::class
     factory { MapFeatureFactory(get(), get()) } bind MapFeatureFactory::class
     factory { MapActor(get()) } bind MapActor::class
     factory { MapDependencies(get()) } bind MapDependencies::class
