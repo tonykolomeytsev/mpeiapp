@@ -6,9 +6,7 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_analytics.addScrollAnalytics
-import kekmech.ru.common_android.ActivityResultListener
-import kekmech.ru.common_android.addSystemVerticalPadding
-import kekmech.ru.common_android.withResultFor
+import kekmech.ru.common_android.*
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.ui.BaseFragment
 import kekmech.ru.common_navigation.addScreenForward
@@ -28,6 +26,8 @@ import kotlinx.android.synthetic.main.fragment_all_notes.*
 import org.koin.android.ext.android.inject
 
 private const val NOTE_EDIT_REQUEST_CODE = 54692
+
+private const val ARG_SELECTED_NOTE = "Arg.Note"
 
 internal class AllNotesFragment : BaseFragment<AllNotesEvent, AllNotesEffect, AllNotesState, AllNotesFeature>(), ActivityResultListener {
 
@@ -59,6 +59,18 @@ internal class AllNotesFragment : BaseFragment<AllNotesEvent, AllNotesEffect, Al
 
     override fun render(state: AllNotesState) {
         adapter.update(AllNotesListConverter().map(state))
+        scrollToSelectedNote(state)
+    }
+
+    private fun scrollToSelectedNote(state: AllNotesState) {
+        if (!state.notes.isNullOrEmpty()) {
+            findAndRemoveArgument<Note>(ARG_SELECTED_NOTE)?.let { note ->
+                val position = adapter.allData.indexOf(note)
+                if (position != -1) {
+                    recyclerView.scrollToPosition(position)
+                }
+            }
+        }
     }
 
     private fun createAdapter() = BaseAdapter(
@@ -81,5 +93,11 @@ internal class AllNotesFragment : BaseFragment<AllNotesEvent, AllNotesEffect, Al
         if (requestCode == NOTE_EDIT_REQUEST_CODE) {
             feature.accept(Wish.Init)
         }
+    }
+
+    companion object {
+
+        fun newInstance(selectedNote: Note?) = AllNotesFragment()
+            .withArguments(ARG_SELECTED_NOTE to selectedNote)
     }
 }

@@ -20,5 +20,5 @@ interface NotesFeatureLauncher {
         requestCode: Int? = null
     )
 
-    fun launchAllNotes()
+    fun launchAllNotes(selectedNote: Note? = null)
 }

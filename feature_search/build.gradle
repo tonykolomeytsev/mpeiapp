@@ -21,5 +21,6 @@ dependencies {
     implementation project(path: ":common_di")
     implementation project(path: ":common_kotlin")
     implementation project(path: ":common_navigation")
+    implementation project(path: ":common_analytics")
     implementation project(path: ":coreui")
 }
