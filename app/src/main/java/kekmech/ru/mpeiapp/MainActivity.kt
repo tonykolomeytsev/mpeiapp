@@ -12,20 +12,20 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import kekmech.ru.common_android.onActivityResult
 import kekmech.ru.common_navigation.BackButtonListener
 import kekmech.ru.common_navigation.NavigationHolder
-import kekmech.ru.common_navigation.NewRoot
-import kekmech.ru.common_navigation.Router
 import kekmech.ru.domain_app_settings.AppSettings
+import kekmech.ru.domain_main_screen.MainScreenLauncher
 import kekmech.ru.domain_onboarding.OnboardingFeatureLauncher
-import kekmech.ru.mpeiapp.ui.main.MainFragment
+import kekmech.ru.mpeiapp.deeplink.DeeplinkHandlersProcessor
 import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
 
     private val navigationHolder: NavigationHolder by inject()
-    private val router: Router by inject()
     private val appSettings: AppSettings by inject()
     private val sharedPreferences: SharedPreferences by inject()
     private val onboardingFeatureLauncher: OnboardingFeatureLauncher by inject()
+    private val mainScreenLauncher: MainScreenLauncher by inject()
+    private val deeplinkHandlersProcessor: DeeplinkHandlersProcessor by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,11 +45,13 @@ class MainActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             if (!sharedPreferences.getString("selected_group", "").isNullOrEmpty()) {
-                router.executeCommand(NewRoot { MainFragment.newInstance() })
+                mainScreenLauncher.launch()
             } else {
                 onboardingFeatureLauncher.launchWelcomePage(true)
             }
         }
+
+        deeplinkHandlersProcessor.processDeeplink(intent.data)
     }
 
     private fun enableEdgeToEdge() {
@@ -58,6 +60,11 @@ class MainActivity : AppCompatActivity() {
                     View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
                     View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
         }
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        deeplinkHandlersProcessor.processDeeplink(intent?.data)
     }
 
     private fun setTheme() {

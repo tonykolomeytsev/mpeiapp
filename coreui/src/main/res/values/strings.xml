@@ -120,7 +120,7 @@
     <string name="dashboard_events_tomorrow">Завтрашние пары</string>
     <string name="dashboard_banner_lunch_header">Судя по всему, сейчас обеденный перерыв</string>
     <string name="dashboard_banner_lunch_description">Найти столовые на карте</string>
-    <string name="dashboard_search_field_text">Искать места, преподавателей, заметки…</string>
+    <string name="dashboard_search_field_text">Искать места, заметки…</string>
     <string name="dashboard_day_status_semester">Идет %d учебная неделя</string>
     <string name="dashboard_day_status_not_semester">Неучебная неделя</string>
 
