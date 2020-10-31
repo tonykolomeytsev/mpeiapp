@@ -1,6 +1,4 @@
 apply from: "../kotlin-module.gradle"
 
 dependencies {
-    implementation rx.java
-    implementation project(path: ":common_di")
 }

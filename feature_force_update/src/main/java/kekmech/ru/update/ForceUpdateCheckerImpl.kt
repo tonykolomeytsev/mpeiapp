@@ -1,7 +1,8 @@
 package kekmech.ru.update
 
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
-import io.reactivex.Single
+import kekmech.ru.common_navigation.Router
+import kekmech.ru.common_navigation.ShowDialog
 import kekmech.ru.domain_force_update.ForceUpdateChecker
 import kekmech.ru.domain_force_update.ForceUpdateChecker.Companion.KEY_CURRENT_VERSION
 import kekmech.ru.domain_force_update.ForceUpdateChecker.Companion.KEY_UPDATE_DESCRIPTION
@@ -10,9 +11,11 @@ import kekmech.ru.domain_force_update.ForceUpdateChecker.Companion.KEY_UPDATE_UR
 import kekmech.ru.domain_force_update.dto.AppVersion
 import kekmech.ru.domain_force_update.dto.ForceUpdateInfo
 
-internal class ForceUpdateCheckerImpl : ForceUpdateChecker {
+internal class ForceUpdateCheckerImpl(
+    private val router: Router
+) : ForceUpdateChecker {
 
-    override fun isNeedToUpdate(): Single<ForceUpdateInfo> = Single.create { emitter ->
+    override fun check() {
         val remoteConfig = FirebaseRemoteConfig.getInstance()
 
         val isUpdateRequired = remoteConfig.getBoolean(KEY_UPDATE_REQUIRED)
@@ -21,13 +24,16 @@ internal class ForceUpdateCheckerImpl : ForceUpdateChecker {
         val updateUrl = remoteConfig.getString(KEY_UPDATE_URL)
         val description = remoteConfig.getString(KEY_UPDATE_DESCRIPTION)
 
-        emitter.onSuccess(
-            ForceUpdateInfo(
-                actualVersion = actualVersion,
-                updateUrl = updateUrl,
-                shortDescription = description,
-                isUpdateRequired = (actualVersion > appVersion) and isUpdateRequired
-            )
+        val forceUpdateInfo = ForceUpdateInfo(
+            actualVersion = actualVersion,
+            updateUrl = updateUrl,
+            shortDescription = description,
+            isUpdateRequired = (actualVersion > appVersion) and isUpdateRequired
         )
+        if (forceUpdateInfo.isUpdateRequired) {
+            router.executeCommand(ShowDialog {
+                ForceUpdateFragment.newInstance(forceUpdateInfo)
+            })
+        }
     }
 }

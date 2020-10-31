@@ -35,6 +35,7 @@ class MainFragment : BaseFragment<MainScreenEvent, MainScreenEffect, MainScreenS
 
         if (savedInstanceState == null) {
             // start observing data
+            dependencies.forceUpdateChecker.check()
         }
 
         dependencies.prefetcher.prefetch()
