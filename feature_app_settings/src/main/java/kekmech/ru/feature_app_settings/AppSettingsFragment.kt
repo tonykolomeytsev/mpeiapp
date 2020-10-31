@@ -1,5 +1,7 @@
 package kekmech.ru.feature_app_settings
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
@@ -64,7 +66,13 @@ class AppSettingsFragment : BaseFragment<AppSettingsEvent, AppSettingsEffect, Ap
             feature.accept(Wish.Action.ClearSelectedGroup)
             dependencies.onboardingFeatureLauncher.launchWelcomePage(true)
         }
+        ITEM_SUPPORT -> navigateToBrowser("https://vk.com/kekmech")
+        ITEM_GITHUB -> navigateToBrowser("https://github.com/tonykolomeytsev/mpeiapp")
         else -> { /* no-op */ }
+    }
+
+    private fun navigateToBrowser(ref: String) {
+        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(ref)))
     }
 
     companion object {
@@ -73,5 +81,7 @@ class AppSettingsFragment : BaseFragment<AppSettingsEvent, AppSettingsEffect, Ap
         const val TOGGLE_AUTO_HIDE_BOTTOM_SHEET = 2
 
         const val ITEM_DEBUG_CLEAR_SELECTED_GROUP = 0
+        const val ITEM_SUPPORT = 1
+        const val ITEM_GITHUB = 2
     }
 }
