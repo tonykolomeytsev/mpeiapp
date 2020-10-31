@@ -1,6 +1,8 @@
 package kekmech.ru.feature_app_settings
 
 import kekmech.ru.coreui.items.*
+import kekmech.ru.feature_app_settings.AppSettingsFragment.Companion.ITEM_GITHUB
+import kekmech.ru.feature_app_settings.AppSettingsFragment.Companion.ITEM_SUPPORT
 import kekmech.ru.feature_app_settings.presentation.AppSettingsState
 
 internal class AppSettingsListConverter {
@@ -42,11 +44,13 @@ internal class AppSettingsListConverter {
             add(SpaceItem.VERTICAL_12)
             add(BottomLabeledTextItem(
                 mainText = "Задать вопрос в группу",
-                label = "vk.com/kekmech"
+                label = "vk.com/kekmech",
+                itemId = ITEM_SUPPORT
             ))
             add(BottomLabeledTextItem(
                 mainText = "Завести Issue или Pull Request",
-                label = "github.com/tonykolomeytsev/mpeiapp"
+                label = "github.com/tonykolomeytsev/mpeiapp",
+                itemId = ITEM_GITHUB
             ))
 
             if (BuildConfig.DEBUG) {
