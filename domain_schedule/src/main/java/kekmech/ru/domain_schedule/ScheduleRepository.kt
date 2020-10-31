@@ -3,7 +3,7 @@ package kekmech.ru.domain_schedule
 import android.content.SharedPreferences
 import io.reactivex.Completable
 import io.reactivex.Single
-import kekmech.ru.common_persistent_cache.orFromCache
+import kekmech.ru.common_persistent_cache.orFromPersistentCache
 import kekmech.ru.common_shared_preferences.string
 import kekmech.ru.domain_schedule.dto.GetScheduleBody
 
@@ -19,7 +19,7 @@ class ScheduleRepository(
 
     fun loadSchedule(groupName: String = selectedGroup, weekOffset: Int = 0) = scheduleService
         .getSchedule(GetScheduleBody(groupName, weekOffset))
-        .orFromCache(groupName to weekOffset, schedulePersistentCache)
+        .orFromPersistentCache(groupName to weekOffset, schedulePersistentCache)
 
     fun selectGroup(groupName: String): Completable = Completable.fromAction {
         selectedGroup = groupName
