@@ -11,9 +11,8 @@ dependencies {
     implementation koin.core
     implementation koin.android
     implementation timber
+    implementation tinkoff.pagerindicator
     implementation rx.java
-    implementation rx.kotlin
-    implementation rx.android
 
     implementation project(path: ":domain_onboarding")
     implementation project(path: ":domain_schedule")
@@ -27,5 +26,6 @@ dependencies {
     implementation project(path: ":common_webview")
     implementation project(path: ":common_mvi")
     implementation project(path: ":common_analytics")
+    implementation project(path: ":common_adapter")
     implementation project(path: ":coreui")
 }
