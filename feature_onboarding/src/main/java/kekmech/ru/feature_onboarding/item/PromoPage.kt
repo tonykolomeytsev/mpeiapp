@@ -17,31 +17,31 @@ internal enum class PromoPage(
 ) {
 
     WELCOME(
-        icon = R.drawable.onboarding_carousel_stub,
+        icon = R.drawable.ic_ill_1,
         title = R.string.onboarding_welcome_title_1,
         subtitle = R.string.onboarding_welcome_subtitle_1
     ),
 
     SCHEDULE(
-        icon = R.drawable.onboarding_carousel_stub,
+        icon = R.drawable.ill_schedule,
         title = R.string.onboarding_welcome_title_2,
         subtitle = R.string.onboarding_welcome_subtitle_2
     ),
 
     NOTES(
-        icon = R.drawable.onboarding_carousel_stub,
+        icon = R.drawable.ill_notes,
         title = R.string.onboarding_welcome_title_3,
         subtitle = R.string.onboarding_welcome_subtitle_3
     ),
 
     MAP(
-        icon = R.drawable.onboarding_carousel_stub,
+        icon = R.drawable.ill_map,
         title = R.string.onboarding_welcome_title_4,
         subtitle = R.string.onboarding_welcome_subtitle_4
     ),
 
     SEARCH(
-        icon = R.drawable.onboarding_carousel_stub,
+        icon = R.drawable.ill_search,
         title = R.string.onboarding_welcome_title_5,
         subtitle = R.string.onboarding_welcome_subtitle_5
     )
