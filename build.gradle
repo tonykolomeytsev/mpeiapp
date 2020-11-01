@@ -89,6 +89,9 @@ buildscript {
                 assertions          : "io.kotest:kotest-assertions-core:4.2.5",
                 property            : "io.kotest:kotest-property:4.2.5"
         ]
+        tinkoff = [
+                pagerindicator      : "ru.tinkoff.scrollingpagerindicator:scrollingpagerindicator:1.2.1"
+        ]
         kotlin_version = "1.4.10"
         appVersionName = "1.0.0"
         appVersionCode = 25
