@@ -1,7 +1,9 @@
 package kekmech.ru.update
 
 import android.app.Dialog
+import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +11,7 @@ import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kekmech.ru.common_android.close
+import kekmech.ru.common_android.findArgument
 import kekmech.ru.common_android.withArguments
 import kekmech.ru.domain_force_update.dto.ForceUpdateInfo
 import kotlinx.android.synthetic.main.fragment_force_update.*
@@ -37,7 +40,11 @@ internal class ForceUpdateFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        buttonUpdateNow?.setOnClickListener { close() }
+        buttonUpdateNow?.setOnClickListener {
+            findArgument<ForceUpdateInfo>(ARG_INFO)?.let { info ->
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(info.updateUrl)))
+            }
+        }
         buttonUpdateLater?.setOnClickListener { close() }
     }
 

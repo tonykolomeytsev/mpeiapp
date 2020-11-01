@@ -1,10 +1,12 @@
 package kekmech.ru.domain_force_update.dto
 
+import java.io.Serializable
+
 data class AppVersion(
     val major: Int,
     val minor: Int,
     val build: Int
-) {
+) : Serializable {
 
     constructor(versionName: String) : this(
         major = getMajor(versionName),
