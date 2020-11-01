@@ -20,9 +20,18 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
--keep class *.dto.** { *; }
+-keep class kekmech.ru.**.dto.** { *; }
+-keep class retrofit2.** { *; }
+-keepclasseswithmembers class * {
+    @retrofit.http.* <methods>;
+}
 
-#-keep class * extends kekmech.ru.coreui.deprecated.adapter2.BaseItem2 { *; }
-#-keepclassmembers class * extends kekmech.ru.coreui.deprecated.adapter2.BaseItem2 { *; }
-#-keep class * extends kekmech.ru.coreui.deprecated.adapter.** { *; }
-#-keepclassmembers class * extends kekmech.ru.coreui.deprecated.adapter.** { *; }
+# Gson
+-keep class * implements com.google.gson.TypeAdapterFactory
+-keep class * implements com.google.gson.JsonSerializer
+-keep class * implements com.google.gson.JsonDeserializer
+
+# Crashlytics
+-keepattributes *Annotation*
+-keepattributes SourceFile,LinenumberTable
+-keep public class  * extends java.lang.Exception
