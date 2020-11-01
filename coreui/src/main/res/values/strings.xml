@@ -80,16 +80,16 @@
     <string name="something_went_wrong_error">Что-то пошло не так…</string>
 
     <string name="onboarding_welcome_start_using">Начать пользоваться</string>
-    <string name="onboarding_welcome_title_1">Встречайте обновленный MPEIX</string>
+    <string name="onboarding_welcome_title_1">Встречайте\nобновленный MPEIX</string>
     <string name="onboarding_welcome_subtitle_1">Мы полностью переосмыслили приложение, чтобы сделать его еще лучше</string>
     <string name="onboarding_welcome_title_2">Просматривайте расписания</string>
     <string name="onboarding_welcome_subtitle_2">К просмотренным ранее расписаниям вы имеете доступ даже без интернета</string>
     <string name="onboarding_welcome_title_3">Создавайте заметки</string>
     <string name="onboarding_welcome_subtitle_3">Пользоваться заметками стало еще удобнее!\nСамые актуальные заметки теперь всегда отображаются на главном экране</string>
     <string name="onboarding_welcome_title_4">Пользуйтесь картой</string>
-    <string name="onboarding_welcome_subtitle_4">Теперь на карте отображены не только корпуса и столовые)</string>
-    <string name="onboarding_welcome_title_5">Поиск по приложению</string>
-    <string name="onboarding_welcome_subtitle_5">С главного экрана можно искать места на карте и свои заметки. Скоро можно будет искать что угодно</string>
+    <string name="onboarding_welcome_subtitle_4">Теперь на карте отображены не только корпуса, столовые и общежития, но и другие важные места</string>
+    <string name="onboarding_welcome_title_5">Ищите в приложении</string>
+    <string name="onboarding_welcome_subtitle_5">С главного экрана можно искать места на карте и свои заметки. Скоро добавим поиск групп и преподавателей!</string>
 
     <string name="schedule_find_header">Введите номер группы</string>
     <string name="schedule_find_description">Мы загрузим расписание выбранной группы на устройство</string>
