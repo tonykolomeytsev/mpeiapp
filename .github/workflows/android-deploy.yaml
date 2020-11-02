@@ -49,7 +49,7 @@ jobs:
           serviceAccountJson: service_account.json
           packageName: kekmech.ru.mpeiapp
           releaseFile: app/build/outputs/bundle/release/app-release.aab
-          track: alpha
+          track: internal
 
       - name: Send Telegram message
         uses: appleboy/telegram-action@master
