@@ -103,11 +103,11 @@
     <string name="schedule_item_window_header">Окно между парами</string>
     <string name="schedule_item_window_description">Проведите его с пользой</string>
     <string name="schedule_item_lunch_header">Обеденный перерыв</string>
-    <string name="schedule_item_lunch_description">Здесь будет диплинк на карту</string>
+    <string name="schedule_item_lunch_description">Искать столовые на карте</string>
     <string name="schedule_item_lunch_time_start">12:45</string>
     <string name="schedule_item_lunch_time_end">13:45</string>
     <string name="schedule_item_self_study_header">День самостоятельных занятий</string>
-    <string name="schedule_item_self_study_description">Потратьте этот день с пользой, начните проходить курсы на Hexlet.io и получите нормальную работу</string>
+    <string name="schedule_item_self_study_description">Потратьте этот день с пользой, начните проходить курсы по программированию или начните читать книгу</string>
     <string name="schedule_empty_state_title">Упс! Не удалось загрузить расписание</string>
     <string name="schedule_empty_state_subtitle">Возможно это произошло из-за проблем с интернет соединением.\nЛибо сервер MpeiX упал :)</string>
 
@@ -184,8 +184,8 @@
     <string name="search_not_found_state_title">По вашему запросу ничего не найдено</string>
     <string name="search_not_found_state_subtitle">Вы можете искать заметки по контенту и названиям дисциплин, а также места на карте по названию, адресу и категории</string>
 
-    <string name="navigation_name_dashboard">Dashboard</string>
-    <string name="navigation_name_schedule">Schedule</string>
-    <string name="navigation_name_map">Map</string>
-    <string name="navigation_name_profile">Profile</string>
+    <string name="navigation_name_dashboard">Лента</string>
+    <string name="navigation_name_schedule">Расписание</string>
+    <string name="navigation_name_map">Карта</string>
+    <string name="navigation_name_profile">Профиль</string>
 </resources>
