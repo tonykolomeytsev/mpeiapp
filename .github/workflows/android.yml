@@ -21,7 +21,7 @@ jobs:
           java-version: 1.8
 
       - name: Materialize google services
-        run: .ci/materialize.sh $GOOGLE_SERVICES_DEBUG app/google-services.json
+        run: .ci/materialize.sh $GOOGLE_SERVICES_DEBUG modules/app/google-services.json
         env:
           GOOGLE_SERVICES_DEBUG: ${{ secrets.GOOGLE_SERVICES_DEBUG }}
 
