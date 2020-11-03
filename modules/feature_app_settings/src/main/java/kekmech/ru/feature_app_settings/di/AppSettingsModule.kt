@@ -6,6 +6,7 @@ import kekmech.ru.common_di.ModuleProvider
 import kekmech.ru.domain_app_settings.AppSettings
 import kekmech.ru.domain_app_settings.AppSettingsFeatureLauncher
 import kekmech.ru.domain_app_settings.AppSettingsRepository
+import kekmech.ru.feature_app_settings.AppSettingsAnalytics
 import kekmech.ru.feature_app_settings.launcher.AppSettingsFeatureLauncherImpl
 import kekmech.ru.feature_app_settings.presentation.AppSettingsActor
 import kekmech.ru.feature_app_settings.presentation.AppSettingsFeatureFactory
@@ -24,4 +25,5 @@ object AppSettingsModule : ModuleProvider({
     factory { AppSettingsFeatureFactory(get()) } bind AppSettingsFeatureFactory::class
     factory { AppSettingDependencies(get(), get()) } bind AppSettingDependencies::class
     factory { AppSettingsFeatureLauncherImpl(get()) } bind AppSettingsFeatureLauncher::class
+    factory { AppSettingsAnalytics(get()) }
 })

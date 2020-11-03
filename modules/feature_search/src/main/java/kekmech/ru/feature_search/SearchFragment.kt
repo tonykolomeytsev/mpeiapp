@@ -79,8 +79,14 @@ internal class SearchFragment : BaseFragment<SearchEvent, SearchEffect, SearchSt
     private fun createAdapter() = BaseAdapter(
         SpaceAdapterItem(),
         SectionHeaderAdapterItem(),
-        NoteAdapterItem(requireContext()) { dependencies.notesFeatureLauncher.launchAllNotes(it) },
-        MapMarkerAdapterItem { navigateToMapMarker(it) },
+        NoteAdapterItem(requireContext()) {
+            analytics.sendClick("SearchNote")
+            dependencies.notesFeatureLauncher.launchAllNotes(it)
+        },
+        MapMarkerAdapterItem {
+            analytics.sendClick("SearchMarker")
+            navigateToMapMarker(it)
+        },
         EmptyStateAdapterItem()
     )
 
