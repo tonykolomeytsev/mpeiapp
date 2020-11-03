@@ -1,0 +1,31 @@
+apply from: "$rootDir/feature-android-module.gradle"
+
+dependencies {
+    implementation kotlinStdLib
+
+    implementation androidx.appcompat
+    implementation androidx.constraintlayout
+    implementation androidx.coordinatorlayout
+    implementation androidx.coreKtx
+    implementation google.material
+    implementation koin.core
+    implementation koin.android
+    implementation timber
+    implementation tinkoff.pagerindicator
+    implementation rx.java
+
+    implementation project(path: ":domain_onboarding")
+    implementation project(path: ":domain_schedule")
+    implementation project(path: ":domain_main_screen")
+
+    implementation project(path: ":common_di")
+    implementation project(path: ":common_android")
+    implementation project(path: ":common_network")
+    implementation project(path: ":common_kotlin")
+    implementation project(path: ":common_navigation")
+    implementation project(path: ":common_webview")
+    implementation project(path: ":common_mvi")
+    implementation project(path: ":common_analytics")
+    implementation project(path: ":common_adapter")
+    implementation project(path: ":coreui")
+}

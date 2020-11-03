@@ -1,9 +1,0 @@
-apply from: "../domain-android-module.gradle"
-
-dependencies {
-    implementation koin.core
-    implementation koin.android
-    implementation androidx.appcompat
-
-    implementation project(path: ":common_di")
-}

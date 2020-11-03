@@ -1,0 +1,11 @@
+apply from: "$rootDir/domain-android-module.gradle"
+
+dependencies {
+    implementation kotlinStdLib
+
+    implementation rx.java
+
+    implementation project(path: ":common_di")
+    implementation project(path: ":common_annotations")
+    implementation project(path: ":common_shared_preferences")
+}

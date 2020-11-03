@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorAccent">@color/colorMain</item>
+        <item name="colorPrimary">@color/colorWhite</item>
+        <item name="colorPrimaryDark">@color/colorGray30</item>
+        <item name="colorControlNormal">@color/colorGray30</item>
+        <item name="colorControlHighlight">#50CDCDCD</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
+
+        <!-- Transparent statusBar -->
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+        <item name="android:statusBarColor">@color/colorNavigationLight</item>
+        <item name="android:navigationBarColor">@color/colorNavigationLight</item>
+
+        <item name="materialButtonStyle">@style/Button.Primary</item>
+        <item name="buttonStyle">@style/Button.Primary</item>
+        <item name="toolbarStyle">@style/Toolbar</item>
+        <item name="editTextStyle">@style/EditText</item>
+        <item name="textInputStyle">@style/TextInputLayout</item>
+
+        <!-- THEME COLORS -->
+        <item name="colorMainDark">@color/colorMainDark</item>
+        <item name="colorMainLight">@color/colorMainLight</item>
+        <item name="colorMain">@color/colorMain</item>
+        <item name="colorYellowDark">@color/colorYellowDark</item>
+        <item name="colorYellowLight">@color/colorYellowLight</item>
+        <item name="colorWhite">@color/colorWhite</item>
+        <item name="colorBlack">@color/colorBlack</item>
+        <item name="colorGray90">@color/colorGray90</item>
+        <item name="colorGray70">@color/colorGray70</item>
+        <item name="colorGray30">@color/colorGray30</item>
+        <item name="colorGray10">@color/colorGray10</item>
+        <item name="colorRed">@color/colorRed</item>
+        <item name="colorGreen">@color/colorGreen</item>
+        <item name="colorPink">@color/colorPink</item>
+        <item name="shimmerColor">@color/colorGray20</item>
+        <item name="cardViewColor">@color/colorWhite</item>
+
+        <!--Additional theme colors-->
+        <item name="themeBoxBackgroundColor">@color/colorGray10</item>
+    </style>
+
+    <style name="AppTheme.Dark" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorAccent">@color/colorMain</item>
+        <item name="colorPrimary">@color/colorWhite</item>
+        <item name="colorPrimaryDark">@color/colorGray30</item>
+        <item name="colorControlNormal">@color/colorGray30</item>
+        <item name="colorControlHighlight">#50BABABA</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
+
+        <!-- Transparent statusBar -->
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+        <item name="android:statusBarColor">@color/colorNavigationDark</item>
+        <item name="android:navigationBarColor">@color/colorNavigationDark</item>
+
+        <item name="materialButtonStyle">@style/Button.Primary</item>
+        <item name="buttonStyle">@style/Button.Primary</item>
+        <item name="toolbarStyle">@style/Toolbar</item>
+        <item name="editTextStyle">@style/EditText</item>
+        <item name="textInputStyle">@style/TextInputLayout</item>
+
+        <!-- THEME COLORS -->
+        <item name="colorMainDark">@color/colorGray30</item>
+        <item name="colorMainLight">@color/colorGray30</item>
+        <item name="colorMain">@color/colorGray10</item>
+        <item name="colorYellowDark">@color/colorYellowLight</item>
+        <item name="colorYellowLight">@color/colorYellowDark</item>
+        <item name="colorWhite">@color/colorBlack</item>
+        <item name="colorBlack">@color/colorWhite</item>
+        <item name="colorGray90">@color/colorGray10</item>
+        <item name="colorGray70">@color/colorGray40</item>
+        <item name="colorGray30">@color/colorGray80</item>
+        <item name="colorGray10">@color/colorGray90</item>
+        <item name="colorRed">@color/colorRed</item>
+        <item name="colorGreen">@color/colorGreen</item>
+        <item name="colorPink">@color/colorPink</item>
+        <item name="shimmerColor">@color/colorGray80</item>
+        <item name="cardViewColor">@color/colorGray80</item>
+
+        <!--Additional theme colors-->
+        <item name="themeBoxBackgroundColor">@color/colorGray90</item>
+    </style>
+
+    <style name="PrimaryFlatButton" parent="Theme.AppCompat.Light">
+<!--        <item name="android:buttonStyle">@style/Widget.AppCompat.Button.Borderless.Colored</item>-->
+<!--        <item name="colorControlHighlight">#22000000</item>-->
+<!--        <item name="colorAccent">@color/colorPrimary</item>-->
+    </style>
+
+    <style name="PrimaryActionButton" parent="Theme.AppCompat.Light">
+<!--        <item name="colorAccent">@color/colorWhite</item>-->
+<!--        <item name="colorControlHighlight">#22000000</item>-->
+    </style>
+
+    <style name="CollapsingToolbarLayoutExpandedTextStyle" parent="AppTheme">
+        <item name="android:textSize">28sp</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="BottomSheet" parent="@style/Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="BaseBottomSheetDialog" parent="@style/Theme.Design.Light.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="bottomSheetStyle">@style/BottomSheet</item>
+    </style>
+
+    <style name="TextViewMapTab" parent="Widget.AppCompat.TextView">
+        <item name="android:paddingTop">6dp</item>
+        <item name="android:paddingBottom">6dp</item>
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:paddingRight">12dp</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">@color/colorGray90</item>
+    </style>
+
+    <style name="BottomSheetDialogTheme" parent="BaseBottomSheetDialog" />
+
+</resources>

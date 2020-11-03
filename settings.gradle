@@ -35,4 +35,13 @@ include ':feature_force_update'
 include ':feature_bars'
 include ':feature_notes'
 include ':feature_search'
+
 include ':coreui'
+
+rootProject.name = "mpeix"
+rootProject.children.each { project ->
+    String projectDirName = "modules/$project.name"
+    project.projectDir = new File(settingsDir, projectDirName)
+    assert project.projectDir.isDirectory()
+    assert project.buildFile.isFile()
+}
