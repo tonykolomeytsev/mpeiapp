@@ -34,7 +34,7 @@ jobs:
       - name: Sign AAB
         uses: r0adkll/sign-android-release@v1
         with:
-          releaseDirectory: app/build/outputs/bundle/release
+          releaseDirectory: modules/app/build/outputs/bundle/release
           signingKeyBase64: ${{ secrets.KEY_STORE_FILE }}
           alias: ${{ secrets.ALIAS }}
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
@@ -48,7 +48,7 @@ jobs:
         with:
           serviceAccountJson: service_account.json
           packageName: kekmech.ru.mpeiapp
-          releaseFile: app/build/outputs/bundle/release/app-release.aab
+          releaseFile: modules/app/build/outputs/bundle/release/app-release.aab
           track: internal
 
       - name: Send Telegram message
