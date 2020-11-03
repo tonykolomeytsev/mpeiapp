@@ -129,8 +129,11 @@ internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState, MapFeat
                 effect.map.animateCameraTo(marker)
                 marker.showInfoWindow()
             }
-            if (effect.collapseBottomSheet) BottomSheetBehavior.from(recyclerView)
-                .state = BottomSheetBehavior.STATE_COLLAPSED
+            if (effect.collapseBottomSheet) {
+                BottomSheetBehavior.from(recyclerView)
+                    .state = BottomSheetBehavior.STATE_COLLAPSED
+                recyclerView.scrollToPosition(0)
+            }
             Unit
         }
     }
