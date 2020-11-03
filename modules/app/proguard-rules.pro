@@ -34,4 +34,7 @@
 # Crashlytics
 -keepattributes *Annotation*
 -keepattributes SourceFile,LinenumberTable
--keep public class  * extends java.lang.Exception
+-keep public class * extends java.lang.Exception
+
+# Java 8 API
+-keep class java.time.** { *; }
