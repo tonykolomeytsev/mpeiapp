@@ -22,7 +22,7 @@
 
 ### Скриншоты
 
-![screenshots](https://github.com/tonykolomeytsev/mpeiapp/raw/master/screenshots/0.png)
+![screenshots](https://github.com/tonykolomeytsev/mpeiapp/raw/master/screenshots/promo_wide_frame.png)
 
 ### Требования приложения
 
@@ -30,7 +30,7 @@
 + Доступ к интернету
 
 ### Стек
- 
+
 + Многомодульная, упрощенная **Clean Architecture** с активным использованием **Koin**.
 + ~~Kotlin Coroutines~~ RxJava
 + ~~Android Arch~~ 
