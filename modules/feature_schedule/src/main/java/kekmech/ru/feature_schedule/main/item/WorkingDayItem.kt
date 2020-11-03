@@ -50,9 +50,9 @@ internal class WorkingDayViewHolderImpl(
     ) {
         adapter = BaseAdapter(
             ClassesAdapterItem(containerView.context, onClickListener), // viewType = 0
-            ClassesStackStartAdapterItem(containerView.context),
-            ClassesStackMiddleAdapterItem(containerView.context),
-            ClassesStackEndAdapterItem(containerView.context),
+            ClassesStackStartAdapterItem(containerView.context, onClickListener),
+            ClassesStackMiddleAdapterItem(containerView.context, onClickListener),
+            ClassesStackEndAdapterItem(containerView.context, onClickListener),
             SelfStudyAdapterItem(),
             LunchAdapterItem(),
             ClassesShimmerAdapterItem(),
