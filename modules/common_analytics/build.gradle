@@ -1,0 +1,10 @@
+apply from: "$rootDir/domain-android-module.gradle"
+
+dependencies {
+    implementation androidx.recyclerview
+    implementation androidx.viewPager2
+    implementation firebase.analytics
+    implementation koin.core
+
+    implementation project(path: ":common_di")
+}

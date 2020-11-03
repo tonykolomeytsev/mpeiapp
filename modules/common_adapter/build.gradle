@@ -1,0 +1,9 @@
+apply from: "$rootDir/domain-android-module.gradle"
+
+dependencies {
+    implementation kotlinStdLib
+    implementation androidx.appcompat
+    implementation androidx.coreKtx
+    implementation google.material
+    implementation timber
+}

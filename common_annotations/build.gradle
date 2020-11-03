@@ -1,5 +1,0 @@
-apply from: "../kotlin-module.gradle"
-
-dependencies {
-    implementation kotlinStdLib
-}

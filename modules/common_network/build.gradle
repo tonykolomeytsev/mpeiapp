@@ -1,0 +1,17 @@
+apply from: "$rootDir/domain-android-module.gradle"
+
+dependencies {
+    implementation kotlinStdLib
+
+    implementation squareup.retrofit
+    implementation squareup.retrofit_rxJava2
+    implementation squareup.retrofit_gson
+    implementation squareup.okhttp
+    implementation squareup.okhttpLogger
+
+    implementation koin.core
+    implementation timber
+
+    implementation project(path: ":common_di")
+    implementation project(path: ":common_annotations")
+}
