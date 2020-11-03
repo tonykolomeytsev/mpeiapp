@@ -33,12 +33,15 @@ class AppSettingsFragment : BaseFragment<AppSettingsEvent, AppSettingsEffect, Ap
 
     private val adapter by fastLazy { createAdapter() }
 
+    private val analytics by inject<AppSettingsAnalytics>()
+
     override fun onViewCreatedInternal(view: View, savedInstanceState: Bundle?) {
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
         recyclerView.attachScrollListenerForAppBarLayoutShadow(appBarLayout)
         appBarLayout.addSystemTopPadding()
         toolbar.init(R.string.app_settings_screen_title)
+        analytics.sendScreenShown()
     }
 
     override fun render(state: AppSettingsState) {
@@ -53,9 +56,18 @@ class AppSettingsFragment : BaseFragment<AppSettingsEvent, AppSettingsEffect, Ap
 
     private fun createAdapter() = BaseAdapter(
         SectionHeaderAdapterItem(),
-        ToggleAdapterItem(TOGGLE_DARK_THEME) { feature.accept(Wish.Action.SetDarkThemeEnabled(it)) },
-        ToggleAdapterItem(TOGGLE_CHANGE_DAY_AFTER_CHANGE_WEEK) { feature.accept(Wish.Action.SetChangeDayAfterChangeWeek(it)) },
-        ToggleAdapterItem(TOGGLE_AUTO_HIDE_BOTTOM_SHEET) { feature.accept(Wish.Action.SetAutoHideBottomSheet(it)) },
+        ToggleAdapterItem(TOGGLE_DARK_THEME) {
+            analytics.sendChangeSetting("DarkTheme", it.toString())
+            feature.accept(Wish.Action.SetDarkThemeEnabled(it))
+        },
+        ToggleAdapterItem(TOGGLE_CHANGE_DAY_AFTER_CHANGE_WEEK) {
+            analytics.sendChangeSetting("ChangeDayAfterChangeWeek", it.toString())
+            feature.accept(Wish.Action.SetChangeDayAfterChangeWeek(it))
+        },
+        ToggleAdapterItem(TOGGLE_AUTO_HIDE_BOTTOM_SHEET) {
+            analytics.sendChangeSetting("AutoHideMapBottomSheet", it.toString())
+            feature.accept(Wish.Action.SetAutoHideBottomSheet(it))
+        },
         SectionTextAdapterItem(),
         SpaceAdapterItem(),
         BottomLabeledTextAdapterItem { onItemClick(it.itemId) }
@@ -66,8 +78,14 @@ class AppSettingsFragment : BaseFragment<AppSettingsEvent, AppSettingsEffect, Ap
             feature.accept(Wish.Action.ClearSelectedGroup)
             dependencies.onboardingFeatureLauncher.launchWelcomePage(true)
         }
-        ITEM_SUPPORT -> navigateToBrowser("https://vk.com/kekmech")
-        ITEM_GITHUB -> navigateToBrowser("https://github.com/tonykolomeytsev/mpeiapp")
+        ITEM_SUPPORT -> {
+            analytics.sendClick("VkGroup")
+            navigateToBrowser("https://vk.com/kekmech")
+        }
+        ITEM_GITHUB -> {
+            analytics.sendClick("GitHub")
+            navigateToBrowser("https://github.com/tonykolomeytsev/mpeiapp")
+        }
         else -> { /* no-op */ }
     }
 

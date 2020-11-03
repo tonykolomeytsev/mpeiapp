@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import kekmech.ru.common_adapter.BaseAdapter
+import kekmech.ru.common_analytics.addScrollAnalytics
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.domain_schedule.CONTINUE_TO_DASHBOARD
 import kekmech.ru.feature_onboarding.R
@@ -34,6 +35,7 @@ internal class WelcomeFragment : Fragment(R.layout.fragment_welcome) {
         recycler.adapter = adapter
         recycler.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         recyclerDots.attachToRecyclerView(recycler)
+        recycler.addScrollAnalytics(analytics, "PromoPager")
         snapHelper.attachToRecyclerView(recycler)
         analytics.sendScreenShown()
         adapter.update(pages)
