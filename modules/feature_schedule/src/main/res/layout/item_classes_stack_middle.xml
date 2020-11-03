@@ -42,19 +42,31 @@
 
     <TextView
             android:id="@+id/textViewClassesPerson"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             tools:text="Чахеев Е.Я."
             android:textColor="?attr/colorGray70"
             android:textSize="14sp"
             android:fontFamily="@font/roboto_regular"
             android:layout_marginStart="80dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginTop="4dp"
             android:layout_marginBottom="16dp"
             app:layout_constraintTop_toBottomOf="@id/textViewClassesPlace"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toStartOf="@id/imageViewAttachment"/>
+
+    <ImageView
+            android:id="@+id/imageViewAttachment"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_attach_file_24px"
+            android:tint="?attr/colorGray70"
+            android:layout_marginEnd="16dp"
+            android:visibility="invisible"
+            tools:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
     <View
             android:id="@+id/colorTag"
