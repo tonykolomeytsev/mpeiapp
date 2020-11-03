@@ -96,7 +96,7 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: App Debug
-          path: app/build/outputs/apk/debug/app-debug.apk
+          path: modules/app/build/outputs/apk/debug/app-debug.apk
 
       - name: Send Telegram message
         uses: appleboy/telegram-action@master
