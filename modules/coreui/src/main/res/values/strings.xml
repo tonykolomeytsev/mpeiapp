@@ -176,6 +176,11 @@
     <string name="app_settings_change_day_after_change_week_description">При переходе на другую неделю автоматически переключаться на 7 дней вперед, либо 7 дней назад</string>
     <string name="app_settings_auto_hide_bottom_sheet">Скрывать список по клику</string>
     <string name="app_settings_auto_hide_bottom_sheet_description">При включенной настройке, на экране карты нажатие на любой адрес в списке автоматически свернет список и переместит камеру к указанному адресу</string>
+    <string name="app_settings_favorite_schedule_title">Избранные расписания</string>
+    <string name="app_settings_favorite_schedule_description">Настройка быстрого доступа к расписаниям</string>
+
+    <string name="favorites_screen_title">Избранные расписания</string>
+    <string name="favorites_toggle_title">Отображать</string>
 
     <string name="search_section_title_map">Карта</string>
     <string name="search_section_title_notes">Заметки</string>

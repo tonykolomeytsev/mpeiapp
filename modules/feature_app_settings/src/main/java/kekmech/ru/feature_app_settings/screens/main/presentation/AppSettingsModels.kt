@@ -1,16 +1,16 @@
-package kekmech.ru.feature_app_settings.presentation
+package kekmech.ru.feature_app_settings.screens.main.presentation
 
 import kekmech.ru.common_mvi.Feature
 import kekmech.ru.domain_app_settings.AppSettings
 
-typealias AppSettingsFeature = Feature<AppSettingsState, AppSettingsEvent, AppSettingsEffect>
+internal typealias AppSettingsFeature = Feature<AppSettingsState, AppSettingsEvent, AppSettingsEffect>
 
-data class AppSettingsState(
+internal data class AppSettingsState(
     val appSettings: AppSettings? = null,
     val hash: String = ""
 )
 
-sealed class AppSettingsEvent {
+internal sealed class AppSettingsEvent {
 
     sealed class Wish : AppSettingsEvent() {
 
@@ -30,7 +30,7 @@ sealed class AppSettingsEvent {
     }
 }
 
-sealed class AppSettingsAction {
+internal sealed class AppSettingsAction {
     object LoadAppSettings : AppSettingsAction()
 
     data class SetDarkThemeEnabled(val isEnabled: Boolean) : AppSettingsAction()
@@ -39,6 +39,6 @@ sealed class AppSettingsAction {
     object ClearSelectedGroup : AppSettingsAction()
 }
 
-sealed class AppSettingsEffect {
+internal sealed class AppSettingsEffect {
     object RecreateActivity : AppSettingsEffect()
 }
