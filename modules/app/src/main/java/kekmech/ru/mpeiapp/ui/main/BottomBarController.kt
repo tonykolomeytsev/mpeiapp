@@ -4,6 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kekmech.ru.common_navigation.BottomTab
+import kekmech.ru.common_navigation.NeedToUpdate
 import kekmech.ru.domain_bars.BarsFeatureLauncher
 import kekmech.ru.domain_map.MapFeatureLauncher
 import kekmech.ru.domain_schedule.ScheduleFeatureLauncher
@@ -76,6 +77,9 @@ class BottomBarController(
             }
             newFragment?.let { fragment ->
                 show(fragment)
+                if (fragment is NeedToUpdate) {
+                    fragment.onUpdate()
+                }
                 fragment.userVisibleHint = true
             }
         }.commitNow()

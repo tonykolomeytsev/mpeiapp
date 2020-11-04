@@ -105,7 +105,7 @@ internal class ScheduleReducer : BaseReducer<ScheduleState, ScheduleEvent, Sched
             state = state,
             effect = ScheduleEffect.NavigateToNoteList(event.classes, state.selectedDay.date)
         )
-        is Wish.Action.OnNotesUpdated -> Result(
+        is Wish.Action.OnNotesUpdated, is Wish.Action.UpdateScheduleIfNeeded -> Result(
             state = state.copy(isLoading = true),
             action = ScheduleAction.LoadSchedule(state.weekOffset)
         )
