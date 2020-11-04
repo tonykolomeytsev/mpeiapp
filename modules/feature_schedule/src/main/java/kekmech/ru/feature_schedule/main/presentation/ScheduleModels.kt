@@ -39,6 +39,7 @@ internal sealed class ScheduleEvent {
             data class SelectWeek(val weekOffset: Int) : Wish()
             data class OnPageChanged(val page: Int) : Wish()
             object OnNotesUpdated : Wish()
+            object UpdateScheduleIfNeeded : Wish()
         }
 
         object Click {

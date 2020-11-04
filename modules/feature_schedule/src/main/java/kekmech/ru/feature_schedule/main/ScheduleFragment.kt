@@ -13,6 +13,7 @@ import kekmech.ru.common_android.addSystemTopPadding
 import kekmech.ru.common_android.getStringArray
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.ui.BaseFragment
+import kekmech.ru.common_navigation.NeedToUpdate
 import kekmech.ru.domain_schedule.dto.Classes
 import kekmech.ru.feature_schedule.R
 import kekmech.ru.feature_schedule.di.ScheduleDependencies
@@ -27,7 +28,9 @@ import java.time.LocalDate
 
 private const val REQUEST_CODE_NOTES_UPDATED = 9328
 
-internal class ScheduleFragment : BaseFragment<ScheduleEvent, ScheduleEffect, ScheduleState, ScheduleFeature>(), ActivityResultListener {
+internal class ScheduleFragment : BaseFragment<ScheduleEvent, ScheduleEffect, ScheduleState, ScheduleFeature>(),
+    ActivityResultListener,
+    NeedToUpdate {
 
     init { retainInstance = true }
 
@@ -128,6 +131,16 @@ internal class ScheduleFragment : BaseFragment<ScheduleEvent, ScheduleEffect, Sc
             }
         )
     )
+
+    override fun onUpdate() {
+        if (isResumed && !isRemoving) {
+            try {
+                feature.accept(Wish.Action.UpdateScheduleIfNeeded)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_CODE_NOTES_UPDATED) {
