@@ -75,6 +75,11 @@ class DashboardReducer : BaseReducer<DashboardState, DashboardEvent, DashboardEf
             state = state,
             effect = state.getActualScheduleDayForView()?.let { day -> DashboardEffect.NavigateToNotesList(event.classes, day.date) }
         )
+        is Wish.Action.SilentUpdate -> Result(
+            state = state,
+            effects = emptyList(),
+            actions = refreshActions()
+        )
     }
 
     private fun refreshActions(): List<DashboardAction> {
