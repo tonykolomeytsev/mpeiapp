@@ -28,6 +28,8 @@ class DBHelper(
     }
 
     companion object {
-        val setOfMigrations by fastLazy { setOf<Migration>() }
+        val setOfMigrations by fastLazy { setOf<Migration>(
+            Migration(1, 2, R.raw.migration_v1_to_v2)
+        ) }
     }
 }
