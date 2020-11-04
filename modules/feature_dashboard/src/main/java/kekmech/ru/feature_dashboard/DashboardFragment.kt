@@ -11,6 +11,7 @@ import kekmech.ru.common_android.views.setProgressViewOffset
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.ui.BaseFragment
 import kekmech.ru.common_navigation.BottomTab
+import kekmech.ru.common_navigation.NeedToUpdate
 import kekmech.ru.coreui.banner.showBanner
 import kekmech.ru.coreui.items.*
 import kekmech.ru.domain_schedule.CONTINUE_TO_BACK_STACK_WITH_RESULT
@@ -26,7 +27,9 @@ import org.koin.android.ext.android.inject
 
 private const val REQUEST_CODE_UPDATE_DATA = 2910
 
-class DashboardFragment : BaseFragment<DashboardEvent, DashboardEffect, DashboardState, DashboardFeature>(), ActivityResultListener {
+class DashboardFragment : BaseFragment<DashboardEvent, DashboardEffect, DashboardState, DashboardFeature>(),
+    ActivityResultListener,
+    NeedToUpdate {
 
     override val initEvent = Wish.Init
 
@@ -122,5 +125,9 @@ class DashboardFragment : BaseFragment<DashboardEvent, DashboardEffect, Dashboar
         if (requestCode == REQUEST_CODE_UPDATE_DATA) {
             feature.accept(Wish.Action.OnSwipeRefresh)
         }
+    }
+
+    override fun onUpdate() {
+        feature.accept(Wish.Action.SilentUpdate)
     }
 }

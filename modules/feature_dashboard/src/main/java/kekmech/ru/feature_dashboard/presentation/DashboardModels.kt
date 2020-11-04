@@ -44,6 +44,7 @@ sealed class DashboardEvent {
 
         object Action {
             object OnSwipeRefresh : Wish()
+            object SilentUpdate : Wish()
         }
 
         object Click {
