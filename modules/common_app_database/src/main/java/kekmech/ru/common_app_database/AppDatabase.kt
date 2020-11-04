@@ -29,7 +29,7 @@ class AppDatabase(
     fun close() = dbHelper.close()
 
     companion object {
-        const val VERSION = 1
+        const val VERSION = 2
         const val NAME = "mpeix.db"
     }
 }
