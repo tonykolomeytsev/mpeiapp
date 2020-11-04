@@ -1,12 +1,12 @@
-package kekmech.ru.feature_app_settings.presentation
+package kekmech.ru.feature_app_settings.screens.main.presentation
 
 import kekmech.ru.common_mvi.BaseReducer
 import kekmech.ru.common_mvi.Result
-import kekmech.ru.feature_app_settings.presentation.AppSettingsEvent.News
-import kekmech.ru.feature_app_settings.presentation.AppSettingsEvent.Wish
+import kekmech.ru.feature_app_settings.screens.main.presentation.AppSettingsEvent.News
+import kekmech.ru.feature_app_settings.screens.main.presentation.AppSettingsEvent.Wish
 import java.util.*
 
-typealias AppSettingsResult = Result<AppSettingsState, AppSettingsEffect, AppSettingsAction>
+internal typealias AppSettingsResult = Result<AppSettingsState, AppSettingsEffect, AppSettingsAction>
 
 internal class AppSettingsReducer : BaseReducer<AppSettingsState, AppSettingsEvent, AppSettingsEffect, AppSettingsAction> {
 

@@ -1,9 +1,11 @@
-package kekmech.ru.feature_app_settings
+package kekmech.ru.feature_app_settings.screens.main
 
 import kekmech.ru.coreui.items.*
-import kekmech.ru.feature_app_settings.AppSettingsFragment.Companion.ITEM_GITHUB
-import kekmech.ru.feature_app_settings.AppSettingsFragment.Companion.ITEM_SUPPORT
-import kekmech.ru.feature_app_settings.presentation.AppSettingsState
+import kekmech.ru.feature_app_settings.BuildConfig
+import kekmech.ru.feature_app_settings.R
+import kekmech.ru.feature_app_settings.screens.main.AppSettingsFragment.Companion.ITEM_GITHUB
+import kekmech.ru.feature_app_settings.screens.main.AppSettingsFragment.Companion.ITEM_SUPPORT
+import kekmech.ru.feature_app_settings.screens.main.presentation.AppSettingsState
 
 internal class AppSettingsListConverter {
 
@@ -20,6 +22,12 @@ internal class AppSettingsListConverter {
 
             add(SectionHeaderItem(
                 titleRes = R.string.app_settings_header_schedule
+            ))
+            add(SpaceItem.VERTICAL_8)
+            add(BottomLabeledTextItem(
+                itemId = AppSettingsFragment.ITEM_FAVORITES,
+                mainTextResId = R.string.app_settings_favorite_schedule_title,
+                labelResId = R.string.app_settings_favorite_schedule_description
             ))
             add(ToggleItem(
                 itemId = AppSettingsFragment.TOGGLE_CHANGE_DAY_AFTER_CHANGE_WEEK,
