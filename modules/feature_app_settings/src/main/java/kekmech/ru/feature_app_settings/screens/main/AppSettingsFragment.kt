@@ -1,27 +1,29 @@
-package kekmech.ru.feature_app_settings
+package kekmech.ru.feature_app_settings.screens.main
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_android.addSystemTopPadding
+import kekmech.ru.common_android.openLinkExternal
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.ui.BaseFragment
+import kekmech.ru.common_navigation.addScreenForward
 import kekmech.ru.coreui.attachScrollListenerForAppBarLayoutShadow
 import kekmech.ru.coreui.items.*
+import kekmech.ru.feature_app_settings.R
 import kekmech.ru.feature_app_settings.di.AppSettingDependencies
-import kekmech.ru.feature_app_settings.presentation.AppSettingsEffect
-import kekmech.ru.feature_app_settings.presentation.AppSettingsEvent
-import kekmech.ru.feature_app_settings.presentation.AppSettingsEvent.Wish
-import kekmech.ru.feature_app_settings.presentation.AppSettingsFeature
-import kekmech.ru.feature_app_settings.presentation.AppSettingsState
+import kekmech.ru.feature_app_settings.screens.favorites.FavoritesFragment
+import kekmech.ru.feature_app_settings.screens.main.presentation.AppSettingsEffect
+import kekmech.ru.feature_app_settings.screens.main.presentation.AppSettingsEvent
+import kekmech.ru.feature_app_settings.screens.main.presentation.AppSettingsEvent.Wish
+import kekmech.ru.feature_app_settings.screens.main.presentation.AppSettingsFeature
+import kekmech.ru.feature_app_settings.screens.main.presentation.AppSettingsState
 import kotlinx.android.synthetic.main.fragment_app_settings.*
 import org.koin.android.ext.android.inject
 
-class AppSettingsFragment : BaseFragment<AppSettingsEvent, AppSettingsEffect, AppSettingsState, AppSettingsFeature>() {
+internal class AppSettingsFragment : BaseFragment<AppSettingsEvent, AppSettingsEffect, AppSettingsState, AppSettingsFeature>() {
 
     override val initEvent get() = Wish.Init
 
@@ -80,17 +82,17 @@ class AppSettingsFragment : BaseFragment<AppSettingsEvent, AppSettingsEffect, Ap
         }
         ITEM_SUPPORT -> {
             analytics.sendClick("VkGroup")
-            navigateToBrowser("https://vk.com/kekmech")
+            requireContext().openLinkExternal("https://vk.com/kekmech")
         }
         ITEM_GITHUB -> {
             analytics.sendClick("GitHub")
-            navigateToBrowser("https://github.com/tonykolomeytsev/mpeiapp")
+            requireContext().openLinkExternal("https://github.com/tonykolomeytsev/mpeiapp")
+        }
+        ITEM_FAVORITES -> {
+            analytics.sendClick("Favorites")
+            addScreenForward { FavoritesFragment() }
         }
         else -> { /* no-op */ }
-    }
-
-    private fun navigateToBrowser(ref: String) {
-        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(ref)))
     }
 
     companion object {
@@ -101,5 +103,6 @@ class AppSettingsFragment : BaseFragment<AppSettingsEvent, AppSettingsEffect, Ap
         const val ITEM_DEBUG_CLEAR_SELECTED_GROUP = 0
         const val ITEM_SUPPORT = 1
         const val ITEM_GITHUB = 2
+        const val ITEM_FAVORITES = 3
     }
 }

@@ -1,4 +1,4 @@
-package kekmech.ru.feature_app_settings.presentation
+package kekmech.ru.feature_app_settings.screens.main.presentation
 
 import io.reactivex.Observable
 import kekmech.ru.common_mvi.Actor

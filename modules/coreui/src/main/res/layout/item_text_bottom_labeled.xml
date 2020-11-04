@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_medium"
             android:textColor="?attr/colorBlack"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:maxLines="1"
             android:ellipsize="end"
             tools:text="Задать вопрос в группу"/>
