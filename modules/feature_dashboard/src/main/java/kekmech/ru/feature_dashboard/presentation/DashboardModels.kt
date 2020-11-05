@@ -2,9 +2,11 @@ package kekmech.ru.feature_dashboard.presentation
 
 import kekmech.ru.common_android.moscowLocalDate
 import kekmech.ru.common_mvi.Feature
+import kekmech.ru.coreui.items.FavoriteScheduleItem
 import kekmech.ru.domain_notes.dto.Note
 import kekmech.ru.domain_schedule.dto.Classes
 import kekmech.ru.domain_schedule.dto.Day
+import kekmech.ru.domain_schedule.dto.FavoriteSchedule
 import kekmech.ru.domain_schedule.dto.Schedule
 import java.time.DayOfWeek
 import java.time.LocalDate
@@ -17,7 +19,8 @@ data class DashboardState(
     val currentWeekSchedule: Schedule? = null,
     val nextWeekSchedule: Schedule? = null,
     val selectedGroupName: String = "",
-    val notes: List<Note>? = null
+    val notes: List<Note>? = null,
+    val favoriteSchedules: List<FavoriteScheduleItem>? = null
 ) {
     val weekOfSemester get() = currentWeekSchedule?.weeks?.first()?.weekOfSemester
     val today: Day? get() = currentWeekSchedule?.weeks?.first()?.days
@@ -45,6 +48,7 @@ sealed class DashboardEvent {
         object Action {
             object OnSwipeRefresh : Wish()
             object SilentUpdate : Wish()
+            data class SelectFavoriteSchedule(val favoriteSchedule: FavoriteSchedule) : Wish()
         }
 
         object Click {
@@ -58,6 +62,8 @@ sealed class DashboardEvent {
         data class NotesLoadError(val throwable: Throwable) : News()
         data class SelectedGroupNameLoaded(val groupName: String) : News()
         data class NotesLoaded(val notes: List<Note>) : News()
+        data class FavoriteSchedulesLoaded(val favorites: List<FavoriteSchedule>) : News()
+        object FavoriteGroupSelected : News()
     }
 }
 
@@ -71,4 +77,6 @@ sealed class DashboardAction {
     object GetSelectedGroupName : DashboardAction()
     data class LoadSchedule(val weekOffset: Int) : DashboardAction()
     object LoadNotes : DashboardAction()
+    object LoadFavoriteSchedules : DashboardAction()
+    data class SelectGroup(val groupName: String) : DashboardAction()
 }
