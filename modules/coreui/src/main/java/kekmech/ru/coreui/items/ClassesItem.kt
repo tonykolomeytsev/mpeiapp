@@ -110,7 +110,7 @@ class ClassesItemBinder(
 
     override fun bind(vh: ClassesViewHolder, model: Classes, position: Int) {
         vh.setDisciplineName(model.name)
-        vh.setPersonName(model.person.takeIf { !it.contains("Вакансия", true) })
+        vh.setPersonName(model.person.takeIfNotEmpty())
         vh.setPlace(model.place)
         vh.setNumberName(classesNumbers.getOrElse(model.number) { classesNumbers[0] }.toUpperCase())
         vh.setTypeName(classesTypes[model.type].orEmpty().toUpperCase())
@@ -119,6 +119,10 @@ class ClassesItemBinder(
         vh.setEndTime(model.time.end.format(timeFormatter))
         vh.setOnClickListener { onClickListener?.invoke(model) }
         vh.setHasAttachments(model.hasAttachedNote)
+    }
+
+    private fun String.takeIfNotEmpty() = takeIf {
+        isNotBlank() && !it.contains("Вакансия", ignoreCase = true)
     }
 }
 
