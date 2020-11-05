@@ -118,7 +118,11 @@ class DashboardFragment : BaseFragment<DashboardEvent, DashboardEffect, Dashboar
                 requestCode = REQUEST_CODE_UPDATE_DATA
             )
         },
-        EmptyStateAdapterItem()
+        EmptyStateAdapterItem(),
+        FavoriteScheduleAdapterItem {
+            analytics.sendClick("FavoriteSchedule")
+            feature.accept(Wish.Action.SelectFavoriteSchedule(it.value))
+        }
     )
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

@@ -21,5 +21,9 @@ class DashboardActor(
             .mapSuccessEvent(News::SelectedGroupNameLoaded)
         is DashboardAction.LoadNotes -> notesRepository.getNotes()
             .mapEvents(News::NotesLoaded, News::NotesLoadError)
+        is DashboardAction.LoadFavoriteSchedules -> scheduleRepository.getFavorites()
+            .mapSuccessEvent(News::FavoriteSchedulesLoaded)
+        is DashboardAction.SelectGroup -> scheduleRepository.selectGroup(action.groupName)
+            .mapSuccessEvent(News.FavoriteGroupSelected)
     }
 }

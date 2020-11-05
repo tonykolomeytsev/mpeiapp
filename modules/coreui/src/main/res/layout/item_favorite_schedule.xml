@@ -19,7 +19,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="Имя группы"
-            android:layout_marginBottom="4dp"
             android:textSize="16sp"
             android:fontFamily="@font/roboto_regular"
             android:textColor="?attr/colorBlack"/>
@@ -29,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="Описание группы"
-            android:textSize="12dp"
+            android:textSize="13sp"
             android:fontFamily="@font/roboto_medium"
             android:textColor="?attr/colorGray70"/>
 

@@ -3,6 +3,7 @@ package kekmech.ru.feature_dashboard.presentation
 import kekmech.ru.common_android.moscowLocalDate
 import kekmech.ru.common_mvi.BaseReducer
 import kekmech.ru.common_mvi.Result
+import kekmech.ru.coreui.items.FavoriteScheduleItem
 import kekmech.ru.domain_notes.dto.Note
 import kekmech.ru.feature_dashboard.getActualScheduleDayForView
 import kekmech.ru.feature_dashboard.presentation.DashboardEvent.News
@@ -51,6 +52,18 @@ class DashboardReducer : BaseReducer<DashboardState, DashboardEvent, DashboardEf
             state = state,
             effect = DashboardEffect.ShowNotesLoadingError
         )
+        is News.FavoriteSchedulesLoaded -> Result(
+            state = state.copy(
+                favoriteSchedules = event.favorites
+                    .takeIf { it.isNotEmpty() }
+                    ?.map { FavoriteScheduleItem(it, it.groupNumber == state.selectedGroupName) }
+            )
+        )
+        is News.FavoriteGroupSelected -> Result(
+            state = state,
+            effects = emptyList(),
+            actions = refreshActions()
+        )
     }
 
     private fun reduceWish(
@@ -80,6 +93,14 @@ class DashboardReducer : BaseReducer<DashboardState, DashboardEvent, DashboardEf
             effects = emptyList(),
             actions = refreshActions()
         )
+        is Wish.Action.SelectFavoriteSchedule -> {
+            val newGroupNumber = event.favoriteSchedule.groupNumber
+            Result(
+                state = state.copy(selectedGroupName = newGroupNumber),
+                effects = emptyList(),
+                actions = listOf(DashboardAction.SelectGroup(newGroupNumber))
+            )
+        }
     }
 
     private fun refreshActions(): List<DashboardAction> {
@@ -88,7 +109,8 @@ class DashboardReducer : BaseReducer<DashboardState, DashboardEvent, DashboardEf
             DashboardAction.LoadNotes,
             DashboardAction.LoadSchedule(0),
             DashboardAction.LoadSchedule(1)
-                .takeIf { moscowLocalDate().dayOfWeek == DayOfWeek.SUNDAY }
+                .takeIf { moscowLocalDate().dayOfWeek == DayOfWeek.SUNDAY },
+            DashboardAction.LoadFavoriteSchedules
         )
     }
 

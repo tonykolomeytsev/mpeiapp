@@ -23,6 +23,11 @@ class DashboardListConverter(
         actionNameRes = R.string.dashboard_section_header_notes_action
     ) }
 
+    private val favoritesHeader by fastLazy { SectionHeaderItem(
+        titleRes = R.string.dashboard_section_header_favorites,
+        subtitle = context.getString(R.string.dashboard_section_header_favorites_subtitle)
+    ) }
+
     private val formatter = PrettyDateFormatter(context)
 
     private val lunchStartTime = LocalTime.of(12, 45) // 12:45
@@ -81,6 +86,13 @@ class DashboardListConverter(
                         subtitleRes = R.string.all_notes_empty_state_subtitle
                     ))
                 }
+            }
+
+            state.favoriteSchedules?.let {
+                add(SpaceItem.VERTICAL_16)
+                add(favoritesHeader)
+                add(SpaceItem.VERTICAL_12)
+                addAll(it)
             }
 
             add(SpaceItem.VERTICAL_24)

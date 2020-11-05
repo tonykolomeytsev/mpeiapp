@@ -33,7 +33,7 @@ internal class FavoritesReducer : BaseReducer<FavoritesState, FavoritesEvent, Fa
             )
         }
         is Wish.Click.DeleteSchedule -> {
-            val newFavorites = state.favorites?.filterNot { it.groupNumber.equals(event.favoriteSchedule.groupNumber) }
+            val newFavorites = state.favorites?.filterNot { it.groupNumber.equals(event.favoriteSchedule.groupNumber, ignoreCase = true) }
             Result(
                 state = state.copy(favorites = newFavorites),
                 action = newFavorites?.let(FavoritesAction::SetFavorites)

@@ -42,7 +42,7 @@ class FavoriteScheduleViewHolderImpl(
         if (isSelected) {
             containerView.backgroundTintList = ColorStateList.valueOf(context.getThemeColor(R.attr.colorMain))
             textViewTitle.setTextColor(context.getThemeColor(R.attr.colorWhite))
-            textViewDescription.setTextColor(context.getThemeColor(R.attr.colorGray30))
+            textViewDescription.setTextColor(context.getThemeColor(R.attr.colorGray10))
         } else {
             containerView.backgroundTintList = ColorStateList.valueOf(context.getThemeColor(R.attr.colorGray10))
             textViewTitle.setTextColor(context.getThemeColor(R.attr.colorBlack))
