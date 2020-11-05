@@ -181,7 +181,11 @@
 
     <string name="favorites_screen_title">Избранные расписания</string>
     <string name="favorites_empty_state_title">Ни одно расписание не добавлено в избранные</string>
-    <string name="favorites_empty_state_add">Добавить</string>
+    <string name="favorites_empty_state_add">ДОБАВИТЬ ГРУППУ</string>
+
+    <string name="edit_favorite_screen_subtitle">Оставьте краткое описание для выбранной группы. Вы также можете оставить описание пустым.</string>
+    <string name="edit_favorite_hint">Описание для группы</string>
+    <string name="edit_favorite_button_continue">Продолжить</string>
 
     <string name="search_section_title_map">Карта</string>
     <string name="search_section_title_notes">Заметки</string>

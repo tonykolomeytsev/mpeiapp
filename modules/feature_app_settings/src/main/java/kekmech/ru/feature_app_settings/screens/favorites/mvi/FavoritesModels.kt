@@ -16,7 +16,11 @@ internal sealed class FavoritesEvent {
 
         object Click {
             object AddFavorite : Wish()
-            data class EditFavorite(val favoriteSchedule: FavoriteSchedule) : Wish()
+            data class DeleteSchedule(val favoriteSchedule: FavoriteSchedule) : Wish()
+        }
+
+        object Action {
+            data class UpdateFavorite(val favoriteSchedule: FavoriteSchedule) : Wish()
         }
     }
 
