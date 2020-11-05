@@ -6,7 +6,6 @@ interface AppSettings {
 
     // schedule
     val changeDayAfterChangeWeek: Boolean
-    val isFavoriteSchedulesEnabled: Boolean
 
     // map
     val autoHideBottomSheet: Boolean
