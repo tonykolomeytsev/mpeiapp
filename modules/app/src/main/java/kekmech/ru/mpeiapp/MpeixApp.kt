@@ -7,6 +7,7 @@ import kekmech.ru.common_android.di.CommonAndroidModule
 import kekmech.ru.common_app_database.di.AppDatabaseModule
 import kekmech.ru.common_cache.di.CacheModule
 import kekmech.ru.common_di.modules
+import kekmech.ru.common_feature_toggles.di.CommonFeatureTogglesModule
 import kekmech.ru.common_navigation.Router
 import kekmech.ru.common_navigation.di.NavigationModule
 import kekmech.ru.common_navigation.di.RouterHolder
@@ -58,6 +59,7 @@ class MpeixApp : Application(),
             CacheModule,
             AppDatabaseModule,
             AnalyticsModule,
+            CommonFeatureTogglesModule,
             // features
             OnboardingModule,
             DashboardModule,
