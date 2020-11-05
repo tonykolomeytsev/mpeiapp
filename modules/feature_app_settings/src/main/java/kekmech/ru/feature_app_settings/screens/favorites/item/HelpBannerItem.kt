@@ -1,8 +1,11 @@
 package kekmech.ru.feature_app_settings.screens.favorites.item
 
-import androidx.annotation.StringRes
+import kekmech.ru.coreui.items.ClickableAdapterItem
+import kekmech.ru.feature_app_settings.R
 
-internal data class HelpBannerItem(
-    @StringRes val descriptionResId: Int,
-    @StringRes val okButtonResId: Int
+internal object HelpBannerItem
+
+internal class HelpBannerAdapterItem : ClickableAdapterItem<HelpBannerItem>(
+    isType = { it is HelpBannerItem },
+    layoutRes = R.layout.item_favorites_help
 )
