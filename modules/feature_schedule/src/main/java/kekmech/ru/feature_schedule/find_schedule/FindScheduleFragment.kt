@@ -19,13 +19,15 @@ import kotlinx.android.synthetic.main.fragment_find_schedule.*
 import org.koin.android.ext.android.inject
 
 private const val CONTINUE_TO_ARG = "ContinueTo"
+private const val SELECT_AFTER_ARG = "SelectAfter"
 
 internal class FindScheduleFragment : BaseFragment<FindScheduleEvent, FindScheduleEffect, FindScheduleState, FindScheduleFeature>() {
 
     override val initEvent = Wish.Init
 
     override fun createFeature() = inject<FindScheduleFeatureFactory>().value.create(
-        getArgument(CONTINUE_TO_ARG)
+        getArgument(CONTINUE_TO_ARG),
+        getArgument(SELECT_AFTER_ARG)
     )
 
     override var layoutId = R.layout.fragment_find_schedule
@@ -58,7 +60,7 @@ internal class FindScheduleFragment : BaseFragment<FindScheduleEvent, FindSchedu
             CONTINUE_TO_BACK_STACK -> close()
             CONTINUE_TO_BARS_ONBOARDING -> onboardingFeatureLauncher.launchBarsPage()
             CONTINUE_TO_DASHBOARD -> dependencies.mainScreenLauncher.launch()
-            CONTINUE_TO_BACK_STACK_WITH_RESULT -> closeWithSuccess()
+            CONTINUE_TO_BACK_STACK_WITH_RESULT -> closeWithResult { putExtra("group_number", effect.groupName) }
             else -> Unit
         }
     }
@@ -70,7 +72,11 @@ internal class FindScheduleFragment : BaseFragment<FindScheduleEvent, FindSchedu
 
     companion object {
         fun newInstance(
-            continueTo: String = CONTINUE_TO_BACK_STACK
-        ) = FindScheduleFragment().withArguments(CONTINUE_TO_ARG to continueTo)
+            continueTo: String = CONTINUE_TO_BACK_STACK,
+            selectGroupAfterSuccess: Boolean = true
+        ) = FindScheduleFragment().withArguments(
+            CONTINUE_TO_ARG to continueTo,
+            SELECT_AFTER_ARG to selectGroupAfterSuccess
+        )
     }
 }

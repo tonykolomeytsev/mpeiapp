@@ -19,13 +19,20 @@ internal class FavoritesReducer : BaseReducer<FavoritesState, FavoritesEvent, Fa
         event: Wish,
         state: FavoritesState
     ): Result<FavoritesState, FavoritesEffect, FavoritesAction> = when (event) {
-        is Wish.Init -> Result(state = state)
+        is Wish.Init -> Result(
+            state = state,
+            action = FavoritesAction.LoadAllFavorites
+        )
+        is Wish.Click.AddFavorite -> Result(state = state)
+        is Wish.Click.EditFavorite -> Result(state = state)
     }
 
     private fun reduceNews(
         event: News,
         state: FavoritesState
-    ): Result<FavoritesState, FavoritesEffect, FavoritesAction> {
-        TODO("Not yet implemented")
+    ): Result<FavoritesState, FavoritesEffect, FavoritesAction> = when (event) {
+        is News.AllFavoritesLoaded -> Result(
+            state = state.copy(favorites = event.favorites)
+        )
     }
 }

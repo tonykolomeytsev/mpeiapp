@@ -7,7 +7,8 @@ internal typealias FindScheduleFeature = Feature<FindScheduleState, FindSchedule
 internal data class FindScheduleState(
     val continueTo: String,
     val isLoading: Boolean = false,
-    val isContinueButtonEnabled: Boolean = false
+    val isContinueButtonEnabled: Boolean = false,
+    val selectGroupAfterSuccess: Boolean
 )
 
 internal sealed class FindScheduleEvent {
@@ -34,7 +35,7 @@ internal sealed class FindScheduleEvent {
 internal sealed class FindScheduleEffect {
     object ShowError : FindScheduleEffect()
     object ShowSomethingWentWrongError : FindScheduleEffect()
-    data class NavigateNextFragment(val continueTo: String) : FindScheduleEffect()
+    data class NavigateNextFragment(val continueTo: String, val groupName: String) : FindScheduleEffect()
 }
 
 internal sealed class FindScheduleAction {

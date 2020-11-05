@@ -8,6 +8,7 @@ dependencies {
     implementation squareup.retrofit_rxJava2
     implementation google.gson
 
+    implementation project(path: ":common_app_database")
     implementation project(path: ":common_annotations")
     implementation project(path: ":common_shared_preferences")
     implementation project(path: ":common_cache")

@@ -27,7 +27,7 @@ class AnalyticsWrapper(
             ))
             is AnalyticsEvent.SettingChanged -> firebaseAnalytics.logEvent("setting_changed", mapOf(
                 Param.SCREEN_NAME to event.screenName,
-                "setting_name" to event.screenName,
+                "setting_name" to event.settingName,
                 "setting_value" to event.settingValue
             ))
             is AnalyticsEvent.ErrorEvent -> firebaseAnalytics.logEvent("error_shown", mapOf(

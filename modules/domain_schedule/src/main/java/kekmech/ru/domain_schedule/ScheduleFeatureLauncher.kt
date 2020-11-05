@@ -14,6 +14,7 @@ interface ScheduleFeatureLauncher {
     fun launchSearchGroup(
         continueTo: String = CONTINUE_TO_BACK_STACK,
         targetFragment: Fragment? = null,
-        requestCode: Int? = null
+        requestCode: Int? = null,
+        selectGroupAfterSuccess: Boolean = true
     )
 }
