@@ -23,6 +23,7 @@ import kekmech.ru.domain_schedule.dto.FavoriteSchedule
 import kekmech.ru.feature_app_settings.R
 import kekmech.ru.feature_app_settings.di.AppSettingDependencies
 import kekmech.ru.feature_app_settings.screens.edit_favorite.EditFavoriteFragment
+import kekmech.ru.feature_app_settings.screens.favorites.item.HelpBannerAdapterItem
 import kekmech.ru.feature_app_settings.screens.favorites.mvi.FavoritesEffect
 import kekmech.ru.feature_app_settings.screens.favorites.mvi.FavoritesEvent
 import kekmech.ru.feature_app_settings.screens.favorites.mvi.FavoritesEvent.Wish
@@ -82,7 +83,8 @@ internal class FavoritesFragment : BaseFragment<FavoritesEvent, FavoritesEffect,
                 .newInstance(it.value.groupNumber, it.value.description)
                 .withResultFor(this, REQUEST_EDIT_FAVORITE)
             addScreenForward { editFavoriteFragment }
-        }
+        },
+        HelpBannerAdapterItem()
     )
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
