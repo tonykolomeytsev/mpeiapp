@@ -1,0 +1,11 @@
+apply from: "$rootDir/domain-android-module.gradle"
+
+dependencies {
+    // Koin for Kotlin Android
+    implementation koin.core
+
+    // Firebase
+    implementation firebase.config
+
+    implementation project(path: ":common_di")
+}

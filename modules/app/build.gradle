@@ -108,4 +108,5 @@ dependencies {
     implementation project(path: ':common_cache')
     implementation project(path: ':common_app_database')
     implementation project(path: ':common_analytics')
+    implementation project(path: ':common_feature_toggles')
 }
