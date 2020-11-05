@@ -6,8 +6,11 @@ internal class FindScheduleFeatureFactory(
     private val findScheduleActor: FindScheduleActor
 ) {
 
-    fun create(continueTo: String): FindScheduleFeature = BaseFeature(
-        initialState = FindScheduleState(continueTo = continueTo),
+    fun create(continueTo: String, selectGroupAfterSuccess: Boolean): FindScheduleFeature = BaseFeature(
+        initialState = FindScheduleState(
+            continueTo = continueTo,
+            selectGroupAfterSuccess = selectGroupAfterSuccess
+        ),
         reducer = FindScheduleReducer(),
         actor = findScheduleActor
     ).start()
