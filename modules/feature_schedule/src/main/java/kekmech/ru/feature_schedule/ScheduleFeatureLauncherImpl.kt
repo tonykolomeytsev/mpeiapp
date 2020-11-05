@@ -17,9 +17,10 @@ internal class ScheduleFeatureLauncherImpl(
     override fun launchSearchGroup(
         continueTo: String,
         targetFragment: Fragment?,
-        requestCode: Int?
+        requestCode: Int?,
+        selectGroupAfterSuccess: Boolean
     ) {
-        val findScheduleFragment = FindScheduleFragment.newInstance(continueTo)
+        val findScheduleFragment = FindScheduleFragment.newInstance(continueTo, selectGroupAfterSuccess)
         if (requestCode != null && targetFragment != null) {
             findScheduleFragment.withResultFor(targetFragment, requestCode)
         }

@@ -180,7 +180,8 @@
     <string name="app_settings_favorite_schedule_description">Настройка быстрого доступа к расписаниям</string>
 
     <string name="favorites_screen_title">Избранные расписания</string>
-    <string name="favorites_toggle_title">Отображать</string>
+    <string name="favorites_empty_state_title">Ни одно расписание не добавлено в избранные</string>
+    <string name="favorites_empty_state_add">Добавить</string>
 
     <string name="search_section_title_map">Карта</string>
     <string name="search_section_title_notes">Заметки</string>

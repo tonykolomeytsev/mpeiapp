@@ -7,7 +7,7 @@ internal class FavoritesFeatureFactory(
 ) {
 
     fun create() = BaseFeature(
-        initialState = FavoritesState(false),
+        initialState = FavoritesState(),
         reducer = FavoritesReducer(),
         actor = actor
     ).start()

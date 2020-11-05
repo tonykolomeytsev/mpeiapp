@@ -6,6 +6,7 @@ import kekmech.ru.domain_schedule.ScheduleFeatureLauncher
 import kekmech.ru.domain_schedule.SchedulePersistentCache
 import kekmech.ru.domain_schedule.ScheduleRepository
 import kekmech.ru.domain_schedule.ScheduleService
+import kekmech.ru.domain_schedule.sources.FavoriteSource
 import kekmech.ru.feature_schedule.ScheduleFeatureLauncherImpl
 import kekmech.ru.feature_schedule.find_schedule.FindScheduleAnalytics
 import kekmech.ru.feature_schedule.find_schedule.presentation.FindScheduleActor
@@ -19,7 +20,7 @@ import retrofit2.Retrofit
 object ScheduleModule : ModuleProvider({
     single { get<Retrofit.Builder>().buildApi<ScheduleService>() } bind ScheduleService::class
     single { ScheduleFeatureLauncherImpl(get()) } bind ScheduleFeatureLauncher::class
-    single { ScheduleRepository(get(), get(), get()) } bind ScheduleRepository::class
+    single { ScheduleRepository(get(), get(), get(), get()) } bind ScheduleRepository::class
     single { FindScheduleActor(get()) }
 
     factory { FindScheduleFeatureFactory(get()) } bind FindScheduleFeatureFactory::class
@@ -29,4 +30,5 @@ object ScheduleModule : ModuleProvider({
     factory { ScheduleAnalytics(get()) } bind ScheduleAnalytics::class
     factory { FindScheduleAnalytics(get()) } bind FindScheduleAnalytics::class
     factory { SchedulePersistentCache(get(), get(), get()) } bind SchedulePersistentCache::class
+    factory { FavoriteSource(get()) }
 })

@@ -5,6 +5,7 @@ import android.os.Handler
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import kekmech.ru.common_adapter.BaseAdapter
+import kekmech.ru.common_android.addSystemBottomPadding
 import kekmech.ru.common_android.addSystemTopPadding
 import kekmech.ru.common_android.openLinkExternal
 import kekmech.ru.common_kotlin.fastLazy
@@ -41,6 +42,7 @@ internal class AppSettingsFragment : BaseFragment<AppSettingsEvent, AppSettingsE
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
         recyclerView.attachScrollListenerForAppBarLayoutShadow(appBarLayout)
+        recyclerView.addSystemBottomPadding()
         appBarLayout.addSystemTopPadding()
         toolbar.init(R.string.app_settings_screen_title)
         analytics.sendScreenShown()
