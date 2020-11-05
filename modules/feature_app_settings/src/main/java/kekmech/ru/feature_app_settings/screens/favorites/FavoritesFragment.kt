@@ -3,23 +3,26 @@ package kekmech.ru.feature_app_settings.screens.favorites
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_android.ActivityResultListener
 import kekmech.ru.common_android.addSystemBottomPadding
 import kekmech.ru.common_android.addSystemTopPadding
+import kekmech.ru.common_android.withResultFor
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.ui.BaseFragment
+import kekmech.ru.common_navigation.addScreenForward
 import kekmech.ru.coreui.attachScrollListenerForAppBarLayoutShadow
 import kekmech.ru.coreui.items.AddActionAdapterItem
 import kekmech.ru.coreui.items.FavoriteScheduleAdapterItem
+import kekmech.ru.coreui.items.FavoriteScheduleItem
 import kekmech.ru.coreui.items.SpaceAdapterItem
 import kekmech.ru.coreui.touch_helpers.attachSwipeToDeleteCallback
 import kekmech.ru.domain_schedule.CONTINUE_TO_BACK_STACK_WITH_RESULT
 import kekmech.ru.domain_schedule.dto.FavoriteSchedule
 import kekmech.ru.feature_app_settings.R
 import kekmech.ru.feature_app_settings.di.AppSettingDependencies
+import kekmech.ru.feature_app_settings.screens.edit_favorite.EditFavoriteFragment
 import kekmech.ru.feature_app_settings.screens.favorites.mvi.FavoritesEffect
 import kekmech.ru.feature_app_settings.screens.favorites.mvi.FavoritesEvent
 import kekmech.ru.feature_app_settings.screens.favorites.mvi.FavoritesEvent.Wish
@@ -52,8 +55,8 @@ internal class FavoritesFragment : BaseFragment<FavoritesEvent, FavoritesEffect,
         recyclerView.addSystemBottomPadding()
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
-        recyclerView.attachSwipeToDeleteCallback(isItemForDelete = { it is FavoriteSchedule }) {
-            /* no-op */
+        recyclerView.attachSwipeToDeleteCallback(isItemForDelete = { it is FavoriteScheduleItem }) {
+            feature.accept(Wish.Click.DeleteSchedule((it as FavoriteScheduleItem).value))
         }
         analytics.sendScreenShown()
     }
@@ -75,13 +78,25 @@ internal class FavoritesFragment : BaseFragment<FavoritesEvent, FavoritesEffect,
         },
         FavoriteScheduleAdapterItem {
             analytics.sendClick("EditFavorite")
-            feature.accept(Wish.Click.EditFavorite(it.value))
+            val editFavoriteFragment = EditFavoriteFragment
+                .newInstance(it.value.groupNumber, it.value.description)
+                .withResultFor(this, REQUEST_EDIT_FAVORITE)
+            addScreenForward { editFavoriteFragment }
         }
     )
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_NEW_FAVORITE && data != null) {
-            Toast.makeText(requireContext(), data.getStringExtra("group_number"), Toast.LENGTH_SHORT).show()
+            data.getStringExtra("group_number")?.let { groupNumber ->
+                val editFavoriteFragment = EditFavoriteFragment
+                    .newInstance(groupNumber)
+                    .withResultFor(this, REQUEST_EDIT_FAVORITE)
+                addScreenForward { editFavoriteFragment }
+            }
+        } else if (requestCode == REQUEST_EDIT_FAVORITE && data != null) {
+            val groupNumber = data.getStringExtra(EditFavoriteFragment.EXTRA_GROUP_NAME) ?: return
+            val description = data.getStringExtra(EditFavoriteFragment.EXTRA_DESCRIPTION).orEmpty()
+            feature.accept(Wish.Action.UpdateFavorite(FavoriteSchedule(groupNumber, description, 0)))
         }
     }
 }

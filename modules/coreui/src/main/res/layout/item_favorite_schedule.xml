@@ -10,6 +10,7 @@
         android:paddingEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/background_rounded_rect_8dp"
         android:backgroundTint="?attr/colorGray10">
 

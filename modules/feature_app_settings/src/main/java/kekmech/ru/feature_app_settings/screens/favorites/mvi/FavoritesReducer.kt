@@ -2,6 +2,7 @@ package kekmech.ru.feature_app_settings.screens.favorites.mvi
 
 import kekmech.ru.common_mvi.BaseReducer
 import kekmech.ru.common_mvi.Result
+import kekmech.ru.domain_schedule.dto.FavoriteSchedule
 import kekmech.ru.feature_app_settings.screens.favorites.mvi.FavoritesEvent.News
 import kekmech.ru.feature_app_settings.screens.favorites.mvi.FavoritesEvent.Wish
 
@@ -24,7 +25,20 @@ internal class FavoritesReducer : BaseReducer<FavoritesState, FavoritesEvent, Fa
             action = FavoritesAction.LoadAllFavorites
         )
         is Wish.Click.AddFavorite -> Result(state = state)
-        is Wish.Click.EditFavorite -> Result(state = state)
+        is Wish.Action.UpdateFavorite -> {
+            val newFavorites = state.favorites?.updateOrAdd(event.favoriteSchedule)
+            Result(
+                state = state.copy(favorites = newFavorites),
+                action = newFavorites?.let(FavoritesAction::SetFavorites)
+            )
+        }
+        is Wish.Click.DeleteSchedule -> {
+            val newFavorites = state.favorites?.filterNot { it.groupNumber.equals(event.favoriteSchedule.groupNumber) }
+            Result(
+                state = state.copy(favorites = newFavorites),
+                action = newFavorites?.let(FavoritesAction::SetFavorites)
+            )
+        }
     }
 
     private fun reduceNews(
@@ -34,5 +48,13 @@ internal class FavoritesReducer : BaseReducer<FavoritesState, FavoritesEvent, Fa
         is News.AllFavoritesLoaded -> Result(
             state = state.copy(favorites = event.favorites)
         )
+    }
+
+    private fun List<FavoriteSchedule>.updateOrAdd(favoriteSchedule: FavoriteSchedule): List<FavoriteSchedule> {
+        return if (any { it.groupNumber.equals(favoriteSchedule.groupNumber, ignoreCase = true) }) {
+            map { if (it.groupNumber.equals(favoriteSchedule.groupNumber, ignoreCase = true)) favoriteSchedule else it }
+        } else {
+            this + favoriteSchedule
+        }
     }
 }

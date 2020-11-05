@@ -69,5 +69,6 @@ class FavoriteScheduleAdapterItem(
     isType = { it is FavoriteScheduleItem },
     layoutRes = R.layout.item_favorite_schedule,
     viewHolderGenerator = ::FavoriteScheduleViewHolderImpl,
-    itemBinder = FavoriteScheduleItemBinder(onClickListener)
+    itemBinder = FavoriteScheduleItemBinder(onClickListener),
+    areItemsTheSame = { a, b -> a.value.groupNumber == b.value.groupNumber }
 )
