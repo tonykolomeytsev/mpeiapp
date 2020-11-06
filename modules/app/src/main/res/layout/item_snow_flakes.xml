@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.jetradarmobile.snowfall.SnowfallView xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/snowFallView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:snowflakeImage="@drawable/ic_snow_flake"
+        app:snowflakesNum="100"
+        app:snowflakeSpeedMax="12"
+        app:snowflakesFadingEnabled="true" />
