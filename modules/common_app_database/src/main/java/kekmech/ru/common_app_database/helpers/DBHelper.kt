@@ -18,6 +18,10 @@ class DBHelper(
 
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL(dbCreateScript)
+        setOfMigrations
+            .sortedBy { it.oldVersion }
+            .map { context.getRawText(it.migrationScript) }
+            .forEach { db.execSQL(it) }
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
