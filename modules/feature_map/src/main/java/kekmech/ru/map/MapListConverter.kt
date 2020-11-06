@@ -60,10 +60,13 @@ internal class MapListConverter {
             list.add(SpaceItem.VERTICAL_12)
             list.addAll(markers.filter { it.tag == tag })
         }
-        list.add(SpaceItem.VERTICAL_24)
-        list.add(SectionHeaderItem(titleRes = R.string.map_section_tag_others))
-        list.add(SpaceItem.VERTICAL_12)
-        list.addAll(markers.filter { it.tag.isEmpty() })
+        val otherPlaces = markers.filter { it.tag.isEmpty() }
+        if (otherPlaces.isNotEmpty()) {
+            list.add(SpaceItem.VERTICAL_24)
+            list.add(SectionHeaderItem(titleRes = R.string.map_section_tag_others))
+            list.add(SpaceItem.VERTICAL_12)
+            list.addAll(otherPlaces)
+        }
         return list
     }
 }
