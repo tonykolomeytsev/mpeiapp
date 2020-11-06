@@ -5,4 +5,6 @@ internal class FeatureTogglesImpl(
 ) : FeatureToggles {
 
     override val isWorkInProgressBannerEnabled get() = wrapper["ft_banner_work_in_progress"]
+
+    override val isSnowFlakesEnabled get() = wrapper["ft_show_flakes_effect"]
 }

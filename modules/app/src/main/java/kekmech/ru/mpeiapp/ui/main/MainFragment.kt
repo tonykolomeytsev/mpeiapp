@@ -3,6 +3,7 @@ package kekmech.ru.mpeiapp.ui.main
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import androidx.core.view.setPadding
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
@@ -58,6 +59,14 @@ class MainFragment : BaseFragment<MainScreenEvent, MainScreenEffect, MainScreenS
         savedInstanceState?.get("lastSelectedTab")?.let {
             bottomBarController?.switchTab(it as BottomTab)
         }
+
+        if (dependencies.featureToggles.isSnowFlakesEnabled) enableSnowFlakesEffect(view)
+    }
+
+    private fun enableSnowFlakesEffect(view: View) {
+        (view as ViewGroup).addView(
+            View.inflate(requireContext(), R.layout.item_snow_flakes, null)
+        )
     }
 
     override fun onResume() {

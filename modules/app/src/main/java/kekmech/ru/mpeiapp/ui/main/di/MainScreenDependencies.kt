@@ -1,5 +1,6 @@
 package kekmech.ru.mpeiapp.ui.main.di
 
+import kekmech.ru.common_feature_toggles.FeatureToggles
 import kekmech.ru.common_navigation.BottomTabsSwitcher
 import kekmech.ru.domain_bars.BarsFeatureLauncher
 import kekmech.ru.domain_force_update.ForceUpdateChecker
@@ -13,5 +14,6 @@ data class MainScreenDependencies(
     val scheduleFeatureLauncher: ScheduleFeatureLauncher,
     val barsFeatureLauncher: BarsFeatureLauncher,
     val mapFeatureLauncher: MapFeatureLauncher,
-    val forceUpdateChecker: ForceUpdateChecker
+    val forceUpdateChecker: ForceUpdateChecker,
+    val featureToggles: FeatureToggles
 )
