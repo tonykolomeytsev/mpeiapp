@@ -22,9 +22,11 @@ dependencies {
     implementation project(path: ':domain_schedule')
     implementation project(path: ':domain_notes')
     implementation project(path: ':domain_search')
+    implementation project(path: ':domain_app_settings')
 
     implementation project(path: ':common_di')
     implementation project(path: ':common_annotations')
+    implementation project(path: ':common_shared_preferences')
     implementation project(path: ':common_android')
     implementation project(path: ':common_adapter')
     implementation project(path: ':common_kotlin')

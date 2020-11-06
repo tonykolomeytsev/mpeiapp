@@ -14,6 +14,7 @@ import kekmech.ru.common_navigation.BottomTab
 import kekmech.ru.common_navigation.NeedToUpdate
 import kekmech.ru.coreui.banner.showBanner
 import kekmech.ru.coreui.items.*
+import kekmech.ru.domain_app_settings.AppSettingsFeatureLauncher
 import kekmech.ru.domain_schedule.CONTINUE_TO_BACK_STACK_WITH_RESULT
 import kekmech.ru.feature_dashboard.di.DashboardDependencies
 import kekmech.ru.feature_dashboard.items.*
@@ -26,6 +27,7 @@ import kotlinx.android.synthetic.main.fragment_dashboard.*
 import org.koin.android.ext.android.inject
 
 private const val REQUEST_CODE_UPDATE_DATA = 2910
+private const val SHARED_PREFS_BANNERS = "banners"
 
 class DashboardFragment : BaseFragment<DashboardEvent, DashboardEffect, DashboardState, DashboardFeature>(),
     ActivityResultListener,
@@ -122,8 +124,22 @@ class DashboardFragment : BaseFragment<DashboardEvent, DashboardEffect, Dashboar
         FavoriteScheduleAdapterItem {
             analytics.sendClick("FavoriteSchedule")
             feature.accept(Wish.Action.SelectFavoriteSchedule(it.value))
-        }
+        },
+        BannerAdapterItem(
+            onClickListener = {
+                closeFeatureBanner()
+                dependencies.bottomTabsSwitcher.changeTab(BottomTab.PROFILE)
+                dependencies.appSettingsFeatureLauncher.launch(AppSettingsFeatureLauncher.SubPage.FAVORITES)
+            },
+            onCloseListener = {
+                closeFeatureBanner()
+            }
+        )
     )
+
+    private fun closeFeatureBanner() {
+        feature.accept(Wish.Action.CloseFeatureBanner)
+    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_CODE_UPDATE_DATA) {
