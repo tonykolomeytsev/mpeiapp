@@ -1,8 +1,10 @@
 package kekmech.ru.feature_dashboard.presentation
 
+import android.content.SharedPreferences
 import kekmech.ru.common_android.moscowLocalDate
 import kekmech.ru.common_mvi.BaseReducer
 import kekmech.ru.common_mvi.Result
+import kekmech.ru.common_shared_preferences.boolean
 import kekmech.ru.coreui.items.FavoriteScheduleItem
 import kekmech.ru.domain_notes.dto.Note
 import kekmech.ru.feature_dashboard.getActualScheduleDayForView
@@ -13,7 +15,11 @@ import java.time.temporal.ChronoUnit
 
 typealias DashboardResult = Result<DashboardState, DashboardEffect, DashboardAction>
 
-class DashboardReducer : BaseReducer<DashboardState, DashboardEvent, DashboardEffect, DashboardAction> {
+class DashboardReducer(
+    sharedPreferences: SharedPreferences
+) : BaseReducer<DashboardState, DashboardEvent, DashboardEffect, DashboardAction> {
+
+    private var isFeatureBannerEnabled by sharedPreferences.boolean("banner_favorites", true)
 
     override fun reduce(
         event: DashboardEvent,
@@ -72,7 +78,8 @@ class DashboardReducer : BaseReducer<DashboardState, DashboardEvent, DashboardEf
     ): DashboardResult = when (event) {
         is Wish.Init -> Result(
             state = state.copy(
-                isLoading = true
+                isLoading = true,
+                isFeatureBannerEnabled = isFeatureBannerEnabled
             ),
             effects = emptyList(), // костыль
             actions = refreshActions()
@@ -99,6 +106,12 @@ class DashboardReducer : BaseReducer<DashboardState, DashboardEvent, DashboardEf
                 state = state.copy(selectedGroupName = newGroupNumber),
                 effects = emptyList(),
                 actions = listOf(DashboardAction.SelectGroup(newGroupNumber))
+            )
+        }
+        is Wish.Action.CloseFeatureBanner -> {
+            isFeatureBannerEnabled = false
+            Result(
+                state = state.copy(isFeatureBannerEnabled = false)
             )
         }
     }

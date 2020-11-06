@@ -4,11 +4,12 @@ import kekmech.ru.common_di.ModuleProvider
 import kekmech.ru.feature_dashboard.DashboardAnalytics
 import kekmech.ru.feature_dashboard.presentation.DashboardActor
 import kekmech.ru.feature_dashboard.presentation.DashboardFeatureFactory
-import org.koin.dsl.bind
+import kekmech.ru.feature_dashboard.presentation.DashboardReducer
 
 object DashboardModule : ModuleProvider({
-    single { DashboardDependencies(get(), get(), get(), get(), get()) } // он не просто так single!!!
-    factory { DashboardFeatureFactory(get()) } bind DashboardFeatureFactory::class
-    factory { DashboardActor(get(), get(), get()) } bind DashboardActor::class
-    factory { DashboardAnalytics(get()) } bind DashboardAnalytics::class
+    single { DashboardDependencies(get(), get(), get(), get(), get(), get()) } // он не просто так single!!!
+    factory { DashboardFeatureFactory(get(), get()) }
+    factory { DashboardReducer(get()) }
+    factory { DashboardActor(get(), get(), get()) }
+    factory { DashboardAnalytics(get()) }
 })

@@ -5,6 +5,7 @@ import kekmech.ru.common_android.moscowLocalDate
 import kekmech.ru.common_android.moscowLocalTime
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.coreui.PrettyDateFormatter
+import kekmech.ru.coreui.items.BannerItem
 import kekmech.ru.coreui.items.EmptyStateItem
 import kekmech.ru.coreui.items.SectionHeaderItem
 import kekmech.ru.coreui.items.SpaceItem
@@ -55,6 +56,8 @@ class DashboardListConverter(
                 }
             }
 
+            addFeatureBanner(state)
+
             // ближайшие события
             createClassesEventsItems(state)?.let { (header, classes) ->
                 add(header)
@@ -74,19 +77,7 @@ class DashboardListConverter(
             }
 
             // актуальные заметки
-            state.notes?.let {
-                add(SpaceItem.VERTICAL_16)
-                add(notesHeader)
-                add(SpaceItem.VERTICAL_12)
-                if (it.isNotEmpty()) {
-                    addAll(it)
-                } else {
-                    add(EmptyStateItem(
-                        titleRes = R.string.dashboard_actual_notes_empty_state_title,
-                        subtitleRes = R.string.all_notes_empty_state_subtitle
-                    ))
-                }
-            }
+            addActualNotes(state)
 
             state.favoriteSchedules?.let {
                 add(SpaceItem.VERTICAL_16)
@@ -96,6 +87,24 @@ class DashboardListConverter(
             }
 
             add(SpaceItem.VERTICAL_24)
+        }
+    }
+
+    private fun MutableList<Any>.addActualNotes(state: DashboardState) {
+        state.notes?.let {
+            add(SpaceItem.VERTICAL_16)
+            add(notesHeader)
+            add(SpaceItem.VERTICAL_12)
+            if (it.isNotEmpty()) {
+                addAll(it)
+            } else {
+                add(
+                    EmptyStateItem(
+                        titleRes = R.string.dashboard_actual_notes_empty_state_title,
+                        subtitleRes = R.string.all_notes_empty_state_subtitle
+                    )
+                )
+            }
         }
     }
 
@@ -143,4 +152,15 @@ class DashboardListConverter(
         subtitle = subtitle,
         groupName = groupName
     )
+
+    private fun MutableList<Any>.addFeatureBanner(state: DashboardState) {
+        if (state.isFeatureBannerEnabled) {
+            add(BannerItem(
+                title = "Избранные расписания!",
+                description = "Теперь вы можете переключаться между группами одним нажатием, не набирая их номера в поиске! \nНажмите, чтобы попробовать.",
+                iconRes = R.drawable.ic_favorites_banner
+            ))
+            add(SpaceItem.VERTICAL_16)
+        }
+    }
 }
