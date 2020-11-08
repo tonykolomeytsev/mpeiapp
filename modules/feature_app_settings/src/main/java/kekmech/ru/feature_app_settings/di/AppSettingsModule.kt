@@ -25,8 +25,8 @@ object AppSettingsModule : ModuleProvider({
     } bind SharedPreferences::class
     factory { AppSettingsRepository(get()) } binds arrayOf(AppSettingsRepository::class, AppSettings::class)
     factory { AppSettingsActor(get(), get()) } bind AppSettingsActor::class
-    factory { AppSettingsFeatureFactory(get()) } bind AppSettingsFeatureFactory::class
-    factory { AppSettingDependencies(get(), get(), get(), get()) } bind AppSettingDependencies::class
+    factory { AppSettingsFeatureFactory(get(), get()) }
+    factory { AppSettingDependencies(get(), get(), get(), get()) }
     factory { AppSettingsFeatureLauncherImpl(get()) } bind AppSettingsFeatureLauncher::class
     factory { AppSettingsAnalytics(get()) }
     factory { FavoritesAnalytics(get()) }

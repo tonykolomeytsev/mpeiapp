@@ -60,7 +60,9 @@ class MainFragment : BaseFragment<MainScreenEvent, MainScreenEffect, MainScreenS
             bottomBarController?.switchTab(it as BottomTab)
         }
 
-        if (dependencies.featureToggles.isSnowFlakesEnabled) enableSnowFlakesEffect(view)
+        if (dependencies.featureToggles.isSnowFlakesEnabled && dependencies.appSettings.isSnowEnabled) {
+            enableSnowFlakesEffect(view)
+        }
     }
 
     private fun enableSnowFlakesEffect(view: View) {

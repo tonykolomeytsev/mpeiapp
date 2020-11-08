@@ -26,5 +26,6 @@
 
     <!--Additional theme colors-->
     <attr name="themeBoxBackgroundColor" format="reference"/>
+    <attr name="themed_snow_flake" format="reference"/>
 
 </resources>

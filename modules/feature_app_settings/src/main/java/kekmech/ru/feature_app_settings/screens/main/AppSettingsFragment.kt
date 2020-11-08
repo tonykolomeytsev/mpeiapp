@@ -73,6 +73,9 @@ internal class AppSettingsFragment : BaseFragment<AppSettingsEvent, AppSettingsE
             analytics.sendChangeSetting("AutoHideMapBottomSheet", it.toString())
             feature.accept(Wish.Action.SetAutoHideBottomSheet(it))
         },
+        ToggleAdapterItem(TOGGLE_SNOW_FLAKES) {
+            feature.accept(Wish.Action.SetSnowEnabled(it))
+        },
         SectionTextAdapterItem(),
         SpaceAdapterItem(),
         BottomLabeledTextAdapterItem { onItemClick(it.itemId) }
@@ -114,6 +117,7 @@ internal class AppSettingsFragment : BaseFragment<AppSettingsEvent, AppSettingsE
         const val TOGGLE_DARK_THEME = 0
         const val TOGGLE_CHANGE_DAY_AFTER_CHANGE_WEEK = 1
         const val TOGGLE_AUTO_HIDE_BOTTOM_SHEET = 2
+        const val TOGGLE_SNOW_FLAKES = 3
 
         const val ITEM_DEBUG_CLEAR_SELECTED_GROUP = 0
         const val ITEM_SUPPORT = 1

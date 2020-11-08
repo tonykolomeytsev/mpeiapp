@@ -44,6 +44,7 @@
 
         <!--Additional theme colors-->
         <item name="themeBoxBackgroundColor">@color/colorGray10</item>
+        <item name="themed_snow_flake">@drawable/ic_snow_flake_light_theme</item>
     </style>
 
     <style name="AppTheme.Dark" parent="Theme.MaterialComponents.Light.NoActionBar">
@@ -89,6 +90,7 @@
 
         <!--Additional theme colors-->
         <item name="themeBoxBackgroundColor">@color/colorGray90</item>
+        <item name="themed_snow_flake">@drawable/ic_snow_flake_dark_theme</item>
     </style>
 
     <style name="PrimaryFlatButton" parent="Theme.AppCompat.Light">
