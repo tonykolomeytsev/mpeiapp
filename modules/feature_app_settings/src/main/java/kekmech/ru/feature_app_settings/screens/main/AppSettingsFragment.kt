@@ -63,6 +63,7 @@ internal class AppSettingsFragment : BaseFragment<AppSettingsEvent, AppSettingsE
         ToggleAdapterItem(TOGGLE_DARK_THEME) {
             analytics.sendChangeSetting("DarkTheme", it.toString())
             feature.accept(Wish.Action.SetDarkThemeEnabled(it))
+            fixStatusBarIssue(it)
         },
         ToggleAdapterItem(TOGGLE_CHANGE_DAY_AFTER_CHANGE_WEEK) {
             analytics.sendChangeSetting("ChangeDayAfterChangeWeek", it.toString())
@@ -95,6 +96,18 @@ internal class AppSettingsFragment : BaseFragment<AppSettingsEvent, AppSettingsE
             addScreenForward { FavoritesFragment() }
         }
         else -> { /* no-op */ }
+    }
+
+    private fun fixStatusBarIssue(isDarkThemeEnabled: Boolean) {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            val decorView = requireActivity().window.decorView
+            val oldSystemUiVisibility = decorView.systemUiVisibility
+            if (isDarkThemeEnabled) {
+                decorView.systemUiVisibility = oldSystemUiVisibility xor View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            } else {
+                decorView.systemUiVisibility = oldSystemUiVisibility or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            }
+        }
     }
 
     companion object {
