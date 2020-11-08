@@ -74,6 +74,7 @@ internal class AppSettingsFragment : BaseFragment<AppSettingsEvent, AppSettingsE
             feature.accept(Wish.Action.SetAutoHideBottomSheet(it))
         },
         ToggleAdapterItem(TOGGLE_SNOW_FLAKES) {
+            analytics.sendChangeSetting("SnowFlakes", it.toString())
             feature.accept(Wish.Action.SetSnowEnabled(it))
         },
         SectionTextAdapterItem(),

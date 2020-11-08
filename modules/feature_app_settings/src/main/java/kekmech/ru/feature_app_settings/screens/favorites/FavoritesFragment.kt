@@ -57,6 +57,7 @@ internal class FavoritesFragment : BaseFragment<FavoritesEvent, FavoritesEffect,
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
         recyclerView.attachSwipeToDeleteCallback(isItemForDelete = { it is FavoriteScheduleItem }) {
+            analytics.sendClick("DeleteFavorite")
             feature.accept(Wish.Click.DeleteSchedule((it as FavoriteScheduleItem).value))
         }
         analytics.sendScreenShown()
