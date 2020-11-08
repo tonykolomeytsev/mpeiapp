@@ -4,7 +4,7 @@
         android:id="@+id/snowFallView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:snowflakeImage="@drawable/ic_snow_flake"
+        app:snowflakeImage="?attr/themed_snow_flake"
         app:snowflakesNum="100"
         app:snowflakeSpeedMax="12"
         app:snowflakesFadingEnabled="true" />

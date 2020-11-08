@@ -18,6 +18,13 @@ internal class AppSettingsListConverter {
                 isChecked = appSettings.isDarkThemeEnabled
             ))
             add(SectionTextItem(resId = R.string.app_settings_dark_theme_description))
+            if (state.isFeatureToggleSnowFlakesEnabled) {
+                add(ToggleItem(
+                    itemId = AppSettingsFragment.TOGGLE_SNOW_FLAKES,
+                    titleRes = R.string.app_settings_snowy_mood,
+                    isChecked = appSettings.isSnowEnabled
+                ))
+            }
             add(SpaceItem.VERTICAL_24)
 
             add(SectionHeaderItem(

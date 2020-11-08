@@ -18,6 +18,9 @@ internal class AppSettingsActor(
         is AppSettingsAction.SetDarkThemeEnabled -> appSettingsRepository
             .complete { isDarkThemeEnabled = action.isEnabled }
             .mapSuccessEvent(AppSettingsEvent.News.AppSettingsChanged)
+        is AppSettingsAction.SetSnowEnabled -> appSettingsRepository
+            .complete { isSnowEnabled = action.isEnabled }
+            .mapSuccessEvent(AppSettingsEvent.News.AppSettingsChanged)
         is AppSettingsAction.SetChangeDayAfterChangeWeek -> appSettingsRepository
             .complete { changeDayAfterChangeWeek = action.isEnabled }
             .mapSuccessEvent(AppSettingsEvent.News.AppSettingsChanged)

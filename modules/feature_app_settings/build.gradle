@@ -26,6 +26,7 @@ dependencies {
     implementation project(path: ':domain_schedule')
     implementation project(path: ':domain_onboarding')
 
+    implementation project(path: ':common_feature_toggles')
     implementation project(path: ':common_analytics')
     implementation project(path: ':common_di')
     implementation project(path: ':common_network')
