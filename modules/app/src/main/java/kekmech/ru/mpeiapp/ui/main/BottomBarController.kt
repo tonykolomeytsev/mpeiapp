@@ -2,6 +2,7 @@ package kekmech.ru.mpeiapp.ui.main
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kekmech.ru.common_navigation.BottomTab
 import kekmech.ru.common_navigation.NeedToUpdate
@@ -82,9 +83,13 @@ class BottomBarController(
                 }
                 fragment.userVisibleHint = true
             }
-        }.commitNow()
+        }.commitNowIgnoreStateLossError()
         lastSelectedTab = tab
     }
+
+    private fun FragmentTransaction.commitNowIgnoreStateLossError() = try {
+        commitNow()
+    } catch (e: Exception) { e.printStackTrace() }
 
     private fun getItemByTab(tab: BottomTab) = when (tab) {
         BottomTab.DASHBOARD -> R.id.navigation_dashboard
