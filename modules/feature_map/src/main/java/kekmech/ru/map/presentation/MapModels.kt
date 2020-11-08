@@ -15,7 +15,8 @@ internal data class MapState(
     val map: GoogleMap? = null,
     val bottomSheetState: Int = BottomSheetBehavior.STATE_COLLAPSED,
     val googleMapMarkers: List<Marker> = emptyList(),
-    val appSettings: AppSettings
+    val appSettings: AppSettings,
+    val hash: String = ""
 )
 
 internal enum class FilterTab { FOOD, BUILDINGS, HOSTELS, OTHERS, STRUCTURES }
@@ -31,6 +32,7 @@ internal sealed class MapEvent {
             data class BottomSheetStateChanged(val newState: Int) : Wish()
             data class GoogleMapMarkersGenerated(val googleMapMarkers: List<Marker>) : Wish()
             data class OnListMarkerSelected(val mapMarker: MapMarker) : Wish()
+            object SilentUpdate : Wish()
         }
     }
 

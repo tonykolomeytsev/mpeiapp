@@ -7,4 +7,6 @@ interface MapFeatureLauncher {
     fun launchMain(): Fragment
 
     fun selectPlace(placeUid: String)
+
+    fun selectTab(tabName: String)
 }

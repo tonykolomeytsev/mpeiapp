@@ -8,8 +8,8 @@ import kekmech.ru.domain_map.MapPersistentCache
 import kekmech.ru.domain_map.MapRepository
 import kekmech.ru.domain_map.MapService
 import kekmech.ru.map.MapAnalytics
+import kekmech.ru.map.launcher.DeeplinkDelegate
 import kekmech.ru.map.launcher.MapFeatureLauncherImpl
-import kekmech.ru.map.launcher.SelectedPlaceDelegate
 import kekmech.ru.map.presentation.MapActor
 import kekmech.ru.map.presentation.MapFeatureFactory
 import kekmech.ru.map.view.MarkersBitmapFactory
@@ -23,7 +23,7 @@ object MapModule : ModuleProvider({
 
     single { get<Retrofit.Builder>().buildApi<MapService>() } bind MapService::class
     single { MapRepository(get(), get(), get()) } bind MapRepository::class
-    single { SelectedPlaceDelegate() } // todo сделать это иначе
+    single { DeeplinkDelegate() } // todo сделать это иначе
     factory { MapFeatureFactory(get(), get()) } bind MapFeatureFactory::class
     factory { MapActor(get()) } bind MapActor::class
     factory { MapDependencies(get(), get()) } bind MapDependencies::class

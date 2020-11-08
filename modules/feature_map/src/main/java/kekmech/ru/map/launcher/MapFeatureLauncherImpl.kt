@@ -4,12 +4,16 @@ import kekmech.ru.domain_map.MapFeatureLauncher
 import kekmech.ru.map.MapFragment
 
 internal class MapFeatureLauncherImpl(
-    private val selectedPlaceDelegate: SelectedPlaceDelegate
+    private val deeplinkDelegate: DeeplinkDelegate
 ) : MapFeatureLauncher {
 
     override fun launchMain() = MapFragment()
 
     override fun selectPlace(placeUid: String) {
-        selectedPlaceDelegate.put(placeUid)
+        deeplinkDelegate.putPlaceUid(placeUid)
+    }
+
+    override fun selectTab(tabName: String) {
+        deeplinkDelegate.putTab(tabName)
     }
 }
