@@ -16,6 +16,7 @@ import kekmech.ru.common_android.doOnApplyWindowInsets
 import kekmech.ru.common_android.views.setMargins
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.ui.BaseFragment
+import kekmech.ru.common_navigation.NeedToUpdate
 import kekmech.ru.coreui.items.PullAdapterItem
 import kekmech.ru.coreui.items.SectionHeaderAdapterItem
 import kekmech.ru.coreui.items.SpaceAdapterItem
@@ -23,7 +24,6 @@ import kekmech.ru.domain_map.dto.MapMarker
 import kekmech.ru.map.di.MapDependencies
 import kekmech.ru.map.ext.animateCameraTo
 import kekmech.ru.map.ext.init
-import kekmech.ru.map.ext.toFilterTab
 import kekmech.ru.map.ext.toMarkerType
 import kekmech.ru.map.items.FilterTabItem
 import kekmech.ru.map.items.MapMarkerAdapterItem
@@ -35,9 +35,7 @@ import kekmech.ru.map.view.MarkersBitmapFactory
 import kotlinx.android.synthetic.main.fragment_map.*
 import org.koin.android.ext.android.inject
 
-private const val DEFAULT_NAVIGATION_DELAY = 1000L
-
-internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState, MapFeature>() {
+internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState, MapFeature>(), NeedToUpdate {
 
     override val initEvent = Wish.Init
 
@@ -98,25 +96,7 @@ internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState, MapFeat
         (recyclerView.layoutManager as ControlledScrollingLayoutManager)
             .isScrollingEnabled = behavior.state != BottomSheetBehavior.STATE_COLLAPSED
 
-        selectPlaceIfNecessary(state)
-    }
-
-    private fun selectPlaceIfNecessary(state: MapState) {
-        state.googleMapMarkers.takeIf { it.isNotEmpty() } ?: return
-        state.map ?: return
-        val selectedPlaceUid = dependencies.selectedPlaceDelegate.get() ?: return
-        val selectedMarker = state.markers.find { it.uid == selectedPlaceUid } ?: return
-        val necessarySelectedTab = selectedMarker.type.toFilterTab() ?: return
-
-        if (state.selectedTab != necessarySelectedTab) {
-            feature.accept(Wish.Action.SelectTab(necessarySelectedTab))
-            return
-        }
-
-        Handler().postDelayed({
-            feature.accept(Wish.Action.OnListMarkerSelected(selectedMarker))
-        }, DEFAULT_NAVIGATION_DELAY)
-        dependencies.selectedPlaceDelegate.clear()
+        DeeplinkHelper.handleDeeplinkIfNecessary(dependencies.deeplinkDelegate, state, feature)
     }
 
     override fun handleEffect(effect: MapEffect) = when (effect) {
@@ -153,11 +133,16 @@ internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState, MapFeat
                 MarkerOptions()
                     .title(it.name)
                     .position(LatLng(it.location.lat, it.location.lng))
-                    .icon(
-                        BitmapDescriptorFactory.fromBitmap(
+                    .icon(BitmapDescriptorFactory.fromBitmap(
                         markersBitmapFactory.getBitmap(it)
                     ))
             ) }
+    }
+
+    override fun onUpdate() {
+        if (dependencies.deeplinkDelegate.isNotEmpty()) {
+            feature.accept(Wish.Action.SilentUpdate)
+        }
     }
 
     private fun createAdapter() = BaseAdapter(

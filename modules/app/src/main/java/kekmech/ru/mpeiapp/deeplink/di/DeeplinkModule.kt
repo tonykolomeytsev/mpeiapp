@@ -10,7 +10,7 @@ object DeeplinkModule : ModuleProvider({
         val handlers = listOf<DeeplinkHandler>(
             BarsDeeplinkHandler(get(), get()),
             MainScreenDeeplinkHandler(get(), get()),
-            MapDeeplinkHandler(get(), get()),
+            MapDeeplinkHandler(get(), get(), get()),
             ScheduleDeeplinkHandler(get(), get()),
             SearchScreenDeeplinkHandler(get(), get(), get()),
             SettingsScreenDeeplinkHandler(get(), get(), get())

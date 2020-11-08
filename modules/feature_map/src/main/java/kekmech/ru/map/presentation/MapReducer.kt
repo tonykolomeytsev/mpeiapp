@@ -4,6 +4,7 @@ import kekmech.ru.common_mvi.BaseReducer
 import kekmech.ru.common_mvi.Result
 import kekmech.ru.map.presentation.MapEvent.News
 import kekmech.ru.map.presentation.MapEvent.Wish
+import java.util.*
 
 internal typealias MapResult = Result<MapState, MapEffect, MapAction>
 
@@ -53,6 +54,9 @@ internal class MapReducer : BaseReducer<MapState, MapEvent, MapEffect, MapAction
                     collapseBottomSheet = state.appSettings.autoHideBottomSheet
                 )
             }
+        )
+        is Wish.Action.SilentUpdate -> Result(
+            state = state.copy(hash = UUID.randomUUID().toString())
         )
     }
 

@@ -55,7 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/schedule_item_lunch_description"
-            android:textColor="?attr/colorGray70"
+            android:textColor="?attr/colorMain"
             android:textSize="14sp"
             android:fontFamily="@font/roboto_bold"
             android:layout_marginStart="80dp"
