@@ -47,9 +47,7 @@ internal class AppSettingsReducer : BaseReducer<AppSettingsState, AppSettingsEve
         )
         is Wish.Action.SetSnowEnabled -> Result(
             state = state,
-            action = AppSettingsAction.SetSnowEnabled(event.isEnabled),
-            effect = AppSettingsEffect.RecreateActivity
-                .takeIf { event.isEnabled != state.appSettings?.isSnowEnabled }
+            action = AppSettingsAction.SetSnowEnabled(event.isEnabled)
         )
         is Wish.Action.SetChangeDayAfterChangeWeek -> Result(
             state = state,
