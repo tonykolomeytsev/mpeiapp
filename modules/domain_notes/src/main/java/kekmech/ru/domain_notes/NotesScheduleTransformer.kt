@@ -17,7 +17,7 @@ class NotesScheduleTransformer(
                 day.classes.forEach { classes ->
                     val firstAttachedNote = classes.relevantToThe(notes, day.date)
                     if (firstAttachedNote != null) {
-                        classes.firstAttachedNoteContent =
+                        classes.attachedNotePreview =
                             firstAttachedNote.content.replaceNewLinesWithSpaces()
                     }
                 }

@@ -9,6 +9,7 @@ import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.common_android.openLinkExternal
 import kekmech.ru.coreui.items.ClassesAdapterItem
 import kekmech.ru.coreui.items.EmptyStateAdapterItem
+import kekmech.ru.coreui.items.NotePreviewAdapterItem
 import kekmech.ru.coreui.items.SpaceAdapterItem
 import kekmech.ru.domain_schedule.dto.Classes
 import kekmech.ru.feature_schedule.R
@@ -50,16 +51,14 @@ internal class WorkingDayViewHolderImpl(
         onClickListener: (Classes) -> Unit
     ) {
         adapter = BaseAdapter(
-            ClassesAdapterItem(containerView.context, onClickListener, true), // viewType = 0
-            ClassesStackStartAdapterItem(containerView.context, onClickListener),
-            ClassesStackMiddleAdapterItem(containerView.context, onClickListener),
-            ClassesStackEndAdapterItem(containerView.context, onClickListener),
+            ClassesAdapterItem(containerView.context, onClickListener), // viewType = 0
             SelfStudyAdapterItem(),
             LunchAdapterItem { containerView.context.openLinkExternal("mpeix://map?tab=FOOD") },
             ClassesShimmerAdapterItem(),
             WindowAdapterItem(),
             EmptyStateAdapterItem(),
-            SpaceAdapterItem()
+            SpaceAdapterItem(),
+            NotePreviewAdapterItem()
         )
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(containerView.context)

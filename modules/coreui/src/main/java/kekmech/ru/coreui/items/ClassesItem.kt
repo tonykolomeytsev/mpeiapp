@@ -27,8 +27,6 @@ interface ClassesViewHolder : ClickableItemViewHolder {
     fun setTagColor(@ColorInt color: Int)
     fun setStartTime(time: String)
     fun setEndTime(time: String)
-    fun setHasAttachments(hasAttachments: Boolean, isNotesPreviewEnabled: Boolean)
-    fun setAttachmentContent(content: String?)
 }
 
 open class ClassesViewHolderImpl(
@@ -75,24 +73,11 @@ open class ClassesViewHolderImpl(
     override fun setEndTime(time: String) {
         textViewTimeEnd.text = time
     }
-
-    override fun setHasAttachments(hasAttachments: Boolean, isNotesPreviewEnabled: Boolean) {
-        val visibilityForImage = if (hasAttachments && !isNotesPreviewEnabled) View.VISIBLE else View.INVISIBLE
-        val visibilityForText = if (hasAttachments && isNotesPreviewEnabled) View.VISIBLE else View.GONE
-
-        imageViewAttachment.visibility = visibilityForImage
-        if (textViewNoteCloud.visibility != visibilityForText) textViewNoteCloud.visibility = visibilityForText
-    }
-
-    override fun setAttachmentContent(content: String?) {
-        textViewNoteCloud.text = content.orEmpty()
-    }
 }
 
 class ClassesItemBinder(
     context: Context,
-    private val onClickListener: ((Classes) -> Unit)? = null,
-    private val isNotesPreviewEnabled: Boolean = false
+    private val onClickListener: ((Classes) -> Unit)? = null
 ) : BaseItemBinder<ClassesViewHolder, Classes>() {
 
     private val classesNumbers by fastLazy { context.getStringArray(R.array.classes_numbers) }
@@ -128,10 +113,6 @@ class ClassesItemBinder(
         vh.setStartTime(model.time.start.format(timeFormatter))
         vh.setEndTime(model.time.end.format(timeFormatter))
         vh.setOnClickListener { onClickListener?.invoke(model) }
-        vh.setHasAttachments(model.firstAttachedNoteContent != null, isNotesPreviewEnabled)
-        if (isNotesPreviewEnabled) {
-            vh.setAttachmentContent(model.firstAttachedNoteContent)
-        }
     }
 
     private fun String.takeIfNotEmpty() = takeIf {
@@ -141,11 +122,10 @@ class ClassesItemBinder(
 
 class ClassesAdapterItem(
     context: Context,
-    onClickListener: ((Classes) -> Unit)? = null,
-    isNotesPreviewEnabled: Boolean = false
+    onClickListener: ((Classes) -> Unit)? = null
 ) : AdapterItem<ClassesViewHolder, Classes>(
-    isType = { it is Classes && it.stackType == null },
+    isType = { it is Classes },
     layoutRes = R.layout.item_classes,
     viewHolderGenerator = ::ClassesViewHolderImpl,
-    itemBinder = ClassesItemBinder(context, onClickListener, isNotesPreviewEnabled)
+    itemBinder = ClassesItemBinder(context, onClickListener)
 )
