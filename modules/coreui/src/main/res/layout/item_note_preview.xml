@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:paddingStart="80dp"
+        android:paddingEnd="16dp"
+        android:layout_marginTop="-12dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/background_classes_stack_end">
+
+    <TextView
+            android:id="@+id/textViewNoteCloud"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            tools:text="Принести типовой расчет 1 лалала лала лала лала"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textColor="?attr/colorBlack"
+            android:textSize="13sp"
+            android:fontFamily="@font/roboto_regular"
+            android:gravity="center_vertical"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="1dp"
+            android:background="@drawable/background_classes_note_cloud" />
+
+</FrameLayout>

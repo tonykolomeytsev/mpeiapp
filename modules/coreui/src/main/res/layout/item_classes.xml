@@ -82,46 +82,7 @@
             android:layout_marginBottom="8dp"
             app:layout_constraintTop_toBottomOf="@id/textViewClassesPlace"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/imageViewAttachment"/>
-
-    <ImageView
-            android:id="@+id/imageViewAttachment"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/ic_attach_file_24px"
-            android:tint="?attr/colorGray70"
-            android:layout_marginEnd="16dp"
-            android:visibility="invisible"
-            tools:visibility="visible"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-
-    <TextView
-            android:id="@+id/textViewNoteCloud"
-            android:layout_width="wrap_content"
-            android:layout_height="32dp"
-            tools:text="Принести типовой расчет 1 лалала лала лала лала"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:textColor="?attr/colorBlack"
-            android:textSize="13sp"
-            android:fontFamily="@font/roboto_regular"
-            android:gravity="center_vertical"
-            android:paddingStart="16dp"
-            android:paddingEnd="12dp"
-            android:paddingBottom="1dp"
-            android:background="@drawable/background_classes_note_cloud"
-            android:maxWidth="280dp"
-            tools:visibility="visible"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/textViewClassesPerson"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="80dp"
-            android:layout_marginEnd="16dp"/>
+            app:layout_constraintEnd_toEndOf="parent"/>
 
     <TextView
             android:id="@+id/textViewClassesNumber"

@@ -31,9 +31,9 @@ data class Classes(
     val person: String = "",
     val time: Time = Time(),
     val number: Int,
-    @Transient var firstAttachedNoteContent: String? = null
+    @Transient var attachedNotePreview: String? = null
 ) : Serializable {
-    @Transient var stackType: ClassesStackType? = null
+    @Transient var isInStack: Boolean = false
 }
 
 data class Time(
@@ -42,5 +42,3 @@ data class Time(
 ) : Serializable
 
 enum class ClassesType : Serializable { UNDEFINED, LECTURE, PRACTICE, LAB, COURSE }
-
-enum class ClassesStackType { START, MIDDLE, END }
