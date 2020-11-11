@@ -77,13 +77,11 @@ open class ClassesViewHolderImpl(
     }
 
     override fun setHasAttachments(hasAttachments: Boolean, isNotesPreviewEnabled: Boolean) {
-        if (isNotesPreviewEnabled) {
-            textViewNoteCloud.isVisible = hasAttachments
-            imageViewAttachment.visibility = View.INVISIBLE
-        } else {
-            imageViewAttachment.visibility = if (hasAttachments) View.VISIBLE else View.INVISIBLE
-            textViewNoteCloud.visibility = View.GONE
-        }
+        val visibilityForImage = if (hasAttachments && !isNotesPreviewEnabled) View.VISIBLE else View.INVISIBLE
+        val visibilityForText = if (hasAttachments && isNotesPreviewEnabled) View.VISIBLE else View.GONE
+
+        imageViewAttachment.visibility = visibilityForImage
+        if (textViewNoteCloud.visibility != visibilityForText) textViewNoteCloud.visibility = visibilityForText
     }
 
     override fun setAttachmentContent(content: String?) {
