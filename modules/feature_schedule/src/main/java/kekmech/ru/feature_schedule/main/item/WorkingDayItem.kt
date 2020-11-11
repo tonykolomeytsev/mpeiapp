@@ -50,7 +50,7 @@ internal class WorkingDayViewHolderImpl(
         onClickListener: (Classes) -> Unit
     ) {
         adapter = BaseAdapter(
-            ClassesAdapterItem(containerView.context, onClickListener), // viewType = 0
+            ClassesAdapterItem(containerView.context, onClickListener, true), // viewType = 0
             ClassesStackStartAdapterItem(containerView.context, onClickListener),
             ClassesStackMiddleAdapterItem(containerView.context, onClickListener),
             ClassesStackEndAdapterItem(containerView.context, onClickListener),

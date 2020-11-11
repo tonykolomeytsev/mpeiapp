@@ -45,6 +45,7 @@
         <!--Additional theme colors-->
         <item name="themeBoxBackgroundColor">@color/colorGray10</item>
         <item name="themed_snow_flake">@drawable/ic_snow_flake_light_theme</item>
+        <item name="colorCloud">@color/colorCloudDay</item>
     </style>
 
     <style name="AppTheme.Dark" parent="Theme.MaterialComponents.Light.NoActionBar">
@@ -91,17 +92,7 @@
         <!--Additional theme colors-->
         <item name="themeBoxBackgroundColor">@color/colorGray90</item>
         <item name="themed_snow_flake">@drawable/ic_snow_flake_dark_theme</item>
-    </style>
-
-    <style name="PrimaryFlatButton" parent="Theme.AppCompat.Light">
-<!--        <item name="android:buttonStyle">@style/Widget.AppCompat.Button.Borderless.Colored</item>-->
-<!--        <item name="colorControlHighlight">#22000000</item>-->
-<!--        <item name="colorAccent">@color/colorPrimary</item>-->
-    </style>
-
-    <style name="PrimaryActionButton" parent="Theme.AppCompat.Light">
-<!--        <item name="colorAccent">@color/colorWhite</item>-->
-<!--        <item name="colorControlHighlight">#22000000</item>-->
+        <item name="colorCloud">@color/colorCloudNight</item>
     </style>
 
     <style name="CollapsingToolbarLayoutExpandedTextStyle" parent="AppTheme">

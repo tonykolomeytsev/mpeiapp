@@ -186,7 +186,7 @@
     <string name="favorites_empty_state_title">Ни одно расписание не добавлено в избранные</string>
     <string name="favorites_empty_state_add">ДОБАВИТЬ ГРУППУ</string>
     <string name="favorites_help_title">Как это работает?</string>
-    <string name="favorites_help_text">Внесенные в этот список группы будут отображаться на главной странице. Вы сможете одним нажатием переключаться между группами, не набирая их имя в поиске.\n\nСвайп влево для удаления группы из списка.</string>
+    <string name="favorites_help_text">Внесенные в этот список группы будут отображаться на главной странице. Вы сможете одним нажатием переключаться между группами, не набирая их имя в поиске.</string>
 
     <string name="edit_favorite_screen_subtitle">Оставьте краткое описание для выбранной группы. Вы также можете оставить описание пустым.</string>
     <string name="edit_favorite_hint">Описание для группы</string>

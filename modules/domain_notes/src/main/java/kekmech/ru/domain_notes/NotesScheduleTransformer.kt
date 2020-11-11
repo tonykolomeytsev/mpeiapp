@@ -15,13 +15,19 @@ class NotesScheduleTransformer(
         .map { notes ->
             schedule.weeks.first().days.forEach { day ->
                 day.classes.forEach { classes ->
-                    classes.hasAttachedNote = classes.relevantToThe(notes, day.date)
+                    val firstAttachedNote = classes.relevantToThe(notes, day.date)
+                    if (firstAttachedNote != null) {
+                        classes.firstAttachedNoteContent =
+                            firstAttachedNote.content.replaceNewLinesWithSpaces()
+                    }
                 }
             }
             schedule
         }
 
     private fun Classes.relevantToThe(listOfNotes: List<Note>, date: LocalDate) =
-        listOfNotes.any { it.classesName == name && it.dateTime == LocalDateTime.of(date, time.start) }
+        listOfNotes.firstOrNull { it.classesName == name && it.dateTime == LocalDateTime.of(date, time.start) }
+
+    private fun String.replaceNewLinesWithSpaces() = replace('\n', ' ')
 
 }
