@@ -8,7 +8,7 @@
         android:background="?attr/colorGray10"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:paddingBottom="16dp">
+        android:paddingBottom="8dp">
 
     <TextView
             android:id="@+id/textViewClassesName"
@@ -65,8 +65,35 @@
             android:layout_marginEnd="16dp"
             android:visibility="invisible"
             tools:visibility="visible"
+            android:layout_marginBottom="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <TextView
+            android:id="@+id/textViewNoteCloud"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            tools:text="Принести типовой расчет 1 лалала лала лала лала"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textColor="?attr/colorBlack"
+            android:textSize="13sp"
+            android:fontFamily="@font/roboto_regular"
+            android:gravity="center_vertical"
+            android:paddingStart="16dp"
+            android:paddingEnd="12dp"
+            android:paddingBottom="1dp"
+            android:background="@drawable/background_classes_note_cloud"
+            android:maxWidth="280dp"
+            tools:visibility="visible"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/textViewClassesPerson"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="80dp"
+            android:layout_marginEnd="16dp"/>
 
     <View
             android:id="@+id/colorTag"
