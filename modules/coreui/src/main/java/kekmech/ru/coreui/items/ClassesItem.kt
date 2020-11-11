@@ -27,7 +27,8 @@ interface ClassesViewHolder : ClickableItemViewHolder {
     fun setTagColor(@ColorInt color: Int)
     fun setStartTime(time: String)
     fun setEndTime(time: String)
-    fun setHasAttachments(hasAttachments: Boolean)
+    fun setHasAttachments(hasAttachments: Boolean, isNotesPreviewEnabled: Boolean)
+    fun setAttachmentContent(content: String?)
 }
 
 open class ClassesViewHolderImpl(
@@ -75,14 +76,25 @@ open class ClassesViewHolderImpl(
         textViewTimeEnd.text = time
     }
 
-    override fun setHasAttachments(hasAttachments: Boolean) {
-        imageViewAttachment.visibility = if (hasAttachments) View.VISIBLE else View.INVISIBLE
+    override fun setHasAttachments(hasAttachments: Boolean, isNotesPreviewEnabled: Boolean) {
+        if (isNotesPreviewEnabled) {
+            textViewNoteCloud.isVisible = hasAttachments
+            imageViewAttachment.visibility = View.INVISIBLE
+        } else {
+            imageViewAttachment.visibility = if (hasAttachments) View.VISIBLE else View.INVISIBLE
+            textViewNoteCloud.visibility = View.GONE
+        }
+    }
+
+    override fun setAttachmentContent(content: String?) {
+        textViewNoteCloud.text = content.orEmpty()
     }
 }
 
 class ClassesItemBinder(
     context: Context,
-    private val onClickListener: ((Classes) -> Unit)? = null
+    private val onClickListener: ((Classes) -> Unit)? = null,
+    private val isNotesPreviewEnabled: Boolean = false
 ) : BaseItemBinder<ClassesViewHolder, Classes>() {
 
     private val classesNumbers by fastLazy { context.getStringArray(R.array.classes_numbers) }
@@ -118,7 +130,10 @@ class ClassesItemBinder(
         vh.setStartTime(model.time.start.format(timeFormatter))
         vh.setEndTime(model.time.end.format(timeFormatter))
         vh.setOnClickListener { onClickListener?.invoke(model) }
-        vh.setHasAttachments(model.hasAttachedNote)
+        vh.setHasAttachments(model.firstAttachedNoteContent != null, isNotesPreviewEnabled)
+        if (isNotesPreviewEnabled) {
+            vh.setAttachmentContent(model.firstAttachedNoteContent)
+        }
     }
 
     private fun String.takeIfNotEmpty() = takeIf {
@@ -128,10 +143,11 @@ class ClassesItemBinder(
 
 class ClassesAdapterItem(
     context: Context,
-    onClickListener: ((Classes) -> Unit)? = null
+    onClickListener: ((Classes) -> Unit)? = null,
+    isNotesPreviewEnabled: Boolean = false
 ) : AdapterItem<ClassesViewHolder, Classes>(
     isType = { it is Classes && it.stackType == null },
     layoutRes = R.layout.item_classes,
     viewHolderGenerator = ::ClassesViewHolderImpl,
-    itemBinder = ClassesItemBinder(context, onClickListener)
+    itemBinder = ClassesItemBinder(context, onClickListener, isNotesPreviewEnabled)
 )

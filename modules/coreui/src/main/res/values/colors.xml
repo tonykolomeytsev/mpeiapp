@@ -18,19 +18,6 @@
     <color name="colorProgressBar">#4F6496</color>
     <color name="colorProgressBarDark">#FFFFFF</color>
     <color name="colorBackdrop">#FFFFFF</color>
-    <color name="colorBackdropDark">#2e2e2e</color>
-    <color name="colorWhiteSlack">#e2e2e2</color>
-    <color name="colorInfoBlock">#0AFFFFFF</color>
-    <color name="colorSearchViewDark">#11ffffff</color>
-    <color name="colorSearchViewHintDark">#80FFFFFF</color>
-    <color name="colorMapTab">#ededed</color>
-    <color name="colorMapTabDark">#454545</color>
-    <color name="colorUpdateBgDark">#3f3f3f</color>
-    <color name="colorUpdateDtnLater">#dedede</color>
-    <color name="colorUpdateDtnLaterDark">#4f4f4f</color>
-    <color name="colorIconsTintDark">#d0d0d0</color>
-    <color name="colorCoupleNumber">#ededed</color>
-    <color name="colorCoupleNumberDark">#454545</color>
 
     <color name="colorMainDark">#2A467A</color>
     <color name="colorMainLight">#8AB3FF</color>
@@ -51,5 +38,6 @@
     <color name="colorPink">#FF505C</color>
     <color name="colorPurple">#673AB7</color>
     <color name="colorTeal">#009688</color>
-
+    <color name="colorCloudDay">#e6e6e6</color>
+    <color name="colorCloudNight">#373737</color>
 </resources>

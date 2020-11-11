@@ -31,7 +31,7 @@ data class Classes(
     val person: String = "",
     val time: Time = Time(),
     val number: Int,
-    @Transient var hasAttachedNote: Boolean = false
+    @Transient var firstAttachedNoteContent: String? = null
 ) : Serializable {
     @Transient var stackType: ClassesStackType? = null
 }
