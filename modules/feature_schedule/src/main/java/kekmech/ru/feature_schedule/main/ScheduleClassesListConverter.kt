@@ -54,7 +54,7 @@ internal object ScheduleClassesListConverter {
             add(e)
             val classes = e as? Classes ?: continue
             val notePreviewContent = classes.attachedNotePreview ?: continue
-            add(NotePreview(notePreviewContent))
+            add(NotePreview(notePreviewContent, linkedClasses = e))
         }
     }
 
