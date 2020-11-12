@@ -16,6 +16,7 @@ import kekmech.ru.coreui.banner.showBanner
 import kekmech.ru.coreui.items.*
 import kekmech.ru.domain_app_settings.AppSettingsFeatureLauncher
 import kekmech.ru.domain_schedule.CONTINUE_TO_BACK_STACK_WITH_RESULT
+import kekmech.ru.domain_schedule.dto.Classes
 import kekmech.ru.feature_dashboard.di.DashboardDependencies
 import kekmech.ru.feature_dashboard.items.*
 import kekmech.ru.feature_dashboard.presentation.DashboardEffect
@@ -27,7 +28,6 @@ import kotlinx.android.synthetic.main.fragment_dashboard.*
 import org.koin.android.ext.android.inject
 
 private const val REQUEST_CODE_UPDATE_DATA = 2910
-private const val SHARED_PREFS_BANNERS = "banners"
 
 class DashboardFragment : BaseFragment<DashboardEvent, DashboardEffect, DashboardState, DashboardFeature>(),
     ActivityResultListener,
@@ -108,10 +108,7 @@ class DashboardFragment : BaseFragment<DashboardEvent, DashboardEffect, Dashboar
         },
         AddActionAdapterItem(),
         DayStatusAdapterItem(),
-        DashboardClassesAdapterItem(requireContext()) {
-            analytics.sendClick("Classes")
-            feature.accept(Wish.Click.OnClasses(it))
-        },
+        DashboardClassesAdapterItem(requireContext(), ::clickOnClasses),
         EventsHeaderAdapterItem {
             analytics.sendClick("ChangeGroup")
             dependencies.scheduleFeatureLauncher.launchSearchGroup(
@@ -134,8 +131,14 @@ class DashboardFragment : BaseFragment<DashboardEvent, DashboardEffect, Dashboar
             onCloseListener = {
                 closeFeatureBanner()
             }
-        )
+        ),
+        NotePreviewAdapterItem(::clickOnClasses, R.layout.item_note_preview_padding_horisontal_8dp)
     )
+
+    private fun clickOnClasses(it: Classes) {
+        analytics.sendClick("Classes")
+        feature.accept(Wish.Click.OnClasses(it))
+    }
 
     private fun closeFeatureBanner() {
         feature.accept(Wish.Action.CloseFeatureBanner)

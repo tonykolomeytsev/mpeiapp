@@ -58,7 +58,7 @@ internal class WorkingDayViewHolderImpl(
             WindowAdapterItem(),
             EmptyStateAdapterItem(),
             SpaceAdapterItem(),
-            NotePreviewAdapterItem()
+            NotePreviewAdapterItem(onClickListener)
         )
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(containerView.context)

@@ -5,10 +5,8 @@ import kekmech.ru.common_android.moscowLocalDate
 import kekmech.ru.common_android.moscowLocalTime
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.coreui.PrettyDateFormatter
-import kekmech.ru.coreui.items.BannerItem
-import kekmech.ru.coreui.items.EmptyStateItem
-import kekmech.ru.coreui.items.SectionHeaderItem
-import kekmech.ru.coreui.items.SpaceItem
+import kekmech.ru.coreui.items.*
+import kekmech.ru.domain_schedule.dto.Classes
 import kekmech.ru.feature_dashboard.items.*
 import kekmech.ru.feature_dashboard.presentation.DashboardState
 import java.time.DayOfWeek
@@ -62,7 +60,7 @@ class DashboardListConverter(
             createClassesEventsItems(state)?.let { (header, classes) ->
                 add(header)
                 add(SpaceItem.VERTICAL_12)
-                addAll(classes)
+                addAll(classes.withNotePreview())
             } ?: run {
                 // если нечего показывать в разделе ближайших событий, покажем EmptyStateItem
                 add(createEventsHeaderItem(
@@ -152,6 +150,16 @@ class DashboardListConverter(
         subtitle = subtitle,
         groupName = groupName
     )
+
+    private fun List<Any>.withNotePreview(): List<Any> = mutableListOf<Any>().apply {
+        val raw = this@withNotePreview
+        for (e in raw) {
+            add(e)
+            val classes = e as? Classes ?: continue
+            val notePreviewContent = classes.attachedNotePreview ?: continue
+            add(NotePreview(notePreviewContent, linkedClasses = e))
+        }
+    }
 
     private fun MutableList<Any>.addFeatureBanner(state: DashboardState) {
         if (state.isFeatureBannerEnabled) {
