@@ -43,25 +43,26 @@ jobs:
         env:
           MAP_KEY: ${{ secrets.MAP_KEY }}
 
-      - name: Build Release AAB
-        run: ./gradlew -Pci bundleRelease
+      - name: Build Release APK
+        run: ./gradlew -Pci assembleRelease
         env:
           MAP_KEY: ${{ secrets.MAP_KEY }}
 
-      - name: Sign AAB
+      - name: Sign APK
         uses: r0adkll/sign-android-release@v1
+          id: sign_app
         with:
-          releaseDirectory: modules/app/build/outputs/bundle/release
+          releaseDirectory: modules/app/release
           signingKeyBase64: ${{ secrets.KEY_STORE_FILE }}
           alias: ${{ secrets.ALIAS }}
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
 
-      - name: Upload Release AAB
+      - name: Upload Release APK
         uses: actions/upload-artifact@v1
         with:
           name: App Release
-          path: modules/app/build/outputs/bundle/release/app-release.aab
+          path: ${{steps.sign_app.outputs.signedReleaseFile}}
 
       - name: Send Telegram message
         uses: appleboy/telegram-action@master
