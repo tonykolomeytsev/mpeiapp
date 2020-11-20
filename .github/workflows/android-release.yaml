@@ -50,7 +50,7 @@ jobs:
 
       - name: Sign APK
         uses: r0adkll/sign-android-release@v1
-          id: sign_app
+        id: sign_app
         with:
           releaseDirectory: modules/app/release
           signingKeyBase64: ${{ secrets.KEY_STORE_FILE }}
