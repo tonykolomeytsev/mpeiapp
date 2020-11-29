@@ -13,7 +13,7 @@ internal class V21StableWebView @JvmOverloads constructor(
 ) : WebView(context.createConfigurationContext(Configuration()), attrs, defStyleAttr, defStyleRes) {
 
 
-    override fun loadUrl(url: String?) {
+    override fun loadUrl(url: String) {
         super.loadUrl(url, mapOf("X-Requested-With" to ""))
     }
 }
