@@ -71,6 +71,18 @@
         <item>Курсовая</item>
     </string-array>
 
+    <string-array name="hours_declensions">
+        <item>час</item>
+        <item>часа</item>
+        <item>часов</item>
+    </string-array>
+
+    <string-array name="minutes_declensions">
+        <item>минута</item>
+        <item>минуты</item>
+        <item>минут</item>
+    </string-array>
+
     <string name="today">Сегодня</string>
     <string name="tomorrow">Завтра</string>
     <string name="after_tomorrow">Послезавтра</string>
