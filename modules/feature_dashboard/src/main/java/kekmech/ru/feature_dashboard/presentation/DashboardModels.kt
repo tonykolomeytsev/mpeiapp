@@ -41,6 +41,14 @@ data class DashboardState(
     val isSwipeRefreshLoadingAnimation = isLoading && currentWeekSchedule != null
 }
 
+data class NextClassesTimeStatus(
+    val condition: NextClassesCondition,
+    val hoursUntilClasses: Long = 0,
+    val minutesUntilClasses: Long = 0
+)
+
+enum class NextClassesCondition { NOT_STARTED, STARTED, ENDED }
+
 sealed class DashboardEvent {
 
     sealed class Wish : DashboardEvent() {

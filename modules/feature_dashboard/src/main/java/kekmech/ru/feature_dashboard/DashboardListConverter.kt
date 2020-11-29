@@ -9,6 +9,8 @@ import kekmech.ru.coreui.items.*
 import kekmech.ru.domain_schedule.dto.Classes
 import kekmech.ru.feature_dashboard.items.*
 import kekmech.ru.feature_dashboard.presentation.DashboardState
+import kekmech.ru.feature_dashboard.presentation.NextClassesCondition.NOT_STARTED
+import kekmech.ru.feature_dashboard.presentation.NextClassesCondition.STARTED
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalTime
@@ -60,7 +62,7 @@ class DashboardListConverter(
             createClassesEventsItems(state)?.let { (header, classes) ->
                 add(header)
                 add(SpaceItem.VERTICAL_12)
-                addAll(classes.withNotePreview())
+                addAll(classes.withNotePreview().withCalculatedTimeUntilNextClasses(state))
             } ?: run {
                 // если нечего показывать в разделе ближайших событий, покажем EmptyStateItem
                 add(createEventsHeaderItem(
@@ -158,6 +160,29 @@ class DashboardListConverter(
             val classes = e as? Classes ?: continue
             val notePreviewContent = classes.attachedNotePreview ?: continue
             add(NotePreview(notePreviewContent, linkedClasses = e))
+        }
+    }
+
+    private fun List<Any>.withCalculatedTimeUntilNextClasses(state: DashboardState): List<Any> = mutableListOf<Any>().apply {
+        val raw = this@withCalculatedTimeUntilNextClasses
+        val indexOfNextClasses = raw
+            .indexOfFirst { it is Classes }
+            .takeIf { it != -1 }
+            ?: return raw
+
+        for (e in raw) {
+            add(e)
+            val classes = e as? Classes ?: continue
+            if (classes == raw[indexOfNextClasses]) {
+                // add time status
+                val actualDay = state.getActualScheduleDayForView() ?: continue
+                val (condition, hours, minutes) = state.getNextClassesTimeStatus(actualDay.date, classes.time)
+                when (condition) {
+                    NOT_STARTED -> add(NotePreview("До пары осталось $hours часов, $minutes минут", classes))
+                    STARTED -> add(NotePreview("Пара уже началась", classes))
+                    else -> Unit
+                }
+            }
         }
     }
 
