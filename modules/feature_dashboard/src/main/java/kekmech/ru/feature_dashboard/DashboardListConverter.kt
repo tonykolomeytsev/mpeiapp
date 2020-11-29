@@ -7,6 +7,7 @@ import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.coreui.PrettyDateFormatter
 import kekmech.ru.coreui.items.*
 import kekmech.ru.domain_schedule.dto.Classes
+import kekmech.ru.feature_dashboard.helpers.TimeDeclensionHelper
 import kekmech.ru.feature_dashboard.helpers.getActualScheduleDayForView
 import kekmech.ru.feature_dashboard.helpers.getNextClassesTimeStatus
 import kekmech.ru.feature_dashboard.items.*
@@ -180,7 +181,7 @@ class DashboardListConverter(
                 val actualDay = state.getActualScheduleDayForView() ?: continue
                 val (condition, hours, minutes) = state.getNextClassesTimeStatus(actualDay.date, classes.time)
                 when (condition) {
-                    NOT_STARTED -> add(NotePreview("До пары осталось $hours часов, $minutes минут", classes))
+                    NOT_STARTED -> add(NotePreview("Через ${TimeDeclensionHelper.formatHoursMinutes(context, hours, minutes)}", classes))
                     STARTED -> add(NotePreview("Пара уже началась", classes))
                     else -> Unit
                 }
