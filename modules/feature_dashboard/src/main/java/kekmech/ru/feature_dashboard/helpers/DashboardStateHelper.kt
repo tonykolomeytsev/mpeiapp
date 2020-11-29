@@ -1,4 +1,4 @@
-package kekmech.ru.feature_dashboard
+package kekmech.ru.feature_dashboard.helpers
 
 import kekmech.ru.common_android.moscowLocalDate
 import kekmech.ru.common_android.moscowLocalTime

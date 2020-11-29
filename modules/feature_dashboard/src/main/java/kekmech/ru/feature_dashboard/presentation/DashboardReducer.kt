@@ -7,7 +7,7 @@ import kekmech.ru.common_mvi.Result
 import kekmech.ru.common_shared_preferences.boolean
 import kekmech.ru.coreui.items.FavoriteScheduleItem
 import kekmech.ru.domain_notes.dto.Note
-import kekmech.ru.feature_dashboard.getActualScheduleDayForView
+import kekmech.ru.feature_dashboard.helpers.getActualScheduleDayForView
 import kekmech.ru.feature_dashboard.presentation.DashboardEvent.News
 import kekmech.ru.feature_dashboard.presentation.DashboardEvent.Wish
 import java.time.DayOfWeek

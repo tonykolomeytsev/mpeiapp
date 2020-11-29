@@ -7,6 +7,8 @@ import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.coreui.PrettyDateFormatter
 import kekmech.ru.coreui.items.*
 import kekmech.ru.domain_schedule.dto.Classes
+import kekmech.ru.feature_dashboard.helpers.getActualScheduleDayForView
+import kekmech.ru.feature_dashboard.helpers.getNextClassesTimeStatus
 import kekmech.ru.feature_dashboard.items.*
 import kekmech.ru.feature_dashboard.presentation.DashboardState
 import kekmech.ru.feature_dashboard.presentation.NextClassesCondition.NOT_STARTED
