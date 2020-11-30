@@ -71,6 +71,7 @@ sealed class DashboardEvent {
         data class SelectedGroupNameLoaded(val groupName: String) : News()
         data class NotesLoaded(val notes: List<Note>) : News()
         data class FavoriteSchedulesLoaded(val favorites: List<FavoriteSchedule>) : News()
+        data class SessionLoaded(val items: List<SessionItem>) : News()
         object FavoriteGroupSelected : News()
     }
 }
@@ -86,5 +87,6 @@ sealed class DashboardAction {
     data class LoadSchedule(val weekOffset: Int) : DashboardAction()
     object LoadNotes : DashboardAction()
     object LoadFavoriteSchedules : DashboardAction()
+    object LoadSession : DashboardAction()
     data class SelectGroup(val groupName: String) : DashboardAction()
 }

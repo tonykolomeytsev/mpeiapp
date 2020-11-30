@@ -17,7 +17,7 @@ interface ScheduleService {
         @Body body: GetScheduleBody
     ): Single<Schedule>
 
-    @POST("")
+    @POST("getSession")
     fun getSession(
         @Body body: GetSessionBody
     ): Single<GetSessionResponse>

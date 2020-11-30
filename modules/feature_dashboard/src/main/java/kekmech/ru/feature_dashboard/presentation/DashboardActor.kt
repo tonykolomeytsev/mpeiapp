@@ -25,5 +25,7 @@ class DashboardActor(
             .mapSuccessEvent(News::FavoriteSchedulesLoaded)
         is DashboardAction.SelectGroup -> scheduleRepository.selectGroup(action.groupName)
             .mapSuccessEvent(News.FavoriteGroupSelected)
+        is DashboardAction.LoadSession -> scheduleRepository.getSession()
+            .mapSuccessEvent { News.SessionLoaded(it.items) }
     }
 }

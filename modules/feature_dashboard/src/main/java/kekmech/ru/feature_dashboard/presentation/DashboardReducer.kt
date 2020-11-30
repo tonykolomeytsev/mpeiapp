@@ -70,6 +70,7 @@ class DashboardReducer(
                     ?.map { FavoriteScheduleItem(it, it.groupNumber == state.selectedGroupName) }
             )
         )
+        is News.SessionLoaded -> Result(state = state.copy(sessionScheduleItems = event.items))
         is News.FavoriteGroupSelected -> Result(
             state = state,
             effects = emptyList(),
@@ -128,7 +129,8 @@ class DashboardReducer(
             DashboardAction.LoadSchedule(0),
             DashboardAction.LoadSchedule(1)
                 .takeIf { moscowLocalDate().dayOfWeek == DayOfWeek.SUNDAY },
-            DashboardAction.LoadFavoriteSchedules
+            DashboardAction.LoadFavoriteSchedules,
+            DashboardAction.LoadSession
         )
     }
 
