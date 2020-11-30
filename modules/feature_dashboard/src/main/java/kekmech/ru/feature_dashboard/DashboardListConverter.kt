@@ -32,6 +32,10 @@ class DashboardListConverter(
         subtitle = context.getString(R.string.dashboard_section_header_favorites_subtitle)
     ) }
 
+    private val sessionHeader by fastLazy { SectionHeaderItem(
+        titleRes = R.string.dashboard_section_header_session
+    ) }
+
     private val formatter = PrettyDateFormatter(context)
 
     private val lunchStartTime = LocalTime.of(12, 45) // 12:45
@@ -46,14 +50,13 @@ class DashboardListConverter(
                 add(SpaceItem.VERTICAL_24)
             }
             add(SearchFieldItem)
-            add(SpaceItem.VERTICAL_12)
+            add(SpaceItem.VERTICAL_16)
 
             listOfNotNull(
                 BannerLunchItem.takeIf { moscowLocalTime() in lunchStartTime..lunchEndTime },
                 BannerOpenSourceItem.takeIf { moscowLocalDate().dayOfWeek in DayOfWeek.SATURDAY..DayOfWeek.SUNDAY }
             ).let {
                 if (it.isNotEmpty()) {
-                    add(SpaceItem.VERTICAL_16)
                     addAll(it)
                     add(SpaceItem.VERTICAL_16)
                 }
@@ -65,9 +68,20 @@ class DashboardListConverter(
             createClassesEventsItems(state)?.let { (header, classes) ->
                 add(header)
                 add(SpaceItem.VERTICAL_12)
-                addAll(classes.withNotePreview().withCalculatedTimeUntilNextClasses(state))
+                addAll(classes
+                    .withNotePreview()
+                    .withCalculatedTimeUntilNextClasses(state))
+
+                // сессию показываем после более близких по времени событий
+                add(SpaceItem.VERTICAL_16)
+                addSession(state)
+
             } ?: run {
-                // если нечего показывать в разделе ближайших событий, покажем EmptyStateItem
+                // если нечего показывать в разделе ближайших событий,
+                // покажем сначала сессию, потом EmptyStateItem
+                addSession(state)
+                add(SpaceItem.VERTICAL_16)
+
                 add(createEventsHeaderItem(
                     subtitle = context.getString(R.string.dashboard_events_empty_state_title),
                     groupName = state.selectedGroupName)
@@ -200,5 +214,12 @@ class DashboardListConverter(
             ))
             add(SpaceItem.VERTICAL_16)
         }
+    }
+
+    private fun MutableList<Any>.addSession(state: DashboardState) {
+        if (state.sessionScheduleItems.isNullOrEmpty()) return
+        add(sessionHeader)
+        add(SpaceItem.VERTICAL_12)
+        addAll(state.sessionScheduleItems)
     }
 }

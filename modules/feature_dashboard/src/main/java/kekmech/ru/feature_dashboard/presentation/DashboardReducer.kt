@@ -7,10 +7,13 @@ import kekmech.ru.common_mvi.Result
 import kekmech.ru.common_shared_preferences.boolean
 import kekmech.ru.coreui.items.FavoriteScheduleItem
 import kekmech.ru.domain_notes.dto.Note
+import kekmech.ru.domain_schedule.dto.SessionItem
+import kekmech.ru.domain_schedule.dto.SessionItemType
 import kekmech.ru.feature_dashboard.helpers.getActualScheduleDayForView
 import kekmech.ru.feature_dashboard.presentation.DashboardEvent.News
 import kekmech.ru.feature_dashboard.presentation.DashboardEvent.Wish
 import java.time.DayOfWeek
+import java.time.LocalDate
 import java.time.temporal.ChronoUnit
 
 typealias DashboardResult = Result<DashboardState, DashboardEffect, DashboardAction>
@@ -38,7 +41,11 @@ class DashboardReducer(
                 currentWeekSchedule = event.schedule.takeIf { event.weekOffset == 0 } ?: state.currentWeekSchedule,
                 nextWeekSchedule = event.schedule.takeIf { event.weekOffset == 1 } ?: state.nextWeekSchedule,
                 isAfterError = false,
-                isLoading = false
+                isLoading = false,
+                sessionScheduleItems = listOf(
+                    SessionItem("Вычислительная механика", SessionItemType.CONSULTATION, "Кафедра РМДиПМ", "Адамов Б.И.", LocalDate.of(2021, 1, 15)),
+                    SessionItem("Вычислительная механика", SessionItemType.EXAM, "Кафедра РМДиПМ", "Адамов Б.И.", LocalDate.of(2021, 1, 15))
+                )
             )
         )
         is News.ScheduleLoadError -> Result(

@@ -4,10 +4,7 @@ import kekmech.ru.common_android.moscowLocalDate
 import kekmech.ru.common_mvi.Feature
 import kekmech.ru.coreui.items.FavoriteScheduleItem
 import kekmech.ru.domain_notes.dto.Note
-import kekmech.ru.domain_schedule.dto.Classes
-import kekmech.ru.domain_schedule.dto.Day
-import kekmech.ru.domain_schedule.dto.FavoriteSchedule
-import kekmech.ru.domain_schedule.dto.Schedule
+import kekmech.ru.domain_schedule.dto.*
 import java.time.DayOfWeek
 import java.time.LocalDate
 
@@ -21,7 +18,8 @@ data class DashboardState(
     val selectedGroupName: String = "",
     val notes: List<Note>? = null,
     val favoriteSchedules: List<FavoriteScheduleItem>? = null,
-    val isFeatureBannerEnabled: Boolean = false
+    val isFeatureBannerEnabled: Boolean = false,
+    val sessionScheduleItems: List<SessionItem>? = null
 ) {
     val weekOfSemester get() = currentWeekSchedule?.weeks?.first()?.weekOfSemester
     val today: Day? get() = currentWeekSchedule?.weeks?.first()?.days
