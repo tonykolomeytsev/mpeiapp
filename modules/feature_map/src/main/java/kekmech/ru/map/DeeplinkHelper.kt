@@ -1,6 +1,7 @@
 package kekmech.ru.map
 
 import android.os.Handler
+import android.os.Looper
 import kekmech.ru.map.ext.toFilterTab
 import kekmech.ru.map.launcher.DeeplinkDelegate
 import kekmech.ru.map.presentation.MapEvent
@@ -36,7 +37,7 @@ internal object DeeplinkHelper {
             return
         }
 
-        Handler().postDelayed({
+        Handler(Looper.getMainLooper()).postDelayed({
             feature.accept(MapEvent.Wish.Action.OnListMarkerSelected(selectedMarker))
         }, DEFAULT_NAVIGATION_DELAY)
         deeplinkDelegate.clear()

@@ -132,7 +132,9 @@ class DashboardFragment : BaseFragment<DashboardEvent, DashboardEffect, Dashboar
                 closeFeatureBanner()
             }
         ),
-        NotePreviewAdapterItem(::clickOnClasses, R.layout.item_note_preview_padding_horisontal_8dp)
+        NotePreviewAdapterItem(::clickOnClasses, R.layout.item_note_preview_padding_horisontal_8dp),
+        TextAdapterItem(R.layout.item_time_prediction),
+        SessionAdapterItem(requireContext())
     )
 
     private fun clickOnClasses(it: Classes) {

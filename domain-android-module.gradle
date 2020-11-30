@@ -2,12 +2,12 @@ apply plugin: "com.android.library"
 apply plugin: "kotlin-android"
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
     buildToolsVersion "29.0.3"
 
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode appVersionCode
         versionName appVersionName
 
@@ -19,9 +19,11 @@ android {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+            buildConfigField "String", "VERSION_NAME", "\"${rootProject.appVersionName}\""
         }
         debug {
             minifyEnabled false
+            buildConfigField "String", "VERSION_NAME", "\"${rootProject.appVersionName}\""
         }
     }
 

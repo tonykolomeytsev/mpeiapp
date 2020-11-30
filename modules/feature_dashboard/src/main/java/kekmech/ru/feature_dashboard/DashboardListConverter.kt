@@ -7,8 +7,13 @@ import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.coreui.PrettyDateFormatter
 import kekmech.ru.coreui.items.*
 import kekmech.ru.domain_schedule.dto.Classes
+import kekmech.ru.feature_dashboard.helpers.TimeDeclensionHelper
+import kekmech.ru.feature_dashboard.helpers.getActualScheduleDayForView
+import kekmech.ru.feature_dashboard.helpers.getNextClassesTimeStatus
 import kekmech.ru.feature_dashboard.items.*
 import kekmech.ru.feature_dashboard.presentation.DashboardState
+import kekmech.ru.feature_dashboard.presentation.NextClassesCondition.NOT_STARTED
+import kekmech.ru.feature_dashboard.presentation.NextClassesCondition.STARTED
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalTime
@@ -27,6 +32,11 @@ class DashboardListConverter(
         subtitle = context.getString(R.string.dashboard_section_header_favorites_subtitle)
     ) }
 
+    private val sessionHeader by fastLazy { SectionHeaderItem(
+        titleRes = R.string.dashboard_section_header_session,
+        subtitle = context.getString(R.string.dashboard_section_header_session_subtitle)
+    ) }
+
     private val formatter = PrettyDateFormatter(context)
 
     private val lunchStartTime = LocalTime.of(12, 45) // 12:45
@@ -41,14 +51,13 @@ class DashboardListConverter(
                 add(SpaceItem.VERTICAL_24)
             }
             add(SearchFieldItem)
-            add(SpaceItem.VERTICAL_12)
+            add(SpaceItem.VERTICAL_16)
 
             listOfNotNull(
                 BannerLunchItem.takeIf { moscowLocalTime() in lunchStartTime..lunchEndTime },
                 BannerOpenSourceItem.takeIf { moscowLocalDate().dayOfWeek in DayOfWeek.SATURDAY..DayOfWeek.SUNDAY }
             ).let {
                 if (it.isNotEmpty()) {
-                    add(SpaceItem.VERTICAL_16)
                     addAll(it)
                     add(SpaceItem.VERTICAL_16)
                 }
@@ -60,9 +69,20 @@ class DashboardListConverter(
             createClassesEventsItems(state)?.let { (header, classes) ->
                 add(header)
                 add(SpaceItem.VERTICAL_12)
-                addAll(classes.withNotePreview())
+                addAll(classes
+                    .withNotePreview()
+                    .withCalculatedTimeUntilNextClasses(state))
+
+                // сессию показываем после более близких по времени событий
+                add(SpaceItem.VERTICAL_16)
+                addSession(state)
+
             } ?: run {
-                // если нечего показывать в разделе ближайших событий, покажем EmptyStateItem
+                // если нечего показывать в разделе ближайших событий,
+                // покажем сначала сессию, потом EmptyStateItem
+                addSession(state)
+                add(SpaceItem.VERTICAL_16)
+
                 add(createEventsHeaderItem(
                     subtitle = context.getString(R.string.dashboard_events_empty_state_title),
                     groupName = state.selectedGroupName)
@@ -161,6 +181,31 @@ class DashboardListConverter(
         }
     }
 
+    private fun List<Any>.withCalculatedTimeUntilNextClasses(state: DashboardState): List<Any> = mutableListOf<Any>().apply {
+        val raw = this@withCalculatedTimeUntilNextClasses
+        val indexOfNextClasses = raw
+            .indexOfFirst { it is Classes }
+            .takeIf { it != -1 }
+            ?: return raw
+
+        for (e in raw) {
+            val classes = e as? Classes
+            val actualDay = state.getActualScheduleDayForView()
+            if (classes == raw[indexOfNextClasses] && actualDay != null) {
+                // add time status
+                val (condition, hours, minutes) = state.getNextClassesTimeStatus(actualDay.date, classes.time)
+                when (condition) {
+                    NOT_STARTED -> add(TextItem(
+                        text = "Пара начнется через ${TimeDeclensionHelper.formatHoursMinutes(context, hours, minutes)}"
+                    ))
+                    STARTED -> Unit
+                    else -> Unit
+                }
+            }
+            add(e)
+        }
+    }
+
     private fun MutableList<Any>.addFeatureBanner(state: DashboardState) {
         if (state.isFeatureBannerEnabled) {
             add(BannerItem(
@@ -170,5 +215,12 @@ class DashboardListConverter(
             ))
             add(SpaceItem.VERTICAL_16)
         }
+    }
+
+    private fun MutableList<Any>.addSession(state: DashboardState) {
+        if (state.sessionScheduleItems.isNullOrEmpty()) return
+        add(sessionHeader)
+        add(SpaceItem.VERTICAL_12)
+        addAll(state.sessionScheduleItems)
     }
 }

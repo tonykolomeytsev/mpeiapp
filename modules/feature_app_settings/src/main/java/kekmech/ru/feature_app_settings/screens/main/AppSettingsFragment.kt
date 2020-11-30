@@ -2,6 +2,7 @@ package kekmech.ru.feature_app_settings.screens.main
 
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import kekmech.ru.common_adapter.BaseAdapter
@@ -54,7 +55,8 @@ internal class AppSettingsFragment : BaseFragment<AppSettingsEvent, AppSettingsE
 
     override fun handleEffect(effect: AppSettingsEffect) = when (effect) {
         is AppSettingsEffect.RecreateActivity -> {
-            Handler().postDelayed({ activity?.recreate() }, 200); Unit
+            Handler(Looper.getMainLooper()).postDelayed({ activity?.recreate() }, 200);
+            Unit
         }
     }
 
@@ -102,6 +104,7 @@ internal class AppSettingsFragment : BaseFragment<AppSettingsEvent, AppSettingsE
         else -> { /* no-op */ }
     }
 
+    @Suppress("DEPRECATION") // потому что это фикс для старых версий
     private fun fixStatusBarIssue(isDarkThemeEnabled: Boolean) {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
             val decorView = requireActivity().window.decorView

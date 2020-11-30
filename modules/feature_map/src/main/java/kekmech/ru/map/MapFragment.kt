@@ -3,6 +3,7 @@ package kekmech.ru.map
 
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.view.View
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
@@ -52,7 +53,7 @@ internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState, MapFeat
     private val markersBitmapFactory: MarkersBitmapFactory by inject()
 
     override fun onViewCreatedInternal(view: View, savedInstanceState: Bundle?) {
-        Handler().postDelayed({ createMap() }, 50L)
+        Handler(Looper.getMainLooper()).postDelayed({ createMap() }, 50L)
         recyclerView.layoutManager = ControlledScrollingLayoutManager(requireContext())
         recyclerView.adapter = adapter
         createBottomSheet(view)
