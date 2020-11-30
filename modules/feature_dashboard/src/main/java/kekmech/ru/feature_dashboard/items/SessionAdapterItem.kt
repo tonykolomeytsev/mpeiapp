@@ -1,22 +1,30 @@
 package kekmech.ru.feature_dashboard.items
 
+import android.content.Context
+import android.content.res.ColorStateList
 import android.view.View
-import androidx.annotation.ColorRes
+import androidx.annotation.AttrRes
+import androidx.annotation.StringRes
 import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseItemBinder
+import kekmech.ru.common_android.getStringArray
+import kekmech.ru.common_android.getThemeColor
+import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.domain_schedule.dto.SessionItem
+import kekmech.ru.domain_schedule.dto.SessionItemType
 import kekmech.ru.feature_dashboard.R
 import kotlinx.android.extensions.LayoutContainer
+import kotlinx.android.synthetic.main.item_session.*
 import java.time.format.DateTimeFormatter
 
 interface SessionViewHolder {
     fun setName(text: String)
-    fun setTypeName(type: String)
-    fun setTypeColor(@ColorRes colorRes: Int)
+    fun setTypeName(@StringRes typeRes: Int? = null)
+    fun setTypeColor(@AttrRes colorRes: Int)
     fun setPlace(place: String)
     fun setPerson(person: String)
-    fun setTimeStart(text: String)
+    fun setDateTime(text: String)
 }
 
 private class SessionViewHolderImpl(
@@ -24,49 +32,81 @@ private class SessionViewHolderImpl(
 ) : RecyclerView.ViewHolder(containerView), SessionViewHolder, LayoutContainer {
 
     override fun setName(text: String) {
-        TODO("Not yet implemented")
+        textViewName.text = text
     }
 
     override fun setPerson(person: String) {
-        TODO("Not yet implemented")
+        textViewPerson.text = person
     }
 
     override fun setPlace(place: String) {
-        TODO("Not yet implemented")
+        textViewPlace.text = place
     }
 
-    override fun setTimeStart(text: String) {
-        TODO("Not yet implemented")
+    override fun setDateTime(text: String) {
+        textViewDateTime.text = text
     }
 
-    override fun setTypeColor(colorRes: Int) {
-        TODO("Not yet implemented")
+    override fun setTypeColor(@AttrRes colorRes: Int) {
+        colorTag.backgroundTintList =
+            ColorStateList.valueOf(containerView.context.getThemeColor(colorRes))
     }
 
-    override fun setTypeName(type: String) {
-        TODO("Not yet implemented")
+    override fun setTypeName(@StringRes typeRes: Int?) {
+        if (typeRes != null) {
+            textViewType.setText(typeRes)
+        } else {
+            textViewType.text = ""
+        }
     }
 }
 
-class SessionItemBinder : BaseItemBinder<SessionViewHolder, SessionItem>() {
+private class SessionItemBinder(
+    context: Context
+) : BaseItemBinder<SessionViewHolder, SessionItem>() {
 
-    private val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
+    private val colorTags by fastLazy {
+        mapOf(
+            SessionItemType.UNDEFINED to kekmech.ru.coreui.R.attr.colorGray30,
+            SessionItemType.CONSULTATION to kekmech.ru.coreui.R.attr.colorGreen,
+            SessionItemType.EXAM to kekmech.ru.coreui.R.attr.colorRed
+        )
+    }
+    private val sessionDateTimeFormatter = SessionDateTimeFormatter(context)
 
     override fun bind(vh: SessionViewHolder, model: SessionItem, position: Int) {
         model.apply {
             vh.setName(model.name)
             vh.setPerson(model.person)
             vh.setPlace(model.place)
-            vh.setTimeStart(model.time.start.format(timeFormatter))
-            vh.setTypeColor(R.color.colorGreen)
-            vh.setTypeName(model.type.name)
+            vh.setTypeColor(colorTags.getValue(model.type))
+            vh.setTypeName(when (model.type) {
+                SessionItemType.EXAM -> R.string.dashboard_session_item_exam
+                SessionItemType.CONSULTATION -> R.string.dashboard_session_item_consultation
+                else -> null
+            })
+            vh.setDateTime(sessionDateTimeFormatter.format(model))
         }
     }
 }
 
-class SessionAdapterItem : AdapterItem<SessionViewHolder, SessionItem>(
+private class SessionDateTimeFormatter(
+    context: Context
+) {
+    private val months = context.getStringArray(R.array.months)
+    private val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
+
+    fun format(sessionItem: SessionItem): String {
+        val dayOfMonth = sessionItem.date.dayOfMonth
+        val monthName = months[sessionItem.date.monthValue - 1]
+        val time = sessionItem.time.start.format(timeFormatter)
+        return "$dayOfMonth $monthName в $time"
+    }
+}
+
+class SessionAdapterItem(context: Context) : AdapterItem<SessionViewHolder, SessionItem>(
     isType = { it is SessionItem },
-    layoutRes = 0,
+    layoutRes = R.layout.item_session,
     viewHolderGenerator = ::SessionViewHolderImpl,
-    itemBinder = SessionItemBinder()
+    itemBinder = SessionItemBinder(context)
 )

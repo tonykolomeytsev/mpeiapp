@@ -33,7 +33,8 @@ class DashboardListConverter(
     ) }
 
     private val sessionHeader by fastLazy { SectionHeaderItem(
-        titleRes = R.string.dashboard_section_header_session
+        titleRes = R.string.dashboard_section_header_session,
+        subtitle = context.getString(R.string.dashboard_section_header_session_subtitle)
     ) }
 
     private val formatter = PrettyDateFormatter(context)
