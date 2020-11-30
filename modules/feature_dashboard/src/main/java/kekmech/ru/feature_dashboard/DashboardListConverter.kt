@@ -174,18 +174,20 @@ class DashboardListConverter(
             ?: return raw
 
         for (e in raw) {
-            add(e)
-            val classes = e as? Classes ?: continue
-            if (classes == raw[indexOfNextClasses]) {
+            val classes = e as? Classes
+            val actualDay = state.getActualScheduleDayForView()
+            if (classes == raw[indexOfNextClasses] && actualDay != null) {
                 // add time status
-                val actualDay = state.getActualScheduleDayForView() ?: continue
                 val (condition, hours, minutes) = state.getNextClassesTimeStatus(actualDay.date, classes.time)
                 when (condition) {
-                    NOT_STARTED -> add(NotePreview("Через ${TimeDeclensionHelper.formatHoursMinutes(context, hours, minutes)}", classes))
-                    STARTED -> add(NotePreview("Пара уже началась", classes))
+                    NOT_STARTED -> add(TextItem(
+                        text = "Пара начнется через ${TimeDeclensionHelper.formatHoursMinutes(context, hours, minutes)}"
+                    ))
+                    STARTED -> Unit
                     else -> Unit
                 }
             }
+            add(e)
         }
     }
 

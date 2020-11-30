@@ -78,7 +78,7 @@
     </string-array>
 
     <string-array name="minutes_declensions">
-        <item>минута</item>
+        <item>минуту</item>
         <item>минуты</item>
         <item>минут</item>
     </string-array>
