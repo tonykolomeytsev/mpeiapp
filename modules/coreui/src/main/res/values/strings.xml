@@ -135,6 +135,7 @@
     <string name="dashboard_events_empty_state_subtitle">В ближайшие сутки не запланировано никаких событий</string>
     <string name="dashboard_section_header_favorites">Избранные расписания</string>
     <string name="dashboard_section_header_favorites_subtitle">Нажмите для переключения</string>
+    <string name="dashboard_section_header_session">Расписание сессии</string>
     <string name="dashboard_section_header_notes">Заметки</string>
     <string name="dashboard_section_header_notes_action">ПОКАЗАТЬ ВСЕ</string>
     <string name="dashboard_actual_notes_empty_state_title">Нет ни одной актуальной заметки для вас</string>
