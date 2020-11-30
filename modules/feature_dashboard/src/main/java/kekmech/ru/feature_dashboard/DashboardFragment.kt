@@ -134,7 +134,7 @@ class DashboardFragment : BaseFragment<DashboardEvent, DashboardEffect, Dashboar
         ),
         NotePreviewAdapterItem(::clickOnClasses, R.layout.item_note_preview_padding_horisontal_8dp),
         TextAdapterItem(R.layout.item_time_prediction),
-        SessionAdapterItem()
+        SessionAdapterItem(requireContext())
     )
 
     private fun clickOnClasses(it: Classes) {
