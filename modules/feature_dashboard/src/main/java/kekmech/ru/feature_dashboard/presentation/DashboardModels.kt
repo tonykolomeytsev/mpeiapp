@@ -4,10 +4,7 @@ import kekmech.ru.common_android.moscowLocalDate
 import kekmech.ru.common_mvi.Feature
 import kekmech.ru.coreui.items.FavoriteScheduleItem
 import kekmech.ru.domain_notes.dto.Note
-import kekmech.ru.domain_schedule.dto.Classes
-import kekmech.ru.domain_schedule.dto.Day
-import kekmech.ru.domain_schedule.dto.FavoriteSchedule
-import kekmech.ru.domain_schedule.dto.Schedule
+import kekmech.ru.domain_schedule.dto.*
 import java.time.DayOfWeek
 import java.time.LocalDate
 
@@ -21,7 +18,8 @@ data class DashboardState(
     val selectedGroupName: String = "",
     val notes: List<Note>? = null,
     val favoriteSchedules: List<FavoriteScheduleItem>? = null,
-    val isFeatureBannerEnabled: Boolean = false
+    val isFeatureBannerEnabled: Boolean = false,
+    val sessionScheduleItems: List<SessionItem>? = null
 ) {
     val weekOfSemester get() = currentWeekSchedule?.weeks?.first()?.weekOfSemester
     val today: Day? get() = currentWeekSchedule?.weeks?.first()?.days
@@ -40,6 +38,14 @@ data class DashboardState(
     val tomorrowClasses: List<Classes>? get() = tomorrow?.classes
     val isSwipeRefreshLoadingAnimation = isLoading && currentWeekSchedule != null
 }
+
+data class NextClassesTimeStatus(
+    val condition: NextClassesCondition,
+    val hoursUntilClasses: Long = 0,
+    val minutesUntilClasses: Long = 0
+)
+
+enum class NextClassesCondition { NOT_STARTED, STARTED, ENDED }
 
 sealed class DashboardEvent {
 
@@ -65,6 +71,7 @@ sealed class DashboardEvent {
         data class SelectedGroupNameLoaded(val groupName: String) : News()
         data class NotesLoaded(val notes: List<Note>) : News()
         data class FavoriteSchedulesLoaded(val favorites: List<FavoriteSchedule>) : News()
+        data class SessionLoaded(val items: List<SessionItem>) : News()
         object FavoriteGroupSelected : News()
     }
 }
@@ -80,5 +87,6 @@ sealed class DashboardAction {
     data class LoadSchedule(val weekOffset: Int) : DashboardAction()
     object LoadNotes : DashboardAction()
     object LoadFavoriteSchedules : DashboardAction()
+    object LoadSession : DashboardAction()
     data class SelectGroup(val groupName: String) : DashboardAction()
 }

@@ -7,6 +7,7 @@ import kekmech.ru.common_persistent_cache.orFromPersistentCache
 import kekmech.ru.common_shared_preferences.string
 import kekmech.ru.domain_schedule.dto.FavoriteSchedule
 import kekmech.ru.domain_schedule.dto.GetScheduleBody
+import kekmech.ru.domain_schedule.dto.GetSessionBody
 import kekmech.ru.domain_schedule.sources.FavoriteSource
 
 private const val KEY_SELECTED_GROUP = "selected_group"
@@ -37,6 +38,9 @@ class ScheduleRepository(
         favoriteSource.deleteAll()
         favoriteSource.addAll(favorites)
     }
+
+    fun getSession(groupName: String = selectedGroup) = scheduleService
+        .getSession(GetSessionBody(groupName))
 
     fun debugClearSelectedGroup() {
         if (BuildConfig.DEBUG) {

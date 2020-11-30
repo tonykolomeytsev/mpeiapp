@@ -54,6 +54,7 @@ class MainActivity : AppCompatActivity() {
         deeplinkHandlersProcessor.processDeeplink(intent.data)
     }
 
+    @Suppress("DEPRECATION") // deprecated с андроида 11, но на 11 работает норм
     private fun enableEdgeToEdge() {
         window.decorView.apply {
             systemUiVisibility = systemUiVisibility or
