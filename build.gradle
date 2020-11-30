@@ -94,7 +94,7 @@ buildscript {
         ]
         kotlin_version = "1.4.20"
         appVersionName = "1.2.0"
-        appVersionCode = 31
+        appVersionCode = 32
     }
 
     repositories {
