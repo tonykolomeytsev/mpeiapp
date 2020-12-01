@@ -61,6 +61,10 @@ internal class AppSettingsReducer : BaseReducer<AppSettingsState, AppSettingsEve
             state = state,
             action = AppSettingsAction.ClearSelectedGroup
         )
+        is Wish.Action.ChangeBackendEnvironment -> Result(
+            state = state,
+            action = AppSettingsAction.ChangeBackendEnvironment(event.isDebug)
+        )
     }
 
 }

@@ -84,6 +84,9 @@ internal class AppSettingsFragment : BaseFragment<AppSettingsEvent, AppSettingsE
             analytics.sendChangeSetting("SnowFlakes", it.toString())
             feature.accept(Wish.Action.SetSnowEnabled(it))
         },
+        ToggleAdapterItem(TOGGLE_DEBUG_CHANGE_ENV) {
+            feature.accept(Wish.Action.ChangeBackendEnvironment(it))
+        },
         SectionTextAdapterItem(),
         SpaceAdapterItem(),
         BottomLabeledTextAdapterItem { onItemClick(it.itemId) }
@@ -127,6 +130,7 @@ internal class AppSettingsFragment : BaseFragment<AppSettingsEvent, AppSettingsE
         const val TOGGLE_CHANGE_DAY_AFTER_CHANGE_WEEK = 1
         const val TOGGLE_AUTO_HIDE_BOTTOM_SHEET = 2
         const val TOGGLE_SNOW_FLAKES = 3
+        const val TOGGLE_DEBUG_CHANGE_ENV = 4
 
         const val ITEM_DEBUG_CLEAR_SELECTED_GROUP = 0
         const val ITEM_SUPPORT = 1
