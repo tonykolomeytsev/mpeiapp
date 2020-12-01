@@ -1,13 +1,17 @@
 package kekmech.ru.feature_search.mvi
 
 import kekmech.ru.common_mvi.Feature
+import kekmech.ru.feature_search.item.FilterItem
+import kekmech.ru.feature_search.item.FilterItemType
 
 internal typealias SearchFeature = Feature<SearchState, SearchEvent, SearchEffect>
 
 internal data class SearchState(
     val query: String,
     val searchResultsMap: List<Any> = emptyList(),
-    val searchResultsNotes: List<Any> = emptyList()
+    val searchResultsNotes: List<Any> = emptyList(),
+    val filterItems: List<FilterItem>,
+    val selectedFilter: FilterItemType = FilterItemType.ALL
 )
 
 internal sealed class SearchEvent {
@@ -17,6 +21,7 @@ internal sealed class SearchEvent {
 
         object Action {
             data class SearchContent(val query: String) : Wish()
+            data class SelectFilter(val filterItem: FilterItem) : Wish()
         }
     }
 
