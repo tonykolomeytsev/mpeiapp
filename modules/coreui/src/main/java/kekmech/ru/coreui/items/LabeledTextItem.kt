@@ -1,13 +1,14 @@
 package kekmech.ru.coreui.items
 
 import android.view.View
+import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseItemBinder
+import kekmech.ru.common_android.viewbinding.ReusableViewHolder
+import kekmech.ru.common_android.viewbinding.lazyBinding
 import kekmech.ru.coreui.R
-import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.item_text_top_labeled.*
 
 interface LabeledTextItem {
     val mainText: String?
@@ -45,9 +46,11 @@ class LabeledTextViewHolderImpl(
 ) :
     LabeledTextViewHolder,
     RecyclerView.ViewHolder(containerView),
-    LayoutContainer,
-    ClickableItemViewHolder by ClickableItemViewHolderImpl(containerView)
-{
+    ClickableItemViewHolder by ClickableItemViewHolderImpl(containerView),
+    ReusableViewHolder {
+
+    private val textViewMainText by lazyBinding<TextView>(R.id.textViewMainText)
+    private val textViewLabel by lazyBinding<TextView>(R.id.textViewLabel)
 
     override fun setMainText(mainText: String) {
         textViewMainText.text = mainText

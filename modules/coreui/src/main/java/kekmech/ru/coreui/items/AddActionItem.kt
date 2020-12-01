@@ -5,8 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.coreui.R
-import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.item_add_action.*
+import kekmech.ru.coreui.databinding.ItemAddActionBinding
 
 private const val ADD_ACTION_DEFAULT_ITEM_ID = 0
 
@@ -20,16 +19,16 @@ interface AddActionViewHolder : ClickableItemViewHolder {
 }
 
 class AddActionViewHolderImpl(
-    override val containerView: View
+    containerView: View
 ) :
     AddActionViewHolder,
     RecyclerView.ViewHolder(containerView),
-    LayoutContainer,
     ClickableItemViewHolder by ClickableItemViewHolderImpl(containerView)
 {
+    private val viewBinding = ItemAddActionBinding.bind(containerView)
 
     override fun setTitle(title: String) {
-        textViewActionName.text = title
+        viewBinding.textViewActionName.text = title
     }
 }
 

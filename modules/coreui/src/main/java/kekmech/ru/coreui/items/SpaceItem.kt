@@ -6,8 +6,7 @@ import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.common_android.dpToPx
 import kekmech.ru.coreui.R
-import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.item_space.*
+import kekmech.ru.coreui.databinding.ItemSpaceBinding
 
 data class SpaceItem(
     val width: Int,
@@ -28,15 +27,17 @@ interface SpaceViewHolder {
 }
 
 class SpaceViewHolderImpl(
-    override val containerView: View
-) : RecyclerView.ViewHolder(containerView), SpaceViewHolder, LayoutContainer {
+    private val containerView: View
+) : RecyclerView.ViewHolder(containerView), SpaceViewHolder {
+
+    private val viewBinding = ItemSpaceBinding.bind(containerView)
 
     override fun setWidth(width: Int) {
-        space.layoutParams.width = containerView.context.resources.dpToPx(width)
+        viewBinding.space.layoutParams.width = containerView.context.resources.dpToPx(width)
     }
 
     override fun setHeight(height: Int) {
-        space.layoutParams.height = containerView.context.resources.dpToPx(height)
+        viewBinding.space.layoutParams.height = containerView.context.resources.dpToPx(height)
     }
 }
 

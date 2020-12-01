@@ -28,7 +28,7 @@ class EventsHeaderViewHolderImpl(
 ) :
     RecyclerView.ViewHolder(containerView),
     EventsHeaderViewHolder,
-    SectionHeaderViewHolder by SectionHeaderViewHolderImpl(containerView),
+    SectionHeaderViewHolder by SectionHeaderViewHolderImpl(containerView, ),
     LayoutContainer {
 
     override fun setGroupName(groupName: String) {

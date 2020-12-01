@@ -29,6 +29,9 @@ android {
             applicationIdSuffix ".dev"
         }
     }
+    buildFeatures {
+        viewBinding true
+    }
 
     compileOptions {
         coreLibraryDesugaringEnabled true
@@ -42,8 +45,7 @@ android {
 
 dependencies {
     coreLibraryDesugaring desugaring
-    testImplementation tests.junit
-    androidTestImplementation androidx.test.runner
+    implementation androidx.lifecycleCommonJava8
 
     // Koin for Kotlin Android
     implementation koin.core
