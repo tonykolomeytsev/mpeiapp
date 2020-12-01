@@ -32,6 +32,7 @@ import org.koin.android.ext.android.inject
 import java.util.concurrent.TimeUnit
 
 private const val ARG_QUERY = "Arg.Query"
+private const val ARG_FILTER = "Arg.Filter"
 
 internal class SearchFragment : BaseFragment<SearchEvent, SearchEffect, SearchState, SearchFeature>() {
 
@@ -39,7 +40,7 @@ internal class SearchFragment : BaseFragment<SearchEvent, SearchEffect, SearchSt
     private val dependencies by inject<SearchDependencies>()
 
     override fun createFeature(): SearchFeature = dependencies.searchFeatureFactory
-        .create(getArgument(ARG_QUERY))
+        .create(getArgument(ARG_QUERY), getArgument(ARG_FILTER))
 
     override var layoutId: Int = R.layout.fragment_search
     private val adapter by fastLazy { createAdapter() }
@@ -112,7 +113,10 @@ internal class SearchFragment : BaseFragment<SearchEvent, SearchEffect, SearchSt
 
     companion object {
 
-        fun newInstance(query: String) = SearchFragment()
-            .withArguments(ARG_QUERY to query)
+        fun newInstance(query: String, filter: String = "ALL") = SearchFragment()
+            .withArguments(
+                ARG_QUERY to query,
+                ARG_FILTER to filter
+            )
     }
 }

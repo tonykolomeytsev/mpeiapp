@@ -17,8 +17,9 @@ class SearchScreenDeeplinkHandler(
 
     override fun handle(deeplink: Uri) {
         val searchQuery = deeplink.getQueryParameter("q").orEmpty()
+        val searchFilter = deeplink.getQueryParameter("filter") ?: "ALL"
         router.executeCommand(PopUntil(MainFragment::class, inclusive = false))
         bottomTabsSwitcher.changeTab(BottomTab.DASHBOARD)
-        searchFeatureLauncher.launch(searchQuery)
+        searchFeatureLauncher.launch(searchQuery, searchFilter)
     }
 }
