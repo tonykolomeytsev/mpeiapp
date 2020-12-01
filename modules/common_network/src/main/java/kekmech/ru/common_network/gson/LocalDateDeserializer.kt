@@ -7,7 +7,7 @@ import java.lang.reflect.Type
 import java.time.LocalDate
 
 
-class LocalDateDeserializer : JsonDeserializer<LocalDate> {
+internal class LocalDateDeserializer : JsonDeserializer<LocalDate> {
 
     override fun deserialize(json: JsonElement, type: Type?, jsonDeserializationContext: JsonDeserializationContext?): LocalDate? {
         return LocalDate.parse(json.asJsonPrimitive.asString)
