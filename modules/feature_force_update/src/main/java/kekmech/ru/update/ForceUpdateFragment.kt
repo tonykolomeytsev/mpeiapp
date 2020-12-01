@@ -12,15 +12,17 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kekmech.ru.common_android.close
 import kekmech.ru.common_android.getArgument
+import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.withArguments
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.domain_force_update.dto.ForceUpdateInfo
-import kotlinx.android.synthetic.main.fragment_force_update.*
+import kekmech.ru.update.databinding.FragmentForceUpdateBinding
 
 private const val ARG_INFO = "Arg.Info"
 
 internal class ForceUpdateFragment : BottomSheetDialogFragment() {
 
+    private val viewBinding by viewBinding(FragmentForceUpdateBinding::bind)
     private val forceUpdateInfo by fastLazy { getArgument<ForceUpdateInfo>(ARG_INFO) }
 
     override fun onCreateView(
@@ -43,11 +45,13 @@ internal class ForceUpdateFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        buttonUpdateNow?.setOnClickListener {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(forceUpdateInfo.updateUrl)))
+        viewBinding.apply {
+            buttonUpdateNow.setOnClickListener {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(forceUpdateInfo.updateUrl)))
+            }
+            buttonUpdateLater.setOnClickListener { close() }
+            textDescription.text = forceUpdateInfo.shortDescription
         }
-        buttonUpdateLater?.setOnClickListener { close() }
-        textDescription.text = forceUpdateInfo.shortDescription
     }
 
     companion object {

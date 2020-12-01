@@ -8,8 +8,6 @@ import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.coreui.R
 import kekmech.ru.coreui.databinding.ItemBannerBinding
-import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.item_banner.*
 
 private const val DEFAULT_BANNER_ID = 0
 

@@ -14,8 +14,7 @@ import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.domain_schedule.dto.SessionItem
 import kekmech.ru.domain_schedule.dto.SessionItemType
 import kekmech.ru.feature_dashboard.R
-import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.item_session.*
+import kekmech.ru.feature_dashboard.databinding.ItemSessionBinding
 import java.time.format.DateTimeFormatter
 
 interface SessionViewHolder {
@@ -28,35 +27,37 @@ interface SessionViewHolder {
 }
 
 private class SessionViewHolderImpl(
-    override val containerView: View
-) : RecyclerView.ViewHolder(containerView), SessionViewHolder, LayoutContainer {
+    private val containerView: View
+) : RecyclerView.ViewHolder(containerView), SessionViewHolder {
+
+    private val viewBinding = ItemSessionBinding.bind(containerView)
 
     override fun setName(text: String) {
-        textViewName.text = text
+        viewBinding.textViewName.text = text
     }
 
     override fun setPerson(person: String) {
-        textViewPerson.text = person
+        viewBinding.textViewPerson.text = person
     }
 
     override fun setPlace(place: String) {
-        textViewPlace.text = place
+        viewBinding.textViewPlace.text = place
     }
 
     override fun setDateTime(text: String) {
-        textViewDateTime.text = text
+        viewBinding.textViewDateTime.text = text
     }
 
     override fun setTypeColor(@AttrRes colorRes: Int) {
-        colorTag.backgroundTintList =
+        viewBinding.colorTag.backgroundTintList =
             ColorStateList.valueOf(containerView.context.getThemeColor(colorRes))
     }
 
     override fun setTypeName(@StringRes typeRes: Int?) {
         if (typeRes != null) {
-            textViewType.setText(typeRes)
+            viewBinding.textViewType.setText(typeRes)
         } else {
-            textViewType.text = ""
+            viewBinding.textViewType.text = ""
         }
     }
 }

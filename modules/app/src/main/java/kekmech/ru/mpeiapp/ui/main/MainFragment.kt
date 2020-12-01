@@ -9,14 +9,15 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
 import kekmech.ru.common_android.addSystemBottomPadding
 import kekmech.ru.common_android.onActivityResult
+import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.ui.BaseFragment
 import kekmech.ru.common_navigation.BackButtonListener
 import kekmech.ru.common_navigation.BottomTab
 import kekmech.ru.mpeiapp.R
+import kekmech.ru.mpeiapp.databinding.FragmentMainBinding
 import kekmech.ru.mpeiapp.ui.main.di.MainScreenDependencies
 import kekmech.ru.mpeiapp.ui.main.presentation.*
-import kotlinx.android.synthetic.main.fragment_main.*
 import org.koin.android.ext.android.inject
 
 class MainFragment : BaseFragment<MainScreenEvent, MainScreenEffect, MainScreenState, MainScreenFeature>(), BackButtonListener {
@@ -30,6 +31,7 @@ class MainFragment : BaseFragment<MainScreenEvent, MainScreenEffect, MainScreenS
     private var bottomBarController: BottomBarController? = null
     private var tabsSwitcherDisposable: Disposable? = null
     private val tabsSwitcher by fastLazy { dependencies.bottomTabsSwitcher }
+    private val viewBinding by viewBinding(FragmentMainBinding::bind)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,8 +46,8 @@ class MainFragment : BaseFragment<MainScreenEvent, MainScreenEffect, MainScreenS
 
     override fun onViewCreatedInternal(view: View, savedInstanceState: Bundle?) {
         super.onViewCreatedInternal(view, savedInstanceState)
-        bottomNavigation.setOnApplyWindowInsetsListener(null)
-        bottomNavigation.setPadding(0)
+        viewBinding.bottomNavigation.setOnApplyWindowInsetsListener(null)
+        viewBinding.bottomNavigation.setPadding(0)
         view.addSystemBottomPadding()
 
         val controller = bottomBarController ?: BottomBarController(
@@ -54,7 +56,7 @@ class MainFragment : BaseFragment<MainScreenEvent, MainScreenEffect, MainScreenS
             dependencies.barsFeatureLauncher,
             dependencies.mapFeatureLauncher
         )
-        controller.init(this, bottomNavigation)
+        controller.init(this, viewBinding.bottomNavigation)
         bottomBarController = controller
         savedInstanceState?.get("lastSelectedTab")?.let {
             bottomBarController?.switchTab(it as BottomTab)

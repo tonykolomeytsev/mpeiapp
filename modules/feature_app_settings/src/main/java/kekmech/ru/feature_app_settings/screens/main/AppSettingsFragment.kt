@@ -9,12 +9,14 @@ import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_android.addSystemBottomPadding
 import kekmech.ru.common_android.addSystemTopPadding
 import kekmech.ru.common_android.openLinkExternal
+import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.ui.BaseFragment
 import kekmech.ru.common_navigation.addScreenForward
 import kekmech.ru.coreui.attachScrollListenerForAppBarLayoutShadow
 import kekmech.ru.coreui.items.*
 import kekmech.ru.feature_app_settings.R
+import kekmech.ru.feature_app_settings.databinding.FragmentAppSettingsBinding
 import kekmech.ru.feature_app_settings.di.AppSettingDependencies
 import kekmech.ru.feature_app_settings.screens.favorites.FavoritesFragment
 import kekmech.ru.feature_app_settings.screens.main.presentation.AppSettingsEffect
@@ -22,7 +24,6 @@ import kekmech.ru.feature_app_settings.screens.main.presentation.AppSettingsEven
 import kekmech.ru.feature_app_settings.screens.main.presentation.AppSettingsEvent.Wish
 import kekmech.ru.feature_app_settings.screens.main.presentation.AppSettingsFeature
 import kekmech.ru.feature_app_settings.screens.main.presentation.AppSettingsState
-import kotlinx.android.synthetic.main.fragment_app_settings.*
 import org.koin.android.ext.android.inject
 
 internal class AppSettingsFragment : BaseFragment<AppSettingsEvent, AppSettingsEffect, AppSettingsState, AppSettingsFeature>() {
@@ -39,13 +40,17 @@ internal class AppSettingsFragment : BaseFragment<AppSettingsEvent, AppSettingsE
 
     private val analytics by inject<AppSettingsAnalytics>()
 
+    private val viewBinding by viewBinding(FragmentAppSettingsBinding::bind)
+
     override fun onViewCreatedInternal(view: View, savedInstanceState: Bundle?) {
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.adapter = adapter
-        recyclerView.attachScrollListenerForAppBarLayoutShadow(appBarLayout)
-        recyclerView.addSystemBottomPadding()
-        appBarLayout.addSystemTopPadding()
-        toolbar.init(R.string.app_settings_screen_title)
+        viewBinding.apply {
+            recyclerView.layoutManager = LinearLayoutManager(requireContext())
+            recyclerView.adapter = adapter
+            recyclerView.attachScrollListenerForAppBarLayoutShadow(appBarLayout)
+            recyclerView.addSystemBottomPadding()
+            appBarLayout.addSystemTopPadding()
+            toolbar.init(R.string.app_settings_screen_title)
+        }
         analytics.sendScreenShown()
     }
 
