@@ -21,6 +21,8 @@ import kekmech.ru.coreui.items.SpaceAdapterItem
 import kekmech.ru.domain_map.dto.MapMarker
 import kekmech.ru.feature_search.databinding.FragmentSearchBinding
 import kekmech.ru.feature_search.di.SearchDependencies
+import kekmech.ru.feature_search.item.FilterAdapterItem
+import kekmech.ru.feature_search.item.FilterItem
 import kekmech.ru.feature_search.item.MapMarkerAdapterItem
 import kekmech.ru.feature_search.mvi.SearchEffect
 import kekmech.ru.feature_search.mvi.SearchEvent
@@ -34,20 +36,16 @@ private const val ARG_QUERY = "Arg.Query"
 internal class SearchFragment : BaseFragment<SearchEvent, SearchEffect, SearchState, SearchFeature>() {
 
     override val initEvent get() = SearchEvent.Wish.Init
-
     private val dependencies by inject<SearchDependencies>()
 
     override fun createFeature(): SearchFeature = dependencies.searchFeatureFactory
         .create(getArgument(ARG_QUERY))
 
     override var layoutId: Int = R.layout.fragment_search
-
     private val adapter by fastLazy { createAdapter() }
-
+    private val filterItemsAdapter by fastLazy { createFilterItemsAdapter() }
     private val analytics by inject<SearchAnalytics>()
-
     private val bottomTabsSwitcher by inject<BottomTabsSwitcher>()
-
     private val viewBinding by viewBinding(FragmentSearchBinding::bind)
 
     override fun onViewCreatedInternal(view: View, savedInstanceState: Bundle?) {
@@ -63,11 +61,14 @@ internal class SearchFragment : BaseFragment<SearchEvent, SearchEffect, SearchSt
                 .let {}
             recyclerView.layoutManager = LinearLayoutManager(requireContext())
             recyclerView.adapter = adapter
+            filterItemsRecycler.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            filterItemsRecycler.adapter = filterItemsAdapter
         }
         analytics.sendScreenShown()
     }
 
     override fun render(state: SearchState) {
+        filterItemsAdapter.update(state.filterItems)
         adapter.update(SearchListConverter().map(state))
     }
 
@@ -94,6 +95,12 @@ internal class SearchFragment : BaseFragment<SearchEvent, SearchEffect, SearchSt
             navigateToMapMarker(it)
         },
         EmptyStateAdapterItem()
+    )
+
+    private fun createFilterItemsAdapter() = BaseAdapter(
+        FilterAdapterItem {
+            feature.accept(SearchEvent.Wish.Action.SelectFilter(it))
+        }
     )
 
     private fun navigateToMapMarker(marker: MapMarker) {
