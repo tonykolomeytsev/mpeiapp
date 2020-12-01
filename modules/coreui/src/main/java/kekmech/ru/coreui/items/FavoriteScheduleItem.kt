@@ -7,9 +7,8 @@ import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.common_android.getThemeColor
 import kekmech.ru.coreui.R
+import kekmech.ru.coreui.databinding.ItemFavoriteScheduleBinding
 import kekmech.ru.domain_schedule.dto.FavoriteSchedule
-import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.item_favorite_schedule.*
 
 class FavoriteScheduleItem(
     val value: FavoriteSchedule,
@@ -23,21 +22,22 @@ interface FavoriteScheduleViewHolder : ClickableItemViewHolder {
 }
 
 class FavoriteScheduleViewHolderImpl(
-    override val containerView: View
+    private val containerView: View
 ) : RecyclerView.ViewHolder(containerView),
     ClickableItemViewHolder by ClickableItemViewHolderImpl(containerView),
-    FavoriteScheduleViewHolder,
-    LayoutContainer {
+    FavoriteScheduleViewHolder {
+
+    private val viewBinding = ItemFavoriteScheduleBinding.bind(containerView)
 
     override fun setTitle(title: String) {
-        textViewTitle.text = title
+        viewBinding.textViewTitle.text = title
     }
 
     override fun setDescription(description: String) {
-        textViewDescription.text = description
+        viewBinding.textViewDescription.text = description
     }
 
-    override fun setIsSelected(isSelected: Boolean) {
+    override fun setIsSelected(isSelected: Boolean) = with(viewBinding) {
         val context = containerView.context
         if (isSelected) {
             containerView.backgroundTintList = ColorStateList.valueOf(context.getThemeColor(R.attr.colorMain))

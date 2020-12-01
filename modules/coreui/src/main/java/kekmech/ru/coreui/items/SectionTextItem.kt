@@ -1,13 +1,12 @@
 package kekmech.ru.coreui.items
 
 import android.view.View
+import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.coreui.R
-import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.item_section_text.*
 
 data class SectionTextItem(
     val text: String? = null,
@@ -20,8 +19,10 @@ interface SectionTextViewHolder {
 }
 
 class SectionTextViewHolderImpl(
-    override val containerView: View
-) : SectionTextViewHolder, RecyclerView.ViewHolder(containerView), LayoutContainer {
+    containerView: View
+) : SectionTextViewHolder, RecyclerView.ViewHolder(containerView) {
+
+    private val textViewSectionText = containerView.findViewById<TextView>(R.id.textViewSectionText)
 
     override fun setText(text: String) {
         textViewSectionText.text = text

@@ -6,8 +6,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
 import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseItemBinder
-import kotlinx.android.extensions.LayoutContainer
-
 
 data class ShimmerItem(
     val id: Int
@@ -18,8 +16,8 @@ interface ShimmerViewHolder {
 }
 
 class ShimmerViewHolderImpl(
-    override val containerView: View
-) : RecyclerView.ViewHolder(containerView), ShimmerViewHolder, LayoutContainer {
+    private val containerView: View
+) : RecyclerView.ViewHolder(containerView), ShimmerViewHolder {
 
     override fun startShimmer() {
         (containerView as ShimmerFrameLayout).startShimmer()

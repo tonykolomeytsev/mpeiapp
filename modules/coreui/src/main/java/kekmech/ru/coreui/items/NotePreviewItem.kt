@@ -6,9 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.coreui.R
+import kekmech.ru.coreui.databinding.ItemNotePreviewBinding
 import kekmech.ru.domain_schedule.dto.Classes
-import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.item_note_preview.*
 
 data class NotePreview(
     val preview: String,
@@ -20,14 +19,15 @@ interface NotePreviewViewHolder : ClickableItemViewHolder {
 }
 
 class NotePreviewViewHolderImpl(
-    override val containerView: View
+    private val containerView: View
 ) : NotePreviewViewHolder,
     RecyclerView.ViewHolder(containerView),
-    ClickableItemViewHolder by ClickableItemViewHolderImpl(containerView),
-    LayoutContainer {
+    ClickableItemViewHolder by ClickableItemViewHolderImpl(containerView) {
+
+    private val viewBinding = ItemNotePreviewBinding.bind(containerView)
 
     override fun setText(text: String) {
-        textViewNoteCloud.text = text
+        viewBinding.textViewNoteCloud.text = text
     }
 }
 

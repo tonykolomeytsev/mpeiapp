@@ -7,9 +7,8 @@ import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.coreui.PrettyDateFormatter
 import kekmech.ru.coreui.R
+import kekmech.ru.coreui.databinding.ItemNoteBinding
 import kekmech.ru.domain_notes.dto.Note
-import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.item_note.*
 
 interface NoteViewHolder : ClickableItemViewHolder {
     fun setContent(content: String)
@@ -18,23 +17,24 @@ interface NoteViewHolder : ClickableItemViewHolder {
 }
 
 class NoteViewHolderImpl(
-    override val containerView: View
+    private val containerView: View
 ) :
     RecyclerView.ViewHolder(containerView),
     NoteViewHolder,
-    LayoutContainer,
     ClickableItemViewHolder by ClickableItemViewHolderImpl(containerView) {
 
+    private val viewBinding = ItemNoteBinding.bind(containerView)
+
     override fun setContent(content: String) {
-        textViewNoteContent.text = content
+        viewBinding.textViewNoteContent.text = content
     }
 
     override fun setDate(date: String) {
-        textViewNoteDate.text = date
+        viewBinding.textViewNoteDate.text = date
     }
 
     override fun setDisciplineName(name: String) {
-        textViewNoteDiscipline.text = name
+        viewBinding.textViewNoteDiscipline.text = name
     }
 }
 

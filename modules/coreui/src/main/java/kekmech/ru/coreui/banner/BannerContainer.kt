@@ -5,27 +5,30 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
 import kekmech.ru.coreui.R
-import kotlinx.android.synthetic.main.view_banner_container.view.*
+import kekmech.ru.coreui.databinding.ViewBannerContainerBinding
 
 class BannerContainer @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null
 ) : FrameLayout(context, attrs) {
 
+    private val viewBinding: ViewBannerContainerBinding
+
     init {
         View.inflate(context, R.layout.view_banner_container, this)
+        viewBinding = ViewBannerContainerBinding.bind(this)
         id = R.id.bannerContainer
-        bannerText.alpha = 0f
+        viewBinding.bannerText.alpha = 0f
     }
 
     fun show(banner: Banner) {
-        bannerText.text = banner.text
-        bannerText.setBackgroundColor(banner.color)
+        viewBinding.bannerText.text = banner.text
+        viewBinding.bannerText.setBackgroundColor(banner.color)
         animateFadeIn()
     }
 
     private fun animateFadeIn() {
-        bannerText.animate()
+        viewBinding.bannerText.animate()
             .alpha(1f)
             .setDuration(200L)
             .withEndAction { animateFadeOut() }
@@ -33,7 +36,7 @@ class BannerContainer @JvmOverloads constructor(
     }
 
     private fun animateFadeOut() {
-        bannerText.animate()
+        viewBinding.bannerText.animate()
             .alpha(0f)
             .setDuration(200L)
             .setStartDelay(1000L)

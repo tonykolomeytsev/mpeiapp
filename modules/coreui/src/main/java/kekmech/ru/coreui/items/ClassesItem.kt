@@ -3,6 +3,7 @@ package kekmech.ru.coreui.items
 import android.content.Context
 import android.content.res.ColorStateList
 import android.view.View
+import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
@@ -10,12 +11,14 @@ import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.common_android.getStringArray
 import kekmech.ru.common_android.getThemeColor
+import kekmech.ru.common_android.viewbinding.ReusableViewHolder
+import kekmech.ru.common_android.viewbinding.lazyBinding
+import kekmech.ru.common_android.viewbinding.unit
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.coreui.R
+import kekmech.ru.coreui.databinding.ItemClassesBinding
 import kekmech.ru.domain_schedule.dto.Classes
 import kekmech.ru.domain_schedule.dto.ClassesType
-import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.item_classes.*
 import java.time.format.DateTimeFormatter
 
 interface ClassesViewHolder : ClickableItemViewHolder {
@@ -35,7 +38,16 @@ open class ClassesViewHolderImpl(
     ClassesViewHolder,
     ClickableItemViewHolder by ClickableItemViewHolderImpl(containerView),
     RecyclerView.ViewHolder(containerView),
-    LayoutContainer {
+    ReusableViewHolder {
+
+    private val textViewClassesName by lazyBinding<TextView>(R.id.textViewClassesName)
+    private val textViewClassesPerson by lazyBinding<TextView>(R.id.textViewClassesPerson)
+    private val textViewClassesPlace by lazyBinding<TextView>(R.id.textViewClassesPlace)
+    private val textViewClassesNumber by lazyBinding<TextView>(R.id.textViewClassesNumber)
+    private val colorTag by lazyBinding<View>(R.id.colorTag)
+    private val textViewClassesType by lazyBinding<TextView>(R.id.textViewClassesType)
+    private val textViewTimeStart by lazyBinding<TextView>(R.id.textViewTimeStart)
+    private val textViewTimeEnd by lazyBinding<TextView>(R.id.textViewTimeEnd)
 
     override fun setDisciplineName(name: String) {
         textViewClassesName.text = name

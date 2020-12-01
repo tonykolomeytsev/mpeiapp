@@ -26,6 +26,9 @@ android {
             buildConfigField "String", "VERSION_NAME", "\"${rootProject.appVersionName}\""
         }
     }
+    buildFeatures {
+        viewBinding true
+    }
 
     compileOptions {
         coreLibraryDesugaringEnabled true
@@ -43,4 +46,5 @@ tasks.withType(Test) {
 
 dependencies {
     coreLibraryDesugaring desugaring
+    implementation androidx.lifecycleCommonJava8
 }

@@ -5,15 +5,14 @@ import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseItemBinder
-import kotlinx.android.extensions.LayoutContainer
 
 interface ClickableItemViewHolder {
     fun setOnClickListener(listener: (View) -> Unit)
 }
 
 class ClickableItemViewHolderImpl(
-    override val containerView: View
-) : RecyclerView.ViewHolder(containerView), ClickableItemViewHolder, LayoutContainer {
+    private val containerView: View
+) : RecyclerView.ViewHolder(containerView), ClickableItemViewHolder {
 
     override fun setOnClickListener(listener: (View) -> Unit) {
         containerView.setOnClickListener(listener)

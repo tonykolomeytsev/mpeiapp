@@ -1,12 +1,16 @@
 package kekmech.ru.coreui.items
 
 import android.view.View
+import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewbinding.ViewBinding
 import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseItemBinder
+import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.coreui.R
+import kekmech.ru.coreui.databinding.ItemSectionHeaderBinding
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_section_header.*
 
@@ -30,8 +34,12 @@ interface SectionHeaderViewHolder {
 }
 
 class SectionHeaderViewHolderImpl(
-    override val containerView: View
-) : RecyclerView.ViewHolder(containerView), SectionHeaderViewHolder, LayoutContainer {
+    containerView: View
+) : RecyclerView.ViewHolder(containerView), SectionHeaderViewHolder {
+
+    private val textViewTitle = containerView.findViewById<TextView>(R.id.textViewTitle)
+    private val textViewSubtitle = containerView.findViewById<TextView>(R.id.textViewSubtitle)
+    private val textViewAction by fastLazy { containerView.findViewById<TextView>(R.id.textViewAction) }
 
     override fun setTitle(title: String) {
         textViewTitle.text = title
