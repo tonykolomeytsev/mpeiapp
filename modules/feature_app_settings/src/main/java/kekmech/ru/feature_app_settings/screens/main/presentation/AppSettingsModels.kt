@@ -22,6 +22,7 @@ internal sealed class AppSettingsEvent {
             data class SetSnowEnabled(val isEnabled: Boolean) : Wish()
             data class SetChangeDayAfterChangeWeek(val isEnabled: Boolean) : Wish()
             data class SetAutoHideBottomSheet(val isEnabled: Boolean) : Wish()
+            data class ChangeBackendEnvironment(val isDebug: Boolean) : Wish()
             object ClearSelectedGroup : Wish()
         }
     }
@@ -39,6 +40,7 @@ internal sealed class AppSettingsAction {
     data class SetSnowEnabled(val isEnabled: Boolean) : AppSettingsAction()
     data class SetChangeDayAfterChangeWeek(val isEnabled: Boolean) : AppSettingsAction()
     data class SetAutoHideBottomSheet(val isEnabled: Boolean) : AppSettingsAction()
+    data class ChangeBackendEnvironment(val isDebug: Boolean) : AppSettingsAction()
     object ClearSelectedGroup : AppSettingsAction()
 }
 

@@ -10,4 +10,7 @@ interface AppSettings {
 
     // map
     val autoHideBottomSheet: Boolean
+
+    // debug
+    val isDebugEnvironment: Boolean
 }

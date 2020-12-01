@@ -12,5 +12,5 @@ fun getServiceUrl(serviceClass: Class<*>): String {
     val annotation = serviceClass.getAnnotation(EndpointUrl::class.java)
         ?: error("$serviceClass should have @EndpointUrl annotation")
 
-    return annotation.value
+    return ServiceUrlResolver.resolve(annotation.value)
 }

@@ -16,6 +16,8 @@ class AppSettingsRepository(
 
     override var autoHideBottomSheet by preferences.boolean("map_auto_hide_bottom_sheet", true)
 
+    override var isDebugEnvironment by preferences.boolean("is_debug_env", false)
+
     fun complete(runnable: AppSettingsRepository.() -> Unit): Completable =
         Completable.fromRunnable { runnable() }
 }

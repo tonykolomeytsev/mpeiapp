@@ -77,6 +77,12 @@ internal class AppSettingsListConverter {
                     label = "После очистки будет открыт онбординг",
                     itemId = AppSettingsFragment.ITEM_DEBUG_CLEAR_SELECTED_GROUP
                 ))
+                add(ToggleItem(
+                    itemId = AppSettingsFragment.TOGGLE_DEBUG_CHANGE_ENV,
+                    title = "Использовать тестовое окружение",
+                    isChecked = appSettings.isDebugEnvironment
+                ))
+                add(SectionTextItem(text = "Нужно перезагрузить приложение, для того чтобы настройка вступила в силу"))
             }
         }
     }
