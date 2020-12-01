@@ -19,7 +19,6 @@ import kekmech.ru.common_navigation.BackButtonListener
 import kekmech.ru.common_webview.databinding.FragmentWebViewBinding
 import kekmech.ru.common_webview.presentation.*
 import kekmech.ru.common_webview.presentation.WebViewEvent.Wish
-import kotlinx.android.synthetic.main.fragment_web_view.*
 import org.koin.android.ext.android.inject
 
 private const val START_URL_ARG = "UrlArg"
@@ -85,7 +84,7 @@ class WebViewFragment : BaseFragment<WebViewEvent, WebViewEffect, WebViewState, 
             }
 
             override fun onPageFinished(view: WebView?, url: String?) {
-                toolbar.title = url.orEmpty()
+                viewBinding.toolbar.title = url.orEmpty()
                 // feature.accept(Wish.Action.LoadingProgressChanged(100))
             }
         }
@@ -104,7 +103,7 @@ class WebViewFragment : BaseFragment<WebViewEvent, WebViewEffect, WebViewState, 
     }
 
     override fun onBackPressed(): Boolean {
-        if (webView.canGoBack()) {
+        if (viewBinding.webView.canGoBack()) {
             viewBinding.webView.goBack()
             return true
         }

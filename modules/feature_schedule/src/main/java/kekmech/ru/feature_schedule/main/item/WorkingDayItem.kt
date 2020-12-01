@@ -13,8 +13,7 @@ import kekmech.ru.coreui.items.NotePreviewAdapterItem
 import kekmech.ru.coreui.items.SpaceAdapterItem
 import kekmech.ru.domain_schedule.dto.Classes
 import kekmech.ru.feature_schedule.R
-import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.item_week_days.*
+import kekmech.ru.feature_schedule.databinding.ItemWorkingDayBinding
 
 const val DAY_OF_WEEK_MONDAY = 1
 const val DAY_OF_WEEK_TUESDAY = 2
@@ -37,10 +36,11 @@ internal interface WorkingDayViewHolder {
 }
 
 internal class WorkingDayViewHolderImpl(
-    override val containerView: View
-) : WorkingDayViewHolder, RecyclerView.ViewHolder(containerView), LayoutContainer {
+    private val containerView: View
+) : WorkingDayViewHolder, RecyclerView.ViewHolder(containerView) {
 
     private var adapter: BaseAdapter? = null
+    private val viewBinding = ItemWorkingDayBinding.bind(containerView)
 
     override fun setItems(list: List<Any>) {
         adapter?.update(list)
@@ -60,9 +60,11 @@ internal class WorkingDayViewHolderImpl(
             SpaceAdapterItem(),
             NotePreviewAdapterItem(onClickListener)
         )
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(containerView.context)
-        recyclerView.setRecycledViewPool(recycledViewPool)
+        viewBinding.apply {
+            recyclerView.adapter = adapter
+            recyclerView.layoutManager = LinearLayoutManager(containerView.context)
+            recyclerView.setRecycledViewPool(recycledViewPool)
+        }
     }
 }
 

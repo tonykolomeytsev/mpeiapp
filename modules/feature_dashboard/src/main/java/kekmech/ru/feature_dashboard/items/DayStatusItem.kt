@@ -4,9 +4,9 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseItemBinder
+import kekmech.ru.common_android.viewbinding.unit
 import kekmech.ru.feature_dashboard.R
-import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.item_day_status.*
+import kekmech.ru.feature_dashboard.databinding.ItemDayStatusBinding
 
 data class DayStatusItem(
     val header: String,
@@ -19,14 +19,16 @@ interface DayStatusViewHolder {
 }
 
 class DayStatusViewHolderImpl(
-    override val containerView: View
-) : RecyclerView.ViewHolder(containerView), DayStatusViewHolder, LayoutContainer {
+    containerView: View
+) : RecyclerView.ViewHolder(containerView), DayStatusViewHolder {
+
+    private val viewBinding = ItemDayStatusBinding.bind(containerView)
 
     override fun setHeader(header: String) {
-        textViewHeader.text = header
+        viewBinding.textViewHeader.text = header
     }
 
-    override fun setDescription(description: CharSequence) {
+    override fun setDescription(description: CharSequence) = viewBinding.unit {
         if (textViewDescription.text.isEmpty() && description.isNotEmpty()) {
             textViewDescription.alpha = 0f
             textViewDescription.animate()

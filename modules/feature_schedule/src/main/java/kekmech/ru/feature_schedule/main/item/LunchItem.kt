@@ -7,18 +7,16 @@ import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.coreui.items.ClickableItemViewHolder
 import kekmech.ru.coreui.items.ClickableItemViewHolderImpl
 import kekmech.ru.feature_schedule.R
-import kotlinx.android.extensions.LayoutContainer
 
 internal object LunchItem
 
 internal interface LunchViewHolder : ClickableItemViewHolder
 
 internal class LunchViewHolderImpl(
-    override val containerView: View
+    containerView: View
 ) : LunchViewHolder,
     RecyclerView.ViewHolder(containerView),
-    ClickableItemViewHolder by ClickableItemViewHolderImpl(containerView),
-    LayoutContainer
+    ClickableItemViewHolder by ClickableItemViewHolderImpl(containerView)
 
 internal class LunchItemBinder(
     private val onClickListener: () -> Unit

@@ -14,6 +14,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_android.doOnApplyWindowInsets
+import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.views.setMargins
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.ui.BaseFragment
@@ -22,6 +23,7 @@ import kekmech.ru.coreui.items.PullAdapterItem
 import kekmech.ru.coreui.items.SectionHeaderAdapterItem
 import kekmech.ru.coreui.items.SpaceAdapterItem
 import kekmech.ru.domain_map.dto.MapMarker
+import kekmech.ru.map.databinding.FragmentMapBinding
 import kekmech.ru.map.di.MapDependencies
 import kekmech.ru.map.ext.animateCameraTo
 import kekmech.ru.map.ext.init
@@ -33,7 +35,6 @@ import kekmech.ru.map.presentation.*
 import kekmech.ru.map.presentation.MapEvent.Wish
 import kekmech.ru.map.view.ControlledScrollingLayoutManager
 import kekmech.ru.map.view.MarkersBitmapFactory
-import kotlinx.android.synthetic.main.fragment_map.*
 import org.koin.android.ext.android.inject
 
 internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState, MapFeature>(), NeedToUpdate {
@@ -52,19 +53,21 @@ internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState, MapFeat
 
     private val markersBitmapFactory: MarkersBitmapFactory by inject()
 
+    private val viewBinding by viewBinding(FragmentMapBinding::bind)
+
     override fun onViewCreatedInternal(view: View, savedInstanceState: Bundle?) {
         Handler(Looper.getMainLooper()).postDelayed({ createMap() }, 50L)
-        recyclerView.layoutManager = ControlledScrollingLayoutManager(requireContext())
-        recyclerView.adapter = adapter
+        viewBinding.recyclerView.layoutManager = ControlledScrollingLayoutManager(requireContext())
+        viewBinding.recyclerView.adapter = adapter
         createBottomSheet(view)
         analytics.sendScreenShown()
     }
 
     private fun createBottomSheet(view: View) {
         view.doOnApplyWindowInsets { _, insets, padding ->
-            coordinatorLayout.setMargins(top = insets.systemWindowInsetTop + padding.top)
+            viewBinding.coordinatorLayout.setMargins(top = insets.systemWindowInsetTop + padding.top)
         }
-        BottomSheetBehavior.from(recyclerView).apply {
+        BottomSheetBehavior.from(viewBinding.recyclerView).apply {
             addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
 
                 override fun onStateChanged(bottomSheet: View, newState: Int) {
@@ -73,7 +76,7 @@ internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState, MapFeat
                 }
 
                 override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                    viewFade.alpha = slideOffset * 0.5f
+                    viewBinding.viewFade.alpha = slideOffset * 0.5f
                 }
             })
         }
@@ -93,8 +96,8 @@ internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState, MapFeat
 
     override fun render(state: MapState) {
         adapter.update(MapListConverter().map(state))
-        val behavior = BottomSheetBehavior.from(recyclerView)
-        (recyclerView.layoutManager as ControlledScrollingLayoutManager)
+        val behavior = BottomSheetBehavior.from(viewBinding.recyclerView)
+        (viewBinding.recyclerView.layoutManager as ControlledScrollingLayoutManager)
             .isScrollingEnabled = behavior.state != BottomSheetBehavior.STATE_COLLAPSED
 
         DeeplinkHelper.handleDeeplinkIfNecessary(dependencies.deeplinkDelegate, state, feature)
@@ -111,9 +114,9 @@ internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState, MapFeat
                 marker.showInfoWindow()
             }
             if (effect.collapseBottomSheet) {
-                BottomSheetBehavior.from(recyclerView)
+                BottomSheetBehavior.from(viewBinding.recyclerView)
                     .state = BottomSheetBehavior.STATE_COLLAPSED
-                recyclerView.scrollToPosition(0)
+                viewBinding.recyclerView.scrollToPosition(0)
             }
             Unit
         }

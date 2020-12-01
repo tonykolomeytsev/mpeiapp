@@ -11,18 +11,20 @@ import kekmech.ru.common_analytics.addScrollAnalytics
 import kekmech.ru.common_android.ActivityResultListener
 import kekmech.ru.common_android.addSystemTopPadding
 import kekmech.ru.common_android.getStringArray
+import kekmech.ru.common_android.viewbinding.unit
+import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.ui.BaseFragment
 import kekmech.ru.common_navigation.NeedToUpdate
 import kekmech.ru.domain_schedule.dto.Classes
 import kekmech.ru.feature_schedule.R
+import kekmech.ru.feature_schedule.databinding.FragmentScheduleBinding
 import kekmech.ru.feature_schedule.di.ScheduleDependencies
 import kekmech.ru.feature_schedule.main.adapter.WeeksScrollAdapter
 import kekmech.ru.feature_schedule.main.helpers.WeeksScrollHelper
 import kekmech.ru.feature_schedule.main.item.*
 import kekmech.ru.feature_schedule.main.presentation.*
 import kekmech.ru.feature_schedule.main.presentation.ScheduleEvent.Wish
-import kotlinx.android.synthetic.main.fragment_schedule.*
 import org.koin.android.ext.android.inject
 import java.time.LocalDate
 
@@ -47,27 +49,31 @@ internal class ScheduleFragment : BaseFragment<ScheduleEvent, ScheduleEffect, Sc
     private val weeksScrollHelper by fastLazy { createWeekDaysHelper() }
 
     private val analytics: ScheduleAnalytics by inject()
+    private val viewBinding by viewBinding(FragmentScheduleBinding::bind)
 
     // for viewPager sliding debounce
     private var viewPagerPositionToBeSelected: Int? = null
     private var weekOffsetToBeSelected: Int = 0
 
     override fun onViewCreatedInternal(view: View, savedInstanceState: Bundle?) {
-        weeksScrollHelper.attach(recyclerView, weekOffsetToBeSelected)
-        recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        recyclerView.adapter = weeksScrollAdapter
-        recyclerView.itemAnimator = null
-        recyclerView.setHasFixedSize(true)
-        recyclerView.addScrollAnalytics(analytics, "WeeksRecyclerView")
-        viewPager.adapter = viewPagerAdapter
-        viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                feature.accept(Wish.Action.OnPageChanged(position))
-            }
-        })
-        viewPager.addScrollAnalytics(analytics, "WorkingDaysViewPager")
-        appBarLayout.outlineProvider = null
-        appBarLayout.addSystemTopPadding()
+        viewBinding.apply {
+            weeksScrollHelper.attach(recyclerView, weekOffsetToBeSelected)
+            recyclerView.layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            recyclerView.adapter = weeksScrollAdapter
+            recyclerView.itemAnimator = null
+            recyclerView.setHasFixedSize(true)
+            recyclerView.addScrollAnalytics(analytics, "WeeksRecyclerView")
+            viewPager.adapter = viewPagerAdapter
+            viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    feature.accept(Wish.Action.OnPageChanged(position))
+                }
+            })
+            viewPager.addScrollAnalytics(analytics, "WorkingDaysViewPager")
+            appBarLayout.outlineProvider = null
+            appBarLayout.addSystemTopPadding()
+        }
         analytics.sendScreenShown()
     }
 
@@ -78,7 +84,7 @@ internal class ScheduleFragment : BaseFragment<ScheduleEvent, ScheduleEffect, Sc
         }
     }
 
-    override fun render(state: ScheduleState) {
+    override fun render(state: ScheduleState) = viewBinding.unit {
         weekOffsetToBeSelected = state.weekOffset
         shimmerViewContainer.isVisible = state.isLoading
         appBarLayoutGroup.isVisible = !state.isLoading
