@@ -2,6 +2,9 @@ package kekmech.ru.notes.all_notes
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import kekmech.ru.common_adapter.BaseAdapter
@@ -50,6 +53,7 @@ internal class AllNotesFragment : BaseFragment<AllNotesEvent, AllNotesEffect, Al
         view.addSystemVerticalPadding()
         viewBinding.apply {
             toolbar.init()
+            toolbar.setOnMenuItemClickListener { searchNotes(); true }
             recyclerView.layoutManager = LinearLayoutManager(requireContext())
             recyclerView.adapter = adapter
             recyclerView.attachScrollListenerForAppBarLayoutShadow(appBarLayout)
@@ -98,6 +102,13 @@ internal class AllNotesFragment : BaseFragment<AllNotesEvent, AllNotesEffect, Al
         if (requestCode == NOTE_EDIT_REQUEST_CODE) {
             feature.accept(Wish.Init)
         }
+    }
+
+    private fun searchNotes() {
+        dependencies.searchFeatureLauncher.launch(
+            query = "",
+            filter = "NOTES"
+        )
     }
 
     companion object {
