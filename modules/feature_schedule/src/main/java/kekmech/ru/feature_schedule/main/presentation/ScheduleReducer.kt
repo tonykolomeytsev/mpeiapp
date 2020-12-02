@@ -156,7 +156,8 @@ internal class ScheduleReducer : BaseReducer<ScheduleState, ScheduleEvent, Sched
                 weekOffset = event.weekOffset,
                 weekItems = weekItems,
                 selectedDay = selectNecessaryDay(state, event.weekOffset, forceChangeSelectedDay),
-                isLoading = true
+                isLoading = true,
+                isNavigationFabCurrentWeek = if (forceChangeSelectedDay) event.weekOffset == 0 else state.isNavigationFabCurrentWeek
             ),
             action = ScheduleAction.LoadSchedule(event.weekOffset)
         )
