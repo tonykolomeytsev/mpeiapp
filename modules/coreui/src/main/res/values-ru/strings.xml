@@ -1,0 +1,227 @@
+<resources>
+    <string name="app_name">coreui</string>
+
+    <!-- НУМЕРАЦИЯ ПАР-->
+    <string-array name="classes_numbers">
+        <item>Очередная пара</item>
+        <item>Первая пара</item>
+        <item>Вторая пара</item>
+        <item>Третья пара</item>
+        <item>Четвертая пара</item>
+        <item>Пятая пара</item>
+        <item>Шестая пара</item>
+        <item>Седьмая пара</item>
+    </string-array>
+
+    <string-array name="days_of_week">
+        <item>Понедельник</item>
+        <item>Вторник</item>
+        <item>Среда</item>
+        <item>Четверг</item>
+        <item>Пятница</item>
+        <item>Суббота</item>
+        <item>Воскресенье</item>
+    </string-array>
+
+    <string-array name="days_of_week_short">
+        <item>ВС</item>
+        <item>ПН</item>
+        <item>ВТ</item>
+        <item>СР</item>
+        <item>ЧТ</item>
+        <item>ПТ</item>
+        <item>СБ</item>
+    </string-array>
+
+    <string-array name="months">
+        <item>января</item>
+        <item>февраля</item>
+        <item>марта</item>
+        <item>апреля</item>
+        <item>мая</item>
+        <item>июня</item>
+        <item>июля</item>
+        <item>августа</item>
+        <item>сентября</item>
+        <item>октября</item>
+        <item>ноября</item>
+        <item>декабря</item>
+    </string-array>
+
+    <string-array name="months_short">
+        <item>янв</item>
+        <item>фев</item>
+        <item>мар</item>
+        <item>апр</item>
+        <item>мая</item>
+        <item>июн</item>
+        <item>июл</item>
+        <item>авг</item>
+        <item>сен</item>
+        <item>окт</item>
+        <item>ноя</item>
+        <item>дек</item>
+    </string-array>
+
+    <string-array name="classes_types">
+        <item>Очередная пара</item>
+        <item>Лекция</item>
+        <item>Практика</item>
+        <item>Лабораторная</item>
+        <item>Курсовая</item>
+    </string-array>
+
+    <string-array name="hours_declensions">
+        <item>час</item>
+        <item>часа</item>
+        <item>часов</item>
+    </string-array>
+
+    <string-array name="minutes_declensions">
+        <item>минуту</item>
+        <item>минуты</item>
+        <item>минут</item>
+    </string-array>
+
+    <string name="today">Сегодня</string>
+    <string name="tomorrow">Завтра</string>
+    <string name="after_tomorrow">Послезавтра</string>
+    <string name="yesterday">Вчера</string>
+    <string name="before_yesterday">Позавчера</string>
+
+    <string name="something_went_wrong_error">Что-то пошло не так…</string>
+
+    <string name="onboarding_welcome_start_using">Начать пользоваться</string>
+    <string name="onboarding_welcome_title_1">Встречайте\nобновленный MPEIX</string>
+    <string name="onboarding_welcome_subtitle_1">Мы полностью переосмыслили приложение, чтобы сделать его еще лучше</string>
+    <string name="onboarding_welcome_title_2">Просматривайте расписания</string>
+    <string name="onboarding_welcome_subtitle_2">К просмотренным ранее расписаниям вы имеете доступ даже без интернета</string>
+    <string name="onboarding_welcome_title_3">Создавайте заметки</string>
+    <string name="onboarding_welcome_subtitle_3">Пользоваться заметками стало еще удобнее!\nСамые актуальные заметки теперь всегда отображаются на главном экране</string>
+    <string name="onboarding_welcome_title_4">Пользуйтесь картой</string>
+    <string name="onboarding_welcome_subtitle_4">Теперь на карте отображены не только корпуса, столовые и общежития, но и другие важные места</string>
+    <string name="onboarding_welcome_title_5">Ищите в приложении</string>
+    <string name="onboarding_welcome_subtitle_5">С главного экрана можно искать места на карте и свои заметки. Скоро добавим поиск групп и преподавателей!</string>
+
+    <string name="schedule_find_header">Введите номер группы</string>
+    <string name="schedule_find_description">Мы загрузим расписание выбранной группы на устройство</string>
+    <string name="schedule_find_hint">Номер группы</string>
+    <string name="schedule_find_button_continue">Продолжить</string>
+    <string name="schedule_find_error_loading">Не удалось загрузить расписание для группы %s</string>
+
+    <string name="schedule_semester_week">Учебная неделя №%d</string>
+    <string name="schedule_weekend_week">Неучебная неделя</string>
+    <string name="schedule_loading_error">При загрузке расписания произошла ошибка</string>
+    <string name="schedule_item_window_header">Окно между парами</string>
+    <string name="schedule_item_window_description">Проведите его с пользой</string>
+    <string name="schedule_item_lunch_header">Обеденный перерыв</string>
+    <string name="schedule_item_lunch_description">Искать столовые на карте</string>
+    <string name="schedule_item_lunch_time_start">12:45</string>
+    <string name="schedule_item_lunch_time_end">13:45</string>
+    <string name="schedule_item_self_study_header">День самостоятельных занятий</string>
+    <string name="schedule_item_self_study_description">Потратьте этот день с пользой, начните проходить курсы по программированию или начните читать книгу</string>
+    <string name="schedule_empty_state_title">Упс! Не удалось загрузить расписание</string>
+    <string name="schedule_empty_state_subtitle">Возможно это произошло из-за проблем с интернет соединением.\nЛибо сервер MpeiX упал :)</string>
+
+    <string name="onboarding_bars_header">Вход в БАРС</string>
+    <string name="onboarding_bars_description">Вы можете совершить вход в систему БАРС, чтобы получить возможность просматривать оценки из приложения</string>
+    <string name="onboarding_bars_button_skip">Пропустить</string>
+    <string name="onboarding_bars_button_signin">Войти</string>
+
+    <string name="dashboard_loading_error">Произошла ошибка при загрузке данных с сервера</string>
+    <string name="dashboard_item_change_group">Группа %s</string>
+    <string name="dashboard_section_header_events">Ближайшие события</string>
+    <string name="dashboard_events_empty_state_title">Пока ничего интересного</string>
+    <string name="dashboard_events_empty_state_subtitle">В ближайшие сутки не запланировано никаких событий</string>
+    <string name="dashboard_section_header_favorites">Избранные расписания</string>
+    <string name="dashboard_section_header_favorites_subtitle">Нажмите для переключения</string>
+    <string name="dashboard_section_header_session">Расписание сессии</string>
+    <string name="dashboard_section_header_session_subtitle">Таков путь</string>
+    <string name="dashboard_session_item_exam">ЭКЗАМЕН</string>
+    <string name="dashboard_session_item_consultation">КОНСУЛЬТАЦИЯ</string>
+    <string name="dashboard_section_header_notes">Заметки</string>
+    <string name="dashboard_section_header_notes_action">ПОКАЗАТЬ ВСЕ</string>
+    <string name="dashboard_actual_notes_empty_state_title">Нет ни одной актуальной заметки для вас</string>
+    <string name="dashboard_events_today">Сегодняшние пары</string>
+    <string name="dashboard_events_tomorrow">Завтрашние пары</string>
+    <string name="dashboard_banner_lunch_header">Судя по всему, сейчас обеденный перерыв</string>
+    <string name="dashboard_banner_lunch_description">Найти столовые на карте</string>
+    <string name="dashboard_search_field_text">Искать места, заметки…</string>
+    <string name="dashboard_day_status_semester">Идет %d учебная неделя</string>
+    <string name="dashboard_day_status_not_semester">Неучебная неделя</string>
+    <string name="dashboard_item_time_prediction_prefix">Пара начнется через</string>
+
+    <string name="map_tab_name_eat">Еда</string>
+    <string name="map_section_name_eat">Еда</string>
+    <string name="map_tab_name_buildings">Корпуса</string>
+    <string name="map_section_name_buildings">Корпуса</string>
+    <string name="map_tab_name_hostels">Общаги</string>
+    <string name="map_section_name_hostels">Общаги</string>
+    <string name="map_tab_name_others">Места</string>
+    <string name="map_section_name_others">Места</string>
+    <string name="map_tab_name_structures">Кафедры</string>
+    <string name="map_section_name_structures">Кафедры</string>
+    <string name="map_section_tag_others">Остальные места</string>
+
+    <string name="note_list_section_add">СОЗДАТЬ ЗАМЕТКУ</string>
+    <string name="note_list_section_header">Прикрепленные заметки</string>
+    <string name="note_list_section_subtitle_empty">У этой пары нет заметок</string>
+    <plurals name="note_list_section_subtitle">
+        <item quantity="one">У этой пары одна заметка</item>
+        <item quantity="two">У этой пары две заметки</item>
+        <item quantity="other">Заметок у пары: %d</item>
+    </plurals>
+
+    <string name="note_edit_screen_title">Заметка</string>
+    <string name="note_edit_button_save">Сохранить</string>
+
+    <string name="all_notes_screen_title">Все заметки</string>
+    <string name="all_notes_section_header_forthcoming">Актуальные заметки</string>
+    <string name="all_notes_section_header_past">Прошедшие заметки</string>
+    <string name="all_notes_empty_state_title">Вы пока не создали ни одной заметки</string>
+    <string name="all_notes_empty_state_subtitle">Для создания заметки нажмите на любую пару в разделе расписания</string>
+    <string name="all_notes_search_menu_item">Поиск</string>
+
+    <string name="bars_stub_student_name">Анонимный студент</string>
+    <string name="bars_stub_student_group">Группа %s</string>
+    <string name="bars_stub_title">Упс! БАРС был убит…</string>
+    <string name="bars_stub_description">Раньше здесь был БАРС.\nМы работаем над тем, чтобы вернуть раздел.\nПодробнее можно узнать в нашей группе.</string>
+
+    <string name="app_settings_screen_title">Настройки</string>
+    <string name="app_settings_header_schedule">Расписание</string>
+    <string name="app_settings_header_map">Карта</string>
+    <string name="app_settings_dark_theme">Темная тема</string>
+    <string name="app_settings_dark_theme_description">Вы можете сменить визуальное оформление со светлого на темное и наоборот</string>
+    <string name="app_settings_snowy_mood">Снежное настроение</string>
+    <string name="app_settings_change_day_after_change_week">Менять день при смене недели</string>
+    <string name="app_settings_change_day_after_change_week_description">При переходе на другую неделю автоматически переключаться на 7 дней вперед, либо 7 дней назад</string>
+    <string name="app_settings_auto_hide_bottom_sheet">Скрывать список по клику</string>
+    <string name="app_settings_auto_hide_bottom_sheet_description">При включенной настройке, на экране карты нажатие на любой адрес в списке автоматически свернет список и переместит камеру к указанному адресу</string>
+    <string name="app_settings_favorite_schedule_title">Избранные расписания</string>
+    <string name="app_settings_favorite_schedule_description">Настройка быстрого доступа к расписаниям</string>
+
+    <string name="favorites_screen_title">Избранные расписания</string>
+    <string name="favorites_empty_state_title">Ни одно расписание не добавлено в избранные</string>
+    <string name="favorites_empty_state_add">ДОБАВИТЬ ГРУППУ</string>
+    <string name="favorites_help_title">Как это работает?</string>
+    <string name="favorites_help_text">Внесенные в этот список группы будут отображаться на главной странице. Вы сможете одним нажатием переключаться между группами, не набирая их имя в поиске.</string>
+
+    <string name="edit_favorite_screen_subtitle">Оставьте краткое описание для выбранной группы. Вы также можете оставить описание пустым.</string>
+    <string name="edit_favorite_hint">Описание для группы</string>
+    <string name="edit_favorite_button_continue">Продолжить</string>
+
+    <string name="search_section_title_map">Карта</string>
+    <string name="search_section_title_notes">Заметки</string>
+    <string name="search_empty_state_title">Введите текст чтобы начать поиск</string>
+    <string name="search_empty_state_subtitle">Вы можете искать заметки и места на карте. Уже скоро можно будет искать преподавателей и расписания!</string>
+    <string name="search_not_found_state_title">По вашему запросу ничего не найдено</string>
+    <string name="search_not_found_state_subtitle">Вы можете искать заметки по контенту и названиям дисциплин, а также места на карте по названию, адресу и категории</string>
+    <string name="search_filter_all">Все категории</string>
+    <string name="search_filter_notes">Заметки</string>
+    <string name="search_filter_map">Карта</string>
+
+    <string name="navigation_name_dashboard">Лента</string>
+    <string name="navigation_name_schedule">Расписание</string>
+    <string name="navigation_name_map">Карта</string>
+    <string name="navigation_name_profile">Профиль</string>
+</resources>
