@@ -1,0 +1,225 @@
+<resources>
+    <!-- НУМЕРАЦИЯ ПАР-->
+    <string-array name="classes_numbers">
+        <item>Some class</item>
+        <item>First class</item>
+        <item>Second class</item>
+        <item>Third class</item>
+        <item>Fourth class</item>
+        <item>Fifth class</item>
+        <item>Sixth class</item>
+        <item>Seventh class</item>
+    </string-array>
+
+    <string-array name="days_of_week">
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+        <item>Saturday</item>
+        <item>Sunday</item>
+    </string-array>
+
+    <string-array name="days_of_week_short">
+        <item>SUN</item>
+        <item>MON</item>
+        <item>TUE</item>
+        <item>WED</item>
+        <item>THU</item>
+        <item>FRI</item>
+        <item>SAT</item>
+    </string-array>
+
+    <string-array name="months">
+        <item>january</item>
+        <item>february</item>
+        <item>march</item>
+        <item>april</item>
+        <item>may</item>
+        <item>june</item>
+        <item>july</item>
+        <item>august</item>
+        <item>september</item>
+        <item>october</item>
+        <item>november</item>
+        <item>december</item>
+    </string-array>
+
+    <string-array name="months_short">
+        <item>jan</item>
+        <item>feb</item>
+        <item>mar</item>
+        <item>apr</item>
+        <item>may</item>
+        <item>jun</item>
+        <item>jul</item>
+        <item>aug</item>
+        <item>sep</item>
+        <item>oct</item>
+        <item>nov</item>
+        <item>dec</item>
+    </string-array>
+
+    <string-array name="classes_types">
+        <item>Some class</item>
+        <item>Lecture</item>
+        <item>Practice</item>
+        <item>Lab</item>
+        <item>Course</item>
+    </string-array>
+
+    <string-array name="hours_declensions">
+        <item>hour</item>
+        <item>hours</item>
+        <item>hours</item>
+    </string-array>
+
+    <string-array name="minutes_declensions">
+        <item>minute</item>
+        <item>minutes</item>
+        <item>minutes</item>
+    </string-array>
+
+    <string name="today">Today</string>
+    <string name="tomorrow">Tomorrow</string>
+    <string name="after_tomorrow">Day after tomorrow</string>
+    <string name="yesterday">Yesterday</string>
+    <string name="before_yesterday">Day before yesterday</string>
+
+    <string name="something_went_wrong_error">Something went wrong…</string>
+
+    <string name="onboarding_welcome_start_using">Continue</string>
+    <string name="onboarding_welcome_title_1">Meet\nоthe refreshed MPEIX</string>
+    <string name="onboarding_welcome_subtitle_1">We`ve completely reimagined the app to make it even better</string>
+    <string name="onboarding_welcome_title_2">Check your schedule</string>
+    <string name="onboarding_welcome_subtitle_2">You can access the previously viewed schedules even without the Internet</string>
+    <string name="onboarding_welcome_title_3">Create notes</string>
+    <string name="onboarding_welcome_subtitle_3">Using notes just got easier!\nThe most relevant notes are now always displayed on the home screen</string>
+    <string name="onboarding_welcome_title_4">Use the map</string>
+    <string name="onboarding_welcome_subtitle_4">Now the map shows not only buildings, canteens and hostels, but also other important places</string>
+    <string name="onboarding_welcome_title_5">Search in the app</string>
+    <string name="onboarding_welcome_subtitle_5">From the home screen, you can search for places on the map and your notes. We will add search for groups and teachers soon!</string>
+
+    <string name="schedule_find_header">Enter group number</string>
+    <string name="schedule_find_description">We will download the schedule of the selected group to the device</string>
+    <string name="schedule_find_hint">Group number</string>
+    <string name="schedule_find_button_continue">Continue</string>
+    <string name="schedule_find_error_loading">Failed to load schedule for group %s</string>
+
+    <string name="schedule_semester_week">Academic week #%d</string>
+    <string name="schedule_weekend_week">Non-academic week</string>
+    <string name="schedule_loading_error">There was an error loading the schedule</string>
+    <string name="schedule_item_window_header">"Window" between classes</string>
+    <string name="schedule_item_window_description">Make the most of this time</string>
+    <string name="schedule_item_lunch_header">Lunch break</string>
+    <string name="schedule_item_lunch_description">Search for food on the map</string>
+    <string name="schedule_item_lunch_time_start">12:45</string>
+    <string name="schedule_item_lunch_time_end">13:45</string>
+    <string name="schedule_item_self_study_header">Self-study day</string>
+    <string name="schedule_item_self_study_description">Spend your day to good use, start taking programming courses or start reading a book</string>
+    <string name="schedule_empty_state_title">Oops! Failed to load schedule</string>
+    <string name="schedule_empty_state_subtitle">Perhaps this happened due to problems with the Internet connection.\nOr the MpeiX server crashed :)</string>
+
+    <string name="onboarding_bars_header">Вход в БАРС</string>
+    <string name="onboarding_bars_description">Вы можете совершить вход в систему БАРС, чтобы получить возможность просматривать оценки из приложения</string>
+    <string name="onboarding_bars_button_skip">Пропустить</string>
+    <string name="onboarding_bars_button_signin">Войти</string>
+
+    <string name="dashboard_loading_error">An error occurred while loading data from the server</string>
+    <string name="dashboard_item_change_group">Group %s</string>
+    <string name="dashboard_section_header_events">Upcoming events</string>
+    <string name="dashboard_events_empty_state_title">Nothing interesting yet</string>
+    <string name="dashboard_events_empty_state_subtitle">No events scheduled for the next 24 hours</string>
+    <string name="dashboard_section_header_favorites">Favorite schedules</string>
+    <string name="dashboard_section_header_favorites_subtitle">Click to switch group number</string>
+    <string name="dashboard_section_header_session">Session schedule</string>
+    <string name="dashboard_section_header_session_subtitle">This is the way</string>
+    <string name="dashboard_session_item_exam">EXAM</string>
+    <string name="dashboard_session_item_consultation">CONSULTATION</string>
+    <string name="dashboard_section_header_notes">Notes</string>
+    <string name="dashboard_section_header_notes_action">SHOW ALL</string>
+    <string name="dashboard_actual_notes_empty_state_title">There are no relevant notes for you</string>
+    <string name="dashboard_events_today">Today`s classes</string>
+    <string name="dashboard_events_tomorrow">Tomorrow`s classes</string>
+    <string name="dashboard_banner_lunch_header">Apparently,\nit`s lunch break now</string>
+    <string name="dashboard_banner_lunch_description">Search for food on the map</string>
+    <string name="dashboard_search_field_text">Search places, notes…</string>
+    <string name="dashboard_day_status_semester">The academic week #%d is in progress</string>
+    <string name="dashboard_day_status_not_semester">Non-academic week</string>
+    <string name="dashboard_item_time_prediction_prefix">The class will start in</string>
+
+    <string name="map_tab_name_eat">Food</string>
+    <string name="map_section_name_eat">Food</string>
+    <string name="map_tab_name_buildings">Buildings</string>
+    <string name="map_section_name_buildings">Buildings</string>
+    <string name="map_tab_name_hostels">Hostels</string>
+    <string name="map_section_name_hostels">Hostels</string>
+    <string name="map_tab_name_others">Places</string>
+    <string name="map_section_name_others">Places</string>
+    <string name="map_tab_name_structures">Departm.</string>
+    <string name="map_section_name_structures">Departments</string>
+    <string name="map_section_tag_others">Remaining places</string>
+
+    <string name="note_list_section_add">CREATE NOTE</string>
+    <string name="note_list_section_header">Attached notes</string>
+    <string name="note_list_section_subtitle_empty">This class has no notes</string>
+    <plurals name="note_list_section_subtitle">
+        <item quantity="one">This class has one note</item>
+        <item quantity="two">This class has two notes</item>
+        <item quantity="other">This class has %d notes</item>
+    </plurals>
+
+    <string name="note_edit_screen_title">Note</string>
+    <string name="note_edit_button_save">Save</string>
+
+    <string name="all_notes_screen_title">All notes</string>
+    <string name="all_notes_section_header_forthcoming">Actual notes</string>
+    <string name="all_notes_section_header_past">Out of date notes</string>
+    <string name="all_notes_empty_state_title">You have not created any notes yet</string>
+    <string name="all_notes_empty_state_subtitle">To create a note, click on any class item in the schedule section</string>
+    <string name="all_notes_search_menu_item">Search</string>
+
+    <string name="bars_stub_student_name">Anonymous student</string>
+    <string name="bars_stub_student_group">Group %s</string>
+    <string name="bars_stub_title">Oops! BARS was killed…</string>
+    <string name="bars_stub_description">There used to be BARS here.\nWe are working to bring the section back.\nMore details can be found in our group.</string>
+
+    <string name="app_settings_screen_title">Settings</string>
+    <string name="app_settings_header_schedule">Schedule</string>
+    <string name="app_settings_header_map">Map</string>
+    <string name="app_settings_dark_theme">Dark theme</string>
+    <string name="app_settings_dark_theme_description">You can change the visual design from light to dark and vice versa</string>
+    <string name="app_settings_snowy_mood">Snowy mood</string>
+    <string name="app_settings_change_day_after_change_week">Change day when changing week</string>
+    <string name="app_settings_change_day_after_change_week_description">When switching to another week, automatically switch 7 days forward, or 7 days back</string>
+    <string name="app_settings_auto_hide_bottom_sheet">Hide the list on click</string>
+    <string name="app_settings_auto_hide_bottom_sheet_description">When the setting is on, on the map screen, clicking on any address in the list will automatically collapse the list and move the camera to the specified address</string>
+    <string name="app_settings_favorite_schedule_title">Favorite schedules</string>
+    <string name="app_settings_favorite_schedule_description">Setting up quick access to schedules</string>
+
+    <string name="favorites_screen_title">Favorite schedules</string>
+    <string name="favorites_empty_state_title">No schedule has been added to favorites</string>
+    <string name="favorites_empty_state_add">ADD GROUP</string>
+    <string name="favorites_help_title">How it works?</string>
+    <string name="favorites_help_text">The groups included in this list will be displayed on the main page. You can switch between groups with one click without typing their name in the search.</string>
+
+    <string name="edit_favorite_screen_subtitle">Write a short description for the selected group. You can also leave the description blank.</string>
+    <string name="edit_favorite_hint">Description for the group</string>
+    <string name="edit_favorite_button_continue">Continue</string>
+
+    <string name="search_section_title_map">Map</string>
+    <string name="search_section_title_notes">Notes</string>
+    <string name="search_empty_state_title">Enter text to start search</string>
+    <string name="search_empty_state_subtitle">You can search for notes and places on the map. It will be possible to search for teachers and schedules soon!</string>
+    <string name="search_not_found_state_title">No results were found for your search</string>
+    <string name="search_not_found_state_subtitle">You can search notes by content and discipline names, as well as locations on the map by name, address and category</string>
+    <string name="search_filter_all">All categories</string>
+    <string name="search_filter_notes">Notes</string>
+    <string name="search_filter_map">Map</string>
+
+    <string name="navigation_name_dashboard">Dashboard</string>
+    <string name="navigation_name_schedule">Schedule</string>
+    <string name="navigation_name_map">Map</string>
+    <string name="navigation_name_profile">Profile</string>
+</resources>

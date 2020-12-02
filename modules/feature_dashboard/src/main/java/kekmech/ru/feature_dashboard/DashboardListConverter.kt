@@ -194,9 +194,10 @@ class DashboardListConverter(
             if (classes == raw[indexOfNextClasses] && actualDay != null) {
                 // add time status
                 val (condition, hours, minutes) = state.getNextClassesTimeStatus(actualDay.date, classes.time)
+                val prefix = context.getString(R.string.dashboard_item_time_prediction_prefix)
                 when (condition) {
                     NOT_STARTED -> add(TextItem(
-                        text = "Пара начнется через ${TimeDeclensionHelper.formatHoursMinutes(context, hours, minutes)}"
+                        text = "$prefix ${TimeDeclensionHelper.formatHoursMinutes(context, hours, minutes)}"
                     ))
                     STARTED -> Unit
                     else -> Unit
