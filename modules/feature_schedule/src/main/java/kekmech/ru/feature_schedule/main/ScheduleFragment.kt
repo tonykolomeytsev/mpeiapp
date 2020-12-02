@@ -73,6 +73,7 @@ internal class ScheduleFragment : BaseFragment<ScheduleEvent, ScheduleEffect, Sc
             viewPager.addScrollAnalytics(analytics, "WorkingDaysViewPager")
             appBarLayout.outlineProvider = null
             appBarLayout.addSystemTopPadding()
+            fab.setOnClickListener { feature.accept(Wish.Click.OnFAB) }
         }
         analytics.sendScreenShown()
     }
@@ -93,12 +94,12 @@ internal class ScheduleFragment : BaseFragment<ScheduleEvent, ScheduleEffect, Sc
         textViewHeader.text = getFormattedDay(state.selectedDay.date)
         textViewDescription.text = state.weekOfSemester?.let { getFormattedWeek(it) }.orEmpty()
 
+        renderWeekSelection(state)
         weeksScrollAdapter.update(state.weekItems)
         weeksScrollAdapter.selectDay(state.selectedDay)
         viewPagerAdapter.update(ScheduleClassesListConverter.map(state))
 
         renderShimmer(state)
-
         renderFloatingActionButton(state)
 
         if (viewPagerPositionToBeSelected != state.selectedDay.dayOfWeek) {
@@ -109,6 +110,11 @@ internal class ScheduleFragment : BaseFragment<ScheduleEvent, ScheduleEffect, Sc
                 if (selectedItem in 0..5) viewPager.setCurrentItem(selectedItem, smoothScroll)
             }
         }
+    }
+
+    private fun renderWeekSelection(state: ScheduleState) {
+        val position = state.weekOffset + (Int.MAX_VALUE / 2)
+        viewBinding.recyclerView.scrollToPosition(position)
     }
 
     private fun renderShimmer(state: ScheduleState) {
@@ -122,6 +128,11 @@ internal class ScheduleFragment : BaseFragment<ScheduleEvent, ScheduleEffect, Sc
     }
 
     private fun renderFloatingActionButton(state: ScheduleState) {
+        if (state.isNavigationFabCurrentWeek) {
+            viewBinding.fab.text = "К следующей неделе"
+        } else {
+            viewBinding.fab.text = "К текущей неделе"
+        }
         if (state.isNavigationFabVisible) with(viewBinding.fab) {
             clearAnimation()
             isEnabled = true
