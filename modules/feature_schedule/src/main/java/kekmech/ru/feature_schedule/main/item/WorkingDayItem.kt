@@ -33,6 +33,7 @@ internal interface WorkingDayViewHolder {
         recycledViewPool: RecyclerView.RecycledViewPool,
         onClickListener: (Classes) -> Unit
     )
+    fun addScrollListener(listener: (Int) -> Unit)
 }
 
 internal class WorkingDayViewHolderImpl(
@@ -66,15 +67,25 @@ internal class WorkingDayViewHolderImpl(
             recyclerView.setRecycledViewPool(recycledViewPool)
         }
     }
+
+    override fun addScrollListener(listener: (Int) -> Unit) {
+        viewBinding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                listener(dy)
+            }
+        })
+    }
 }
 
 internal class WorkingDayItemBinder(
     private val recycledViewPool: RecyclerView.RecycledViewPool,
-    private val onClickListener: (Classes) -> Unit
+    private val onClickListener: (Classes) -> Unit,
+    private val onScrollClasses: (Int) -> Unit
 ) : BaseItemBinder<WorkingDayViewHolder, WorkingDayItem>() {
 
     override fun bind(vh: WorkingDayViewHolder, model: WorkingDayItem, position: Int) {
         vh.initAdapter(recycledViewPool, onClickListener)
+        vh.addScrollListener(onScrollClasses)
         vh.setItems(model.items)
     }
 
@@ -90,14 +101,16 @@ internal class WorkingDayItemBinder(
 
 internal class WorkingDayAdapterItem(
     dayOfWeek: Int,
-    onClickListener: (Classes) -> Unit
+    onClickListener: (Classes) -> Unit,
+    onScrollClasses: (Int) -> Unit
 ) : AdapterItem<WorkingDayViewHolder, WorkingDayItem>(
     isType = { it is WorkingDayItem && it.dayOfWeek == dayOfWeek },
     layoutRes = R.layout.item_working_day,
     viewHolderGenerator = ::WorkingDayViewHolderImpl,
     itemBinder = WorkingDayItemBinder(
         recycledViewPool = RecyclerView.RecycledViewPool().apply { setMaxRecycledViews(0, 200) },
-        onClickListener = onClickListener
+        onClickListener = onClickListener,
+        onScrollClasses = onScrollClasses
     ),
     areItemsTheSame = { a, b -> a.dayOfWeek == b.dayOfWeek },
     equals = { a, b -> a.items == b.items },

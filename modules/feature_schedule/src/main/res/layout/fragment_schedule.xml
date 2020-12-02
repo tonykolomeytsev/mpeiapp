@@ -51,7 +51,6 @@
                 android:layout_height="64dp"
                 android:orientation="horizontal"
                 android:clipToPadding="false"
-                android:layout_marginBottom="8dp"
                 tools:layoutManager="LinearLayoutManager"
                 tools:itemCount="6"
                 tools:listitem="@layout/item_day"/>
@@ -184,5 +183,27 @@
             android:layout_height="0dp"
             app:layout_constraintTop_toBottomOf="@id/appBarLayout"
             app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:background="@drawable/background_white_gradient"
+            app:layout_constraintTop_toBottomOf="@id/appBarLayout"/>
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="16dp"
+            app:backgroundTint="@color/colorMain"
+            android:textColor="@color/colorWhite"
+            app:icon="@drawable/ic_outline_search_24"
+            app:iconTint="@color/colorWhite"
+            android:text="Следующая неделя"
+            android:tooltipText="Bla bla"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

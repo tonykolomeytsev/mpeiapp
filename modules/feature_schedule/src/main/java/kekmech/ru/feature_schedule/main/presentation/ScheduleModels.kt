@@ -22,13 +22,16 @@ internal data class ScheduleState(
     val weekItems: HashMap<Int, WeekItem> = hashMapOf(),
     val hash: String = "",
     val appSettings: AppSettings,
-    val isAfterError: Boolean = false
+    val isAfterError: Boolean = false,
+    val isNavigationFabVisible: Boolean = true
 ) {
     /**
      * Get weekOfSemester number by weekOffset
      * @param n - weekOffset
      */
     val weekOfSemester get() = schedule[0]?.weeks?.firstOrNull()?.weekOfSemester?.plus(weekOffset)
+
+    val selectedWeekSchedule get() = schedule[selectedDay.weekOffset]?.weeks?.first()
 }
 
 internal sealed class ScheduleEvent {
@@ -40,6 +43,7 @@ internal sealed class ScheduleEvent {
             data class OnPageChanged(val page: Int) : Wish()
             object OnNotesUpdated : Wish()
             object UpdateScheduleIfNeeded : Wish()
+            data class OnClassesScroll(val dy: Int) : Wish()
         }
 
         object Click {

@@ -109,6 +109,9 @@ internal class ScheduleReducer : BaseReducer<ScheduleState, ScheduleEvent, Sched
             state = state.copy(isLoading = true),
             action = ScheduleAction.LoadSchedule(state.weekOffset)
         )
+        is Wish.Action.OnClassesScroll -> Result(
+            state = state.copy(isNavigationFabVisible = event.dy <= 0)
+        )
     }
 
     private fun generateSelectedWeekResult(
