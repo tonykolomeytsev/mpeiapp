@@ -1,5 +1,6 @@
 package kekmech.ru.mpeiapp
 
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -10,6 +11,7 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException
 import com.google.android.gms.maps.MapsInitializer
 import com.google.firebase.analytics.FirebaseAnalytics
 import kekmech.ru.common_android.onActivityResult
+import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_navigation.BackButtonListener
 import kekmech.ru.common_navigation.NavigationHolder
 import kekmech.ru.domain_app_settings.AppSettings
@@ -26,6 +28,7 @@ class MainActivity : AppCompatActivity() {
     private val onboardingFeatureLauncher: OnboardingFeatureLauncher by inject()
     private val mainScreenLauncher: MainScreenLauncher by inject()
     private val deeplinkHandlersProcessor: DeeplinkHandlersProcessor by inject()
+    private val localeContextWrapper by fastLazy { LocaleContextWrapper() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -98,5 +101,9 @@ class MainActivity : AppCompatActivity() {
         } else {
             super.onBackPressed()
         }
+    }
+
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(localeContextWrapper.wrapContext(newBase))
     }
 }
