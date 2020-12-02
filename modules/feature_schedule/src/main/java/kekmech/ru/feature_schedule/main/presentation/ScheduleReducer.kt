@@ -114,20 +114,18 @@ internal class ScheduleReducer : BaseReducer<ScheduleState, ScheduleEvent, Sched
             state = state.copy(isNavigationFabVisible = event.dy <= 0)
         )
         is Wish.Click.OnFAB -> {
-            val newWeekOffset = if (state.weekOffset != 0) 0 else 1
-            Result(
-                state.copy(
-                    weekOffset = newWeekOffset,
-                    isNavigationFabCurrentWeek = newWeekOffset == 0,
-                    selectedDay = selectNecessaryDay(state, newWeekOffset, force = true)
-                )
+            generateSelectedWeekResult(
+                state,
+                Wish.Action.SelectWeek(if (state.weekOffset != 0) 0 else 1),
+                forceChangeSelectedDay = true
             )
         }
     }
 
     private fun generateSelectedWeekResult(
         state: ScheduleState,
-        event: Wish.Action.SelectWeek
+        event: Wish.Action.SelectWeek,
+        forceChangeSelectedDay: Boolean = false
     ): Result<ScheduleState, ScheduleEffect, ScheduleAction> {
         if (state.weekOffset == event.weekOffset || state.currentWeekMonday == null) return Result(state)
         val copyOfState = state.copy()
@@ -157,7 +155,7 @@ internal class ScheduleReducer : BaseReducer<ScheduleState, ScheduleEvent, Sched
             state = state.copy(
                 weekOffset = event.weekOffset,
                 weekItems = weekItems,
-                selectedDay = selectNecessaryDay(state, event.weekOffset),
+                selectedDay = selectNecessaryDay(state, event.weekOffset, forceChangeSelectedDay),
                 isLoading = true
             ),
             action = ScheduleAction.LoadSchedule(event.weekOffset)
