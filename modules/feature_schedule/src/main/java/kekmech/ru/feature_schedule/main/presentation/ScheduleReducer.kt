@@ -31,6 +31,7 @@ internal class ScheduleReducer : BaseReducer<ScheduleState, ScheduleEvent, Sched
         is News.ScheduleWeekLoadSuccess -> {
             val schedule = state.schedule.apply { put(event.weekOffset, event.schedule) }
             if (state.isFirstLoading) {
+                val (actualSelectedDay, isNeedToShowNextWeek) = getActualSelectedDay(state)
                 val firstDayOfWeek = event.schedule.weeks.first().firstDayOfWeek
                 val weekItems = hashMapOf(
                     -3 to createWeekItem(-3, firstDayOfWeek.minusWeeks(3)),
@@ -41,17 +42,18 @@ internal class ScheduleReducer : BaseReducer<ScheduleState, ScheduleEvent, Sched
                     2 to createWeekItem(2, firstDayOfWeek.plusWeeks(2)),
                     3 to createWeekItem(3, firstDayOfWeek.plusWeeks(3))
                 )
-                val actualSelectedDay = state.selectedDay
-                    .takeIf { it.date.dayOfWeek != DayOfWeek.SUNDAY } ?: state.selectedDay.plusDays(-1)
                 Result(
                     state = state.copy(
+                        weekOffset = if (isNeedToShowNextWeek) 1 else 0,
                         currentWeekMonday = firstDayOfWeek,
                         isFirstLoading = false,
                         isLoading = false,
                         schedule = schedule,
                         weekItems = weekItems,
-                        selectedDay = actualSelectedDay
-                    )
+                        selectedDay = actualSelectedDay,
+                        isNavigationFabCurrentWeek = !isNeedToShowNextWeek
+                    ),
+                    action = ScheduleAction.LoadSchedule(1).takeIf { isNeedToShowNextWeek }
                 )
             } else {
                 Result(
@@ -179,5 +181,18 @@ internal class ScheduleReducer : BaseReducer<ScheduleState, ScheduleEvent, Sched
         } else {
             return oldSelectedDay
         }
+    }
+
+    private fun getActualSelectedDay(state: ScheduleState): Pair<DayItem, Boolean> {
+        val todayIsSunday = state.selectedDay.date.dayOfWeek == DayOfWeek.SUNDAY
+        val todayIsSaturday = state.selectedDay.date.dayOfWeek == DayOfWeek.SATURDAY
+        val hasNoClassesOnSaturday = state.selectedWeekSchedule?.days?.find { it.dayOfWeek == DayOfWeek.SATURDAY.value }?.classes.isNullOrEmpty()
+        val correction = todayIsSunday || (todayIsSaturday && hasNoClassesOnSaturday)
+        val day = when {
+            todayIsSunday -> state.selectedDay.plusDays(1).copy(weekOffset = 1)
+            todayIsSaturday && hasNoClassesOnSaturday -> state.selectedDay.plusDays(2).copy(weekOffset = 1)
+            else -> state.selectedDay
+        }
+        return day to correction
     }
 }
