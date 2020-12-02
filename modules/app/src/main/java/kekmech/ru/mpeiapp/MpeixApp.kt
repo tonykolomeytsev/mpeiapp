@@ -1,6 +1,7 @@
 package kekmech.ru.mpeiapp
 
 import android.app.Application
+import android.content.Context
 import android.content.SharedPreferences
 import kekmech.ru.bars.di.BarsModule
 import kekmech.ru.common_analytics.di.AnalyticsModule
@@ -39,10 +40,11 @@ class MpeixApp : Application(),
     RouterHolder {
 
     override val router by inject<Router>()
+    private val sharedPreferences by fastLazy { applicationContext.getSharedPreferences("mpeix", MODE_PRIVATE) }
     private val isDebugBackendEnvironmentEnabled by fastLazy {
-        applicationContext.getSharedPreferences("mpeix", MODE_PRIVATE)
-            .getBoolean("is_debug_env", false)
+        sharedPreferences.getBoolean("is_debug_env", false)
     }
+    private val localeContextWrapper by fastLazy { LocaleContextWrapper() }
 
     override fun onCreate() {
         super.onCreate()
@@ -50,6 +52,10 @@ class MpeixApp : Application(),
         RemoteConfig.setup()
         initKoin()
         initTimber()
+    }
+
+    override fun attachBaseContext(base: Context) {
+        super.attachBaseContext(localeContextWrapper.wrapContext(base))
     }
 
     private fun initKoin() = startKoin {
