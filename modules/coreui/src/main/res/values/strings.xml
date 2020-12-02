@@ -122,6 +122,9 @@
     <string name="schedule_item_self_study_description">Потратьте этот день с пользой, начните проходить курсы по программированию или начните читать книгу</string>
     <string name="schedule_empty_state_title">Упс! Не удалось загрузить расписание</string>
     <string name="schedule_empty_state_subtitle">Возможно это произошло из-за проблем с интернет соединением.\nЛибо сервер MpeiX упал :)</string>
+    <string name="schedule_fab_tooltip">Кнопка быстрого переключения между текущей и следующей неделей. Убрать кнопку можно в настройках</string>
+    <string name="schedule_fab_next">К следующей неделе</string>
+    <string name="schedule_fab_prev">К текущей неделе</string>
 
     <string name="onboarding_bars_header">Вход в БАРС</string>
     <string name="onboarding_bars_description">Вы можете совершить вход в систему БАРС, чтобы получить возможность просматривать оценки из приложения</string>

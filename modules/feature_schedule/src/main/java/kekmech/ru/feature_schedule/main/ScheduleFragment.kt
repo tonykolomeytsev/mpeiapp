@@ -129,9 +129,11 @@ internal class ScheduleFragment : BaseFragment<ScheduleEvent, ScheduleEffect, Sc
 
     private fun renderFloatingActionButton(state: ScheduleState) {
         if (state.isNavigationFabCurrentWeek) {
-            viewBinding.fab.text = "К следующей неделе"
+            viewBinding.fab.setText(R.string.schedule_fab_next)
+            viewBinding.fab.setIconResource(R.drawable.ic_next_schedule)
         } else {
-            viewBinding.fab.text = "К текущей неделе"
+            viewBinding.fab.setText(R.string.schedule_fab_prev)
+            viewBinding.fab.setIconResource(R.drawable.ic_prev_schedule)
         }
         if (state.isNavigationFabVisible) with(viewBinding.fab) {
             clearAnimation()

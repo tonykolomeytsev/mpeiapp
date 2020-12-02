@@ -201,9 +201,9 @@
             android:layout_marginEnd="16dp"
             app:backgroundTint="@color/colorMain"
             android:textColor="@color/colorWhite"
-            app:icon="@drawable/ic_outline_search_24"
+            app:icon="@drawable/ic_next_schedule"
             app:iconTint="@color/colorWhite"
             android:text="К следующей неделе"
-            android:tooltipText="Bla bla"/>
+            android:tooltipText="@string/schedule_fab_tooltip"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
