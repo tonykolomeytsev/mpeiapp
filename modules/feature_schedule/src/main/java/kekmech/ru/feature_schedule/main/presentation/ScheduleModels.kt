@@ -23,7 +23,8 @@ internal data class ScheduleState(
     val hash: String = "",
     val appSettings: AppSettings,
     val isAfterError: Boolean = false,
-    val isNavigationFabVisible: Boolean = true
+    val isNavigationFabVisible: Boolean = true,
+    val isNavigationFabCurrentWeek: Boolean = true
 ) {
     /**
      * Get weekOfSemester number by weekOffset
@@ -49,6 +50,7 @@ internal sealed class ScheduleEvent {
         object Click {
             data class OnDayClick(val dayItem: DayItem) : Wish()
             data class OnClassesClick(val classes: Classes) : Wish()
+            object OnFAB : Wish()
         }
     }
 

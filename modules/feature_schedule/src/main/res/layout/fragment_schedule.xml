@@ -203,7 +203,7 @@
             android:textColor="@color/colorWhite"
             app:icon="@drawable/ic_outline_search_24"
             app:iconTint="@color/colorWhite"
-            android:text="Следующая неделя"
+            android:text="К следующей неделе"
             android:tooltipText="Bla bla"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -84,13 +84,14 @@ internal class ScheduleReducer : BaseReducer<ScheduleState, ScheduleEvent, Sched
         is Wish.Action.SelectWeek -> generateSelectedWeekResult(state, event)
         is Wish.Click.OnDayClick -> Result(
             state = state.copy(
-                selectedDay = event.dayItem.copy()
+                selectedDay = event.dayItem.copy(),
+                isNavigationFabCurrentWeek = state.weekOffset == 0
             )
         )
         is Wish.Action.OnPageChanged -> {
             if (!isFirstPageChangeIgnored || state.isLoading) {
                 isFirstPageChangeIgnored = true
-                Result(state = state)
+                Result(state)
             } else {
                 val oldSelectedDay = state.selectedDay.dayOfWeek
                 val newSelectedDay = event.page + 1
@@ -112,6 +113,16 @@ internal class ScheduleReducer : BaseReducer<ScheduleState, ScheduleEvent, Sched
         is Wish.Action.OnClassesScroll -> Result(
             state = state.copy(isNavigationFabVisible = event.dy <= 0)
         )
+        is Wish.Click.OnFAB -> {
+            val newWeekOffset = if (state.weekOffset != 0) 0 else 1
+            Result(
+                state.copy(
+                    weekOffset = newWeekOffset,
+                    isNavigationFabCurrentWeek = newWeekOffset == 0,
+                    selectedDay = selectNecessaryDay(state, newWeekOffset, force = true)
+                )
+            )
+        }
     }
 
     private fun generateSelectedWeekResult(
@@ -153,17 +164,21 @@ internal class ScheduleReducer : BaseReducer<ScheduleState, ScheduleEvent, Sched
         )
     }
 
-    private fun selectNecessaryDay(state: ScheduleState, newWeekOffset: Int): DayItem {
+    private fun selectNecessaryDay(
+        state: ScheduleState,
+        newWeekOffset: Int,
+        force: Boolean = false
+    ): DayItem {
         val oldSelectedDay = state.selectedDay
-        if (!state.appSettings.changeDayAfterChangeWeek) {
-            return oldSelectedDay
-        } else {
+        if (state.appSettings.changeDayAfterChangeWeek || force) {
             val oldWeekOffset = oldSelectedDay.weekOffset.toLong()
             return DayItem(
                 date = oldSelectedDay.date.plusWeeks(newWeekOffset - oldWeekOffset),
                 weekOffset = newWeekOffset,
                 isSelected = true
             )
+        } else {
+            return oldSelectedDay
         }
     }
 }
