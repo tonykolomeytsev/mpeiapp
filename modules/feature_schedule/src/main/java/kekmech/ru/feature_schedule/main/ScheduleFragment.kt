@@ -97,6 +97,10 @@ internal class ScheduleFragment : BaseFragment<ScheduleEvent, ScheduleEffect, Sc
         weeksScrollAdapter.selectDay(state.selectedDay)
         viewPagerAdapter.update(ScheduleClassesListConverter.map(state))
 
+        renderShimmer(state)
+
+        renderFloatingActionButton(state)
+
         if (viewPagerPositionToBeSelected != state.selectedDay.dayOfWeek) {
             val smoothScroll = viewPagerPositionToBeSelected != null
             viewPagerPositionToBeSelected = state.selectedDay.dayOfWeek
@@ -107,19 +111,51 @@ internal class ScheduleFragment : BaseFragment<ScheduleEvent, ScheduleEffect, Sc
         }
     }
 
+    private fun renderShimmer(state: ScheduleState) {
+        if (state.selectedWeekSchedule == null) {
+            viewBinding.shimmerViewContainer.visibility = View.VISIBLE
+            viewBinding.shimmerViewContainer.startShimmer()
+        } else {
+            viewBinding.shimmerViewContainer.visibility = View.INVISIBLE
+            viewBinding.shimmerViewContainer.stopShimmer()
+        }
+    }
+
+    private fun renderFloatingActionButton(state: ScheduleState) {
+        if (state.isNavigationFabVisible) with(viewBinding.fab) {
+            clearAnimation()
+            isEnabled = true
+            animate()
+                .alpha(1f)
+                .setDuration(100L)
+                .start()
+        } else with(viewBinding.fab) {
+            clearAnimation()
+            isEnabled = false
+            animate()
+                .alpha(0f)
+                .setDuration(100L)
+                .start()
+        }
+    }
+
     private fun createViewPagerAdapter() = BaseAdapter(
-        WorkingDayAdapterItem(DAY_OF_WEEK_MONDAY, ::onClassesClick),
-        WorkingDayAdapterItem(DAY_OF_WEEK_TUESDAY, ::onClassesClick),
-        WorkingDayAdapterItem(DAY_OF_WEEK_WEDNESDAY, ::onClassesClick),
-        WorkingDayAdapterItem(DAY_OF_WEEK_THURSDAY, ::onClassesClick),
-        WorkingDayAdapterItem(DAY_OF_WEEK_FRIDAY, ::onClassesClick),
-        WorkingDayAdapterItem(DAY_OF_WEEK_SATURDAY, ::onClassesClick),
+        WorkingDayAdapterItem(DAY_OF_WEEK_MONDAY, ::onClassesClick, ::onClassesScroll),
+        WorkingDayAdapterItem(DAY_OF_WEEK_TUESDAY, ::onClassesClick, ::onClassesScroll),
+        WorkingDayAdapterItem(DAY_OF_WEEK_WEDNESDAY, ::onClassesClick, ::onClassesScroll),
+        WorkingDayAdapterItem(DAY_OF_WEEK_THURSDAY, ::onClassesClick, ::onClassesScroll),
+        WorkingDayAdapterItem(DAY_OF_WEEK_FRIDAY, ::onClassesClick, ::onClassesScroll),
+        WorkingDayAdapterItem(DAY_OF_WEEK_SATURDAY, ::onClassesClick, ::onClassesScroll),
         ClassesShimmerAdapterItem()
     )
 
     private fun onClassesClick(classes: Classes) {
         analytics.sendClick("Classes")
         feature.accept(Wish.Click.OnClassesClick(classes))
+    }
+
+    private fun onClassesScroll(dy: Int) {
+        feature.accept(Wish.Action.OnClassesScroll(dy))
     }
 
     private fun createWeekDaysHelper() = WeeksScrollHelper(
