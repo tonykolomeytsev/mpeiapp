@@ -211,6 +211,10 @@
     <string name="edit_favorite_hint">Description for the group</string>
     <string name="edit_favorite_button_continue">Continue</string>
 
+    <string name="change_language_description_russian">Русский язык</string>
+    <string name="change_language_description_english">English language</string>
+    <string name="change_language_disclaimer">At the moment, only the GUI of the application has been translated into English. Class names, teacher names, and classroom names will remain Russian. Automatic machine translation for them will start working in future versions of the application.</string>
+
     <string name="search_section_title_map">Map</string>
     <string name="search_section_title_notes">Notes</string>
     <string name="search_empty_state_title">Enter text to start search</string>

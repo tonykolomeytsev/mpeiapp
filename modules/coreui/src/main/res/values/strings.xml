@@ -213,6 +213,10 @@
     <string name="edit_favorite_hint">Описание для группы</string>
     <string name="edit_favorite_button_continue">Продолжить</string>
 
+    <string name="change_language_description_russian">Русский язык</string>
+    <string name="change_language_description_english">English language</string>
+    <string name="change_language_disclaimer">На данный момент, на английский язык переведен только графический интерфейс приложения. Названия занятий, имена преподавателей и названия аудиторий на английский не переведены. Автоматический машинный перевод для них начнет работать в будущих версиях приложения.</string>
+
     <string name="search_section_title_map">Карта</string>
     <string name="search_section_title_notes">Заметки</string>
     <string name="search_empty_state_title">Введите текст чтобы начать поиск</string>

@@ -18,6 +18,10 @@ internal class AppSettingsListConverter {
                 isChecked = appSettings.isDarkThemeEnabled
             ))
             add(SectionTextItem(resId = R.string.app_settings_dark_theme_description))
+            add(BottomLabeledTextItem(
+                "Язык приложения",
+                itemId = AppSettingsFragment.ITEM_LANGUAGE
+            ))
             if (state.isFeatureToggleSnowFlakesEnabled) {
                 add(ToggleItem(
                     itemId = AppSettingsFragment.TOGGLE_SNOW_FLAKES,
