@@ -34,6 +34,14 @@ data class BottomLabeledTextItem(
     override val itemId: Int? = null
 ) : LabeledTextItem
 
+data class RightLabeledTextItem(
+    override val mainText: String? = null,
+    @StringRes override val mainTextResId: Int? = null,
+    override val label: String? = null,
+    @StringRes override val labelResId: Int? = null,
+    override val itemId: Int? = null
+) : LabeledTextItem
+
 interface LabeledTextViewHolder : ClickableItemViewHolder {
     fun setMainText(mainText: String)
     fun setMainText(@StringRes mainTextResId: Int)
@@ -96,6 +104,15 @@ class BottomLabeledTextAdapterItem(
 ) : AdapterItem<LabeledTextViewHolder, BottomLabeledTextItem>(
     isType = { it is BottomLabeledTextItem },
     layoutRes = R.layout.item_text_bottom_labeled,
+    viewHolderGenerator = ::LabeledTextViewHolderImpl,
+    itemBinder = LabeledTextItemBinder(onClickListener)
+)
+
+class RightLabeledTextAdapterItem(
+    onClickListener: ((LabeledTextItem) -> Unit)? = null
+) : AdapterItem<LabeledTextViewHolder, BottomLabeledTextItem>(
+    isType = { it is RightLabeledTextItem },
+    layoutRes = R.layout.item_text_right_labeled,
     viewHolderGenerator = ::LabeledTextViewHolderImpl,
     itemBinder = LabeledTextItemBinder(onClickListener)
 )
