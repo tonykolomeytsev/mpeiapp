@@ -12,7 +12,6 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException
 import com.google.android.gms.maps.MapsInitializer
 import com.google.firebase.analytics.FirebaseAnalytics
 import kekmech.ru.common_android.onActivityResult
-import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_navigation.BackButtonListener
 import kekmech.ru.common_navigation.NavigationHolder
 import kekmech.ru.domain_app_settings.AppSettings

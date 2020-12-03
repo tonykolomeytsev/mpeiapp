@@ -3,6 +3,7 @@ package kekmech.ru.domain_app_settings
 import android.content.SharedPreferences
 import io.reactivex.Completable
 import kekmech.ru.common_shared_preferences.boolean
+import kekmech.ru.common_shared_preferences.string
 
 class AppSettingsRepository(
     preferences: SharedPreferences
@@ -17,6 +18,8 @@ class AppSettingsRepository(
     override var autoHideBottomSheet by preferences.boolean("map_auto_hide_bottom_sheet", true)
 
     override var isDebugEnvironment by preferences.boolean("is_debug_env", false)
+
+    override var languageCode: String? by preferences.string("app_lang", null)
 
     fun complete(runnable: AppSettingsRepository.() -> Unit): Completable =
         Completable.fromRunnable { runnable() }

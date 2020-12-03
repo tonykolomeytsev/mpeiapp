@@ -1,10 +1,12 @@
 package kekmech.ru.common_network.di
 
+import android.content.SharedPreferences
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import kekmech.ru.common_di.ModuleProvider
 import kekmech.ru.common_network.BuildConfig
 import kekmech.ru.common_network.device_id.DeviceIdProvider
+import kekmech.ru.common_network.device_id.DeviceLocaleProvider
 import kekmech.ru.common_network.gson.*
 import kekmech.ru.common_network.okhttp.NoConnectionInterceptor
 import kekmech.ru.common_network.okhttp.RequiredHeadersInterceptor
@@ -23,7 +25,11 @@ import java.util.concurrent.TimeUnit
 
 object NetworkModule : ModuleProvider({
     single { provideGson() } bind Gson::class
-    single { RequiredHeadersInterceptor(deviceId = provideDeviceId(get()), appVersion = BuildConfig.VERSION_NAME) }
+    single { RequiredHeadersInterceptor(
+        deviceId = provideDeviceId(get()),
+        appVersion = BuildConfig.VERSION_NAME,
+        deviceLanguage = provideDeviceLocale(get())
+    ) }
     single { NoConnectionInterceptor(get()) }
     single { provideOkHttpClient(get(), get()) } bind OkHttpClient::class
     single { provideRetrofitBuilder(get(), get()) } bind Retrofit.Builder::class
@@ -60,3 +66,6 @@ private fun provideRetrofitBuilder(
     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
 
 private fun provideDeviceId(deviceIdProvider: DeviceIdProvider) = deviceIdProvider.getDeviceId()
+
+private fun provideDeviceLocale(sharedPreferences: SharedPreferences) =
+    DeviceLocaleProvider(sharedPreferences).getLanguage()
