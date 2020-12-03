@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">coreui</string>
+    <string name="app_name" translatable="false">MpeiX</string>
 
     <!-- НУМЕРАЦИЯ ПАР-->
     <string-array name="classes_numbers">
