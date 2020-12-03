@@ -65,6 +65,15 @@ internal class AppSettingsReducer : BaseReducer<AppSettingsState, AppSettingsEve
             state = state,
             action = AppSettingsAction.ChangeBackendEnvironment(event.isDebug)
         )
+        is Wish.Click.OnLanguage -> Result(
+            state = state,
+            effect = state.appSettings?.let { AppSettingsEffect.OpenLanguageSelectionDialog(it.languageCode) }
+        )
+        is Wish.Action.LanguageChanged -> Result(
+            state = state,
+            effect = AppSettingsEffect.RecreateActivity,
+            action = AppSettingsAction.ChangeLanguage(event.selectedLanguage)
+        )
     }
 
 }

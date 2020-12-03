@@ -97,7 +97,7 @@ class ScheduleReducerTest : BehaviorSpec({
             override val autoHideBottomSheet: Boolean get() = false
             override val isSnowEnabled: Boolean get() = false
             override val isDebugEnvironment: Boolean get() = false
-            override val languageCode: String? get() = null
+            override val languageCode: String get() = "ru_RU"
         }
         private val INITIAL_STATE = ScheduleState(appSettings = APP_SETTINGS)
         private val CURRENT_MONDAY = LocalDate.of(2020, Month.SEPTEMBER, 14)
