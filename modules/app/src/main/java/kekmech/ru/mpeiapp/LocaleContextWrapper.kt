@@ -2,28 +2,33 @@ package kekmech.ru.mpeiapp
 
 import android.content.Context
 import android.content.res.Configuration
+import android.content.res.Resources
 import android.os.Build
 import java.util.*
 
-class LocaleContextWrapper {
+object LocaleContextWrapper {
 
     fun wrapContext(context: Context): Context {
+        if (Build.VERSION.SDK_INT < 25) return context
         val savedLocale = createLocaleFromSharedPreferences(context) ?: return context
 
         val newConfig = Configuration(context.resources.configuration)
         newConfig.setLocale(savedLocale)
-        if (Build.VERSION.SDK_INT < 25) {
-            @Suppress("DEPRECATION")
-            context.resources.updateConfiguration(newConfig, context.resources.displayMetrics)
-            return context
-        } else {
-            return context.createConfigurationContext(newConfig)
-        }
+        return context.createConfigurationContext(newConfig)
+    }
+
+    fun updateResourcesV24(context: Context) {
+        val locale = createLocaleFromSharedPreferences(context) ?: return
+        Locale.setDefault(locale)
+        val res: Resources = context.resources
+        val config = Configuration(res.configuration)
+        config.setLocale(locale)
+        res.updateConfiguration(config, res.displayMetrics)
     }
 
     private fun createLocaleFromSharedPreferences(context: Context): Locale? {
         val prefs = context.getSharedPreferences("mpeix", Context.MODE_PRIVATE)
-        val lang = prefs.getString("app_lang", null)?.split("_") ?: return null
+        val lang = prefs.getString("app_lang", "ru_RU")?.split("_") ?: return null
         val (language, country) = lang[0] to lang[1]
         return Locale(language, country)
     }
