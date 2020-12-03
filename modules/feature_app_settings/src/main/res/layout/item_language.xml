@@ -4,8 +4,9 @@
         android:layout_width="match_parent"
         android:layout_height="56dp"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp">
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:background="?attr/selectableItemBackground">
 
     <ImageView
             android:id="@+id/imageViewIcon"
