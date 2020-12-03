@@ -4,7 +4,7 @@ interface AppSettings {
     // all app
     val isDarkThemeEnabled: Boolean
     val isSnowEnabled: Boolean
-    val languageCode: String?
+    val languageCode: String
 
     // schedule
     val changeDayAfterChangeWeek: Boolean

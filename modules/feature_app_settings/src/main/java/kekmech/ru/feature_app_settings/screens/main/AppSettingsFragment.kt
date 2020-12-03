@@ -1,24 +1,25 @@
 package kekmech.ru.feature_app_settings.screens.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import kekmech.ru.common_adapter.BaseAdapter
-import kekmech.ru.common_android.addSystemBottomPadding
-import kekmech.ru.common_android.addSystemTopPadding
-import kekmech.ru.common_android.openLinkExternal
+import kekmech.ru.common_android.*
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.ui.BaseFragment
 import kekmech.ru.common_navigation.addScreenForward
+import kekmech.ru.common_navigation.showDialog
 import kekmech.ru.coreui.attachScrollListenerForAppBarLayoutShadow
 import kekmech.ru.coreui.items.*
 import kekmech.ru.feature_app_settings.R
 import kekmech.ru.feature_app_settings.databinding.FragmentAppSettingsBinding
 import kekmech.ru.feature_app_settings.di.AppSettingDependencies
 import kekmech.ru.feature_app_settings.screens.favorites.FavoritesFragment
+import kekmech.ru.feature_app_settings.screens.lang.SelectLanguageFragment
 import kekmech.ru.feature_app_settings.screens.main.presentation.AppSettingsEffect
 import kekmech.ru.feature_app_settings.screens.main.presentation.AppSettingsEvent
 import kekmech.ru.feature_app_settings.screens.main.presentation.AppSettingsEvent.Wish
@@ -26,7 +27,9 @@ import kekmech.ru.feature_app_settings.screens.main.presentation.AppSettingsFeat
 import kekmech.ru.feature_app_settings.screens.main.presentation.AppSettingsState
 import org.koin.android.ext.android.inject
 
-internal class AppSettingsFragment : BaseFragment<AppSettingsEvent, AppSettingsEffect, AppSettingsState, AppSettingsFeature>() {
+private const val RESULT_SELECTED_LANG = 846583
+
+internal class AppSettingsFragment : BaseFragment<AppSettingsEvent, AppSettingsEffect, AppSettingsState, AppSettingsFeature>(), ActivityResultListener {
 
     override val initEvent get() = Wish.Init
 
@@ -59,9 +62,10 @@ internal class AppSettingsFragment : BaseFragment<AppSettingsEvent, AppSettingsE
     }
 
     override fun handleEffect(effect: AppSettingsEffect) = when (effect) {
-        is AppSettingsEffect.RecreateActivity -> {
-            Handler(Looper.getMainLooper()).postDelayed({ activity?.recreate() }, 200);
-            Unit
+        is AppSettingsEffect.RecreateActivity -> recreateActivity()
+        is AppSettingsEffect.OpenLanguageSelectionDialog -> showDialog {
+            SelectLanguageFragment.newInstance(effect.selectedLanguage)
+                .withResultFor(this, RESULT_SELECTED_LANG)
         }
     }
 
@@ -109,6 +113,10 @@ internal class AppSettingsFragment : BaseFragment<AppSettingsEvent, AppSettingsE
             analytics.sendClick("Favorites")
             addScreenForward { FavoritesFragment() }
         }
+        ITEM_LANGUAGE -> {
+            analytics.sendClick("SelectLanguage")
+            feature.accept(Wish.Click.OnLanguage)
+        }
         else -> { /* no-op */ }
     }
 
@@ -125,6 +133,17 @@ internal class AppSettingsFragment : BaseFragment<AppSettingsEvent, AppSettingsE
         }
     }
 
+    private fun recreateActivity() {
+        Handler(Looper.getMainLooper()).postDelayed({ activity?.recreate() }, 200)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == RESULT_SELECTED_LANG && data != null) {
+            val selectedLanguage = data.getStringExtra("app_lang") ?: return
+            feature.accept(Wish.Action.LanguageChanged(selectedLanguage))
+        }
+    }
+
     companion object {
         const val TOGGLE_DARK_THEME = 0
         const val TOGGLE_CHANGE_DAY_AFTER_CHANGE_WEEK = 1
@@ -136,5 +155,6 @@ internal class AppSettingsFragment : BaseFragment<AppSettingsEvent, AppSettingsE
         const val ITEM_SUPPORT = 1
         const val ITEM_GITHUB = 2
         const val ITEM_FAVORITES = 3
+        const val ITEM_LANGUAGE = 4
     }
 }

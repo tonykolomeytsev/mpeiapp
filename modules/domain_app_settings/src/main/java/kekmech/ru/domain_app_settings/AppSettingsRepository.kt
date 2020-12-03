@@ -19,7 +19,7 @@ class AppSettingsRepository(
 
     override var isDebugEnvironment by preferences.boolean("is_debug_env", false)
 
-    override var languageCode: String? by preferences.string("app_lang", null)
+    override var languageCode: String by preferences.string("app_lang", "ru_RU")
 
     fun complete(runnable: AppSettingsRepository.() -> Unit): Completable =
         Completable.fromRunnable { runnable() }

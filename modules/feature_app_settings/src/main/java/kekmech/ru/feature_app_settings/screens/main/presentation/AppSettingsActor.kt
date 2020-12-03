@@ -33,5 +33,8 @@ internal class AppSettingsActor(
         is AppSettingsAction.ChangeBackendEnvironment -> appSettingsRepository
             .complete { isDebugEnvironment = action.isDebug }
             .toObservable()
+        is AppSettingsAction.ChangeLanguage -> appSettingsRepository
+            .complete { languageCode = action.selectedLanguage }
+            .toObservable()
     }
 }
