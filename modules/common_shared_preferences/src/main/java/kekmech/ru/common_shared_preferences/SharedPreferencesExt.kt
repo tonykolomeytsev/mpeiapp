@@ -4,16 +4,16 @@ import android.content.SharedPreferences
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
-sealed class SharedPreferencesDelegate<T : Any>(open val sharedPreferences: SharedPreferences) : ReadWriteProperty<Any, T>
+sealed class SharedPreferencesDelegate<T>(open val sharedPreferences: SharedPreferences) : ReadWriteProperty<Any, T>
 
 class StringPreference(
     preferences: SharedPreferences,
     private val key: String,
-    private val defaultValue: String = ""
-) : SharedPreferencesDelegate<String>(preferences) {
+    private val defaultValue: String? = ""
+) : SharedPreferencesDelegate<String?>(preferences) {
 
     override fun getValue(thisRef: Any, property: KProperty<*>): String = sharedPreferences.getString(key, defaultValue)!!
-    override fun setValue(thisRef: Any, property: KProperty<*>, value: String) {
+    override fun setValue(thisRef: Any, property: KProperty<*>, value: String?) {
         sharedPreferences
             .edit()
             .putString(key, value)
@@ -51,6 +51,6 @@ class BooleanPreference(
     }
 }
 
-fun SharedPreferences.string(key: String, defaultValue: String = "") = StringPreference(this, key, defaultValue)
+fun SharedPreferences.string(key: String, defaultValue: String? = "") = StringPreference(this, key, defaultValue)
 fun SharedPreferences.int(key: String, defaultValue: Int = 0) = IntPreference(this, key, defaultValue)
 fun SharedPreferences.boolean(key: String, defaultValue: Boolean = false) = BooleanPreference(this, key, defaultValue)
