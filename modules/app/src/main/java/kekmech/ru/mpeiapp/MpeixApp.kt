@@ -3,6 +3,7 @@ package kekmech.ru.mpeiapp
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import android.os.Build
 import kekmech.ru.bars.di.BarsModule
 import kekmech.ru.common_analytics.di.AnalyticsModule
 import kekmech.ru.common_android.di.CommonAndroidModule
@@ -44,7 +45,6 @@ class MpeixApp : Application(),
     private val isDebugBackendEnvironmentEnabled by fastLazy {
         sharedPreferences.getBoolean("is_debug_env", false)
     }
-    private val localeContextWrapper by fastLazy { LocaleContextWrapper() }
 
     override fun onCreate() {
         super.onCreate()
@@ -52,10 +52,11 @@ class MpeixApp : Application(),
         RemoteConfig.setup()
         initKoin()
         initTimber()
+        if (Build.VERSION.SDK_INT < 25) LocaleContextWrapper.updateResourcesV24(this)
     }
 
     override fun attachBaseContext(base: Context) {
-        super.attachBaseContext(localeContextWrapper.wrapContext(base))
+        super.attachBaseContext(LocaleContextWrapper.wrapContext(base))
     }
 
     private fun initKoin() = startKoin {
