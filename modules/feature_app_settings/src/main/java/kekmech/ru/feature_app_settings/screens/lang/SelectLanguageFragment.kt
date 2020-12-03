@@ -34,9 +34,14 @@ internal class SelectLanguageFragment : BottomSheetDialogFragment(R.layout.fragm
 
     private fun getItems() = mutableListOf<Any>().apply {
         add(SpaceItem.VERTICAL_8)
-        add(SectionHeaderItem("Выбор языка"))
+        add(SectionHeaderItem(titleRes = R.string.change_language_screen_title))
         add(SpaceItem.VERTICAL_12)
         addAll(LanguageEntry.values().asList().map { LanguageItem(it, it.languageCode == selectLanguage) })
+        add(SpaceItem.VERTICAL_16)
+        add(TextItem(
+            textResId = R.string.change_language_disclaimer,
+            styleResId = R.style.H6_C8
+        ))
     }
 
     private fun createAdapter() = BaseAdapter(

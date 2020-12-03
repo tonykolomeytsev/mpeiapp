@@ -93,7 +93,8 @@ internal class AppSettingsFragment : BaseFragment<AppSettingsEvent, AppSettingsE
         },
         SectionTextAdapterItem(),
         SpaceAdapterItem(),
-        BottomLabeledTextAdapterItem { onItemClick(it.itemId) }
+        BottomLabeledTextAdapterItem { onItemClick(it.itemId) },
+        RightLabeledTextAdapterItem { onItemClick(it.itemId) }
     )
 
     private fun onItemClick(itemId: Int?) = when (itemId) {
