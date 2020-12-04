@@ -20,6 +20,7 @@ internal sealed class AppSettingsEvent {
         object Action {
             data class SetDarkThemeEnabled(val isEnabled: Boolean) : Wish()
             data class SetSnowEnabled(val isEnabled: Boolean) : Wish()
+            data class SetShowQuickNavigationFab(val isVisible: Boolean) : Wish()
             data class SetChangeDayAfterChangeWeek(val isEnabled: Boolean) : Wish()
             data class SetAutoHideBottomSheet(val isEnabled: Boolean) : Wish()
             data class ChangeBackendEnvironment(val isDebug: Boolean) : Wish()
@@ -43,6 +44,7 @@ internal sealed class AppSettingsAction {
 
     data class SetDarkThemeEnabled(val isEnabled: Boolean) : AppSettingsAction()
     data class SetSnowEnabled(val isEnabled: Boolean) : AppSettingsAction()
+    data class SetShowQuickNavigationFab(val isVisible: Boolean) : AppSettingsAction()
     data class SetChangeDayAfterChangeWeek(val isEnabled: Boolean) : AppSettingsAction()
     data class SetAutoHideBottomSheet(val isEnabled: Boolean) : AppSettingsAction()
     data class ChangeBackendEnvironment(val isDebug: Boolean) : AppSettingsAction()

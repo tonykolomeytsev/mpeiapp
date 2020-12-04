@@ -8,6 +8,7 @@ interface AppSettings {
 
     // schedule
     val changeDayAfterChangeWeek: Boolean
+    val showNavigationButton: Boolean
 
     // map
     val autoHideBottomSheet: Boolean

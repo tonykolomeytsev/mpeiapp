@@ -88,6 +88,10 @@ internal class AppSettingsFragment : BaseFragment<AppSettingsEvent, AppSettingsE
             analytics.sendChangeSetting("SnowFlakes", it.toString())
             feature.accept(Wish.Action.SetSnowEnabled(it))
         },
+        ToggleAdapterItem(TOGGLE_SHOW_NAV_FAB) {
+            analytics.sendChangeSetting("ShowQuickNavFab", it.toString())
+            feature.accept(Wish.Action.SetShowQuickNavigationFab(it))
+        },
         ToggleAdapterItem(TOGGLE_DEBUG_CHANGE_ENV) {
             feature.accept(Wish.Action.ChangeBackendEnvironment(it))
         },
@@ -151,6 +155,7 @@ internal class AppSettingsFragment : BaseFragment<AppSettingsEvent, AppSettingsE
         const val TOGGLE_AUTO_HIDE_BOTTOM_SHEET = 2
         const val TOGGLE_SNOW_FLAKES = 3
         const val TOGGLE_DEBUG_CHANGE_ENV = 4
+        const val TOGGLE_SHOW_NAV_FAB = 5
 
         const val ITEM_DEBUG_CLEAR_SELECTED_GROUP = 0
         const val ITEM_SUPPORT = 1

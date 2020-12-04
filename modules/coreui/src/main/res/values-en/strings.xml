@@ -120,7 +120,7 @@
     <string name="schedule_item_self_study_description">Spend your day to good use, start taking programming courses or start reading a book</string>
     <string name="schedule_empty_state_title">Oops! Failed to load schedule</string>
     <string name="schedule_empty_state_subtitle">Perhaps this happened due to problems with the Internet connection.\nOr the MpeiX server crashed :)</string>
-    <string name="schedule_fab_tooltip">Button to quickly switch between the current and next week. You can disable this button in the settings</string>
+    <string name="schedule_fab_tooltip">Quick navigation button. You can disable this button in the settings</string>
     <string name="schedule_fab_next">Go to next week</string>
     <string name="schedule_fab_prev">Go to current week</string>
 
@@ -198,6 +198,8 @@
     <string name="app_settings_snowy_mood">Snowy mood</string>
     <string name="app_settings_change_day_after_change_week">Change day when changing week</string>
     <string name="app_settings_change_day_after_change_week_description">When switching to another week, automatically switch 7 days forward, or 7 days back</string>
+    <string name="app_settings_show_navigation_fab">Quick navigation button</string>
+    <string name="app_settings_show_navigation_fab_description">Show or hide the navigation button (at the bottom of the schedule screen) that allows you to quickly switch to the current and next week</string>
     <string name="app_settings_auto_hide_bottom_sheet">Hide the list on click</string>
     <string name="app_settings_auto_hide_bottom_sheet_description">When the setting is on, on the map screen, clicking on any address in the list will automatically collapse the list and move the camera to the specified address</string>
     <string name="app_settings_favorite_schedule_title">Favorite schedules</string>

@@ -122,7 +122,7 @@
     <string name="schedule_item_self_study_description">Потратьте этот день с пользой, начните проходить курсы по программированию или начните читать книгу</string>
     <string name="schedule_empty_state_title">Упс! Не удалось загрузить расписание</string>
     <string name="schedule_empty_state_subtitle">Возможно это произошло из-за проблем с интернет соединением.\nЛибо сервер MpeiX упал :)</string>
-    <string name="schedule_fab_tooltip">Кнопка быстрого переключения между текущей и следующей неделей. Убрать кнопку можно в настройках</string>
+    <string name="schedule_fab_tooltip">Кнопка быстрой навигации. Убрать кнопку можно в настройках</string>
     <string name="schedule_fab_next">К следующей неделе</string>
     <string name="schedule_fab_prev">К текущей неделе</string>
 
@@ -200,6 +200,8 @@
     <string name="app_settings_snowy_mood">Снежное настроение</string>
     <string name="app_settings_change_day_after_change_week">Менять день при смене недели</string>
     <string name="app_settings_change_day_after_change_week_description">При переходе на другую неделю автоматически переключаться на 7 дней вперед, либо 7 дней назад</string>
+    <string name="app_settings_show_navigation_fab">Кнопка быстрой навигации</string>
+    <string name="app_settings_show_navigation_fab_description">Показать либо скрыть кнопку навигации (внизу экрана расписания), позволяющую быстро переключаться на текущую и следующую недели</string>
     <string name="app_settings_auto_hide_bottom_sheet">Скрывать список по клику</string>
     <string name="app_settings_auto_hide_bottom_sheet_description">При включенной настройке, на экране карты нажатие на любой адрес в списке автоматически свернет список и переместит камеру к указанному адресу</string>
     <string name="app_settings_favorite_schedule_title">Избранные расписания</string>

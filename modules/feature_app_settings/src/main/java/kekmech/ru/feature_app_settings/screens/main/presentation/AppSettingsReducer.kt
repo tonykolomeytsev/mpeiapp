@@ -74,6 +74,10 @@ internal class AppSettingsReducer : BaseReducer<AppSettingsState, AppSettingsEve
             effect = AppSettingsEffect.RecreateActivity,
             action = AppSettingsAction.ChangeLanguage(event.selectedLanguage)
         )
+        is Wish.Action.SetShowQuickNavigationFab -> Result(
+            state = state,
+            action = AppSettingsAction.SetShowQuickNavigationFab(event.isVisible)
+        )
     }
 
 }
