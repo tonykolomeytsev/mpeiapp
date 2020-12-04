@@ -39,6 +39,12 @@ internal class AppSettingsListConverter {
                 labelResId = R.string.app_settings_favorite_schedule_description
             ))
             add(ToggleItem(
+                itemId = AppSettingsFragment.TOGGLE_SHOW_NAV_FAB,
+                titleRes = R.string.app_settings_show_navigation_fab,
+                isChecked = appSettings.showNavigationButton
+            ))
+            add(SectionTextItem(resId = R.string.app_settings_show_navigation_fab_description))
+            add(ToggleItem(
                 itemId = AppSettingsFragment.TOGGLE_CHANGE_DAY_AFTER_CHANGE_WEEK,
                 titleRes = R.string.app_settings_change_day_after_change_week,
                 isChecked = appSettings.changeDayAfterChangeWeek

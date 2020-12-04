@@ -36,5 +36,8 @@ internal class AppSettingsActor(
         is AppSettingsAction.ChangeLanguage -> appSettingsRepository
             .complete { languageCode = action.selectedLanguage }
             .toObservable()
+        is AppSettingsAction.SetShowQuickNavigationFab -> appSettingsRepository
+            .complete { showNavigationButton = action.isVisible }
+            .toObservable()
     }
 }

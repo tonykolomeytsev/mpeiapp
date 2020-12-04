@@ -128,6 +128,12 @@ internal class ScheduleFragment : BaseFragment<ScheduleEvent, ScheduleEffect, Sc
     }
 
     private fun renderFloatingActionButton(state: ScheduleState) {
+        if (!state.appSettings.showNavigationButton) {
+            viewBinding.fab.isVisible = false
+            return
+        } else {
+            viewBinding.fab.isVisible = true
+        }
         if (state.isNavigationFabCurrentWeek) {
             viewBinding.fab.setText(R.string.schedule_fab_next)
             viewBinding.fab.setIconResource(R.drawable.ic_next_schedule)

@@ -15,6 +15,8 @@ class AppSettingsRepository(
 
     override var changeDayAfterChangeWeek by preferences.boolean("schedule_change_day_after_change_week", false)
 
+    override var showNavigationButton by preferences.boolean("show_nav_fab", true)
+
     override var autoHideBottomSheet by preferences.boolean("map_auto_hide_bottom_sheet", true)
 
     override var isDebugEnvironment by preferences.boolean("is_debug_env", false)
