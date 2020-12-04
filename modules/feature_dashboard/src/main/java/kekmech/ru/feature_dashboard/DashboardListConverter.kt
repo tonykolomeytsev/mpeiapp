@@ -210,8 +210,8 @@ class DashboardListConverter(
     private fun MutableList<Any>.addFeatureBanner(state: DashboardState) {
         if (state.isFeatureBannerEnabled) {
             add(BannerItem(
-                title = "Избранные расписания!",
-                description = "Теперь вы можете переключаться между группами одним нажатием, не набирая их номера в поиске! \nНажмите, чтобы попробовать.",
+                titleRes = R.string.dashboard_banner_favorites_title,
+                descriptionRes = R.string.dashboard_banner_favorites_description,
                 iconRes = R.drawable.ic_favorites_banner
             ))
             add(SpaceItem.VERTICAL_16)

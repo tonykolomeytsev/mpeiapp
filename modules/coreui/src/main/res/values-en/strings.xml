@@ -151,6 +151,8 @@
     <string name="dashboard_day_status_semester">The academic week #%d is in progress</string>
     <string name="dashboard_day_status_not_semester">Non-academic week</string>
     <string name="dashboard_item_time_prediction_prefix">The class will start in</string>
+    <string name="dashboard_banner_favorites_title">Featured Schedules!</string>
+    <string name="dashboard_banner_favorites_description">Now you can switch between groups with one tap, without typing their numbers in the search! Click to try.</string>
 
     <string name="map_tab_name_eat">Food</string>
     <string name="map_section_name_eat">Food</string>
