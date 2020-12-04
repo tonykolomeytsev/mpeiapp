@@ -35,17 +35,13 @@ class DashboardFragment : BaseFragment<DashboardEvent, DashboardEffect, Dashboar
     NeedToUpdate {
 
     override val initEvent = Wish.Init
-
     private val dependencies by inject<DashboardDependencies>()
 
     override fun createFeature() = dependencies.dashboardFeatureFactory.create()
 
     override var layoutId = R.layout.fragment_dashboard
-
     private val adapter by fastLazy { createAdapter() }
-
     private val analytics: DashboardAnalytics by inject()
-
     private val viewBinding by viewBinding(FragmentDashboardBinding::bind)
 
     override fun onViewCreatedInternal(view: View, savedInstanceState: Bundle?) {

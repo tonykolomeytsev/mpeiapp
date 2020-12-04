@@ -13,6 +13,9 @@ internal class DeviceLocaleProvider(
     private val sharedPreferences: SharedPreferences
 ) {
 
-    fun getLanguage() =
-        sharedPreferences.getString("app_lang", DEFAULT_LOCALE) ?: Locale.getDefault().language
+    fun getLanguage(): String {
+        val languageCode = sharedPreferences.getString("app_lang", DEFAULT_LOCALE)?.split('_')
+            ?: return Locale.getDefault().language
+        return languageCode[0]
+    }
 }
