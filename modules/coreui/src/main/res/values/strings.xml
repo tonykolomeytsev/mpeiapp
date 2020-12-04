@@ -153,6 +153,8 @@
     <string name="dashboard_day_status_semester">Идет %d учебная неделя</string>
     <string name="dashboard_day_status_not_semester">Неучебная неделя</string>
     <string name="dashboard_item_time_prediction_prefix">Пара начнется через</string>
+    <string name="dashboard_banner_favorites_title">Избранные расписания!</string>
+    <string name="dashboard_banner_favorites_description">Теперь вы можете переключаться между группами одним нажатием, не набирая их номера в поиске!\nНажмите, чтобы попробовать.</string>
 
     <string name="map_tab_name_eat">Еда</string>
     <string name="map_section_name_eat">Еда</string>
