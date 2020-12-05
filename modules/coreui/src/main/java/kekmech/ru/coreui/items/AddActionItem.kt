@@ -1,5 +1,7 @@
 package kekmech.ru.coreui.items
 
+import android.annotation.SuppressLint
+import android.view.MotionEvent
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.common_adapter.AdapterItem
@@ -18,6 +20,7 @@ interface AddActionViewHolder : ClickableItemViewHolder {
     fun setTitle(title: String)
 }
 
+@SuppressLint("ClickableViewAccessibility")
 class AddActionViewHolderImpl(
     containerView: View
 ) :
@@ -26,6 +29,27 @@ class AddActionViewHolderImpl(
     ClickableItemViewHolder by ClickableItemViewHolderImpl(containerView)
 {
     private val viewBinding = ItemAddActionBinding.bind(containerView)
+
+    init {
+        containerView.setOnTouchListener { _, event ->
+            if (event.action == MotionEvent.ACTION_DOWN) {
+                containerView.clearAnimation()
+                containerView.animate()
+                    .scaleX(0.9f)
+                    .scaleY(0.9f)
+                    .setDuration(100L)
+                    .start()
+            } else {
+                containerView.clearAnimation()
+                containerView.animate()
+                    .scaleX(1f)
+                    .scaleY(1f)
+                    .setDuration(100L)
+                    .start()
+            }
+            false
+        }
+    }
 
     override fun setTitle(title: String) {
         viewBinding.textViewActionName.text = title

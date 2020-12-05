@@ -31,7 +31,6 @@ internal class ScheduleReducer : BaseReducer<ScheduleState, ScheduleEvent, Sched
         is News.ScheduleWeekLoadSuccess -> {
             val schedule = state.schedule.apply { put(event.weekOffset, event.schedule) }
             if (state.isFirstLoading) {
-                val (actualSelectedDay, isNeedToShowNextWeek) = getActualSelectedDay(state)
                 val firstDayOfWeek = event.schedule.weeks.first().firstDayOfWeek
                 val weekItems = hashMapOf(
                     -3 to createWeekItem(-3, firstDayOfWeek.minusWeeks(3)),
@@ -44,16 +43,15 @@ internal class ScheduleReducer : BaseReducer<ScheduleState, ScheduleEvent, Sched
                 )
                 Result(
                     state = state.copy(
-                        weekOffset = if (isNeedToShowNextWeek) 1 else 0,
+                        weekOffset = state.selectedDay.weekOffset,
                         currentWeekMonday = firstDayOfWeek,
                         isFirstLoading = false,
                         isLoading = false,
                         schedule = schedule,
                         weekItems = weekItems,
-                        selectedDay = actualSelectedDay,
-                        isNavigationFabCurrentWeek = !isNeedToShowNextWeek
+                        isNavigationFabCurrentWeek = state.selectedDay.weekOffset == 0
                     ),
-                    action = ScheduleAction.LoadSchedule(1).takeIf { isNeedToShowNextWeek }
+                    action = ScheduleAction.LoadSchedule(1).takeIf { state.selectedDay.weekOffset == 1 }
                 )
             } else {
                 Result(
@@ -80,14 +78,18 @@ internal class ScheduleReducer : BaseReducer<ScheduleState, ScheduleEvent, Sched
         state: ScheduleState
     ): ScheduleResult = when (event) {
         is Wish.Init -> Result(
-            state = state.copy(isLoading = true),
-            action = ScheduleAction.LoadSchedule(state.weekOffset)
+            state = state.copy(
+                isLoading = true,
+                selectedDay = getActualSelectedDay(state).first
+            ),
+            action = ScheduleAction.LoadSchedule(0)
         )
         is Wish.Action.SelectWeek -> generateSelectedWeekResult(state, event)
         is Wish.Click.OnDayClick -> Result(
             state = state.copy(
                 selectedDay = event.dayItem.copy(),
-                isNavigationFabCurrentWeek = state.weekOffset == 0
+                isNavigationFabCurrentWeek = state.weekOffset == 0,
+                isNavigationFabVisible = true
             )
         )
         is Wish.Action.OnPageChanged -> {
@@ -99,7 +101,8 @@ internal class ScheduleReducer : BaseReducer<ScheduleState, ScheduleEvent, Sched
                 val newSelectedDay = event.page + 1
                 ScheduleResult(
                     state = state.copy(
-                        selectedDay = state.selectedDay.plusDays(newSelectedDay - oldSelectedDay)
+                        selectedDay = state.selectedDay.plusDays(newSelectedDay - oldSelectedDay),
+                        isNavigationFabVisible = true
                     )
                 )
             }
@@ -186,11 +189,10 @@ internal class ScheduleReducer : BaseReducer<ScheduleState, ScheduleEvent, Sched
     private fun getActualSelectedDay(state: ScheduleState): Pair<DayItem, Boolean> {
         val todayIsSunday = state.selectedDay.date.dayOfWeek == DayOfWeek.SUNDAY
         val todayIsSaturday = state.selectedDay.date.dayOfWeek == DayOfWeek.SATURDAY
-        val hasNoClassesOnSaturday = state.selectedWeekSchedule?.days?.find { it.dayOfWeek == DayOfWeek.SATURDAY.value }?.classes.isNullOrEmpty()
-        val correction = todayIsSunday || (todayIsSaturday && hasNoClassesOnSaturday)
+        val correction = todayIsSunday || todayIsSaturday
         val day = when {
             todayIsSunday -> state.selectedDay.plusDays(1).copy(weekOffset = 1)
-            todayIsSaturday && hasNoClassesOnSaturday -> state.selectedDay.plusDays(2).copy(weekOffset = 1)
+            todayIsSaturday -> state.selectedDay.plusDays(2).copy(weekOffset = 1)
             else -> state.selectedDay
         }
         return day to correction
