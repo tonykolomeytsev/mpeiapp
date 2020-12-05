@@ -87,9 +87,7 @@ internal class ScheduleFragment : BaseFragment<ScheduleEvent, ScheduleEffect, Sc
 
     override fun render(state: ScheduleState) = viewBinding.unit {
         weekOffsetToBeSelected = state.weekOffset
-        shimmerViewContainer.isVisible = state.isLoading
         appBarLayoutGroup.isVisible = !state.isLoading
-        if (state.isLoading) shimmerViewContainer.startShimmer() else shimmerViewContainer.stopShimmer()
 
         textViewHeader.text = getFormattedDay(state.selectedDay.date)
         textViewDescription.text = state.weekOfSemester?.let { getFormattedWeek(it) }.orEmpty()
@@ -118,13 +116,15 @@ internal class ScheduleFragment : BaseFragment<ScheduleEvent, ScheduleEffect, Sc
     }
 
     private fun renderShimmer(state: ScheduleState) {
-        if (state.selectedWeekSchedule == null) {
-            viewBinding.shimmerViewContainer.visibility = View.VISIBLE
-            viewBinding.shimmerViewContainer.startShimmer()
-        } else {
-            viewBinding.shimmerViewContainer.visibility = View.INVISIBLE
-            viewBinding.shimmerViewContainer.stopShimmer()
-        }
+//        if (state.selectedWeekSchedule == null) {
+//            viewBinding.shimmerViewContainer.visibility = View.VISIBLE
+//            viewBinding.shimmerViewContainer.startShimmer()
+//        } else {
+//            viewBinding.shimmerViewContainer.visibility = View.INVISIBLE
+//            viewBinding.shimmerViewContainer.stopShimmer()
+//        }
+        //viewBinding.shimmerViewContainer.visibility = View.VISIBLE
+        //viewBinding.shimmerViewContainer.startShimmer()
     }
 
     private fun renderFloatingActionButton(state: ScheduleState) {

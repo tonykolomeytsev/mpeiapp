@@ -4,7 +4,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <View
+    <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:background="@drawable/background_classes"
@@ -12,10 +12,29 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:paddingBottom="16dp"/>
+            android:paddingBottom="16dp">
 
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:layout_marginStart="80dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/background_rounded_rect_8dp"
+                android:backgroundTint="?attr/colorGray30"/>
 
-    <View
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_marginStart="80dp"
+                android:layout_marginEnd="150dp"
+                android:layout_marginTop="44dp"
+                android:background="@drawable/background_rounded_rect_8dp"
+                android:backgroundTint="?attr/colorGray30"/>
+
+    </FrameLayout>
+
+    <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:background="@drawable/background_classes"
@@ -24,6 +43,57 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="108dp"
-            android:paddingBottom="16dp"/>
+            android:paddingBottom="16dp">
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:layout_marginStart="80dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/background_rounded_rect_8dp"
+                android:backgroundTint="?attr/colorGray30"/>
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_marginStart="80dp"
+                android:layout_marginEnd="150dp"
+                android:layout_marginTop="44dp"
+                android:background="@drawable/background_rounded_rect_8dp"
+                android:backgroundTint="?attr/colorGray30"/>
+
+    </FrameLayout>
+
+    <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@drawable/background_classes"
+            android:backgroundTint="?attr/shimmerColor"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="216dp"
+            android:paddingBottom="16dp">
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:layout_marginStart="80dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/background_rounded_rect_8dp"
+                android:backgroundTint="?attr/colorGray30"/>
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_marginStart="80dp"
+                android:layout_marginEnd="150dp"
+                android:layout_marginTop="44dp"
+                android:background="@drawable/background_rounded_rect_8dp"
+                android:backgroundTint="?attr/colorGray30"/>
+
+    </FrameLayout>
 
 </com.facebook.shimmer.ShimmerFrameLayout>
