@@ -97,7 +97,6 @@ internal class ScheduleFragment : BaseFragment<ScheduleEvent, ScheduleEffect, Sc
         weeksScrollAdapter.selectDay(state.selectedDay)
         viewPagerAdapter.update(ScheduleClassesListConverter.map(state))
 
-        renderShimmer(state)
         renderFloatingActionButton(state)
 
         if (viewPagerPositionToBeSelected != state.selectedDay.dayOfWeek) {
@@ -113,18 +112,6 @@ internal class ScheduleFragment : BaseFragment<ScheduleEvent, ScheduleEffect, Sc
     private fun renderWeekSelection(state: ScheduleState) {
         val position = state.weekOffset + (Int.MAX_VALUE / 2)
         viewBinding.recyclerView.scrollToPosition(position)
-    }
-
-    private fun renderShimmer(state: ScheduleState) {
-//        if (state.selectedWeekSchedule == null) {
-//            viewBinding.shimmerViewContainer.visibility = View.VISIBLE
-//            viewBinding.shimmerViewContainer.startShimmer()
-//        } else {
-//            viewBinding.shimmerViewContainer.visibility = View.INVISIBLE
-//            viewBinding.shimmerViewContainer.stopShimmer()
-//        }
-        //viewBinding.shimmerViewContainer.visibility = View.VISIBLE
-        //viewBinding.shimmerViewContainer.startShimmer()
     }
 
     private fun renderFloatingActionButton(state: ScheduleState) {
@@ -164,8 +151,7 @@ internal class ScheduleFragment : BaseFragment<ScheduleEvent, ScheduleEffect, Sc
         WorkingDayAdapterItem(DAY_OF_WEEK_WEDNESDAY, ::onClassesClick, ::onClassesScroll),
         WorkingDayAdapterItem(DAY_OF_WEEK_THURSDAY, ::onClassesClick, ::onClassesScroll),
         WorkingDayAdapterItem(DAY_OF_WEEK_FRIDAY, ::onClassesClick, ::onClassesScroll),
-        WorkingDayAdapterItem(DAY_OF_WEEK_SATURDAY, ::onClassesClick, ::onClassesScroll),
-        ClassesShimmerAdapterItem()
+        WorkingDayAdapterItem(DAY_OF_WEEK_SATURDAY, ::onClassesClick, ::onClassesScroll)
     )
 
     private fun onClassesClick(classes: Classes) {
