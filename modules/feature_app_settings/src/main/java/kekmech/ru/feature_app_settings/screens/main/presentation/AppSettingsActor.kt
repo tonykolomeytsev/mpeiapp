@@ -30,5 +30,14 @@ internal class AppSettingsActor(
         is AppSettingsAction.ClearSelectedGroup -> appSettingsRepository
             .complete { scheduleRepository.debugClearSelectedGroup() }
             .toObservable()
+        is AppSettingsAction.ChangeBackendEnvironment -> appSettingsRepository
+            .complete { isDebugEnvironment = action.isDebug }
+            .toObservable()
+        is AppSettingsAction.ChangeLanguage -> appSettingsRepository
+            .complete { languageCode = action.selectedLanguage }
+            .toObservable()
+        is AppSettingsAction.SetShowQuickNavigationFab -> appSettingsRepository
+            .complete { showNavigationButton = action.isVisible }
+            .toObservable()
     }
 }

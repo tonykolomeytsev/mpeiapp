@@ -12,12 +12,13 @@ import androidx.annotation.RequiresApi
 import kekmech.ru.common_android.close
 import kekmech.ru.common_android.findArgument
 import kekmech.ru.common_android.getArgument
+import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.withArguments
 import kekmech.ru.common_mvi.ui.BaseFragment
 import kekmech.ru.common_navigation.BackButtonListener
+import kekmech.ru.common_webview.databinding.FragmentWebViewBinding
 import kekmech.ru.common_webview.presentation.*
 import kekmech.ru.common_webview.presentation.WebViewEvent.Wish
-import kotlinx.android.synthetic.main.fragment_web_view.*
 import org.koin.android.ext.android.inject
 
 private const val START_URL_ARG = "UrlArg"
@@ -29,6 +30,8 @@ class WebViewFragment : BaseFragment<WebViewEvent, WebViewEffect, WebViewState, 
 
     override val initEvent = Wish.Init
 
+    private val viewBinding by viewBinding(FragmentWebViewBinding::bind)
+
     override fun createFeature() = inject<WebViewFeatureFactory>().value
         .create(getArgument(START_URL_ARG))
 
@@ -38,25 +41,27 @@ class WebViewFragment : BaseFragment<WebViewEvent, WebViewEffect, WebViewState, 
     override var layoutId = R.layout.fragment_web_view
 
     override fun onViewCreatedInternal(view: View, savedInstanceState: Bundle?) {
-        webView.init()
-        toolbar.init()
+        viewBinding.apply {
+            webView.init()
+            toolbar.init()
+        }
     }
 
     override fun render(state: WebViewState) {
         // show loading state
         if (state.isLoading) {
-            progressBar.animate()
+            viewBinding.progressBar.animate()
                 .alpha(1f)
                 .start()
         } else {
-            progressBar.animate()
+            viewBinding.progressBar.animate()
                 .cancel()
         }
     }
 
     override fun handleEffect(effect: WebViewEffect) = when (effect) {
         is WebViewEffect.CloseScreen -> close()
-        is WebViewEffect.LoadUrl -> webView.loadUrl(effect.url)
+        is WebViewEffect.LoadUrl -> viewBinding.webView.loadUrl(effect.url)
     }
 
     private fun WebView.init() {
@@ -79,7 +84,7 @@ class WebViewFragment : BaseFragment<WebViewEvent, WebViewEffect, WebViewState, 
             }
 
             override fun onPageFinished(view: WebView?, url: String?) {
-                toolbar.title = url.orEmpty()
+                viewBinding.toolbar.title = url.orEmpty()
                 // feature.accept(Wish.Action.LoadingProgressChanged(100))
             }
         }
@@ -98,8 +103,8 @@ class WebViewFragment : BaseFragment<WebViewEvent, WebViewEffect, WebViewState, 
     }
 
     override fun onBackPressed(): Boolean {
-        if (webView.canGoBack()) {
-            webView.goBack()
+        if (viewBinding.webView.canGoBack()) {
+            viewBinding.webView.goBack()
             return true
         }
         return false

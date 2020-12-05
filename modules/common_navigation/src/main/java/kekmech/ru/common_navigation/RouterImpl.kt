@@ -3,7 +3,7 @@ package kekmech.ru.common_navigation
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 
-class RouterImpl : NavigationHolder, Router {
+internal class RouterImpl : NavigationHolder, Router {
 
     private var activity: AppCompatActivity? = null
 

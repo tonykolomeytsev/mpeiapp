@@ -5,15 +5,14 @@ import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.feature_schedule.R
-import kotlinx.android.extensions.LayoutContainer
 
 internal object SelfStudyItem
 
 internal interface SelfStudyViewHolder
 
 internal class SelfStudyViewHolderImpl(
-    override val containerView: View
-) : SelfStudyViewHolder, RecyclerView.ViewHolder(containerView), LayoutContainer
+    containerView: View
+) : SelfStudyViewHolder, RecyclerView.ViewHolder(containerView)
 
 internal class SelfStudyItemBinder : BaseItemBinder<SelfStudyViewHolder, SelfStudyItem>() {
 

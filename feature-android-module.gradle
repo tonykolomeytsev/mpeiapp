@@ -1,6 +1,5 @@
 apply plugin: "com.android.library"
 apply plugin: "kotlin-android"
-apply plugin: "kotlin-android-extensions"
 
 android {
     compileSdkVersion 30
@@ -27,6 +26,9 @@ android {
             buildConfigField "String", "VERSION_NAME", "\"${rootProject.appVersionName}\""
         }
     }
+    buildFeatures {
+        viewBinding true
+    }
 
     compileOptions {
         coreLibraryDesugaringEnabled true
@@ -38,14 +40,11 @@ android {
     }
 }
 
-androidExtensions {
-    experimental = true
-}
-
 tasks.withType(Test) {
     useJUnitPlatform()
 }
 
 dependencies {
     coreLibraryDesugaring desugaring
+    implementation androidx.lifecycleCommonJava8
 }

@@ -18,6 +18,8 @@ internal class AppSettingsListConverter {
                 isChecked = appSettings.isDarkThemeEnabled
             ))
             add(SectionTextItem(resId = R.string.app_settings_dark_theme_description))
+            add(createLanguageItem(state))
+            add(SectionTextItem(resId = R.string.app_settings_section_lang_description))
             if (state.isFeatureToggleSnowFlakesEnabled) {
                 add(ToggleItem(
                     itemId = AppSettingsFragment.TOGGLE_SNOW_FLAKES,
@@ -37,6 +39,12 @@ internal class AppSettingsListConverter {
                 labelResId = R.string.app_settings_favorite_schedule_description
             ))
             add(ToggleItem(
+                itemId = AppSettingsFragment.TOGGLE_SHOW_NAV_FAB,
+                titleRes = R.string.app_settings_show_navigation_fab,
+                isChecked = appSettings.showNavigationButton
+            ))
+            add(SectionTextItem(resId = R.string.app_settings_show_navigation_fab_description))
+            add(ToggleItem(
                 itemId = AppSettingsFragment.TOGGLE_CHANGE_DAY_AFTER_CHANGE_WEEK,
                 titleRes = R.string.app_settings_change_day_after_change_week,
                 isChecked = appSettings.changeDayAfterChangeWeek
@@ -55,15 +63,15 @@ internal class AppSettingsListConverter {
             add(SectionTextItem(resId = R.string.app_settings_auto_hide_bottom_sheet_description))
 
             add(SpaceItem.VERTICAL_24)
-            add(SectionHeaderItem(title = "Поддержка"))
+            add(SectionHeaderItem(titleRes = R.string.app_settings_header_support))
             add(SpaceItem.VERTICAL_12)
             add(BottomLabeledTextItem(
-                mainText = "Задать вопрос в группу",
+                mainTextResId = R.string.app_settings_section_ask,
                 label = "vk.com/kekmech",
                 itemId = ITEM_SUPPORT
             ))
             add(BottomLabeledTextItem(
-                mainText = "Завести Issue или Pull Request",
+                mainTextResId = R.string.app_settings_section_github,
                 label = "github.com/tonykolomeytsev/mpeiapp",
                 itemId = ITEM_GITHUB
             ))
@@ -77,7 +85,25 @@ internal class AppSettingsListConverter {
                     label = "После очистки будет открыт онбординг",
                     itemId = AppSettingsFragment.ITEM_DEBUG_CLEAR_SELECTED_GROUP
                 ))
+                add(ToggleItem(
+                    itemId = AppSettingsFragment.TOGGLE_DEBUG_CHANGE_ENV,
+                    title = "Использовать тестовое окружение",
+                    isChecked = appSettings.isDebugEnvironment
+                ))
+                add(SectionTextItem(text = "Нужно перезагрузить приложение, для того чтобы настройка вступила в силу"))
             }
         }
+    }
+
+    private fun createLanguageItem(state: AppSettingsState): Any {
+        return RightLabeledTextItem(
+            mainTextResId = R.string.app_settings_section_lang,
+            label = when (state.appSettings?.languageCode) {
+                "ru_RU" -> "РУССКИЙ"
+                "en_US" -> "ENGLISH"
+                else -> ""
+            },
+            itemId = AppSettingsFragment.ITEM_LANGUAGE
+        )
     }
 }

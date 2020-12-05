@@ -8,7 +8,7 @@ import kekmech.ru.common_app_database.R
 import kekmech.ru.common_app_database.dto.Migration
 import kekmech.ru.common_kotlin.fastLazy
 
-class DBHelper(
+internal class DBHelper(
     private val context: Context,
     databaseName: String,
     databaseVersion: Int

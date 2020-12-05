@@ -13,8 +13,7 @@ import kekmech.ru.coreui.items.NotePreviewAdapterItem
 import kekmech.ru.coreui.items.SpaceAdapterItem
 import kekmech.ru.domain_schedule.dto.Classes
 import kekmech.ru.feature_schedule.R
-import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.item_week_days.*
+import kekmech.ru.feature_schedule.databinding.ItemWorkingDayBinding
 
 const val DAY_OF_WEEK_MONDAY = 1
 const val DAY_OF_WEEK_TUESDAY = 2
@@ -34,13 +33,15 @@ internal interface WorkingDayViewHolder {
         recycledViewPool: RecyclerView.RecycledViewPool,
         onClickListener: (Classes) -> Unit
     )
+    fun addScrollListener(listener: (Int) -> Unit)
 }
 
 internal class WorkingDayViewHolderImpl(
-    override val containerView: View
-) : WorkingDayViewHolder, RecyclerView.ViewHolder(containerView), LayoutContainer {
+    private val containerView: View
+) : WorkingDayViewHolder, RecyclerView.ViewHolder(containerView) {
 
     private var adapter: BaseAdapter? = null
+    private val viewBinding = ItemWorkingDayBinding.bind(containerView)
 
     override fun setItems(list: List<Any>) {
         adapter?.update(list)
@@ -60,19 +61,31 @@ internal class WorkingDayViewHolderImpl(
             SpaceAdapterItem(),
             NotePreviewAdapterItem(onClickListener)
         )
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(containerView.context)
-        recyclerView.setRecycledViewPool(recycledViewPool)
+        viewBinding.apply {
+            recyclerView.adapter = adapter
+            recyclerView.layoutManager = LinearLayoutManager(containerView.context)
+            recyclerView.setRecycledViewPool(recycledViewPool)
+        }
+    }
+
+    override fun addScrollListener(listener: (Int) -> Unit) {
+        viewBinding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                listener(dy)
+            }
+        })
     }
 }
 
 internal class WorkingDayItemBinder(
     private val recycledViewPool: RecyclerView.RecycledViewPool,
-    private val onClickListener: (Classes) -> Unit
+    private val onClickListener: (Classes) -> Unit,
+    private val onScrollClasses: (Int) -> Unit
 ) : BaseItemBinder<WorkingDayViewHolder, WorkingDayItem>() {
 
     override fun bind(vh: WorkingDayViewHolder, model: WorkingDayItem, position: Int) {
         vh.initAdapter(recycledViewPool, onClickListener)
+        vh.addScrollListener(onScrollClasses)
         vh.setItems(model.items)
     }
 
@@ -88,14 +101,16 @@ internal class WorkingDayItemBinder(
 
 internal class WorkingDayAdapterItem(
     dayOfWeek: Int,
-    onClickListener: (Classes) -> Unit
+    onClickListener: (Classes) -> Unit,
+    onScrollClasses: (Int) -> Unit
 ) : AdapterItem<WorkingDayViewHolder, WorkingDayItem>(
     isType = { it is WorkingDayItem && it.dayOfWeek == dayOfWeek },
     layoutRes = R.layout.item_working_day,
     viewHolderGenerator = ::WorkingDayViewHolderImpl,
     itemBinder = WorkingDayItemBinder(
         recycledViewPool = RecyclerView.RecycledViewPool().apply { setMaxRecycledViews(0, 200) },
-        onClickListener = onClickListener
+        onClickListener = onClickListener,
+        onScrollClasses = onScrollClasses
     ),
     areItemsTheSame = { a, b -> a.dayOfWeek == b.dayOfWeek },
     equals = { a, b -> a.items == b.items },

@@ -7,8 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.feature_onboarding.R
-import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.item_promo_page.*
+import kekmech.ru.feature_onboarding.databinding.ItemPromoPageBinding
 
 internal enum class PromoPage(
     @DrawableRes val icon: Int,
@@ -54,19 +53,21 @@ internal interface PromoPageViewHolder {
 }
 
 internal class PromoPageViewHolderImpl(
-    override val containerView: View
-) : PromoPageViewHolder, RecyclerView.ViewHolder(containerView), LayoutContainer {
+    containerView: View
+) : PromoPageViewHolder, RecyclerView.ViewHolder(containerView) {
+
+    private val viewBinding = ItemPromoPageBinding.bind(containerView)
 
     override fun setIcon(@DrawableRes icon: Int) {
-        promoIcon.setBackgroundResource(icon)
+        viewBinding.promoIcon.setBackgroundResource(icon)
     }
 
     override fun setTitle(@StringRes title: Int) {
-        promoTitle.setText(title)
+        viewBinding.promoTitle.setText(title)
     }
 
     override fun setSubtitle(@StringRes subtitle: Int) {
-        promoSubtitle.setText(subtitle)
+        viewBinding.promoSubtitle.setText(subtitle)
     }
 }
 

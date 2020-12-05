@@ -1,7 +1,9 @@
 package kekmech.ru.mpeiapp
 
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
@@ -52,6 +54,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         deeplinkHandlersProcessor.processDeeplink(intent.data)
+        if (Build.VERSION.SDK_INT < 25) LocaleContextWrapper.updateResourcesV24(this)
     }
 
     @Suppress("DEPRECATION") // deprecated с андроида 11, но на 11 работает норм
@@ -98,5 +101,9 @@ class MainActivity : AppCompatActivity() {
         } else {
             super.onBackPressed()
         }
+    }
+
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(LocaleContextWrapper.wrapContext(newBase))
     }
 }

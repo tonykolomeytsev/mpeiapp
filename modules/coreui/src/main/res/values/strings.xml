@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">coreui</string>
+    <string name="app_name" translatable="false">MpeiX</string>
 
     <!-- НУМЕРАЦИЯ ПАР-->
     <string-array name="classes_numbers">
@@ -122,6 +122,9 @@
     <string name="schedule_item_self_study_description">Потратьте этот день с пользой, начните проходить курсы по программированию или начните читать книгу</string>
     <string name="schedule_empty_state_title">Упс! Не удалось загрузить расписание</string>
     <string name="schedule_empty_state_subtitle">Возможно это произошло из-за проблем с интернет соединением.\nЛибо сервер MpeiX упал :)</string>
+    <string name="schedule_fab_tooltip">Кнопка быстрой навигации. Убрать кнопку можно в настройках</string>
+    <string name="schedule_fab_next">К следующей неделе</string>
+    <string name="schedule_fab_prev">К текущей неделе</string>
 
     <string name="onboarding_bars_header">Вход в БАРС</string>
     <string name="onboarding_bars_description">Вы можете совершить вход в систему БАРС, чтобы получить возможность просматривать оценки из приложения</string>
@@ -149,6 +152,9 @@
     <string name="dashboard_search_field_text">Искать места, заметки…</string>
     <string name="dashboard_day_status_semester">Идет %d учебная неделя</string>
     <string name="dashboard_day_status_not_semester">Неучебная неделя</string>
+    <string name="dashboard_item_time_prediction_prefix">Пара начнется через</string>
+    <string name="dashboard_banner_favorites_title">Избранные расписания!</string>
+    <string name="dashboard_banner_favorites_description">Теперь вы можете переключаться между группами одним нажатием, не набирая их номера в поиске!\nНажмите, чтобы попробовать.</string>
 
     <string name="map_tab_name_eat">Еда</string>
     <string name="map_section_name_eat">Еда</string>
@@ -179,6 +185,7 @@
     <string name="all_notes_section_header_past">Прошедшие заметки</string>
     <string name="all_notes_empty_state_title">Вы пока не создали ни одной заметки</string>
     <string name="all_notes_empty_state_subtitle">Для создания заметки нажмите на любую пару в разделе расписания</string>
+    <string name="all_notes_search_menu_item">Поиск</string>
 
     <string name="bars_stub_student_name">Анонимный студент</string>
     <string name="bars_stub_student_group">Группа %s</string>
@@ -193,10 +200,17 @@
     <string name="app_settings_snowy_mood">Снежное настроение</string>
     <string name="app_settings_change_day_after_change_week">Менять день при смене недели</string>
     <string name="app_settings_change_day_after_change_week_description">При переходе на другую неделю автоматически переключаться на 7 дней вперед, либо 7 дней назад</string>
+    <string name="app_settings_show_navigation_fab">Кнопка быстрой навигации</string>
+    <string name="app_settings_show_navigation_fab_description">Показать либо скрыть кнопку навигации (внизу экрана расписания), позволяющую быстро переключаться на текущую и следующую недели</string>
     <string name="app_settings_auto_hide_bottom_sheet">Скрывать список по клику</string>
     <string name="app_settings_auto_hide_bottom_sheet_description">При включенной настройке, на экране карты нажатие на любой адрес в списке автоматически свернет список и переместит камеру к указанному адресу</string>
     <string name="app_settings_favorite_schedule_title">Избранные расписания</string>
     <string name="app_settings_favorite_schedule_description">Настройка быстрого доступа к расписаниям</string>
+    <string name="app_settings_header_support">Поддержка</string>
+    <string name="app_settings_section_ask">Задать вопрос в группу</string>
+    <string name="app_settings_section_github">Завести Issue или Pull Request</string>
+    <string name="app_settings_section_lang">Язык приложения</string>
+    <string name="app_settings_section_lang_description">Иногда после смены языка требуется перезапустить приложение</string>
 
     <string name="favorites_screen_title">Избранные расписания</string>
     <string name="favorites_empty_state_title">Ни одно расписание не добавлено в избранные</string>
@@ -208,12 +222,20 @@
     <string name="edit_favorite_hint">Описание для группы</string>
     <string name="edit_favorite_button_continue">Продолжить</string>
 
+    <string name="change_language_screen_title">Выбор языка</string>
+    <string name="change_language_description_russian">Русский язык</string>
+    <string name="change_language_description_english">English language</string>
+    <string name="change_language_disclaimer">На данный момент, на английский язык переведен только графический интерфейс приложения. Названия занятий, имена преподавателей и названия аудиторий на английский не переведены. Автоматический машинный перевод для них начнет работать в будущих версиях приложения.</string>
+
     <string name="search_section_title_map">Карта</string>
     <string name="search_section_title_notes">Заметки</string>
     <string name="search_empty_state_title">Введите текст чтобы начать поиск</string>
     <string name="search_empty_state_subtitle">Вы можете искать заметки и места на карте. Уже скоро можно будет искать преподавателей и расписания!</string>
     <string name="search_not_found_state_title">По вашему запросу ничего не найдено</string>
     <string name="search_not_found_state_subtitle">Вы можете искать заметки по контенту и названиям дисциплин, а также места на карте по названию, адресу и категории</string>
+    <string name="search_filter_all">Все категории</string>
+    <string name="search_filter_notes">Заметки</string>
+    <string name="search_filter_map">Карта</string>
 
     <string name="navigation_name_dashboard">Лента</string>
     <string name="navigation_name_schedule">Расписание</string>

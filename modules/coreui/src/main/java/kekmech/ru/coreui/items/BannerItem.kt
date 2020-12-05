@@ -7,8 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.coreui.R
-import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.item_banner.*
+import kekmech.ru.coreui.databinding.ItemBannerBinding
 
 private const val DEFAULT_BANNER_ID = 0
 
@@ -32,27 +31,29 @@ interface BannerViewHolder {
 }
 
 class BannerViewHolderImpl(
-    override val containerView: View
-) : RecyclerView.ViewHolder(containerView), BannerViewHolder, LayoutContainer {
+    private val containerView: View
+) : RecyclerView.ViewHolder(containerView), BannerViewHolder {
+
+    private val viewBinding = ItemBannerBinding.bind(containerView)
 
     override fun setTitle(title: String) {
-        bannerTitle.text = title
+        viewBinding.bannerTitle.text = title
     }
 
     override fun setTitle(@StringRes titleRes: Int) {
-        bannerTitle.setText(titleRes)
+        viewBinding.bannerTitle.setText(titleRes)
     }
 
     override fun setDescription(description: String) {
-        bannerDescription.text = description
+        viewBinding.bannerDescription.text = description
     }
 
     override fun setDescription(descriptionRes: Int) {
-        bannerDescription.setText(descriptionRes)
+        viewBinding.bannerDescription.setText(descriptionRes)
     }
 
     override fun setIcon(iconRes: Int) {
-        bannerIcon.setImageResource(iconRes)
+        viewBinding.bannerIcon.setImageResource(iconRes)
     }
 
     override fun setOnClickListener(listener: (View) -> Unit) {
@@ -60,7 +61,7 @@ class BannerViewHolderImpl(
     }
 
     override fun setOnCloseListener(listener: (View) -> Unit) {
-        bannerExit.setOnClickListener(listener)
+        viewBinding.bannerExit.setOnClickListener(listener)
     }
 }
 

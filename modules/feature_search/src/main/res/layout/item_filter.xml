@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:paddingBottom="1dp"
+        android:textSize="13sp"
+        android:fontFamily="@font/roboto_regular"
+        android:gravity="center"
+        android:background="@drawable/background_item_chip"
+        android:textColor="@color/color_text_item_chip_selector"
+        android:layout_marginEnd="8dp"
+        tools:text="Chip" />

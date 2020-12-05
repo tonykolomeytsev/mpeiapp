@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.google.gms.google-services' // Firebase
 apply plugin: 'com.google.firebase.crashlytics'
 
@@ -29,6 +28,9 @@ android {
             applicationIdSuffix ".dev"
         }
     }
+    buildFeatures {
+        viewBinding true
+    }
 
     compileOptions {
         coreLibraryDesugaringEnabled true
@@ -42,8 +44,7 @@ android {
 
 dependencies {
     coreLibraryDesugaring desugaring
-    testImplementation tests.junit
-    androidTestImplementation androidx.test.runner
+    implementation androidx.lifecycleCommonJava8
 
     // Koin for Kotlin Android
     implementation koin.core
@@ -108,4 +109,5 @@ dependencies {
     implementation project(path: ':common_app_database')
     implementation project(path: ':common_analytics')
     implementation project(path: ':common_feature_toggles')
+    implementation project(path: ':common_shared_preferences')
 }

@@ -1,6 +1,9 @@
 package kekmech.ru.mpeiapp
 
 import android.app.Application
+import android.content.Context
+import android.content.SharedPreferences
+import android.os.Build
 import kekmech.ru.bars.di.BarsModule
 import kekmech.ru.common_analytics.di.AnalyticsModule
 import kekmech.ru.common_android.di.CommonAndroidModule
@@ -8,10 +11,13 @@ import kekmech.ru.common_app_database.di.AppDatabaseModule
 import kekmech.ru.common_cache.di.CacheModule
 import kekmech.ru.common_di.modules
 import kekmech.ru.common_feature_toggles.di.CommonFeatureTogglesModule
+import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_navigation.Router
 import kekmech.ru.common_navigation.di.NavigationModule
 import kekmech.ru.common_navigation.di.RouterHolder
 import kekmech.ru.common_network.di.NetworkModule
+import kekmech.ru.common_network.retrofit.ServiceUrlResolver
+import kekmech.ru.common_shared_preferences.boolean
 import kekmech.ru.common_webview.di.WebViewModule
 import kekmech.ru.feature_app_settings.di.AppSettingsModule
 import kekmech.ru.feature_dashboard.di.DashboardModule
@@ -31,17 +37,26 @@ import org.koin.core.context.startKoin
 import timber.log.Timber
 import timber.log.Timber.DebugTree
 
-
 class MpeixApp : Application(),
     RouterHolder {
 
     override val router by inject<Router>()
+    private val sharedPreferences by fastLazy { applicationContext.getSharedPreferences("mpeix", MODE_PRIVATE) }
+    private val isDebugBackendEnvironmentEnabled by fastLazy {
+        sharedPreferences.getBoolean("is_debug_env", false)
+    }
 
     override fun onCreate() {
         super.onCreate()
+        ServiceUrlResolver.setEnvironment(debug = isDebugBackendEnvironmentEnabled)
         RemoteConfig.setup()
         initKoin()
         initTimber()
+        if (Build.VERSION.SDK_INT < 25) LocaleContextWrapper.updateResourcesV24(this)
+    }
+
+    override fun attachBaseContext(base: Context) {
+        super.attachBaseContext(LocaleContextWrapper.wrapContext(base))
     }
 
     private fun initKoin() = startKoin {

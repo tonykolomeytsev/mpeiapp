@@ -6,8 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.coreui.R
-import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.item_empty_state.*
+import kekmech.ru.coreui.databinding.ItemEmptyStateBinding
 
 data class EmptyStateItem(
     @StringRes val titleRes: Int? = null,
@@ -20,15 +19,17 @@ interface EmptyStateViewHolder {
 }
 
 class EmptyStateViewHolderImpl(
-    override val containerView: View
-) : EmptyStateViewHolder, RecyclerView.ViewHolder(containerView), LayoutContainer {
+    containerView: View
+) : EmptyStateViewHolder, RecyclerView.ViewHolder(containerView) {
+
+    private val viewBinding = ItemEmptyStateBinding.bind(containerView)
 
     override fun setTitle(@StringRes titleRes: Int) {
-        textViewTitle.setText(titleRes)
+        viewBinding.textViewTitle.setText(titleRes)
     }
 
     override fun setSubtitle(@StringRes subtitleRes: Int) {
-        textViewSubtitle.setText(subtitleRes)
+        viewBinding.textViewSubtitle.setText(subtitleRes)
     }
 }
 

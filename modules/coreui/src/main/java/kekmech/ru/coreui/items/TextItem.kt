@@ -1,16 +1,16 @@
 package kekmech.ru.coreui.items
 
 import android.view.View
-import androidx.annotation.DrawableRes
+import android.widget.TextView
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import androidx.annotation.StyleRes
 import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseItemBinder
+import kekmech.ru.common_android.viewbinding.ReusableViewHolder
+import kekmech.ru.common_android.viewbinding.lazyBinding
 import kekmech.ru.coreui.R
-import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.item_text.*
 
 data class TextItem(
     val text: CharSequence? = null,
@@ -26,7 +26,9 @@ interface TextItemViewHolder {
 
 class TextItemViewHolderImpl(
     override val containerView: View
-) : TextItemViewHolder, RecyclerView.ViewHolder(containerView), LayoutContainer {
+) : TextItemViewHolder, RecyclerView.ViewHolder(containerView), ReusableViewHolder {
+
+    private val textViewTextItem by lazyBinding<TextView>(R.id.textViewTextItem)
 
     override fun setText(text: CharSequence) {
         textViewTextItem.text = text

@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_analytics.addScrollAnalytics
 import kekmech.ru.common_android.*
+import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.views.setProgressViewOffset
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.ui.BaseFragment
@@ -17,6 +18,7 @@ import kekmech.ru.coreui.items.*
 import kekmech.ru.domain_app_settings.AppSettingsFeatureLauncher
 import kekmech.ru.domain_schedule.CONTINUE_TO_BACK_STACK_WITH_RESULT
 import kekmech.ru.domain_schedule.dto.Classes
+import kekmech.ru.feature_dashboard.databinding.FragmentDashboardBinding
 import kekmech.ru.feature_dashboard.di.DashboardDependencies
 import kekmech.ru.feature_dashboard.items.*
 import kekmech.ru.feature_dashboard.presentation.DashboardEffect
@@ -24,7 +26,6 @@ import kekmech.ru.feature_dashboard.presentation.DashboardEvent
 import kekmech.ru.feature_dashboard.presentation.DashboardEvent.Wish
 import kekmech.ru.feature_dashboard.presentation.DashboardFeature
 import kekmech.ru.feature_dashboard.presentation.DashboardState
-import kotlinx.android.synthetic.main.fragment_dashboard.*
 import org.koin.android.ext.android.inject
 
 private const val REQUEST_CODE_UPDATE_DATA = 2910
@@ -34,27 +35,27 @@ class DashboardFragment : BaseFragment<DashboardEvent, DashboardEffect, Dashboar
     NeedToUpdate {
 
     override val initEvent = Wish.Init
-
     private val dependencies by inject<DashboardDependencies>()
 
     override fun createFeature() = dependencies.dashboardFeatureFactory.create()
 
     override var layoutId = R.layout.fragment_dashboard
-
     private val adapter by fastLazy { createAdapter() }
-
     private val analytics: DashboardAnalytics by inject()
+    private val viewBinding by viewBinding(FragmentDashboardBinding::bind)
 
     override fun onViewCreatedInternal(view: View, savedInstanceState: Bundle?) {
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.adapter = adapter
-        recyclerView.addSystemVerticalPadding()
-        recyclerView.addScrollAnalytics(analytics, "RecyclerView")
-        bannerContainer.addSystemTopPadding()
-        swipeRefresh.apply {
-            setOnRefreshListener { feature.accept(Wish.Action.OnSwipeRefresh) }
-            doOnApplyWindowInsets { _, windowInsets, _ ->
-                setProgressViewOffset(windowInsets.systemWindowInsetTop)
+        viewBinding.apply {
+            recyclerView.layoutManager = LinearLayoutManager(requireContext())
+            recyclerView.adapter = adapter
+            recyclerView.addSystemVerticalPadding()
+            recyclerView.addScrollAnalytics(analytics, "RecyclerView")
+            bannerContainer.addSystemTopPadding()
+            swipeRefresh.apply {
+                setOnRefreshListener { feature.accept(Wish.Action.OnSwipeRefresh) }
+                doOnApplyWindowInsets { _, windowInsets, _ ->
+                    setProgressViewOffset(windowInsets.systemWindowInsetTop)
+                }
             }
         }
         analytics.sendScreenShown()
@@ -62,8 +63,8 @@ class DashboardFragment : BaseFragment<DashboardEvent, DashboardEffect, Dashboar
 
     override fun render(state: DashboardState) {
         adapter.update(DashboardListConverter(requireContext()).map(state))
-        swipeRefresh.post {
-            swipeRefresh.isRefreshing = state.isSwipeRefreshLoadingAnimation
+        viewBinding.swipeRefresh.post {
+            viewBinding.swipeRefresh.isRefreshing = state.isSwipeRefreshLoadingAnimation
         }
     }
 

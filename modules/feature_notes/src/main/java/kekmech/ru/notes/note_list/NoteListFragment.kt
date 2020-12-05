@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_android.*
+import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.ui.BaseBottomSheetDialogFragment
 import kekmech.ru.common_navigation.addScreenForward
@@ -15,6 +16,7 @@ import kekmech.ru.coreui.touch_helpers.attachSwipeToDeleteCallback
 import kekmech.ru.domain_notes.dto.Note
 import kekmech.ru.domain_schedule.dto.Classes
 import kekmech.ru.notes.R
+import kekmech.ru.notes.databinding.FragmentNoteListBinding
 import kekmech.ru.notes.di.NotesDependencies
 import kekmech.ru.notes.edit.NoteEditFragment
 import kekmech.ru.notes.note_list.mvi.NoteListEffect
@@ -22,7 +24,6 @@ import kekmech.ru.notes.note_list.mvi.NoteListEvent
 import kekmech.ru.notes.note_list.mvi.NoteListEvent.Wish
 import kekmech.ru.notes.note_list.mvi.NoteListFeature
 import kekmech.ru.notes.note_list.mvi.NoteListState
-import kotlinx.android.synthetic.main.fragment_note_list.*
 import org.koin.android.ext.android.inject
 import java.time.LocalDate
 
@@ -46,12 +47,16 @@ internal class NoteListFragment : BaseBottomSheetDialogFragment<NoteListEvent, N
 
     private val analytics: NoteListAnalytics by inject()
 
+    private val viewBinding by viewBinding(FragmentNoteListBinding::bind)
+
     override fun onViewCreatedInternal(view: View, savedInstanceState: Bundle?) {
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.adapter = adapter
-        recyclerView.attachSwipeToDeleteCallback(isItemForDelete = { it is Note }) { note ->
-            analytics.sendClick("DeleteNote")
-            feature.accept(Wish.Action.DeleteNote(note as Note))
+        viewBinding.apply {
+            recyclerView.layoutManager = LinearLayoutManager(requireContext())
+            recyclerView.adapter = adapter
+            recyclerView.attachSwipeToDeleteCallback(isItemForDelete = { it is Note }) { note ->
+                analytics.sendClick("DeleteNote")
+                feature.accept(Wish.Action.DeleteNote(note as Note))
+            }
         }
         analytics.sendScreenShown()
     }
