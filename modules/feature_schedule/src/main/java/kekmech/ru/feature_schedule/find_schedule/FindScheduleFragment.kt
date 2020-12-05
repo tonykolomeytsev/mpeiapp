@@ -3,6 +3,7 @@ package kekmech.ru.feature_schedule.find_schedule
 import android.os.Bundle
 import android.view.View
 import kekmech.ru.common_android.*
+import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.ui.BaseFragment
 import kekmech.ru.coreui.banner.showBanner
@@ -11,11 +12,11 @@ import kekmech.ru.domain_schedule.CONTINUE_TO_BACK_STACK_WITH_RESULT
 import kekmech.ru.domain_schedule.CONTINUE_TO_BARS_ONBOARDING
 import kekmech.ru.domain_schedule.CONTINUE_TO_DASHBOARD
 import kekmech.ru.feature_schedule.R
+import kekmech.ru.feature_schedule.databinding.FragmentFindScheduleBinding
 import kekmech.ru.feature_schedule.di.ScheduleDependencies
 import kekmech.ru.feature_schedule.find_schedule.presentation.*
 import kekmech.ru.feature_schedule.find_schedule.presentation.FindScheduleEvent.Wish
 import kekmech.ru.feature_schedule.find_schedule.utils.GroupFormatTextWatcher
-import kotlinx.android.synthetic.main.fragment_find_schedule.*
 import org.koin.android.ext.android.inject
 
 private const val CONTINUE_TO_ARG = "ContinueTo"
@@ -35,26 +36,29 @@ internal class FindScheduleFragment : BaseFragment<FindScheduleEvent, FindSchedu
     private val dependencies by inject<ScheduleDependencies>()
     private val onboardingFeatureLauncher by fastLazy { dependencies.onboardingFeatureLauncher }
     private val analytics: FindScheduleAnalytics by inject()
+    private val viewBinding by viewBinding(FragmentFindScheduleBinding::bind)
 
     override fun onViewCreatedInternal(view: View, savedInstanceState: Bundle?) {
         super.onViewCreatedInternal(view, savedInstanceState)
-        toolbar.init()
-        groupText.showKeyboard()
-        groupText.afterTextChanged {
-            groupTextLayout.error = null
-            feature.accept(Wish.Action.GroupNumberChanged(groupText.text?.toString().orEmpty()))
-        }
-        groupText.addTextChangedListener(GroupFormatTextWatcher(groupText))
-        buttonContinue.setOnClickListener {
-            analytics.sendClick("Continue")
-            feature.accept(Wish.Click.Continue(groupText.text?.toString().orEmpty()))
+        viewBinding.apply {
+            toolbar.init()
+            groupText.showKeyboard()
+            groupText.afterTextChanged {
+                groupTextLayout.error = null
+                feature.accept(Wish.Action.GroupNumberChanged(groupText.text?.toString().orEmpty()))
+            }
+            groupText.addTextChangedListener(GroupFormatTextWatcher(groupText))
+            buttonContinue.setOnClickListener {
+                analytics.sendClick("Continue")
+                feature.accept(Wish.Click.Continue(groupText.text?.toString().orEmpty()))
+            }
         }
         analytics.sendScreenShown()
     }
 
     override fun handleEffect(effect: FindScheduleEffect) = when (effect) {
         is FindScheduleEffect.ShowError ->
-            groupTextLayout.setError(getString(R.string.schedule_find_error_loading, groupText.text?.toString().orEmpty()))
+            viewBinding.groupTextLayout.setError(getString(R.string.schedule_find_error_loading, viewBinding.groupText.text?.toString().orEmpty()))
         is FindScheduleEffect.ShowSomethingWentWrongError -> showBanner(R.string.something_went_wrong_error)
         is FindScheduleEffect.NavigateNextFragment -> when (effect.continueTo) {
             CONTINUE_TO_BACK_STACK -> close()
@@ -66,8 +70,8 @@ internal class FindScheduleFragment : BaseFragment<FindScheduleEvent, FindSchedu
     }
 
     override fun render(state: FindScheduleState) {
-        buttonContinue.isEnabled = state.isContinueButtonEnabled
-        buttonContinue.setLoading(state.isLoading)
+        viewBinding.buttonContinue.isEnabled = state.isContinueButtonEnabled
+        viewBinding.buttonContinue.setLoading(state.isLoading)
     }
 
     companion object {

@@ -6,10 +6,10 @@ import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.common_android.afterTextChanged
 import kekmech.ru.common_android.showKeyboard
+import kekmech.ru.common_android.viewbinding.unit
 import kekmech.ru.domain_notes.dto.Note
 import kekmech.ru.notes.R
-import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.item_note_edit.*
+import kekmech.ru.notes.databinding.ItemNoteEditBinding
 
 internal interface NoteEditViewHolder {
     fun showKeyboard()
@@ -18,21 +18,23 @@ internal interface NoteEditViewHolder {
 }
 
 internal class NoteEditViewHolderImpl(
-    override val containerView: View
-) : NoteEditViewHolder, RecyclerView.ViewHolder(containerView), LayoutContainer {
+    containerView: View
+) : NoteEditViewHolder, RecyclerView.ViewHolder(containerView) {
+
+    private val viewBinding = ItemNoteEditBinding.bind(containerView)
 
     override fun showKeyboard() {
-        editTextContent.showKeyboard()
+        viewBinding.editTextContent.showKeyboard()
     }
 
-    override fun setContent(content: String) {
+    override fun setContent(content: String) = viewBinding.unit {
         val selection = editTextContent.selectionStart to editTextContent.selectionEnd
         editTextContent.setText(content)
         editTextContent.setSelection(selection.first, selection.second)
     }
 
     override fun afterTextChanged(listener: (String) -> Unit) {
-        editTextContent.afterTextChanged(listener)
+        viewBinding.editTextContent.afterTextChanged(listener)
     }
 }
 

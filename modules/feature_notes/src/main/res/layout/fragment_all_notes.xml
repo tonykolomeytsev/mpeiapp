@@ -16,7 +16,8 @@
                 android:id="@+id/toolbar"
                 app:title="@string/all_notes_screen_title"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                app:menu="@menu/search_menu" />
 
     </com.google.android.material.appbar.AppBarLayout>
 

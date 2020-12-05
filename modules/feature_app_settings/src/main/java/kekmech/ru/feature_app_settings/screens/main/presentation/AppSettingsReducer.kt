@@ -61,6 +61,23 @@ internal class AppSettingsReducer : BaseReducer<AppSettingsState, AppSettingsEve
             state = state,
             action = AppSettingsAction.ClearSelectedGroup
         )
+        is Wish.Action.ChangeBackendEnvironment -> Result(
+            state = state,
+            action = AppSettingsAction.ChangeBackendEnvironment(event.isDebug)
+        )
+        is Wish.Click.OnLanguage -> Result(
+            state = state,
+            effect = state.appSettings?.let { AppSettingsEffect.OpenLanguageSelectionDialog(it.languageCode) }
+        )
+        is Wish.Action.LanguageChanged -> Result(
+            state = state,
+            effect = AppSettingsEffect.RecreateActivity,
+            action = AppSettingsAction.ChangeLanguage(event.selectedLanguage)
+        )
+        is Wish.Action.SetShowQuickNavigationFab -> Result(
+            state = state,
+            action = AppSettingsAction.SetShowQuickNavigationFab(event.isVisible)
+        )
     }
 
 }

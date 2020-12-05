@@ -6,9 +6,9 @@ import androidx.annotation.StringRes
 import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseItemBinder
+import kekmech.ru.common_android.viewbinding.unit
 import kekmech.ru.coreui.R
-import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.item_toggle.*
+import kekmech.ru.coreui.databinding.ItemToggleBinding
 
 private const val DEFAULT_TOGGLE_ITEM_ID = 0
 
@@ -27,18 +27,20 @@ interface ToggleViewHolder {
 }
 
 class ToggleViewHolderImpl(
-    override val containerView: View
-) : RecyclerView.ViewHolder(containerView), ToggleViewHolder, LayoutContainer {
+    containerView: View
+) : RecyclerView.ViewHolder(containerView), ToggleViewHolder {
+
+    private val viewBinding = ItemToggleBinding.bind(containerView)
 
     override fun setTitle(title: String) {
-        textViewTitle.text = title
+        viewBinding.textViewTitle.text = title
     }
 
     override fun setTitle(@StringRes titleRes: Int) {
-        textViewTitle.setText(titleRes)
+        viewBinding.textViewTitle.setText(titleRes)
     }
 
-    override fun setIsChecked(isChecked: Boolean, withAnimation: Boolean) {
+    override fun setIsChecked(isChecked: Boolean, withAnimation: Boolean) = viewBinding.unit {
         if (withAnimation) toggle.post {
             toggle.isChecked = isChecked
         } else {
@@ -47,7 +49,7 @@ class ToggleViewHolderImpl(
     }
 
     override fun onCheckedChanged(onCheckedChangeListener: CompoundButton.OnCheckedChangeListener) {
-        toggle.setOnCheckedChangeListener(onCheckedChangeListener)
+        viewBinding.toggle.setOnCheckedChangeListener(onCheckedChangeListener)
     }
 }
 

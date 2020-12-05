@@ -2,11 +2,15 @@ package kekmech.ru.notes.all_notes
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_analytics.addScrollAnalytics
 import kekmech.ru.common_android.*
+import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.ui.BaseFragment
 import kekmech.ru.common_navigation.addScreenForward
@@ -20,9 +24,9 @@ import kekmech.ru.notes.all_notes.mvi.AllNotesEvent
 import kekmech.ru.notes.all_notes.mvi.AllNotesEvent.Wish
 import kekmech.ru.notes.all_notes.mvi.AllNotesFeature
 import kekmech.ru.notes.all_notes.mvi.AllNotesState
+import kekmech.ru.notes.databinding.FragmentAllNotesBinding
 import kekmech.ru.notes.di.NotesDependencies
 import kekmech.ru.notes.edit.NoteEditFragment
-import kotlinx.android.synthetic.main.fragment_all_notes.*
 import org.koin.android.ext.android.inject
 
 private const val NOTE_EDIT_REQUEST_CODE = 54692
@@ -43,16 +47,21 @@ internal class AllNotesFragment : BaseFragment<AllNotesEvent, AllNotesEffect, Al
 
     private val adapter by fastLazy { createAdapter() }
 
+    private val viewBinding by viewBinding(FragmentAllNotesBinding::bind)
+
     override fun onViewCreatedInternal(view: View, savedInstanceState: Bundle?) {
         view.addSystemVerticalPadding()
-        toolbar.init()
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.adapter = adapter
-        recyclerView.attachScrollListenerForAppBarLayoutShadow(appBarLayout)
-        recyclerView.addScrollAnalytics(analytics, "RecyclerView")
-        recyclerView.attachSwipeToDeleteCallback(isItemForDelete = { it is Note }) { note ->
-            analytics.sendClick("DeleteNote")
-            feature.accept(Wish.Action.DeleteNote(note as Note))
+        viewBinding.apply {
+            toolbar.init()
+            toolbar.setOnMenuItemClickListener { searchNotes(); true }
+            recyclerView.layoutManager = LinearLayoutManager(requireContext())
+            recyclerView.adapter = adapter
+            recyclerView.attachScrollListenerForAppBarLayoutShadow(appBarLayout)
+            recyclerView.addScrollAnalytics(analytics, "RecyclerView")
+            recyclerView.attachSwipeToDeleteCallback(isItemForDelete = { it is Note }) { note ->
+                analytics.sendClick("DeleteNote")
+                feature.accept(Wish.Action.DeleteNote(note as Note))
+            }
         }
         analytics.sendScreenShown()
     }
@@ -67,7 +76,7 @@ internal class AllNotesFragment : BaseFragment<AllNotesEvent, AllNotesEffect, Al
             findAndRemoveArgument<Note>(ARG_SELECTED_NOTE)?.let { note ->
                 val position = adapter.allData.indexOf(note)
                 if (position != -1) {
-                    recyclerView.scrollToPosition(position)
+                    viewBinding.recyclerView.scrollToPosition(position)
                 }
             }
         }
@@ -93,6 +102,13 @@ internal class AllNotesFragment : BaseFragment<AllNotesEvent, AllNotesEffect, Al
         if (requestCode == NOTE_EDIT_REQUEST_CODE) {
             feature.accept(Wish.Init)
         }
+    }
+
+    private fun searchNotes() {
+        dependencies.searchFeatureLauncher.launch(
+            query = "",
+            filter = "NOTES"
+        )
     }
 
     companion object {

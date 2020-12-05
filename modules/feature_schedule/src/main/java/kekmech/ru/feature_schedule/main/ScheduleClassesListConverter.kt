@@ -12,7 +12,7 @@ import kekmech.ru.feature_schedule.main.presentation.ScheduleState
 internal object ScheduleClassesListConverter {
 
     fun map(state: ScheduleState): List<Any> {
-        val selectedWeekSchedule = state.schedule[state.selectedDay.weekOffset]?.weeks?.first()
+        val selectedWeekSchedule = state.selectedWeekSchedule
         return when {
             (!state.isLoading && state.isAfterError && selectedWeekSchedule == null) -> List(6) {
                 val dayOfWeek = it + 1

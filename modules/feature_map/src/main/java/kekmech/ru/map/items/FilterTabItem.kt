@@ -9,9 +9,8 @@ import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.coreui.items.ClickableItemViewHolder
 import kekmech.ru.coreui.items.ClickableItemViewHolderImpl
 import kekmech.ru.map.R
+import kekmech.ru.map.databinding.ItemFilterTabBinding
 import kekmech.ru.map.presentation.FilterTab
-import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.item_filter_tab.*
 
 internal data class FilterTabItem(
     @DrawableRes val drawableResId: Int,
@@ -25,19 +24,20 @@ internal interface FilterTabViewHolder : ClickableItemViewHolder {
 }
 
 internal class FilterTabViewHolderImpl(
-    override val containerView: View
+    containerView: View
 ) :
     FilterTabViewHolder,
     RecyclerView.ViewHolder(containerView),
-    LayoutContainer,
     ClickableItemViewHolder by ClickableItemViewHolderImpl(containerView) {
 
+    private val viewBinding = ItemFilterTabBinding.bind(containerView)
+
     override fun setName(@StringRes nameResId: Int) {
-        textViewName.setText(nameResId)
+        viewBinding.textViewName.setText(nameResId)
     }
 
     override fun setIcon(@DrawableRes drawableResId: Int) {
-        imageViewIcon.setImageResource(drawableResId)
+        viewBinding.imageViewIcon.setImageResource(drawableResId)
     }
 }
 

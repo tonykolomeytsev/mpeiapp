@@ -9,8 +9,7 @@ import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.common_android.getStringArray
 import kekmech.ru.common_android.getThemeColor
 import kekmech.ru.feature_schedule.R
-import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.item_day.*
+import kekmech.ru.feature_schedule.databinding.ItemDayBinding
 import java.time.LocalDate
 
 data class DayItem(
@@ -35,44 +34,45 @@ interface DayViewHolder {
 }
 
 class DayViewHolderImpl(
-    override val containerView: View
-) : RecyclerView.ViewHolder(containerView), DayViewHolder, LayoutContainer {
+    private val containerView: View
+) : RecyclerView.ViewHolder(containerView), DayViewHolder {
 
+    private val viewBinding = ItemDayBinding.bind(containerView)
     override var isSelected = false
 
     override fun setDayOfWeekName(name: String) {
-        textDayOfWeek.text = name
+        viewBinding.textDayOfWeek.text = name
     }
 
     override fun setDayOfMonthNumber(number: Int) {
-        textDayOfMonth.text = number.toString()
+        viewBinding.textDayOfMonth.text = number.toString()
     }
 
     override fun setMonthName(name: String) {
-        textMonthName.text = name
+        viewBinding.textMonthName.text = name
     }
 
     override fun setIsCurrentDay(isCurrentDay: Boolean) {
-        viewMarker.isVisible = isCurrentDay
+        viewBinding.viewMarker.isVisible = isCurrentDay
     }
 
     override fun setIsSelected(isSelected: Boolean) {
         this.isSelected = isSelected
-        viewBackground.isVisible = isSelected
+        viewBinding.viewBackground.isVisible = isSelected
         val context = containerView.context
         if (isSelected) {
-            textDayOfMonth.setTextColor(context.getThemeColor(R.attr.colorWhite))
-            textDayOfWeek.setTextColor(context.getThemeColor(R.attr.colorWhite))
-            textMonthName.setTextColor(context.getThemeColor(R.attr.colorWhite))
+            viewBinding.textDayOfMonth.setTextColor(context.getThemeColor(R.attr.colorWhite))
+            viewBinding.textDayOfWeek.setTextColor(context.getThemeColor(R.attr.colorWhite))
+            viewBinding.textMonthName.setTextColor(context.getThemeColor(R.attr.colorWhite))
         } else {
-            textDayOfMonth.setTextColor(context.getThemeColor(R.attr.colorGray90))
-            textDayOfWeek.setTextColor(context.getThemeColor(R.attr.colorGray90))
-            textMonthName.setTextColor(context.getThemeColor(R.attr.colorGray70))
+            viewBinding.textDayOfMonth.setTextColor(context.getThemeColor(R.attr.colorGray90))
+            viewBinding.textDayOfWeek.setTextColor(context.getThemeColor(R.attr.colorGray90))
+            viewBinding.textMonthName.setTextColor(context.getThemeColor(R.attr.colorGray70))
         }
     }
 
     override fun setOnClickListener(listener: (View) -> Unit) {
-        linearLayoutContainer.setOnClickListener(listener)
+        viewBinding.linearLayoutContainer.setOnClickListener(listener)
     }
 }
 

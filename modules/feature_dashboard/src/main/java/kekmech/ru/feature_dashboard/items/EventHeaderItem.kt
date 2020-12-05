@@ -1,15 +1,17 @@
 package kekmech.ru.feature_dashboard.items
 
 import android.view.View
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseItemBinder
+import kekmech.ru.common_android.viewbinding.ReusableViewHolder
+import kekmech.ru.common_android.viewbinding.lazyBinding
 import kekmech.ru.coreui.items.SectionHeaderViewHolder
 import kekmech.ru.coreui.items.SectionHeaderViewHolderImpl
 import kekmech.ru.feature_dashboard.R
-import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.item_events_header.*
 
 data class EventsHeaderItem(
     val title: String? = null,
@@ -29,7 +31,10 @@ class EventsHeaderViewHolderImpl(
     RecyclerView.ViewHolder(containerView),
     EventsHeaderViewHolder,
     SectionHeaderViewHolder by SectionHeaderViewHolderImpl(containerView),
-    LayoutContainer {
+    ReusableViewHolder {
+
+    private val textViewGroupName by lazyBinding<TextView>(R.id.textViewGroupName)
+    private val linearLayoutAction by lazyBinding<LinearLayout>(R.id.linearLayoutAction)
 
     override fun setGroupName(groupName: String) {
         textViewGroupName.text = groupName

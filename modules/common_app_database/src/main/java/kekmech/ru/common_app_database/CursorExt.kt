@@ -2,7 +2,7 @@ package kekmech.ru.common_app_database
 
 import android.database.Cursor
 
-operator fun Cursor.get(columnName: String): Any? {
+internal operator fun Cursor.get(columnName: String): Any? {
     val columnIndex = getColumnIndexOrThrow(columnName)
     return when (getType(columnIndex)) {
         Cursor.FIELD_TYPE_INTEGER -> getInt(columnIndex)

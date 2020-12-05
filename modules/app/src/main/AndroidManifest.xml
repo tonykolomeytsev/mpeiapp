@@ -35,6 +35,7 @@
                 android:label="MainActivity"
                 android:launchMode="singleTask"
                 android:screenOrientation="portrait"
+                android:configChanges="layoutDirection|locale"
                 android:theme="@style/AppTheme"/>
 
         <activity android:name="kekmech.ru.mpeiapp.ui.SplashActivity" android:theme="@style/SplashTheme">

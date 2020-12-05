@@ -6,9 +6,9 @@ import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_adapter.BaseItemBinder
+import kekmech.ru.common_android.viewbinding.unit
 import kekmech.ru.feature_schedule.R
-import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.item_week_days.*
+import kekmech.ru.feature_schedule.databinding.ItemWeekDaysBinding
 import java.time.LocalDate
 
 data class WeekItem(
@@ -25,13 +25,14 @@ interface WeekViewHolder {
 }
 
 class WeekViewHolderImpl(
-    override val containerView: View
-) : RecyclerView.ViewHolder(containerView), WeekViewHolder, LayoutContainer {
+    private val containerView: View
+) : RecyclerView.ViewHolder(containerView), WeekViewHolder {
 
     private var onDayClickListener: (DayItem) -> Unit = {}
     private var adapter: BaseAdapter? = null
+    private val viewBinding = ItemWeekDaysBinding.bind(containerView)
 
-    override fun setDays(items: List<Any>) {
+    override fun setDays(items: List<Any>) = viewBinding.unit {
         if (recyclerView.adapter == null) recyclerView.adapter = adapter
         if (recyclerView.layoutManager == null) recyclerView.layoutManager = GridLayoutManager(containerView.context, 6)
         adapter?.update(items)
@@ -49,12 +50,12 @@ class WeekViewHolderImpl(
                     onDayClickListener = { onDayClickListener(it) }
                 )
             )
-            recyclerView.setHasFixedSize(true)
+            viewBinding.recyclerView.setHasFixedSize(true)
         }
     }
 
     override fun setRecycledViewPool(recycledViewPool: RecyclerView.RecycledViewPool) {
-        recyclerView.setRecycledViewPool(recycledViewPool)
+        viewBinding.recyclerView.setRecycledViewPool(recycledViewPool)
     }
 }
 

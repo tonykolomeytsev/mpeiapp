@@ -7,9 +7,8 @@ import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.map.R
+import kekmech.ru.map.databinding.ItemTabBarBinding
 import kekmech.ru.map.presentation.FilterTab
-import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.item_tab_bar.*
 
 internal object TabBarItem
 
@@ -20,19 +19,20 @@ internal interface TabBarViewHolder {
 }
 
 internal class TabBarViewHolderImpl(
-    override val containerView: View
-) : RecyclerView.ViewHolder(containerView), TabBarViewHolder, LayoutContainer {
+    private val containerView: View
+) : RecyclerView.ViewHolder(containerView), TabBarViewHolder {
 
     private var adapter: BaseAdapter? = null
     private var onClickListener: ((FilterTab) -> Unit)? = null
+    private val viewBinding = ItemTabBarBinding.bind(containerView)
 
     override fun createAdapterIfNull() {
         if (adapter == null) {
             adapter = BaseAdapter(
                 FilterTabAdapterItem { onClickListener?.invoke(it) }
             )
-            recyclerView.adapter = adapter
-            recyclerView.layoutManager = LinearLayoutManager(containerView.context, LinearLayoutManager.HORIZONTAL, false)
+            viewBinding.recyclerView.adapter = adapter
+            viewBinding.recyclerView.layoutManager = LinearLayoutManager(containerView.context, LinearLayoutManager.HORIZONTAL, false)
         }
     }
 
