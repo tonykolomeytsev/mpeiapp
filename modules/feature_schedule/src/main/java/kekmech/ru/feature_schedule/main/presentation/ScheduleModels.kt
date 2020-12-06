@@ -1,5 +1,6 @@
 package kekmech.ru.feature_schedule.main.presentation
 
+import kekmech.ru.common_android.moscowLocalDate
 import kekmech.ru.common_mvi.Feature
 import kekmech.ru.domain_app_settings.AppSettings
 import kekmech.ru.domain_schedule.dto.Classes
@@ -18,7 +19,7 @@ internal data class ScheduleState(
     val isLoading: Boolean = true,
     val schedule: MutableMap<Int, Schedule> = mutableMapOf(), // weekOffset -> schedule
     val currentWeekMonday: LocalDate? = null,
-    val selectedDay: DayItem = DayItem(LocalDate.now(), 0, true),
+    val selectedDay: DayItem = DayItem(moscowLocalDate(), 0, true),
     val weekItems: HashMap<Int, WeekItem> = hashMapOf(),
     val hash: String = "",
     val appSettings: AppSettings,

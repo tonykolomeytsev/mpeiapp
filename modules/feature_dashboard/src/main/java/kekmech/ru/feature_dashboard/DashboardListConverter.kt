@@ -135,7 +135,7 @@ class DashboardListConverter(
             }
         }
         return DayStatusItem(
-            formatter.formatAbsolute(LocalDate.now()),
+            formatter.formatAbsolute(moscowLocalDate()),
             weekStatus.orEmpty()
         )
     }
