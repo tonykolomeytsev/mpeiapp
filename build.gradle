@@ -88,8 +88,8 @@ buildscript {
                 pagerindicator      : "ru.tinkoff.scrollingpagerindicator:scrollingpagerindicator:1.2.1"
         ]
         kotlin_version = "1.4.20"
-        appVersionName = "1.3.0"
-        appVersionCode = 33
+        appVersionName = "1.4.0"
+        appVersionCode = 34
     }
 
     repositories {
