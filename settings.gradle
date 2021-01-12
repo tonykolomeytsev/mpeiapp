@@ -16,6 +16,7 @@ include ':common_emoji'
 include ':common_analytics'
 include ':common_persistent_cache'
 include ':common_feature_toggles'
+include ':common_image_picker'
 
 include ':domain_notes'
 include ':domain_onboarding'
@@ -38,6 +39,7 @@ include ':feature_notes'
 include ':feature_search'
 
 include ':coreui'
+include ':widget_glasscardview'
 
 rootProject.name = "mpeix"
 rootProject.children.each { project ->
