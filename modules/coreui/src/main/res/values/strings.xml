@@ -103,9 +103,9 @@
     <string name="onboarding_welcome_title_5">Ищите в приложении</string>
     <string name="onboarding_welcome_subtitle_5">С главного экрана можно искать места на карте и свои заметки. Скоро добавим поиск групп и преподавателей!</string>
 
-    <string name="schedule_find_header">Введите номер группы</string>
-    <string name="schedule_find_description">Мы загрузим расписание выбранной группы на устройство</string>
-    <string name="schedule_find_hint">Номер группы</string>
+    <string name="schedule_find_header">Поиск расписания</string>
+    <string name="schedule_find_description">Введите номер группы или имя преподавателя и мы загрузим выбранное расписание на устройство</string>
+    <string name="schedule_find_hint">Номер группы или имя преподавателя</string>
     <string name="schedule_find_button_continue">Продолжить</string>
     <string name="schedule_find_error_loading">Не удалось загрузить расписание для группы %s</string>
 

@@ -16,5 +16,8 @@ internal class FindScheduleActor(
         is FindScheduleAction.SelectGroup -> scheduleRepository
             .selectGroup(action.groupName)
             .toObservable()
+        is FindScheduleAction.SearchForAutocomplete -> scheduleRepository
+            .getSearchResults(action.query)
+            .mapSuccessEvent(successEventMapper = { News.SearchResultsLoaded(it.items) })
     }
 }

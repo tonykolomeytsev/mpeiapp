@@ -31,7 +31,9 @@ internal class FindScheduleReducer : BaseReducer<FindScheduleState, FindSchedule
         is Wish.Action.GroupNumberChanged -> Result(
             state = state.copy(
                 isContinueButtonEnabled = event.groupName.isValidGroupNumber()
-            )
+            ),
+            action = event.groupName.takeIf { it.length >= 2 }
+                ?.let(FindScheduleAction::SearchForAutocomplete)
         )
     }
 
@@ -48,6 +50,9 @@ internal class FindScheduleReducer : BaseReducer<FindScheduleState, FindSchedule
             effect = FindScheduleEffect.NavigateNextFragment(state.continueTo, event.groupName),
             action = FindScheduleAction.SelectGroup(event.groupName)
                 .takeIf { state.selectGroupAfterSuccess }
+        )
+        is News.SearchResultsLoaded -> Result(
+            state = state.copy(searchResults = event.results)
         )
     }
 

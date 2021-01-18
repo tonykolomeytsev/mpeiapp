@@ -101,9 +101,9 @@
     <string name="onboarding_welcome_title_5">Search in the app</string>
     <string name="onboarding_welcome_subtitle_5">From the home screen, you can search for places on the map and your notes. We will add search for groups and teachers soon!</string>
 
-    <string name="schedule_find_header">Enter group number</string>
-    <string name="schedule_find_description">We will download the schedule of the selected group to the device</string>
-    <string name="schedule_find_hint">Group number</string>
+    <string name="schedule_find_header">Search for a schedule</string>
+    <string name="schedule_find_description">Enter the group number or teacher name and we will download the selected schedule to the device</string>
+    <string name="schedule_find_hint">Group number or teacher name</string>
     <string name="schedule_find_button_continue">Continue</string>
     <string name="schedule_find_error_loading">Failed to load schedule for group %s</string>
 
