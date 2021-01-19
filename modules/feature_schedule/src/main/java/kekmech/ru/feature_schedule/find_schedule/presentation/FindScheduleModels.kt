@@ -1,6 +1,7 @@
 package kekmech.ru.feature_schedule.find_schedule.presentation
 
 import kekmech.ru.common_mvi.Feature
+import kekmech.ru.domain_schedule.dto.SearchResult
 
 internal typealias FindScheduleFeature = Feature<FindScheduleState, FindScheduleEvent, FindScheduleEffect>
 
@@ -8,7 +9,8 @@ internal data class FindScheduleState(
     val continueTo: String,
     val isLoading: Boolean = false,
     val isContinueButtonEnabled: Boolean = false,
-    val selectGroupAfterSuccess: Boolean
+    val selectGroupAfterSuccess: Boolean,
+    val searchResults: List<SearchResult> = emptyList()
 )
 
 internal sealed class FindScheduleEvent {
@@ -29,6 +31,7 @@ internal sealed class FindScheduleEvent {
     sealed class News : FindScheduleEvent() {
         data class GroupLoadedSuccessfully(val groupName: String) : News()
         data class GroupLoadingError(val throwable: Throwable) : News()
+        data class SearchResultsLoaded(val results: List<SearchResult>) : News()
     }
 }
 
@@ -41,4 +44,5 @@ internal sealed class FindScheduleEffect {
 internal sealed class FindScheduleAction {
     data class FindGroup(val groupName: String) : FindScheduleAction()
     data class SelectGroup(val groupName: String) : FindScheduleAction()
+    data class SearchForAutocomplete(val query: String) : FindScheduleAction()
 }

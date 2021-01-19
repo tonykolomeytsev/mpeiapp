@@ -6,8 +6,7 @@ import io.reactivex.Single
 import kekmech.ru.common_persistent_cache.orFromPersistentCache
 import kekmech.ru.common_shared_preferences.string
 import kekmech.ru.domain_schedule.dto.FavoriteSchedule
-import kekmech.ru.domain_schedule.dto.GetScheduleBody
-import kekmech.ru.domain_schedule.dto.GetSessionBody
+import kekmech.ru.domain_schedule.dto.SearchResultType
 import kekmech.ru.domain_schedule.sources.FavoriteSource
 
 private const val KEY_SELECTED_GROUP = "selected_group"
@@ -22,7 +21,7 @@ class ScheduleRepository(
     private var selectedGroup by sharedPreferences.string(KEY_SELECTED_GROUP)
 
     fun loadSchedule(groupName: String = selectedGroup, weekOffset: Int = 0) = scheduleService
-        .getSchedule(GetScheduleBody(groupName, weekOffset))
+        .getSchedule(groupName, weekOffset)
         .orFromPersistentCache(groupName to weekOffset, schedulePersistentCache)
 
     fun selectGroup(groupName: String): Completable = Completable.fromAction {
@@ -40,7 +39,10 @@ class ScheduleRepository(
     }
 
     fun getSession(groupName: String = selectedGroup) = scheduleService
-        .getSession(GetSessionBody(groupName))
+        .getSession(groupName)
+
+    fun getSearchResults(query: String, type: SearchResultType? = null) =
+        scheduleService.getSearchResults(query, type)
 
     fun debugClearSelectedGroup() {
         if (BuildConfig.DEBUG) {
