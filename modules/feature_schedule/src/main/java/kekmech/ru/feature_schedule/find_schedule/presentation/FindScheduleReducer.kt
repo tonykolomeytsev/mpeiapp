@@ -8,6 +8,8 @@ import kekmech.ru.feature_schedule.find_schedule.presentation.FindScheduleEvent.
 internal typealias FindScheduleResult = Result<FindScheduleState, FindScheduleEffect, FindScheduleAction>
 
 private const val MESSAGE_BAD_REQUEST = "HTTP 503 Service Unavailable"
+private val GROUP_NUMBER_PATTERN = "[а-яА-Я]+-[а-яА-Я0-9]+-[0-9]+".toRegex()
+private val PERSON_NAME_PATTERN = "[а-яА-Я]+\\s+([а-яА-Я]+\\s?)+".toRegex()
 
 internal class FindScheduleReducer : BaseReducer<FindScheduleState, FindScheduleEvent, FindScheduleEffect, FindScheduleAction> {
 
@@ -30,7 +32,7 @@ internal class FindScheduleReducer : BaseReducer<FindScheduleState, FindSchedule
         )
         is Wish.Action.GroupNumberChanged -> Result(
             state = state.copy(
-                isContinueButtonEnabled = event.groupName.isValidGroupNumber()
+                isContinueButtonEnabled = event.groupName.isValidGroupNumberOrPersonName()
             ),
             action = event.groupName.takeIf { it.length >= 2 }
                 ?.let(FindScheduleAction::SearchForAutocomplete)
@@ -61,6 +63,6 @@ internal class FindScheduleReducer : BaseReducer<FindScheduleState, FindSchedule
         else -> FindScheduleEffect.ShowSomethingWentWrongError
     }
 
-    private fun String.isValidGroupNumber() =
-        matches("[а-яА-Я]+-[а-яА-Я0-9]+-[0-9]+".toRegex()) && isNotBlank()
+    private fun String.isValidGroupNumberOrPersonName() =
+        isNotBlank() && (matches(GROUP_NUMBER_PATTERN) || matches(PERSON_NAME_PATTERN))
 }
