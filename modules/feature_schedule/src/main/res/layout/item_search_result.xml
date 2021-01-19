@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.chip.Chip xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:textColor="?colorBlack"
+        android:textSize="14sp"
+        android:fontFamily="@font/roboto_medium"
+        android:backgroundTint="?colorCloud"
+        app:chipMinTouchTargetSize="32dp"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:text="Hello world" />

@@ -1,7 +1,9 @@
 package kekmech.ru.feature_schedule.find_schedule
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import com.google.android.material.chip.Chip
 import kekmech.ru.common_android.*
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_kotlin.fastLazy
@@ -72,6 +74,25 @@ internal class FindScheduleFragment : BaseFragment<FindScheduleEvent, FindSchedu
     override fun render(state: FindScheduleState) {
         viewBinding.buttonContinue.isEnabled = state.isContinueButtonEnabled
         viewBinding.buttonContinue.setLoading(state.isLoading)
+        renderAutocompleteList(state)
+    }
+
+    private fun renderAutocompleteList(state: FindScheduleState) {
+        with(viewBinding.flowLayout) {
+            removeAllViews()
+            val inflater = LayoutInflater.from(requireContext())
+            state.searchResults
+                .filter { it.name != viewBinding.groupText.text.toString() }
+                .forEach { result ->
+                    val chip = inflater.inflate(R.layout.item_search_result, this, false) as Chip
+                    chip.text = result.name
+                    chip.setOnClickListener {
+                        viewBinding.groupText.setText(result.name)
+                        viewBinding.groupText.setSelection(result.name.length)
+                    }
+                    addView(chip)
+                }
+        }
     }
 
     companion object {
