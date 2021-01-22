@@ -9,7 +9,7 @@ internal data class FindScheduleState(
     val continueTo: String,
     val isLoading: Boolean = false,
     val isContinueButtonEnabled: Boolean = false,
-    val selectGroupAfterSuccess: Boolean,
+    val selectScheduleAfterSuccess: Boolean,
     val searchResults: List<SearchResult> = emptyList()
 )
 
@@ -20,16 +20,16 @@ internal sealed class FindScheduleEvent {
         object Init : Wish()
 
         object Click {
-            data class Continue(val groupName: String) : Wish()
+            data class Continue(val scheduleName: String) : Wish()
         }
 
         object Action {
-            data class GroupNumberChanged(val groupName: String) : Wish()
+            data class GroupNumberChanged(val scheduleName: String) : Wish()
         }
     }
 
     sealed class News : FindScheduleEvent() {
-        data class GroupLoadedSuccessfully(val groupName: String) : News()
+        data class GroupLoadedSuccessfully(val scheduleName: String) : News()
         data class GroupLoadingError(val throwable: Throwable) : News()
         data class SearchResultsLoaded(val results: List<SearchResult>) : News()
     }
@@ -42,7 +42,7 @@ internal sealed class FindScheduleEffect {
 }
 
 internal sealed class FindScheduleAction {
-    data class FindGroup(val groupName: String) : FindScheduleAction()
-    data class SelectGroup(val groupName: String) : FindScheduleAction()
+    data class FindGroup(val scheduleName: String) : FindScheduleAction()
+    data class SelectGroup(val scheduleName: String) : FindScheduleAction()
     data class SearchForAutocomplete(val query: String) : FindScheduleAction()
 }

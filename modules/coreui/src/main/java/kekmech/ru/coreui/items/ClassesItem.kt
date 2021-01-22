@@ -120,7 +120,7 @@ class ClassesItemBinder(
         vh.setPersonName(model.person.takeIfNotEmpty())
         vh.setPlace(model.place)
         vh.setNumberName(classesNumbers.getOrElse(model.number) { classesNumbers[0] }.toUpperCase())
-        vh.setTypeName(classesTypes[model.type].orEmpty().toUpperCase())
+        vh.setTypeName(getClassesTypeName(model).toUpperCase())
         vh.setTagColor(colorTags.getValue(model.type))
         vh.setStartTime(model.time.start.format(timeFormatter))
         vh.setEndTime(model.time.end.format(timeFormatter))
@@ -129,6 +129,14 @@ class ClassesItemBinder(
 
     private fun String.takeIfNotEmpty() = takeIf {
         isNotBlank() && !it.contains("Вакансия", ignoreCase = true)
+    }
+
+    private fun getClassesTypeName(classes: Classes): String {
+        return if (classes.type == ClassesType.UNDEFINED && classes.rawType.isNotBlank()) {
+            classes.rawType
+        } else {
+            classesTypes[classes.type].orEmpty()
+        }
     }
 }
 

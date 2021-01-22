@@ -13,11 +13,11 @@ class NotesRepository(
 ) {
 
     fun getNotes(): Single<List<Note>> = scheduleRepository
-        .getSelectedGroup()
+        .getSelectedScheduleName()
         .map { notesSource.getAll(it) }
 
     fun putNote(note: Note): Completable = scheduleRepository
-        .getSelectedGroup()
+        .getSelectedScheduleName()
         .map { notesSource.put(it, note) }
         .ignoreElement()
 

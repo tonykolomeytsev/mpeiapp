@@ -5,8 +5,9 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 data class Schedule(
-    val groupNumber: String = "",
-    val groupId: String = "",
+    val name: String = "",
+    val id: String = "",
+    val type: ScheduleType = ScheduleType.GROUP,
     val weeks: List<Week> = emptyList()
 ) : Serializable
 
@@ -26,6 +27,7 @@ data class Day(
 data class Classes(
     val name: String = "",
     val type: ClassesType = ClassesType.UNDEFINED,
+    val rawType: String = "",
     val place: String = "",
     val groups: String = "",
     val person: String = "",
@@ -41,4 +43,6 @@ data class Time(
     val end: LocalTime = LocalTime.now()
 ) : Serializable
 
-enum class ClassesType : Serializable { UNDEFINED, LECTURE, PRACTICE, LAB, COURSE }
+enum class ClassesType : Serializable { UNDEFINED, LECTURE, PRACTICE, LAB, COURSE, EXAM, CONSULTATION }
+
+enum class ScheduleType(val pathName: String) : Serializable { GROUP("group"), PERSON("person") }

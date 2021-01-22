@@ -103,8 +103,8 @@ class ScheduleReducerTest : BehaviorSpec({
         private val INITIAL_STATE = ScheduleState(appSettings = APP_SETTINGS)
         private val CURRENT_MONDAY = LocalDate.of(2020, Month.SEPTEMBER, 14)
         private val SCHEDULE = Schedule(
-            groupNumber = "C-12-16",
-            groupId = "12345",
+            name = "C-12-16",
+            id = "12345",
             weeks = listOf(Week(
                 weekOfSemester = 1,
                 weekOfYear = 36,
