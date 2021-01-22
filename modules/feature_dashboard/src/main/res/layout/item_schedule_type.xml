@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="?selectableItemBackground">
+
+    <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginStart="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/scheduleName"
+            tools:src="@drawable/ic_person_24"
+            android:tint="?colorBlack"/>
+
+    <TextView
+            android:id="@+id/scheduleName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/roboto_bold"
+            android:textColor="?colorBlack"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@id/scheduleDescription"
+            app:layout_constraintStart_toEndOf="@id/imageView"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Бободжанов Абдухафиз Абдурасулович" />
+
+    <TextView
+            android:id="@+id/scheduleDescription"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_medium"
+            android:text="Нажмите, чтобы сменить расписание"
+            android:textColor="?colorGray70"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@id/scheduleName"
+            app:layout_constraintTop_toBottomOf="@id/scheduleName" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

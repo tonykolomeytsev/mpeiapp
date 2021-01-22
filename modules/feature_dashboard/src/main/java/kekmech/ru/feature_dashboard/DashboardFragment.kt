@@ -110,7 +110,7 @@ class DashboardFragment : BaseFragment<DashboardEvent, DashboardEffect, Dashboar
         AddActionAdapterItem(),
         DayStatusAdapterItem(),
         DashboardClassesAdapterItem(requireContext(), ::clickOnClasses),
-        EventsHeaderAdapterItem {
+        ScheduleTypeAdapterItem {
             analytics.sendClick("ChangeGroup")
             dependencies.scheduleFeatureLauncher.launchSearchGroup(
                 continueTo = CONTINUE_TO_BACK_STACK_WITH_RESULT,

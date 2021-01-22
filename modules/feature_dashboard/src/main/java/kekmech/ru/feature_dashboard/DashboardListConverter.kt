@@ -15,7 +15,6 @@ import kekmech.ru.feature_dashboard.presentation.DashboardState
 import kekmech.ru.feature_dashboard.presentation.NextClassesCondition.NOT_STARTED
 import kekmech.ru.feature_dashboard.presentation.NextClassesCondition.STARTED
 import java.time.DayOfWeek
-import java.time.LocalDate
 import java.time.LocalTime
 
 class DashboardListConverter(
@@ -51,7 +50,12 @@ class DashboardListConverter(
                 add(SpaceItem.VERTICAL_24)
             }
             add(SearchFieldItem)
-            add(SpaceItem.VERTICAL_16)
+            add(SpaceItem.VERTICAL_8)
+            add(ScheduleTypeItem(
+                selectedScheduleName = state.selectedScheduleName,
+                selectedScheduleType = state.selectedScheduleType
+            ))
+            add(SpaceItem.VERTICAL_8)
 
             listOfNotNull(
                 BannerLunchItem.takeIf { moscowLocalTime() in lunchStartTime..lunchEndTime },
@@ -83,10 +87,7 @@ class DashboardListConverter(
                 addSession(state)
                 add(SpaceItem.VERTICAL_16)
 
-                add(createEventsHeaderItem(
-                    subtitle = context.getString(R.string.dashboard_events_empty_state_title),
-                    groupName = state.selectedGroupName)
-                )
+                add(createEventsHeaderItem(subtitle = context.getString(R.string.dashboard_events_empty_state_title),))
                 add(SpaceItem.VERTICAL_12)
                 add(EmptyStateItem(
                     titleRes = R.string.dashboard_events_empty_state_title,
@@ -150,13 +151,13 @@ class DashboardListConverter(
 
         when {
             isSunday || isEvening || hasNoClassesToday -> {
-                val headerItem = createEventsHeaderItem(context.getString(R.string.dashboard_events_tomorrow), state.selectedGroupName)
+                val headerItem = createEventsHeaderItem(context.getString(R.string.dashboard_events_tomorrow))
                 val tomorrowClasses = state.tomorrowClasses
                     ?: return null // если на завтра пар тоже нет, то не возвращаем вообще ничего
                 return headerItem to tomorrowClasses
             }
             else -> {
-                val headerItem = createEventsHeaderItem(context.getString(R.string.dashboard_events_today), state.selectedGroupName)
+                val headerItem = createEventsHeaderItem(context.getString(R.string.dashboard_events_today))
                 val nextTodayClasses = state.todayClasses
                     ?.filter { it.time.end > nowTime } // не берем прошедшие пары
                     ?: return null // если на сегодня пар нет, то не возвращаем ничего
@@ -165,10 +166,9 @@ class DashboardListConverter(
         }
     }
 
-    private fun createEventsHeaderItem(subtitle: String, groupName: String) = EventsHeaderItem(
+    private fun createEventsHeaderItem(subtitle: String) = SectionHeaderItem(
         title = context.getString(R.string.dashboard_section_header_events),
-        subtitle = subtitle,
-        groupName = groupName
+        subtitle = subtitle
     )
 
     private fun List<Any>.withNotePreview(): List<Any> = mutableListOf<Any>().apply {

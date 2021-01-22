@@ -7,15 +7,10 @@ import kekmech.ru.common_mvi.Result
 import kekmech.ru.common_shared_preferences.boolean
 import kekmech.ru.coreui.items.FavoriteScheduleItem
 import kekmech.ru.domain_notes.dto.Note
-import kekmech.ru.domain_schedule.dto.SessionItem
-import kekmech.ru.domain_schedule.dto.SessionItemType
-import kekmech.ru.domain_schedule.dto.Time
 import kekmech.ru.feature_dashboard.helpers.getActualScheduleDayForView
 import kekmech.ru.feature_dashboard.presentation.DashboardEvent.News
 import kekmech.ru.feature_dashboard.presentation.DashboardEvent.Wish
 import java.time.DayOfWeek
-import java.time.LocalDate
-import java.time.LocalTime
 import java.time.temporal.ChronoUnit
 
 typealias DashboardResult = Result<DashboardState, DashboardEffect, DashboardAction>
@@ -54,7 +49,7 @@ class DashboardReducer(
             effect = DashboardEffect.ShowLoadingError
         )
         is News.SelectedGroupNameLoaded -> Result(
-            state = state.copy(selectedGroupName = event.groupName)
+            state = state.copy(selectedScheduleName = event.groupName)
         )
         is News.NotesLoaded -> Result(
             state = state.copy(notes = getImportantNotes(event.notes))
@@ -67,7 +62,7 @@ class DashboardReducer(
             state = state.copy(
                 favoriteSchedules = event.favorites
                     .takeIf { it.isNotEmpty() }
-                    ?.map { FavoriteScheduleItem(it, it.groupNumber == state.selectedGroupName) }
+                    ?.map { FavoriteScheduleItem(it, it.groupNumber == state.selectedScheduleName) }
             )
         )
         is News.SessionLoaded -> Result(state = state.copy(sessionScheduleItems = event.items))
@@ -109,7 +104,7 @@ class DashboardReducer(
         is Wish.Action.SelectFavoriteSchedule -> {
             val newGroupNumber = event.favoriteSchedule.groupNumber
             Result(
-                state = state.copy(selectedGroupName = newGroupNumber),
+                state = state.copy(selectedScheduleName = newGroupNumber),
                 effects = emptyList(),
                 actions = listOf(DashboardAction.SelectGroup(newGroupNumber))
             )
