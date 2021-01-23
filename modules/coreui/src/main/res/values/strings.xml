@@ -107,7 +107,7 @@
     <string name="schedule_find_description">Введите номер группы или имя преподавателя и мы загрузим выбранное расписание на устройство</string>
     <string name="schedule_find_hint">Номер группы или имя преподавателя</string>
     <string name="schedule_find_button_continue">Продолжить</string>
-    <string name="schedule_find_error_loading">Не удалось загрузить расписание для группы %s</string>
+    <string name="schedule_find_error_loading">Не удалось загрузить расписание для %s</string>
 
     <string name="schedule_semester_week">Учебная неделя №%d</string>
     <string name="schedule_weekend_week">Неучебная неделя</string>
@@ -214,12 +214,12 @@
 
     <string name="favorites_screen_title">Избранные расписания</string>
     <string name="favorites_empty_state_title">Ни одно расписание не добавлено в избранные</string>
-    <string name="favorites_empty_state_add">ДОБАВИТЬ ГРУППУ</string>
+    <string name="favorites_empty_state_add">ДОБАВИТЬ РАСПИСАНИЕ</string>
     <string name="favorites_help_title">Как это работает?</string>
-    <string name="favorites_help_text">Внесенные в этот список группы будут отображаться на главной странице. Вы сможете одним нажатием переключаться между группами, не набирая их имя в поиске.</string>
+    <string name="favorites_help_text">Внесенные в этот список группы и преподаватели будут отображаться на главной странице. Вы сможете одним нажатием переключаться между их расписаниями, не набирая имен в поиске.</string>
 
-    <string name="edit_favorite_screen_subtitle">Оставьте краткое описание для выбранной группы. Вы также можете оставить описание пустым.</string>
-    <string name="edit_favorite_hint">Описание для группы</string>
+    <string name="edit_favorite_screen_subtitle">Оставьте краткое описание для выбранного расписания. Вы также можете оставить описание пустым.</string>
+    <string name="edit_favorite_hint">Описание группы или преподавателя</string>
     <string name="edit_favorite_button_continue">Продолжить</string>
 
     <string name="change_language_screen_title">Выбор языка</string>
