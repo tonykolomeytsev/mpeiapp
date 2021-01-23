@@ -13,9 +13,10 @@
             android:layout_height="16dp"
             android:layout_marginStart="16dp"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/scheduleName"
             app:layout_constraintBottom_toBottomOf="@id/scheduleName"
             tools:src="@drawable/ic_person_24"
-            android:tint="?colorBlack"/>
+            android:tint="?colorMain"/>
 
     <TextView
             android:id="@+id/scheduleName"
@@ -24,7 +25,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
             android:fontFamily="@font/roboto_bold"
-            android:textColor="?colorBlack"
+            android:textColor="?colorMain"
             android:textSize="14sp"
             app:layout_constraintBottom_toTopOf="@id/scheduleDescription"
             app:layout_constraintStart_toEndOf="@id/imageView"
