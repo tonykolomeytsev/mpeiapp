@@ -13,12 +13,11 @@ import kekmech.ru.common_android.getStringArray
 import kekmech.ru.common_android.getThemeColor
 import kekmech.ru.common_android.viewbinding.ReusableViewHolder
 import kekmech.ru.common_android.viewbinding.lazyBinding
-import kekmech.ru.common_android.viewbinding.unit
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.coreui.R
-import kekmech.ru.coreui.databinding.ItemClassesBinding
 import kekmech.ru.domain_schedule.dto.Classes
 import kekmech.ru.domain_schedule.dto.ClassesType
+import kekmech.ru.domain_schedule.dto.ScheduleType
 import java.time.format.DateTimeFormatter
 
 interface ClassesViewHolder : ClickableItemViewHolder {
@@ -117,7 +116,10 @@ class ClassesItemBinder(
 
     override fun bind(vh: ClassesViewHolder, model: Classes, position: Int) {
         vh.setDisciplineName(model.name)
-        vh.setPersonName(model.person.takeIfNotEmpty())
+        vh.setPersonName(when (model.scheduleType) {
+            ScheduleType.GROUP -> model.person.takeIfNotEmpty()
+            ScheduleType.PERSON -> model.groups.takeIfNotEmpty()
+        })
         vh.setPlace(model.place)
         vh.setNumberName(classesNumbers.getOrElse(model.number) { classesNumbers[0] }.toUpperCase())
         vh.setTypeName(getClassesTypeName(model).toUpperCase())

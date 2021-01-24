@@ -149,16 +149,19 @@ class DashboardListConverter(
         val isEvening = state.todayClasses?.lastOrNull()?.time?.end?.let { it < nowTime } ?: false
         val hasNoClassesToday = state.todayClasses.isNullOrEmpty()
 
+        val selectedScheduleType = state.selectedScheduleType
         when {
             isSunday || isEvening || hasNoClassesToday -> {
                 val headerItem = createEventsHeaderItem(context.getString(R.string.dashboard_events_tomorrow))
                 val tomorrowClasses = state.tomorrowClasses
+                    ?.onEach { it.scheduleType = selectedScheduleType }
                     ?: return null // если на завтра пар тоже нет, то не возвращаем вообще ничего
                 return headerItem to tomorrowClasses
             }
             else -> {
                 val headerItem = createEventsHeaderItem(context.getString(R.string.dashboard_events_today))
                 val nextTodayClasses = state.todayClasses
+                    ?.onEach { it.scheduleType = selectedScheduleType }
                     ?.filter { it.time.end > nowTime } // не берем прошедшие пары
                     ?: return null // если на сегодня пар нет, то не возвращаем ничего
                 return headerItem to nextTodayClasses

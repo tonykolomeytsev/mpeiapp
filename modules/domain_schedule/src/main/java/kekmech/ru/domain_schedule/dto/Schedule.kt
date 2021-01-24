@@ -35,7 +35,9 @@ data class Classes(
     val number: Int,
     @Transient var attachedNotePreview: String? = null
 ) : Serializable {
-    @Transient var isInStack: Boolean = false
+    // its to optimize recyclerview items
+    // sets the same as parent schedule type
+    @Transient var scheduleType: ScheduleType = ScheduleType.GROUP
 }
 
 data class Time(

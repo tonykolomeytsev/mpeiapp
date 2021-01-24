@@ -12,16 +12,17 @@ import kekmech.ru.feature_schedule.main.presentation.ScheduleState
 internal object ScheduleClassesListConverter {
 
     fun map(state: ScheduleState): List<Any> {
-        val selectedWeekSchedule = state.selectedWeekSchedule
+        val selectedSchedule = state.selectedSchedule
+        val selectedScheduleWeek = selectedSchedule?.weeks?.firstOrNull()
         return when {
-            (!state.isLoading && state.isAfterError && selectedWeekSchedule == null) -> List(6) {
+            (!state.isLoading && state.isAfterError && selectedScheduleWeek == null) -> List(6) {
                 val dayOfWeek = it + 1
                 WorkingDayItem(
                     dayOfWeek = dayOfWeek,
                     items = listOf(SpaceItem.VERTICAL_24, getEmptyStateItem())
                 )
             }
-            selectedWeekSchedule == null -> List(6) {
+            selectedSchedule == null || selectedScheduleWeek == null -> List(6) {
                 val dayOfWeek = it + 1
                 WorkingDayItem(
                     dayOfWeek = dayOfWeek,
@@ -30,12 +31,15 @@ internal object ScheduleClassesListConverter {
             }
             else -> List(6) {
                 val dayOfWeek = it + 1
-                val rawClasses = selectedWeekSchedule.days.find { day -> day.dayOfWeek == dayOfWeek }?.classes ?: emptyList()
+                val rawClasses = selectedScheduleWeek.days
+                    .find { day -> day.dayOfWeek == dayOfWeek }
+                    ?.classes
+                    ?.onEach { classes -> classes.scheduleType = selectedSchedule.type }
+                    ?: emptyList()
                 val modifiedClasses = if (rawClasses.isEmpty()) {
                     listOf(SelfStudyItem)
                 } else {
                     rawClasses
-                        .detectStackClasses()
                         .withWindows()
                         .withLunch()
                         .withNotePreview()
@@ -87,18 +91,6 @@ internal object ScheduleClassesListConverter {
         } else {
             addAll(raw)
         }
-    }
-
-    private fun List<Classes>.detectStackClasses(): List<Classes> {
-        for (i in 1 until size) {
-            val currItem = this[i]
-            val prevItem = this[i - 1]
-            if (currItem.number == prevItem.number) {
-                currItem.isInStack = true
-                prevItem.isInStack = true
-            }
-        }
-        return this
     }
 
     private fun getEmptyStateItem() = EmptyStateItem(
