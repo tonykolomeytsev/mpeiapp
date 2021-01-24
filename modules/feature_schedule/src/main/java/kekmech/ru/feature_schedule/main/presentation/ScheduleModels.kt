@@ -33,7 +33,7 @@ internal data class ScheduleState(
      */
     val weekOfSemester get() = schedule[0]?.weeks?.firstOrNull()?.weekOfSemester?.plus(weekOffset)
 
-    val selectedWeekSchedule get() = schedule[selectedDay.weekOffset]?.weeks?.first()
+    val selectedSchedule get() = schedule[selectedDay.weekOffset]
 }
 
 internal sealed class ScheduleEvent {

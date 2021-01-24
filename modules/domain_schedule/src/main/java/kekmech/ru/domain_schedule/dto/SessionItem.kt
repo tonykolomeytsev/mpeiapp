@@ -7,6 +7,7 @@ data class SessionItem(
     val type: SessionItemType = SessionItemType.UNDEFINED,
     val place: String = "",
     val person: String = "",
+    val groups: String = "",
     val date: LocalDate = LocalDate.now(),
     val time: Time = Time()
 )

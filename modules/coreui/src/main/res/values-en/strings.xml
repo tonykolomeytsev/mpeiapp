@@ -105,7 +105,7 @@
     <string name="schedule_find_description">Enter the group number or teacher name and we will download the selected schedule to the device</string>
     <string name="schedule_find_hint">Group number or teacher name</string>
     <string name="schedule_find_button_continue">Continue</string>
-    <string name="schedule_find_error_loading">Failed to load schedule for group %s</string>
+    <string name="schedule_find_error_loading">Failed to load schedule for %s</string>
 
     <string name="schedule_semester_week">Academic week #%d</string>
     <string name="schedule_weekend_week">Non-academic week</string>
@@ -212,12 +212,12 @@
 
     <string name="favorites_screen_title">Favorite schedules</string>
     <string name="favorites_empty_state_title">No schedule has been added to favorites</string>
-    <string name="favorites_empty_state_add">ADD GROUP</string>
+    <string name="favorites_empty_state_add">ADD SCHEDULE</string>
     <string name="favorites_help_title">How it works?</string>
-    <string name="favorites_help_text">The groups included in this list will be displayed on the main page. You can switch between groups with one click without typing their name in the search.</string>
+    <string name="favorites_help_text">The groups and persons included in this list will be displayed on the main page. You can switch between groups with one click without typing their name in the search.</string>
 
-    <string name="edit_favorite_screen_subtitle">Write a short description for the selected group. You can also leave the description blank.</string>
-    <string name="edit_favorite_hint">Description for the group</string>
+    <string name="edit_favorite_screen_subtitle">Write a short description for the selected schedule. You can also leave the description blank.</string>
+    <string name="edit_favorite_hint">Description for the group or person</string>
     <string name="edit_favorite_button_continue">Continue</string>
 
     <string name="change_language_screen_title">Select language</string>
