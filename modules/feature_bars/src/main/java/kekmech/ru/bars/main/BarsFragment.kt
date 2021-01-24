@@ -26,7 +26,7 @@ internal class BarsFragment : Fragment(R.layout.fragment_bars),
         val buttonSettings = view.findViewById<View>(R.id.buttonSettings)
 
         textViewTitle.setText(R.string.bars_stub_student_name)
-        scheduleRepository.getSelectedGroup()
+        scheduleRepository.getSelectedScheduleName()
             .doOnSuccess {
                 textViewSubtitle.text = requireContext().getString(R.string.bars_stub_student_group, it)
             }

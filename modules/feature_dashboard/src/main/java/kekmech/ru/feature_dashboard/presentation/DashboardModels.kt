@@ -4,6 +4,7 @@ import kekmech.ru.common_android.moscowLocalDate
 import kekmech.ru.common_mvi.Feature
 import kekmech.ru.coreui.items.FavoriteScheduleItem
 import kekmech.ru.domain_notes.dto.Note
+import kekmech.ru.domain_schedule.GROUP_NUMBER_PATTERN
 import kekmech.ru.domain_schedule.dto.*
 import java.time.DayOfWeek
 import java.time.LocalDate
@@ -15,7 +16,7 @@ data class DashboardState(
     val isAfterError: Boolean = false,
     val currentWeekSchedule: Schedule? = null,
     val nextWeekSchedule: Schedule? = null,
-    val selectedGroupName: String = "",
+    val selectedScheduleName: String = "",
     val notes: List<Note>? = null,
     val favoriteSchedules: List<FavoriteScheduleItem>? = null,
     val isFeatureBannerEnabled: Boolean = false,
@@ -37,6 +38,10 @@ data class DashboardState(
     }
     val tomorrowClasses: List<Classes>? get() = tomorrow?.classes
     val isSwipeRefreshLoadingAnimation = isLoading && currentWeekSchedule != null
+    val selectedScheduleType: ScheduleType get() = when {
+        selectedScheduleName.matches(GROUP_NUMBER_PATTERN) -> ScheduleType.GROUP
+        else -> ScheduleType.PERSON
+    }
 }
 
 data class NextClassesTimeStatus(

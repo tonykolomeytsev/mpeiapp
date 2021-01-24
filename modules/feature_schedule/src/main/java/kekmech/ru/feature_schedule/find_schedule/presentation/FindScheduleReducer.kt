@@ -2,14 +2,14 @@ package kekmech.ru.feature_schedule.find_schedule.presentation
 
 import kekmech.ru.common_mvi.BaseReducer
 import kekmech.ru.common_mvi.Result
+import kekmech.ru.domain_schedule.GROUP_NUMBER_PATTERN
+import kekmech.ru.domain_schedule.PERSON_NAME_PATTERN
 import kekmech.ru.feature_schedule.find_schedule.presentation.FindScheduleEvent.News
 import kekmech.ru.feature_schedule.find_schedule.presentation.FindScheduleEvent.Wish
 
 internal typealias FindScheduleResult = Result<FindScheduleState, FindScheduleEffect, FindScheduleAction>
 
 private const val MESSAGE_BAD_REQUEST = "HTTP 503 Service Unavailable"
-private val GROUP_NUMBER_PATTERN = "[а-яА-Я]+-[а-яА-Я0-9]+-[0-9]+".toRegex()
-private val PERSON_NAME_PATTERN = "[а-яА-Я]+\\s+([а-яА-Я]+\\s?)+".toRegex()
 
 internal class FindScheduleReducer : BaseReducer<FindScheduleState, FindScheduleEvent, FindScheduleEffect, FindScheduleAction> {
 
@@ -28,13 +28,13 @@ internal class FindScheduleReducer : BaseReducer<FindScheduleState, FindSchedule
         is Wish.Init -> Result(state = state)
         is Wish.Click.Continue -> Result(
             state = state.copy(isLoading = true),
-            action = FindScheduleAction.FindGroup(groupName = event.groupName)
+            action = FindScheduleAction.FindGroup(scheduleName = event.scheduleName)
         )
         is Wish.Action.GroupNumberChanged -> Result(
             state = state.copy(
-                isContinueButtonEnabled = event.groupName.isValidGroupNumberOrPersonName()
+                isContinueButtonEnabled = event.scheduleName.isValidGroupNumberOrPersonName()
             ),
-            action = event.groupName.takeIf { it.length >= 2 }
+            action = event.scheduleName.takeIf { it.length >= 2 }
                 ?.let(FindScheduleAction::SearchForAutocomplete)
         )
     }
@@ -49,9 +49,9 @@ internal class FindScheduleReducer : BaseReducer<FindScheduleState, FindSchedule
         )
         is News.GroupLoadedSuccessfully -> Result(
             state = state.copy(isLoading = false),
-            effect = FindScheduleEffect.NavigateNextFragment(state.continueTo, event.groupName),
-            action = FindScheduleAction.SelectGroup(event.groupName)
-                .takeIf { state.selectGroupAfterSuccess }
+            effect = FindScheduleEffect.NavigateNextFragment(state.continueTo, event.scheduleName),
+            action = FindScheduleAction.SelectGroup(event.scheduleName)
+                .takeIf { state.selectScheduleAfterSuccess }
         )
         is News.SearchResultsLoaded -> Result(
             state = state.copy(searchResults = event.results)

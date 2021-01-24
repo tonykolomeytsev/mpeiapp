@@ -9,7 +9,7 @@ internal class FindScheduleFeatureFactory(
     fun create(continueTo: String, selectGroupAfterSuccess: Boolean): FindScheduleFeature = BaseFeature(
         initialState = FindScheduleState(
             continueTo = continueTo,
-            selectGroupAfterSuccess = selectGroupAfterSuccess
+            selectScheduleAfterSuccess = selectGroupAfterSuccess
         ),
         reducer = FindScheduleReducer(),
         actor = findScheduleActor

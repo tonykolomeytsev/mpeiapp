@@ -14,14 +14,16 @@ import retrofit2.http.Query
 @EndpointUrl(BackendServiceUrl.SCHEDULE)
 interface ScheduleService {
 
-    @GET("v1/group/{groupNumber}/schedule/{weekOffset}")
+    @GET("v1/{type}/{groupNumber}/schedule/{weekOffset}")
     fun getSchedule(
+        @Path("type") scheduleType: String,
         @Path("groupNumber", encoded = true) groupNumber: String,
         @Path("weekOffset") weekOffset: Int
     ): Single<Schedule>
 
-    @GET("v1/group/{groupNumber}/session")
+    @GET("v1/{type}/{groupNumber}/session")
     fun getSession(
+        @Path("type") scheduleType: String,
         @Path("groupNumber", encoded = true) groupNumber: String
     ): Single<GetSessionResponse>
 

@@ -13,10 +13,10 @@ internal class FindScheduleActor(
 
     override fun execute(action: FindScheduleAction): Observable<FindScheduleEvent> = when (action) {
         is FindScheduleAction.FindGroup -> scheduleRepository
-            .loadSchedule(action.groupName)
-            .mapEvents(News.GroupLoadedSuccessfully(action.groupName), News::GroupLoadingError)
+            .loadSchedule(action.scheduleName)
+            .mapEvents(News.GroupLoadedSuccessfully(action.scheduleName), News::GroupLoadingError)
         is FindScheduleAction.SelectGroup -> scheduleRepository
-            .selectGroup(action.groupName)
+            .selectSchedule(action.scheduleName)
             .toObservable()
         is FindScheduleAction.SearchForAutocomplete -> scheduleRepository
             .getSearchResults(action.query)
