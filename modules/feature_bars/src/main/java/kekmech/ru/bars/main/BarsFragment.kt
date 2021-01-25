@@ -9,6 +9,8 @@ import kekmech.ru.common_android.addSystemVerticalPadding
 import kekmech.ru.common_mvi.util.DisposableDelegate
 import kekmech.ru.common_mvi.util.DisposableDelegateImpl
 import kekmech.ru.domain_app_settings.AppSettingsFeatureLauncher
+import kekmech.ru.domain_notes.NotesFeatureLauncher
+import kekmech.ru.domain_schedule.GROUP_NUMBER_PATTERN
 import kekmech.ru.domain_schedule.ScheduleRepository
 import org.koin.android.ext.android.inject
 
@@ -17,23 +19,33 @@ internal class BarsFragment : Fragment(R.layout.fragment_bars),
 
     private val scheduleRepository by inject<ScheduleRepository>()
     private val settingsFeatureLauncher by inject<AppSettingsFeatureLauncher>()
+    private val notesFeatureLauncher by inject<NotesFeatureLauncher>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         view.addSystemVerticalPadding()
         // because view binding sucks, it don't see included layout id's
         val textViewTitle = view.findViewById<TextView>(R.id.textViewTitle)
         val textViewSubtitle = view.findViewById<TextView>(R.id.textViewSubtitle)
-        val buttonSettings = view.findViewById<View>(R.id.buttonSettings)
 
         textViewTitle.setText(R.string.bars_stub_student_name)
         scheduleRepository.getSelectedScheduleName()
             .doOnSuccess {
-                textViewSubtitle.text = requireContext().getString(R.string.bars_stub_student_group, it)
+                textViewSubtitle.text = if (it.matches(GROUP_NUMBER_PATTERN)) {
+                    requireContext().getString(R.string.bars_stub_student_group, it)
+                } else {
+                    it
+                }
             }
             .subscribe()
             .bind()
-        buttonSettings.setOnClickListener {
+        view.findViewById<View>(R.id.buttonSettings).setOnClickListener {
             settingsFeatureLauncher.launch()
         }
+        view.findViewById<View>(R.id.buttonNotes).setOnClickListener {
+            notesFeatureLauncher.launchAllNotes()
+        }
+//        view.findViewById<View>(R.id.buttonSchedules).setOnClickListener {
+//            /* no-op */
+//        }
     }
 }

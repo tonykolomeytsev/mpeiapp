@@ -187,10 +187,12 @@
     <string name="all_notes_empty_state_subtitle">Для создания заметки нажмите на любую пару в разделе расписания</string>
     <string name="all_notes_search_menu_item">Поиск</string>
 
-    <string name="bars_stub_student_name">Анонимный студент</string>
+    <string name="bars_stub_student_name">Анонимный Пользователь</string>
     <string name="bars_stub_student_group">Группа %s</string>
-    <string name="bars_stub_title">Упс! БАРС был убит…</string>
-    <string name="bars_stub_description">Раньше здесь был БАРС.\nМы работаем над тем, чтобы вернуть раздел.\nПодробнее можно узнать в нашей группе.</string>
+    <string name="bars_stub_description">Раньше здесь был БАРС.\nМы уже работаем над тем, чтобы вернуть раздел обратно в приложение.</string>
+    <string name="bars_stub_btn_schedules">Расписания</string>
+    <string name="bars_stub_btn_notes">Заметки</string>
+    <string name="bars_stub_btn_settings">Настройки</string>
 
     <string name="app_settings_screen_title">Настройки</string>
     <string name="app_settings_header_schedule">Расписание</string>
