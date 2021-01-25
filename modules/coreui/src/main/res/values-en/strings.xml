@@ -185,10 +185,12 @@
     <string name="all_notes_empty_state_subtitle">To create a note, click on any class item in the schedule section</string>
     <string name="all_notes_search_menu_item">Search</string>
 
-    <string name="bars_stub_student_name">Anonymous student</string>
+    <string name="bars_stub_student_name">Anonymous User</string>
     <string name="bars_stub_student_group">Group %s</string>
-    <string name="bars_stub_title">Oops! BARS was killed…</string>
-    <string name="bars_stub_description">There used to be BARS here.\nWe are working to bring the section back.\nMore details can be found in our group.</string>
+    <string name="bars_stub_description">There used to be BARS here.\nWe are working to bring the section back.</string>
+    <string name="bars_stub_btn_schedules">Schedules</string>
+    <string name="bars_stub_btn_notes">Notes</string>
+    <string name="bars_stub_btn_settings">Settings</string>
 
     <string name="app_settings_screen_title">Settings</string>
     <string name="app_settings_header_schedule">Schedule</string>
