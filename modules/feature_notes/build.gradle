@@ -34,6 +34,7 @@ dependencies {
     implementation project(path: ":common_adapter")
     implementation project(path: ":common_navigation")
     implementation project(path: ":common_analytics")
+    implementation project(path: ":common_images")
 
     implementation project(path: ":coreui")
 }

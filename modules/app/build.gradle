@@ -110,4 +110,5 @@ dependencies {
     implementation project(path: ':common_analytics')
     implementation project(path: ':common_feature_toggles')
     implementation project(path: ':common_shared_preferences')
+    implementation project(path: ':common_images')
 }

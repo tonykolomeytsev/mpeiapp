@@ -27,7 +27,7 @@ internal class DBHelper(
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         val migration = setOfMigrations
             .find { it.oldVersion == oldVersion && it.newVersion == newVersion }
-            ?: error("Can't find migration for database")
+            ?: error("Can't find migration for database (v$oldVersion -> v$newVersion)")
         db.execSQL(context.getRawText(migration.migrationScript))
     }
 

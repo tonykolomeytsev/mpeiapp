@@ -1,6 +1,0 @@
-apply from: "$rootDir/feature-android-module.gradle"
-
-dependencies {
-    implementation androidx.appcompat
-    implementation google.material
-}
