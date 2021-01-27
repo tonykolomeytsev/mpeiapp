@@ -5,27 +5,31 @@ import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import kekmech.ru.common_adapter.BaseAdapter
+import kekmech.ru.common_android.getArgument
 import kekmech.ru.common_android.viewbinding.viewBinding
+import kekmech.ru.common_android.withArguments
 import kekmech.ru.common_images.R
 import kekmech.ru.common_images.databinding.FragmentImagePickerBinding
 import kekmech.ru.common_mvi.ui.BaseBottomSheetDialogFragment
+import kekmech.ru.coreui.items.PullAdapterItem
+import kekmech.ru.coreui.items.PullItem
 import org.koin.android.ext.android.inject
+import ru.kekmech.common_images.imagepicker.adapter.ImageAdapterItem
 import ru.kekmech.common_images.imagepicker.mvi.*
 import ru.kekmech.common_images.imagepicker.mvi.ImagePickerEvent.Wish
 import ru.kekmech.common_images.imagepicker.utils.requestStoragePermissionIfNeeded
 
 private const val REQUEST_CODE_STORAGE = 1000
 private const val REQUEST_CODE_CAMERA = 1001
+private const val ARG_IMAGE_COUNT = "Arg.ImageCount"
 
 internal class ImagePickerFragment : BaseBottomSheetDialogFragment<ImagePickerEvent, ImagePickerEffect, ImagePickerState, ImagePickerFeature>() {
 
     private val viewBinding by viewBinding(FragmentImagePickerBinding::bind)
-
     override val initEvent get() = Wish.Init
-
     override var layoutId: Int = R.layout.fragment_image_picker
-
-    override fun createFeature() = inject<ImagePickerFeatureFactory>().value.create()
+    override fun createFeature() = inject<ImagePickerFeatureFactory>().value
+        .create(getArgument(ARG_IMAGE_COUNT))
 
     private val adapter by lazy(LazyThreadSafetyMode.NONE) { createAdapter() }
 
@@ -33,12 +37,14 @@ internal class ImagePickerFragment : BaseBottomSheetDialogFragment<ImagePickerEv
         requestStoragePermissionIfNeeded(REQUEST_CODE_STORAGE) {
             feature.accept(Wish.Action.StoragePermissionGranted)
         }
-        viewBinding.recyclerView.adapter = adapter
-        viewBinding.recyclerView.layoutManager = GridLayoutManager(requireContext(), 3)
+        with(viewBinding) {
+            recyclerView.adapter = adapter
+            recyclerView.layoutManager = createLayoutManager()
+        }
     }
 
     override fun render(state: ImagePickerState) {
-        /* no-op */
+        adapter.update(ImagePickerListConverter.map(state))
     }
 
     override fun onRequestPermissionsResult(
@@ -57,10 +63,31 @@ internal class ImagePickerFragment : BaseBottomSheetDialogFragment<ImagePickerEv
         }
     }
 
-    private fun createAdapter() = BaseAdapter()
+    private fun createAdapter() = BaseAdapter(
+        ImageAdapterItem {
+            /* no-op */
+        },
+        PullAdapterItem()
+    )
+
+    private fun createLayoutManager() =
+        GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
+            .apply {
+                spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                    override fun getSpanSize(position: Int): Int {
+                        if (adapter.allData[position] is PullItem) {
+                            return 3
+                        } else {
+                            return 1
+                        }
+                    }
+                }
+            }
+
 
     companion object {
 
-        fun newInstance(): ImagePickerFragment = ImagePickerFragment()
+        fun newInstance(imageCountLimit: Int): ImagePickerFragment = ImagePickerFragment()
+            .withArguments(ARG_IMAGE_COUNT to imageCountLimit)
     }
 }

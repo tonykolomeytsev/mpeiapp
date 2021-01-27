@@ -90,7 +90,7 @@ internal class AllNotesFragment : BaseFragment<AllNotesEvent, AllNotesEffect, Al
         ShimmerAdapterItem(0, R.layout.item_note_shimmer),
         EmptyStateAdapterItem(),
         AddActionAdapterItem {
-            inject<ImagePickerLauncher>().value.launch()
+            inject<ImagePickerLauncher>().value.launch(12345, this)
         }
     )
 

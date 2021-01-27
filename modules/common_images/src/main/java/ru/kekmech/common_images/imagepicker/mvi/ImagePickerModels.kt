@@ -6,14 +6,11 @@ internal typealias ImagePickerFeature = Feature<ImagePickerState, ImagePickerEve
 
 internal data class ImagePickerState(
     val isCollapsed: Boolean = false,
-    val images: List<ImageItem> = emptyList(),
+    val imagesUrls: Set<String> = emptySet(),
+    val selectedImagesUrls: Set<String> = emptySet(),
     val isStoragePermissionGranted: Boolean = false,
     val isCameraPermissionGranted: Boolean = false,
-)
-
-internal data class ImageItem(
-    val url: String,
-    val isSelected: Boolean
+    val imageCountLimit: Int
 )
 
 internal sealed class ImagePickerEvent {
@@ -23,6 +20,10 @@ internal sealed class ImagePickerEvent {
         object Action {
             object StoragePermissionGranted : Wish()
             object CameraPermissionGranted : Wish()
+        }
+
+        object Click {
+            data class Image(val imageUrl: String) : Wish()
         }
     }
 }
