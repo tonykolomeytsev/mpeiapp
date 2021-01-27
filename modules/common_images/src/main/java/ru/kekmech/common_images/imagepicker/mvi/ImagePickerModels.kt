@@ -10,7 +10,9 @@ internal data class ImagePickerState(
     val selectedImagesUrls: Set<String> = emptySet(),
     val isStoragePermissionGranted: Boolean = false,
     val isCameraPermissionGranted: Boolean = false,
-    val imageCountLimit: Int
+    val imageCountLimit: Int,
+    val loaderPage: Int = 0,
+    val isLoading: Boolean = true
 )
 
 internal sealed class ImagePickerEvent {
@@ -20,14 +22,21 @@ internal sealed class ImagePickerEvent {
         object Action {
             object StoragePermissionGranted : Wish()
             object CameraPermissionGranted : Wish()
+            object BottomReached : Wish()
         }
 
         object Click {
             data class Image(val imageUrl: String) : Wish()
         }
     }
+
+    sealed class  News : ImagePickerEvent() {
+        data class ImagesLoaded(val imagesUrls: List<String>): News()
+    }
 }
 
 internal sealed class ImagePickerEffect
 
-internal sealed class ImagePickerAction
+internal sealed class ImagePickerAction {
+    data class LoadImages(val page: Int) : ImagePickerAction()
+}

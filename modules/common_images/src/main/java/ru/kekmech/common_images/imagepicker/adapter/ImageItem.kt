@@ -2,6 +2,7 @@ package ru.kekmech.common_images.imagepicker.adapter
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.common_images.R
@@ -28,7 +29,7 @@ private class ImageItemViewHolderImpl(
     private val viewBinding = ItemImageBinding.bind(itemView)
 
     override fun setImageByUrl(url: String) {
-        /* no-op */
+        viewBinding.imageView.load("file:///" + url)
     }
 
     override fun setIsSelected(isSelected: Boolean) {

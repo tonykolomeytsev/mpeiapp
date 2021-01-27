@@ -4,6 +4,7 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_android.getArgument
 import kekmech.ru.common_android.viewbinding.viewBinding
@@ -39,7 +40,20 @@ internal class ImagePickerFragment : BaseBottomSheetDialogFragment<ImagePickerEv
         }
         with(viewBinding) {
             recyclerView.adapter = adapter
-            recyclerView.layoutManager = createLayoutManager()
+            val gridLayoutManager = createLayoutManager()
+            recyclerView.layoutManager = gridLayoutManager
+            recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    if (dy <= 0) return
+                    if (adapter.itemCount <= gridLayoutManager.findLastVisibleItemPosition() + DEFAULT_VISIBLE_THRESHOLD) {
+                        feature.accept(Wish.Action.BottomReached)
+                    }
+                }
+            })
+        }
+        requestStoragePermissionIfNeeded(REQUEST_CODE_STORAGE) {
+            feature.accept(Wish.Action.StoragePermissionGranted)
         }
     }
 
@@ -86,6 +100,8 @@ internal class ImagePickerFragment : BaseBottomSheetDialogFragment<ImagePickerEv
 
 
     companion object {
+
+        private const val DEFAULT_VISIBLE_THRESHOLD = 16 // 1 (PullItem) + 3 (span count) * 5 (rows)
 
         fun newInstance(imageCountLimit: Int): ImagePickerFragment = ImagePickerFragment()
             .withArguments(ARG_IMAGE_COUNT to imageCountLimit)
