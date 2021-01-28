@@ -12,7 +12,7 @@ internal data class ImagePickerState(
     val isCameraPermissionGranted: Boolean = false,
     val imageCountLimit: Int,
     val loaderPage: Int = 0,
-    val isLoading: Boolean = true
+    val isLoading: Boolean = false
 )
 
 internal sealed class ImagePickerEvent {

@@ -22,7 +22,7 @@ internal class ImagePickerReducer : BaseReducer<ImagePickerState, ImagePickerEve
         is News.ImagesLoaded -> Result(
             state = state.copy(
                 imagesUrls = state.imagesUrls + event.imagesUrls,
-                loaderPage = state.loaderPage + 1,
+                loaderPage = if (event.imagesUrls.isNotEmpty()) state.loaderPage + 1 else state.loaderPage,
                 isLoading = false
             )
         )
@@ -32,19 +32,23 @@ internal class ImagePickerReducer : BaseReducer<ImagePickerState, ImagePickerEve
         event: Wish,
         state: ImagePickerState
     ): Result<ImagePickerState, ImagePickerEffect, ImagePickerAction> = when (event) {
-        is Wish.Init -> Result(
-            state = state.copy(isLoading = true)
+        is Wish.Init -> Result(state)
+        is Wish.Action.StoragePermissionGranted -> Result(
+            state = state.copy(isStoragePermissionGranted = true),
+            action = ImagePickerAction.LoadImages(state.loaderPage)
+                .takeIf { !state.isStoragePermissionGranted }
         )
-        is Wish.Action.StoragePermissionGranted -> {
-            val loaderPage = state.loaderPage
-            Result(
-                state = state.copy(
-                    isStoragePermissionGranted = true,
-                    isLoading = true
-                ),
-                action = ImagePickerAction.LoadImages(loaderPage)
-            )
+        is Wish.Action.BottomReached -> {
+            if (!state.isLoading) {
+                Result(
+                    state = state.copy(isLoading = true),
+                    action = ImagePickerAction.LoadImages(state.loaderPage)
+                )
+            } else {
+                Result(state)
+            }
         }
-        else -> Result(state)
+        is Wish.Click.Image -> Result(state)
+        is Wish.Action.CameraPermissionGranted -> Result(state) // TODO implement in the future
     }
 }

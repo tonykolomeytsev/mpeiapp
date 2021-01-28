@@ -42,7 +42,7 @@ internal class ImageSource(
             }
             if (photoCursor?.isAfterLast != null) {
                 photoCursor.doWhile {
-                    urls += photoCursor.getString((photoCursor.getColumnIndex(MediaStore.Images.Media.DATA)))
+                    urls += "file:///" + photoCursor.getString((photoCursor.getColumnIndex(MediaStore.Images.Media.DATA)))
                 }
             }
         } catch (e: Exception) {

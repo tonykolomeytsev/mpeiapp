@@ -3,6 +3,7 @@ package ru.kekmech.common_images.imagepicker.adapter
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import coil.size.ViewSizeResolver
 import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.common_images.R
@@ -29,7 +30,10 @@ private class ImageItemViewHolderImpl(
     private val viewBinding = ItemImageBinding.bind(itemView)
 
     override fun setImageByUrl(url: String) {
-        viewBinding.imageView.load("file:///" + url)
+        viewBinding.imageView.load(url) {
+            crossfade(true)
+            size(ViewSizeResolver(viewBinding.imageView))
+        }
     }
 
     override fun setIsSelected(isSelected: Boolean) {
