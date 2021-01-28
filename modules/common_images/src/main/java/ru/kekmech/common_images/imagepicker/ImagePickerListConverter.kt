@@ -8,6 +8,10 @@ internal object ImagePickerListConverter {
 
     fun map(state: ImagePickerState): List<Any> = mutableListOf<Any>().apply {
         add(PullItem)
-        addAll(state.imagesUrls.map { ImageItem(it, false) })
+
+        addAll(state.imagesUrls.map { url ->
+            val selectedIndex = state.selectedImagesUrls.indexOf(url)
+            ImageItem(url, selectedIndex != -1, selectedIndex + 1)
+        })
     }
 }

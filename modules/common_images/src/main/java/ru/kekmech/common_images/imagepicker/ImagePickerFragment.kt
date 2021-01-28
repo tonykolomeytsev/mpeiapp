@@ -78,9 +78,14 @@ internal class ImagePickerFragment : BaseBottomSheetDialogFragment<ImagePickerEv
     }
 
     private fun createAdapter() = BaseAdapter(
-        ImageAdapterItem {
-            /* no-op */
-        },
+        ImageAdapterItem(
+            onClickListener = { imageUrl ->
+                feature.accept(Wish.Click.Image(imageUrl))
+            },
+            onSelectListener = { imageUrl ->
+                feature.accept(Wish.Click.SelectImage(imageUrl))
+            }
+        ),
         PullAdapterItem()
     )
 

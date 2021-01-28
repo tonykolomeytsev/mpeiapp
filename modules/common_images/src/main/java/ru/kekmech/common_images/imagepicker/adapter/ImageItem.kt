@@ -13,12 +13,14 @@ import kekmech.ru.coreui.items.ClickableItemViewHolderImpl
 
 internal data class ImageItem(
     val url:  String,
-    val isSelected: Boolean
+    val isSelected: Boolean,
+    val selectionIndex: Int
 )
 
 internal interface ImageItemViewHolder : ClickableItemViewHolder {
     fun setImageByUrl(url: String)
-    fun setIsSelected(isSelected: Boolean)
+    fun setIsSelected(isSelected: Boolean, selectionIndex: Int, withAnimation: Boolean = false)
+    fun setOnImageSelectListener(onSelectListener: (View) -> Unit)
 }
 
 private class ImageItemViewHolderImpl(
@@ -36,27 +38,78 @@ private class ImageItemViewHolderImpl(
         }
     }
 
-    override fun setIsSelected(isSelected: Boolean) {
-        /* no-op */
+    override fun setIsSelected(isSelected: Boolean, selectionIndex: Int, withAnimation: Boolean) {
+        with(viewBinding.textViewIndex) {
+            text = if (isSelected) selectionIndex.toString() else ""
+            this.isSelected = isSelected
+        }
+        with (viewBinding.imageView) {
+            if (withAnimation) {
+                if (isSelected) {
+                    animate()
+                        .scaleX(SELECTED_IMAGE_SCALE)
+                        .scaleY(SELECTED_IMAGE_SCALE)
+                        .setDuration(SELECT_ANIMATION_DURATION)
+                        .start()
+                } else {
+                    animate()
+                        .scaleX(DEFAULT_IMAGE_SCALE)
+                        .scaleY(DEFAULT_IMAGE_SCALE)
+                        .setDuration(SELECT_ANIMATION_DURATION)
+                        .start()
+                }
+            } else {
+                if (isSelected) {
+                    scaleX = SELECTED_IMAGE_SCALE
+                    scaleY = SELECTED_IMAGE_SCALE
+                } else {
+                    scaleX = DEFAULT_IMAGE_SCALE
+                    scaleY = DEFAULT_IMAGE_SCALE
+                }
+            }
+        }
+    }
+
+    override fun setOnImageSelectListener(onSelectListener: (View) -> Unit) {
+        viewBinding.clickableIndexContainer.setOnClickListener(onSelectListener)
+    }
+
+    companion object {
+        private const val SELECTED_IMAGE_SCALE = 0.75f
+        private const val DEFAULT_IMAGE_SCALE = 1f
+        private const val SELECT_ANIMATION_DURATION = 50L // ms
     }
 }
 
 private class ImageItemBinder(
-    private val onClickListener: (String) -> Unit
+    private val onClickListener: (String) -> Unit,
+    private val onSelectListener: (String) -> Unit
 ) : BaseItemBinder<ImageItemViewHolder, ImageItem>() {
 
     override fun bind(vh: ImageItemViewHolder, model: ImageItem, position: Int) {
         vh.setImageByUrl(model.url)
-        vh.setIsSelected(model.isSelected)
+        vh.setIsSelected(model.isSelected, model.selectionIndex)
         vh.setOnClickListener { onClickListener(model.url) }
+        vh.setOnImageSelectListener { onSelectListener(model.url) }
+    }
+
+    override fun update(
+        vh: ImageItemViewHolder,
+        model: ImageItem,
+        position: Int,
+        payloads: List<Any>
+    ) {
+        vh.setIsSelected(model.isSelected, model.selectionIndex, withAnimation = true)
     }
 }
 
 internal class ImageAdapterItem(
-    onClickListener: (String) -> Unit
+    onClickListener: (String) -> Unit,
+    onSelectListener: (String) -> Unit
 ) : AdapterItem<ImageItemViewHolder, ImageItem>(
     isType = { it is ImageItem },
     layoutRes = R.layout.item_image,
     viewHolderGenerator = ::ImageItemViewHolderImpl,
-    itemBinder = ImageItemBinder(onClickListener)
+    itemBinder = ImageItemBinder(onClickListener, onSelectListener),
+    areItemsTheSame = { a, b -> a.url == b.url }
 )

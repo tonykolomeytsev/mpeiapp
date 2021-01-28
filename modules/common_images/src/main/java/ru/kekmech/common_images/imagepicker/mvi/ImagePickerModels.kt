@@ -27,6 +27,7 @@ internal sealed class ImagePickerEvent {
 
         object Click {
             data class Image(val imageUrl: String) : Wish()
+            data class SelectImage(val imageUrl: String) : Wish()
         }
     }
 

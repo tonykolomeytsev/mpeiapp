@@ -48,7 +48,15 @@ internal class ImagePickerReducer : BaseReducer<ImagePickerState, ImagePickerEve
                 Result(state)
             }
         }
-        is Wish.Click.Image -> Result(state)
+        is Wish.Click.SelectImage -> {
+            val newSelectedImages = if (event.imageUrl in state.selectedImagesUrls) {
+                state.selectedImagesUrls - event.imageUrl
+            } else {
+                state.selectedImagesUrls + event.imageUrl
+            }
+            Result(state.copy(selectedImagesUrls = newSelectedImages))
+        }
+        is Wish.Click.Image -> Result(state) // TODO open image viewer
         is Wish.Action.CameraPermissionGranted -> Result(state) // TODO implement in the future
     }
 }

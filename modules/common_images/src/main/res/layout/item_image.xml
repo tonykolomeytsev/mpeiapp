@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ru.kekmech.common_images.imagepicker.adapter.SquareFrameLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<ru.kekmech.common_images.imagepicker.adapter.SquareFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        xmlns:tools="http://schemas.android.com/tools"
         android:background="?colorGray10"
         android:layout_margin="2dp">
 
@@ -10,5 +10,24 @@
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
+
+    <FrameLayout
+            android:id="@+id/clickableIndexContainer"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="right|top">
+
+        <TextView
+                android:id="@+id/textViewIndex"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                tools:text="7"
+                android:textColor="@color/colorWhite"
+                android:fontFamily="@font/roboto_medium"
+                android:background="@drawable/background_image_index"/>
+
+    </FrameLayout>
 
 </ru.kekmech.common_images.imagepicker.adapter.SquareFrameLayout>
