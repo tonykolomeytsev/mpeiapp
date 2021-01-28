@@ -13,7 +13,10 @@ internal data class ImagePickerState(
     val imageCountLimit: Int,
     val loaderPage: Int = 0,
     val isLoading: Boolean = false
-)
+) {
+
+    val isAcceptButtonVisible get() = selectedImagesUrls.isNotEmpty()
+}
 
 internal sealed class ImagePickerEvent {
     sealed class Wish : ImagePickerEvent() {
@@ -28,6 +31,7 @@ internal sealed class ImagePickerEvent {
         object Click {
             data class Image(val imageUrl: String) : Wish()
             data class SelectImage(val imageUrl: String) : Wish()
+            object Accept : Wish()
         }
     }
 
@@ -36,7 +40,9 @@ internal sealed class ImagePickerEvent {
     }
 }
 
-internal sealed class ImagePickerEffect
+internal sealed class ImagePickerEffect {
+    data class CloseWithResult(val selectedImagesUrls: ArrayList<String>) : ImagePickerEffect()
+}
 
 internal sealed class ImagePickerAction {
     data class LoadImages(val page: Int) : ImagePickerAction()

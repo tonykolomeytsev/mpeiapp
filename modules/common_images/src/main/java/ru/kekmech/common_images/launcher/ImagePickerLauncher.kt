@@ -12,5 +12,6 @@ interface ImagePickerLauncher {
 
     companion object {
         const val DEFAULT_IMAGE_COUNT_LIMIT = 10
+        const val EXTRA_SELECTED_IMAGES = "SelectedImages"
     }
 }

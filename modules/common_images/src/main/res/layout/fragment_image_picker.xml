@@ -1,16 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+<FrameLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
-        android:paddingTop="4dp"
-        android:paddingBottom="8dp"
-        android:paddingStart="2dp"
-        android:paddingEnd="2dp"
-        android:clipToPadding="false"
-        android:overScrollMode="never"
-        android:minHeight="500dp"
-        android:background="@drawable/background_bottom_sheet"/>
+        android:layout_height="wrap_content">
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            android:paddingTop="4dp"
+            android:paddingBottom="8dp"
+            android:paddingStart="2dp"
+            android:paddingEnd="2dp"
+            android:clipToPadding="false"
+            android:overScrollMode="never"
+            android:minHeight="500dp"
+            android:background="@drawable/background_bottom_sheet"/>
+
+    <FrameLayout
+            android:id="@+id/acceptButtonContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="?attr/colorWhite">
+
+        <Button
+                style="@style/Button.Primary"
+                android:id="@+id/buttonAccept"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Прикрепить"/>
+
+    </FrameLayout>
+
+</FrameLayout>

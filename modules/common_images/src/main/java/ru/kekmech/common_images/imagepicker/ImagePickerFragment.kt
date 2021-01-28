@@ -3,9 +3,11 @@ package ru.kekmech.common_images.imagepicker
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.common_adapter.BaseAdapter
+import kekmech.ru.common_android.closeWithResult
 import kekmech.ru.common_android.getArgument
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.withArguments
@@ -18,7 +20,10 @@ import org.koin.android.ext.android.inject
 import ru.kekmech.common_images.imagepicker.adapter.ImageAdapterItem
 import ru.kekmech.common_images.imagepicker.mvi.*
 import ru.kekmech.common_images.imagepicker.mvi.ImagePickerEvent.Wish
+import ru.kekmech.common_images.imagepicker.utils.BottomSheetFixedElementHelper
 import ru.kekmech.common_images.imagepicker.utils.requestStoragePermissionIfNeeded
+import ru.kekmech.common_images.launcher.ImagePickerLauncher
+
 
 private const val REQUEST_CODE_STORAGE = 1000
 private const val REQUEST_CODE_CAMERA = 1001
@@ -33,6 +38,7 @@ internal class ImagePickerFragment : BaseBottomSheetDialogFragment<ImagePickerEv
         .create(getArgument(ARG_IMAGE_COUNT))
 
     private val adapter by lazy(LazyThreadSafetyMode.NONE) { createAdapter() }
+    private lateinit var bottomSheetFixedElementHelper: BottomSheetFixedElementHelper
 
     override fun onViewCreatedInternal(view: View, savedInstanceState: Bundle?) {
         requestStoragePermissionIfNeeded(REQUEST_CODE_STORAGE) {
@@ -51,6 +57,15 @@ internal class ImagePickerFragment : BaseBottomSheetDialogFragment<ImagePickerEv
                     }
                 }
             })
+            buttonAccept.setOnClickListener {
+                feature.accept(Wish.Click.Accept)
+            }
+            recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    println("Scroll hello world")
+                }
+            })
+            bottomSheetFixedElementHelper = BottomSheetFixedElementHelper(acceptButtonContainer, requireActivity().window)
         }
         requestStoragePermissionIfNeeded(REQUEST_CODE_STORAGE) {
             feature.accept(Wish.Action.StoragePermissionGranted)
@@ -59,6 +74,18 @@ internal class ImagePickerFragment : BaseBottomSheetDialogFragment<ImagePickerEv
 
     override fun render(state: ImagePickerState) {
         adapter.update(ImagePickerListConverter.map(state))
+        viewBinding.buttonAccept.isVisible = state.isAcceptButtonVisible
+        (view?.parent as? View)?.let(bottomSheetFixedElementHelper::update)
+    }
+
+    override fun handleEffect(effect: ImagePickerEffect) = when (effect) {
+        is ImagePickerEffect.CloseWithResult -> closeWithResult {
+            putExtra(ImagePickerLauncher.EXTRA_SELECTED_IMAGES, effect.selectedImagesUrls)
+        }
+    }
+
+    override fun onBottomSheetSlide(bottomSheet: View, slideOffset: Float) {
+        bottomSheetFixedElementHelper.update(bottomSheet)
     }
 
     override fun onRequestPermissionsResult(
