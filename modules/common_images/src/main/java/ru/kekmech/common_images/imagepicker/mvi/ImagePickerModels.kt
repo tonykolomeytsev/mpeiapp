@@ -42,6 +42,7 @@ internal sealed class ImagePickerEvent {
 
 internal sealed class ImagePickerEffect {
     data class CloseWithResult(val selectedImagesUrls: ArrayList<String>) : ImagePickerEffect()
+    data class ShowImage(val url: String) : ImagePickerEffect()
 }
 
 internal sealed class ImagePickerAction {

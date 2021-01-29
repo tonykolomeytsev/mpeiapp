@@ -61,7 +61,7 @@ internal class ImagePickerReducer : BaseReducer<ImagePickerState, ImagePickerEve
             }
         }
         is Wish.Click.Accept -> Result(state, effect = ImagePickerEffect.CloseWithResult(ArrayList(state.selectedImagesUrls)))
-        is Wish.Click.Image -> Result(state) // TODO open image viewer
+        is Wish.Click.Image -> Result(state, effect = ImagePickerEffect.ShowImage(event.imageUrl))
         is Wish.Action.CameraPermissionGranted -> Result(state) // TODO implement in the future
     }
 }

@@ -14,6 +14,7 @@ import kekmech.ru.common_android.withArguments
 import kekmech.ru.common_images.R
 import kekmech.ru.common_images.databinding.FragmentImagePickerBinding
 import kekmech.ru.common_mvi.ui.BaseBottomSheetDialogFragment
+import kekmech.ru.common_navigation.showDialog
 import kekmech.ru.coreui.items.PullAdapterItem
 import kekmech.ru.coreui.items.PullItem
 import org.koin.android.ext.android.inject
@@ -22,6 +23,7 @@ import ru.kekmech.common_images.imagepicker.mvi.*
 import ru.kekmech.common_images.imagepicker.mvi.ImagePickerEvent.Wish
 import ru.kekmech.common_images.imagepicker.utils.BottomSheetFixedElementHelper
 import ru.kekmech.common_images.imagepicker.utils.requestStoragePermissionIfNeeded
+import ru.kekmech.common_images.imageviewer.ImageViewFragment
 import ru.kekmech.common_images.launcher.ImagePickerLauncher
 
 
@@ -81,6 +83,11 @@ internal class ImagePickerFragment : BaseBottomSheetDialogFragment<ImagePickerEv
     override fun handleEffect(effect: ImagePickerEffect) = when (effect) {
         is ImagePickerEffect.CloseWithResult -> closeWithResult {
             putExtra(ImagePickerLauncher.EXTRA_SELECTED_IMAGES, effect.selectedImagesUrls)
+        }
+        is ImagePickerEffect.ShowImage -> {
+            showDialog {
+                ImageViewFragment.newInstance(effect.url)
+            }
         }
     }
 
