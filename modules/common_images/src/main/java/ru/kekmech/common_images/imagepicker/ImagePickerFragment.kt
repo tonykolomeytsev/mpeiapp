@@ -7,21 +7,23 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.common_adapter.BaseAdapter
+import kekmech.ru.common_android.addSystemVerticalPadding
 import kekmech.ru.common_android.closeWithResult
 import kekmech.ru.common_android.getArgument
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.withArguments
 import kekmech.ru.common_images.R
 import kekmech.ru.common_images.databinding.FragmentImagePickerBinding
-import kekmech.ru.common_mvi.ui.BaseBottomSheetDialogFragment
+import kekmech.ru.common_mvi.ui.BaseFragment
 import kekmech.ru.common_navigation.showDialog
-import kekmech.ru.coreui.items.PullAdapterItem
 import kekmech.ru.coreui.items.PullItem
+import kekmech.ru.coreui.items.SectionHeaderAdapterItem
+import kekmech.ru.coreui.items.SpaceAdapterItem
 import org.koin.android.ext.android.inject
 import ru.kekmech.common_images.imagepicker.adapter.ImageAdapterItem
+import ru.kekmech.common_images.imagepicker.adapter.ImageItem
 import ru.kekmech.common_images.imagepicker.mvi.*
 import ru.kekmech.common_images.imagepicker.mvi.ImagePickerEvent.Wish
-import ru.kekmech.common_images.imagepicker.utils.BottomSheetFixedElementHelper
 import ru.kekmech.common_images.imagepicker.utils.requestStoragePermissionIfNeeded
 import ru.kekmech.common_images.imageviewer.ImageViewFragment
 import ru.kekmech.common_images.launcher.ImagePickerLauncher
@@ -31,7 +33,7 @@ private const val REQUEST_CODE_STORAGE = 1000
 private const val REQUEST_CODE_CAMERA = 1001
 private const val ARG_IMAGE_COUNT = "Arg.ImageCount"
 
-internal class ImagePickerFragment : BaseBottomSheetDialogFragment<ImagePickerEvent, ImagePickerEffect, ImagePickerState, ImagePickerFeature>() {
+internal class ImagePickerFragment : BaseFragment<ImagePickerEvent, ImagePickerEffect, ImagePickerState, ImagePickerFeature>() {
 
     private val viewBinding by viewBinding(FragmentImagePickerBinding::bind)
     override val initEvent get() = Wish.Init
@@ -40,12 +42,12 @@ internal class ImagePickerFragment : BaseBottomSheetDialogFragment<ImagePickerEv
         .create(getArgument(ARG_IMAGE_COUNT))
 
     private val adapter by lazy(LazyThreadSafetyMode.NONE) { createAdapter() }
-    private lateinit var bottomSheetFixedElementHelper: BottomSheetFixedElementHelper
 
     override fun onViewCreatedInternal(view: View, savedInstanceState: Bundle?) {
         requestStoragePermissionIfNeeded(REQUEST_CODE_STORAGE) {
             feature.accept(Wish.Action.StoragePermissionGranted)
         }
+        view.addSystemVerticalPadding()
         with(viewBinding) {
             recyclerView.adapter = adapter
             val gridLayoutManager = createLayoutManager()
@@ -67,7 +69,6 @@ internal class ImagePickerFragment : BaseBottomSheetDialogFragment<ImagePickerEv
                     println("Scroll hello world")
                 }
             })
-            bottomSheetFixedElementHelper = BottomSheetFixedElementHelper(acceptButtonContainer, requireActivity().window)
         }
         requestStoragePermissionIfNeeded(REQUEST_CODE_STORAGE) {
             feature.accept(Wish.Action.StoragePermissionGranted)
@@ -77,7 +78,6 @@ internal class ImagePickerFragment : BaseBottomSheetDialogFragment<ImagePickerEv
     override fun render(state: ImagePickerState) {
         adapter.update(ImagePickerListConverter.map(state))
         viewBinding.buttonAccept.isVisible = state.isAcceptButtonVisible
-        (view?.parent as? View)?.let(bottomSheetFixedElementHelper::update)
     }
 
     override fun handleEffect(effect: ImagePickerEffect) = when (effect) {
@@ -89,10 +89,6 @@ internal class ImagePickerFragment : BaseBottomSheetDialogFragment<ImagePickerEv
                 ImageViewFragment.newInstance(effect.url)
             }
         }
-    }
-
-    override fun onBottomSheetSlide(bottomSheet: View, slideOffset: Float) {
-        bottomSheetFixedElementHelper.update(bottomSheet)
     }
 
     override fun onRequestPermissionsResult(
@@ -120,7 +116,8 @@ internal class ImagePickerFragment : BaseBottomSheetDialogFragment<ImagePickerEv
                 feature.accept(Wish.Click.SelectImage(imageUrl))
             }
         ),
-        PullAdapterItem()
+        SectionHeaderAdapterItem(),
+        SpaceAdapterItem()
     )
 
     private fun createLayoutManager() =
@@ -128,10 +125,10 @@ internal class ImagePickerFragment : BaseBottomSheetDialogFragment<ImagePickerEv
             .apply {
                 spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                     override fun getSpanSize(position: Int): Int {
-                        if (adapter.allData[position] is PullItem) {
-                            return 3
-                        } else {
+                        if (adapter.allData[position] is ImageItem) {
                             return 1
+                        } else {
+                            return 3
                         }
                     }
                 }
