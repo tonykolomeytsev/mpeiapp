@@ -1,8 +1,6 @@
-apply from: "$rootDir/kotlin-module.gradle"
+apply from: "$gradleDir/kotlin-module.gradle"
 
 dependencies {
-    implementation kotlinStdLib
     implementation androidx.appcompat
     implementation androidx.coreKtx
-    implementation kotlinReflect
 }

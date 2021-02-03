@@ -1,4 +1,4 @@
-apply from: "$rootDir/feature-android-module.gradle"
+apply from: "$gradleDir/feature-android-module.gradle"
 
 dependencies {
     implementation google.material

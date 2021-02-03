@@ -22,7 +22,6 @@ import kekmech.ru.domain_map.dto.MapMarker
 import kekmech.ru.feature_search.databinding.FragmentSearchBinding
 import kekmech.ru.feature_search.di.SearchDependencies
 import kekmech.ru.feature_search.item.FilterAdapterItem
-import kekmech.ru.feature_search.item.FilterItem
 import kekmech.ru.feature_search.item.MapMarkerAdapterItem
 import kekmech.ru.feature_search.mvi.SearchEffect
 import kekmech.ru.feature_search.mvi.SearchEvent
@@ -40,7 +39,10 @@ internal class SearchFragment : BaseFragment<SearchEvent, SearchEffect, SearchSt
     private val dependencies by inject<SearchDependencies>()
 
     override fun createFeature(): SearchFeature = dependencies.searchFeatureFactory
-        .create(getArgument(ARG_QUERY), getArgument(ARG_FILTER))
+        .create(
+            getArgument(ARG_QUERY),
+            getArgument(ARG_FILTER)
+        )
 
     override var layoutId: Int = R.layout.fragment_search
     private val adapter by fastLazy { createAdapter() }

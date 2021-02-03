@@ -1,4 +1,4 @@
-apply from: "$rootDir/kotlin-module.gradle"
+apply from: "$gradleDir/kotlin-module.gradle"
 
 dependencies {
 }

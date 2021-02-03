@@ -1,7 +1,6 @@
-apply from: "$rootDir/domain-android-module.gradle"
+apply from: "$gradleDir/domain-android-module.gradle"
 
 dependencies {
-    implementation kotlinStdLib
     implementation androidx.appcompat
     implementation androidx.fragmentKtx
     implementation androidx.coreKtx
@@ -12,11 +11,8 @@ dependencies {
     implementation koin.core
     implementation koin.android
 
-    implementation kotlinReflect
-
     implementation rx.java
     implementation rx.android
-    implementation rx.kotlin
 
     implementation project(path: ":common_di")
 }

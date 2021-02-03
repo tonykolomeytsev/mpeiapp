@@ -26,7 +26,9 @@ internal class EditFavoriteFragment : Fragment(R.layout.fragment_edit_favorite) 
             groupText.showKeyboard()
             buttonContinue.setOnClickListener {
                 closeWithResult {
-                    putExtra(EXTRA_GROUP_NAME, getArgument<String>(ARG_GROUP_NUMBER))
+                    putExtra(EXTRA_GROUP_NAME,
+                        getArgument<String>(ARG_GROUP_NUMBER)
+                    )
                     putExtra(EXTRA_DESCRIPTION, groupText.text.toString())
                 }
             }

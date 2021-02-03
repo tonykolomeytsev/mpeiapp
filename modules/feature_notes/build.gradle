@@ -1,14 +1,11 @@
-apply from: "$rootDir/feature-android-module.gradle"
+apply from: "$gradleDir/feature-android-module.gradle"
 
 dependencies {
-    implementation kotlinStdLib
-
     testImplementation kotest.runner
     testImplementation kotest.assertions
     testImplementation kotest.property
 
     implementation androidx.coreKtx
-    implementation "androidx.legacy:legacy-support-v4:1.0.0"
 
     implementation androidx.appcompat
     implementation androidx.coreKtx
