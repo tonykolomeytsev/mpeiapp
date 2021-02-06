@@ -2,6 +2,7 @@ package ru.kekmech.common_images.imagepicker.adapter
 
 import android.graphics.Bitmap
 import android.view.View
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import kekmech.ru.common_adapter.AdapterItem
@@ -33,6 +34,7 @@ private class ImageItemViewHolderImpl(
 
     override fun setImageByUrl(url: String) {
         with(viewBinding.imageView) {
+            transitionName = url
             Picasso.get()
                 .load(url)
                 .config(Bitmap.Config.RGB_565)
@@ -78,6 +80,12 @@ private class ImageItemViewHolderImpl(
         viewBinding.clickableIndexContainer.setOnClickListener(onSelectListener)
     }
 
+    override fun setOnClickListener(listener: (View) -> Unit) {
+        viewBinding.root.setOnClickListener {
+            listener(viewBinding.imageView)
+        }
+    }
+
     companion object {
         private const val SELECTED_IMAGE_SCALE = 0.75f
         private const val DEFAULT_IMAGE_SCALE = 1f
@@ -86,14 +94,14 @@ private class ImageItemViewHolderImpl(
 }
 
 private class ImageItemBinder(
-    private val onClickListener: (String) -> Unit,
+    private val onClickListener: (ImageView, String) -> Unit,
     private val onSelectListener: (String) -> Unit
 ) : BaseItemBinder<ImageItemViewHolder, ImageItem>() {
 
     override fun bind(vh: ImageItemViewHolder, model: ImageItem, position: Int) {
         vh.setImageByUrl(model.url)
         vh.setIsSelected(model.isSelected, model.selectionIndex)
-        vh.setOnClickListener { onClickListener(model.url) }
+        vh.setOnClickListener { onClickListener(it as ImageView, model.url) }
         vh.setOnImageSelectListener { onSelectListener(model.url) }
     }
 
@@ -108,7 +116,7 @@ private class ImageItemBinder(
 }
 
 internal class ImageAdapterItem(
-    onClickListener: (String) -> Unit,
+    onClickListener: (ImageView, String) -> Unit,
     onSelectListener: (String) -> Unit
 ) : AdapterItem<ImageItemViewHolder, ImageItem>(
     isType = { it is ImageItem },

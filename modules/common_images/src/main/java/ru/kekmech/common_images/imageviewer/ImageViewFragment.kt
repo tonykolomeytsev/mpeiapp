@@ -10,19 +10,26 @@ import kekmech.ru.common_android.getArgument
 import kekmech.ru.common_android.withArguments
 import kekmech.ru.common_images.R
 
-class ImageViewFragment : Fragment(R.layout.fragment_image_view) {
+internal class ImageViewFragment : Fragment(R.layout.fragment_image_view) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         view.addSystemVerticalPadding()
         val imageView = view.findViewById<ImageView>(R.id.imageView)
         Picasso.get()
-            .load(getArgument<String>("url"))
+            .load(getArgument<String>(ARG_URL))
+            .noFade()
             .into(imageView)
     }
 
     companion object {
 
-        fun newInstance(url: String) = ImageViewFragment()
-            .withArguments("url" to url)
+        private const val ARG_URL = "Arg.Url"
+        private const val ARG_TRANSITION_ELEMENT = "Arg.Transition"
+
+        fun newInstance(url: String, transitionElementName: String?) = ImageViewFragment()
+            .withArguments(
+                ARG_URL to url,
+                ARG_TRANSITION_ELEMENT to transitionElementName
+            )
     }
 }

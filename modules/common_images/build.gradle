@@ -3,6 +3,7 @@ apply from: "$gradleDir/feature-android-module.gradle"
 dependencies {
     implementation androidx.appcompat
     implementation androidx.coreKtx
+    implementation androidx.fragmentKtx
     implementation google.material
 
     implementation koin.core

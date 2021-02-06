@@ -29,6 +29,7 @@ import ru.kekmech.common_images.imagepicker.mvi.ImagePickerEvent.Wish
 import ru.kekmech.common_images.imagepicker.utils.requestStoragePermissionIfNeeded
 import ru.kekmech.common_images.imageviewer.ImageViewFragment
 import ru.kekmech.common_images.launcher.ImagePickerLauncher
+import ru.kekmech.common_images.launcher.ImageViewerLauncher
 
 
 private const val REQUEST_CODE_STORAGE = 1000
@@ -43,7 +44,7 @@ internal class ImagePickerFragment : BaseFragment<ImagePickerEvent, ImagePickerE
     override var layoutId: Int = R.layout.fragment_image_picker
     override fun createFeature() = inject<ImagePickerFeatureFactory>().value
         .create(getArgument(ARG_IMAGE_COUNT), getArgument(ARG_ALREADY_SELECTED_IMAGES))
-
+    private val imageViewerLauncher by inject<ImageViewerLauncher>()
     private val adapter by lazy(LazyThreadSafetyMode.NONE) { createAdapter() }
 
     override fun onViewCreatedInternal(view: View, savedInstanceState: Bundle?) {
@@ -81,11 +82,6 @@ internal class ImagePickerFragment : BaseFragment<ImagePickerEvent, ImagePickerE
         is ImagePickerEffect.CloseWithResult -> closeWithResult {
             putExtra(ImagePickerLauncher.EXTRA_SELECTED_IMAGES, effect.selectedImagesUrls)
         }
-        is ImagePickerEffect.ShowImage -> {
-            addScreenForward {
-                ImageViewFragment.newInstance(effect.url)
-            }
-        }
     }
 
     override fun onRequestPermissionsResult(
@@ -106,8 +102,8 @@ internal class ImagePickerFragment : BaseFragment<ImagePickerEvent, ImagePickerE
 
     private fun createAdapter() = BaseAdapter(
         ImageAdapterItem(
-            onClickListener = { imageUrl ->
-                feature.accept(Wish.Click.Image(imageUrl))
+            onClickListener = { imageView, imageUrl ->
+                imageViewerLauncher.launch(imageUrl, imageView)
             },
             onSelectListener = { imageUrl ->
                 feature.accept(Wish.Click.SelectImage(imageUrl))

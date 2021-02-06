@@ -29,7 +29,6 @@ internal sealed class ImagePickerEvent {
         }
 
         object Click {
-            data class Image(val imageUrl: String) : Wish()
             data class SelectImage(val imageUrl: String) : Wish()
             object Accept : Wish()
         }
@@ -42,7 +41,6 @@ internal sealed class ImagePickerEvent {
 
 internal sealed class ImagePickerEffect {
     data class CloseWithResult(val selectedImagesUrls: ArrayList<String>) : ImagePickerEffect()
-    data class ShowImage(val url: String) : ImagePickerEffect()
 }
 
 internal sealed class ImagePickerAction {
