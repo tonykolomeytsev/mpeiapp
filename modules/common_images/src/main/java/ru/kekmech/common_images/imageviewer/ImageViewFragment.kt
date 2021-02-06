@@ -1,13 +1,10 @@
 package ru.kekmech.common_images.imageviewer
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
-import coil.load
+import com.squareup.picasso.Picasso
 import kekmech.ru.common_android.addSystemVerticalPadding
 import kekmech.ru.common_android.getArgument
 import kekmech.ru.common_android.withArguments
@@ -18,9 +15,9 @@ class ImageViewFragment : Fragment(R.layout.fragment_image_view) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         view.addSystemVerticalPadding()
         val imageView = view.findViewById<ImageView>(R.id.imageView)
-        imageView.load(getArgument<String>("url")) {
-            crossfade(true)
-        }
+        Picasso.get()
+            .load(getArgument<String>("url"))
+            .into(imageView)
     }
 
     companion object {

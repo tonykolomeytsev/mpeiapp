@@ -12,6 +12,7 @@ import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.common_android.*
 import kekmech.ru.common_android.viewbinding.viewBinding
+import kekmech.ru.common_android.views.setMargins
 import kekmech.ru.common_images.R
 import kekmech.ru.common_images.databinding.FragmentImagePickerBinding
 import kekmech.ru.common_mvi.ui.BaseFragment
@@ -62,7 +63,9 @@ internal class ImagePickerFragment : BaseFragment<ImagePickerEvent, ImagePickerE
             buttonAccept.setOnClickListener {
                 feature.accept(Wish.Click.Accept)
             }
-            view.addSystemBottomPadding()
+            view.doOnApplyWindowInsets { _, insets, padding ->
+                acceptButtonContainer.updatePadding(bottom = insets.systemWindowInsetBottom + padding.bottom)
+            }
         }
         requestStoragePermissionIfNeeded(REQUEST_CODE_STORAGE) {
             feature.accept(Wish.Action.StoragePermissionGranted)
@@ -71,7 +74,7 @@ internal class ImagePickerFragment : BaseFragment<ImagePickerEvent, ImagePickerE
 
     override fun render(state: ImagePickerState) {
         adapter.update(ImagePickerListConverter.map(state))
-        viewBinding.buttonAccept.isVisible = state.isAcceptButtonVisible
+        viewBinding.acceptButtonContainer.isVisible = state.isAcceptButtonVisible
     }
 
     override fun handleEffect(effect: ImagePickerEffect) = when (effect) {

@@ -24,7 +24,7 @@ buildscript {
         kotlinStdLib = "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin}"
         timber = "com.jakewharton.timber:timber:4.7.1"
         desugaring = "com.android.tools:desugar_jdk_libs:1.1.1"
-        coil = "io.coil-kt:coil:1.1.1"
+        picasso = "com.squareup.picasso:picasso:2.8"
         androidx = [
                 constraintlayout    : "androidx.constraintlayout:constraintlayout:${versions.constraintlayout}",
                 coordinatorlayout   : "androidx.coordinatorlayout:coordinatorlayout:${versions.coordinatorlayout}",

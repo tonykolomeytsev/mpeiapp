@@ -9,7 +9,7 @@ dependencies {
     implementation koin.android
 
     implementation rx.java
-    implementation coil
+    implementation picasso
 
     implementation project(path: ":common_di")
     implementation project(path: ":common_android")

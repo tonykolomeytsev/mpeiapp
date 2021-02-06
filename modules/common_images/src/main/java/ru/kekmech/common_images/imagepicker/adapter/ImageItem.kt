@@ -1,9 +1,9 @@
 package ru.kekmech.common_images.imagepicker.adapter
 
+import android.graphics.Bitmap
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
-import coil.size.ViewSizeResolver
+import com.squareup.picasso.Picasso
 import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.common_images.R
@@ -32,9 +32,13 @@ private class ImageItemViewHolderImpl(
     private val viewBinding = ItemImageBinding.bind(itemView)
 
     override fun setImageByUrl(url: String) {
-        viewBinding.imageView.load(url) {
-            crossfade(true)
-            size(ViewSizeResolver(viewBinding.imageView))
+        with(viewBinding.imageView) {
+            Picasso.get()
+                .load(url)
+                .config(Bitmap.Config.RGB_565)
+                .fit()
+                .centerCrop()
+                .into(this)
         }
     }
 
