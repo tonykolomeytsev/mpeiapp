@@ -1,13 +1,13 @@
 package ru.kekmech.common_images.imagepicker
 
-import ru.kekmech.common_images.imagepicker.adapter.GalleryHeader
+import kekmech.ru.coreui.items.PullItem
 import ru.kekmech.common_images.imagepicker.adapter.ImageItem
 import ru.kekmech.common_images.imagepicker.mvi.ImagePickerState
 
 internal object ImagePickerListConverter {
 
     fun map(state: ImagePickerState): List<Any> = mutableListOf<Any>().apply {
-        add(GalleryHeader)
+        add(PullItem)
 
         addAll(state.imagesUrls.map { url ->
             val selectedIndex = state.selectedImagesUrls.indexOf(url)
