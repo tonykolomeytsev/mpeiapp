@@ -7,7 +7,8 @@ interface ImagePickerLauncher {
     fun launch(
         requestCode: Int,
         targetFragment: Fragment,
-        imageCountLimit: Int = DEFAULT_IMAGE_COUNT_LIMIT
+        imageCountLimit: Int = DEFAULT_IMAGE_COUNT_LIMIT,
+        alreadySelectedImages: List<String> = emptyList()
     )
 
     companion object {

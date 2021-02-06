@@ -6,9 +6,10 @@ internal class ImagePickerFeatureFactory(
     private val actor: ImagePickerActor
 ) {
 
-    fun create(imageCountLimit: Int) = BaseFeature(
+    fun create(imageCountLimit: Int, selectedImageUrls: ArrayList<String>) = BaseFeature(
         initialState = ImagePickerState(
-            imageCountLimit = imageCountLimit
+            imageCountLimit = imageCountLimit,
+            selectedImagesUrls = selectedImageUrls.toSet()
         ),
         reducer = ImagePickerReducer(),
         actor = actor

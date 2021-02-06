@@ -12,10 +12,15 @@ internal class ImagePickerLauncherImpl(
 ) : ImagePickerLauncher {
 
 
-    override fun launch(requestCode: Int, targetFragment: Fragment, imageCountLimit: Int) {
+    override fun launch(
+        requestCode: Int,
+        targetFragment: Fragment,
+        imageCountLimit: Int,
+        alreadySelectedImages: List<String>
+    ) {
         router.executeCommand(AddScreenForward {
             ImagePickerFragment
-                .newInstance(imageCountLimit)
+                .newInstance(imageCountLimit, ArrayList(alreadySelectedImages))
                 .withResultFor(targetFragment, requestCode)
         })
     }

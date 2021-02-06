@@ -4,22 +4,23 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
+import androidx.core.view.updatePadding
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseAdapter
-import kekmech.ru.common_android.addSystemVerticalPadding
-import kekmech.ru.common_android.closeWithResult
-import kekmech.ru.common_android.getArgument
+import kekmech.ru.common_adapter.BaseItemBinder
+import kekmech.ru.common_android.*
 import kekmech.ru.common_android.viewbinding.viewBinding
-import kekmech.ru.common_android.withArguments
 import kekmech.ru.common_images.R
 import kekmech.ru.common_images.databinding.FragmentImagePickerBinding
 import kekmech.ru.common_mvi.ui.BaseFragment
-import kekmech.ru.common_navigation.showDialog
-import kekmech.ru.coreui.items.PullItem
-import kekmech.ru.coreui.items.SectionHeaderAdapterItem
+import kekmech.ru.common_navigation.addScreenForward
+import kekmech.ru.coreui.items.ClickableItemViewHolderImpl
 import kekmech.ru.coreui.items.SpaceAdapterItem
+import kekmech.ru.coreui.items.TextAdapterItem
 import org.koin.android.ext.android.inject
+import ru.kekmech.common_images.imagepicker.adapter.GalleryHeader
 import ru.kekmech.common_images.imagepicker.adapter.ImageAdapterItem
 import ru.kekmech.common_images.imagepicker.adapter.ImageItem
 import ru.kekmech.common_images.imagepicker.mvi.*
@@ -32,6 +33,7 @@ import ru.kekmech.common_images.launcher.ImagePickerLauncher
 private const val REQUEST_CODE_STORAGE = 1000
 private const val REQUEST_CODE_CAMERA = 1001
 private const val ARG_IMAGE_COUNT = "Arg.ImageCount"
+private const val ARG_ALREADY_SELECTED_IMAGES = "Arg.Selected"
 
 internal class ImagePickerFragment : BaseFragment<ImagePickerEvent, ImagePickerEffect, ImagePickerState, ImagePickerFeature>() {
 
@@ -39,15 +41,11 @@ internal class ImagePickerFragment : BaseFragment<ImagePickerEvent, ImagePickerE
     override val initEvent get() = Wish.Init
     override var layoutId: Int = R.layout.fragment_image_picker
     override fun createFeature() = inject<ImagePickerFeatureFactory>().value
-        .create(getArgument(ARG_IMAGE_COUNT))
+        .create(getArgument(ARG_IMAGE_COUNT), getArgument(ARG_ALREADY_SELECTED_IMAGES))
 
     private val adapter by lazy(LazyThreadSafetyMode.NONE) { createAdapter() }
 
     override fun onViewCreatedInternal(view: View, savedInstanceState: Bundle?) {
-        requestStoragePermissionIfNeeded(REQUEST_CODE_STORAGE) {
-            feature.accept(Wish.Action.StoragePermissionGranted)
-        }
-        view.addSystemVerticalPadding()
         with(viewBinding) {
             recyclerView.adapter = adapter
             val gridLayoutManager = createLayoutManager()
@@ -64,11 +62,7 @@ internal class ImagePickerFragment : BaseFragment<ImagePickerEvent, ImagePickerE
             buttonAccept.setOnClickListener {
                 feature.accept(Wish.Click.Accept)
             }
-            recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    println("Scroll hello world")
-                }
-            })
+            view.addSystemBottomPadding()
         }
         requestStoragePermissionIfNeeded(REQUEST_CODE_STORAGE) {
             feature.accept(Wish.Action.StoragePermissionGranted)
@@ -85,7 +79,7 @@ internal class ImagePickerFragment : BaseFragment<ImagePickerEvent, ImagePickerE
             putExtra(ImagePickerLauncher.EXTRA_SELECTED_IMAGES, effect.selectedImagesUrls)
         }
         is ImagePickerEffect.ShowImage -> {
-            showDialog {
+            addScreenForward {
                 ImageViewFragment.newInstance(effect.url)
             }
         }
@@ -116,8 +110,14 @@ internal class ImagePickerFragment : BaseFragment<ImagePickerEvent, ImagePickerE
                 feature.accept(Wish.Click.SelectImage(imageUrl))
             }
         ),
-        SectionHeaderAdapterItem(),
-        SpaceAdapterItem()
+        AdapterItem(
+            isType = { it is GalleryHeader },
+            layoutRes = R.layout.item_gallery_header,
+            viewHolderGenerator = ::ClickableItemViewHolderImpl,
+            itemBinder = object : BaseItemBinder<ClickableItemViewHolderImpl, GalleryHeader>() {
+                override fun bind(vh: ClickableItemViewHolderImpl, model: GalleryHeader, position: Int) = Unit
+            }
+        )
     )
 
     private fun createLayoutManager() =
@@ -139,7 +139,13 @@ internal class ImagePickerFragment : BaseFragment<ImagePickerEvent, ImagePickerE
 
         private const val DEFAULT_VISIBLE_THRESHOLD = 16 // 1 (PullItem) + 3 (span count) * 5 (rows)
 
-        fun newInstance(imageCountLimit: Int): ImagePickerFragment = ImagePickerFragment()
-            .withArguments(ARG_IMAGE_COUNT to imageCountLimit)
+        fun newInstance(
+            imageCountLimit: Int,
+            alreadySelectedImages: ArrayList<String>
+        ): ImagePickerFragment = ImagePickerFragment()
+            .withArguments(
+                ARG_IMAGE_COUNT to imageCountLimit,
+                ARG_ALREADY_SELECTED_IMAGES to alreadySelectedImages
+            )
     }
 }

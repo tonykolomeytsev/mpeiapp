@@ -6,26 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
 import coil.load
 import kekmech.ru.common_android.addSystemVerticalPadding
 import kekmech.ru.common_android.getArgument
 import kekmech.ru.common_android.withArguments
 import kekmech.ru.common_images.R
 
-class ImageViewFragment : DialogFragment() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setStyle(STYLE_NORMAL, R.style.Theme_MaterialComponents_Dialog_FullScreen)
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_image_view, container, false)
-    }
+class ImageViewFragment : Fragment(R.layout.fragment_image_view) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         view.addSystemVerticalPadding()

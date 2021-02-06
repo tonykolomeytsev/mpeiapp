@@ -30,4 +30,4 @@ inline fun <reified T : Any> Bundle?.findArgument(key: String, getArgument: Bund
     this?.let { if (it.containsKey(key)) it.getArgument() else null }
 
 fun KClass<*>.isSubclassOf(base: KClass<*>): Boolean =
-    this == base || this.java.isAssignableFrom(base.java)
+    this == base || base.java.isAssignableFrom(this.java)
