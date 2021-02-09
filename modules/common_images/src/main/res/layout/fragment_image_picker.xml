@@ -40,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:background="?attr/colorWhite">
+            android:background="@color/colorTransparent">
 
         <Button
                 style="@style/Button.Primary"
@@ -51,7 +51,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="8dp"
-                android:text="Прикрепить"/>
+                android:text="@string/image_picker_attach_button"/>
 
     </FrameLayout>
 

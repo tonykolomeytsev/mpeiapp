@@ -4,8 +4,9 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="?selectableItemBackground">
+        android:layout_height="wrap_content"
+        android:background="?selectableItemBackground"
+        android:paddingBottom="6dp">
 
     <ImageView
             android:id="@+id/imageView"
@@ -16,7 +17,7 @@
             app:layout_constraintTop_toTopOf="@id/scheduleName"
             app:layout_constraintBottom_toBottomOf="@id/scheduleName"
             tools:src="@drawable/ic_person_24"
-            android:tint="?colorMain"/>
+            app:tint="?attr/colorMain"/>
 
     <TextView
             android:id="@+id/scheduleName"
