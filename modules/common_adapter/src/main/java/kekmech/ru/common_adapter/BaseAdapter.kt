@@ -74,8 +74,12 @@ open class BaseAdapter(
     override fun onViewDetachedFromWindow(holder: RecyclerView.ViewHolder) {
         val position = holder.adapterPosition
         if (position == -1) return
-        val type = adapterItems.first { item -> item.isType(getItem(position)) }
-        type.itemBinder.detachViewHolder(holder)
+        try {
+            val type = adapterItems.first { item -> item.isType(getItem(position)) }
+            type.itemBinder.detachViewHolder(holder)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
         super.onViewDetachedFromWindow(holder)
     }
 

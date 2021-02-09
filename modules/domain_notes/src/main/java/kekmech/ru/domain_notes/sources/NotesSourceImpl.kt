@@ -23,10 +23,12 @@ class NotesSourceImpl(
         val content = note.content.toBase64()
         val dateTime = note.dateTime.format(dateTimeFormatter)
         val classesName = note.classesName
+        val target = note.targetRect
+        val pictureAttachments = note.attachedPictureUrls.joinToString(",") { it.toBase64() }
         if (note.id == -1) {
             db.fetch("""
-                insert into notes(content, datetime, cls_name, grp_name)
-                values ('$content', '$dateTime', '$classesName', '$groupName');
+                insert into notes(content, datetime, cls_name, grp_name, target, p_attachments)
+                values ('$content', '$dateTime', '$classesName', '$groupName', $target, '$pictureAttachments');
                 """
             )
         } else {
@@ -35,7 +37,9 @@ class NotesSourceImpl(
                 set content='$content',
                     datetime='$dateTime',
                     cls_name='$classesName',
-                    grp_name='$groupName'
+                    grp_name='$groupName',
+                    target=$target,
+                    p_attachments='$pictureAttachments'
                 where _id=${note.id};
             """)
         }
@@ -47,9 +51,14 @@ class NotesSourceImpl(
     }
 
     private fun map(record: Record): Note = Note(
-        id = record.get<Int>("_id") ?: error("Note Id must not be null!"),
+        id = record.get("_id") ?: error("Note Id must not be null!"),
         content = record.get<String>("content")?.fromBase64().orEmpty(),
         dateTime = record.get<String>("datetime")?.let { LocalDateTime.parse(it, dateTimeFormatter) } ?: LocalDateTime.MIN,
-        classesName = record.get<String>("cls_name").orEmpty()
+        classesName = record.get<String>("cls_name").orEmpty(),
+        targetRect = record.get("target"),
+        attachedPictureUrls = record.get<String>("p_attachments")
+            ?.split(",")
+            ?.map { it.fromBase64() }
+            ?: emptyList()
     )
 }

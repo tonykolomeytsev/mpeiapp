@@ -2,7 +2,6 @@ package kekmech.ru.mpeiapp
 
 import android.app.Application
 import android.content.Context
-import android.content.SharedPreferences
 import android.os.Build
 import kekmech.ru.bars.di.BarsModule
 import kekmech.ru.common_analytics.di.AnalyticsModule
@@ -17,7 +16,6 @@ import kekmech.ru.common_navigation.di.NavigationModule
 import kekmech.ru.common_navigation.di.RouterHolder
 import kekmech.ru.common_network.di.NetworkModule
 import kekmech.ru.common_network.retrofit.ServiceUrlResolver
-import kekmech.ru.common_shared_preferences.boolean
 import kekmech.ru.common_webview.di.WebViewModule
 import kekmech.ru.feature_app_settings.di.AppSettingsModule
 import kekmech.ru.feature_dashboard.di.DashboardModule
@@ -34,6 +32,7 @@ import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
+import ru.kekmech.common_images.di.CommonImagesModule
 import timber.log.Timber
 import timber.log.Timber.DebugTree
 
@@ -75,6 +74,7 @@ class MpeixApp : Application(),
             AppDatabaseModule,
             AnalyticsModule,
             CommonFeatureTogglesModule,
+            CommonImagesModule,
             // features
             OnboardingModule,
             DashboardModule,

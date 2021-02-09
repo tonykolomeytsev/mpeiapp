@@ -37,7 +37,7 @@ fun <T : Fragment> T.withArguments(vararg args: Pair<String, Any?>): T = apply {
     arguments?.putAll(bundleOf(*args)) ?: run { arguments = bundleOf(*args) }
 }
 
-inline fun <reified T : Any> Fragment.getArgument(key: String): T = arguments.getargument(key)
+inline fun <reified T : Any> Fragment.getArgument(key: String): T = arguments.getArgument(key)
 
 inline fun <reified T : Any> Fragment.findArgument(key: String): T? = arguments.findArgument(key)
 

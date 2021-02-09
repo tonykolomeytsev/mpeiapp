@@ -1,8 +1,6 @@
-apply from: "$rootDir/feature-android-module.gradle"
+apply from: "$gradleDir/feature-android-module.gradle"
 
 dependencies {
-    implementation kotlinStdLib
-
     implementation squareup.okhttp
     implementation squareup.okhttpLogger
 
@@ -10,7 +8,6 @@ dependencies {
     implementation koin.android
     implementation timber
     implementation rx.java
-    implementation rx.kotlin
     implementation rx.android
     implementation androidx.appcompat
     implementation androidx.coreKtx

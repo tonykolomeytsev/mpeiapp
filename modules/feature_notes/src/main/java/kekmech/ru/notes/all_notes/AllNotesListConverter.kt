@@ -1,10 +1,7 @@
 package kekmech.ru.notes.all_notes
 
 import kekmech.ru.common_android.moscowLocalDate
-import kekmech.ru.coreui.items.EmptyStateItem
-import kekmech.ru.coreui.items.SectionHeaderItem
-import kekmech.ru.coreui.items.ShimmerItem
-import kekmech.ru.coreui.items.SpaceItem
+import kekmech.ru.coreui.items.*
 import kekmech.ru.domain_notes.dto.Note
 import kekmech.ru.notes.R
 import kekmech.ru.notes.all_notes.mvi.AllNotesState
@@ -16,10 +13,15 @@ internal class AllNotesListConverter {
 
         return when {
             state.notes == null -> List(3) { ShimmerItem(0) }
-            state.notes.isEmpty() -> listOf(EmptyStateItem(
-                titleRes = R.string.all_notes_empty_state_title,
-                subtitleRes = R.string.all_notes_empty_state_subtitle
-            ))
+            state.notes.isEmpty() -> listOf(
+                EmptyStateItem(
+                    titleRes = R.string.all_notes_empty_state_title,
+                    subtitleRes = R.string.all_notes_empty_state_subtitle
+                ),
+                AddActionItem(
+                    title = "СОЗДАТЬ ЗАМЕТКУ"
+                )
+            )
             else -> mutableListOf<Any>().apply {
                 getForthcomingNotes(state.notes)?.let {
                     add(SectionHeaderItem(

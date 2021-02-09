@@ -2,9 +2,6 @@ package kekmech.ru.notes.all_notes
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import kekmech.ru.common_adapter.BaseAdapter
@@ -28,6 +25,7 @@ import kekmech.ru.notes.databinding.FragmentAllNotesBinding
 import kekmech.ru.notes.di.NotesDependencies
 import kekmech.ru.notes.edit.NoteEditFragment
 import org.koin.android.ext.android.inject
+import ru.kekmech.common_images.launcher.ImagePickerLauncher
 
 private const val NOTE_EDIT_REQUEST_CODE = 54692
 
@@ -90,7 +88,10 @@ internal class AllNotesFragment : BaseFragment<AllNotesEvent, AllNotesEffect, Al
         },
         SectionHeaderAdapterItem(),
         ShimmerAdapterItem(0, R.layout.item_note_shimmer),
-        EmptyStateAdapterItem()
+        EmptyStateAdapterItem(),
+        AddActionAdapterItem {
+            inject<ImagePickerLauncher>().value.launch(12345, this, alreadySelectedImages = selectedImages)
+        }
     )
 
     private fun navigateToNoteEdit(note: Note) = addScreenForward {
@@ -98,9 +99,13 @@ internal class AllNotesFragment : BaseFragment<AllNotesEvent, AllNotesEffect, Al
             .withResultFor(this, NOTE_EDIT_REQUEST_CODE)
     }
 
+    private var selectedImages = arrayListOf<String>()
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == NOTE_EDIT_REQUEST_CODE) {
             feature.accept(Wish.Init)
+        }
+        if (requestCode == 12345) {
+            selectedImages = data!!.getStringArrayListExtra(ImagePickerLauncher.EXTRA_SELECTED_IMAGES)!!
         }
     }
 

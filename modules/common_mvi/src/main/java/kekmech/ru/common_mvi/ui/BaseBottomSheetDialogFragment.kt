@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import io.reactivex.android.schedulers.AndroidSchedulers.mainThread
@@ -61,11 +62,22 @@ abstract class BaseBottomSheetDialogFragment<Event : Any, Effect : Any, State : 
         val dialog = super.onCreateDialog(savedInstanceState)
         dialog.setOnShowListener { dialogInterface ->
             dialogInterface as BottomSheetDialog
-            dialogInterface.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
-                ?.setBackgroundColor(Color.TRANSPARENT)
+            val view = dialogInterface.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+            if (view != null) {
+                view.setBackgroundColor(Color.TRANSPARENT)
+                BottomSheetBehavior.from(view)
+                    .addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+                        override fun onSlide(bottomSheet: View, slideOffset: Float) = onBottomSheetSlide(bottomSheet, slideOffset)
+                        override fun onStateChanged(bottomSheet: View, newState: Int) = onBottomSheetStateChanged(bottomSheet, newState)
+                    })
+            }
         }
         return dialog
     }
+
+    protected open fun onBottomSheetStateChanged(bottomSheet: View, newState: Int) = Unit
+
+    protected open fun onBottomSheetSlide(bottomSheet: View, slideOffset: Float) = Unit
 
     protected open fun onViewCreatedInternal(view: View, savedInstanceState: Bundle?) = Unit
 

@@ -241,4 +241,6 @@
     <string name="navigation_name_schedule">Schedule</string>
     <string name="navigation_name_map">Map</string>
     <string name="navigation_name_profile">Profile</string>
+
+    <string name="image_picker_attach_button">Attach</string>
 </resources>

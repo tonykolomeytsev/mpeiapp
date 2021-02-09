@@ -243,4 +243,6 @@
     <string name="navigation_name_schedule">Расписание</string>
     <string name="navigation_name_map">Карта</string>
     <string name="navigation_name_profile">Профиль</string>
+
+    <string name="image_picker_attach_button">Прикрепить</string>
 </resources>

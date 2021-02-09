@@ -1,14 +1,13 @@
-apply from: "$rootDir/domain-android-module.gradle"
+apply from: "$gradleDir/domain-android-module.gradle"
 
 dependencies {
     implementation androidx.appcompat
     implementation androidx.coreKtx
+    implementation androidx.lifecycleExtensions
     implementation google.material
 
     implementation rx.java
     implementation rx.android
-    implementation rx.kotlin
 
     implementation timber
-    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
 }
