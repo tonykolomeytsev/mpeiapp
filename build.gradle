@@ -5,26 +5,26 @@ buildscript {
 
     ext {
         versions = [
-                kotlin              : "1.4.20",
+                kotlin              : "1.4.30",
                 recyclerview        : "1.1.0",
-                constraintlayout    : "1.1.3",
+                constraintlayout    : "2.0.4",
                 coordinatorlayout   : "1.1.0",
                 viewPager2          : "1.0.0",
                 appcompat           : "1.1.0",
                 koin                : "2.0.1",
-                material            : "1.2.1",
+                material            : "1.3.0",
                 cardview            : "1.0.0",
                 swiperefreshlayout  : "1.1.0",
-                fragmentktx         : "1.2.4",
+                fragmentktx         : "1.2.5",
                 retrofit            : "2.9.0",
                 okhttp              : "4.9.0"
         ]
 
         kotlin = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
         kotlinStdLib = "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin}"
-        kotlinReflect = "org.jetbrains.kotlin:kotlin-reflect:${versions.kotlin}"
         timber = "com.jakewharton.timber:timber:4.7.1"
-        desugaring = "com.android.tools:desugar_jdk_libs:1.0.10"
+        desugaring = "com.android.tools:desugar_jdk_libs:1.1.1"
+        picasso = "com.squareup.picasso:picasso:2.8"
         androidx = [
                 constraintlayout    : "androidx.constraintlayout:constraintlayout:${versions.constraintlayout}",
                 coordinatorlayout   : "androidx.coordinatorlayout:coordinatorlayout:${versions.coordinatorlayout}",
@@ -36,6 +36,7 @@ buildscript {
                 fragmentKtx         : "androidx.fragment:fragment-ktx:1.2.5",
                 coreKtx             : "androidx.core:core-ktx:1.3.2",
                 lifecycleCommonJava8: "androidx.lifecycle:lifecycle-common-java8:2.2.0",
+                lifecycleExtensions : "androidx.lifecycle:lifecycle-extensions:2.2.0",
                 test: [
                         runner      : "androidx.test:runner:1.2.0",
                         espresso    : "androidx.test.espresso:espresso-core:3.2.0"
@@ -54,9 +55,9 @@ buildscript {
         ]
 
         firebase = [
-                analytics           : "com.google.firebase:firebase-analytics:17.6.0",
-                config              : "com.google.firebase:firebase-config:19.2.0",
-                crashlytics         : "com.google.firebase:firebase-crashlytics:17.2.2"
+                analytics           : "com.google.firebase:firebase-analytics:18.0.2",
+                config              : "com.google.firebase:firebase-config:20.0.3",
+                crashlytics         : "com.google.firebase:firebase-crashlytics:17.3.1"
         ]
 
         tests = [
@@ -73,8 +74,7 @@ buildscript {
                 retrofit_rxJava2    : "com.squareup.retrofit2:adapter-rxjava2:${versions.retrofit}",
                 retrofit_gson       : "com.squareup.retrofit2:converter-gson:${versions.retrofit}",
                 okhttp              : "com.squareup.okhttp3:okhttp:${versions.okhttp}",
-                okhttpLogger        : "com.squareup.okhttp3:logging-interceptor:${versions.okhttp}",
-                picasso             : "com.squareup.picasso:picasso:2.71828"
+                okhttpLogger        : "com.squareup.okhttp3:logging-interceptor:${versions.okhttp}"
         ]
         facebook = [
                 shimmer             : "com.facebook.shimmer:shimmer:0.5.0"
@@ -87,9 +87,9 @@ buildscript {
         tinkoff = [
                 pagerindicator      : "ru.tinkoff.scrollingpagerindicator:scrollingpagerindicator:1.2.1"
         ]
-        kotlin_version = "1.4.20"
         appVersionName = "1.4.0"
         appVersionCode = 34
+        gradleDir = "$rootDir/gradle"
     }
 
     repositories {
@@ -100,13 +100,10 @@ buildscript {
         }
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:4.1.1"
+        classpath "com.android.tools.build:gradle:4.1.2"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
-        classpath "com.google.gms:google-services:4.3.3"
-        classpath "com.google.firebase:firebase-crashlytics-gradle:2.4.1"  // Crashlytics plugin
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+        classpath "com.google.gms:google-services:4.3.5"
+        classpath "com.google.firebase:firebase-crashlytics-gradle:2.4.1"
     }
 }
 

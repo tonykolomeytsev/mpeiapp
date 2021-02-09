@@ -23,6 +23,16 @@ class AddScreenForward(private val fragmentProvider: () -> Fragment) : Command {
     }
 }
 
+class AddScreenAbove(private val fragmentProvider: () -> Fragment) : Command {
+
+    override fun apply(supportFragmentManager: FragmentManager) = supportFragmentManager.commit {
+        setDefaultAnimation()
+        setReorderingAllowed(true)
+        add(R.id.container, fragmentProvider())
+        addToBackStack(null)
+    }
+}
+
 class ReplaceScreen(private val fragmentProvider: () -> Fragment) : Command {
 
     override fun apply(supportFragmentManager: FragmentManager) {

@@ -1,0 +1,1 @@
+alter table notes add column target integer default null;

@@ -1,9 +1,6 @@
-apply from: "$rootDir/feature-android-module.gradle"
+apply from: "$gradleDir/feature-android-module.gradle"
 
 dependencies {
-    implementation kotlinStdLib
-
-    // Android Widget
     implementation google.material
     implementation androidx.appcompat
     implementation androidx.constraintlayout

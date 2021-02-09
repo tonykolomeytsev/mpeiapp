@@ -1,9 +1,8 @@
-apply from: "$rootDir/feature-android-module.gradle"
+apply from: "$gradleDir/feature-android-module.gradle"
 
 dependencies {
     implementation kotlinStdLib
 
-    implementation "androidx.legacy:legacy-support-v4:1.0.0"
     implementation androidx.coreKtx
     implementation google.material
     implementation androidx.appcompat
@@ -11,12 +10,10 @@ dependencies {
     implementation androidx.recyclerview
     implementation androidx.coordinatorlayout
 
-    // Koin for Kotlin Android
     implementation koin.core
     implementation koin.android
 
     implementation rx.java
-    implementation rx.kotlin
     implementation rx.android
 
     implementation squareup.retrofit

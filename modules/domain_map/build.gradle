@@ -1,4 +1,4 @@
-apply from: "$rootDir/domain-android-module.gradle"
+apply from: "$gradleDir/domain-android-module.gradle"
 
 dependencies {
     implementation squareup.retrofit
