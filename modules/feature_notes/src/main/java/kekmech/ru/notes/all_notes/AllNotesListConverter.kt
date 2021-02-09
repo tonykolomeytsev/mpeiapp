@@ -17,9 +17,6 @@ internal class AllNotesListConverter {
                 EmptyStateItem(
                     titleRes = R.string.all_notes_empty_state_title,
                     subtitleRes = R.string.all_notes_empty_state_subtitle
-                ),
-                AddActionItem(
-                    title = "СОЗДАТЬ ЗАМЕТКУ"
                 )
             )
             else -> mutableListOf<Any>().apply {
