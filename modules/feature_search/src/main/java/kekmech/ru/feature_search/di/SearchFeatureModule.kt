@@ -13,5 +13,5 @@ object SearchFeatureModule : ModuleProvider({
     factory { SearchFeatureLauncherImpl(get()) } bind SearchFeatureLauncher::class
     factory { SearchDependencies(get(), get(), get()) }
     factory { SearchFeatureFactory(get()) }
-    factory { SearchActor(get(), get()) }
+    factory { SearchActor(get(), get(), get()) }
 })

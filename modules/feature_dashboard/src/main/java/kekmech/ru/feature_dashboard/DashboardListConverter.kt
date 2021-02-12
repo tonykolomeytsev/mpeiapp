@@ -129,7 +129,7 @@ class DashboardListConverter(
 
     private fun createDayStatusItem(state: DashboardState): DayStatusItem? {
         val weekStatus = state.weekOfSemester?.let { weekOfSemester ->
-            if (weekOfSemester in 1..16) {
+            if (weekOfSemester in 0..17) {
                 context.getString(R.string.dashboard_day_status_semester, weekOfSemester)
             } else {
                 context.getString(R.string.dashboard_day_status_not_semester)

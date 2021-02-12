@@ -1,8 +1,13 @@
 package kekmech.ru.feature_search
 
+import androidx.annotation.StringRes
+import kekmech.ru.coreui.items.BottomLabeledTextItem
 import kekmech.ru.coreui.items.EmptyStateItem
 import kekmech.ru.coreui.items.SectionHeaderItem
 import kekmech.ru.coreui.items.SpaceItem
+import kekmech.ru.feature_search.item.FilterItemType
+import kekmech.ru.feature_search.item.FilterItemType.*
+import kekmech.ru.feature_search.item.compareFilter
 import kekmech.ru.feature_search.mvi.SearchState
 
 internal class SearchListConverter {
@@ -16,18 +21,22 @@ internal class SearchListConverter {
                 )
             )
             else -> mutableListOf<Any>().apply {
-                if (state.searchResultsNotes.isNotEmpty()) {
-                    add(SpaceItem.VERTICAL_12)
-                    add(SectionHeaderItem(titleRes = R.string.search_section_title_notes))
-                    add(SpaceItem.VERTICAL_12)
-                    addAll(state.searchResultsNotes)
-                }
-                if (state.searchResultsMap.isNotEmpty()) {
-                    add(SpaceItem.VERTICAL_12)
-                    add(SectionHeaderItem(titleRes = R.string.search_section_title_map))
-                    add(SpaceItem.VERTICAL_12)
-                    addAll(state.searchResultsMap)
-                }
+                if (state.selectedFilter.compareFilter(NOTES)) addResults(
+                    titleRes = R.string.search_section_title_notes,
+                    items = state.searchResultsNotes
+                )
+                if (state.selectedFilter.compareFilter(PERSONS)) addResults(
+                    titleRes = R.string.search_filter_persons,
+                    items = state.searchResultsPersons.map { BottomLabeledTextItem(mainText = it.name, label = it.description) }
+                )
+                if (state.selectedFilter.compareFilter(MAP)) addResults(
+                    titleRes = R.string.search_section_title_map,
+                    items = state.searchResultsMap
+                )
+                if (state.selectedFilter.compareFilter(GROUPS)) addResults(
+                    titleRes = R.string.search_filter_groups,
+                    items = state.searchResultsGroups.map { BottomLabeledTextItem(mainText = it.name, label = it.description) }
+                )
             }
                 .takeIf { it.isNotEmpty() }
                 ?: listOf(EmptyStateItem(
@@ -35,5 +44,13 @@ internal class SearchListConverter {
                     subtitleRes = R.string.search_not_found_state_subtitle
                 ))
         }
+    }
+
+    private fun MutableList<Any>.addResults(@StringRes titleRes: Int, items: List<Any>) {
+        if (items.isEmpty()) return
+        add(SpaceItem.VERTICAL_12)
+        add(SectionHeaderItem(titleRes = titleRes))
+        add(SpaceItem.VERTICAL_12)
+        addAll(items)
     }
 }

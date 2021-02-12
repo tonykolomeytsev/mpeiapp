@@ -14,10 +14,7 @@ import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.ui.BaseFragment
 import kekmech.ru.common_navigation.BottomTab
 import kekmech.ru.common_navigation.BottomTabsSwitcher
-import kekmech.ru.coreui.items.EmptyStateAdapterItem
-import kekmech.ru.coreui.items.NoteAdapterItem
-import kekmech.ru.coreui.items.SectionHeaderAdapterItem
-import kekmech.ru.coreui.items.SpaceAdapterItem
+import kekmech.ru.coreui.items.*
 import kekmech.ru.domain_map.dto.MapMarker
 import kekmech.ru.feature_search.databinding.FragmentSearchBinding
 import kekmech.ru.feature_search.di.SearchDependencies
@@ -96,6 +93,9 @@ internal class SearchFragment : BaseFragment<SearchEvent, SearchEffect, SearchSt
         MapMarkerAdapterItem {
             analytics.sendClick("SearchMarker")
             navigateToMapMarker(it)
+        },
+        BottomLabeledTextAdapterItem {
+            /* no-op */
         },
         EmptyStateAdapterItem()
     )
