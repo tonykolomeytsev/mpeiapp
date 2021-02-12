@@ -202,7 +202,7 @@ internal class ScheduleFragment : BaseFragment<ScheduleEvent, ScheduleEffect, Sc
     }
 
     private fun getFormattedWeek(weekNumber: Int): String {
-        if (weekNumber in 1..16) {
+        if (weekNumber in 0..17) {
             return requireContext().getString(R.string.schedule_semester_week, weekNumber)
         } else {
             return requireContext().getString(R.string.schedule_weekend_week)
