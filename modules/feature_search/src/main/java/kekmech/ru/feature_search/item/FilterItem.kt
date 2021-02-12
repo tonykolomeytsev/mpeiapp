@@ -17,6 +17,8 @@ internal data class FilterItem(
     companion object {
         fun resolveAllItems() = listOf(
             FilterItem(FilterItemType.ALL, true),
+            FilterItem(FilterItemType.GROUPS, false),
+            FilterItem(FilterItemType.PERSONS, false),
             FilterItem(FilterItemType.NOTES, false),
             FilterItem(FilterItemType.MAP, false)
         )
@@ -27,9 +29,14 @@ internal enum class FilterItemType(
     @StringRes val nameRes: Int
 ) {
     ALL(R.string.search_filter_all),
+    GROUPS(R.string.search_filter_groups),
+    PERSONS(R.string.search_filter_persons),
     NOTES(R.string.search_filter_notes),
     MAP(R.string.search_filter_map)
 }
+
+internal fun FilterItemType.compareFilter(filterItemType: FilterItemType) =
+    this == FilterItemType.ALL || this == filterItemType
 
 internal interface FilterViewHolder : ClickableItemViewHolder {
     fun setText(@StringRes textRes: Int)

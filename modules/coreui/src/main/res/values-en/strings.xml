@@ -147,7 +147,7 @@
     <string name="dashboard_events_tomorrow">Tomorrow`s classes</string>
     <string name="dashboard_banner_lunch_header">Apparently,\nit`s lunch break now</string>
     <string name="dashboard_banner_lunch_description">Search for food on the map</string>
-    <string name="dashboard_search_field_text">Search places, notes…</string>
+    <string name="dashboard_search_field_text">Search in MPEI…</string>
     <string name="dashboard_day_status_semester">The academic week #%d is in progress</string>
     <string name="dashboard_day_status_not_semester">Non-academic week</string>
     <string name="dashboard_item_time_prediction_prefix">The class will start in</string>
@@ -230,12 +230,14 @@
     <string name="search_section_title_map">Map</string>
     <string name="search_section_title_notes">Notes</string>
     <string name="search_empty_state_title">Enter text to start search</string>
-    <string name="search_empty_state_subtitle">You can search for notes and places on the map. It will be possible to search for teachers and schedules soon!</string>
+    <string name="search_empty_state_subtitle">You can search for groups, teachers, notes and places on the map</string>
     <string name="search_not_found_state_title">No results were found for your search</string>
     <string name="search_not_found_state_subtitle">You can search notes by content and discipline names, as well as locations on the map by name, address and category</string>
     <string name="search_filter_all">All categories</string>
     <string name="search_filter_notes">Notes</string>
     <string name="search_filter_map">Map</string>
+    <string name="search_filter_groups">Groups</string>
+    <string name="search_filter_persons">Teachers</string>
 
     <string name="navigation_name_dashboard">Dashboard</string>
     <string name="navigation_name_schedule">Schedule</string>

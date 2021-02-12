@@ -3,8 +3,8 @@ package kekmech.ru.feature_search.mvi
 import kekmech.ru.common_mvi.BaseReducer
 import kekmech.ru.common_mvi.Result
 import kekmech.ru.feature_search.item.FilterItemType
-import kekmech.ru.feature_search.item.FilterItemType.MAP
-import kekmech.ru.feature_search.item.FilterItemType.NOTES
+import kekmech.ru.feature_search.item.FilterItemType.*
+import kekmech.ru.feature_search.item.compareFilter
 import kekmech.ru.feature_search.mvi.SearchEvent.News
 import kekmech.ru.feature_search.mvi.SearchEvent.Wish
 import kekmech.ru.feature_search.simplify
@@ -23,12 +23,10 @@ internal class SearchReducer : BaseReducer<SearchState, SearchEvent, SearchEffec
         event: News,
         state: SearchState
     ): Result<SearchState, SearchEffect, SearchAction> = when (event) {
-        is News.SearchNotesSuccess -> Result(
-            state = state.copy(searchResultsNotes = event.results)
-        )
-        is News.SearchMapSuccess -> Result(
-            state = state.copy(searchResultsMap = event.results)
-        )
+        is News.SearchNotesSuccess -> Result(state.copy(searchResultsNotes = event.results))
+        is News.SearchMapSuccess -> Result(state.copy(searchResultsMap = event.results))
+        is News.SearchGroupsSuccess -> Result(state.copy(searchResultsGroups = event.results))
+        is News.SearchPersonsSuccess -> Result(state.copy(searchResultsPersons = event.results))
     }
 
     private fun reduceWish(
@@ -60,14 +58,12 @@ internal class SearchReducer : BaseReducer<SearchState, SearchEvent, SearchEffec
             val newSelectedFilter = event.filterItem.type
             val newState = state.copy(
                 filterItems = newFilterItems,
-                selectedFilter = newSelectedFilter,
-                searchResultsNotes = if (newSelectedFilter.compareFilter(NOTES)) state.searchResultsNotes else emptyList(),
-                searchResultsMap = if (newSelectedFilter.compareFilter(MAP)) state.searchResultsMap else emptyList()
+                selectedFilter = newSelectedFilter
             )
             Result(
                 state = newState,
                 effects = emptyList(),
-                actions = getLoadActions(newState.query, newState.selectedFilter)
+                actions = getLoadActions(newState.query.simplify(), newState.selectedFilter)
             )
         }
     }
@@ -75,10 +71,9 @@ internal class SearchReducer : BaseReducer<SearchState, SearchEvent, SearchEffec
     private fun getLoadActions(simplifiedQuery: String, selectedFilter: FilterItemType): List<SearchAction> {
         return listOfNotNull(
             SearchAction.SearchNotes(simplifiedQuery).takeIf { selectedFilter.compareFilter(NOTES) },
-            SearchAction.SearchMap(simplifiedQuery).takeIf { selectedFilter.compareFilter(MAP) }
+            SearchAction.SearchMap(simplifiedQuery).takeIf { selectedFilter.compareFilter(MAP) },
+            SearchAction.SearchGroups(simplifiedQuery).takeIf { selectedFilter.compareFilter(GROUPS) },
+            SearchAction.SearchPersons(simplifiedQuery).takeIf { selectedFilter.compareFilter(PERSONS) }
         ).takeIf { simplifiedQuery.isNotEmpty() } ?: emptyList()
     }
-
-    private fun FilterItemType.compareFilter(filterItemType: FilterItemType) =
-        this == FilterItemType.ALL || this == filterItemType
 }

@@ -149,7 +149,7 @@
     <string name="dashboard_events_tomorrow">Завтрашние пары</string>
     <string name="dashboard_banner_lunch_header">Судя по всему, сейчас обеденный перерыв</string>
     <string name="dashboard_banner_lunch_description">Найти столовые на карте</string>
-    <string name="dashboard_search_field_text">Искать места, заметки…</string>
+    <string name="dashboard_search_field_text">Искать в МЭИ…</string>
     <string name="dashboard_day_status_semester">Идет %d учебная неделя</string>
     <string name="dashboard_day_status_not_semester">Неучебная неделя</string>
     <string name="dashboard_item_time_prediction_prefix">Пара начнется через</string>
@@ -232,12 +232,14 @@
     <string name="search_section_title_map">Карта</string>
     <string name="search_section_title_notes">Заметки</string>
     <string name="search_empty_state_title">Введите текст чтобы начать поиск</string>
-    <string name="search_empty_state_subtitle">Вы можете искать заметки и места на карте. Уже скоро можно будет искать преподавателей и расписания!</string>
+    <string name="search_empty_state_subtitle">Вы можете искать группы, преподавателей, заметки и места на карте</string>
     <string name="search_not_found_state_title">По вашему запросу ничего не найдено</string>
     <string name="search_not_found_state_subtitle">Вы можете искать заметки по контенту и названиям дисциплин, а также места на карте по названию, адресу и категории</string>
     <string name="search_filter_all">Все категории</string>
     <string name="search_filter_notes">Заметки</string>
     <string name="search_filter_map">Карта</string>
+    <string name="search_filter_groups">Группы</string>
+    <string name="search_filter_persons">Преподаватели</string>
 
     <string name="navigation_name_dashboard">Лента</string>
     <string name="navigation_name_schedule">Расписание</string>
