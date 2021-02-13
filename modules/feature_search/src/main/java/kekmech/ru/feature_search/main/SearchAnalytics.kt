@@ -1,4 +1,4 @@
-package kekmech.ru.feature_search
+package kekmech.ru.feature_search.main
 
 import kekmech.ru.common_analytics.Analytics
 import kekmech.ru.common_analytics.AnalyticsImpl

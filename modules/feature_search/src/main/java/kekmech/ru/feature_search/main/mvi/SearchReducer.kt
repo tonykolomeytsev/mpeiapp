@@ -1,13 +1,13 @@
-package kekmech.ru.feature_search.mvi
+package kekmech.ru.feature_search.main.mvi
 
 import kekmech.ru.common_mvi.BaseReducer
 import kekmech.ru.common_mvi.Result
 import kekmech.ru.feature_search.item.FilterItemType
 import kekmech.ru.feature_search.item.FilterItemType.*
 import kekmech.ru.feature_search.item.compareFilter
-import kekmech.ru.feature_search.mvi.SearchEvent.News
-import kekmech.ru.feature_search.mvi.SearchEvent.Wish
-import kekmech.ru.feature_search.simplify
+import kekmech.ru.feature_search.main.mvi.SearchEvent.News
+import kekmech.ru.feature_search.main.mvi.SearchEvent.Wish
+import kekmech.ru.feature_search.main.simplify
 
 internal class SearchReducer : BaseReducer<SearchState, SearchEvent, SearchEffect, SearchAction> {
 

@@ -1,14 +1,14 @@
-package kekmech.ru.feature_search
+package kekmech.ru.feature_search.main
 
 import androidx.annotation.StringRes
 import kekmech.ru.coreui.items.BottomLabeledTextItem
 import kekmech.ru.coreui.items.EmptyStateItem
 import kekmech.ru.coreui.items.SectionHeaderItem
 import kekmech.ru.coreui.items.SpaceItem
-import kekmech.ru.feature_search.item.FilterItemType
+import kekmech.ru.feature_search.R
 import kekmech.ru.feature_search.item.FilterItemType.*
 import kekmech.ru.feature_search.item.compareFilter
-import kekmech.ru.feature_search.mvi.SearchState
+import kekmech.ru.feature_search.main.mvi.SearchState
 
 internal class SearchListConverter {
 
@@ -27,7 +27,7 @@ internal class SearchListConverter {
                 )
                 if (state.selectedFilter.compareFilter(PERSONS)) addResults(
                     titleRes = R.string.search_filter_persons,
-                    items = state.searchResultsPersons.map { BottomLabeledTextItem(mainText = it.name, label = it.description) }
+                    items = state.searchResultsPersons
                 )
                 if (state.selectedFilter.compareFilter(MAP)) addResults(
                     titleRes = R.string.search_section_title_map,
@@ -35,7 +35,7 @@ internal class SearchListConverter {
                 )
                 if (state.selectedFilter.compareFilter(GROUPS)) addResults(
                     titleRes = R.string.search_filter_groups,
-                    items = state.searchResultsGroups.map { BottomLabeledTextItem(mainText = it.name, label = it.description) }
+                    items = state.searchResultsGroups
                 )
             }
                 .takeIf { it.isNotEmpty() }

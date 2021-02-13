@@ -239,6 +239,14 @@
     <string name="search_filter_groups">Groups</string>
     <string name="search_filter_persons">Teachers</string>
 
+    <string name="search_schedule_details_classes_1">classes</string>
+    <string name="search_schedule_details_classes_2_4">classes</string>
+    <string name="search_schedule_details_classes_5_0">classes</string>
+    <string name="search_schedule_details_this_week_description_empty">No classes this week.</string>
+    <string name="search_schedule_details_this_week_description">%s this week.</string>
+    <string name="search_schedule_details_next_week_description_empty">No classes next week.</string>
+    <string name="search_schedule_details_next_week_description">%s next week.</string>
+
     <string name="navigation_name_dashboard">Dashboard</string>
     <string name="navigation_name_schedule">Schedule</string>
     <string name="navigation_name_map">Map</string>

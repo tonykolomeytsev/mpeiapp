@@ -1,4 +1,4 @@
-package kekmech.ru.feature_search
+package kekmech.ru.feature_search.main
 
 internal fun String.simplify() = this
     .toLowerCase()

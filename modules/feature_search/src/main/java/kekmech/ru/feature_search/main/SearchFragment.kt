@@ -1,4 +1,4 @@
-package kekmech.ru.feature_search
+package kekmech.ru.feature_search.main
 
 import android.os.Bundle
 import android.view.View
@@ -6,7 +6,9 @@ import android.widget.EditText
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseAdapter
+import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.common_android.*
 import kekmech.ru.common_android.viewbinding.unit
 import kekmech.ru.common_android.viewbinding.viewBinding
@@ -14,16 +16,20 @@ import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.ui.BaseFragment
 import kekmech.ru.common_navigation.BottomTab
 import kekmech.ru.common_navigation.BottomTabsSwitcher
+import kekmech.ru.common_navigation.showDialog
 import kekmech.ru.coreui.items.*
 import kekmech.ru.domain_map.dto.MapMarker
+import kekmech.ru.domain_schedule.dto.SearchResult
+import kekmech.ru.feature_search.R
 import kekmech.ru.feature_search.databinding.FragmentSearchBinding
 import kekmech.ru.feature_search.di.SearchDependencies
 import kekmech.ru.feature_search.item.FilterAdapterItem
 import kekmech.ru.feature_search.item.MapMarkerAdapterItem
-import kekmech.ru.feature_search.mvi.SearchEffect
-import kekmech.ru.feature_search.mvi.SearchEvent
-import kekmech.ru.feature_search.mvi.SearchFeature
-import kekmech.ru.feature_search.mvi.SearchState
+import kekmech.ru.feature_search.main.mvi.SearchEffect
+import kekmech.ru.feature_search.main.mvi.SearchEvent
+import kekmech.ru.feature_search.main.mvi.SearchFeature
+import kekmech.ru.feature_search.main.mvi.SearchState
+import kekmech.ru.feature_search.schedule_details.ScheduleDetailsFragment
 import org.koin.android.ext.android.inject
 import java.util.concurrent.TimeUnit
 
@@ -94,9 +100,20 @@ internal class SearchFragment : BaseFragment<SearchEvent, SearchEffect, SearchSt
             analytics.sendClick("SearchMarker")
             navigateToMapMarker(it)
         },
-        BottomLabeledTextAdapterItem {
-            /* no-op */
-        },
+        AdapterItem(
+            isType = { it is SearchResult },
+            layoutRes = R.layout.item_text_bottom_labeled,
+            viewHolderGenerator = ::LabeledTextViewHolderImpl,
+            itemBinder = object : BaseItemBinder<LabeledTextViewHolder, SearchResult>() {
+                override fun bind(vh: LabeledTextViewHolder, model: SearchResult, position: Int) {
+                    vh.setMainText(model.name)
+                    vh.setLabel(model.description)
+                    vh.setOnClickListener {
+                        openScheduleDetails(model)
+                    }
+                }
+            }
+        ),
         EmptyStateAdapterItem()
     )
 
@@ -111,6 +128,13 @@ internal class SearchFragment : BaseFragment<SearchEvent, SearchEffect, SearchSt
         bottomTabsSwitcher.changeTab(BottomTab.MAP)
         viewBinding.searchView.hideKeyboard()
         close()
+    }
+
+    private fun openScheduleDetails(searchResult: SearchResult) {
+        viewBinding.searchView.hideKeyboard()
+        showDialog {
+            ScheduleDetailsFragment.newInstance(searchResult)
+        }
     }
 
     companion object {

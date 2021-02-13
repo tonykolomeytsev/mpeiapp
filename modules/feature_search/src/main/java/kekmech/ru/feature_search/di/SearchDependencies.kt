@@ -2,7 +2,7 @@ package kekmech.ru.feature_search.di
 
 import kekmech.ru.domain_map.MapFeatureLauncher
 import kekmech.ru.domain_notes.NotesFeatureLauncher
-import kekmech.ru.feature_search.mvi.SearchFeatureFactory
+import kekmech.ru.feature_search.main.mvi.SearchFeatureFactory
 
 internal data class SearchDependencies(
     val searchFeatureFactory: SearchFeatureFactory,
