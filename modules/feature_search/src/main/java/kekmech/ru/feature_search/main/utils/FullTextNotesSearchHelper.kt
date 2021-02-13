@@ -1,7 +1,7 @@
-package kekmech.ru.feature_search.utils
+package kekmech.ru.feature_search.main.utils
 
 import kekmech.ru.domain_notes.dto.Note
-import kekmech.ru.feature_search.simplify
+import kekmech.ru.feature_search.main.simplify
 
 internal class FullTextNotesSearchHelper(
     private val notes: List<Note>,

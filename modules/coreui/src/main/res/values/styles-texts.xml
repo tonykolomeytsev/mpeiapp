@@ -29,11 +29,11 @@
         <item name="android:textColor">?attr/colorBlack</item>
     </style>
     
-    <style name="H4.C6">
+    <style name="H4.White">
         <item name="android:textColor">?attr/colorWhite</item>
     </style>
 
-    <style name="H4.C3">
+    <style name="H4.Main">
         <item name="android:textColor">?attr/colorMain</item>
     </style>
 
@@ -51,15 +51,15 @@
         <item name="android:textColor">?attr/colorBlack</item>
     </style>
 
-    <style name="H6.C6">
+    <style name="H6.White">
         <item name="android:textColor">?attr/colorWhite</item>
     </style>
 
-    <style name="H6.C8">
+    <style name="H6.Gray70">
         <item name="android:textColor">?attr/colorGray70</item>
     </style>
 
-    <style name="H6.C11">
+    <style name="H6.Red">
         <item name="android:textColor">?attr/colorRed</item>
     </style>
 
@@ -70,11 +70,11 @@
         <item name="android:textColor">?attr/colorBlack</item>
     </style>
 
-    <style name="H7.C8">
+    <style name="H7.Gray70">
         <item name="android:textColor">?attr/colorGray70</item>
     </style>
 
-    <style name="H7.C11">
+    <style name="H7.Red">
         <item name="android:textColor">?attr/colorRed</item>
     </style>
 
@@ -85,11 +85,11 @@
         <item name="android:textColor">?attr/colorBlack</item>
     </style>
 
-    <style name="H8.C8">
+    <style name="H8.Gray70">
         <item name="android:textColor">?attr/colorGray70</item>
     </style>
 
-    <style name="H8.C11">
+    <style name="H8.Red">
         <item name="android:textColor">?attr/colorRed</item>
     </style>
 

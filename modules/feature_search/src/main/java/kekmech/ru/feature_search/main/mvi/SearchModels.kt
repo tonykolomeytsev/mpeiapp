@@ -1,4 +1,4 @@
-package kekmech.ru.feature_search.mvi
+package kekmech.ru.feature_search.main.mvi
 
 import kekmech.ru.common_mvi.Feature
 import kekmech.ru.domain_schedule.dto.SearchResult

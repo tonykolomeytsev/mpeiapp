@@ -15,7 +15,7 @@
             tools:text="Вторник, 7 мая"/>
 
     <TextView
-            style="@style/H6.C8"
+            style="@style/H6.Gray70"
             android:id="@+id/textViewDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

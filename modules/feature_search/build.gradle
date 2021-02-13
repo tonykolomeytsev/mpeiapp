@@ -9,6 +9,7 @@ dependencies {
     implementation koin.android
     implementation rx.java
     implementation rx.android
+    implementation facebook.shimmer
 
     implementation project(path: ":domain_schedule")
     implementation project(path: ":domain_notes")

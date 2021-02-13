@@ -32,16 +32,16 @@
         <item name="android:fontFamily">@font/roboto_regular</item>
     </style>
 
-    <style name="TextInputEditText.Hint" parent="H8.C8">
+    <style name="TextInputEditText.Hint" parent="H8.Gray70">
         <item name="android:textColor">?attr/colorGray70</item>
         <item name="android:fontFamily">@font/roboto_medium</item>
     </style>
 
-    <style name="TextInputEditText.Error" parent="H8.C11">
+    <style name="TextInputEditText.Error" parent="H8.Red">
         <item name="android:textColor">?attr/colorRed</item>
     </style>
 
-    <style name="TextInputEditText.Counter" parent="H8.C8">
+    <style name="TextInputEditText.Counter" parent="H8.Gray70">
         <item name="android:textColor">?attr/colorGray70</item>
     </style>
 

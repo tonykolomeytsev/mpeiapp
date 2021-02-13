@@ -40,7 +40,7 @@ internal class SelectLanguageFragment : BottomSheetDialogFragment(R.layout.fragm
         add(SpaceItem.VERTICAL_16)
         add(TextItem(
             textResId = R.string.change_language_disclaimer,
-            styleResId = R.style.H6_C8
+            styleResId = R.style.H6_Gray70
         ))
     }
 

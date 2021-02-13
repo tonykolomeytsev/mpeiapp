@@ -1,4 +1,4 @@
-package kekmech.ru.feature_search.mvi
+package kekmech.ru.feature_search.main.mvi
 
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -6,11 +6,10 @@ import kekmech.ru.common_mvi.Actor
 import kekmech.ru.domain_map.MapRepository
 import kekmech.ru.domain_notes.NotesRepository
 import kekmech.ru.domain_schedule.ScheduleRepository
-import kekmech.ru.domain_schedule.dto.SearchResultType
 import kekmech.ru.domain_schedule.dto.SearchResultType.GROUP
 import kekmech.ru.domain_schedule.dto.SearchResultType.PERSON
-import kekmech.ru.feature_search.utils.FullTextMapMarkersSearchHelper
-import kekmech.ru.feature_search.utils.FullTextNotesSearchHelper
+import kekmech.ru.feature_search.main.utils.FullTextMapMarkersSearchHelper
+import kekmech.ru.feature_search.main.utils.FullTextNotesSearchHelper
 
 internal class SearchActor(
     private val notesRepository: NotesRepository,
