@@ -1,13 +1,13 @@
 package kekmech.ru.feature_schedule
 
 import io.kotest.core.spec.style.BehaviorSpec
+import kekmech.ru.common_schedule.items.DayItem
 import kekmech.ru.domain_app_settings.AppSettings
 import kekmech.ru.domain_schedule.dto.Day
 import kekmech.ru.domain_schedule.dto.Schedule
 import kekmech.ru.domain_schedule.dto.Week
-import kekmech.ru.feature_schedule.main.item.DayItem
 import kekmech.ru.feature_schedule.main.presentation.*
-import kekmech.ru.feature_schedule.main.utils.TimeUtils.createWeekItem
+import kekmech.ru.common_schedule.utils.TimeUtils.createWeekItem
 import org.junit.jupiter.api.Assertions.assertEquals
 import java.time.DayOfWeek
 import java.time.LocalDate

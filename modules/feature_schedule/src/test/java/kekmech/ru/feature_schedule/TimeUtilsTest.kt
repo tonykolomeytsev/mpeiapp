@@ -1,9 +1,9 @@
 package kekmech.ru.feature_schedule
 
 import io.kotest.core.spec.style.StringSpec
-import kekmech.ru.feature_schedule.main.item.DayItem
-import kekmech.ru.feature_schedule.main.item.WeekItem
-import kekmech.ru.feature_schedule.main.utils.TimeUtils
+import kekmech.ru.common_schedule.items.DayItem
+import kekmech.ru.common_schedule.items.WeekItem
+import kekmech.ru.common_schedule.utils.TimeUtils
 import org.junit.jupiter.api.Assertions.assertEquals
 import java.time.LocalDate
 import java.time.Month

@@ -9,6 +9,7 @@ import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.withArguments
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.ui.BaseBottomSheetDialogFragment
+import kekmech.ru.common_schedule.items.ClassesAdapterItem
 import kekmech.ru.coreui.items.*
 import kekmech.ru.domain_schedule.dto.SearchResult
 import kekmech.ru.feature_search.R

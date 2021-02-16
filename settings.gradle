@@ -17,6 +17,7 @@ include ':common_analytics'
 include ':common_persistent_cache'
 include ':common_feature_toggles'
 include ':common_images'
+include ':common_schedule'
 
 include ':domain_notes'
 include ':domain_onboarding'

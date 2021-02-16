@@ -16,6 +16,7 @@ dependencies {
     implementation project(path: ":domain_map")
     implementation project(path: ":domain_search")
 
+    implementation project(path: ":common_schedule")
     implementation project(path: ":common_adapter")
     implementation project(path: ":common_android")
     implementation project(path: ":common_mvi")

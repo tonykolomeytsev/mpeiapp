@@ -1,15 +1,16 @@
-package kekmech.ru.feature_schedule.main.item
+package kekmech.ru.common_schedule.items
 
 import android.content.Context
 import android.view.View
+import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.common_android.getStringArray
 import kekmech.ru.common_android.getThemeColor
-import kekmech.ru.feature_schedule.R
-import kekmech.ru.feature_schedule.databinding.ItemDayBinding
+import kekmech.ru.common_android.moscowLocalDate
+import kekmech.ru.common_schedule.R
 import java.time.LocalDate
 
 data class DayItem(
@@ -37,42 +38,46 @@ class DayViewHolderImpl(
     private val containerView: View
 ) : RecyclerView.ViewHolder(containerView), DayViewHolder {
 
-    private val viewBinding = ItemDayBinding.bind(containerView)
+    private val textDayOfWeek = containerView.findViewById<TextView>(R.id.textDayOfWeek)
+    private val textDayOfMonth = containerView.findViewById<TextView>(R.id.textDayOfMonth)
+    private val textMonthName = containerView.findViewById<TextView>(R.id.textMonthName)
+    private val viewMarker = containerView.findViewById<View>(R.id.viewMarker)
+    private val viewBackground = containerView.findViewById<View>(R.id.viewBackground)
     override var isSelected = false
 
     override fun setDayOfWeekName(name: String) {
-        viewBinding.textDayOfWeek.text = name
+        textDayOfWeek.text = name
     }
 
     override fun setDayOfMonthNumber(number: Int) {
-        viewBinding.textDayOfMonth.text = number.toString()
+        textDayOfMonth.text = number.toString()
     }
 
     override fun setMonthName(name: String) {
-        viewBinding.textMonthName.text = name
+        textMonthName.text = name
     }
 
     override fun setIsCurrentDay(isCurrentDay: Boolean) {
-        viewBinding.viewMarker.isVisible = isCurrentDay
+        viewMarker.isVisible = isCurrentDay
     }
 
     override fun setIsSelected(isSelected: Boolean) {
         this.isSelected = isSelected
-        viewBinding.viewBackground.isVisible = isSelected
+        viewBackground.isVisible = isSelected
         val context = containerView.context
         if (isSelected) {
-            viewBinding.textDayOfMonth.setTextColor(context.getThemeColor(R.attr.colorWhite))
-            viewBinding.textDayOfWeek.setTextColor(context.getThemeColor(R.attr.colorWhite))
-            viewBinding.textMonthName.setTextColor(context.getThemeColor(R.attr.colorWhite))
+            textDayOfMonth.setTextColor(context.getThemeColor(R.attr.colorWhite))
+            textDayOfWeek.setTextColor(context.getThemeColor(R.attr.colorWhite))
+            textMonthName.setTextColor(context.getThemeColor(R.attr.colorWhite))
         } else {
-            viewBinding.textDayOfMonth.setTextColor(context.getThemeColor(R.attr.colorGray90))
-            viewBinding.textDayOfWeek.setTextColor(context.getThemeColor(R.attr.colorGray90))
-            viewBinding.textMonthName.setTextColor(context.getThemeColor(R.attr.colorGray70))
+            textDayOfMonth.setTextColor(context.getThemeColor(R.attr.colorGray90))
+            textDayOfWeek.setTextColor(context.getThemeColor(R.attr.colorGray90))
+            textMonthName.setTextColor(context.getThemeColor(R.attr.colorGray70))
         }
     }
 
     override fun setOnClickListener(listener: (View) -> Unit) {
-        viewBinding.linearLayoutContainer.setOnClickListener(listener)
+        containerView.setOnClickListener(listener)
     }
 }
 
@@ -103,11 +108,12 @@ class DayItemBinder(
 
 class DayAdapterItem(
     context: Context,
-    onDayClickListener: (DayItem) -> Unit
+    onDayClickListener: (DayItem) -> Unit,
+    layoutRes: Int = R.layout.item_day
 ) : AdapterItem<DayViewHolder, DayItem>(
     isType = { it is DayItem },
-    layoutRes = R.layout.item_day,
-    itemBinder = DayItemBinder(context, LocalDate.now(), onDayClickListener),
+    layoutRes = layoutRes,
+    itemBinder = DayItemBinder(context, moscowLocalDate(), onDayClickListener),
     viewHolderGenerator = ::DayViewHolderImpl,
     areItemsTheSame = { a, b -> a.date == b.date },
     equals = { a, b -> a.date == b.date && a.isSelected == b.isSelected },
