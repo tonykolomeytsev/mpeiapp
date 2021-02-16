@@ -35,6 +35,7 @@ internal sealed class ScheduleDetailsEvent {
     sealed class News : ScheduleDetailsEvent() {
         data class ScheduleLoaded(val schedule: Schedule, val weekOffset: Int) : News()
         data class LoadScheduleError(val weekOffset: Int) : News()
+        data class FavoritesLoaded(val names: List<FavoriteSchedule>) : News()
     }
 }
 

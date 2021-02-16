@@ -27,6 +27,8 @@ import org.koin.android.ext.android.inject
 
 private const val ARG_RESULT_ITEM = "Arg.Item"
 internal const val ITEM_TEXT_SHIMMER_ID = 0
+internal const val ITEM_WEEK_SHIMMER_ID = 1
+internal const val ITEM_CLASSES_SHIMMER_ID = 2
 internal const val ITEM_BUTTON_SWITCH = 1
 internal const val ITEM_FAVORITES = 1
 
@@ -65,6 +67,8 @@ internal class ScheduleDetailsFragment : BaseBottomSheetDialogFragment<ScheduleD
         SpaceAdapterItem(),
         PullAdapterItem(),
         ShimmerAdapterItem(ITEM_TEXT_SHIMMER_ID, R.layout.item_text_shimmer),
+        ShimmerAdapterItem(ITEM_WEEK_SHIMMER_ID, R.layout.item_week_shimmer),
+        ShimmerAdapterItem(ITEM_CLASSES_SHIMMER_ID, R.layout.item_classes_shimmer),
         ButtonAdapterItem(ITEM_BUTTON_SWITCH, R.layout.item_button_primary) { /* no-op */ },
         TextWithIconAdapterItem {
             when (it.itemId) {

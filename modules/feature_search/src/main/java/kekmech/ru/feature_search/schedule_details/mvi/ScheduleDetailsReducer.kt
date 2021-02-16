@@ -15,7 +15,8 @@ internal class ScheduleDetailsReducer : BaseReducer<ScheduleDetailsState, Schedu
             state = state,
             actions = listOf(
                 ScheduleDetailsAction.LoadSchedule(state.searchResult.name, weekOffset = 0),
-                ScheduleDetailsAction.LoadSchedule(state.searchResult.name, weekOffset = 1)
+                ScheduleDetailsAction.LoadSchedule(state.searchResult.name, weekOffset = 1),
+                ScheduleDetailsAction.LoadFavorites
             ),
             effects = emptyList()
         )
@@ -37,6 +38,9 @@ internal class ScheduleDetailsReducer : BaseReducer<ScheduleDetailsState, Schedu
             }
             Result(newState)
         }
+        is ScheduleDetailsEvent.News.FavoritesLoaded -> Result(
+            state.copy(isInFavorites = event.names.any { it.groupNumber == state.searchResult.name })
+        )
     }
 
     private fun Schedule.mapToDays(): List<Day> {

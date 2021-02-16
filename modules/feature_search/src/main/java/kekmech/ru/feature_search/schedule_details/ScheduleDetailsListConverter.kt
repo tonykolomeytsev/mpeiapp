@@ -61,8 +61,9 @@ internal object ScheduleDetailsListConverter {
 
             getWeekItem(state)?.let {
                 add(it)
-                add(SpaceItem.VERTICAL_8)
-            } ?: Unit //shimmer
+            } ?: add(ShimmerItem(ITEM_WEEK_SHIMMER_ID))
+            
+            add(SpaceItem.VERTICAL_8)
 
             if (state.thisWeek != null && state.nextWeek != null) {
                 (state.thisWeek + state.nextWeek)
@@ -72,7 +73,7 @@ internal object ScheduleDetailsListConverter {
                     ?.let { addAll(it) }
                     ?: add(classesEmptyStateItem)
             } else {
-                // shimmer
+                add(ShimmerItem(ITEM_CLASSES_SHIMMER_ID))
             }
 
             add(SpaceItem.VERTICAL_8)
