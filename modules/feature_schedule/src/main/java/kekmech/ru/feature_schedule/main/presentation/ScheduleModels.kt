@@ -2,11 +2,11 @@ package kekmech.ru.feature_schedule.main.presentation
 
 import kekmech.ru.common_android.moscowLocalDate
 import kekmech.ru.common_mvi.Feature
+import kekmech.ru.common_schedule.items.DayItem
+import kekmech.ru.common_schedule.items.WeekItem
 import kekmech.ru.domain_app_settings.AppSettings
 import kekmech.ru.domain_schedule.dto.Classes
 import kekmech.ru.domain_schedule.dto.Schedule
-import kekmech.ru.feature_schedule.main.item.DayItem
-import kekmech.ru.feature_schedule.main.item.WeekItem
 import java.time.LocalDate
 import java.util.*
 

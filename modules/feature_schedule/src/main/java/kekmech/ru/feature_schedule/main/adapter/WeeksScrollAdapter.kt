@@ -3,10 +3,10 @@ package kekmech.ru.feature_schedule.main.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import kekmech.ru.feature_schedule.main.item.DayItem
-import kekmech.ru.feature_schedule.main.item.WeekAdapterItem
-import kekmech.ru.feature_schedule.main.item.WeekItem
-import kekmech.ru.feature_schedule.main.item.WeekViewHolderImpl
+import kekmech.ru.common_schedule.items.DayItem
+import kekmech.ru.common_schedule.items.WeekAdapterItem
+import kekmech.ru.common_schedule.items.WeekItem
+import kekmech.ru.common_schedule.items.WeekViewHolderImpl
 
 internal class WeeksScrollAdapter(
     private val weekAdapterItem: WeekAdapterItem

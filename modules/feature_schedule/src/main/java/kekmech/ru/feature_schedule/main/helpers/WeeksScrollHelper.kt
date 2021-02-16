@@ -39,5 +39,4 @@ internal class WeeksScrollHelper(
         position = realPosition
         onWeekSelectListener(realPosition)
     }
-
 }

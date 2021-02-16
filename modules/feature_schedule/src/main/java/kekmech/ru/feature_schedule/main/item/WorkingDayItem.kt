@@ -7,7 +7,7 @@ import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.common_android.openLinkExternal
-import kekmech.ru.coreui.items.ClassesAdapterItem
+import kekmech.ru.common_schedule.items.ClassesAdapterItem
 import kekmech.ru.coreui.items.EmptyStateAdapterItem
 import kekmech.ru.coreui.items.NotePreviewAdapterItem
 import kekmech.ru.coreui.items.SpaceAdapterItem

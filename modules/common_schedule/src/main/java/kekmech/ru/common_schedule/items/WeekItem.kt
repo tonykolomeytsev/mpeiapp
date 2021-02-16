@@ -1,4 +1,4 @@
-package kekmech.ru.feature_schedule.main.item
+package kekmech.ru.common_schedule.items
 
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
@@ -7,8 +7,8 @@ import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.common_android.viewbinding.unit
-import kekmech.ru.feature_schedule.R
-import kekmech.ru.feature_schedule.databinding.ItemWeekDaysBinding
+import kekmech.ru.common_schedule.R
+import kekmech.ru.common_schedule.databinding.ItemWeekDaysBinding
 import java.time.LocalDate
 
 data class WeekItem(

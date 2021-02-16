@@ -2,10 +2,10 @@ package kekmech.ru.feature_schedule.main.presentation
 
 import kekmech.ru.common_mvi.BaseReducer
 import kekmech.ru.common_mvi.Result
-import kekmech.ru.feature_schedule.main.item.DayItem
+import kekmech.ru.common_schedule.items.DayItem
 import kekmech.ru.feature_schedule.main.presentation.ScheduleEvent.News
 import kekmech.ru.feature_schedule.main.presentation.ScheduleEvent.Wish
-import kekmech.ru.feature_schedule.main.utils.TimeUtils.createWeekItem
+import kekmech.ru.common_schedule.utils.TimeUtils.createWeekItem
 import java.time.DayOfWeek
 import java.util.*
 

@@ -1,4 +1,4 @@
-package kekmech.ru.coreui.items
+package kekmech.ru.common_schedule.items
 
 import android.content.Context
 import android.content.res.ColorStateList
@@ -14,7 +14,9 @@ import kekmech.ru.common_android.getThemeColor
 import kekmech.ru.common_android.viewbinding.ReusableViewHolder
 import kekmech.ru.common_android.viewbinding.lazyBinding
 import kekmech.ru.common_kotlin.fastLazy
-import kekmech.ru.coreui.R
+import kekmech.ru.common_schedule.R
+import kekmech.ru.coreui.items.ClickableItemViewHolder
+import kekmech.ru.coreui.items.ClickableItemViewHolderImpl
 import kekmech.ru.domain_schedule.dto.Classes
 import kekmech.ru.domain_schedule.dto.ClassesType
 import kekmech.ru.domain_schedule.dto.ScheduleType
