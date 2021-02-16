@@ -244,10 +244,13 @@
     <string name="search_schedule_details_classes_1">пара</string>
     <string name="search_schedule_details_classes_2_4">пары</string>
     <string name="search_schedule_details_classes_5_0">пар</string>
-    <string name="search_schedule_details_this_week_description_empty">Нет пар на этой неделе.</string>
-    <string name="search_schedule_details_this_week_description">%s на этой неделе.</string>
-    <string name="search_schedule_details_next_week_description_empty">Нет пар на следующей неделе.</string>
-    <string name="search_schedule_details_next_week_description">%s на следующей неделе.</string>
+    <string name="search_schedule_details_this_week_description_empty">Нет пар на этой неделе</string>
+    <string name="search_schedule_details_this_week_description">%s на этой неделе</string>
+    <string name="search_schedule_details_next_week_description_empty">нет пар на следующей.</string>
+    <string name="search_schedule_details_next_week_description">%s на следующей.</string>
+    <string name="search_schedule_details_add_favorites">Добавить в избранное</string>
+    <string name="search_schedule_details_remove_favorites">Удалить из избранного</string>
+    <string name="search_schedule_details_switch_schedule">Перейти к расписанию</string>
 
     <string name="navigation_name_dashboard">Лента</string>
     <string name="navigation_name_schedule">Расписание</string>

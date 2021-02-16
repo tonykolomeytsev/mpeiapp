@@ -12,5 +12,8 @@ internal class ScheduleDetailsActor(
         is ScheduleDetailsAction.LoadSchedule -> scheduleRepository
             .loadSchedule(action.ownerName, action.weekOffset)
             .mapSuccessEvent { ScheduleDetailsEvent.News.ScheduleLoaded(it, action.weekOffset) }
+        is ScheduleDetailsAction.LoadFavorites -> Observable.empty()
+        is ScheduleDetailsAction.AddToFavorites -> Observable.empty()
+        is ScheduleDetailsAction.RemoveFromFavorites -> Observable.empty()
     }
 }
