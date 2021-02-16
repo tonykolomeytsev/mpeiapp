@@ -1,7 +1,9 @@
 package kekmech.ru.feature_search.schedule_details.mvi
 
+import kekmech.ru.common_android.moscowLocalDate
 import kekmech.ru.common_mvi.Feature
 import kekmech.ru.domain_schedule.dto.*
+import java.time.LocalDate
 
 internal typealias ScheduleDetailsFeature = Feature<ScheduleDetailsState, ScheduleDetailsEvent, ScheduleDetailsEffect>
 
@@ -9,19 +11,14 @@ internal data class ScheduleDetailsState(
     val searchResult: SearchResult,
     val thisWeek: List<Day>? = null,
     val nextWeek: List<Day>? = null,
-    val isInFavorites: Boolean? = null
+    val isInFavorites: Boolean? = null,
+    val selectedDayDate: LocalDate = moscowLocalDate()
 ) {
     val isLoadingSchedule: Boolean get() = thisWeek == null || nextWeek == null
-    private val scheduleType get() = when (searchResult.type) {
+    val scheduleType get() = when (searchResult.type) {
         SearchResultType.GROUP -> ScheduleType.GROUP
         SearchResultType.PERSON -> ScheduleType.PERSON
     }
-
-    fun getThisWeekClasses(): List<Classes>? =
-        thisWeek?.flatMap { day -> day.classes.onEach { it.scheduleType = scheduleType } }
-
-    fun getNextWeekClasses(): List<Classes>? =
-        nextWeek?.flatMap { day -> day.classes.onEach { it.scheduleType = scheduleType } }
 }
 
 internal sealed class ScheduleDetailsEvent {
@@ -31,6 +28,7 @@ internal sealed class ScheduleDetailsEvent {
 
         object Click {
             object Favorites : Wish()
+            data class Day(val date: LocalDate) : Wish()
         }
     }
 

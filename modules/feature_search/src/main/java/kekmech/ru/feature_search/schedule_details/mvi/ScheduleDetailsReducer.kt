@@ -19,9 +19,8 @@ internal class ScheduleDetailsReducer : BaseReducer<ScheduleDetailsState, Schedu
             ),
             effects = emptyList()
         )
-        is ScheduleDetailsEvent.Wish.Click.Favorites -> Result(
-            state
-        )
+        is ScheduleDetailsEvent.Wish.Click.Favorites -> Result(state)
+        is ScheduleDetailsEvent.Wish.Click.Day -> Result(state.copy(selectedDayDate = event.date))
         is ScheduleDetailsEvent.News.ScheduleLoaded -> {
             val newState = if (event.weekOffset == 0) {
                 state.copy(thisWeek = event.schedule.mapToDays())

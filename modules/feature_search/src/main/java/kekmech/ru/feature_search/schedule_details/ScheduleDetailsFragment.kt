@@ -1,20 +1,27 @@
 package kekmech.ru.feature_search.schedule_details
 
+import android.graphics.Point
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_android.getArgument
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.withArguments
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.ui.BaseBottomSheetDialogFragment
-import kekmech.ru.common_schedule.items.ClassesAdapterItem
+import kekmech.ru.common_schedule.items.ClassesItemBinder
+import kekmech.ru.common_schedule.items.ClassesViewHolderImpl
 import kekmech.ru.coreui.items.*
+import kekmech.ru.domain_schedule.dto.Classes
 import kekmech.ru.domain_schedule.dto.SearchResult
 import kekmech.ru.feature_search.R
 import kekmech.ru.feature_search.databinding.FragmentScheduleDetailsBinding
 import kekmech.ru.feature_search.item.ButtonAdapterItem
+import kekmech.ru.feature_search.item.WeekMinItem
+import kekmech.ru.feature_search.item.WeekMinItemBinder
+import kekmech.ru.feature_search.item.WeekMinViewHolderImpl
 import kekmech.ru.feature_search.schedule_details.mvi.*
 import org.koin.android.ext.android.inject
 
@@ -39,6 +46,14 @@ internal class ScheduleDetailsFragment : BaseBottomSheetDialogFragment<ScheduleD
             recyclerView.layoutManager = LinearLayoutManager(requireContext())
             recyclerView.adapter = adapter
         }
+        setFixedSizeWorkaround()
+    }
+
+    private fun setFixedSizeWorkaround() {
+        val display = requireActivity().windowManager.defaultDisplay
+        val point = Point()
+        display.getSize(point)
+        viewBinding.recyclerView.minimumHeight = point.y
     }
 
     override fun render(state: ScheduleDetailsState) {
@@ -57,7 +72,22 @@ internal class ScheduleDetailsFragment : BaseBottomSheetDialogFragment<ScheduleD
                 else -> Unit
             }
         },
-        ClassesAdapterItem(requireContext()) { /* no-op */ }
+        AdapterItem(
+            isType = { it is WeekMinItem },
+            layoutRes = R.layout.item_week_min,
+            viewHolderGenerator = ::WeekMinViewHolderImpl,
+            itemBinder = WeekMinItemBinder(requireContext()) {
+                feature.accept(ScheduleDetailsEvent.Wish.Click.Day(it.date))
+            },
+            areItemsTheSame = { _, _ -> true }
+        ),
+        AdapterItem(
+            isType = { it is Classes },
+            layoutRes = R.layout.item_classes_padding_horisontal_16dp,
+            viewHolderGenerator = ::ClassesViewHolderImpl,
+            itemBinder = ClassesItemBinder(requireContext()) { /* no-op */ }
+        ),
+        EmptyStateAdapterItem()
     )
 
     companion object {

@@ -9,13 +9,21 @@ import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
 import androidx.annotation.StringRes
 import kekmech.ru.common_android.getThemeColor
+import kekmech.ru.common_android.moscowLocalDate
+import kekmech.ru.common_schedule.items.DayItem
+import kekmech.ru.common_schedule.utils.TimeUtils
 import kekmech.ru.coreui.items.*
 import kekmech.ru.domain_schedule.dto.Classes
 import kekmech.ru.feature_search.R
 import kekmech.ru.feature_search.item.ButtonItem
+import kekmech.ru.feature_search.item.WeekMinItem
 import kekmech.ru.feature_search.schedule_details.mvi.ScheduleDetailsState
 
 internal object ScheduleDetailsListConverter {
+
+    private val classesEmptyStateItem = EmptyStateItem(
+
+    )
 
     private fun getFavoritesItem(isInFavorites: Boolean?): Any? {
         if (isInFavorites == null) return null
@@ -51,7 +59,23 @@ internal object ScheduleDetailsListConverter {
 
             add(SpaceItem.VERTICAL_8)
 
-            addAll(state.getThisWeekClasses() ?: emptyList())
+            getWeekItem(state)?.let {
+                add(it)
+                add(SpaceItem.VERTICAL_8)
+            } ?: Unit //shimmer
+
+            if (state.thisWeek != null && state.nextWeek != null) {
+                (state.thisWeek + state.nextWeek)
+                    .find { it.date == state.selectedDayDate }
+                    ?.classes
+                    ?.onEach { it.scheduleType = state.scheduleType }
+                    ?.let { addAll(it) }
+                    ?: add(classesEmptyStateItem)
+            } else {
+                // shimmer
+            }
+
+            add(SpaceItem.VERTICAL_8)
 
             add(ButtonItem(ITEM_BUTTON_SWITCH, R.string.search_schedule_details_switch_schedule))
         }
@@ -100,6 +124,15 @@ internal object ScheduleDetailsListConverter {
         } else {
             context.getString(emptyWeekDescription)
         }
+    }
+
+    private fun getWeekItem(state: ScheduleDetailsState): Any? {
+        state.thisWeek ?: return null
+        state.nextWeek ?: return null
+        val dayItems =
+            state.thisWeek.map { DayItem(it.date, 0, it.date == state.selectedDayDate) } +
+                    state.nextWeek.map { DayItem(it.date, 0, it.date == state.selectedDayDate) }
+        return WeekMinItem(dayItems)
     }
 
     private fun adoptNumber(

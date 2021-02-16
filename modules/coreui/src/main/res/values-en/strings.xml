@@ -29,6 +29,7 @@
         <item>THU</item>
         <item>FRI</item>
         <item>SAT</item>
+        <item>SUN</item>
     </string-array>
 
     <string-array name="months">
