@@ -2,6 +2,7 @@ package kekmech.ru.feature_search.schedule_details.mvi
 
 import kekmech.ru.common_mvi.BaseReducer
 import kekmech.ru.common_mvi.Result
+import kekmech.ru.domain_schedule.dto.Day
 import kekmech.ru.domain_schedule.dto.Schedule
 
 internal class ScheduleDetailsReducer : BaseReducer<ScheduleDetailsState, ScheduleDetailsEvent, ScheduleDetailsEffect, ScheduleDetailsAction> {
@@ -18,25 +19,34 @@ internal class ScheduleDetailsReducer : BaseReducer<ScheduleDetailsState, Schedu
             ),
             effects = emptyList()
         )
+        is ScheduleDetailsEvent.Wish.Click.Favorites -> Result(
+            state
+        )
         is ScheduleDetailsEvent.News.ScheduleLoaded -> {
             val newState = if (event.weekOffset == 0) {
-                state.copy(thisWeekSchedule = event.schedule.mapToClasses())
+                state.copy(thisWeek = event.schedule.mapToDays())
             } else {
-                state.copy(nextWeekSchedule = event.schedule.mapToClasses())
+                state.copy(nextWeek = event.schedule.mapToDays())
             }
             Result(newState)
         }
         is ScheduleDetailsEvent.News.LoadScheduleError -> {
             val newState = if (event.weekOffset == 0) {
-                state.copy(thisWeekSchedule = emptyList())
+                state.copy(thisWeek = emptyList())
             } else {
-                state.copy(nextWeekSchedule = emptyList())
+                state.copy(nextWeek = emptyList())
             }
             Result(newState)
         }
     }
 
-    private fun Schedule.mapToClasses() = weeks
-        .flatMap { it.days }
-        .flatMap { it.classes }
+    private fun Schedule.mapToDays(): List<Day> {
+        val week = weeks.firstOrNull() ?: return emptyList()
+        val days = weeks.flatMap { it.days }
+        return (1 .. 7)
+            .map { dayOfWeek ->
+                days.find { it.dayOfWeek == dayOfWeek }
+                    ?: Day(dayOfWeek, week.firstDayOfWeek.plusDays(dayOfWeek - 1L))
+            }
+    }
 }

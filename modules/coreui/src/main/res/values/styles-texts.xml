@@ -55,6 +55,10 @@
         <item name="android:textColor">?attr/colorWhite</item>
     </style>
 
+    <style name="H6.Main">
+        <item name="android:textColor">?attr/colorMain</item>
+    </style>
+
     <style name="H6.Gray70">
         <item name="android:textColor">?attr/colorGray70</item>
     </style>
