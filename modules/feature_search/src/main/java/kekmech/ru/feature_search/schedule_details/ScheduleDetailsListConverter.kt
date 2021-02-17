@@ -22,7 +22,8 @@ import kekmech.ru.feature_search.schedule_details.mvi.ScheduleDetailsState
 internal object ScheduleDetailsListConverter {
 
     private val classesEmptyStateItem = EmptyStateItem(
-
+        titleRes = R.string.search_schedule_details_empty_title,
+        subtitleRes = R.string.search_schedule_details_empty_subtitle
     )
 
     private fun getFavoritesItem(isInFavorites: Boolean?): Any? {
@@ -62,16 +63,19 @@ internal object ScheduleDetailsListConverter {
             getWeekItem(state)?.let {
                 add(it)
             } ?: add(ShimmerItem(ITEM_WEEK_SHIMMER_ID))
-            
+
             add(SpaceItem.VERTICAL_8)
 
             if (state.thisWeek != null && state.nextWeek != null) {
-                (state.thisWeek + state.nextWeek)
+                val classes = (state.thisWeek + state.nextWeek)
                     .find { it.date == state.selectedDayDate }
                     ?.classes
                     ?.onEach { it.scheduleType = state.scheduleType }
-                    ?.let { addAll(it) }
-                    ?: add(classesEmptyStateItem)
+                if (classes.isNullOrEmpty()) {
+                    add(classesEmptyStateItem)
+                } else {
+                    addAll(classes)
+                }
             } else {
                 add(ShimmerItem(ITEM_CLASSES_SHIMMER_ID))
             }
@@ -91,7 +95,7 @@ internal object ScheduleDetailsListConverter {
             context = context
         )
         val nextWeekDescription: CharSequence = getScheduleDescription(
-            classesCount = state.thisWeek?.sumBy { it.classes.size } ?: 0,
+            classesCount = state.nextWeek?.sumBy { it.classes.size } ?: 0,
             weekDescription = R.string.search_schedule_details_next_week_description,
             emptyWeekDescription = R.string.search_schedule_details_next_week_description_empty,
             context = context
