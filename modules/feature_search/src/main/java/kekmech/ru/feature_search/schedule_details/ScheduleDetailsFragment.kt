@@ -6,11 +6,16 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseAdapter
+import kekmech.ru.common_android.close
 import kekmech.ru.common_android.getArgument
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.withArguments
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.ui.BaseBottomSheetDialogFragment
+import kekmech.ru.common_navigation.BottomTab
+import kekmech.ru.common_navigation.BottomTabsSwitcher
+import kekmech.ru.common_navigation.ClearBackStack
+import kekmech.ru.common_navigation.Router
 import kekmech.ru.common_schedule.items.ClassesItemBinder
 import kekmech.ru.common_schedule.items.ClassesViewHolderImpl
 import kekmech.ru.coreui.items.*
@@ -37,6 +42,8 @@ internal class ScheduleDetailsFragment : BaseBottomSheetDialogFragment<ScheduleD
 
     private val viewBinding by viewBinding(FragmentScheduleDetailsBinding::bind)
     private val adapter by fastLazy { createAdapter() }
+    private val router by inject<Router>()
+    private val bottomTabsSwitcher by inject<BottomTabsSwitcher>()
 
     override val initEvent: ScheduleDetailsEvent get() = Wish.Init
     override var layoutId: Int = R.layout.fragment_schedule_details
@@ -63,6 +70,14 @@ internal class ScheduleDetailsFragment : BaseBottomSheetDialogFragment<ScheduleD
         adapter.update(ScheduleDetailsListConverter.map(state, requireContext()))
     }
 
+    override fun handleEffect(effect: ScheduleDetailsEffect) = when (effect) {
+        is ScheduleDetailsEffect.CloseAndGoToSchedule -> {
+            close()
+            router.executeCommand(ClearBackStack())
+            bottomTabsSwitcher.changeTab(BottomTab.DASHBOARD)
+        }
+    }
+
     private fun createAdapter() = BaseAdapter(
         TextAdapterItem(),
         SpaceAdapterItem(),
@@ -70,7 +85,9 @@ internal class ScheduleDetailsFragment : BaseBottomSheetDialogFragment<ScheduleD
         ShimmerAdapterItem(ITEM_TEXT_SHIMMER_ID, R.layout.item_text_shimmer),
         ShimmerAdapterItem(ITEM_WEEK_SHIMMER_ID, R.layout.item_week_shimmer),
         ShimmerAdapterItem(ITEM_CLASSES_SHIMMER_ID, R.layout.item_classes_shimmer),
-        ButtonAdapterItem(ITEM_BUTTON_SWITCH, R.layout.item_button_primary) { /* no-op */ },
+        ButtonAdapterItem(ITEM_BUTTON_SWITCH, R.layout.item_button) {
+            feature.accept(Wish.Click.SwitchSchedule)
+        },
         TextWithIconAdapterItem {
             when (it.itemId) {
                 ITEM_FAVORITES -> feature.accept(Wish.Click.Favorites)

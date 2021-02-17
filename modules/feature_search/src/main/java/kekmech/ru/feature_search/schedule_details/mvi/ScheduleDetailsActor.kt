@@ -20,5 +20,8 @@ internal class ScheduleDetailsActor(
         is ScheduleDetailsAction.RemoveFromFavorites -> scheduleRepository
             .removeFavorite(action.schedule)
             .mapSuccessEvent(ScheduleDetailsEvent.News.FavoriteRemoved)
+        is ScheduleDetailsAction.SwitchSchedule -> scheduleRepository
+            .selectSchedule(action.scheduleName)
+            .toObservable()
     }
 }

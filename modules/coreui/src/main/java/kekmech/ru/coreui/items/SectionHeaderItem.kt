@@ -54,7 +54,12 @@ class SectionHeaderViewHolderImpl(
     }
 
     override fun setActionName(actionNameRes: Int) {
-        textViewAction.setText(actionNameRes)
+        if (actionNameRes != 0) {
+            textViewAction.isVisible = true
+            textViewAction.setText(actionNameRes)
+        } else {
+            textViewAction.isVisible = false
+        }
     }
 
     override fun setOnActionClickListener(listener: (View) -> Unit) {
@@ -71,7 +76,7 @@ class SectionHeaderItemBinder(
         model.subtitle?.let(vh::setSubtitle)
         model.title?.let(vh::setTitle)
         model.titleRes?.let(vh::setTitle)
-        model.actionNameRes?.let(vh::setActionName)
+        vh.setActionName(model.actionNameRes ?: 0)
         vh.setOnActionClickListener { onActionClickListener?.invoke(model) }
     }
 }
