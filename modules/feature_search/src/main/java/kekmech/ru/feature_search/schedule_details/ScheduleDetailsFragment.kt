@@ -23,6 +23,7 @@ import kekmech.ru.feature_search.item.WeekMinItem
 import kekmech.ru.feature_search.item.WeekMinItemBinder
 import kekmech.ru.feature_search.item.WeekMinViewHolderImpl
 import kekmech.ru.feature_search.schedule_details.mvi.*
+import kekmech.ru.feature_search.schedule_details.mvi.ScheduleDetailsEvent.Wish
 import org.koin.android.ext.android.inject
 
 private const val ARG_RESULT_ITEM = "Arg.Item"
@@ -37,7 +38,7 @@ internal class ScheduleDetailsFragment : BaseBottomSheetDialogFragment<ScheduleD
     private val viewBinding by viewBinding(FragmentScheduleDetailsBinding::bind)
     private val adapter by fastLazy { createAdapter() }
 
-    override val initEvent: ScheduleDetailsEvent get() = ScheduleDetailsEvent.Wish.Init
+    override val initEvent: ScheduleDetailsEvent get() = Wish.Init
     override var layoutId: Int = R.layout.fragment_schedule_details
 
     override fun createFeature() = inject<ScheduleDetailsFeatureFactory>().value
@@ -72,7 +73,7 @@ internal class ScheduleDetailsFragment : BaseBottomSheetDialogFragment<ScheduleD
         ButtonAdapterItem(ITEM_BUTTON_SWITCH, R.layout.item_button_primary) { /* no-op */ },
         TextWithIconAdapterItem {
             when (it.itemId) {
-                ITEM_FAVORITES -> feature.accept(ScheduleDetailsEvent.Wish.Click.Favorites)
+                ITEM_FAVORITES -> feature.accept(Wish.Click.Favorites)
                 else -> Unit
             }
         },
@@ -81,7 +82,7 @@ internal class ScheduleDetailsFragment : BaseBottomSheetDialogFragment<ScheduleD
             layoutRes = R.layout.item_week_min,
             viewHolderGenerator = ::WeekMinViewHolderImpl,
             itemBinder = WeekMinItemBinder(requireContext()) {
-                feature.accept(ScheduleDetailsEvent.Wish.Click.Day(it.date))
+                feature.accept(Wish.Click.Day(it.date))
             },
             areItemsTheSame = { _, _ -> true }
         ),

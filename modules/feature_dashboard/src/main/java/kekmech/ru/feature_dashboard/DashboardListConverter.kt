@@ -22,13 +22,16 @@ class DashboardListConverter(
 ) {
 
     private val notesHeader by fastLazy { SectionHeaderItem(
+        itemId = SECTION_NOTES_ACTION,
         titleRes = R.string.dashboard_section_header_notes,
         actionNameRes = R.string.dashboard_section_header_notes_action
     ) }
 
     private val favoritesHeader by fastLazy { SectionHeaderItem(
+        itemId = SECTION_FAVORITES_ACTION,
         titleRes = R.string.dashboard_section_header_favorites,
-        subtitle = context.getString(R.string.dashboard_section_header_favorites_subtitle)
+        subtitle = context.getString(R.string.dashboard_section_header_favorites_subtitle),
+        actionNameRes = R.string.dashboard_section_header_favorites_action
     ) }
 
     private val sessionHeader by fastLazy { SectionHeaderItem(

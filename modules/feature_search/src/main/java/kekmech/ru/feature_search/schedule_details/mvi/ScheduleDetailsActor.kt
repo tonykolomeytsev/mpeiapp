@@ -14,7 +14,11 @@ internal class ScheduleDetailsActor(
             .mapSuccessEvent { ScheduleDetailsEvent.News.ScheduleLoaded(it, action.weekOffset) }
         is ScheduleDetailsAction.LoadFavorites -> scheduleRepository.getFavorites()
             .mapSuccessEvent(ScheduleDetailsEvent.News::FavoritesLoaded)
-        is ScheduleDetailsAction.AddToFavorites -> Observable.empty()
-        is ScheduleDetailsAction.RemoveFromFavorites -> Observable.empty()
+        is ScheduleDetailsAction.AddToFavorites -> scheduleRepository
+            .addFavorite(action.schedule)
+            .mapSuccessEvent(ScheduleDetailsEvent.News.FavoriteAdded(action.schedule))
+        is ScheduleDetailsAction.RemoveFromFavorites -> scheduleRepository
+            .removeFavorite(action.schedule)
+            .mapSuccessEvent(ScheduleDetailsEvent.News.FavoriteRemoved)
     }
 }

@@ -137,6 +137,7 @@
     <string name="dashboard_events_empty_state_subtitle">No events scheduled for the next 24 hours</string>
     <string name="dashboard_section_header_favorites">Favorite schedules</string>
     <string name="dashboard_section_header_favorites_subtitle">Click to switch group number</string>
+    <string name="dashboard_section_header_favorites_action">SETTINGS</string>
     <string name="dashboard_section_header_session">Session schedule</string>
     <string name="dashboard_section_header_session_subtitle">This is the way</string>
     <string name="dashboard_session_item_exam">EXAM</string>
@@ -251,7 +252,6 @@
     <string name="search_schedule_details_remove_favorites">Remove from favorites</string>
     <string name="search_schedule_details_switch_schedule">Go to Schedule </string>
     <string name="search_schedule_details_empty_title">There are no classes on this day</string>
-    <string name="search_schedule_details_empty_subtitle">Or the schedule has not been published</string>
 
     <string name="navigation_name_dashboard">Dashboard</string>
     <string name="navigation_name_schedule">Schedule</string>

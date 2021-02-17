@@ -41,6 +41,14 @@ class ScheduleRepository(
         favoriteSource.addAll(favorites)
     }
 
+    fun addFavorite(favoriteSchedule: FavoriteSchedule): Completable = Completable.fromRunnable {
+        favoriteSource.add(favoriteSchedule)
+    }
+
+    fun removeFavorite(favoriteSchedule: FavoriteSchedule): Completable = Completable.fromRunnable {
+        favoriteSource.remove(favoriteSchedule)
+    }
+
     fun getSession(scheduleType: String = selectedScheduleName) = scheduleService
         .getSession(getScheduleType(scheduleType).pathName, scheduleType)
 
