@@ -146,7 +146,7 @@
     <string name="dashboard_session_item_consultation">КОНСУЛЬТАЦИЯ</string>
     <string name="dashboard_section_header_notes">Заметки</string>
     <string name="dashboard_section_header_notes_action">ПОКАЗАТЬ ВСЕ</string>
-    <string name="dashboard_actual_notes_empty_state_title">Нет ни одной актуальной заметки для вас</string>
+    <string name="dashboard_actual_notes_empty_state_title">Нет ни одной актуальной заметки</string>
     <string name="dashboard_events_today">Сегодняшние пары</string>
     <string name="dashboard_events_tomorrow">Завтрашние пары</string>
     <string name="dashboard_banner_lunch_header">Судя по всему, сейчас обеденный перерыв</string>

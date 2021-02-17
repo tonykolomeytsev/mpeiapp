@@ -66,7 +66,10 @@ class BottomBarController(
         val currentFragment = currentTabFragment
         val newFragment = childFragmentManager.findFragmentByTag(tab.name)
 
-        if (currentFragment != null && newFragment != null && currentFragment == newFragment) return
+        if (currentFragment != null && newFragment != null && currentFragment == newFragment) {
+            if (currentFragment is NeedToUpdate) currentFragment.onUpdate()
+            return
+        }
 
         childFragmentManager.beginTransaction().apply {
             if (newFragment == null) {

@@ -30,6 +30,7 @@ internal sealed class ScheduleDetailsEvent {
         object Click {
             object Favorites : Wish()
             data class Day(val date: LocalDate) : Wish()
+            object SwitchSchedule : Wish()
         }
     }
 
@@ -42,11 +43,14 @@ internal sealed class ScheduleDetailsEvent {
     }
 }
 
-internal sealed class ScheduleDetailsEffect
+internal sealed class ScheduleDetailsEffect {
+    object CloseAndGoToSchedule : ScheduleDetailsEffect()
+}
 
 internal sealed class ScheduleDetailsAction {
     data class LoadSchedule(val ownerName: String, val weekOffset: Int) : ScheduleDetailsAction()
     object LoadFavorites : ScheduleDetailsAction()
     data class AddToFavorites(val schedule: FavoriteSchedule) : ScheduleDetailsAction()
     data class RemoveFromFavorites(val schedule: FavoriteSchedule) : ScheduleDetailsAction()
+    data class SwitchSchedule(val scheduleName: String) : ScheduleDetailsAction()
 }

@@ -5,6 +5,7 @@ import kekmech.ru.common_mvi.Result
 import kekmech.ru.domain_schedule.dto.Day
 import kekmech.ru.domain_schedule.dto.FavoriteSchedule
 import kekmech.ru.domain_schedule.dto.Schedule
+import kekmech.ru.feature_search.schedule_details.mvi.ScheduleDetailsEvent.Wish
 
 internal class ScheduleDetailsReducer : BaseReducer<ScheduleDetailsState, ScheduleDetailsEvent, ScheduleDetailsEffect, ScheduleDetailsAction> {
 
@@ -12,7 +13,7 @@ internal class ScheduleDetailsReducer : BaseReducer<ScheduleDetailsState, Schedu
         event: ScheduleDetailsEvent,
         state: ScheduleDetailsState
     ): Result<ScheduleDetailsState, ScheduleDetailsEffect, ScheduleDetailsAction> = when (event) {
-        is ScheduleDetailsEvent.Wish -> reduceWish(event, state)
+        is Wish -> reduceWish(event, state)
         is ScheduleDetailsEvent.News -> reduceNews(event, state)
     }
 
@@ -54,10 +55,10 @@ internal class ScheduleDetailsReducer : BaseReducer<ScheduleDetailsState, Schedu
     }
 
     private fun reduceWish(
-        event: ScheduleDetailsEvent.Wish,
+        event: Wish,
         state: ScheduleDetailsState
     ): Result<ScheduleDetailsState, ScheduleDetailsEffect, ScheduleDetailsAction> = when(event) {
-        is ScheduleDetailsEvent.Wish.Init -> Result(
+        is Wish.Init -> Result(
             state = state,
             actions = listOf(
                 ScheduleDetailsAction.LoadSchedule(state.searchResult.name, weekOffset = 0),
@@ -66,8 +67,8 @@ internal class ScheduleDetailsReducer : BaseReducer<ScheduleDetailsState, Schedu
             ),
             effects = emptyList()
         )
-        is ScheduleDetailsEvent.Wish.Click.Day -> Result(state.copy(selectedDayDate = event.date))
-        is ScheduleDetailsEvent.Wish.Click.Favorites -> {
+        is Wish.Click.Day -> Result(state.copy(selectedDayDate = event.date))
+        is Wish.Click.Favorites -> {
             if (state.favoriteSchedule == null) {
                 val newFavorite = FavoriteSchedule(
                     groupNumber = state.searchResult.name,
@@ -79,6 +80,11 @@ internal class ScheduleDetailsReducer : BaseReducer<ScheduleDetailsState, Schedu
                 Result(state.copy(isInFavorites = null), action = ScheduleDetailsAction.RemoveFromFavorites(state.favoriteSchedule))
             }
         }
+        is Wish.Click.SwitchSchedule -> Result(
+            state = state,
+            action = ScheduleDetailsAction.SwitchSchedule(state.searchResult.name),
+            effect = ScheduleDetailsEffect.CloseAndGoToSchedule
+        )
     }
 
     private fun Schedule.mapToDays(): List<Day> {
