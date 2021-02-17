@@ -247,6 +247,11 @@
     <string name="search_schedule_details_this_week_description">%s this week.</string>
     <string name="search_schedule_details_next_week_description_empty">No classes next week.</string>
     <string name="search_schedule_details_next_week_description">%s next week.</string>
+    <string name="search_schedule_details_add_favorites">Add to favorites</string>
+    <string name="search_schedule_details_remove_favorites">Remove from favorites</string>
+    <string name="search_schedule_details_switch_schedule">Go to Schedule </string>
+    <string name="search_schedule_details_empty_title">There are no classes on this day</string>
+    <string name="search_schedule_details_empty_subtitle">Or the schedule has not been published</string>
 
     <string name="navigation_name_dashboard">Dashboard</string>
     <string name="navigation_name_schedule">Schedule</string>
