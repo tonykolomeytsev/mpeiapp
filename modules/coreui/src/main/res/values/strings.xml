@@ -139,6 +139,7 @@
     <string name="dashboard_events_empty_state_subtitle">В ближайшие сутки не запланировано никаких событий</string>
     <string name="dashboard_section_header_favorites">Избранные расписания</string>
     <string name="dashboard_section_header_favorites_subtitle">Нажмите для переключения</string>
+    <string name="dashboard_section_header_favorites_action">НАСТРОИТЬ</string>
     <string name="dashboard_section_header_session">Расписание сессии</string>
     <string name="dashboard_section_header_session_subtitle">Таков путь</string>
     <string name="dashboard_session_item_exam">ЭКЗАМЕН</string>
@@ -253,7 +254,6 @@
     <string name="search_schedule_details_remove_favorites">Удалить из избранного</string>
     <string name="search_schedule_details_switch_schedule">Перейти к расписанию</string>
     <string name="search_schedule_details_empty_title">В этот день нет занятий</string>
-    <string name="search_schedule_details_empty_subtitle">Либо расписание не было опубликовано</string>
 
     <string name="navigation_name_dashboard">Лента</string>
     <string name="navigation_name_schedule">Расписание</string>

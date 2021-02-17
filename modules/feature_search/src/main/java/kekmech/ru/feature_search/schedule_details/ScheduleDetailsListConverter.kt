@@ -22,8 +22,7 @@ import kekmech.ru.feature_search.schedule_details.mvi.ScheduleDetailsState
 internal object ScheduleDetailsListConverter {
 
     private val classesEmptyStateItem = EmptyStateItem(
-        titleRes = R.string.search_schedule_details_empty_title,
-        subtitleRes = R.string.search_schedule_details_empty_subtitle
+        titleRes = R.string.search_schedule_details_empty_title
     )
 
     private fun getFavoritesItem(isInFavorites: Boolean?): Any? {

@@ -16,6 +16,7 @@ import kekmech.ru.common_navigation.NeedToUpdate
 import kekmech.ru.coreui.banner.showBanner
 import kekmech.ru.coreui.items.*
 import kekmech.ru.domain_app_settings.AppSettingsFeatureLauncher
+import kekmech.ru.domain_app_settings.AppSettingsFeatureLauncher.SubPage.FAVORITES
 import kekmech.ru.domain_schedule.CONTINUE_TO_BACK_STACK_WITH_RESULT
 import kekmech.ru.domain_schedule.dto.Classes
 import kekmech.ru.feature_dashboard.databinding.FragmentDashboardBinding
@@ -29,6 +30,8 @@ import kekmech.ru.feature_dashboard.presentation.DashboardState
 import org.koin.android.ext.android.inject
 
 private const val REQUEST_CODE_UPDATE_DATA = 2910
+internal const val SECTION_NOTES_ACTION = 1
+internal const val SECTION_FAVORITES_ACTION = 2
 
 class DashboardFragment : BaseFragment<DashboardEvent, DashboardEffect, DashboardState, DashboardFeature>(),
     ActivityResultListener,
@@ -95,9 +98,14 @@ class DashboardFragment : BaseFragment<DashboardEvent, DashboardEffect, Dashboar
             analytics.sendClick("BannerOpenSource")
             requireContext().openLinkExternal("https://vk.com/kekmech")
         },
-        SectionHeaderAdapterItem {
+        SectionHeaderAdapterItem(),
+        SectionHeaderAdapterItem(SECTION_NOTES_ACTION) {
             analytics.sendClick("ShowAllNotes")
             dependencies.notesFeatureLauncher.launchAllNotes()
+        },
+        SectionHeaderAdapterItem(SECTION_FAVORITES_ACTION) {
+            analytics.sendClick("SetUpFavorites")
+            dependencies.appSettingsFeatureLauncher.launch(FAVORITES)
         },
         NoteAdapterItem(requireContext()) {
             analytics.sendClick("EditNote")
@@ -127,7 +135,7 @@ class DashboardFragment : BaseFragment<DashboardEvent, DashboardEffect, Dashboar
             onClickListener = {
                 closeFeatureBanner()
                 dependencies.bottomTabsSwitcher.changeTab(BottomTab.PROFILE)
-                dependencies.appSettingsFeatureLauncher.launch(AppSettingsFeatureLauncher.SubPage.FAVORITES)
+                dependencies.appSettingsFeatureLauncher.launch(FAVORITES)
             },
             onCloseListener = {
                 closeFeatureBanner()

@@ -12,7 +12,8 @@ internal data class ScheduleDetailsState(
     val thisWeek: List<Day>? = null,
     val nextWeek: List<Day>? = null,
     val isInFavorites: Boolean? = null,
-    val selectedDayDate: LocalDate = moscowLocalDate()
+    val selectedDayDate: LocalDate = moscowLocalDate(),
+    val favoriteSchedule: FavoriteSchedule? = null
 ) {
     val isLoadingSchedule: Boolean get() = thisWeek == null || nextWeek == null
     val scheduleType get() = when (searchResult.type) {
@@ -35,7 +36,9 @@ internal sealed class ScheduleDetailsEvent {
     sealed class News : ScheduleDetailsEvent() {
         data class ScheduleLoaded(val schedule: Schedule, val weekOffset: Int) : News()
         data class LoadScheduleError(val weekOffset: Int) : News()
-        data class FavoritesLoaded(val names: List<FavoriteSchedule>) : News()
+        data class FavoritesLoaded(val schedules: List<FavoriteSchedule>) : News()
+        object FavoriteRemoved : News()
+        data class FavoriteAdded(val schedule: FavoriteSchedule) : News()
     }
 }
 
@@ -44,6 +47,6 @@ internal sealed class ScheduleDetailsEffect
 internal sealed class ScheduleDetailsAction {
     data class LoadSchedule(val ownerName: String, val weekOffset: Int) : ScheduleDetailsAction()
     object LoadFavorites : ScheduleDetailsAction()
-    data class AddToFavorites(val scheduleName: String) : ScheduleDetailsAction()
-    data class RemoveFromFavorites(val scheduleName: String) : ScheduleDetailsAction()
+    data class AddToFavorites(val schedule: FavoriteSchedule) : ScheduleDetailsAction()
+    data class RemoveFromFavorites(val schedule: FavoriteSchedule) : ScheduleDetailsAction()
 }

@@ -18,6 +18,12 @@ class FavoriteSource(
         }
     }
 
+    fun remove(favoriteSchedule: FavoriteSchedule) {
+        favoriteSchedule.apply {
+            db.fetch("delete from favorite_schedules where grp_num like '${groupNumber.toBase64()}';")
+        }
+    }
+
     fun addAll(fs: List<FavoriteSchedule>) = fs.forEach(::add)
 
     fun deleteAll() {
