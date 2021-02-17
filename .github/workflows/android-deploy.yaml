@@ -48,7 +48,7 @@ jobs:
         with:
           serviceAccountJson: service_account.json
           packageName: kekmech.ru.mpeiapp
-          releaseFile: modules/app/build/outputs/bundle/release/app-release.aab
+          releaseFiles: modules/app/build/outputs/bundle/release/app-release.aab
           track: internal
 
       - name: Send Telegram message
