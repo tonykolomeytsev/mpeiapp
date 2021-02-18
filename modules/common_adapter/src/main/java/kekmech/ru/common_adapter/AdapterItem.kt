@@ -4,6 +4,7 @@ import android.view.View
 import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
 
+@Suppress("LongParameterList")
 open class AdapterItem <in VH, in Model>(
     val isType: (Any) -> Boolean,
     @LayoutRes

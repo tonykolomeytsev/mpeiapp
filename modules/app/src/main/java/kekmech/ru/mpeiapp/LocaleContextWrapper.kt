@@ -14,6 +14,7 @@ private const val DEFAULT_LOCALE = "ru_RU"
 
 object LocaleContextWrapper {
 
+    @Suppress("MagicNumber")
     fun wrapContext(context: Context): Context {
         if (Build.VERSION.SDK_INT < 25) return context
         val savedLocale = createLocaleFromSharedPreferences(context) ?: return context

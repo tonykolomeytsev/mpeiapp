@@ -36,7 +36,9 @@ import org.koin.android.ext.android.inject
 private const val REQUEST_NEW_FAVORITE = 312344
 private const val REQUEST_EDIT_FAVORITE = 312345
 
-internal class FavoritesFragment : BaseFragment<FavoritesEvent, FavoritesEffect, FavoritesState, FavoritesFeature>(), ActivityResultListener {
+internal class FavoritesFragment :
+    BaseFragment<FavoritesEvent, FavoritesEffect, FavoritesState, FavoritesFeature>(),
+    ActivityResultListener {
 
     override val initEvent get() = Wish.Init
 

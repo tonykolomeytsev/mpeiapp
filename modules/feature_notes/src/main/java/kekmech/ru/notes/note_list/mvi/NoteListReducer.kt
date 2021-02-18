@@ -63,6 +63,7 @@ internal class NoteListReducer : BaseReducer<NoteListState, NoteListEvent, NoteL
         )
     }
 
+    @Suppress("ReturnCount")
     private fun matchesPredicate(note: Note, classes: Classes, date: LocalDate): Boolean {
         if (note.classesName != classes.name) return false
         if (note.dateTime.toLocalDate() != date) return false

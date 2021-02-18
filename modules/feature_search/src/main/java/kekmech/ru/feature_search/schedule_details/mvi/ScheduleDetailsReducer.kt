@@ -7,7 +7,11 @@ import kekmech.ru.domain_schedule.dto.FavoriteSchedule
 import kekmech.ru.domain_schedule.dto.Schedule
 import kekmech.ru.feature_search.schedule_details.mvi.ScheduleDetailsEvent.Wish
 
-internal class ScheduleDetailsReducer : BaseReducer<ScheduleDetailsState, ScheduleDetailsEvent, ScheduleDetailsEffect, ScheduleDetailsAction> {
+internal class ScheduleDetailsReducer : BaseReducer<
+        ScheduleDetailsState,
+        ScheduleDetailsEvent,
+        ScheduleDetailsEffect,
+        ScheduleDetailsAction> {
 
     override fun reduce(
         event: ScheduleDetailsEvent,
@@ -75,9 +79,15 @@ internal class ScheduleDetailsReducer : BaseReducer<ScheduleDetailsState, Schedu
                     description = state.searchResult.description,
                     order = 0
                 )
-                Result(state.copy(isInFavorites = null), action = ScheduleDetailsAction.AddToFavorites(newFavorite))
+                Result(
+                    state = state.copy(isInFavorites = null),
+                    action = ScheduleDetailsAction.AddToFavorites(newFavorite)
+                )
             } else {
-                Result(state.copy(isInFavorites = null), action = ScheduleDetailsAction.RemoveFromFavorites(state.favoriteSchedule))
+                Result(
+                    state = state.copy(isInFavorites = null),
+                    action = ScheduleDetailsAction.RemoveFromFavorites(state.favoriteSchedule)
+                )
             }
         }
         is Wish.Click.SwitchSchedule -> Result(
@@ -90,10 +100,14 @@ internal class ScheduleDetailsReducer : BaseReducer<ScheduleDetailsState, Schedu
     private fun Schedule.mapToDays(): List<Day> {
         val week = weeks.firstOrNull() ?: return emptyList()
         val days = weeks.flatMap { it.days }
-        return (1 .. 7)
+        return (1..DAYS_IN_WEEK)
             .map { dayOfWeek ->
                 days.find { it.dayOfWeek == dayOfWeek }
                     ?: Day(dayOfWeek, week.firstDayOfWeek.plusDays(dayOfWeek - 1L))
             }
+    }
+
+    private companion object {
+        private const val DAYS_IN_WEEK = 7
     }
 }

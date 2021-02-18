@@ -23,6 +23,8 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 import java.util.concurrent.TimeUnit
 
+private const val DEFAULT_REQUEST_TIMEOUT = 15L
+
 object NetworkModule : ModuleProvider({
     single { provideGson() } bind Gson::class
     single { RequiredHeadersInterceptor(
@@ -52,9 +54,9 @@ private fun provideOkHttpClient(
     .addNetworkInterceptor(HttpLoggingInterceptor().apply { level = Level.BODY })
     .addInterceptor(requiredHeadersInterceptor)
     .addInterceptor(noConnectionInterceptor)
-    .readTimeout(15, TimeUnit.SECONDS)
-    .writeTimeout(15, TimeUnit.SECONDS)
-    .connectTimeout(15, TimeUnit.SECONDS)
+    .readTimeout(DEFAULT_REQUEST_TIMEOUT, TimeUnit.SECONDS)
+    .writeTimeout(DEFAULT_REQUEST_TIMEOUT, TimeUnit.SECONDS)
+    .connectTimeout(DEFAULT_REQUEST_TIMEOUT, TimeUnit.SECONDS)
     .build()
 
 private fun provideRetrofitBuilder(

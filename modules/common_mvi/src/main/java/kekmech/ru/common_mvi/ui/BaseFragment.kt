@@ -14,7 +14,12 @@ import kekmech.ru.common_mvi.util.DisposableDelegateImpl
 import timber.log.Timber
 import kekmech.ru.common_mvi.Feature as MviFeature
 
-abstract class BaseFragment<Event : Any, Effect : Any, State : Any, Feature : MviFeature<State, Event, Effect>> : Fragment(),
+abstract class BaseFragment<
+        Event : Any,
+        Effect : Any,
+        State : Any,
+        Feature : MviFeature<State, Event, Effect>> :
+    Fragment(),
     DisposableDelegate by DisposableDelegateImpl() {
 
     private val effects by lazy { feature.effects }

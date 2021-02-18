@@ -84,6 +84,7 @@ class DashboardFragment : BaseFragment<DashboardEvent, DashboardEffect, Dashboar
         }
     }
 
+    @Suppress("LongMethod")
     private fun createAdapter() = BaseAdapter(
         SpaceAdapterItem(),
         SearchFieldAdapterItem {

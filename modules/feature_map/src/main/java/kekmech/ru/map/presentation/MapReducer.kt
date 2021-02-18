@@ -30,7 +30,12 @@ internal class MapReducer : BaseReducer<MapState, MapEvent, MapEffect, MapAction
             state = state.copy(
                 map = event.map
             ),
-            effect = MapEffect.GenerateGoogleMapMarkers(event.map, state.markers, state.googleMapMarkers, state.selectedTab)
+            effect = MapEffect.GenerateGoogleMapMarkers(
+                map = event.map,
+                markers = state.markers,
+                googleMapMarkers = state.googleMapMarkers,
+                selectedTab = state.selectedTab
+            )
         )
         is Wish.Action.SelectTab -> Result(
             state = state.copy(

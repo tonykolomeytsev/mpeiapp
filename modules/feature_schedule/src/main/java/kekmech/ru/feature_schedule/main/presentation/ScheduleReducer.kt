@@ -11,9 +11,10 @@ import java.util.*
 
 internal typealias ScheduleResult = Result<ScheduleState, ScheduleEffect, ScheduleAction>
 
+private const val PREFETCH_WEEK_BUFFER = 3
+
 internal class ScheduleReducer : BaseReducer<ScheduleState, ScheduleEvent, ScheduleEffect, ScheduleAction> {
 
-    private val prefetchWeekBuffer = 3
     private var isFirstPageChangeIgnored = false
 
     override fun reduce(
@@ -24,6 +25,7 @@ internal class ScheduleReducer : BaseReducer<ScheduleState, ScheduleEvent, Sched
         is News -> reduceNews(event, state)
     }
 
+    @Suppress("MagicNumber")
     private fun reduceNews(
         event: News,
         state: ScheduleState
@@ -138,7 +140,7 @@ internal class ScheduleReducer : BaseReducer<ScheduleState, ScheduleEvent, Sched
         // prefetch next week WeekItem
         when {
             event.weekOffset < 0 -> {
-                val nextWeekOffset = event.weekOffset - prefetchWeekBuffer
+                val nextWeekOffset = event.weekOffset - PREFETCH_WEEK_BUFFER
                 weekItems.getOrPut(nextWeekOffset) {
                     createWeekItem(
                         weekOffset = nextWeekOffset,
@@ -147,7 +149,7 @@ internal class ScheduleReducer : BaseReducer<ScheduleState, ScheduleEvent, Sched
                 }
             }
             event.weekOffset > 0 -> {
-                val nextWeekOffset = event.weekOffset + prefetchWeekBuffer
+                val nextWeekOffset = event.weekOffset + PREFETCH_WEEK_BUFFER
                 weekItems.getOrPut(nextWeekOffset) {
                     createWeekItem(
                         weekOffset = nextWeekOffset,
@@ -162,7 +164,11 @@ internal class ScheduleReducer : BaseReducer<ScheduleState, ScheduleEvent, Sched
                 weekItems = weekItems,
                 selectedDay = selectNecessaryDay(state, event.weekOffset, forceChangeSelectedDay),
                 isLoading = true,
-                isNavigationFabCurrentWeek = if (forceChangeSelectedDay) event.weekOffset == 0 else state.isNavigationFabCurrentWeek
+                isNavigationFabCurrentWeek = if (forceChangeSelectedDay) {
+                    event.weekOffset == 0
+                } else {
+                    state.isNavigationFabCurrentWeek
+                }
             ),
             action = ScheduleAction.LoadSchedule(event.weekOffset)
         )

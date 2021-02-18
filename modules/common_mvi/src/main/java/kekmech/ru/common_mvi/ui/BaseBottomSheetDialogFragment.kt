@@ -16,7 +16,11 @@ import kekmech.ru.common_mvi.util.DisposableDelegateImpl
 import timber.log.Timber
 import kekmech.ru.common_mvi.Feature as MviFeature
 
-abstract class BaseBottomSheetDialogFragment<Event : Any, Effect : Any, State : Any, Feature : MviFeature<State, Event, Effect>> :
+abstract class BaseBottomSheetDialogFragment<
+        Event : Any,
+        Effect : Any,
+        State : Any,
+        Feature : MviFeature<State, Event, Effect>> :
     BottomSheetDialogFragment(),
     DisposableDelegate by DisposableDelegateImpl() {
 
@@ -62,13 +66,16 @@ abstract class BaseBottomSheetDialogFragment<Event : Any, Effect : Any, State : 
         val dialog = super.onCreateDialog(savedInstanceState)
         dialog.setOnShowListener { dialogInterface ->
             dialogInterface as BottomSheetDialog
-            val view = dialogInterface.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+            val view = dialogInterface
+                .findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
             if (view != null) {
                 view.setBackgroundColor(Color.TRANSPARENT)
                 BottomSheetBehavior.from(view)
                     .addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
-                        override fun onSlide(bottomSheet: View, slideOffset: Float) = onBottomSheetSlide(bottomSheet, slideOffset)
-                        override fun onStateChanged(bottomSheet: View, newState: Int) = onBottomSheetStateChanged(bottomSheet, newState)
+                        override fun onSlide(bottomSheet: View, slideOffset: Float) =
+                            onBottomSheetSlide(bottomSheet, slideOffset)
+                        override fun onStateChanged(bottomSheet: View, newState: Int) =
+                            onBottomSheetStateChanged(bottomSheet, newState)
                     })
             }
         }

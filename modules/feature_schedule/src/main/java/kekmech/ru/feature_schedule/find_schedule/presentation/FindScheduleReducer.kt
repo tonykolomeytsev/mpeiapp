@@ -11,7 +11,8 @@ internal typealias FindScheduleResult = Result<FindScheduleState, FindScheduleEf
 
 private const val MESSAGE_BAD_REQUEST = "HTTP 503 Service Unavailable"
 
-internal class FindScheduleReducer : BaseReducer<FindScheduleState, FindScheduleEvent, FindScheduleEffect, FindScheduleAction> {
+internal class FindScheduleReducer :
+    BaseReducer<FindScheduleState, FindScheduleEvent, FindScheduleEffect, FindScheduleAction> {
 
     override fun reduce(
         event: FindScheduleEvent,

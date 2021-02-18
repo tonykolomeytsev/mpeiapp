@@ -45,6 +45,7 @@ class MpeixApp : Application(),
         sharedPreferences.getBoolean("is_debug_env", false)
     }
 
+    @Suppress("MagicNumber")
     override fun onCreate() {
         super.onCreate()
         ServiceUrlResolver.setEnvironment(debug = isDebugBackendEnvironmentEnabled)
@@ -94,17 +95,21 @@ class MpeixApp : Application(),
         }
     }
 
+    @Suppress("NestedBlockDepth")
     override fun getPackageName(): String {
         try {
             val stackTrace = Thread.currentThread().stackTrace
             for (element in stackTrace) {
                 if ("org.chromium.base.BuildInfo".equals(element.className, true)) {
-                    if ("getAll".equals(element.methodName, ignoreCase = true))
+                    if ("getAll".equals(element.methodName, ignoreCase = true)) {
                         return ""
+                    }
                     break
                 }
             }
-        } catch (e: Exception) { }
+        } catch (e: Exception) {
+            Timber.d("Replace app package name")
+        }
         return super.getPackageName()
     }
 }

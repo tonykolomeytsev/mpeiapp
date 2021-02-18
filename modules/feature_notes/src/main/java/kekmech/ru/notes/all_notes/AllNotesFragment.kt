@@ -28,10 +28,13 @@ import org.koin.android.ext.android.inject
 import ru.kekmech.common_images.launcher.ImagePickerLauncher
 
 private const val NOTE_EDIT_REQUEST_CODE = 54692
+private const val PICK_IMAGE_REQUEST_CODE = 54693
 
 private const val ARG_SELECTED_NOTE = "Arg.Note"
 
-internal class AllNotesFragment : BaseFragment<AllNotesEvent, AllNotesEffect, AllNotesState, AllNotesFeature>(), ActivityResultListener {
+internal class AllNotesFragment :
+    BaseFragment<AllNotesEvent, AllNotesEffect, AllNotesState, AllNotesFeature>(),
+    ActivityResultListener {
 
     override val initEvent = Wish.Init
 
@@ -90,7 +93,8 @@ internal class AllNotesFragment : BaseFragment<AllNotesEvent, AllNotesEffect, Al
         ShimmerAdapterItem(0, R.layout.item_note_shimmer),
         EmptyStateAdapterItem(),
         AddActionAdapterItem {
-            inject<ImagePickerLauncher>().value.launch(12345, this, alreadySelectedImages = selectedImages)
+            inject<ImagePickerLauncher>().value
+                .launch(PICK_IMAGE_REQUEST_CODE, this, alreadySelectedImages = selectedImages)
         }
     )
 
@@ -104,8 +108,9 @@ internal class AllNotesFragment : BaseFragment<AllNotesEvent, AllNotesEffect, Al
         if (requestCode == NOTE_EDIT_REQUEST_CODE) {
             feature.accept(Wish.Init)
         }
-        if (requestCode == 12345) {
-            selectedImages = data!!.getStringArrayListExtra(ImagePickerLauncher.EXTRA_SELECTED_IMAGES)!!
+        if (requestCode == PICK_IMAGE_REQUEST_CODE) {
+            selectedImages = data!!
+                .getStringArrayListExtra(ImagePickerLauncher.EXTRA_SELECTED_IMAGES)!!
         }
     }
 

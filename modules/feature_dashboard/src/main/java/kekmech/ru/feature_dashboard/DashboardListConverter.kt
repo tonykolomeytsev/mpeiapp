@@ -17,6 +17,10 @@ import kekmech.ru.feature_dashboard.presentation.NextClassesCondition.STARTED
 import java.time.DayOfWeek
 import java.time.LocalTime
 
+private const val WEEK_MIN_NUMBER = 0
+private const val WEEK_MAX_NUMBER = 17
+
+@Suppress("MagicNumber")
 class DashboardListConverter(
     private val context: Context
 ) {
@@ -132,7 +136,7 @@ class DashboardListConverter(
 
     private fun createDayStatusItem(state: DashboardState): DayStatusItem? {
         val weekStatus = state.weekOfSemester?.let { weekOfSemester ->
-            if (weekOfSemester in 0..17) {
+            if (weekOfSemester in WEEK_MIN_NUMBER..WEEK_MAX_NUMBER) {
                 context.getString(R.string.dashboard_day_status_semester, weekOfSemester)
             } else {
                 context.getString(R.string.dashboard_day_status_not_semester)
@@ -158,16 +162,16 @@ class DashboardListConverter(
                 val headerItem = createEventsHeaderItem(context.getString(R.string.dashboard_events_tomorrow))
                 val tomorrowClasses = state.tomorrowClasses
                     ?.onEach { it.scheduleType = selectedScheduleType }
-                    ?: return null // если на завтра пар тоже нет, то не возвращаем вообще ничего
-                return headerItem to tomorrowClasses
+                // если на завтра пар тоже нет, то не возвращаем вообще ничего
+                return tomorrowClasses?.let { headerItem to it }
             }
             else -> {
                 val headerItem = createEventsHeaderItem(context.getString(R.string.dashboard_events_today))
                 val nextTodayClasses = state.todayClasses
                     ?.onEach { it.scheduleType = selectedScheduleType }
                     ?.filter { it.time.end > nowTime } // не берем прошедшие пары
-                    ?: return null // если на сегодня пар нет, то не возвращаем ничего
-                return headerItem to nextTodayClasses
+                // если на сегодня пар нет, то не возвращаем ничего
+                return nextTodayClasses?.let { headerItem to it }
             }
         }
     }
@@ -182,12 +186,16 @@ class DashboardListConverter(
         for (e in raw) {
             add(e)
             val classes = e as? Classes ?: continue
-            val notePreviewContent = classes.attachedNotePreview ?: continue
-            add(NotePreview(notePreviewContent, linkedClasses = e))
+            classes.attachedNotePreview?.let { notePreviewContent ->
+                add(NotePreview(notePreviewContent, linkedClasses = e))
+            }
         }
     }
 
-    private fun List<Any>.withCalculatedTimeUntilNextClasses(state: DashboardState): List<Any> = mutableListOf<Any>().apply {
+    @Suppress("NestedBlockDepth")
+    private fun List<Any>.withCalculatedTimeUntilNextClasses(
+        state: DashboardState
+    ): List<Any> = mutableListOf<Any>().apply {
         val raw = this@withCalculatedTimeUntilNextClasses
         val indexOfNextClasses = raw
             .indexOfFirst { it is Classes }

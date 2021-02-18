@@ -7,6 +7,7 @@ import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 
+@Suppress("TooManyFunctions")
 open class BaseAdapter(
     private vararg val adapterItems: AdapterItem<*, *>
 ) : ListAdapter<Any, RecyclerView.ViewHolder>(BaseDiffUtil(adapterItems)) {

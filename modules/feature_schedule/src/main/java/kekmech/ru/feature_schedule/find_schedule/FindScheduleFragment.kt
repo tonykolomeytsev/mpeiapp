@@ -24,7 +24,8 @@ import org.koin.android.ext.android.inject
 private const val CONTINUE_TO_ARG = "ContinueTo"
 private const val SELECT_AFTER_ARG = "SelectAfter"
 
-internal class FindScheduleFragment : BaseFragment<FindScheduleEvent, FindScheduleEffect, FindScheduleState, FindScheduleFeature>() {
+internal class FindScheduleFragment :
+    BaseFragment<FindScheduleEvent, FindScheduleEffect, FindScheduleState, FindScheduleFeature>() {
 
     override val initEvent = Wish.Init
 
@@ -59,8 +60,10 @@ internal class FindScheduleFragment : BaseFragment<FindScheduleEvent, FindSchedu
     }
 
     override fun handleEffect(effect: FindScheduleEffect) = when (effect) {
-        is FindScheduleEffect.ShowError ->
-            viewBinding.groupTextLayout.setError(getString(R.string.schedule_find_error_loading, viewBinding.groupText.text?.toString().orEmpty()))
+        is FindScheduleEffect.ShowError -> viewBinding.groupTextLayout.setError(getString(
+            R.string.schedule_find_error_loading,
+            viewBinding.groupText.text?.toString().orEmpty()
+        ))
         is FindScheduleEffect.ShowSomethingWentWrongError -> showBanner(R.string.something_went_wrong_error)
         is FindScheduleEffect.NavigateNextFragment -> when (effect.continueTo) {
             CONTINUE_TO_BACK_STACK -> close()

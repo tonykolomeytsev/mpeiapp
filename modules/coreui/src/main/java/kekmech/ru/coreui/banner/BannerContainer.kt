@@ -7,6 +7,9 @@ import android.widget.FrameLayout
 import kekmech.ru.coreui.R
 import kekmech.ru.coreui.databinding.ViewBannerContainerBinding
 
+private const val ANIMATION_DURATION = 200L
+private const val ANIMATION_HIDE_DELAY = 1000L
+
 class BannerContainer @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null
@@ -30,7 +33,7 @@ class BannerContainer @JvmOverloads constructor(
     private fun animateFadeIn() {
         viewBinding.bannerText.animate()
             .alpha(1f)
-            .setDuration(200L)
+            .setDuration(ANIMATION_DURATION)
             .withEndAction { animateFadeOut() }
             .start()
     }
@@ -38,8 +41,8 @@ class BannerContainer @JvmOverloads constructor(
     private fun animateFadeOut() {
         viewBinding.bannerText.animate()
             .alpha(0f)
-            .setDuration(200L)
-            .setStartDelay(1000L)
+            .setDuration(ANIMATION_DURATION)
+            .setStartDelay(ANIMATION_HIDE_DELAY)
             .start()
     }
 }

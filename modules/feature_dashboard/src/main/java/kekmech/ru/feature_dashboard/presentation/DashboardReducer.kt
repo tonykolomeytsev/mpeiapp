@@ -94,7 +94,8 @@ class DashboardReducer(
         )
         is Wish.Click.OnClasses -> Result(
             state = state,
-            effect = state.getActualScheduleDayForView()?.let { day -> DashboardEffect.NavigateToNotesList(event.classes, day.date) }
+            effect = state.getActualScheduleDayForView()
+                ?.let { day -> DashboardEffect.NavigateToNotesList(event.classes, day.date) }
         )
         is Wish.Action.SilentUpdate -> Result(
             state = state,
@@ -129,9 +130,12 @@ class DashboardReducer(
         )
     }
 
+    @Suppress("MagicNumber")
     private fun getImportantNotes(notes: List<Note>): List<Note> =
         notes
-            .filter { ChronoUnit.DAYS.between(moscowLocalDate(), it.dateTime.toLocalDate()) in 0..7 } // todo make with settings
+            .filter { // todo make with settings
+                ChronoUnit.DAYS.between(moscowLocalDate(), it.dateTime.toLocalDate()) in 0..7
+            }
             .sortedBy { it.dateTime }
             .take(5) // todo make with settings
 }

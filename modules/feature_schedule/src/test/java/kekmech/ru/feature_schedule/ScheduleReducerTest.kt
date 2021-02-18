@@ -8,6 +8,7 @@ import kekmech.ru.domain_schedule.dto.Schedule
 import kekmech.ru.domain_schedule.dto.Week
 import kekmech.ru.feature_schedule.main.presentation.*
 import kekmech.ru.common_schedule.utils.TimeUtils.createWeekItem
+import kekmech.ru.feature_schedule.main.presentation.ScheduleEvent.Wish
 import org.junit.jupiter.api.Assertions.assertEquals
 import java.time.DayOfWeek
 import java.time.LocalDate
@@ -19,7 +20,7 @@ class ScheduleReducerTest : BehaviorSpec({
     Given("Initial state") {
         val state = INITIAL_STATE.copy(isFirstLoading = true, selectedDay = getActualSelectedDay())
         When("View created") {
-            val result = reducer.reduce(ScheduleEvent.Wish.Init, state)
+            val result = reducer.reduce(Wish.Init, state)
             Then("Should start loading data") {
                 assertEquals(result.actions, listOf(ScheduleAction.LoadSchedule(0)))
             }
@@ -34,11 +35,20 @@ class ScheduleReducerTest : BehaviorSpec({
             }
         }
         When("First data successfully loaded") {
-            val result = reducer.reduce(ScheduleEvent.News.ScheduleWeekLoadSuccess(0, SCHEDULE), state)
+            val result = reducer
+                .reduce(ScheduleEvent.News.ScheduleWeekLoadSuccess(0, SCHEDULE), state)
             Then("UI state changed") {
                 assertEquals(
-                    AFTER_LOADING_STATE.copy(weekOffset = 0, selectedDay = getActualSelectedDay(), isNavigationFabCurrentWeek = false),
-                    result.state.copy(weekOffset = 0, selectedDay = getActualSelectedDay(), isNavigationFabCurrentWeek = false)
+                    AFTER_LOADING_STATE.copy(
+                        weekOffset = 0,
+                        selectedDay = getActualSelectedDay(),
+                        isNavigationFabCurrentWeek = false
+                    ),
+                    result.state.copy(
+                        weekOffset = 0,
+                        selectedDay = getActualSelectedDay(),
+                        isNavigationFabCurrentWeek = false
+                    )
                 )
             }
             Then("No effects") {
@@ -52,7 +62,8 @@ class ScheduleReducerTest : BehaviorSpec({
     Given("After loading state") {
         val state = AFTER_LOADING_STATE.copy(selectedDay = getActualSelectedDay())
         When("Scroll back recyclerView (with weeks)") {
-            val result = reducer.reduce(ScheduleEvent.Wish.Action.SelectWeek(-1), state.copy(weekItems = INITIAL_WEEK_ITEMS))
+            val result = reducer
+                .reduce(Wish.Action.SelectWeek(-1), state.copy(weekItems = INITIAL_WEEK_ITEMS))
             Then("Prefetch week with offset == -2") {
                 assertEquals(
                     state.copy(
@@ -71,7 +82,8 @@ class ScheduleReducerTest : BehaviorSpec({
             }
         }
         When("Scroll forward recyclerView (with weeks)") {
-            val result = reducer.reduce(ScheduleEvent.Wish.Action.SelectWeek(1), state.copy(weekItems = INITIAL_WEEK_ITEMS))
+            val result = reducer
+                .reduce(Wish.Action.SelectWeek(1), state.copy(weekItems = INITIAL_WEEK_ITEMS))
             Then("Prefetch week with offset == 2") {
                 assertEquals(
                     state.copy(
@@ -155,7 +167,8 @@ class ScheduleReducerTest : BehaviorSpec({
             schedule = mutableMapOf(0 to SCHEDULE),
             currentWeekMonday = CURRENT_MONDAY,
             selectedDay = INITIAL_STATE.selectedDay
-                .takeIf { it.date.dayOfWeek != DayOfWeek.SUNDAY } ?: INITIAL_STATE.selectedDay.plusDays(-1),
+                .takeIf { it.date.dayOfWeek != DayOfWeek.SUNDAY }
+                ?: INITIAL_STATE.selectedDay.plusDays(-1),
             weekItems = INITIAL_WEEK_ITEMS
         )
         private fun getActualSelectedDay(): DayItem {

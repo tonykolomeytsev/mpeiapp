@@ -88,6 +88,7 @@ open class ClassesViewHolderImpl(
     }
 }
 
+@Suppress("MagicNumber")
 class ClassesItemBinder(
     context: Context,
     private val onClickListener: ((Classes) -> Unit)? = null
