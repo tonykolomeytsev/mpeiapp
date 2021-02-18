@@ -1,14 +1,13 @@
 package kekmech.ru.feature_search.main
 
 import androidx.annotation.StringRes
-import kekmech.ru.coreui.items.BottomLabeledTextItem
 import kekmech.ru.coreui.items.EmptyStateItem
 import kekmech.ru.coreui.items.SectionHeaderItem
 import kekmech.ru.coreui.items.SpaceItem
 import kekmech.ru.feature_search.R
 import kekmech.ru.feature_search.item.FilterItemType.*
 import kekmech.ru.feature_search.item.compareFilter
-import kekmech.ru.feature_search.main.mvi.SearchState
+import kekmech.ru.feature_search.main.elm.SearchState
 
 internal class SearchListConverter {
 

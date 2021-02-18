@@ -17,6 +17,8 @@ dependencies {
     implementation androidx.viewPager2
     implementation google.material
     implementation facebook.shimmer
+    implementation vividMoney.elmslieCore
+    implementation vividMoney.elmslieAndroid
 
     implementation project(path: ':domain_app_settings')
     implementation project(path: ':domain_schedule')

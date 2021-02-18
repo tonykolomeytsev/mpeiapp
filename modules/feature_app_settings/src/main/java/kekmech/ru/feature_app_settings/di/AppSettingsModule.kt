@@ -8,11 +8,11 @@ import kekmech.ru.domain_app_settings.AppSettingsFeatureLauncher
 import kekmech.ru.domain_app_settings.AppSettingsRepository
 import kekmech.ru.feature_app_settings.launcher.AppSettingsFeatureLauncherImpl
 import kekmech.ru.feature_app_settings.screens.favorites.FavoritesAnalytics
-import kekmech.ru.feature_app_settings.screens.favorites.mvi.FavoritesActor
-import kekmech.ru.feature_app_settings.screens.favorites.mvi.FavoritesFeatureFactory
+import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesActor
+import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesFeatureFactory
 import kekmech.ru.feature_app_settings.screens.main.AppSettingsAnalytics
-import kekmech.ru.feature_app_settings.screens.main.presentation.AppSettingsActor
-import kekmech.ru.feature_app_settings.screens.main.presentation.AppSettingsFeatureFactory
+import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsActor
+import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsFeatureFactory
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.bind
 import org.koin.dsl.binds

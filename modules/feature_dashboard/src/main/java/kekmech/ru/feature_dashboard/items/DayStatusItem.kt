@@ -4,7 +4,6 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseItemBinder
-import kekmech.ru.common_android.viewbinding.unit
 import kekmech.ru.feature_dashboard.R
 import kekmech.ru.feature_dashboard.databinding.ItemDayStatusBinding
 
@@ -30,7 +29,7 @@ class DayStatusViewHolderImpl(
         viewBinding.textViewHeader.text = header
     }
 
-    override fun setDescription(description: CharSequence) = viewBinding.unit {
+    override fun setDescription(description: CharSequence) = with(viewBinding) {
         if (textViewDescription.text.isEmpty() && description.isNotEmpty()) {
             textViewDescription.alpha = 0f
             textViewDescription.animate()

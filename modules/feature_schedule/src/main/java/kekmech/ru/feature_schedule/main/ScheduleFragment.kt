@@ -11,10 +11,9 @@ import kekmech.ru.common_analytics.addScrollAnalytics
 import kekmech.ru.common_android.ActivityResultListener
 import kekmech.ru.common_android.addSystemTopPadding
 import kekmech.ru.common_android.getStringArray
-import kekmech.ru.common_android.viewbinding.unit
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_kotlin.fastLazy
-import kekmech.ru.common_mvi.ui.BaseFragment
+import kekmech.ru.common_mvi.BaseFragment
 import kekmech.ru.common_navigation.NeedToUpdate
 import kekmech.ru.common_schedule.items.WeekAdapterItem
 import kekmech.ru.domain_schedule.dto.Classes
@@ -24,8 +23,8 @@ import kekmech.ru.feature_schedule.di.ScheduleDependencies
 import kekmech.ru.feature_schedule.main.adapter.WeeksScrollAdapter
 import kekmech.ru.feature_schedule.main.helpers.WeeksScrollHelper
 import kekmech.ru.feature_schedule.main.item.*
-import kekmech.ru.feature_schedule.main.presentation.*
-import kekmech.ru.feature_schedule.main.presentation.ScheduleEvent.Wish
+import kekmech.ru.feature_schedule.main.elm.*
+import kekmech.ru.feature_schedule.main.elm.ScheduleEvent.Wish
 import org.koin.android.ext.android.inject
 import java.time.LocalDate
 
@@ -36,24 +35,19 @@ private const val FAB_ANIMATION_DURATION = 100L
 
 @Suppress("TooManyFunctions")
 internal class ScheduleFragment :
-    BaseFragment<ScheduleEvent, ScheduleEffect, ScheduleState, ScheduleFeature>(),
+    BaseFragment<ScheduleEvent, ScheduleEffect, ScheduleState>(),
     ActivityResultListener,
     NeedToUpdate {
 
     init { retainInstance = true }
 
     override val initEvent = Wish.Init
-
-    override fun createFeature() = inject<ScheduleFeatureFactory>().value.create()
-
     override var layoutId = R.layout.fragment_schedule
 
     private val dependencies by inject<ScheduleDependencies>()
-
     private val viewPagerAdapter by fastLazy { createViewPagerAdapter() }
     private val weeksScrollAdapter by fastLazy { createWeekScrollAdapter() }
     private val weeksScrollHelper by fastLazy { createWeekDaysHelper() }
-
     private val analytics: ScheduleAnalytics by inject()
     private val viewBinding by viewBinding(FragmentScheduleBinding::bind)
 
@@ -61,7 +55,10 @@ internal class ScheduleFragment :
     private var viewPagerPositionToBeSelected: Int? = null
     private var weekOffsetToBeSelected: Int = 0
 
-    override fun onViewCreatedInternal(view: View, savedInstanceState: Bundle?) {
+    override fun createStore() = inject<ScheduleFeatureFactory>().value.create()
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         viewBinding.apply {
             weeksScrollHelper.attach(recyclerView, weekOffsetToBeSelected)
             recyclerView.layoutManager =
@@ -92,7 +89,7 @@ internal class ScheduleFragment :
     }
 
     @Suppress("MagicNumber")
-    override fun render(state: ScheduleState) = viewBinding.unit {
+    override fun render(state: ScheduleState) = with(viewBinding) {
         weekOffsetToBeSelected = state.weekOffset
         appBarLayoutGroup.isVisible = !state.isLoading
 

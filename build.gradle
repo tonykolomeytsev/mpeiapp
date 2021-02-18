@@ -87,6 +87,10 @@ buildscript {
         tinkoff = [
                 pagerindicator      : "ru.tinkoff.scrollingpagerindicator:scrollingpagerindicator:1.2.1"
         ]
+        vividMoney = [
+                elmslieCore         : "com.github.vivid-money.elmslie:elmslie-core:1.0.2",
+                elmslieAndroid      : "com.github.vivid-money.elmslie:elmslie-android:1.0.2"
+        ]
         appVersionName = "1.6.0"
         appVersionCode = 36
         gradleDir = "$rootDir/gradle"
@@ -95,6 +99,8 @@ buildscript {
     repositories {
         google()
         jcenter()
+        maven { url "https://jitpack.io" }
+        mavenCentral()
         maven {
             url "https://maven.fabric.io/public"
         }

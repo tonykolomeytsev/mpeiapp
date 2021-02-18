@@ -11,12 +11,12 @@ import kekmech.ru.common_cache.di.CacheModule
 import kekmech.ru.common_di.modules
 import kekmech.ru.common_feature_toggles.di.CommonFeatureTogglesModule
 import kekmech.ru.common_kotlin.fastLazy
+import kekmech.ru.common_mvi.TimberLogger
 import kekmech.ru.common_navigation.Router
 import kekmech.ru.common_navigation.di.NavigationModule
 import kekmech.ru.common_navigation.di.RouterHolder
 import kekmech.ru.common_network.di.NetworkModule
 import kekmech.ru.common_network.retrofit.ServiceUrlResolver
-import kekmech.ru.common_webview.di.WebViewModule
 import kekmech.ru.feature_app_settings.di.AppSettingsModule
 import kekmech.ru.feature_dashboard.di.DashboardModule
 import kekmech.ru.feature_onboarding.di.OnboardingModule
@@ -32,9 +32,10 @@ import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
-import ru.kekmech.common_images.di.CommonImagesModule
 import timber.log.Timber
 import timber.log.Timber.DebugTree
+import vivid.money.elmslie.android.logger.strategy.Crash
+import vivid.money.elmslie.core.config.ElmslieConfig
 
 class MpeixApp : Application(),
     RouterHolder {
@@ -70,12 +71,10 @@ class MpeixApp : Application(),
             NavigationModule,
             CommonAndroidModule,
             NetworkModule,
-            WebViewModule,
             CacheModule,
             AppDatabaseModule,
             AnalyticsModule,
             CommonFeatureTogglesModule,
-            CommonImagesModule,
             // features
             OnboardingModule,
             DashboardModule,
@@ -92,6 +91,17 @@ class MpeixApp : Application(),
     private fun initTimber() {
         if (BuildConfig.DEBUG) {
             Timber.plant(DebugTree())
+        } else {
+            Timber.plant()
+        }
+        ElmslieConfig.logger {
+            if (BuildConfig.DEBUG) {
+                fatal(Crash)
+                nonfatal(TimberLogger.E)
+                debug(TimberLogger.D)
+            } else {
+                fatal(TimberLogger.E)
+            }
         }
     }
 

@@ -10,6 +10,8 @@ dependencies {
     implementation rx.java
     implementation rx.android
     implementation facebook.shimmer
+    implementation vividMoney.elmslieCore
+    implementation vividMoney.elmslieAndroid
 
     implementation project(path: ":domain_schedule")
     implementation project(path: ":domain_notes")
