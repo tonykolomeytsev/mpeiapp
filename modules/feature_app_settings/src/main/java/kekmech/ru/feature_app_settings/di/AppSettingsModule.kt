@@ -7,10 +7,8 @@ import kekmech.ru.domain_app_settings.AppSettings
 import kekmech.ru.domain_app_settings.AppSettingsFeatureLauncher
 import kekmech.ru.domain_app_settings.AppSettingsRepository
 import kekmech.ru.feature_app_settings.launcher.AppSettingsFeatureLauncherImpl
-import kekmech.ru.feature_app_settings.screens.favorites.FavoritesAnalytics
 import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesActor
 import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesFeatureFactory
-import kekmech.ru.feature_app_settings.screens.main.AppSettingsAnalytics
 import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsActor
 import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsFeatureFactory
 import org.koin.android.ext.koin.androidContext
@@ -28,8 +26,6 @@ object AppSettingsModule : ModuleProvider({
     factory { AppSettingsFeatureFactory(get(), get()) }
     factory { AppSettingDependencies(get(), get(), get(), get()) }
     factory { AppSettingsFeatureLauncherImpl(get()) } bind AppSettingsFeatureLauncher::class
-    factory { AppSettingsAnalytics(get()) }
-    factory { FavoritesAnalytics(get()) }
     factory { FavoritesActor(get()) }
     factory { FavoritesFeatureFactory(get()) }
 })

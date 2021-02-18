@@ -12,6 +12,7 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kekmech.ru.common_adapter.BaseAdapter
+import kekmech.ru.common_analytics.ext.screenAnalytics
 import kekmech.ru.common_android.doOnApplyWindowInsets
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.views.setMargins
@@ -46,7 +47,7 @@ internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState>(), Need
 
     private val dependencies by inject<MapDependencies>()
     private val adapter by fastLazy { createAdapter() }
-    private val analytics: MapAnalytics by inject()
+    private val analytics by screenAnalytics("Map")
     private val markersBitmapFactory: MarkersBitmapFactory by inject()
     private val viewBinding by viewBinding(FragmentMapBinding::bind)
 
@@ -58,7 +59,6 @@ internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState>(), Need
         viewBinding.recyclerView.layoutManager = ControlledScrollingLayoutManager(requireContext())
         viewBinding.recyclerView.adapter = adapter
         createBottomSheet(view)
-        analytics.sendScreenShown()
     }
 
     private fun createBottomSheet(view: View) {

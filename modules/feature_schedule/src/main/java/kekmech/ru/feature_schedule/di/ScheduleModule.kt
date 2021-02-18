@@ -8,10 +8,8 @@ import kekmech.ru.domain_schedule.ScheduleRepository
 import kekmech.ru.domain_schedule.ScheduleService
 import kekmech.ru.domain_schedule.sources.FavoriteSource
 import kekmech.ru.feature_schedule.ScheduleFeatureLauncherImpl
-import kekmech.ru.feature_schedule.find_schedule.FindScheduleAnalytics
 import kekmech.ru.feature_schedule.find_schedule.elm.FindScheduleActor
 import kekmech.ru.feature_schedule.find_schedule.elm.FindScheduleFeatureFactory
-import kekmech.ru.feature_schedule.main.ScheduleAnalytics
 import kekmech.ru.feature_schedule.main.elm.ScheduleActor
 import kekmech.ru.feature_schedule.main.elm.ScheduleFeatureFactory
 import org.koin.dsl.bind
@@ -27,8 +25,6 @@ object ScheduleModule : ModuleProvider({
     factory { ScheduleFeatureFactory(get(), get()) } bind ScheduleFeatureFactory::class
     factory { ScheduleActor(get(), get()) }
     factory { ScheduleDependencies(get(), get(), get()) }
-    factory { ScheduleAnalytics(get()) } bind ScheduleAnalytics::class
-    factory { FindScheduleAnalytics(get()) } bind FindScheduleAnalytics::class
     factory { SchedulePersistentCache(get(), get(), get()) } bind SchedulePersistentCache::class
     factory { FavoriteSource(get()) }
 })

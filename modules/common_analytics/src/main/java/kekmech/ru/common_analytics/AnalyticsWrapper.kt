@@ -6,7 +6,7 @@ import com.google.firebase.analytics.FirebaseAnalytics.Event
 import com.google.firebase.analytics.FirebaseAnalytics.Param
 import kekmech.ru.common_analytics.dto.AnalyticsEvent
 
-class AnalyticsWrapper(
+internal class AnalyticsWrapper(
     private val firebaseAnalytics: FirebaseAnalytics
 ) {
 
