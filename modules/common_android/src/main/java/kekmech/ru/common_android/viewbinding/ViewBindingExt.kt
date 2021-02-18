@@ -43,7 +43,8 @@ fun <F : DialogFragment, VB : ViewBinding> DialogFragment.viewBinding(
     viewBinder: (F) -> VB
 ): ReadOnlyProperty<F, VB> {
     return object : ViewBindingProperty<F, VB>(viewBinder) {
-        override fun getLifecycleOwner(thisRef: F) = if (thisRef.view == null) thisRef.viewLifecycleOwner else thisRef // вот этого момента я пока не понимаю
+        override fun getLifecycleOwner(thisRef: F) = // вот этого момента я пока не понимаю
+            if (thisRef.view == null) thisRef.viewLifecycleOwner else thisRef
     }
 }
 

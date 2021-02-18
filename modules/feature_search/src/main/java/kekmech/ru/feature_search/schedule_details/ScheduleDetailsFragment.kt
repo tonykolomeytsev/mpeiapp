@@ -38,7 +38,11 @@ internal const val ITEM_CLASSES_SHIMMER_ID = 2
 internal const val ITEM_BUTTON_SWITCH = 1
 internal const val ITEM_FAVORITES = 1
 
-internal class ScheduleDetailsFragment : BaseBottomSheetDialogFragment<ScheduleDetailsEvent, ScheduleDetailsEffect, ScheduleDetailsState, ScheduleDetailsFeature>() {
+internal class ScheduleDetailsFragment : BaseBottomSheetDialogFragment<
+        ScheduleDetailsEvent,
+        ScheduleDetailsEffect,
+        ScheduleDetailsState,
+        ScheduleDetailsFeature>() {
 
     private val viewBinding by viewBinding(FragmentScheduleDetailsBinding::bind)
     private val adapter by fastLazy { createAdapter() }

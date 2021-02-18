@@ -35,6 +35,7 @@ import java.util.concurrent.TimeUnit
 
 private const val ARG_QUERY = "Arg.Query"
 private const val ARG_FILTER = "Arg.Filter"
+private const val DEFAULT_INPUT_DEBOUNCE = 300L
 
 internal class SearchFragment : BaseFragment<SearchEvent, SearchEffect, SearchState, SearchFeature>() {
 
@@ -60,14 +61,15 @@ internal class SearchFragment : BaseFragment<SearchEvent, SearchEffect, SearchSt
             navBackButton.setOnClickListener { close() }
             searchView.showKeyboard()
             searchView.observeChanges()
-                .debounce(300, TimeUnit.MILLISECONDS)
+                .debounce(DEFAULT_INPUT_DEBOUNCE, TimeUnit.MILLISECONDS)
                 .distinctUntilChanged()
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe { feature.accept(SearchEvent.Wish.Action.SearchContent(it)) }
                 .let {}
             recyclerView.layoutManager = LinearLayoutManager(requireContext())
             recyclerView.adapter = adapter
-            filterItemsRecycler.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            filterItemsRecycler.layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             filterItemsRecycler.adapter = filterItemsAdapter
         }
         analytics.sendScreenShown()

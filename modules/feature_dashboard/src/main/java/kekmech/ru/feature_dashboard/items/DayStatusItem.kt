@@ -8,6 +8,8 @@ import kekmech.ru.common_android.viewbinding.unit
 import kekmech.ru.feature_dashboard.R
 import kekmech.ru.feature_dashboard.databinding.ItemDayStatusBinding
 
+private const val ANIMATION_DURATION = 200L
+
 data class DayStatusItem(
     val header: String,
     val description: CharSequence
@@ -33,7 +35,7 @@ class DayStatusViewHolderImpl(
             textViewDescription.alpha = 0f
             textViewDescription.animate()
                 .alpha(1f)
-                .setDuration(200L)
+                .setDuration(ANIMATION_DURATION)
                 .start()
         }
         textViewDescription.text = description

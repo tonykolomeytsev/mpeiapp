@@ -9,6 +9,7 @@ import kekmech.ru.feature_app_settings.screens.main.presentation.AppSettingsStat
 
 internal class AppSettingsListConverter {
 
+    @Suppress("LongMethod")
     fun map(state: AppSettingsState): List<Any> {
         val appSettings = state.appSettings ?: return emptyList()
         return mutableListOf<Any>().apply {

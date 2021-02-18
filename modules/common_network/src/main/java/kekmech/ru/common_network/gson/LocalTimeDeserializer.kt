@@ -8,7 +8,11 @@ import java.time.LocalTime
 
 internal class LocalTimeDeserializer : JsonDeserializer<LocalTime> {
 
-    override fun deserialize(json: JsonElement, type: Type?, jsonDeserializationContext: JsonDeserializationContext?): LocalTime? {
+    override fun deserialize(
+        json: JsonElement,
+        type: Type?,
+        jsonDeserializationContext: JsonDeserializationContext?
+    ): LocalTime? {
         return LocalTime.parse(json.asJsonPrimitive.asString)
     }
 }

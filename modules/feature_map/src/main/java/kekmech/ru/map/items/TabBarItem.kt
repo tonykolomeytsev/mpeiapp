@@ -19,7 +19,7 @@ internal interface TabBarViewHolder {
 }
 
 internal class TabBarViewHolderImpl(
-    private val containerView: View
+    containerView: View
 ) : RecyclerView.ViewHolder(containerView), TabBarViewHolder {
 
     private var adapter: BaseAdapter? = null
@@ -31,8 +31,11 @@ internal class TabBarViewHolderImpl(
             adapter = BaseAdapter(
                 FilterTabAdapterItem { onClickListener?.invoke(it) }
             )
-            viewBinding.recyclerView.adapter = adapter
-            viewBinding.recyclerView.layoutManager = LinearLayoutManager(containerView.context, LinearLayoutManager.HORIZONTAL, false)
+            with(viewBinding) {
+                recyclerView.adapter = adapter
+                recyclerView.layoutManager =
+                    LinearLayoutManager(root.context, LinearLayoutManager.HORIZONTAL, false)
+            }
         }
     }
 
