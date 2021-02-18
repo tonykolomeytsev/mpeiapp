@@ -14,6 +14,7 @@ private const val KEY_SELECTED_GROUP = "selected_group"
 val GROUP_NUMBER_PATTERN = "[а-яА-Я]+-[а-яА-Я0-9]+-[0-9]+".toRegex()
 val PERSON_NAME_PATTERN = "[а-яА-Я]+\\s+([а-яА-Я]+\\s?)+".toRegex()
 
+@Suppress("TooManyFunctions")
 class ScheduleRepository(
     private val scheduleService: ScheduleService,
     private val schedulePersistentCache: SchedulePersistentCache,

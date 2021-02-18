@@ -5,7 +5,8 @@ import kekmech.ru.common_mvi.Result
 import ru.kekmech.common_images.imagepicker.mvi.ImagePickerEvent.News
 import ru.kekmech.common_images.imagepicker.mvi.ImagePickerEvent.Wish
 
-internal class ImagePickerReducer : BaseReducer<ImagePickerState, ImagePickerEvent, ImagePickerEffect, ImagePickerAction> {
+internal class ImagePickerReducer :
+    BaseReducer<ImagePickerState, ImagePickerEvent, ImagePickerEffect, ImagePickerAction> {
 
     override fun reduce(
         event: ImagePickerEvent,
@@ -60,7 +61,10 @@ internal class ImagePickerReducer : BaseReducer<ImagePickerState, ImagePickerEve
                 Result(state)
             }
         }
-        is Wish.Click.Accept -> Result(state, effect = ImagePickerEffect.CloseWithResult(ArrayList(state.selectedImagesUrls)))
+        is Wish.Click.Accept -> Result(
+            state = state,
+            effect = ImagePickerEffect.CloseWithResult(ArrayList(state.selectedImagesUrls))
+        )
         is Wish.Action.CameraPermissionGranted -> Result(state) // TODO implement in the future
     }
 }

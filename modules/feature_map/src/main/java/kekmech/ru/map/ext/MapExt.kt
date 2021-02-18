@@ -11,6 +11,12 @@ import com.google.android.gms.maps.model.Marker
 import kekmech.ru.common_android.dpToPx
 import kekmech.ru.map.R
 
+private const val CAMERA_ANIMATION_DURATION = 200
+private const val MAP_BOTTOM_PADDING = 120f // because of nav bar
+private const val CAMERA_TILT = 30f
+private const val CAMERA_ZOOM = 17f
+
+@Suppress("MagicNumber")
 @SuppressLint("MissingPermission")
 internal fun GoogleMap.init(context: Context) {
     setMapStyle(MapStyleOptions.loadRawResourceStyle(context, R.raw.google_map_style))
@@ -19,7 +25,7 @@ internal fun GoogleMap.init(context: Context) {
     isTrafficEnabled = false
     isIndoorEnabled = true
     mapType = GoogleMap.MAP_TYPE_NORMAL
-    setPadding(0, 0, 0, context.resources.dpToPx(120f))
+    setPadding(0, 0, 0, context.resources.dpToPx(MAP_BOTTOM_PADDING))
     uiSettings.apply {
         isCompassEnabled = false
         isMyLocationButtonEnabled = false
@@ -27,8 +33,8 @@ internal fun GoogleMap.init(context: Context) {
         isRotateGesturesEnabled = false
     }
     val cameraPosition = CameraPosition.Builder()
-        .tilt(30f)
-        .zoom(17f)
+        .tilt(CAMERA_TILT)
+        .zoom(CAMERA_ZOOM)
         .target(LatLng(55.755060, 37.708431)) // mpei main building
         .build()
     moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
@@ -36,9 +42,13 @@ internal fun GoogleMap.init(context: Context) {
 
 internal fun GoogleMap.animateCameraTo(marker: Marker) {
     val cameraPosition = CameraPosition.Builder()
-        .tilt(30f)
-        .zoom(17f)
+        .tilt(CAMERA_TILT)
+        .zoom(CAMERA_ZOOM)
         .target(marker.position)
         .build()
-    animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 200, null)
+    animateCamera(
+        CameraUpdateFactory.newCameraPosition(cameraPosition),
+        CAMERA_ANIMATION_DURATION,
+        null
+    )
 }

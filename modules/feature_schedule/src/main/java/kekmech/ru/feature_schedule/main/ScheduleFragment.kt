@@ -30,8 +30,13 @@ import org.koin.android.ext.android.inject
 import java.time.LocalDate
 
 private const val REQUEST_CODE_NOTES_UPDATED = 9328
+private const val WEEK_MIN_NUMBER = 0
+private const val WEEK_MAX_NUMBER = 17
+private const val FAB_ANIMATION_DURATION = 100L
 
-internal class ScheduleFragment : BaseFragment<ScheduleEvent, ScheduleEffect, ScheduleState, ScheduleFeature>(),
+@Suppress("TooManyFunctions")
+internal class ScheduleFragment :
+    BaseFragment<ScheduleEvent, ScheduleEffect, ScheduleState, ScheduleFeature>(),
     ActivityResultListener,
     NeedToUpdate {
 
@@ -86,6 +91,7 @@ internal class ScheduleFragment : BaseFragment<ScheduleEvent, ScheduleEffect, Sc
         }
     }
 
+    @Suppress("MagicNumber")
     override fun render(state: ScheduleState) = viewBinding.unit {
         weekOffsetToBeSelected = state.weekOffset
         appBarLayoutGroup.isVisible = !state.isLoading
@@ -134,14 +140,14 @@ internal class ScheduleFragment : BaseFragment<ScheduleEvent, ScheduleEffect, Sc
             isEnabled = true
             animate()
                 .alpha(1f)
-                .setDuration(100L)
+                .setDuration(FAB_ANIMATION_DURATION)
                 .start()
         } else with(viewBinding.fab) {
             clearAnimation()
             isEnabled = false
             animate()
                 .alpha(0f)
-                .setDuration(100L)
+                .setDuration(FAB_ANIMATION_DURATION)
                 .start()
         }
     }
@@ -197,13 +203,17 @@ internal class ScheduleFragment : BaseFragment<ScheduleEvent, ScheduleEffect, Sc
     }
 
     private fun getFormattedDay(day: LocalDate): String {
-        val dayOfWeekName = requireContext().getStringArray(R.array.days_of_week).getOrElse(day.dayOfWeek.value - 1) { "" }
-        val dayOfMonthName = requireContext().getStringArray(R.array.months).getOrElse(day.monthValue - 1) { "" }
+        val dayOfWeekName = requireContext()
+            .getStringArray(R.array.days_of_week)
+            .getOrElse(day.dayOfWeek.value - 1) { "" }
+        val dayOfMonthName = requireContext()
+            .getStringArray(R.array.months)
+            .getOrElse(day.monthValue - 1) { "" }
         return "$dayOfWeekName, ${day.dayOfMonth} $dayOfMonthName"
     }
 
     private fun getFormattedWeek(weekNumber: Int): String {
-        if (weekNumber in 0..17) {
+        if (weekNumber in WEEK_MIN_NUMBER..WEEK_MAX_NUMBER) {
             return requireContext().getString(R.string.schedule_semester_week, weekNumber)
         } else {
             return requireContext().getString(R.string.schedule_weekend_week)

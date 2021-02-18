@@ -123,7 +123,12 @@ internal object ScheduleDetailsListConverter {
             val fullString = context.getString(weekDescription, adoptedNumber)
             SpannableString.valueOf(fullString).apply {
                 setSpan(StyleSpan(Typeface.BOLD), 0, adoptedNumber.length, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
-                setSpan(ForegroundColorSpan(context.getThemeColor(R.attr.colorBlack)), 0, adoptedNumber.length, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
+                setSpan(
+                    ForegroundColorSpan(context.getThemeColor(R.attr.colorBlack)),
+                    0,
+                    adoptedNumber.length,
+                    Spannable.SPAN_INCLUSIVE_INCLUSIVE
+                )
             }
         } else {
             context.getString(emptyWeekDescription)
@@ -139,6 +144,7 @@ internal object ScheduleDetailsListConverter {
         return WeekMinItem(dayItems)
     }
 
+    @Suppress("MagicNumber")
     private fun adoptNumber(
         num: Int,
         context: Context

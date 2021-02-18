@@ -30,7 +30,8 @@ import java.time.LocalDate
 private const val ARG_SELECTED_CLASSES = "Arg.SelectedClasses"
 private const val ARG_SELECTED_DATE = "Arg.SelectedDate"
 
-internal class NoteListFragment : BaseBottomSheetDialogFragment<NoteListEvent, NoteListEffect, NoteListState, NoteListFeature>() {
+internal class NoteListFragment :
+    BaseBottomSheetDialogFragment<NoteListEvent, NoteListEffect, NoteListState, NoteListFeature>() {
 
     override val initEvent = Wish.Init
 

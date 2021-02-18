@@ -16,9 +16,7 @@ sealed class MainScreenEvent {
     }
 
     // events from actor
-    sealed class News : MainScreenEvent() {
-
-    }
+    sealed class News : MainScreenEvent()
 }
 
 sealed class MainScreenAction

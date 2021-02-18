@@ -9,13 +9,15 @@ import kekmech.ru.map.items.TabBarItem
 import kekmech.ru.map.presentation.FilterTab
 import kekmech.ru.map.presentation.MapState
 
+private const val TAB_BAR_ITEM_SPACING = 4
+
 internal class MapListConverter {
 
     fun map(state: MapState): List<Any> {
 
         return mutableListOf<Any>().apply {
             add(PullItem)
-            add(SpaceItem(0, 4))
+            add(SpaceItem(0, TAB_BAR_ITEM_SPACING))
             add(TabBarItem)
 
             val selectedMarkers = state.markers.filter { it.type == state.selectedTab.toMarkerType() }

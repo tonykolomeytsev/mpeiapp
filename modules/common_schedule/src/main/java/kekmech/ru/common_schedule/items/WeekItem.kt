@@ -11,6 +11,8 @@ import kekmech.ru.common_schedule.R
 import kekmech.ru.common_schedule.databinding.ItemWeekDaysBinding
 import java.time.LocalDate
 
+private const val DAY_ITEM_SPAN_COUNT = 6
+
 data class WeekItem(
     val weekOffset: Int,
     val firstDayOfWeek: LocalDate?,
@@ -34,7 +36,8 @@ class WeekViewHolderImpl(
 
     override fun setDays(items: List<Any>) = viewBinding.unit {
         if (recyclerView.adapter == null) recyclerView.adapter = adapter
-        if (recyclerView.layoutManager == null) recyclerView.layoutManager = GridLayoutManager(containerView.context, 6)
+        if (recyclerView.layoutManager == null) recyclerView.layoutManager =
+            GridLayoutManager(containerView.context, DAY_ITEM_SPAN_COUNT)
         adapter?.update(items)
     }
 
@@ -79,7 +82,12 @@ class WeekAdapterItem(
     layoutRes = R.layout.item_week_days,
     viewHolderGenerator = ::WeekViewHolderImpl,
     itemBinder = WeekItemBinder(
-        recycledViewPool = RecyclerView.RecycledViewPool().apply { setMaxRecycledViews(0, 200) },
+        recycledViewPool = RecyclerView.RecycledViewPool()
+            .apply { setMaxRecycledViews(0, RECYCLED_VIEW_POOL_SIZE) },
         onDayClickListener = onDayClickListener
     )
-)
+) {
+    companion object {
+        private const val RECYCLED_VIEW_POOL_SIZE = 200
+    }
+}

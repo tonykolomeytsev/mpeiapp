@@ -12,6 +12,8 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit
 
+private const val MINUTES_IN_HOUR = 60L
+
 fun DashboardState.getActualScheduleDayForView(): Day? {
     val nowDate = moscowLocalDate()
     val nowTime = moscowLocalTime()
@@ -35,9 +37,11 @@ fun DashboardState.getNextClassesTimeStatus(nextClassesDate: LocalDate, nextClas
     return when {
         currentMoscowDateTime < nextClassesStartDateTime -> {
             // пара еще не началась
-            val hoursUntilClasses = currentMoscowDateTime.until(nextClassesStartDateTime, ChronoUnit.HOURS)
-            val minutesUntilClasses = currentMoscowDateTime.until(nextClassesStartDateTime, ChronoUnit.MINUTES)
-            val minutesWithoutHours = minutesUntilClasses - (hoursUntilClasses * 60)
+            val hoursUntilClasses = currentMoscowDateTime
+                .until(nextClassesStartDateTime, ChronoUnit.HOURS)
+            val minutesUntilClasses = currentMoscowDateTime
+                .until(nextClassesStartDateTime, ChronoUnit.MINUTES)
+            val minutesWithoutHours = minutesUntilClasses - (hoursUntilClasses * MINUTES_IN_HOUR)
             NextClassesTimeStatus(NOT_STARTED, hoursUntilClasses, minutesWithoutHours)
         }
         currentMoscowDateTime in nextClassesStartDateTime..nextClassesEndDateTime -> {

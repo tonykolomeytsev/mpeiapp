@@ -23,6 +23,7 @@ internal fun Fragment.requestStoragePermissionIfNeeded(
     onPermissionAlreadyGranted = onPermissionAlreadyGranted
 )
 
+@Suppress("MagicNumber")
 private fun Fragment.requestPermissionIfNeeded(
     permission: String,
     requestCode: Int,

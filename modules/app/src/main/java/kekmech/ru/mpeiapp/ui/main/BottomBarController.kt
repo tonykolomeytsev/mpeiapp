@@ -13,6 +13,8 @@ import kekmech.ru.feature_dashboard.DashboardFragment
 import kekmech.ru.mpeiapp.R
 import java.util.concurrent.TimeUnit
 
+private const val FRAGMENT_POSTPONE_DELAY = 300L
+
 class BottomBarController(
     fragment: Fragment,
     private val scheduleFeatureLauncher: ScheduleFeatureLauncher,
@@ -51,7 +53,8 @@ class BottomBarController(
         selectTab(lastSelectedTab)
         backStack.push(lastSelectedTab)
         if (bottomNavView.selectedItemId == R.id.navigation_dashboard) {
-            containerFragment.postponeEnterTransition(300L, TimeUnit.MILLISECONDS)
+            containerFragment
+                .postponeEnterTransition(FRAGMENT_POSTPONE_DELAY, TimeUnit.MILLISECONDS)
         }
     }
 

@@ -8,16 +8,13 @@ import androidx.core.view.updatePadding
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseAdapter
-import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.common_android.*
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.views.setMargins
 import kekmech.ru.common_images.R
 import kekmech.ru.common_images.databinding.FragmentImagePickerBinding
 import kekmech.ru.common_mvi.ui.BaseFragment
-import kekmech.ru.coreui.items.ClickableItemViewHolderImpl
 import kekmech.ru.coreui.items.PullAdapterItem
 import org.koin.android.ext.android.inject
 import ru.kekmech.common_images.imagepicker.adapter.ImageAdapterItem
@@ -28,13 +25,15 @@ import ru.kekmech.common_images.imagepicker.utils.requestStoragePermissionIfNeed
 import ru.kekmech.common_images.launcher.ImagePickerLauncher
 import ru.kekmech.common_images.launcher.ImageViewerLauncher
 
-
 private const val REQUEST_CODE_STORAGE = 1000
 private const val REQUEST_CODE_CAMERA = 1001
 private const val ARG_IMAGE_COUNT = "Arg.ImageCount"
 private const val ARG_ALREADY_SELECTED_IMAGES = "Arg.Selected"
+private const val EXPAND_DELAY = 100L
+private const val IMG_SPAN_COUNT = 3
 
-internal class ImagePickerFragment : BaseFragment<ImagePickerEvent, ImagePickerEffect, ImagePickerState, ImagePickerFeature>() {
+internal class ImagePickerFragment :
+    BaseFragment<ImagePickerEvent, ImagePickerEffect, ImagePickerState, ImagePickerFeature>() {
 
     private val viewBinding by viewBinding(FragmentImagePickerBinding::bind)
     override val initEvent get() = Wish.Init
@@ -53,7 +52,9 @@ internal class ImagePickerFragment : BaseFragment<ImagePickerEvent, ImagePickerE
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
                     if (dy <= 0) return
-                    if (adapter.itemCount <= gridLayoutManager.findLastVisibleItemPosition() + DEFAULT_VISIBLE_THRESHOLD) {
+                    if (adapter.itemCount <=
+                        gridLayoutManager.findLastVisibleItemPosition() + DEFAULT_VISIBLE_THRESHOLD
+                    ) {
                         feature.accept(Wish.Action.BottomReached)
                     }
                 }
@@ -77,7 +78,7 @@ internal class ImagePickerFragment : BaseFragment<ImagePickerEvent, ImagePickerE
                 })
                 recyclerView.postDelayed({
                     state = BottomSheetBehavior.STATE_COLLAPSED
-                }, 100L)
+                }, EXPAND_DELAY)
             }
             overlayView.setOnClickListener { close() }
         }
@@ -126,14 +127,14 @@ internal class ImagePickerFragment : BaseFragment<ImagePickerEvent, ImagePickerE
     )
 
     private fun createLayoutManager() =
-        GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
+        GridLayoutManager(requireContext(), IMG_SPAN_COUNT, GridLayoutManager.VERTICAL, false)
             .apply {
                 spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                     override fun getSpanSize(position: Int): Int {
                         if (adapter.allData[position] is ImageItem) {
                             return 1
                         } else {
-                            return 3
+                            return IMG_SPAN_COUNT
                         }
                     }
                 }

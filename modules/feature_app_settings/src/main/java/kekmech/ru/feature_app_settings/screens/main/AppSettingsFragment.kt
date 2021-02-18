@@ -28,8 +28,13 @@ import kekmech.ru.feature_app_settings.screens.main.presentation.AppSettingsStat
 import org.koin.android.ext.android.inject
 
 private const val RESULT_SELECTED_LANG = 846583
+private const val ACTIVITY_RECREATION_DELAY = 200L
 
-internal class AppSettingsFragment : BaseFragment<AppSettingsEvent, AppSettingsEffect, AppSettingsState, AppSettingsFeature>(), ActivityResultListener {
+internal class AppSettingsFragment : BaseFragment<
+        AppSettingsEvent,
+        AppSettingsEffect,
+        AppSettingsState,
+        AppSettingsFeature>(), ActivityResultListener {
 
     override val initEvent get() = Wish.Init
 
@@ -139,7 +144,8 @@ internal class AppSettingsFragment : BaseFragment<AppSettingsEvent, AppSettingsE
     }
 
     private fun recreateActivity() {
-        Handler(Looper.getMainLooper()).postDelayed({ activity?.recreate() }, 200)
+        Handler(Looper.getMainLooper())
+            .postDelayed({ activity?.recreate() }, ACTIVITY_RECREATION_DELAY)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

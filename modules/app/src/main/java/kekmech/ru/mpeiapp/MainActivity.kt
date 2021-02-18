@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity() {
     private val mainScreenLauncher: MainScreenLauncher by inject()
     private val deeplinkHandlersProcessor: DeeplinkHandlersProcessor by inject()
 
+    @Suppress("MagicNumber")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

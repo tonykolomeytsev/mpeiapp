@@ -53,7 +53,8 @@ class NotesSourceImpl(
     private fun map(record: Record): Note = Note(
         id = record.get("_id") ?: error("Note Id must not be null!"),
         content = record.get<String>("content")?.fromBase64().orEmpty(),
-        dateTime = record.get<String>("datetime")?.let { LocalDateTime.parse(it, dateTimeFormatter) } ?: LocalDateTime.MIN,
+        dateTime = record.get<String>("datetime")
+            ?.let { LocalDateTime.parse(it, dateTimeFormatter) } ?: LocalDateTime.MIN,
         classesName = record.get<String>("cls_name").orEmpty(),
         targetRect = record.get("target"),
         attachedPictureUrls = record.get<String>("p_attachments")

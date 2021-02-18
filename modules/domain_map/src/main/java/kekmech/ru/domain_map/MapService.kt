@@ -6,7 +6,6 @@ import kekmech.ru.common_annotations.EndpointUrl
 import kekmech.ru.domain_map.dto.GetMapMarkersResponse
 import retrofit2.http.GET
 
-
 @EndpointUrl(BackendServiceUrl.MAP)
 interface MapService {
 

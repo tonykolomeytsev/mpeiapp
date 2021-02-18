@@ -108,11 +108,15 @@ internal class WorkingDayAdapterItem(
     layoutRes = R.layout.item_working_day,
     viewHolderGenerator = ::WorkingDayViewHolderImpl,
     itemBinder = WorkingDayItemBinder(
-        recycledViewPool = RecyclerView.RecycledViewPool().apply { setMaxRecycledViews(0, 200) },
+        recycledViewPool = RecyclerView.RecycledViewPool().apply { setMaxRecycledViews(0, RECYCLED_VIEW_POOL_SIZE) },
         onClickListener = onClickListener,
         onScrollClasses = onScrollClasses
     ),
     areItemsTheSame = { a, b -> a.dayOfWeek == b.dayOfWeek },
     equals = { a, b -> a.items == b.items },
     changePayload = { _, b -> b.items }
-)
+) {
+    companion object {
+        const val RECYCLED_VIEW_POOL_SIZE = 200
+    }
+}

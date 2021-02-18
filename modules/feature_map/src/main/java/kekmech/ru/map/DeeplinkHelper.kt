@@ -21,6 +21,7 @@ internal object DeeplinkHelper {
         selectTabIfNecessary(deeplinkDelegate, state, feature)
     }
 
+    @Suppress("ReturnCount")
     private fun selectPlaceIfNecessary(
         deeplinkDelegate: DeeplinkDelegate,
         state: MapState,

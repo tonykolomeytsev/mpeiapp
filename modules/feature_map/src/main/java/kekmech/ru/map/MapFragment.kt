@@ -1,6 +1,5 @@
 package kekmech.ru.map
 
-
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -37,26 +36,24 @@ import kekmech.ru.map.view.ControlledScrollingLayoutManager
 import kekmech.ru.map.view.MarkersBitmapFactory
 import org.koin.android.ext.android.inject
 
+private const val MAP_CREATION_DELAY = 50L
+private const val MAX_OVERLAY_ALPHA = 0.5f
+
 internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState, MapFeature>(), NeedToUpdate {
 
     override val initEvent = Wish.Init
+    override var layoutId = R.layout.fragment_map
 
     private val dependencies by inject<MapDependencies>()
+    private val adapter by fastLazy { createAdapter() }
+    private val analytics: MapAnalytics by inject()
+    private val markersBitmapFactory: MarkersBitmapFactory by inject()
+    private val viewBinding by viewBinding(FragmentMapBinding::bind)
 
     override fun createFeature() = dependencies.mapFeatureFactory.create()
 
-    override var layoutId = R.layout.fragment_map
-
-    private val adapter by fastLazy { createAdapter() }
-
-    private val analytics: MapAnalytics by inject()
-
-    private val markersBitmapFactory: MarkersBitmapFactory by inject()
-
-    private val viewBinding by viewBinding(FragmentMapBinding::bind)
-
     override fun onViewCreatedInternal(view: View, savedInstanceState: Bundle?) {
-        Handler(Looper.getMainLooper()).postDelayed({ createMap() }, 50L)
+        Handler(Looper.getMainLooper()).postDelayed({ createMap() }, MAP_CREATION_DELAY)
         viewBinding.recyclerView.layoutManager = ControlledScrollingLayoutManager(requireContext())
         viewBinding.recyclerView.adapter = adapter
         createBottomSheet(view)
@@ -71,12 +68,14 @@ internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState, MapFeat
             addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
 
                 override fun onStateChanged(bottomSheet: View, newState: Int) {
-                    if (newState == BottomSheetBehavior.STATE_DRAGGING) analytics.sendScroll("BottomSheet")
+                    if (newState == BottomSheetBehavior.STATE_DRAGGING) {
+                        analytics.sendScroll("MapBottomSheet")
+                    }
                     feature.accept(Wish.Action.BottomSheetStateChanged(newState))
                 }
 
                 override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                    viewBinding.viewFade.alpha = slideOffset * 0.5f
+                    viewBinding.viewFade.alpha = slideOffset * MAX_OVERLAY_ALPHA
                 }
             })
         }
@@ -105,7 +104,12 @@ internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState, MapFeat
 
     override fun handleEffect(effect: MapEffect) = when (effect) {
         is MapEffect.GenerateGoogleMapMarkers -> {
-            val markers = generateGoogleMapMarkers(effect.map, effect.markers, effect.googleMapMarkers, effect.selectedTab)
+            val markers = generateGoogleMapMarkers(
+                map = effect.map,
+                markers = effect.markers,
+                googleMapMarkers = effect.googleMapMarkers,
+                selectedTab = effect.selectedTab
+            )
             feature.accept(Wish.Action.GoogleMapMarkersGenerated(markers))
         }
         is MapEffect.AnimateCameraToPlace -> {

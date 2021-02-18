@@ -9,27 +9,33 @@ import kekmech.ru.feature_schedule.R
 import kekmech.ru.feature_schedule.main.item.*
 import kekmech.ru.feature_schedule.main.presentation.ScheduleState
 
+private const val CLASSES_BEFORE_LUNCH_NUMBER = 2
+private const val CLASSES_AFTER_LUNCH_NUMBER = 3
+private const val DAY_ITEMS_COUNT = 6
+
 internal object ScheduleClassesListConverter {
 
     fun map(state: ScheduleState): List<Any> {
         val selectedSchedule = state.selectedSchedule
         val selectedScheduleWeek = selectedSchedule?.weeks?.firstOrNull()
+        val shouldShowEmptyState = !state.isLoading
+                && state.isAfterError && selectedScheduleWeek == null
         return when {
-            (!state.isLoading && state.isAfterError && selectedScheduleWeek == null) -> List(6) {
+            shouldShowEmptyState -> List(DAY_ITEMS_COUNT) {
                 val dayOfWeek = it + 1
                 WorkingDayItem(
                     dayOfWeek = dayOfWeek,
                     items = listOf(SpaceItem.VERTICAL_24, getEmptyStateItem())
                 )
             }
-            selectedSchedule == null || selectedScheduleWeek == null -> List(6) {
+            selectedSchedule == null || selectedScheduleWeek == null -> List(DAY_ITEMS_COUNT) {
                 val dayOfWeek = it + 1
                 WorkingDayItem(
                     dayOfWeek = dayOfWeek,
                     items = listOf(getClassesShimmerItem())
                 )
             }
-            else -> List(6) {
+            else -> List(DAY_ITEMS_COUNT) {
                 val dayOfWeek = it + 1
                 val rawClasses = selectedScheduleWeek.days
                     .find { day -> day.dayOfWeek == dayOfWeek }
@@ -57,14 +63,17 @@ internal object ScheduleClassesListConverter {
         for (e in raw) {
             add(e)
             val classes = e as? Classes ?: continue
-            val notePreviewContent = classes.attachedNotePreview ?: continue
-            add(NotePreview(notePreviewContent, linkedClasses = e))
+            classes.attachedNotePreview?.let { notePreviewContent ->
+                add(NotePreview(notePreviewContent, linkedClasses = e))
+            }
         }
     }
 
     private fun List<Any>.withLunch(): List<Any> = mutableListOf<Any>().apply {
         val raw = this@withLunch
-        val hasSecondAndThirdClasses = raw.any { it is Classes && it.number == 2 } && raw.any { it is Classes && it.number == 3 }
+        val hasSecondAndThirdClasses =
+            raw.any { it is Classes && it.number == CLASSES_BEFORE_LUNCH_NUMBER } &&
+                    raw.any { it is Classes && it.number == CLASSES_AFTER_LUNCH_NUMBER }
         if (hasSecondAndThirdClasses) {
             val indexOfLastSecondClasses = raw.indexOfLast { it is Classes && it.number == 2 }
             raw.forEachIndexed { index, e ->

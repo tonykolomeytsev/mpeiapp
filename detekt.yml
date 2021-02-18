@@ -2,11 +2,6 @@ build:
   maxIssues: 0
   excludeCorrectable: false
   weights:
-  # complexity: 2
-  # LongParameterList: 1
-  # style: 1
-  # comments: 1
-
 config:
   validation: true
   warningsAsErrors: false
@@ -18,19 +13,12 @@ processors:
 
 console-reports:
   active: true
-  exclude:
-    - 'ProjectStatisticsReport'
-    - 'ComplexityReport'
-    - 'NotificationReport'
-    #  - 'FindingsReport'
-    - 'FileBasedFindingsReport'
 
 output-reports:
   active: true
   exclude:
-  # - 'TxtOutputReport'
-  # - 'XmlOutputReport'
-  # - 'HtmlOutputReport'
+    - 'TxtOutputReport'
+    - 'XmlOutputReport'
 
 comments:
   active: true
@@ -109,7 +97,16 @@ complexity:
     ignoreStringsRegex: '$^'
   TooManyFunctions:
     active: true
-    excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
+    excludes:
+      - '**/test/**'
+      - '**/androidTest/**'
+      - '**/commonTest/**'
+      - '**/jvmTest/**'
+      - '**/jsTest/**'
+      - '**/iosTest/**'
+      - '**/common_android/**'
+      - '**/common_mvi/**'
+      - '**/common_cache/**'
     thresholdInFiles: 11
     thresholdInClasses: 11
     thresholdInInterfaces: 11
@@ -195,6 +192,8 @@ formatting:
   MaximumLineLength:
     active: true
     maxLineLength: 80
+    excludes:
+      - '**Test**'
   ModifierOrdering:
     active: true
   MultiLineIfElse:
@@ -300,8 +299,8 @@ naming:
     excludes: ['*.kts']
     rootPackage: ''
   MatchingDeclarationName:
-    active: true
-    mustBeFirst: true
+    active: false
+    mustBeFirst: false
   MemberNameEqualsClassName:
     active: true
     ignoreOverridden: true
@@ -476,7 +475,14 @@ style:
     maxJumpCount: 1
   MagicNumber:
     active: true
-    excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
+    excludes:
+      - '**Test**'
+      - '**/test/**'
+      - '**/androidTest/**'
+      - '**/commonTest/**'
+      - '**/jvmTest/**'
+      - '**/jsTest/**'
+      - '**/iosTest/**'
     ignoreNumbers: ['-1', '0', '1', '2']
     ignoreHashCodeFunction: true
     ignorePropertyDeclaration: false

@@ -20,7 +20,9 @@ import kekmech.ru.mpeiapp.ui.main.di.MainScreenDependencies
 import kekmech.ru.mpeiapp.ui.main.presentation.*
 import org.koin.android.ext.android.inject
 
-class MainFragment : BaseFragment<MainScreenEvent, MainScreenEffect, MainScreenState, MainScreenFeature>(), BackButtonListener {
+class MainFragment :
+    BaseFragment<MainScreenEvent, MainScreenEffect, MainScreenState, MainScreenFeature>(),
+    BackButtonListener {
 
     override val initEvent: MainScreenEvent get() = MainScreenEvent.Wish.Init
     override var layoutId: Int = R.layout.fragment_main

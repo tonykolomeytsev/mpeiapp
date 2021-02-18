@@ -14,13 +14,19 @@ class FavoriteSource(
 
     fun add(favoriteSchedule: FavoriteSchedule) {
         favoriteSchedule.apply {
-            db.fetch("insert into favorite_schedules(grp_num, description, ord) values ('${groupNumber.toBase64()}', '${description.toBase64()}', $order)")
+            db.fetch("""
+                insert into favorite_schedules(grp_num, description, ord) 
+                values ('${groupNumber.toBase64()}', '${description.toBase64()}', $order);
+            """)
         }
     }
 
     fun remove(favoriteSchedule: FavoriteSchedule) {
         favoriteSchedule.apply {
-            db.fetch("delete from favorite_schedules where grp_num like '${groupNumber.toBase64()}';")
+            db.fetch("""
+                delete from favorite_schedules 
+                where grp_num like '${groupNumber.toBase64()}';
+            """)
         }
     }
 

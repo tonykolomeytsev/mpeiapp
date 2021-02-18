@@ -63,7 +63,8 @@ abstract class SwipeToDeleteCallback(
         val isCanceled = dX == 0f && !isCurrentlyActive
 
         if (isCanceled) {
-            clearCanvas(c, itemView.right + dX, itemView.top.toFloat(), itemView.right.toFloat(), itemView.bottom.toFloat())
+            clearCanvas(c, itemView.right + dX, itemView.top.toFloat(),
+                itemView.right.toFloat(), itemView.bottom.toFloat())
             super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
             return
         }
@@ -100,7 +101,8 @@ fun RecyclerView.attachSwipeToDeleteCallback(
     callback: (Any) -> Unit
 ) {
     val baseAdapter = (adapter as? BaseAdapter)
-        ?: error("This function can only be used with RecyclerView with BaseAdapter. Your adapter is ${adapter?.javaClass?.simpleName}.")
+        ?: error("This function can only be used with RecyclerView with BaseAdapter. " +
+                "Your adapter is ${adapter?.javaClass?.simpleName}.")
     val swipeHandler = object : SwipeToDeleteCallback(context) {
 
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {

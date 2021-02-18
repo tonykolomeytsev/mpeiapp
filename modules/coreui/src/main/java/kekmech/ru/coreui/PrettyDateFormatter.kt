@@ -14,6 +14,7 @@ class PrettyDateFormatter(context: Context) {
     private val yesterday = context.getString(R.string.yesterday)
     private val beforeYesterday = context.getString(R.string.before_yesterday)
 
+    @Suppress("MagicNumber")
     fun formatRelative(date: LocalDate): String {
         val now = LocalDate.now()
         val deltaDays = ChronoUnit.DAYS.between(now, date)

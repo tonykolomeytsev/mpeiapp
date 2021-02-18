@@ -15,6 +15,7 @@ internal class WebViewReducer : BaseReducer<WebViewState, WebViewEvent, WebViewE
         is News -> reduceNews(event, state)
     }
 
+    @Suppress("MagicNumber")
     private fun reduceWish(
         event: Wish,
         state: WebViewState
@@ -34,6 +35,7 @@ internal class WebViewReducer : BaseReducer<WebViewState, WebViewEvent, WebViewE
         )
     }
 
+    @Suppress("UnusedPrivateMember")
     private fun reduceNews(
         event: News,
         state: WebViewState

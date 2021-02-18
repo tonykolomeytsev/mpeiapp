@@ -10,6 +10,9 @@ import kekmech.ru.coreui.R
 import kekmech.ru.coreui.databinding.ItemAddActionBinding
 
 private const val ADD_ACTION_DEFAULT_ITEM_ID = 0
+private const val ANIMATION_SCALE_DEFAULT = 1f
+private const val ANIMATION_SCALE_MIN = 0.9f
+private const val ANIMATION_DURATION = 100L
 
 data class AddActionItem(
     val title: String,
@@ -35,16 +38,16 @@ class AddActionViewHolderImpl(
             if (event.action == MotionEvent.ACTION_DOWN) {
                 containerView.clearAnimation()
                 containerView.animate()
-                    .scaleX(0.9f)
-                    .scaleY(0.9f)
-                    .setDuration(100L)
+                    .scaleX(ANIMATION_SCALE_MIN)
+                    .scaleY(ANIMATION_SCALE_MIN)
+                    .setDuration(ANIMATION_DURATION)
                     .start()
             } else {
                 containerView.clearAnimation()
                 containerView.animate()
-                    .scaleX(1f)
-                    .scaleY(1f)
-                    .setDuration(100L)
+                    .scaleX(ANIMATION_SCALE_DEFAULT)
+                    .scaleY(ANIMATION_SCALE_DEFAULT)
+                    .setDuration(ANIMATION_DURATION)
                     .start()
             }
             false
