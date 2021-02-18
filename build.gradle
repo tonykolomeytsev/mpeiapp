@@ -87,8 +87,8 @@ buildscript {
         tinkoff = [
                 pagerindicator      : "ru.tinkoff.scrollingpagerindicator:scrollingpagerindicator:1.2.1"
         ]
-        appVersionName = "1.5.0"
-        appVersionCode = 35
+        appVersionName = "1.6.0"
+        appVersionCode = 36
         gradleDir = "$rootDir/gradle"
     }
 
