@@ -8,4 +8,5 @@ dependencies {
     implementation koin.android
 
     implementation project(path: ":common_di")
+    implementation project(path: ":domain_schedule")
 }
