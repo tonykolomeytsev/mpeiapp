@@ -9,6 +9,19 @@ on:
       - dev
 
 jobs:
+  detekt:
+    name: Run Detekt analyzer
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Detekt
+        uses: natiginfo/action-detekt-all@1.16.0-RC1
+        with:
+          args: --config detekt.yml --jvm-target JVM_1_8 --language-version 1.4 --parallel true --input modules
+
   test:
     name: Run Unit Tests
     runs-on: ubuntu-latest
