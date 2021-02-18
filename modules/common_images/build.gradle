@@ -11,6 +11,8 @@ dependencies {
 
     implementation rx.java
     implementation picasso
+    implementation vividMoney.elmslieCore
+    implementation vividMoney.elmslieAndroid
 
     implementation project(path: ":common_di")
     implementation project(path: ":common_android")

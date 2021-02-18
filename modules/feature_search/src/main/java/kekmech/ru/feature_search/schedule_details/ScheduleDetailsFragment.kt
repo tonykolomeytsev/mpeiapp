@@ -11,7 +11,7 @@ import kekmech.ru.common_android.getArgument
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.withArguments
 import kekmech.ru.common_kotlin.fastLazy
-import kekmech.ru.common_mvi.ui.BaseBottomSheetDialogFragment
+import kekmech.ru.common_mvi.BaseBottomSheetDialogFragment
 import kekmech.ru.common_navigation.BottomTab
 import kekmech.ru.common_navigation.BottomTabsSwitcher
 import kekmech.ru.common_navigation.ClearBackStack
@@ -27,8 +27,8 @@ import kekmech.ru.feature_search.item.ButtonAdapterItem
 import kekmech.ru.feature_search.item.WeekMinItem
 import kekmech.ru.feature_search.item.WeekMinItemBinder
 import kekmech.ru.feature_search.item.WeekMinViewHolderImpl
-import kekmech.ru.feature_search.schedule_details.mvi.*
-import kekmech.ru.feature_search.schedule_details.mvi.ScheduleDetailsEvent.Wish
+import kekmech.ru.feature_search.schedule_details.elm.*
+import kekmech.ru.feature_search.schedule_details.elm.ScheduleDetailsEvent.Wish
 import org.koin.android.ext.android.inject
 
 private const val ARG_RESULT_ITEM = "Arg.Item"
@@ -38,11 +38,9 @@ internal const val ITEM_CLASSES_SHIMMER_ID = 2
 internal const val ITEM_BUTTON_SWITCH = 1
 internal const val ITEM_FAVORITES = 1
 
-internal class ScheduleDetailsFragment : BaseBottomSheetDialogFragment<
-        ScheduleDetailsEvent,
-        ScheduleDetailsEffect,
-        ScheduleDetailsState,
-        ScheduleDetailsFeature>() {
+internal class ScheduleDetailsFragment :
+    BaseBottomSheetDialogFragment<ScheduleDetailsEvent, ScheduleDetailsEffect,
+            ScheduleDetailsState>() {
 
     private val viewBinding by viewBinding(FragmentScheduleDetailsBinding::bind)
     private val adapter by fastLazy { createAdapter() }
@@ -52,10 +50,11 @@ internal class ScheduleDetailsFragment : BaseBottomSheetDialogFragment<
     override val initEvent: ScheduleDetailsEvent get() = Wish.Init
     override var layoutId: Int = R.layout.fragment_schedule_details
 
-    override fun createFeature() = inject<ScheduleDetailsFeatureFactory>().value
+    override fun createStore() = inject<ScheduleDetailsFeatureFactory>().value
         .create(getArgument(ARG_RESULT_ITEM))
 
-    override fun onViewCreatedInternal(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         with(viewBinding) {
             recyclerView.layoutManager = LinearLayoutManager(requireContext())
             recyclerView.adapter = adapter

@@ -6,7 +6,6 @@ import androidx.annotation.StringRes
 import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseItemBinder
-import kekmech.ru.common_android.viewbinding.unit
 import kekmech.ru.coreui.R
 import kekmech.ru.coreui.databinding.ItemToggleBinding
 
@@ -40,11 +39,13 @@ class ToggleViewHolderImpl(
         viewBinding.textViewTitle.setText(titleRes)
     }
 
-    override fun setIsChecked(isChecked: Boolean, withAnimation: Boolean) = viewBinding.unit {
-        if (withAnimation) toggle.post {
-            toggle.isChecked = isChecked
-        } else {
-            toggle.isChecked = isChecked
+    override fun setIsChecked(isChecked: Boolean, withAnimation: Boolean) {
+        with(viewBinding) {
+            if (withAnimation) toggle.post {
+                toggle.isChecked = isChecked
+            } else {
+                toggle.isChecked = isChecked
+            }
         }
     }
 

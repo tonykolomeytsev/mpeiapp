@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_adapter.BaseItemBinder
-import kekmech.ru.common_android.viewbinding.unit
 import kekmech.ru.common_schedule.R
 import kekmech.ru.common_schedule.databinding.ItemWeekDaysBinding
 import java.time.LocalDate
@@ -34,11 +33,13 @@ class WeekViewHolderImpl(
     private var adapter: BaseAdapter? = null
     private val viewBinding = ItemWeekDaysBinding.bind(containerView)
 
-    override fun setDays(items: List<Any>) = viewBinding.unit {
-        if (recyclerView.adapter == null) recyclerView.adapter = adapter
-        if (recyclerView.layoutManager == null) recyclerView.layoutManager =
-            GridLayoutManager(containerView.context, DAY_ITEM_SPAN_COUNT)
-        adapter?.update(items)
+    override fun setDays(items: List<Any>) {
+        with(viewBinding) {
+            if (recyclerView.adapter == null) recyclerView.adapter = adapter
+            if (recyclerView.layoutManager == null) recyclerView.layoutManager =
+                GridLayoutManager(containerView.context, DAY_ITEM_SPAN_COUNT)
+            adapter?.update(items)
+        }
     }
 
     override fun setOnDayClickListener(listener: (DayItem) -> Unit) {

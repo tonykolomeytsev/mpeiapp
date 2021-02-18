@@ -6,7 +6,7 @@ import kekmech.ru.coreui.items.PullItem
 import kekmech.ru.coreui.items.SectionHeaderItem
 import kekmech.ru.coreui.items.SpaceItem
 import kekmech.ru.notes.R
-import kekmech.ru.notes.note_list.mvi.NoteListState
+import kekmech.ru.notes.note_list.elm.NoteListState
 
 internal class NoteListConverter(private val context: Context) {
 

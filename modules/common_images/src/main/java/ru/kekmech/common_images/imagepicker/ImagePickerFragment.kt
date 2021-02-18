@@ -14,13 +14,13 @@ import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.views.setMargins
 import kekmech.ru.common_images.R
 import kekmech.ru.common_images.databinding.FragmentImagePickerBinding
-import kekmech.ru.common_mvi.ui.BaseFragment
+import kekmech.ru.common_mvi.BaseFragment
 import kekmech.ru.coreui.items.PullAdapterItem
 import org.koin.android.ext.android.inject
 import ru.kekmech.common_images.imagepicker.adapter.ImageAdapterItem
 import ru.kekmech.common_images.imagepicker.adapter.ImageItem
-import ru.kekmech.common_images.imagepicker.mvi.*
-import ru.kekmech.common_images.imagepicker.mvi.ImagePickerEvent.Wish
+import ru.kekmech.common_images.imagepicker.elm.*
+import ru.kekmech.common_images.imagepicker.elm.ImagePickerEvent.Wish
 import ru.kekmech.common_images.imagepicker.utils.requestStoragePermissionIfNeeded
 import ru.kekmech.common_images.launcher.ImagePickerLauncher
 import ru.kekmech.common_images.launcher.ImageViewerLauncher
@@ -33,17 +33,19 @@ private const val EXPAND_DELAY = 100L
 private const val IMG_SPAN_COUNT = 3
 
 internal class ImagePickerFragment :
-    BaseFragment<ImagePickerEvent, ImagePickerEffect, ImagePickerState, ImagePickerFeature>() {
+    BaseFragment<ImagePickerEvent, ImagePickerEffect, ImagePickerState>() {
 
     private val viewBinding by viewBinding(FragmentImagePickerBinding::bind)
     override val initEvent get() = Wish.Init
-    override var layoutId: Int = R.layout.fragment_image_picker
-    override fun createFeature() = inject<ImagePickerFeatureFactory>().value
-        .create(getArgument(ARG_IMAGE_COUNT), getArgument(ARG_ALREADY_SELECTED_IMAGES))
+    override val layoutId: Int = R.layout.fragment_image_picker
     private val imageViewerLauncher by inject<ImageViewerLauncher>()
     private val adapter by lazy(LazyThreadSafetyMode.NONE) { createAdapter() }
 
-    override fun onViewCreatedInternal(view: View, savedInstanceState: Bundle?) {
+    override fun createStore() = inject<ImagePickerFeatureFactory>().value
+        .create(getArgument(ARG_IMAGE_COUNT), getArgument(ARG_ALREADY_SELECTED_IMAGES))
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         with(viewBinding) {
             recyclerView.adapter = adapter
             val gridLayoutManager = createLayoutManager()
@@ -55,12 +57,12 @@ internal class ImagePickerFragment :
                     if (adapter.itemCount <=
                         gridLayoutManager.findLastVisibleItemPosition() + DEFAULT_VISIBLE_THRESHOLD
                     ) {
-                        feature.accept(Wish.Action.BottomReached)
+                        store.accept(Wish.Action.BottomReached)
                     }
                 }
             })
             buttonAccept.setOnClickListener {
-                feature.accept(Wish.Click.Accept)
+                store.accept(Wish.Click.Accept)
             }
             view.doOnApplyWindowInsets { _, insets, padding ->
                 acceptButtonContainer.updatePadding(bottom = insets.systemWindowInsetBottom + padding.bottom)
@@ -83,7 +85,7 @@ internal class ImagePickerFragment :
             overlayView.setOnClickListener { close() }
         }
         requestStoragePermissionIfNeeded(REQUEST_CODE_STORAGE) {
-            feature.accept(Wish.Action.StoragePermissionGranted)
+            store.accept(Wish.Action.StoragePermissionGranted)
         }
     }
 

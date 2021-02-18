@@ -10,10 +10,9 @@ import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.common_android.*
-import kekmech.ru.common_android.viewbinding.unit
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_kotlin.fastLazy
-import kekmech.ru.common_mvi.ui.BaseFragment
+import kekmech.ru.common_mvi.BaseFragment
 import kekmech.ru.common_navigation.BottomTab
 import kekmech.ru.common_navigation.BottomTabsSwitcher
 import kekmech.ru.common_navigation.showDialog
@@ -25,10 +24,9 @@ import kekmech.ru.feature_search.databinding.FragmentSearchBinding
 import kekmech.ru.feature_search.di.SearchDependencies
 import kekmech.ru.feature_search.item.FilterAdapterItem
 import kekmech.ru.feature_search.item.MapMarkerAdapterItem
-import kekmech.ru.feature_search.main.mvi.SearchEffect
-import kekmech.ru.feature_search.main.mvi.SearchEvent
-import kekmech.ru.feature_search.main.mvi.SearchFeature
-import kekmech.ru.feature_search.main.mvi.SearchState
+import kekmech.ru.feature_search.main.elm.SearchEffect
+import kekmech.ru.feature_search.main.elm.SearchEvent
+import kekmech.ru.feature_search.main.elm.SearchState
 import kekmech.ru.feature_search.schedule_details.ScheduleDetailsFragment
 import org.koin.android.ext.android.inject
 import java.util.concurrent.TimeUnit
@@ -37,16 +35,10 @@ private const val ARG_QUERY = "Arg.Query"
 private const val ARG_FILTER = "Arg.Filter"
 private const val DEFAULT_INPUT_DEBOUNCE = 300L
 
-internal class SearchFragment : BaseFragment<SearchEvent, SearchEffect, SearchState, SearchFeature>() {
+internal class SearchFragment : BaseFragment<SearchEvent, SearchEffect, SearchState>() {
 
     override val initEvent get() = SearchEvent.Wish.Init
     private val dependencies by inject<SearchDependencies>()
-
-    override fun createFeature(): SearchFeature = dependencies.searchFeatureFactory
-        .create(
-            getArgument(ARG_QUERY),
-            getArgument(ARG_FILTER)
-        )
 
     override var layoutId: Int = R.layout.fragment_search
     private val adapter by fastLazy { createAdapter() }
@@ -55,7 +47,14 @@ internal class SearchFragment : BaseFragment<SearchEvent, SearchEffect, SearchSt
     private val bottomTabsSwitcher by inject<BottomTabsSwitcher>()
     private val viewBinding by viewBinding(FragmentSearchBinding::bind)
 
-    override fun onViewCreatedInternal(view: View, savedInstanceState: Bundle?) {
+    override fun createStore() = dependencies.searchFeatureFactory
+        .create(
+            getArgument(ARG_QUERY),
+            getArgument(ARG_FILTER)
+        )
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         view.addSystemVerticalPadding()
         viewBinding.apply {
             navBackButton.setOnClickListener { close() }
@@ -81,7 +80,7 @@ internal class SearchFragment : BaseFragment<SearchEvent, SearchEffect, SearchSt
     }
 
     override fun handleEffect(effect: SearchEffect) = when (effect) {
-        is SearchEffect.SetInitialQuery -> viewBinding.unit {
+        is SearchEffect.SetInitialQuery -> with(viewBinding) {
             searchView.setText(effect.query)
             searchView.setSelection(effect.query.length)
         }

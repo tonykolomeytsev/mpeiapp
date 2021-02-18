@@ -4,7 +4,7 @@ import kekmech.ru.common_android.moscowLocalDate
 import kekmech.ru.coreui.items.*
 import kekmech.ru.domain_notes.dto.Note
 import kekmech.ru.notes.R
-import kekmech.ru.notes.all_notes.mvi.AllNotesState
+import kekmech.ru.notes.all_notes.elm.AllNotesState
 import java.time.temporal.ChronoUnit
 
 private const val SHIMMER_ITEM_COUNT = 3

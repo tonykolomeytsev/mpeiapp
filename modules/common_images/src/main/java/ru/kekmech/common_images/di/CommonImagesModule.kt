@@ -4,8 +4,8 @@ import kekmech.ru.common_di.ModuleProvider
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.bind
 import ru.kekmech.common_images.imagepicker.ImagePickerLauncherImpl
-import ru.kekmech.common_images.imagepicker.mvi.ImagePickerActor
-import ru.kekmech.common_images.imagepicker.mvi.ImagePickerFeatureFactory
+import ru.kekmech.common_images.imagepicker.elm.ImagePickerActor
+import ru.kekmech.common_images.imagepicker.elm.ImagePickerFeatureFactory
 import ru.kekmech.common_images.imagepicker.source.ImageSource
 import ru.kekmech.common_images.imageviewer.ImageViewerLauncherImpl
 import ru.kekmech.common_images.launcher.ImagePickerLauncher

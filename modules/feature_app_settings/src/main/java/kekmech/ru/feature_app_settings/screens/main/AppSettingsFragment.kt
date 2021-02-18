@@ -10,7 +10,7 @@ import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_android.*
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_kotlin.fastLazy
-import kekmech.ru.common_mvi.ui.BaseFragment
+import kekmech.ru.common_mvi.BaseFragment
 import kekmech.ru.common_navigation.addScreenForward
 import kekmech.ru.common_navigation.showDialog
 import kekmech.ru.coreui.attachScrollListenerForAppBarLayoutShadow
@@ -20,37 +20,33 @@ import kekmech.ru.feature_app_settings.databinding.FragmentAppSettingsBinding
 import kekmech.ru.feature_app_settings.di.AppSettingDependencies
 import kekmech.ru.feature_app_settings.screens.favorites.FavoritesFragment
 import kekmech.ru.feature_app_settings.screens.lang.SelectLanguageFragment
-import kekmech.ru.feature_app_settings.screens.main.presentation.AppSettingsEffect
-import kekmech.ru.feature_app_settings.screens.main.presentation.AppSettingsEvent
-import kekmech.ru.feature_app_settings.screens.main.presentation.AppSettingsEvent.Wish
-import kekmech.ru.feature_app_settings.screens.main.presentation.AppSettingsFeature
-import kekmech.ru.feature_app_settings.screens.main.presentation.AppSettingsState
+import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsEffect
+import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsEvent
+import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsEvent.Wish
+import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsFeatureFactory
+import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsState
 import org.koin.android.ext.android.inject
 
 private const val RESULT_SELECTED_LANG = 846583
 private const val ACTIVITY_RECREATION_DELAY = 200L
 
-internal class AppSettingsFragment : BaseFragment<
-        AppSettingsEvent,
-        AppSettingsEffect,
-        AppSettingsState,
-        AppSettingsFeature>(), ActivityResultListener {
+internal class AppSettingsFragment :
+    BaseFragment<AppSettingsEvent, AppSettingsEffect, AppSettingsState>(),
+    ActivityResultListener {
 
     override val initEvent get() = Wish.Init
 
-    private val dependencies by inject<AppSettingDependencies>()
-
-    override fun createFeature() = dependencies.appSettingsFeatureFactory.create()
-
     override var layoutId: Int = R.layout.fragment_app_settings
 
+    private val dependencies by inject<AppSettingDependencies>()
     private val adapter by fastLazy { createAdapter() }
-
     private val analytics by inject<AppSettingsAnalytics>()
-
     private val viewBinding by viewBinding(FragmentAppSettingsBinding::bind)
 
-    override fun onViewCreatedInternal(view: View, savedInstanceState: Bundle?) {
+    override fun createStore() = inject<AppSettingsFeatureFactory>().value.create()
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         viewBinding.apply {
             recyclerView.layoutManager = LinearLayoutManager(requireContext())
             recyclerView.adapter = adapter

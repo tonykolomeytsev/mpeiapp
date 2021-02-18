@@ -11,9 +11,9 @@ import kekmech.ru.feature_dashboard.helpers.TimeDeclensionHelper
 import kekmech.ru.feature_dashboard.helpers.getActualScheduleDayForView
 import kekmech.ru.feature_dashboard.helpers.getNextClassesTimeStatus
 import kekmech.ru.feature_dashboard.items.*
-import kekmech.ru.feature_dashboard.presentation.DashboardState
-import kekmech.ru.feature_dashboard.presentation.NextClassesCondition.NOT_STARTED
-import kekmech.ru.feature_dashboard.presentation.NextClassesCondition.STARTED
+import kekmech.ru.feature_dashboard.elm.DashboardState
+import kekmech.ru.feature_dashboard.elm.NextClassesCondition.NOT_STARTED
+import kekmech.ru.feature_dashboard.elm.NextClassesCondition.STARTED
 import java.time.DayOfWeek
 import java.time.LocalTime
 

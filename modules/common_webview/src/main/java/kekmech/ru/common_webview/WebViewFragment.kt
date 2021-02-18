@@ -14,7 +14,7 @@ import kekmech.ru.common_android.findArgument
 import kekmech.ru.common_android.getArgument
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.withArguments
-import kekmech.ru.common_mvi.ui.BaseFragment
+import kekmech.ru.common_mvi.BaseFragment
 import kekmech.ru.common_navigation.BackButtonListener
 import kekmech.ru.common_webview.databinding.FragmentWebViewBinding
 import kekmech.ru.common_webview.presentation.*

@@ -10,7 +10,7 @@ import kekmech.ru.common_android.getArgument
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.withArguments
 import kekmech.ru.common_kotlin.fastLazy
-import kekmech.ru.common_mvi.ui.BaseFragment
+import kekmech.ru.common_mvi.BaseFragment
 import kekmech.ru.coreui.PrettyDateFormatter
 import kekmech.ru.coreui.attachScrollListenerForAppBarLayoutShadow
 import kekmech.ru.coreui.banner.showBanner
@@ -18,22 +18,21 @@ import kekmech.ru.domain_notes.dto.Note
 import kekmech.ru.notes.R
 import kekmech.ru.notes.databinding.FragmentNoteEditBinding
 import kekmech.ru.notes.di.NotesDependencies
-import kekmech.ru.notes.edit.mvi.NoteEditEffect
-import kekmech.ru.notes.edit.mvi.NoteEditEvent
-import kekmech.ru.notes.edit.mvi.NoteEditEvent.Wish
-import kekmech.ru.notes.edit.mvi.NoteEditFeature
-import kekmech.ru.notes.edit.mvi.NoteEditState
+import kekmech.ru.notes.edit.elm.NoteEditEffect
+import kekmech.ru.notes.edit.elm.NoteEditEvent
+import kekmech.ru.notes.edit.elm.NoteEditEvent.Wish
+import kekmech.ru.notes.edit.elm.NoteEditState
 import org.koin.android.ext.android.inject
 
 private const val ARG_NOTE = "Arg.Note"
 
-internal class NoteEditFragment : BaseFragment<NoteEditEvent, NoteEditEffect, NoteEditState, NoteEditFeature>() {
+internal class NoteEditFragment : BaseFragment<NoteEditEvent, NoteEditEffect, NoteEditState>() {
 
     override val initEvent = Wish.Init
 
     private val dependencies: NotesDependencies by inject()
 
-    override fun createFeature() = dependencies.noteEditFeatureFactory.create(
+    override fun createStore() = dependencies.noteEditFeatureFactory.create(
         note = getArgument(ARG_NOTE)
     )
 
@@ -49,7 +48,8 @@ internal class NoteEditFragment : BaseFragment<NoteEditEvent, NoteEditEffect, No
 
     private val viewBinding by viewBinding(FragmentNoteEditBinding::bind)
 
-    override fun onViewCreatedInternal(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         view.addSystemVerticalPadding()
         viewBinding.apply {
             toolbar.init()

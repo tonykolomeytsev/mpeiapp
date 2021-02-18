@@ -9,7 +9,7 @@ import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_android.*
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_kotlin.fastLazy
-import kekmech.ru.common_mvi.ui.BaseBottomSheetDialogFragment
+import kekmech.ru.common_mvi.BaseBottomSheetDialogFragment
 import kekmech.ru.common_navigation.addScreenForward
 import kekmech.ru.coreui.items.*
 import kekmech.ru.coreui.touch_helpers.attachSwipeToDeleteCallback
@@ -19,11 +19,10 @@ import kekmech.ru.notes.R
 import kekmech.ru.notes.databinding.FragmentNoteListBinding
 import kekmech.ru.notes.di.NotesDependencies
 import kekmech.ru.notes.edit.NoteEditFragment
-import kekmech.ru.notes.note_list.mvi.NoteListEffect
-import kekmech.ru.notes.note_list.mvi.NoteListEvent
-import kekmech.ru.notes.note_list.mvi.NoteListEvent.Wish
-import kekmech.ru.notes.note_list.mvi.NoteListFeature
-import kekmech.ru.notes.note_list.mvi.NoteListState
+import kekmech.ru.notes.note_list.elm.NoteListEffect
+import kekmech.ru.notes.note_list.elm.NoteListEvent
+import kekmech.ru.notes.note_list.elm.NoteListEvent.Wish
+import kekmech.ru.notes.note_list.elm.NoteListState
 import org.koin.android.ext.android.inject
 import java.time.LocalDate
 
@@ -31,18 +30,18 @@ private const val ARG_SELECTED_CLASSES = "Arg.SelectedClasses"
 private const val ARG_SELECTED_DATE = "Arg.SelectedDate"
 
 internal class NoteListFragment :
-    BaseBottomSheetDialogFragment<NoteListEvent, NoteListEffect, NoteListState, NoteListFeature>() {
+    BaseBottomSheetDialogFragment<NoteListEvent, NoteListEffect, NoteListState>() {
 
     override val initEvent = Wish.Init
 
     private val dependencies by inject<NotesDependencies>()
 
-    override fun createFeature() = dependencies.noteListFeatureFactory.create(
+    override fun createStore() = dependencies.noteListFeatureFactory.create(
         selectedClasses = getArgument(ARG_SELECTED_CLASSES),
         selectedDate = getArgument(ARG_SELECTED_DATE)
     )
 
-    override var layoutId = R.layout.fragment_note_list
+    override val layoutId = R.layout.fragment_note_list
 
     private val adapter by fastLazy { createAdapter() }
 
@@ -50,7 +49,8 @@ internal class NoteListFragment :
 
     private val viewBinding by viewBinding(FragmentNoteListBinding::bind)
 
-    override fun onViewCreatedInternal(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         viewBinding.apply {
             recyclerView.layoutManager = LinearLayoutManager(requireContext())
             recyclerView.adapter = adapter

@@ -6,8 +6,8 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import kekmech.ru.bars.R
 import kekmech.ru.common_android.addSystemVerticalPadding
-import kekmech.ru.common_mvi.util.DisposableDelegate
-import kekmech.ru.common_mvi.util.DisposableDelegateImpl
+import kekmech.ru.common_mvi.DisposableDelegate
+import kekmech.ru.common_mvi.DisposableDelegateImpl
 import kekmech.ru.domain_app_settings.AppSettingsFeatureLauncher
 import kekmech.ru.domain_notes.NotesFeatureLauncher
 import kekmech.ru.domain_schedule.GROUP_NUMBER_PATTERN
@@ -44,8 +44,5 @@ internal class BarsFragment : Fragment(R.layout.fragment_bars),
         view.findViewById<View>(R.id.buttonNotes).setOnClickListener {
             notesFeatureLauncher.launchAllNotes()
         }
-//        view.findViewById<View>(R.id.buttonSchedules).setOnClickListener {
-//            /* no-op */
-//        }
     }
 }

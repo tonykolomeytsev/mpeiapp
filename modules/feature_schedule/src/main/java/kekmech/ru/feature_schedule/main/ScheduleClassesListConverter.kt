@@ -7,7 +7,7 @@ import kekmech.ru.coreui.items.SpaceItem
 import kekmech.ru.domain_schedule.dto.Classes
 import kekmech.ru.feature_schedule.R
 import kekmech.ru.feature_schedule.main.item.*
-import kekmech.ru.feature_schedule.main.presentation.ScheduleState
+import kekmech.ru.feature_schedule.main.elm.ScheduleState
 
 private const val CLASSES_BEFORE_LUNCH_NUMBER = 2
 private const val CLASSES_AFTER_LUNCH_NUMBER = 3

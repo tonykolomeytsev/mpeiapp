@@ -4,10 +4,10 @@ import kekmech.ru.common_di.ModuleProvider
 import kekmech.ru.domain_search.SearchFeatureLauncher
 import kekmech.ru.feature_search.main.SearchAnalytics
 import kekmech.ru.feature_search.launcher.SearchFeatureLauncherImpl
-import kekmech.ru.feature_search.main.mvi.SearchActor
-import kekmech.ru.feature_search.main.mvi.SearchFeatureFactory
-import kekmech.ru.feature_search.schedule_details.mvi.ScheduleDetailsActor
-import kekmech.ru.feature_search.schedule_details.mvi.ScheduleDetailsFeatureFactory
+import kekmech.ru.feature_search.main.elm.SearchActor
+import kekmech.ru.feature_search.main.elm.SearchFeatureFactory
+import kekmech.ru.feature_search.schedule_details.elm.ScheduleDetailsActor
+import kekmech.ru.feature_search.schedule_details.elm.ScheduleDetailsFeatureFactory
 import org.koin.dsl.bind
 
 object SearchFeatureModule : ModuleProvider({

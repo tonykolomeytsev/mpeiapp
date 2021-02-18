@@ -9,11 +9,11 @@ import kekmech.ru.domain_schedule.ScheduleService
 import kekmech.ru.domain_schedule.sources.FavoriteSource
 import kekmech.ru.feature_schedule.ScheduleFeatureLauncherImpl
 import kekmech.ru.feature_schedule.find_schedule.FindScheduleAnalytics
-import kekmech.ru.feature_schedule.find_schedule.presentation.FindScheduleActor
-import kekmech.ru.feature_schedule.find_schedule.presentation.FindScheduleFeatureFactory
+import kekmech.ru.feature_schedule.find_schedule.elm.FindScheduleActor
+import kekmech.ru.feature_schedule.find_schedule.elm.FindScheduleFeatureFactory
 import kekmech.ru.feature_schedule.main.ScheduleAnalytics
-import kekmech.ru.feature_schedule.main.presentation.ScheduleActor
-import kekmech.ru.feature_schedule.main.presentation.ScheduleFeatureFactory
+import kekmech.ru.feature_schedule.main.elm.ScheduleActor
+import kekmech.ru.feature_schedule.main.elm.ScheduleFeatureFactory
 import org.koin.dsl.bind
 import retrofit2.Retrofit
 

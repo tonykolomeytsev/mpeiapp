@@ -6,8 +6,10 @@ dependencies {
     implementation androidx.lifecycleExtensions
     implementation google.material
 
-    implementation rx.java
-    implementation rx.android
-
     implementation timber
+    implementation rx.java
+    implementation vividMoney.elmslieCore
+    implementation vividMoney.elmslieAndroid
+
+    implementation project(path: ":common_android")
 }

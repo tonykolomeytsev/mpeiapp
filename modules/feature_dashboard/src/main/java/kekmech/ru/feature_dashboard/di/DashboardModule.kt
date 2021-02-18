@@ -2,9 +2,9 @@ package kekmech.ru.feature_dashboard.di
 
 import kekmech.ru.common_di.ModuleProvider
 import kekmech.ru.feature_dashboard.DashboardAnalytics
-import kekmech.ru.feature_dashboard.presentation.DashboardActor
-import kekmech.ru.feature_dashboard.presentation.DashboardFeatureFactory
-import kekmech.ru.feature_dashboard.presentation.DashboardReducer
+import kekmech.ru.feature_dashboard.elm.DashboardActor
+import kekmech.ru.feature_dashboard.elm.DashboardFeatureFactory
+import kekmech.ru.feature_dashboard.elm.DashboardReducer
 
 object DashboardModule : ModuleProvider({
     single { DashboardDependencies(get(), get(), get(), get(), get(), get()) } // он не просто так single!!!

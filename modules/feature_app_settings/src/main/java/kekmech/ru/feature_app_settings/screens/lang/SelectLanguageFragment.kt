@@ -17,11 +17,13 @@ import kekmech.ru.feature_app_settings.screens.lang.item.LanguageItem
 
 private const val ARG_SELECTED_LANG = "Arg.Lang"
 
-internal class SelectLanguageFragment : BottomSheetDialogFragment(R.layout.fragment_change_language) {
+internal class SelectLanguageFragment : BottomSheetDialogFragment() {
 
     private val viewBinding by viewBinding(FragmentChangeLanguageBinding::bind)
     private val adapter by fastLazy { createAdapter() }
     private val selectLanguage by fastLazy { getArgument<String>(ARG_SELECTED_LANG) }
+
+    override val layoutId: Int = R.layout.fragment_change_language
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

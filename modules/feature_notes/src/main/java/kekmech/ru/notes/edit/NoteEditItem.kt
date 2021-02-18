@@ -6,7 +6,6 @@ import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.common_android.afterTextChanged
 import kekmech.ru.common_android.showKeyboard
-import kekmech.ru.common_android.viewbinding.unit
 import kekmech.ru.domain_notes.dto.Note
 import kekmech.ru.notes.R
 import kekmech.ru.notes.databinding.ItemNoteEditBinding
@@ -27,7 +26,7 @@ internal class NoteEditViewHolderImpl(
         viewBinding.editTextContent.showKeyboard()
     }
 
-    override fun setContent(content: String) = viewBinding.unit {
+    override fun setContent(content: String) = with(viewBinding) {
         val selection = editTextContent.selectionStart to editTextContent.selectionEnd
         editTextContent.setText(content)
         editTextContent.setSelection(selection.first, selection.second)
