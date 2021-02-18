@@ -119,7 +119,7 @@ allprojects {
         detekt
     }
     dependencies {
-        detekt "io.gitlab.arturbosch.detekt:detekt-cli:1.16.0-RC1"
+        detekt "io.gitlab.arturbosch.detekt:detekt-cli:1.15.0"
     }
 }
 
