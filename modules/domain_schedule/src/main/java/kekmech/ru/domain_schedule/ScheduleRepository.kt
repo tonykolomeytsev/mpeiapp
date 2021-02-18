@@ -1,6 +1,7 @@
 package kekmech.ru.domain_schedule
 
 import android.content.SharedPreferences
+import androidx.annotation.RestrictTo
 import io.reactivex.Completable
 import io.reactivex.Single
 import kekmech.ru.common_persistent_cache.orFromPersistentCache
@@ -68,4 +69,6 @@ class ScheduleRepository(
         scheduleName.matches(GROUP_NUMBER_PATTERN) -> ScheduleType.GROUP
         else -> ScheduleType.PERSON
     }
+
+    fun getSelectedScheduleNameForAnalytics() = selectedScheduleName
 }
