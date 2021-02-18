@@ -4,9 +4,9 @@ import kekmech.ru.common_android.moscowLocalDate
 import kekmech.ru.common_android.moscowLocalTime
 import kekmech.ru.domain_schedule.dto.Day
 import kekmech.ru.domain_schedule.dto.Time
-import kekmech.ru.feature_dashboard.presentation.DashboardState
-import kekmech.ru.feature_dashboard.presentation.NextClassesCondition.*
-import kekmech.ru.feature_dashboard.presentation.NextClassesTimeStatus
+import kekmech.ru.feature_dashboard.elm.DashboardState
+import kekmech.ru.feature_dashboard.elm.NextClassesCondition.*
+import kekmech.ru.feature_dashboard.elm.NextClassesTimeStatus
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalDateTime

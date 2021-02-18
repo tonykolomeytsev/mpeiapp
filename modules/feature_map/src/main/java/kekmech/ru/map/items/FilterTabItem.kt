@@ -10,7 +10,7 @@ import kekmech.ru.coreui.items.ClickableItemViewHolder
 import kekmech.ru.coreui.items.ClickableItemViewHolderImpl
 import kekmech.ru.map.R
 import kekmech.ru.map.databinding.ItemFilterTabBinding
-import kekmech.ru.map.presentation.FilterTab
+import kekmech.ru.map.elm.FilterTab
 
 internal data class FilterTabItem(
     @DrawableRes val drawableResId: Int,

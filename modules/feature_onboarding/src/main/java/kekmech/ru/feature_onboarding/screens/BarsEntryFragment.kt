@@ -7,17 +7,12 @@ import androidx.fragment.app.Fragment
 import kekmech.ru.common_android.close
 import kekmech.ru.common_android.hideKeyboard
 import kekmech.ru.common_android.viewbinding.viewBinding
-import kekmech.ru.common_android.withResultFor
-import kekmech.ru.common_navigation.addScreenForward
-import kekmech.ru.common_webview.WebViewFragment
 import kekmech.ru.domain_main_screen.MainScreenLauncher
 import kekmech.ru.feature_onboarding.BarsEntryScreenAnalytics
 import kekmech.ru.feature_onboarding.R
 import kekmech.ru.feature_onboarding.databinding.FragmentBarsEntryBinding
 import org.koin.android.ext.android.inject
 import timber.log.Timber
-
-private const val REQUEST_CODE = 2910
 
 internal class BarsEntryFragment : Fragment(R.layout.fragment_bars_entry) {
 
@@ -37,11 +32,12 @@ internal class BarsEntryFragment : Fragment(R.layout.fragment_bars_entry) {
         }
         viewBinding.buttonStart.setOnClickListener {
             analytics.sendClick("LoginBars")
-            addScreenForward {
-                WebViewFragment
-                    .newInstance("https://bars.mpei.ru/bars_web/", enableJs = true)
-                    .withResultFor(this, REQUEST_CODE)
-            }
+            TODO("Not implemented")
+//            addScreenForward {
+//                WebViewFragment
+//                    .newInstance("https://bars.mpei.ru/bars_web/", enableJs = true)
+//                    .withResultFor(this, REQUEST_CODE)
+//            }
         }
         analytics.sendScreenShown()
     }

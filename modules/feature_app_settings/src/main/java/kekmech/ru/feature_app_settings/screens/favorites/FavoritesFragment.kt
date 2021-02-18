@@ -11,7 +11,7 @@ import kekmech.ru.common_android.addSystemTopPadding
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.withResultFor
 import kekmech.ru.common_kotlin.fastLazy
-import kekmech.ru.common_mvi.ui.BaseFragment
+import kekmech.ru.common_mvi.BaseFragment
 import kekmech.ru.common_navigation.addScreenForward
 import kekmech.ru.coreui.attachScrollListenerForAppBarLayoutShadow
 import kekmech.ru.coreui.items.AddActionAdapterItem
@@ -26,35 +26,31 @@ import kekmech.ru.feature_app_settings.databinding.FragmentFavoritesBinding
 import kekmech.ru.feature_app_settings.di.AppSettingDependencies
 import kekmech.ru.feature_app_settings.screens.edit_favorite.EditFavoriteFragment
 import kekmech.ru.feature_app_settings.screens.favorites.item.HelpBannerAdapterItem
-import kekmech.ru.feature_app_settings.screens.favorites.mvi.FavoritesEffect
-import kekmech.ru.feature_app_settings.screens.favorites.mvi.FavoritesEvent
-import kekmech.ru.feature_app_settings.screens.favorites.mvi.FavoritesEvent.Wish
-import kekmech.ru.feature_app_settings.screens.favorites.mvi.FavoritesFeature
-import kekmech.ru.feature_app_settings.screens.favorites.mvi.FavoritesState
+import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesEffect
+import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesEvent
+import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesEvent.Wish
+import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesState
 import org.koin.android.ext.android.inject
 
 private const val REQUEST_NEW_FAVORITE = 312344
 private const val REQUEST_EDIT_FAVORITE = 312345
 
 internal class FavoritesFragment :
-    BaseFragment<FavoritesEvent, FavoritesEffect, FavoritesState, FavoritesFeature>(),
+    BaseFragment<FavoritesEvent, FavoritesEffect, FavoritesState>(),
     ActivityResultListener {
 
     override val initEvent get() = Wish.Init
-
     override var layoutId: Int = R.layout.fragment_favorites
 
     private val dependencies by inject<AppSettingDependencies>()
-
     private val analytics by inject<FavoritesAnalytics>()
-
-    override fun createFeature(): FavoritesFeature = dependencies.favoritesFeatureFactory.create()
-
     private val adapter by fastLazy { createAdapter() }
-
     private val viewBinding by viewBinding(FragmentFavoritesBinding::bind)
 
-    override fun onViewCreatedInternal(view: View, savedInstanceState: Bundle?) {
+    override fun createStore() = dependencies.favoritesFeatureFactory.create()
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         view.addSystemTopPadding()
         viewBinding.apply {
             toolbar.init(R.string.favorites_screen_title)

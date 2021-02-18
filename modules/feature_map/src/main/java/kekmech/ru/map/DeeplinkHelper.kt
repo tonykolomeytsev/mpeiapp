@@ -2,11 +2,12 @@ package kekmech.ru.map
 
 import android.os.Handler
 import android.os.Looper
+import kekmech.ru.map.elm.MapEffect
 import kekmech.ru.map.ext.toFilterTab
 import kekmech.ru.map.launcher.DeeplinkDelegate
-import kekmech.ru.map.presentation.MapEvent
-import kekmech.ru.map.presentation.MapFeature
-import kekmech.ru.map.presentation.MapState
+import kekmech.ru.map.elm.MapEvent
+import kekmech.ru.map.elm.MapState
+import vivid.money.elmslie.core.store.Store
 
 private const val DEFAULT_NAVIGATION_DELAY = 1000L
 
@@ -15,7 +16,7 @@ internal object DeeplinkHelper {
     fun handleDeeplinkIfNecessary(
         deeplinkDelegate: DeeplinkDelegate,
         state: MapState,
-        feature: MapFeature
+        feature: Store<MapEvent, MapEffect, MapState>
     ) {
         selectPlaceIfNecessary(deeplinkDelegate, state, feature)
         selectTabIfNecessary(deeplinkDelegate, state, feature)
@@ -25,7 +26,7 @@ internal object DeeplinkHelper {
     private fun selectPlaceIfNecessary(
         deeplinkDelegate: DeeplinkDelegate,
         state: MapState,
-        feature: MapFeature
+        feature: Store<MapEvent, MapEffect, MapState>
     ) {
         state.googleMapMarkers.takeIf { it.isNotEmpty() } ?: return
         state.map ?: return
@@ -47,7 +48,7 @@ internal object DeeplinkHelper {
     private fun selectTabIfNecessary(
         deeplinkDelegate: DeeplinkDelegate,
         state: MapState,
-        feature: MapFeature
+        feature: Store<MapEvent, MapEffect, MapState>
     ) {
         state.googleMapMarkers.takeIf { it.isNotEmpty() } ?: return
         state.map ?: return

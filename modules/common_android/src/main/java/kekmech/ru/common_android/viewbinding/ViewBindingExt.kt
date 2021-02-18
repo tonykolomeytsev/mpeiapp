@@ -55,7 +55,5 @@ inline fun <F : DialogFragment, VB : ViewBinding> DialogFragment.viewBinding(
     return viewBinding { fragment: F -> vbFactory(viewProvider(fragment)) }
 }
 
-inline fun <T : ViewBinding> T.unit(block: T.() -> Unit) { apply(block) }
-
 fun <T : View> ReusableViewHolder.lazyBinding(@IdRes idRes: Int) =
     lazy(LazyThreadSafetyMode.NONE) { containerView.findViewById<T>(idRes) }

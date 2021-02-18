@@ -3,4 +3,5 @@ apply from: "$gradleDir/kotlin-module.gradle"
 dependencies {
     implementation androidx.appcompat
     implementation androidx.coreKtx
+    implementation rx.java
 }

@@ -5,7 +5,7 @@ import kekmech.ru.domain_app_settings.AppSettingsFeatureLauncher
 import kekmech.ru.domain_notes.NotesFeatureLauncher
 import kekmech.ru.domain_schedule.ScheduleFeatureLauncher
 import kekmech.ru.domain_search.SearchFeatureLauncher
-import kekmech.ru.feature_dashboard.presentation.DashboardFeatureFactory
+import kekmech.ru.feature_dashboard.elm.DashboardFeatureFactory
 
 data class DashboardDependencies(
     val dashboardFeatureFactory: DashboardFeatureFactory,

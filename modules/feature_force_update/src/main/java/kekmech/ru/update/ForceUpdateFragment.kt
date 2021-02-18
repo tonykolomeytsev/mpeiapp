@@ -15,10 +15,12 @@ import kekmech.ru.update.databinding.FragmentForceUpdateBinding
 
 private const val ARG_INFO = "Arg.Info"
 
-internal class ForceUpdateFragment : BottomSheetDialogFragment(R.layout.fragment_force_update) {
+internal class ForceUpdateFragment : BottomSheetDialogFragment() {
 
     private val viewBinding by viewBinding(FragmentForceUpdateBinding::bind)
     private val forceUpdateInfo by fastLazy { getArgument<ForceUpdateInfo>(ARG_INFO) }
+
+    override val layoutId: Int = R.layout.fragment_force_update
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

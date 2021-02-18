@@ -16,7 +16,7 @@ import kekmech.ru.common_android.doOnApplyWindowInsets
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.views.setMargins
 import kekmech.ru.common_kotlin.fastLazy
-import kekmech.ru.common_mvi.ui.BaseFragment
+import kekmech.ru.common_mvi.BaseFragment
 import kekmech.ru.common_navigation.NeedToUpdate
 import kekmech.ru.coreui.items.PullAdapterItem
 import kekmech.ru.coreui.items.SectionHeaderAdapterItem
@@ -30,8 +30,8 @@ import kekmech.ru.map.ext.toMarkerType
 import kekmech.ru.map.items.FilterTabItem
 import kekmech.ru.map.items.MapMarkerAdapterItem
 import kekmech.ru.map.items.TabBarAdapterItem
-import kekmech.ru.map.presentation.*
-import kekmech.ru.map.presentation.MapEvent.Wish
+import kekmech.ru.map.elm.*
+import kekmech.ru.map.elm.MapEvent.Wish
 import kekmech.ru.map.view.ControlledScrollingLayoutManager
 import kekmech.ru.map.view.MarkersBitmapFactory
 import org.koin.android.ext.android.inject
@@ -39,10 +39,10 @@ import org.koin.android.ext.android.inject
 private const val MAP_CREATION_DELAY = 50L
 private const val MAX_OVERLAY_ALPHA = 0.5f
 
-internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState, MapFeature>(), NeedToUpdate {
+internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState>(), NeedToUpdate {
 
     override val initEvent = Wish.Init
-    override var layoutId = R.layout.fragment_map
+    override val layoutId = R.layout.fragment_map
 
     private val dependencies by inject<MapDependencies>()
     private val adapter by fastLazy { createAdapter() }
@@ -50,9 +50,10 @@ internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState, MapFeat
     private val markersBitmapFactory: MarkersBitmapFactory by inject()
     private val viewBinding by viewBinding(FragmentMapBinding::bind)
 
-    override fun createFeature() = dependencies.mapFeatureFactory.create()
+    override fun createStore() = dependencies.mapFeatureFactory.create()
 
-    override fun onViewCreatedInternal(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         Handler(Looper.getMainLooper()).postDelayed({ createMap() }, MAP_CREATION_DELAY)
         viewBinding.recyclerView.layoutManager = ControlledScrollingLayoutManager(requireContext())
         viewBinding.recyclerView.adapter = adapter

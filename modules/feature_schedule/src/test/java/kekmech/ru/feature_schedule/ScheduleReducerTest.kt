@@ -6,9 +6,9 @@ import kekmech.ru.domain_app_settings.AppSettings
 import kekmech.ru.domain_schedule.dto.Day
 import kekmech.ru.domain_schedule.dto.Schedule
 import kekmech.ru.domain_schedule.dto.Week
-import kekmech.ru.feature_schedule.main.presentation.*
+import kekmech.ru.feature_schedule.main.elm.*
 import kekmech.ru.common_schedule.utils.TimeUtils.createWeekItem
-import kekmech.ru.feature_schedule.main.presentation.ScheduleEvent.Wish
+import kekmech.ru.feature_schedule.main.elm.ScheduleEvent.Wish
 import org.junit.jupiter.api.Assertions.assertEquals
 import java.time.DayOfWeek
 import java.time.LocalDate
@@ -22,7 +22,7 @@ class ScheduleReducerTest : BehaviorSpec({
         When("View created") {
             val result = reducer.reduce(Wish.Init, state)
             Then("Should start loading data") {
-                assertEquals(result.actions, listOf(ScheduleAction.LoadSchedule(0)))
+                assertEquals(result.commands, listOf(ScheduleAction.LoadSchedule(0)))
             }
             Then("Ui state changed") {
                 assertEquals(
@@ -77,7 +77,7 @@ class ScheduleReducerTest : BehaviorSpec({
             Then("Load schedule for weekOffset == -1") {
                 assertEquals(
                     listOf(ScheduleAction.LoadSchedule(-1)),
-                    result.actions
+                    result.commands
                 )
             }
         }
@@ -97,7 +97,7 @@ class ScheduleReducerTest : BehaviorSpec({
             Then("Load schedule for weekOffset == 1") {
                 assertEquals(
                     listOf(ScheduleAction.LoadSchedule(1)),
-                    result.actions
+                    result.commands
                 )
             }
         }

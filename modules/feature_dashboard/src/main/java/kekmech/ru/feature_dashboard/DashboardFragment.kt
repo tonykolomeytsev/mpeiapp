@@ -10,44 +10,45 @@ import kekmech.ru.common_android.*
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.views.setProgressViewOffset
 import kekmech.ru.common_kotlin.fastLazy
-import kekmech.ru.common_mvi.ui.BaseFragment
+import kekmech.ru.common_mvi.BaseFragment
 import kekmech.ru.common_navigation.BottomTab
 import kekmech.ru.common_navigation.NeedToUpdate
 import kekmech.ru.coreui.banner.showBanner
 import kekmech.ru.coreui.items.*
-import kekmech.ru.domain_app_settings.AppSettingsFeatureLauncher
 import kekmech.ru.domain_app_settings.AppSettingsFeatureLauncher.SubPage.FAVORITES
 import kekmech.ru.domain_schedule.CONTINUE_TO_BACK_STACK_WITH_RESULT
 import kekmech.ru.domain_schedule.dto.Classes
 import kekmech.ru.feature_dashboard.databinding.FragmentDashboardBinding
 import kekmech.ru.feature_dashboard.di.DashboardDependencies
 import kekmech.ru.feature_dashboard.items.*
-import kekmech.ru.feature_dashboard.presentation.DashboardEffect
-import kekmech.ru.feature_dashboard.presentation.DashboardEvent
-import kekmech.ru.feature_dashboard.presentation.DashboardEvent.Wish
-import kekmech.ru.feature_dashboard.presentation.DashboardFeature
-import kekmech.ru.feature_dashboard.presentation.DashboardState
+import kekmech.ru.feature_dashboard.elm.DashboardEffect
+import kekmech.ru.feature_dashboard.elm.DashboardEvent
+import kekmech.ru.feature_dashboard.elm.DashboardEvent.Wish
+import kekmech.ru.feature_dashboard.elm.DashboardState
 import org.koin.android.ext.android.inject
+import vivid.money.elmslie.core.store.Store
 
 private const val REQUEST_CODE_UPDATE_DATA = 2910
 internal const val SECTION_NOTES_ACTION = 1
 internal const val SECTION_FAVORITES_ACTION = 2
 
-class DashboardFragment : BaseFragment<DashboardEvent, DashboardEffect, DashboardState, DashboardFeature>(),
+class DashboardFragment :
+    BaseFragment<DashboardEvent, DashboardEffect, DashboardState>(),
     ActivityResultListener,
     NeedToUpdate {
 
     override val initEvent = Wish.Init
     private val dependencies by inject<DashboardDependencies>()
 
-    override fun createFeature() = dependencies.dashboardFeatureFactory.create()
-
     override var layoutId = R.layout.fragment_dashboard
     private val adapter by fastLazy { createAdapter() }
     private val analytics: DashboardAnalytics by inject()
     private val viewBinding by viewBinding(FragmentDashboardBinding::bind)
 
-    override fun onViewCreatedInternal(view: View, savedInstanceState: Bundle?) {
+    override fun createStore() = dependencies.dashboardFeatureFactory.create()
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         viewBinding.apply {
             recyclerView.layoutManager = LinearLayoutManager(requireContext())
             recyclerView.adapter = adapter

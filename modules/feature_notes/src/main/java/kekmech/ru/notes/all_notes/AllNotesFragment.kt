@@ -9,48 +9,42 @@ import kekmech.ru.common_analytics.addScrollAnalytics
 import kekmech.ru.common_android.*
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_kotlin.fastLazy
-import kekmech.ru.common_mvi.ui.BaseFragment
+import kekmech.ru.common_mvi.BaseFragment
 import kekmech.ru.common_navigation.addScreenForward
 import kekmech.ru.coreui.attachScrollListenerForAppBarLayoutShadow
 import kekmech.ru.coreui.items.*
 import kekmech.ru.coreui.touch_helpers.attachSwipeToDeleteCallback
 import kekmech.ru.domain_notes.dto.Note
 import kekmech.ru.notes.R
-import kekmech.ru.notes.all_notes.mvi.AllNotesEffect
-import kekmech.ru.notes.all_notes.mvi.AllNotesEvent
-import kekmech.ru.notes.all_notes.mvi.AllNotesEvent.Wish
-import kekmech.ru.notes.all_notes.mvi.AllNotesFeature
-import kekmech.ru.notes.all_notes.mvi.AllNotesState
+import kekmech.ru.notes.all_notes.elm.AllNotesEffect
+import kekmech.ru.notes.all_notes.elm.AllNotesEvent
+import kekmech.ru.notes.all_notes.elm.AllNotesEvent.Wish
+import kekmech.ru.notes.all_notes.elm.AllNotesState
 import kekmech.ru.notes.databinding.FragmentAllNotesBinding
 import kekmech.ru.notes.di.NotesDependencies
 import kekmech.ru.notes.edit.NoteEditFragment
 import org.koin.android.ext.android.inject
-import ru.kekmech.common_images.launcher.ImagePickerLauncher
 
 private const val NOTE_EDIT_REQUEST_CODE = 54692
-private const val PICK_IMAGE_REQUEST_CODE = 54693
 
 private const val ARG_SELECTED_NOTE = "Arg.Note"
 
 internal class AllNotesFragment :
-    BaseFragment<AllNotesEvent, AllNotesEffect, AllNotesState, AllNotesFeature>(),
+    BaseFragment<AllNotesEvent, AllNotesEffect, AllNotesState>(),
     ActivityResultListener {
 
     override val initEvent = Wish.Init
-
-    private val dependencies: NotesDependencies by inject()
-
-    override fun createFeature() = dependencies.allNotesFeatureFactory.create()
-
     override var layoutId: Int = R.layout.fragment_all_notes
 
+    private val dependencies: NotesDependencies by inject()
     private val analytics: AllNotesAnalytics by inject()
-
     private val adapter by fastLazy { createAdapter() }
-
     private val viewBinding by viewBinding(FragmentAllNotesBinding::bind)
 
-    override fun onViewCreatedInternal(view: View, savedInstanceState: Bundle?) {
+    override fun createStore() = dependencies.allNotesFeatureFactory.create()
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         view.addSystemVerticalPadding()
         viewBinding.apply {
             toolbar.init()
@@ -91,11 +85,7 @@ internal class AllNotesFragment :
         },
         SectionHeaderAdapterItem(),
         ShimmerAdapterItem(0, R.layout.item_note_shimmer),
-        EmptyStateAdapterItem(),
-        AddActionAdapterItem {
-            inject<ImagePickerLauncher>().value
-                .launch(PICK_IMAGE_REQUEST_CODE, this, alreadySelectedImages = selectedImages)
-        }
+        EmptyStateAdapterItem()
     )
 
     private fun navigateToNoteEdit(note: Note) = addScreenForward {
@@ -103,14 +93,9 @@ internal class AllNotesFragment :
             .withResultFor(this, NOTE_EDIT_REQUEST_CODE)
     }
 
-    private var selectedImages = arrayListOf<String>()
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == NOTE_EDIT_REQUEST_CODE) {
             feature.accept(Wish.Init)
-        }
-        if (requestCode == PICK_IMAGE_REQUEST_CODE) {
-            selectedImages = data!!
-                .getStringArrayListExtra(ImagePickerLauncher.EXTRA_SELECTED_IMAGES)!!
         }
     }
 

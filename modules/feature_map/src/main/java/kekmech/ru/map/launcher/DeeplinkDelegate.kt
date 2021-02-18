@@ -1,6 +1,6 @@
 package kekmech.ru.map.launcher
 
-import kekmech.ru.map.presentation.FilterTab
+import kekmech.ru.map.elm.FilterTab
 
 internal class DeeplinkDelegate {
     private var placeUid: String? = null

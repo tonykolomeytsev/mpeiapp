@@ -5,7 +5,7 @@ import kekmech.ru.feature_app_settings.BuildConfig
 import kekmech.ru.feature_app_settings.R
 import kekmech.ru.feature_app_settings.screens.main.AppSettingsFragment.Companion.ITEM_GITHUB
 import kekmech.ru.feature_app_settings.screens.main.AppSettingsFragment.Companion.ITEM_SUPPORT
-import kekmech.ru.feature_app_settings.screens.main.presentation.AppSettingsState
+import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsState
 
 internal class AppSettingsListConverter {
 
