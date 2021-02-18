@@ -122,8 +122,6 @@ coroutines:
     active: false
   RedundantSuspendModifier:
     active: false
-  SleepInsteadOfDelay:
-    active: false
   SuspendFunWithFlowReturnType:
     active: false
 
@@ -362,8 +360,6 @@ potential-bugs:
     active: true
   EqualsWithHashCodeExist:
     active: true
-  ExitOutsideMain:
-    active: false
   ExplicitGarbageCollectionCall:
     active: true
   HasPlatformType:
@@ -423,11 +419,6 @@ style:
   DataClassContainsFunctions:
     active: false
     conversionFunctionPrefix: 'to'
-  DataClassShouldBeImmutable:
-    active: false
-  DestructuringDeclarationWithTooManyEntries:
-    active: false
-    maxDestructuringEntries: 3
   EqualsNullCall:
     active: true
   EqualsOnSignatureLine:
@@ -461,7 +452,6 @@ style:
   FunctionOnlyReturningConstant:
     active: true
     ignoreOverridableFunction: true
-    ignoreActualFunction: true
     excludedFunctions: 'describeContents'
     excludeAnnotatedFunction: ['dagger.Provides']
   LibraryCodeMustSpecifyReturnType:
@@ -493,7 +483,6 @@ style:
     ignoreNamedArgument: true
     ignoreEnums: false
     ignoreRanges: false
-    ignoreExtensionFunctions: true
   MandatoryBracesIfStatements:
     active: false
   MandatoryBracesLoops:
@@ -508,8 +497,6 @@ style:
     active: true
   ModifierOrder:
     active: true
-  MultilineLambdaItParameter:
-    active: false
   NestedClassesVisibility:
     active: true
   NewLineAtEndOfFile:
