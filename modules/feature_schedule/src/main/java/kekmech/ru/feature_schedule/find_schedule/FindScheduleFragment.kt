@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import com.google.android.material.chip.Chip
+import kekmech.ru.common_analytics.ext.screenAnalytics
 import kekmech.ru.common_android.*
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_kotlin.fastLazy
@@ -32,7 +33,7 @@ internal class FindScheduleFragment :
 
     private val dependencies by inject<ScheduleDependencies>()
     private val onboardingFeatureLauncher by fastLazy { dependencies.onboardingFeatureLauncher }
-    private val analytics: FindScheduleAnalytics by inject()
+    private val analytics by screenAnalytics("FindSchedule")
     private val viewBinding by viewBinding(FragmentFindScheduleBinding::bind)
 
     override fun createStore() = inject<FindScheduleFeatureFactory>().value.create(
@@ -51,11 +52,10 @@ internal class FindScheduleFragment :
             }
             groupText.addTextChangedListener(GroupFormatTextWatcher(groupText))
             buttonContinue.setOnClickListener {
-                analytics.sendClick("Continue")
+                analytics.sendClick("FindContinue")
                 feature.accept(Wish.Click.Continue(groupText.text?.toString().orEmpty()))
             }
         }
-        analytics.sendScreenShown()
     }
 
     override fun handleEffect(effect: FindScheduleEffect) = when (effect) {
@@ -89,6 +89,7 @@ internal class FindScheduleFragment :
                     val chip = inflater.inflate(R.layout.item_search_result, this, false) as Chip
                     chip.text = result.name
                     chip.setOnClickListener {
+                        analytics.sendClick("ClickAutocomplete")
                         viewBinding.groupText.setText(result.name)
                         viewBinding.groupText.setSelection(result.name.length)
                     }

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import kekmech.ru.common_adapter.BaseAdapter
+import kekmech.ru.common_analytics.ext.screenAnalytics
 import kekmech.ru.common_android.addSystemVerticalPadding
 import kekmech.ru.common_android.closeWithSuccess
 import kekmech.ru.common_android.getArgument
@@ -29,24 +30,19 @@ private const val ARG_NOTE = "Arg.Note"
 internal class NoteEditFragment : BaseFragment<NoteEditEvent, NoteEditEffect, NoteEditState>() {
 
     override val initEvent = Wish.Init
+    override var layoutId: Int = R.layout.fragment_note_edit
 
     private val dependencies: NotesDependencies by inject()
+    private val analytics by screenAnalytics("NoteEdit")
+    private val adapter by fastLazy {
+        BaseAdapter(NoteEditAdapterItem(::onNoteContentChanged))
+    }
+    private val formatter by fastLazy { PrettyDateFormatter(requireContext()) }
+    private val viewBinding by viewBinding(FragmentNoteEditBinding::bind)
 
     override fun createStore() = dependencies.noteEditFeatureFactory.create(
         note = getArgument(ARG_NOTE)
     )
-
-    override var layoutId: Int = R.layout.fragment_note_edit
-
-    private val analytics: NoteEditAnalytics by inject()
-
-    private val adapter by fastLazy {
-        BaseAdapter(NoteEditAdapterItem(::onNoteContentChanged))
-    }
-
-    private val formatter by fastLazy { PrettyDateFormatter(requireContext()) }
-
-    private val viewBinding by viewBinding(FragmentNoteEditBinding::bind)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -63,7 +59,6 @@ internal class NoteEditFragment : BaseFragment<NoteEditEvent, NoteEditEffect, No
             recyclerView.itemAnimator = null
             recyclerView.attachScrollListenerForAppBarLayoutShadow(appBarLayout)
         }
-        analytics.sendScreenShown()
     }
 
     override fun render(state: NoteEditState) {

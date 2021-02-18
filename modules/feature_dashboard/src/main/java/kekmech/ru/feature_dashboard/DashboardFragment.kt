@@ -6,6 +6,7 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_analytics.addScrollAnalytics
+import kekmech.ru.common_analytics.ext.screenAnalytics
 import kekmech.ru.common_android.*
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.views.setProgressViewOffset
@@ -42,7 +43,7 @@ class DashboardFragment :
 
     override var layoutId = R.layout.fragment_dashboard
     private val adapter by fastLazy { createAdapter() }
-    private val analytics: DashboardAnalytics by inject()
+    private val analytics by screenAnalytics("Dashboard")
     private val viewBinding by viewBinding(FragmentDashboardBinding::bind)
 
     override fun createStore() = dependencies.dashboardFeatureFactory.create()
@@ -62,7 +63,6 @@ class DashboardFragment :
                 }
             }
         }
-        analytics.sendScreenShown()
     }
 
     override fun render(state: DashboardState) {
@@ -135,11 +135,13 @@ class DashboardFragment :
         },
         BannerAdapterItem(
             onClickListener = {
+                analytics.sendClick("DashboardFeatureBannerOpen")
                 closeFeatureBanner()
                 dependencies.bottomTabsSwitcher.changeTab(BottomTab.PROFILE)
                 dependencies.appSettingsFeatureLauncher.launch(FAVORITES)
             },
             onCloseListener = {
+                analytics.sendClick("DashboardFeatureBannerClose")
                 closeFeatureBanner()
             }
         ),
@@ -149,7 +151,7 @@ class DashboardFragment :
     )
 
     private fun clickOnClasses(it: Classes) {
-        analytics.sendClick("Classes")
+        analytics.sendClick("ClickClasses")
         feature.accept(Wish.Click.OnClasses(it))
     }
 

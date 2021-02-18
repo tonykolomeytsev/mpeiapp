@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import kekmech.ru.common_adapter.BaseAdapter
+import kekmech.ru.common_analytics.ext.screenAnalytics
 import kekmech.ru.common_android.ActivityResultListener
 import kekmech.ru.common_android.addSystemBottomPadding
 import kekmech.ru.common_android.addSystemTopPadding
@@ -43,7 +44,7 @@ internal class FavoritesFragment :
     override var layoutId: Int = R.layout.fragment_favorites
 
     private val dependencies by inject<AppSettingDependencies>()
-    private val analytics by inject<FavoritesAnalytics>()
+    private val analytics by screenAnalytics("Favorites")
     private val adapter by fastLazy { createAdapter() }
     private val viewBinding by viewBinding(FragmentFavoritesBinding::bind)
 
@@ -63,7 +64,6 @@ internal class FavoritesFragment :
                 feature.accept(Wish.Click.DeleteSchedule((it as FavoriteScheduleItem).value))
             }
         }
-        analytics.sendScreenShown()
     }
 
     override fun render(state: FavoritesState) {

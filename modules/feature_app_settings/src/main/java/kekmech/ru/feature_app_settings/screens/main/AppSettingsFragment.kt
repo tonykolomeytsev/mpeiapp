@@ -7,6 +7,7 @@ import android.os.Looper
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import kekmech.ru.common_adapter.BaseAdapter
+import kekmech.ru.common_analytics.ext.screenAnalytics
 import kekmech.ru.common_android.*
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_kotlin.fastLazy
@@ -40,7 +41,7 @@ internal class AppSettingsFragment :
 
     private val dependencies by inject<AppSettingDependencies>()
     private val adapter by fastLazy { createAdapter() }
-    private val analytics by inject<AppSettingsAnalytics>()
+    private val analytics by screenAnalytics("AppSettings")
     private val viewBinding by viewBinding(FragmentAppSettingsBinding::bind)
 
     override fun createStore() = inject<AppSettingsFeatureFactory>().value.create()
@@ -55,7 +56,6 @@ internal class AppSettingsFragment :
             appBarLayout.addSystemTopPadding()
             toolbar.init(R.string.app_settings_screen_title)
         }
-        analytics.sendScreenShown()
     }
 
     override fun render(state: AppSettingsState) {

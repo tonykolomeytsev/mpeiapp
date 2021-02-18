@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import kekmech.ru.common_analytics.ext.screenAnalytics
 import kekmech.ru.common_android.close
 import kekmech.ru.common_android.fragment.BottomSheetDialogFragment
 import kekmech.ru.common_android.getArgument
@@ -19,6 +20,7 @@ internal class ForceUpdateFragment : BottomSheetDialogFragment() {
 
     private val viewBinding by viewBinding(FragmentForceUpdateBinding::bind)
     private val forceUpdateInfo by fastLazy { getArgument<ForceUpdateInfo>(ARG_INFO) }
+    private val analytics by screenAnalytics("ForceUpdate")
 
     override val layoutId: Int = R.layout.fragment_force_update
 
@@ -26,9 +28,13 @@ internal class ForceUpdateFragment : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         viewBinding.apply {
             buttonUpdateNow.setOnClickListener {
+                analytics.sendClick("UpdateNow")
                 startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(forceUpdateInfo.updateUrl)))
             }
-            buttonUpdateLater.setOnClickListener { close() }
+            buttonUpdateLater.setOnClickListener {
+                analytics.sendClick("UpdateLater")
+                close()
+            }
             textDescription.text = forceUpdateInfo.shortDescription
         }
     }
