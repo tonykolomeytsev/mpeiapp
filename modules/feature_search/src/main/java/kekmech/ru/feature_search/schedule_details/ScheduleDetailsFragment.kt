@@ -6,6 +6,7 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseAdapter
+import kekmech.ru.common_analytics.ext.screenAnalytics
 import kekmech.ru.common_android.close
 import kekmech.ru.common_android.getArgument
 import kekmech.ru.common_android.viewbinding.viewBinding
@@ -46,6 +47,7 @@ internal class ScheduleDetailsFragment :
     private val adapter by fastLazy { createAdapter() }
     private val router by inject<Router>()
     private val bottomTabsSwitcher by inject<BottomTabsSwitcher>()
+    private val analytics by screenAnalytics("SearchScheduleDetails")
 
     override val initEvent: ScheduleDetailsEvent get() = Wish.Init
     override var layoutId: Int = R.layout.fragment_schedule_details
@@ -89,11 +91,15 @@ internal class ScheduleDetailsFragment :
         ShimmerAdapterItem(ITEM_WEEK_SHIMMER_ID, R.layout.item_week_shimmer),
         ShimmerAdapterItem(ITEM_CLASSES_SHIMMER_ID, R.layout.item_classes_shimmer),
         ButtonAdapterItem(ITEM_BUTTON_SWITCH, R.layout.item_button) {
+            analytics.sendClick("SwitchSchedule")
             feature.accept(Wish.Click.SwitchSchedule)
         },
         TextWithIconAdapterItem {
             when (it.itemId) {
-                ITEM_FAVORITES -> feature.accept(Wish.Click.Favorites)
+                ITEM_FAVORITES -> {
+                    analytics.sendClick("AddToFavorites")
+                    feature.accept(Wish.Click.Favorites)
+                }
                 else -> Unit
             }
         },

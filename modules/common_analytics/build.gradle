@@ -5,6 +5,7 @@ dependencies {
     implementation androidx.viewPager2
     implementation firebase.analytics
     implementation koin.core
+    implementation koin.android
 
     implementation project(path: ":common_di")
 }

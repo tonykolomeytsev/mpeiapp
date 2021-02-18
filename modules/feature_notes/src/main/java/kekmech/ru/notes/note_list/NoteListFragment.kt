@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import kekmech.ru.common_adapter.BaseAdapter
+import kekmech.ru.common_analytics.ext.screenAnalytics
 import kekmech.ru.common_android.*
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_kotlin.fastLazy
@@ -33,21 +34,17 @@ internal class NoteListFragment :
     BaseBottomSheetDialogFragment<NoteListEvent, NoteListEffect, NoteListState>() {
 
     override val initEvent = Wish.Init
+    override val layoutId = R.layout.fragment_note_list
 
     private val dependencies by inject<NotesDependencies>()
+    private val adapter by fastLazy { createAdapter() }
+    private val analytics by screenAnalytics("NoteList")
+    private val viewBinding by viewBinding(FragmentNoteListBinding::bind)
 
     override fun createStore() = dependencies.noteListFeatureFactory.create(
         selectedClasses = getArgument(ARG_SELECTED_CLASSES),
         selectedDate = getArgument(ARG_SELECTED_DATE)
     )
-
-    override val layoutId = R.layout.fragment_note_list
-
-    private val adapter by fastLazy { createAdapter() }
-
-    private val analytics: NoteListAnalytics by inject()
-
-    private val viewBinding by viewBinding(FragmentNoteListBinding::bind)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -59,7 +56,6 @@ internal class NoteListFragment :
                 feature.accept(Wish.Action.DeleteNote(note as Note))
             }
         }
-        analytics.sendScreenShown()
     }
 
     override fun onCancel(dialog: DialogInterface) {

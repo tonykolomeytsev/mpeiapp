@@ -7,7 +7,6 @@ import kekmech.ru.domain_map.MapFeatureLauncher
 import kekmech.ru.domain_map.MapPersistentCache
 import kekmech.ru.domain_map.MapRepository
 import kekmech.ru.domain_map.MapService
-import kekmech.ru.map.MapAnalytics
 import kekmech.ru.map.launcher.DeeplinkDelegate
 import kekmech.ru.map.launcher.MapFeatureLauncherImpl
 import kekmech.ru.map.elm.MapActor
@@ -27,7 +26,6 @@ object MapModule : ModuleProvider({
     factory { MapFeatureFactory(get(), get()) } bind MapFeatureFactory::class
     factory { MapActor(get()) } bind MapActor::class
     factory { MapDependencies(get(), get()) } bind MapDependencies::class
-    factory { MapAnalytics(get()) } bind MapAnalytics::class
     factory { MarkersBitmapFactory(androidContext(), get()) } bind MarkersBitmapFactory::class
     factory { MapPersistentCache(get(), get()) } bind MapPersistentCache::class
     factory { MapFeatureLauncherImpl(get()) } bind MapFeatureLauncher::class

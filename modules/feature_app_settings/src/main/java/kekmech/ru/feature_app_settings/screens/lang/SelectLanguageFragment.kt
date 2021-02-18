@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import kekmech.ru.common_adapter.BaseAdapter
+import kekmech.ru.common_analytics.ext.screenAnalytics
 import kekmech.ru.common_android.*
 import kekmech.ru.common_android.fragment.BottomSheetDialogFragment
 import kekmech.ru.common_android.viewbinding.viewBinding
@@ -22,6 +23,7 @@ internal class SelectLanguageFragment : BottomSheetDialogFragment() {
     private val viewBinding by viewBinding(FragmentChangeLanguageBinding::bind)
     private val adapter by fastLazy { createAdapter() }
     private val selectLanguage by fastLazy { getArgument<String>(ARG_SELECTED_LANG) }
+    private val analytics by screenAnalytics("SelectLanguage")
 
     override val layoutId: Int = R.layout.fragment_change_language
 
@@ -51,6 +53,7 @@ internal class SelectLanguageFragment : BottomSheetDialogFragment() {
         SpaceAdapterItem(),
         TextAdapterItem(),
         LanguageAdapterItem {
+            analytics.sendClick("SelectLanguage_${it.languageCode}")
             if (it.languageCode == selectLanguage) {
                 closeWithSuccess()
             } else {

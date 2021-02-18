@@ -9,6 +9,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_adapter.BaseItemBinder
+import kekmech.ru.common_analytics.ext.screenAnalytics
 import kekmech.ru.common_android.*
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_kotlin.fastLazy
@@ -43,7 +44,7 @@ internal class SearchFragment : BaseFragment<SearchEvent, SearchEffect, SearchSt
     override var layoutId: Int = R.layout.fragment_search
     private val adapter by fastLazy { createAdapter() }
     private val filterItemsAdapter by fastLazy { createFilterItemsAdapter() }
-    private val analytics by inject<SearchAnalytics>()
+    private val analytics by screenAnalytics("Search")
     private val bottomTabsSwitcher by inject<BottomTabsSwitcher>()
     private val viewBinding by viewBinding(FragmentSearchBinding::bind)
 
@@ -71,7 +72,6 @@ internal class SearchFragment : BaseFragment<SearchEvent, SearchEffect, SearchSt
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             filterItemsRecycler.adapter = filterItemsAdapter
         }
-        analytics.sendScreenShown()
     }
 
     override fun render(state: SearchState) {
@@ -110,6 +110,7 @@ internal class SearchFragment : BaseFragment<SearchEvent, SearchEffect, SearchSt
                     vh.setMainText(model.name)
                     vh.setLabel(model.description)
                     vh.setOnClickListener {
+                        analytics.sendClick("ScheduleDetails")
                         openScheduleDetails(model)
                     }
                 }
@@ -120,6 +121,7 @@ internal class SearchFragment : BaseFragment<SearchEvent, SearchEffect, SearchSt
 
     private fun createFilterItemsAdapter() = BaseAdapter(
         FilterAdapterItem {
+            analytics.sendClick("SearchFilter_${it.type}")
             feature.accept(SearchEvent.Wish.Action.SelectFilter(it))
         }
     )

@@ -4,11 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import kekmech.ru.common_analytics.ext.screenAnalytics
 import kekmech.ru.common_android.close
 import kekmech.ru.common_android.hideKeyboard
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.domain_main_screen.MainScreenLauncher
-import kekmech.ru.feature_onboarding.BarsEntryScreenAnalytics
 import kekmech.ru.feature_onboarding.R
 import kekmech.ru.feature_onboarding.databinding.FragmentBarsEntryBinding
 import org.koin.android.ext.android.inject
@@ -17,7 +17,7 @@ import timber.log.Timber
 internal class BarsEntryFragment : Fragment(R.layout.fragment_bars_entry) {
 
     private val mainScreenLauncher: MainScreenLauncher by inject()
-    private val analytics: BarsEntryScreenAnalytics by inject()
+    private val analytics by screenAnalytics("OnboardingBarsEntry")
     private val viewBinding by viewBinding(FragmentBarsEntryBinding::bind)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -39,7 +39,6 @@ internal class BarsEntryFragment : Fragment(R.layout.fragment_bars_entry) {
 //                    .withResultFor(this, REQUEST_CODE)
 //            }
         }
-        analytics.sendScreenShown()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

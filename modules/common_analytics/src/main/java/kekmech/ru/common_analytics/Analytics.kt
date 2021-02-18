@@ -17,7 +17,7 @@ interface Analytics {
     fun sendCustomAction(actionName: String)
 }
 
-class AnalyticsImpl(
+internal class AnalyticsImpl(
     private val wrapper: AnalyticsWrapper,
     override val screenName: String
 ) : Analytics {

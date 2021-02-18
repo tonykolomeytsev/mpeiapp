@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_analytics.addScrollAnalytics
+import kekmech.ru.common_analytics.ext.screenAnalytics
 import kekmech.ru.common_android.ActivityResultListener
 import kekmech.ru.common_android.addSystemTopPadding
 import kekmech.ru.common_android.getStringArray
@@ -48,7 +49,7 @@ internal class ScheduleFragment :
     private val viewPagerAdapter by fastLazy { createViewPagerAdapter() }
     private val weeksScrollAdapter by fastLazy { createWeekScrollAdapter() }
     private val weeksScrollHelper by fastLazy { createWeekDaysHelper() }
-    private val analytics: ScheduleAnalytics by inject()
+    private val analytics by screenAnalytics("Schedule")
     private val viewBinding by viewBinding(FragmentScheduleBinding::bind)
 
     // for viewPager sliding debounce
@@ -78,7 +79,6 @@ internal class ScheduleFragment :
             appBarLayout.addSystemTopPadding()
             fab.setOnClickListener { feature.accept(Wish.Click.OnFAB) }
         }
-        analytics.sendScreenShown()
     }
 
     override fun handleEffect(effect: ScheduleEffect) = when (effect) {
@@ -159,7 +159,7 @@ internal class ScheduleFragment :
     )
 
     private fun onClassesClick(classes: Classes) {
-        analytics.sendClick("Classes")
+        analytics.sendClick("ClickClasses")
         feature.accept(Wish.Click.OnClassesClick(classes))
     }
 

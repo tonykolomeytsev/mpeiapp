@@ -6,6 +6,7 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_analytics.addScrollAnalytics
+import kekmech.ru.common_analytics.ext.screenAnalytics
 import kekmech.ru.common_android.*
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_kotlin.fastLazy
@@ -37,7 +38,7 @@ internal class AllNotesFragment :
     override var layoutId: Int = R.layout.fragment_all_notes
 
     private val dependencies: NotesDependencies by inject()
-    private val analytics: AllNotesAnalytics by inject()
+    private val analytics by screenAnalytics("AllNotes")
     private val adapter by fastLazy { createAdapter() }
     private val viewBinding by viewBinding(FragmentAllNotesBinding::bind)
 
@@ -48,7 +49,11 @@ internal class AllNotesFragment :
         view.addSystemVerticalPadding()
         viewBinding.apply {
             toolbar.init()
-            toolbar.setOnMenuItemClickListener { searchNotes(); true }
+            toolbar.setOnMenuItemClickListener {
+                analytics.sendClick("SearchNotes")
+                searchNotes()
+                true
+            }
             recyclerView.layoutManager = LinearLayoutManager(requireContext())
             recyclerView.adapter = adapter
             recyclerView.attachScrollListenerForAppBarLayoutShadow(appBarLayout)
@@ -58,7 +63,6 @@ internal class AllNotesFragment :
                 feature.accept(Wish.Action.DeleteNote(note as Note))
             }
         }
-        analytics.sendScreenShown()
     }
 
     override fun render(state: AllNotesState) {

@@ -8,13 +8,10 @@ import kekmech.ru.domain_notes.sources.CachedNotesSource
 import kekmech.ru.domain_notes.sources.NotesSource
 import kekmech.ru.domain_notes.sources.NotesSourceImpl
 import kekmech.ru.notes.NotesFeatureLauncherImpl
-import kekmech.ru.notes.all_notes.AllNotesAnalytics
 import kekmech.ru.notes.all_notes.elm.AllNotesActor
 import kekmech.ru.notes.all_notes.elm.AllNotesFeatureFactory
-import kekmech.ru.notes.edit.NoteEditAnalytics
 import kekmech.ru.notes.edit.elm.NoteEditActor
 import kekmech.ru.notes.edit.elm.NoteEditFeatureFactory
-import kekmech.ru.notes.note_list.NoteListAnalytics
 import kekmech.ru.notes.note_list.elm.NoteListActor
 import kekmech.ru.notes.note_list.elm.NoteListFeatureFactory
 import org.koin.dsl.bind
@@ -34,8 +31,4 @@ object NotesModule : ModuleProvider({
 
     factory { AllNotesFeatureFactory(get()) } bind AllNotesFeatureFactory::class
     factory { AllNotesActor(get()) } bind AllNotesActor::class
-
-    factory { NoteListAnalytics(get()) } bind NoteListAnalytics::class
-    factory { NoteEditAnalytics(get()) } bind NoteEditAnalytics::class
-    factory { AllNotesAnalytics(get()) } bind AllNotesAnalytics::class
 })
