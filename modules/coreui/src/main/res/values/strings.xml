@@ -215,6 +215,7 @@
     <string name="app_settings_section_github">Завести Issue или Pull Request</string>
     <string name="app_settings_section_lang">Язык приложения</string>
     <string name="app_settings_section_lang_description">Иногда после смены языка требуется перезапустить приложение</string>
+    <string name="app_settings_app_version">MpeiX для Android v%s</string>
 
     <string name="favorites_screen_title">Избранные расписания</string>
     <string name="favorites_empty_state_title">Ни одно расписание не добавлено в избранные</string>

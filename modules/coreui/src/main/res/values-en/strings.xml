@@ -213,6 +213,7 @@
     <string name="app_settings_section_github">Create an Issue or Pull Request</string>
     <string name="app_settings_section_lang">App language</string>
     <string name="app_settings_section_lang_description">Sometimes after changing the language, you need to restart the application</string>
+    <string name="app_settings_app_version">MpeiX for Android v%s</string>
 
     <string name="favorites_screen_title">Favorite schedules</string>
     <string name="favorites_empty_state_title">No schedule has been added to favorites</string>
