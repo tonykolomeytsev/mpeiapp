@@ -1,17 +1,18 @@
 package kekmech.ru.feature_schedule.main.item
 
 import android.view.View
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.common_android.openLinkExternal
+import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_schedule.items.ClassesAdapterItem
 import kekmech.ru.common_schedule.items.LunchAdapterItem
 import kekmech.ru.common_schedule.items.SelfStudyAdapterItem
 import kekmech.ru.coreui.items.EmptyStateAdapterItem
 import kekmech.ru.coreui.items.NotePreviewAdapterItem
+import kekmech.ru.coreui.items.ShimmerAdapterItem
 import kekmech.ru.coreui.items.SpaceAdapterItem
 import kekmech.ru.domain_schedule.dto.Classes
 import kekmech.ru.feature_schedule.R
@@ -30,11 +31,9 @@ internal data class WorkingDayItem(
 )
 
 internal interface WorkingDayViewHolder {
-    fun setItems(list: List<Any>)
-    fun initAdapter(
-        recycledViewPool: RecyclerView.RecycledViewPool,
-        onClickListener: (Classes) -> Unit
-    )
+    fun update(list: List<Any>)
+    fun setRecycledViewPool(recycledViewPool: RecyclerView.RecycledViewPool)
+    fun setOnClickListener(listener: (Classes) -> Unit)
     fun addScrollListener(listener: (Int) -> Unit)
 }
 
@@ -42,33 +41,36 @@ internal class WorkingDayViewHolderImpl(
     private val containerView: View
 ) : WorkingDayViewHolder, RecyclerView.ViewHolder(containerView) {
 
-    private var adapter: BaseAdapter? = null
+    private val adapter by fastLazy { createAdapter() }
     private val viewBinding = ItemWorkingDayBinding.bind(containerView)
+    private var clickListener: (Classes) -> Unit = {}
 
-    override fun setItems(list: List<Any>) {
-        adapter?.update(list)
+    init {
+        viewBinding.recyclerView.adapter = adapter
     }
 
-    override fun initAdapter(
-        recycledViewPool: RecyclerView.RecycledViewPool,
-        onClickListener: (Classes) -> Unit
-    ) {
-        adapter = BaseAdapter(
-            ClassesAdapterItem(containerView.context, onClickListener), // viewType = 0
-            SelfStudyAdapterItem(),
-            LunchAdapterItem { containerView.context.openLinkExternal("mpeix://map?tab=FOOD") },
-            ClassesShimmerAdapterItem(),
-            WindowAdapterItem(),
-            EmptyStateAdapterItem(),
-            SpaceAdapterItem(),
-            NotePreviewAdapterItem(onClickListener)
-        )
-        viewBinding.apply {
-            recyclerView.adapter = adapter
-            recyclerView.layoutManager = LinearLayoutManager(containerView.context)
-            recyclerView.setRecycledViewPool(recycledViewPool)
-        }
+    override fun update(list: List<Any>) {
+        adapter.update(list)
     }
+
+    override fun setOnClickListener(listener: (Classes) -> Unit) {
+        clickListener = listener
+    }
+
+    override fun setRecycledViewPool(recycledViewPool: RecyclerView.RecycledViewPool) {
+        viewBinding.recyclerView.setRecycledViewPool(recycledViewPool)
+    }
+
+    private fun createAdapter() = BaseAdapter(
+        ClassesAdapterItem(containerView.context, onClickListener = { clickListener(it) }),
+        SelfStudyAdapterItem(),
+        LunchAdapterItem { containerView.context.openLinkExternal("mpeix://map?tab=FOOD") },
+        WindowAdapterItem(),
+        EmptyStateAdapterItem(),
+        SpaceAdapterItem(),
+        NotePreviewAdapterItem(onClickListener = { clickListener(it) }),
+        ShimmerAdapterItem(0, R.layout.item_working_day_shimmer)
+    )
 
     override fun addScrollListener(listener: (Int) -> Unit) {
         viewBinding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -86,9 +88,10 @@ internal class WorkingDayItemBinder(
 ) : BaseItemBinder<WorkingDayViewHolder, WorkingDayItem>() {
 
     override fun bind(vh: WorkingDayViewHolder, model: WorkingDayItem, position: Int) {
-        vh.initAdapter(recycledViewPool, onClickListener)
+        vh.setRecycledViewPool(recycledViewPool)
+        vh.setOnClickListener(onClickListener)
         vh.addScrollListener(onScrollClasses)
-        vh.setItems(model.items)
+        vh.update(model.items)
     }
 
     override fun update(
@@ -97,7 +100,7 @@ internal class WorkingDayItemBinder(
         position: Int,
         payloads: List<Any>
     ) {
-        vh.setItems(model.items)
+        vh.update(model.items)
     }
 }
 
