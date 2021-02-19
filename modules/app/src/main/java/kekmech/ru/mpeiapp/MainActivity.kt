@@ -14,6 +14,7 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import kekmech.ru.common_android.onActivityResult
 import kekmech.ru.common_navigation.BackButtonListener
 import kekmech.ru.common_navigation.NavigationHolder
+import kekmech.ru.common_network.device_id.DeviceIdProvider
 import kekmech.ru.domain_app_settings.AppSettings
 import kekmech.ru.domain_main_screen.MainScreenLauncher
 import kekmech.ru.domain_onboarding.OnboardingFeatureLauncher
@@ -28,6 +29,7 @@ class MainActivity : AppCompatActivity() {
     private val onboardingFeatureLauncher: OnboardingFeatureLauncher by inject()
     private val mainScreenLauncher: MainScreenLauncher by inject()
     private val deeplinkHandlersProcessor: DeeplinkHandlersProcessor by inject()
+    private val deviceIdProvider: DeviceIdProvider by inject()
 
     @Suppress("MagicNumber")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +40,9 @@ class MainActivity : AppCompatActivity() {
         } catch (e: GooglePlayServicesNotAvailableException) {
             e.printStackTrace()
         }
-        FirebaseAnalytics.getInstance(this)
+        FirebaseAnalytics.getInstance(this).apply {
+            setUserId(deviceIdProvider.getDeviceId())
+        }
 
         setTheme()
         setContentView(R.layout.activity_main)
