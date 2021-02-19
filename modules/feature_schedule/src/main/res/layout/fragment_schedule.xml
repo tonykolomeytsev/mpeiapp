@@ -1,59 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:clipToPadding="false">
 
     <com.google.android.material.appbar.AppBarLayout
-            app:layout_constraintTop_toTopOf="parent"
             android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/colorWhite"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.Group
                 android:id="@+id/appBarLayoutGroup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:constraint_referenced_ids="textViewHeader,textViewDescription,recyclerView"
                 android:visibility="invisible"
-                tools:visibility="visible"
-                />
+                app:constraint_referenced_ids="textViewHeader,textViewDescription,recyclerView"
+                tools:visibility="visible" />
 
         <TextView
-                style="@style/H2"
                 android:id="@+id/textViewHeader"
+                style="@style/H2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
                 android:layout_marginTop="12dp"
-                tools:text="Вторник, 7 мая"/>
+                android:layout_marginEnd="16dp"
+                tools:text="Вторник, 7 мая" />
 
         <TextView
-                style="@style/H6.Gray70"
                 android:id="@+id/textViewDescription"
+                style="@style/H6.Gray70"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="8dp"
-                tools:text="Сейчас идет четная неделя №12"/>
+                tools:text="Сейчас идет четная неделя №12" />
 
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
-                android:orientation="horizontal"
                 android:clipToPadding="false"
-                tools:layoutManager="LinearLayoutManager"
+                android:orientation="horizontal"
+                app:layoutManager="LinearLayoutManager"
                 tools:itemCount="6"
-                tools:listitem="@layout/item_day"/>
+                tools:listitem="@layout/item_day" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -61,29 +59,29 @@
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@id/appBarLayout"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/appBarLayout" />
 
     <View
             android:layout_width="match_parent"
             android:layout_height="8dp"
             android:background="@drawable/background_white_gradient"
-            app:layout_constraintTop_toBottomOf="@id/appBarLayout"/>
+            app:layout_constraintTop_toBottomOf="@id/appBarLayout" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginBottom="16dp"
             android:layout_marginEnd="16dp"
-            app:backgroundTint="@color/colorMain"
+            android:layout_marginBottom="16dp"
+            android:text="К следующей неделе"
             android:textColor="@color/colorWhite"
+            android:tooltipText="@string/schedule_fab_tooltip"
+            app:backgroundTint="@color/colorMain"
             app:icon="@drawable/ic_next_schedule"
             app:iconTint="@color/colorWhite"
-            android:text="К следующей неделе"
-            android:tooltipText="@string/schedule_fab_tooltip"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
