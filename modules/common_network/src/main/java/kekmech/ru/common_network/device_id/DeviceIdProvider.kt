@@ -3,7 +3,7 @@ package kekmech.ru.common_network.device_id
 import android.content.Context
 import java.util.*
 
-internal class DeviceIdProvider(private val context: Context) {
+class DeviceIdProvider(private val context: Context) {
 
     @Volatile
     private var deviceId: String? = null

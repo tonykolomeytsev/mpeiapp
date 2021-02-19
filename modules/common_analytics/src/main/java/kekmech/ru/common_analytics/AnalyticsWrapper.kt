@@ -57,7 +57,7 @@ internal class AnalyticsWrapper(
         }
         val scheduleName = scheduleRepository.getSelectedScheduleNameForAnalytics()
         if (scheduleName.isNotBlank()) {
-            bundle.putString("schedule_name", scheduleName)
+            setUserProperty("schedule_name", scheduleName)
         }
         logEvent(name, bundle)
     }
