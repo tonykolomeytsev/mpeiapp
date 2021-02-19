@@ -59,7 +59,7 @@ internal class AppSettingsFragment :
     }
 
     override fun render(state: AppSettingsState) {
-        adapter.update(AppSettingsListConverter().map(state))
+        adapter.update(AppSettingsListConverter().map(state, requireContext()))
     }
 
     override fun handleEffect(effect: AppSettingsEffect) = when (effect) {
@@ -99,7 +99,8 @@ internal class AppSettingsFragment :
         SectionTextAdapterItem(),
         SpaceAdapterItem(),
         BottomLabeledTextAdapterItem { onItemClick(it.itemId) },
-        RightLabeledTextAdapterItem { onItemClick(it.itemId) }
+        RightLabeledTextAdapterItem { onItemClick(it.itemId) },
+        TextAdapterItem(R.layout.item_app_version)
     )
 
     private fun onItemClick(itemId: Int?) = when (itemId) {
