@@ -1,36 +1,42 @@
 package kekmech.ru.feature_schedule.main.elm
 
 import kekmech.ru.common_android.moscowLocalDate
+import kekmech.ru.common_kotlin.mutableLinkedHashMap
 import kekmech.ru.common_schedule.items.DayItem
-import kekmech.ru.common_schedule.items.WeekItem
+import kekmech.ru.common_schedule.utils.atStartOfWeek
 import kekmech.ru.domain_app_settings.AppSettings
 import kekmech.ru.domain_schedule.dto.Classes
 import kekmech.ru.domain_schedule.dto.Schedule
 import java.time.LocalDate
 import java.util.*
 
+private const val SCHEDULE_RAM_CACHE_CAPACITY = 5
+
 internal data class ScheduleState(
-    val isFirstLoading: Boolean = true,
+    val isAfterError: Boolean = false,
+    val schedule: MutableMap<Int, Schedule> = mutableLinkedHashMap(SCHEDULE_RAM_CACHE_CAPACITY),
     val weekOffset: Int = 0,
-    val isLoading: Boolean = true,
-    val schedule: MutableMap<Int, Schedule> = mutableMapOf(), // weekOffset -> schedule
-    val currentWeekMonday: LocalDate? = null,
-    val selectedDay: DayItem = DayItem(moscowLocalDate(), 0, true),
-    val weekItems: HashMap<Int, WeekItem> = hashMapOf(),
+    val selectedDate: LocalDate = moscowLocalDate(),
     val hash: String = "",
     val appSettings: AppSettings,
-    val isAfterError: Boolean = false,
-    val isNavigationFabVisible: Boolean = true,
-    val isNavigationFabCurrentWeek: Boolean = true
+    val isNavigationFabVisible: Boolean = true
 ) {
     /**
      * Get weekOfSemester number by weekOffset
      * @param n - weekOffset
      */
-    val weekOfSemester get() = schedule[0]?.weeks?.firstOrNull()?.weekOfSemester?.plus(weekOffset)
+    val weekOfSemester get() = schedule[weekOffset]?.weeks?.firstOrNull()?.weekOfSemester
+        ?: schedule[0]?.weeks?.firstOrNull()?.weekOfSemester?.plus(weekOffset)
 
-    val selectedSchedule get() = schedule[selectedDay.weekOffset]
+    val selectedSchedule get() = schedule[weekOffset]
+
+    val isOnCurrentWeek get() = weekOffset == 0
 }
+
+internal data class NavigationFabState(
+    val isVisible: Boolean = true,
+    val isOnCurrentWeek: Boolean = true
+)
 
 internal sealed class ScheduleEvent {
 

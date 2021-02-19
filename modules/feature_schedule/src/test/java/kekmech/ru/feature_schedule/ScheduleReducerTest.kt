@@ -131,35 +131,6 @@ class ScheduleReducerTest : BehaviorSpec({
                 )
             ))
         )
-        private val INITIAL_WEEK_ITEMS get() = hashMapOf(
-            -3 to createWeekItem(-3, CURRENT_MONDAY.minusWeeks(3)),
-            -2 to createWeekItem(-2, CURRENT_MONDAY.minusWeeks(2)),
-            -1 to createWeekItem(-1, CURRENT_MONDAY.minusWeeks(1)),
-            0 to createWeekItem(0, CURRENT_MONDAY),
-            1 to createWeekItem(1, CURRENT_MONDAY.plusWeeks(1)),
-            2 to createWeekItem(2, CURRENT_MONDAY.plusWeeks(2)),
-            3 to createWeekItem(3, CURRENT_MONDAY.plusWeeks(3))
-        )
-        private val AFTER_SCROLL_BACK_WEEK_ITEMS get() = hashMapOf(
-            -4 to createWeekItem(-4, CURRENT_MONDAY.minusWeeks(4)),
-            -3 to createWeekItem(-3, CURRENT_MONDAY.minusWeeks(3)),
-            -2 to createWeekItem(-2, CURRENT_MONDAY.minusWeeks(2)),
-            -1 to createWeekItem(-1, CURRENT_MONDAY.minusWeeks(1)),
-            0 to createWeekItem(0, CURRENT_MONDAY),
-            1 to createWeekItem(1, CURRENT_MONDAY.plusWeeks(1)),
-            2 to createWeekItem(2, CURRENT_MONDAY.plusWeeks(2)),
-            3 to createWeekItem(3, CURRENT_MONDAY.plusWeeks(3))
-        )
-        private val AFTER_SCROLL_FORWARD_WEEK_ITEMS get() = hashMapOf(
-            -3 to createWeekItem(-3, CURRENT_MONDAY.minusWeeks(3)),
-            -2 to createWeekItem(-2, CURRENT_MONDAY.minusWeeks(2)),
-            -1 to createWeekItem(-1, CURRENT_MONDAY.minusWeeks(1)),
-            0 to createWeekItem(0, CURRENT_MONDAY),
-            1 to createWeekItem(1, CURRENT_MONDAY.plusWeeks(1)),
-            2 to createWeekItem(2, CURRENT_MONDAY.plusWeeks(2)),
-            3 to createWeekItem(3, CURRENT_MONDAY.plusWeeks(3)),
-            4 to createWeekItem(4, CURRENT_MONDAY.plusWeeks(4))
-        )
         private val AFTER_LOADING_STATE = INITIAL_STATE.copy(
             isFirstLoading = false,
             isLoading = false,
@@ -168,8 +139,7 @@ class ScheduleReducerTest : BehaviorSpec({
             currentWeekMonday = CURRENT_MONDAY,
             selectedDay = INITIAL_STATE.selectedDay
                 .takeIf { it.date.dayOfWeek != DayOfWeek.SUNDAY }
-                ?: INITIAL_STATE.selectedDay.plusDays(-1),
-            weekItems = INITIAL_WEEK_ITEMS
+                ?: INITIAL_STATE.selectedDay.plusDays(-1)
         )
         private fun getActualSelectedDay(): DayItem {
             val state = INITIAL_STATE

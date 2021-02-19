@@ -5,6 +5,7 @@ import kekmech.ru.common_schedule.items.LunchItem
 import kekmech.ru.common_schedule.items.SelfStudyItem
 import kekmech.ru.coreui.items.EmptyStateItem
 import kekmech.ru.coreui.items.NotePreview
+import kekmech.ru.coreui.items.ShimmerItem
 import kekmech.ru.coreui.items.SpaceItem
 import kekmech.ru.domain_schedule.dto.Classes
 import kekmech.ru.feature_schedule.R
@@ -20,8 +21,7 @@ internal object ScheduleClassesListConverter {
     fun map(state: ScheduleState): List<Any> {
         val selectedSchedule = state.selectedSchedule
         val selectedScheduleWeek = selectedSchedule?.weeks?.firstOrNull()
-        val shouldShowEmptyState = !state.isLoading
-                && state.isAfterError && selectedScheduleWeek == null
+        val shouldShowEmptyState = state.isAfterError && selectedScheduleWeek == null
         return when {
             shouldShowEmptyState -> List(DAY_ITEMS_COUNT) {
                 val dayOfWeek = it + 1
@@ -34,7 +34,7 @@ internal object ScheduleClassesListConverter {
                 val dayOfWeek = it + 1
                 WorkingDayItem(
                     dayOfWeek = dayOfWeek,
-                    items = listOf(getClassesShimmerItem())
+                    items = listOf(ShimmerItem(0))
                 )
             }
             else -> List(DAY_ITEMS_COUNT) {

@@ -1,4 +1,4 @@
-package kekmech.ru.common_schedule.items
+package kekmech.ru.feature_schedule.main.item
 
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
@@ -6,8 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_adapter.BaseItemBinder
-import kekmech.ru.common_schedule.R
-import kekmech.ru.common_schedule.databinding.ItemWeekDaysBinding
+import kekmech.ru.common_schedule.items.DayAdapterItem
+import kekmech.ru.common_schedule.items.DayItem
+import kekmech.ru.feature_schedule.R
+import kekmech.ru.feature_schedule.databinding.ItemWeekBinding
 import java.time.LocalDate
 
 private const val DAY_ITEM_SPAN_COUNT = 6
@@ -31,7 +33,7 @@ class WeekViewHolderImpl(
 
     private var onDayClickListener: (DayItem) -> Unit = {}
     private var adapter: BaseAdapter? = null
-    private val viewBinding = ItemWeekDaysBinding.bind(containerView)
+    private val viewBinding = ItemWeekBinding.bind(containerView)
 
     override fun setDays(items: List<Any>) {
         with(viewBinding) {
@@ -80,7 +82,7 @@ class WeekAdapterItem(
     onDayClickListener: (DayItem) -> Unit
 ) : AdapterItem<WeekViewHolder, WeekItem>(
     isType = { it is WeekItem },
-    layoutRes = R.layout.item_week_days,
+    layoutRes = R.layout.item_week,
     viewHolderGenerator = ::WeekViewHolderImpl,
     itemBinder = WeekItemBinder(
         recycledViewPool = RecyclerView.RecycledViewPool()

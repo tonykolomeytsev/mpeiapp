@@ -4,8 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.viewpager2.widget.ViewPager2
 import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_analytics.addScrollAnalytics
 import kekmech.ru.common_analytics.ext.screenAnalytics
@@ -13,16 +11,19 @@ import kekmech.ru.common_android.ActivityResultListener
 import kekmech.ru.common_android.addSystemTopPadding
 import kekmech.ru.common_android.getStringArray
 import kekmech.ru.common_android.viewbinding.viewBinding
+import kekmech.ru.common_android.views.DEFAULT_MILLIS_PER_INCH
+import kekmech.ru.common_android.views.onPageSelected
+import kekmech.ru.common_android.views.smoothScrollToPosition
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.BaseFragment
 import kekmech.ru.common_navigation.NeedToUpdate
-import kekmech.ru.common_schedule.items.WeekAdapterItem
+import kekmech.ru.feature_schedule.main.item.WeekAdapterItem
 import kekmech.ru.domain_schedule.dto.Classes
 import kekmech.ru.feature_schedule.R
 import kekmech.ru.feature_schedule.databinding.FragmentScheduleBinding
 import kekmech.ru.feature_schedule.di.ScheduleDependencies
 import kekmech.ru.feature_schedule.main.adapter.WeeksScrollAdapter
-import kekmech.ru.feature_schedule.main.helpers.WeeksScrollHelper
+import kekmech.ru.feature_schedule.main.adapter.WeeksScrollHelper
 import kekmech.ru.feature_schedule.main.item.*
 import kekmech.ru.feature_schedule.main.elm.*
 import kekmech.ru.feature_schedule.main.elm.ScheduleEvent.Wish
@@ -62,23 +63,24 @@ internal class ScheduleFragment :
         super.onViewCreated(view, savedInstanceState)
         viewBinding.apply {
             weeksScrollHelper.attach(recyclerView, weekOffsetToBeSelected)
-            recyclerView.layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             recyclerView.adapter = weeksScrollAdapter
             recyclerView.itemAnimator = null
             recyclerView.setHasFixedSize(true)
             recyclerView.addScrollAnalytics(analytics, "WeeksRecyclerView")
+
             viewPager.adapter = viewPagerAdapter
-            viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-                override fun onPageSelected(position: Int) {
-                    feature.accept(Wish.Action.OnPageChanged(position))
-                }
-            })
+            viewPager.onPageSelected { feature.accept(Wish.Action.OnPageChanged(it)) }
             viewPager.addScrollAnalytics(analytics, "WorkingDaysViewPager")
+
             appBarLayout.outlineProvider = null
             appBarLayout.addSystemTopPadding()
             fab.setOnClickListener { feature.accept(Wish.Click.OnFAB) }
         }
+    }
+
+    override fun onDestroyView() {
+        weeksScrollHelper.detach(viewBinding.recyclerView)
+        super.onDestroyView()
     }
 
     override fun handleEffect(effect: ScheduleEffect) = when (effect) {
@@ -89,33 +91,38 @@ internal class ScheduleFragment :
     }
 
     @Suppress("MagicNumber")
-    override fun render(state: ScheduleState) = with(viewBinding) {
+    override fun render(state: ScheduleState) {
         weekOffsetToBeSelected = state.weekOffset
-        appBarLayoutGroup.isVisible = !state.isLoading
 
-        textViewHeader.text = getFormattedDay(state.selectedDay.date)
-        textViewDescription.text = state.weekOfSemester?.let { getFormattedWeek(it) }.orEmpty()
-
-        renderWeekSelection(state)
-        weeksScrollAdapter.update(state.weekItems)
-        weeksScrollAdapter.selectDay(state.selectedDay)
+        renderStatusBar(state)
+        renderWeekCalendar(state)
         viewPagerAdapter.update(ScheduleClassesListConverter.map(state))
-
+        renderViewPager(state)
         renderFloatingActionButton(state)
+    }
 
-        if (viewPagerPositionToBeSelected != state.selectedDay.dayOfWeek) {
+    private fun renderStatusBar(state: ScheduleState) = with(viewBinding) {
+        textViewHeader.text = getFormattedDay(state.selectedDate)
+        textViewDescription.text = state.weekOfSemester?.let { getFormattedWeek(it) }.orEmpty()
+    }
+
+    private fun renderViewPager(state: ScheduleState) = with(viewBinding) {
+        if (viewPagerPositionToBeSelected != state.selectedDate.dayOfWeek.value) {
             val smoothScroll = viewPagerPositionToBeSelected != null
-            viewPagerPositionToBeSelected = state.selectedDay.dayOfWeek
-            val selectedItem = state.selectedDay.dayOfWeek - 1
+            viewPagerPositionToBeSelected = state.selectedDate.dayOfWeek.value
+            val selectedItem = state.selectedDate.dayOfWeek.value - 1
             if (selectedItem != viewPager.currentItem) viewPager.post {
                 if (selectedItem in 0..5) viewPager.setCurrentItem(selectedItem, smoothScroll)
             }
         }
     }
 
-    private fun renderWeekSelection(state: ScheduleState) {
-        val position = state.weekOffset + (Int.MAX_VALUE / 2)
-        viewBinding.recyclerView.scrollToPosition(position)
+    private fun renderWeekCalendar(state: ScheduleState) {
+        weeksScrollAdapter.selectDay(state.selectedDate) { position ->
+            with(viewBinding.recyclerView) {
+                scrollToPosition(position)
+            }
+        }
     }
 
     private fun renderFloatingActionButton(state: ScheduleState) {
@@ -125,7 +132,7 @@ internal class ScheduleFragment :
         } else {
             viewBinding.fab.isVisible = true
         }
-        if (state.isNavigationFabCurrentWeek) {
+        if (state.isOnCurrentWeek) {
             viewBinding.fab.setText(R.string.schedule_fab_next)
             viewBinding.fab.setIconResource(R.drawable.ic_next_schedule)
         } else {
