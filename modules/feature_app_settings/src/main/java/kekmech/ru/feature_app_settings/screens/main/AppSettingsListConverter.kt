@@ -1,5 +1,9 @@
 package kekmech.ru.feature_app_settings.screens.main
 
+import android.content.Context
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
+import kekmech.ru.common_android.getThemeColor
 import kekmech.ru.coreui.items.*
 import kekmech.ru.feature_app_settings.BuildConfig
 import kekmech.ru.feature_app_settings.R
@@ -10,7 +14,7 @@ import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsState
 internal class AppSettingsListConverter {
 
     @Suppress("LongMethod")
-    fun map(state: AppSettingsState): List<Any> {
+    fun map(state: AppSettingsState, context: Context): List<Any> {
         val appSettings = state.appSettings ?: return emptyList()
         return mutableListOf<Any>().apply {
             add(ToggleItem(
@@ -93,7 +97,18 @@ internal class AppSettingsListConverter {
                 ))
                 add(SectionTextItem(text = "Нужно перезагрузить приложение, для того чтобы настройка вступила в силу"))
             }
+
+            add(SpaceItem.VERTICAL_24)
+            add(getVersionItem(context))
+            add(SpaceItem.VERTICAL_24)
         }
+    }
+
+    private fun getVersionItem(context: Context): Any {
+        val versionName = BuildConfig.VERSION_NAME
+        return TextItem(
+            text = context.getString(R.string.app_settings_app_version, versionName)
+        )
     }
 
     private fun createLanguageItem(state: AppSettingsState): Any {
