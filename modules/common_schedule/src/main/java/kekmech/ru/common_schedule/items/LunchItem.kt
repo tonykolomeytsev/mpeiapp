@@ -1,24 +1,24 @@
-package kekmech.ru.feature_schedule.main.item
+package kekmech.ru.common_schedule.items
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseItemBinder
+import kekmech.ru.common_schedule.R
 import kekmech.ru.coreui.items.ClickableItemViewHolder
 import kekmech.ru.coreui.items.ClickableItemViewHolderImpl
-import kekmech.ru.feature_schedule.R
 
-internal object LunchItem
+object LunchItem
 
-internal interface LunchViewHolder : ClickableItemViewHolder
+interface LunchViewHolder : ClickableItemViewHolder
 
-internal class LunchViewHolderImpl(
+private class LunchViewHolderImpl(
     containerView: View
 ) : LunchViewHolder,
     RecyclerView.ViewHolder(containerView),
     ClickableItemViewHolder by ClickableItemViewHolderImpl(containerView)
 
-internal class LunchItemBinder(
+private class LunchItemBinder(
     private val onClickListener: () -> Unit
 ) : BaseItemBinder<LunchViewHolder, LunchItem>() {
 
@@ -27,7 +27,7 @@ internal class LunchItemBinder(
     }
 }
 
-internal class LunchAdapterItem(
+class LunchAdapterItem(
     onClickListener: () -> Unit
 ) : AdapterItem<LunchViewHolder, LunchItem>(
     isType = { it is LunchItem },
