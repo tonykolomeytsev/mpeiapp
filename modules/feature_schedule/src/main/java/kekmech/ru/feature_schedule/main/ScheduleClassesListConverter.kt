@@ -1,6 +1,8 @@
 package kekmech.ru.feature_schedule.main
 
 import kekmech.ru.common_kotlin.addIf
+import kekmech.ru.common_schedule.items.LunchItem
+import kekmech.ru.common_schedule.items.SelfStudyItem
 import kekmech.ru.coreui.items.EmptyStateItem
 import kekmech.ru.coreui.items.NotePreview
 import kekmech.ru.coreui.items.SpaceItem
