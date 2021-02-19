@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:background="?attr/selectableItemBackground"
         android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:background="?attr/selectableItemBackground">
+        android:paddingEnd="16dp">
 
     <ImageView
             android:id="@+id/imageViewIcon"
-            tools:src="@drawable/ic_english"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_english" />
 
     <TextView
             android:id="@+id/textViewDescription"
@@ -37,18 +37,18 @@
             android:id="@+id/indicatorContainer"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             android:background="@drawable/background_selection_indicator"
-            android:backgroundTint="@color/colorMain">
+            android:backgroundTint="@color/colorMain"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-                android:src="@drawable/ic_selection_indicator"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:layout_gravity="center"
-                android:tint="@color/colorWhite"/>
+                android:src="@drawable/ic_selection_indicator"
+                app:tint="@color/colorWhite" />
 
     </FrameLayout>
 
