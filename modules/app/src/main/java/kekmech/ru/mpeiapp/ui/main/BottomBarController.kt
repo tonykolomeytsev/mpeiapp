@@ -106,7 +106,7 @@ class BottomBarController(
 
     private fun createTabFragment(tab: BottomTab): Fragment = when (tab) {
         BottomTab.DASHBOARD -> DashboardFragment()
-        BottomTab.SCHEDULE -> scheduleFeatureLauncher.launchMain()
+        BottomTab.SCHEDULE -> scheduleFeatureLauncher.getScreen()
         BottomTab.MAP -> mapFeatureLauncher.launchMain()
         BottomTab.PROFILE -> barsFeatureLauncher.launchMain()
     }
