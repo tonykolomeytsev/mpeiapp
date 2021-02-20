@@ -10,7 +10,7 @@ import kekmech.ru.common_analytics.addScrollAnalytics
 import kekmech.ru.common_analytics.ext.screenAnalytics
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_kotlin.fastLazy
-import kekmech.ru.domain_schedule.CONTINUE_TO_DASHBOARD
+import kekmech.ru.domain_schedule.ScheduleFeatureLauncher.ContinueTo.DASHBOARD
 import kekmech.ru.feature_onboarding.R
 import kekmech.ru.feature_onboarding.databinding.FragmentWelcomeBinding
 import kekmech.ru.feature_onboarding.di.OnboardingDependencies
@@ -33,7 +33,7 @@ internal class WelcomeFragment : Fragment(R.layout.fragment_welcome) {
         viewBinding.apply {
             buttonStart.setOnClickListener {
                 analytics.sendClick("WelcomeStart")
-                scheduleFeatureLauncher.launchSearchGroup(CONTINUE_TO_DASHBOARD)
+                scheduleFeatureLauncher.launchSearchGroup(DASHBOARD)
             }
             recycler.adapter = adapter
             recycler.layoutManager =

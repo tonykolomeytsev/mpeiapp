@@ -12,10 +12,10 @@ internal class ScheduleFeatureLauncherImpl(
     private val router: Router
 ) : ScheduleFeatureLauncher {
 
-    override fun launchMain() = ScheduleFragment()
+    override fun getScreen() = ScheduleFragment()
 
     override fun launchSearchGroup(
-        continueTo: String,
+        continueTo: ScheduleFeatureLauncher.ContinueTo,
         targetFragment: Fragment?,
         requestCode: Int?,
         selectGroupAfterSuccess: Boolean

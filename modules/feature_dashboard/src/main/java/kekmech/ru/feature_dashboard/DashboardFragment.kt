@@ -17,17 +17,16 @@ import kekmech.ru.common_navigation.NeedToUpdate
 import kekmech.ru.coreui.banner.showBanner
 import kekmech.ru.coreui.items.*
 import kekmech.ru.domain_app_settings.AppSettingsFeatureLauncher.SubPage.FAVORITES
-import kekmech.ru.domain_schedule.CONTINUE_TO_BACK_STACK_WITH_RESULT
+import kekmech.ru.domain_schedule.ScheduleFeatureLauncher.ContinueTo.BACK_WITH_RESULT
 import kekmech.ru.domain_schedule.dto.Classes
 import kekmech.ru.feature_dashboard.databinding.FragmentDashboardBinding
 import kekmech.ru.feature_dashboard.di.DashboardDependencies
-import kekmech.ru.feature_dashboard.items.*
 import kekmech.ru.feature_dashboard.elm.DashboardEffect
 import kekmech.ru.feature_dashboard.elm.DashboardEvent
 import kekmech.ru.feature_dashboard.elm.DashboardEvent.Wish
 import kekmech.ru.feature_dashboard.elm.DashboardState
+import kekmech.ru.feature_dashboard.items.*
 import org.koin.android.ext.android.inject
-import vivid.money.elmslie.core.store.Store
 
 private const val REQUEST_CODE_UPDATE_DATA = 2910
 internal const val SECTION_NOTES_ACTION = 1
@@ -123,7 +122,7 @@ class DashboardFragment :
         ScheduleTypeAdapterItem {
             analytics.sendClick("ChangeGroup")
             dependencies.scheduleFeatureLauncher.launchSearchGroup(
-                continueTo = CONTINUE_TO_BACK_STACK_WITH_RESULT,
+                continueTo = BACK_WITH_RESULT,
                 targetFragment = parentFragment,
                 requestCode = REQUEST_CODE_UPDATE_DATA
             )
