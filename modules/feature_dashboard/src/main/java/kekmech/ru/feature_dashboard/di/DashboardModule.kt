@@ -8,6 +8,6 @@ import kekmech.ru.feature_dashboard.elm.DashboardReducer
 object DashboardModule : ModuleProvider({
     single { DashboardDependencies(get(), get(), get(), get(), get(), get()) } // он не просто так single!!!
     factory { DashboardFeatureFactory(get(), get()) }
-    factory { DashboardReducer(get()) }
+    factory { DashboardReducer() }
     factory { DashboardActor(get(), get(), get()) }
 })

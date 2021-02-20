@@ -1,9 +1,10 @@
 apply from: "$gradleDir/feature-android-module.gradle"
 
 dependencies {
-    implementation squareup.okhttp
-    implementation squareup.okhttpLogger
-
+    testImplementation kotest.runner
+    testImplementation kotest.assertions
+    testImplementation kotest.property
+    
     implementation koin.core
     implementation koin.android
     implementation timber

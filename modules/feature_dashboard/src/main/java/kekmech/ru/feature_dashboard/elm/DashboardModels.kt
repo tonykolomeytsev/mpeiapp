@@ -16,7 +16,6 @@ data class DashboardState(
     val selectedScheduleName: String = "",
     val notes: List<Note>? = null,
     val favoriteSchedules: List<FavoriteScheduleItem>? = null,
-    val isFeatureBannerEnabled: Boolean = false,
     val sessionScheduleItems: List<SessionItem>? = null
 ) {
     val weekOfSemester get() = currentWeekSchedule?.weeks?.first()?.weekOfSemester
@@ -58,7 +57,6 @@ sealed class DashboardEvent {
             object OnSwipeRefresh : Wish()
             object SilentUpdate : Wish()
             data class SelectFavoriteSchedule(val favoriteSchedule: FavoriteSchedule) : Wish()
-            object CloseFeatureBanner : Wish()
         }
 
         object Click {

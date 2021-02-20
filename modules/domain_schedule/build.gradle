@@ -5,6 +5,7 @@ dependencies {
     implementation squareup.retrofit
     implementation squareup.retrofit_rxJava2
     implementation google.gson
+    implementation firebase.crashlytics
 
     implementation project(path: ":common_app_database")
     implementation project(path: ":common_annotations")
