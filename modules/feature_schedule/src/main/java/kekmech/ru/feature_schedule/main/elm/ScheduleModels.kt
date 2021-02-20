@@ -2,8 +2,6 @@ package kekmech.ru.feature_schedule.main.elm
 
 import kekmech.ru.common_android.moscowLocalDate
 import kekmech.ru.common_kotlin.mutableLinkedHashMap
-import kekmech.ru.common_schedule.items.DayItem
-import kekmech.ru.common_schedule.utils.atStartOfWeek
 import kekmech.ru.domain_app_settings.AppSettings
 import kekmech.ru.domain_schedule.dto.Classes
 import kekmech.ru.domain_schedule.dto.Schedule
@@ -39,16 +37,16 @@ internal sealed class ScheduleEvent {
         object Init : Wish()
         object Action {
             data class SelectWeek(val weekOffset: Int) : Wish()
-            data class OnPageChanged(val page: Int) : Wish()
-            object OnNotesUpdated : Wish()
+            data class PageChanged(val page: Int) : Wish()
+            object NotesUpdated : Wish()
             object UpdateScheduleIfNeeded : Wish()
-            data class OnClassesScroll(val dy: Int) : Wish()
+            data class ClassesScrolled(val dy: Int) : Wish()
         }
 
         object Click {
-            data class OnDayClick(val date: LocalDate) : Wish()
-            data class OnClassesClick(val classes: Classes) : Wish()
-            object OnFAB : Wish()
+            data class Day(val date: LocalDate) : Wish()
+            data class Classes(val classes: kekmech.ru.domain_schedule.dto.Classes) : Wish()
+            object FAB : Wish()
         }
     }
 

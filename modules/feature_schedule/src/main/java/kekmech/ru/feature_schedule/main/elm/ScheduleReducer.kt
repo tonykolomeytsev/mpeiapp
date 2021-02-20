@@ -2,8 +2,8 @@ package kekmech.ru.feature_schedule.main.elm
 
 import kekmech.ru.feature_schedule.main.elm.ScheduleEvent.News
 import kekmech.ru.feature_schedule.main.elm.ScheduleEvent.Wish
-import vivid.money.elmslie.core.store.StateReducer
 import vivid.money.elmslie.core.store.Result
+import vivid.money.elmslie.core.store.StateReducer
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.util.*
@@ -50,13 +50,13 @@ internal class ScheduleReducer : StateReducer<ScheduleEvent, ScheduleState, Sche
             )
         )
         is Wish.Action.SelectWeek -> getWeekSelectionResult(state, event)
-        is Wish.Click.OnDayClick -> Result(
+        is Wish.Click.Day -> Result(
             state = state.copy(
                 selectedDate = event.date,
                 isNavigationFabVisible = true
             )
         )
-        is Wish.Action.OnPageChanged -> {
+        is Wish.Action.PageChanged -> {
             if (!isFirstPageChangeIgnored) {
                 isFirstPageChangeIgnored = true
                 Result(state)
@@ -71,18 +71,18 @@ internal class ScheduleReducer : StateReducer<ScheduleEvent, ScheduleState, Sche
                 )
             }
         }
-        is Wish.Click.OnClassesClick -> Result(
+        is Wish.Click.Classes -> Result(
             state = state,
             effect = ScheduleEffect.NavigateToNoteList(event.classes, state.selectedDate)
         )
-        is Wish.Action.OnNotesUpdated, is Wish.Action.UpdateScheduleIfNeeded -> Result(
+        is Wish.Action.NotesUpdated, is Wish.Action.UpdateScheduleIfNeeded -> Result(
             state = state,
             command = ScheduleAction.LoadSchedule(state.weekOffset)
         )
-        is Wish.Action.OnClassesScroll -> Result(
+        is Wish.Action.ClassesScrolled -> Result(
             state = state.copy(isNavigationFabVisible = event.dy <= 0)
         )
-        is Wish.Click.OnFAB -> {
+        is Wish.Click.FAB -> {
             getWeekSelectionResult(
                 state,
                 Wish.Action.SelectWeek(if (state.weekOffset != 0) 0 else 1),
@@ -100,7 +100,8 @@ internal class ScheduleReducer : StateReducer<ScheduleEvent, ScheduleState, Sche
         return Result(
             state = state.copy(
                 weekOffset = event.weekOffset,
-                selectedDate = selectNecessaryDate(state, event.weekOffset, forceChangeSelectedDay)
+                selectedDate = selectNecessaryDate(state, event.weekOffset, forceChangeSelectedDay),
+                isAfterError = false
             ),
             command = ScheduleAction.LoadSchedule(event.weekOffset)
         )
