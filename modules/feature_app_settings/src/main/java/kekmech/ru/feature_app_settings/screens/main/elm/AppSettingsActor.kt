@@ -22,9 +22,6 @@ internal class AppSettingsActor(
         is AppSettingsAction.SetSnowEnabled -> appSettingsRepository
             .complete { isSnowEnabled = action.isEnabled }
             .mapSuccessEvent(AppSettingsEvent.News.AppSettingsChanged)
-        is AppSettingsAction.SetChangeDayAfterChangeWeek -> appSettingsRepository
-            .complete { changeDayAfterChangeWeek = action.isEnabled }
-            .mapSuccessEvent(AppSettingsEvent.News.AppSettingsChanged)
         is AppSettingsAction.SetAutoHideBottomSheet -> appSettingsRepository
             .complete { autoHideBottomSheet = action.isEnabled }
             .mapSuccessEvent(AppSettingsEvent.News.AppSettingsChanged)

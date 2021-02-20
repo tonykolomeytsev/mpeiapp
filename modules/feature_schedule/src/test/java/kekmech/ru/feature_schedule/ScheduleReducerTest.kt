@@ -259,7 +259,6 @@ class ScheduleReducerTest : BehaviorSpec({
 }) {
     companion object {
         private val APP_SETTINGS = object : AppSettings {
-            override val changeDayAfterChangeWeek: Boolean get() = true
             override val isDarkThemeEnabled: Boolean get() = false
             override val autoHideBottomSheet: Boolean get() = false
             override val isSnowEnabled: Boolean get() = false
