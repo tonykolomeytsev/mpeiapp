@@ -27,7 +27,7 @@ data class Day(
 data class Classes(
     val name: String = "",
     val type: ClassesType = ClassesType.UNDEFINED,
-    val rawType: String = "",
+    val rawType: String? = null,
     val place: String = "",
     val groups: String = "",
     val person: String = "",
