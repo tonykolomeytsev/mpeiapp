@@ -9,12 +9,11 @@ import io.kotest.matchers.maps.shouldBeEmpty
 import io.kotest.matchers.maps.shouldContainExactly
 import io.kotest.matchers.shouldBe
 import kekmech.ru.common_kotlin.mutableLinkedHashMap
+import kekmech.ru.common_schedule.utils.atStartOfWeek
 import kekmech.ru.domain_app_settings.AppSettings
-import kekmech.ru.domain_schedule.dto.Day
-import kekmech.ru.domain_schedule.dto.Schedule
-import kekmech.ru.domain_schedule.dto.ScheduleType
-import kekmech.ru.domain_schedule.dto.Week
+import kekmech.ru.domain_schedule.dto.*
 import kekmech.ru.feature_schedule.main.elm.ScheduleAction
+import kekmech.ru.feature_schedule.main.elm.ScheduleEffect
 import kekmech.ru.feature_schedule.main.elm.ScheduleEvent.News
 import kekmech.ru.feature_schedule.main.elm.ScheduleEvent.Wish
 import kekmech.ru.feature_schedule.main.elm.ScheduleReducer
@@ -168,10 +167,10 @@ class ScheduleReducerTest : BehaviorSpec({
                 actions.shouldBeEmpty()
             }
         }
-        When("Wish.Click.Day") {
-            val (state, effects, actions) = reducer.reduce(Wish.Click.Day(CURRENT_DATE_WEEKEND_SAT), givenState)
+        When("Wish.Action.PageChanged") {
+            val (state, effects, actions) = reducer.reduce(Wish.Action.PageChanged(1), givenState)
             Then("Check state") {
-                state.selectedDate shouldBe CURRENT_DATE_WEEKEND_SAT
+                state.selectedDate shouldBe CURRENT_DATE.atStartOfWeek().plusDays(1L)
                 state.isNavigationFabVisible.shouldBeTrue()
             }
             Then("Check effects") {
@@ -181,10 +180,72 @@ class ScheduleReducerTest : BehaviorSpec({
                 actions.shouldBeEmpty()
             }
         }
-        When("Wish.Action.PageChanged") {
-            val (state, effects, actions) = reducer.reduce(Wish.Action.PageChanged(1), givenState)
+        When("Wish.Click.Classes") {
+            val (state, effects, actions) = reducer.reduce(Wish.Click.Classes(CLASSES), givenState)
             Then("Check state") {
-                state.selectedDate shouldBe CURRENT_DATE_WEEKEND_SAT
+                state shouldBe givenState
+            }
+            Then("Check effects") {
+                effects.shouldContainExactly(ScheduleEffect.NavigateToNoteList(CLASSES, state.selectedDate))
+            }
+            Then("Check actions") {
+                actions.shouldBeEmpty()
+            }
+        }
+        When("Wish.Click.FAB") {
+            val (state, effects, actions) = reducer.reduce(Wish.Click.FAB, givenState)
+            Then("Check state") {
+                state.weekOffset shouldBe 1
+                state.selectedDate shouldBe CURRENT_DATE.plusDays(7L)
+                state.isOnCurrentWeek.shouldBeFalse()
+                state.isAfterError.shouldBeFalse()
+            }
+            Then("Check effects") {
+                effects.shouldBeEmpty()
+            }
+            Then("Check actions") {
+                actions.shouldContainExactly(ScheduleAction.LoadSchedule(1))
+            }
+        }
+        When("Wish.Action.NotesUpdated") {
+            val (state, effects, actions) = reducer.reduce(Wish.Action.UpdateScheduleIfNeeded, givenState)
+            Then("Check state") {
+                state shouldBe givenState
+            }
+            Then("Check effects") {
+                effects.shouldBeEmpty()
+            }
+            Then("Check actions") {
+                actions.shouldContainExactly(ScheduleAction.LoadSchedule(0))
+            }
+        }
+        When("Wish.Action.UpdateScheduleIfNeeded") {
+            val (state, effects, actions) = reducer.reduce(Wish.Action.UpdateScheduleIfNeeded, givenState)
+            Then("Check state") {
+                state shouldBe givenState
+            }
+            Then("Check effects") {
+                effects.shouldBeEmpty()
+            }
+            Then("Check actions") {
+                actions.shouldContainExactly(ScheduleAction.LoadSchedule(0))
+            }
+        }
+        When("Wish.Action.ClassesScrolled (scrolled down)") {
+            val (state, effects, actions) = reducer.reduce(Wish.Action.ClassesScrolled(1), givenState)
+            Then("Check state") {
+                state.isNavigationFabVisible.shouldBeFalse()
+            }
+            Then("Check effects") {
+                effects.shouldBeEmpty()
+            }
+            Then("Check actions") {
+                actions.shouldBeEmpty()
+            }
+        }
+        When("Wish.Action.ClassesScrolled (scrolled up)") {
+            val (state, effects, actions) = reducer.reduce(Wish.Action.ClassesScrolled(-1), givenState)
+            Then("Check state") {
                 state.isNavigationFabVisible.shouldBeTrue()
             }
             Then("Check effects") {
@@ -233,39 +294,14 @@ class ScheduleReducerTest : BehaviorSpec({
                 )
             ))
         )
-        private val SCHEDULE_1 = Schedule(
-            name = "C-12-16",
-            id = "12345",
-            type = ScheduleType.GROUP,
-            weeks = listOf(Week(
-                weekOfSemester = 4,
-                weekOfYear = 37,
-                firstDayOfWeek = CURRENT_MONDAY,
-                days = listOf(
-                    Day(
-                        dayOfWeek = 1,
-                        date = CURRENT_MONDAY,
-                        classes = listOf()
-                    )
-                )
-            ))
-        )
-        private val SCHEDULE_2 = Schedule(
-            name = "C-12-16",
-            id = "12345",
-            type = ScheduleType.GROUP,
-            weeks = listOf(Week(
-                weekOfSemester = 5,
-                weekOfYear = 38,
-                firstDayOfWeek = CURRENT_MONDAY,
-                days = listOf(
-                    Day(
-                        dayOfWeek = 1,
-                        date = CURRENT_MONDAY,
-                        classes = listOf()
-                    )
-                )
-            ))
+        private val CLASSES = Classes(
+            name = "Гидропневмопривод мехатронных и робототехнчиеских систем",
+            type = ClassesType.PRACTICE,
+            rawType = "",
+            groups = "С-12-16",
+            place = "",
+            person = "Зуев Ю.Ю.",
+            number = 4
         )
     }
 }
