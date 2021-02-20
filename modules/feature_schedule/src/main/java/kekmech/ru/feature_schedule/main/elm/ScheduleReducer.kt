@@ -1,6 +1,5 @@
 package kekmech.ru.feature_schedule.main.elm
 
-import kekmech.ru.common_schedule.items.DayItem
 import kekmech.ru.feature_schedule.main.elm.ScheduleEvent.News
 import kekmech.ru.feature_schedule.main.elm.ScheduleEvent.Wish
 import vivid.money.elmslie.core.store.StateReducer
@@ -53,7 +52,7 @@ internal class ScheduleReducer : StateReducer<ScheduleEvent, ScheduleState, Sche
         is Wish.Action.SelectWeek -> getWeekSelectionResult(state, event)
         is Wish.Click.OnDayClick -> Result(
             state = state.copy(
-                selectedDate = event.dayItem.date,
+                selectedDate = event.date,
                 isNavigationFabVisible = true
             )
         )
