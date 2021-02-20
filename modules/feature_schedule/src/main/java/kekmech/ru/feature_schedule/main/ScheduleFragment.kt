@@ -186,13 +186,7 @@ internal class ScheduleFragment :
     )
 
     override fun onUpdate() {
-        if (isResumed && !isRemoving) {
-            try {
-                feature.accept(Wish.Action.UpdateScheduleIfNeeded)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
+        feature.accept(Wish.Action.UpdateScheduleIfNeeded)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
