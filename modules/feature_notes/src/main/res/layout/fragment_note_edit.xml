@@ -68,4 +68,10 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"/>
 
+    <kekmech.ru.coreui.banner.BannerContainer
+            android:id="@+id/bannerContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
