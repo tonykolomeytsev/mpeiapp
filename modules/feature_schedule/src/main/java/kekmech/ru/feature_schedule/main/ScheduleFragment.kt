@@ -54,6 +54,8 @@ internal class ScheduleFragment :
 
     // for viewPager sliding debounce
     private var viewPagerPositionToBeSelected: Int? = null
+    // for viewPager callback issue
+    private var viewPagerFirstSelectionIgnored: Boolean = false
 
     override fun createStore() = inject<ScheduleFeatureFactory>().value.create()
 
@@ -67,7 +69,10 @@ internal class ScheduleFragment :
             recyclerView.addScrollAnalytics(analytics, "WeeksRecyclerView")
 
             viewPager.adapter = viewPagerAdapter
-            viewPager.onPageSelected { feature.accept(Wish.Action.PageChanged(it)) }
+            viewPager.onPageSelected {
+                if (viewPagerFirstSelectionIgnored) feature.accept(Wish.Action.PageChanged(it))
+                viewPagerFirstSelectionIgnored = true
+            }
             viewPager.addScrollAnalytics(analytics, "WorkingDaysViewPager")
 
             appBarLayout.outlineProvider = null
