@@ -67,12 +67,12 @@ internal class ScheduleFragment :
             recyclerView.addScrollAnalytics(analytics, "WeeksRecyclerView")
 
             viewPager.adapter = viewPagerAdapter
-            viewPager.onPageSelected { feature.accept(Wish.Action.OnPageChanged(it)) }
+            viewPager.onPageSelected { feature.accept(Wish.Action.PageChanged(it)) }
             viewPager.addScrollAnalytics(analytics, "WorkingDaysViewPager")
 
             appBarLayout.outlineProvider = null
             appBarLayout.addSystemTopPadding()
-            fab.setOnClickListener { feature.accept(Wish.Click.OnFAB) }
+            fab.setOnClickListener { feature.accept(Wish.Click.FAB) }
         }
     }
 
@@ -163,11 +163,11 @@ internal class ScheduleFragment :
 
     private fun onClassesClick(classes: Classes) {
         analytics.sendClick("ClickClasses")
-        feature.accept(Wish.Click.OnClassesClick(classes))
+        feature.accept(Wish.Click.Classes(classes))
     }
 
     private fun onClassesScroll(dy: Int) {
-        feature.accept(Wish.Action.OnClassesScroll(dy))
+        feature.accept(Wish.Action.ClassesScrolled(dy))
     }
 
     private fun createWeekDaysHelper() = WeeksScrollHelper(
@@ -181,7 +181,7 @@ internal class ScheduleFragment :
         WeekAdapterItem(
             onDayClickListener = {
                 analytics.sendClick("Day_${it.date}")
-                feature.accept(Wish.Click.OnDayClick(it.date))
+                feature.accept(Wish.Click.Day(it.date))
             }
         )
     )
@@ -192,7 +192,7 @@ internal class ScheduleFragment :
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_CODE_NOTES_UPDATED) {
-            feature.accept(Wish.Action.OnNotesUpdated)
+            feature.accept(Wish.Action.NotesUpdated)
         }
     }
 
