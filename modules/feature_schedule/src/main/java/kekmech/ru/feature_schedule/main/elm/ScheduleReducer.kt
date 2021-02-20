@@ -10,8 +10,6 @@ import java.util.*
 
 internal class ScheduleReducer : StateReducer<ScheduleEvent, ScheduleState, ScheduleEffect, ScheduleAction> {
 
-    private var isFirstPageChangeIgnored = false
-
     override fun reduce(
         event: ScheduleEvent,
         state: ScheduleState
@@ -57,19 +55,14 @@ internal class ScheduleReducer : StateReducer<ScheduleEvent, ScheduleState, Sche
             )
         )
         is Wish.Action.PageChanged -> {
-            if (!isFirstPageChangeIgnored) {
-                isFirstPageChangeIgnored = true
-                Result(state)
-            } else {
-                val oldSelectedDay = state.selectedDate.dayOfWeek.value
-                val newSelectedDay = event.page + 1L
-                Result(
-                    state = state.copy(
-                        selectedDate = state.selectedDate.plusDays(newSelectedDay - oldSelectedDay),
-                        isNavigationFabVisible = true
-                    )
+            val oldSelectedDay = state.selectedDate.dayOfWeek.value
+            val newSelectedDay = event.page + 1L
+            Result(
+                state = state.copy(
+                    selectedDate = state.selectedDate.plusDays(newSelectedDay - oldSelectedDay),
+                    isNavigationFabVisible = true
                 )
-            }
+            )
         }
         is Wish.Click.Classes -> Result(
             state = state,
