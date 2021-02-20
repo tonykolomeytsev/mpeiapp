@@ -137,8 +137,8 @@ class ClassesItemBinder(
     }
 
     private fun getClassesTypeName(classes: Classes): String {
-        return if (classes.type == ClassesType.UNDEFINED && classes.rawType.isNotBlank()) {
-            classes.rawType
+        return if (classes.type == ClassesType.UNDEFINED && classes.rawType != null) {
+            classes.rawType.orEmpty()
         } else {
             classesTypes[classes.type].orEmpty()
         }
