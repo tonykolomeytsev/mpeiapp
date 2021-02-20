@@ -9,12 +9,11 @@ import kekmech.ru.common_schedule.utils.atStartOfWeek
 import kekmech.ru.feature_schedule.main.item.WeekAdapterItem
 import kekmech.ru.feature_schedule.main.item.WeekItem
 import kekmech.ru.feature_schedule.main.item.WeekViewHolderImpl
-import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit
-import kotlin.math.abs
 
 private const val HALF_INT_MAX_VALUE = Int.MAX_VALUE / 2
+private const val DAYS_IN_CALENDAR = 6
 
 internal class WeeksScrollAdapter(
     private val weekAdapterItem: WeekAdapterItem
@@ -47,7 +46,7 @@ internal class WeeksScrollAdapter(
         return WeekItem(
             weekOffset = weekOffset,
             firstDayOfWeek = actualMonday,
-            dayItems = List(6) { offset ->
+            dayItems = List(DAYS_IN_CALENDAR) { offset ->
                 val dayDate = actualMonday.plusDays(offset.toLong())
                 DayItem(dayDate, weekOffset, lastSelectedDate == dayDate)
             }

@@ -11,22 +11,22 @@ import kekmech.ru.common_android.ActivityResultListener
 import kekmech.ru.common_android.addSystemTopPadding
 import kekmech.ru.common_android.getStringArray
 import kekmech.ru.common_android.viewbinding.viewBinding
-import kekmech.ru.common_android.views.DEFAULT_MILLIS_PER_INCH
 import kekmech.ru.common_android.views.onPageSelected
-import kekmech.ru.common_android.views.smoothScrollToPosition
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.BaseFragment
 import kekmech.ru.common_navigation.NeedToUpdate
-import kekmech.ru.feature_schedule.main.item.WeekAdapterItem
 import kekmech.ru.domain_schedule.dto.Classes
 import kekmech.ru.feature_schedule.R
 import kekmech.ru.feature_schedule.databinding.FragmentScheduleBinding
 import kekmech.ru.feature_schedule.di.ScheduleDependencies
 import kekmech.ru.feature_schedule.main.adapter.WeeksScrollAdapter
 import kekmech.ru.feature_schedule.main.adapter.WeeksScrollHelper
-import kekmech.ru.feature_schedule.main.item.*
-import kekmech.ru.feature_schedule.main.elm.*
+import kekmech.ru.feature_schedule.main.elm.ScheduleEffect
+import kekmech.ru.feature_schedule.main.elm.ScheduleEvent
 import kekmech.ru.feature_schedule.main.elm.ScheduleEvent.Wish
+import kekmech.ru.feature_schedule.main.elm.ScheduleFeatureFactory
+import kekmech.ru.feature_schedule.main.elm.ScheduleState
+import kekmech.ru.feature_schedule.main.item.*
 import org.koin.android.ext.android.inject
 import java.time.LocalDate
 
@@ -34,6 +34,7 @@ private const val REQUEST_CODE_NOTES_UPDATED = 9328
 private const val WEEK_MIN_NUMBER = 0
 private const val WEEK_MAX_NUMBER = 17
 private const val FAB_ANIMATION_DURATION = 100L
+private const val DAYS_TO_VIEW = 6
 
 @Suppress("TooManyFunctions")
 internal class ScheduleFragment :
@@ -107,7 +108,7 @@ internal class ScheduleFragment :
             viewPagerPositionToBeSelected = state.selectedDate.dayOfWeek.value
             val selectedItem = state.selectedDate.dayOfWeek.value - 1
             if (selectedItem != viewPager.currentItem) viewPager.post {
-                if (selectedItem in 0..5) viewPager.setCurrentItem(selectedItem, smoothScroll)
+                if (selectedItem in 0 until DAYS_TO_VIEW) viewPager.setCurrentItem(selectedItem, smoothScroll)
             }
         }
     }
