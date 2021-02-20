@@ -7,13 +7,13 @@ import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.coreui.PrettyDateFormatter
 import kekmech.ru.coreui.items.*
 import kekmech.ru.domain_schedule.dto.Classes
+import kekmech.ru.feature_dashboard.elm.DashboardState
+import kekmech.ru.feature_dashboard.elm.NextClassesCondition.NOT_STARTED
+import kekmech.ru.feature_dashboard.elm.NextClassesCondition.STARTED
 import kekmech.ru.feature_dashboard.helpers.TimeDeclensionHelper
 import kekmech.ru.feature_dashboard.helpers.getActualScheduleDayForView
 import kekmech.ru.feature_dashboard.helpers.getNextClassesTimeStatus
 import kekmech.ru.feature_dashboard.items.*
-import kekmech.ru.feature_dashboard.elm.DashboardState
-import kekmech.ru.feature_dashboard.elm.NextClassesCondition.NOT_STARTED
-import kekmech.ru.feature_dashboard.elm.NextClassesCondition.STARTED
 import java.time.DayOfWeek
 import java.time.LocalTime
 
@@ -73,8 +73,6 @@ class DashboardListConverter(
                     add(SpaceItem.VERTICAL_16)
                 }
             }
-
-            addFeatureBanner(state)
 
             // ближайшие события
             createClassesEventsItems(state)?.let { (header, classes) ->
@@ -218,17 +216,6 @@ class DashboardListConverter(
                 }
             }
             add(e)
-        }
-    }
-
-    private fun MutableList<Any>.addFeatureBanner(state: DashboardState) {
-        if (state.isFeatureBannerEnabled) {
-            add(BannerItem(
-                titleRes = R.string.dashboard_banner_favorites_title,
-                descriptionRes = R.string.dashboard_banner_favorites_description,
-                iconRes = R.drawable.ic_favorites_banner
-            ))
-            add(SpaceItem.VERTICAL_16)
         }
     }
 

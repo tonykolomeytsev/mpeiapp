@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException
 import com.google.android.gms.maps.MapsInitializer
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kekmech.ru.common_android.onActivityResult
 import kekmech.ru.common_navigation.BackButtonListener
 import kekmech.ru.common_navigation.NavigationHolder
@@ -49,9 +50,10 @@ class MainActivity : AppCompatActivity() {
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
         enableEdgeToEdge()
 
-
         if (savedInstanceState == null) {
-            if (!sharedPreferences.getString("selected_group", "").isNullOrEmpty()) {
+            val selectedGroup = sharedPreferences.getString("selected_group", "")
+            if (!selectedGroup.isNullOrEmpty()) {
+                FirebaseCrashlytics.getInstance().setCustomKey("schedule_name", selectedGroup)
                 mainScreenLauncher.launch()
             } else {
                 onboardingFeatureLauncher.launchWelcomePage(true)

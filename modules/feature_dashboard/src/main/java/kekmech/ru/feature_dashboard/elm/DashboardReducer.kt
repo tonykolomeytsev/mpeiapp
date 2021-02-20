@@ -1,23 +1,16 @@
 package kekmech.ru.feature_dashboard.elm
 
-import android.content.SharedPreferences
 import kekmech.ru.common_android.moscowLocalDate
-import kekmech.ru.common_shared_preferences.boolean
 import kekmech.ru.coreui.items.FavoriteScheduleItem
 import kekmech.ru.domain_notes.dto.Note
-import kekmech.ru.feature_dashboard.helpers.getActualScheduleDayForView
 import kekmech.ru.feature_dashboard.elm.DashboardEvent.News
 import kekmech.ru.feature_dashboard.elm.DashboardEvent.Wish
-import vivid.money.elmslie.core.store.StateReducer
+import kekmech.ru.feature_dashboard.helpers.getActualScheduleDayForView
 import vivid.money.elmslie.core.store.Result
-import java.time.DayOfWeek
+import vivid.money.elmslie.core.store.StateReducer
 import java.time.temporal.ChronoUnit
 
-class DashboardReducer(
-    sharedPreferences: SharedPreferences
-) : StateReducer<DashboardEvent, DashboardState, DashboardEffect, DashboardAction> {
-
-    private var isFeatureBannerEnabled by sharedPreferences.boolean("banner_favorites", true)
+class DashboardReducer : StateReducer<DashboardEvent, DashboardState, DashboardEffect, DashboardAction> {
 
     override fun reduce(
         event: DashboardEvent,
@@ -75,10 +68,7 @@ class DashboardReducer(
         state: DashboardState
     ): Result<DashboardState, DashboardEffect, DashboardAction> = when (event) {
         is Wish.Init -> Result(
-            state = state.copy(
-                isLoading = true,
-                isFeatureBannerEnabled = isFeatureBannerEnabled
-            ),
+            state = state.copy(isLoading = true),
             commands = refreshActions()
         )
         is Wish.Action.OnSwipeRefresh -> Result(
@@ -103,12 +93,6 @@ class DashboardReducer(
                 commands = listOf(DashboardAction.SelectGroup(newGroupNumber))
             )
         }
-        is Wish.Action.CloseFeatureBanner -> {
-            isFeatureBannerEnabled = false
-            Result(
-                state = state.copy(isFeatureBannerEnabled = false)
-            )
-        }
     }
 
     private fun refreshActions(): List<DashboardAction> {
@@ -116,8 +100,7 @@ class DashboardReducer(
             DashboardAction.GetSelectedGroupName,
             DashboardAction.LoadNotes,
             DashboardAction.LoadSchedule(0),
-            DashboardAction.LoadSchedule(1)
-                .takeIf { moscowLocalDate().dayOfWeek == DayOfWeek.SUNDAY },
+            DashboardAction.LoadSchedule(1),
             DashboardAction.LoadFavoriteSchedules,
             DashboardAction.LoadSession
         )

@@ -61,9 +61,9 @@ internal class DBHelper(
 
     companion object {
         val setOfMigrations by fastLazy { setOf<Migration>(
-            /*Migration(1, 2, R.raw.migration_v1_to_v2),
+            Migration(1, 2, R.raw.migration_v1_to_v2),
             Migration(2, 3, R.raw.migration_v2_to_v3),
-            Migration(3, 4, R.raw.migration_v3_to_v4)*/
+            Migration(3, 4, R.raw.migration_v3_to_v4)
         ) }
     }
 }

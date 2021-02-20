@@ -132,18 +132,6 @@ class DashboardFragment :
             analytics.sendClick("FavoriteSchedule")
             feature.accept(Wish.Action.SelectFavoriteSchedule(it.value))
         },
-        BannerAdapterItem(
-            onClickListener = {
-                analytics.sendClick("DashboardFeatureBannerOpen")
-                closeFeatureBanner()
-                dependencies.bottomTabsSwitcher.changeTab(BottomTab.PROFILE)
-                dependencies.appSettingsFeatureLauncher.launch(FAVORITES)
-            },
-            onCloseListener = {
-                analytics.sendClick("DashboardFeatureBannerClose")
-                closeFeatureBanner()
-            }
-        ),
         NotePreviewAdapterItem(::clickOnClasses, R.layout.item_note_preview_padding_horisontal_8dp),
         TextAdapterItem(R.layout.item_time_prediction),
         SessionAdapterItem(requireContext())
@@ -152,10 +140,6 @@ class DashboardFragment :
     private fun clickOnClasses(it: Classes) {
         analytics.sendClick("ClickClasses")
         feature.accept(Wish.Click.OnClasses(it))
-    }
-
-    private fun closeFeatureBanner() {
-        feature.accept(Wish.Action.CloseFeatureBanner)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

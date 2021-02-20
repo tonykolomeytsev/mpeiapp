@@ -1,7 +1,7 @@
 package kekmech.ru.domain_schedule
 
 import android.content.SharedPreferences
-import androidx.annotation.RestrictTo
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.reactivex.Completable
 import io.reactivex.Single
 import kekmech.ru.common_persistent_cache.orFromPersistentCache
@@ -31,6 +31,7 @@ class ScheduleRepository(
 
     fun selectSchedule(name: String): Completable = Completable.fromAction {
         selectedScheduleName = name
+        FirebaseCrashlytics.getInstance().setCustomKey("schedule_name", name)
     }
 
     fun getSelectedScheduleName() = Single.just(selectedScheduleName)
