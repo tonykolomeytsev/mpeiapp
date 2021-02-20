@@ -1,20 +1,18 @@
 package kekmech.ru.domain_schedule
 
 import androidx.fragment.app.Fragment
-
-const val CONTINUE_TO_DASHBOARD = "Dashboard"
-const val CONTINUE_TO_BARS_ONBOARDING = "Bars"
-const val CONTINUE_TO_BACK_STACK = "Back"
-const val CONTINUE_TO_BACK_STACK_WITH_RESULT = "WithResult"
+import java.io.Serializable
 
 interface ScheduleFeatureLauncher {
 
-    fun launchMain(): Fragment
+    fun getScreen(): Fragment
 
     fun launchSearchGroup(
-        continueTo: String = CONTINUE_TO_BACK_STACK,
+        continueTo: ContinueTo = ContinueTo.BACK,
         targetFragment: Fragment? = null,
         requestCode: Int? = null,
         selectGroupAfterSuccess: Boolean = true
     )
+
+    enum class ContinueTo : Serializable { DASHBOARD, BACK, BACK_WITH_RESULT, BARS }
 }

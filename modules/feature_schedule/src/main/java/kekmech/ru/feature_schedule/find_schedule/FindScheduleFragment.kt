@@ -10,15 +10,16 @@ import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.BaseFragment
 import kekmech.ru.coreui.banner.showBanner
-import kekmech.ru.domain_schedule.CONTINUE_TO_BACK_STACK
-import kekmech.ru.domain_schedule.CONTINUE_TO_BACK_STACK_WITH_RESULT
-import kekmech.ru.domain_schedule.CONTINUE_TO_BARS_ONBOARDING
-import kekmech.ru.domain_schedule.CONTINUE_TO_DASHBOARD
+import kekmech.ru.domain_schedule.ScheduleFeatureLauncher
+import kekmech.ru.domain_schedule.ScheduleFeatureLauncher.ContinueTo.*
 import kekmech.ru.feature_schedule.R
 import kekmech.ru.feature_schedule.databinding.FragmentFindScheduleBinding
 import kekmech.ru.feature_schedule.di.ScheduleDependencies
-import kekmech.ru.feature_schedule.find_schedule.elm.*
+import kekmech.ru.feature_schedule.find_schedule.elm.FindScheduleEffect
+import kekmech.ru.feature_schedule.find_schedule.elm.FindScheduleEvent
 import kekmech.ru.feature_schedule.find_schedule.elm.FindScheduleEvent.Wish
+import kekmech.ru.feature_schedule.find_schedule.elm.FindScheduleFeatureFactory
+import kekmech.ru.feature_schedule.find_schedule.elm.FindScheduleState
 import kekmech.ru.feature_schedule.find_schedule.utils.GroupFormatTextWatcher
 import org.koin.android.ext.android.inject
 
@@ -65,10 +66,10 @@ internal class FindScheduleFragment :
         ))
         is FindScheduleEffect.ShowSomethingWentWrongError -> showBanner(R.string.something_went_wrong_error)
         is FindScheduleEffect.NavigateNextFragment -> when (effect.continueTo) {
-            CONTINUE_TO_BACK_STACK -> close()
-            CONTINUE_TO_BARS_ONBOARDING -> onboardingFeatureLauncher.launchBarsPage()
-            CONTINUE_TO_DASHBOARD -> dependencies.mainScreenLauncher.launch()
-            CONTINUE_TO_BACK_STACK_WITH_RESULT -> closeWithResult { putExtra("group_number", effect.groupName) }
+            BACK -> close()
+            BARS -> onboardingFeatureLauncher.launchBarsPage()
+            DASHBOARD -> dependencies.mainScreenLauncher.launch()
+            BACK_WITH_RESULT -> closeWithResult { putExtra("group_number", effect.groupName) }
             else -> Unit
         }
     }
@@ -100,7 +101,7 @@ internal class FindScheduleFragment :
 
     companion object {
         fun newInstance(
-            continueTo: String = CONTINUE_TO_BACK_STACK,
+            continueTo: ScheduleFeatureLauncher.ContinueTo = BACK,
             selectGroupAfterSuccess: Boolean = true
         ) = FindScheduleFragment().withArguments(
             CONTINUE_TO_ARG to continueTo,

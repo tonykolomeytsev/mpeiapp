@@ -20,17 +20,17 @@ import kekmech.ru.coreui.items.FavoriteScheduleAdapterItem
 import kekmech.ru.coreui.items.FavoriteScheduleItem
 import kekmech.ru.coreui.items.SpaceAdapterItem
 import kekmech.ru.coreui.touch_helpers.attachSwipeToDeleteCallback
-import kekmech.ru.domain_schedule.CONTINUE_TO_BACK_STACK_WITH_RESULT
+import kekmech.ru.domain_schedule.ScheduleFeatureLauncher.ContinueTo.BACK_WITH_RESULT
 import kekmech.ru.domain_schedule.dto.FavoriteSchedule
 import kekmech.ru.feature_app_settings.R
 import kekmech.ru.feature_app_settings.databinding.FragmentFavoritesBinding
 import kekmech.ru.feature_app_settings.di.AppSettingDependencies
 import kekmech.ru.feature_app_settings.screens.edit_favorite.EditFavoriteFragment
-import kekmech.ru.feature_app_settings.screens.favorites.item.HelpBannerAdapterItem
 import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesEffect
 import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesEvent
 import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesEvent.Wish
 import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesState
+import kekmech.ru.feature_app_settings.screens.favorites.item.HelpBannerAdapterItem
 import org.koin.android.ext.android.inject
 
 private const val REQUEST_NEW_FAVORITE = 312344
@@ -75,7 +75,7 @@ internal class FavoritesFragment :
         AddActionAdapterItem {
             analytics.sendClick("AddFavorite")
             dependencies.scheduleFeatureLauncher.launchSearchGroup(
-                continueTo = CONTINUE_TO_BACK_STACK_WITH_RESULT,
+                continueTo = BACK_WITH_RESULT,
                 targetFragment = this,
                 requestCode = REQUEST_NEW_FAVORITE,
                 selectGroupAfterSuccess = false

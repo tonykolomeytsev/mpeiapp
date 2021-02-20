@@ -1,9 +1,10 @@
 package kekmech.ru.feature_schedule.find_schedule.elm
 
+import kekmech.ru.domain_schedule.ScheduleFeatureLauncher
 import kekmech.ru.domain_schedule.dto.SearchResult
 
 internal data class FindScheduleState(
-    val continueTo: String,
+    val continueTo: ScheduleFeatureLauncher.ContinueTo,
     val isLoading: Boolean = false,
     val isContinueButtonEnabled: Boolean = false,
     val selectScheduleAfterSuccess: Boolean,
@@ -35,7 +36,10 @@ internal sealed class FindScheduleEvent {
 internal sealed class FindScheduleEffect {
     object ShowError : FindScheduleEffect()
     object ShowSomethingWentWrongError : FindScheduleEffect()
-    data class NavigateNextFragment(val continueTo: String, val groupName: String) : FindScheduleEffect()
+    data class NavigateNextFragment(
+        val continueTo: ScheduleFeatureLauncher.ContinueTo,
+        val groupName: String
+    ) : FindScheduleEffect()
 }
 
 internal sealed class FindScheduleAction {
