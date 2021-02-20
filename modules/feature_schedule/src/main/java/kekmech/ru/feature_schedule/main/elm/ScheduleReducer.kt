@@ -78,22 +78,20 @@ internal class ScheduleReducer : StateReducer<ScheduleEvent, ScheduleState, Sche
         is Wish.Click.FAB -> {
             getWeekSelectionResult(
                 state,
-                Wish.Action.SelectWeek(if (state.weekOffset != 0) 0 else 1),
-                forceChangeSelectedDay = true
+                Wish.Action.SelectWeek(if (state.weekOffset != 0) 0 else 1)
             )
         }
     }
 
     private fun getWeekSelectionResult(
         state: ScheduleState,
-        event: Wish.Action.SelectWeek,
-        forceChangeSelectedDay: Boolean = false
+        event: Wish.Action.SelectWeek
     ): Result<ScheduleState, ScheduleEffect, ScheduleAction> {
         if (state.weekOffset == event.weekOffset) return Result(state)
         return Result(
             state = state.copy(
                 weekOffset = event.weekOffset,
-                selectedDate = selectNecessaryDate(state, event.weekOffset, forceChangeSelectedDay),
+                selectedDate = selectNecessaryDate(state, event.weekOffset),
                 isAfterError = false
             ),
             command = ScheduleAction.LoadSchedule(event.weekOffset)
@@ -102,15 +100,8 @@ internal class ScheduleReducer : StateReducer<ScheduleEvent, ScheduleState, Sche
 
     private fun selectNecessaryDate(
         state: ScheduleState,
-        newWeekOffset: Int,
-        force: Boolean = false
-    ): LocalDate {
-        if (state.appSettings.changeDayAfterChangeWeek || force) {
-            return state.selectedDate.plusWeeks((newWeekOffset - state.weekOffset).toLong())
-        } else {
-            return state.selectedDate
-        }
-    }
+        newWeekOffset: Int
+    ): LocalDate = state.selectedDate.plusWeeks((newWeekOffset - state.weekOffset).toLong())
 
     private fun ScheduleState.showNextWeekIfWeekend(): ScheduleState {
         val todayIsSunday = selectedDate.dayOfWeek == DayOfWeek.SUNDAY

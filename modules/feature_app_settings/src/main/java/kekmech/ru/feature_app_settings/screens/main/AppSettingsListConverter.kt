@@ -1,9 +1,6 @@
 package kekmech.ru.feature_app_settings.screens.main
 
 import android.content.Context
-import android.text.SpannableString
-import android.text.style.ForegroundColorSpan
-import kekmech.ru.common_android.getThemeColor
 import kekmech.ru.coreui.items.*
 import kekmech.ru.feature_app_settings.BuildConfig
 import kekmech.ru.feature_app_settings.R
@@ -49,12 +46,6 @@ internal class AppSettingsListConverter {
                 isChecked = appSettings.showNavigationButton
             ))
             add(SectionTextItem(resId = R.string.app_settings_show_navigation_fab_description))
-            add(ToggleItem(
-                itemId = AppSettingsFragment.TOGGLE_CHANGE_DAY_AFTER_CHANGE_WEEK,
-                titleRes = R.string.app_settings_change_day_after_change_week,
-                isChecked = appSettings.changeDayAfterChangeWeek
-            ))
-            add(SectionTextItem(resId = R.string.app_settings_change_day_after_change_week_description))
             add(SpaceItem.VERTICAL_24)
 
             add(SectionHeaderItem(

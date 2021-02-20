@@ -200,8 +200,6 @@
     <string name="app_settings_dark_theme">Dark theme</string>
     <string name="app_settings_dark_theme_description">You can change the visual design from light to dark and vice versa</string>
     <string name="app_settings_snowy_mood">Snowy mood</string>
-    <string name="app_settings_change_day_after_change_week">Change day when changing week</string>
-    <string name="app_settings_change_day_after_change_week_description">When switching to another week, automatically switch 7 days forward, or 7 days back</string>
     <string name="app_settings_show_navigation_fab">Quick navigation button</string>
     <string name="app_settings_show_navigation_fab_description">Show or hide the navigation button (at the bottom of the schedule screen) that allows you to quickly switch to the current and next week</string>
     <string name="app_settings_auto_hide_bottom_sheet">Hide the list on click</string>

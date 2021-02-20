@@ -77,10 +77,6 @@ internal class AppSettingsFragment :
             feature.accept(Wish.Action.SetDarkThemeEnabled(it))
             fixStatusBarIssue(it)
         },
-        ToggleAdapterItem(TOGGLE_CHANGE_DAY_AFTER_CHANGE_WEEK) {
-            analytics.sendChangeSetting("ChangeDayAfterChangeWeek", it.toString())
-            feature.accept(Wish.Action.SetChangeDayAfterChangeWeek(it))
-        },
         ToggleAdapterItem(TOGGLE_AUTO_HIDE_BOTTOM_SHEET) {
             analytics.sendChangeSetting("AutoHideMapBottomSheet", it.toString())
             feature.accept(Wish.Action.SetAutoHideBottomSheet(it))
@@ -154,7 +150,6 @@ internal class AppSettingsFragment :
 
     companion object {
         const val TOGGLE_DARK_THEME = 0
-        const val TOGGLE_CHANGE_DAY_AFTER_CHANGE_WEEK = 1
         const val TOGGLE_AUTO_HIDE_BOTTOM_SHEET = 2
         const val TOGGLE_SNOW_FLAKES = 3
         const val TOGGLE_DEBUG_CHANGE_ENV = 4

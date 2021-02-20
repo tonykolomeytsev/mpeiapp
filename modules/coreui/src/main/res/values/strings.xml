@@ -202,8 +202,6 @@
     <string name="app_settings_dark_theme">Темная тема</string>
     <string name="app_settings_dark_theme_description">Вы можете сменить визуальное оформление со светлого на темное и наоборот</string>
     <string name="app_settings_snowy_mood">Снежное настроение</string>
-    <string name="app_settings_change_day_after_change_week">Менять день при смене недели</string>
-    <string name="app_settings_change_day_after_change_week_description">При переходе на другую неделю автоматически переключаться на 7 дней вперед, либо 7 дней назад</string>
     <string name="app_settings_show_navigation_fab">Кнопка быстрой навигации</string>
     <string name="app_settings_show_navigation_fab_description">Показать либо скрыть кнопку навигации (внизу экрана расписания), позволяющую быстро переключаться на текущую и следующую недели</string>
     <string name="app_settings_auto_hide_bottom_sheet">Скрывать список по клику</string>
