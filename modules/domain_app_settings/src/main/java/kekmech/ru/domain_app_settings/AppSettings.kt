@@ -7,7 +7,6 @@ interface AppSettings {
     val languageCode: String
 
     // schedule
-    val changeDayAfterChangeWeek: Boolean
     val showNavigationButton: Boolean
 
     // map

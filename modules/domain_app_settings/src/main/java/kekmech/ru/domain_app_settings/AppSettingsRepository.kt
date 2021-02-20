@@ -13,8 +13,6 @@ class AppSettingsRepository(
 
     override var isSnowEnabled by preferences.boolean("app_is_snow_enabled", true)
 
-    override var changeDayAfterChangeWeek by preferences.boolean("schedule_change_day_after_change_week", false)
-
     override var showNavigationButton by preferences.boolean("show_nav_fab", true)
 
     override var autoHideBottomSheet by preferences.boolean("map_auto_hide_bottom_sheet", true)

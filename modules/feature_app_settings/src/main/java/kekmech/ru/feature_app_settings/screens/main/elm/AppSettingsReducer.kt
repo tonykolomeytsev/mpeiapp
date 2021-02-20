@@ -2,8 +2,8 @@ package kekmech.ru.feature_app_settings.screens.main.elm
 
 import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsEvent.News
 import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsEvent.Wish
-import vivid.money.elmslie.core.store.StateReducer
 import vivid.money.elmslie.core.store.Result
+import vivid.money.elmslie.core.store.StateReducer
 import java.util.*
 
 internal class AppSettingsReducer :
@@ -47,10 +47,6 @@ internal class AppSettingsReducer :
         is Wish.Action.SetSnowEnabled -> Result(
             state = state,
             command = AppSettingsAction.SetSnowEnabled(event.isEnabled)
-        )
-        is Wish.Action.SetChangeDayAfterChangeWeek -> Result(
-            state = state,
-            command = AppSettingsAction.SetChangeDayAfterChangeWeek(event.isEnabled)
         )
         is Wish.Action.SetAutoHideBottomSheet -> Result(
             state = state,
