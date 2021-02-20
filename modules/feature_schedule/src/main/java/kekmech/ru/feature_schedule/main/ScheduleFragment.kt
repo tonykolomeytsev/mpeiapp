@@ -41,8 +41,6 @@ internal class ScheduleFragment :
     ActivityResultListener,
     NeedToUpdate {
 
-    init { retainInstance = true }
-
     override val initEvent = Wish.Init
     override var layoutId = R.layout.fragment_schedule
 
@@ -55,14 +53,13 @@ internal class ScheduleFragment :
 
     // for viewPager sliding debounce
     private var viewPagerPositionToBeSelected: Int? = null
-    private var weekOffsetToBeSelected: Int = 0
 
     override fun createStore() = inject<ScheduleFeatureFactory>().value.create()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewBinding.apply {
-            weeksScrollHelper.attach(recyclerView, weekOffsetToBeSelected)
+            weeksScrollHelper.attach(recyclerView)
             recyclerView.adapter = weeksScrollAdapter
             recyclerView.itemAnimator = null
             recyclerView.setHasFixedSize(true)
@@ -92,11 +89,9 @@ internal class ScheduleFragment :
 
     @Suppress("MagicNumber")
     override fun render(state: ScheduleState) {
-        weekOffsetToBeSelected = state.weekOffset
-
+        viewPagerAdapter.update(ScheduleClassesListConverter.map(state))
         renderStatusBar(state)
         renderWeekCalendar(state)
-        viewPagerAdapter.update(ScheduleClassesListConverter.map(state))
         renderViewPager(state)
         renderFloatingActionButton(state)
     }
@@ -185,7 +180,7 @@ internal class ScheduleFragment :
         WeekAdapterItem(
             onDayClickListener = {
                 analytics.sendClick("Day_${it.date}")
-                feature.accept(Wish.Click.OnDayClick(it))
+                feature.accept(Wish.Click.OnDayClick(it.date))
             }
         )
     )

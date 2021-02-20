@@ -33,11 +33,6 @@ internal data class ScheduleState(
     val isOnCurrentWeek get() = weekOffset == 0
 }
 
-internal data class NavigationFabState(
-    val isVisible: Boolean = true,
-    val isOnCurrentWeek: Boolean = true
-)
-
 internal sealed class ScheduleEvent {
 
     sealed class Wish : ScheduleEvent() {
@@ -51,7 +46,7 @@ internal sealed class ScheduleEvent {
         }
 
         object Click {
-            data class OnDayClick(val dayItem: DayItem) : Wish()
+            data class OnDayClick(val date: LocalDate) : Wish()
             data class OnClassesClick(val classes: Classes) : Wish()
             object OnFAB : Wish()
         }
