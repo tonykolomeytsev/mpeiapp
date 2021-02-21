@@ -57,9 +57,13 @@ internal open class LiquidSchema(tablesProvider: GeneralScope.() -> Unit) {
     }
 
     init {
+        check(tables.isNotEmpty())
         val tablesNames = tables.map { it.name }
-        check(tablesNames.toSet().size == tablesNames.size) { "All tables name should be unique!" }
-        check(tables.all { it.columns.isNotEmpty() }) { "All tables should have at least one column!" }
+        check(tablesNames.toSet().size == tablesNames.size) { "All tables names must be unique!" }
+        check(tables.all { it.columns.isNotEmpty() }) { "All tables must have at least one column!" }
+        check(tables.all { table -> table.columns.let { it.toSet().size == it.size } }) {
+            "All columns in a table must be unique!"
+        }
     }
 
     fun migrate(db: Executor) {

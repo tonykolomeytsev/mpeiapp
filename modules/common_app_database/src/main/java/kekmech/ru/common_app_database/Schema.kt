@@ -9,8 +9,8 @@ internal object Schema : LiquidSchema({
         column("datetime", textNotNull)
         column("cls_name", textNotNull)
         column("grp_name", textNotNull)
-        //column("p_attachments", textDefaultNull)
-        //column("target", textDefaultNull)
+        column("p_attachments", textDefaultNull)
+        column("target", textDefaultNull)
     }
     table("favorite_schedules") {
         column("_id", integerPrimaryKeyAutoIncrement)

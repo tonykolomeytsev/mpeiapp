@@ -5,6 +5,7 @@ import io.kotest.matchers.collections.shouldContainExactly
 import kekmech.ru.common_app_database.migrations.Executor
 import kekmech.ru.common_app_database.migrations.LiquidSchema
 import org.intellij.lang.annotations.Language
+import org.junit.jupiter.api.assertThrows
 
 class LiquidSchemaTest : StringSpec({
     "Test create table if database is empty" {
@@ -18,26 +19,70 @@ class LiquidSchemaTest : StringSpec({
         executor.setOfQueries.shouldContainExactly(SCHEMA_SQL_1, SCHEMA_SQL_2)
     }
     "Test create second table if one table is exists" {
-        val executor = setAccumulatingExecutor(mapOf(
-            "students" to setOf("first_name", "last_name", "age", "_group")
-        ))
+        val executor = setAccumulatingExecutor(
+            mapOf(
+                "students" to setOf("first_name", "last_name", "age", "_group")
+            )
+        )
         SCHEMA_2.migrate(executor)
         executor.setOfQueries.shouldContainExactly(SCHEMA_SQL_2)
     }
     "Test update TWO tables in database (add columns)" {
-        val executor = setAccumulatingExecutor(mapOf(
-            "students" to setOf("first_name", "last_name", "age", "_group"),
-            "teachers" to setOf("first_name", "last_name", "groups")
-        ))
+        val executor = setAccumulatingExecutor(
+            mapOf(
+                "students" to setOf("first_name", "last_name", "age", "_group"),
+                "teachers" to setOf("first_name", "last_name", "groups")
+            )
+        )
         SCHEMA_3.migrate(executor)
         executor.setOfQueries.shouldContainExactly(SCHEMA_SQL_3)
     }
     "Test update one table and create second one" {
-        val executor = setAccumulatingExecutor(mapOf(
-            "students" to setOf("first_name", "last_name", "age", "_group")
-        ))
+        val executor = setAccumulatingExecutor(
+            mapOf(
+                "students" to setOf("first_name", "last_name", "age", "_group")
+            )
+        )
         SCHEMA_3.migrate(executor)
         executor.setOfQueries.shouldContainExactly(SCHEMA_SQL_4)
+    }
+    "Test error if schema has no tables" {
+        assertThrows<IllegalStateException> {
+            LiquidSchema {
+                /* no-op */
+            }
+        }
+    }
+    "Test error if schema has tables with duplicate names" {
+        assertThrows<IllegalStateException> {
+            LiquidSchema {
+                table("test_table") {
+                    column("test_column_1", textNotNull)
+                }
+                table("test_table") {
+                    column("test_column_2", textNotNull)
+                }
+            }
+        }
+    }
+    "Test error if schema has table without columns" {
+        assertThrows<IllegalStateException> {
+            LiquidSchema {
+                table("test_table") {
+                    /* no-op */
+                }
+            }
+        }
+    }
+    "Test error if schema has table with duplicate columns" {
+        assertThrows<IllegalStateException> {
+            LiquidSchema {
+                table("test_table") {
+                    column("test_column", textNotNull)
+                    column("test_column", textNotNull)
+                }
+            }
+        }
     }
 }) {
     private companion object {
