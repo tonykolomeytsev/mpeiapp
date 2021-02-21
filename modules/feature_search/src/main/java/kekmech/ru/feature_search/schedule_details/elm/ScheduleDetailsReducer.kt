@@ -3,9 +3,10 @@ package kekmech.ru.feature_search.schedule_details.elm
 import kekmech.ru.domain_schedule.dto.Day
 import kekmech.ru.domain_schedule.dto.FavoriteSchedule
 import kekmech.ru.domain_schedule.dto.Schedule
+import kekmech.ru.feature_search.schedule_details.elm.ScheduleDetailsEvent.News
 import kekmech.ru.feature_search.schedule_details.elm.ScheduleDetailsEvent.Wish
-import vivid.money.elmslie.core.store.StateReducer
 import vivid.money.elmslie.core.store.Result
+import vivid.money.elmslie.core.store.StateReducer
 
 internal class ScheduleDetailsReducer :
     StateReducer<ScheduleDetailsEvent, ScheduleDetailsState,
@@ -16,14 +17,14 @@ internal class ScheduleDetailsReducer :
         state: ScheduleDetailsState
     ): Result<ScheduleDetailsState, ScheduleDetailsEffect, ScheduleDetailsAction> = when (event) {
         is Wish -> reduceWish(event, state)
-        is ScheduleDetailsEvent.News -> reduceNews(event, state)
+        is News -> reduceNews(event, state)
     }
 
     private fun reduceNews(
-        event: ScheduleDetailsEvent.News,
+        event: News,
         state: ScheduleDetailsState
     ): Result<ScheduleDetailsState, ScheduleDetailsEffect, ScheduleDetailsAction> = when(event) {
-        is ScheduleDetailsEvent.News.ScheduleLoaded -> {
+        is News.ScheduleLoaded -> {
             val newState = if (event.weekOffset == 0) {
                 state.copy(thisWeek = event.schedule.mapToDays())
             } else {
@@ -31,7 +32,7 @@ internal class ScheduleDetailsReducer :
             }
             Result(newState)
         }
-        is ScheduleDetailsEvent.News.LoadScheduleError -> {
+        is News.LoadScheduleError -> {
             val newState = if (event.weekOffset == 0) {
                 state.copy(thisWeek = emptyList())
             } else {
@@ -39,7 +40,7 @@ internal class ScheduleDetailsReducer :
             }
             Result(newState)
         }
-        is ScheduleDetailsEvent.News.FavoritesLoaded -> {
+        is News.FavoritesLoaded -> {
             val favoriteSchedule = event.schedules.find { it.groupNumber == state.searchResult.name }
             Result(
                 state.copy(
@@ -48,10 +49,10 @@ internal class ScheduleDetailsReducer :
                 )
             )
         }
-        is ScheduleDetailsEvent.News.FavoriteRemoved -> Result(
+        is News.FavoriteRemoved -> Result(
             state.copy(isInFavorites = false, favoriteSchedule = null)
         )
-        is ScheduleDetailsEvent.News.FavoriteAdded -> Result(
+        is News.FavoriteAdded -> Result(
             state.copy(isInFavorites = true, favoriteSchedule = event.schedule)
         )
     }
@@ -94,6 +95,9 @@ internal class ScheduleDetailsReducer :
         )
     }
 
+    /**
+     * If you modify this function, please, also modify same function in ScheduleDetailsReducerTest.Companion
+     */
     private fun Schedule.mapToDays(): List<Day> {
         val week = weeks.firstOrNull() ?: return emptyList()
         val days = weeks.flatMap { it.days }
