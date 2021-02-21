@@ -10,9 +10,11 @@ internal data class SearchState(
     val searchResultsNotes: List<Any> = emptyList(),
     val searchResultsGroups: List<SearchResult> = emptyList(),
     val searchResultsPersons: List<SearchResult> = emptyList(),
-    val filterItems: List<FilterItem>,
     val selectedFilter: FilterItemType = FilterItemType.ALL
-)
+) {
+    val filterItems: List<FilterItem> = FilterItem
+        .resolveAllItems().map { it.copy(isSelected = it.type == selectedFilter) }
+}
 
 internal sealed class SearchEvent {
 
