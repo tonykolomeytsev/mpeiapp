@@ -6,8 +6,8 @@ import kekmech.ru.feature_search.item.compareFilter
 import kekmech.ru.feature_search.main.elm.SearchEvent.News
 import kekmech.ru.feature_search.main.elm.SearchEvent.Wish
 import kekmech.ru.feature_search.main.simplify
-import vivid.money.elmslie.core.store.StateReducer
 import vivid.money.elmslie.core.store.Result
+import vivid.money.elmslie.core.store.StateReducer
 
 internal class SearchReducer : StateReducer<SearchEvent, SearchState, SearchEffect, SearchAction> {
 
@@ -39,7 +39,7 @@ internal class SearchReducer : StateReducer<SearchEvent, SearchState, SearchEffe
             } else {
                 val simplifiedQuery = state.query.simplify()
                 Result(
-                    state = state.copy(query = state.query),
+                    state = state,
                     effects = listOf(SearchEffect.SetInitialQuery(state.query)),
                     commands = getLoadActions(simplifiedQuery, state.selectedFilter)
                 )
@@ -53,12 +53,7 @@ internal class SearchReducer : StateReducer<SearchEvent, SearchState, SearchEffe
             )
         }
         is Wish.Action.SelectFilter -> {
-            val newFilterItems = state.filterItems.map { it.copy(isSelected = it.type == event.filterItem.type) }
-            val newSelectedFilter = event.filterItem.type
-            val newState = state.copy(
-                filterItems = newFilterItems,
-                selectedFilter = newSelectedFilter
-            )
+            val newState = state.copy(selectedFilter = event.filterItem.type)
             Result(
                 state = newState,
                 commands = getLoadActions(newState.query.simplify(), newState.selectedFilter)

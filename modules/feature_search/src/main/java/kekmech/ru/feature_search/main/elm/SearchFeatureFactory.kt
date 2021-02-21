@@ -1,6 +1,5 @@
 package kekmech.ru.feature_search.main.elm
 
-import kekmech.ru.feature_search.item.FilterItem
 import kekmech.ru.feature_search.item.FilterItemType
 import vivid.money.elmslie.core.store.ElmStore
 import vivid.money.elmslie.core.store.Store
@@ -16,8 +15,7 @@ internal class SearchFeatureFactory(
         val filterType = FilterItemType.valueOf(filter.toUpperCase())
         return ElmStore(
             initialState = SearchState(
-                query,
-                filterItems = FilterItem.resolveAllItems().map { it.copy(isSelected = it.type == filterType) },
+                query = query,
                 selectedFilter = filterType
             ),
             reducer = SearchReducer(),
