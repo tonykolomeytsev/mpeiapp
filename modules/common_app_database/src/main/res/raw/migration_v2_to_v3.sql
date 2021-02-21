@@ -1,1 +1,0 @@
-alter table notes add column p_attachments text default null;

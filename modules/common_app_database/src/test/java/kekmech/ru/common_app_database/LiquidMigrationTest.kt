@@ -1,3 +1,0 @@
-package kekmech.ru.common_app_database
-
-class LiquidMigrationTest
