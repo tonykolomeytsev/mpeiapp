@@ -8,7 +8,7 @@ interface AppDatabase {
     fun close()
 
     companion object {
-        const val VERSION = 5
+        const val VERSION = 2
         const val NAME = "mpeix.db"
     }
 }

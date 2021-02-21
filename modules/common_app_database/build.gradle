@@ -1,6 +1,10 @@
 apply from: "$gradleDir/domain-android-module.gradle"
 
 dependencies {
+    testImplementation kotest.runner
+    testImplementation kotest.assertions
+    testImplementation kotest.property
+
     implementation androidx.appcompat
     implementation koin.core
     implementation koin.android
