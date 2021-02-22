@@ -14,6 +14,8 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_analytics.ext.screenAnalytics
 import kekmech.ru.common_android.doOnApplyWindowInsets
+import kekmech.ru.common_android.dpToPx
+import kekmech.ru.common_android.getThemeColor
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.views.setMargins
 import kekmech.ru.common_kotlin.fastLazy
@@ -25,20 +27,25 @@ import kekmech.ru.coreui.items.SpaceAdapterItem
 import kekmech.ru.domain_map.dto.MapMarker
 import kekmech.ru.map.databinding.FragmentMapBinding
 import kekmech.ru.map.di.MapDependencies
+import kekmech.ru.map.elm.FilterTab
+import kekmech.ru.map.elm.MapEffect
+import kekmech.ru.map.elm.MapEvent
+import kekmech.ru.map.elm.MapEvent.Wish
+import kekmech.ru.map.elm.MapState
 import kekmech.ru.map.ext.animateCameraTo
 import kekmech.ru.map.ext.init
 import kekmech.ru.map.ext.toMarkerType
 import kekmech.ru.map.items.FilterTabItem
 import kekmech.ru.map.items.MapMarkerAdapterItem
 import kekmech.ru.map.items.TabBarAdapterItem
-import kekmech.ru.map.elm.*
-import kekmech.ru.map.elm.MapEvent.Wish
+import kekmech.ru.map.view.BottomSheetBackgroundDrawable
 import kekmech.ru.map.view.ControlledScrollingLayoutManager
 import kekmech.ru.map.view.MarkersBitmapFactory
 import org.koin.android.ext.android.inject
 
 private const val MAP_CREATION_DELAY = 50L
 private const val MAX_OVERLAY_ALPHA = 0.5f
+private const val DEFAULT_CORNER_RADIUS = 16f // dp
 
 internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState>(), NeedToUpdate {
 
@@ -50,6 +57,10 @@ internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState>(), Need
     private val analytics by screenAnalytics("Map")
     private val markersBitmapFactory: MarkersBitmapFactory by inject()
     private val viewBinding by viewBinding(FragmentMapBinding::bind)
+    private val bottomSheetBackground by fastLazy { BottomSheetBackgroundDrawable(
+        backgroundColor = requireContext().getThemeColor(R.attr.colorWhite),
+        topCornerRadius = resources.dpToPx(DEFAULT_CORNER_RADIUS).toFloat()
+    ) }
 
     override fun createStore() = dependencies.mapFeatureFactory.create()
 
@@ -58,6 +69,7 @@ internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState>(), Need
         Handler(Looper.getMainLooper()).postDelayed({ createMap() }, MAP_CREATION_DELAY)
         viewBinding.recyclerView.layoutManager = ControlledScrollingLayoutManager(requireContext())
         viewBinding.recyclerView.adapter = adapter
+        viewBinding.recyclerView.background = bottomSheetBackground
         createBottomSheet(view)
     }
 
@@ -100,6 +112,15 @@ internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState>(), Need
         (viewBinding.recyclerView.layoutManager as ControlledScrollingLayoutManager)
             .isScrollingEnabled = behavior.state != BottomSheetBehavior.STATE_COLLAPSED
 
+        if (state.bottomSheetState == BottomSheetBehavior.STATE_EXPANDED) {
+            bottomSheetBackground.animate()
+                .radius(0f)
+                .start()
+        } else {
+            bottomSheetBackground.animate()
+                .radius(1f)
+                .start()
+        }
         DeeplinkHelper.handleDeeplinkIfNecessary(dependencies.deeplinkDelegate, state, feature)
     }
 
