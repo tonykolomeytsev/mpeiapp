@@ -1,6 +1,10 @@
 apply from: "$gradleDir/feature-android-module.gradle"
 
 dependencies {
+    testImplementation kotest.runner
+    testImplementation kotest.assertions
+    testImplementation kotest.property
+
     implementation androidx.coreKtx
     implementation google.material
 
