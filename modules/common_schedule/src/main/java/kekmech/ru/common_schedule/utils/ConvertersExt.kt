@@ -69,6 +69,7 @@ fun List<Classes>.withWindows(): List<Any> = mutableListOf<Any>().apply {
  * Indicate progress for those classes who need it, return the same list
  * IT IS IN-PLACE FUNCTION!
  */
+@Suppress("NestedBlockDepth")
 fun List<Any>.withProgressPreview(
     now: LocalTime = moscowLocalTime()
 ): List<Any> {

@@ -100,7 +100,7 @@ open class ClassesViewHolderImpl(
                 context.getThemeColor(R.attr.colorGray10),
                 context.getResColor(R.color.colorMain),
                 cornerRadius = ProgressBackgroundDrawable.CornerRadius
-                    .of(context.resources.dpToPx(7f).toFloat())
+                    .of(context.resources.dpToPx(PROGRESS_BACKGROUND_CORNER_RADIUS).toFloat())
             )
             bg.background = progressBackgroundDrawable
             progressBackgroundDrawable.progress = progress
@@ -108,6 +108,10 @@ open class ClassesViewHolderImpl(
             val progressBackgroundDrawable = bg.background as ProgressBackgroundDrawable
             progressBackgroundDrawable.progress = progress
         }
+    }
+
+    private companion object {
+        private const val PROGRESS_BACKGROUND_CORNER_RADIUS = 7f
     }
 }
 

@@ -41,7 +41,7 @@ class NotePreviewViewHolderImpl(
         val context = containerView.context
         val bg = containerView
         if (bg.background !is ProgressBackgroundDrawable) {
-            val dp7 = context.resources.dpToPx(7f).toFloat()
+            val dp7 = context.resources.dpToPx(PROGRESS_BACKGROUND_CORNER_RADIUS).toFloat()
             val progressBackgroundDrawable = ProgressBackgroundDrawable(
                 context,
                 context.getThemeColor(R.attr.colorGray10),
@@ -59,6 +59,10 @@ class NotePreviewViewHolderImpl(
             val progressBackgroundDrawable = bg.background as ProgressBackgroundDrawable
             progressBackgroundDrawable.progress = progress
         }
+    }
+
+    private companion object {
+        private const val PROGRESS_BACKGROUND_CORNER_RADIUS = 7f
     }
 }
 
