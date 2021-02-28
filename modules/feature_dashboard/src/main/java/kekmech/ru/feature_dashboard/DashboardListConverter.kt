@@ -9,6 +9,7 @@ import kekmech.ru.common_schedule.utils.withProgressPreview
 import kekmech.ru.coreui.PrettyDateFormatter
 import kekmech.ru.coreui.items.*
 import kekmech.ru.domain_schedule.dto.Classes
+import kekmech.ru.domain_schedule.dto.Day
 import kekmech.ru.feature_dashboard.elm.DashboardState
 import kekmech.ru.feature_dashboard.elm.NextClassesCondition.NOT_STARTED
 import kekmech.ru.feature_dashboard.elm.NextClassesCondition.STARTED
@@ -17,6 +18,7 @@ import kekmech.ru.feature_dashboard.helpers.getActualScheduleDayForView
 import kekmech.ru.feature_dashboard.helpers.getNextClassesTimeStatus
 import kekmech.ru.feature_dashboard.items.*
 import java.time.DayOfWeek
+import java.time.LocalDate
 import java.time.LocalTime
 
 private const val WEEK_MIN_NUMBER = 0
@@ -80,10 +82,11 @@ class DashboardListConverter(
             createClassesEventsItems(state)?.let { (header, classes) ->
                 add(header)
                 add(SpaceItem.VERTICAL_12)
+                val actualDay = state.getActualScheduleDayForView()
                 addAll(classes
                     .withNotePreview()
-                    .withProgressPreview()
-                    .withCalculatedTimeUntilNextClasses(state)
+                    .withProgressPreview(nowDate = actualDay?.date ?: LocalDate.MIN)
+                    .withCalculatedTimeUntilNextClasses(state, actualDay)
                 )
 
                 // сессию показываем после более близких по времени событий
@@ -185,7 +188,8 @@ class DashboardListConverter(
 
     @Suppress("NestedBlockDepth")
     private fun List<Any>.withCalculatedTimeUntilNextClasses(
-        state: DashboardState
+        state: DashboardState,
+        actualDay: Day?
     ): List<Any> = mutableListOf<Any>().apply {
         val raw = this@withCalculatedTimeUntilNextClasses
         val indexOfNextClasses = raw
@@ -195,7 +199,6 @@ class DashboardListConverter(
 
         for (e in raw) {
             val classes = e as? Classes
-            val actualDay = state.getActualScheduleDayForView()
             if (classes == raw[indexOfNextClasses] && actualDay != null) {
                 // add time status
                 val (condition, hours, minutes) = state.getNextClassesTimeStatus(actualDay.date, classes.time)

@@ -157,7 +157,7 @@ class ClassesItemBinder(
         vh.setStartTime(model.time.start.format(timeFormatter))
         vh.setEndTime(model.time.end.format(timeFormatter))
         vh.setOnClickListener { onClickListener?.invoke(model) }
-        model.progress?.let { vh.setProgress(it) }
+        model.progress?.let(vh::setProgress)
     }
 
     private fun String.takeIfNotEmpty() = takeIf {
