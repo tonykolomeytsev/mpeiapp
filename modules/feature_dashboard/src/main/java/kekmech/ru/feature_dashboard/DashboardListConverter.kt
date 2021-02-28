@@ -4,6 +4,8 @@ import android.content.Context
 import kekmech.ru.common_android.moscowLocalDate
 import kekmech.ru.common_android.moscowLocalTime
 import kekmech.ru.common_kotlin.fastLazy
+import kekmech.ru.common_schedule.utils.withNotePreview
+import kekmech.ru.common_schedule.utils.withProgressPreview
 import kekmech.ru.coreui.PrettyDateFormatter
 import kekmech.ru.coreui.items.*
 import kekmech.ru.domain_schedule.dto.Classes
@@ -80,7 +82,9 @@ class DashboardListConverter(
                 add(SpaceItem.VERTICAL_12)
                 addAll(classes
                     .withNotePreview()
-                    .withCalculatedTimeUntilNextClasses(state))
+                    .withProgressPreview()
+                    .withCalculatedTimeUntilNextClasses(state)
+                )
 
                 // сессию показываем после более близких по времени событий
                 add(SpaceItem.VERTICAL_16)
@@ -178,17 +182,6 @@ class DashboardListConverter(
         title = context.getString(R.string.dashboard_section_header_events),
         subtitle = subtitle
     )
-
-    private fun List<Any>.withNotePreview(): List<Any> = mutableListOf<Any>().apply {
-        val raw = this@withNotePreview
-        for (e in raw) {
-            add(e)
-            val classes = e as? Classes ?: continue
-            classes.attachedNotePreview?.let { notePreviewContent ->
-                add(NotePreview(notePreviewContent, linkedClasses = e))
-            }
-        }
-    }
 
     @Suppress("NestedBlockDepth")
     private fun List<Any>.withCalculatedTimeUntilNextClasses(

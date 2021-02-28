@@ -14,6 +14,7 @@ import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.BaseFragment
 import kekmech.ru.common_navigation.BottomTab
 import kekmech.ru.common_navigation.NeedToUpdate
+import kekmech.ru.common_schedule.items.NotePreviewAdapterItem
 import kekmech.ru.coreui.banner.showBanner
 import kekmech.ru.coreui.items.*
 import kekmech.ru.domain_app_settings.AppSettingsFeatureLauncher.SubPage.FAVORITES
