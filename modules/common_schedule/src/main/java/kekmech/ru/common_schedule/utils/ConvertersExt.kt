@@ -1,11 +1,13 @@
 package kekmech.ru.common_schedule.utils
 
+import kekmech.ru.common_android.moscowLocalDate
 import kekmech.ru.common_android.moscowLocalTime
 import kekmech.ru.common_kotlin.addIf
 import kekmech.ru.common_schedule.items.LunchItem
 import kekmech.ru.common_schedule.items.NotePreview
 import kekmech.ru.common_schedule.items.WindowItem
 import kekmech.ru.domain_schedule.dto.Classes
+import java.time.LocalDate
 import java.time.LocalTime
 import java.time.temporal.ChronoUnit
 
@@ -71,17 +73,19 @@ fun List<Classes>.withWindows(): List<Any> = mutableListOf<Any>().apply {
  */
 @Suppress("NestedBlockDepth")
 fun List<Any>.withProgressPreview(
-    now: LocalTime = moscowLocalTime()
+    nowTime: LocalTime = moscowLocalTime(),
+    nowDate: LocalDate = moscowLocalDate()
 ): List<Any> {
+    if (nowDate != moscowLocalDate()) return this
     var isProgressIndicated = false
     val iterator = iterator()
     while (!isProgressIndicated && iterator.hasNext()) {
         when (val item = iterator.next()) {
             is Classes -> {
                 val time = item.time
-                if (now in time.start..time.end) {
+                if (nowTime in time.start..time.end) {
                     val classesDuration = time.start.until(time.end, ChronoUnit.SECONDS)
-                    val elapsedTime = time.start.until(now, ChronoUnit.SECONDS)
+                    val elapsedTime = time.start.until(nowTime, ChronoUnit.SECONDS)
                     if (classesDuration > 0) {
                         item.progress = elapsedTime.toFloat() / classesDuration.toFloat()
                     }

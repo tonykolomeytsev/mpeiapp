@@ -72,7 +72,7 @@ class ClassesNoteItemBinder(
 
     override fun bind(vh: NotePreviewViewHolder, model: NotePreview, position: Int) {
         vh.setText(model.preview)
-        model.linkedClasses.progress?.let { vh.setProgress(it) }
+        model.linkedClasses.progress?.let(vh::setProgress)
         onClickListener?.let { vh.setOnClickListener { it(model.linkedClasses) } }
     }
 }
