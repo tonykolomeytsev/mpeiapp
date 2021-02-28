@@ -1,19 +1,16 @@
 package kekmech.ru.feature_schedule.main
 
-import kekmech.ru.common_kotlin.addIf
-import kekmech.ru.common_schedule.items.LunchItem
 import kekmech.ru.common_schedule.items.SelfStudyItem
+import kekmech.ru.common_schedule.utils.withLunch
+import kekmech.ru.common_schedule.utils.withNotePreview
+import kekmech.ru.common_schedule.utils.withWindows
 import kekmech.ru.coreui.items.EmptyStateItem
-import kekmech.ru.coreui.items.NotePreview
 import kekmech.ru.coreui.items.ShimmerItem
 import kekmech.ru.coreui.items.SpaceItem
-import kekmech.ru.domain_schedule.dto.Classes
 import kekmech.ru.feature_schedule.R
-import kekmech.ru.feature_schedule.main.item.*
 import kekmech.ru.feature_schedule.main.elm.ScheduleState
+import kekmech.ru.feature_schedule.main.item.WorkingDayItem
 
-private const val CLASSES_BEFORE_LUNCH_NUMBER = 2
-private const val CLASSES_AFTER_LUNCH_NUMBER = 3
 private const val DAY_ITEMS_COUNT = 6
 
 internal object ScheduleClassesListConverter {
@@ -57,50 +54,6 @@ internal object ScheduleClassesListConverter {
                     items = modifiedClasses
                 )
             }
-        }
-    }
-
-    private fun List<Any>.withNotePreview(): List<Any> = mutableListOf<Any>().apply {
-        val raw = this@withNotePreview
-        for (e in raw) {
-            add(e)
-            val classes = e as? Classes ?: continue
-            classes.attachedNotePreview?.let { notePreviewContent ->
-                add(NotePreview(notePreviewContent, linkedClasses = e))
-            }
-        }
-    }
-
-    private fun List<Any>.withLunch(): List<Any> = mutableListOf<Any>().apply {
-        val raw = this@withLunch
-        val hasSecondAndThirdClasses =
-            raw.any { it is Classes && it.number == CLASSES_BEFORE_LUNCH_NUMBER } &&
-                    raw.any { it is Classes && it.number == CLASSES_AFTER_LUNCH_NUMBER }
-        if (hasSecondAndThirdClasses) {
-            val indexOfLastSecondClasses = raw.indexOfLast { it is Classes && it.number == 2 }
-            raw.forEachIndexed { index, e ->
-                add(e)
-                addIf(LunchItem) { index == indexOfLastSecondClasses }
-            }
-        } else {
-            addAll(raw)
-        }
-    }
-
-    private fun List<Classes>.withWindows(): List<Any> = mutableListOf<Any>().apply {
-        val raw = this@withWindows
-        if (raw.size > 1) {
-            add(raw.first())
-            for (i in 1 until raw.size) {
-                val currClasses = raw[i]
-                val prevClasses = raw[i - 1]
-                addIf(
-                    WindowItem(prevClasses.time.end, currClasses.time.start)
-                ) { currClasses.number - prevClasses.number > 1 }
-                add(currClasses)
-            }
-        } else {
-            addAll(raw)
         }
     }
 

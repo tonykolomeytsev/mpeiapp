@@ -38,6 +38,7 @@ data class Classes(
     // its to optimize recyclerview items
     // sets the same as parent schedule type
     @Transient var scheduleType: ScheduleType = ScheduleType.GROUP
+    @Transient var progress: Float? = null
 }
 
 data class Time(
