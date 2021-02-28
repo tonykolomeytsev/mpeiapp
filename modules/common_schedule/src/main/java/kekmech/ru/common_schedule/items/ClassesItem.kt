@@ -9,12 +9,15 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseItemBinder
+import kekmech.ru.common_android.dpToPx
+import kekmech.ru.common_android.getResColor
 import kekmech.ru.common_android.getStringArray
 import kekmech.ru.common_android.getThemeColor
 import kekmech.ru.common_android.viewbinding.ReusableViewHolder
 import kekmech.ru.common_android.viewbinding.lazyBinding
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_schedule.R
+import kekmech.ru.common_schedule.drawable.ProgressBackgroundDrawable
 import kekmech.ru.coreui.items.ClickableItemViewHolder
 import kekmech.ru.coreui.items.ClickableItemViewHolderImpl
 import kekmech.ru.domain_schedule.dto.Classes
@@ -31,6 +34,7 @@ interface ClassesViewHolder : ClickableItemViewHolder {
     fun setTagColor(@ColorInt color: Int)
     fun setStartTime(time: String)
     fun setEndTime(time: String)
+    fun setProgress(progress: Float)
 }
 
 open class ClassesViewHolderImpl(
@@ -86,6 +90,25 @@ open class ClassesViewHolderImpl(
     override fun setEndTime(time: String) {
         textViewTimeEnd.text = time
     }
+
+    override fun setProgress(progress: Float) {
+        val context = containerView.context
+        val bg = containerView.findViewById<View>(R.id.constraintLayout)
+        if (bg.background !is ProgressBackgroundDrawable) {
+            val progressBackgroundDrawable = ProgressBackgroundDrawable(
+                context,
+                context.getThemeColor(R.attr.colorGray10),
+                context.getResColor(R.color.colorMain),
+                cornerRadius = ProgressBackgroundDrawable.CornerRadius
+                    .of(context.resources.dpToPx(7f).toFloat())
+            )
+            bg.background = progressBackgroundDrawable
+            progressBackgroundDrawable.progress = progress
+        } else {
+            val progressBackgroundDrawable = bg.background as ProgressBackgroundDrawable
+            progressBackgroundDrawable.progress = progress
+        }
+    }
 }
 
 @Suppress("MagicNumber")
@@ -130,6 +153,7 @@ class ClassesItemBinder(
         vh.setStartTime(model.time.start.format(timeFormatter))
         vh.setEndTime(model.time.end.format(timeFormatter))
         vh.setOnClickListener { onClickListener?.invoke(model) }
+        model.progress?.let { vh.setProgress(it) }
     }
 
     private fun String.takeIfNotEmpty() = takeIf {
