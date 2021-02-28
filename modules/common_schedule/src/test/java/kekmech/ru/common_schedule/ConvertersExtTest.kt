@@ -168,7 +168,7 @@ class ConvertersExtTest : BehaviorSpec({
             val givenClassesCopy = givenClasses.map { it.copy() }
             Then("No progress") {
                 check(givenClassesCopy
-                    .withProgressPreview(now = LocalTime.of(9, 0))
+                    .withProgressPreview(nowTime = LocalTime.of(9, 0))
                     .all { (it as Classes).progress == null }
                 )
             }
@@ -177,7 +177,7 @@ class ConvertersExtTest : BehaviorSpec({
             val givenClassesCopy = givenClasses.map { it.copy() }
             Then("First classes progress not null") {
                 check(givenClassesCopy
-                    .withProgressPreview(now = LocalTime.of(9, 30))
+                    .withProgressPreview(nowTime = LocalTime.of(9, 30))
                     .all {
                         if ((it as Classes).number == 1) {
                             it.progress != null
@@ -192,7 +192,7 @@ class ConvertersExtTest : BehaviorSpec({
             val givenClassesCopy = givenClasses.map { it.copy() }
             Then("No progress") {
                 check(givenClassesCopy
-                    .withProgressPreview(now = LocalTime.of(11, 0))
+                    .withProgressPreview(nowTime = LocalTime.of(11, 0))
                     .all { (it as Classes).progress == null }
                 )
             }
@@ -202,7 +202,7 @@ class ConvertersExtTest : BehaviorSpec({
             val givenClassesCopy = givenClasses.map { it.copy() }
             Then("Third classes has 0% progress") {
                 check(givenClassesCopy
-                    .withProgressPreview(now = currentTime)
+                    .withProgressPreview(nowTime = currentTime)
                     .all {
                         if ((it as Classes).number == 3) {
                             it.progress == 0f
@@ -218,7 +218,7 @@ class ConvertersExtTest : BehaviorSpec({
             val givenClassesCopy = givenClasses.map { it.copy() }
             Then("Third classes has 100% progress") {
                 check(givenClassesCopy
-                    .withProgressPreview(now = currentTime)
+                    .withProgressPreview(nowTime = currentTime)
                     .all {
                         if ((it as Classes).number == 3) {
                             it.progress == 1f
