@@ -235,9 +235,12 @@ class ConvertersExtTest : BehaviorSpec({
     private companion object {
         private val TIME = Time(LocalTime.of(12, 45), LocalTime.of(13, 45))
         private const val NOTE_CONTENT = "blah blah blah"
-        private val CLASSES_1 = Classes(name = "one", number = 1, time = Time(LocalTime.of(9, 20), LocalTime.of(10, 55)))
-        private val CLASSES_2 = Classes(name = "two", number = 2, time = Time(LocalTime.of(11, 10), LocalTime.of(12, 45)))
-        private val CLASSES_3 = Classes(name = "three", number = 3, time = Time(LocalTime.of(13, 45), LocalTime.of(15, 20)))
+        private val CLASSES_1 = Classes(name = "one", number = 1,
+            time = Time(LocalTime.of(9, 20), LocalTime.of(10, 55)))
+        private val CLASSES_2 = Classes(name = "two", number = 2,
+            time = Time(LocalTime.of(11, 10), LocalTime.of(12, 45)))
+        private val CLASSES_3 = Classes(name = "three", number = 3,
+            time = Time(LocalTime.of(13, 45), LocalTime.of(15, 20)))
         private val CLASSES_4 = Classes(name = "four", number = 4)
         private val CLASSES_5 = Classes(name = "five", number = 5)
     }
