@@ -13,10 +13,14 @@ import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.BaseFragment
 import kekmech.ru.common_navigation.BackButtonListener
+import kekmech.ru.common_navigation.BottomTab
 import kekmech.ru.mpeiapp.R
 import kekmech.ru.mpeiapp.databinding.FragmentMainBinding
 import kekmech.ru.mpeiapp.ui.main.di.MainScreenDependencies
-import kekmech.ru.mpeiapp.ui.main.elm.*
+import kekmech.ru.mpeiapp.ui.main.elm.MainScreenEffect
+import kekmech.ru.mpeiapp.ui.main.elm.MainScreenEvent
+import kekmech.ru.mpeiapp.ui.main.elm.MainScreenFeatureFactory
+import kekmech.ru.mpeiapp.ui.main.elm.MainScreenState
 import org.koin.android.ext.android.inject
 
 class MainFragment :
@@ -40,6 +44,11 @@ class MainFragment :
         if (savedInstanceState == null) {
             // start observing data
             dependencies.forceUpdateChecker.check()
+        } else {
+            (savedInstanceState.getSerializable(LAST_TAB_KEY) as? BottomTab)?.let { tab ->
+                bottomBarController?.lastSelectedTab = tab
+                tabsSwitcher.changeTab(tab)
+            }
         }
 
         dependencies.prefetcher.prefetch()
@@ -91,7 +100,7 @@ class MainFragment :
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         bottomBarController?.lastSelectedTab?.let {
-            outState.putSerializable("lastSelectedTab", it)
+            outState.putSerializable(LAST_TAB_KEY, it)
         }
     }
 
@@ -105,6 +114,9 @@ class MainFragment :
     }
 
     companion object {
+
+        private const val LAST_TAB_KEY = "lastSelectedTab"
+
         fun newInstance() = MainFragment()
     }
 }
