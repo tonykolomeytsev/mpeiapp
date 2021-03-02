@@ -34,7 +34,7 @@ interface ClassesViewHolder : ClickableItemViewHolder {
     fun setTagColor(@ColorInt color: Int)
     fun setStartTime(time: String)
     fun setEndTime(time: String)
-    fun setProgress(progress: Float)
+    fun setProgress(progress: Float?)
 }
 
 open class ClassesViewHolderImpl(
@@ -91,9 +91,13 @@ open class ClassesViewHolderImpl(
         textViewTimeEnd.text = time
     }
 
-    override fun setProgress(progress: Float) {
+    override fun setProgress(progress: Float?) {
         val context = containerView.context
         val bg = containerView.findViewById<View>(R.id.constraintLayout)
+        if (progress == null) {
+            bg.setBackgroundResource(R.drawable.background_classes)
+            return
+        }
         if (bg.background !is ProgressBackgroundDrawable) {
             val progressBackgroundDrawable = ProgressBackgroundDrawable(
                 context,
@@ -157,7 +161,7 @@ class ClassesItemBinder(
         vh.setStartTime(model.time.start.format(timeFormatter))
         vh.setEndTime(model.time.end.format(timeFormatter))
         vh.setOnClickListener { onClickListener?.invoke(model) }
-        model.progress?.let(vh::setProgress)
+        vh.setProgress(model.progress)
     }
 
     private fun String.takeIfNotEmpty() = takeIf {

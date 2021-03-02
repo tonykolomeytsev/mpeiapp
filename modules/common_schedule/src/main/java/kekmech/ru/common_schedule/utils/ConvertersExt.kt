@@ -23,7 +23,7 @@ fun List<Any>.withNotePreview(): List<Any> = mutableListOf<Any>().apply {
         add(e)
         val classes = e as? Classes ?: continue
         classes.attachedNotePreview?.let { notePreviewContent ->
-            add(NotePreview(notePreviewContent, linkedClasses = e))
+            add(NotePreview(notePreviewContent, linkedClasses = e, classes.progress))
         }
     }
 }

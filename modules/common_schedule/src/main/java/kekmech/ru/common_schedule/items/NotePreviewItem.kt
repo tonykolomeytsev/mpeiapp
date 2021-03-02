@@ -17,12 +17,13 @@ import kekmech.ru.domain_schedule.dto.Classes
 
 data class NotePreview(
     val preview: String,
-    val linkedClasses: Classes
+    val linkedClasses: Classes,
+    val progress : Float? = null
 )
 
 interface NotePreviewViewHolder : ClickableItemViewHolder {
     fun setText(text: String)
-    fun setProgress(progress: Float)
+    fun setProgress(progress: Float?)
 }
 
 class NotePreviewViewHolderImpl(
@@ -37,9 +38,13 @@ class NotePreviewViewHolderImpl(
         viewBinding.textViewNoteCloud.text = text
     }
 
-    override fun setProgress(progress: Float) {
+    override fun setProgress(progress: Float?) {
         val context = containerView.context
         val bg = containerView
+        if (progress == null) {
+            bg.setBackgroundResource(R.drawable.background_classes_stack_end)
+            return
+        }
         if (bg.background !is ProgressBackgroundDrawable) {
             val dp7 = context.resources.dpToPx(PROGRESS_BACKGROUND_CORNER_RADIUS).toFloat()
             val progressBackgroundDrawable = ProgressBackgroundDrawable(
@@ -72,7 +77,7 @@ class ClassesNoteItemBinder(
 
     override fun bind(vh: NotePreviewViewHolder, model: NotePreview, position: Int) {
         vh.setText(model.preview)
-        model.linkedClasses.progress?.let(vh::setProgress)
+        vh.setProgress(model.progress)
         onClickListener?.let { vh.setOnClickListener { it(model.linkedClasses) } }
     }
 }
@@ -84,5 +89,6 @@ class NotePreviewAdapterItem(
     isType = { it is NotePreview },
     layoutRes = layoutRes,
     viewHolderGenerator = ::NotePreviewViewHolderImpl,
-    itemBinder = ClassesNoteItemBinder(onClickListener)
+    itemBinder = ClassesNoteItemBinder(onClickListener),
+    areItemsTheSame = { a, b -> a.preview == b.preview }
 )
