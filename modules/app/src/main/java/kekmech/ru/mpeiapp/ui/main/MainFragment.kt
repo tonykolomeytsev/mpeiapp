@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.setPadding
 import io.reactivex.disposables.Disposable
-import io.reactivex.rxkotlin.subscribeBy
 import kekmech.ru.common_android.addSystemBottomPadding
 import kekmech.ru.common_android.onActivityResult
 import kekmech.ru.common_android.viewbinding.viewBinding
@@ -84,7 +83,7 @@ class MainFragment :
 
     override fun onResume() {
         super.onResume()
-        tabsSwitcherDisposable = tabsSwitcher.observe().subscribeBy {
+        tabsSwitcherDisposable = tabsSwitcher.observe().subscribe {
             it.value?.let { tab ->
                 bottomBarController?.switchTab(tab)
                 tabsSwitcher.clearTab()

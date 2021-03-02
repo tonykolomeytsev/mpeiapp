@@ -73,7 +73,6 @@ dependencies {
 
     implementation rx.java
     implementation rx.android
-    implementation rx.kotlin
 
     implementation squareup.retrofit
     implementation squareup.retrofit_rxJava2
