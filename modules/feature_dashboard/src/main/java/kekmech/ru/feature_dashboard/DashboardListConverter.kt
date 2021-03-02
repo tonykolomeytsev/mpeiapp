@@ -84,8 +84,8 @@ class DashboardListConverter(
                 add(SpaceItem.VERTICAL_12)
                 val actualDay = state.getActualScheduleDayForView()
                 addAll(classes
-                    .withNotePreview()
                     .withProgressPreview(nowDate = actualDay?.date ?: LocalDate.MIN)
+                    .withNotePreview()
                     .withCalculatedTimeUntilNextClasses(state, actualDay)
                 )
 
