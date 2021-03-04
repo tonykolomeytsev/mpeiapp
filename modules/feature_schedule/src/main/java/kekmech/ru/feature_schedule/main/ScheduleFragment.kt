@@ -35,6 +35,7 @@ private const val WEEK_MIN_NUMBER = 0
 private const val WEEK_MAX_NUMBER = 17
 private const val FAB_ANIMATION_DURATION = 100L
 private const val DAYS_TO_VIEW = 6
+internal const val SHIMMER_ITEM_ID = 0
 
 @Suppress("TooManyFunctions")
 internal class ScheduleFragment :

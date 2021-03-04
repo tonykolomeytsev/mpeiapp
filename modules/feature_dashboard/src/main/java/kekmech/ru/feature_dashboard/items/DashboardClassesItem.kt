@@ -15,6 +15,5 @@ class DashboardClassesAdapterItem(
     isType = { it is Classes },
     layoutRes = R.layout.item_classes_padding_horisontal_16dp,
     viewHolderGenerator = ::ClassesViewHolderImpl,
-    itemBinder = ClassesItemBinder(context, onClickListener),
-    equals = { a, b -> a == b && a.progress == b.progress }
+    itemBinder = ClassesItemBinder(context, onClickListener)
 )

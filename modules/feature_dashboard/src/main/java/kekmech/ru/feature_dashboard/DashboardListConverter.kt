@@ -79,7 +79,10 @@ class DashboardListConverter(
             }
 
             // ближайшие события
-            createClassesEventsItems(state)?.let { (header, classes) ->
+            if (state.currentWeekSchedule == null || state.nextWeekSchedule == null) {
+                add(createEventsHeaderItem())
+                add(ShimmerItem(EVENTS_SHIMMER_ITEM_ID))
+            } else createClassesEventsItems(state)?.let { (header, classes) ->
                 add(header)
                 add(SpaceItem.VERTICAL_12)
                 val actualDay = state.getActualScheduleDayForView()
@@ -97,7 +100,6 @@ class DashboardListConverter(
                 // если нечего показывать в разделе ближайших событий,
                 // покажем сначала сессию, потом EmptyStateItem
                 addSession(state)
-                add(SpaceItem.VERTICAL_16)
 
                 add(createEventsHeaderItem(subtitle = context.getString(R.string.dashboard_events_empty_state_title),))
                 add(SpaceItem.VERTICAL_12)
@@ -181,7 +183,7 @@ class DashboardListConverter(
         }
     }
 
-    private fun createEventsHeaderItem(subtitle: String) = SectionHeaderItem(
+    private fun createEventsHeaderItem(subtitle: String? = null) = SectionHeaderItem(
         title = context.getString(R.string.dashboard_section_header_events),
         subtitle = subtitle
     )
@@ -220,5 +222,6 @@ class DashboardListConverter(
         add(sessionHeader)
         add(SpaceItem.VERTICAL_12)
         addAll(state.sessionScheduleItems)
+        add(SpaceItem.VERTICAL_16)
     }
 }
