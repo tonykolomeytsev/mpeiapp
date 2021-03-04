@@ -31,7 +31,7 @@ internal object ScheduleClassesListConverter {
                 val dayOfWeek = it + 1
                 WorkingDayItem(
                     dayOfWeek = dayOfWeek,
-                    items = listOf(ShimmerItem(0))
+                    items = listOf(ShimmerItem(SHIMMER_ITEM_ID))
                 )
             }
             else -> List(DAY_ITEMS_COUNT) {
