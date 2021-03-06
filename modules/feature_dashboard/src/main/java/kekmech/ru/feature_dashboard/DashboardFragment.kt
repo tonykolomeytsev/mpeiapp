@@ -32,6 +32,7 @@ import org.koin.android.ext.android.inject
 private const val REQUEST_CODE_UPDATE_DATA = 2910
 internal const val SECTION_NOTES_ACTION = 1
 internal const val SECTION_FAVORITES_ACTION = 2
+internal const val EVENTS_SHIMMER_ITEM_ID = 0
 
 class DashboardFragment :
     BaseFragment<DashboardEvent, DashboardEffect, DashboardState>(),
@@ -135,7 +136,8 @@ class DashboardFragment :
         },
         NotePreviewAdapterItem(::clickOnClasses, R.layout.item_note_preview_padding_horisontal_8dp),
         TextAdapterItem(R.layout.item_time_prediction),
-        SessionAdapterItem(requireContext())
+        SessionAdapterItem(requireContext()),
+        ShimmerAdapterItem(EVENTS_SHIMMER_ITEM_ID, R.layout.item_events_shimmer)
     )
 
     private fun clickOnClasses(it: Classes) {

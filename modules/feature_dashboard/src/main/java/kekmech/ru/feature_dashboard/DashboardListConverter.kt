@@ -79,14 +79,17 @@ class DashboardListConverter(
             }
 
             // ближайшие события
-            createClassesEventsItems(state)?.let { (header, classes) ->
+            if (state.currentWeekSchedule == null || state.nextWeekSchedule == null) {
+                add(createEventsHeaderItem())
+                add(ShimmerItem(EVENTS_SHIMMER_ITEM_ID))
+            } else createClassesEventsItems(state)?.let { (header, classes) ->
                 add(header)
                 add(SpaceItem.VERTICAL_12)
                 val actualDay = state.getActualScheduleDayForView()
                 addAll(classes
-                    .withNotePreview()
                     .withProgressPreview(nowDate = actualDay?.date ?: LocalDate.MIN)
-                    .withCalculatedTimeUntilNextClasses(state, actualDay)
+                    .withNotePreview()
+                    .withCalculatedTimeUntilNextClasses(actualDay)
                 )
 
                 // сессию показываем после более близких по времени событий
@@ -97,7 +100,6 @@ class DashboardListConverter(
                 // если нечего показывать в разделе ближайших событий,
                 // покажем сначала сессию, потом EmptyStateItem
                 addSession(state)
-                add(SpaceItem.VERTICAL_16)
 
                 add(createEventsHeaderItem(subtitle = context.getString(R.string.dashboard_events_empty_state_title),))
                 add(SpaceItem.VERTICAL_12)
@@ -181,14 +183,13 @@ class DashboardListConverter(
         }
     }
 
-    private fun createEventsHeaderItem(subtitle: String) = SectionHeaderItem(
+    private fun createEventsHeaderItem(subtitle: String? = null) = SectionHeaderItem(
         title = context.getString(R.string.dashboard_section_header_events),
         subtitle = subtitle
     )
 
     @Suppress("NestedBlockDepth")
     private fun List<Any>.withCalculatedTimeUntilNextClasses(
-        state: DashboardState,
         actualDay: Day?
     ): List<Any> = mutableListOf<Any>().apply {
         val raw = this@withCalculatedTimeUntilNextClasses
@@ -201,7 +202,7 @@ class DashboardListConverter(
             val classes = e as? Classes
             if (classes == raw[indexOfNextClasses] && actualDay != null) {
                 // add time status
-                val (condition, hours, minutes) = state.getNextClassesTimeStatus(actualDay.date, classes.time)
+                val (condition, hours, minutes) = getNextClassesTimeStatus(actualDay.date, classes.time)
                 val prefix = context.getString(R.string.dashboard_item_time_prediction_prefix)
                 when (condition) {
                     NOT_STARTED -> add(TextItem(
@@ -220,5 +221,6 @@ class DashboardListConverter(
         add(sessionHeader)
         add(SpaceItem.VERTICAL_12)
         addAll(state.sessionScheduleItems)
+        add(SpaceItem.VERTICAL_16)
     }
 }
