@@ -4,21 +4,14 @@ import android.content.Context
 import kekmech.ru.common_android.moscowLocalDate
 import kekmech.ru.common_android.moscowLocalTime
 import kekmech.ru.common_kotlin.fastLazy
-import kekmech.ru.common_schedule.utils.withNotePreview
-import kekmech.ru.common_schedule.utils.withProgressPreview
 import kekmech.ru.coreui.PrettyDateFormatter
-import kekmech.ru.coreui.items.*
-import kekmech.ru.domain_schedule.dto.Classes
-import kekmech.ru.domain_schedule.dto.Day
+import kekmech.ru.coreui.items.EmptyStateItem
+import kekmech.ru.coreui.items.SectionHeaderItem
+import kekmech.ru.coreui.items.SpaceItem
 import kekmech.ru.feature_dashboard.elm.DashboardState
-import kekmech.ru.feature_dashboard.elm.NextClassesCondition.NOT_STARTED
-import kekmech.ru.feature_dashboard.elm.NextClassesCondition.STARTED
-import kekmech.ru.feature_dashboard.helpers.TimeDeclensionHelper
-import kekmech.ru.feature_dashboard.helpers.getActualScheduleDayForView
-import kekmech.ru.feature_dashboard.helpers.getNextClassesTimeStatus
 import kekmech.ru.feature_dashboard.items.*
+import kekmech.ru.feature_dashboard.upcoming_events.UpcomingEventsListConverter
 import java.time.DayOfWeek
-import java.time.LocalDate
 import java.time.LocalTime
 
 private const val WEEK_MIN_NUMBER = 0
@@ -28,6 +21,7 @@ private const val WEEK_MAX_NUMBER = 17
 class DashboardListConverter(
     private val context: Context
 ) {
+    private val upcomingEventsListConverter = UpcomingEventsListConverter(context)
 
     private val notesHeader by fastLazy { SectionHeaderItem(
         itemId = SECTION_NOTES_ACTION,
@@ -79,34 +73,20 @@ class DashboardListConverter(
             }
 
             // ближайшие события
-            if (state.currentWeekSchedule == null || state.nextWeekSchedule == null) {
-                add(createEventsHeaderItem())
-                add(ShimmerItem(EVENTS_SHIMMER_ITEM_ID))
-            } else createClassesEventsItems(state)?.let { (header, classes) ->
-                add(header)
-                add(SpaceItem.VERTICAL_12)
-                val actualDay = state.getActualScheduleDayForView()
-                addAll(classes
-                    .withProgressPreview(nowDate = actualDay?.date ?: LocalDate.MIN)
-                    .withNotePreview()
-                    .withCalculatedTimeUntilNextClasses(actualDay)
-                )
-
-                // сессию показываем после более близких по времени событий
-                add(SpaceItem.VERTICAL_16)
-                addSession(state)
-
-            } ?: run {
+            val (list, offset) = upcomingEventsListConverter.map(state)
+            if (offset == -1) {
                 // если нечего показывать в разделе ближайших событий,
                 // покажем сначала сессию, потом EmptyStateItem
                 addSession(state)
 
-                add(createEventsHeaderItem(subtitle = context.getString(R.string.dashboard_events_empty_state_title),))
-                add(SpaceItem.VERTICAL_12)
-                add(EmptyStateItem(
-                    titleRes = R.string.dashboard_events_empty_state_title,
-                    subtitleRes = R.string.dashboard_events_empty_state_subtitle
-                ))
+                addAll(list)
+                add(SpaceItem.VERTICAL_16)
+            } else {
+                addAll(list)
+                add(SpaceItem.VERTICAL_16)
+
+                // сессию показываем после более близких по времени событий
+                addSession(state)
             }
 
             // актуальные заметки
@@ -125,7 +105,6 @@ class DashboardListConverter(
 
     private fun MutableList<Any>.addActualNotes(state: DashboardState) {
         state.notes?.let {
-            add(SpaceItem.VERTICAL_16)
             add(notesHeader)
             add(SpaceItem.VERTICAL_12)
             if (it.isNotEmpty()) {
@@ -138,6 +117,7 @@ class DashboardListConverter(
                     )
                 )
             }
+            add(SpaceItem.VERTICAL_16)
         }
     }
 
@@ -155,66 +135,10 @@ class DashboardListConverter(
         )
     }
 
-    private fun createClassesEventsItems(state: DashboardState): Pair<Any, List<Any>>? {
-        val nowDate = moscowLocalDate()
-        val nowTime = moscowLocalTime()
-
-        val isSunday = nowDate.dayOfWeek == DayOfWeek.SUNDAY
-        val isEvening = state.todayClasses?.lastOrNull()?.time?.end?.let { it < nowTime } ?: false
-        val hasNoClassesToday = state.todayClasses.isNullOrEmpty()
-
-        val selectedScheduleType = state.selectedScheduleType
-        when {
-            isSunday || isEvening || hasNoClassesToday -> {
-                val headerItem = createEventsHeaderItem(context.getString(R.string.dashboard_events_tomorrow))
-                val tomorrowClasses = state.tomorrowClasses
-                    ?.onEach { it.scheduleType = selectedScheduleType }
-                // если на завтра пар тоже нет, то не возвращаем вообще ничего
-                return tomorrowClasses?.let { headerItem to it }
-            }
-            else -> {
-                val headerItem = createEventsHeaderItem(context.getString(R.string.dashboard_events_today))
-                val nextTodayClasses = state.todayClasses
-                    ?.onEach { it.scheduleType = selectedScheduleType }
-                    ?.filter { it.time.end > nowTime } // не берем прошедшие пары
-                // если на сегодня пар нет, то не возвращаем ничего
-                return nextTodayClasses?.let { headerItem to it }
-            }
-        }
-    }
-
     private fun createEventsHeaderItem(subtitle: String? = null) = SectionHeaderItem(
         title = context.getString(R.string.dashboard_section_header_events),
         subtitle = subtitle
     )
-
-    @Suppress("NestedBlockDepth")
-    private fun List<Any>.withCalculatedTimeUntilNextClasses(
-        actualDay: Day?
-    ): List<Any> = mutableListOf<Any>().apply {
-        val raw = this@withCalculatedTimeUntilNextClasses
-        val indexOfNextClasses = raw
-            .indexOfFirst { it is Classes }
-            .takeIf { it != -1 }
-            ?: return raw
-
-        for (e in raw) {
-            val classes = e as? Classes
-            if (classes == raw[indexOfNextClasses] && actualDay != null) {
-                // add time status
-                val (condition, hours, minutes) = getNextClassesTimeStatus(actualDay.date, classes.time)
-                val prefix = context.getString(R.string.dashboard_item_time_prediction_prefix)
-                when (condition) {
-                    NOT_STARTED -> add(TextItem(
-                        text = "$prefix ${TimeDeclensionHelper.formatHoursMinutes(context, hours, minutes)}"
-                    ))
-                    STARTED -> Unit
-                    else -> Unit
-                }
-            }
-            add(e)
-        }
-    }
 
     private fun MutableList<Any>.addSession(state: DashboardState) {
         if (state.sessionScheduleItems.isNullOrEmpty()) return

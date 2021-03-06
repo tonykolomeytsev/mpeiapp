@@ -16,6 +16,7 @@ data class SectionHeaderItem(
     val title: String? = null,
     @StringRes val titleRes: Int? = null,
     val subtitle: String? = null,
+    @StringRes val subtitleRes: Int? = null,
     val itemId: Int = ITEM_SECTION_HEADER_DEFAULT_ID,
     @StringRes val actionNameRes: Int? = null
 )
@@ -24,6 +25,7 @@ interface SectionHeaderViewHolder {
     fun setTitle(title: String)
     fun setTitle(@StringRes resId: Int)
     fun setSubtitle(subtitle: String)
+    fun setSubtitle(@StringRes resId: Int)
     fun setSubtitleVisibility(isVisible: Boolean)
     fun setActionName(actionNameRes: Int)
     fun setOnActionClickListener(listener: (View) -> Unit)
@@ -47,6 +49,10 @@ class SectionHeaderViewHolderImpl(
 
     override fun setSubtitle(subtitle: String) {
         textViewSubtitle.text = subtitle
+    }
+
+    override fun setSubtitle(resId: Int) {
+        textViewSubtitle.setText(resId)
     }
 
     override fun setSubtitleVisibility(isVisible: Boolean) {
@@ -73,9 +79,10 @@ class SectionHeaderItemBinder(
 
     override fun bind(vh: SectionHeaderViewHolder, model: SectionHeaderItem, position: Int) {
         vh.setSubtitleVisibility(model.subtitle != null)
-        model.subtitle?.let(vh::setSubtitle)
         model.title?.let(vh::setTitle)
         model.titleRes?.let(vh::setTitle)
+        model.subtitle?.let(vh::setSubtitle)
+        model.subtitleRes?.let(vh::setSubtitle)
         vh.setActionName(model.actionNameRes ?: 0)
         vh.setOnActionClickListener { onActionClickListener?.invoke(model) }
     }
