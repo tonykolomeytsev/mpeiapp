@@ -34,7 +34,7 @@ data class Classes(
     val time: Time = Time(),
     val number: Int,
     @Transient var attachedNotePreview: String? = null,
-    @Transient var progress: Float? = null
+    @Transient val progress: Float? = null
 ) : Serializable {
     // its to optimize recyclerview items
     // sets the same as parent schedule type

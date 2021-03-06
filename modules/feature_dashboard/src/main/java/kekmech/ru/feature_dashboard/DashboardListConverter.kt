@@ -89,7 +89,7 @@ class DashboardListConverter(
                 addAll(classes
                     .withProgressPreview(nowDate = actualDay?.date ?: LocalDate.MIN)
                     .withNotePreview()
-                    .withCalculatedTimeUntilNextClasses(state, actualDay)
+                    .withCalculatedTimeUntilNextClasses(actualDay)
                 )
 
                 // сессию показываем после более близких по времени событий
@@ -190,7 +190,6 @@ class DashboardListConverter(
 
     @Suppress("NestedBlockDepth")
     private fun List<Any>.withCalculatedTimeUntilNextClasses(
-        state: DashboardState,
         actualDay: Day?
     ): List<Any> = mutableListOf<Any>().apply {
         val raw = this@withCalculatedTimeUntilNextClasses
