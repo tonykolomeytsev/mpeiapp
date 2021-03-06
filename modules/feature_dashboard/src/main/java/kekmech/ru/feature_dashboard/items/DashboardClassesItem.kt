@@ -15,5 +15,6 @@ class DashboardClassesAdapterItem(
     isType = { it is Classes },
     layoutRes = R.layout.item_classes_padding_horisontal_16dp,
     viewHolderGenerator = ::ClassesViewHolderImpl,
-    itemBinder = ClassesItemBinder(context, onClickListener)
+    itemBinder = ClassesItemBinder(context, onClickListener),
+    areItemsTheSame = { a, b -> a.name == b.name }
 )
