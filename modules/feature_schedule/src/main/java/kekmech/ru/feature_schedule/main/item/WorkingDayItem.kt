@@ -14,6 +14,7 @@ import kekmech.ru.coreui.items.SpaceAdapterItem
 import kekmech.ru.domain_schedule.dto.Classes
 import kekmech.ru.feature_schedule.R
 import kekmech.ru.feature_schedule.databinding.ItemWorkingDayBinding
+import kekmech.ru.feature_schedule.main.SHIMMER_ITEM_ID
 
 const val DAY_OF_WEEK_MONDAY = 1
 const val DAY_OF_WEEK_TUESDAY = 2
@@ -66,7 +67,7 @@ internal class WorkingDayViewHolderImpl(
         EmptyStateAdapterItem(),
         SpaceAdapterItem(),
         NotePreviewAdapterItem(onClickListener = { clickListener(it) }),
-        ShimmerAdapterItem(0, R.layout.item_working_day_shimmer)
+        ShimmerAdapterItem(SHIMMER_ITEM_ID, R.layout.item_working_day_shimmer)
     )
 
     override fun addScrollListener(listener: (Int) -> Unit) {

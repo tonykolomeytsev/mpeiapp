@@ -23,7 +23,7 @@ fun List<Any>.withNotePreview(): List<Any> = mutableListOf<Any>().apply {
         add(e)
         val classes = e as? Classes ?: continue
         classes.attachedNotePreview?.let { notePreviewContent ->
-            add(NotePreview(notePreviewContent, linkedClasses = e))
+            add(NotePreview(notePreviewContent, linkedClasses = e, classes.progress))
         }
     }
 }
@@ -68,14 +68,14 @@ fun List<Classes>.withWindows(): List<Any> = mutableListOf<Any>().apply {
 }
 
 /**
- * Indicate progress for those classes who need it, return the same list
- * IT IS IN-PLACE FUNCTION!
+ * Indicate progress for those classes who need it, return new list
  */
 @Suppress("NestedBlockDepth")
 fun List<Any>.withProgressPreview(
     nowTime: LocalTime = moscowLocalTime(),
     nowDate: LocalDate = moscowLocalDate()
 ): List<Any> {
+    val newList = mutableListOf<Any>()
     if (nowDate != moscowLocalDate()) return this
     var isProgressIndicated = false
     val iterator = iterator()
@@ -87,13 +87,13 @@ fun List<Any>.withProgressPreview(
                     val classesDuration = time.start.until(time.end, ChronoUnit.SECONDS)
                     val elapsedTime = time.start.until(nowTime, ChronoUnit.SECONDS)
                     if (classesDuration > 0) {
-                        item.progress = elapsedTime.toFloat() / classesDuration.toFloat()
+                        newList += item.copy(progress = elapsedTime.toFloat() / classesDuration.toFloat())
                     }
                     isProgressIndicated = true
                 }
             }
-            else -> Unit
+            else -> newList += item
         }
     }
-    return this
+    return newList
 }

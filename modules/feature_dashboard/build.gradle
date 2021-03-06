@@ -15,6 +15,7 @@ dependencies {
     implementation androidx.constraintlayout
     implementation androidx.swiperefreshlayout
     implementation google.material
+    implementation facebook.shimmer
     implementation vividMoney.elmslieCore
     implementation vividMoney.elmslieAndroid
 

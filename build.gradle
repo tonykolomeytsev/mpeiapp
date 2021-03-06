@@ -57,8 +57,7 @@ buildscript {
         ]
         rx = [
                 java                : "io.reactivex.rxjava2:rxjava:2.2.20",
-                android             : "io.reactivex.rxjava2:rxandroid:2.1.1",
-                kotlin              : "io.reactivex.rxjava2:rxkotlin:2.4.0"
+                android             : "io.reactivex.rxjava2:rxandroid:2.1.1"
         ]
         squareup = [
                 retrofit            : "com.squareup.retrofit2:retrofit:${versions.retrofit}",
