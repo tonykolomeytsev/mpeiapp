@@ -29,7 +29,7 @@ fun DashboardState.getActualScheduleDayForView(): Day? {
     }
 }
 
-fun DashboardState.getNextClassesTimeStatus(nextClassesDate: LocalDate, nextClassesTime: Time): NextClassesTimeStatus {
+fun getNextClassesTimeStatus(nextClassesDate: LocalDate, nextClassesTime: Time): NextClassesTimeStatus {
     val currentMoscowDateTime = LocalDateTime.of(moscowLocalDate(), moscowLocalTime())
     val nextClassesStartDateTime = LocalDateTime.of(nextClassesDate, nextClassesTime.start)
     val nextClassesEndDateTime = LocalDateTime.of(nextClassesDate, nextClassesTime.end)
