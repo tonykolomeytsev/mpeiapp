@@ -15,6 +15,7 @@ import kekmech.ru.common_android.getStringArray
 import kekmech.ru.common_android.getThemeColor
 import kekmech.ru.common_android.viewbinding.ReusableViewHolder
 import kekmech.ru.common_android.viewbinding.lazyBinding
+import kekmech.ru.common_android.views.setOnClickListenerWithDebounce
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_schedule.R
 import kekmech.ru.common_schedule.drawable.ProgressBackgroundDrawable
@@ -112,6 +113,10 @@ open class ClassesViewHolderImpl(
             val progressBackgroundDrawable = bg.background as ProgressBackgroundDrawable
             progressBackgroundDrawable.progress = progress
         }
+    }
+
+    override fun setOnClickListener(listener: (View) -> Unit) {
+        containerView.setOnClickListenerWithDebounce(listener)
     }
 
     private companion object {
