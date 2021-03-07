@@ -49,7 +49,7 @@ class UpcomingEventsExtTest : BehaviorSpec({
         )
         private val CLASSES_4 = Classes(name = "four", number = 4)
         private val CLASSES_5 = Classes(name = "five", number = 5)
-        private val DATE = LocalDate.of(1, Month.MARCH, 2021)
+        private val DATE = LocalDate.of(2021, Month.MARCH, 1)
         private val SCHEDULE_0 = Schedule(
             weeks = listOf(Week(
                 days = listOf(
