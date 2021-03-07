@@ -69,6 +69,9 @@ fun List<Classes>.withWindows(): List<Any> = mutableListOf<Any>().apply {
 
 /**
  * Indicate progress for those classes who need it, return new list
+ *
+ * @param nowDate current date at the time of processing
+ * @param nowTime current time of processing
  */
 @Suppress("NestedBlockDepth")
 fun List<Any>.withProgressPreview(
