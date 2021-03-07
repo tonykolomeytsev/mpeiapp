@@ -75,25 +75,17 @@ fun List<Any>.withProgressPreview(
     nowTime: LocalTime = moscowLocalTime(),
     nowDate: LocalDate = moscowLocalDate()
 ): List<Any> {
-    val newList = mutableListOf<Any>()
     if (nowDate != moscowLocalDate()) return this
-    var isProgressIndicated = false
-    val iterator = iterator()
-    while (!isProgressIndicated && iterator.hasNext()) {
-        when (val item = iterator.next()) {
-            is Classes -> {
-                val time = item.time
-                if (nowTime in time.start..time.end) {
-                    val classesDuration = time.start.until(time.end, ChronoUnit.SECONDS)
-                    val elapsedTime = time.start.until(nowTime, ChronoUnit.SECONDS)
-                    if (classesDuration > 0) {
-                        newList += item.copy(progress = elapsedTime.toFloat() / classesDuration.toFloat())
-                    }
-                    isProgressIndicated = true
-                }
-            }
-            else -> newList += item
-        }
+    return map { item ->
+        if (item is Classes) {
+            val time = item.time
+            if (nowTime in time.start..time.end) {
+                val classesDuration = time.start.until(time.end, ChronoUnit.SECONDS)
+                val elapsedTime = time.start.until(nowTime, ChronoUnit.SECONDS)
+                if (classesDuration > 0) {
+                    item.copy(progress = elapsedTime.toFloat() / classesDuration.toFloat())
+                } else item
+            } else item
+        } else item
     }
-    return newList
 }

@@ -84,6 +84,12 @@
         <item>минут</item>
     </string-array>
 
+    <string-array name="days_declensions">
+        <item>день</item>
+        <item>дня</item>
+        <item>дней</item>
+    </string-array>
+
     <string name="today">Сегодня</string>
     <string name="tomorrow">Завтра</string>
     <string name="after_tomorrow">Послезавтра</string>
@@ -136,7 +142,7 @@
     <string name="dashboard_item_change_group">Группа %s</string>
     <string name="dashboard_section_header_events">Ближайшие события</string>
     <string name="dashboard_events_empty_state_title">Пока ничего интересного</string>
-    <string name="dashboard_events_empty_state_subtitle">В ближайшие сутки не запланировано никаких событий</string>
+    <string name="dashboard_events_empty_state_subtitle">На ближайшую неделю не запланировано никаких событий</string>
     <string name="dashboard_section_header_favorites">Избранные расписания</string>
     <string name="dashboard_section_header_favorites_subtitle">Нажмите для переключения</string>
     <string name="dashboard_section_header_favorites_action">НАСТРОИТЬ</string>
@@ -149,6 +155,8 @@
     <string name="dashboard_actual_notes_empty_state_title">Нет ни одной актуальной заметки</string>
     <string name="dashboard_events_today">Сегодняшние пары</string>
     <string name="dashboard_events_tomorrow">Завтрашние пары</string>
+    <string name="dashboard_events_after_tomorrow">Пары послезавтра</string>
+    <string name="dashboard_events_n_days">Пары через %s</string>
     <string name="dashboard_banner_lunch_header">Судя по всему, сейчас обеденный перерыв</string>
     <string name="dashboard_banner_lunch_description">Найти столовые на карте</string>
     <string name="dashboard_search_field_text">Искать в МЭИ…</string>

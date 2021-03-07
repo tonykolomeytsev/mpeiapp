@@ -135,11 +135,6 @@ class DashboardListConverter(
         )
     }
 
-    private fun createEventsHeaderItem(subtitle: String? = null) = SectionHeaderItem(
-        title = context.getString(R.string.dashboard_section_header_events),
-        subtitle = subtitle
-    )
-
     private fun MutableList<Any>.addSession(state: DashboardState) {
         if (state.sessionScheduleItems.isNullOrEmpty()) return
         add(sessionHeader)
