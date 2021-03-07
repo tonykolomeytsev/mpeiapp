@@ -5,6 +5,7 @@ import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.nulls.shouldNotBeNull
 import kekmech.ru.domain_schedule.dto.*
 import kekmech.ru.feature_dashboard.elm.DashboardState
+import kekmech.ru.feature_dashboard.upcoming_events.getClassesForDayWithOffset
 import kekmech.ru.feature_dashboard.upcoming_events.getDayWithOffset
 import java.time.DayOfWeek
 import java.time.LocalDate
@@ -14,25 +15,49 @@ import java.time.Month
 class UpcomingEventsExtTest : BehaviorSpec({
     Given("DashboardState.getDayWithOffset") {
         val givenState = STATE.copy(currentWeekSchedule = SCHEDULE_0)
-        When("Get today classes") {
+        When("Get today") {
             val day = givenState.getDayWithOffset(currentDay = DATE, offset = 0)
             Then("Check day") {
                 day.shouldNotBeNull()
                 day.classes.shouldContainExactly(CLASSES_1)
             }
         }
-        When("Get tomorrow classes") {
+        When("Get tomorrow") {
             val day = givenState.getDayWithOffset(currentDay = DATE, offset = 1)
             Then("Check day") {
                 day.shouldNotBeNull()
                 day.classes.shouldContainExactly(CLASSES_1, CLASSES_2)
             }
         }
-        When("Get after tomorrow classes") {
+        When("Get after tomorrow") {
             val day = givenState.getDayWithOffset(currentDay = DATE, offset = 2)
             Then("Check day") {
                 day.shouldNotBeNull()
                 day.classes.shouldContainExactly(CLASSES_3, CLASSES_4)
+            }
+        }
+    }
+    Given("DashboardState.getClassesForDayWithOffset") {
+        val givenState = STATE.copy(currentWeekSchedule = SCHEDULE_0)
+        When("Get today classes") {
+            val classes = givenState.getClassesForDayWithOffset(DATE, LocalTime.MIN, offset = 0)
+            Then("Check day") {
+                classes.shouldNotBeNull()
+                classes.shouldContainExactly(CLASSES_1)
+            }
+        }
+        When("Get tomorrow classes") {
+            val classes = givenState.getClassesForDayWithOffset(DATE, LocalTime.MIN, offset = 1)
+            Then("Check day") {
+                classes.shouldNotBeNull()
+                classes.shouldContainExactly(CLASSES_1, CLASSES_2)
+            }
+        }
+        When("Get after tomorrow classes") {
+            val classes = givenState.getClassesForDayWithOffset(DATE, LocalTime.MIN, offset = 2)
+            Then("Check day") {
+                classes.shouldNotBeNull()
+                classes.shouldContainExactly(CLASSES_3, CLASSES_4)
             }
         }
     }
