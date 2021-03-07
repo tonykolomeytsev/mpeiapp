@@ -82,6 +82,12 @@
         <item>minutes</item>
     </string-array>
 
+    <string-array name="days_declensions">
+        <item>day</item>
+        <item>days</item>
+        <item>days</item>
+    </string-array>
+
     <string name="today">Today</string>
     <string name="tomorrow">Tomorrow</string>
     <string name="after_tomorrow">Day after tomorrow</string>
@@ -134,7 +140,7 @@
     <string name="dashboard_item_change_group">Group %s</string>
     <string name="dashboard_section_header_events">Upcoming events</string>
     <string name="dashboard_events_empty_state_title">Nothing interesting yet</string>
-    <string name="dashboard_events_empty_state_subtitle">No events scheduled for the next 24 hours</string>
+    <string name="dashboard_events_empty_state_subtitle">No events scheduled for the next 7 days</string>
     <string name="dashboard_section_header_favorites">Favorite schedules</string>
     <string name="dashboard_section_header_favorites_subtitle">Click to switch group number</string>
     <string name="dashboard_section_header_favorites_action">SETTINGS</string>
@@ -147,6 +153,8 @@
     <string name="dashboard_actual_notes_empty_state_title">There are no relevant notes for you</string>
     <string name="dashboard_events_today">Today`s classes</string>
     <string name="dashboard_events_tomorrow">Tomorrow`s classes</string>
+    <string name="dashboard_events_after_tomorrow">Classes the day after tomorrow </string>
+    <string name="dashboard_events_n_days">Classes in %s</string>
     <string name="dashboard_banner_lunch_header">Apparently,\nit`s lunch break now</string>
     <string name="dashboard_banner_lunch_description">Search for food on the map</string>
     <string name="dashboard_search_field_text">Search in MPEI…</string>

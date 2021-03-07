@@ -16,6 +16,7 @@ import kekmech.ru.feature_dashboard.elm.UpcomingEventsMappingResult
 import kekmech.ru.feature_dashboard.helpers.TimeDeclensionHelper
 import kekmech.ru.feature_dashboard.helpers.getNextClassesTimeStatus
 import java.time.LocalDate
+import java.time.LocalTime
 
 class UpcomingEventsListConverter(
     private val context: Context
@@ -35,12 +36,7 @@ class UpcomingEventsListConverter(
                     LIST_WITH_SHIMMERS
                 } else {
                     state.getClassesForDayWithOffset(nowDate, nowTime, actualDayOffset)
-                        ?.setScheduleType(state.selectedScheduleType)
-                        ?.withProgressPreview(nowTime, nowDate)
-                        ?.withNotePreview()
-                        ?.withCalculatedTimeUntilNextClasses(nowDate)
-                        ?.attachSectionHeader(actualDayOffset)
-                        ?.let { UpcomingEventsMappingResult(it, actualDayOffset) }
+                        ?.handleClasses(state.selectedScheduleType, nowDate, nowTime, actualDayOffset)
                         ?: LIST_WITH_SHIMMERS
                 }
             }
@@ -51,12 +47,7 @@ class UpcomingEventsListConverter(
                     LIST_WITH_EMPTY_STATE
                 } else {
                     state.getClassesForDayWithOffset(nowDate, nowTime, actualDayOffset)
-                        ?.setScheduleType(state.selectedScheduleType)
-                        ?.withProgressPreview(nowTime, nowDate)
-                        ?.withNotePreview()
-                        ?.withCalculatedTimeUntilNextClasses(nowDate)
-                        ?.attachSectionHeader(actualDayOffset)
-                        ?.let { UpcomingEventsMappingResult(it, actualDayOffset) }
+                        ?.handleClasses(state.selectedScheduleType, nowDate, nowTime, actualDayOffset)
                         ?: LIST_WITH_EMPTY_STATE
                 }
             }
@@ -64,20 +55,32 @@ class UpcomingEventsListConverter(
         }
     }
 
-    private fun List<Any>.attachSectionHeader(actualDayOffset: Int): List<Any> =
+    private fun List<Any>.handleClasses(
+        selectedScheduleType: ScheduleType,
+        nowDate: LocalDate,
+        nowTime: LocalTime,
+        offset: Int
+    ) = this
+        .setScheduleType(selectedScheduleType)
+        .withProgressPreview(nowTime, nowDate.plusDays(offset.toLong()))
+        .withNotePreview()
+        .withTimePrediction(nowDate)
+        .withSectionHeader(offset)
+        .let { UpcomingEventsMappingResult(it, offset) }
+
+    private fun List<Any>.withSectionHeader(actualDayOffset: Int): List<Any> =
         listOf(
             SectionHeaderItem(
                 titleRes = R.string.dashboard_section_header_events,
-                subtitleRes = R.string.dashboard_events_empty_state_title
+                subtitleRes = R.string.dashboard_events_empty_state_title.takeIf { actualDayOffset == -1 },
+                subtitle = TimeDeclensionHelper.formatTimePrediction(context, actualDayOffset)
             ),
             SpaceItem.VERTICAL_12
         ) + this
 
     @Suppress("NestedBlockDepth")
-    private fun List<Any>.withCalculatedTimeUntilNextClasses(
-        currentDate: LocalDate
-    ): List<Any> = mutableListOf<Any>().apply {
-        val raw = this@withCalculatedTimeUntilNextClasses
+    private fun List<Any>.withTimePrediction(currentDate: LocalDate): List<Any> = mutableListOf<Any>().apply {
+        val raw = this@withTimePrediction
         val indexOfNextClasses = raw
             .indexOfFirst { it is Classes }
             .takeIf { it != -1 }

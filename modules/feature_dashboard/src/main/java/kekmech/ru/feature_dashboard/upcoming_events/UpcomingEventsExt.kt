@@ -15,7 +15,6 @@ private const val NONE_OFFSET = -1
  * Для сегодняшнего дня **offset == 0**
  *
  * @param currentDay текущая дата
- * @param currentTime текущее время
  * @param offset отступ от текущего дня на **offset** дней вперед
  */
 fun DashboardState.getDayWithOffset(
@@ -52,7 +51,7 @@ fun DashboardState.getClassesForDayWithOffset(
         ?.days
         ?.find { it.date == dayWithOffset }
         ?.classes
-        ?.filterIfNeeded(offset, currentTime)
+        ?.filterOnlyActual(offset, currentTime)
 }
 
 /**
@@ -102,5 +101,5 @@ fun DashboardState.getOffsetForDayWithActualEvents(
 private fun List<Classes>.hasActualClasses(offset: Int, currentTime: LocalTime): Boolean =
     if (offset == 0) any { it.time.end > currentTime } else isNotEmpty()
 
-private fun List<Classes>.filterIfNeeded(offset: Int, currentTime: LocalTime) =
+private fun List<Classes>.filterOnlyActual(offset: Int, currentTime: LocalTime) =
     if (offset == 0) filter { it.time.end > currentTime } else this
