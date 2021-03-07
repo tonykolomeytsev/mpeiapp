@@ -1,11 +1,14 @@
 package kekmech.ru.feature_dashboard.elm
 
 import kekmech.ru.common_android.moscowLocalDate
+import kekmech.ru.common_android.moscowLocalDateTime
 import kekmech.ru.coreui.items.FavoriteScheduleItem
 import kekmech.ru.domain_notes.dto.Note
+import kekmech.ru.domain_schedule.dto.Day
 import kekmech.ru.feature_dashboard.elm.DashboardEvent.News
 import kekmech.ru.feature_dashboard.elm.DashboardEvent.Wish
-import kekmech.ru.feature_dashboard.helpers.getActualScheduleDayForView
+import kekmech.ru.feature_dashboard.upcoming_events.getDayWithOffset
+import kekmech.ru.feature_dashboard.upcoming_events.getOffsetForDayWithActualEvents
 import vivid.money.elmslie.core.store.Result
 import vivid.money.elmslie.core.store.StateReducer
 import java.time.temporal.ChronoUnit
@@ -29,7 +32,8 @@ class DashboardReducer : StateReducer<DashboardEvent, DashboardState, DashboardE
                 currentWeekSchedule = event.schedule.takeIf { event.weekOffset == 0 } ?: state.currentWeekSchedule,
                 nextWeekSchedule = event.schedule.takeIf { event.weekOffset == 1 } ?: state.nextWeekSchedule,
                 isAfterError = false,
-                isLoading = false
+                isLoading = false,
+                lastUpdateDateTime = moscowLocalDateTime()
             )
         )
         is News.ScheduleLoadError -> Result(
@@ -114,4 +118,11 @@ class DashboardReducer : StateReducer<DashboardEvent, DashboardState, DashboardE
             }
             .sortedBy { it.dateTime }
             .take(5) // todo make with settings
+
+    private fun DashboardState.getActualScheduleDayForView(): Day? {
+        val nowDate = lastUpdateDateTime.toLocalDate()
+        val nowTime = lastUpdateDateTime.toLocalTime()
+        return getDayWithOffset(nowDate, getOffsetForDayWithActualEvents(nowDate, nowTime))
+    }
+
 }

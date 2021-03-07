@@ -1,12 +1,12 @@
 package kekmech.ru.feature_dashboard.elm
 
-import kekmech.ru.common_android.moscowLocalDate
+import kekmech.ru.common_android.moscowLocalDateTime
 import kekmech.ru.coreui.items.FavoriteScheduleItem
 import kekmech.ru.domain_notes.dto.Note
 import kekmech.ru.domain_schedule.GROUP_NUMBER_PATTERN
 import kekmech.ru.domain_schedule.dto.*
-import java.time.DayOfWeek
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 data class DashboardState(
     val isLoading: Boolean = false,
@@ -16,24 +16,10 @@ data class DashboardState(
     val selectedScheduleName: String = "",
     val notes: List<Note>? = null,
     val favoriteSchedules: List<FavoriteScheduleItem>? = null,
-    val sessionScheduleItems: List<SessionItem>? = null
+    val sessionScheduleItems: List<SessionItem>? = null,
+    val lastUpdateDateTime: LocalDateTime = moscowLocalDateTime()
 ) {
     val weekOfSemester get() = currentWeekSchedule?.weeks?.first()?.weekOfSemester
-    val today: Day? get() = currentWeekSchedule?.weeks?.first()?.days
-        ?.find { it.date == moscowLocalDate() }
-    val todayClasses: List<Classes>? get() = today?.classes
-    val tomorrow: Day? get() {
-        val dayOfWeek = moscowLocalDate().dayOfWeek
-        if (dayOfWeek == DayOfWeek.SUNDAY) {
-            return nextWeekSchedule?.weeks?.first()?.days
-                ?.find { it.dayOfWeek == DayOfWeek.MONDAY.value }
-        } else {
-            return currentWeekSchedule?.weeks?.first()?.days
-                ?.find { it.dayOfWeek == dayOfWeek.value + 1 }
-        }
-    }
-    val tomorrowClasses: List<Classes>? get() = tomorrow?.classes
-    val isSwipeRefreshLoadingAnimation = isLoading && currentWeekSchedule != null
     val selectedScheduleType: ScheduleType get() = when {
         selectedScheduleName.matches(GROUP_NUMBER_PATTERN) -> ScheduleType.GROUP
         else -> ScheduleType.PERSON
@@ -47,6 +33,8 @@ data class NextClassesTimeStatus(
 )
 
 enum class NextClassesCondition { NOT_STARTED, STARTED, ENDED }
+
+data class UpcomingEventsMappingResult(val list: List<Any>, val dayOffset: Int)
 
 sealed class DashboardEvent {
 

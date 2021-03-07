@@ -26,4 +26,16 @@ object TimeDeclensionHelper {
             else -> declensions[DECLENSION_5_TO_10]
         }
     }
+
+    fun formatTimePrediction(context: Context, offset: Int): String? = when (offset) {
+        -1 -> null
+        0 -> context.getString(R.string.dashboard_events_today)
+        1 -> context.getString(R.string.dashboard_events_tomorrow)
+        2 -> context.getString(R.string.dashboard_events_after_tomorrow)
+        else -> {
+            val decDays = context.getStringArray(R.array.days_declensions)
+            val adoptedOffset = offset - 1L
+            context.getString(R.string.dashboard_events_n_days, format(decDays, adoptedOffset))
+        }
+    }
 }
