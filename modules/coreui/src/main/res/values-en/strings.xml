@@ -264,4 +264,9 @@
     <string name="navigation_name_profile">Profile</string>
 
     <string name="image_picker_attach_button">Attach</string>
+
+    <string name="blocking_update_title">It`s time to\nupdate the application</string>
+    <string name="blocking_update_description">There are only two people working on the application and we cannot support old versions forever.\n\nYou have not updated MpeiX for over half a year, since then we have made a lot of improvements both in the client side of the application and in the server side. You should really upgrade.\n\n If you have a compelling reason not to upgrade, please let us know in VK:</string>
+    <string name="blocking_update_exit">Exit</string>
+    <string name="blocking_update_update">Update</string>
 </resources>
