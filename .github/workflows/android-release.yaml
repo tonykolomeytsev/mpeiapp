@@ -7,7 +7,7 @@ on:
 
 jobs:
   detekt:
-    name: Run Detekt analyzer
+    name: Detekt
     runs-on: ubuntu-latest
 
     steps:
