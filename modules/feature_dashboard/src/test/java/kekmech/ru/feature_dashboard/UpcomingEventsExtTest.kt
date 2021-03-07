@@ -29,7 +29,7 @@ class UpcomingEventsExtTest : BehaviorSpec({
             }
         }
         When("Get after tomorrow classes") {
-            val day = givenState.getDayWithOffset(currentDay = DATE, offset = 3)
+            val day = givenState.getDayWithOffset(currentDay = DATE, offset = 2)
             Then("Check day") {
                 day.shouldNotBeNull()
                 day.classes.shouldContainExactly(CLASSES_3, CLASSES_4)
