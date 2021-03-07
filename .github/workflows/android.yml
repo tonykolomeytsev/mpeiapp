@@ -10,7 +10,7 @@ on:
 
 jobs:
   detekt:
-    name: Run Detekt analyzer
+    name: Detekt
     runs-on: ubuntu-latest
 
     steps:
@@ -23,7 +23,7 @@ jobs:
           args: --config detekt.yml --language-version 1.4 --input modules
 
   test:
-    name: Run Unit Tests
+    name: Unit Tests
     runs-on: ubuntu-latest
 
     steps:
