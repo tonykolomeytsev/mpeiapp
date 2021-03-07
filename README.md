@@ -78,7 +78,7 @@ Room, к сожалению, оставаясь типичным ORM, требу
 
 1. Добавьте `google-services.json` от Firebase в корень модуля `app` и в `app/src/debug` (можно один и тот же). [Инструкция](https://support.google.com/firebase/answer/7015592?hl=en) по получению `google-services.json`.
 
-1. В глобальный `gradle.properties` добавьте поле `google_maps_api_key="{SECRET}"`, где `{SECRET}` - ключ от API Google Maps. [Инструкция](https://developers.google.com/maps/gmp-get-started) по получению ключа.
+1. В глобальный `gradle.properties` добавьте поле `mpeiapp_google_maps_api_key="{SECRET}"`, где `{SECRET}` - ключ от API Google Maps. [Инструкция](https://developers.google.com/maps/gmp-get-started) по получению ключа.
 
 1. Скачайте и установите JDK 11 версии, укажите в настройках проекта java 11по умолчанию для Gradle и компилятора Kotlin:
 
