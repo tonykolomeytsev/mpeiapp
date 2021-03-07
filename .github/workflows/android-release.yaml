@@ -17,17 +17,17 @@ jobs:
       - name: Detekt
         uses: natiginfo/action-detekt-all@1.15.0
         with:
-          args: --config detekt.yml --language-version 1.4 --input modules
+          args: --config detekt.yaml --language-version 1.4 --input modules
 
   build:
     name: Release Build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - name: set up JDK 1.8
+      - name: set up JDK 11
         uses: actions/setup-java@v1
         with:
-          java-version: 1.8
+          java-version: 11
 
       - name: Materialize google services
         run: .ci/materialize.sh $GOOGLE_SERVICES modules/app/google-services.json
