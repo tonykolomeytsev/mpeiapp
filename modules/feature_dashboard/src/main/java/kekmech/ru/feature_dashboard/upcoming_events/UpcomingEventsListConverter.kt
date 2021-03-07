@@ -55,6 +55,9 @@ class UpcomingEventsListConverter(
         }
     }
 
+    /**
+     * Apply all necessary modifiers to the list of pairs
+     */
     private fun List<Any>.handleClasses(
         selectedScheduleType: ScheduleType,
         nowDate: LocalDate,
@@ -68,6 +71,9 @@ class UpcomingEventsListConverter(
         .withSectionHeader(offset)
         .let { UpcomingEventsMappingResult(it, offset) }
 
+    /**
+     * Prepend section header item to classes list
+     */
     private fun List<Any>.withSectionHeader(actualDayOffset: Int): List<Any> =
         listOf(
             SectionHeaderItem(
@@ -78,6 +84,9 @@ class UpcomingEventsListConverter(
             SpaceItem.VERTICAL_12
         ) + this
 
+    /**
+     * Prepend time prediction item for classes list
+     */
     @Suppress("NestedBlockDepth")
     private fun List<Any>.withTimePrediction(currentDate: LocalDate): List<Any> = mutableListOf<Any>().apply {
         val raw = this@withTimePrediction
