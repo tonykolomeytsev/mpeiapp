@@ -67,7 +67,7 @@ class UpcomingEventsListConverter(
         .setScheduleType(selectedScheduleType)
         .withProgressPreview(nowTime, nowDate.plusDays(offset.toLong()))
         .withNotePreview()
-        .withTimePrediction(nowDate)
+        .withTimePrediction(nowDate.plusDays(offset.toLong()), offset)
         .withSectionHeader(offset)
         .let { UpcomingEventsMappingResult(it, offset) }
 
@@ -88,8 +88,12 @@ class UpcomingEventsListConverter(
      * Prepend time prediction item for classes list
      */
     @Suppress("NestedBlockDepth")
-    private fun List<Any>.withTimePrediction(currentDate: LocalDate): List<Any> = mutableListOf<Any>().apply {
+    private fun List<Any>.withTimePrediction(
+        currentDate: LocalDate,
+        offset: Int
+    ): List<Any> = mutableListOf<Any>().apply {
         val raw = this@withTimePrediction
+        if (offset > 2) return raw
         val indexOfNextClasses = raw
             .indexOfFirst { it is Classes }
             .takeIf { it != -1 }
@@ -102,7 +106,7 @@ class UpcomingEventsListConverter(
                 val (condition, hours, minutes) = getNextClassesTimeStatus(currentDate, classes.time)
                 val prefix = context.getString(R.string.dashboard_item_time_prediction_prefix)
                 when (condition) {
-                    NextClassesCondition.NOT_STARTED -> if (hours < MAX_TIME_PREDICTION_HOURS) {
+                    NextClassesCondition.NOT_STARTED -> {
                         val formattedHoursMinutes =
                             TimeDeclensionHelper.formatHoursMinutes(context, hours, minutes)
                         add(TextItem( "$prefix $formattedHoursMinutes"))
@@ -119,7 +123,6 @@ class UpcomingEventsListConverter(
         onEach { (it as? Classes)?.scheduleType = scheduleType }
 
     private companion object {
-        private const val MAX_TIME_PREDICTION_HOURS = 48L
         private val LIST_WITH_SHIMMERS = listOf(
             SectionHeaderItem(titleRes = R.string.dashboard_section_header_events),
             ShimmerItem(EVENTS_SHIMMER_ITEM_ID)
