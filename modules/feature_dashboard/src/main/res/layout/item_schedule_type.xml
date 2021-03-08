@@ -17,7 +17,7 @@
             app:layout_constraintTop_toTopOf="@id/scheduleName"
             app:layout_constraintBottom_toBottomOf="@id/scheduleName"
             tools:src="@drawable/ic_person_24"
-            app:tint="?attr/colorMain"/>
+            app:tint="?attr/colorActive"/>
 
     <TextView
             android:id="@+id/scheduleName"
@@ -26,7 +26,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
             android:fontFamily="@font/roboto_bold"
-            android:textColor="?colorMain"
+            android:textColor="?colorActive"
             android:textSize="14sp"
             app:layout_constraintBottom_toTopOf="@id/scheduleDescription"
             app:layout_constraintStart_toEndOf="@id/imageView"
