@@ -27,7 +27,9 @@
 
 ### Скриншоты
 
-![screenshots](https://github.com/tonykolomeytsev/mpeiapp/raw/master/screenshots/promo_wide_frame.png)
+![screenshots 1](https://github.com/tonykolomeytsev/mpeiapp/raw/master/screenshots/promo_wide_frame_1.png)
+
+![screenshots 2](https://github.com/tonykolomeytsev/mpeiapp/raw/master/screenshots/promo_wide_frame_2.png)
 
 ### Требования приложения
 
