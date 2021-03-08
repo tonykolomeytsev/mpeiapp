@@ -1,5 +1,6 @@
 package kekmech.ru.feature_search.schedule_details
 
+import android.app.Dialog
 import android.graphics.Point
 import android.os.Bundle
 import android.view.View
@@ -28,8 +29,11 @@ import kekmech.ru.feature_search.item.ButtonAdapterItem
 import kekmech.ru.feature_search.item.WeekMinItem
 import kekmech.ru.feature_search.item.WeekMinItemBinder
 import kekmech.ru.feature_search.item.WeekMinViewHolderImpl
-import kekmech.ru.feature_search.schedule_details.elm.*
+import kekmech.ru.feature_search.schedule_details.elm.ScheduleDetailsEffect
+import kekmech.ru.feature_search.schedule_details.elm.ScheduleDetailsEvent
 import kekmech.ru.feature_search.schedule_details.elm.ScheduleDetailsEvent.Wish
+import kekmech.ru.feature_search.schedule_details.elm.ScheduleDetailsFeatureFactory
+import kekmech.ru.feature_search.schedule_details.elm.ScheduleDetailsState
 import org.koin.android.ext.android.inject
 
 private const val ARG_RESULT_ITEM = "Arg.Item"
@@ -62,6 +66,12 @@ internal class ScheduleDetailsFragment :
             recyclerView.adapter = adapter
         }
         setFixedSizeWorkaround()
+    }
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        return super.onCreateDialog(savedInstanceState).also {
+            //it.setFullHeightBottomSheet()
+        }
     }
 
     private fun setFixedSizeWorkaround() {

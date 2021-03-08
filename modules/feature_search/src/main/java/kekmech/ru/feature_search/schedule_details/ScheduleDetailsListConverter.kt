@@ -1,16 +1,11 @@
 package kekmech.ru.feature_search.schedule_details
 
 import android.content.Context
-import android.graphics.Typeface
-import android.text.Spannable
-import android.text.SpannableString
 import android.text.SpannableStringBuilder
-import android.text.style.ForegroundColorSpan
-import android.text.style.StyleSpan
 import androidx.annotation.StringRes
-import kekmech.ru.common_android.getThemeColor
 import kekmech.ru.common_schedule.items.DayItem
 import kekmech.ru.coreui.items.*
+import kekmech.ru.coreui.spannable
 import kekmech.ru.feature_search.R
 import kekmech.ru.feature_search.item.ButtonItem
 import kekmech.ru.feature_search.item.WeekMinItem
@@ -117,15 +112,10 @@ internal object ScheduleDetailsListConverter {
     ): CharSequence {
         return if (classesCount > 0) {
             val adoptedNumber = adoptNumber(classesCount, context)
-            val fullString = context.getString(weekDescription, adoptedNumber)
-            SpannableString.valueOf(fullString).apply {
-                setSpan(StyleSpan(Typeface.BOLD), 0, adoptedNumber.length, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
-                setSpan(
-                    ForegroundColorSpan(context.getThemeColor(R.attr.colorBlack)),
-                    0,
-                    adoptedNumber.length,
-                    Spannable.SPAN_INCLUSIVE_INCLUSIVE
-                )
+            spannable(context) {
+                res(weekDescription) format {
+                    adoptedNumber.bold() textAppearance R.style.H6
+                }
             }
         } else {
             context.getString(emptyWeekDescription)
