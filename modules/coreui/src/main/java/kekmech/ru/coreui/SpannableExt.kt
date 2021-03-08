@@ -19,14 +19,14 @@ class SpannableScope(
     private val context: Context
 ) {
 
-    private val list = mutableListOf<Wrapper>()
+    private val wrappers = mutableListOf<Wrapper>()
 
     private fun Any.wrap(): Wrapper {
         return if (this is Wrapper) {
             this
         } else {
             val wrapper = Wrapper(toString())
-            list += wrapper
+            wrappers += wrapper
             wrapper
         }
     }
@@ -39,7 +39,7 @@ class SpannableScope(
 
     fun space(count: Int = 1) {
         check(count > 0) { "Space length must be greater than zero!" }
-        list += Wrapper(String(CharArray(count) { ' ' }))
+        wrappers += Wrapper(String(CharArray(count) { ' ' }))
     }
 
     fun spannable(builder: SpannableScope.() -> Unit) = spannable(context, builder)
@@ -50,20 +50,20 @@ class SpannableScope(
             val necessaryArgsCount = matchResults.size
             val scope = SpannableScope(context)
             builder.invoke(scope)
-            check(necessaryArgsCount == scope.list.size) { "Args count mut be equal!" }
+            check(necessaryArgsCount == scope.wrappers.size) { "Args count mut be equal!" }
             if (matchResults.isNotEmpty()) {
-                list -= this
+                wrappers -= this
                 var lastEndIndex = 0
-                val scopeIterator = scope.list.iterator()
+                val scopeIterator = scope.wrappers.iterator()
                 for (res in matchResults) {
                     if (res.range.first > 0) {
-                        list += Wrapper(string.subSequence(lastEndIndex until res.range.first))
+                        wrappers += Wrapper(string.subSequence(lastEndIndex until res.range.first))
                     }
-                    list += scopeIterator.next().let { Wrapper(it.string, it.spans) }
+                    wrappers += scopeIterator.next().let { Wrapper(it.string, it.spans) }
                     lastEndIndex = res.range.last + 1
                 }
                 if (lastEndIndex != string.lastIndex) {
-                    list += Wrapper(string.subSequence(lastEndIndex..string.lastIndex))
+                    wrappers += Wrapper(string.subSequence(lastEndIndex..string.lastIndex))
                 }
             }
         }
@@ -106,7 +106,7 @@ class SpannableScope(
     fun compile(): SpannableStringBuilder {
         val builder = SpannableStringBuilder()
         var startIndex = 0
-        for ((text, spans) in list) {
+        for ((text, spans) in wrappers) {
             val endIndex = startIndex + text.length
             builder.append(text)
             if (spans.isNotEmpty()) {
