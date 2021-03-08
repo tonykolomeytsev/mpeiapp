@@ -33,7 +33,7 @@ internal object ScheduleDetailsListConverter {
             itemId = ITEM_FAVORITES,
             textResId = stringId,
             drawableResID = drawableId,
-            tintColorAttrId = R.attr.colorMain,
+            tintColorAttrId = R.attr.colorActive,
             textStyleResId = R.style.H6_Main
         )
     }

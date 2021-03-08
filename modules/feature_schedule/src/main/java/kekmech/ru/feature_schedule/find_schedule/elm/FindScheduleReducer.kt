@@ -35,7 +35,8 @@ internal class FindScheduleReducer :
         )
         is Wish.Action.GroupNumberChanged -> Result(
             state = state.copy(
-                isContinueButtonEnabled = event.scheduleName.isValidGroupNumberOrPersonName()
+                isContinueButtonEnabled = event.scheduleName.isValidGroupNumberOrPersonName(),
+                searchResults = state.searchResults.takeIf { event.scheduleName.length > 2 }.orEmpty()
             ),
             command = event.scheduleName.takeIf { it.length >= 2 }
                 ?.let(FindScheduleAction::SearchForAutocomplete)
