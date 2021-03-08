@@ -32,7 +32,7 @@
             android:id="@+id/textViewNoteDate"
             android:fontFamily="@font/roboto_medium"
             android:textSize="12sp"
-            android:textColor="?attr/colorMain"
+            android:textColor="?attr/colorActive"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
