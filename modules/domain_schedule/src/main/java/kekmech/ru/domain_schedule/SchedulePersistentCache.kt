@@ -10,8 +10,7 @@ import java.util.*
 
 class SchedulePersistentCache(
     context: Context,
-    gson: Gson,
-    private val locale: Locale
+    gson: Gson
 ) : GsonPersistentCache<Pair<String, Int>, Schedule>(
     context = context,
     gson = gson,
@@ -28,7 +27,7 @@ class SchedulePersistentCache(
 
     override fun generateKeyForGet(key: Pair<String, Int>): String? {
         val (groupNumber, weekOffset) = key
-        val weekOfYear = moscowLocalDate().get(WeekFields.of(locale).weekOfWeekBasedYear()) + weekOffset
+        val weekOfYear = moscowLocalDate().get(WeekFields.of(Locale.ENGLISH).weekOfWeekBasedYear()) + weekOffset
         return "${groupNumber}_$weekOfYear"
     }
 }
