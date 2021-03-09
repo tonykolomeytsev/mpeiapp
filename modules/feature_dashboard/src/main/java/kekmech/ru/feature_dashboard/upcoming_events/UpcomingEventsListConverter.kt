@@ -109,7 +109,9 @@ class UpcomingEventsListConverter(
                     NextClassesCondition.NOT_STARTED -> {
                         val formattedHoursMinutes =
                             TimeDeclensionHelper.formatHoursMinutes(context, hours, minutes)
-                        add(TextItem( "$prefix $formattedHoursMinutes"))
+                        if (formattedHoursMinutes.isNotBlank()) {
+                            add(TextItem("$prefix $formattedHoursMinutes"))
+                        }
                     }
                     NextClassesCondition.STARTED -> Unit
                     else -> Unit
