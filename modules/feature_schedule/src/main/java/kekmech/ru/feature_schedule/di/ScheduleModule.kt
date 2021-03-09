@@ -25,6 +25,6 @@ object ScheduleModule : ModuleProvider({
     factory { ScheduleFeatureFactory(get(), get()) } bind ScheduleFeatureFactory::class
     factory { ScheduleActor(get(), get()) }
     factory { ScheduleDependencies(get(), get(), get()) }
-    factory { SchedulePersistentCache(get(), get(), get()) } bind SchedulePersistentCache::class
+    factory { SchedulePersistentCache(get(), get()) } bind SchedulePersistentCache::class
     factory { FavoriteSource(get()) }
 })
