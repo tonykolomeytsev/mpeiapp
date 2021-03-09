@@ -3,6 +3,7 @@ package kekmech.ru.update
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import kekmech.ru.common_analytics.ext.screenAnalytics
 import kekmech.ru.common_android.*
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_kotlin.fastLazy
@@ -16,18 +17,24 @@ class BlockingUpdateFragment : Fragment(R.layout.fragment_blocking_update) {
 
     private val viewBinding by viewBinding(FragmentBlockingUpdateBinding::bind)
     private val updateInfo: ForceUpdateInfo by fastLazy { getArgument(ARG_UPDATE_INFO) }
+    private val analytics by screenAnalytics("BlockingUpdate")
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         with(viewBinding) {
-            buttonExit.setOnClickListener { close() }
+            buttonExit.setOnClickListener {
+                analytics.sendClick("DismissBlockingUpdate")
+                close()
+            }
             buttonUpdateNow.setOnClickListener {
+                analytics.sendClick("UpdateBlockingUpdate")
                 requireContext().openLinkExternal(updateInfo.updateUrl)
             }
             header.setText(R.string.blocking_update_title)
             fullText.setText(R.string.blocking_update_description)
             link.text = LINK_VK
             link.setOnClickListener {
+                analytics.sendClick("GoToVkBlockingUpdate")
                 requireContext().openLinkExternal(LINK_VK)
             }
         }
