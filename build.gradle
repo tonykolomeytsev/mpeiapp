@@ -81,7 +81,7 @@ buildscript {
                 elmslieCore         : "com.github.vivid-money.elmslie:elmslie-core:1.0.2",
                 elmslieAndroid      : "com.github.vivid-money.elmslie:elmslie-android:1.0.2"
         ]
-        appVersionName = "1.7.0"
+        appVersionName = "1.8.0"
         appVersionCode = 37
         gradleDir = "$rootDir/gradle"
     }
@@ -96,10 +96,10 @@ buildscript {
         }
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:4.1.2"
+        classpath "com.android.tools.build:gradle:4.1.3"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
         classpath "com.google.gms:google-services:4.3.5"
-        classpath "com.google.firebase:firebase-crashlytics-gradle:2.4.1"
+        classpath "com.google.firebase:firebase-crashlytics-gradle:2.5.1"
     }
 }
 
