@@ -31,6 +31,9 @@ class BarsReducer : StateReducer<BarsEvent, BarsState, BarsEffect, BarsAction> {
         state: BarsState
     ): Result<BarsState, BarsEffect, BarsAction> = when (event) {
         is Wish.Init -> Result(state, command = BarsAction.GetRemoteBarsConfig)
-        is Wish.Action.Update -> Result(state, effect = state.config?.loginLink?.let(BarsEffect::LoadPage))
+        is Wish.Action.Update -> Result(state,
+            effect = state.config?.loginLink?.let(BarsEffect::LoadPage))
+        is Wish.Action.PageFinished -> Result(state,
+            effect = state.config?.js?.extractData?.let(BarsEffect::InvokeJs))
     }
 }
