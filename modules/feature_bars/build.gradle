@@ -7,6 +7,9 @@ dependencies {
     implementation androidx.recyclerview
     implementation androidx.coordinatorlayout
     implementation androidx.swiperefreshlayout
+    implementation facebook.shimmer
+    implementation vividMoney.elmslieCore
+    implementation vividMoney.elmslieAndroid
 
     implementation koin.core
     implementation koin.android
