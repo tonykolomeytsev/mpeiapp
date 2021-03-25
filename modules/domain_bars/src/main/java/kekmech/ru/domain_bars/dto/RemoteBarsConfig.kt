@@ -7,6 +7,6 @@ data class RemoteBarsConfig(
 )
 
 data class JsKit(
-    val extractMarks: String,
+    val extractData: String,
     val changeSemester: String
 )
