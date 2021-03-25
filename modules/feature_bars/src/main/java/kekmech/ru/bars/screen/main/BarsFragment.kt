@@ -50,29 +50,7 @@ class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), NeedToUpd
             }
 
             addJavascriptInterface(JSInterface(), JS_INTERFACE_NAME)
-            webViewClient = object : WebViewClient() {
-
-                override fun onPageFinished(view: WebView?, url: String?) {
-                    super.onPageFinished(view, url)
-                }
-
-                override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-                    super.onPageStarted(view, url, favicon)
-                }
-
-                override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
-                    return true
-                }
-
-                @TargetApi(Build.VERSION_CODES.N)
-                override fun shouldOverrideUrlLoading(
-                    view: WebView,
-                    request: WebResourceRequest
-                ): Boolean {
-                    view.loadUrl(request.url.toString())
-                    return true
-                }
-            }
+            webViewClient = BarsWebViewClient()
         }
     }
 
@@ -89,11 +67,53 @@ class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), NeedToUpd
         feature.accept(Wish.Action.Update)
     }
 
+    inner class BarsWebViewClient : WebViewClient() {
+
+        override fun onPageFinished(view: WebView?, url: String?) {
+            feature.accept(Wish.Action.PageFinished)
+        }
+
+        override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+            super.onPageStarted(view, url, favicon)
+        }
+
+        override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
+            return true
+        }
+
+        @TargetApi(Build.VERSION_CODES.N)
+        override fun shouldOverrideUrlLoading(
+            view: WebView,
+            request: WebResourceRequest
+        ): Boolean {
+            view.loadUrl(request.url.toString())
+            return true
+        }
+    }
+
     @Suppress("unused")
     inner class JSInterface {
 
         @JavascriptInterface
-        fun marksExtracted(content: String) {
+        fun onStudentNameExtracted(name: String) {
+            println("BarsFragment: $name")
+        }
+
+        @JavascriptInterface
+        fun onStudentMetaExtracted(metadata: String) {
+            println("BarsFragment: $metadata")
+
+        }
+
+        @JavascriptInterface
+        fun onSemestersExtracted(semesters: String, selectedSemesterName: String) {
+            println("BarsFragment: $semesters")
+            println("BarsFragment: $selectedSemesterName")
+        }
+
+        @JavascriptInterface
+        fun onMarksExtracted(content: String) {
+            println("BarsFragment: $content")
 
         }
     }

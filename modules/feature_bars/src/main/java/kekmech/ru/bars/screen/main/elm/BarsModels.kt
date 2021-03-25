@@ -13,6 +13,7 @@ sealed class BarsEvent {
 
         object Action {
             object Update : Wish()
+            object PageFinished : Wish()
         }
     }
 
