@@ -34,6 +34,6 @@ class BarsReducer : StateReducer<BarsEvent, BarsState, BarsEffect, BarsAction> {
         is Wish.Action.Update -> Result(state,
             effect = state.config?.loginLink?.let(BarsEffect::LoadPage))
         is Wish.Action.PageFinished -> Result(state,
-            effect = state.config?.js?.extractData?.let(BarsEffect::InvokeJs))
+            effect = state.config?.js?.extractDataDecoded?.let(BarsEffect::InvokeJs))
     }
 }
