@@ -1,4 +1,4 @@
-package kekmech.ru.bars.main
+package kekmech.ru.bars.screen.stub
 
 import android.os.Bundle
 import android.view.View
@@ -14,7 +14,7 @@ import kekmech.ru.domain_schedule.GROUP_NUMBER_PATTERN
 import kekmech.ru.domain_schedule.ScheduleRepository
 import org.koin.android.ext.android.inject
 
-internal class BarsFragment : Fragment(R.layout.fragment_bars),
+internal class BarsStubFragment : Fragment(R.layout.fragment_bars_stub),
     DisposableDelegate by DisposableDelegateImpl() {
 
     private val scheduleRepository by inject<ScheduleRepository>()
