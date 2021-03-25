@@ -11,5 +11,9 @@ enum class BackendServiceUrl(
     MAP(
         prodEndpoint = "https://api.kekmech.com/mpeix/map/",
         devEndpoint = "https://dev-api.kekmech.com/mpeix/map/"
+    ),
+    BARS(
+        prodEndpoint = "https://api.kekmech.com/mpeix/bars/",
+        devEndpoint = "https://dev-api.kekmech.com/mpeix/bars/"
     )
 }
