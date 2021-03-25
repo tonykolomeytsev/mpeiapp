@@ -1,6 +1,7 @@
 package kekmech.ru.domain_bars
 
 import android.content.res.Resources
+import android.util.Base64
 import io.reactivex.Single
 import kekmech.ru.domain_bars.dto.JsKit
 import kekmech.ru.domain_bars.dto.RemoteBarsConfig
@@ -18,8 +19,8 @@ class BarsRepository(
             loginLink = "https://bars.mpei.ru/bars_web",
             studentListLink = "https://bars.mpei.ru/bars_web/Student/ListStudent",
             js = JsKit(
-                extractData = extractJs,
-                changeSemester = ""
+                extractDataEncoded = Base64.encodeToString(extractJs.toByteArray(), Base64.NO_WRAP),
+                changeSemesterEncoded = ""
             )
         )
     )
