@@ -25,6 +25,11 @@ internal sealed class BarsEvent {
         object Click {
             object ShowBrowser : Wish()
             object HideBrowser : Wish()
+
+            object Notes : Wish()
+            object Settings : Wish()
+
+            object Logout : Wish()
         }
 
         object Extract {
@@ -51,6 +56,8 @@ internal sealed class BarsEvent {
 internal sealed class BarsEffect {
     data class LoadPage(val url: String) : BarsEffect()
     data class InvokeJs(val js: String) : BarsEffect()
+    object OpenAllNotes : BarsEffect()
+    object OpenSettings : BarsEffect()
 }
 
 internal sealed class BarsAction {
