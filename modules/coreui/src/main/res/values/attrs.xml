@@ -1,33 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <attr name="text" format="string"/>
+    <attr name="text" format="string" />
 
     <declare-styleable name="ProgressButton">
-        <attr name="text"/>
-        <attr name="enabled" format="boolean"/>
+        <attr name="text" />
+        <attr name="enabled" format="boolean" />
     </declare-styleable>
 
-    <attr name="colorMainDark" format="reference"/>
-    <attr name="colorMainLight" format="reference"/>
-    <attr name="colorMain" format="reference"/>
-    <attr name="colorYellowDark" format="reference"/>
-    <attr name="colorYellowLight" format="reference"/>
-    <attr name="colorWhite" format="reference"/>
-    <attr name="colorBlack" format="reference"/>
-    <attr name="colorGray90" format="reference"/>
-    <attr name="colorGray70" format="reference"/>
-    <attr name="colorGray30" format="reference"/>
-    <attr name="colorGray10" format="reference"/>
-    <attr name="colorRed" format="reference"/>
-    <attr name="colorGreen" format="reference"/>
-    <attr name="colorPink" format="reference"/>
-    <attr name="shimmerColor" format="reference"/>
-    <attr name="cardViewColor" format="reference"/>
+    <attr name="colorMainDark" format="reference" />
+    <attr name="colorMainLight" format="reference" />
+    <attr name="colorMain" format="reference" />
+    <attr name="colorYellowDark" format="reference" />
+    <attr name="colorYellowLight" format="reference" />
+    <attr name="colorWhite" format="reference" />
+    <attr name="colorBlack" format="reference" />
+    <attr name="colorGray90" format="reference" />
+    <attr name="colorGray70" format="reference" />
+    <attr name="colorGray30" format="reference" />
+    <attr name="colorGray10" format="reference" />
+    <attr name="colorRed" format="reference" />
+    <attr name="colorGreen" format="reference" />
+    <attr name="colorPink" format="reference" />
+    <attr name="shimmerColor" format="reference" />
+    <attr name="cardViewColor" format="reference" />
 
     <!--Additional theme colors-->
-    <attr name="themeBoxBackgroundColor" format="reference"/>
-    <attr name="themed_snow_flake" format="reference"/>
-    <attr name="colorCloud" format="reference"/>
-    <attr name="colorActive" format="reference"/>
+    <attr name="themeBoxBackgroundColor" format="reference" />
+    <attr name="themed_snow_flake" format="reference" />
+    <attr name="colorCloud" format="reference" />
+    <attr name="colorActive" format="reference" />
 
+
+    <!-- BARS marks -->
+    <attr name="colorMarkGreenText" format="reference" />
+    <attr name="colorMarkGreenBg" format="reference" />
+    <attr name="colorMarkYellowText" format="reference" />
+    <attr name="colorMarkYellowBg" format="reference" />
+    <attr name="colorMarkRedText" format="reference" />
+    <attr name="colorMarkRedBg" format="reference" />
 </resources>
