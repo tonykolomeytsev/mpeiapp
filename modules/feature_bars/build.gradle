@@ -2,11 +2,13 @@ apply from: "$gradleDir/feature-android-module.gradle"
 
 dependencies {
     implementation google.material
+    implementation google.gson
     implementation androidx.appcompat
     implementation androidx.constraintlayout
     implementation androidx.recyclerview
     implementation androidx.coordinatorlayout
     implementation androidx.swiperefreshlayout
+    implementation androidx.coreKtx
     implementation facebook.shimmer
     implementation vividMoney.elmslieCore
     implementation vividMoney.elmslieAndroid
@@ -28,6 +30,7 @@ dependencies {
     implementation project(path: ":common_mvi")
     implementation project(path: ":common_network")
     implementation project(path: ":common_navigation")
+    implementation project(path: ":common_adapter")
 
     implementation project(path: ":coreui")
 }

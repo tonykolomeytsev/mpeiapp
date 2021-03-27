@@ -2,7 +2,7 @@ package kekmech.ru.bars.screen.main.elm
 
 import vivid.money.elmslie.core.store.ElmStore
 
-class BarsFeatureFactory(
+internal class BarsFeatureFactory(
     private val actor: BarsActor
 ) {
 

@@ -5,6 +5,7 @@ import android.util.Base64
 data class RemoteBarsConfig(
     val loginLink: String,
     val studentListLink: String,
+    val marksListLink: String,
     val js: JsKit
 )
 
