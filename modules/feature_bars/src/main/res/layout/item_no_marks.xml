@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="24dp"
+        android:background="@drawable/background_rounded_rect_8dp"
+        android:text="Нет оценок"
+        android:backgroundTint="?colorGray30"
+        android:textColor="?colorGray70"
+        android:gravity="center"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:fontFamily="@font/roboto_medium"
+        android:textSize="14sp" />

@@ -14,7 +14,7 @@ import retrofit2.Retrofit
 
 object BarsModule : ModuleProvider({
     single { get<Retrofit.Builder>().buildApi<BarsService>() } bind BarsService::class
-    factory { BarsRepository(get(), androidContext().resources) }
+    factory { BarsRepository(get(), get(), androidContext().resources) }
     factory { BarsActor(get()) }
     factory { BarsFeatureFactory(get()) }
     factory { BarsFeatureLauncherImpl() } bind BarsFeatureLauncher::class
