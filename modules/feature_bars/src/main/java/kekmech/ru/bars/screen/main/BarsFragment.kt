@@ -13,19 +13,23 @@ import android.webkit.WebViewClient
 import androidx.core.view.isInvisible
 import kekmech.ru.bars.R
 import kekmech.ru.bars.databinding.FragmentBarsBinding
-import kekmech.ru.bars.items.AssessedDisciplineAdapterItem
+import kekmech.ru.bars.items.*
 import kekmech.ru.bars.screen.main.elm.BarsEffect
 import kekmech.ru.bars.screen.main.elm.BarsEvent
 import kekmech.ru.bars.screen.main.elm.BarsEvent.Wish
 import kekmech.ru.bars.screen.main.elm.BarsFeatureFactory
 import kekmech.ru.bars.screen.main.elm.BarsState
+import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseAdapter
+import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.common_android.addSystemTopPadding
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.BaseFragment
 import kekmech.ru.common_navigation.NeedToUpdate
 import kekmech.ru.coreui.items.SpaceAdapterItem
+import kekmech.ru.domain_app_settings.AppSettingsFeatureLauncher
+import kekmech.ru.domain_notes.NotesFeatureLauncher
 import org.koin.android.ext.android.inject
 
 
@@ -38,6 +42,8 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), 
 
     private val viewBinding by viewBinding(FragmentBarsBinding::bind)
     private val adapter by fastLazy { createAdapter() }
+    private val settingsFeatureLauncher by inject<AppSettingsFeatureLauncher>()
+    private val notesFeatureLauncher by inject<NotesFeatureLauncher>()
 
     override fun createStore() = inject<BarsFeatureFactory>().value.create()
 
@@ -46,7 +52,7 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), 
         setupWebView()
         with(viewBinding){
             recyclerView.adapter = adapter
-            swipeRefresh.addSystemTopPadding()
+            recyclerView.addSystemTopPadding()
             webViewContainer.addSystemTopPadding()
         }
     }
@@ -81,6 +87,8 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), 
     override fun handleEffect(effect: BarsEffect) = when (effect) {
         is BarsEffect.LoadPage -> viewBinding.webView.loadUrl(effect.url)
         is BarsEffect.InvokeJs -> viewBinding.webView.evaluateJavascript(effect.js, null)
+        is BarsEffect.OpenSettings -> settingsFeatureLauncher.launch()
+        is BarsEffect.OpenAllNotes -> notesFeatureLauncher.launchAllNotes()
     }
 
     override fun onUpdate() {
@@ -147,6 +155,28 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), 
 
     private fun createAdapter() = BaseAdapter(
         AssessedDisciplineAdapterItem { /* no-op */ },
-        SpaceAdapterItem()
+        SpaceAdapterItem(),
+        AdapterItem(
+            isType = { it is MenusItem },
+            layoutRes = R.layout.item_menus,
+            viewHolderGenerator = ::MenusViewHolder,
+            itemBinder = object : BaseItemBinder<MenusViewHolder, MenusItem>() {
+                override fun bind(vh: MenusViewHolder, model: MenusItem, position: Int) {
+                    vh.setOnNotesClickListener { feature.accept(Wish.Click.Notes) }
+                    vh.setOnSettingsClickListener { feature.accept(Wish.Click.Settings) }
+                }
+            }
+        ),
+        AdapterItem(
+            isType = { it is UserNameHeaderItem },
+            layoutRes = R.layout.item_user_name_header,
+            viewHolderGenerator = ::UserNameHeaderViewHolder,
+            itemBinder = object : BaseItemBinder<UserNameHeaderViewHolder, UserNameHeaderItem>() {
+                override fun bind(vh: UserNameHeaderViewHolder, model: UserNameHeaderItem, position: Int) {
+                    vh.setName(model.name)
+                    vh.setOnMenuClick { feature.accept(Wish.Click.Logout) }
+                }
+            }
+        )
     )
 }

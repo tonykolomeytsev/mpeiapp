@@ -40,7 +40,12 @@ class BarsRepository(
     }
 
     fun pushStudentName(studentName: String): Completable = updateUserBarsCache {
-        copy(name = studentName)
+        val studentNames = studentName.split("\\s+".toRegex())
+        if (studentNames.size > 2) {
+            copy(name = "${studentNames[0]} ${studentNames[1]}")
+        } else {
+            copy(name = studentName)
+        }
     }
 
     fun pushStudentGroup(studentGroup: String): Completable = updateUserBarsCache {
