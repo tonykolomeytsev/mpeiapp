@@ -50,6 +50,9 @@ internal class BarsReducer : StateReducer<BarsEvent, BarsState, BarsEffect, Bars
 
         is Wish.Click.ShowBrowser -> Result(state.copy(isBrowserShownForce = true))
         is Wish.Click.HideBrowser -> Result(state.copy(isBrowserShownForce = false))
+        is Wish.Click.Notes -> Result(state, effect = BarsEffect.OpenAllNotes)
+        is Wish.Click.Settings -> Result(state, effect = BarsEffect.OpenSettings)
+        is Wish.Click.Logout -> Result(state, effect = BarsEffect.OpenSettings)
 
         is Wish.Extract.StudentName -> Result(state, command = BarsAction.PushStudentName(event.name))
         is Wish.Extract.StudentGroup -> Result(state, command = BarsAction.PushStudentGroup(event.group))

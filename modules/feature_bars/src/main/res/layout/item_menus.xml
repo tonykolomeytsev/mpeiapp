@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp">
+
+    <LinearLayout
+            android:id="@+id/buttonSchedules"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:layout_weight="1"
+            android:alpha="0.5"
+            android:gravity="center"
+            android:orientation="vertical">
+
+        <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_navigation_schedule"
+                app:tint="?colorMain" />
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/roboto_medium"
+                android:text="@string/bars_stub_btn_schedules"
+                android:textColor="?colorMain"
+                android:textSize="14sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:id="@+id/buttonNotes"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:layout_weight="1"
+            android:background="?selectableItemBackgroundBorderless"
+            android:gravity="center"
+            android:orientation="vertical">
+
+        <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_sticky_note_48"
+                app:tint="?colorMain" />
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/roboto_medium"
+                android:text="@string/bars_stub_btn_notes"
+                android:textColor="?colorMain"
+                android:textSize="14sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:id="@+id/buttonSettings"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:layout_weight="1"
+            android:background="?selectableItemBackgroundBorderless"
+            android:gravity="center"
+            android:orientation="vertical">
+
+        <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_settings_24"
+                app:tint="?colorMain" />
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/roboto_medium"
+                android:text="@string/bars_stub_btn_settings"
+                android:textColor="?colorMain"
+                android:textSize="14sp" />
+
+    </LinearLayout>
+
+</LinearLayout>
