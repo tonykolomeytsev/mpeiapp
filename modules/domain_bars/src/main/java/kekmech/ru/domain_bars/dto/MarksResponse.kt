@@ -16,7 +16,7 @@ data class AssessedDiscipline(
 
 data class ControlActivity(
     val name: String,
-    val weight: Float,
+    val weight: String,
     val deadline: String,
     val finalMark: Float
 ) : Serializable

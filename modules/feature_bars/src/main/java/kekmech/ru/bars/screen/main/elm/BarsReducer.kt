@@ -24,9 +24,9 @@ internal class BarsReducer : StateReducer<BarsEvent, BarsState, BarsEffect, Bars
             state = state.copy(config = event.remoteBarsConfig),
             effect = BarsEffect.LoadPage(event.remoteBarsConfig.loginLink)
         )
-        is News.GetRemoteBarsConfigFailure -> Result(state) // TODO handle error
-        is News.ObserveBarsSuccess -> Result(state.copy(userBars = event.userBars))
-        is News.ObserveBarsFailure -> Result(state) // TODO handle error
+        is News.GetRemoteBarsConfigFailure -> Result(state.copy(isAfterErrorLoadingConfig = true))
+        is News.ObserveBarsSuccess -> Result(state.copy(userBars = event.userBars, isLoading = false))
+        is News.ObserveBarsFailure -> Result(state.copy(isAfterErrorLoadingUserBars = true))
     }
 
     private fun reduceWish(
@@ -41,18 +41,25 @@ internal class BarsReducer : StateReducer<BarsEvent, BarsState, BarsEffect, Bars
         )
         is Wish.Action.Update -> Result(state,
             effect = state.config?.loginLink?.let(BarsEffect::LoadPage))
-        is Wish.Action.PageFinished -> Result(
-            state = state.copy(
-                isLoggedIn = state.config?.let { isLoggedInUrl(event.url, it) }
-            ),
-            effect = state.config?.js?.extractDataDecoded?.let(BarsEffect::InvokeJs)
-        )
+        is Wish.Action.PageFinished -> {
+            val isLoggedIn = state.config?.let { isLoggedInUrl(event.url, it) }
+            Result(
+                state = state.copy(
+                    isLoggedIn = isLoggedIn,
+                    config = if (isLoggedIn == true) state.config.copy(marksListLink = event.url) else state.config
+                ),
+                effect = state.config?.js?.extractDataDecoded?.let(BarsEffect::InvokeJs)
+            )
+        }
 
         is Wish.Click.ShowBrowser -> Result(state.copy(isBrowserShownForce = true))
         is Wish.Click.HideBrowser -> Result(state.copy(isBrowserShownForce = false))
         is Wish.Click.Notes -> Result(state, effect = BarsEffect.OpenAllNotes)
         is Wish.Click.Settings -> Result(state, effect = BarsEffect.OpenSettings)
         is Wish.Click.Logout -> Result(state, effect = BarsEffect.OpenSettings)
+        is Wish.Click.SwipeToRefresh -> Result(state.copy(isLoading = true),
+            effect = state.config?.marksListLink?.let(BarsEffect::LoadPage)
+        )
 
         is Wish.Extract.StudentName -> Result(state, command = BarsAction.PushStudentName(event.name))
         is Wish.Extract.StudentGroup -> Result(state, command = BarsAction.PushStudentGroup(event.group))

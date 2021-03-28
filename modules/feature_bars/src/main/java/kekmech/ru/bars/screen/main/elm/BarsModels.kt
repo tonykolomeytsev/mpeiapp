@@ -7,7 +7,10 @@ internal data class BarsState(
     val isLoggedIn: Boolean? = null,
     val isBrowserShownForce: Boolean = false,
     val config: RemoteBarsConfig? = null,
-    val userBars: UserBarsInfo? = null
+    val isAfterErrorLoadingConfig: Boolean = false,
+    val userBars: UserBarsInfo? = null,
+    val isAfterErrorLoadingUserBars: Boolean = false,
+    val isLoading: Boolean = true
 ) {
 
     val isBrowserShown: Boolean = (isLoggedIn == false) || isBrowserShownForce
@@ -30,6 +33,7 @@ internal sealed class BarsEvent {
             object Settings : Wish()
 
             object Logout : Wish()
+            object SwipeToRefresh : Wish()
         }
 
         object Extract {
