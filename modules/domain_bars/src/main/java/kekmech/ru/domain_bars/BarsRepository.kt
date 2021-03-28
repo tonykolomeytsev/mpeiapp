@@ -11,6 +11,7 @@ import kekmech.ru.domain_bars.dto.JsKit
 import kekmech.ru.domain_bars.dto.RawMarksResponse
 import kekmech.ru.domain_bars.dto.RemoteBarsConfig
 import kekmech.ru.domain_bars.dto.UserBarsInfo
+import java.util.concurrent.TimeUnit
 
 class BarsRepository(
     private val barsService: BarsService,
@@ -22,9 +23,10 @@ class BarsRepository(
 
     fun getRemoteBarsConfig(): Single<RemoteBarsConfig> = Single.just(
         RemoteBarsConfig(
-            loginLink = "https://bars.mpei.ru/bars_web",
-            studentListLink = "https://bars.mpei.ru/bars_web/Student/ListStudent",
-            marksListLink = "https://bars.mpei.ru/bars_web/Student/Part1",
+            loginUrl = "https://bars.mpei.ru/bars_web",
+            studentListUrl = "https://bars.mpei.ru/bars_web/Student/ListStudent",
+            marksListUrl = "https://bars.mpei.ru/bars_web/Student/Part1",
+            logoutUrl = "https://bars.mpei.ru/bars_web/Auth/Exit",
             js = JsKit(
                 extractDataEncoded = Base64.encodeToString(extractJs.toByteArray(), Base64.NO_WRAP),
                 changeSemesterEncoded = ""
@@ -33,6 +35,8 @@ class BarsRepository(
     )
 
     fun observeUserBars(): Observable<UserBarsInfo> = userBarsCache
+        .distinctUntilChanged()
+        .debounce(INFO_CHANGING_DEBOUNCE, TimeUnit.MILLISECONDS)
 
     fun pushMarksJson(marksJson: String): Completable = updateUserBarsCache {
         val rawMarksResponse = gson.fromJson(marksJson, RawMarksResponse::class.java)
@@ -58,4 +62,8 @@ class BarsRepository(
         .doOnSuccess { userBarsCache.onNext(updater(it)) }
         .doOnError { userBarsCache.onError(it) }
         .ignoreElement()
+
+    companion object {
+        private const val INFO_CHANGING_DEBOUNCE = 150L
+    }
 }
