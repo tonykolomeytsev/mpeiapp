@@ -19,6 +19,7 @@ import kekmech.ru.common_android.withArguments
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.coreui.items.*
 import kekmech.ru.domain_bars.dto.AssessedDiscipline
+import kekmech.ru.domain_bars.dto.FinalGradeType
 
 private const val BULLET_SEPARATOR = " • "
 private const val ARG_DISCIPLINE_INFO = "Arg.Discipline"
@@ -55,7 +56,12 @@ class BarsDetailsFragment : BottomSheetDialogFragment() {
             ?.let { grades ->
                 add(SectionHeaderItem("Итоговые оценки"))
                 add(SpaceItem.VERTICAL_12)
-                addAll(grades)
+                grades.forEach {
+                    if (it.type == FinalGradeType.INTERMEDIATE_MARK) {
+                        add(SpaceItem.VERTICAL_16)
+                    }
+                    add(it)
+                }
             }
         add(SpaceItem.VERTICAL_24)
     }
