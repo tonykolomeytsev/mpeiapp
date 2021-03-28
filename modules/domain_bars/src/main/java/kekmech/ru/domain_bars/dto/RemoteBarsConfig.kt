@@ -3,9 +3,10 @@ package kekmech.ru.domain_bars.dto
 import android.util.Base64
 
 data class RemoteBarsConfig(
-    val loginLink: String,
-    val studentListLink: String,
-    val marksListLink: String,
+    val loginUrl: String,
+    val studentListUrl: String,
+    val marksListUrl: String,
+    val logoutUrl: String,
     val js: JsKit
 )
 
