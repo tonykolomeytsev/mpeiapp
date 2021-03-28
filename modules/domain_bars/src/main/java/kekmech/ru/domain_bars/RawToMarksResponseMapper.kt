@@ -11,15 +11,15 @@ object RawToMarksResponseMapper {
             AssessedDiscipline(
                 name = disciplineRow.disciplineName,
                 person = disciplineRow.personName,
-                assessmentType = disciplineRow.assessmentType,
+                assessmentType = disciplineRow.assessmentType.capitalize(),
                 controlActivities = disciplineRow.activities
                     .filter { it.type == CONTROL_ACTIVITY }
                     .map { caRow ->
                         ControlActivity(
                             name = caRow.name.orEmpty(),
-                            weight = caRow.weight?.toFloatOrNull() ?: -1f,
-                            deadline = caRow.weekNum.orEmpty(),
-                            finalMark = caRow.markAndDate?.extractFloatOfNull() ?: -1f
+                            weight = caRow.weight?.trim().orEmpty(),
+                            deadline = caRow.weekNum?.extractIntOrNull()?.toString().orEmpty(),
+                            finalMark = caRow.markAndDate?.extractFloatOrNull() ?: -1f
                         )
                     },
                 finalGrades = disciplineRow.activities
@@ -27,7 +27,7 @@ object RawToMarksResponseMapper {
                     .map { aRow ->
                         FinalGrade(
                             name = aRow.name.orEmpty(),
-                            finalMark = aRow.markAndDate?.extractFloatOfNull() ?: -1f,
+                            finalMark = aRow.markAndDate?.extractFloatOrNull() ?: -1f,
                             type = FinalGradeType.valueOf(aRow.type.name)
                         )
                     }
@@ -35,6 +35,11 @@ object RawToMarksResponseMapper {
         }
     )
 
-    private fun String.extractFloatOfNull() = toFloatOrNull()
-        ?: split("[\\s\\(]+".toRegex())[0].toFloatOrNull()
+    private fun String.extractFloatOrNull() = replace(',', '.').let {
+        it.toFloatOrNull()
+            ?: it.split("[\\s\\(]+".toRegex())[0].toFloatOrNull()
+    }
+
+    private fun String.extractIntOrNull() = toIntOrNull()
+        ?: split("[\\s\\(]+".toRegex())[0].toIntOrNull()
 }

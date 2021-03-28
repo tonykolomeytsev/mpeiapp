@@ -14,6 +14,7 @@ import androidx.core.view.isInvisible
 import kekmech.ru.bars.R
 import kekmech.ru.bars.databinding.FragmentBarsBinding
 import kekmech.ru.bars.items.*
+import kekmech.ru.bars.screen.details.BarsDetailsFragment
 import kekmech.ru.bars.screen.main.elm.BarsEffect
 import kekmech.ru.bars.screen.main.elm.BarsEvent
 import kekmech.ru.bars.screen.main.elm.BarsEvent.Wish
@@ -27,7 +28,9 @@ import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.BaseFragment
 import kekmech.ru.common_navigation.NeedToUpdate
+import kekmech.ru.common_navigation.showDialog
 import kekmech.ru.coreui.items.SpaceAdapterItem
+import kekmech.ru.coreui.items.TextWithIconAdapterItem
 import kekmech.ru.domain_app_settings.AppSettingsFeatureLauncher
 import kekmech.ru.domain_notes.NotesFeatureLauncher
 import org.koin.android.ext.android.inject
@@ -74,14 +77,21 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), 
             webViewToolbar.setNavigationOnClickListener {
                 feature.accept(Wish.Click.HideBrowser)
             }
+            swipeRefresh.setOnRefreshListener {
+                feature.accept(Wish.Click.SwipeToRefresh)
+            }
         }
     }
 
     override fun render(state: BarsState) {
         with(viewBinding) {
             webViewContainer.isInvisible = !state.isBrowserShown
+            swipeRefresh.isInvisible = state.isBrowserShown
+            swipeRefresh.post {
+                swipeRefresh.isRefreshing = state.isLoading
+            }
         }
-        adapter.update(BarsListConverter().map(state))
+        adapter.update(BarsListConverter(requireContext()).map(state))
     }
 
     override fun handleEffect(effect: BarsEffect) = when (effect) {
@@ -99,6 +109,7 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), 
 
         override fun onPageFinished(view: WebView, url: String) {
             feature.accept(Wish.Action.PageFinished(url))
+            viewBinding.webViewToolbar.title = url
         }
 
         override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
@@ -154,7 +165,9 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), 
     }
 
     private fun createAdapter() = BaseAdapter(
-        AssessedDisciplineAdapterItem { /* no-op */ },
+        AssessedDisciplineAdapterItem {
+            showDialog { BarsDetailsFragment.newInstance(it) }
+        },
         SpaceAdapterItem(),
         AdapterItem(
             isType = { it is MenusItem },
@@ -172,11 +185,20 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), 
             layoutRes = R.layout.item_user_name_header,
             viewHolderGenerator = ::UserNameHeaderViewHolder,
             itemBinder = object : BaseItemBinder<UserNameHeaderViewHolder, UserNameHeaderItem>() {
-                override fun bind(vh: UserNameHeaderViewHolder, model: UserNameHeaderItem, position: Int) {
+                override fun bind(
+                    vh: UserNameHeaderViewHolder,
+                    model: UserNameHeaderItem,
+                    position: Int
+                ) {
                     vh.setName(model.name)
                     vh.setOnMenuClick { feature.accept(Wish.Click.Logout) }
                 }
             }
-        )
+        ),
+        TextWithIconAdapterItem {
+            if (it.itemId == 1) {
+                feature.accept(Wish.Click.ShowBrowser)
+            }
+        }
     )
 }
