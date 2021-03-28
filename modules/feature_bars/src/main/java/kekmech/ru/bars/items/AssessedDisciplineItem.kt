@@ -63,7 +63,7 @@ private class AssessedDisciplineViewHolderImpl(
             removeAllViews()
             marks.forEachIndexed { index, mark ->
                 val view = inflater.inflate(R.layout.item_mark, this, false)
-                viewBinding.marksContainer.addView(view)
+                addView(view)
                 val vh = MarkViewHolderImpl(view)
                 marksBinder.bind(vh, MarkItem(mark), index)
                 view.setMargins(right = resources.dpToPx(DEFAULT_RIGHT_MARK_PADDING))
@@ -82,7 +82,7 @@ internal class AssessedDisciplineItemBinder(
 
     override fun bind(vh: AssessedDisciplineViewHolder, model: AssessedDiscipline, position: Int) {
         vh.setName(model.name)
-        vh.setDescription(model.assessmentType.capitalize(), model.person)
+        vh.setDescription(model.assessmentType, model.person)
         vh.setMarks(model.controlActivities.map { it.finalMark }.filter { it != -1f })
         vh.setOnClickListener { onClickListener(model) }
     }
