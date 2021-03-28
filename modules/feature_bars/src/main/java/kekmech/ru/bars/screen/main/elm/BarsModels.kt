@@ -4,7 +4,7 @@ import kekmech.ru.domain_bars.dto.RemoteBarsConfig
 import kekmech.ru.domain_bars.dto.UserBarsInfo
 
 internal data class BarsState(
-    val isLoggedIn: Boolean? = null,
+    val flowState: FlowState = FlowState.UNDEFINED,
     val isBrowserShownForce: Boolean = false,
     val config: RemoteBarsConfig? = null,
     val isAfterErrorLoadingConfig: Boolean = false,
@@ -13,7 +13,14 @@ internal data class BarsState(
     val isLoading: Boolean = true
 ) {
 
-    val isBrowserShown: Boolean = (isLoggedIn == false) || isBrowserShownForce
+    val isBrowserShown: Boolean = isBrowserShownForce || flowState == FlowState.LOGIN
+}
+
+internal enum class FlowState {
+    UNDEFINED,
+    LOGIN,
+    NOT_LOGGED_IN,
+    LOGGED_IN
 }
 
 internal sealed class BarsEvent {
