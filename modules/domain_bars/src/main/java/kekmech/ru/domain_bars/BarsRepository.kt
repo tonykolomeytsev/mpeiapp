@@ -1,13 +1,10 @@
 package kekmech.ru.domain_bars
 
-import android.content.res.Resources
-import android.util.Base64
 import com.google.gson.Gson
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.subjects.BehaviorSubject
-import kekmech.ru.domain_bars.dto.JsKit
 import kekmech.ru.domain_bars.dto.RawMarksResponse
 import kekmech.ru.domain_bars.dto.RemoteBarsConfig
 import kekmech.ru.domain_bars.dto.UserBarsInfo
@@ -15,24 +12,11 @@ import java.util.concurrent.TimeUnit
 
 class BarsRepository(
     private val barsService: BarsService,
-    private val gson: Gson,
-    resources: Resources
+    private val gson: Gson
 ) {
     private val userBarsCache = BehaviorSubject.createDefault(UserBarsInfo())
-    private val extractJs = resources.openRawResource(R.raw.extract).bufferedReader().readText()
 
-    fun getRemoteBarsConfig(): Single<RemoteBarsConfig> = Single.just(
-        RemoteBarsConfig(
-            loginUrl = "https://bars.mpei.ru/bars_web",
-            studentListUrl = "https://bars.mpei.ru/bars_web/Student/ListStudent",
-            marksListUrl = "https://bars.mpei.ru/bars_web/Student/Part1",
-            logoutUrl = "https://bars.mpei.ru/bars_web/Auth/Exit",
-            js = JsKit(
-                extractDataEncoded = Base64.encodeToString(extractJs.toByteArray(), Base64.NO_WRAP),
-                changeSemesterEncoded = ""
-            )
-        )
-    )
+    fun getRemoteBarsConfig(): Single<RemoteBarsConfig> = barsService.getRemoteBarsConfig()
 
     fun observeUserBars(): Observable<UserBarsInfo> = userBarsCache
         .distinctUntilChanged()
