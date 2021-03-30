@@ -10,6 +10,6 @@ import retrofit2.http.GET
 @EndpointUrl(BackendServiceUrl.BARS)
 interface BarsService {
 
-    @GET("getRemoteBarsConfig")
+    @GET("v1/getRemoteBarsConfig")
     fun getRemoteBarsConfig(): Single<RemoteBarsConfig>
 }
