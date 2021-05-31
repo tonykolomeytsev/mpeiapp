@@ -14,10 +14,9 @@ data class JsKit(
     val extractDataEncoded: String,
     val changeSemesterEncoded: String
 ) {
-    val extractDataDecoded: String by lazy(LazyThreadSafetyMode.NONE) {
+    val extractDataDecoded: String get() =
         String(Base64.decode(extractDataEncoded.toByteArray(), Base64.NO_WRAP))
-    }
-    val changeSemesterDecoded: String by lazy(LazyThreadSafetyMode.NONE) {
+
+    val changeSemesterDecoded: String get() =
         String(Base64.decode(changeSemesterEncoded.toByteArray(), Base64.NO_WRAP))
-    }
 }
