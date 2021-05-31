@@ -14,6 +14,8 @@ import kekmech.ru.coreui.items.TextWithIconItem
 
 internal class BarsListConverter(private val context: Context) {
 
+    private val listStub = listOf<Any>(MenusItem)
+
     fun map(state: BarsState): List<Any> = when {
         state.config != null && state.userBars != null -> mutableListOf<Any>().apply {
             state.userBars.name?.let {
@@ -56,6 +58,6 @@ internal class BarsListConverter(private val context: Context) {
             state.isAfterErrorLoadingUserBars -> emptyList()
             else -> emptyList()
         }
-        else -> emptyList()
+        else -> listStub
     }
 }
