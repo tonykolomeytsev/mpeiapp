@@ -35,6 +35,7 @@ dependencies {
     implementation project(path: ':common_cache')
     implementation project(path: ':common_analytics')
     implementation project(path: ':common_emoji')
+    implementation project(path: ':common_persistent_cache')
     implementation project(path: ':coreui')
 
     // TODO: resolve supertype of MapPersistentCache without depending on 'common_persistent_cache'
