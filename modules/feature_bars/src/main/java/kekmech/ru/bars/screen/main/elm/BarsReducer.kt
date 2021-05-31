@@ -28,7 +28,12 @@ internal class BarsReducer : StateReducer<BarsEvent, BarsState, BarsEffect, Bars
             effect = BarsEffect.LoadPage(event.remoteBarsConfig.loginUrl)
         )
         is News.GetRemoteBarsConfigFailure -> Result(state.copy(isAfterErrorLoadingConfig = true))
-        is News.ObserveBarsSuccess -> Result(state.copy(userBars = event.userBars, isLoading = false))
+        is News.ObserveBarsSuccess -> Result(
+            state.copy(
+                userBars = event.userBars,
+                isLoading = false
+            )
+        )
         is News.ObserveBarsFailure -> Result(state.copy(isAfterErrorLoadingUserBars = true))
     }
 
@@ -36,7 +41,8 @@ internal class BarsReducer : StateReducer<BarsEvent, BarsState, BarsEffect, Bars
         event: Wish,
         state: BarsState
     ): Result<BarsState, BarsEffect, BarsAction> = when (event) {
-        is Wish.Init -> Result(state,
+        is Wish.Init -> Result(
+            state = state,
             commands = listOf(
                 BarsAction.GetRemoteBarsConfig,
                 BarsAction.ObserveBars
@@ -55,8 +61,14 @@ internal class BarsReducer : StateReducer<BarsEvent, BarsState, BarsEffect, Bars
             effect = loadPageEffect(state) { marksListUrl }
         )
 
-        is Wish.Extract.StudentName -> Result(state, command = BarsAction.PushStudentName(event.name))
-        is Wish.Extract.StudentGroup -> Result(state, command = BarsAction.PushStudentGroup(event.group))
+        is Wish.Extract.StudentName -> Result(
+            state = state,
+            command = BarsAction.PushStudentName(event.name)
+        )
+        is Wish.Extract.StudentGroup -> Result(
+            state = state,
+            command = BarsAction.PushStudentGroup(event.group)
+        )
         is Wish.Extract.MetaData -> Result(state) // TODO in future versions
         is Wish.Extract.Rating -> Result(state) // TODO in future versions
         is Wish.Extract.Semesters -> Result(state) // TODO in future versions
