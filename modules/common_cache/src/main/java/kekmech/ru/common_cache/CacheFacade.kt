@@ -1,9 +1,9 @@
 package kekmech.ru.common_cache
 
-import io.reactivex.Completable
-import io.reactivex.Observable
-import io.reactivex.Single
-import io.reactivex.schedulers.Schedulers.io
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.schedulers.Schedulers.io
 import kekmech.ru.common_cache.core.LifetimeCache
 import kekmech.ru.common_cache.core.LifetimeCacheUnit
 import kekmech.ru.common_cache.core.LifetimeCacheUnitImpl
@@ -54,7 +54,8 @@ class CacheFacade<T : Any>(
 
     fun isNotEmpty() = cache.isNotEmpty()
 
-    private fun ensureFirstValue(): Single<T> = cache.asMaybe().switchIfEmpty(getDataSource().firstOrError())
+    private fun ensureFirstValue(): Single<T> =
+        cache.asMaybe().switchIfEmpty(getDataSource().firstOrError())
 
     private fun getDataSource(): Observable<T> = atomicDataSource.getOrPut {
         dataSource()

@@ -1,7 +1,7 @@
 package kekmech.ru.domain_app_settings
 
 import android.content.SharedPreferences
-import io.reactivex.Completable
+import io.reactivex.rxjava3.core.Completable
 import kekmech.ru.common_shared_preferences.boolean
 import kekmech.ru.common_shared_preferences.string
 

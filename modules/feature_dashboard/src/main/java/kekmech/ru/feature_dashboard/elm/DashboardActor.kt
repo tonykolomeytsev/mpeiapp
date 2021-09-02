@@ -1,6 +1,6 @@
 package kekmech.ru.feature_dashboard.elm
 
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 import kekmech.ru.domain_notes.NotesRepository
 import kekmech.ru.domain_notes.NotesScheduleTransformer
 import kekmech.ru.domain_schedule.ScheduleRepository

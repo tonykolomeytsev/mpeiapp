@@ -1,6 +1,6 @@
 package kekmech.ru.feature_schedule.find_schedule.elm
 
-import io.reactivex.exceptions.CompositeException
+import io.reactivex.rxjava3.exceptions.CompositeException
 import kekmech.ru.domain_schedule.GROUP_NUMBER_PATTERN
 import kekmech.ru.domain_schedule.PERSON_NAME_PATTERN
 import kekmech.ru.feature_schedule.find_schedule.elm.FindScheduleEvent.News

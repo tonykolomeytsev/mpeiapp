@@ -1,6 +1,6 @@
 package kekmech.ru.notes.note_list.elm
 
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 import kekmech.ru.domain_notes.NotesRepository
 import vivid.money.elmslie.core.store.Actor
 

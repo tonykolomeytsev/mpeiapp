@@ -1,10 +1,10 @@
 package kekmech.ru.common_cache.core
 
-import io.reactivex.Maybe
-import io.reactivex.MaybeEmitter
-import io.reactivex.Observable
-import io.reactivex.schedulers.Schedulers.io
-import io.reactivex.subjects.BehaviorSubject
+import io.reactivex.rxjava3.core.Maybe
+import io.reactivex.rxjava3.core.MaybeEmitter
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.schedulers.Schedulers.io
+import io.reactivex.rxjava3.subjects.BehaviorSubject
 import kekmech.ru.common_kotlin.Option
 import java.util.concurrent.ConcurrentHashMap
 
@@ -54,7 +54,7 @@ class LifetimeCache {
         .hide()
         .observeOn(io())
         .filter { it.isNotEmpty }
-        .map { it.value }
+        .map { it.value!! }
 
     fun contains(key: String): Boolean = getSubject<Any>(key).value?.isNotEmpty ?: false
 

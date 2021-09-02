@@ -1,6 +1,6 @@
 package kekmech.ru.domain_map
 
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Single
 import kekmech.ru.common_annotations.BackendServiceUrl
 import kekmech.ru.common_annotations.EndpointUrl
 import kekmech.ru.domain_map.dto.GetMapMarkersResponse

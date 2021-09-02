@@ -1,8 +1,8 @@
 package kekmech.ru.common_android.clipboard
 
 import android.content.Context
-import io.reactivex.Completable
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
 
 class ClipboardRepository(private val context: Context) {
 

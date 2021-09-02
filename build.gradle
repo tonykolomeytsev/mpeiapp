@@ -56,12 +56,12 @@ buildscript {
                 crashlytics         : "com.google.firebase:firebase-crashlytics:18.2.1"
         ]
         rx = [
-                java                : "io.reactivex.rxjava2:rxjava:2.2.20", // 3.1.1
-                android             : "io.reactivex.rxjava2:rxandroid:2.1.1" // 3.0.0
+                java                : "io.reactivex.rxjava3:rxjava:3.1.1",
+                android             : "io.reactivex.rxjava3:rxandroid:3.0.0"
         ]
         squareup = [
                 retrofit            : "com.squareup.retrofit2:retrofit:${versions.retrofit}",
-                retrofit_rxJava2    : "com.squareup.retrofit2:adapter-rxjava2:${versions.retrofit}",
+                retrofit_rxJava2    : "com.squareup.retrofit2:adapter-rxjava3:${versions.retrofit}",
                 retrofit_gson       : "com.squareup.retrofit2:converter-gson:${versions.retrofit}",
                 okhttp              : "com.squareup.okhttp3:okhttp:${versions.okhttp}",
                 okhttpLogger        : "com.squareup.okhttp3:logging-interceptor:${versions.okhttp}"
@@ -78,8 +78,8 @@ buildscript {
                 pagerindicator      : "ru.tinkoff.scrollingpagerindicator:scrollingpagerindicator:1.2.1"
         ]
         vividMoney = [
-                elmslieCore         : "com.github.vivid-money.elmslie:elmslie-core:1.0.2",
-                elmslieAndroid      : "com.github.vivid-money.elmslie:elmslie-android:1.0.2"
+                elmslieCore         : "com.github.vivid-money.elmslie:elmslie-core:1.1.4",
+                elmslieAndroid      : "com.github.vivid-money.elmslie:elmslie-android:1.1.4"
         ]
         appVersionName = "1.8.0-RC"
         appVersionCode = 37

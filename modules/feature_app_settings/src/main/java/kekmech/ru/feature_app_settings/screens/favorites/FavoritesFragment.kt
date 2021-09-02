@@ -6,11 +6,8 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_analytics.ext.screenAnalytics
-import kekmech.ru.common_android.ActivityResultListener
-import kekmech.ru.common_android.addSystemBottomPadding
-import kekmech.ru.common_android.addSystemTopPadding
+import kekmech.ru.common_android.*
 import kekmech.ru.common_android.viewbinding.viewBinding
-import kekmech.ru.common_android.withResultFor
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.BaseFragment
 import kekmech.ru.common_navigation.addScreenForward
@@ -54,7 +51,8 @@ internal class FavoritesFragment :
         super.onViewCreated(view, savedInstanceState)
         view.addSystemTopPadding()
         viewBinding.apply {
-            toolbar.init(R.string.favorites_screen_title)
+            toolbar.setTitle(R.string.favorites_screen_title)
+            toolbar.setNavigationOnClickListener { close() }
             recyclerView.attachScrollListenerForAppBarLayoutShadow(appBarLayout)
             recyclerView.addSystemBottomPadding()
             recyclerView.layoutManager = LinearLayoutManager(requireContext())

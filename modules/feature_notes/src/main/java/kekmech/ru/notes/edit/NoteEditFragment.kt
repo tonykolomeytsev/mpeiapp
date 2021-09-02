@@ -5,11 +5,8 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_analytics.ext.screenAnalytics
-import kekmech.ru.common_android.addSystemVerticalPadding
-import kekmech.ru.common_android.closeWithSuccess
-import kekmech.ru.common_android.getArgument
+import kekmech.ru.common_android.*
 import kekmech.ru.common_android.viewbinding.viewBinding
-import kekmech.ru.common_android.withArguments
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.BaseFragment
 import kekmech.ru.coreui.PrettyDateFormatter
@@ -48,7 +45,7 @@ internal class NoteEditFragment : BaseFragment<NoteEditEvent, NoteEditEffect, No
         super.onViewCreated(view, savedInstanceState)
         view.addSystemVerticalPadding()
         viewBinding.apply {
-            toolbar.init()
+            toolbar.setNavigationOnClickListener { close() }
             buttonSave.setOnClickListener {
                 analytics.sendClick("SaveNote")
                 feature.accept(Wish.Click.SaveNote)

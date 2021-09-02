@@ -1,6 +1,6 @@
 package kekmech.ru.common_navigation
 
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 import kekmech.ru.common_kotlin.Option
 
 interface BottomTabsSwitcher {

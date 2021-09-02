@@ -54,7 +54,8 @@ internal class AppSettingsFragment :
             recyclerView.attachScrollListenerForAppBarLayoutShadow(appBarLayout)
             recyclerView.addSystemBottomPadding()
             appBarLayout.addSystemTopPadding()
-            toolbar.init(R.string.app_settings_screen_title)
+            toolbar.setTitle(R.string.app_settings_screen_title)
+            toolbar.setNavigationOnClickListener { close() }
         }
     }
 

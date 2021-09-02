@@ -6,8 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.CallSuper
 import androidx.annotation.LayoutRes
-import androidx.annotation.StringRes
-import androidx.appcompat.widget.Toolbar
+import kekmech.ru.common_android.hideKeyboard
 import vivid.money.elmslie.android.base.ElmFragment
 
 abstract class BaseFragment<Event : Any, Effect : Any, State : Any> :
@@ -31,17 +30,14 @@ abstract class BaseFragment<Event : Any, Effect : Any, State : Any> :
         view.requestApplyInsetsWhenAttached()
     }
 
+    override fun onStop() {
+        hideKeyboard()
+        super.onStop()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         clearDisposables()
-    }
-
-    protected fun Toolbar.init(@StringRes titleRes: Int? = null) =
-        init(titleRes?.let { getString(it) })
-
-    protected fun Toolbar.init(title: String?) {
-        title?.let { setTitle(it) }
-        setNavigationOnClickListener { requireActivity().onBackPressed() }
     }
 
     private fun View.requestApplyInsetsWhenAttached() {

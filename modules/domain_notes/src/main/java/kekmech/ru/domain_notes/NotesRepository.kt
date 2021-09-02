@@ -1,8 +1,8 @@
 package kekmech.ru.domain_notes
 
-import io.reactivex.Completable
-import io.reactivex.Single
-import io.reactivex.internal.operators.completable.CompletableFromRunnable
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.internal.operators.completable.CompletableFromRunnable
 import kekmech.ru.domain_notes.dto.Note
 import kekmech.ru.domain_notes.sources.NotesSource
 import kekmech.ru.domain_schedule.ScheduleRepository
