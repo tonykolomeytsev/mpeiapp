@@ -4,8 +4,8 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Context.CLIPBOARD_SERVICE
-import io.reactivex.Observable
-import io.reactivex.disposables.Disposables
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.disposables.Disposable
 
 object ClipboardUtils {
 
@@ -25,7 +25,7 @@ object ClipboardUtils {
 
             val listener = ClipboardManager.OnPrimaryClipChangedListener { invalidate() }
             clipboard.addPrimaryClipChangedListener(listener)
-            subscriber.setDisposable(Disposables.fromAction { clipboard.removePrimaryClipChangedListener(listener) })
+            subscriber.setDisposable(Disposable.fromAction { clipboard.removePrimaryClipChangedListener(listener) })
         }
     }
 }

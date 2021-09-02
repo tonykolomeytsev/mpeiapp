@@ -2,8 +2,8 @@ package kekmech.ru.domain_schedule
 
 import android.content.SharedPreferences
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import io.reactivex.Completable
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Single
 import kekmech.ru.common_persistent_cache.orFromPersistentCache
 import kekmech.ru.common_shared_preferences.string
 import kekmech.ru.domain_schedule.dto.FavoriteSchedule

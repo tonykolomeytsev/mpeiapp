@@ -1,7 +1,7 @@
 package kekmech.ru.feature_search.main.elm
 
-import io.reactivex.Observable
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 import kekmech.ru.domain_map.MapRepository
 import kekmech.ru.domain_notes.NotesRepository
 import kekmech.ru.domain_schedule.ScheduleRepository

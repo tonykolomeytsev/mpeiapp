@@ -45,7 +45,7 @@ internal class FindScheduleFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewBinding.apply {
-            toolbar.init()
+            toolbar.setNavigationOnClickListener { close() }
             groupText.showKeyboard()
             groupText.afterTextChanged {
                 groupTextLayout.error = null

@@ -1,7 +1,7 @@
 package kekmech.ru.common_cache.core
 
-import io.reactivex.Maybe
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Maybe
+import io.reactivex.rxjava3.core.Observable
 
 interface LifetimeCacheUnit<T : Any> {
 

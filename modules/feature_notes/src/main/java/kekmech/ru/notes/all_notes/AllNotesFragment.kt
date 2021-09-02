@@ -48,7 +48,7 @@ internal class AllNotesFragment :
         super.onViewCreated(view, savedInstanceState)
         view.addSystemVerticalPadding()
         viewBinding.apply {
-            toolbar.init()
+            toolbar.setNavigationOnClickListener { close() }
             toolbar.setOnMenuItemClickListener {
                 analytics.sendClick("SearchNotes")
                 searchNotes()

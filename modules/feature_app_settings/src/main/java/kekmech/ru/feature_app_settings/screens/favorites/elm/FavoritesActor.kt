@@ -1,6 +1,6 @@
 package kekmech.ru.feature_app_settings.screens.favorites.elm
 
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 import kekmech.ru.domain_schedule.ScheduleRepository
 import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesEvent.News
 import vivid.money.elmslie.core.store.Actor

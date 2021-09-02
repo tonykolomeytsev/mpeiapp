@@ -1,6 +1,6 @@
 package kekmech.ru.feature_app_settings.screens.main.elm
 
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 import kekmech.ru.domain_app_settings.AppSettings
 import kekmech.ru.domain_app_settings.AppSettingsRepository
 import kekmech.ru.domain_schedule.ScheduleRepository
