@@ -14,5 +14,5 @@ internal class FindScheduleFeatureFactory(
         ),
         reducer = FindScheduleReducer(),
         actor = findScheduleActor
-    ).start()
+    )
 }

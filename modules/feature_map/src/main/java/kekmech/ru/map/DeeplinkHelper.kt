@@ -3,10 +3,10 @@ package kekmech.ru.map
 import android.os.Handler
 import android.os.Looper
 import kekmech.ru.map.elm.MapEffect
-import kekmech.ru.map.ext.toFilterTab
-import kekmech.ru.map.launcher.DeeplinkDelegate
 import kekmech.ru.map.elm.MapEvent
 import kekmech.ru.map.elm.MapState
+import kekmech.ru.map.ext.toFilterTab
+import kekmech.ru.map.launcher.DeeplinkDelegate
 import vivid.money.elmslie.core.store.Store
 
 private const val DEFAULT_NAVIGATION_DELAY = 1000L

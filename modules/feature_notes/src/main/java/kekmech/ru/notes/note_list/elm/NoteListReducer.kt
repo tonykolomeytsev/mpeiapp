@@ -4,8 +4,8 @@ import kekmech.ru.domain_notes.dto.Note
 import kekmech.ru.domain_schedule.dto.Classes
 import kekmech.ru.notes.note_list.elm.NoteListEvent.News
 import kekmech.ru.notes.note_list.elm.NoteListEvent.Wish
-import vivid.money.elmslie.core.store.StateReducer
 import vivid.money.elmslie.core.store.Result
+import vivid.money.elmslie.core.store.StateReducer
 import java.time.LocalDate
 import java.time.LocalDateTime
 

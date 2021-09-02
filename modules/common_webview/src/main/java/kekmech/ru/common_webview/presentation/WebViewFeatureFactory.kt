@@ -8,5 +8,5 @@ internal object WebViewFeatureFactory {
         initialState = WebViewState(url = url),
         reducer = WebViewReducer(),
         actor = WebViewActor()
-    ).start()
+    )
 }

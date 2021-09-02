@@ -13,5 +13,5 @@ internal class ImagePickerFeatureFactory(
         ),
         reducer = ImagePickerReducer(),
         actor = actor
-    ).start()
+    )
 }

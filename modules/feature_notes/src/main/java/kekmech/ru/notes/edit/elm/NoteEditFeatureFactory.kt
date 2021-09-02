@@ -13,5 +13,5 @@ internal class NoteEditFeatureFactory(
         initialState = NoteEditState(note),
         reducer = NoteEditReducer(),
         actor = actor
-    ).start()
+    )
 }

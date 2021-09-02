@@ -5,8 +5,8 @@ import kekmech.ru.coreui.items.AddActionItem
 import kekmech.ru.coreui.items.FavoriteScheduleItem
 import kekmech.ru.coreui.items.SpaceItem
 import kekmech.ru.feature_app_settings.R
-import kekmech.ru.feature_app_settings.screens.favorites.item.HelpBannerItem
 import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesState
+import kekmech.ru.feature_app_settings.screens.favorites.item.HelpBannerItem
 
 internal class FavoritesListConverter(context: Context) {
 

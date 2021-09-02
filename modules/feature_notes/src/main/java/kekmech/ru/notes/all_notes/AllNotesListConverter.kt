@@ -1,7 +1,10 @@
 package kekmech.ru.notes.all_notes
 
 import kekmech.ru.common_android.moscowLocalDate
-import kekmech.ru.coreui.items.*
+import kekmech.ru.coreui.items.EmptyStateItem
+import kekmech.ru.coreui.items.SectionHeaderItem
+import kekmech.ru.coreui.items.ShimmerItem
+import kekmech.ru.coreui.items.SpaceItem
 import kekmech.ru.domain_notes.dto.Note
 import kekmech.ru.notes.R
 import kekmech.ru.notes.all_notes.elm.AllNotesState

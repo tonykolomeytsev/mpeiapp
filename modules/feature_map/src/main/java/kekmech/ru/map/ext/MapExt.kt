@@ -24,7 +24,7 @@ internal fun GoogleMap.init(context: Context) {
     isBuildingsEnabled = true
     isTrafficEnabled = false
     isIndoorEnabled = true
-    mapType = GoogleMap.MAP_TYPE_NORMAL
+    mapType = GoogleMap.MAP_TYPE_HYBRID
     setPadding(0, 0, 0, context.resources.dpToPx(MAP_BOTTOM_PADDING))
     uiSettings.apply {
         isCompassEnabled = false

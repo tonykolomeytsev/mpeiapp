@@ -4,10 +4,10 @@ import kekmech.ru.coreui.items.PullItem
 import kekmech.ru.coreui.items.SectionHeaderItem
 import kekmech.ru.coreui.items.SpaceItem
 import kekmech.ru.domain_map.dto.MapMarker
-import kekmech.ru.map.ext.toMarkerType
-import kekmech.ru.map.items.TabBarItem
 import kekmech.ru.map.elm.FilterTab
 import kekmech.ru.map.elm.MapState
+import kekmech.ru.map.ext.toMarkerType
+import kekmech.ru.map.items.TabBarItem
 
 private const val TAB_BAR_ITEM_SPACING = 4
 

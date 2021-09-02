@@ -5,9 +5,12 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_analytics.ext.screenAnalytics
-import kekmech.ru.common_android.*
+import kekmech.ru.common_android.closeWithResult
+import kekmech.ru.common_android.closeWithSuccess
 import kekmech.ru.common_android.fragment.BottomSheetDialogFragment
+import kekmech.ru.common_android.getArgument
 import kekmech.ru.common_android.viewbinding.viewBinding
+import kekmech.ru.common_android.withArguments
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.coreui.items.*
 import kekmech.ru.feature_app_settings.R

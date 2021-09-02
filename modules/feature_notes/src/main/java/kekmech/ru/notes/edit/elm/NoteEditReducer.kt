@@ -2,8 +2,8 @@ package kekmech.ru.notes.edit.elm
 
 import kekmech.ru.notes.edit.elm.NoteEditEvent.News
 import kekmech.ru.notes.edit.elm.NoteEditEvent.Wish
-import vivid.money.elmslie.core.store.StateReducer
 import vivid.money.elmslie.core.store.Result
+import vivid.money.elmslie.core.store.StateReducer
 
 internal class NoteEditReducer :
     StateReducer<NoteEditEvent, NoteEditState, NoteEditEffect, NoteEditAction> {

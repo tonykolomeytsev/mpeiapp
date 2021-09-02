@@ -3,8 +3,8 @@ package kekmech.ru.feature_app_settings.screens.favorites.elm
 import kekmech.ru.domain_schedule.dto.FavoriteSchedule
 import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesEvent.News
 import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesEvent.Wish
-import vivid.money.elmslie.core.store.StateReducer
 import vivid.money.elmslie.core.store.Result
+import vivid.money.elmslie.core.store.StateReducer
 
 internal class FavoritesReducer : StateReducer<FavoritesEvent, FavoritesState, FavoritesEffect, FavoritesAction> {
 
