@@ -10,5 +10,5 @@ internal class AllNotesFeatureFactory(
         initialState = AllNotesState(),
         reducer = AllNotesReducer(),
         actor = actor
-    ).start()
+    )
 }

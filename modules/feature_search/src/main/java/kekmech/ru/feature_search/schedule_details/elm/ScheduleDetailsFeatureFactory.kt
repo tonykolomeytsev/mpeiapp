@@ -11,5 +11,5 @@ internal class ScheduleDetailsFeatureFactory(
         initialState = ScheduleDetailsState(searchResult),
         reducer = ScheduleDetailsReducer(),
         actor = actor
-    ).start()
+    )
 }

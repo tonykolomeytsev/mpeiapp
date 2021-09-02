@@ -14,5 +14,5 @@ internal class AppSettingsFeatureFactory(
         ),
         reducer = AppSettingsReducer(),
         actor = actor
-    ).start()
+    )
 }

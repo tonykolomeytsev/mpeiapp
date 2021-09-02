@@ -20,6 +20,6 @@ internal class SearchFeatureFactory(
             ),
             reducer = SearchReducer(),
             actor = actor
-        ).start()
+        )
     }
 }

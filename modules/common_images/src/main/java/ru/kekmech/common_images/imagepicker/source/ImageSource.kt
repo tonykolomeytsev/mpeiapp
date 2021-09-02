@@ -3,7 +3,7 @@ package ru.kekmech.common_images.imagepicker.source
 import android.content.ContentResolver
 import android.database.Cursor
 import android.provider.MediaStore
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Single
 
 internal class ImageSource(
     private val contentResolver: ContentResolver

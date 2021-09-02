@@ -11,5 +11,5 @@ class DashboardFeatureFactory(
         initialState = DashboardState(),
         reducer = reducer,
         actor = actor
-    ).start()
+    )
 }

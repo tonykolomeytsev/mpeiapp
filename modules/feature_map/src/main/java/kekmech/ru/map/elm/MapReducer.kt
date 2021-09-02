@@ -2,8 +2,8 @@ package kekmech.ru.map.elm
 
 import kekmech.ru.map.elm.MapEvent.News
 import kekmech.ru.map.elm.MapEvent.Wish
-import vivid.money.elmslie.core.store.StateReducer
 import vivid.money.elmslie.core.store.Result
+import vivid.money.elmslie.core.store.StateReducer
 import java.util.*
 
 internal class MapReducer : StateReducer<MapEvent, MapState, MapEffect, MapAction> {

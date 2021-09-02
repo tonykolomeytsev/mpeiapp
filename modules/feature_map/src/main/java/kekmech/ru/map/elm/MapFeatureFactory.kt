@@ -12,5 +12,5 @@ internal class MapFeatureFactory(
         initialState = MapState(appSettings = appSettings),
         reducer = MapReducer(),
         actor = actor
-    ).start()
+    )
 }

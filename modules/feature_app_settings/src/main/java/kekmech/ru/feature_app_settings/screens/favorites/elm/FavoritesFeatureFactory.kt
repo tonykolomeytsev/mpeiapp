@@ -10,5 +10,5 @@ internal class FavoritesFeatureFactory(
         initialState = FavoritesState(),
         reducer = FavoritesReducer(),
         actor = actor
-    ).start()
+    )
 }

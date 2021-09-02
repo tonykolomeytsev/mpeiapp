@@ -9,5 +9,5 @@ object MainScreenFeatureFactory {
         initialState = MainScreenState(),
         reducer = MainScreenReducer(),
         actor = NoOpActor()
-    ).start()
+    )
 }

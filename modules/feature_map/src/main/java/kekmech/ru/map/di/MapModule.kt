@@ -7,10 +7,10 @@ import kekmech.ru.domain_map.MapFeatureLauncher
 import kekmech.ru.domain_map.MapPersistentCache
 import kekmech.ru.domain_map.MapRepository
 import kekmech.ru.domain_map.MapService
-import kekmech.ru.map.launcher.DeeplinkDelegate
-import kekmech.ru.map.launcher.MapFeatureLauncherImpl
 import kekmech.ru.map.elm.MapActor
 import kekmech.ru.map.elm.MapFeatureFactory
+import kekmech.ru.map.launcher.DeeplinkDelegate
+import kekmech.ru.map.launcher.MapFeatureLauncherImpl
 import kekmech.ru.map.view.MarkersBitmapFactory
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.loadKoinModules

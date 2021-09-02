@@ -12,5 +12,5 @@ internal class ScheduleFeatureFactory(
         initialState = ScheduleState(appSettings = appSettings),
         reducer = ScheduleReducer(),
         actor = actor
-    ).start()
+    )
 }

@@ -12,5 +12,5 @@ internal class NoteListFeatureFactory(
         initialState = NoteListState(selectedClasses, selectedDate),
         reducer = NoteListReducer(),
         actor = actor
-    ).start()
+    )
 }

@@ -6,7 +6,6 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import kekmech.ru.common_android.R
 import kotlin.properties.ReadOnlyProperty
 
 fun <F : Fragment, VB : ViewBinding> Fragment.viewBinding(

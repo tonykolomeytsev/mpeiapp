@@ -159,7 +159,7 @@ internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState>(), Need
         map.clear()
         return markers
             .filter { it.type == selectedTab.toMarkerType() }
-            .map { map.addMarker(
+            .mapNotNull { map.addMarker(
                 MarkerOptions()
                     .title(it.name)
                     .position(LatLng(it.location.lat, it.location.lng))
