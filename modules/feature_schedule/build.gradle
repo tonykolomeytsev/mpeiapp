@@ -38,5 +38,8 @@ dependencies {
     implementation project(path: ':common_analytics')
     implementation project(path: ':common_app_database')
 
+    // TODO: resolve supertype of MapPersistentCache without depending on 'common_persistent_cache'
+    implementation project(path: ':common_persistent_cache')
+
     implementation project(path: ':coreui')
 }
