@@ -4,6 +4,7 @@ import android.webkit.CookieManager
 import kekmech.ru.bars.screen.main.elm.BarsEvent.News
 import kekmech.ru.bars.screen.main.elm.BarsEvent.Wish
 import kekmech.ru.bars.screen.main.util.hasAuthCookie
+import kekmech.ru.bars.screen.main.util.removeAuthCookie
 import kekmech.ru.domain_bars.dto.RemoteBarsConfig
 import vivid.money.elmslie.core.store.dsl_reducer.ScreenDslReducer
 
@@ -72,7 +73,11 @@ internal class BarsReducer : ScreenDslReducer<
                         isAfterErrorLoadingConfig = false,
                     )
                 }
-                commands { +BarsAction.GetRemoteBarsConfig }
+                commands {
+                    if (initialState.isAfterErrorLoadingConfig) {
+                        +BarsAction.GetRemoteBarsConfig
+                    }
+                }
                 effects { +loadPageEffect(state) { state.latestLoadedUrl ?: loginUrl } }
             }
             is Wish.Click.Settings -> effects { +BarsEffect.OpenSettings }
@@ -113,6 +118,7 @@ internal class BarsReducer : ScreenDslReducer<
                 )
             }
             else -> state {
+                CookieManager.getInstance().removeAuthCookie()
                 copy(
                     userInfo = null,
                     flowState = FlowState.NOT_LOGGED_IN,

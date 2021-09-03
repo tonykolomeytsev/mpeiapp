@@ -21,25 +21,28 @@ internal class BarsListConverter(private val context: Context) {
     private val disciplineShimmers = List(3) { ShimmerItem(ITEM_DISCIPLINE_SHIMMER) }
 
     fun map(state: BarsState): List<Any> =
-        when (state.flowState) {
-            FlowState.LOGGED_IN -> mutableListOf<Any>().apply {
-                addUserHeaderWithSettingsButton(state.userInfo?.name)
-                addUserGroupLabel(state.userInfo?.group)
-                addShowBarsInBrowserLabel()
+        when {
+            state.flowState == FlowState.LOGGED_IN ->
+                mutableListOf<Any>().apply {
+                    addUserHeaderWithSettingsButton(state.userInfo?.name)
+                    addUserGroupLabel(state.userInfo?.group)
+                    addShowBarsInBrowserLabel()
 
-                state.userInfo?.assessedDisciplines?.let { addAll(it) }
-                    ?: addAll(disciplineShimmers)
-            }
-            else -> mutableListOf<Any>().apply {
-                addUserHeaderWithSettingsButton(context.getString(R.string.bars_stub_student_name))
-                addShowBarsInBrowserLabel()
-
-                if (state.extractJs == null || state.config == null) {
-                    addAll(disciplineShimmers)
-                } else {
+                    state.userInfo?.assessedDisciplines?.let { addAll(it) }
+                        ?: addAll(disciplineShimmers)
+                }
+            state.flowState == FlowState.NOT_LOGGED_IN && state.config != null ->
+                mutableListOf<Any>().apply {
+                    addUserHeaderWithSettingsButton(context.getString(R.string.bars_stub_student_name))
+                    addShowBarsInBrowserLabel()
                     add(LoginToBarsItem)
                 }
-            }
+            else ->
+                mutableListOf<Any>().apply {
+                    addUserHeaderWithSettingsButton(context.getString(R.string.bars_stub_student_name))
+                    addShowBarsInBrowserLabel()
+                    addAll(disciplineShimmers)
+                }
         }
 
     private fun MutableList<Any>.addUserHeaderWithSettingsButton(userName: String? = null) {

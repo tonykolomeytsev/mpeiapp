@@ -9,7 +9,7 @@ internal data class BarsState(
     val extractJs: String? = null,
 
     // region data
-    val flowState: FlowState = FlowState.NOT_LOGGED_IN,
+    val flowState: FlowState = FlowState.UNDEFINED,
     val userInfo: UserBarsInfo? = null,
     val latestLoadedUrl: String? = null,
 
@@ -22,7 +22,8 @@ internal data class BarsState(
 
 internal enum class FlowState {
     NOT_LOGGED_IN,
-    LOGGED_IN
+    LOGGED_IN,
+    UNDEFINED
 }
 
 internal sealed class BarsEvent {
