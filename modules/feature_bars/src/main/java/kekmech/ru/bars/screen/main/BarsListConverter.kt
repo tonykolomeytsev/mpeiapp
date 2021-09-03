@@ -5,6 +5,7 @@ import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
 import kekmech.ru.bars.R
+import kekmech.ru.bars.items.LoginToBarsItem
 import kekmech.ru.bars.items.UserNameHeaderItem
 import kekmech.ru.bars.screen.main.BarsFragment.Companion.ITEM_DISCIPLINE_SHIMMER
 import kekmech.ru.bars.screen.main.BarsFragment.Companion.ITEM_TEXT_SHIMMER
@@ -17,6 +18,8 @@ import kekmech.ru.coreui.items.TextWithIconItem
 
 internal class BarsListConverter(private val context: Context) {
 
+    private val disciplineShimmers = List(3) { ShimmerItem(ITEM_DISCIPLINE_SHIMMER) }
+
     fun map(state: BarsState): List<Any> =
         when (state.flowState) {
             FlowState.LOGGED_IN -> mutableListOf<Any>().apply {
@@ -25,11 +28,17 @@ internal class BarsListConverter(private val context: Context) {
                 addShowBarsInBrowserLabel()
 
                 state.userInfo?.assessedDisciplines?.let { addAll(it) }
-                    ?: addAll(List(3) { ShimmerItem(ITEM_DISCIPLINE_SHIMMER) })
+                    ?: addAll(disciplineShimmers)
             }
             else -> mutableListOf<Any>().apply {
                 addUserHeaderWithSettingsButton(context.getString(R.string.bars_stub_student_name))
                 addShowBarsInBrowserLabel()
+
+                if (state.extractJs == null || state.config == null) {
+                    addAll(disciplineShimmers)
+                } else {
+                    add(LoginToBarsItem)
+                }
             }
         }
 

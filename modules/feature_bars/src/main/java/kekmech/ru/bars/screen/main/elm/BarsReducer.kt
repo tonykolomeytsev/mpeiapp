@@ -76,6 +76,10 @@ internal class BarsReducer : ScreenDslReducer<
                 effects { +loadPageEffect(state) { state.latestLoadedUrl ?: loginUrl } }
             }
             is Wish.Click.Settings -> effects { +BarsEffect.OpenSettings }
+            is Wish.Click.Login -> {
+                state { copy(isBrowserVisible = true) }
+                effects { +loadPageEffect(state) { loginUrl } }
+            }
 
             is Wish.Extract.StudentName -> commands { +BarsAction.PushStudentName(event.name) }
             is Wish.Extract.StudentGroup -> commands { +BarsAction.PushStudentGroup(event.group) }
@@ -128,11 +132,4 @@ internal class BarsReducer : ScreenDslReducer<
 
     private fun isMarksListUrl(url: String, config: RemoteBarsConfig?) =
         if (config != null) url.startsWith(config.marksListUrl, ignoreCase = true) else false
-
-    private fun isMainPageUrl(url: String, config: RemoteBarsConfig?) =
-        if (config != null) url.normalizeUrl() == config.loginUrl.normalizeUrl() else false
-
-    private fun String.normalizeUrl(): String = this
-        .lowercase()
-        .let { if (it.last() != '/') "$it/" else it }
 }

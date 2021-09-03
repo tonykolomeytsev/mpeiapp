@@ -197,10 +197,9 @@
 
     <string name="bars_stub_student_name">Анонимный Пользователь</string>
     <string name="bars_stub_student_group">Группа %s</string>
-    <string name="bars_stub_description">Раньше здесь был БАРС.\nМы уже работаем над тем, чтобы вернуть раздел обратно в приложение.</string>
-    <string name="bars_stub_btn_schedules">Расписания</string>
-    <string name="bars_stub_btn_notes">Заметки</string>
-    <string name="bars_stub_btn_settings">Настройки</string>
+    <string name="bars_stub_login_header">Вы не вошли в БАРС</string>
+    <string name="bars_stub_login_description">Вход в БАРС осуществляется через встроенный браузер, после этого просмотр всей информации происходит в приложении</string>
+    <string name="bars_stub_login_button">Войти в БАРС</string>
 
     <string name="app_settings_screen_title">Настройки</string>
     <string name="app_settings_header_schedule">Расписание</string>
