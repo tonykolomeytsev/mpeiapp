@@ -54,6 +54,9 @@ internal class BarsReducer : ScreenDslReducer<
                 }
             }
             is Wish.Action.PageFinished -> handlePageFinished(event)
+            is Wish.Action.Update -> effects {
+                +loadPageEffect(state) { state.latestLoadedUrl ?: loginUrl }
+            }
 
             is Wish.Click.ShowBrowser -> state { copy(isBrowserVisible = true) }
             is Wish.Click.HideBrowser -> state {
