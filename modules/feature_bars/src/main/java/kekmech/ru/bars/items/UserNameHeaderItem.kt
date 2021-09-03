@@ -3,9 +3,33 @@ package kekmech.ru.bars.items
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import kekmech.ru.bars.R
 import kekmech.ru.bars.databinding.ItemUserNameHeaderBinding
+import kekmech.ru.common_adapter.AdapterItem
+import kekmech.ru.common_adapter.BaseItemBinder
 
 internal data class UserNameHeaderItem(val name: String?)
+
+internal class UserNameHeaderAdapterItem(
+    onMenuClickListener: () -> Unit,
+) : AdapterItem<UserNameHeaderViewHolder, UserNameHeaderItem>(
+    isType = { it is UserNameHeaderItem },
+    layoutRes = R.layout.item_user_name_header,
+    viewHolderGenerator = ::UserNameHeaderViewHolder,
+    itemBinder = object : BaseItemBinder<UserNameHeaderViewHolder, UserNameHeaderItem>() {
+
+        override fun bind(
+            vh: UserNameHeaderViewHolder,
+            model: UserNameHeaderItem,
+            position: Int
+        ) {
+            vh.setShimmerEnabled(model.name == null)
+            vh.setName(model.name.orEmpty())
+            vh.setOnMenuClick { onMenuClickListener.invoke() }
+        }
+    },
+    areItemsTheSame = { _, _ -> true }
+)
 
 internal class UserNameHeaderViewHolder(
     itemView: View
