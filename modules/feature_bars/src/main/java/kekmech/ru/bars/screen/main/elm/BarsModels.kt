@@ -39,6 +39,7 @@ internal sealed class BarsEvent {
             object HideBrowser : Wish()
             object Settings : Wish()
             object SwipeToRefresh : Wish()
+            object Login : Wish()
         }
 
         object Extract {

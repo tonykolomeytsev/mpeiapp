@@ -15,6 +15,7 @@ import androidx.core.view.isVisible
 import kekmech.ru.bars.R
 import kekmech.ru.bars.databinding.FragmentBarsBinding
 import kekmech.ru.bars.items.AssessedDisciplineAdapterItem
+import kekmech.ru.bars.items.LoginToBarsAdapterItem
 import kekmech.ru.bars.items.UserNameHeaderAdapterItem
 import kekmech.ru.bars.screen.details.BarsDetailsFragment
 import kekmech.ru.bars.screen.main.elm.BarsEffect
@@ -178,14 +179,13 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>() {
             showDialog { BarsDetailsFragment.newInstance(it) }
         },
         SpaceAdapterItem(),
-        UserNameHeaderAdapterItem {
-            feature.accept(Wish.Click.Settings)
-        },
+        UserNameHeaderAdapterItem { feature.accept(Wish.Click.Settings) },
         TextWithIconAdapterItem {
             if (it.itemId == 1) {
                 feature.accept(Wish.Click.ShowBrowser)
             }
         },
+        LoginToBarsAdapterItem { feature.accept(Wish.Click.Login) },
         ShimmerAdapterItem(ITEM_TEXT_SHIMMER, R.layout.item_text_shimmer),
         ShimmerAdapterItem(ITEM_DISCIPLINE_SHIMMER, R.layout.item_discipline_shimmer),
     )
