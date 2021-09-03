@@ -55,7 +55,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_medium"
-                    android:text="Данные обновлены. Нажмите на баннер, чтобы вернуться к обычному отображению"
+                    android:text="@string/bars_stub_banner_return"
                     android:textColor="@color/colorWhite"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginVertical="12dp"/>
