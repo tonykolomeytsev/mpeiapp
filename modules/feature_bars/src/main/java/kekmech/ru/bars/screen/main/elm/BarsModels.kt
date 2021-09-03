@@ -31,6 +31,7 @@ internal sealed class BarsEvent {
 
         object Action {
             data class PageFinished(val url: String) : Wish()
+            object Update : Wish()
         }
 
         object Click {
