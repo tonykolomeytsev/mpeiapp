@@ -15,17 +15,14 @@ import androidx.core.view.isVisible
 import kekmech.ru.bars.R
 import kekmech.ru.bars.databinding.FragmentBarsBinding
 import kekmech.ru.bars.items.AssessedDisciplineAdapterItem
-import kekmech.ru.bars.items.UserNameHeaderItem
-import kekmech.ru.bars.items.UserNameHeaderViewHolder
+import kekmech.ru.bars.items.UserNameHeaderAdapterItem
 import kekmech.ru.bars.screen.details.BarsDetailsFragment
 import kekmech.ru.bars.screen.main.elm.BarsEffect
 import kekmech.ru.bars.screen.main.elm.BarsEvent
 import kekmech.ru.bars.screen.main.elm.BarsEvent.Wish
 import kekmech.ru.bars.screen.main.elm.BarsFeatureFactory
 import kekmech.ru.bars.screen.main.elm.BarsState
-import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseAdapter
-import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.common_android.addSystemTopPadding
 import kekmech.ru.common_android.doOnApplyWindowInsets
 import kekmech.ru.common_android.viewbinding.viewBinding
@@ -181,23 +178,9 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>() {
             showDialog { BarsDetailsFragment.newInstance(it) }
         },
         SpaceAdapterItem(),
-        AdapterItem(
-            isType = { it is UserNameHeaderItem },
-            layoutRes = R.layout.item_user_name_header,
-            viewHolderGenerator = ::UserNameHeaderViewHolder,
-            itemBinder = object : BaseItemBinder<UserNameHeaderViewHolder, UserNameHeaderItem>() {
-                override fun bind(
-                    vh: UserNameHeaderViewHolder,
-                    model: UserNameHeaderItem,
-                    position: Int
-                ) {
-                    vh.setShimmerEnabled(model.name == null)
-                    vh.setName(model.name.orEmpty())
-                    vh.setOnMenuClick { feature.accept(Wish.Click.Settings) }
-                }
-            },
-            areItemsTheSame = { _, _ -> true }
-        ),
+        UserNameHeaderAdapterItem {
+            feature.accept(Wish.Click.Settings)
+        },
         TextWithIconAdapterItem {
             if (it.itemId == 1) {
                 feature.accept(Wish.Click.ShowBrowser)
