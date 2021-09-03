@@ -10,7 +10,7 @@ import kekmech.ru.bars.databinding.FragmentBarsDetailsBinding
 import kekmech.ru.bars.items.ControlActivityAdapterItem
 import kekmech.ru.bars.items.FinalGradeAdapterItem
 import kekmech.ru.common_adapter.BaseAdapter
-import kekmech.ru.common_android.addSystemVerticalPadding
+import kekmech.ru.common_android.addSystemBottomPadding
 import kekmech.ru.common_android.fragment.BottomSheetDialogFragment
 import kekmech.ru.common_android.getArgument
 import kekmech.ru.common_android.getThemeColor
@@ -34,7 +34,7 @@ class BarsDetailsFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         with(viewBinding) {
-            recyclerView.addSystemVerticalPadding()
+            recyclerView.addSystemBottomPadding()
             recyclerView.adapter = adapter
         }
         adapter.update(getItems(getArgument(ARG_DISCIPLINE_INFO)))

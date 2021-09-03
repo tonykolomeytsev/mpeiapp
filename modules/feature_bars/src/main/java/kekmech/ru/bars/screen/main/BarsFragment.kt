@@ -11,9 +11,12 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
 import kekmech.ru.bars.R
 import kekmech.ru.bars.databinding.FragmentBarsBinding
-import kekmech.ru.bars.items.*
+import kekmech.ru.bars.items.AssessedDisciplineAdapterItem
+import kekmech.ru.bars.items.UserNameHeaderItem
+import kekmech.ru.bars.items.UserNameHeaderViewHolder
 import kekmech.ru.bars.screen.details.BarsDetailsFragment
 import kekmech.ru.bars.screen.main.elm.BarsEffect
 import kekmech.ru.bars.screen.main.elm.BarsEvent
@@ -24,21 +27,22 @@ import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.common_android.addSystemTopPadding
+import kekmech.ru.common_android.doOnApplyWindowInsets
 import kekmech.ru.common_android.viewbinding.viewBinding
+import kekmech.ru.common_android.views.setProgressViewOffset
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.BaseFragment
-import kekmech.ru.common_navigation.NeedToUpdate
 import kekmech.ru.common_navigation.showDialog
+import kekmech.ru.coreui.items.ShimmerAdapterItem
 import kekmech.ru.coreui.items.SpaceAdapterItem
 import kekmech.ru.coreui.items.TextWithIconAdapterItem
 import kekmech.ru.domain_app_settings.AppSettingsFeatureLauncher
 import kekmech.ru.domain_notes.NotesFeatureLauncher
 import org.koin.android.ext.android.inject
 
-
 private const val JS_INTERFACE_NAME = "kti"
 
-internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), NeedToUpdate {
+internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>() {
 
     override val initEvent: BarsEvent = Wish.Init
     override val layoutId: Int = R.layout.fragment_bars
@@ -53,10 +57,17 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupWebView()
-        with(viewBinding){
+        with(viewBinding) {
             recyclerView.adapter = adapter
             recyclerView.addSystemTopPadding()
             webViewContainer.addSystemTopPadding()
+            returnBanner.setOnClickListener { feature.accept(Wish.Click.HideBrowser) }
+            swipeRefresh.setOnRefreshListener {
+                feature.accept(Wish.Click.SwipeToRefresh)
+            }
+            swipeRefresh.doOnApplyWindowInsets { _, windowInsets, _ ->
+                swipeRefresh.setProgressViewOffset(windowInsets.systemWindowInsetTop)
+            }
         }
     }
 
@@ -77,19 +88,17 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), 
             webViewToolbar.setNavigationOnClickListener {
                 feature.accept(Wish.Click.HideBrowser)
             }
-            swipeRefresh.setOnRefreshListener {
-                feature.accept(Wish.Click.SwipeToRefresh)
-            }
         }
     }
 
     override fun render(state: BarsState) {
         with(viewBinding) {
-            webViewContainer.isInvisible = !state.isBrowserShown
-            swipeRefresh.isInvisible = state.isBrowserShown
+            webViewContainer.isInvisible = !state.isBrowserVisible
+            swipeRefresh.isInvisible = state.isBrowserVisible
             swipeRefresh.post {
                 swipeRefresh.isRefreshing = state.isLoading
             }
+            returnBanner.isVisible = state.isReturnBannerVisible
         }
         adapter.update(BarsListConverter(requireContext()).map(state))
     }
@@ -99,10 +108,6 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), 
         is BarsEffect.InvokeJs -> viewBinding.webView.evaluateJavascript(effect.js, null)
         is BarsEffect.OpenSettings -> settingsFeatureLauncher.launch()
         is BarsEffect.OpenAllNotes -> notesFeatureLauncher.launchAllNotes()
-    }
-
-    override fun onUpdate() {
-        feature.accept(Wish.Action.Update)
     }
 
     inner class BarsWebViewClient : WebViewClient() {
@@ -170,17 +175,6 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), 
         },
         SpaceAdapterItem(),
         AdapterItem(
-            isType = { it is MenusItem },
-            layoutRes = R.layout.item_menus,
-            viewHolderGenerator = ::MenusViewHolder,
-            itemBinder = object : BaseItemBinder<MenusViewHolder, MenusItem>() {
-                override fun bind(vh: MenusViewHolder, model: MenusItem, position: Int) {
-                    vh.setOnNotesClickListener { feature.accept(Wish.Click.Notes) }
-                    vh.setOnSettingsClickListener { feature.accept(Wish.Click.Settings) }
-                }
-            }
-        ),
-        AdapterItem(
             isType = { it is UserNameHeaderItem },
             layoutRes = R.layout.item_user_name_header,
             viewHolderGenerator = ::UserNameHeaderViewHolder,
@@ -190,15 +184,24 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), 
                     model: UserNameHeaderItem,
                     position: Int
                 ) {
-                    vh.setName(model.name)
-                    vh.setOnMenuClick { feature.accept(Wish.Click.Logout) }
+                    vh.setShimmerEnabled(model.name == null)
+                    vh.setName(model.name.orEmpty())
+                    vh.setOnMenuClick { feature.accept(Wish.Click.Settings) }
                 }
-            }
+            },
+            areItemsTheSame = { _, _ -> true }
         ),
         TextWithIconAdapterItem {
             if (it.itemId == 1) {
                 feature.accept(Wish.Click.ShowBrowser)
             }
-        }
+        },
+        ShimmerAdapterItem(ITEM_TEXT_SHIMMER, R.layout.item_text_shimmer),
+        ShimmerAdapterItem(ITEM_DISCIPLINE_SHIMMER, R.layout.item_discipline_shimmer),
     )
+
+    companion object {
+        const val ITEM_TEXT_SHIMMER = 0
+        const val ITEM_DISCIPLINE_SHIMMER = 1
+    }
 }

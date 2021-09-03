@@ -6,7 +6,7 @@
         android:layout_height="match_parent"
         android:background="@drawable/background_bottom_sheet"
         android:clipToPadding="false"
-        android:fitsSystemWindows="true"
+        android:fitsSystemWindows="false"
         android:minHeight="500dp"
         android:orientation="vertical"
         android:overScrollMode="never"

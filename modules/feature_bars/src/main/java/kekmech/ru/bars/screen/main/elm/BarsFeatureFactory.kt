@@ -10,5 +10,5 @@ internal class BarsFeatureFactory(
         initialState = BarsState(),
         reducer = BarsReducer(),
         actor = actor
-    ).start()
+    )
 }
