@@ -40,15 +40,23 @@ internal class SelectLanguageFragment : BottomSheetDialogFragment() {
     }
 
     private fun getItems() = mutableListOf<Any>().apply {
+        add(PullItem)
         add(SpaceItem.VERTICAL_8)
         add(SectionHeaderItem(titleRes = R.string.change_language_screen_title))
         add(SpaceItem.VERTICAL_12)
-        addAll(LanguageEntry.values().asList().map { LanguageItem(it, it.languageCode == selectLanguage) })
+        addAll(
+            LanguageEntry
+                .values()
+                .asList()
+                .map { LanguageItem(it, it.languageCode == selectLanguage) }
+        )
         add(SpaceItem.VERTICAL_16)
-        add(TextItem(
-            textResId = R.string.change_language_disclaimer,
-            styleResId = R.style.H6_Gray70
-        ))
+        add(
+            TextItem(
+                textResId = R.string.change_language_disclaimer,
+                styleResId = R.style.H6_Gray70
+            )
+        )
     }
 
     private fun createAdapter() = BaseAdapter(
@@ -64,7 +72,8 @@ internal class SelectLanguageFragment : BottomSheetDialogFragment() {
                     putExtra("app_lang", it.languageCode)
                 }
             }
-        }
+        },
+        PullAdapterItem()
     )
 
     companion object {

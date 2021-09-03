@@ -8,9 +8,11 @@ import androidx.annotation.CallSuper
 import androidx.annotation.LayoutRes
 import kekmech.ru.common_android.hideKeyboard
 import vivid.money.elmslie.android.base.ElmFragment
+import vivid.money.elmslie.android.screen.ElmDelegate
 
 abstract class BaseFragment<Event : Any, Effect : Any, State : Any> :
     ElmFragment<Event, Effect, State>(),
+    ElmDelegate<Event, Effect, State>,
     DisposableDelegate by DisposableDelegateImpl() {
 
     @LayoutRes
