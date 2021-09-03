@@ -4,21 +4,23 @@ import kekmech.ru.domain_bars.dto.RemoteBarsConfig
 import kekmech.ru.domain_bars.dto.UserBarsInfo
 
 internal data class BarsState(
-    val flowState: FlowState = FlowState.UNDEFINED,
-    val isBrowserShownForce: Boolean = false,
+    //region config
     val config: RemoteBarsConfig? = null,
-    val isAfterErrorLoadingConfig: Boolean = false,
-    val userBars: UserBarsInfo? = null,
-    val isAfterErrorLoadingUserBars: Boolean = false,
-    val isLoading: Boolean = true
-) {
+    val extractJs: String? = null,
 
-    val isBrowserShown: Boolean = isBrowserShownForce || flowState == FlowState.LOGIN
-}
+    // region data
+    val flowState: FlowState = FlowState.NOT_LOGGED_IN,
+    val userInfo: UserBarsInfo? = null,
+    val latestLoadedUrl: String? = null,
+
+    // region ui
+    val isAfterErrorLoadingConfig: Boolean = false,
+    val isLoading: Boolean = true,
+    val isBrowserVisible: Boolean = false,
+    val isReturnBannerVisible: Boolean = false,
+)
 
 internal enum class FlowState {
-    UNDEFINED,
-    LOGIN,
     NOT_LOGGED_IN,
     LOGGED_IN
 }
@@ -28,18 +30,13 @@ internal sealed class BarsEvent {
         object Init : Wish()
 
         object Action {
-            object Update : Wish()
             data class PageFinished(val url: String) : Wish()
         }
 
         object Click {
             object ShowBrowser : Wish()
             object HideBrowser : Wish()
-
-            object Notes : Wish()
             object Settings : Wish()
-
-            object Logout : Wish()
             object SwipeToRefresh : Wish()
         }
 
@@ -52,15 +49,19 @@ internal sealed class BarsEvent {
                 val semestersJson: String,
                 val selectedSemesterName: String
             ) : Wish()
+
             data class Marks(val marksJson: String) : Wish()
         }
     }
 
     sealed class News : BarsEvent() {
-        data class GetRemoteBarsConfigSuccess(val remoteBarsConfig: RemoteBarsConfig) : News()
+        data class GetRemoteBarsConfigSuccess(
+            val remoteBarsConfig: RemoteBarsConfig,
+            val extractJs: String,
+        ) : News()
+
         data class GetRemoteBarsConfigFailure(val throwable: Throwable) : News()
         data class ObserveBarsSuccess(val userBars: UserBarsInfo) : News()
-        data class ObserveBarsFailure(val throwable: Throwable) : News()
     }
 }
 

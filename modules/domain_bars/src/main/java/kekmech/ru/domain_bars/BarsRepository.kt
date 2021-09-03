@@ -1,10 +1,10 @@
 package kekmech.ru.domain_bars
 
 import com.google.gson.Gson
-import io.reactivex.Completable
-import io.reactivex.Observable
-import io.reactivex.Single
-import io.reactivex.subjects.BehaviorSubject
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.subjects.BehaviorSubject
 import kekmech.ru.domain_bars.dto.RawMarksResponse
 import kekmech.ru.domain_bars.dto.RemoteBarsConfig
 import kekmech.ru.domain_bars.dto.UserBarsInfo
@@ -12,11 +12,16 @@ import java.util.concurrent.TimeUnit
 
 class BarsRepository(
     private val barsService: BarsService,
-    private val gson: Gson
+    private val gson: Gson,
 ) {
     private val userBarsCache = BehaviorSubject.createDefault(UserBarsInfo())
 
-    fun getRemoteBarsConfig(): Single<RemoteBarsConfig> = barsService.getRemoteBarsConfig()
+    fun getRemoteBarsConfig(): Single<RemoteBarsConfig> = barsService
+        .getRemoteBarsConfig()
+
+    fun getExtractJs(): Single<String> = barsService
+        .getExtractJs()
+        .map { it.charStream().buffered().readText() }
 
     fun observeUserBars(): Observable<UserBarsInfo> = userBarsCache
         .distinctUntilChanged()

@@ -4,111 +4,121 @@ import android.webkit.CookieManager
 import kekmech.ru.bars.screen.main.elm.BarsEvent.News
 import kekmech.ru.bars.screen.main.elm.BarsEvent.Wish
 import kekmech.ru.bars.screen.main.util.hasAuthCookie
-import kekmech.ru.domain_bars.dto.JsKit
 import kekmech.ru.domain_bars.dto.RemoteBarsConfig
-import vivid.money.elmslie.core.store.Result
-import vivid.money.elmslie.core.store.StateReducer
+import vivid.money.elmslie.core.store.dsl_reducer.ScreenDslReducer
 
-internal class BarsReducer : StateReducer<BarsEvent, BarsState, BarsEffect, BarsAction> {
+internal class BarsReducer : ScreenDslReducer<
+        BarsEvent, Wish, News,
+        BarsState,
+        BarsEffect,
+        BarsAction>(Wish::class, News::class) {
 
-    override fun reduce(
-        event: BarsEvent,
-        state: BarsState
-    ): Result<BarsState, BarsEffect, BarsAction> = when (event) {
-        is News -> reduceNews(event, state)
-        is Wish -> reduceWish(event, state)
-    }
+    override fun Result.internal(event: News): Any =
+        when (event) {
+            is News.GetRemoteBarsConfigSuccess -> {
+                state {
+                    copy(
+                        config = event.remoteBarsConfig,
+                        extractJs = event.extractJs,
+                    )
+                }
+                effects { +BarsEffect.LoadPage(event.remoteBarsConfig.loginUrl) }
+            }
+            is News.GetRemoteBarsConfigFailure -> state { copy(isAfterErrorLoadingConfig = true) }
+            is News.ObserveBarsSuccess -> {
+                state {
+                    copy(
+                        userInfo = event.userBars,
+                        isLoading = false,
+                        isReturnBannerVisible = isBrowserVisible
+                    )
+                }
+            }
+        }
 
-    private fun reduceNews(
-        event: News,
-        state: BarsState
-    ): Result<BarsState, BarsEffect, BarsAction> = when (event) {
-        is News.GetRemoteBarsConfigSuccess -> Result(
-            state = state.copy(config = event.remoteBarsConfig),
-            effect = BarsEffect.LoadPage(event.remoteBarsConfig.loginUrl)
-        )
-        is News.GetRemoteBarsConfigFailure -> Result(state.copy(isAfterErrorLoadingConfig = true))
-        is News.ObserveBarsSuccess -> Result(
-            state.copy(
-                userBars = event.userBars,
-                isLoading = false
-            )
-        )
-        is News.ObserveBarsFailure -> Result(state.copy(isAfterErrorLoadingUserBars = true))
-    }
+    override fun Result.ui(event: Wish): Any =
+        when (event) {
+            is Wish.Init -> {
+                state {
+                    val actualFlowState =
+                        if (CookieManager.getInstance().hasAuthCookie()) {
+                            FlowState.LOGGED_IN
+                        } else {
+                            FlowState.NOT_LOGGED_IN
+                        }
+                    copy(flowState = actualFlowState)
+                }
+                commands {
+                    +BarsAction.GetRemoteBarsConfig
+                    +BarsAction.ObserveBars
+                }
+            }
+            is Wish.Action.PageFinished -> handlePageFinished(event)
 
-    private fun reduceWish(
-        event: Wish,
-        state: BarsState
-    ): Result<BarsState, BarsEffect, BarsAction> = when (event) {
-        is Wish.Init -> Result(
-            state = state,
-            commands = listOf(
-                BarsAction.GetRemoteBarsConfig,
-                BarsAction.ObserveBars
-            )
-        )
-        is Wish.Action.Update -> Result(state, effect = loadPageEffect(state) { loginUrl })
-        is Wish.Action.PageFinished -> handlePageFinished(event, state)
+            is Wish.Click.ShowBrowser -> state { copy(isBrowserVisible = true) }
+            is Wish.Click.HideBrowser -> state {
+                copy(
+                    isBrowserVisible = false,
+                    isReturnBannerVisible = false,
+                )
+            }
+            is Wish.Click.SwipeToRefresh -> {
+                state {
+                    copy(
+                        isLoading = true,
+                        isAfterErrorLoadingConfig = false,
+                    )
+                }
+                commands { +BarsAction.GetRemoteBarsConfig }
+                effects { +loadPageEffect(state) { state.latestLoadedUrl ?: loginUrl } }
+            }
+            is Wish.Click.Settings -> effects { +BarsEffect.OpenSettings }
 
-        is Wish.Click.ShowBrowser -> Result(state.copy(isBrowserShownForce = true))
-        is Wish.Click.HideBrowser -> Result(state.copy(isBrowserShownForce = false))
-        is Wish.Click.Notes -> Result(state, effect = BarsEffect.OpenAllNotes)
-        is Wish.Click.Settings -> Result(state, effect = BarsEffect.OpenSettings)
-        is Wish.Click.Logout -> Result(state, effect = loadPageEffect(state) { logoutUrl })
-        is Wish.Click.SwipeToRefresh -> Result(
-            state = state.copy(isLoading = true),
-            effect = loadPageEffect(state) { marksListUrl }
-        )
+            is Wish.Extract.StudentName -> commands { +BarsAction.PushStudentName(event.name) }
+            is Wish.Extract.StudentGroup -> commands { +BarsAction.PushStudentGroup(event.group) }
+            is Wish.Extract.MetaData -> Unit // TODO in future versions
+            is Wish.Extract.Rating -> Unit // TODO in future versions
+            is Wish.Extract.Semesters -> Unit // TODO in future versions
+            is Wish.Extract.Marks -> commands { +BarsAction.PushMarks(event.marksJson) }
+        }
 
-        is Wish.Extract.StudentName -> Result(
-            state = state,
-            command = BarsAction.PushStudentName(event.name)
-        )
-        is Wish.Extract.StudentGroup -> Result(
-            state = state,
-            command = BarsAction.PushStudentGroup(event.group)
-        )
-        is Wish.Extract.MetaData -> Result(state) // TODO in future versions
-        is Wish.Extract.Rating -> Result(state) // TODO in future versions
-        is Wish.Extract.Semesters -> Result(state) // TODO in future versions
-        is Wish.Extract.Marks -> Result(state, command = BarsAction.PushMarks(event.marksJson))
-    }
-
-    private fun handlePageFinished(
-        event: Wish.Action.PageFinished,
-        state: BarsState
-    ): Result<BarsState, BarsEffect, BarsAction> {
-        state.config ?: return Result(state)
-        val oldFlowState = state.flowState
+    private fun Result.handlePageFinished(
+        event: Wish.Action.PageFinished
+    ): Any {
+        state.config ?: return Unit
         val hasAuthCookie = CookieManager.getInstance().hasAuthCookie()
         return when {
-            isMarksListUrl(event.url, state.config) && hasAuthCookie -> Result(
-                state = state.copy(
+            isMarksListUrl(event.url, state.config) && hasAuthCookie -> {
+                state {
+                    copy(
+                        flowState = FlowState.LOGGED_IN,
+                        isLoading = false,
+                        latestLoadedUrl = event.url,
+                    )
+                }
+                effects { +invokeExtractJsEffect(state) }
+            }
+            hasAuthCookie -> state {
+                copy(
                     flowState = FlowState.LOGGED_IN,
-                    config = state.config.copy(marksListUrl = event.url),
                     isLoading = false,
-                    isBrowserShownForce = oldFlowState == FlowState.NOT_LOGGED_IN
-                ),
-                effect = invokeJsEffect(state) { extractDataDecoded }
-            )
-            isMainPageUrl(event.url, state.config) && !hasAuthCookie -> Result(
-                state.copy(
+                    isReturnBannerVisible = false,
+                )
+            }
+            else -> state {
+                copy(
+                    userInfo = null,
                     flowState = FlowState.NOT_LOGGED_IN,
-                    isLoading = false
+                    isLoading = false,
+                    isReturnBannerVisible = false,
+                    latestLoadedUrl = null,
                 )
-            )
-            else -> Result(
-                state.copy(
-                    flowState = FlowState.UNDEFINED,
-                    isLoading = false
-                )
-            )
+            }
         }
     }
 
-    private fun invokeJsEffect(state: BarsState, jsSelector: JsKit.() -> String) =
-        state.config?.js?.jsSelector()?.let(BarsEffect::InvokeJs)
+    private fun invokeExtractJsEffect(state: BarsState) =
+        state.extractJs?.let(BarsEffect::InvokeJs)
 
     private fun loadPageEffect(state: BarsState, urlSelector: RemoteBarsConfig.() -> String) =
         state.config?.urlSelector()?.let(BarsEffect::LoadPage)
@@ -120,6 +130,6 @@ internal class BarsReducer : StateReducer<BarsEvent, BarsState, BarsEffect, Bars
         if (config != null) url.normalizeUrl() == config.loginUrl.normalizeUrl() else false
 
     private fun String.normalizeUrl(): String = this
-        .toLowerCase()
+        .lowercase()
         .let { if (it.last() != '/') "$it/" else it }
 }

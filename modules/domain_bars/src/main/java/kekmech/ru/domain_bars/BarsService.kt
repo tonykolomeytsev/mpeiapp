@@ -1,14 +1,18 @@
 package kekmech.ru.domain_bars
 
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Single
 import kekmech.ru.common_annotations.BackendServiceUrl
 import kekmech.ru.common_annotations.EndpointUrl
 import kekmech.ru.domain_bars.dto.RemoteBarsConfig
-import retrofit2.http.POST
+import okhttp3.ResponseBody
+import retrofit2.http.GET
 
 @EndpointUrl(BackendServiceUrl.BARS)
 interface BarsService {
 
-    @POST("v1/getRemoteBarsConfig")
+    @GET("config.json")
     fun getRemoteBarsConfig(): Single<RemoteBarsConfig>
+
+    @GET("extract.js")
+    fun getExtractJs(): Single<ResponseBody>
 }

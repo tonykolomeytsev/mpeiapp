@@ -13,9 +13,9 @@
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:clipChildren="false"
                 android:clipToPadding="false"
-                android:clipChildren="false"/>
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
@@ -38,5 +38,28 @@
                 android:layout_marginTop="?actionBarSize" />
 
     </FrameLayout>
+
+    <androidx.cardview.widget.CardView
+            android:id="@+id/returnBanner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginBottom="12dp"
+            app:cardBackgroundColor="@color/colorGreen"
+            android:foreground="?selectableItemBackground"
+            app:cardCornerRadius="8dp">
+
+            <TextView
+                    android:id="@+id/bannerDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="Данные обновлены. Нажмите на баннер, чтобы вернуться к обычному отображению"
+                    android:textColor="@color/colorWhite"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginVertical="12dp"/>
+
+    </androidx.cardview.widget.CardView>
 
 </FrameLayout>
