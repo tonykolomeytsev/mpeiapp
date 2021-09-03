@@ -200,6 +200,7 @@
     <string name="bars_stub_login_header">Вы не вошли в БАРС</string>
     <string name="bars_stub_login_description">Вход в БАРС осуществляется через встроенный браузер, после этого просмотр всей информации происходит в приложении</string>
     <string name="bars_stub_login_button">Войти в БАРС</string>
+    <string name="bars_stub_banner_return">Данные обновлены. Нажмите на баннер, чтобы вернуться к обычному отображению</string>
 
     <string name="app_settings_screen_title">Настройки</string>
     <string name="app_settings_header_schedule">Расписание</string>
