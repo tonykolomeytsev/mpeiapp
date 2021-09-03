@@ -62,11 +62,13 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>() {
             recyclerView.addSystemTopPadding()
             webViewContainer.addSystemTopPadding()
             returnBanner.setOnClickListener { feature.accept(Wish.Click.HideBrowser) }
-            swipeRefresh.setOnRefreshListener {
-                feature.accept(Wish.Click.SwipeToRefresh)
-            }
-            swipeRefresh.doOnApplyWindowInsets { _, windowInsets, _ ->
-                swipeRefresh.setProgressViewOffset(windowInsets.systemWindowInsetTop)
+            swipeRefresh.apply {
+                setOnRefreshListener {
+                    feature.accept(Wish.Click.SwipeToRefresh)
+                }
+                doOnApplyWindowInsets { _, windowInsets, _ ->
+                    setProgressViewOffset(windowInsets.systemWindowInsetTop)
+                }
             }
         }
     }
@@ -108,6 +110,11 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>() {
         is BarsEffect.InvokeJs -> viewBinding.webView.evaluateJavascript(effect.js, null)
         is BarsEffect.OpenSettings -> settingsFeatureLauncher.launch()
         is BarsEffect.OpenAllNotes -> notesFeatureLauncher.launchAllNotes()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        feature.accept(Wish.Action.Update)
     }
 
     inner class BarsWebViewClient : WebViewClient() {
