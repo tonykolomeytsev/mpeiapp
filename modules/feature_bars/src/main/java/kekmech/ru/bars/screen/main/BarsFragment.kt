@@ -126,8 +126,8 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>() {
             super.onPageStarted(view, url, favicon)
         }
 
-        override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
-            return true
+        override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
+            return "https://bars.mpei.ru" !in url
         }
 
         @TargetApi(Build.VERSION_CODES.N)
@@ -135,8 +135,7 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>() {
             view: WebView,
             request: WebResourceRequest
         ): Boolean {
-            view.loadUrl(request.url.toString())
-            return true
+            return "https://bars.mpei.ru" !in request.url.toString()
         }
     }
 
