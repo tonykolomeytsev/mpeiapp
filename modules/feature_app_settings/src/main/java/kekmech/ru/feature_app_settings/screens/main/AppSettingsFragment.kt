@@ -26,9 +26,11 @@ import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsEvent
 import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsEvent.Wish
 import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsFeatureFactory
 import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsState
+import kekmech.ru.feature_app_settings.screens.map_type.SelectMapTypeFragment
 import org.koin.android.ext.android.inject
 
 private const val RESULT_SELECTED_LANG = 846583
+private const val RESULT_SELECTED_MAP_TYPE = 946583
 private const val ACTIVITY_RECREATION_DELAY = 200L
 
 internal class AppSettingsFragment :
@@ -68,6 +70,10 @@ internal class AppSettingsFragment :
         is AppSettingsEffect.OpenLanguageSelectionDialog -> showDialog {
             SelectLanguageFragment.newInstance(effect.selectedLanguage)
                 .withResultFor(this, RESULT_SELECTED_LANG)
+        }
+        is AppSettingsEffect.OpenMapTypeDialog -> showDialog {
+            SelectMapTypeFragment.newInstance(effect.mapType)
+                .withResultFor(this, RESULT_SELECTED_MAP_TYPE)
         }
     }
 
@@ -121,6 +127,10 @@ internal class AppSettingsFragment :
             analytics.sendClick("SelectLanguage")
             feature.accept(Wish.Click.OnLanguage)
         }
+        ITEM_MAP_TYPE -> {
+            analytics.sendClick("SelectMapType")
+            feature.accept(Wish.Click.MapType)
+        }
         else -> { /* no-op */ }
     }
 
@@ -147,6 +157,10 @@ internal class AppSettingsFragment :
             val selectedLanguage = data.getStringExtra("app_lang") ?: return
             feature.accept(Wish.Action.LanguageChanged(selectedLanguage))
         }
+        if (requestCode == RESULT_SELECTED_MAP_TYPE && data != null) {
+            val selectedMapType = data.getStringExtra("map_type") ?: return
+            feature.accept(Wish.Action.MapTypeChanged(selectedMapType))
+        }
     }
 
     companion object {
@@ -161,5 +175,6 @@ internal class AppSettingsFragment :
         const val ITEM_GITHUB = 2
         const val ITEM_FAVORITES = 3
         const val ITEM_LANGUAGE = 4
+        const val ITEM_MAP_TYPE = 5
     }
 }

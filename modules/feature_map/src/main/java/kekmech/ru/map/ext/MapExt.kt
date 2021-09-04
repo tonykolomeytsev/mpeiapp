@@ -18,13 +18,16 @@ private const val CAMERA_ZOOM = 17f
 
 @Suppress("MagicNumber")
 @SuppressLint("MissingPermission")
-internal fun GoogleMap.init(context: Context) {
+internal fun GoogleMap.init(context: Context, mapAppearanceType: String) {
     setMapStyle(MapStyleOptions.loadRawResourceStyle(context, R.raw.google_map_style))
     isMyLocationEnabled = false
     isBuildingsEnabled = true
     isTrafficEnabled = false
     isIndoorEnabled = true
-    mapType = GoogleMap.MAP_TYPE_HYBRID
+    mapType = when (mapAppearanceType) {
+        "scheme" -> GoogleMap.MAP_TYPE_NORMAL
+        else -> GoogleMap.MAP_TYPE_HYBRID
+    }
     setPadding(0, 0, 0, context.resources.dpToPx(MAP_BOTTOM_PADDING))
     uiSettings.apply {
         isCompassEnabled = false

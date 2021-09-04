@@ -22,10 +22,12 @@ internal sealed class AppSettingsEvent {
             data class ChangeBackendEnvironment(val isDebug: Boolean) : Wish()
             object ClearSelectedGroup : Wish()
             data class LanguageChanged(val selectedLanguage: String) : Wish()
+            data class MapTypeChanged(val selectedMapType: String) : Wish()
         }
 
         object Click {
             object OnLanguage : Wish()
+            object MapType : Wish()
         }
     }
 
@@ -44,10 +46,12 @@ internal sealed class AppSettingsAction {
     data class SetAutoHideBottomSheet(val isEnabled: Boolean) : AppSettingsAction()
     data class ChangeBackendEnvironment(val isDebug: Boolean) : AppSettingsAction()
     data class ChangeLanguage(val selectedLanguage: String) : AppSettingsAction()
+    data class ChangeMapType(val selectedMapType: String) : AppSettingsAction()
     object ClearSelectedGroup : AppSettingsAction()
 }
 
 internal sealed class AppSettingsEffect {
     object RecreateActivity : AppSettingsEffect()
     data class OpenLanguageSelectionDialog(val selectedLanguage: String) : AppSettingsEffect()
+    data class OpenMapTypeDialog(val mapType: String) : AppSettingsEffect()
 }

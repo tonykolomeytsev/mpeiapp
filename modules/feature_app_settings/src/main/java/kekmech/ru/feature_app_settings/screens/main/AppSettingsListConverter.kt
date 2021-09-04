@@ -57,6 +57,7 @@ internal class AppSettingsListConverter {
                 isChecked = appSettings.autoHideBottomSheet
             ))
             add(SectionTextItem(resId = R.string.app_settings_auto_hide_bottom_sheet_description))
+            add(createMapTypeItem(state, context))
 
             add(SpaceItem.VERTICAL_24)
             add(SectionHeaderItem(titleRes = R.string.app_settings_header_support))
@@ -111,6 +112,18 @@ internal class AppSettingsListConverter {
                 else -> ""
             },
             itemId = AppSettingsFragment.ITEM_LANGUAGE
+        )
+    }
+
+    private fun createMapTypeItem(state: AppSettingsState, context: Context): Any {
+        return RightLabeledTextItem(
+            mainTextResId = R.string.app_settings_map_appearance_type,
+            label = when (state.appSettings?.mapAppearanceType) {
+                "hybrid" -> context.getString(R.string.change_map_type_hybrid).uppercase()
+                "scheme" -> context.getString(R.string.change_map_type_scheme).uppercase()
+                else -> ""
+            },
+            itemId = AppSettingsFragment.ITEM_MAP_TYPE
         )
     }
 }
