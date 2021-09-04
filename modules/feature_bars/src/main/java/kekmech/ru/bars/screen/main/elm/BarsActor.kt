@@ -19,7 +19,7 @@ internal class BarsActor(
             barsRepository.getExtractJs(),
             ::Pair
         )
-            .delay(16L, TimeUnit.MILLISECONDS)
+            .delay(CONFIG_DELAY, TimeUnit.MILLISECONDS)
             .mapSuccessEvent { (config, js) -> News.GetRemoteBarsConfigSuccess(config, js) }
             .mapErrorEvent(News::GetRemoteBarsConfigFailure)
         is BarsAction.ObserveBars -> barsRepository.observeUserBars()
@@ -37,5 +37,10 @@ internal class BarsActor(
             .toObservable()
         is BarsAction.PushStudentGroup -> barsRepository.pushStudentGroup(action.studentGroup)
             .toObservable()
+    }
+
+    private companion object {
+
+        const val CONFIG_DELAY = 16L
     }
 }
