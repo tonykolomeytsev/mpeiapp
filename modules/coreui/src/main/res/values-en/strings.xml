@@ -199,6 +199,7 @@
     <string name="bars_stub_login_description">Logging into BARS is carried out through the built-in browser, after which all information is viewed in the application</string>
     <string name="bars_stub_login_button">Login to BARS</string>
     <string name="bars_stub_banner_return">Data has been updated. Click on the banner to return to normal display</string>
+    <string name="bars_stub_disclaimer">The functionality of BARS is still under development, there may be crashes and incorrect behavior of this part of the application</string>
 
     <string name="app_settings_screen_title">Settings</string>
     <string name="app_settings_header_schedule">Schedule</string>

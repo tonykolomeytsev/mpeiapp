@@ -175,9 +175,7 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>() {
     }
 
     private fun createAdapter() = BaseAdapter(
-        AssessedDisciplineAdapterItem {
-            showDialog { BarsDetailsFragment.newInstance(it) }
-        },
+        AssessedDisciplineAdapterItem { showDialog { BarsDetailsFragment.newInstance(it) } },
         SpaceAdapterItem(),
         UserNameHeaderAdapterItem { feature.accept(Wish.Click.Settings) },
         TextWithIconAdapterItem {

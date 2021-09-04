@@ -23,7 +23,7 @@ internal class BarsReducer : ScreenDslReducer<
                         extractJs = event.extractJs,
                     )
                 }
-                effects { +BarsEffect.LoadPage(event.remoteBarsConfig.loginUrl) }
+                effects { +loadPageEffect { latestLoadedUrl ?: config?.loginUrl } }
             }
             is News.GetRemoteBarsConfigFailure -> state { copy(isAfterErrorLoadingConfig = true) }
             is News.ObserveBarsSuccess -> {
@@ -34,6 +34,9 @@ internal class BarsReducer : ScreenDslReducer<
                         isReturnBannerVisible = isBrowserVisible
                     )
                 }
+            }
+            is News.GetLatestLoadedUrlSuccess -> state {
+                copy(latestLoadedUrl = event.latestLoadedUrl)
             }
         }
 
@@ -50,13 +53,16 @@ internal class BarsReducer : ScreenDslReducer<
                     copy(flowState = actualFlowState)
                 }
                 commands {
+                    +BarsAction.GetLatestLoadedUrl
                     +BarsAction.GetRemoteBarsConfig
                     +BarsAction.ObserveBars
                 }
             }
             is Wish.Action.PageFinished -> handlePageFinished(event)
             is Wish.Action.Update -> effects {
-                +loadPageEffect(state) { state.latestLoadedUrl ?: loginUrl }
+                if (state.config != null) {
+                    +loadPageEffect { latestLoadedUrl ?: config?.loginUrl }
+                }
             }
 
             is Wish.Click.ShowBrowser -> state { copy(isBrowserVisible = true) }
@@ -78,12 +84,12 @@ internal class BarsReducer : ScreenDslReducer<
                         +BarsAction.GetRemoteBarsConfig
                     }
                 }
-                effects { +loadPageEffect(state) { state.latestLoadedUrl ?: loginUrl } }
+                effects { +loadPageEffect { latestLoadedUrl ?: config?.loginUrl } }
             }
             is Wish.Click.Settings -> effects { +BarsEffect.OpenSettings }
             is Wish.Click.Login -> {
                 state { copy(isBrowserVisible = true) }
-                effects { +loadPageEffect(state) { loginUrl } }
+                effects { +loadPageEffect { config?.loginUrl } }
             }
 
             is Wish.Extract.StudentName -> commands { +BarsAction.PushStudentName(event.name) }
@@ -109,6 +115,7 @@ internal class BarsReducer : ScreenDslReducer<
                     )
                 }
                 effects { +invokeExtractJsEffect(state) }
+                commands { +BarsAction.SetLatestLoadedUrl(event.url) }
             }
             hasAuthCookie -> state {
                 copy(
@@ -117,15 +124,18 @@ internal class BarsReducer : ScreenDslReducer<
                     isReturnBannerVisible = false,
                 )
             }
-            else -> state {
-                CookieManager.getInstance().removeAuthCookie()
-                copy(
-                    userInfo = null,
-                    flowState = FlowState.NOT_LOGGED_IN,
-                    isLoading = false,
-                    isReturnBannerVisible = false,
-                    latestLoadedUrl = null,
-                )
+            else -> {
+                state {
+                    CookieManager.getInstance().removeAuthCookie()
+                    copy(
+                        userInfo = null,
+                        flowState = FlowState.NOT_LOGGED_IN,
+                        isLoading = false,
+                        isReturnBannerVisible = false,
+                        latestLoadedUrl = null,
+                    )
+                }
+                commands { +BarsAction.SetLatestLoadedUrl(null) }
             }
         }
     }
@@ -133,8 +143,8 @@ internal class BarsReducer : ScreenDslReducer<
     private fun invokeExtractJsEffect(state: BarsState) =
         state.extractJs?.let(BarsEffect::InvokeJs)
 
-    private fun loadPageEffect(state: BarsState, urlSelector: RemoteBarsConfig.() -> String) =
-        state.config?.urlSelector()?.let(BarsEffect::LoadPage)
+    private fun Result.loadPageEffect(urlSelector: BarsState.() -> String?) =
+        state.urlSelector()?.let(BarsEffect::LoadPage)
 
     private fun isMarksListUrl(url: String, config: RemoteBarsConfig?) =
         if (config != null) url.startsWith(config.marksListUrl, ignoreCase = true) else false
