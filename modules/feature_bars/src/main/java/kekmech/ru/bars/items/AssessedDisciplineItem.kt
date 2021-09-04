@@ -50,7 +50,11 @@ private class AssessedDisciplineViewHolderImpl(
     override fun setDescription(assessmentType: String, personName: String) {
         val context = viewBinding.root.context
         viewBinding.disciplineDescription.text = SpannableStringBuilder()
-            .append(assessmentType, ForegroundColorSpan(context.getThemeColor(R.attr.colorBlack)), SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE)
+            .append(
+                assessmentType,
+                ForegroundColorSpan(context.getThemeColor(R.attr.colorBlack)),
+                SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
             .append(BULLET_SEPARATOR)
             .append(personName)
 

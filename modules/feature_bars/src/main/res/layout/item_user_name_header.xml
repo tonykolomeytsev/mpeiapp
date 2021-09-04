@@ -28,18 +28,18 @@
             android:layout_height="32dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="12dp"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/menu"
+            app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintVertical_bias="0"
-            android:visibility="visible">
+            app:layout_constraintVertical_bias="0">
 
         <View
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/background_rounded_rect_8dp"/>
+                android:background="@drawable/background_rounded_rect_8dp" />
 
     </com.facebook.shimmer.ShimmerFrameLayout>
 

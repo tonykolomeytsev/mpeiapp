@@ -7,16 +7,16 @@
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:orientation="vertical"
-            android:paddingHorizontal="16dp"
-            android:gravity="center">
+            android:paddingHorizontal="16dp">
 
         <View
                 android:layout_width="200dp"
                 android:layout_height="32dp"
+                android:layout_marginTop="32dp"
                 android:background="@drawable/background_rounded_rect_8dp"
-                android:backgroundTint="?colorGray30"
-                android:layout_marginTop="32dp"/>
+                android:backgroundTint="?colorGray30" />
 
         <View
                 android:layout_width="300dp"

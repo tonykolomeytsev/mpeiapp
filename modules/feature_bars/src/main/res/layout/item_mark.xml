@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="wrap_content"
         android:layout_height="24dp"
         android:background="@drawable/background_rounded_rect_8dp"
-        xmlns:tools="http://schemas.android.com/tools"
-        tools:text="4"
-        tools:backgroundTint="@color/colorYellowDark"
+        android:fontFamily="@font/roboto_medium"
         android:gravity="center"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
-        android:fontFamily="@font/roboto_medium"
-        android:textSize="14sp"/>
+        android:textSize="14sp"
+        tools:backgroundTint="@color/colorYellowDark"
+        tools:text="4" />

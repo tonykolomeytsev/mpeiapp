@@ -47,8 +47,14 @@ internal class FinalGradeItemBinder : BaseItemBinder<FinalGradeViewHolder, Final
     override fun bind(vh: FinalGradeViewHolder, model: FinalGrade, position: Int) {
         vh.setMark(model.finalMark)
         if (model.type == FinalGradeType.FINAL_MARK) {
-            vh.setName(SpannableStringBuilder()
-                .append(model.name, StyleSpan(Typeface.BOLD), SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE))
+            vh.setName(
+                SpannableStringBuilder()
+                    .append(
+                        model.name,
+                        StyleSpan(Typeface.BOLD),
+                        SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+            )
         } else {
             vh.setName(model.name)
         }
