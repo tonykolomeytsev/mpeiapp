@@ -40,6 +40,7 @@ class BarsDetailsFragment : BottomSheetDialogFragment() {
         adapter.update(getItems(getArgument(ARG_DISCIPLINE_INFO)))
     }
 
+    @Suppress("NestedBlockDepth")
     private fun getItems(discipline: AssessedDiscipline): List<Any> = mutableListOf<Any>().apply {
         add(PullItem)
         add(TextItem(text = discipline.name, styleResId = R.style.H2))

@@ -20,8 +20,10 @@ import kekmech.ru.coreui.items.TextWithIconItem
 
 internal class BarsListConverter(private val context: Context) {
 
-    private val disciplineShimmers = List(3) { ShimmerItem(ITEM_DISCIPLINE_SHIMMER) }
+    private val disciplineShimmers =
+        List(DISCIPLINE_SHIMMER_COUNT) { ShimmerItem(ITEM_DISCIPLINE_SHIMMER) }
 
+    @Suppress("NestedBlockDepth")
     fun map(state: BarsState): List<Any> =
         when {
             state.flowState == FlowState.LOGGED_IN ->
@@ -100,5 +102,10 @@ internal class BarsListConverter(private val context: Context) {
             )
         )
         add(SpaceItem.VERTICAL_8)
+    }
+
+    private companion object {
+
+        const val DISCIPLINE_SHIMMER_COUNT = 3
     }
 }
