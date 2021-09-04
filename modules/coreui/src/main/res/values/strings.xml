@@ -204,6 +204,8 @@
     <string name="bars_stub_disclaimer">Функциональность БАРСа все еще в разработке, возможны сбои и некорректное поведение в этой части приложения</string>
     <string name="bars_stub_error_loading_config_header">Произошла ошибка</string>
     <string name="bars_stub_error_loading_config_description">Возникли проблемы при загрузке конфигурации для работы с БАРС. Попробуйте повторить попытку позже.</string>
+    <string name="bars_stub_empty_disciplines_header">Нет дисциплин</string>
+    <string name="bars_stub_empty_disciplines_description">Список дисциплин для заданного семестра пуст, либо во время загрузки произошла ошибка</string>
 
     <string name="app_settings_screen_title">Настройки</string>
     <string name="app_settings_header_schedule">Расписание</string>

@@ -30,8 +30,18 @@ internal class BarsListConverter(private val context: Context) {
                     addUserGroupLabel(state.userInfo?.group)
                     addShowBarsInBrowserLabel()
 
-                    state.userInfo?.assessedDisciplines?.let { addAll(it) }
-                        ?: addAll(disciplineShimmers)
+                    state.userInfo?.assessedDisciplines?.let { disciplines ->
+                        if (disciplines.isEmpty()) {
+                            add(
+                                EmptyStateItem(
+                                    titleRes = R.string.bars_stub_empty_disciplines_header,
+                                    subtitleRes = R.string.bars_stub_empty_disciplines_description
+                                )
+                            )
+                        } else {
+                            addAll(disciplines)
+                        }
+                    } ?: addAll(disciplineShimmers)
                 }
             state.flowState == FlowState.NOT_LOGGED_IN && state.config != null ->
                 mutableListOf<Any>().apply {
@@ -46,10 +56,12 @@ internal class BarsListConverter(private val context: Context) {
                     if (!state.isAfterErrorLoadingConfig) {
                         add(ShimmerItem(ITEM_LOGIN_SHIMMER))
                     } else {
-                        add(EmptyStateItem(
-                            titleRes = R.string.bars_stub_error_loading_config_header,
-                            subtitleRes = R.string.bars_stub_error_loading_config_description
-                        ))
+                        add(
+                            EmptyStateItem(
+                                titleRes = R.string.bars_stub_error_loading_config_header,
+                                subtitleRes = R.string.bars_stub_error_loading_config_description
+                            )
+                        )
                     }
                 }
         }
