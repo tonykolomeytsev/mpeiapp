@@ -265,6 +265,7 @@ class ScheduleReducerTest : BehaviorSpec({
             override val isDebugEnvironment: Boolean get() = false
             override val languageCode: String get() = "ru_RU"
             override val showNavigationButton: Boolean get() = false
+            override val mapAppearanceType: String get() = "hybrid"
         }
         private const val CACHE_ENTRIES_SIZE = 2
         private val CURRENT_DATE = LocalDate.of(2020, Month.SEPTEMBER, 17)
