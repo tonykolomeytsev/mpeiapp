@@ -80,7 +80,7 @@ internal class BarsReducer : ScreenDslReducer<
                     )
                 }
                 commands {
-                    if (initialState.isAfterErrorLoadingConfig) {
+                    if (state.config == null) {
                         +BarsAction.GetRemoteBarsConfig
                     }
                 }
