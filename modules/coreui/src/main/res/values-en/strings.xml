@@ -202,6 +202,8 @@
     <string name="bars_stub_disclaimer">The functionality of BARS is still under development, there may be crashes and incorrect behavior of this part of the application</string>
     <string name="bars_stub_error_loading_config_header">An error has occurred</string>
     <string name="bars_stub_error_loading_config_description">There were problems loading the configuration for working with BARS. Please try again later. </string>
+    <string name="bars_stub_empty_disciplines_header">No academic disciplines</string>
+    <string name="bars_stub_empty_disciplines_description">The list of disciplines for the given semester is empty, or an error occurred during the download.</string>
 
     <string name="app_settings_screen_title">Settings</string>
     <string name="app_settings_header_schedule">Schedule</string>
