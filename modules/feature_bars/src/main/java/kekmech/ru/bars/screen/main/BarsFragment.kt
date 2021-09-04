@@ -6,10 +6,7 @@ import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.webkit.JavascriptInterface
-import android.webkit.WebResourceRequest
-import android.webkit.WebView
-import android.webkit.WebViewClient
+import android.webkit.*
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import kekmech.ru.bars.R
@@ -31,6 +28,7 @@ import kekmech.ru.common_android.views.setProgressViewOffset
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.BaseFragment
 import kekmech.ru.common_navigation.showDialog
+import kekmech.ru.coreui.banner.showBanner
 import kekmech.ru.coreui.items.EmptyStateAdapterItem
 import kekmech.ru.coreui.items.ShimmerAdapterItem
 import kekmech.ru.coreui.items.SpaceAdapterItem
@@ -69,6 +67,7 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>() {
                     setProgressViewOffset(windowInsets.systemWindowInsetTop)
                 }
             }
+            bannerContainer.addSystemTopPadding()
         }
     }
 
@@ -137,6 +136,14 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>() {
             request: WebResourceRequest
         ): Boolean {
             return "https://bars.mpei.ru" !in request.url.toString()
+        }
+
+        override fun onReceivedError(
+            view: WebView,
+            request: WebResourceRequest,
+            error: WebResourceError
+        ) {
+            showBanner(R.string.something_went_wrong_error)
         }
     }
 
