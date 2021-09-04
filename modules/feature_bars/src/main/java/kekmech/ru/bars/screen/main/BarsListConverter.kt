@@ -8,6 +8,7 @@ import kekmech.ru.bars.R
 import kekmech.ru.bars.items.LoginToBarsItem
 import kekmech.ru.bars.items.UserNameHeaderItem
 import kekmech.ru.bars.screen.main.BarsFragment.Companion.ITEM_DISCIPLINE_SHIMMER
+import kekmech.ru.bars.screen.main.BarsFragment.Companion.ITEM_LOGIN_SHIMMER
 import kekmech.ru.bars.screen.main.BarsFragment.Companion.ITEM_TEXT_SHIMMER
 import kekmech.ru.bars.screen.main.elm.BarsState
 import kekmech.ru.bars.screen.main.elm.FlowState
@@ -41,7 +42,7 @@ internal class BarsListConverter(private val context: Context) {
                 mutableListOf<Any>().apply {
                     addUserHeaderWithSettingsButton(context.getString(R.string.bars_stub_student_name))
                     addShowBarsInBrowserLabel()
-                    addAll(disciplineShimmers)
+                    add(ShimmerItem(ITEM_LOGIN_SHIMMER))
                 }
         }
 
