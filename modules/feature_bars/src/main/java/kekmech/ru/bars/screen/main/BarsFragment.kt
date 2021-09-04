@@ -185,10 +185,12 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>() {
         LoginToBarsAdapterItem { feature.accept(Wish.Click.Login) },
         ShimmerAdapterItem(ITEM_TEXT_SHIMMER, R.layout.item_text_shimmer),
         ShimmerAdapterItem(ITEM_DISCIPLINE_SHIMMER, R.layout.item_discipline_shimmer),
+        ShimmerAdapterItem(ITEM_LOGIN_SHIMMER, R.layout.item_login_to_bars_shimmer),
     )
 
     companion object {
         const val ITEM_TEXT_SHIMMER = 0
         const val ITEM_DISCIPLINE_SHIMMER = 1
+        const val ITEM_LOGIN_SHIMMER = 2
     }
 }
