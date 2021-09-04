@@ -13,7 +13,7 @@ enum class BackendServiceUrl(
         devEndpoint = "https://dev-api.kekmech.com/mpeix/map/"
     ),
     BARS(
-        prodEndpoint = "https://raw.githubusercontent.com/tonykolomeytsev/mpeiapp/IS-0-project-x/statics/bars/",
-        devEndpoint = "https://raw.githubusercontent.com/tonykolomeytsev/mpeiapp/IS-0-project-x/statics/bars/"
+        prodEndpoint = "https://raw.githubusercontent.com/tonykolomeytsev/mpeiapp/master/statics/bars/",
+        devEndpoint = "https://raw.githubusercontent.com/tonykolomeytsev/mpeiapp/dev/statics/bars/"
     )
 }
