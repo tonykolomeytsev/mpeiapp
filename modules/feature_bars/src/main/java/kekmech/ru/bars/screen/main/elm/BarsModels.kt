@@ -61,21 +61,29 @@ internal sealed class BarsEvent {
         data class GetRemoteBarsConfigSuccess(
             val remoteBarsConfig: RemoteBarsConfig,
             val extractJs: String,
-        ) : News()
+        ) : News() {
+            override fun toString(): String =
+                "GetRemoteBarsConfigSuccess(remoteBarsConfig=$remoteBarsConfig, ...)"
+        }
 
         data class GetRemoteBarsConfigFailure(val throwable: Throwable) : News()
         data class ObserveBarsSuccess(val userBars: UserBarsInfo) : News()
+        data class GetLatestLoadedUrlSuccess(val latestLoadedUrl: String?) : News()
     }
 }
 
 internal sealed class BarsEffect {
     data class LoadPage(val url: String) : BarsEffect()
-    data class InvokeJs(val js: String) : BarsEffect()
+    data class InvokeJs(val js: String) : BarsEffect() {
+        override fun toString(): String = "InvokeJs(...)"
+    }
     object OpenAllNotes : BarsEffect()
     object OpenSettings : BarsEffect()
 }
 
 internal sealed class BarsAction {
+    data class SetLatestLoadedUrl(val latestLoadedUrl: String?) : BarsAction()
+    object GetLatestLoadedUrl : BarsAction()
     object GetRemoteBarsConfig : BarsAction()
     object ObserveBars : BarsAction()
     data class PushMarks(val marksJson: String) : BarsAction()
