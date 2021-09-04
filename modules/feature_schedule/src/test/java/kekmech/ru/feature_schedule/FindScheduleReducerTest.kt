@@ -6,7 +6,7 @@ import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
-import io.reactivex.exceptions.CompositeException
+import io.reactivex.rxjava3.exceptions.CompositeException
 import kekmech.ru.domain_schedule.ScheduleFeatureLauncher
 import kekmech.ru.feature_schedule.find_schedule.elm.FindScheduleAction
 import kekmech.ru.feature_schedule.find_schedule.elm.FindScheduleEffect
