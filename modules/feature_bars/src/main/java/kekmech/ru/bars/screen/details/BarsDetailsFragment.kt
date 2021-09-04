@@ -43,10 +43,18 @@ class BarsDetailsFragment : BottomSheetDialogFragment() {
     private fun getItems(discipline: AssessedDiscipline): List<Any> = mutableListOf<Any>().apply {
         add(PullItem)
         add(TextItem(text = discipline.name, styleResId = R.style.H2))
-        add(TextItem(text = SpannableStringBuilder()
-            .append(discipline.assessmentType, ForegroundColorSpan(requireContext().getThemeColor(R.attr.colorBlack)), SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE)
-            .append(BULLET_SEPARATOR)
-            .append(discipline.person), styleResId = R.style.H4_Gray70))
+        add(
+            TextItem(
+                text = SpannableStringBuilder()
+                    .append(
+                        discipline.assessmentType,
+                        ForegroundColorSpan(requireContext().getThemeColor(R.attr.colorBlack)),
+                        SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+                    .append(BULLET_SEPARATOR)
+                    .append(discipline.person), styleResId = R.style.H4_Gray70
+            )
+        )
         add(SpaceItem.VERTICAL_12)
         addAll(discipline.controlActivities)
         add(SpaceItem.VERTICAL_16)

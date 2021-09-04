@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit
 class BarsRepository(
     private val barsService: BarsService,
     private val gson: Gson,
-    private val preferences: SharedPreferences,
+    preferences: SharedPreferences,
 ) {
     private val userBarsCache = BehaviorSubject.createDefault(UserBarsInfo())
     var latestLoadedUrl by preferences.string("bars_last_loaded_link")

@@ -37,9 +37,18 @@ private class ControlActivityViewHolderImpl(
             viewBinding.deadline.isVisible = true
             viewBinding.deadline.text = SpannableStringBuilder()
                 .append(prefix)
-                .append(deadline, ForegroundColorSpan(context.getThemeColor(R.attr.colorBlack)), SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE)
+                .append(
+                    deadline,
+                    ForegroundColorSpan(context.getThemeColor(R.attr.colorBlack)),
+                    SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
                 .apply {
-                    setSpan(StyleSpan(Typeface.BOLD), prefix.length, prefix.length + deadline.length, SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    setSpan(
+                        StyleSpan(Typeface.BOLD),
+                        prefix.length,
+                        prefix.length + deadline.length,
+                        SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
                 }
         } else {
             viewBinding.deadline.isVisible = false
@@ -52,9 +61,18 @@ private class ControlActivityViewHolderImpl(
             viewBinding.weight.isVisible = true
             viewBinding.weight.text = SpannableStringBuilder()
                 .append(prefix)
-                .append(weight, ForegroundColorSpan(context.getThemeColor(R.attr.colorBlack)), SpannableString.SPAN_EXCLUSIVE_INCLUSIVE)
+                .append(
+                    weight,
+                    ForegroundColorSpan(context.getThemeColor(R.attr.colorBlack)),
+                    SpannableString.SPAN_EXCLUSIVE_INCLUSIVE
+                )
                 .apply {
-                    setSpan(StyleSpan(Typeface.BOLD), prefix.length, prefix.length + weight.length, SpannableString.SPAN_EXCLUSIVE_INCLUSIVE)
+                    setSpan(
+                        StyleSpan(Typeface.BOLD),
+                        prefix.length,
+                        prefix.length + weight.length,
+                        SpannableString.SPAN_EXCLUSIVE_INCLUSIVE
+                    )
                 }
                 .append("%")
         } else {
@@ -83,7 +101,8 @@ private class ControlActivityViewHolderImpl(
     }
 }
 
-internal class ControlActivityItemBinder : BaseItemBinder<ControlActivityViewHolder, ControlActivity>() {
+internal class ControlActivityItemBinder :
+    BaseItemBinder<ControlActivityViewHolder, ControlActivity>() {
 
     override fun bind(vh: ControlActivityViewHolder, model: ControlActivity, position: Int) {
         if (model.finalMark != -1f) {
