@@ -46,20 +46,25 @@
             android:layout_gravity="bottom"
             android:layout_marginHorizontal="16dp"
             android:layout_marginBottom="12dp"
-            app:cardBackgroundColor="@color/colorGreen"
             android:foreground="?selectableItemBackground"
+            app:cardBackgroundColor="@color/colorGreen"
             app:cardCornerRadius="8dp">
 
-            <TextView
-                    android:id="@+id/bannerDescription"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto_medium"
-                    android:text="@string/bars_stub_banner_return"
-                    android:textColor="@color/colorWhite"
-                    android:layout_marginHorizontal="16dp"
-                    android:layout_marginVertical="12dp"/>
+        <TextView
+                android:id="@+id/bannerDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginVertical="12dp"
+                android:fontFamily="@font/roboto_medium"
+                android:text="@string/bars_stub_banner_return"
+                android:textColor="@color/colorWhite" />
 
     </androidx.cardview.widget.CardView>
+
+    <kekmech.ru.coreui.banner.BannerContainer
+            android:id="@+id/bannerContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
 </FrameLayout>
