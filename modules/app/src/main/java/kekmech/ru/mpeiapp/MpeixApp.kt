@@ -112,7 +112,7 @@ class MpeixApp : Application(),
             for (element in stackTrace) {
                 if ("org.chromium.base.BuildInfo".equals(element.className, true)) {
                     if ("getAll".equals(element.methodName, ignoreCase = true)) {
-                        return ""
+                        return "com.android.chrome"
                     }
                     break
                 }
