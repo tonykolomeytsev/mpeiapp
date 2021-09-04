@@ -25,7 +25,12 @@ internal class BarsReducer : ScreenDslReducer<
                 }
                 effects { +loadPageEffect { latestLoadedUrl ?: config?.loginUrl } }
             }
-            is News.GetRemoteBarsConfigFailure -> state { copy(isAfterErrorLoadingConfig = true) }
+            is News.GetRemoteBarsConfigFailure -> state {
+                copy(
+                    isAfterErrorLoadingConfig = true,
+                    isLoading = false
+                )
+            }
             is News.ObserveBarsSuccess -> {
                 state {
                     copy(
