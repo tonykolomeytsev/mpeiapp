@@ -21,6 +21,8 @@ import kekmech.ru.bars.screen.main.elm.BarsEvent.Wish
 import kekmech.ru.bars.screen.main.elm.BarsFeatureFactory
 import kekmech.ru.bars.screen.main.elm.BarsState
 import kekmech.ru.common_adapter.BaseAdapter
+import kekmech.ru.common_analytics.addScrollAnalytics
+import kekmech.ru.common_analytics.ext.screenAnalytics
 import kekmech.ru.common_android.addSystemTopPadding
 import kekmech.ru.common_android.doOnApplyWindowInsets
 import kekmech.ru.common_android.viewbinding.viewBinding
@@ -34,7 +36,6 @@ import kekmech.ru.coreui.items.ShimmerAdapterItem
 import kekmech.ru.coreui.items.SpaceAdapterItem
 import kekmech.ru.coreui.items.TextWithIconAdapterItem
 import kekmech.ru.domain_app_settings.AppSettingsFeatureLauncher
-import kekmech.ru.domain_notes.NotesFeatureLauncher
 import org.koin.android.ext.android.inject
 
 private const val JS_INTERFACE_NAME = "kti"
@@ -44,10 +45,10 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>() {
     override val initEvent: BarsEvent = Wish.Init
     override val layoutId: Int = R.layout.fragment_bars
 
+    private val analytics by screenAnalytics("Bars")
     private val viewBinding by viewBinding(FragmentBarsBinding::bind)
     private val adapter by fastLazy { createAdapter() }
     private val settingsFeatureLauncher by inject<AppSettingsFeatureLauncher>()
-    private val notesFeatureLauncher by inject<NotesFeatureLauncher>()
 
     override fun createStore() = inject<BarsFeatureFactory>().value.create()
 
@@ -57,10 +58,15 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>() {
         with(viewBinding) {
             recyclerView.adapter = adapter
             recyclerView.addSystemTopPadding()
+            recyclerView.addScrollAnalytics(analytics, "BarsRecycler")
             webViewContainer.addSystemTopPadding()
-            returnBanner.setOnClickListener { feature.accept(Wish.Click.HideBrowser) }
+            returnBanner.setOnClickListener {
+                analytics.sendClick("BarsReturnBanner")
+                feature.accept(Wish.Click.HideBrowser)
+            }
             swipeRefresh.apply {
                 setOnRefreshListener {
+                    analytics.sendClick("BarsUpdate")
                     feature.accept(Wish.Click.SwipeToRefresh)
                 }
                 doOnApplyWindowInsets { _, windowInsets, _ ->
@@ -87,6 +93,7 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>() {
                 webViewClient = BarsWebViewClient()
             }
             webViewToolbar.setNavigationOnClickListener {
+                analytics.sendClick("BarsHideBrowser")
                 feature.accept(Wish.Click.HideBrowser)
             }
         }
@@ -108,7 +115,6 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>() {
         is BarsEffect.LoadPage -> viewBinding.webView.loadUrl(effect.url)
         is BarsEffect.InvokeJs -> viewBinding.webView.evaluateJavascript(effect.js, null)
         is BarsEffect.OpenSettings -> settingsFeatureLauncher.launch()
-        is BarsEffect.OpenAllNotes -> notesFeatureLauncher.launchAllNotes()
     }
 
     override fun onResume() {
@@ -144,6 +150,7 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>() {
             request: WebResourceRequest,
             error: WebResourceError
         ) {
+            analytics.sendCustomAction("BarsWebViewErrorReceived")
             showBanner(R.string.something_went_wrong_error)
         }
     }
@@ -183,15 +190,25 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>() {
     }
 
     private fun createAdapter() = BaseAdapter(
-        AssessedDisciplineAdapterItem { showDialog { BarsDetailsFragment.newInstance(it) } },
+        AssessedDisciplineAdapterItem {
+            analytics.sendClick("BarsDisciplineDetails")
+            showDialog { BarsDetailsFragment.newInstance(it) }
+        },
         SpaceAdapterItem(),
-        UserNameHeaderAdapterItem { feature.accept(Wish.Click.Settings) },
+        UserNameHeaderAdapterItem {
+            analytics.sendClick("BarsSettings")
+            feature.accept(Wish.Click.Settings)
+        },
         TextWithIconAdapterItem {
             if (it.itemId == 1) {
+                analytics.sendClick("BarsShowBrowser")
                 feature.accept(Wish.Click.ShowBrowser)
             }
         },
-        LoginToBarsAdapterItem { feature.accept(Wish.Click.Login) },
+        LoginToBarsAdapterItem {
+            analytics.sendClick("BarsMainLogin")
+            feature.accept(Wish.Click.Login)
+        },
         EmptyStateAdapterItem(),
         ShimmerAdapterItem(ITEM_TEXT_SHIMMER, R.layout.item_text_shimmer),
         ShimmerAdapterItem(ITEM_DISCIPLINE_SHIMMER, R.layout.item_discipline_shimmer),

@@ -10,6 +10,8 @@ import kekmech.ru.bars.databinding.FragmentBarsDetailsBinding
 import kekmech.ru.bars.items.ControlActivityAdapterItem
 import kekmech.ru.bars.items.FinalGradeAdapterItem
 import kekmech.ru.common_adapter.BaseAdapter
+import kekmech.ru.common_analytics.addScrollAnalytics
+import kekmech.ru.common_analytics.ext.screenAnalytics
 import kekmech.ru.common_android.addSystemBottomPadding
 import kekmech.ru.common_android.fragment.BottomSheetDialogFragment
 import kekmech.ru.common_android.getArgument
@@ -28,6 +30,7 @@ class BarsDetailsFragment : BottomSheetDialogFragment() {
 
     override val layoutId: Int = R.layout.fragment_bars_details
 
+    private val analytics by screenAnalytics("BarsDetails")
     private val viewBinding by viewBinding(FragmentBarsDetailsBinding::bind)
     private val adapter by fastLazy { createAdapter() }
 
@@ -36,6 +39,7 @@ class BarsDetailsFragment : BottomSheetDialogFragment() {
         with(viewBinding) {
             recyclerView.addSystemBottomPadding()
             recyclerView.adapter = adapter
+            recyclerView.addScrollAnalytics(analytics, "BarsDetailsRecycler")
         }
         adapter.update(getItems(getArgument(ARG_DISCIPLINE_INFO)))
     }

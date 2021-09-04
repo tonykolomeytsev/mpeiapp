@@ -78,7 +78,6 @@ internal sealed class BarsEffect {
         override fun toString(): String = "InvokeJs(...)"
     }
 
-    object OpenAllNotes : BarsEffect()
     object OpenSettings : BarsEffect()
 }
 

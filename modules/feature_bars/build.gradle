@@ -22,7 +22,6 @@ dependencies {
     implementation project(path: ":domain_bars")
     implementation project(path: ":domain_schedule")
     implementation project(path: ":domain_app_settings")
-    implementation project(path: ":domain_notes")
 
     implementation project(path: ":common_di")
     implementation project(path: ":common_android")
@@ -31,6 +30,7 @@ dependencies {
     implementation project(path: ":common_network")
     implementation project(path: ":common_navigation")
     implementation project(path: ":common_adapter")
+    implementation project(path: ":common_analytics")
 
     implementation project(path: ":coreui")
 }
