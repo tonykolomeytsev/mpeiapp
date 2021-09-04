@@ -54,6 +54,7 @@ internal class MarkItemBinder : BaseItemBinder<MarkViewHolder, MarkItem>() {
         toString()
     }
 
+    @Suppress("MagicNumber")
     private fun getColorsForMark(mark: Float): Pair<Int, Int> {
         return if (mark in 3.5f..5f) R.attr.colorMarkGreenText to R.attr.colorMarkGreenBg
         else if (3.5f > mark && mark >= 2.5f) R.attr.colorMarkYellowText to R.attr.colorMarkYellowBg
