@@ -215,6 +215,7 @@
     <string name="app_settings_show_navigation_fab_description">Show or hide the navigation button (at the bottom of the schedule screen) that allows you to quickly switch to the current and next week</string>
     <string name="app_settings_auto_hide_bottom_sheet">Hide the list on click</string>
     <string name="app_settings_auto_hide_bottom_sheet_description">When the setting is on, on the map screen, clicking on any address in the list will automatically collapse the list and move the camera to the specified address</string>
+    <string name="app_settings_map_appearance_type">Map appearance</string>
     <string name="app_settings_favorite_schedule_title">Favorite schedules</string>
     <string name="app_settings_favorite_schedule_description">Setting up quick access to schedules</string>
     <string name="app_settings_header_support">Support</string>
@@ -238,6 +239,10 @@
     <string name="change_language_description_russian">Русский язык</string>
     <string name="change_language_description_english">English language</string>
     <string name="change_language_disclaimer">At the moment, only the GUI of the application has been translated into English. Class names, teacher names, and classroom names will remain Russian. Automatic machine translation for them will start working in future versions of the application.</string>
+
+    <string name="change_map_type_screen_title">Map appearance</string>
+    <string name="change_map_type_hybrid">Hybrid</string>
+    <string name="change_map_type_scheme">Scheme</string>
 
     <string name="search_section_title_map">Map</string>
     <string name="search_section_title_notes">Notes</string>

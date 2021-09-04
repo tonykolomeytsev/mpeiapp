@@ -21,6 +21,8 @@ class AppSettingsRepository(
 
     override var languageCode: String by preferences.string("app_lang", "ru_RU")
 
+    override var mapAppearanceType: String by preferences.string("app_map_type", "hybrid")
+
     fun complete(runnable: AppSettingsRepository.() -> Unit): Completable =
         Completable.fromRunnable { runnable() }
 }

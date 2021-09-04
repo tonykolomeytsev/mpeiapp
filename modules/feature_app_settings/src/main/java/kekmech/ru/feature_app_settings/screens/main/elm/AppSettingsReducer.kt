@@ -64,10 +64,19 @@ internal class AppSettingsReducer :
             state = state,
             effect = state.appSettings?.let { AppSettingsEffect.OpenLanguageSelectionDialog(it.languageCode) }
         )
+        is Wish.Click.MapType -> Result(
+            state = state,
+            effect = state.appSettings?.let { AppSettingsEffect.OpenMapTypeDialog(it.mapAppearanceType) }
+        )
         is Wish.Action.LanguageChanged -> Result(
             state = state,
             effect = AppSettingsEffect.RecreateActivity,
             command = AppSettingsAction.ChangeLanguage(event.selectedLanguage)
+        )
+        is Wish.Action.MapTypeChanged -> Result(
+            state = state,
+            effect = AppSettingsEffect.RecreateActivity,
+            command = AppSettingsAction.ChangeMapType(event.selectedMapType)
         )
         is Wish.Action.SetShowQuickNavigationFab -> Result(
             state = state,

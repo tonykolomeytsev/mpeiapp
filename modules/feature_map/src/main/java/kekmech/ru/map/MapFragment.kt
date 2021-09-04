@@ -24,6 +24,7 @@ import kekmech.ru.common_navigation.NeedToUpdate
 import kekmech.ru.coreui.items.PullAdapterItem
 import kekmech.ru.coreui.items.SectionHeaderAdapterItem
 import kekmech.ru.coreui.items.SpaceAdapterItem
+import kekmech.ru.domain_app_settings.AppSettings
 import kekmech.ru.domain_map.dto.MapMarker
 import kekmech.ru.map.databinding.FragmentMapBinding
 import kekmech.ru.map.di.MapDependencies
@@ -61,6 +62,7 @@ internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState>(), Need
         backgroundColor = requireContext().getThemeColor(R.attr.colorWhite),
         topCornerRadius = resources.dpToPx(DEFAULT_CORNER_RADIUS).toFloat()
     ) }
+    private val appSettings by inject<AppSettings>()
 
     override fun createStore() = dependencies.mapFeatureFactory.create()
 
@@ -101,7 +103,7 @@ internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState>(), Need
             .replace(R.id.mapFragmentContainer, mapFragment)
             .commitAllowingStateLoss()
         mapFragment.getMapAsync {
-            it.init(requireContext())
+            it.init(requireContext(), appSettings.mapAppearanceType)
             feature.accept(Wish.Action.OnMapReady(it))
         }
     }

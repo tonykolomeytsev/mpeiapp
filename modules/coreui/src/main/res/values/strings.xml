@@ -217,6 +217,7 @@
     <string name="app_settings_show_navigation_fab_description">Показать либо скрыть кнопку навигации (внизу экрана расписания), позволяющую быстро переключаться на текущую и следующую недели</string>
     <string name="app_settings_auto_hide_bottom_sheet">Скрывать список по клику</string>
     <string name="app_settings_auto_hide_bottom_sheet_description">При включенной настройке, на экране карты нажатие на любой адрес в списке автоматически свернет список и переместит камеру к указанному адресу</string>
+    <string name="app_settings_map_appearance_type">Внешний вид карты</string>
     <string name="app_settings_favorite_schedule_title">Избранные расписания</string>
     <string name="app_settings_favorite_schedule_description">Настройка быстрого доступа к расписаниям</string>
     <string name="app_settings_header_support">Поддержка</string>
@@ -240,6 +241,10 @@
     <string name="change_language_description_russian">Русский язык</string>
     <string name="change_language_description_english">English language</string>
     <string name="change_language_disclaimer">На данный момент, на английский язык переведен только графический интерфейс приложения. Названия занятий, имена преподавателей и названия аудиторий на английский не переведены. Автоматический машинный перевод для них начнет работать в будущих версиях приложения.</string>
+
+    <string name="change_map_type_screen_title">Внешний вид карты</string>
+    <string name="change_map_type_hybrid">Гибрид</string>
+    <string name="change_map_type_scheme">Схема</string>
 
     <string name="search_section_title_map">Карта</string>
     <string name="search_section_title_notes">Заметки</string>
