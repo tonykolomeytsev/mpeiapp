@@ -78,6 +78,7 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>() {
                 settings.allowFileAccess = false
                 settings.allowContentAccess = false
                 settings.javaScriptEnabled = true
+                settings.compromiseUserAgent()
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     settings.safeBrowsingEnabled = false
                 }
@@ -196,6 +197,10 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>() {
         ShimmerAdapterItem(ITEM_DISCIPLINE_SHIMMER, R.layout.item_discipline_shimmer),
         ShimmerAdapterItem(ITEM_LOGIN_SHIMMER, R.layout.item_login_to_bars_shimmer),
     )
+
+    private fun WebSettings.compromiseUserAgent() {
+        userAgentString = userAgentString.replace("; wv", "")
+    }
 
     companion object {
         const val ITEM_TEXT_SHIMMER = 0
