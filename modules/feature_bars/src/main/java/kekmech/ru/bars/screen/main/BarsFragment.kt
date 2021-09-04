@@ -31,6 +31,7 @@ import kekmech.ru.common_android.views.setProgressViewOffset
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.BaseFragment
 import kekmech.ru.common_navigation.showDialog
+import kekmech.ru.coreui.items.EmptyStateAdapterItem
 import kekmech.ru.coreui.items.ShimmerAdapterItem
 import kekmech.ru.coreui.items.SpaceAdapterItem
 import kekmech.ru.coreui.items.TextWithIconAdapterItem
@@ -183,6 +184,7 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>() {
             }
         },
         LoginToBarsAdapterItem { feature.accept(Wish.Click.Login) },
+        EmptyStateAdapterItem(),
         ShimmerAdapterItem(ITEM_TEXT_SHIMMER, R.layout.item_text_shimmer),
         ShimmerAdapterItem(ITEM_DISCIPLINE_SHIMMER, R.layout.item_discipline_shimmer),
         ShimmerAdapterItem(ITEM_LOGIN_SHIMMER, R.layout.item_login_to_bars_shimmer),

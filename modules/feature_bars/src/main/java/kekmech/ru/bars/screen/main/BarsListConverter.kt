@@ -13,6 +13,7 @@ import kekmech.ru.bars.screen.main.BarsFragment.Companion.ITEM_TEXT_SHIMMER
 import kekmech.ru.bars.screen.main.elm.BarsState
 import kekmech.ru.bars.screen.main.elm.FlowState
 import kekmech.ru.common_android.getThemeColor
+import kekmech.ru.coreui.items.EmptyStateItem
 import kekmech.ru.coreui.items.ShimmerItem
 import kekmech.ru.coreui.items.SpaceItem
 import kekmech.ru.coreui.items.TextWithIconItem
@@ -42,7 +43,14 @@ internal class BarsListConverter(private val context: Context) {
                 mutableListOf<Any>().apply {
                     addUserHeaderWithSettingsButton(context.getString(R.string.bars_stub_student_name))
                     addShowBarsInBrowserLabel()
-                    add(ShimmerItem(ITEM_LOGIN_SHIMMER))
+                    if (!state.isAfterErrorLoadingConfig) {
+                        add(ShimmerItem(ITEM_LOGIN_SHIMMER))
+                    } else {
+                        add(EmptyStateItem(
+                            titleRes = R.string.bars_stub_error_loading_config_header,
+                            subtitleRes = R.string.bars_stub_error_loading_config_description
+                        ))
+                    }
                 }
         }
 
