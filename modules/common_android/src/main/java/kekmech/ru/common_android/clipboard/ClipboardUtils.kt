@@ -25,7 +25,9 @@ object ClipboardUtils {
 
             val listener = ClipboardManager.OnPrimaryClipChangedListener { invalidate() }
             clipboard.addPrimaryClipChangedListener(listener)
-            subscriber.setDisposable(Disposable.fromAction { clipboard.removePrimaryClipChangedListener(listener) })
+            subscriber.setDisposable(Disposable.fromAction {
+                clipboard.removePrimaryClipChangedListener(listener)
+            })
         }
     }
 }

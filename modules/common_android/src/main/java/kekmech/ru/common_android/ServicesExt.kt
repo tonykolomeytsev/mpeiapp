@@ -5,7 +5,7 @@ import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
 
-@Suppress("DEPRECATION")
+@Suppress("DEPRECATION", "MissingPermission")
 fun Context.vibrateSingle(durationMs: Long, amplitude: Int? = null) {
     if (!hasPermission(android.Manifest.permission.VIBRATE)) return
     val vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator

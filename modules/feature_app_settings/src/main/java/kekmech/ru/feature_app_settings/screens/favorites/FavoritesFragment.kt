@@ -1,12 +1,14 @@
 package kekmech.ru.feature_app_settings.screens.favorites
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_analytics.ext.screenAnalytics
-import kekmech.ru.common_android.*
+import kekmech.ru.common_android.addSystemBottomPadding
+import kekmech.ru.common_android.addSystemTopPadding
+import kekmech.ru.common_android.close
+import kekmech.ru.common_android.setResultListener
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.BaseFragment
@@ -30,12 +32,7 @@ import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesState
 import kekmech.ru.feature_app_settings.screens.favorites.item.HelpBannerAdapterItem
 import org.koin.android.ext.android.inject
 
-private const val REQUEST_NEW_FAVORITE = 312344
-private const val REQUEST_EDIT_FAVORITE = 312345
-
-internal class FavoritesFragment :
-    BaseFragment<FavoritesEvent, FavoritesEffect, FavoritesState>(),
-    ActivityResultListener {
+internal class FavoritesFragment : BaseFragment<FavoritesEvent, FavoritesEffect, FavoritesState>() {
 
     override val initEvent get() = Wish.Init
     override var layoutId: Int = R.layout.fragment_favorites
@@ -74,33 +71,43 @@ internal class FavoritesFragment :
             analytics.sendClick("AddFavorite")
             dependencies.scheduleFeatureLauncher.launchSearchGroup(
                 continueTo = BACK_WITH_RESULT,
-                targetFragment = this,
-                requestCode = REQUEST_NEW_FAVORITE,
-                selectGroupAfterSuccess = false
+                selectGroupAfterSuccess = false,
+                resultKey = FIND_GROUP_RESULT_KEY
             )
+            setResultListener<String>(FIND_GROUP_RESULT_KEY) { groupName ->
+                addScreenForward {
+                    EditFavoriteFragment.newInstance(
+                        groupNumber = groupName,
+                        description = "",
+                        resultKey = NEW_FAVORITE_RESULT_KEY
+                    )
+                }
+            }
         },
         FavoriteScheduleAdapterItem {
             analytics.sendClick("EditFavorite")
-            val editFavoriteFragment = EditFavoriteFragment
-                .newInstance(it.value.groupNumber, it.value.description)
-                .withResultFor(this, REQUEST_EDIT_FAVORITE)
-            addScreenForward { editFavoriteFragment }
+            addScreenForward {
+                EditFavoriteFragment.newInstance(
+                    groupNumber = it.value.groupNumber,
+                    description = it.value.description,
+                    resultKey = EDIT_FAVORITE_RESULT_KEY
+                )
+            }
+            setResultListener<Pair<String, String>>(EDIT_FAVORITE_RESULT_KEY) { (groupName, description) ->
+                feature.accept(
+                    Wish.Action.UpdateFavorite(
+                        FavoriteSchedule(groupName, description, 0)
+                    )
+                )
+            }
         },
         HelpBannerAdapterItem()
     )
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_NEW_FAVORITE && data != null) {
-            data.getStringExtra("group_number")?.let { groupNumber ->
-                val editFavoriteFragment = EditFavoriteFragment
-                    .newInstance(groupNumber)
-                    .withResultFor(this, REQUEST_EDIT_FAVORITE)
-                addScreenForward { editFavoriteFragment }
-            }
-        } else if (requestCode == REQUEST_EDIT_FAVORITE && data != null) {
-            val groupNumber = data.getStringExtra(EditFavoriteFragment.EXTRA_GROUP_NAME) ?: return
-            val description = data.getStringExtra(EditFavoriteFragment.EXTRA_DESCRIPTION).orEmpty()
-            feature.accept(Wish.Action.UpdateFavorite(FavoriteSchedule(groupNumber, description, 0)))
-        }
+    companion object {
+
+        private const val FIND_GROUP_RESULT_KEY = "FIND_GROUP_RESULT_KEY"
+        private const val NEW_FAVORITE_RESULT_KEY = "NEW_FAVORITE_RESULT_KEY"
+        private const val EDIT_FAVORITE_RESULT_KEY = "EDIT_FAVORITE_RESULT_KEY"
     }
 }

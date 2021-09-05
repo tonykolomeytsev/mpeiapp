@@ -58,7 +58,7 @@ class DashboardFragment :
             recyclerView.addScrollAnalytics(analytics, "RecyclerView")
             bannerContainer.addSystemTopPadding()
             swipeRefresh.apply {
-                setOnRefreshListener { feature.accept(Wish.Action.OnSwipeRefresh) }
+                setOnRefreshListener { feature.accept(Wish.Action.SwipeToRefresh) }
                 doOnApplyWindowInsets { _, windowInsets, _ ->
                     setProgressViewOffset(windowInsets.systemWindowInsetTop)
                 }
@@ -80,9 +80,11 @@ class DashboardFragment :
             dependencies.notesFeatureLauncher.launchNoteList(
                 selectedClasses = effect.classes,
                 selectedDate = effect.date,
-                targetFragment = parentFragment,
-                requestCode = REQUEST_CODE_UPDATE_DATA
+                resultKey = NOTES_LIST_RESULT_KEY,
             )
+            setResultListener<EmptyResult>(NOTES_LIST_RESULT_KEY) {
+                feature.accept(Wish.Action.SwipeToRefresh)
+            }
         }
     }
 
@@ -114,9 +116,11 @@ class DashboardFragment :
             analytics.sendClick("EditNote")
             dependencies.notesFeatureLauncher.launchNoteEdit(
                 note = it,
-                targetFragment = parentFragment,
-                requestCode = REQUEST_CODE_UPDATE_DATA
+                resultKey = EDIT_NOTE_RESULT_KEY
             )
+            setResultListener<EmptyResult>(EDIT_NOTE_RESULT_KEY) {
+                feature.accept(Wish.Action.SwipeToRefresh)
+            }
         },
         AddActionAdapterItem(),
         DayStatusAdapterItem(),
@@ -125,9 +129,11 @@ class DashboardFragment :
             analytics.sendClick("ChangeGroup")
             dependencies.scheduleFeatureLauncher.launchSearchGroup(
                 continueTo = BACK_WITH_RESULT,
-                targetFragment = parentFragment,
-                requestCode = REQUEST_CODE_UPDATE_DATA
+                resultKey = FIND_GROUP_RESULT_KEY
             )
+            setResultListener<String>(FIND_GROUP_RESULT_KEY) { _ ->
+                feature.accept(Wish.Action.SwipeToRefresh)
+            }
         },
         EmptyStateAdapterItem(),
         FavoriteScheduleAdapterItem {
@@ -147,11 +153,18 @@ class DashboardFragment :
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_CODE_UPDATE_DATA) {
-            feature.accept(Wish.Action.OnSwipeRefresh)
+            feature.accept(Wish.Action.SwipeToRefresh)
         }
     }
 
     override fun onUpdate() {
         feature.accept(Wish.Action.SilentUpdate)
+    }
+
+    companion object {
+
+        private const val NOTES_LIST_RESULT_KEY = "NOTES_LIST_RESULT_KEY"
+        private const val EDIT_NOTE_RESULT_KEY = "EDIT_NOTE_RESULT_KEY"
+        private const val FIND_GROUP_RESULT_KEY = "FIND_GROUP_RESULT_KEY"
     }
 }

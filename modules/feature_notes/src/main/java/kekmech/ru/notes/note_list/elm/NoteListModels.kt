@@ -7,7 +7,7 @@ import java.time.LocalDate
 internal data class NoteListState(
     val selectedClasses: Classes,
     val selectedDate: LocalDate,
-    val notes: List<Note> = emptyList()
+    val notes: List<Note> = emptyList(),
 )
 
 internal sealed class NoteListEvent {

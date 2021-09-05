@@ -5,7 +5,7 @@ import kekmech.ru.domain_notes.NotesRepository
 import vivid.money.elmslie.core.store.Actor
 
 internal class NoteEditActor(
-    private val notesRepository: NotesRepository
+    private val notesRepository: NotesRepository,
 ) : Actor<NoteEditAction, NoteEditEvent> {
 
     @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")

@@ -22,8 +22,6 @@ import kekmech.ru.notes.edit.elm.NoteEditEvent.Wish
 import kekmech.ru.notes.edit.elm.NoteEditState
 import org.koin.android.ext.android.inject
 
-private const val ARG_NOTE = "Arg.Note"
-
 internal class NoteEditFragment : BaseFragment<NoteEditEvent, NoteEditEffect, NoteEditState>() {
 
     override val initEvent = Wish.Init
@@ -36,6 +34,7 @@ internal class NoteEditFragment : BaseFragment<NoteEditEvent, NoteEditEffect, No
     }
     private val formatter by fastLazy { PrettyDateFormatter(requireContext()) }
     private val viewBinding by viewBinding(FragmentNoteEditBinding::bind)
+    private val resultKey by fastLazy { getArgument<String>(ARG_RESULT_KEY) }
 
     override fun createStore() = dependencies.noteEditFeatureFactory.create(
         note = getArgument(ARG_NOTE)
@@ -66,7 +65,10 @@ internal class NoteEditFragment : BaseFragment<NoteEditEvent, NoteEditEffect, No
     }
 
     override fun handleEffect(effect: NoteEditEffect) = when (effect) {
-        is NoteEditEffect.CloseWithSuccess -> closeWithSuccess()
+        is NoteEditEffect.CloseWithSuccess -> {
+            close()
+            setResult(resultKey, EmptyResult)
+        }
         is NoteEditEffect.ShowError -> showBanner(R.string.something_went_wrong_error)
     }
 
@@ -77,11 +79,16 @@ internal class NoteEditFragment : BaseFragment<NoteEditEvent, NoteEditEffect, No
 
     companion object {
 
+        private const val ARG_NOTE = "Arg.Note"
+        private const val ARG_RESULT_KEY = "Arg.ResultKey"
+
         fun newInstance(
-            note: Note
+            note: Note,
+            resultKey: String,
         ) = NoteEditFragment()
             .withArguments(
-                ARG_NOTE to note
+                ARG_NOTE to note,
+                ARG_RESULT_KEY to resultKey
             )
     }
 }

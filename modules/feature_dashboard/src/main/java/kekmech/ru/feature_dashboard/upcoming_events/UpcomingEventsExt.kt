@@ -19,7 +19,7 @@ private const val NONE_OFFSET = -1
  */
 fun DashboardState.getDayWithOffset(
     currentDay: LocalDate,
-    offset: Int
+    offset: Int,
 ): Day? {
     val dayIsOnCurrentWeek = currentDay.dayOfWeek.value + offset <= DayOfWeek.SUNDAY.value
     val dayWithOffset = currentDay.plusDays(offset.toLong())
@@ -41,7 +41,7 @@ fun DashboardState.getDayWithOffset(
 fun DashboardState.getClassesForDayWithOffset(
     currentDay: LocalDate,
     currentTime: LocalTime,
-    offset: Int
+    offset: Int,
 ): List<Classes>? {
     val dayIsOnCurrentWeek = currentDay.dayOfWeek.value + offset <= DayOfWeek.SUNDAY.value
     val dayWithOffset = currentDay.plusDays(offset.toLong())
@@ -65,7 +65,7 @@ fun DashboardState.getClassesForDayWithOffset(
 fun DashboardState.hasClassesForDayWithOffset(
     currentDay: LocalDate,
     currentTime: LocalTime,
-    offset: Int
+    offset: Int,
 ): Boolean {
     val dayIsOnCurrentWeek = currentDay.dayOfWeek.value + offset <= DayOfWeek.SUNDAY.value
     val dayWithOffset = currentDay.plusDays(offset.toLong())
@@ -88,7 +88,7 @@ fun DashboardState.hasClassesForDayWithOffset(
  */
 fun DashboardState.getOffsetForDayWithActualEvents(
     currentDay: LocalDate,
-    currentTime: LocalTime
+    currentTime: LocalTime,
 ): Int {
     var offset = 0
     var foundActualDay = hasClassesForDayWithOffset(currentDay, currentTime, offset)

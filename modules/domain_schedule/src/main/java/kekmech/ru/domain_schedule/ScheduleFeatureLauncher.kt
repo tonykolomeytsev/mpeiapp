@@ -9,9 +9,8 @@ interface ScheduleFeatureLauncher {
 
     fun launchSearchGroup(
         continueTo: ContinueTo = ContinueTo.BACK,
-        targetFragment: Fragment? = null,
-        requestCode: Int? = null,
-        selectGroupAfterSuccess: Boolean = true
+        selectGroupAfterSuccess: Boolean = true,
+        resultKey: String,
     )
 
     enum class ContinueTo : Serializable { DASHBOARD, BACK, BACK_WITH_RESULT, BARS }

@@ -5,10 +5,10 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_analytics.ext.screenAnalytics
-import kekmech.ru.common_android.closeWithResult
-import kekmech.ru.common_android.closeWithSuccess
+import kekmech.ru.common_android.close
 import kekmech.ru.common_android.fragment.BottomSheetDialogFragment
 import kekmech.ru.common_android.getArgument
+import kekmech.ru.common_android.setResult
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.withArguments
 import kekmech.ru.common_kotlin.fastLazy
@@ -19,14 +19,13 @@ import kekmech.ru.feature_app_settings.screens.lang.dto.LanguageEntry
 import kekmech.ru.feature_app_settings.screens.lang.item.LanguageAdapterItem
 import kekmech.ru.feature_app_settings.screens.lang.item.LanguageItem
 
-private const val ARG_SELECTED_LANG = "Arg.Lang"
-
 internal class SelectLanguageFragment : BottomSheetDialogFragment() {
 
     private val viewBinding by viewBinding(FragmentChangeLanguageBinding::bind)
     private val adapter by fastLazy { createAdapter() }
     private val selectLanguage by fastLazy { getArgument<String>(ARG_SELECTED_LANG) }
     private val analytics by screenAnalytics("SelectLanguage")
+    private val resultKey by fastLazy { getArgument<String>(ARG_RESULT_KEY) }
 
     override val layoutId: Int = R.layout.fragment_change_language
 
@@ -66,11 +65,10 @@ internal class SelectLanguageFragment : BottomSheetDialogFragment() {
         LanguageAdapterItem {
             analytics.sendClick("SelectLanguage_${it.languageCode}")
             if (it.languageCode == selectLanguage) {
-                closeWithSuccess()
+                close()
             } else {
-                closeWithResult {
-                    putExtra("app_lang", it.languageCode)
-                }
+                close()
+                setResult(resultKey, result = it.languageCode)
             }
         },
         PullAdapterItem()
@@ -78,7 +76,14 @@ internal class SelectLanguageFragment : BottomSheetDialogFragment() {
 
     companion object {
 
-        fun newInstance(selectedLanguage: String) = SelectLanguageFragment()
-            .withArguments(ARG_SELECTED_LANG to selectedLanguage)
+        private const val ARG_SELECTED_LANG = "Arg.Lang"
+        private const val ARG_RESULT_KEY = "Arg.ResultKey"
+
+        fun newInstance(selectedLanguage: String, resultKey: String) =
+            SelectLanguageFragment()
+                .withArguments(
+                    ARG_SELECTED_LANG to selectedLanguage,
+                    ARG_RESULT_KEY to resultKey
+                )
     }
 }

@@ -4,11 +4,11 @@ import kekmech.ru.domain_notes.dto.Note
 import vivid.money.elmslie.core.store.ElmStore
 
 internal class NoteEditFeatureFactory(
-    private val actor: NoteEditActor
+    private val actor: NoteEditActor,
 ) {
 
     fun create(
-        note: Note
+        note: Note,
     ) = ElmStore(
         initialState = NoteEditState(note),
         reducer = NoteEditReducer(),

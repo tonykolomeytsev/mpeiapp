@@ -23,9 +23,6 @@ import kekmech.ru.feature_schedule.find_schedule.elm.FindScheduleState
 import kekmech.ru.feature_schedule.find_schedule.utils.GroupFormatTextWatcher
 import org.koin.android.ext.android.inject
 
-private const val CONTINUE_TO_ARG = "ContinueTo"
-private const val SELECT_AFTER_ARG = "SelectAfter"
-
 internal class FindScheduleFragment :
     BaseFragment<FindScheduleEvent, FindScheduleEffect, FindScheduleState>() {
 
@@ -36,10 +33,11 @@ internal class FindScheduleFragment :
     private val onboardingFeatureLauncher by fastLazy { dependencies.onboardingFeatureLauncher }
     private val analytics by screenAnalytics("FindSchedule")
     private val viewBinding by viewBinding(FragmentFindScheduleBinding::bind)
+    private val resultKey by fastLazy { getArgument<String>(ARG_RESULT_KEY) }
 
     override fun createStore() = inject<FindScheduleFeatureFactory>().value.create(
-        getArgument(CONTINUE_TO_ARG),
-        getArgument(SELECT_AFTER_ARG)
+        getArgument(ARG_CONTINUE_TO),
+        getArgument(ARG_SELECT_AFTER)
     )
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -69,7 +67,10 @@ internal class FindScheduleFragment :
             BACK -> close()
             BARS -> onboardingFeatureLauncher.launchBarsPage()
             DASHBOARD -> dependencies.mainScreenLauncher.launch()
-            BACK_WITH_RESULT -> closeWithResult { putExtra("group_number", effect.groupName) }
+            BACK_WITH_RESULT -> {
+                close()
+                setResult(resultKey, result = effect.groupName)
+            }
             else -> Unit
         }
     }
@@ -100,12 +101,19 @@ internal class FindScheduleFragment :
     }
 
     companion object {
+
+        private const val ARG_CONTINUE_TO = "Arg.ContinueTo"
+        private const val ARG_SELECT_AFTER = "Arg.SelectAfter"
+        private const val ARG_RESULT_KEY = "Arg.ResultKey"
+
         fun newInstance(
             continueTo: ScheduleFeatureLauncher.ContinueTo = BACK,
-            selectGroupAfterSuccess: Boolean = true
+            selectGroupAfterSuccess: Boolean = true,
+            resultKey: String,
         ) = FindScheduleFragment().withArguments(
-            CONTINUE_TO_ARG to continueTo,
-            SELECT_AFTER_ARG to selectGroupAfterSuccess
+            ARG_CONTINUE_TO to continueTo,
+            ARG_SELECT_AFTER to selectGroupAfterSuccess,
+            ARG_RESULT_KEY to resultKey,
         )
     }
 }
