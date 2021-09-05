@@ -4,6 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationBarView
 import kekmech.ru.common_navigation.BottomTab
 import kekmech.ru.common_navigation.NeedToUpdate
 import kekmech.ru.domain_bars.BarsFeatureLauncher
@@ -19,7 +20,7 @@ class BottomBarController(
     fragment: Fragment,
     private val scheduleFeatureLauncher: ScheduleFeatureLauncher,
     private val barsFeatureLauncher: BarsFeatureLauncher,
-    private val mapFeatureLauncher: MapFeatureLauncher
+    private val mapFeatureLauncher: MapFeatureLauncher,
 ) {
 
     private val childFragmentManager: FragmentManager = fragment.childFragmentManager
@@ -29,7 +30,7 @@ class BottomBarController(
         get() = childFragmentManager.fragments.firstOrNull { !it.isHidden }
     private val backStack: BottomBarBackStack = BottomBarBackStack(firstTab = BottomTab.DASHBOARD)
 
-    private val navSelectListener = BottomNavigationView.OnNavigationItemSelectedListener {  item ->
+    private val navSelectListener = NavigationBarView.OnItemSelectedListener { item ->
         val tab = when (item.itemId) {
             R.id.navigation_dashboard -> BottomTab.DASHBOARD
             R.id.navigation_schedule -> BottomTab.SCHEDULE
@@ -46,10 +47,10 @@ class BottomBarController(
 
     fun init(
         containerFragment: Fragment,
-        bottomNavView: BottomNavigationView
+        bottomNavView: BottomNavigationView,
     ) {
         this.bottomNavView = bottomNavView
-        bottomNavView.setOnNavigationItemSelectedListener(navSelectListener)
+        bottomNavView.setOnItemSelectedListener(navSelectListener)
         selectTab(lastSelectedTab)
         backStack.push(lastSelectedTab)
         if (bottomNavView.selectedItemId == R.id.navigation_dashboard) {
@@ -95,7 +96,9 @@ class BottomBarController(
 
     private fun FragmentTransaction.commitNowIgnoreStateLossError() = try {
         commitNow()
-    } catch (e: Exception) { e.printStackTrace() }
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
 
     private fun getItemByTab(tab: BottomTab) = when (tab) {
         BottomTab.DASHBOARD -> R.id.navigation_dashboard

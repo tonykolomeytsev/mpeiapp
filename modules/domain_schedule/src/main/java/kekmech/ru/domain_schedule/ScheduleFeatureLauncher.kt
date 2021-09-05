@@ -13,5 +13,5 @@ interface ScheduleFeatureLauncher {
         resultKey: String,
     )
 
-    enum class ContinueTo : Serializable { DASHBOARD, BACK, BACK_WITH_RESULT, BARS }
+    enum class ContinueTo : Serializable { DASHBOARD, BACK, BACK_WITH_RESULT }
 }

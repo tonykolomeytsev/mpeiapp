@@ -12,7 +12,7 @@ internal class SearchFeatureFactory(
         query: String,
         filter: String
     ): Store<SearchEvent, SearchEffect, SearchState> {
-        val filterType = FilterItemType.valueOf(filter.toUpperCase())
+        val filterType = FilterItemType.valueOf(filter.uppercase())
         return ElmStore(
             initialState = SearchState(
                 query = query,

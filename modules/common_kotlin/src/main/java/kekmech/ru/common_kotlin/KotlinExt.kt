@@ -6,3 +6,5 @@ fun <T> fastLazy(inInitializer: () -> T): Lazy<T> = lazy(LazyThreadSafetyMode.NO
 
 fun <T> AtomicReference<T>.getOrPut(defaultValue: () -> T): T =
     get() ?: defaultValue().also { compareAndSet(null, it) }
+
+fun String.uppercaseFirstChar() = replaceFirstChar { it.uppercaseChar() }
