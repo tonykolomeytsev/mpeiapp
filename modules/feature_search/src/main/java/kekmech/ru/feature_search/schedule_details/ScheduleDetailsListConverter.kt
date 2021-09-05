@@ -85,13 +85,13 @@ internal object ScheduleDetailsListConverter {
     private fun getDescriptionItem(state: ScheduleDetailsState, context: Context): Any? {
         if (state.isLoadingSchedule) return null
         val thisWeekDescription: CharSequence = getScheduleDescription(
-            classesCount = state.thisWeek?.sumBy { it.classes.size } ?: 0,
+            classesCount = state.thisWeek?.sumOf { it.classes.size } ?: 0,
             weekDescription = R.string.search_schedule_details_this_week_description,
             emptyWeekDescription = R.string.search_schedule_details_this_week_description_empty,
             context = context
         )
         val nextWeekDescription: CharSequence = getScheduleDescription(
-            classesCount = state.nextWeek?.sumBy { it.classes.size } ?: 0,
+            classesCount = state.nextWeek?.sumOf { it.classes.size } ?: 0,
             weekDescription = R.string.search_schedule_details_next_week_description,
             emptyWeekDescription = R.string.search_schedule_details_next_week_description_empty,
             context = context

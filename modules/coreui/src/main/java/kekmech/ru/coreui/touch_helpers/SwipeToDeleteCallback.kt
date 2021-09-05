@@ -39,7 +39,7 @@ abstract class SwipeToDeleteCallback(
          * if (viewHolder?.itemViewType == YourAdapter.SOME_TYPE) return 0
          * if (viewHolder?.adapterPosition == 0) return 0
          */
-        if (!isTypeForDelete(viewHolder.adapterPosition, viewHolder.itemViewType)) return 0
+        if (!isTypeForDelete(viewHolder.bindingAdapterPosition, viewHolder.itemViewType)) return 0
         return super.getMovementFlags(recyclerView, viewHolder)
     }
 
@@ -106,7 +106,7 @@ fun RecyclerView.attachSwipeToDeleteCallback(
     val swipeHandler = object : SwipeToDeleteCallback(context) {
 
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-            val item = baseAdapter.allData.getOrNull(viewHolder.adapterPosition)
+            val item = baseAdapter.allData.getOrNull(viewHolder.bindingAdapterPosition)
             item?.let(callback)
         }
 

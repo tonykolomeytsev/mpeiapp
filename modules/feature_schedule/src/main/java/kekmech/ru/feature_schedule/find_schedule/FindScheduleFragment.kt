@@ -65,7 +65,6 @@ internal class FindScheduleFragment :
         is FindScheduleEffect.ShowSomethingWentWrongError -> showBanner(R.string.something_went_wrong_error)
         is FindScheduleEffect.NavigateNextFragment -> when (effect.continueTo) {
             BACK -> close()
-            BARS -> onboardingFeatureLauncher.launchBarsPage()
             DASHBOARD -> dependencies.mainScreenLauncher.launch()
             BACK_WITH_RESULT -> {
                 close()
