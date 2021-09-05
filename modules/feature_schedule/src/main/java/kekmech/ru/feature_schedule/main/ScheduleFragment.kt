@@ -1,15 +1,12 @@
 package kekmech.ru.feature_schedule.main
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
 import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_analytics.addScrollAnalytics
 import kekmech.ru.common_analytics.ext.screenAnalytics
-import kekmech.ru.common_android.ActivityResultListener
-import kekmech.ru.common_android.addSystemTopPadding
-import kekmech.ru.common_android.getStringArray
+import kekmech.ru.common_android.*
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.views.onPageSelected
 import kekmech.ru.common_kotlin.fastLazy
@@ -30,7 +27,6 @@ import kekmech.ru.feature_schedule.main.item.*
 import org.koin.android.ext.android.inject
 import java.time.LocalDate
 
-private const val REQUEST_CODE_NOTES_UPDATED = 9328
 private const val WEEK_MIN_NUMBER = 0
 private const val WEEK_MAX_NUMBER = 17
 private const val FAB_ANIMATION_DURATION = 100L
@@ -55,6 +51,7 @@ internal class ScheduleFragment :
 
     // for viewPager sliding debounce
     private var viewPagerPositionToBeSelected: Int? = null
+
     // for viewPager callback issue
     private var viewPagerFirstSelectionIgnored: Boolean = false
 
@@ -89,12 +86,17 @@ internal class ScheduleFragment :
 
     override fun handleEffect(effect: ScheduleEffect) = when (effect) {
         is ScheduleEffect.NavigateToNoteList -> {
-            dependencies.notesFeatureLauncher
-                .launchNoteList(effect.classes, effect.date, parentFragment, REQUEST_CODE_NOTES_UPDATED)
+            dependencies.notesFeatureLauncher.launchNoteList(
+                selectedClasses = effect.classes,
+                selectedDate = effect.date,
+                resultKey = NOTES_LIST_RESULT_KEY
+            )
+            setResultListener<EmptyResult>(NOTES_LIST_RESULT_KEY) {
+                feature.accept(Wish.Action.NotesUpdated)
+            }
         }
     }
 
-    @Suppress("MagicNumber")
     override fun render(state: ScheduleState) {
         viewPagerAdapter.update(ScheduleClassesListConverter.map(state))
         renderStatusBar(state)
@@ -196,12 +198,6 @@ internal class ScheduleFragment :
         feature.accept(Wish.Action.UpdateScheduleIfNeeded)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_CODE_NOTES_UPDATED) {
-            feature.accept(Wish.Action.NotesUpdated)
-        }
-    }
-
     private fun getFormattedDay(day: LocalDate): String {
         val dayOfWeekName = requireContext()
             .getStringArray(R.array.days_of_week)
@@ -218,5 +214,10 @@ internal class ScheduleFragment :
         } else {
             return requireContext().getString(R.string.schedule_weekend_week)
         }
+    }
+
+    companion object {
+
+        private const val NOTES_LIST_RESULT_KEY = "NOTES_LIST_RESULT_KEY"
     }
 }

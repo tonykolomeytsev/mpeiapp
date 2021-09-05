@@ -17,7 +17,7 @@ class DashboardReducer : StateReducer<DashboardEvent, DashboardState, DashboardE
 
     override fun reduce(
         event: DashboardEvent,
-        state: DashboardState
+        state: DashboardState,
     ): Result<DashboardState, DashboardEffect, DashboardAction> = when (event) {
         is Wish -> reduceWish(event, state)
         is News -> reduceNews(event, state)
@@ -25,7 +25,7 @@ class DashboardReducer : StateReducer<DashboardEvent, DashboardState, DashboardE
 
     private fun reduceNews(
         event: News,
-        state: DashboardState
+        state: DashboardState,
     ): Result<DashboardState, DashboardEffect, DashboardAction> = when (event) {
         is News.ScheduleLoaded -> Result(
             state = state.copy(
@@ -69,13 +69,13 @@ class DashboardReducer : StateReducer<DashboardEvent, DashboardState, DashboardE
 
     private fun reduceWish(
         event: Wish,
-        state: DashboardState
+        state: DashboardState,
     ): Result<DashboardState, DashboardEffect, DashboardAction> = when (event) {
         is Wish.Init -> Result(
             state = state.copy(isLoading = true),
             commands = refreshActions()
         )
-        is Wish.Action.OnSwipeRefresh -> Result(
+        is Wish.Action.SwipeToRefresh -> Result(
             state = state.copy(
                 isLoading = true
             ),

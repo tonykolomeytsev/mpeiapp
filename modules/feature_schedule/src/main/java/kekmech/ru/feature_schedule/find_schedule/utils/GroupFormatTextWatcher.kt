@@ -48,10 +48,10 @@ internal class GroupFormatTextWatcher(
             .find(s.string)
             ?.groups?.get(1)
             ?.let { it.value to it.range }
-            ?.takeIf { (value, _) -> value != value.toLowerCase() }
+            ?.takeIf { (value, _) -> value != value.lowercase() }
             ?.let { (value, range) ->
                 s.copy(
-                    string = s.string.replaceRange(range, value.toLowerCase())
+                    string = s.string.replaceRange(range, value.lowercase())
                 )
             } ?: s
 

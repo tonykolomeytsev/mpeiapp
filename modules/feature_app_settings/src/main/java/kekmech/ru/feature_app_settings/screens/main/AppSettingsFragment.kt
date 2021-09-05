@@ -1,6 +1,5 @@
 package kekmech.ru.feature_app_settings.screens.main
 
-import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -29,8 +28,6 @@ import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsState
 import kekmech.ru.feature_app_settings.screens.map_type.SelectMapTypeFragment
 import org.koin.android.ext.android.inject
 
-private const val RESULT_SELECTED_LANG = 846583
-private const val RESULT_SELECTED_MAP_TYPE = 946583
 private const val ACTIVITY_RECREATION_DELAY = 200L
 
 internal class AppSettingsFragment :
@@ -67,13 +64,21 @@ internal class AppSettingsFragment :
 
     override fun handleEffect(effect: AppSettingsEffect) = when (effect) {
         is AppSettingsEffect.RecreateActivity -> recreateActivity()
-        is AppSettingsEffect.OpenLanguageSelectionDialog -> showDialog {
-            SelectLanguageFragment.newInstance(effect.selectedLanguage)
-                .withResultFor(this, RESULT_SELECTED_LANG)
+        is AppSettingsEffect.OpenLanguageSelectionDialog -> {
+            showDialog {
+                SelectLanguageFragment.newInstance(effect.selectedLanguage, LANGUAGE_RESULT_KEY)
+            }
+            setResultListener<String>(LANGUAGE_RESULT_KEY) { selectedLanguage ->
+                feature.accept(Wish.Action.LanguageChanged(selectedLanguage))
+            }
         }
-        is AppSettingsEffect.OpenMapTypeDialog -> showDialog {
-            SelectMapTypeFragment.newInstance(effect.mapType)
-                .withResultFor(this, RESULT_SELECTED_MAP_TYPE)
+        is AppSettingsEffect.OpenMapTypeDialog -> {
+            showDialog {
+                SelectMapTypeFragment.newInstance(effect.mapType, MAP_TYPE_RESULT_KEY)
+            }
+            setResultListener<String>(MAP_TYPE_RESULT_KEY) { selectedMapType ->
+                feature.accept(Wish.Action.MapTypeChanged(selectedMapType))
+            }
         }
     }
 
@@ -131,7 +136,8 @@ internal class AppSettingsFragment :
             analytics.sendClick("SelectMapType")
             feature.accept(Wish.Click.MapType)
         }
-        else -> { /* no-op */ }
+        else -> { /* no-op */
+        }
     }
 
     @Suppress("DEPRECATION") // потому что это фикс для старых версий
@@ -152,17 +158,6 @@ internal class AppSettingsFragment :
             .postDelayed({ activity?.recreate() }, ACTIVITY_RECREATION_DELAY)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == RESULT_SELECTED_LANG && data != null) {
-            val selectedLanguage = data.getStringExtra("app_lang") ?: return
-            feature.accept(Wish.Action.LanguageChanged(selectedLanguage))
-        }
-        if (requestCode == RESULT_SELECTED_MAP_TYPE && data != null) {
-            val selectedMapType = data.getStringExtra("map_type") ?: return
-            feature.accept(Wish.Action.MapTypeChanged(selectedMapType))
-        }
-    }
-
     companion object {
         const val TOGGLE_DARK_THEME = 0
         const val TOGGLE_AUTO_HIDE_BOTTOM_SHEET = 2
@@ -176,5 +171,8 @@ internal class AppSettingsFragment :
         const val ITEM_FAVORITES = 3
         const val ITEM_LANGUAGE = 4
         const val ITEM_MAP_TYPE = 5
+
+        private const val LANGUAGE_RESULT_KEY = "LANGUAGE_RESULT_KEY"
+        private const val MAP_TYPE_RESULT_KEY = "MAP_TYPE_RESULT_KEY"
     }
 }

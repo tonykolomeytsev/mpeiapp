@@ -4,7 +4,7 @@ import vivid.money.elmslie.core.store.ElmStore
 
 class DashboardFeatureFactory(
     private val actor: DashboardActor,
-    private val reducer: DashboardReducer
+    private val reducer: DashboardReducer,
 ) {
 
     fun create() = ElmStore(

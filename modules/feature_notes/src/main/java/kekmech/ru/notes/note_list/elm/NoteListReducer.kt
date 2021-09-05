@@ -14,7 +14,7 @@ internal class NoteListReducer :
 
     override fun reduce(
         event: NoteListEvent,
-        state: NoteListState
+        state: NoteListState,
     ): Result<NoteListState, NoteListEffect, NoteListAction> = when (event) {
         is Wish -> reduceWish(event, state)
         is News -> reduceNews(event, state)
@@ -22,7 +22,7 @@ internal class NoteListReducer :
 
     private fun reduceNews(
         event: News,
-        state: NoteListState
+        state: NoteListState,
     ): Result<NoteListState, NoteListEffect, NoteListAction> = when (event) {
         is News.NotesLoaded -> Result(
             state = state.copy(
@@ -38,7 +38,7 @@ internal class NoteListReducer :
 
     private fun reduceWish(
         event: Wish,
-        state: NoteListState
+        state: NoteListState,
     ): Result<NoteListState, NoteListEffect, NoteListAction> = when (event) {
         is Wish.Init -> Result(
             state = state,

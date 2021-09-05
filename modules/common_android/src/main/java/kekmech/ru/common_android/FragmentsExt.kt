@@ -1,16 +1,13 @@
 package kekmech.ru.common_android
 
-import android.app.Activity.RESULT_OK
-import android.content.Intent
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.setFragmentResultListener
 
 private const val AVERAGE_KEYBOARD_HEIGHT = 250
-
-const val RESULT_ERROR = 1
-const val EXTRA_ERROR = "error"
 
 fun Fragment.close() {
     when {
@@ -21,21 +18,21 @@ fun Fragment.close() {
     }
 }
 
-fun <T : Fragment> T.closeWithSuccess() = closeWithResult { this }
-
-fun <T : Fragment> T.closeWithResult(putResult: Intent.() -> Intent) {
-    close()
-    targetFragment?.onActivityResult(targetRequestCode, RESULT_OK, Intent().putResult())
-}
-
-fun <T : Fragment> T.closeWithError(error: Throwable) {
-    close()
-    targetFragment?.onActivityResult(targetRequestCode, RESULT_ERROR, Intent().putExtra(EXTRA_ERROR, error))
-}
-
 fun <T : Fragment> T.withArguments(vararg args: Pair<String, Any?>): T = apply {
     arguments?.putAll(bundleOf(*args)) ?: run { arguments = bundleOf(*args) }
 }
+
+inline fun <reified T : Any> Fragment.setResultListener(
+    key: String,
+    crossinline onResult: (T) -> Unit,
+) {
+    setFragmentResultListener(key) { requestKey, bundle ->
+        onResult(bundle.getArgument(requestKey))
+    }
+}
+
+fun Fragment.setResult(key: String, result: Any = EmptyResult) =
+    setFragmentResult(key, bundleOf(key to result))
 
 inline fun <reified T : Any> Fragment.getArgument(key: String): T = arguments.getArgument(key)
 
@@ -43,15 +40,6 @@ inline fun <reified T : Any> Fragment.findArgument(key: String): T? = arguments.
 
 inline fun <reified T : Any> Fragment.findAndRemoveArgument(key: String): T? =
     findArgument<T>(key).also { arguments?.remove(key) }
-
-fun <T : Fragment> T.withResultFor(target: Fragment, requestCode: Int): T {
-    return also { it.setTargetFragment(target, requestCode) }
-}
-
-fun <S : Fragment, T : Fragment> T.withTheSameResultAs(provider: S): T = also {
-    val fragment = provider.targetFragment
-    if (fragment != null) it.withResultFor(fragment, provider.targetRequestCode)
-}
 
 fun Fragment.hideKeyboard() {
     view?.let { KeyboardUtils.hideSoftInput(it) }

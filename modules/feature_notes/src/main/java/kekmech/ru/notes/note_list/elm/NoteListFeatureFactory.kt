@@ -5,7 +5,7 @@ import vivid.money.elmslie.core.store.ElmStore
 import java.time.LocalDate
 
 internal class NoteListFeatureFactory(
-    private val actor: NoteListActor
+    private val actor: NoteListActor,
 ) {
 
     fun create(selectedClasses: Classes, selectedDate: LocalDate) = ElmStore(

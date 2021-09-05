@@ -33,7 +33,7 @@ internal class WelcomeFragment : Fragment(R.layout.fragment_welcome) {
         viewBinding.apply {
             buttonStart.setOnClickListener {
                 analytics.sendClick("WelcomeStart")
-                scheduleFeatureLauncher.launchSearchGroup(DASHBOARD)
+                scheduleFeatureLauncher.launchSearchGroup(DASHBOARD, resultKey = "")
             }
             recycler.adapter = adapter
             recycler.layoutManager =

@@ -42,7 +42,7 @@ sealed class DashboardEvent {
         object Init : Wish()
 
         object Action {
-            object OnSwipeRefresh : Wish()
+            object SwipeToRefresh : Wish()
             object SilentUpdate : Wish()
             data class SelectFavoriteSchedule(val favoriteSchedule: FavoriteSchedule) : Wish()
         }

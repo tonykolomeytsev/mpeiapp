@@ -19,7 +19,7 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 class UpcomingEventsListConverter(
-    private val context: Context
+    private val context: Context,
 ) {
 
     fun map(state: DashboardState): UpcomingEventsMappingResult {
@@ -62,7 +62,7 @@ class UpcomingEventsListConverter(
         selectedScheduleType: ScheduleType,
         nowDate: LocalDate,
         nowTime: LocalTime,
-        offset: Int
+        offset: Int,
     ) = this
         .setScheduleType(selectedScheduleType)
         .withProgressPreview(nowTime, nowDate.plusDays(offset.toLong()))
@@ -90,7 +90,7 @@ class UpcomingEventsListConverter(
     @Suppress("NestedBlockDepth")
     private fun List<Any>.withTimePrediction(
         currentDate: LocalDate,
-        offset: Int
+        offset: Int,
     ): List<Any> = mutableListOf<Any>().apply {
         val raw = this@withTimePrediction
         if (offset > 2) return raw

@@ -17,10 +17,10 @@ internal interface NoteEditViewHolder {
 }
 
 internal class NoteEditViewHolderImpl(
-    containerView: View
-) : NoteEditViewHolder, RecyclerView.ViewHolder(containerView) {
+    itemView: View,
+) : NoteEditViewHolder, RecyclerView.ViewHolder(itemView) {
 
-    private val viewBinding = ItemNoteEditBinding.bind(containerView)
+    private val viewBinding = ItemNoteEditBinding.bind(itemView)
 
     override fun showKeyboard() {
         viewBinding.editTextContent.showKeyboard()
@@ -38,7 +38,7 @@ internal class NoteEditViewHolderImpl(
 }
 
 internal class NoteEditItemBinder(
-    private val listener: (String) -> Unit
+    private val listener: (String) -> Unit,
 ) : BaseItemBinder<NoteEditViewHolder, Note>() {
 
     override fun bind(vh: NoteEditViewHolder, model: Note, position: Int) {
@@ -51,7 +51,7 @@ internal class NoteEditItemBinder(
 }
 
 internal class NoteEditAdapterItem(
-    listener: (String) -> Unit
+    listener: (String) -> Unit,
 ) : AdapterItem<NoteEditViewHolder, Note>(
     isType = { it is Note },
     layoutRes = R.layout.item_note_edit,

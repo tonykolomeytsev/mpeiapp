@@ -19,27 +19,33 @@ private const val WEEK_MAX_NUMBER = 17
 
 @Suppress("MagicNumber")
 class DashboardListConverter(
-    private val context: Context
+    private val context: Context,
 ) {
     private val upcomingEventsListConverter = UpcomingEventsListConverter(context)
 
-    private val notesHeader by fastLazy { SectionHeaderItem(
-        itemId = SECTION_NOTES_ACTION,
-        titleRes = R.string.dashboard_section_header_notes,
-        actionNameRes = R.string.dashboard_section_header_notes_action
-    ) }
+    private val notesHeader by fastLazy {
+        SectionHeaderItem(
+            itemId = SECTION_NOTES_ACTION,
+            titleRes = R.string.dashboard_section_header_notes,
+            actionNameRes = R.string.dashboard_section_header_notes_action
+        )
+    }
 
-    private val favoritesHeader by fastLazy { SectionHeaderItem(
-        itemId = SECTION_FAVORITES_ACTION,
-        titleRes = R.string.dashboard_section_header_favorites,
-        subtitle = context.getString(R.string.dashboard_section_header_favorites_subtitle),
-        actionNameRes = R.string.dashboard_section_header_favorites_action
-    ) }
+    private val favoritesHeader by fastLazy {
+        SectionHeaderItem(
+            itemId = SECTION_FAVORITES_ACTION,
+            titleRes = R.string.dashboard_section_header_favorites,
+            subtitle = context.getString(R.string.dashboard_section_header_favorites_subtitle),
+            actionNameRes = R.string.dashboard_section_header_favorites_action
+        )
+    }
 
-    private val sessionHeader by fastLazy { SectionHeaderItem(
-        titleRes = R.string.dashboard_section_header_session,
-        subtitle = context.getString(R.string.dashboard_section_header_session_subtitle)
-    ) }
+    private val sessionHeader by fastLazy {
+        SectionHeaderItem(
+            titleRes = R.string.dashboard_section_header_session,
+            subtitle = context.getString(R.string.dashboard_section_header_session_subtitle)
+        )
+    }
 
     private val formatter = PrettyDateFormatter(context)
 

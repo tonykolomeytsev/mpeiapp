@@ -1,6 +1,5 @@
 package kekmech.ru.notes.all_notes
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,13 +25,7 @@ import kekmech.ru.notes.di.NotesDependencies
 import kekmech.ru.notes.edit.NoteEditFragment
 import org.koin.android.ext.android.inject
 
-private const val NOTE_EDIT_REQUEST_CODE = 54692
-
-private const val ARG_SELECTED_NOTE = "Arg.Note"
-
-internal class AllNotesFragment :
-    BaseFragment<AllNotesEvent, AllNotesEffect, AllNotesState>(),
-    ActivityResultListener {
+internal class AllNotesFragment : BaseFragment<AllNotesEvent, AllNotesEffect, AllNotesState>() {
 
     override val initEvent = Wish.Init
     override var layoutId: Int = R.layout.fragment_all_notes
@@ -92,13 +85,11 @@ internal class AllNotesFragment :
         EmptyStateAdapterItem()
     )
 
-    private fun navigateToNoteEdit(note: Note) = addScreenForward {
-        NoteEditFragment.newInstance(note)
-            .withResultFor(this, NOTE_EDIT_REQUEST_CODE)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == NOTE_EDIT_REQUEST_CODE) {
+    private fun navigateToNoteEdit(note: Note) {
+        addScreenForward {
+            NoteEditFragment.newInstance(note, NOTE_EDIT_RESULT_KEY)
+        }
+        setResultListener<EmptyResult>(NOTE_EDIT_RESULT_KEY) {
             feature.accept(Wish.Init)
         }
     }
@@ -111,6 +102,9 @@ internal class AllNotesFragment :
     }
 
     companion object {
+
+        private const val ARG_SELECTED_NOTE = "Arg.Note"
+        private const val NOTE_EDIT_RESULT_KEY = "NOTE_EDIT_RESULT_KEY"
 
         fun newInstance(selectedNote: Note?) = AllNotesFragment()
             .withArguments(ARG_SELECTED_NOTE to selectedNote)

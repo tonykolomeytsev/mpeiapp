@@ -10,7 +10,7 @@ import vivid.money.elmslie.core.store.Actor
 class DashboardActor(
     private val scheduleRepository: ScheduleRepository,
     private val notesRepository: NotesRepository,
-    private val notesScheduleTransformer: NotesScheduleTransformer
+    private val notesScheduleTransformer: NotesScheduleTransformer,
 ) : Actor<DashboardAction, DashboardEvent> {
 
     @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")

@@ -10,7 +10,7 @@ internal class NoteEditReducer :
 
     override fun reduce(
         event: NoteEditEvent,
-        state: NoteEditState
+        state: NoteEditState,
     ): Result<NoteEditState, NoteEditEffect, NoteEditAction> = when (event) {
         is Wish -> reduceWish(event, state)
         is News -> reduceNews(event, state)
@@ -18,7 +18,7 @@ internal class NoteEditReducer :
 
     private fun reduceNews(
         event: News,
-        state: NoteEditState
+        state: NoteEditState,
     ): Result<NoteEditState, NoteEditEffect, NoteEditAction> = when (event) {
         is News.NoteSavedSuccessfully -> Result(
             state = state,
@@ -32,7 +32,7 @@ internal class NoteEditReducer :
 
     private fun reduceWish(
         event: Wish,
-        state: NoteEditState
+        state: NoteEditState,
     ): Result<NoteEditState, NoteEditEffect, NoteEditAction> = when (event) {
         is Wish.Init -> Result(state = state)
         is Wish.Click.SaveNote -> {
