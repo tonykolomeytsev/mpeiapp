@@ -8,7 +8,7 @@ abstract class PersistentCache<K, V>(
     cacheName: String,
     private val persistentCacheInteractor: PersistentCacheInteractor = PersistentCacheInteractor()
 ) {
-    private val cacheDir = File(context.filesDir, cacheName).apply { mkdirs() }
+    private val cacheDir = File(context.cacheDir, cacheName).apply { mkdirs() }
 
     fun put(key: K, value: V?) {
         val stringKey = generateKeyForPut(key, value) ?: return
