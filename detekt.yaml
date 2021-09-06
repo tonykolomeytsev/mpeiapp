@@ -60,6 +60,7 @@ complexity:
     ignoreSingleWhenExpression: false
     ignoreSimpleWhenEntries: false
     ignoreNestingFunctions: false
+    excludes: [ '**/**Reducer.kt', '**/**ListConverter.kt' ]
     nestingFunctions: [run, let, apply, with, also, use, forEach, isNotNull, ifNull]
   LabeledExpression:
     active: false
@@ -70,6 +71,7 @@ complexity:
   LongMethod:
     active: true
     threshold: 60
+    excludes: [ '**/**Reducer.kt', '**/**ListConverter.kt' ]
   LongParameterList:
     active: true
     functionThreshold: 6
