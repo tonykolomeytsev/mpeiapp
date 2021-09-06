@@ -124,9 +124,10 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>() {
 
             // render webview
             val (url, pageTitle, isLoading) = state.webViewUiState
+            val decoratedUrl = url.replace("https://", "").replace("http://", "")
             with(webViewToolbar) {
-                title = pageTitle ?: url
-                subtitle = url.takeIf { pageTitle != null }
+                title = pageTitle ?: decoratedUrl
+                subtitle = decoratedUrl.takeIf { pageTitle != null }
             }
             progressIndicator.isVisible = isLoading
         }
