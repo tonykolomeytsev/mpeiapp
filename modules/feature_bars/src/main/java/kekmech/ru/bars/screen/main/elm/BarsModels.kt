@@ -18,6 +18,7 @@ internal data class BarsState(
     val isLoading: Boolean = true,
     val isBrowserVisible: Boolean = false,
     val isReturnBannerVisible: Boolean = false,
+    val webViewUiState: WebViewUiState = WebViewUiState(),
 )
 
 internal enum class FlowState {
@@ -25,6 +26,12 @@ internal enum class FlowState {
     LOGGED_IN,
     UNDEFINED
 }
+
+internal data class WebViewUiState(
+    val url: String = "",
+    val pageTitle: String? = null,
+    val isLoading: Boolean = true
+)
 
 internal sealed class BarsEvent {
     sealed class Wish : BarsEvent() {
@@ -79,10 +86,6 @@ internal sealed class BarsEffect {
     }
 
     object OpenSettings : BarsEffect()
-    data class SetWebViewToolbar(
-        val url: String,
-        val pageTitle: String?,
-    ) : BarsEffect()
 }
 
 internal sealed class BarsAction {
