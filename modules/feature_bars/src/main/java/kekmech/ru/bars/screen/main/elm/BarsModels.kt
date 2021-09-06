@@ -39,6 +39,8 @@ internal sealed class BarsEvent {
 
         object Action {
             data class PageFinished(val url: String, val pageTitle: String?) : Wish()
+            object PageStarted : Wish()
+            object PageLoadingError : Wish()
             object Update : Wish()
         }
 
@@ -86,6 +88,7 @@ internal sealed class BarsEffect {
     }
 
     object OpenSettings : BarsEffect()
+    object ShowCommonError : BarsEffect()
 }
 
 internal sealed class BarsAction {

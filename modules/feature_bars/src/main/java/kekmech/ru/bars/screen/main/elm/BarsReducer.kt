@@ -65,6 +65,19 @@ internal class BarsReducer : ScreenDslReducer<
                     +BarsAction.ObserveBars
                 }
             }
+            is Wish.Action.PageStarted -> state {
+                copy(
+                    webViewUiState = webViewUiState.copy(isLoading = true)
+                )
+            }
+            is Wish.Action.PageLoadingError -> {
+                state {
+                    copy(
+                        webViewUiState = webViewUiState.copy(isLoading = true)
+                    )
+                }
+                effects { +BarsEffect.ShowCommonError }
+            }
             is Wish.Action.PageFinished -> handlePageFinished(event)
             is Wish.Action.Update -> {
                 state {
