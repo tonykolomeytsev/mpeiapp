@@ -120,15 +120,21 @@ internal class BarsReducer : ScreenDslReducer<
                         latestLoadedUrl = event.url,
                     )
                 }
-                effects { +invokeExtractJsEffect(state) }
+                effects {
+                    +invokeExtractJsEffect(state)
+                    +BarsEffect.SetWebViewToolbar(event.url, event.pageTitle)
+                }
                 commands { +BarsAction.SetLatestLoadedUrl(event.url) }
             }
-            hasAuthCookie -> state {
-                copy(
-                    flowState = FlowState.LOGGED_IN,
-                    isLoading = false,
-                    isReturnBannerVisible = false,
-                )
+            hasAuthCookie -> {
+                state {
+                    copy(
+                        flowState = FlowState.LOGGED_IN,
+                        isLoading = false,
+                        isReturnBannerVisible = false,
+                    )
+                }
+                effects { +BarsEffect.SetWebViewToolbar(event.url, event.pageTitle) }
             }
             else -> {
                 state {
@@ -142,6 +148,7 @@ internal class BarsReducer : ScreenDslReducer<
                     )
                 }
                 commands { +BarsAction.SetLatestLoadedUrl(null) }
+                effects { +BarsEffect.SetWebViewToolbar(event.url, event.pageTitle) }
             }
         }
     }

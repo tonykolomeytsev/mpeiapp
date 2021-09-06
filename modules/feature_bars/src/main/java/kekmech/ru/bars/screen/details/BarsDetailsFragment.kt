@@ -48,6 +48,7 @@ class BarsDetailsFragment : BottomSheetDialogFragment() {
     private fun getItems(discipline: AssessedDiscipline): List<Any> = mutableListOf<Any>().apply {
         add(PullItem)
         add(TextItem(text = discipline.name, styleResId = R.style.H2))
+        add(SpaceItem.VERTICAL_4)
         add(
             TextItem(
                 text = SpannableStringBuilder()

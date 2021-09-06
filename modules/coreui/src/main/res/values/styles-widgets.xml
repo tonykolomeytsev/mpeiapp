@@ -11,6 +11,12 @@
         <item name="navigationIcon">@drawable/ic_close_black</item>
     </style>
 
+    <style name="Toolbar.WebView">
+        <item name="titleTextAppearance">@style/H4</item>
+        <item name="subtitleTextAppearance">@style/H7.Gray70</item>
+        <item name="navigationIcon">@drawable/ic_close_black</item>
+    </style>
+
     <style name="EditText" parent="Widget.AppCompat.EditText"/>
 
 </resources>

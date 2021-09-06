@@ -14,6 +14,7 @@ data class SpaceItem(
 ) {
 
     companion object {
+        val VERTICAL_4 = SpaceItem(0, 4)
         val VERTICAL_8 = SpaceItem(0, 8)
         val VERTICAL_12 = SpaceItem(0, 12)
         val VERTICAL_16 = SpaceItem(0, 16)
