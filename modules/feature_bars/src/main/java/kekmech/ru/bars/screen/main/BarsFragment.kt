@@ -5,8 +5,13 @@ import android.annotation.TargetApi
 import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
+import android.text.Spannable
+import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.webkit.*
+import androidx.appcompat.widget.Toolbar
+import androidx.core.text.toSpannable
+import androidx.core.view.forEach
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import kekmech.ru.bars.R
@@ -25,6 +30,7 @@ import kekmech.ru.common_analytics.addScrollAnalytics
 import kekmech.ru.common_analytics.ext.screenAnalytics
 import kekmech.ru.common_android.addSystemTopPadding
 import kekmech.ru.common_android.doOnApplyWindowInsets
+import kekmech.ru.common_android.getThemeColor
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.views.setProgressViewOffset
 import kekmech.ru.common_kotlin.fastLazy
@@ -96,6 +102,14 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>() {
                 analytics.sendClick("BarsHideBrowser")
                 feature.accept(Wish.Click.HideBrowser)
             }
+            webViewToolbar.enableOverflowMenuColorWorkaround()
+            webViewToolbar.setOnMenuItemClickListener { menuItem ->
+                when (menuItem.itemId) {
+                    R.id.refresh -> feature.accept(Wish.Action.Update)
+                    else -> Unit
+                }
+                false
+            }
         }
     }
 
@@ -123,6 +137,7 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>() {
         is BarsEffect.LoadPage -> viewBinding.webView.loadUrl(effect.url)
         is BarsEffect.InvokeJs -> viewBinding.webView.evaluateJavascript(effect.js, null)
         is BarsEffect.OpenSettings -> settingsFeatureLauncher.launch()
+        is BarsEffect.ShowCommonError -> showBanner(R.string.something_went_wrong_error)
     }
 
     override fun onResume() {
@@ -138,6 +153,7 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>() {
 
         override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
             super.onPageStarted(view, url, favicon)
+            feature.accept(Wish.Action.PageStarted)
         }
 
         override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
@@ -158,7 +174,7 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>() {
             error: WebResourceError
         ) {
             analytics.sendCustomAction("BarsWebViewErrorReceived")
-            showBanner(R.string.something_went_wrong_error)
+            feature.accept(Wish.Action.PageLoadingError)
         }
     }
 
@@ -224,6 +240,21 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>() {
 
     private fun WebSettings.compromiseUserAgent() {
         userAgentString = userAgentString.replace("; wv", "")
+    }
+
+    private fun Toolbar.enableOverflowMenuColorWorkaround() {
+        val blackThemeColor = requireContext().getThemeColor(R.attr.colorBlack)
+        overflowIcon?.setTint(blackThemeColor)
+        menu?.forEach { menuItem ->
+            val spannable = menuItem.title.toSpannable()
+            spannable.setSpan(
+                ForegroundColorSpan(blackThemeColor),
+                0,
+                spannable.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            menuItem.title = spannable
+        }
     }
 
     companion object {

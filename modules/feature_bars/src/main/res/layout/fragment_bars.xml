@@ -27,13 +27,14 @@
             android:visibility="invisible"
             tools:visibility="visible">
 
-        <androidx.appcompat.widget.Toolbar
+        <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/webViewToolbar"
                 style="@style/Toolbar.WebView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:title="ЛКС Коломейцев А.А."
-                tools:subtitle="https://bars.mpei.ru/bars_web/..."/>
+                app:menu="@menu/menu_bars_webview"
+                tools:subtitle="https://bars.mpei.ru/bars_web/..."
+                tools:title="ЛКС Коломейцев А.А." />
 
         <WebView
                 android:id="@+id/webView"
@@ -48,7 +49,7 @@
                 android:layout_marginTop="?actionBarSize"
                 android:indeterminate="true"
                 app:indicatorColor="@color/colorMain"
-                app:trackColor="@color/colorTransparent"/>
+                app:trackColor="@color/colorTransparent" />
 
     </FrameLayout>
 
