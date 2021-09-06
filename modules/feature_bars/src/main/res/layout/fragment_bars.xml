@@ -41,6 +41,15 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="?actionBarSize" />
 
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/progressIndicator"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="?actionBarSize"
+                android:indeterminate="true"
+                app:indicatorColor="@color/colorMain"
+                app:trackColor="@color/colorTransparent"/>
+
     </FrameLayout>
 
     <androidx.cardview.widget.CardView

@@ -21,6 +21,7 @@ internal class BarsReducer : ScreenDslReducer<
                     copy(
                         config = event.remoteBarsConfig,
                         extractJs = event.extractJs,
+                        webViewUiState = webViewUiState.copy(isLoading = true)
                     )
                 }
                 effects { +loadPageEffect { latestLoadedUrl ?: config?.loginUrl } }
@@ -65,9 +66,16 @@ internal class BarsReducer : ScreenDslReducer<
                 }
             }
             is Wish.Action.PageFinished -> handlePageFinished(event)
-            is Wish.Action.Update -> effects {
-                if (state.config != null) {
-                    +loadPageEffect { latestLoadedUrl ?: config?.loginUrl }
+            is Wish.Action.Update -> {
+                state {
+                    copy(
+                        webViewUiState = webViewUiState.copy(isLoading = true)
+                    )
+                }
+                effects {
+                    if (state.config != null) {
+                        +loadPageEffect { latestLoadedUrl ?: config?.loginUrl }
+                    }
                 }
             }
 
@@ -83,6 +91,7 @@ internal class BarsReducer : ScreenDslReducer<
                     copy(
                         isLoading = true,
                         isAfterErrorLoadingConfig = false,
+                        webViewUiState = webViewUiState.copy(isLoading = true)
                     )
                 }
                 commands {
@@ -94,7 +103,12 @@ internal class BarsReducer : ScreenDslReducer<
             }
             is Wish.Click.Settings -> effects { +BarsEffect.OpenSettings }
             is Wish.Click.Login -> {
-                state { copy(isBrowserVisible = true) }
+                state {
+                    copy(
+                        isBrowserVisible = true,
+                        webViewUiState = webViewUiState.copy(isLoading = true)
+                    )
+                }
                 effects { +loadPageEffect { config?.loginUrl } }
             }
 
@@ -107,7 +121,7 @@ internal class BarsReducer : ScreenDslReducer<
         }
 
     private fun Result.handlePageFinished(
-        event: Wish.Action.PageFinished
+        event: Wish.Action.PageFinished,
     ): Any {
         state.config ?: return Unit
         val hasAuthCookie = CookieManager.getInstance().hasAuthCookie()
@@ -118,23 +132,27 @@ internal class BarsReducer : ScreenDslReducer<
                         flowState = FlowState.LOGGED_IN,
                         isLoading = false,
                         latestLoadedUrl = event.url,
+                        webViewUiState = WebViewUiState(
+                            url = event.url,
+                            pageTitle = event.pageTitle,
+                            isLoading = false
+                        )
                     )
                 }
-                effects {
-                    +invokeExtractJsEffect(state)
-                    +BarsEffect.SetWebViewToolbar(event.url, event.pageTitle)
-                }
+                effects { +invokeExtractJsEffect(state) }
                 commands { +BarsAction.SetLatestLoadedUrl(event.url) }
             }
-            hasAuthCookie -> {
-                state {
-                    copy(
-                        flowState = FlowState.LOGGED_IN,
-                        isLoading = false,
-                        isReturnBannerVisible = false,
+            hasAuthCookie -> state {
+                copy(
+                    flowState = FlowState.LOGGED_IN,
+                    isLoading = false,
+                    isReturnBannerVisible = false,
+                    webViewUiState = WebViewUiState(
+                        url = event.url,
+                        pageTitle = event.pageTitle,
+                        isLoading = false
                     )
-                }
-                effects { +BarsEffect.SetWebViewToolbar(event.url, event.pageTitle) }
+                )
             }
             else -> {
                 state {
@@ -145,10 +163,14 @@ internal class BarsReducer : ScreenDslReducer<
                         isLoading = false,
                         isReturnBannerVisible = false,
                         latestLoadedUrl = null,
+                        webViewUiState = WebViewUiState(
+                            url = event.url,
+                            pageTitle = event.pageTitle,
+                            isLoading = false
+                        )
                     )
                 }
                 commands { +BarsAction.SetLatestLoadedUrl(null) }
-                effects { +BarsEffect.SetWebViewToolbar(event.url, event.pageTitle) }
             }
         }
     }

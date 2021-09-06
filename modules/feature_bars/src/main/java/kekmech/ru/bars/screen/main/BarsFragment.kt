@@ -107,6 +107,14 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>() {
                 swipeRefresh.isRefreshing = state.isLoading
             }
             returnBanner.isVisible = state.isReturnBannerVisible
+
+            // render webview
+            val (url, pageTitle, isLoading) = state.webViewUiState
+            with(webViewToolbar) {
+                title = pageTitle ?: url
+                subtitle = url.takeIf { pageTitle != null }
+            }
+            progressIndicator.isVisible = isLoading
         }
         adapter.update(BarsListConverter(requireContext()).map(state))
     }
@@ -115,12 +123,6 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>() {
         is BarsEffect.LoadPage -> viewBinding.webView.loadUrl(effect.url)
         is BarsEffect.InvokeJs -> viewBinding.webView.evaluateJavascript(effect.js, null)
         is BarsEffect.OpenSettings -> settingsFeatureLauncher.launch()
-        is BarsEffect.SetWebViewToolbar ->
-            with(viewBinding.webViewToolbar) {
-                val (url, pageTitle) = effect
-                title = pageTitle ?: url
-                subtitle = url.takeIf { pageTitle != null }
-            }
     }
 
     override fun onResume() {

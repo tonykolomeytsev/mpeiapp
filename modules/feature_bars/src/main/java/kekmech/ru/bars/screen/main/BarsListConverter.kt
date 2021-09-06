@@ -97,7 +97,7 @@ internal class BarsListConverter(private val context: Context) {
                 itemId = 1,
                 text = "Показать БАРС в браузере",
                 drawableResID = R.drawable.ic_public_24px,
-                tintColorAttrId = R.attr.colorMain,
+                tintColorAttrId = R.attr.colorActive,
                 textStyleResId = R.style.H6_Main
             )
         )
