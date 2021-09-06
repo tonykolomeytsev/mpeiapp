@@ -31,6 +31,7 @@ import kekmech.ru.common_analytics.ext.screenAnalytics
 import kekmech.ru.common_android.addSystemTopPadding
 import kekmech.ru.common_android.doOnApplyWindowInsets
 import kekmech.ru.common_android.getThemeColor
+import kekmech.ru.common_android.openLinkExternal
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.views.setProgressViewOffset
 import kekmech.ru.common_kotlin.fastLazy
@@ -106,6 +107,7 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>() {
             webViewToolbar.setOnMenuItemClickListener { menuItem ->
                 when (menuItem.itemId) {
                     R.id.refresh -> feature.accept(Wish.Action.Update)
+                    R.id.open_external -> webView.url?.let { requireContext().openLinkExternal(it) }
                     else -> Unit
                 }
                 false
