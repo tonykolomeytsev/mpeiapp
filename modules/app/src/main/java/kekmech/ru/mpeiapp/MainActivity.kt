@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
     private val deeplinkHandlersProcessor: DeeplinkHandlersProcessor by inject()
     private val deviceIdProvider: DeviceIdProvider by inject()
 
-    @Suppress("MagicNumber")
+    @Suppress("MagicNumber", "MissingPermission")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

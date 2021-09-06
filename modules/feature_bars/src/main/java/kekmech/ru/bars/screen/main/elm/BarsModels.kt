@@ -31,7 +31,7 @@ internal sealed class BarsEvent {
         object Init : Wish()
 
         object Action {
-            data class PageFinished(val url: String) : Wish()
+            data class PageFinished(val url: String, val pageTitle: String?) : Wish()
             object Update : Wish()
         }
 
@@ -79,6 +79,10 @@ internal sealed class BarsEffect {
     }
 
     object OpenSettings : BarsEffect()
+    data class SetWebViewToolbar(
+        val url: String,
+        val pageTitle: String?,
+    ) : BarsEffect()
 }
 
 internal sealed class BarsAction {

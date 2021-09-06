@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -23,13 +24,16 @@
             android:id="@+id/webViewContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="invisible">
+            android:visibility="invisible"
+            tools:visibility="visible">
 
         <androidx.appcompat.widget.Toolbar
                 android:id="@+id/webViewToolbar"
-                style="@style/Toolbar.Close"
+                style="@style/Toolbar.WebView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                tools:title="ЛКС Коломейцев А.А."
+                tools:subtitle="https://bars.mpei.ru/bars_web/..."/>
 
         <WebView
                 android:id="@+id/webView"

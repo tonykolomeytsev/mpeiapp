@@ -115,6 +115,12 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>() {
         is BarsEffect.LoadPage -> viewBinding.webView.loadUrl(effect.url)
         is BarsEffect.InvokeJs -> viewBinding.webView.evaluateJavascript(effect.js, null)
         is BarsEffect.OpenSettings -> settingsFeatureLauncher.launch()
+        is BarsEffect.SetWebViewToolbar ->
+            with(viewBinding.webViewToolbar) {
+                val (url, pageTitle) = effect
+                title = pageTitle ?: url
+                subtitle = url.takeIf { pageTitle != null }
+            }
     }
 
     override fun onResume() {
@@ -124,9 +130,8 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>() {
 
     inner class BarsWebViewClient : WebViewClient() {
 
-        override fun onPageFinished(view: WebView, url: String) {
-            feature.accept(Wish.Action.PageFinished(url))
-            viewBinding.webViewToolbar.title = url
+        override fun onPageFinished(view: WebView?, url: String) {
+            feature.accept(Wish.Action.PageFinished(url, view?.title))
         }
 
         override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {

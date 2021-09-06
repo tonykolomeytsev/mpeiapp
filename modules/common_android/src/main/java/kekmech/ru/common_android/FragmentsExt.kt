@@ -1,6 +1,7 @@
 package kekmech.ru.common_android
 
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
@@ -53,3 +54,15 @@ fun Fragment.onKeyboardShown(action: () -> Unit) {
 
 val Fragment.decorView: View
     get() = requireActivity().window.decorView.findViewById(android.R.id.content)
+
+fun Fragment.setOnBackPressedListener(listener: () -> Unit) {
+    activity?.onBackPressedDispatcher?.addCallback(
+        viewLifecycleOwner,
+        object : OnBackPressedCallback(true) {
+
+            override fun handleOnBackPressed() {
+                listener.invoke()
+            }
+        }
+    )
+}
