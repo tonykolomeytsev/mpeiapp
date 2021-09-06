@@ -3,4 +3,8 @@
     <item
             android:id="@+id/refresh"
             android:title="@string/bars_webview_menu_refresh" />
+
+    <item
+            android:id="@+id/open_external"
+            android:title="@string/bars_webview_menu_open_external" />
 </menu>
