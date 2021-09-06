@@ -46,7 +46,6 @@ internal class BarsReducer : ScreenDslReducer<
             }
         }
 
-    @Suppress("ComplexMethod")
     override fun Result.ui(event: Wish): Any =
         when (event) {
             is Wish.Init -> {
