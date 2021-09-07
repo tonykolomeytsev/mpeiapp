@@ -123,6 +123,7 @@ internal class BarsReducer : ScreenDslReducer<
                 }
                 effects { +loadPageEffect { config?.loginUrl } }
             }
+            is Wish.Click.NotAllowedLink -> effects { +BarsEffect.ShowNotAllowedLinkError }
 
             is Wish.Extract.StudentName -> commands { +BarsAction.PushStudentName(event.name) }
             is Wish.Extract.StudentGroup -> commands { +BarsAction.PushStudentGroup(event.group) }

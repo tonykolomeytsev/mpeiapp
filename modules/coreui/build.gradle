@@ -7,6 +7,8 @@ dependencies {
     implementation androidx.coreKtx
     implementation google.material
     implementation facebook.shimmer
+    implementation rx.java
+    implementation rx.android
 
     implementation project(path: ":domain_schedule")
     implementation project(path: ":domain_notes")
