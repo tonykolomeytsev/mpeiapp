@@ -82,10 +82,4 @@
 
     </ScrollView>
 
-    <kekmech.ru.coreui.banner.BannerContainer
-            android:id="@+id/bannerContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:visibility="gone" />
-
 </FrameLayout>

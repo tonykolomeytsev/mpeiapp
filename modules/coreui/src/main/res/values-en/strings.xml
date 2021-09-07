@@ -206,6 +206,7 @@
     <string name="bars_stub_empty_disciplines_description">The list of disciplines for the given semester is empty, or an error occurred during the download.</string>
     <string name="bars_webview_menu_refresh">Refresh page</string>
     <string name="bars_webview_menu_open_external">Open in browser</string>
+    <string name="bars_webview_not_allowed_link">Navigation to other sites is not possible inside the application</string>
 
     <string name="app_settings_screen_title">Settings</string>
     <string name="app_settings_header_schedule">Schedule</string>

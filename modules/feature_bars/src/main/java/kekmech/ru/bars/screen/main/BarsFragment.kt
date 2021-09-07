@@ -80,7 +80,6 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>() {
                     setProgressViewOffset(windowInsets.systemWindowInsetTop)
                 }
             }
-            bannerContainer.addSystemTopPadding()
         }
     }
 
@@ -141,6 +140,8 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>() {
         is BarsEffect.InvokeJs -> viewBinding.webView.evaluateJavascript(effect.js, null)
         is BarsEffect.OpenSettings -> settingsFeatureLauncher.launch()
         is BarsEffect.ShowCommonError -> showBanner(R.string.something_went_wrong_error)
+        is BarsEffect.ShowNotAllowedLinkError ->
+            showBanner(R.string.bars_webview_not_allowed_link, color = R.color.colorMain)
     }
 
     override fun onResume() {
@@ -160,7 +161,7 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>() {
         }
 
         override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-            return "https://bars.mpei.ru" !in url
+            return handleUrlLoading(url)
         }
 
         @TargetApi(Build.VERSION_CODES.N)
@@ -168,7 +169,15 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>() {
             view: WebView,
             request: WebResourceRequest
         ): Boolean {
-            return "https://bars.mpei.ru" !in request.url.toString()
+            return handleUrlLoading(request.url.toString())
+        }
+
+        private fun handleUrlLoading(url: String): Boolean {
+            val allowToFollowTheUrl = "https://bars.mpei.ru" in url
+            if (!allowToFollowTheUrl) {
+                feature.accept(Wish.Click.NotAllowedLink)
+            }
+            return !allowToFollowTheUrl
         }
 
         override fun onReceivedError(

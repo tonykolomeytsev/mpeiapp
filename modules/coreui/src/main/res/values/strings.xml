@@ -208,6 +208,7 @@
     <string name="bars_stub_empty_disciplines_description">Список дисциплин для заданного семестра пуст, либо во время загрузки произошла ошибка</string>
     <string name="bars_webview_menu_refresh">Обновить страницу</string>
     <string name="bars_webview_menu_open_external">Открыть в браузере</string>
+    <string name="bars_webview_not_allowed_link">Переход на сторонние ресурсы невозможен внутри приложения</string>
 
     <string name="app_settings_screen_title">Настройки</string>
     <string name="app_settings_header_schedule">Расписание</string>

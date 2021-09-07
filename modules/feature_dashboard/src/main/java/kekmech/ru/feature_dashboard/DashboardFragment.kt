@@ -56,7 +56,6 @@ class DashboardFragment :
             recyclerView.adapter = adapter
             recyclerView.addSystemVerticalPadding()
             recyclerView.addScrollAnalytics(analytics, "RecyclerView")
-            bannerContainer.addSystemTopPadding()
             swipeRefresh.apply {
                 setOnRefreshListener { feature.accept(Wish.Action.SwipeToRefresh) }
                 doOnApplyWindowInsets { _, windowInsets, _ ->

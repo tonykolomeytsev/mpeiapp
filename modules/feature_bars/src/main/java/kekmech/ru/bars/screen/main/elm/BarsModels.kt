@@ -50,6 +50,7 @@ internal sealed class BarsEvent {
             object Settings : Wish()
             object SwipeToRefresh : Wish()
             object Login : Wish()
+            object NotAllowedLink : Wish()
         }
 
         object Extract {
@@ -89,6 +90,7 @@ internal sealed class BarsEffect {
 
     object OpenSettings : BarsEffect()
     object ShowCommonError : BarsEffect()
+    object ShowNotAllowedLinkError : BarsEffect()
 }
 
 internal sealed class BarsAction {

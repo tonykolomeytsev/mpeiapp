@@ -29,10 +29,4 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/appBarLayout" />
 
-    <kekmech.ru.coreui.banner.BannerContainer
-            android:id="@+id/bannerContainer"
-            android:layout_width="match_parent"
-            android:layout_height="fill_parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
