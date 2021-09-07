@@ -9,6 +9,6 @@ import org.koin.dsl.bind
 
 object MainScreenModule : ModuleProvider({
     single { BottomTabsSwitcherImpl } bind BottomTabsSwitcher::class
-    single { MainScreenDependencies(get(), get(), get(), get(), get(), get(), get(), get()) }
+    single { MainScreenDependencies(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
     factory { MainScreenLauncherImpl(get()) } bind MainScreenLauncher::class
 })

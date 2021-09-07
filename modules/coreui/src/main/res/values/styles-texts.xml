@@ -101,4 +101,8 @@
         <item name="android:textColor">?attr/colorRed</item>
     </style>
 
+    <style name="H8.White">
+        <item name="android:textColor">?attr/colorRed</item>
+    </style>
+
 </resources>

@@ -10,9 +10,15 @@ fun Fragment.showBanner(@StringRes resId: Int, @ColorRes color: Int = R.color.co
     showBanner(getString(resId), color)
 
 fun Fragment.showBanner(text: String, @ColorRes color: Int = R.color.colorRed) {
-    val container = findBanner() ?: error("Add BannerContainer to $this layout")
-    val bannerBackgroundColor = ContextCompat.getColor(requireContext(), color)
-    container.show(Banner(text, bannerBackgroundColor))
+    findBanner()?.let { container ->
+        val bannerBackgroundColor = ContextCompat.getColor(requireContext(), color)
+        container.show(Banner(text, bannerBackgroundColor))
+    }
 }
 
-fun Fragment.findBanner(): BannerContainer? = requireActivity().findViewById(R.id.bannerContainer)
+private fun Fragment.findNetworkStateBanner(): NetworkStateBannerContainer? =
+    requireActivity().findViewById(R.id.networkStateBannerContainer)
+
+fun Fragment.findBanner(): BannerContainer? =
+    requireActivity().findViewById<BannerContainer>(R.id.bannerContainer)
+        ?.takeIf { findNetworkStateBanner()?.isVisible != true }

@@ -95,6 +95,7 @@
     <string name="before_yesterday">Day before yesterday</string>
 
     <string name="something_went_wrong_error">Something went wrong…</string>
+    <string name="connection_lost_error">No internet connection</string>
 
     <string name="onboarding_welcome_start_using">Continue</string>
     <string name="onboarding_welcome_title_1">Meet\nthe refreshed MPEIX</string>

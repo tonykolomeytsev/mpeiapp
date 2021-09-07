@@ -8,16 +8,14 @@
     <TextView
             android:id="@+id/bannerText"
             style="@style/H6.White"
-            android:fontFamily="@font/roboto_medium"
-            android:textSize="14sp"
-            android:textColor="@color/colorWhite"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_medium"
             android:paddingStart="32dp"
-            android:paddingEnd="32dp"
             android:paddingTop="16dp"
+            android:paddingEnd="32dp"
             android:paddingBottom="16dp"
+            android:textColor="@color/colorWhite"
             tools:background="@color/colorRed"
-            tools:text="Somethind went wrong"
-            />
+            tools:text="Somethind went wrong" />
 </merge>

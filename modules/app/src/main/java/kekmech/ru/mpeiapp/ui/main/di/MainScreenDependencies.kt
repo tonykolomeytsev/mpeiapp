@@ -2,6 +2,7 @@ package kekmech.ru.mpeiapp.ui.main.di
 
 import kekmech.ru.common_feature_toggles.FeatureToggles
 import kekmech.ru.common_navigation.BottomTabsSwitcher
+import kekmech.ru.common_network.connection_tracker.ConnectionTracker
 import kekmech.ru.domain_app_settings.AppSettings
 import kekmech.ru.domain_bars.BarsFeatureLauncher
 import kekmech.ru.domain_force_update.ForceUpdateChecker
@@ -17,5 +18,6 @@ data class MainScreenDependencies(
     val mapFeatureLauncher: MapFeatureLauncher,
     val forceUpdateChecker: ForceUpdateChecker,
     val featureToggles: FeatureToggles,
-    val appSettings: AppSettings
+    val appSettings: AppSettings,
+    val connectionTracker: ConnectionTracker,
 )

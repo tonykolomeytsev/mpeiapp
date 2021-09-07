@@ -97,6 +97,7 @@
     <string name="before_yesterday">Позавчера</string>
 
     <string name="something_went_wrong_error">Что-то пошло не так…</string>
+    <string name="connection_lost_error">Интернет соединение отсутствует</string>
 
     <string name="onboarding_welcome_start_using">Начать пользоваться</string>
     <string name="onboarding_welcome_title_1">Встречайте\nобновленный MPEIX</string>

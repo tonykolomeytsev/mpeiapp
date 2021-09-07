@@ -12,6 +12,8 @@ import com.google.android.gms.maps.MapsInitializer
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kekmech.ru.common_android.onActivityResult
+import kekmech.ru.common_mvi.DisposableDelegate
+import kekmech.ru.common_mvi.DisposableDelegateImpl
 import kekmech.ru.common_navigation.BackButtonListener
 import kekmech.ru.common_navigation.NavigationHolder
 import kekmech.ru.common_network.device_id.DeviceIdProvider
@@ -21,7 +23,7 @@ import kekmech.ru.domain_onboarding.OnboardingFeatureLauncher
 import kekmech.ru.mpeiapp.deeplink.DeeplinkHandlersProcessor
 import org.koin.android.ext.android.inject
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), DisposableDelegate by DisposableDelegateImpl() {
 
     private val navigationHolder: NavigationHolder by inject()
     private val appSettings: AppSettings by inject()
