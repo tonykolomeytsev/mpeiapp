@@ -7,15 +7,14 @@
 
     <TextView
             android:id="@+id/bannerText"
-            style="@style/H6.White"
+            style="@style/H8"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/colorRed"
             android:fontFamily="@font/roboto_medium"
-            android:paddingStart="32dp"
-            android:paddingTop="16dp"
-            android:paddingEnd="32dp"
-            android:paddingBottom="16dp"
-            android:textColor="@color/colorWhite"
-            tools:background="@color/colorRed"
-            tools:text="Somethind went wrong" />
+            android:gravity="center"
+            android:paddingHorizontal="32dp"
+            android:paddingVertical="4dp"
+            android:text="@string/connection_lost_error"
+            android:textColor="@color/colorWhite" />
 </merge>

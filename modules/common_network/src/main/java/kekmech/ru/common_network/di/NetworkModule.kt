@@ -5,6 +5,7 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import kekmech.ru.common_di.ModuleProvider
 import kekmech.ru.common_network.BuildConfig
+import kekmech.ru.common_network.connection_tracker.ConnectionTracker
 import kekmech.ru.common_network.device_id.DeviceIdProvider
 import kekmech.ru.common_network.device_id.DeviceLocaleProvider
 import kekmech.ru.common_network.gson.*
@@ -36,6 +37,7 @@ object NetworkModule : ModuleProvider({
     single { provideOkHttpClient(get(), get()) } bind OkHttpClient::class
     single { provideRetrofitBuilder(get(), get()) } bind Retrofit.Builder::class
     single { DeviceIdProvider(get()) } bind DeviceIdProvider::class
+    single { ConnectionTracker(get()) }
 })
 
 private fun provideGson() = GsonBuilder()
