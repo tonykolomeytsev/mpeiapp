@@ -12,7 +12,6 @@ import kekmech.ru.coreui.databinding.ViewBannerContainerBinding
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-
 class BannerContainer @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,

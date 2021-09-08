@@ -139,6 +139,7 @@
 
     <string name="dashboard_loading_error">An error occurred while loading data from the server</string>
     <string name="dashboard_item_change_group">Group %s</string>
+    <string name="dashboard_item_click_to_change_group">Click to change schedule</string>
     <string name="dashboard_section_header_events">Upcoming events</string>
     <string name="dashboard_events_empty_state_title">Nothing interesting yet</string>
     <string name="dashboard_events_empty_state_subtitle">No events scheduled for the next 7 days</string>
@@ -195,10 +196,11 @@
     <string name="all_notes_search_menu_item">Search</string>
 
     <string name="bars_stub_student_name">Anonymous User</string>
-    <string name="bars_stub_student_group">Group %s</string>
+    <string name="bars_stub_student_group">Group</string>
     <string name="bars_stub_login_header">You are not logged into BARS</string>
     <string name="bars_stub_login_description">Logging into BARS is carried out through the built-in browser, after which all information is viewed in the application</string>
     <string name="bars_stub_login_button">Login to BARS</string>
+    <string name="bars_stub_show_browser_label">Show BARS in browser</string>
     <string name="bars_stub_banner_return">Data has been updated. Click on the banner to return to normal display</string>
     <string name="bars_stub_disclaimer">The functionality of BARS is still under development, there may be crashes and incorrect behavior of this part of the application</string>
     <string name="bars_stub_error_loading_config_header">An error has occurred</string>
@@ -208,6 +210,7 @@
     <string name="bars_webview_menu_refresh">Refresh page</string>
     <string name="bars_webview_menu_open_external">Open in browser</string>
     <string name="bars_webview_not_allowed_link">Navigation to other sites is not possible inside the application</string>
+    <string name="bars_item_no_marks">No grades</string>
 
     <string name="app_settings_screen_title">Settings</string>
     <string name="app_settings_header_schedule">Schedule</string>
