@@ -14,5 +14,7 @@ dependencies {
     implementation rx.java
     implementation rx.android
 
+    implementation timber
+
     implementation project(path: ":common_di")
 }
