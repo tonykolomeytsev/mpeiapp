@@ -15,7 +15,7 @@
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:windowTranslucentStatus">false</item>
         <item name="android:windowTranslucentNavigation">false</item>
-        <item name="android:statusBarColor">@color/colorNavigationLight</item>
+        <item name="android:statusBarColor">@color/colorTransparent</item>
         <item name="android:navigationBarColor">@color/colorNavigationDark</item>
 
         <item name="materialButtonStyle">@style/Button.Primary</item>
@@ -71,7 +71,7 @@
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:windowTranslucentStatus">false</item>
         <item name="android:windowTranslucentNavigation">false</item>
-        <item name="android:statusBarColor">@color/colorNavigationDark</item>
+        <item name="android:statusBarColor">@color/colorTransparent</item>
         <item name="android:navigationBarColor">@color/colorNavigationLight</item>
 
         <item name="materialButtonStyle">@style/Button.Primary</item>

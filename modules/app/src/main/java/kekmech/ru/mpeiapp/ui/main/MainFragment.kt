@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.setPadding
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers.mainThread
 import io.reactivex.rxjava3.disposables.Disposable
 import kekmech.ru.common_android.addSystemBottomPadding
 import kekmech.ru.common_android.onActivityResult
@@ -14,7 +13,6 @@ import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.BaseFragment
 import kekmech.ru.common_navigation.BackButtonListener
 import kekmech.ru.common_navigation.BottomTab
-import kekmech.ru.coreui.banner.NetworkStateBannerContainer
 import kekmech.ru.mpeiapp.R
 import kekmech.ru.mpeiapp.databinding.FragmentMainBinding
 import kekmech.ru.mpeiapp.ui.main.di.MainScreenDependencies
@@ -70,12 +68,6 @@ class MainFragment : BaseFragment<MainScreenEvent, MainScreenEffect, MainScreenS
         if (dependencies.featureToggles.isSnowFlakesEnabled && dependencies.appSettings.isSnowEnabled) {
             enableSnowFlakesEffect(view)
         }
-
-        dependencies.connectionTracker
-            .observeConnectionState()
-            .observeOn(mainThread())
-            .subscribe(::displayNetworkStateBanner)
-            .bind()
     }
 
     override fun render(state: MainScreenState) = Unit
@@ -115,15 +107,6 @@ class MainFragment : BaseFragment<MainScreenEvent, MainScreenEffect, MainScreenS
 
     override fun onBackPressed(): Boolean {
         return bottomBarController?.popStack() == true
-    }
-
-    private fun displayNetworkStateBanner(networkState: Boolean) {
-        val bannerContainer =
-            requireActivity().findViewById<NetworkStateBannerContainer>(R.id.networkStateBannerContainer)
-        when (networkState) {
-            true -> bannerContainer.hideBanner()
-            false -> bannerContainer.showBanner()
-        }
     }
 
     companion object {
