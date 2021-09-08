@@ -8,6 +8,7 @@ import io.reactivex.rxjava3.subjects.BehaviorSubject
 import kekmech.ru.common_kotlin.Option
 import java.util.concurrent.ConcurrentHashMap
 
+@Deprecated("Deprecated in MpeiX v1.9.0")
 class LifetimeCache {
 
     private val cache = ConcurrentHashMap<String, BehaviorSubject<Option<Any>>>()
