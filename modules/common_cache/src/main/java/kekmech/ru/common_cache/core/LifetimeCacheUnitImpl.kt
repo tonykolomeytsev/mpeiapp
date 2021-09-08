@@ -1,5 +1,6 @@
 package kekmech.ru.common_cache.core
 
+@Deprecated("Deprecated in MpeiX v1.9.0")
 class LifetimeCacheUnitImpl<T : Any>(
     private val key: String,
     private val lifetimeCache: LifetimeCache

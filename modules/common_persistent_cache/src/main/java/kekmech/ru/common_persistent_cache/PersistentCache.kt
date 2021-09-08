@@ -3,6 +3,7 @@ package kekmech.ru.common_persistent_cache
 import android.content.Context
 import java.io.File
 
+@Deprecated("Deprecated in MpeiX v1.9.0")
 abstract class PersistentCache<K, V>(
     context: Context,
     cacheName: String,

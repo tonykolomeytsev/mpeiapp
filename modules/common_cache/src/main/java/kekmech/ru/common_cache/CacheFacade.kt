@@ -11,6 +11,7 @@ import kekmech.ru.common_kotlin.getOrPut
 import java.util.*
 import java.util.concurrent.atomic.AtomicReference
 
+@Deprecated("Deprecated in MpeiX v1.9.0")
 class CacheFacade<T : Any>(
     private val cache: LifetimeCacheUnit<T>,
     private val dataSource: () -> Observable<T>

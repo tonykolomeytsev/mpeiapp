@@ -3,6 +3,7 @@ package kekmech.ru.common_persistent_cache
 import android.content.Context
 import com.google.gson.Gson
 
+@Deprecated("Deprecated in MpeiX v1.9.0")
 abstract class GsonPersistentCache<K, V>(
     context: Context,
     cacheName: String,
