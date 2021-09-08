@@ -81,7 +81,7 @@ class MainFragment : BaseFragment<MainScreenEvent, MainScreenEffect, MainScreenS
     override fun onResume() {
         super.onResume()
         tabsSwitcherDisposable = tabsSwitcher.observe().subscribe {
-            it.value?.let { tab ->
+            it.map { tab ->
                 bottomBarController?.switchTab(tab)
                 tabsSwitcher.clearTab()
             }
