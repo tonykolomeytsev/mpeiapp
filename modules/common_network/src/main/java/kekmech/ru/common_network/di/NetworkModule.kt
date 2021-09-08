@@ -28,11 +28,13 @@ private const val DEFAULT_REQUEST_TIMEOUT = 15L
 
 object NetworkModule : ModuleProvider({
     single { provideGson() } bind Gson::class
-    single { RequiredHeadersInterceptor(
-        deviceId = provideDeviceId(get()),
-        appVersion = BuildConfig.VERSION_NAME,
-        deviceLanguage = provideDeviceLocale(get())
-    ) }
+    single {
+        RequiredHeadersInterceptor(
+            deviceId = provideDeviceId(get()),
+            appVersion = BuildConfig.VERSION_NAME,
+            deviceLanguage = provideDeviceLocale(get())
+        )
+    }
     single { NoConnectionInterceptor(get()) }
     single { provideOkHttpClient(get(), get()) } bind OkHttpClient::class
     single { provideRetrofitBuilder(get(), get()) } bind Retrofit.Builder::class
@@ -51,7 +53,7 @@ private fun provideGson() = GsonBuilder()
 
 private fun provideOkHttpClient(
     requiredHeadersInterceptor: RequiredHeadersInterceptor,
-    noConnectionInterceptor: NoConnectionInterceptor
+    noConnectionInterceptor: NoConnectionInterceptor,
 ) = OkHttpClient.Builder()
     .addNetworkInterceptor(HttpLoggingInterceptor().apply { level = Level.BODY })
     .addInterceptor(requiredHeadersInterceptor)
@@ -63,7 +65,7 @@ private fun provideOkHttpClient(
 
 private fun provideRetrofitBuilder(
     okHttpClient: OkHttpClient,
-    gson: Gson
+    gson: Gson,
 ) = Retrofit.Builder()
     .client(okHttpClient)
     .addConverterFactory(GsonConverterFactory.create(gson))

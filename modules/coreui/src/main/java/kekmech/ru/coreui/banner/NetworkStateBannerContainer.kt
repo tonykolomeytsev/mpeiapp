@@ -8,7 +8,6 @@ import kekmech.ru.common_android.addSystemTopPadding
 import kekmech.ru.coreui.R
 import kekmech.ru.coreui.databinding.ViewNetworkStateBannerContainerBinding
 
-
 class NetworkStateBannerContainer @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
