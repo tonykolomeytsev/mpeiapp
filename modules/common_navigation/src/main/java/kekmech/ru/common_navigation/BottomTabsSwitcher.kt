@@ -1,7 +1,7 @@
 package kekmech.ru.common_navigation
 
 import io.reactivex.rxjava3.core.Observable
-import kekmech.ru.common_kotlin.Option
+import java.util.*
 
 interface BottomTabsSwitcher {
 
@@ -9,5 +9,5 @@ interface BottomTabsSwitcher {
 
     fun clearTab()
 
-    fun observe(): Observable<Option<BottomTab>>
+    fun observe(): Observable<Optional<BottomTab>>
 }

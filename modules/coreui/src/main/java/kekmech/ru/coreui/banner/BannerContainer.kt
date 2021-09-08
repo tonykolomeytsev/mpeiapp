@@ -7,18 +7,18 @@ import android.widget.FrameLayout
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers.mainThread
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import kekmech.ru.common_android.addSystemTopPadding
-import kekmech.ru.common_kotlin.Option
 import kekmech.ru.coreui.R
 import kekmech.ru.coreui.databinding.ViewBannerContainerBinding
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 
 class BannerContainer @JvmOverloads constructor(
     context: Context,
-    attrs: AttributeSet? = null
+    attrs: AttributeSet? = null,
 ) : FrameLayout(context, attrs) {
 
-    private val bannerSubject = BehaviorSubject.create<Option<Banner>>().toSerialized()
+    private val bannerSubject = BehaviorSubject.create<Optional<Banner>>().toSerialized()
     private val viewBinding: ViewBannerContainerBinding
     private val bannerText get() = viewBinding.bannerText
 
@@ -30,13 +30,13 @@ class BannerContainer @JvmOverloads constructor(
         bannerText.addSystemTopPadding()
 
         observeBannerShowing()
-            .subscribe { it.value?.let(::displayBanner) }
+            .subscribe { it.map(::displayBanner) }
         observeBannerHiding()
-            .subscribe { it.value?.let { hideBanner() } }
+            .subscribe { it.map { hideBanner() } }
     }
 
     fun show(banner: Banner) {
-        bannerSubject.onNext(Option(banner))
+        bannerSubject.onNext(Optional.of(banner))
     }
 
     private fun displayBanner(banner: Banner) {
@@ -67,7 +67,7 @@ class BannerContainer @JvmOverloads constructor(
     private fun observeBannerHiding() =
         bannerSubject
             .debounce(BANNER_SHOWING_DURATION, TimeUnit.MILLISECONDS)
-            .doOnNext { bannerSubject.onNext(Option(null)) }
+            .doOnNext { bannerSubject.onNext(Optional.empty()) }
             .observeOn(mainThread())
 
     private companion object {
