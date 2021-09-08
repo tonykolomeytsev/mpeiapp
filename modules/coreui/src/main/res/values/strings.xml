@@ -141,6 +141,7 @@
 
     <string name="dashboard_loading_error">Произошла ошибка при загрузке данных с сервера</string>
     <string name="dashboard_item_change_group">Группа %s</string>
+    <string name="dashboard_item_click_to_change_group">Нажмите, чтобы сменить расписание</string>
     <string name="dashboard_section_header_events">Ближайшие события</string>
     <string name="dashboard_events_empty_state_title">Пока ничего интересного</string>
     <string name="dashboard_events_empty_state_subtitle">На ближайшую неделю не запланировано никаких событий</string>
@@ -197,10 +198,11 @@
     <string name="all_notes_search_menu_item">Поиск</string>
 
     <string name="bars_stub_student_name">Анонимный Пользователь</string>
-    <string name="bars_stub_student_group">Группа %s</string>
+    <string name="bars_stub_student_group">Группа</string>
     <string name="bars_stub_login_header">Вы не вошли в БАРС</string>
     <string name="bars_stub_login_description">Вход в БАРС осуществляется через встроенный браузер, после этого просмотр всей информации происходит в приложении</string>
     <string name="bars_stub_login_button">Войти в БАРС</string>
+    <string name="bars_stub_show_browser_label">Показать БАРС в браузере</string>
     <string name="bars_stub_banner_return">Данные обновлены. Нажмите на баннер, чтобы вернуться к обычному отображению</string>
     <string name="bars_stub_disclaimer">Функциональность БАРСа все еще в разработке, возможны сбои и некорректное поведение в этой части приложения</string>
     <string name="bars_stub_error_loading_config_header">Произошла ошибка</string>
@@ -210,6 +212,7 @@
     <string name="bars_webview_menu_refresh">Обновить страницу</string>
     <string name="bars_webview_menu_open_external">Открыть в браузере</string>
     <string name="bars_webview_not_allowed_link">Переход на сторонние ресурсы невозможен внутри приложения</string>
+    <string name="bars_item_no_marks">Нет оценок</string>
 
     <string name="app_settings_screen_title">Настройки</string>
     <string name="app_settings_header_schedule">Расписание</string>
