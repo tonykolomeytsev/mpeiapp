@@ -8,6 +8,6 @@
         android:gravity="center"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
-        android:text="Нет оценок"
+        android:text="@string/bars_item_no_marks"
         android:textColor="?colorGray70"
         android:textSize="14sp" />

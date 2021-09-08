@@ -78,7 +78,8 @@ internal class BarsListConverter(private val context: Context) {
                 TextWithIconItem(
                     itemId = 0,
                     text = SpannableStringBuilder()
-                        .append("Группа ")
+                        .append(context.getString(R.string.bars_stub_student_group))
+                        .append(" ")
                         .append(
                             it,
                             ForegroundColorSpan(context.getThemeColor(R.attr.colorBlack)),
@@ -95,7 +96,7 @@ internal class BarsListConverter(private val context: Context) {
         add(
             TextWithIconItem(
                 itemId = 1,
-                text = "Показать БАРС в браузере",
+                textResId = R.string.bars_stub_show_browser_label,
                 drawableResID = R.drawable.ic_public_24px,
                 tintColorAttrId = R.attr.colorActive,
                 textStyleResId = R.style.H6_Main
