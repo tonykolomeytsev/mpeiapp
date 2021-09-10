@@ -8,6 +8,7 @@ import io.reactivex.rxjava3.subjects.BehaviorSubject
 import kekmech.ru.common_cache.core.CacheHandle
 import kekmech.ru.common_cache.core.DelegatingPersistentCacheHandle
 import java.io.File
+import java.time.Duration
 import java.util.*
 
 @Suppress("TooManyFunctions")
@@ -15,6 +16,10 @@ open class PersistentCache(
     private val gson: Gson,
     private val cacheDirectory: File,
 ) {
+
+    init {
+        cacheDirectory.mkdirs()
+    }
 
     private val commonSubject = BehaviorSubject.create<PipelineEntry>()
     private val cache = Collections.synchronizedMap(
@@ -30,49 +35,61 @@ open class PersistentCache(
     fun remove(key: String) {
         removePersistentInternal(key)
         cache.remove(key)
+        commonSubject.onNext(PipelineEntry(key, Optional.empty()))
     }
 
     @Suppress("UNCHECKED_CAST")
     fun <T : Any> peek(
         key: String,
         valueClass: Class<T>,
+        lifetime: Duration?,
         autoUpdateSubject: Boolean = true,
     ): T? {
         return cache[key] as T?
-            ?: peekPersistent(key, valueClass)
+            ?: peekPersistent(key, valueClass, lifetime)
                 ?.also { if (autoUpdateSubject) put(key, it) }
     }
 
     fun <T : Any> putIfPresent(
         key: String,
         valueClass: Class<T>,
+        lifetime: Duration?,
         modifier: (previousValue: T) -> T,
     ) {
-        val previousValue = peek(key, valueClass, autoUpdateSubject = false)
+        val previousValue = peek(key, valueClass, lifetime, autoUpdateSubject = false)
         previousValue?.let { put(key, modifier.invoke(it)) }
     }
 
     fun <T : Any> put(
         key: String,
         valueClass: Class<T>,
+        lifetime: Duration?,
         modifier: (previousValue: T?) -> T,
     ) {
-        val previousValue = peek(key, valueClass, autoUpdateSubject = false)
+        val previousValue = peek(key, valueClass, lifetime, autoUpdateSubject = false)
         put(key, modifier.invoke(previousValue))
     }
 
-    fun <T : Any> get(key: String, valueClass: Class<T>): Maybe<T> =
+    fun <T : Any> get(
+        key: String,
+        valueClass: Class<T>,
+        lifetime: Duration?,
+    ): Maybe<T> =
         Maybe
             .create<T> { emitter ->
-                peek(key, valueClass)
+                peek(key, valueClass, lifetime)
                     ?.let(emitter::onSuccess)
                     ?: emitter.onComplete()
             }
             .observeOn(io())
 
     @Suppress("UNCHECKED_CAST")
-    fun <T : Any> observe(key: String, valueClass: Class<T>): Observable<T> {
-        peek(key, valueClass)
+    fun <T : Any> observe(
+        key: String,
+        valueClass: Class<T>,
+        lifetime: Duration?,
+    ): Observable<T> {
+        peek(key, valueClass, lifetime)
         return commonSubject
             .filter { it.key == key }
             .observeOn(io())
@@ -89,7 +106,9 @@ open class PersistentCache(
     fun <T : Any> of(
         key: String,
         valueClass: Class<T>,
-    ): CacheHandle<T> = DelegatingPersistentCacheHandle(key, valueClass, this)
+        lifetime: Duration? = null,
+    ): CacheHandle<T> =
+        DelegatingPersistentCacheHandle(key, valueClass, lifetime, this)
 
     fun clear() {
         cache.clear()
@@ -116,8 +135,19 @@ open class PersistentCache(
     private fun <T : Any> peekPersistent(
         key: String,
         valueClass: Class<T>,
+        lifetime: Duration?
     ): T? {
         val file = File(cacheDirectory, key)
+
+        // check cache lifetime expiration
+        if (lifetime != null) {
+            val expirationTimestamp = file.lastModified() + lifetime.toMillis()
+            if (expirationTimestamp > System.currentTimeMillis()) {
+                // we don't need to delete file from cache dir
+                // just return null
+                return null
+            }
+        }
         if (file.exists()) {
             return runCatching {
                 gson.fromJson(String(file.readBytes()), valueClass)
