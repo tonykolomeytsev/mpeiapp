@@ -1,4 +1,4 @@
-package kekmech.ru.common_cache.core.in_memory_cache
+package kekmech.ru.common_cache.core
 
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Observable
