@@ -11,7 +11,7 @@ internal class MapActor(
 
     @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
     override fun execute(action: MapAction): Observable<MapEvent> = when (action) {
-        is MapAction.ObserveMarkers -> mapRepository.observeMarkers()
+        is MapAction.ObserveMarkers -> mapRepository.getMarkers()
             .flatMap { Single.just(it.markers) }
             .mapEvents(MapEvent.News::MapMarkersLoaded, MapEvent.News::MapMarkersLoadError)
     }

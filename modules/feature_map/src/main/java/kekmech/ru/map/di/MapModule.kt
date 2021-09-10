@@ -21,7 +21,7 @@ object MapModule : ModuleProvider({
     loadKoinModules(EmojiModule.provider)
 
     single { get<Retrofit.Builder>().buildApi<MapService>() } bind MapService::class
-    single { MapRepository(get(), get(), get()) } bind MapRepository::class
+    single { MapRepository(get(), get()) } bind MapRepository::class
     single { DeeplinkDelegate() } // todo сделать это иначе
     factory { MapFeatureFactory(get(), get()) } bind MapFeatureFactory::class
     factory { MapActor(get()) } bind MapActor::class

@@ -5,6 +5,7 @@ dependencies {
     implementation squareup.retrofit_rxJava2
     implementation google.gson
     implementation androidx.appcompat
+    implementation timber
 
     implementation project(path: ":common_annotations")
     implementation project(path: ":common_persistent_cache")
