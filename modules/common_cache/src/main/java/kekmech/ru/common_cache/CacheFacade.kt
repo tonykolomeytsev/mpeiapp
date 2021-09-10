@@ -4,11 +4,8 @@ import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers.io
-import kekmech.ru.common_cache.core.LifetimeCache
 import kekmech.ru.common_cache.core.LifetimeCacheUnit
-import kekmech.ru.common_cache.core.LifetimeCacheUnitImpl
 import kekmech.ru.common_kotlin.getOrPut
-import java.util.*
 import java.util.concurrent.atomic.AtomicReference
 
 @Deprecated("Deprecated in MpeiX v1.9.0")
@@ -66,8 +63,3 @@ class CacheFacade<T : Any>(
             .doFinally { atomicDataSource.set(null) }
     }
 }
-
-fun <T : Any> LifetimeCache.create(dataSource: () -> Single<T>): CacheFacade<T> =
-    CacheFacade(
-        LifetimeCacheUnitImpl(UUID.randomUUID().toString(), this)
-    ) { dataSource().toObservable() }
