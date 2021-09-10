@@ -22,7 +22,7 @@ internal class SearchActor(
         is SearchAction.SearchNotes -> notesRepository.getNotes()
             .flatMap { Single.just(FullTextNotesSearchHelper(it, action.query).execute()) }
             .mapSuccessEvent(SearchEvent.News::SearchNotesSuccess)
-        is SearchAction.SearchMap -> mapRepository.observeMarkers()
+        is SearchAction.SearchMap -> mapRepository.getMarkers()
             .flatMap { Single.just(FullTextMapMarkersSearchHelper(it.markers, action.query).execute()) }
             .mapSuccessEvent(SearchEvent.News::SearchMapSuccess)
         is SearchAction.SearchGroups -> scheduleRepository.getSearchResults(action.query, GROUP)
