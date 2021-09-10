@@ -1,12 +1,13 @@
-package kekmech.ru.common_cache.core.in_memory_cache
+package kekmech.ru.common_cache.core
 
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Observable
+import kekmech.ru.common_cache.in_memory_cache.InMemoryCache
 
 /**
  * Taken from: https://github.com/vivid-money/lazycache
  */
-class DelegatingCacheHandle<T : Any>(
+internal class DelegatingCacheHandle<T : Any>(
     private val key: String,
     private val cache: InMemoryCache
 ) : CacheHandle<T> {

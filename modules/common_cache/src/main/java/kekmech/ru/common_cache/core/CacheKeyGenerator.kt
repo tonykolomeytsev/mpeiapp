@@ -1,4 +1,4 @@
-package kekmech.ru.common_cache.core.in_memory_cache
+package kekmech.ru.common_cache.core
 
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -9,7 +9,7 @@ import com.google.gson.reflect.TypeToken
  *
  * Taken from: https://github.com/vivid-money/lazycache
  */
-class CacheKeyGenerator<Result : Any>(
+internal class CacheKeyGenerator<Result : Any>(
     private val resultToken: TypeToken<Result>,
     private val customKey: String?,
     private val gson: Gson,
