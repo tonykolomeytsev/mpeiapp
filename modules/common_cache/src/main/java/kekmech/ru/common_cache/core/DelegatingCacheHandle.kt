@@ -22,7 +22,8 @@ internal class DelegatingCacheHandle<T : Any>(
 
     override fun peek(): T? = cache.peek(key)
 
-    override fun updateIfPresent(newValue: (previousValue: T) -> T) = cache.putIfPresent(key, newValue)
+    override fun updateIfPresent(newValue: (previousValue: T) -> T) =
+        cache.putIfPresent(key, newValue)
 
     override fun update(newValue: (previousValue: T?) -> T) = cache.put(key, newValue)
 
