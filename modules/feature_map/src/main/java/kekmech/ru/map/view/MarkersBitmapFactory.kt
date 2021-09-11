@@ -67,7 +67,7 @@ internal class MarkersBitmapFactory(
     }
 
     fun getBitmap(mapMarker: MapMarker): Bitmap {
-        val emoji = emojiProvider.provideEmoji(mapMarker.icon)
+        val emoji = emojiProvider.provideEmoji(mapMarker.icon.orEmpty())
         if (emoji != null) {
             emoji.setBounds(0, 0, iconWidth, iconHeight)
             val canvas = Canvas(bitmap)
@@ -95,7 +95,7 @@ internal class MarkersBitmapFactory(
     private fun drawDecor(marker: MapMarker, canvas: Canvas) {
         when (marker.type) {
             MarkerType.BUILDING -> {
-                val icon = marker.icon
+                val icon = marker.icon.orEmpty()
                 if (icon.length == 1) {
                     canvas.drawText(icon, iconWidth / 2f, iconHeight / 2f + dp2, paint)
                 }
