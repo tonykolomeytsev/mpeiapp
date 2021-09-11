@@ -49,7 +49,7 @@ private interface CompositedCacheHandle<T : Any> : CacheHandle<T> {
 
 fun <T : Any> CacheHandle<T>.getOrLoadFrom(singleSource: Single<T>): Single<T> {
     check(this is CompositedCacheHandle) {
-        "getOrLoadFrom(Single<T>) available only for Composited cache handles"
+        "getOrLoadFrom(Single<T>) available only for CompositedCacheHandle"
     }
     return limitedLifetimeCacheHandle
         .get()
