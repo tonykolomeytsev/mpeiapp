@@ -32,18 +32,17 @@ internal class BarsListConverter(private val context: Context) {
                     addUserGroupLabel(state.userInfo?.group)
                     addShowBarsInBrowserLabel()
 
-                    state.userInfo?.assessedDisciplines?.let { disciplines ->
-                        if (disciplines.isEmpty()) {
-                            add(
-                                EmptyStateItem(
-                                    titleRes = R.string.bars_stub_empty_disciplines_header,
-                                    subtitleRes = R.string.bars_stub_empty_disciplines_description
-                                )
-                            )
-                        } else {
-                            addAll(disciplines)
-                        }
-                    } ?: addAll(disciplineShimmers)
+                    if (!state.isAfterErrorLoadingConfig) {
+                        state.userInfo?.assessedDisciplines?.let { disciplines ->
+                            if (disciplines.isEmpty()) {
+                                addEmptyDisciplinesItem()
+                            } else {
+                                addAll(disciplines)
+                            }
+                        } ?: addAll(disciplineShimmers)
+                    } else {
+                        addErrorStateItem(state)
+                    }
                 }
             state.flowState == FlowState.NOT_LOGGED_IN && state.config != null ->
                 mutableListOf<Any>().apply {
@@ -55,16 +54,7 @@ internal class BarsListConverter(private val context: Context) {
                 mutableListOf<Any>().apply {
                     addUserHeaderWithSettingsButton(context.getString(R.string.bars_stub_student_name))
                     addShowBarsInBrowserLabel()
-                    if (!state.isAfterErrorLoadingConfig) {
-                        add(ShimmerItem(ITEM_LOGIN_SHIMMER))
-                    } else {
-                        add(
-                            EmptyStateItem(
-                                titleRes = R.string.bars_stub_error_loading_config_header,
-                                subtitleRes = R.string.bars_stub_error_loading_config_description
-                            )
-                        )
-                    }
+                    addErrorStateItem(state)
                 }
         }
 
@@ -103,6 +93,28 @@ internal class BarsListConverter(private val context: Context) {
             )
         )
         add(SpaceItem.VERTICAL_8)
+    }
+
+    private fun MutableList<Any>.addEmptyDisciplinesItem() {
+        add(
+            EmptyStateItem(
+                titleRes = R.string.bars_stub_empty_disciplines_header,
+                subtitleRes = R.string.bars_stub_empty_disciplines_description
+            )
+        )
+    }
+
+    private fun MutableList<Any>.addErrorStateItem(state: BarsState) {
+        if (!state.isAfterErrorLoadingConfig) {
+            add(ShimmerItem(ITEM_LOGIN_SHIMMER))
+        } else {
+            add(
+                EmptyStateItem(
+                    titleRes = R.string.bars_stub_error_loading_config_header,
+                    subtitleRes = R.string.bars_stub_error_loading_config_description
+                )
+            )
+        }
     }
 
     private companion object {
