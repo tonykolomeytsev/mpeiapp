@@ -12,5 +12,4 @@ dependencies {
     implementation project(path: ":common_shared_preferences")
     implementation project(path: ":common_cache")
     implementation project(path: ":common_android")
-    implementation project(path: ":common_persistent_cache")
 }

@@ -23,7 +23,7 @@ open class PersistentCache(
 
     private val commonSubject = BehaviorSubject.create<PipelineEntry>()
     private val cache = Collections.synchronizedMap(
-        WeakHashMap<String, Any>(0)
+        WeakHashMap<String, Any>(MEMORY_CACHE_CAPACITY)
     )
 
     fun <T : Any> put(key: String, value: T) {
@@ -157,4 +157,9 @@ open class PersistentCache(
     }
 
     private data class PipelineEntry(val key: String, val value: Optional<Any>)
+
+    private companion object {
+
+        const val MEMORY_CACHE_CAPACITY = 16
+    }
 }
