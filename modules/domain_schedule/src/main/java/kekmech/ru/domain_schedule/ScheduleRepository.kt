@@ -12,6 +12,7 @@ import kekmech.ru.domain_schedule.dto.Schedule
 import kekmech.ru.domain_schedule.dto.ScheduleType
 import kekmech.ru.domain_schedule.dto.SearchResultType
 import kekmech.ru.domain_schedule.sources.FavoriteSource
+import java.time.LocalDate
 import java.time.temporal.WeekFields
 import java.util.*
 
@@ -98,11 +99,10 @@ fun Single<Schedule>.orFromPersistentCache(
     }
     .onErrorResumeNext {
         val (scheduleName, weekOffset) = key
-
-        val weekOfYear = // пиздец монструозная конструкция,
-            moscowLocalDate() // я даже забыл как именно она работает, но она работает
-                .get(WeekFields.of(Locale.ENGLISH).weekOfWeekBasedYear()) + weekOffset
-
+        val weekOfYear = moscowLocalDate().weekOfYear() + weekOffset - 1 // на бекенде смещение, это ошибка
         val cacheKey = "${scheduleName}_$weekOfYear"
         persistentCache.get(cacheKey, Schedule::class.java, null).toSingle()
     }
+
+private fun LocalDate.weekOfYear(): Int =
+    get(WeekFields.of(Locale.ENGLISH).weekOfWeekBasedYear())
