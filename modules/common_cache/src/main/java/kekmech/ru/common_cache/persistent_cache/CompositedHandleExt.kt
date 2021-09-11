@@ -53,7 +53,9 @@ fun <T : Any> CacheHandle<T>.getOrLoadFrom(singleSource: Single<T>): Single<T> {
     }
     return limitedLifetimeCacheHandle
         .get()
-        .switchIfEmpty(singleSource)
-        .doOnSuccess(limitedLifetimeCacheHandle::set)
-        .onErrorResumeWith(foreverLifetimeCacheHandle.get().toSingle())
+        .switchIfEmpty(
+            singleSource
+                .doOnSuccess(limitedLifetimeCacheHandle::set)
+                .onErrorResumeWith(foreverLifetimeCacheHandle.get().toSingle())
+        )
 }
