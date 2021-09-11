@@ -21,7 +21,7 @@ internal class MapListConverter {
             add(TabBarItem)
 
             val selectedMarkers = state.markers.filter { it.type == state.selectedTab.toMarkerType() }
-            if (selectedMarkers.all { it.tag.isEmpty() }) {
+            if (selectedMarkers.all { it.tag.isNullOrEmpty() }) {
                 createSectionHeader(state.selectedTab).let {
                     add(SpaceItem.VERTICAL_24)
                     add(it)
@@ -56,13 +56,13 @@ internal class MapListConverter {
         val setOfTags = markers.map { it.tag }.toSet()
         val list = mutableListOf<Any>()
         for (tag in setOfTags) {
-            if (tag.isEmpty()) continue
+            if (tag.isNullOrEmpty()) continue
             list.add(SpaceItem.VERTICAL_24)
             list.add(SectionHeaderItem(title = tag))
             list.add(SpaceItem.VERTICAL_12)
             list.addAll(markers.filter { it.tag == tag })
         }
-        val otherPlaces = markers.filter { it.tag.isEmpty() }
+        val otherPlaces = markers.filter { it.tag.isNullOrEmpty() }
         if (otherPlaces.isNotEmpty()) {
             list.add(SpaceItem.VERTICAL_24)
             list.add(SectionHeaderItem(titleRes = R.string.map_section_tag_others))
