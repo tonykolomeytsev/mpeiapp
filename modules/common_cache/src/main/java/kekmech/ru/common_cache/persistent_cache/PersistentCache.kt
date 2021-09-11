@@ -107,9 +107,8 @@ open class PersistentCache(
     fun <T : Any> of(
         key: String,
         valueClass: Class<T>,
-        lifetime: Duration? = null,
     ): CacheHandle<T> =
-        DelegatingPersistentCacheHandle(key, valueClass, lifetime, this)
+        DelegatingPersistentCacheHandle(key, valueClass, null, this)
 
     fun clear() {
         cache.clear()
