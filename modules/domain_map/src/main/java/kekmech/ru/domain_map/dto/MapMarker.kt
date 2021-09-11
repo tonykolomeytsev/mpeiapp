@@ -6,8 +6,8 @@ data class MapMarker(
     val location: Location,
     val name: String,
     val type: MarkerType,
-    val icon: String,
-    val tag: String
+    val icon: String?,
+    val tag: String?,
 )
 
 data class Location(val lat: Double, val lng: Double)
