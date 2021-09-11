@@ -3,6 +3,8 @@ package kekmech.ru.mpeiapp
 import android.app.Application
 import android.content.Context
 import android.os.Build
+import io.reactivex.rxjava3.exceptions.UndeliverableException
+import io.reactivex.rxjava3.plugins.RxJavaPlugins
 import kekmech.ru.bars.di.BarsModule
 import kekmech.ru.common_analytics.di.AnalyticsModule
 import kekmech.ru.common_android.di.CommonAndroidModule
@@ -49,6 +51,17 @@ class MpeixApp : Application(),
     @Suppress("MagicNumber")
     override fun onCreate() {
         super.onCreate()
+        RxJavaPlugins.setErrorHandler { e ->
+            if (e is UndeliverableException) {
+                // Merely log undeliverable exceptions
+                Timber.e(e)
+            } else {
+                // Forward all others to current thread's uncaught exception handler
+                Thread.currentThread().also { thread ->
+                    thread.uncaughtExceptionHandler?.uncaughtException(thread, e)
+                }
+            }
+        }
         ServiceUrlResolver.setEnvironment(debug = isDebugBackendEnvironmentEnabled)
         RemoteConfig.setup()
         initKoin()

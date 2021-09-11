@@ -17,10 +17,6 @@ open class PersistentCache(
     private val cacheDirectory: File,
 ) {
 
-    init {
-        cacheDirectory.mkdirs()
-    }
-
     private val commonSubject = BehaviorSubject.create<PipelineEntry>()
     private val cache = Collections.synchronizedMap(
         WeakHashMap<String, Any>(MEMORY_CACHE_CAPACITY)
@@ -47,7 +43,12 @@ open class PersistentCache(
     ): T? {
         return cache[key] as T?
             ?: peekPersistent(key, valueClass, lifetime)
-                ?.also { if (autoUpdateSubject) put(key, it) }
+                ?.also {
+                    if (autoUpdateSubject) {
+                        cache[key] = it
+                        commonSubject.onNext(PipelineEntry(key, Optional.of(it)))
+                    }
+                }
     }
 
     fun <T : Any> putIfPresent(
@@ -119,6 +120,7 @@ open class PersistentCache(
     private fun updatePersistentInternal(key: String, newValue: Any) {
         gson.toJson(newValue).toByteArray().let { byteArray ->
             val file = File(cacheDirectory, key)
+            if (!cacheDirectory.exists()) cacheDirectory.mkdirs()
             if (!file.exists()) file.createNewFile()
             file.writeBytes(byteArray)
             file.setLastModified(System.currentTimeMillis())
@@ -135,14 +137,14 @@ open class PersistentCache(
     private fun <T : Any> peekPersistent(
         key: String,
         valueClass: Class<T>,
-        lifetime: Duration?
+        lifetime: Duration?,
     ): T? {
         val file = File(cacheDirectory, key)
 
         // check cache lifetime expiration
         if (lifetime != null) {
             val expirationTimestamp = file.lastModified() + lifetime.toMillis()
-            if (expirationTimestamp > System.currentTimeMillis()) {
+            if (expirationTimestamp < System.currentTimeMillis()) {
                 // we don't need to delete file from cache dir
                 // just return null
                 return null
