@@ -9,8 +9,8 @@ enum class BackendServiceUrl(
         devEndpoint = "https://dev-api.kekmech.com/mpeix/schedule/"
     ),
     MAP(
-        prodEndpoint = "https://api.kekmech.com/mpeix/map/",
-        devEndpoint = "https://dev-api.kekmech.com/mpeix/map/"
+        prodEndpoint = "https://raw.githubusercontent.com/tonykolomeytsev/mpeiapp/master/statics/map/",
+        devEndpoint = "https://raw.githubusercontent.com/tonykolomeytsev/mpeiapp/dev/statics/map/"
     ),
     BARS(
         prodEndpoint = "https://raw.githubusercontent.com/tonykolomeytsev/mpeiapp/master/statics/bars/",
