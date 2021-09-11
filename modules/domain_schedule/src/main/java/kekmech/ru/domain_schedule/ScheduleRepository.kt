@@ -4,12 +4,16 @@ import android.content.SharedPreferences
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
-import kekmech.ru.common_persistent_cache.orFromPersistentCache
+import kekmech.ru.common_android.moscowLocalDate
+import kekmech.ru.common_cache.persistent_cache.PersistentCache
 import kekmech.ru.common_shared_preferences.string
 import kekmech.ru.domain_schedule.dto.FavoriteSchedule
+import kekmech.ru.domain_schedule.dto.Schedule
 import kekmech.ru.domain_schedule.dto.ScheduleType
 import kekmech.ru.domain_schedule.dto.SearchResultType
 import kekmech.ru.domain_schedule.sources.FavoriteSource
+import java.time.temporal.WeekFields
+import java.util.*
 
 private const val KEY_SELECTED_GROUP = "selected_group"
 val GROUP_NUMBER_PATTERN = "[а-яА-Я]+-[а-яА-Я0-9]+-[0-9]+".toRegex()
@@ -18,39 +22,47 @@ val PERSON_NAME_PATTERN = "[а-яА-Я]+\\s+([а-яА-Я]+\\s?)+".toRegex()
 @Suppress("TooManyFunctions")
 class ScheduleRepository(
     private val scheduleService: ScheduleService,
-    private val schedulePersistentCache: SchedulePersistentCache,
+    private val favoriteSource: FavoriteSource,
+    private val persistentCache: PersistentCache,
     sharedPreferences: SharedPreferences,
-    private val favoriteSource: FavoriteSource
 ) {
 
     private var selectedScheduleName by sharedPreferences.string(KEY_SELECTED_GROUP)
 
-    fun loadSchedule(scheduleName: String = selectedScheduleName, weekOffset: Int = 0) = scheduleService
-        .getSchedule(getScheduleType(scheduleName).pathName, scheduleName, weekOffset)
-        .orFromPersistentCache(scheduleName to weekOffset, schedulePersistentCache)
+    fun loadSchedule(
+        scheduleName: String = selectedScheduleName,
+        weekOffset: Int = 0,
+    ): Single<Schedule> =
+        scheduleService
+            .getSchedule(getScheduleType(scheduleName).pathName, scheduleName, weekOffset)
+            .orFromPersistentCache(scheduleName to weekOffset, persistentCache)
 
-    fun selectSchedule(name: String): Completable = Completable.fromAction {
-        selectedScheduleName = name
-        FirebaseCrashlytics.getInstance().setCustomKey("schedule_name", name)
-    }
+    fun selectSchedule(name: String): Completable =
+        Completable.fromAction {
+            selectedScheduleName = name
+            FirebaseCrashlytics.getInstance().setCustomKey("schedule_name", name)
+        }
 
-    fun getSelectedScheduleName() = Single.just(selectedScheduleName)
+    fun getSelectedScheduleName(): Single<String> = Single.just(selectedScheduleName)
 
     fun getFavorites(): Single<List<FavoriteSchedule>> =
         Single.just(favoriteSource.getAll())
 
-    fun setFavorites(favorites: List<FavoriteSchedule>): Completable = Completable.fromRunnable {
-        favoriteSource.deleteAll()
-        favoriteSource.addAll(favorites)
-    }
+    fun setFavorites(favorites: List<FavoriteSchedule>): Completable =
+        Completable.fromRunnable {
+            favoriteSource.deleteAll()
+            favoriteSource.addAll(favorites)
+        }
 
-    fun addFavorite(favoriteSchedule: FavoriteSchedule): Completable = Completable.fromRunnable {
-        favoriteSource.add(favoriteSchedule)
-    }
+    fun addFavorite(favoriteSchedule: FavoriteSchedule): Completable =
+        Completable.fromRunnable {
+            favoriteSource.add(favoriteSchedule)
+        }
 
-    fun removeFavorite(favoriteSchedule: FavoriteSchedule): Completable = Completable.fromRunnable {
-        favoriteSource.remove(favoriteSchedule)
-    }
+    fun removeFavorite(favoriteSchedule: FavoriteSchedule): Completable =
+        Completable.fromRunnable {
+            favoriteSource.remove(favoriteSchedule)
+        }
 
     fun getSession(scheduleType: String = selectedScheduleName) = scheduleService
         .getSession(getScheduleType(scheduleType).pathName, scheduleType)
@@ -73,3 +85,24 @@ class ScheduleRepository(
 
     fun getSelectedScheduleNameForAnalytics() = selectedScheduleName
 }
+
+fun Single<Schedule>.orFromPersistentCache(
+    key: Pair<String, Int>,
+    persistentCache: PersistentCache,
+): Single<Schedule> = this
+    .doOnSuccess { schedule ->
+        val (scheduleName, _) = key
+        val weekOfYear = schedule.weeks.first().weekOfYear
+        val cacheKey = "${scheduleName}_$weekOfYear"
+        persistentCache.put(cacheKey, schedule)
+    }
+    .onErrorResumeNext {
+        val (scheduleName, weekOffset) = key
+
+        val weekOfYear = // пиздец монструозная конструкция,
+            moscowLocalDate() // я даже забыл как именно она работает, но она работает
+                .get(WeekFields.of(Locale.ENGLISH).weekOfWeekBasedYear()) + weekOffset
+
+        val cacheKey = "${scheduleName}_$weekOfYear"
+        persistentCache.get(cacheKey, Schedule::class.java, null).toSingle()
+    }
