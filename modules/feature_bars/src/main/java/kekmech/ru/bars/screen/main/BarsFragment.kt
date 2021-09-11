@@ -140,8 +140,8 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>() {
         is BarsEffect.InvokeJs -> viewBinding.webView.evaluateJavascript(effect.js, null)
         is BarsEffect.OpenSettings -> settingsFeatureLauncher.launch()
         is BarsEffect.ShowCommonError -> showBanner(R.string.something_went_wrong_error)
-        is BarsEffect.ShowNotAllowedLinkError ->
-            showBanner(R.string.bars_webview_not_allowed_link, color = R.color.colorMain)
+        is BarsEffect.OpenExternalBrowser ->
+            requireContext().openLinkExternal(effect.url)
     }
 
     override fun onResume() {
@@ -175,7 +175,7 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>() {
         private fun handleUrlLoading(url: String): Boolean {
             val allowToFollowTheUrl = "https://bars.mpei.ru" in url
             if (!allowToFollowTheUrl) {
-                feature.accept(Wish.Click.NotAllowedLink)
+                feature.accept(Wish.Click.NotAllowedUrl(url))
             }
             return !allowToFollowTheUrl
         }
