@@ -7,6 +7,34 @@ const getMeta = (metadataContainer) => {
         .map((li) => pair(li.innerText.split('-')));
     return JSON.stringify({ "meta": m });
 };
+const getRating = (metadataContainer) => {
+    const complexScore = document.getElementById("total_score").textContent.trim();
+    const studyScore = document.getElementById("study_score").textContent.trim();
+    const scienceScore = document.getElementById("science_score").textContent.trim();
+    const socialScore = document.getElementById("social_score").textContent.trim();
+    const sportScore = document.getElementById("sport_score").textContent.trim();
+    const socialActivityScore = document.getElementById("social_activity_score").textContent.trim();
+    
+    const dataRows = metadataContainer.getElementsByTagName("li");
+    const studyYear = Number.parseInt(dataRows.item(0).textContent.substring(6)) || 0;
+    const isBachelor = dataRows.item(1).textContent.includes("бакалавр") || false;
+    const isFirstYearBachelor = studyYear == 1 && isBachelor;
+
+    const ratingWeight = {
+        "studyScoreWeight": (isFirstYearBachelor) ? 0.8 : 0.6,
+        "scienceScoreWeight": (isFirstYearBachelor) ? 0.0 : 0.2,
+        "socialScoreWeight": 0.2
+    }
+    return JSON.stringify({
+        "complexScore": complexScore || 0,
+        "studyScore": studyScore || 0,
+        "scienceScore": scienceScore || 0,
+        "socialScore": socialScore || 0,
+        "sportScore": sportScore || 0,
+        "socialActivityScore": socialActivityScore || 0,
+        "weights": ratingWeight
+    });
+};
 const getSemesters = () => {
     const s = Array
         .from(document.getElementById("ddl_FilterSemester").children)
@@ -94,3 +122,6 @@ const selectedSemesterName =
     document.getElementsByClassName("filter-option-inner-inner")[0].innerText.trim();
 kti.onSemestersExtracted(semesters, selectedSemesterName);
 kti.onMarksExtracted(getAllMarks());
+
+const rating = getRating(metadataContainer);
+kti.onStudentRatingExtracted(rating);
