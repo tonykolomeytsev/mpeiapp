@@ -124,6 +124,11 @@ internal class BarsReducer : ScreenDslReducer<
                 effects { +loadPageEffect { config?.loginUrl } }
             }
             is Wish.Click.NotAllowedUrl -> effects { +BarsEffect.OpenExternalBrowser(event.url) }
+            is Wish.Click.ShowRating -> effects {
+                +state.userInfo?.rating?.let {
+                    BarsEffect.OpenRatingDetails(it)
+                }
+            }
 
             is Wish.Extract.StudentName -> commands { +BarsAction.PushStudentName(event.name) }
             is Wish.Extract.StudentGroup -> commands { +BarsAction.PushStudentGroup(event.group) }

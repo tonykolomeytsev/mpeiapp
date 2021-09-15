@@ -25,6 +25,7 @@ import kekmech.ru.bars.screen.main.elm.BarsEvent
 import kekmech.ru.bars.screen.main.elm.BarsEvent.Wish
 import kekmech.ru.bars.screen.main.elm.BarsFeatureFactory
 import kekmech.ru.bars.screen.main.elm.BarsState
+import kekmech.ru.bars.screen.rating_details.RatingDetailsFragment
 import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_analytics.addScrollAnalytics
 import kekmech.ru.common_analytics.ext.screenAnalytics
@@ -36,6 +37,7 @@ import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.views.setProgressViewOffset
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.BaseFragment
+import kekmech.ru.common_navigation.addScreenForward
 import kekmech.ru.common_navigation.showDialog
 import kekmech.ru.coreui.banner.showBanner
 import kekmech.ru.coreui.items.EmptyStateAdapterItem
@@ -142,6 +144,8 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>() {
         is BarsEffect.ShowCommonError -> showBanner(R.string.something_went_wrong_error)
         is BarsEffect.OpenExternalBrowser ->
             requireContext().openLinkExternal(effect.url)
+        is BarsEffect.OpenRatingDetails ->
+            addScreenForward { RatingDetailsFragment.newInstance(effect.rating) }
     }
 
     override fun onResume() {
@@ -235,9 +239,16 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>() {
             feature.accept(Wish.Click.Settings)
         },
         TextWithIconAdapterItem {
-            if (it.itemId == 1) {
-                analytics.sendClick("BarsShowBrowser")
-                feature.accept(Wish.Click.ShowBrowser)
+            when (it.itemId) {
+                ITEM_BROWSER_LABEL -> {
+                    analytics.sendClick("BarsShowBrowser")
+                    feature.accept(Wish.Click.ShowBrowser)
+                }
+                ITEM_RATING_LABEL -> {
+                    analytics.sendClick("BarsShowRating")
+                    feature.accept(Wish.Click.ShowRating)
+                }
+                else -> { /* no-op */ }
             }
         },
         LoginToBarsAdapterItem {
@@ -273,5 +284,9 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>() {
         const val ITEM_TEXT_SHIMMER = 0
         const val ITEM_DISCIPLINE_SHIMMER = 1
         const val ITEM_LOGIN_SHIMMER = 2
+
+        const val ITEM_GROUP_LABEL = 0
+        const val ITEM_BROWSER_LABEL = 1
+        const val ITEM_RATING_LABEL = 2
     }
 }

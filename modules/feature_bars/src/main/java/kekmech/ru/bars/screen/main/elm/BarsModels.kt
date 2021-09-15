@@ -1,5 +1,6 @@
 package kekmech.ru.bars.screen.main.elm
 
+import kekmech.ru.domain_bars.dto.Rating
 import kekmech.ru.domain_bars.dto.RemoteBarsConfig
 import kekmech.ru.domain_bars.dto.UserBarsInfo
 
@@ -45,6 +46,7 @@ internal sealed class BarsEvent {
         }
 
         object Click {
+            object ShowRating : Wish()
             object ShowBrowser : Wish()
             object HideBrowser : Wish()
             object Settings : Wish()
@@ -91,6 +93,7 @@ internal sealed class BarsEffect {
     object OpenSettings : BarsEffect()
     object ShowCommonError : BarsEffect()
     data class OpenExternalBrowser(val url: String) : BarsEffect()
+    data class OpenRatingDetails(val rating: Rating) : BarsEffect()
 }
 
 internal sealed class BarsAction {
