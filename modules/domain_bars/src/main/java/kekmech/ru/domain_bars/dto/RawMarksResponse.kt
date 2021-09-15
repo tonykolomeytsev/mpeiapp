@@ -1,10 +1,10 @@
 package kekmech.ru.domain_bars.dto
 
-class RawMarksResponse(
+internal class RawMarksResponse(
     val payload: List<DisciplineRow>
 )
 
-class DisciplineRow(
+internal class DisciplineRow(
     val disciplineName: String,
     val personName: String,
     val assessmentType: String,
@@ -12,7 +12,7 @@ class DisciplineRow(
     val activities: List<ControlActivityRow>
 )
 
-class ControlActivityRow(
+internal class ControlActivityRow(
     val type: DisciplineRowType,
     val name: String? = null,
     val weight: String? = null,
@@ -20,7 +20,8 @@ class ControlActivityRow(
     val markAndDate: String? = null
 )
 
-enum class DisciplineRowType {
+@Suppress("unused")
+internal enum class DisciplineRowType {
     UNDEFINED,
     CONTROL_ACTIVITY,
     CURRENT_SCORE,

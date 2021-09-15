@@ -4,7 +4,7 @@ import kekmech.ru.domain_bars.dto.*
 import kekmech.ru.domain_bars.dto.DisciplineRowType.CONTROL_ACTIVITY
 import kekmech.ru.domain_bars.dto.DisciplineRowType.UNDEFINED
 
-object RawToMarksResponseMapper {
+internal object RawToMarksResponseMapper {
 
     fun map(rawMarksResponse: RawMarksResponse) = MarksResponse(
         payload = rawMarksResponse.payload.map { disciplineRow ->
