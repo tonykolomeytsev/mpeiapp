@@ -7,8 +7,11 @@ import android.text.style.ForegroundColorSpan
 import kekmech.ru.bars.R
 import kekmech.ru.bars.items.LoginToBarsItem
 import kekmech.ru.bars.items.UserNameHeaderItem
+import kekmech.ru.bars.screen.main.BarsFragment.Companion.ITEM_BROWSER_LABEL
 import kekmech.ru.bars.screen.main.BarsFragment.Companion.ITEM_DISCIPLINE_SHIMMER
+import kekmech.ru.bars.screen.main.BarsFragment.Companion.ITEM_GROUP_LABEL
 import kekmech.ru.bars.screen.main.BarsFragment.Companion.ITEM_LOGIN_SHIMMER
+import kekmech.ru.bars.screen.main.BarsFragment.Companion.ITEM_RATING_LABEL
 import kekmech.ru.bars.screen.main.BarsFragment.Companion.ITEM_TEXT_SHIMMER
 import kekmech.ru.bars.screen.main.elm.BarsState
 import kekmech.ru.bars.screen.main.elm.FlowState
@@ -69,7 +72,7 @@ internal class BarsListConverter(private val context: Context) {
         groupName?.let {
             add(
                 TextWithIconItem(
-                    itemId = 2,
+                    itemId = ITEM_GROUP_LABEL,
                     text = SpannableStringBuilder()
                         .append(context.getString(R.string.bars_stub_student_group))
                         .append(" ")
@@ -88,7 +91,7 @@ internal class BarsListConverter(private val context: Context) {
     private fun MutableList<Any>.addShowBarsInBrowserLabel() {
         add(
             TextWithIconItem(
-                itemId = 1,
+                itemId = ITEM_BROWSER_LABEL,
                 textResId = R.string.bars_stub_show_browser_label,
                 drawableResID = R.drawable.ic_public_24px,
                 tintColorAttrId = R.attr.colorActive,
@@ -106,7 +109,7 @@ internal class BarsListConverter(private val context: Context) {
                 )
             add(
                 TextWithIconItem(
-                    itemId = 1,
+                    itemId = ITEM_RATING_LABEL,
                     text = SpannableStringBuilder()
                         .append(context.getString(R.string.bars_complex_rating))
                         .append(" ")

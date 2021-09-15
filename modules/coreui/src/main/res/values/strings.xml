@@ -220,6 +220,11 @@
     <string name="bars_complex_rating">Комплексный рейтинг</string>
     <string name="bars_item_no_marks">Нет оценок</string>
 
+    <string name="bars_rating_complex_name">Комплексный рейтинг</string>
+    <string name="bars_rating_study_name">Учебный рейтинг</string>
+    <string name="bars_rating_science_name">Научный рейтинг</string>
+    <string name="bars_rating_social_name">Социальный рейтинг</string>
+
     <string name="app_settings_screen_title">Настройки</string>
     <string name="app_settings_header_schedule">Расписание</string>
     <string name="app_settings_header_map">Карта</string>
