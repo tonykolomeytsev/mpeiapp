@@ -32,6 +32,7 @@ dependencies {
     implementation project(path: ":common_adapter")
     implementation project(path: ":common_analytics")
     implementation project(path: ":common_cache")
+    implementation project(path: ":common_schedule")
 
     implementation project(path: ":coreui")
 }

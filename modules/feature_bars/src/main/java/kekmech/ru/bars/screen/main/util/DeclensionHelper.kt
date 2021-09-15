@@ -8,7 +8,6 @@ internal object DeclensionHelper {
 
     @Suppress("MagicNumber")
     fun format(declensions: Array<String>, n: Long): String {
-        if (n == 0L) return ""
         if (n in 11L..19L) return "$n " + declensions[DECLENSION_5_TO_10]
         return "$n " + when (n % 10L) {
             1L -> declensions[DECLENSION_1]
