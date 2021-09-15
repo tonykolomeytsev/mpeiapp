@@ -128,7 +128,7 @@ internal class BarsReducer : ScreenDslReducer<
             is Wish.Extract.StudentName -> commands { +BarsAction.PushStudentName(event.name) }
             is Wish.Extract.StudentGroup -> commands { +BarsAction.PushStudentGroup(event.group) }
             is Wish.Extract.MetaData -> Unit // TODO in future versions
-            is Wish.Extract.Rating -> Unit // TODO in future versions
+            is Wish.Extract.Rating -> commands { +BarsAction.PushStudentRating(event.ratingJson) }
             is Wish.Extract.Semesters -> Unit // TODO in future versions
             is Wish.Extract.Marks -> commands { +BarsAction.PushMarks(event.marksJson) }
         }

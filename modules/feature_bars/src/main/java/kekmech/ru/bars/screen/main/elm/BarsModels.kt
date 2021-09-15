@@ -101,4 +101,5 @@ internal sealed class BarsAction {
     data class PushMarks(val marksJson: String) : BarsAction()
     data class PushStudentName(val studentName: String) : BarsAction()
     data class PushStudentGroup(val studentGroup: String) : BarsAction()
+    data class PushStudentRating(val ratingJson: String) : BarsAction()
 }

@@ -12,6 +12,8 @@ import kekmech.ru.bars.screen.main.BarsFragment.Companion.ITEM_LOGIN_SHIMMER
 import kekmech.ru.bars.screen.main.BarsFragment.Companion.ITEM_TEXT_SHIMMER
 import kekmech.ru.bars.screen.main.elm.BarsState
 import kekmech.ru.bars.screen.main.elm.FlowState
+import kekmech.ru.bars.screen.main.util.DeclensionHelper
+import kekmech.ru.common_android.getStringArray
 import kekmech.ru.common_android.getThemeColor
 import kekmech.ru.coreui.items.EmptyStateItem
 import kekmech.ru.coreui.items.ShimmerItem
@@ -31,6 +33,7 @@ internal class BarsListConverter(private val context: Context) {
                     addUserHeaderWithSettingsButton(state.userInfo?.name)
                     addUserGroupLabel(state.userInfo?.group)
                     addShowBarsInBrowserLabel()
+                    addComplexRatingLabel(state)
 
                     if (!state.isAfterErrorLoadingConfig) {
                         state.userInfo?.assessedDisciplines?.let { disciplines ->
@@ -66,7 +69,7 @@ internal class BarsListConverter(private val context: Context) {
         groupName?.let {
             add(
                 TextWithIconItem(
-                    itemId = 0,
+                    itemId = 2,
                     text = SpannableStringBuilder()
                         .append(context.getString(R.string.bars_stub_student_group))
                         .append(" ")
@@ -92,6 +95,32 @@ internal class BarsListConverter(private val context: Context) {
                 textStyleResId = R.style.H6_Main
             )
         )
+    }
+
+    private fun MutableList<Any>.addComplexRatingLabel(state: BarsState) {
+        state.userInfo?.rating?.let {
+            val complexPoints =
+                DeclensionHelper.format(
+                    declensions = context.getStringArray(R.array.points_declensions),
+                    n = it.complex.toLong()
+                )
+            add(
+                TextWithIconItem(
+                    itemId = 1,
+                    text = SpannableStringBuilder()
+                        .append(context.getString(R.string.bars_complex_rating))
+                        .append(" ")
+                        .append(
+                            complexPoints,
+                            ForegroundColorSpan(context.getThemeColor(R.attr.colorBlack)),
+                            SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
+                        ),
+                    drawableResID = R.drawable.ic_leaderboard_24dp,
+                    tintColorAttrId = R.attr.colorGray70,
+                    textStyleResId = R.style.H6_Main
+                )
+            )
+        } ?: add(ShimmerItem(ITEM_TEXT_SHIMMER))
         add(SpaceItem.VERTICAL_8)
     }
 

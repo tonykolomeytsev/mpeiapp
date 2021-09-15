@@ -32,10 +32,16 @@ internal class BarsActor(
             .mapSuccessEvent { News.GetLatestLoadedUrlSuccess(it.takeIf { it.isNotBlank() }) }
 
         is BarsAction.PushMarks -> barsRepository.pushMarksJson(action.marksJson)
+            .onErrorComplete()
             .toObservable()
         is BarsAction.PushStudentName -> barsRepository.pushStudentName(action.studentName)
+            .onErrorComplete()
             .toObservable()
         is BarsAction.PushStudentGroup -> barsRepository.pushStudentGroup(action.studentGroup)
+            .onErrorComplete()
+            .toObservable()
+        is BarsAction.PushStudentRating -> barsRepository.pushStudentRating(action.ratingJson)
+            .onErrorComplete()
             .toObservable()
     }
 
