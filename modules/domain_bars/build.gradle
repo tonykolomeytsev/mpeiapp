@@ -6,6 +6,7 @@ dependencies {
     implementation google.gson
     implementation androidx.appcompat
     implementation rx.java
+    implementation timber
 
     implementation project(path: ":common_di")
     implementation project(path: ":common_annotations")
