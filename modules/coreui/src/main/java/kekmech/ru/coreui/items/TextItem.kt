@@ -15,13 +15,15 @@ import kekmech.ru.coreui.R
 data class TextItem(
     val text: CharSequence? = null,
     @StringRes val textResId: Int? = null,
-    @StyleRes val styleResId: Int? = null
+    @StyleRes val styleResId: Int? = null,
+    val textGravity: Int? = null,
 )
 
 interface TextItemViewHolder {
     fun setText(text: CharSequence)
     fun setText(@StringRes textResId: Int)
     fun setStyle(@StyleRes styleResId: Int)
+    fun setTextGravity(textGravity: Int)
 }
 
 class TextItemViewHolderImpl(
@@ -46,6 +48,10 @@ class TextItemViewHolderImpl(
             textViewTextItem.setTextAppearance(containerView.context, styleResId)
         }
     }
+
+    override fun setTextGravity(textGravity: Int) {
+        textViewTextItem.gravity = textGravity
+    }
 }
 
 class TextItemBinder : BaseItemBinder<TextItemViewHolder, TextItem>() {
@@ -55,6 +61,7 @@ class TextItemBinder : BaseItemBinder<TextItemViewHolder, TextItem>() {
             text?.let(vh::setText)
             textResId?.let(vh::setText)
             styleResId?.let(vh::setStyle)
+            textGravity?.let(vh::setTextGravity)
         }
     }
 }
