@@ -4,8 +4,8 @@ import android.content.Context
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
-import android.view.Gravity
 import androidx.annotation.StringRes
+import androidx.core.text.HtmlCompat
 import kekmech.ru.bars.R
 import kekmech.ru.bars.screen.main.util.DeclensionHelper
 import kekmech.ru.bars.screen.rating_details.RatingDetailsFragment.Companion.ITEM_ID_SCIENCE
@@ -49,13 +49,20 @@ internal class RatingDetailsListConverter(
             )
 
             add(SpaceItem.VERTICAL_16)
+
             add(TextItem(
-                text = "Полную информацию о формировании \n" +
-                        "рейтинга,читайте в положении о БАРС \n" +
-                        "на официальном сайте МЭИ.",
-                styleResId = R.style.H7_Gray70,
-                textGravity = Gravity.CENTER,
+                text = "Как рассчитывается рейтинг?",
+                styleResId = R.style.H3,
             ))
+            add(SpaceItem.VERTICAL_16)
+            getRatingDetailsDescription().forEach { line ->
+                add(TextItem(
+                    text = HtmlCompat.fromHtml(line, HtmlCompat.FROM_HTML_MODE_LEGACY),
+                    styleResId = R.style.H7,
+                ))
+                add(SpaceItem.VERTICAL_16)
+            }
+            add(SpaceItem.VERTICAL_16)
         }
 
     private fun MutableList<Any>.addComplexRatingHeaders(rating: Rating) {
