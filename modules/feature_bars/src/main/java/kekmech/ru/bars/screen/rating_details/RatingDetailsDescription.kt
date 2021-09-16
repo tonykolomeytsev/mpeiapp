@@ -1,5 +1,6 @@
 package kekmech.ru.bars.screen.rating_details
 
+@Suppress("MaxLineLength")
 internal fun getRatingDetailsDescription(): List<String> =
     listOf(
         "Комплексный рейтинг складывается из:",

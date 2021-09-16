@@ -82,6 +82,7 @@ internal class CompositeRatingViewHolder(
             ?.progress = progress
     }
 
+    @Suppress("ImplicitDefaultLocale")
     fun setWeight(weight: Float) {
         viewBinding.weight.text = String.format("× %.1f", weight).replaceFirst(',', '.')
     }
