@@ -164,6 +164,7 @@ internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState>(), Need
             .mapNotNull { map.addMarker(
                 MarkerOptions()
                     .title(it.name)
+                    .snippet(it.address)
                     .position(LatLng(it.location.lat, it.location.lng))
                     .icon(BitmapDescriptorFactory.fromBitmap(
                         markersBitmapFactory.getBitmap(it)
