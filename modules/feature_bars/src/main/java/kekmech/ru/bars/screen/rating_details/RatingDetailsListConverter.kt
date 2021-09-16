@@ -48,21 +48,7 @@ internal class RatingDetailsListConverter(
                 itemId = ITEM_ID_SOCIAL
             )
 
-            add(SpaceItem.VERTICAL_16)
-
-            add(TextItem(
-                text = "Как рассчитывается рейтинг?",
-                styleResId = R.style.H3,
-            ))
-            add(SpaceItem.VERTICAL_16)
-            getRatingDetailsDescription().forEach { line ->
-                add(TextItem(
-                    text = HtmlCompat.fromHtml(line, HtmlCompat.FROM_HTML_MODE_LEGACY),
-                    styleResId = R.style.H7,
-                ))
-                add(SpaceItem.VERTICAL_16)
-            }
-            add(SpaceItem.VERTICAL_16)
+            addCalculationInfo()
         }
 
     private fun MutableList<Any>.addComplexRatingHeaders(rating: Rating) {
@@ -121,5 +107,22 @@ internal class RatingDetailsListConverter(
             progress = progress,
             itemId = itemId
         ))
+    }
+
+    private fun MutableList<Any>.addCalculationInfo() {
+        add(SpaceItem.VERTICAL_16)
+        add(TextItem(
+            text = "Как рассчитывается рейтинг?",
+            styleResId = R.style.H3,
+        ))
+        add(SpaceItem.VERTICAL_16)
+        getRatingDetailsDescription().forEach { line ->
+            add(TextItem(
+                text = HtmlCompat.fromHtml(line, HtmlCompat.FROM_HTML_MODE_LEGACY),
+                styleResId = R.style.H7,
+            ))
+            add(SpaceItem.VERTICAL_16)
+        }
+        add(SpaceItem.VERTICAL_16)
     }
 }
