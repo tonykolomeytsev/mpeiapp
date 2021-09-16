@@ -11,7 +11,7 @@ import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.views.onPageSelected
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.BaseFragment
-import kekmech.ru.common_navigation.NeedToUpdate
+import kekmech.ru.common_navigation.features.NeedToUpdate
 import kekmech.ru.domain_schedule.dto.Classes
 import kekmech.ru.feature_schedule.R
 import kekmech.ru.feature_schedule.databinding.FragmentScheduleBinding

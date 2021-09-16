@@ -6,7 +6,8 @@ import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
 import kekmech.ru.common_navigation.BottomTab
-import kekmech.ru.common_navigation.NeedToUpdate
+import kekmech.ru.common_navigation.features.NeedToUpdate
+import kekmech.ru.common_navigation.features.ScrollToTop
 import kekmech.ru.domain_bars.BarsFeatureLauncher
 import kekmech.ru.domain_map.MapFeatureLauncher
 import kekmech.ru.domain_schedule.ScheduleFeatureLauncher
@@ -72,23 +73,24 @@ class BottomBarController(
 
         if (currentFragment != null && newFragment != null && currentFragment == newFragment) {
             if (currentFragment is NeedToUpdate) currentFragment.onUpdate()
+            if (currentFragment is ScrollToTop) currentFragment.onScrollToTop()
             return
         }
 
         childFragmentManager.beginTransaction().apply {
             if (newFragment == null) {
-                add(R.id.fragmentContainer, createTabFragment(tab), tab.name)
+                replace(R.id.fragmentContainer, createTabFragment(tab), tab.name)
             }
-            currentFragment?.let { fragment ->
-                hide(fragment)
-                fragment.userVisibleHint = false
-            }
+//            currentFragment?.let { fragment ->
+//                hide(fragment)
+//                fragment.userVisibleHint = false
+//            }
             newFragment?.let { fragment ->
-                show(fragment)
+                //show(fragment)
                 if (fragment is NeedToUpdate) {
                     fragment.onUpdate()
                 }
-                fragment.userVisibleHint = true
+                //fragment.userVisibleHint = true
             }
         }.commitNowIgnoreStateLossError()
         lastSelectedTab = tab

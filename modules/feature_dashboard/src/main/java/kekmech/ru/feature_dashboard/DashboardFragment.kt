@@ -3,6 +3,7 @@ package kekmech.ru.feature_dashboard
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_analytics.addScrollAnalytics
@@ -13,7 +14,8 @@ import kekmech.ru.common_android.views.setProgressViewOffset
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.BaseFragment
 import kekmech.ru.common_navigation.BottomTab
-import kekmech.ru.common_navigation.NeedToUpdate
+import kekmech.ru.common_navigation.features.NeedToUpdate
+import kekmech.ru.common_navigation.features.ScrollToTop
 import kekmech.ru.common_schedule.items.NotePreviewAdapterItem
 import kekmech.ru.coreui.banner.showBanner
 import kekmech.ru.coreui.items.*
@@ -37,7 +39,8 @@ internal const val EVENTS_SHIMMER_ITEM_ID = 0
 class DashboardFragment :
     BaseFragment<DashboardEvent, DashboardEffect, DashboardState>(),
     ActivityResultListener,
-    NeedToUpdate {
+    NeedToUpdate,
+    ScrollToTop {
 
     override val initEvent = Wish.Init
     private val dependencies by inject<DashboardDependencies>()
@@ -158,6 +161,12 @@ class DashboardFragment :
 
     override fun onUpdate() {
         feature.accept(Wish.Action.SilentUpdate)
+    }
+
+    override fun onScrollToTop() {
+        if (lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
+            viewBinding.recyclerView.scrollToPosition(0)
+        }
     }
 
     companion object {

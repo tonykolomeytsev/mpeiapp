@@ -14,6 +14,7 @@ import androidx.core.text.toSpannable
 import androidx.core.view.forEach
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
+import androidx.lifecycle.Lifecycle
 import kekmech.ru.bars.R
 import kekmech.ru.bars.databinding.FragmentBarsBinding
 import kekmech.ru.bars.items.AssessedDisciplineAdapterItem
@@ -38,6 +39,7 @@ import kekmech.ru.common_android.views.setProgressViewOffset
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.BaseFragment
 import kekmech.ru.common_navigation.addScreenForward
+import kekmech.ru.common_navigation.features.ScrollToTop
 import kekmech.ru.common_navigation.showDialog
 import kekmech.ru.coreui.banner.showBanner
 import kekmech.ru.coreui.items.EmptyStateAdapterItem
@@ -49,7 +51,7 @@ import org.koin.android.ext.android.inject
 
 private const val JS_INTERFACE_NAME = "kti"
 
-internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>() {
+internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), ScrollToTop {
 
     override val initEvent: BarsEvent = Wish.Init
     override val layoutId: Int = R.layout.fragment_bars
@@ -151,6 +153,12 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>() {
     override fun onResume() {
         super.onResume()
         feature.accept(Wish.Action.Update)
+    }
+
+    override fun onScrollToTop() {
+        if (lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
+            viewBinding.recyclerView.scrollToPosition(0)
+        }
     }
 
     inner class BarsWebViewClient : WebViewClient() {
