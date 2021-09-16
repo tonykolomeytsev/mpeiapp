@@ -1,8 +1,6 @@
 package kekmech.ru.map
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.View
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
@@ -11,6 +9,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import io.reactivex.rxjava3.core.Completable
 import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_analytics.ext.screenAnalytics
 import kekmech.ru.common_android.doOnApplyWindowInsets
@@ -43,6 +42,7 @@ import kekmech.ru.map.view.BottomSheetBackgroundDrawable
 import kekmech.ru.map.view.ControlledScrollingLayoutManager
 import kekmech.ru.map.view.MarkersBitmapFactory
 import org.koin.android.ext.android.inject
+import java.util.concurrent.TimeUnit
 
 private const val MAP_CREATION_DELAY = 50L
 private const val MAX_OVERLAY_ALPHA = 0.5f
@@ -68,7 +68,13 @@ internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState>(), Need
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Handler(Looper.getMainLooper()).postDelayed({ createMap() }, MAP_CREATION_DELAY)
+
+        Completable
+            .fromAction(::createMap)
+            .delay(MAP_CREATION_DELAY, TimeUnit.MILLISECONDS)
+            .subscribe()
+            .bind()
+
         viewBinding.recyclerView.layoutManager = ControlledScrollingLayoutManager(requireContext())
         viewBinding.recyclerView.adapter = adapter
         viewBinding.recyclerView.background = bottomSheetBackground
