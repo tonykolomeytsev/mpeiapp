@@ -10,6 +10,7 @@ import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_android.*
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_kotlin.fastLazy
+import kekmech.ru.coreui.attachScrollListenerForAppBarLayoutShadow
 import kekmech.ru.coreui.items.SpaceAdapterItem
 import kekmech.ru.coreui.items.TextAdapterItem
 import kekmech.ru.domain_bars.dto.Rating
@@ -21,10 +22,11 @@ internal class RatingDetailsFragment : Fragment(R.layout.fragment_rating_details
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        view.addSystemTopPadding()
         with(binding) {
             toolbar.setNavigationOnClickListener { close() }
+            appBarLayout.addSystemTopPadding()
             recycler.addSystemBottomPadding()
+            recycler.attachScrollListenerForAppBarLayoutShadow(appBarLayout)
             recycler.adapter = adapter
         }
         adapter.update(RatingDetailsListConverter(requireContext()).map(getArgument(ARG_RATING)))
