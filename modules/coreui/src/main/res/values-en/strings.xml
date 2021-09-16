@@ -218,6 +218,11 @@
     <string name="bars_complex_rating">Complex score </string>
     <string name="bars_item_no_marks">No grades</string>
 
+    <string name="bars_rating_complex_name">Complex score</string>
+    <string name="bars_rating_study_name">Study score</string>
+    <string name="bars_rating_science_name">Science score</string>
+    <string name="bars_rating_social_name">Social score</string>
+
     <string name="app_settings_screen_title">Settings</string>
     <string name="app_settings_header_schedule">Schedule</string>
     <string name="app_settings_header_map">Map</string>
