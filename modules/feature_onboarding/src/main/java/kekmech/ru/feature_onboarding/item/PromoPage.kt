@@ -15,35 +15,29 @@ internal enum class PromoPage(
     @StringRes val subtitle: Int
 ) {
 
-    WELCOME(
-        icon = R.drawable.ic_ill_1,
-        title = R.string.onboarding_welcome_title_1,
-        subtitle = R.string.onboarding_welcome_subtitle_1
-    ),
-
     SCHEDULE(
         icon = R.drawable.ill_schedule,
-        title = R.string.onboarding_welcome_title_2,
-        subtitle = R.string.onboarding_welcome_subtitle_2
-    ),
-
-    NOTES(
-        icon = R.drawable.ill_notes,
-        title = R.string.onboarding_welcome_title_3,
-        subtitle = R.string.onboarding_welcome_subtitle_3
+        title = R.string.onboarding_welcome_title_schedule,
+        subtitle = R.string.onboarding_welcome_subtitle_schedule
     ),
 
     MAP(
         icon = R.drawable.ill_map,
-        title = R.string.onboarding_welcome_title_4,
-        subtitle = R.string.onboarding_welcome_subtitle_4
+        title = R.string.onboarding_welcome_title_map,
+        subtitle = R.string.onboarding_welcome_subtitle_map
     ),
 
-    SEARCH(
-        icon = R.drawable.ill_search,
-        title = R.string.onboarding_welcome_title_5,
-        subtitle = R.string.onboarding_welcome_subtitle_5
-    )
+    BARS(
+        icon = R.drawable.ill_bars,
+        title = R.string.onboarding_welcome_title_bars,
+        subtitle = R.string.onboarding_welcome_subtitle_bars
+    ),
+
+    NOTES(
+        icon = R.drawable.ill_notes,
+        title = R.string.onboarding_welcome_title_notes,
+        subtitle = R.string.onboarding_welcome_subtitle_notes
+    ),
 }
 
 internal interface PromoPageViewHolder {
