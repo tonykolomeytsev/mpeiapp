@@ -8,8 +8,8 @@
 
     <View
             android:id="@+id/promoIcon"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
             android:background="@drawable/onboarding_carousel_stub"
             android:layout_marginBottom="24dp"/>
 
@@ -20,8 +20,7 @@
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:gravity="center"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginHorizontal="16dp"
             android:layout_marginBottom="24dp"/>
 
     <TextView
@@ -29,8 +28,7 @@
             style="@style/H6.Gray70"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginHorizontal="32dp"
             android:textAlignment="center"
             android:gravity="center"/>
 
