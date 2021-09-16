@@ -19,7 +19,7 @@ import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.views.setMargins
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.BaseFragment
-import kekmech.ru.common_navigation.NeedToUpdate
+import kekmech.ru.common_navigation.features.NeedToUpdate
 import kekmech.ru.coreui.items.PullAdapterItem
 import kekmech.ru.coreui.items.SectionHeaderAdapterItem
 import kekmech.ru.coreui.items.SpaceAdapterItem
