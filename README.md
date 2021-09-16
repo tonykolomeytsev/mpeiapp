@@ -3,6 +3,10 @@
 ![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/tonykolomeytsev/mpeiapp?label=version) 
 ![](https://github.com/tonykolomeytsev/mpeiapp/workflows/Android%20build/badge.svg?branch=master)
 
+<p align="center">
+  <img src="https://github.com/tonykolomeytsev/mpeiapp/raw/master/screenshots/gradient_logo.png" />
+</p>
+
 Расписание пар, заметки, личный кабинет БАРС и крутая карта для студентов и преподавателей НИУ МЭИ. Самое функциональное, легковесное и стабильное МЭИшное приложение.
 
 **Фичи приложения:**
