@@ -1,7 +1,6 @@
 package kekmech.ru.bars.screen.rating_details.item
 
 import android.annotation.SuppressLint
-import android.view.MotionEvent
 import android.view.View
 import androidx.annotation.StringRes
 import androidx.recyclerview.widget.RecyclerView
@@ -12,6 +11,7 @@ import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.common_android.dpToPx
 import kekmech.ru.common_android.getResColor
 import kekmech.ru.common_android.getThemeColor
+import kekmech.ru.common_android.views.scaleOnTouch
 import kekmech.ru.common_schedule.drawable.ProgressBackgroundDrawable
 
 internal data class CompositeRatingItem(
@@ -49,24 +49,7 @@ internal class CompositeRatingViewHolder(
                 cornerRadius = ProgressBackgroundDrawable.CornerRadius
                     .of(context.resources.dpToPx(8f).toFloat())
             )
-        itemView.setOnTouchListener { _, event ->
-            if (event.action == MotionEvent.ACTION_DOWN) {
-                itemView.clearAnimation()
-                itemView.animate()
-                    .scaleX(ANIMATION_SCALE_MIN)
-                    .scaleY(ANIMATION_SCALE_MIN)
-                    .setDuration(ANIMATION_DURATION)
-                    .start()
-            } else {
-                itemView.clearAnimation()
-                itemView.animate()
-                    .scaleX(ANIMATION_SCALE_DEFAULT)
-                    .scaleY(ANIMATION_SCALE_DEFAULT)
-                    .setDuration(ANIMATION_DURATION)
-                    .start()
-            }
-            false
-        }
+        itemView.scaleOnTouch()
     }
 
     fun setName(@StringRes nameResId: Int) {
@@ -89,13 +72,6 @@ internal class CompositeRatingViewHolder(
 
     fun setOnClickListener(listener: () -> Unit) {
         viewBinding.root.setOnClickListener { listener.invoke() }
-    }
-
-    companion object {
-
-        private const val ANIMATION_SCALE_DEFAULT = 1f
-        private const val ANIMATION_SCALE_MIN = 0.97f
-        private const val ANIMATION_DURATION = 100L
     }
 }
 

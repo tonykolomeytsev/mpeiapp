@@ -1,18 +1,15 @@
 package kekmech.ru.coreui.items
 
-import android.annotation.SuppressLint
-import android.view.MotionEvent
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseItemBinder
+import kekmech.ru.common_android.views.scaleOnTouch
 import kekmech.ru.coreui.R
 import kekmech.ru.coreui.databinding.ItemAddActionBinding
 
 private const val ADD_ACTION_DEFAULT_ITEM_ID = 0
-private const val ANIMATION_SCALE_DEFAULT = 1f
 private const val ANIMATION_SCALE_MIN = 0.9f
-private const val ANIMATION_DURATION = 100L
 
 data class AddActionItem(
     val title: String,
@@ -23,7 +20,6 @@ interface AddActionViewHolder : ClickableItemViewHolder {
     fun setTitle(title: String)
 }
 
-@SuppressLint("ClickableViewAccessibility")
 class AddActionViewHolderImpl(
     containerView: View
 ) :
@@ -34,24 +30,7 @@ class AddActionViewHolderImpl(
     private val viewBinding = ItemAddActionBinding.bind(containerView)
 
     init {
-        containerView.setOnTouchListener { _, event ->
-            if (event.action == MotionEvent.ACTION_DOWN) {
-                containerView.clearAnimation()
-                containerView.animate()
-                    .scaleX(ANIMATION_SCALE_MIN)
-                    .scaleY(ANIMATION_SCALE_MIN)
-                    .setDuration(ANIMATION_DURATION)
-                    .start()
-            } else {
-                containerView.clearAnimation()
-                containerView.animate()
-                    .scaleX(ANIMATION_SCALE_DEFAULT)
-                    .scaleY(ANIMATION_SCALE_DEFAULT)
-                    .setDuration(ANIMATION_DURATION)
-                    .start()
-            }
-            false
-        }
+        containerView.scaleOnTouch(factor = ANIMATION_SCALE_MIN)
     }
 
     override fun setTitle(title: String) {
