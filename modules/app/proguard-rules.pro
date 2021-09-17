@@ -38,3 +38,9 @@
 
 # Java 8 API
 -keep class java.time.** { *; }
+
+# Generate mapping files
+-dump release/obfuscation/class_files.txt
+-printseeds release/obfuscation/seeds.txt
+-printusage release/obfuscation/unused.txt
+-printmapping release/obfuscation/mapping.txt
