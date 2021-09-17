@@ -7,7 +7,7 @@ import kekmech.ru.feature_app_settings.R
 internal enum class LanguageEntry(
     val languageCode: String,
     @StringRes val descriptionRes: Int,
-    @DrawableRes val iconRes: Int
+    @DrawableRes val iconRes: Int,
 ) {
 
     RUSSIAN(

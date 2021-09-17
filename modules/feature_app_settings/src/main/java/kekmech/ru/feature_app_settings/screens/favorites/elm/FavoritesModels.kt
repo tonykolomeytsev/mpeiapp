@@ -3,7 +3,7 @@ package kekmech.ru.feature_app_settings.screens.favorites.elm
 import kekmech.ru.domain_schedule.dto.FavoriteSchedule
 
 internal data class FavoritesState(
-    val favorites: List<FavoriteSchedule>? = null
+    val favorites: List<FavoriteSchedule>? = null,
 )
 
 internal sealed class FavoritesEvent {

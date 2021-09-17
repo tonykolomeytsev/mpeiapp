@@ -5,7 +5,7 @@ import kekmech.ru.domain_app_settings.AppSettings
 internal data class AppSettingsState(
     val appSettings: AppSettings? = null,
     val isFeatureToggleSnowFlakesEnabled: Boolean,
-    val hash: String = ""
+    val hash: String = "",
 )
 
 internal sealed class AppSettingsEvent {

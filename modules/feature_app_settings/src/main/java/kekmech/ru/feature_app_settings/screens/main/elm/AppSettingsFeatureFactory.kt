@@ -5,14 +5,15 @@ import vivid.money.elmslie.core.store.ElmStore
 
 internal class AppSettingsFeatureFactory(
     private val actor: AppSettingsActor,
-    private val featureToggles: FeatureToggles
+    private val featureToggles: FeatureToggles,
 ) {
 
-    fun create() = ElmStore(
-        initialState = AppSettingsState(
-            isFeatureToggleSnowFlakesEnabled = featureToggles.isSnowFlakesEnabled
-        ),
-        reducer = AppSettingsReducer(),
-        actor = actor
-    )
+    fun create() =
+        ElmStore(
+            initialState = AppSettingsState(
+                isFeatureToggleSnowFlakesEnabled = featureToggles.isSnowFlakesEnabled
+            ),
+            reducer = AppSettingsReducer(),
+            actor = actor
+        )
 }

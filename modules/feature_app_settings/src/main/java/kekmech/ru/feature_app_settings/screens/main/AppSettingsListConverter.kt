@@ -1,6 +1,8 @@
 package kekmech.ru.feature_app_settings.screens.main
 
 import android.content.Context
+import android.view.Gravity
+import androidx.annotation.StringRes
 import kekmech.ru.coreui.items.*
 import kekmech.ru.feature_app_settings.BuildConfig
 import kekmech.ru.feature_app_settings.R
@@ -14,14 +16,16 @@ internal class AppSettingsListConverter {
     fun map(state: AppSettingsState, context: Context): List<Any> {
         val appSettings = state.appSettings ?: return emptyList()
         return mutableListOf<Any>().apply {
-            add(ToggleItem(
+
+            addToggleWithDescription(
                 itemId = AppSettingsFragment.TOGGLE_DARK_THEME,
-                titleRes = R.string.app_settings_dark_theme,
-                isChecked = appSettings.isDarkThemeEnabled
-            ))
-            add(SectionTextItem(resId = R.string.app_settings_dark_theme_description))
-            add(createLanguageItem(state))
-            add(SectionTextItem(resId = R.string.app_settings_section_lang_description))
+                toggleTextResId = R.string.app_settings_dark_theme,
+                isChecked = appSettings.isDarkThemeEnabled,
+                descriptionResId = R.string.app_settings_dark_theme_description
+            )
+
+            addSwitchLanguageItem(state)
+
             if (state.isFeatureToggleSnowFlakesEnabled) {
                 add(ToggleItem(
                     itemId = AppSettingsFragment.TOGGLE_SNOW_FLAKES,
@@ -29,49 +33,49 @@ internal class AppSettingsListConverter {
                     isChecked = appSettings.isSnowEnabled
                 ))
             }
-            add(SpaceItem.VERTICAL_24)
 
-            add(SectionHeaderItem(
-                titleRes = R.string.app_settings_header_schedule
-            ))
-            add(SpaceItem.VERTICAL_8)
-            add(BottomLabeledTextItem(
-                itemId = AppSettingsFragment.ITEM_FAVORITES,
-                mainTextResId = R.string.app_settings_favorite_schedule_title,
-                labelResId = R.string.app_settings_favorite_schedule_description
-            ))
-            add(ToggleItem(
-                itemId = AppSettingsFragment.TOGGLE_SHOW_NAV_FAB,
-                titleRes = R.string.app_settings_show_navigation_fab,
-                isChecked = appSettings.showNavigationButton
-            ))
-            add(SectionTextItem(resId = R.string.app_settings_show_navigation_fab_description))
-            add(SpaceItem.VERTICAL_24)
+            addSection(titleResId = R.string.app_settings_header_schedule) {
 
-            add(SectionHeaderItem(
-                titleRes = R.string.app_settings_header_map
-            ))
-            add(ToggleItem(
-                itemId = AppSettingsFragment.TOGGLE_AUTO_HIDE_BOTTOM_SHEET,
-                titleRes = R.string.app_settings_auto_hide_bottom_sheet,
-                isChecked = appSettings.autoHideBottomSheet
-            ))
-            add(SectionTextItem(resId = R.string.app_settings_auto_hide_bottom_sheet_description))
-            add(createMapTypeItem(state, context))
+                add(BottomLabeledTextItem(
+                    itemId = AppSettingsFragment.ITEM_FAVORITES,
+                    mainTextResId = R.string.app_settings_favorite_schedule_title,
+                    labelResId = R.string.app_settings_favorite_schedule_description
+                ))
 
-            add(SpaceItem.VERTICAL_24)
-            add(SectionHeaderItem(titleRes = R.string.app_settings_header_support))
-            add(SpaceItem.VERTICAL_12)
-            add(BottomLabeledTextItem(
-                mainTextResId = R.string.app_settings_section_ask,
-                label = "vk.com/kekmech",
-                itemId = ITEM_SUPPORT
-            ))
-            add(BottomLabeledTextItem(
-                mainTextResId = R.string.app_settings_section_github,
-                label = "github.com/tonykolomeytsev/mpeiapp",
-                itemId = ITEM_GITHUB
-            ))
+                addToggleWithDescription(
+                    itemId = AppSettingsFragment.TOGGLE_SHOW_NAV_FAB,
+                    toggleTextResId = R.string.app_settings_show_navigation_fab,
+                    isChecked = appSettings.showNavigationButton,
+                    descriptionResId = R.string.app_settings_show_navigation_fab_description
+                )
+            }
+
+            addSection(titleResId = R.string.app_settings_header_map) {
+
+                addToggleWithDescription(
+                    itemId = AppSettingsFragment.TOGGLE_AUTO_HIDE_BOTTOM_SHEET,
+                    toggleTextResId = R.string.app_settings_auto_hide_bottom_sheet,
+                    isChecked = appSettings.autoHideBottomSheet,
+                    descriptionResId = R.string.app_settings_auto_hide_bottom_sheet_description
+                )
+
+                addSwitchMapTypeItem(state, context)
+            }
+
+            addSection(titleResId = R.string.app_settings_header_support) {
+
+                add(BottomLabeledTextItem(
+                    mainTextResId = R.string.app_settings_section_ask,
+                    label = "vk.com/kekmech",
+                    itemId = ITEM_SUPPORT
+                ))
+
+                add(BottomLabeledTextItem(
+                    mainTextResId = R.string.app_settings_section_github,
+                    label = "github.com/tonykolomeytsev/mpeiapp",
+                    itemId = ITEM_GITHUB
+                ))
+            }
 
             if (BuildConfig.DEBUG) {
                 add(SpaceItem.VERTICAL_24)
@@ -87,7 +91,10 @@ internal class AppSettingsListConverter {
                     title = "Использовать тестовое окружение",
                     isChecked = appSettings.isDebugEnvironment
                 ))
-                add(SectionTextItem(text = "Нужно перезагрузить приложение, для того чтобы настройка вступила в силу"))
+                add(TextItem(
+                    text = "Нужно перезагрузить приложение, для того чтобы настройка вступила в силу",
+                    styleResId = R.style.H8_Gray70_Medium
+                ))
             }
 
             add(SpaceItem.VERTICAL_24)
@@ -99,12 +106,14 @@ internal class AppSettingsListConverter {
     private fun getVersionItem(context: Context): Any {
         val versionName = BuildConfig.VERSION_NAME
         return TextItem(
-            text = context.getString(R.string.app_settings_app_version, versionName)
+            text = context.getString(R.string.app_settings_app_version, versionName),
+            styleResId = R.style.H6_Gray70,
+            textGravity = Gravity.CENTER
         )
     }
 
-    private fun createLanguageItem(state: AppSettingsState): Any {
-        return RightLabeledTextItem(
+    private fun MutableList<Any>.addSwitchLanguageItem(state: AppSettingsState) {
+        add(RightLabeledTextItem(
             mainTextResId = R.string.app_settings_section_lang,
             label = when (state.appSettings?.languageCode) {
                 "ru_RU" -> "РУССКИЙ"
@@ -112,11 +121,15 @@ internal class AppSettingsListConverter {
                 else -> ""
             },
             itemId = AppSettingsFragment.ITEM_LANGUAGE
-        )
+        ))
+        add(TextItem(
+            textResId = R.string.app_settings_section_lang_description,
+            styleResId = R.style.H8_Gray70_Medium
+        ))
     }
 
-    private fun createMapTypeItem(state: AppSettingsState, context: Context): Any {
-        return RightLabeledTextItem(
+    private fun MutableList<Any>.addSwitchMapTypeItem(state: AppSettingsState, context: Context) {
+        add(RightLabeledTextItem(
             mainTextResId = R.string.app_settings_map_appearance_type,
             label = when (state.appSettings?.mapAppearanceType) {
                 "hybrid" -> context.getString(R.string.change_map_type_hybrid).uppercase()
@@ -124,6 +137,26 @@ internal class AppSettingsListConverter {
                 else -> ""
             },
             itemId = AppSettingsFragment.ITEM_MAP_TYPE
-        )
+        ))
+    }
+
+    private fun MutableList<Any>.addToggleWithDescription(
+        itemId: Int,
+        @StringRes toggleTextResId: Int,
+        isChecked: Boolean,
+        @StringRes descriptionResId: Int,
+    ) {
+        add(ToggleItem(itemId = itemId, titleRes = toggleTextResId, isChecked = isChecked))
+        add(TextItem(textResId = descriptionResId, styleResId = R.style.H8_Gray70_Medium))
+    }
+
+    private fun MutableList<Any>.addSection(
+        @StringRes titleResId: Int,
+        content: MutableList<Any>.() -> Unit,
+    ) {
+        add(SpaceItem.VERTICAL_24)
+        add(SectionHeaderItem(titleRes = titleResId))
+        add(SpaceItem.VERTICAL_8)
+        content.invoke(this)
     }
 }

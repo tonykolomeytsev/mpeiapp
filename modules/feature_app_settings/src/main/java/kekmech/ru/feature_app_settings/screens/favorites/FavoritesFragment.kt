@@ -65,44 +65,45 @@ internal class FavoritesFragment : BaseFragment<FavoritesEvent, FavoritesEffect,
         adapter.update(FavoritesListConverter(requireContext()).map(state))
     }
 
-    private fun createAdapter() = BaseAdapter(
-        SpaceAdapterItem(),
-        AddActionAdapterItem {
-            analytics.sendClick("AddFavorite")
-            dependencies.scheduleFeatureLauncher.launchSearchGroup(
-                continueTo = BACK_WITH_RESULT,
-                selectGroupAfterSuccess = false,
-                resultKey = FIND_GROUP_RESULT_KEY
-            )
-            setResultListener<String>(FIND_GROUP_RESULT_KEY) { groupName ->
+    private fun createAdapter() =
+        BaseAdapter(
+            SpaceAdapterItem(),
+            AddActionAdapterItem {
+                analytics.sendClick("AddFavorite")
+                dependencies.scheduleFeatureLauncher.launchSearchGroup(
+                    continueTo = BACK_WITH_RESULT,
+                    selectGroupAfterSuccess = false,
+                    resultKey = FIND_GROUP_RESULT_KEY
+                )
+                setResultListener<String>(FIND_GROUP_RESULT_KEY) { groupName ->
+                    addScreenForward {
+                        EditFavoriteFragment.newInstance(
+                            groupNumber = groupName,
+                            description = "",
+                            resultKey = NEW_FAVORITE_RESULT_KEY
+                        )
+                    }
+                }
+            },
+            FavoriteScheduleAdapterItem {
+                analytics.sendClick("EditFavorite")
                 addScreenForward {
                     EditFavoriteFragment.newInstance(
-                        groupNumber = groupName,
-                        description = "",
-                        resultKey = NEW_FAVORITE_RESULT_KEY
+                        groupNumber = it.value.groupNumber,
+                        description = it.value.description,
+                        resultKey = EDIT_FAVORITE_RESULT_KEY
                     )
                 }
-            }
-        },
-        FavoriteScheduleAdapterItem {
-            analytics.sendClick("EditFavorite")
-            addScreenForward {
-                EditFavoriteFragment.newInstance(
-                    groupNumber = it.value.groupNumber,
-                    description = it.value.description,
-                    resultKey = EDIT_FAVORITE_RESULT_KEY
-                )
-            }
-            setResultListener<Pair<String, String>>(EDIT_FAVORITE_RESULT_KEY) { (groupName, description) ->
-                feature.accept(
-                    Wish.Action.UpdateFavorite(
-                        FavoriteSchedule(groupName, description, 0)
+                setResultListener<Pair<String, String>>(EDIT_FAVORITE_RESULT_KEY) { (groupName, description) ->
+                    feature.accept(
+                        Wish.Action.UpdateFavorite(
+                            FavoriteSchedule(groupName, description, 0)
+                        )
                     )
-                )
-            }
-        },
-        HelpBannerAdapterItem()
-    )
+                }
+            },
+            HelpBannerAdapterItem()
+        )
 
     companion object {
 

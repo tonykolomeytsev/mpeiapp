@@ -10,18 +10,17 @@ import kekmech.ru.feature_app_settings.screens.favorites.item.HelpBannerItem
 
 internal class FavoritesListConverter(context: Context) {
 
-    private val addFavoriteItem = AddActionItem(
-        context.getString(R.string.favorites_empty_state_add)
-    )
+    private val addFavoriteItem = AddActionItem(context.getString(R.string.favorites_empty_state_add))
 
-    fun map(state: FavoritesState): List<Any> = when {
-        state.favorites == null -> listOf(HelpBannerItem) // loading
-        state.favorites.isEmpty() -> listOf(HelpBannerItem, addFavoriteItem)
-        else -> mutableListOf<Any>().apply {
-            add(HelpBannerItem)
-            addAll(state.favorites.map(::FavoriteScheduleItem))
-            add(SpaceItem.VERTICAL_24)
-            add(addFavoriteItem)
+    fun map(state: FavoritesState): List<Any> =
+        when {
+            state.favorites == null -> listOf(HelpBannerItem) // loading
+            state.favorites.isEmpty() -> listOf(HelpBannerItem, addFavoriteItem)
+            else -> mutableListOf<Any>().apply {
+                add(HelpBannerItem)
+                addAll(state.favorites.map(::FavoriteScheduleItem))
+                add(SpaceItem.VERTICAL_24)
+                add(addFavoriteItem)
+            }
         }
-    }
 }
