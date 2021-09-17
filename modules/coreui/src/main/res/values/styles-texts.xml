@@ -97,6 +97,10 @@
         <item name="android:textColor">?attr/colorGray70</item>
     </style>
 
+    <style name="H8.Gray70.Medium">
+        <item name="android:fontFamily">@font/roboto_medium</item>
+    </style>
+
     <style name="H8.Red">
         <item name="android:textColor">?attr/colorRed</item>
     </style>

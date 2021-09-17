@@ -38,41 +38,43 @@ internal class SelectLanguageFragment : BottomSheetDialogFragment() {
         adapter.update(getItems())
     }
 
-    private fun getItems() = mutableListOf<Any>().apply {
-        add(PullItem)
-        add(SpaceItem.VERTICAL_8)
-        add(SectionHeaderItem(titleRes = R.string.change_language_screen_title))
-        add(SpaceItem.VERTICAL_12)
-        addAll(
-            LanguageEntry
-                .values()
-                .asList()
-                .map { LanguageItem(it, it.languageCode == selectLanguage) }
-        )
-        add(SpaceItem.VERTICAL_16)
-        add(
-            TextItem(
-                textResId = R.string.change_language_disclaimer,
-                styleResId = R.style.H6_Gray70
+    private fun getItems() =
+        mutableListOf<Any>().apply {
+            add(PullItem)
+            add(SpaceItem.VERTICAL_8)
+            add(SectionHeaderItem(titleRes = R.string.change_language_screen_title))
+            add(SpaceItem.VERTICAL_12)
+            addAll(
+                LanguageEntry
+                    .values()
+                    .asList()
+                    .map { LanguageItem(it, it.languageCode == selectLanguage) }
             )
-        )
-    }
+            add(SpaceItem.VERTICAL_16)
+            add(
+                TextItem(
+                    textResId = R.string.change_language_disclaimer,
+                    styleResId = R.style.H6_Gray70
+                )
+            )
+        }
 
-    private fun createAdapter() = BaseAdapter(
-        SectionHeaderAdapterItem(),
-        SpaceAdapterItem(),
-        TextAdapterItem(),
-        LanguageAdapterItem {
-            analytics.sendClick("SelectLanguage_${it.languageCode}")
-            if (it.languageCode == selectLanguage) {
-                close()
-            } else {
-                close()
-                setResult(resultKey, result = it.languageCode)
-            }
-        },
-        PullAdapterItem()
-    )
+    private fun createAdapter() =
+        BaseAdapter(
+            SectionHeaderAdapterItem(),
+            SpaceAdapterItem(),
+            TextAdapterItem(),
+            LanguageAdapterItem {
+                analytics.sendClick("SelectLanguage_${it.languageCode}")
+                if (it.languageCode == selectLanguage) {
+                    close()
+                } else {
+                    close()
+                    setResult(resultKey, result = it.languageCode)
+                }
+            },
+            PullAdapterItem()
+        )
 
     companion object {
 

@@ -9,5 +9,5 @@ internal data class AppSettingDependencies(
     val appSettingsFeatureFactory: AppSettingsFeatureFactory,
     val onboardingFeatureLauncher: OnboardingFeatureLauncher,
     val favoritesFeatureFactory: FavoritesFeatureFactory,
-    val scheduleFeatureLauncher: ScheduleFeatureLauncher
+    val scheduleFeatureLauncher: ScheduleFeatureLauncher,
 )

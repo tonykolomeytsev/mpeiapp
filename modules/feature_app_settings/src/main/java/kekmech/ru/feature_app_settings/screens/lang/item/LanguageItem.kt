@@ -14,7 +14,7 @@ import kekmech.ru.feature_app_settings.screens.lang.dto.LanguageEntry
 
 internal data class LanguageItem(
     val language: LanguageEntry,
-    val isSelected: Boolean
+    val isSelected: Boolean,
 )
 
 internal interface LanguageViewHolder : ClickableItemViewHolder {
@@ -24,7 +24,7 @@ internal interface LanguageViewHolder : ClickableItemViewHolder {
 }
 
 private class LanguageViewHolderImpl(
-    containerView: View
+    containerView: View,
 ) : RecyclerView.ViewHolder(containerView),
     LanguageViewHolder,
     ClickableItemViewHolder by ClickableItemViewHolderImpl(containerView) {
@@ -46,7 +46,7 @@ private class LanguageViewHolderImpl(
 }
 
 private class LanguageItemBinder(
-    private val onClickListener: (LanguageEntry) -> Unit
+    private val onClickListener: (LanguageEntry) -> Unit,
 ) : BaseItemBinder<LanguageViewHolder, LanguageItem>() {
 
     override fun bind(vh: LanguageViewHolder, model: LanguageItem, position: Int) {
@@ -58,7 +58,7 @@ private class LanguageItemBinder(
 }
 
 internal class LanguageAdapterItem(
-    onClickListener: (LanguageEntry) -> Unit
+    onClickListener: (LanguageEntry) -> Unit,
 ) : AdapterItem<LanguageViewHolder, LanguageItem>(
     isType = { it is LanguageItem },
     layoutRes = R.layout.item_language,

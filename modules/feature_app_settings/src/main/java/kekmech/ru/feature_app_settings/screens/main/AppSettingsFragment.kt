@@ -62,83 +62,85 @@ internal class AppSettingsFragment :
         adapter.update(AppSettingsListConverter().map(state, requireContext()))
     }
 
-    override fun handleEffect(effect: AppSettingsEffect) = when (effect) {
-        is AppSettingsEffect.RecreateActivity -> recreateActivity()
-        is AppSettingsEffect.OpenLanguageSelectionDialog -> {
-            showDialog {
-                SelectLanguageFragment.newInstance(effect.selectedLanguage, LANGUAGE_RESULT_KEY)
+    override fun handleEffect(effect: AppSettingsEffect) =
+        when (effect) {
+            is AppSettingsEffect.RecreateActivity -> recreateActivity()
+            is AppSettingsEffect.OpenLanguageSelectionDialog -> {
+                showDialog {
+                    SelectLanguageFragment.newInstance(effect.selectedLanguage, LANGUAGE_RESULT_KEY)
+                }
+                setResultListener<String>(LANGUAGE_RESULT_KEY) { selectedLanguage ->
+                    feature.accept(Wish.Action.LanguageChanged(selectedLanguage))
+                }
             }
-            setResultListener<String>(LANGUAGE_RESULT_KEY) { selectedLanguage ->
-                feature.accept(Wish.Action.LanguageChanged(selectedLanguage))
+            is AppSettingsEffect.OpenMapTypeDialog -> {
+                showDialog {
+                    SelectMapTypeFragment.newInstance(effect.mapType, MAP_TYPE_RESULT_KEY)
+                }
+                setResultListener<String>(MAP_TYPE_RESULT_KEY) { selectedMapType ->
+                    feature.accept(Wish.Action.MapTypeChanged(selectedMapType))
+                }
             }
         }
-        is AppSettingsEffect.OpenMapTypeDialog -> {
-            showDialog {
-                SelectMapTypeFragment.newInstance(effect.mapType, MAP_TYPE_RESULT_KEY)
-            }
-            setResultListener<String>(MAP_TYPE_RESULT_KEY) { selectedMapType ->
-                feature.accept(Wish.Action.MapTypeChanged(selectedMapType))
-            }
-        }
-    }
 
-    private fun createAdapter() = BaseAdapter(
-        SectionHeaderAdapterItem(),
-        ToggleAdapterItem(TOGGLE_DARK_THEME) {
-            analytics.sendChangeSetting("DarkTheme", it.toString())
-            feature.accept(Wish.Action.SetDarkThemeEnabled(it))
-            fixStatusBarIssue(it)
-        },
-        ToggleAdapterItem(TOGGLE_AUTO_HIDE_BOTTOM_SHEET) {
-            analytics.sendChangeSetting("AutoHideMapBottomSheet", it.toString())
-            feature.accept(Wish.Action.SetAutoHideBottomSheet(it))
-        },
-        ToggleAdapterItem(TOGGLE_SNOW_FLAKES) {
-            analytics.sendChangeSetting("SnowFlakes", it.toString())
-            feature.accept(Wish.Action.SetSnowEnabled(it))
-        },
-        ToggleAdapterItem(TOGGLE_SHOW_NAV_FAB) {
-            analytics.sendChangeSetting("ShowQuickNavFab", it.toString())
-            feature.accept(Wish.Action.SetShowQuickNavigationFab(it))
-        },
-        ToggleAdapterItem(TOGGLE_DEBUG_CHANGE_ENV) {
-            feature.accept(Wish.Action.ChangeBackendEnvironment(it))
-        },
-        SectionTextAdapterItem(),
-        SpaceAdapterItem(),
-        BottomLabeledTextAdapterItem { onItemClick(it.itemId) },
-        RightLabeledTextAdapterItem { onItemClick(it.itemId) },
-        TextAdapterItem(R.layout.item_app_version)
-    )
+    private fun createAdapter() =
+        BaseAdapter(
+            SectionHeaderAdapterItem(),
+            ToggleAdapterItem(TOGGLE_DARK_THEME) {
+                analytics.sendChangeSetting("DarkTheme", it.toString())
+                feature.accept(Wish.Action.SetDarkThemeEnabled(it))
+                fixStatusBarIssue(it)
+            },
+            ToggleAdapterItem(TOGGLE_AUTO_HIDE_BOTTOM_SHEET) {
+                analytics.sendChangeSetting("AutoHideMapBottomSheet", it.toString())
+                feature.accept(Wish.Action.SetAutoHideBottomSheet(it))
+            },
+            ToggleAdapterItem(TOGGLE_SNOW_FLAKES) {
+                analytics.sendChangeSetting("SnowFlakes", it.toString())
+                feature.accept(Wish.Action.SetSnowEnabled(it))
+            },
+            ToggleAdapterItem(TOGGLE_SHOW_NAV_FAB) {
+                analytics.sendChangeSetting("ShowQuickNavFab", it.toString())
+                feature.accept(Wish.Action.SetShowQuickNavigationFab(it))
+            },
+            ToggleAdapterItem(TOGGLE_DEBUG_CHANGE_ENV) {
+                feature.accept(Wish.Action.ChangeBackendEnvironment(it))
+            },
+            TextAdapterItem(),
+            SpaceAdapterItem(),
+            BottomLabeledTextAdapterItem { onItemClick(it.itemId) },
+            RightLabeledTextAdapterItem { onItemClick(it.itemId) },
+        )
 
-    private fun onItemClick(itemId: Int?) = when (itemId) {
-        ITEM_DEBUG_CLEAR_SELECTED_GROUP -> {
-            feature.accept(Wish.Action.ClearSelectedGroup)
-            dependencies.onboardingFeatureLauncher.launchWelcomePage(true)
+    private fun onItemClick(itemId: Int?) =
+        when (itemId) {
+            ITEM_DEBUG_CLEAR_SELECTED_GROUP -> {
+                feature.accept(Wish.Action.ClearSelectedGroup)
+                dependencies.onboardingFeatureLauncher.launchWelcomePage(true)
+            }
+            ITEM_SUPPORT -> {
+                analytics.sendClick("VkGroup")
+                requireContext().openLinkExternal("https://vk.com/kekmech")
+            }
+            ITEM_GITHUB -> {
+                analytics.sendClick("GitHub")
+                requireContext().openLinkExternal("https://github.com/tonykolomeytsev/mpeiapp")
+            }
+            ITEM_FAVORITES -> {
+                analytics.sendClick("Favorites")
+                addScreenForward { FavoritesFragment() }
+            }
+            ITEM_LANGUAGE -> {
+                analytics.sendClick("SelectLanguage")
+                feature.accept(Wish.Click.OnLanguage)
+            }
+            ITEM_MAP_TYPE -> {
+                analytics.sendClick("SelectMapType")
+                feature.accept(Wish.Click.MapType)
+            }
+            else -> { /* no-op */
+            }
         }
-        ITEM_SUPPORT -> {
-            analytics.sendClick("VkGroup")
-            requireContext().openLinkExternal("https://vk.com/kekmech")
-        }
-        ITEM_GITHUB -> {
-            analytics.sendClick("GitHub")
-            requireContext().openLinkExternal("https://github.com/tonykolomeytsev/mpeiapp")
-        }
-        ITEM_FAVORITES -> {
-            analytics.sendClick("Favorites")
-            addScreenForward { FavoritesFragment() }
-        }
-        ITEM_LANGUAGE -> {
-            analytics.sendClick("SelectLanguage")
-            feature.accept(Wish.Click.OnLanguage)
-        }
-        ITEM_MAP_TYPE -> {
-            analytics.sendClick("SelectMapType")
-            feature.accept(Wish.Click.MapType)
-        }
-        else -> { /* no-op */
-        }
-    }
 
     @Suppress("DEPRECATION") // потому что это фикс для старых версий
     private fun fixStatusBarIssue(isDarkThemeEnabled: Boolean) {
