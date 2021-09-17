@@ -1,5 +1,6 @@
 package kekmech.ru.coreui.items
 
+import android.view.Gravity
 import android.view.View
 import android.widget.TextView
 import androidx.annotation.LayoutRes
@@ -16,7 +17,7 @@ data class TextItem(
     val text: CharSequence? = null,
     @StringRes val textResId: Int? = null,
     @StyleRes val styleResId: Int? = null,
-    val textGravity: Int? = null,
+    val textGravity: Int = Gravity.START,
 )
 
 interface TextItemViewHolder {
@@ -61,7 +62,7 @@ class TextItemBinder : BaseItemBinder<TextItemViewHolder, TextItem>() {
             text?.let(vh::setText)
             textResId?.let(vh::setText)
             styleResId?.let(vh::setStyle)
-            textGravity?.let(vh::setTextGravity)
+            textGravity.let(vh::setTextGravity)
         }
     }
 }
