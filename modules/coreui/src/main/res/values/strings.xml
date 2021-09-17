@@ -106,12 +106,12 @@
     <string name="connection_lost_error">Нет интернет соединения</string>
 
     <string name="onboarding_welcome_start_using">Погнали!</string>
-    <string name="onboarding_welcome_title_schedule">Просматривайте расписания</string>
+    <string name="onboarding_welcome_title_schedule">Смотрите расписания</string>
     <string name="onboarding_welcome_subtitle_schedule">К просмотренным ранее расписаниям вы имеете доступ даже без интернета</string>
     <string name="onboarding_welcome_title_notes">Создавайте заметки</string>
     <string name="onboarding_welcome_subtitle_notes">Заметки стали еще удобнее! Самые актуальные заметки всегда отображаются на главном экране</string>
     <string name="onboarding_welcome_title_map">Пользуйтесь картой</string>
-    <string name="onboarding_welcome_subtitle_map">Теперь на карте отображены не только корпуса, столовые и общежития, но и другие важные места</string>
+    <string name="onboarding_welcome_subtitle_map">На карте можно найти корпуса, столовые, общежития и много других важных мест</string>
     <string name="onboarding_welcome_title_bars">Смотрите оценки</string>
     <string name="onboarding_welcome_subtitle_bars">Просматривайте БАРС прямо в приложении. Для особых случаев есть встроенный браузер</string>
 

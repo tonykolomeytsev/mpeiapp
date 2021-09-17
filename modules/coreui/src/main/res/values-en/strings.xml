@@ -109,9 +109,9 @@
     <string name="onboarding_welcome_title_notes">Create notes</string>
     <string name="onboarding_welcome_subtitle_notes">Notes just got better! The most relevant notes are always displayed on the home screen </string>
     <string name="onboarding_welcome_title_map">Use the map</string>
-    <string name="onboarding_welcome_subtitle_map">Now the map shows not only buildings, canteens and hostels, but also other important places</string>
+    <string name="onboarding_welcome_subtitle_map">On the map you can find buildings, canteens, hostels and many other important places</string>
     <string name="onboarding_welcome_title_bars">View your BARS</string>
-    <string name="onboarding_welcome_subtitle_bars">You can view BARS directly in the application. For special occasions, there is a built-in browser!</string>
+    <string name="onboarding_welcome_subtitle_bars">You can view BARS directly in the application. For special occasions, there is a built-in browser</string>
 
     <string name="schedule_find_header">Search for a schedule</string>
     <string name="schedule_find_description">Enter the group number or teacher name and we will download the selected schedule to the device</string>
