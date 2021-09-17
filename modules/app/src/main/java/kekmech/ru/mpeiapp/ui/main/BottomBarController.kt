@@ -79,7 +79,7 @@ class BottomBarController(
 
         childFragmentManager.beginTransaction().apply {
             if (newFragment == null) {
-                replace(R.id.fragmentContainer, createTabFragment(tab), tab.name)
+                add(R.id.fragmentContainer, createTabFragment(tab), tab.name)
             }
             currentFragment?.let { fragment ->
                 hide(fragment)
