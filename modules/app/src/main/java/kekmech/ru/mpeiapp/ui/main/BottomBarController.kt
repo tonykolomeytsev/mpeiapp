@@ -81,16 +81,16 @@ class BottomBarController(
             if (newFragment == null) {
                 replace(R.id.fragmentContainer, createTabFragment(tab), tab.name)
             }
-//            currentFragment?.let { fragment ->
-//                hide(fragment)
-//                fragment.userVisibleHint = false
-//            }
+            currentFragment?.let { fragment ->
+                hide(fragment)
+                fragment.userVisibleHint = false
+            }
             newFragment?.let { fragment ->
-                //show(fragment)
+                show(fragment)
                 if (fragment is NeedToUpdate) {
                     fragment.onUpdate()
                 }
-                //fragment.userVisibleHint = true
+                fragment.userVisibleHint = true
             }
         }.commitNowIgnoreStateLossError()
         lastSelectedTab = tab
