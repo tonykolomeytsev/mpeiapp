@@ -37,9 +37,9 @@ internal object RawToMarksResponseMapper {
 
     private fun String.extractFloatOrNull() = replace(',', '.').let {
         it.toFloatOrNull()
-            ?: it.split("[\\s\\(]+".toRegex())[0].toFloatOrNull()
+            ?: it.split("[\\s\\(\\/]+".toRegex())[0].toFloatOrNull()
     }
 
     private fun String.extractIntOrNull() = toIntOrNull()
-        ?: split("[\\s\\(]+".toRegex())[0].toIntOrNull()
+        ?: split("[\\s\\(\\/]+".toRegex())[0].toIntOrNull()
 }

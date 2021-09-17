@@ -50,3 +50,32 @@ fun View.setOnClickListenerWithDebounce(debounceDuration: Long, onClickListener:
         }
     })
 }
+
+
+const val SCALE_ON_TOUCH_FACTOR = 0.97f
+const val SCALE_ON_TOUCH_DURATION = 100L
+
+@SuppressLint("ClickableViewAccessibility")
+fun View.scaleOnTouch(
+    factor: Float = SCALE_ON_TOUCH_FACTOR,
+    duration: Long = SCALE_ON_TOUCH_DURATION,
+) {
+    setOnTouchListener { _, event ->
+        if (event.action == ACTION_DOWN) {
+            clearAnimation()
+            animate()
+                .scaleX(factor)
+                .scaleY(factor)
+                .setDuration(duration)
+                .start()
+        } else {
+            clearAnimation()
+            animate()
+                .scaleX(1f)
+                .scaleY(1f)
+                .setDuration(duration)
+                .start()
+        }
+        false
+    }
+}
