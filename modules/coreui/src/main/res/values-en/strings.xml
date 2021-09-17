@@ -103,7 +103,7 @@
     <string name="something_went_wrong_error">Something went wrong…</string>
     <string name="connection_lost_error">No internet connection</string>
 
-    <string name="onboarding_welcome_start_using">Continue</string>
+    <string name="onboarding_welcome_start_using">Let\'s go!</string>
     <string name="onboarding_welcome_title_schedule">Check your schedule</string>
     <string name="onboarding_welcome_subtitle_schedule">You can access the previously viewed schedules even without the Internet</string>
     <string name="onboarding_welcome_title_notes">Create notes</string>

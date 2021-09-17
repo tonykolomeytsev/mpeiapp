@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="400dp"
             app:layout_constraintBottom_toTopOf="@+id/buttonStart"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/gradientLogo"
             tools:itemCount="1"
             tools:listitem="@layout/item_promo_page" />
 
@@ -33,7 +33,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/recycler"
-            app:spi_dotColor="?attr/colorGray70"
+            app:spi_dotColor="?attr/colorGray30"
             app:spi_dotSelectedColor="@color/colorMain" />
 
     <Button
