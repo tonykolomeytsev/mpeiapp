@@ -113,7 +113,7 @@
     <string name="onboarding_welcome_title_map">Пользуйтесь картой</string>
     <string name="onboarding_welcome_subtitle_map">Теперь на карте отображены не только корпуса, столовые и общежития, но и другие важные места</string>
     <string name="onboarding_welcome_title_bars">Смотрите оценки</string>
-    <string name="onboarding_welcome_subtitle_bars">Просматривайте БАРС можно прямо в приложении. Для особых случаев есть встроенный браузер</string>
+    <string name="onboarding_welcome_subtitle_bars">Просматривайте БАРС прямо в приложении. Для особых случаев есть встроенный браузер</string>
 
     <string name="schedule_find_header">Поиск расписания</string>
     <string name="schedule_find_description">Введите номер группы или имя преподавателя и мы загрузим выбранное расписание на устройство</string>
