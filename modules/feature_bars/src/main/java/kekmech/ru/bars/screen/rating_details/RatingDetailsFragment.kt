@@ -7,6 +7,8 @@ import kekmech.ru.bars.R
 import kekmech.ru.bars.databinding.FragmentRatingDetailsBinding
 import kekmech.ru.bars.screen.rating_details.item.CompositeRatingAdapterItem
 import kekmech.ru.common_adapter.BaseAdapter
+import kekmech.ru.common_analytics.addScrollAnalytics
+import kekmech.ru.common_analytics.ext.screenAnalytics
 import kekmech.ru.common_android.*
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_kotlin.fastLazy
@@ -19,6 +21,7 @@ internal class RatingDetailsFragment : Fragment(R.layout.fragment_rating_details
 
     private val binding by viewBinding(FragmentRatingDetailsBinding::bind)
     private val adapter by fastLazy { createAdapter() }
+    private val analytics by screenAnalytics("RatingDetails")
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -28,6 +31,7 @@ internal class RatingDetailsFragment : Fragment(R.layout.fragment_rating_details
             recycler.addSystemBottomPadding()
             recycler.attachScrollListenerForAppBarLayoutShadow(appBarLayout)
             recycler.adapter = adapter
+            recycler.addScrollAnalytics(analytics, "RatingDetailsRecycler")
         }
         adapter.update(RatingDetailsListConverter(requireContext()).map(getArgument(ARG_RATING)))
     }
@@ -35,7 +39,9 @@ internal class RatingDetailsFragment : Fragment(R.layout.fragment_rating_details
     private fun createAdapter() = BaseAdapter(
         TextAdapterItem(),
         SpaceAdapterItem(),
-        CompositeRatingAdapterItem { /* no-op */ }
+        CompositeRatingAdapterItem {
+            analytics.sendClick("CompositeRating_$it")
+        }
     )
 
     companion object {
