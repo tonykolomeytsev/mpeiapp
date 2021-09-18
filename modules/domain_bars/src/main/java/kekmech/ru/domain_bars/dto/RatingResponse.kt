@@ -12,11 +12,11 @@ data class Rating(
 data class CompositeRating(
     val value: Int,
     val weight: Float,
-)
+) : Serializable
 
 data class SocialCompositeRating(
     val value: Int,
     val weight: Float,
     val sportValue: Int,
     val socialActivityValue: Int,
-)
+) : Serializable
