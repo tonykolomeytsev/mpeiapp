@@ -1,5 +1,6 @@
 package kekmech.ru.map
 
+import kekmech.ru.coreui.items.ErrorStateItem
 import kekmech.ru.coreui.items.PullItem
 import kekmech.ru.coreui.items.SectionHeaderItem
 import kekmech.ru.coreui.items.SpaceItem
@@ -14,22 +15,26 @@ private const val TAB_BAR_ITEM_SPACING = 4
 internal class MapListConverter {
 
     fun map(state: MapState): List<Any> {
-
         return mutableListOf<Any>().apply {
             add(PullItem)
             add(SpaceItem(0, TAB_BAR_ITEM_SPACING))
             add(TabBarItem)
 
-            val selectedMarkers = state.markers.filter { it.type == state.selectedTab.toMarkerType() }
-            if (selectedMarkers.all { it.tag.isNullOrEmpty() }) {
-                createSectionHeader(state.selectedTab).let {
-                    add(SpaceItem.VERTICAL_24)
-                    add(it)
-                    add(SpaceItem.VERTICAL_12)
-                }
-                addAll(selectedMarkers)
+            if (state.markers.isEmpty() && state.loadingError != null) {
+                add(SpaceItem.VERTICAL_24)
+                add(ErrorStateItem(state.loadingError))
             } else {
-                addAll(createListWithSections(selectedMarkers))
+                val selectedMarkers = state.markers.filter { it.type == state.selectedTab.toMarkerType() }
+                if (selectedMarkers.all { it.tag.isNullOrEmpty() }) {
+                    createSectionHeader(state.selectedTab).let {
+                        add(SpaceItem.VERTICAL_24)
+                        add(it)
+                        add(SpaceItem.VERTICAL_12)
+                    }
+                    addAll(selectedMarkers)
+                } else {
+                    addAll(createListWithSections(selectedMarkers))
+                }
             }
         }
     }
