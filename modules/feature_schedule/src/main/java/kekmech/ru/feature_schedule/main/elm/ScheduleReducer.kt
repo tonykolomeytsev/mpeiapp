@@ -33,7 +33,7 @@ internal class ScheduleReducer : StateReducer<ScheduleEvent, ScheduleState, Sche
                 )
             )
         }
-        is News.ScheduleWeekLoadError -> Result(state.copy(isAfterError = true))
+        is News.ScheduleWeekLoadError -> Result(state.copy(isAfterError = true, lastError = event.throwable))
     }
 
     private fun reduceWish(

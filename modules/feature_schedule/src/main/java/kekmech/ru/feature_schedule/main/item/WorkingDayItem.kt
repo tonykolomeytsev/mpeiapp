@@ -9,6 +9,7 @@ import kekmech.ru.common_android.openLinkExternal
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_schedule.items.*
 import kekmech.ru.coreui.items.EmptyStateAdapterItem
+import kekmech.ru.coreui.items.ErrorStateAdapterItem
 import kekmech.ru.coreui.items.ShimmerAdapterItem
 import kekmech.ru.coreui.items.SpaceAdapterItem
 import kekmech.ru.domain_schedule.dto.Classes
@@ -67,7 +68,8 @@ internal class WorkingDayViewHolderImpl(
         EmptyStateAdapterItem(),
         SpaceAdapterItem(),
         NotePreviewAdapterItem(onClickListener = { clickListener(it) }),
-        ShimmerAdapterItem(SHIMMER_ITEM_ID, R.layout.item_working_day_shimmer)
+        ShimmerAdapterItem(SHIMMER_ITEM_ID, R.layout.item_working_day_shimmer),
+        ErrorStateAdapterItem { /* no-op */ }
     )
 
     override fun addScrollListener(listener: (Int) -> Unit) {
