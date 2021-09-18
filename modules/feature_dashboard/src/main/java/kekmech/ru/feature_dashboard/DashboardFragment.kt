@@ -133,7 +133,7 @@ class DashboardFragment :
                 continueTo = BACK_WITH_RESULT,
                 resultKey = FIND_GROUP_RESULT_KEY
             )
-            setResultListener<String>(FIND_GROUP_RESULT_KEY) { _ ->
+            setResultListener<String>(FIND_GROUP_RESULT_KEY) {
                 feature.accept(Wish.Action.SwipeToRefresh)
             }
         },
@@ -145,7 +145,11 @@ class DashboardFragment :
         NotePreviewAdapterItem(::clickOnClasses, R.layout.item_note_preview_padding_horisontal_8dp),
         TextAdapterItem(R.layout.item_time_prediction),
         SessionAdapterItem(requireContext()),
-        ShimmerAdapterItem(EVENTS_SHIMMER_ITEM_ID, R.layout.item_events_shimmer)
+        ShimmerAdapterItem(EVENTS_SHIMMER_ITEM_ID, R.layout.item_events_shimmer),
+        ErrorStateAdapterItem {
+            analytics.sendClick("DashboardReload")
+            feature.accept(Wish.Action.SwipeToRefresh)
+        }
     )
 
     private fun clickOnClasses(it: Classes) {

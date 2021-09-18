@@ -6,6 +6,7 @@ import kekmech.ru.common_android.moscowLocalTime
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.coreui.PrettyDateFormatter
 import kekmech.ru.coreui.items.EmptyStateItem
+import kekmech.ru.coreui.items.ErrorStateItem
 import kekmech.ru.coreui.items.SectionHeaderItem
 import kekmech.ru.coreui.items.SpaceItem
 import kekmech.ru.feature_dashboard.elm.DashboardState
@@ -79,21 +80,27 @@ class DashboardListConverter(
             }
 
             // ближайшие события
-            val (list, offset) = upcomingEventsListConverter.map(state)
-            if (offset == -1) {
-                // если нечего показывать в разделе ближайших событий,
-                // покажем сначала сессию, потом EmptyStateItem
-                addSession(state)
+            val (upcomingEvents, offset) = upcomingEventsListConverter.map(state)
+            val haveSomethingToShow = offset != -1
 
-                addAll(list)
-                add(SpaceItem.VERTICAL_16)
-            } else {
-                addAll(list)
-                add(SpaceItem.VERTICAL_16)
-
-                // сессию показываем после более близких по времени событий
-                addSession(state)
+            when {
+                haveSomethingToShow -> {
+                    addAll(upcomingEvents)
+                    add(SpaceItem.VERTICAL_16)
+                    // сессию показываем после более близких по времени событий
+                    addSession(state)
+                }
+                state.loadingError != null -> {
+                    add(ErrorStateItem(state.loadingError))
+                }
+                else -> {
+                    // если нечего показывать в разделе ближайших событий,
+                    // покажем сначала сессию, потом EmptyStateItem
+                    addSession(state)
+                    addAll(upcomingEvents)
+                }
             }
+            add(SpaceItem.VERTICAL_16)
 
             // актуальные заметки
             addActualNotes(state)
@@ -146,6 +153,5 @@ class DashboardListConverter(
         add(sessionHeader)
         add(SpaceItem.VERTICAL_12)
         addAll(state.sessionScheduleItems)
-        add(SpaceItem.VERTICAL_16)
     }
 }
