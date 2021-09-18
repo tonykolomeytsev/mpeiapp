@@ -19,7 +19,7 @@ class MapRepository(
         mapService
             .getMapMarkers()
             .doOnSuccess(mapMarkersCache::set)
-            .onErrorResumeWith(mapMarkersCache.get().toSingle())
+            .onErrorResumeWith(mapMarkersCache.getOrError())
 
     private companion object {
 

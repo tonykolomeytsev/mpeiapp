@@ -20,6 +20,8 @@ import kekmech.ru.common_android.views.setMargins
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.BaseFragment
 import kekmech.ru.common_navigation.features.NeedToUpdate
+import kekmech.ru.coreui.banner.showBanner
+import kekmech.ru.coreui.items.ErrorStateAdapterItem
 import kekmech.ru.coreui.items.PullAdapterItem
 import kekmech.ru.coreui.items.SectionHeaderAdapterItem
 import kekmech.ru.coreui.items.SpaceAdapterItem
@@ -58,10 +60,12 @@ internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState>(), Need
     private val analytics by screenAnalytics("Map")
     private val markersBitmapFactory: MarkersBitmapFactory by inject()
     private val viewBinding by viewBinding(FragmentMapBinding::bind)
-    private val bottomSheetBackground by fastLazy { BottomSheetBackgroundDrawable(
-        backgroundColor = requireContext().getThemeColor(R.attr.colorWhite),
-        topCornerRadius = resources.dpToPx(DEFAULT_CORNER_RADIUS).toFloat()
-    ) }
+    private val bottomSheetBackground by fastLazy {
+        BottomSheetBackgroundDrawable(
+            backgroundColor = requireContext().getThemeColor(R.attr.colorWhite),
+            topCornerRadius = resources.dpToPx(DEFAULT_CORNER_RADIUS).toFloat()
+        )
+    }
     private val appSettings by inject<AppSettings>()
 
     override fun createStore() = dependencies.mapFeatureFactory.create()
@@ -132,50 +136,55 @@ internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState>(), Need
         DeeplinkHelper.handleDeeplinkIfNecessary(dependencies.deeplinkDelegate, state, feature)
     }
 
-    override fun handleEffect(effect: MapEffect) = when (effect) {
-        is MapEffect.GenerateGoogleMapMarkers -> {
-            val markers = generateGoogleMapMarkers(
-                map = effect.map,
-                markers = effect.markers,
-                googleMapMarkers = effect.googleMapMarkers,
-                selectedTab = effect.selectedTab
-            )
-            feature.accept(Wish.Action.GoogleMapMarkersGenerated(markers))
-        }
-        is MapEffect.AnimateCameraToPlace -> {
-            effect.googleMapMarkers.find { it.title == effect.mapMarker.name }?.let { marker ->
-                effect.map.animateCameraTo(marker)
-                marker.showInfoWindow()
+    override fun handleEffect(effect: MapEffect) =
+        when (effect) {
+            is MapEffect.GenerateGoogleMapMarkers -> {
+                val markers = generateGoogleMapMarkers(
+                    map = effect.map,
+                    markers = effect.markers,
+                    googleMapMarkers = effect.googleMapMarkers,
+                    selectedTab = effect.selectedTab
+                )
+                feature.accept(Wish.Action.GoogleMapMarkersGenerated(markers))
             }
-            if (effect.collapseBottomSheet) {
-                BottomSheetBehavior.from(viewBinding.recyclerView)
-                    .state = BottomSheetBehavior.STATE_COLLAPSED
-                viewBinding.recyclerView.scrollToPosition(0)
+            is MapEffect.AnimateCameraToPlace -> {
+                effect.googleMapMarkers.find { it.title == effect.mapMarker.name }?.let { marker ->
+                    effect.map.animateCameraTo(marker)
+                    marker.showInfoWindow()
+                }
+                if (effect.collapseBottomSheet) {
+                    BottomSheetBehavior.from(viewBinding.recyclerView)
+                        .state = BottomSheetBehavior.STATE_COLLAPSED
+                    viewBinding.recyclerView.scrollToPosition(0)
+                }
+                Unit
             }
-            Unit
+            is MapEffect.ShowLoadingError ->
+                showBanner(R.string.map_loading_error_message)
         }
-    }
 
     private fun generateGoogleMapMarkers(
         map: GoogleMap?,
         markers: List<MapMarker>?,
         googleMapMarkers: List<Marker>,
-        selectedTab: FilterTab
+        selectedTab: FilterTab,
     ): List<Marker> {
         if (markers.isNullOrEmpty() || map == null) return emptyList()
         googleMapMarkers.forEach { it.remove() }
         map.clear()
         return markers
             .filter { it.type == selectedTab.toMarkerType() }
-            .mapNotNull { map.addMarker(
-                MarkerOptions()
-                    .title(it.name)
-                    .snippet(it.address)
-                    .position(LatLng(it.location.lat, it.location.lng))
-                    .icon(BitmapDescriptorFactory.fromBitmap(
-                        markersBitmapFactory.getBitmap(it)
-                    ))
-            ) }
+            .mapNotNull {
+                map.addMarker(
+                    MarkerOptions()
+                        .title(it.name)
+                        .snippet(it.address)
+                        .position(LatLng(it.location.lat, it.location.lng))
+                        .icon(BitmapDescriptorFactory.fromBitmap(
+                            markersBitmapFactory.getBitmap(it)
+                        ))
+                )
+            }
     }
 
     override fun onUpdate() {
@@ -198,6 +207,10 @@ internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState>(), Need
         MapMarkerAdapterItem {
             analytics.sendClick("ListMarker_(${it.name})")
             feature.accept(Wish.Action.OnListMarkerSelected(it))
+        },
+        ErrorStateAdapterItem {
+            analytics.sendClick("MapReload")
+            feature.accept(Wish.Action.Reload)
         }
     )
 

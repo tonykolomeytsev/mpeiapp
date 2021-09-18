@@ -22,7 +22,7 @@ internal class MapReducer : StateReducer<MapEvent, MapState, MapEffect, MapActio
     ): Result<MapState, MapEffect, MapAction> = when (event) {
         is Wish.Init -> Result(
             state = state,
-            command = MapAction.ObserveMarkers
+            command = MapAction.GetMarkers
         )
         is Wish.Action.OnMapReady -> Result(
             state = state.copy(
@@ -61,6 +61,10 @@ internal class MapReducer : StateReducer<MapEvent, MapState, MapEffect, MapActio
         is Wish.Action.SilentUpdate -> Result(
             state = state.copy(hash = UUID.randomUUID().toString())
         )
+        is Wish.Action.Reload -> Result(
+            state = state.copy(loadingError = null),
+            command = MapAction.GetMarkers
+        )
     }
 
     private fun reduceNews(
@@ -69,9 +73,13 @@ internal class MapReducer : StateReducer<MapEvent, MapState, MapEffect, MapActio
     ): Result<MapState, MapEffect, MapAction> = when (event) {
         is News.MapMarkersLoaded -> Result(
             state = state.copy(
-                markers = event.markers
+                markers = event.markers,
+                loadingError = null
             )
         )
-        is News.MapMarkersLoadError -> Result(state = state)
+        is News.MapMarkersLoadError -> Result(
+            state = state.copy(loadingError = event.throwable),
+            effect = MapEffect.ShowLoadingError
+        )
     }
 }

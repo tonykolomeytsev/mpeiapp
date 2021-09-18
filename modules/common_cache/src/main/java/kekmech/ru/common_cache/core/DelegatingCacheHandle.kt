@@ -2,6 +2,7 @@ package kekmech.ru.common_cache.core
 
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 import kekmech.ru.common_cache.in_memory_cache.InMemoryCache
 
 /**
@@ -15,6 +16,8 @@ internal class DelegatingCacheHandle<T : Any>(
     override fun set(value: T) = cache.put(key, value)
 
     override fun get(): Maybe<T> = cache.get(key)
+
+    override fun getOrError(): Single<T> = cache.getOrError(key)
 
     override fun observe(): Observable<T> = cache.observe(key)
 

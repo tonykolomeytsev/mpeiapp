@@ -136,11 +136,6 @@
     <string name="schedule_fab_next">Go to next week</string>
     <string name="schedule_fab_prev">Go to current week</string>
 
-    <string name="onboarding_bars_header">Вход в БАРС</string>
-    <string name="onboarding_bars_description">Вы можете совершить вход в систему БАРС, чтобы получить возможность просматривать оценки из приложения</string>
-    <string name="onboarding_bars_button_skip">Пропустить</string>
-    <string name="onboarding_bars_button_signin">Войти</string>
-
     <string name="dashboard_loading_error">An error occurred while loading data from the server</string>
     <string name="dashboard_item_change_group">Group %s</string>
     <string name="dashboard_item_click_to_change_group">Click to change schedule</string>

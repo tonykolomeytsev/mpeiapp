@@ -147,11 +147,6 @@
     <string name="schedule_fab_next">К следующей неделе</string>
     <string name="schedule_fab_prev">К текущей неделе</string>
 
-    <string name="onboarding_bars_header">Вход в БАРС</string>
-    <string name="onboarding_bars_description">Вы можете совершить вход в систему БАРС, чтобы получить возможность просматривать оценки из приложения</string>
-    <string name="onboarding_bars_button_skip">Пропустить</string>
-    <string name="onboarding_bars_button_signin">Войти</string>
-
     <string name="dashboard_loading_error">Произошла ошибка при загрузке данных с сервера</string>
     <string name="dashboard_item_change_group">Группа %s</string>
     <string name="dashboard_item_click_to_change_group">Нажмите, чтобы сменить расписание</string>
@@ -190,6 +185,7 @@
     <string name="map_tab_name_structures">Кафедры</string>
     <string name="map_section_name_structures">Кафедры</string>
     <string name="map_section_tag_others">Остальные места</string>
+    <string name="map_loading_error_message">При загрузке списка мест для карты произошла ошибка</string>
 
     <string name="note_list_section_add">СОЗДАТЬ ЗАМЕТКУ</string>
     <string name="note_list_section_header">Прикрепленные заметки</string>
