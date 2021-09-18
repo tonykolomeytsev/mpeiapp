@@ -17,7 +17,8 @@ internal data class ScheduleState(
     val selectedDate: LocalDate = moscowLocalDate(),
     val hash: String = "",
     val appSettings: AppSettings,
-    val isNavigationFabVisible: Boolean = true
+    val isNavigationFabVisible: Boolean = true,
+    val lastError: Throwable? = null
 ) {
     /**
      * Get weekOfSemester number by weekOffset
