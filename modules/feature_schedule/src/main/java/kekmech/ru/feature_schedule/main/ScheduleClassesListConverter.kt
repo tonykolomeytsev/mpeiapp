@@ -17,13 +17,13 @@ internal object ScheduleClassesListConverter {
     fun map(state: ScheduleState): List<Any> {
         val selectedSchedule = state.selectedSchedule
         val selectedScheduleWeek = selectedSchedule?.weeks?.firstOrNull()
-        val shouldShowEmptyState = state.isAfterError && selectedScheduleWeek == null
         return when {
-            shouldShowEmptyState -> List(DAY_ITEMS_COUNT) {
+            // error state
+            state.loadingError != null && selectedScheduleWeek == null -> List(DAY_ITEMS_COUNT) {
                 val dayOfWeek = it + 1
                 WorkingDayItem(
                     dayOfWeek = dayOfWeek,
-                    items = listOf(SpaceItem.VERTICAL_24, getEmptyStateItem(state.lastError))
+                    items = listOf(SpaceItem.VERTICAL_24, ErrorStateItem(state.loadingError))
                 )
             }
             selectedSchedule == null || selectedScheduleWeek == null -> List(DAY_ITEMS_COUNT) {
@@ -55,7 +55,4 @@ internal object ScheduleClassesListConverter {
             }
         }
     }
-
-    private fun getEmptyStateItem(lastError: Throwable?) =
-        ErrorStateItem(lastError!!)
 }

@@ -11,25 +11,31 @@ import java.util.*
 private const val SCHEDULE_RAM_CACHE_CAPACITY = 5
 
 internal data class ScheduleState(
-    val isAfterError: Boolean = false,
     val schedule: MutableMap<Int, Schedule> = mutableLinkedHashMap(SCHEDULE_RAM_CACHE_CAPACITY),
+    val loadingError: Throwable? = null,
+
+    // region settings
     val weekOffset: Int = 0,
     val selectedDate: LocalDate = moscowLocalDate(),
+
+    // region ui
     val hash: String = "",
     val appSettings: AppSettings,
     val isNavigationFabVisible: Boolean = true,
-    val lastError: Throwable? = null
 ) {
     /**
      * Get weekOfSemester number by weekOffset
-     * @param n - weekOffset
+     * @param n weekOffset
      */
-    val weekOfSemester get() = schedule[weekOffset]?.weeks?.firstOrNull()?.weekOfSemester
-        ?: schedule[0]?.weeks?.firstOrNull()?.weekOfSemester?.plus(weekOffset)
+    val weekOfSemester
+        get() = schedule[weekOffset]?.weeks?.firstOrNull()?.weekOfSemester
+            ?: schedule[0]?.weeks?.firstOrNull()?.weekOfSemester?.plus(weekOffset)
 
     val selectedSchedule get() = schedule[weekOffset]
 
     val isOnCurrentWeek get() = weekOffset == 0
+
+    val isAfterError get() = loadingError != null
 }
 
 internal sealed class ScheduleEvent {
@@ -48,6 +54,7 @@ internal sealed class ScheduleEvent {
             data class Day(val date: LocalDate) : Wish()
             data class Classes(val classes: kekmech.ru.domain_schedule.dto.Classes) : Wish()
             object FAB : Wish()
+            object Reload : Wish()
         }
     }
 

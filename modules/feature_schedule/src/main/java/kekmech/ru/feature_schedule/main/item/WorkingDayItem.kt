@@ -29,34 +29,28 @@ internal data class WorkingDayItem(
     val items: List<Any> = emptyList()
 )
 
-internal interface WorkingDayViewHolder {
-    fun update(list: List<Any>)
-    fun setRecycledViewPool(recycledViewPool: RecyclerView.RecycledViewPool)
-    fun setOnClickListener(listener: (Classes) -> Unit)
-    fun addScrollListener(listener: (Int) -> Unit)
-}
-
-internal class WorkingDayViewHolderImpl(
+internal class WorkingDayViewHolder(
     private val containerView: View
-) : WorkingDayViewHolder, RecyclerView.ViewHolder(containerView) {
+) : RecyclerView.ViewHolder(containerView) {
 
     private val adapter by fastLazy { createAdapter() }
     private val viewBinding = ItemWorkingDayBinding.bind(containerView)
     private var clickListener: (Classes) -> Unit = {}
+    private var reloadClickListener: () -> Unit = {}
 
     init {
         viewBinding.recyclerView.adapter = adapter
     }
 
-    override fun update(list: List<Any>) {
+    fun update(list: List<Any>) {
         adapter.update(list)
     }
 
-    override fun setOnClickListener(listener: (Classes) -> Unit) {
+    fun setOnClickListener(listener: (Classes) -> Unit) {
         clickListener = listener
     }
 
-    override fun setRecycledViewPool(recycledViewPool: RecyclerView.RecycledViewPool) {
+    fun setRecycledViewPool(recycledViewPool: RecyclerView.RecycledViewPool) {
         viewBinding.recyclerView.setRecycledViewPool(recycledViewPool)
     }
 
@@ -69,28 +63,34 @@ internal class WorkingDayViewHolderImpl(
         SpaceAdapterItem(),
         NotePreviewAdapterItem(onClickListener = { clickListener(it) }),
         ShimmerAdapterItem(SHIMMER_ITEM_ID, R.layout.item_working_day_shimmer),
-        ErrorStateAdapterItem { /* no-op */ }
+        ErrorStateAdapterItem { reloadClickListener.invoke() }
     )
 
-    override fun addScrollListener(listener: (Int) -> Unit) {
+    fun addScrollListener(listener: (Int) -> Unit) {
         viewBinding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 listener(dy)
             }
         })
     }
+
+    fun setOnReloadClickListener(onReloadClick: () -> Unit) {
+        reloadClickListener = onReloadClick
+    }
 }
 
 internal class WorkingDayItemBinder(
     private val recycledViewPool: RecyclerView.RecycledViewPool,
     private val onClickListener: (Classes) -> Unit,
-    private val onScrollClasses: (Int) -> Unit
+    private val onScrollClasses: (Int) -> Unit,
+    private val onReloadClick: () -> Unit,
 ) : BaseItemBinder<WorkingDayViewHolder, WorkingDayItem>() {
 
     override fun bind(vh: WorkingDayViewHolder, model: WorkingDayItem, position: Int) {
         vh.setRecycledViewPool(recycledViewPool)
         vh.setOnClickListener(onClickListener)
         vh.addScrollListener(onScrollClasses)
+        vh.setOnReloadClickListener(onReloadClick)
         vh.update(model.items)
     }
 
@@ -107,15 +107,17 @@ internal class WorkingDayItemBinder(
 internal class WorkingDayAdapterItem(
     dayOfWeek: Int,
     onClickListener: (Classes) -> Unit,
-    onScrollClasses: (Int) -> Unit
+    onScrollClasses: (Int) -> Unit,
+    onReloadClick: () -> Unit,
 ) : AdapterItem<WorkingDayViewHolder, WorkingDayItem>(
     isType = { it is WorkingDayItem && it.dayOfWeek == dayOfWeek },
     layoutRes = R.layout.item_working_day,
-    viewHolderGenerator = ::WorkingDayViewHolderImpl,
+    viewHolderGenerator = ::WorkingDayViewHolder,
     itemBinder = WorkingDayItemBinder(
         recycledViewPool = RecyclerView.RecycledViewPool().apply { setMaxRecycledViews(0, RECYCLED_VIEW_POOL_SIZE) },
         onClickListener = onClickListener,
-        onScrollClasses = onScrollClasses
+        onScrollClasses = onScrollClasses,
+        onReloadClick = onReloadClick
     ),
     areItemsTheSame = { a, b -> a.dayOfWeek == b.dayOfWeek },
     equals = { a, b -> a.items == b.items },
