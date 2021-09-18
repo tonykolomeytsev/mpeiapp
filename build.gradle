@@ -81,8 +81,8 @@ buildscript {
                 elmslieCore         : "com.github.vivid-money.elmslie:elmslie-core:1.1.4",
                 elmslieAndroid      : "com.github.vivid-money.elmslie:elmslie-android:1.1.4"
         ]
-        appVersionName = "1.10.0"
-        appVersionCode = 41
+        appVersionName = "1.11.0"
+        appVersionCode = 43
         gradleDir = "$rootDir/gradle"
     }
 
