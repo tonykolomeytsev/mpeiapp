@@ -64,6 +64,7 @@ private class ErrorStateItemBinder(
         }
     }
 
+    @Suppress("MagicNumber")
     private fun getErrorStateContent(throwable: Throwable?): Triple<Int, Pair<Int, String?>, Int> =
         when (throwable) {
             is NoInternetConnectionException,

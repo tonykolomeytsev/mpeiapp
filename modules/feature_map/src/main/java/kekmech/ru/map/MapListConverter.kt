@@ -14,6 +14,7 @@ private const val TAB_BAR_ITEM_SPACING = 4
 
 internal class MapListConverter {
 
+    @Suppress("NestedBlockDepth")
     fun map(state: MapState): List<Any> {
         return mutableListOf<Any>().apply {
             add(PullItem)
