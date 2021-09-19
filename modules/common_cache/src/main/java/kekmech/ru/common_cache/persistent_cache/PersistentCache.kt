@@ -3,9 +3,11 @@ package kekmech.ru.common_cache.persistent_cache
 import com.google.gson.Gson
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers.io
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import kekmech.ru.common_cache.core.CacheHandle
+import kekmech.ru.common_cache.core.CacheIsEmptyException
 import kekmech.ru.common_cache.core.DelegatingPersistentCacheHandle
 import java.io.File
 import java.time.Duration
@@ -81,6 +83,19 @@ open class PersistentCache(
                 peek(key, valueClass, lifetime)
                     ?.let(emitter::onSuccess)
                     ?: emitter.onComplete()
+            }
+            .observeOn(io())
+
+    fun <T : Any> getOrError(
+        key: String,
+        valueClass: Class<T>,
+        lifetime: Duration?,
+    ): Single<T> =
+        Single
+            .create<T> { emitter ->
+                peek(key, valueClass, lifetime)
+                    ?.let(emitter::onSuccess)
+                    ?: emitter.onError(CacheIsEmptyException(key))
             }
             .observeOn(io())
 

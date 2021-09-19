@@ -31,14 +31,14 @@ class DashboardReducer : StateReducer<DashboardEvent, DashboardState, DashboardE
             state = state.copy(
                 currentWeekSchedule = event.schedule.takeIf { event.weekOffset == 0 } ?: state.currentWeekSchedule,
                 nextWeekSchedule = event.schedule.takeIf { event.weekOffset == 1 } ?: state.nextWeekSchedule,
-                isAfterError = false,
+                loadingError = null,
                 isLoading = false,
                 lastUpdateDateTime = moscowLocalDateTime()
             )
         )
         is News.ScheduleLoadError -> Result(
             state = state.copy(
-                isAfterError = true,
+                loadingError = event.throwable,
                 isLoading = false
             ),
             effect = DashboardEffect.ShowLoadingError
