@@ -105,6 +105,15 @@
     <string name="something_went_wrong_error">Что-то пошло не так…</string>
     <string name="connection_lost_error">Нет интернет соединения</string>
 
+    <string name="common_error_no_internet_title">Нет интернета</string>
+    <string name="common_error_no_internet_description">Проверьте свое подключение к интернету и попробуйте загрузить данные снова</string>
+    <string name="common_error_bad_response_title">Ошибка на сервере</string>
+    <string name="common_error_bad_response_description">Сервер не смог нормально ответить на запрос и прислал ошибку с кодом %s. Если проблема сохраняется в течение нескольких минут, сообщите о ней разработчикам.</string>
+    <string name="common_error_handshake_title">Проблемы с шифрованием</string>
+    <string name="common_error_handshake_description">Убедитесь в том, что время и дата на телефоне выставлены верно. Это нужно для установки шифрованного соединения. Если это не помогло, срочно сообщите о проблеме разработчикам.</string>
+    <string name="common_error_view_title">Ошибка отображения</string>
+    <string name="common_error_view_description">Сервер прислал данные, но мы не смогли их обработать. Так может быть, если вы давно не обновляли приложение. Если это не так, сообщите о проблеме разработчикам.</string>
+
     <string name="onboarding_welcome_start_using">Погнали!</string>
     <string name="onboarding_welcome_title_schedule">Смотрите расписания</string>
     <string name="onboarding_welcome_subtitle_schedule">К просмотренным ранее расписаниям вы имеете доступ даже без интернета</string>
@@ -137,11 +146,6 @@
     <string name="schedule_fab_tooltip">Кнопка быстрой навигации. Убрать кнопку можно в настройках</string>
     <string name="schedule_fab_next">К следующей неделе</string>
     <string name="schedule_fab_prev">К текущей неделе</string>
-
-    <string name="onboarding_bars_header">Вход в БАРС</string>
-    <string name="onboarding_bars_description">Вы можете совершить вход в систему БАРС, чтобы получить возможность просматривать оценки из приложения</string>
-    <string name="onboarding_bars_button_skip">Пропустить</string>
-    <string name="onboarding_bars_button_signin">Войти</string>
 
     <string name="dashboard_loading_error">Произошла ошибка при загрузке данных с сервера</string>
     <string name="dashboard_item_change_group">Группа %s</string>
@@ -181,6 +185,7 @@
     <string name="map_tab_name_structures">Кафедры</string>
     <string name="map_section_name_structures">Кафедры</string>
     <string name="map_section_tag_others">Остальные места</string>
+    <string name="map_loading_error_message">При загрузке списка мест для карты произошла ошибка</string>
 
     <string name="note_list_section_add">СОЗДАТЬ ЗАМЕТКУ</string>
     <string name="note_list_section_header">Прикрепленные заметки</string>

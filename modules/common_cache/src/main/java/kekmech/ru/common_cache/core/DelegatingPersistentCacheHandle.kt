@@ -2,6 +2,7 @@ package kekmech.ru.common_cache.core
 
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 import kekmech.ru.common_cache.persistent_cache.PersistentCache
 import java.time.Duration
 
@@ -15,6 +16,8 @@ class DelegatingPersistentCacheHandle<T : Any>(
     override fun set(value: T) = cache.put(key, value)
 
     override fun get(): Maybe<T> = cache.get(key, valueClass, lifetime)
+
+    override fun getOrError(): Single<T> = cache.getOrError(key, valueClass, lifetime)
 
     override fun observe(): Observable<T> = cache.observe(key, valueClass, lifetime)
 

@@ -101,7 +101,7 @@ fun Single<Schedule>.orFromPersistentCache(
         val (scheduleName, weekOffset) = key
         val weekOfYear = moscowLocalDate().weekOfYear() + weekOffset // на бекенде смещение, это ошибка
         val cacheKey = "${scheduleName}_$weekOfYear"
-        persistentCache.get(cacheKey, Schedule::class.java, null).toSingle()
+        persistentCache.getOrError(cacheKey, Schedule::class.java, null)
     }
 
 private fun LocalDate.weekOfYear(): Int =

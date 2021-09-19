@@ -4,10 +4,9 @@ import kekmech.ru.common_schedule.items.SelfStudyItem
 import kekmech.ru.common_schedule.utils.withLunch
 import kekmech.ru.common_schedule.utils.withNotePreview
 import kekmech.ru.common_schedule.utils.withWindows
-import kekmech.ru.coreui.items.EmptyStateItem
+import kekmech.ru.coreui.items.ErrorStateItem
 import kekmech.ru.coreui.items.ShimmerItem
 import kekmech.ru.coreui.items.SpaceItem
-import kekmech.ru.feature_schedule.R
 import kekmech.ru.feature_schedule.main.elm.ScheduleState
 import kekmech.ru.feature_schedule.main.item.WorkingDayItem
 
@@ -18,13 +17,13 @@ internal object ScheduleClassesListConverter {
     fun map(state: ScheduleState): List<Any> {
         val selectedSchedule = state.selectedSchedule
         val selectedScheduleWeek = selectedSchedule?.weeks?.firstOrNull()
-        val shouldShowEmptyState = state.isAfterError && selectedScheduleWeek == null
         return when {
-            shouldShowEmptyState -> List(DAY_ITEMS_COUNT) {
+            // error state
+            state.loadingError != null && selectedScheduleWeek == null -> List(DAY_ITEMS_COUNT) {
                 val dayOfWeek = it + 1
                 WorkingDayItem(
                     dayOfWeek = dayOfWeek,
-                    items = listOf(SpaceItem.VERTICAL_24, getEmptyStateItem())
+                    items = listOf(SpaceItem.VERTICAL_24, ErrorStateItem(state.loadingError))
                 )
             }
             selectedSchedule == null || selectedScheduleWeek == null -> List(DAY_ITEMS_COUNT) {
@@ -56,9 +55,4 @@ internal object ScheduleClassesListConverter {
             }
         }
     }
-
-    private fun getEmptyStateItem() = EmptyStateItem(
-        titleRes = R.string.schedule_empty_state_title,
-        subtitleRes = R.string.schedule_empty_state_subtitle
-    )
 }

@@ -161,12 +161,12 @@ internal class ScheduleFragment :
     }
 
     private fun createViewPagerAdapter() = BaseAdapter(
-        WorkingDayAdapterItem(DAY_OF_WEEK_MONDAY, ::onClassesClick, ::onClassesScroll),
-        WorkingDayAdapterItem(DAY_OF_WEEK_TUESDAY, ::onClassesClick, ::onClassesScroll),
-        WorkingDayAdapterItem(DAY_OF_WEEK_WEDNESDAY, ::onClassesClick, ::onClassesScroll),
-        WorkingDayAdapterItem(DAY_OF_WEEK_THURSDAY, ::onClassesClick, ::onClassesScroll),
-        WorkingDayAdapterItem(DAY_OF_WEEK_FRIDAY, ::onClassesClick, ::onClassesScroll),
-        WorkingDayAdapterItem(DAY_OF_WEEK_SATURDAY, ::onClassesClick, ::onClassesScroll)
+        WorkingDayAdapterItem(DAY_OF_WEEK_MONDAY, ::onClassesClick, ::onClassesScroll, ::onReloadClick),
+        WorkingDayAdapterItem(DAY_OF_WEEK_TUESDAY, ::onClassesClick, ::onClassesScroll, ::onReloadClick),
+        WorkingDayAdapterItem(DAY_OF_WEEK_WEDNESDAY, ::onClassesClick, ::onClassesScroll, ::onReloadClick),
+        WorkingDayAdapterItem(DAY_OF_WEEK_THURSDAY, ::onClassesClick, ::onClassesScroll, ::onReloadClick),
+        WorkingDayAdapterItem(DAY_OF_WEEK_FRIDAY, ::onClassesClick, ::onClassesScroll, ::onReloadClick),
+        WorkingDayAdapterItem(DAY_OF_WEEK_SATURDAY, ::onClassesClick, ::onClassesScroll, ::onReloadClick)
     )
 
     private fun onClassesClick(classes: Classes) {
@@ -176,6 +176,11 @@ internal class ScheduleFragment :
 
     private fun onClassesScroll(dy: Int) {
         feature.accept(Wish.Action.ClassesScrolled(dy))
+    }
+
+    private fun onReloadClick() {
+        analytics.sendClick("ClassesReload")
+        feature.accept(Wish.Click.Reload)
     }
 
     private fun createWeekDaysHelper() = WeeksScrollHelper(

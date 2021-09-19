@@ -3,9 +3,11 @@ package kekmech.ru.common_cache.in_memory_cache
 import com.google.gson.Gson
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers.io
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import kekmech.ru.common_cache.core.CacheHandle
+import kekmech.ru.common_cache.core.CacheIsEmptyException
 import kekmech.ru.common_cache.core.DelegatingCacheHandle
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
@@ -55,6 +57,17 @@ class InMemoryCache(
                     ?: emitter.onComplete()
             }
             .observeOn(io())
+
+    fun <T : Any> getOrError(key: String): Single<T> =
+        Single
+            .create<T> { emitter ->
+                getSubject<T>(key).value
+                    ?.orElse(null)
+                    ?.let(emitter::onSuccess)
+                    ?: emitter.onError(CacheIsEmptyException(key))
+            }
+            .observeOn(io())
+
 
     fun <T : Any> observe(key: String): Observable<T> =
         getSubject<T>(key)

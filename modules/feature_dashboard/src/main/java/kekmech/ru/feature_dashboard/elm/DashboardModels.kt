@@ -10,7 +10,7 @@ import java.time.LocalDateTime
 
 data class DashboardState(
     val isLoading: Boolean = false,
-    val isAfterError: Boolean = false,
+    val loadingError: Throwable? = null,
     val currentWeekSchedule: Schedule? = null,
     val nextWeekSchedule: Schedule? = null,
     val selectedScheduleName: String = "",
@@ -24,6 +24,7 @@ data class DashboardState(
         selectedScheduleName.matches(GROUP_NUMBER_PATTERN) -> ScheduleType.GROUP
         else -> ScheduleType.PERSON
     }
+    val isAfterError get() = loadingError != null
 }
 
 data class NextClassesTimeStatus(

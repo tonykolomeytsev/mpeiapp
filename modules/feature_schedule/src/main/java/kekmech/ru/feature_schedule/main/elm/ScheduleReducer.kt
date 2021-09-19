@@ -27,13 +27,13 @@ internal class ScheduleReducer : StateReducer<ScheduleEvent, ScheduleState, Sche
             val schedule = state.schedule.apply { put(event.weekOffset, event.schedule) }
             Result(
                 state = state.copy(
-                    isAfterError = false,
+                    loadingError = null,
                     schedule = schedule,
                     hash = UUID.randomUUID().toString()
                 )
             )
         }
-        is News.ScheduleWeekLoadError -> Result(state.copy(isAfterError = true))
+        is News.ScheduleWeekLoadError -> Result(state.copy(loadingError = event.throwable))
     }
 
     private fun reduceWish(
@@ -81,6 +81,13 @@ internal class ScheduleReducer : StateReducer<ScheduleEvent, ScheduleState, Sche
                 Wish.Action.SelectWeek(if (state.weekOffset != 0) 0 else 1)
             )
         }
+        is Wish.Click.Reload ->
+            Result(
+                state = state,
+                commands = listOf(
+                    ScheduleAction.LoadSchedule(state.weekOffset),
+                )
+            )
     }
 
     private fun getWeekSelectionResult(
@@ -92,7 +99,7 @@ internal class ScheduleReducer : StateReducer<ScheduleEvent, ScheduleState, Sche
             state = state.copy(
                 weekOffset = event.weekOffset,
                 selectedDate = selectNecessaryDate(state, event.weekOffset),
-                isAfterError = false
+                loadingError = null,
             ),
             command = ScheduleAction.LoadSchedule(event.weekOffset)
         )

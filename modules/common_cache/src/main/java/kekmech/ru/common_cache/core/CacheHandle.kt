@@ -2,6 +2,7 @@ package kekmech.ru.common_cache.core
 
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 
 /**
  * Represents a single entry in cache.
@@ -14,6 +15,8 @@ interface CacheHandle<T : Any> {
     fun set(value: T)
 
     fun get(): Maybe<T>
+
+    fun getOrError(): Single<T>
 
     fun observe(): Observable<T>
 
