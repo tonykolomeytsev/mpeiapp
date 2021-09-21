@@ -9,6 +9,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers.mainThread
 import io.reactivex.rxjava3.core.Completable
 import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_analytics.ext.screenAnalytics
@@ -73,10 +74,9 @@ internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState>(), Need
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Completable
-            .fromAction(::createMap)
-            .delay(MAP_CREATION_DELAY, TimeUnit.MILLISECONDS)
-            .subscribe()
+        Completable.timer(MAP_CREATION_DELAY, TimeUnit.MILLISECONDS)
+            .observeOn(mainThread())
+            .subscribe(::createMap)
             .bind()
 
         viewBinding.recyclerView.layoutManager = ControlledScrollingLayoutManager(requireContext())
