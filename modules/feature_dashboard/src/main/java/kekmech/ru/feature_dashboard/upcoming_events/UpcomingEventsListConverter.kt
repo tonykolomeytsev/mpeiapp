@@ -8,7 +8,7 @@ import kekmech.ru.common_schedule.utils.withProgressPreview
 import kekmech.ru.coreui.items.*
 import kekmech.ru.domain_schedule.dto.Classes
 import kekmech.ru.domain_schedule.dto.ScheduleType
-import kekmech.ru.feature_dashboard.EVENTS_SHIMMER_ITEM_ID
+import kekmech.ru.feature_dashboard.DashboardFragment.Companion.EVENTS_SHIMMER_ITEM_ID
 import kekmech.ru.feature_dashboard.R
 import kekmech.ru.feature_dashboard.elm.DashboardState
 import kekmech.ru.feature_dashboard.elm.NextClassesCondition

@@ -79,7 +79,8 @@ buildscript {
         ]
         vividMoney = [
                 elmslieCore         : "com.github.vivid-money.elmslie:elmslie-core:1.1.4",
-                elmslieAndroid      : "com.github.vivid-money.elmslie:elmslie-android:1.1.4"
+                elmslieAndroid      : "com.github.vivid-money.elmslie:elmslie-android:1.1.4",
+                elmslieStoreHolder  : "com.github.vivid-money.elmslie:elmslie-store-persisting:1.1.4"
         ]
         appVersionName = "1.11.0"
         appVersionCode = 43
