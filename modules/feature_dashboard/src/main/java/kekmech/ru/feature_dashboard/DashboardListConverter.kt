@@ -9,6 +9,8 @@ import kekmech.ru.coreui.items.EmptyStateItem
 import kekmech.ru.coreui.items.ErrorStateItem
 import kekmech.ru.coreui.items.SectionHeaderItem
 import kekmech.ru.coreui.items.SpaceItem
+import kekmech.ru.feature_dashboard.DashboardFragment.Companion.SECTION_FAVORITES_ACTION
+import kekmech.ru.feature_dashboard.DashboardFragment.Companion.SECTION_NOTES_ACTION
 import kekmech.ru.feature_dashboard.elm.DashboardState
 import kekmech.ru.feature_dashboard.items.*
 import kekmech.ru.feature_dashboard.upcoming_events.UpcomingEventsListConverter
@@ -57,7 +59,7 @@ class DashboardListConverter(
 
         return mutableListOf<Any>().apply {
             add(SpaceItem.VERTICAL_12)
-            createDayStatusItem(state)?.let {
+            createDayStatusItem(state).let {
                 add(it)
                 add(SpaceItem.VERTICAL_24)
             }
@@ -134,7 +136,7 @@ class DashboardListConverter(
         }
     }
 
-    private fun createDayStatusItem(state: DashboardState): DayStatusItem? {
+    private fun createDayStatusItem(state: DashboardState): DayStatusItem {
         val weekStatus = state.weekOfSemester?.let { weekOfSemester ->
             if (weekOfSemester in WEEK_MIN_NUMBER..WEEK_MAX_NUMBER) {
                 context.getString(R.string.dashboard_day_status_semester, weekOfSemester)
