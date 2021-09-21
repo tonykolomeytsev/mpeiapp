@@ -1,6 +1,5 @@
 package kekmech.ru.feature_dashboard
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Lifecycle
@@ -14,6 +13,8 @@ import kekmech.ru.common_android.views.setProgressViewOffset
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.BaseFragment
 import kekmech.ru.common_navigation.BottomTab
+import kekmech.ru.common_navigation.features.BottomBarStateSaver
+import kekmech.ru.common_navigation.features.BottomBarStateSaverImpl
 import kekmech.ru.common_navigation.features.NeedToUpdate
 import kekmech.ru.common_navigation.features.ScrollToTop
 import kekmech.ru.common_schedule.items.NotePreviewAdapterItem
@@ -31,21 +32,18 @@ import kekmech.ru.feature_dashboard.elm.DashboardState
 import kekmech.ru.feature_dashboard.items.*
 import org.koin.android.ext.android.inject
 
-private const val REQUEST_CODE_UPDATE_DATA = 2910
-internal const val SECTION_NOTES_ACTION = 1
-internal const val SECTION_FAVORITES_ACTION = 2
-internal const val EVENTS_SHIMMER_ITEM_ID = 0
-
 class DashboardFragment :
     BaseFragment<DashboardEvent, DashboardEffect, DashboardState>(),
     ActivityResultListener,
     NeedToUpdate,
-    ScrollToTop {
+    ScrollToTop,
+    BottomBarStateSaver by BottomBarStateSaverImpl("dashboard") {
 
     override val initEvent = Wish.Init
     private val dependencies by inject<DashboardDependencies>()
 
     override var layoutId = R.layout.fragment_dashboard
+
     private val adapter by fastLazy { createAdapter() }
     private val analytics by screenAnalytics("Dashboard")
     private val viewBinding by viewBinding(FragmentDashboardBinding::bind)
@@ -65,7 +63,13 @@ class DashboardFragment :
                     setProgressViewOffset(windowInsets.systemWindowInsetTop)
                 }
             }
+            restoreState(recyclerView)
         }
+    }
+
+    override fun onDestroyView() {
+        saveState(viewBinding.recyclerView)
+        super.onDestroyView()
     }
 
     override fun render(state: DashboardState) {
@@ -157,12 +161,6 @@ class DashboardFragment :
         feature.accept(Wish.Click.OnClasses(it))
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_CODE_UPDATE_DATA) {
-            feature.accept(Wish.Action.SwipeToRefresh)
-        }
-    }
-
     override fun onUpdate() {
         feature.accept(Wish.Action.SilentUpdate)
     }
@@ -178,5 +176,9 @@ class DashboardFragment :
         private const val NOTES_LIST_RESULT_KEY = "NOTES_LIST_RESULT_KEY"
         private const val EDIT_NOTE_RESULT_KEY = "EDIT_NOTE_RESULT_KEY"
         private const val FIND_GROUP_RESULT_KEY = "FIND_GROUP_RESULT_KEY"
+
+        internal const val SECTION_NOTES_ACTION = 1
+        internal const val SECTION_FAVORITES_ACTION = 2
+        internal const val EVENTS_SHIMMER_ITEM_ID = 0
     }
 }

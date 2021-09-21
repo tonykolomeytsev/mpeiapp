@@ -1,11 +1,14 @@
 package kekmech.ru.mpeiapp.ui.main
 
+import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kekmech.ru.common_navigation.BottomTab
+import kekmech.ru.common_navigation.features.BottomBarStateSaver
 import kekmech.ru.common_navigation.features.NeedToUpdate
 import kekmech.ru.common_navigation.features.ScrollToTop
 import kekmech.ru.domain_bars.BarsFeatureLauncher
@@ -27,6 +30,7 @@ class BottomBarController(
     private val childFragmentManager: FragmentManager = fragment.childFragmentManager
     var lastSelectedTab = BottomTab.DASHBOARD
     private var bottomNavView: BottomNavigationView? = null
+    private var bundle: Bundle = Bundle()
     private val currentTabFragment: Fragment?
         get() = childFragmentManager.fragments.firstOrNull { !it.isHidden }
     private val backStack: BottomBarBackStack = BottomBarBackStack(firstTab = BottomTab.DASHBOARD)
@@ -68,38 +72,27 @@ class BottomBarController(
 
     @Suppress("DEPRECATION")
     private fun selectTab(tab: BottomTab) {
-        val currentFragment = currentTabFragment
-        val newFragment = childFragmentManager.findFragmentByTag(tab.name)
-
-        if (currentFragment != null && newFragment != null && currentFragment == newFragment) {
-            if (currentFragment is NeedToUpdate) currentFragment.onUpdate()
-            if (currentFragment is ScrollToTop) currentFragment.onScrollToTop()
+        if (currentTabFragment?.tag == tab.name) {
+            (currentTabFragment as? ScrollToTop)?.onScrollToTop()
+            (currentTabFragment as? NeedToUpdate)?.onUpdate()
             return
         }
 
+        (currentTabFragment as? BottomBarStateSaver)?.updateBundle(bundle)
+
         childFragmentManager.beginTransaction().apply {
-            if (newFragment == null) {
-                add(R.id.fragmentContainer, createTabFragment(tab), tab.name)
-            }
-            currentFragment?.let { fragment ->
-                hide(fragment)
-                fragment.userVisibleHint = false
-            }
-            newFragment?.let { fragment ->
-                show(fragment)
-                if (fragment is NeedToUpdate) {
-                    fragment.onUpdate()
-                }
-                fragment.userVisibleHint = true
-            }
+            val newFragment = createTabFragment(tab)
+            replace(R.id.fragmentContainer, newFragment, tab.name)
+            (newFragment as? NeedToUpdate)?.onUpdate()
         }.commitNowIgnoreStateLossError()
         lastSelectedTab = tab
     }
 
     private fun FragmentTransaction.commitNowIgnoreStateLossError() = try {
-        commitNow()
+        commitNowAllowingStateLoss()
     } catch (e: Exception) {
-        e.printStackTrace()
+        // TODO: remove in future if will no exceptions
+        FirebaseCrashlytics.getInstance().recordException(e)
     }
 
     private fun getItemByTab(tab: BottomTab) = when (tab) {
@@ -114,5 +107,5 @@ class BottomBarController(
         BottomTab.SCHEDULE -> scheduleFeatureLauncher.getScreen()
         BottomTab.MAP -> mapFeatureLauncher.launchMain()
         BottomTab.PROFILE -> barsFeatureLauncher.launchMain()
-    }
+    }.apply { (this as? BottomBarStateSaver)?.restoreBundle(bundle) }
 }
