@@ -1,10 +1,6 @@
 package kekmech.ru.common_feature_toggles
 
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+interface RemoteConfigWrapper {
 
-internal class RemoteConfigWrapper {
-
-    private val remoteConfig = FirebaseRemoteConfig.getInstance()
-
-    operator fun get(featureToggleKey: String): Boolean = remoteConfig.getBoolean(featureToggleKey)
+    operator fun get(featureToggleKey: String): Boolean
 }
