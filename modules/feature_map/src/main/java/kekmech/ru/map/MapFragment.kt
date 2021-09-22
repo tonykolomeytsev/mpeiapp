@@ -6,6 +6,8 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers.mainThread
+import io.reactivex.rxjava3.core.Completable
 import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_analytics.ext.screenAnalytics
 import kekmech.ru.common_android.doOnApplyWindowInsets
@@ -42,6 +44,7 @@ import kekmech.ru.map.view.ControlledScrollingLayoutManager
 import kekmech.ru.map.view.MarkersBitmapFactory
 import org.koin.android.ext.android.inject
 import vivid.money.elmslie.storepersisting.retainInParentStoreHolder
+import java.util.concurrent.TimeUnit
 
 internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState>(), TabScreenStateSaver by TabScreenStateSaverImpl("map") {
 
@@ -67,7 +70,14 @@ internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState>(), TabS
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        createMap()
+        if (isMapStateEmpty()) {
+            Completable.timer(MAP_START_UP_DELAY, TimeUnit.MILLISECONDS)
+                .observeOn(mainThread())
+                .subscribe(::createMap)
+                .bind()
+        } else {
+            createMap()
+        }
 
         viewBinding.recyclerView.layoutManager = ControlledScrollingLayoutManager(requireContext())
         viewBinding.recyclerView.adapter = adapter
@@ -238,8 +248,12 @@ internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState>(), TabS
     private fun getSavedCameraPosition(): CameraPosition? =
         stateBundle.getBundle("map_state")?.getParcelable("camera")
 
+    private fun isMapStateEmpty(): Boolean =
+        stateBundle.getBundle("map_state") == null
+
     companion object {
 
+        private const val MAP_START_UP_DELAY = 100L // ms
         private const val MAX_OVERLAY_ALPHA = 0.5f
         private const val DEFAULT_CORNER_RADIUS = 16f // dp
     }
