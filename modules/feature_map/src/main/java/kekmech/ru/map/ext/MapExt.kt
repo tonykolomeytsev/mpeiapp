@@ -18,7 +18,7 @@ private const val CAMERA_ZOOM = 17f
 
 @Suppress("MagicNumber")
 @SuppressLint("MissingPermission")
-internal fun GoogleMap.init(context: Context, mapAppearanceType: String) {
+internal fun GoogleMap.init(context: Context, mapAppearanceType: String, savedCameraPosition: CameraPosition?) {
     setMapStyle(MapStyleOptions.loadRawResourceStyle(context, R.raw.google_map_style))
     isMyLocationEnabled = false
     isBuildingsEnabled = true
@@ -34,12 +34,15 @@ internal fun GoogleMap.init(context: Context, mapAppearanceType: String) {
         isMyLocationButtonEnabled = false
         isZoomControlsEnabled = false
         isRotateGesturesEnabled = false
+        setMinZoomPreference(15f)
     }
-    val cameraPosition = CameraPosition.Builder()
+
+    val cameraPosition = savedCameraPosition ?: CameraPosition.Builder()
         .tilt(CAMERA_TILT)
         .zoom(CAMERA_ZOOM)
         .target(LatLng(55.755060, 37.708431)) // mpei main building
         .build()
+
     moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
 }
 
