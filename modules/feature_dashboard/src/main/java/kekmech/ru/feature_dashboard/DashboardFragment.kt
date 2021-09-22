@@ -13,10 +13,9 @@ import kekmech.ru.common_android.views.setProgressViewOffset
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.BaseFragment
 import kekmech.ru.common_navigation.BottomTab
-import kekmech.ru.common_navigation.features.BottomBarStateSaver
-import kekmech.ru.common_navigation.features.BottomBarStateSaverImpl
-import kekmech.ru.common_navigation.features.NeedToUpdate
 import kekmech.ru.common_navigation.features.ScrollToTop
+import kekmech.ru.common_navigation.features.TabScreenStateSaver
+import kekmech.ru.common_navigation.features.TabScreenStateSaverImpl
 import kekmech.ru.common_schedule.items.NotePreviewAdapterItem
 import kekmech.ru.coreui.banner.showBanner
 import kekmech.ru.coreui.items.*
@@ -31,19 +30,19 @@ import kekmech.ru.feature_dashboard.elm.DashboardEvent.Wish
 import kekmech.ru.feature_dashboard.elm.DashboardState
 import kekmech.ru.feature_dashboard.items.*
 import org.koin.android.ext.android.inject
+import vivid.money.elmslie.storepersisting.retainInParentStoreHolder
 
 class DashboardFragment :
     BaseFragment<DashboardEvent, DashboardEffect, DashboardState>(),
     ActivityResultListener,
-    NeedToUpdate,
     ScrollToTop,
-    BottomBarStateSaver by BottomBarStateSaverImpl("dashboard") {
+    TabScreenStateSaver by TabScreenStateSaverImpl("dashboard") {
 
     override val initEvent = Wish.Init
-    private val dependencies by inject<DashboardDependencies>()
-
     override var layoutId = R.layout.fragment_dashboard
+    override val storeHolder by retainInParentStoreHolder(storeProvider = ::createStore)
 
+    private val dependencies by inject<DashboardDependencies>()
     private val adapter by fastLazy { createAdapter() }
     private val analytics by screenAnalytics("Dashboard")
     private val viewBinding by viewBinding(FragmentDashboardBinding::bind)
@@ -56,7 +55,7 @@ class DashboardFragment :
             recyclerView.layoutManager = LinearLayoutManager(requireContext())
             recyclerView.adapter = adapter
             recyclerView.addSystemVerticalPadding()
-            recyclerView.addScrollAnalytics(analytics, "RecyclerView")
+            recyclerView.addScrollAnalytics(analytics, "DashboardRecyclerView")
             swipeRefresh.apply {
                 setOnRefreshListener { feature.accept(Wish.Action.SwipeToRefresh) }
                 doOnApplyWindowInsets { _, windowInsets, _ ->
@@ -159,10 +158,6 @@ class DashboardFragment :
     private fun clickOnClasses(it: Classes) {
         analytics.sendClick("ClickClasses")
         feature.accept(Wish.Click.OnClasses(it))
-    }
-
-    override fun onUpdate() {
-        feature.accept(Wish.Action.SilentUpdate)
     }
 
     override fun onScrollToTop() {
