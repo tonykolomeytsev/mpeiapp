@@ -20,6 +20,9 @@ internal class EditFavoriteFragment : Fragment(R.layout.fragment_edit_favorite) 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewBinding.apply {
+            appBarLayout.addSystemTopPadding()
+            root.addSystemBottomPadding()
+
             toolbar.setNavigationOnClickListener { close() }
             header.text = groupNumber
             val description = getArgument<String>(ARG_DESCRIPTION)
