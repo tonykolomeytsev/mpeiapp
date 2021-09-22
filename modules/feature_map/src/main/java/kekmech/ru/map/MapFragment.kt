@@ -46,7 +46,9 @@ import org.koin.android.ext.android.inject
 import vivid.money.elmslie.storepersisting.retainInParentStoreHolder
 import java.util.concurrent.TimeUnit
 
-internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState>(), TabScreenStateSaver by TabScreenStateSaverImpl("map") {
+@Suppress("TooManyFunctions")
+internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState>(),
+    TabScreenStateSaver by TabScreenStateSaverImpl("map") {
 
     override val initEvent = Wish.Init
     override val layoutId = R.layout.fragment_map

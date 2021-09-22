@@ -54,6 +54,7 @@ import vivid.money.elmslie.storepersisting.retainInParentStoreHolder
 
 private const val JS_INTERFACE_NAME = "kti"
 
+@Suppress("TooManyFunctions")
 internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), ScrollToTop,
     TabScreenStateSaver by TabScreenStateSaverImpl("bars") {
 
