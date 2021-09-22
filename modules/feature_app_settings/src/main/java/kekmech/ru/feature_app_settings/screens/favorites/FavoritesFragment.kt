@@ -71,12 +71,8 @@ internal class FavoritesFragment : BaseFragment<FavoritesEvent, FavoritesEffect,
             SpaceAdapterItem(),
             AddActionAdapterItem {
                 analytics.sendClick("AddFavorite")
-                dependencies.scheduleFeatureLauncher.launchSearchGroup(
-                    continueTo = BACK_WITH_RESULT,
-                    selectGroupAfterSuccess = false,
-                    resultKey = FIND_GROUP_RESULT_KEY
-                )
                 setResultListener<String>(FIND_GROUP_RESULT_KEY) { groupName ->
+                    setResultListenerForUpdateFavorite(NEW_FAVORITE_RESULT_KEY)
                     addScreenForward {
                         EditFavoriteFragment.newInstance(
                             groupNumber = groupName,
@@ -85,9 +81,15 @@ internal class FavoritesFragment : BaseFragment<FavoritesEvent, FavoritesEffect,
                         )
                     }
                 }
+                dependencies.scheduleFeatureLauncher.launchSearchGroup(
+                    continueTo = BACK_WITH_RESULT,
+                    selectGroupAfterSuccess = false,
+                    resultKey = FIND_GROUP_RESULT_KEY
+                )
             },
             FavoriteScheduleAdapterItem {
                 analytics.sendClick("EditFavorite")
+                setResultListenerForUpdateFavorite(EDIT_FAVORITE_RESULT_KEY)
                 addScreenForward {
                     EditFavoriteFragment.newInstance(
                         groupNumber = it.value.groupNumber,
@@ -95,16 +97,18 @@ internal class FavoritesFragment : BaseFragment<FavoritesEvent, FavoritesEffect,
                         resultKey = EDIT_FAVORITE_RESULT_KEY
                     )
                 }
-                setResultListener<Pair<String, String>>(EDIT_FAVORITE_RESULT_KEY) { (groupName, description) ->
-                    feature.accept(
-                        Wish.Action.UpdateFavorite(
-                            FavoriteSchedule(groupName, description, 0)
-                        )
-                    )
-                }
             },
             HelpBannerAdapterItem()
         )
+
+    private fun setResultListenerForUpdateFavorite(resultKey: String) =
+        setResultListener<Pair<String, String>>(resultKey) { (groupName, description) ->
+            feature.accept(
+                Wish.Action.UpdateFavorite(
+                    FavoriteSchedule(groupName, description, 0)
+                )
+            )
+        }
 
     companion object {
 
