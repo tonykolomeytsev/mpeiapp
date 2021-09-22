@@ -35,30 +35,34 @@ internal enum class FilterItemType(
     MAP(R.string.search_filter_map)
 }
 
+internal class FilterAdapterItem(
+    onCLickListener: ((FilterItem) -> Unit)? = null
+) : AdapterItem<FilterViewHolder, FilterItem>(
+    isType = { it is FilterItem },
+    layoutRes = R.layout.item_filter,
+    viewHolderGenerator = ::FilterViewHolder,
+    itemBinder = FilterItemBinder(onCLickListener),
+    areItemsTheSame = { a, b -> a.type == b.type }
+)
+
 internal fun FilterItemType.compareFilter(filterItemType: FilterItemType) =
     this == FilterItemType.ALL || this == filterItemType
 
-internal interface FilterViewHolder : ClickableItemViewHolder {
-    fun setText(@StringRes textRes: Int)
-    fun setIsSelected(isSelected: Boolean)
-}
-
-internal class FilterViewHolderImpl(
+internal class FilterViewHolder(
     private val containerView: View
-) : FilterViewHolder,
-    RecyclerView.ViewHolder(containerView),
+) : RecyclerView.ViewHolder(containerView),
     ClickableItemViewHolder by ClickableItemViewHolderImpl(containerView) {
 
-    override fun setText(@StringRes textRes: Int) {
+    fun setText(@StringRes textRes: Int) {
         (containerView as TextView).setText(textRes)
     }
 
-    override fun setIsSelected(isSelected: Boolean) {
+    fun setIsSelected(isSelected: Boolean) {
         (containerView as TextView).isSelected = isSelected
     }
 }
 
-internal class FilterItemBinder(
+private class FilterItemBinder(
     private val onCLickListener: ((FilterItem) -> Unit)?
 ) : BaseItemBinder<FilterViewHolder, FilterItem>() {
     override fun bind(vh: FilterViewHolder, model: FilterItem, position: Int) {
@@ -67,13 +71,3 @@ internal class FilterItemBinder(
         vh.setOnClickListener { onCLickListener?.invoke(model) }
     }
 }
-
-internal class FilterAdapterItem(
-    onCLickListener: ((FilterItem) -> Unit)? = null
-) : AdapterItem<FilterViewHolder, FilterItem>(
-    isType = { it is FilterItem },
-    layoutRes = R.layout.item_filter,
-    viewHolderGenerator = ::FilterViewHolderImpl,
-    itemBinder = FilterItemBinder(onCLickListener),
-    areItemsTheSame = { a, b -> a.type == b.type }
-)

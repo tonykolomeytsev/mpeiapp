@@ -40,32 +40,33 @@ internal enum class PromoPage(
     ),
 }
 
-internal interface PromoPageViewHolder {
-    fun setIcon(@DrawableRes icon: Int)
-    fun setTitle(@StringRes title: Int)
-    fun setSubtitle(@StringRes subtitle: Int)
-}
+internal class PromoPageAdapterItem : AdapterItem<PromoPageViewHolder, PromoPage>(
+    isType = { it is PromoPage },
+    layoutRes = R.layout.item_promo_page,
+    viewHolderGenerator = ::PromoPageViewHolder,
+    itemBinder = PromoPageBinder()
+)
 
-internal class PromoPageViewHolderImpl(
+internal class PromoPageViewHolder(
     containerView: View
-) : PromoPageViewHolder, RecyclerView.ViewHolder(containerView) {
+) : RecyclerView.ViewHolder(containerView) {
 
     private val viewBinding = ItemPromoPageBinding.bind(containerView)
 
-    override fun setIcon(@DrawableRes icon: Int) {
+    fun setIcon(@DrawableRes icon: Int) {
         viewBinding.promoIcon.setBackgroundResource(icon)
     }
 
-    override fun setTitle(@StringRes title: Int) {
+    fun setTitle(@StringRes title: Int) {
         viewBinding.promoTitle.setText(title)
     }
 
-    override fun setSubtitle(@StringRes subtitle: Int) {
+    fun setSubtitle(@StringRes subtitle: Int) {
         viewBinding.promoSubtitle.setText(subtitle)
     }
 }
 
-internal class PromoPageBinder : BaseItemBinder<PromoPageViewHolder, PromoPage>() {
+private class PromoPageBinder : BaseItemBinder<PromoPageViewHolder, PromoPage>() {
 
     override fun bind(vh: PromoPageViewHolder, model: PromoPage, position: Int) {
         vh.setIcon(model.icon)
@@ -73,10 +74,3 @@ internal class PromoPageBinder : BaseItemBinder<PromoPageViewHolder, PromoPage>(
         vh.setSubtitle(model.subtitle)
     }
 }
-
-internal class PromoPageAdapterItem : AdapterItem<PromoPageViewHolder, PromoPage>(
-    isType = { it is PromoPage },
-    layoutRes = R.layout.item_promo_page,
-    viewHolderGenerator = ::PromoPageViewHolderImpl,
-    itemBinder = PromoPageBinder()
-)

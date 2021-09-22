@@ -1,8 +1,6 @@
 package kekmech.ru.feature_app_settings.screens.lang.item
 
 import android.view.View
-import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
 import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseItemBinder
@@ -17,29 +15,32 @@ internal data class LanguageItem(
     val isSelected: Boolean,
 )
 
-internal interface LanguageViewHolder : ClickableItemViewHolder {
-    fun setDescription(@StringRes descriptionRes: Int)
-    fun setIcon(@DrawableRes iconRes: Int)
-    fun setIsSelected(isSelected: Boolean)
-}
+internal class LanguageAdapterItem(
+    onClickListener: (LanguageEntry) -> Unit,
+) : AdapterItem<LanguageViewHolder, LanguageItem>(
+    isType = { it is LanguageItem },
+    layoutRes = R.layout.item_language,
+    viewHolderGenerator = ::LanguageViewHolder,
+    itemBinder = LanguageItemBinder(onClickListener),
+    areItemsTheSame = { a, b -> a.language == b.language }
+)
 
-private class LanguageViewHolderImpl(
+internal class LanguageViewHolder(
     containerView: View,
 ) : RecyclerView.ViewHolder(containerView),
-    LanguageViewHolder,
     ClickableItemViewHolder by ClickableItemViewHolderImpl(containerView) {
 
     private val viewBinding = ItemLanguageBinding.bind(containerView)
 
-    override fun setDescription(descriptionRes: Int) {
+    fun setDescription(descriptionRes: Int) {
         viewBinding.textViewDescription.setText(descriptionRes)
     }
 
-    override fun setIcon(iconRes: Int) {
+    fun setIcon(iconRes: Int) {
         viewBinding.imageViewIcon.setImageResource(iconRes)
     }
 
-    override fun setIsSelected(isSelected: Boolean) {
+    fun setIsSelected(isSelected: Boolean) {
         viewBinding.indicatorContainer.visibility =
             if (isSelected) View.VISIBLE else View.INVISIBLE
     }
@@ -56,13 +57,3 @@ private class LanguageItemBinder(
         vh.setOnClickListener { onClickListener(model.language) }
     }
 }
-
-internal class LanguageAdapterItem(
-    onClickListener: (LanguageEntry) -> Unit,
-) : AdapterItem<LanguageViewHolder, LanguageItem>(
-    isType = { it is LanguageItem },
-    layoutRes = R.layout.item_language,
-    viewHolderGenerator = ::LanguageViewHolderImpl,
-    itemBinder = LanguageItemBinder(onClickListener),
-    areItemsTheSame = { a, b -> a.language == b.language }
-)

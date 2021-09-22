@@ -2,7 +2,6 @@ package kekmech.ru.bars.items
 
 import android.content.res.ColorStateList
 import android.view.View
-import androidx.annotation.AttrRes
 import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.bars.R
 import kekmech.ru.bars.databinding.ItemMarkBinding
@@ -14,25 +13,17 @@ internal data class MarkItem(
     val mark: Float
 )
 
-internal interface MarkViewHolder {
-    fun setMark(mark: String)
-    fun setColors(
-        @AttrRes backgroundColorAttr: Int,
-        @AttrRes textColorAttr: Int
-    )
-}
-
-internal class MarkViewHolderImpl(
+internal class MarkViewHolder(
     itemView: View
-) : MarkViewHolder, RecyclerView.ViewHolder(itemView) {
+) : RecyclerView.ViewHolder(itemView) {
 
     private val viewBinding = ItemMarkBinding.bind(itemView)
 
-    override fun setMark(mark: String) {
+    fun setMark(mark: String) {
         mark.let(viewBinding.root::setText)
     }
 
-    override fun setColors(backgroundColorAttr: Int, textColorAttr: Int) {
+    fun setColors(backgroundColorAttr: Int, textColorAttr: Int) {
         with(viewBinding.root) {
             backgroundTintList = ColorStateList.valueOf(context.getThemeColor(backgroundColorAttr))
             setTextColor(context.getThemeColor(textColorAttr))

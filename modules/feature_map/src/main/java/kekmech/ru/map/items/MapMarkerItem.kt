@@ -7,6 +7,15 @@ import kekmech.ru.coreui.items.LabeledTextViewHolderImpl
 import kekmech.ru.domain_map.dto.MapMarker
 import kekmech.ru.map.R
 
+internal class MapMarkerAdapterItem(
+    onClickListener: ((MapMarker) -> Unit)? = null
+) : AdapterItem<LabeledTextViewHolder, MapMarker>(
+    isType = { it is MapMarker },
+    layoutRes = R.layout.item_text_bottom_labeled,
+    viewHolderGenerator = ::LabeledTextViewHolderImpl,
+    itemBinder = MapMarkerItemBinder(onClickListener)
+)
+
 internal class MapMarkerItemBinder(
     private val onClickListener: ((MapMarker) -> Unit)?
 ) : BaseItemBinder<LabeledTextViewHolder, MapMarker>() {
@@ -17,12 +26,3 @@ internal class MapMarkerItemBinder(
         vh.setOnClickListener { onClickListener?.invoke(model) }
     }
 }
-
-internal class MapMarkerAdapterItem(
-    onClickListener: ((MapMarker) -> Unit)? = null
-) : AdapterItem<LabeledTextViewHolder, MapMarker>(
-    isType = { it is MapMarker },
-    layoutRes = R.layout.item_text_bottom_labeled,
-    viewHolderGenerator = ::LabeledTextViewHolderImpl,
-    itemBinder = MapMarkerItemBinder(onClickListener)
-)

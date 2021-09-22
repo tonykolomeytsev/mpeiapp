@@ -13,22 +13,24 @@ data class EmptyStateItem(
     @StringRes val subtitleRes: Int? = null
 )
 
-interface EmptyStateViewHolder {
-    fun setTitle(@StringRes titleRes: Int)
-    fun setSubtitle(@StringRes subtitleRes: Int)
-}
+class EmptyStateAdapterItem : AdapterItem<EmptyStateViewHolder, EmptyStateItem>(
+    isType = { it is EmptyStateItem },
+    layoutRes = R.layout.item_empty_state,
+    viewHolderGenerator = ::EmptyStateViewHolder,
+    itemBinder = EmptyStateItemBinder()
+)
 
-class EmptyStateViewHolderImpl(
+class EmptyStateViewHolder(
     containerView: View
-) : EmptyStateViewHolder, RecyclerView.ViewHolder(containerView) {
+) : RecyclerView.ViewHolder(containerView) {
 
     private val viewBinding = ItemEmptyStateBinding.bind(containerView)
 
-    override fun setTitle(@StringRes titleRes: Int) {
+    fun setTitle(@StringRes titleRes: Int) {
         viewBinding.textViewTitle.setText(titleRes)
     }
 
-    override fun setSubtitle(@StringRes subtitleRes: Int) {
+    fun setSubtitle(@StringRes subtitleRes: Int) {
         viewBinding.textViewSubtitle.setText(subtitleRes)
     }
 }
@@ -40,10 +42,3 @@ class EmptyStateItemBinder : BaseItemBinder<EmptyStateViewHolder, EmptyStateItem
         model.subtitleRes?.let(vh::setSubtitle)
     }
 }
-
-class EmptyStateAdapterItem : AdapterItem<EmptyStateViewHolder, EmptyStateItem>(
-    isType = { it is EmptyStateItem },
-    layoutRes = R.layout.item_empty_state,
-    viewHolderGenerator = ::EmptyStateViewHolderImpl,
-    itemBinder = EmptyStateItemBinder()
-)

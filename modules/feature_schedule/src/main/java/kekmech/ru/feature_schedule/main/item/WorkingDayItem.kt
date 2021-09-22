@@ -29,6 +29,30 @@ internal data class WorkingDayItem(
     val items: List<Any> = emptyList()
 )
 
+internal class WorkingDayAdapterItem(
+    dayOfWeek: Int,
+    onClickListener: (Classes) -> Unit,
+    onScrollClasses: (Int) -> Unit,
+    onReloadClick: () -> Unit,
+) : AdapterItem<WorkingDayViewHolder, WorkingDayItem>(
+    isType = { it is WorkingDayItem && it.dayOfWeek == dayOfWeek },
+    layoutRes = R.layout.item_working_day,
+    viewHolderGenerator = ::WorkingDayViewHolder,
+    itemBinder = WorkingDayItemBinder(
+        recycledViewPool = RecyclerView.RecycledViewPool().apply { setMaxRecycledViews(0, RECYCLED_VIEW_POOL_SIZE) },
+        onClickListener = onClickListener,
+        onScrollClasses = onScrollClasses,
+        onReloadClick = onReloadClick
+    ),
+    areItemsTheSame = { a, b -> a.dayOfWeek == b.dayOfWeek },
+    equals = { a, b -> a.items == b.items },
+    changePayload = { _, b -> b.items }
+) {
+    companion object {
+        const val RECYCLED_VIEW_POOL_SIZE = 200
+    }
+}
+
 internal class WorkingDayViewHolder(
     private val containerView: View
 ) : RecyclerView.ViewHolder(containerView) {
@@ -101,29 +125,5 @@ internal class WorkingDayItemBinder(
         payloads: List<Any>
     ) {
         vh.update(model.items)
-    }
-}
-
-internal class WorkingDayAdapterItem(
-    dayOfWeek: Int,
-    onClickListener: (Classes) -> Unit,
-    onScrollClasses: (Int) -> Unit,
-    onReloadClick: () -> Unit,
-) : AdapterItem<WorkingDayViewHolder, WorkingDayItem>(
-    isType = { it is WorkingDayItem && it.dayOfWeek == dayOfWeek },
-    layoutRes = R.layout.item_working_day,
-    viewHolderGenerator = ::WorkingDayViewHolder,
-    itemBinder = WorkingDayItemBinder(
-        recycledViewPool = RecyclerView.RecycledViewPool().apply { setMaxRecycledViews(0, RECYCLED_VIEW_POOL_SIZE) },
-        onClickListener = onClickListener,
-        onScrollClasses = onScrollClasses,
-        onReloadClick = onReloadClick
-    ),
-    areItemsTheSame = { a, b -> a.dayOfWeek == b.dayOfWeek },
-    equals = { a, b -> a.items == b.items },
-    changePayload = { _, b -> b.items }
-) {
-    companion object {
-        const val RECYCLED_VIEW_POOL_SIZE = 200
     }
 }

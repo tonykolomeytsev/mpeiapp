@@ -11,21 +11,25 @@ import kekmech.ru.map.elm.FilterTab
 
 internal object TabBarItem
 
-internal interface TabBarViewHolder {
-    fun createAdapterIfNull()
-    fun updateItems(items: List<Any>)
-    fun setOnClickListener(listener: (FilterTab) -> Unit)
-}
+internal class TabBarAdapterItem(
+    tabs: List<FilterTabItem>,
+    onClickListener: ((FilterTab) -> Unit)?
+) : AdapterItem<TabBarViewHolder, TabBarItem>(
+    isType = { it is TabBarItem },
+    layoutRes = R.layout.item_tab_bar,
+    viewHolderGenerator = ::TabBarViewHolder,
+    itemBinder = TabBarItemBinder(tabs, onClickListener)
+)
 
-internal class TabBarViewHolderImpl(
+internal class TabBarViewHolder(
     containerView: View
-) : RecyclerView.ViewHolder(containerView), TabBarViewHolder {
+) : RecyclerView.ViewHolder(containerView) {
 
     private var adapter: BaseAdapter? = null
     private var onClickListener: ((FilterTab) -> Unit)? = null
     private val viewBinding = ItemTabBarBinding.bind(containerView)
 
-    override fun createAdapterIfNull() {
+    fun createAdapterIfNull() {
         if (adapter == null) {
             adapter = BaseAdapter(
                 FilterTabAdapterItem { onClickListener?.invoke(it) }
@@ -36,11 +40,11 @@ internal class TabBarViewHolderImpl(
         }
     }
 
-    override fun updateItems(items: List<Any>) {
+    fun updateItems(items: List<Any>) {
         adapter?.update(items)
     }
 
-    override fun setOnClickListener(listener: (FilterTab) -> Unit) {
+    fun setOnClickListener(listener: (FilterTab) -> Unit) {
         onClickListener = listener
     }
 }
@@ -56,13 +60,3 @@ internal class TabBarItemBinder(
         onClickListener?.let(vh::setOnClickListener)
     }
 }
-
-internal class TabBarAdapterItem(
-    tabs: List<FilterTabItem>,
-    onClickListener: ((FilterTab) -> Unit)?
-) : AdapterItem<TabBarViewHolder, TabBarItem>(
-    isType = { it is TabBarItem },
-    layoutRes = R.layout.item_tab_bar,
-    viewHolderGenerator = ::TabBarViewHolderImpl,
-    itemBinder = TabBarItemBinder(tabs, onClickListener)
-)

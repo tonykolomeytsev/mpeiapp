@@ -20,28 +20,30 @@ data class TextItem(
     val textGravity: Int = Gravity.START,
 )
 
-interface TextItemViewHolder {
-    fun setText(text: CharSequence)
-    fun setText(@StringRes textResId: Int)
-    fun setStyle(@StyleRes styleResId: Int)
-    fun setTextGravity(textGravity: Int)
-}
+class TextAdapterItem(
+    @LayoutRes layoutRes: Int = R.layout.item_text
+) : AdapterItem<TextItemViewHolder, TextItem>(
+    isType = { it is TextItem },
+    layoutRes = layoutRes,
+    viewHolderGenerator = ::TextItemViewHolder,
+    itemBinder = TextItemBinder()
+)
 
-class TextItemViewHolderImpl(
+class TextItemViewHolder(
     override val containerView: View
-) : TextItemViewHolder, RecyclerView.ViewHolder(containerView), ReusableViewHolder {
+) : RecyclerView.ViewHolder(containerView), ReusableViewHolder {
 
     private val textViewTextItem by lazyBinding<TextView>(R.id.textViewTextItem)
 
-    override fun setText(text: CharSequence) {
+    fun setText(text: CharSequence) {
         textViewTextItem.text = text
     }
 
-    override fun setText(@StringRes textResId: Int) {
+    fun setText(@StringRes textResId: Int) {
         textViewTextItem.setText(textResId)
     }
 
-    override fun setStyle(@StyleRes styleResId: Int) {
+    fun setStyle(@StyleRes styleResId: Int) {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
             textViewTextItem.setTextAppearance(styleResId)
         } else {
@@ -50,7 +52,7 @@ class TextItemViewHolderImpl(
         }
     }
 
-    override fun setTextGravity(textGravity: Int) {
+    fun setTextGravity(textGravity: Int) {
         textViewTextItem.gravity = textGravity
     }
 }
@@ -66,12 +68,3 @@ class TextItemBinder : BaseItemBinder<TextItemViewHolder, TextItem>() {
         }
     }
 }
-
-class TextAdapterItem(
-    @LayoutRes layoutRes: Int = R.layout.item_text
-) : AdapterItem<TextItemViewHolder, TextItem>(
-    isType = { it is TextItem },
-    layoutRes = layoutRes,
-    viewHolderGenerator = ::TextItemViewHolderImpl,
-    itemBinder = TextItemBinder()
-)

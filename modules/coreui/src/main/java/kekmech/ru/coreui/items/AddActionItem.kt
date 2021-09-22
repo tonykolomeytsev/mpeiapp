@@ -16,15 +16,19 @@ data class AddActionItem(
     val itemId: Int = ADD_ACTION_DEFAULT_ITEM_ID
 )
 
-interface AddActionViewHolder : ClickableItemViewHolder {
-    fun setTitle(title: String)
-}
+class AddActionAdapterItem(
+    isType: (Any) -> Boolean = { it is AddActionItem && it.itemId == ADD_ACTION_DEFAULT_ITEM_ID },
+    onClickListener: ((AddActionItem) -> Unit)? = null
+) : AdapterItem<AddActionViewHolder, AddActionItem>(
+    isType = isType,
+    layoutRes = R.layout.item_add_action,
+    viewHolderGenerator = ::AddActionViewHolder,
+    itemBinder = AddActionItemBinder(onClickListener)
+)
 
-class AddActionViewHolderImpl(
+class AddActionViewHolder(
     containerView: View
-) :
-    AddActionViewHolder,
-    RecyclerView.ViewHolder(containerView),
+) : RecyclerView.ViewHolder(containerView),
     ClickableItemViewHolder by ClickableItemViewHolderImpl(containerView)
 {
     private val viewBinding = ItemAddActionBinding.bind(containerView)
@@ -33,7 +37,7 @@ class AddActionViewHolderImpl(
         containerView.scaleOnTouch(factor = ANIMATION_SCALE_MIN)
     }
 
-    override fun setTitle(title: String) {
+    fun setTitle(title: String) {
         viewBinding.textViewActionName.text = title
     }
 }
@@ -47,13 +51,3 @@ class AddActionItemBinder(
         vh.setTitle(model.title)
     }
 }
-
-class AddActionAdapterItem(
-    isType: (Any) -> Boolean = { it is AddActionItem && it.itemId == ADD_ACTION_DEFAULT_ITEM_ID },
-    onClickListener: ((AddActionItem) -> Unit)? = null
-) : AdapterItem<AddActionViewHolder, AddActionItem>(
-    isType = isType,
-    layoutRes = R.layout.item_add_action,
-    viewHolderGenerator = ::AddActionViewHolderImpl,
-    itemBinder = AddActionItemBinder(onClickListener)
-)

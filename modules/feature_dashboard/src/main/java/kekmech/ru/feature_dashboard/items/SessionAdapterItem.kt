@@ -17,43 +17,41 @@ import kekmech.ru.feature_dashboard.R
 import kekmech.ru.feature_dashboard.databinding.ItemSessionBinding
 import java.time.format.DateTimeFormatter
 
-interface SessionViewHolder {
-    fun setName(text: String)
-    fun setTypeName(@StringRes typeRes: Int? = null)
-    fun setTypeColor(@AttrRes colorRes: Int)
-    fun setPlace(place: String)
-    fun setPerson(person: String)
-    fun setDateTime(text: String)
-}
+internal class SessionAdapterItem(context: Context) : AdapterItem<SessionViewHolder, SessionItem>(
+    isType = { it is SessionItem },
+    layoutRes = R.layout.item_session,
+    viewHolderGenerator = ::SessionViewHolder,
+    itemBinder = SessionItemBinder(context)
+)
 
-private class SessionViewHolderImpl(
+internal class SessionViewHolder(
     private val containerView: View
-) : RecyclerView.ViewHolder(containerView), SessionViewHolder {
+) : RecyclerView.ViewHolder(containerView) {
 
     private val viewBinding = ItemSessionBinding.bind(containerView)
 
-    override fun setName(text: String) {
+    fun setName(text: String) {
         viewBinding.textViewName.text = text
     }
 
-    override fun setPerson(person: String) {
+    fun setPerson(person: String) {
         viewBinding.textViewPerson.text = person
     }
 
-    override fun setPlace(place: String) {
+    fun setPlace(place: String) {
         viewBinding.textViewPlace.text = place
     }
 
-    override fun setDateTime(text: String) {
+    fun setDateTime(text: String) {
         viewBinding.textViewDateTime.text = text
     }
 
-    override fun setTypeColor(@AttrRes colorRes: Int) {
+    fun setTypeColor(@AttrRes colorRes: Int) {
         viewBinding.colorTag.backgroundTintList =
             ColorStateList.valueOf(containerView.context.getThemeColor(colorRes))
     }
 
-    override fun setTypeName(@StringRes typeRes: Int?) {
+    fun setTypeName(@StringRes typeRes: Int?) {
         if (typeRes != null) {
             viewBinding.textViewType.setText(typeRes)
         } else {
@@ -104,10 +102,3 @@ private class SessionDateTimeFormatter(
         return "$dayOfMonth $monthName в $time"
     }
 }
-
-class SessionAdapterItem(context: Context) : AdapterItem<SessionViewHolder, SessionItem>(
-    isType = { it is SessionItem },
-    layoutRes = R.layout.item_session,
-    viewHolderGenerator = ::SessionViewHolderImpl,
-    itemBinder = SessionItemBinder(context)
-)
