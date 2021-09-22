@@ -16,7 +16,7 @@
     <TextView
             android:id="@+id/promoTitle"
             style="@style/H2"
-            android:layout_width="480dp"
+            android:layout_width="@dimen/tablet_frame_width"
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:gravity="center"
@@ -25,7 +25,7 @@
     <TextView
             android:id="@+id/promoSubtitle"
             style="@style/H6.Gray70"
-            android:layout_width="480dp"
+            android:layout_width="@dimen/tablet_frame_width"
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:gravity="center"/>

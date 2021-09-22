@@ -39,7 +39,7 @@
     <Button
             android:id="@+id/buttonStart"
             style="@style/Button.Primary"
-            android:layout_width="480dp"
+            android:layout_width="@dimen/tablet_frame_width"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:layout_marginBottom="16dp"
