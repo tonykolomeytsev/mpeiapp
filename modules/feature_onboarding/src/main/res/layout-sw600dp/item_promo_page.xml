@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+    <View
+            android:id="@+id/promoIcon"
+            android:layout_width="320dp"
+            android:layout_height="320dp"
+            android:background="@drawable/onboarding_carousel_stub"
+            android:layout_marginBottom="16dp"/>
+
+    <TextView
+            android:id="@+id/promoTitle"
+            style="@style/H2"
+            android:layout_width="480dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:layout_marginBottom="12dp"/>
+
+    <TextView
+            android:id="@+id/promoSubtitle"
+            style="@style/H6.Gray70"
+            android:layout_width="480dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:gravity="center"/>
+
+</LinearLayout>
