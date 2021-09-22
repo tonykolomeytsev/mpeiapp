@@ -93,6 +93,7 @@ class UpcomingEventsListConverter(
         offset: Int,
     ): List<Any> = mutableListOf<Any>().apply {
         val raw = this@withTimePrediction
+        var isPredictionAdded = false
         if (offset > 2) return raw
         val indexOfNextClasses = raw
             .indexOfFirst { it is Classes }
@@ -101,7 +102,7 @@ class UpcomingEventsListConverter(
 
         for (e in raw) {
             val classes = e as? Classes
-            if (classes == raw[indexOfNextClasses]) {
+            if (classes == raw[indexOfNextClasses] && !isPredictionAdded) {
                 // add time status
                 val (condition, hours, minutes) = getNextClassesTimeStatus(currentDate, classes.time)
                 val prefix = context.getString(R.string.dashboard_item_time_prediction_prefix)
@@ -116,6 +117,7 @@ class UpcomingEventsListConverter(
                     NextClassesCondition.STARTED -> Unit
                     else -> Unit
                 }
+                isPredictionAdded = true
             }
             add(e)
         }
