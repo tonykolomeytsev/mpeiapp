@@ -8,7 +8,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kekmech.ru.common_navigation.BottomTab
-import kekmech.ru.common_navigation.features.NeedToUpdate
 import kekmech.ru.common_navigation.features.ScrollToTop
 import kekmech.ru.common_navigation.features.TabScreenStateSaver
 import kekmech.ru.domain_bars.BarsFeatureLauncher
@@ -74,16 +73,13 @@ class BottomBarController(
     private fun selectTab(tab: BottomTab) {
         if (currentTabFragment?.tag == tab.name) {
             (currentTabFragment as? ScrollToTop)?.onScrollToTop()
-            (currentTabFragment as? NeedToUpdate)?.onUpdate()
             return
         }
 
         (currentTabFragment as? TabScreenStateSaver)?.updateBundle(bundle)
 
         childFragmentManager.beginTransaction().apply {
-            val newFragment = createTabFragment(tab)
-            replace(R.id.fragmentContainer, newFragment, tab.name)
-            (newFragment as? NeedToUpdate)?.onUpdate()
+            replace(R.id.fragmentContainer, createTabFragment(tab), tab.name)
         }.commitNowIgnoreStateLossError()
         lastSelectedTab = tab
     }
