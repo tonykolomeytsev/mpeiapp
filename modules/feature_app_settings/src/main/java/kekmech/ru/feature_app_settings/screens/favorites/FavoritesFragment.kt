@@ -46,8 +46,9 @@ internal class FavoritesFragment : BaseFragment<FavoritesEvent, FavoritesEffect,
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        view.addSystemTopPadding()
         viewBinding.apply {
+            appBarLayout.addSystemTopPadding()
+
             toolbar.setTitle(R.string.favorites_screen_title)
             toolbar.setNavigationOnClickListener { close() }
             recyclerView.attachScrollListenerForAppBarLayoutShadow(appBarLayout)
