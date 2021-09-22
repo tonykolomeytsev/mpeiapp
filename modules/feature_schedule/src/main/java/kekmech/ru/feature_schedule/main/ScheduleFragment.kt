@@ -49,9 +49,6 @@ internal class ScheduleFragment :
     // for viewPager sliding debounce
     private var viewPagerPositionToBeSelected: Int? = null
 
-    // for viewPager callback issue
-    private var viewPagerFirstSelectionIgnored: Boolean = false
-
     override fun createStore() = inject<ScheduleFeatureFactory>().value.create()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -63,12 +60,9 @@ internal class ScheduleFragment :
             recyclerView.setHasFixedSize(true)
             recyclerView.addScrollAnalytics(analytics, "WeeksRecyclerView")
 
-            // TODO save state of viewpager2 to avoid days change "blinking"
             viewPager.adapter = viewPagerAdapter
-            viewPager.onPageSelected {
-                if (viewPagerFirstSelectionIgnored) feature.accept(Wish.Action.PageChanged(it))
-                viewPagerFirstSelectionIgnored = true
-            }
+            viewPager.setCurrentItem(getSavedViewPagerCurrentItem(), false)
+            viewPager.onPageSelected { feature.accept(Wish.Action.PageChanged(it)) }
             viewPager.addScrollAnalytics(analytics, "WorkingDaysViewPager")
 
             appBarLayout.outlineProvider = null
@@ -78,22 +72,25 @@ internal class ScheduleFragment :
     }
 
     override fun onDestroyView() {
+        saveViewPagerState()
+        viewBinding.viewPager.adapter = null
         weeksScrollHelper.detach(viewBinding.recyclerView)
         super.onDestroyView()
     }
 
-    override fun handleEffect(effect: ScheduleEffect) = when (effect) {
-        is ScheduleEffect.NavigateToNoteList -> {
-            dependencies.notesFeatureLauncher.launchNoteList(
-                selectedClasses = effect.classes,
-                selectedDate = effect.date,
-                resultKey = NOTES_LIST_RESULT_KEY
-            )
-            setResultListener<EmptyResult>(NOTES_LIST_RESULT_KEY) {
-                feature.accept(Wish.Action.NotesUpdated)
+    override fun handleEffect(effect: ScheduleEffect) =
+        when (effect) {
+            is ScheduleEffect.NavigateToNoteList -> {
+                dependencies.notesFeatureLauncher.launchNoteList(
+                    selectedClasses = effect.classes,
+                    selectedDate = effect.date,
+                    resultKey = NOTES_LIST_RESULT_KEY
+                )
+                setResultListener<EmptyResult>(NOTES_LIST_RESULT_KEY) {
+                    feature.accept(Wish.Action.NotesUpdated)
+                }
             }
         }
-    }
 
     override fun render(state: ScheduleState) {
         viewPagerAdapter.update(ScheduleClassesListConverter.map(state))
@@ -103,21 +100,23 @@ internal class ScheduleFragment :
         renderFloatingActionButton(state)
     }
 
-    private fun renderStatusBar(state: ScheduleState) = with(viewBinding) {
-        textViewHeader.text = getFormattedDay(state.selectedDate)
-        textViewDescription.text = state.weekOfSemester?.let { getFormattedWeek(it) }.orEmpty()
-    }
+    private fun renderStatusBar(state: ScheduleState) =
+        with(viewBinding) {
+            textViewHeader.text = getFormattedDay(state.selectedDate)
+            textViewDescription.text = state.weekOfSemester?.let { getFormattedWeek(it) }.orEmpty()
+        }
 
-    private fun renderViewPager(state: ScheduleState) = with(viewBinding) {
-        if (viewPagerPositionToBeSelected != state.selectedDate.dayOfWeek.value) {
-            val smoothScroll = viewPagerPositionToBeSelected != null
-            viewPagerPositionToBeSelected = state.selectedDate.dayOfWeek.value
-            val selectedItem = state.selectedDate.dayOfWeek.value - 1
-            if (selectedItem != viewPager.currentItem) viewPager.post {
-                if (selectedItem in 0 until DAYS_TO_VIEW) viewPager.setCurrentItem(selectedItem, smoothScroll)
+    private fun renderViewPager(state: ScheduleState) =
+        with(viewBinding) {
+            val newSelectedPosition = state.selectedDate.dayOfWeek.value - 1
+            if (viewPagerPositionToBeSelected != newSelectedPosition &&
+                viewPager.currentItem != newSelectedPosition &&
+                newSelectedPosition in 0 until DAYS_TO_VIEW
+            ) {
+                viewPager.setCurrentItem(newSelectedPosition, viewPagerPositionToBeSelected != null)
+                viewPagerPositionToBeSelected = newSelectedPosition
             }
         }
-    }
 
     private fun renderWeekCalendar(state: ScheduleState) {
         weeksScrollAdapter.selectDay(state.selectedDate) { position ->
@@ -213,6 +212,13 @@ internal class ScheduleFragment :
         } else {
             return requireContext().getString(R.string.schedule_weekend_week)
         }
+    }
+
+    private fun getSavedViewPagerCurrentItem(): Int =
+        stateBundle.getInt("selected_page")
+
+    private fun saveViewPagerState() {
+        stateBundle.putInt("selected_page", viewBinding.viewPager.currentItem)
     }
 
     companion object {
