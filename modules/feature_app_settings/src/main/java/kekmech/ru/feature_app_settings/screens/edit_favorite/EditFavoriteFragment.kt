@@ -23,7 +23,10 @@ internal class EditFavoriteFragment : Fragment(R.layout.fragment_edit_favorite) 
             appBarLayout.addSystemTopPadding()
             root.addSystemBottomPadding()
 
-            toolbar.setNavigationOnClickListener { close() }
+            toolbar.setNavigationOnClickListener {
+                close()
+                hideKeyboard()
+            }
             header.text = groupNumber
             val description = getArgument<String>(ARG_DESCRIPTION)
             groupText.setText(description)
@@ -32,6 +35,7 @@ internal class EditFavoriteFragment : Fragment(R.layout.fragment_edit_favorite) 
             buttonContinue.setOnClickListener {
                 analytics.sendClick("SaveFavoriteDescription")
                 close()
+                hideKeyboard()
                 setResult(resultKey, result = groupNumber to groupText.text.toString())
             }
         }
