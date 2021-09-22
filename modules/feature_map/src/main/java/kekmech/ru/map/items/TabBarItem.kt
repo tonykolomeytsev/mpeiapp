@@ -1,7 +1,6 @@
 package kekmech.ru.map.items
 
 import android.view.View
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseAdapter
@@ -33,8 +32,6 @@ internal class TabBarViewHolderImpl(
             )
             with(viewBinding) {
                 recyclerView.adapter = adapter
-                recyclerView.layoutManager =
-                    LinearLayoutManager(root.context, LinearLayoutManager.HORIZONTAL, false)
             }
         }
     }

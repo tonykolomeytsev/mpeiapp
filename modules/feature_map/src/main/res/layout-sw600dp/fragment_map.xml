@@ -48,8 +48,9 @@
 
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
+                android:layout_width="@dimen/tablet_frame_width"
                 android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
                 android:background="@drawable/background_bottom_sheet"
                 android:clipChildren="false"
                 android:clipToPadding="false"
