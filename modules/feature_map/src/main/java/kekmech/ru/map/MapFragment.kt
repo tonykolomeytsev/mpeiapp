@@ -4,13 +4,8 @@ import android.os.Bundle
 import android.view.View
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers.mainThread
-import io.reactivex.rxjava3.core.Completable
 import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_analytics.ext.screenAnalytics
 import kekmech.ru.common_android.doOnApplyWindowInsets
@@ -20,7 +15,8 @@ import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.views.setMargins
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.BaseFragment
-import kekmech.ru.common_navigation.features.NeedToUpdate
+import kekmech.ru.common_navigation.features.TabScreenStateSaver
+import kekmech.ru.common_navigation.features.TabScreenStateSaverImpl
 import kekmech.ru.coreui.banner.showBanner
 import kekmech.ru.coreui.items.ErrorStateAdapterItem
 import kekmech.ru.coreui.items.PullAdapterItem
@@ -45,16 +41,13 @@ import kekmech.ru.map.view.BottomSheetBackgroundDrawable
 import kekmech.ru.map.view.ControlledScrollingLayoutManager
 import kekmech.ru.map.view.MarkersBitmapFactory
 import org.koin.android.ext.android.inject
-import java.util.concurrent.TimeUnit
+import vivid.money.elmslie.storepersisting.retainInParentStoreHolder
 
-private const val MAP_CREATION_DELAY = 50L
-private const val MAX_OVERLAY_ALPHA = 0.5f
-private const val DEFAULT_CORNER_RADIUS = 16f // dp
-
-internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState>(), NeedToUpdate {
+internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState>(), TabScreenStateSaver by TabScreenStateSaverImpl("map") {
 
     override val initEvent = Wish.Init
     override val layoutId = R.layout.fragment_map
+    override val storeHolder by retainInParentStoreHolder(storeProvider = ::createStore)
 
     private val dependencies by inject<MapDependencies>()
     private val adapter by fastLazy { createAdapter() }
@@ -74,15 +67,17 @@ internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState>(), Need
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Completable.timer(MAP_CREATION_DELAY, TimeUnit.MILLISECONDS)
-            .observeOn(mainThread())
-            .subscribe(::createMap)
-            .bind()
+        createMap()
 
         viewBinding.recyclerView.layoutManager = ControlledScrollingLayoutManager(requireContext())
         viewBinding.recyclerView.adapter = adapter
         viewBinding.recyclerView.background = bottomSheetBackground
         createBottomSheet(view)
+    }
+
+    override fun onDestroyView() {
+        saveMapState()
+        super.onDestroyView()
     }
 
     private fun createBottomSheet(view: View) {
@@ -111,9 +106,9 @@ internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState>(), Need
         childFragmentManager
             .beginTransaction()
             .replace(R.id.mapFragmentContainer, mapFragment)
-            .commitAllowingStateLoss()
+            .commitNowAllowingStateLoss()
         mapFragment.getMapAsync {
-            it.init(requireContext(), appSettings.mapAppearanceType)
+            it.init(requireContext(), appSettings.mapAppearanceType, getSavedCameraPosition())
             feature.accept(Wish.Action.OnMapReady(it))
         }
     }
@@ -187,12 +182,6 @@ internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState>(), Need
             }
     }
 
-    override fun onUpdate() {
-        if (dependencies.deeplinkDelegate.isNotEmpty()) {
-            feature.accept(Wish.Action.SilentUpdate)
-        }
-    }
-
     private fun createAdapter() = BaseAdapter(
         PullAdapterItem(),
         TabBarAdapterItem(
@@ -241,4 +230,17 @@ internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState>(), Need
             tab = FilterTab.STRUCTURES
         )
     )
+
+    private fun saveMapState() {
+        childFragmentManager.fragments.firstOrNull()?.onSaveInstanceState(stateBundle)
+    }
+
+    private fun getSavedCameraPosition(): CameraPosition? =
+        stateBundle.getBundle("map_state")?.getParcelable("camera")
+
+    companion object {
+
+        private const val MAX_OVERLAY_ALPHA = 0.5f
+        private const val DEFAULT_CORNER_RADIUS = 16f // dp
+    }
 }

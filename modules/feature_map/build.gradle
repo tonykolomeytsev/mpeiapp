@@ -21,6 +21,7 @@ dependencies {
     implementation google.gson
     implementation vividMoney.elmslieCore
     implementation vividMoney.elmslieAndroid
+    implementation vividMoney.elmslieStoreHolder
 
     implementation project(path: ':domain_map')
     implementation project(path: ':domain_app_settings')
