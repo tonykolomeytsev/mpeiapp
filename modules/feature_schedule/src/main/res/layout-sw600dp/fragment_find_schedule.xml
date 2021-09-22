@@ -4,20 +4,32 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="?attr/colorGray10"
         android:fitsSystemWindows="true"
         android:orientation="vertical">
 
-    <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+    <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:background="?attr/colorWhite"
+            android:fitsSystemWindows="true"
+            app:elevation="0dp">
+
+        <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent" />
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <ScrollView
-            android:layout_width="480dp"
-            android:layout_gravity="center_horizontal"
+            android:layout_width="@dimen/tablet_frame_width"
             android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="?attr/actionBarSize"
+            android:background="?attr/colorWhite"
             android:fillViewport="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
