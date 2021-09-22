@@ -18,30 +18,33 @@ internal data class FilterTabItem(
     val tab: FilterTab
 )
 
-internal interface FilterTabViewHolder : ClickableItemViewHolder {
-    fun setName(@StringRes nameResId: Int)
-    fun setIcon(@DrawableRes drawableResId: Int)
-}
+internal class FilterTabAdapterItem(
+    onClickListener: ((FilterTab) -> Unit)? = null
+) : AdapterItem<FilterTabViewHolder, FilterTabItem>(
+    isType = { it is FilterTabItem },
+    layoutRes = R.layout.item_filter_tab,
+    viewHolderGenerator = ::FilterTabViewHolder,
+    itemBinder = FilterTabItemBinder(onClickListener),
+    areItemsTheSame = { a, b -> a.tab == b.tab }
+)
 
-internal class FilterTabViewHolderImpl(
+internal class FilterTabViewHolder(
     containerView: View
-) :
-    FilterTabViewHolder,
-    RecyclerView.ViewHolder(containerView),
+) : RecyclerView.ViewHolder(containerView),
     ClickableItemViewHolder by ClickableItemViewHolderImpl(containerView) {
 
     private val viewBinding = ItemFilterTabBinding.bind(containerView)
 
-    override fun setName(@StringRes nameResId: Int) {
+    fun setName(@StringRes nameResId: Int) {
         viewBinding.textViewName.setText(nameResId)
     }
 
-    override fun setIcon(@DrawableRes drawableResId: Int) {
+    fun setIcon(@DrawableRes drawableResId: Int) {
         viewBinding.imageViewIcon.setImageResource(drawableResId)
     }
 }
 
-internal class FilterTabItemBinder(
+private class FilterTabItemBinder(
     private val onClickListener: ((FilterTab) -> Unit)?
 ) : BaseItemBinder<FilterTabViewHolder, FilterTabItem>() {
 
@@ -51,13 +54,3 @@ internal class FilterTabItemBinder(
         vh.setOnClickListener { onClickListener?.invoke(model.tab) }
     }
 }
-
-internal class FilterTabAdapterItem(
-    onClickListener: ((FilterTab) -> Unit)? = null
-) : AdapterItem<FilterTabViewHolder, FilterTabItem>(
-    isType = { it is FilterTabItem },
-    layoutRes = R.layout.item_filter_tab,
-    viewHolderGenerator = ::FilterTabViewHolderImpl,
-    itemBinder = FilterTabItemBinder(onClickListener),
-    areItemsTheSame = { a, b -> a.tab == b.tab }
-)

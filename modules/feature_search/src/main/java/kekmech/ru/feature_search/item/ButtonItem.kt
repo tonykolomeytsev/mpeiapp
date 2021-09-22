@@ -15,7 +15,18 @@ internal data class ButtonItem(
     @StringRes val textResId: Int
 )
 
-internal class ButtonViewHolderImpl(
+internal class ButtonAdapterItem(
+    itemId: Int,
+    @LayoutRes layoutRes: Int,
+    onClickListener: (ButtonItem) -> Unit
+) : AdapterItem<ButtonViewHolder, ButtonItem>(
+    isType = { it is ButtonItem && it.itemId == itemId },
+    layoutRes = layoutRes,
+    viewHolderGenerator = ::ButtonViewHolder,
+    itemBinder = ButtonItemBinder(onClickListener)
+)
+
+internal class ButtonViewHolder(
     itemView: View
 ) : RecyclerView.ViewHolder(itemView) {
 
@@ -30,23 +41,12 @@ internal class ButtonViewHolderImpl(
     }
 }
 
-internal class ButtonItemBinder(
+private class ButtonItemBinder(
     private val onClickListener: (ButtonItem) -> Unit
-) : BaseItemBinder<ButtonViewHolderImpl, ButtonItem>() {
+) : BaseItemBinder<ButtonViewHolder, ButtonItem>() {
 
-    override fun bind(vh: ButtonViewHolderImpl, model: ButtonItem, position: Int) {
+    override fun bind(vh: ButtonViewHolder, model: ButtonItem, position: Int) {
         vh.setOnCLickListener { onClickListener(model) }
         vh.setText(model.textResId)
     }
 }
-
-internal class ButtonAdapterItem(
-    itemId: Int,
-    @LayoutRes layoutRes: Int,
-    onClickListener: (ButtonItem) -> Unit
-) : AdapterItem<ButtonViewHolderImpl, ButtonItem>(
-    isType = { it is ButtonItem && it.itemId == itemId },
-    layoutRes = layoutRes,
-    viewHolderGenerator = ::ButtonViewHolderImpl,
-    itemBinder = ButtonItemBinder(onClickListener)
-)

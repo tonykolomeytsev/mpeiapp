@@ -70,7 +70,7 @@ internal class AssessedDisciplineViewHolder(
             marks.forEachIndexed { index, mark ->
                 val view = inflater.inflate(R.layout.item_mark, this, false)
                 addView(view)
-                val vh = MarkViewHolderImpl(view)
+                val vh = MarkViewHolder(view)
                 marksBinder.bind(vh, MarkItem(mark), index)
                 view.setMargins(right = rightMarkPadding)
             }
@@ -88,7 +88,7 @@ internal class AssessedDisciplineViewHolder(
         with(viewBinding.finalMarkContainer) {
             val view = inflater.inflate(R.layout.item_mark, this, false) as TextView
             addView(view)
-            val vh = MarkViewHolderImpl(view)
+            val vh = MarkViewHolder(view)
             marksBinder.bind(vh, MarkItem(finalMark), 0)
             view.text = "Итог: ${view.text}"
             view.setMargins(right = rightMarkPadding)

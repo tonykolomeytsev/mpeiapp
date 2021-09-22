@@ -36,7 +36,7 @@ private class FinalGradeViewHolderImpl(
             removeAllViews()
             val view = inflater.inflate(R.layout.item_mark, this, false)
             addView(view)
-            val vh = MarkViewHolderImpl(view)
+            val vh = MarkViewHolder(view)
             marksBinder.bind(vh, MarkItem(mark), 0)
         }
     }

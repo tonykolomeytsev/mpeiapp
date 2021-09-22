@@ -10,30 +10,33 @@ import kekmech.ru.coreui.R
 import kekmech.ru.coreui.databinding.ItemNoteBinding
 import kekmech.ru.domain_notes.dto.Note
 
-interface NoteViewHolder : ClickableItemViewHolder {
-    fun setContent(content: String)
-    fun setDate(date: String)
-    fun setDisciplineName(name: String)
-}
+class NoteAdapterItem(
+    context: Context,
+    onClickListener: ((Note) -> Unit)? = null
+) : AdapterItem<NoteViewHolder, Note>(
+    isType = { it is Note },
+    layoutRes = R.layout.item_note,
+    viewHolderGenerator = ::NoteViewHolder,
+    itemBinder = NoteItemBinder(context, onClickListener)
+)
 
-class NoteViewHolderImpl(
+class NoteViewHolder(
     private val containerView: View
 ) :
     RecyclerView.ViewHolder(containerView),
-    NoteViewHolder,
     ClickableItemViewHolder by ClickableItemViewHolderImpl(containerView) {
 
     private val viewBinding = ItemNoteBinding.bind(containerView)
 
-    override fun setContent(content: String) {
+    fun setContent(content: String) {
         viewBinding.textViewNoteContent.text = content
     }
 
-    override fun setDate(date: String) {
+    fun setDate(date: String) {
         viewBinding.textViewNoteDate.text = date
     }
 
-    override fun setDisciplineName(name: String) {
+    fun setDisciplineName(name: String) {
         viewBinding.textViewNoteDiscipline.text = name
     }
 }
@@ -52,13 +55,3 @@ class NoteItemBinder(
         vh.setOnClickListener { onClickListener?.invoke(model) }
     }
 }
-
-class NoteAdapterItem(
-    context: Context,
-    onClickListener: ((Note) -> Unit)? = null
-) : AdapterItem<NoteViewHolder, Note>(
-    isType = { it is Note },
-    layoutRes = R.layout.item_note,
-    viewHolderGenerator = ::NoteViewHolderImpl,
-    itemBinder = NoteItemBinder(context, onClickListener)
-)

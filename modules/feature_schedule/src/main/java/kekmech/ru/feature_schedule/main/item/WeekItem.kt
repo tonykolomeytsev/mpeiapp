@@ -20,22 +20,32 @@ data class WeekItem(
     val dayItems: List<DayItem>
 )
 
-interface WeekViewHolder {
-    fun createAdapterIfNull()
-    fun setDays(items: List<Any>)
-    fun setOnDayClickListener(listener: (DayItem) -> Unit)
-    fun setRecycledViewPool(recycledViewPool: RecyclerView.RecycledViewPool)
+class WeekAdapterItem(
+    onDayClickListener: (DayItem) -> Unit
+) : AdapterItem<WeekViewHolder, WeekItem>(
+    isType = { it is WeekItem },
+    layoutRes = R.layout.item_week,
+    viewHolderGenerator = ::WeekViewHolder,
+    itemBinder = WeekItemBinder(
+        recycledViewPool = RecyclerView.RecycledViewPool()
+            .apply { setMaxRecycledViews(0, RECYCLED_VIEW_POOL_SIZE) },
+        onDayClickListener = onDayClickListener
+    )
+) {
+    companion object {
+        private const val RECYCLED_VIEW_POOL_SIZE = 200
+    }
 }
 
-class WeekViewHolderImpl(
+class WeekViewHolder(
     private val containerView: View
-) : RecyclerView.ViewHolder(containerView), WeekViewHolder {
+) : RecyclerView.ViewHolder(containerView) {
 
     private var onDayClickListener: (DayItem) -> Unit = {}
     private var adapter: BaseAdapter? = null
     private val viewBinding = ItemWeekBinding.bind(containerView)
 
-    override fun setDays(items: List<Any>) {
+    fun setDays(items: List<Any>) {
         with(viewBinding) {
             if (recyclerView.adapter == null) recyclerView.adapter = adapter
             if (recyclerView.layoutManager == null) recyclerView.layoutManager =
@@ -44,11 +54,11 @@ class WeekViewHolderImpl(
         }
     }
 
-    override fun setOnDayClickListener(listener: (DayItem) -> Unit) {
+    fun setOnDayClickListener(listener: (DayItem) -> Unit) {
         onDayClickListener = listener
     }
 
-    override fun createAdapterIfNull() {
+    fun createAdapterIfNull() {
         if (adapter == null) {
             adapter = BaseAdapter(
                 DayAdapterItem(
@@ -60,7 +70,7 @@ class WeekViewHolderImpl(
         }
     }
 
-    override fun setRecycledViewPool(recycledViewPool: RecyclerView.RecycledViewPool) {
+    fun setRecycledViewPool(recycledViewPool: RecyclerView.RecycledViewPool) {
         viewBinding.recyclerView.setRecycledViewPool(recycledViewPool)
     }
 }
@@ -75,22 +85,5 @@ class WeekItemBinder(
         vh.createAdapterIfNull()
         vh.setDays(model.dayItems)
         vh.setOnDayClickListener(onDayClickListener)
-    }
-}
-
-class WeekAdapterItem(
-    onDayClickListener: (DayItem) -> Unit
-) : AdapterItem<WeekViewHolder, WeekItem>(
-    isType = { it is WeekItem },
-    layoutRes = R.layout.item_week,
-    viewHolderGenerator = ::WeekViewHolderImpl,
-    itemBinder = WeekItemBinder(
-        recycledViewPool = RecyclerView.RecycledViewPool()
-            .apply { setMaxRecycledViews(0, RECYCLED_VIEW_POOL_SIZE) },
-        onDayClickListener = onDayClickListener
-    )
-) {
-    companion object {
-        private const val RECYCLED_VIEW_POOL_SIZE = 200
     }
 }

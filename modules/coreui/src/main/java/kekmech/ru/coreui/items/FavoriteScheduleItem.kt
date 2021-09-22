@@ -15,29 +15,32 @@ class FavoriteScheduleItem(
     val isSelected: Boolean = false
 )
 
-interface FavoriteScheduleViewHolder : ClickableItemViewHolder {
-    fun setTitle(title: String)
-    fun setDescription(description: String)
-    fun setIsSelected(isSelected: Boolean)
-}
+class FavoriteScheduleAdapterItem(
+    onClickListener: ((FavoriteScheduleItem) -> Unit)? = null
+) : AdapterItem<FavoriteScheduleViewHolder, FavoriteScheduleItem>(
+    isType = { it is FavoriteScheduleItem },
+    layoutRes = R.layout.item_favorite_schedule,
+    viewHolderGenerator = ::FavoriteScheduleViewHolder,
+    itemBinder = FavoriteScheduleItemBinder(onClickListener),
+    areItemsTheSame = { a, b -> a.value.groupNumber == b.value.groupNumber }
+)
 
-class FavoriteScheduleViewHolderImpl(
+class FavoriteScheduleViewHolder(
     private val containerView: View
 ) : RecyclerView.ViewHolder(containerView),
-    ClickableItemViewHolder by ClickableItemViewHolderImpl(containerView),
-    FavoriteScheduleViewHolder {
+    ClickableItemViewHolder by ClickableItemViewHolderImpl(containerView) {
 
     private val viewBinding = ItemFavoriteScheduleBinding.bind(containerView)
 
-    override fun setTitle(title: String) {
+    fun setTitle(title: String) {
         viewBinding.textViewTitle.text = title
     }
 
-    override fun setDescription(description: String) {
+    fun setDescription(description: String) {
         viewBinding.textViewDescription.text = description
     }
 
-    override fun setIsSelected(isSelected: Boolean) = with(viewBinding) {
+    fun setIsSelected(isSelected: Boolean) = with(viewBinding) {
         val context = containerView.context
         if (isSelected) {
             containerView.backgroundTintList = ColorStateList.valueOf(context.getThemeColor(R.attr.colorMain))
@@ -62,13 +65,3 @@ class FavoriteScheduleItemBinder(
         onClickListener?.let { vh.setOnClickListener { it(model) } }
     }
 }
-
-class FavoriteScheduleAdapterItem(
-    onClickListener: ((FavoriteScheduleItem) -> Unit)? = null
-) : AdapterItem<FavoriteScheduleViewHolder, FavoriteScheduleItem>(
-    isType = { it is FavoriteScheduleItem },
-    layoutRes = R.layout.item_favorite_schedule,
-    viewHolderGenerator = ::FavoriteScheduleViewHolderImpl,
-    itemBinder = FavoriteScheduleItemBinder(onClickListener),
-    areItemsTheSame = { a, b -> a.value.groupNumber == b.value.groupNumber }
-)

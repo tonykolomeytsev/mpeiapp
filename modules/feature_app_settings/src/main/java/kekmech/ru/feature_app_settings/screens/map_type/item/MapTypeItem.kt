@@ -15,6 +15,16 @@ internal data class MapTypeItem(
     val isSelected: Boolean
 )
 
+internal class MapTypeAdapterItem(
+    onClickListener: (MapTypeEntry) -> Unit
+) : AdapterItem<MapTypeViewHolder, MapTypeItem>(
+    isType = { it is MapTypeItem },
+    layoutRes = R.layout.item_map_type,
+    viewHolderGenerator = ::MapTypeViewHolder,
+    itemBinder = LanguageItemBinder(onClickListener),
+    areItemsTheSame = { a, b -> a.type == b.type }
+)
+
 internal class MapTypeViewHolder(
     containerView: View
 ) : RecyclerView.ViewHolder(containerView),
@@ -42,13 +52,3 @@ private class LanguageItemBinder(
         vh.setOnClickListener { onClickListener(model.type) }
     }
 }
-
-internal class MapTypeAdapterItem(
-    onClickListener: (MapTypeEntry) -> Unit
-) : AdapterItem<MapTypeViewHolder, MapTypeItem>(
-    isType = { it is MapTypeItem },
-    layoutRes = R.layout.item_map_type,
-    viewHolderGenerator = ::MapTypeViewHolder,
-    itemBinder = LanguageItemBinder(onClickListener),
-    areItemsTheSame = { a, b -> a.type == b.type }
-)

@@ -27,7 +27,7 @@ import kekmech.ru.feature_search.databinding.FragmentScheduleDetailsBinding
 import kekmech.ru.feature_search.item.ButtonAdapterItem
 import kekmech.ru.feature_search.item.WeekMinItem
 import kekmech.ru.feature_search.item.WeekMinItemBinder
-import kekmech.ru.feature_search.item.WeekMinViewHolderImpl
+import kekmech.ru.feature_search.item.WeekMinViewHolder
 import kekmech.ru.feature_search.schedule_details.elm.ScheduleDetailsEffect
 import kekmech.ru.feature_search.schedule_details.elm.ScheduleDetailsEvent
 import kekmech.ru.feature_search.schedule_details.elm.ScheduleDetailsEvent.Wish
@@ -109,7 +109,7 @@ internal class ScheduleDetailsFragment :
         AdapterItem(
             isType = { it is WeekMinItem },
             layoutRes = R.layout.item_week_min,
-            viewHolderGenerator = ::WeekMinViewHolderImpl,
+            viewHolderGenerator = ::WeekMinViewHolder,
             itemBinder = WeekMinItemBinder(requireContext()) {
                 feature.accept(Wish.Click.Day(it.date))
             },

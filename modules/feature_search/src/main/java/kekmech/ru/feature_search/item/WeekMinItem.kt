@@ -15,7 +15,7 @@ internal data class WeekMinItem(
     val days: List<DayItem>
 )
 
-internal class WeekMinViewHolderImpl(
+internal class WeekMinViewHolder(
     itemView: View
 ) : RecyclerView.ViewHolder(itemView) {
 
@@ -33,13 +33,13 @@ internal class WeekMinViewHolderImpl(
 internal class WeekMinItemBinder(
     context: Context,
     private val onDayClickListener: (DayItem) -> Unit
-) : BaseItemBinder<WeekMinViewHolderImpl, WeekMinItem>() {
+) : BaseItemBinder<WeekMinViewHolder, WeekMinItem>() {
 
     private val adapter by fastLazy { BaseAdapter(
         DayAdapterItem(context, onDayClickListener, R.layout.item_day_min)
     ) }
 
-    override fun bind(vh: WeekMinViewHolderImpl, model: WeekMinItem, position: Int) {
+    override fun bind(vh: WeekMinViewHolder, model: WeekMinItem, position: Int) {
         vh.update(adapter, model.days)
     }
 }

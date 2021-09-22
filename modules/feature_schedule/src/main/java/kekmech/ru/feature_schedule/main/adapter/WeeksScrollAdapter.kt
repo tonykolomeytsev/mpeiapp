@@ -8,7 +8,7 @@ import kekmech.ru.common_schedule.items.DayItem
 import kekmech.ru.common_schedule.utils.atStartOfWeek
 import kekmech.ru.feature_schedule.main.item.WeekAdapterItem
 import kekmech.ru.feature_schedule.main.item.WeekItem
-import kekmech.ru.feature_schedule.main.item.WeekViewHolderImpl
+import kekmech.ru.feature_schedule.main.item.WeekViewHolder
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit
 
@@ -17,7 +17,7 @@ private const val DAYS_IN_CALENDAR = 6
 
 internal class WeeksScrollAdapter(
     private val weekAdapterItem: WeekAdapterItem
-) : RecyclerView.Adapter<WeekViewHolderImpl>() {
+) : RecyclerView.Adapter<WeekViewHolder>() {
 
     private val currentDate: LocalDate = moscowLocalDate()
     private val nearestPastMonday: LocalDate = currentDate.atStartOfWeek()
@@ -31,15 +31,15 @@ internal class WeeksScrollAdapter(
 
     override fun getItemCount() = Int.MAX_VALUE
 
-    override fun onBindViewHolder(holder: WeekViewHolderImpl, position: Int) {
+    override fun onBindViewHolder(holder: WeekViewHolder, position: Int) {
         val weekOffset = position - HALF_INT_MAX_VALUE
         weekAdapterItem.itemBinder.bind(holder, createWeekItemFor(weekOffset), weekOffset)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WeekViewHolderImpl = LayoutInflater
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WeekViewHolder = LayoutInflater
         .from(parent.context)
         .inflate(weekAdapterItem.layoutRes, parent, false)
-        .let(weekAdapterItem.viewHolderGenerator) as WeekViewHolderImpl
+        .let(weekAdapterItem.viewHolderGenerator) as WeekViewHolder
 
     private fun createWeekItemFor(weekOffset: Int): WeekItem {
         val actualMonday = nearestPastMonday.plusWeeks(weekOffset.toLong())
