@@ -18,7 +18,7 @@ abstract class BaseFragment<Event : Any, Effect : Any, State : Any> :
     @LayoutRes
     protected open val layoutId: Int = 0
 
-    protected val feature by lazy(LazyThreadSafetyMode.NONE) { store }
+    protected val feature get() = store
 
     final override fun onCreateView(
         inflater: LayoutInflater,
