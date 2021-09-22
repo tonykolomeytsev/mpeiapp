@@ -91,6 +91,7 @@ class BottomBarController(
     private fun FragmentTransaction.commitNowIgnoreStateLossError() = try {
         commitNowAllowingStateLoss()
     } catch (e: Exception) {
+        e.printStackTrace()
         // TODO: remove in future if will no exceptions
         FirebaseCrashlytics.getInstance().recordException(e)
     }
