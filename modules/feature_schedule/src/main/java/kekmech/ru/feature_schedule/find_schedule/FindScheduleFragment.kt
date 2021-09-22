@@ -30,7 +30,6 @@ internal class FindScheduleFragment :
     override var layoutId = R.layout.fragment_find_schedule
 
     private val dependencies by inject<ScheduleDependencies>()
-    private val onboardingFeatureLauncher by fastLazy { dependencies.onboardingFeatureLauncher }
     private val analytics by screenAnalytics("FindSchedule")
     private val viewBinding by viewBinding(FragmentFindScheduleBinding::bind)
     private val resultKey by fastLazy { getArgument<String>(ARG_RESULT_KEY) }
@@ -43,6 +42,9 @@ internal class FindScheduleFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewBinding.apply {
+            root.addSystemBottomPadding()
+            appBarLayout.addSystemTopPadding()
+
             toolbar.setNavigationOnClickListener { close() }
             groupText.showKeyboard()
             groupText.afterTextChanged {
