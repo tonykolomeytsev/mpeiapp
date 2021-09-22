@@ -1,56 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         tools:background="?attr/colorWhite">
 
     <ImageView
             android:id="@+id/navBackButton"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:scaleType="center"
-            android:src="?attr/homeAsUpIndicator"
-            android:background="?attr/selectableItemBackgroundBorderless"
             android:layout_marginStart="4dp"
             android:layout_marginTop="4dp"
-            app:layout_constraintTop_toTopOf="parent"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:scaleType="center"
+            android:src="?attr/homeAsUpIndicator"
             app:layout_constraintStart_toStartOf="parent"
-            android:tint="?attr/colorBlack" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="?attr/colorBlack" />
 
     <EditText
-            style="@style/SearchView"
             android:id="@+id/searchView"
+            style="@style/SearchView"
             android:layout_width="0dp"
             android:layout_height="36dp"
-            app:layout_constraintStart_toEndOf="@id/navBackButton"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/navBackButton"
-            app:layout_constraintBottom_toBottomOf="@id/navBackButton"
-            android:layout_marginEnd="16dp"
             android:layout_marginStart="12dp"
+            android:layout_marginEnd="16dp"
+            android:inputType="text"
             android:maxLines="1"
-            android:inputType="text" />
+            app:layout_constraintBottom_toBottomOf="@id/navBackButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/navBackButton"
+            app:layout_constraintTop_toTopOf="@id/navBackButton" />
 
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/filterItemsRecycler"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:paddingTop="8dp"
-            android:paddingStart="16dp"
+            android:layout_marginTop="?attr/actionBarSize"
             android:clipToPadding="false"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="?attr/actionBarSize"/>
+            android:paddingStart="16dp"
+            android:paddingTop="8dp"
+            app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:clipToPadding="false"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/filterItemsRecycler" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
