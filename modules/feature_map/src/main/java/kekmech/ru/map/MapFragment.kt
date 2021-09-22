@@ -119,7 +119,7 @@ internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState>(),
         childFragmentManager
             .beginTransaction()
             .replace(R.id.mapFragmentContainer, mapFragment)
-            .commitNowAllowingStateLoss()
+            .commitAllowingStateLoss()
         mapFragment.getMapAsync {
             it.init(requireContext(), appSettings.mapAppearanceType, getSavedCameraPosition())
             feature.accept(Wish.Action.OnMapReady(it))
