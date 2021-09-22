@@ -42,9 +42,15 @@
     <color name="colorCloudNight">#373737</color>
 
     <color name="colorMarkGreenTextLight">#47720C</color>
+    <color name="colorMarkGreenTextDark">#CCFFFFFF</color>
     <color name="colorMarkGreenBgLight">#C8D9B2</color>
+    <color name="colorMarkGreenBgDark">#47720C</color>
     <color name="colorMarkYellowTextLight">#A7761C</color>
+    <color name="colorMarkYellowTextDark">#CCFFFFFF</color>
     <color name="colorMarkYellowBgLight">#E6D3B1</color>
+    <color name="colorMarkYellowBgDark">#A7761C</color>
     <color name="colorMarkRedTextLight">#B73F3F</color>
+    <color name="colorMarkRedTextDark">#CCFFFFFF</color>
     <color name="colorMarkRedBgLight">#EBBDBD</color>
+    <color name="colorMarkRedBgDark">#B73F3F</color>
 </resources>
