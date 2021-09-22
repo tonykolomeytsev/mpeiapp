@@ -11,7 +11,8 @@ import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.views.onPageSelected
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.BaseFragment
-import kekmech.ru.common_navigation.features.NeedToUpdate
+import kekmech.ru.common_navigation.features.TabScreenStateSaver
+import kekmech.ru.common_navigation.features.TabScreenStateSaverImpl
 import kekmech.ru.domain_schedule.dto.Classes
 import kekmech.ru.feature_schedule.R
 import kekmech.ru.feature_schedule.databinding.FragmentScheduleBinding
@@ -25,22 +26,18 @@ import kekmech.ru.feature_schedule.main.elm.ScheduleFeatureFactory
 import kekmech.ru.feature_schedule.main.elm.ScheduleState
 import kekmech.ru.feature_schedule.main.item.*
 import org.koin.android.ext.android.inject
+import vivid.money.elmslie.storepersisting.retainInParentStoreHolder
 import java.time.LocalDate
-
-private const val WEEK_MIN_NUMBER = 0
-private const val WEEK_MAX_NUMBER = 17
-private const val FAB_ANIMATION_DURATION = 100L
-private const val DAYS_TO_VIEW = 6
-internal const val SHIMMER_ITEM_ID = 0
 
 @Suppress("TooManyFunctions")
 internal class ScheduleFragment :
     BaseFragment<ScheduleEvent, ScheduleEffect, ScheduleState>(),
     ActivityResultListener,
-    NeedToUpdate {
+    TabScreenStateSaver by TabScreenStateSaverImpl("schedule") {
 
     override val initEvent = Wish.Init
     override var layoutId = R.layout.fragment_schedule
+    override val storeHolder by retainInParentStoreHolder(storeProvider = ::createStore)
 
     private val dependencies by inject<ScheduleDependencies>()
     private val viewPagerAdapter by fastLazy { createViewPagerAdapter() }
@@ -66,6 +63,7 @@ internal class ScheduleFragment :
             recyclerView.setHasFixedSize(true)
             recyclerView.addScrollAnalytics(analytics, "WeeksRecyclerView")
 
+            // TODO save state of viewpager2 to avoid days change "blinking"
             viewPager.adapter = viewPagerAdapter
             viewPager.onPageSelected {
                 if (viewPagerFirstSelectionIgnored) feature.accept(Wish.Action.PageChanged(it))
@@ -199,10 +197,6 @@ internal class ScheduleFragment :
         )
     )
 
-    override fun onUpdate() {
-        feature.accept(Wish.Action.UpdateScheduleIfNeeded)
-    }
-
     private fun getFormattedDay(day: LocalDate): String {
         val dayOfWeekName = requireContext()
             .getStringArray(R.array.days_of_week)
@@ -222,6 +216,14 @@ internal class ScheduleFragment :
     }
 
     companion object {
+
+        internal const val SHIMMER_ITEM_ID = 0
+
+        private const val WEEK_MIN_NUMBER = 0
+        private const val WEEK_MAX_NUMBER = 17
+
+        private const val FAB_ANIMATION_DURATION = 100L
+        private const val DAYS_TO_VIEW = 6
 
         private const val NOTES_LIST_RESULT_KEY = "NOTES_LIST_RESULT_KEY"
     }
