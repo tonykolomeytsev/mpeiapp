@@ -84,6 +84,7 @@ internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState>(),
         viewBinding.recyclerView.layoutManager = ControlledScrollingLayoutManager(requireContext())
         viewBinding.recyclerView.adapter = adapter
         viewBinding.recyclerView.background = bottomSheetBackground
+
         createBottomSheet(view)
     }
 
