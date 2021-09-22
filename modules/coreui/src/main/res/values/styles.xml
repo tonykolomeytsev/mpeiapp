@@ -105,12 +105,12 @@
         <item name="colorActive">@color/colorMainLight</item>
 
         <!-- BARS marks -->
-        <item name="colorMarkGreenText">@color/colorMarkGreenTextLight</item>
-        <item name="colorMarkGreenBg">@color/colorMarkGreenBgLight</item>
-        <item name="colorMarkYellowText">@color/colorMarkYellowTextLight</item>
-        <item name="colorMarkYellowBg">@color/colorMarkYellowBgLight</item>
-        <item name="colorMarkRedText">@color/colorMarkRedTextLight</item>
-        <item name="colorMarkRedBg">@color/colorMarkRedBgLight</item>
+        <item name="colorMarkGreenText">@color/colorMarkGreenTextDark</item>
+        <item name="colorMarkGreenBg">@color/colorMarkGreenBgDark</item>
+        <item name="colorMarkYellowText">@color/colorMarkYellowTextDark</item>
+        <item name="colorMarkYellowBg">@color/colorMarkYellowBgDark</item>
+        <item name="colorMarkRedText">@color/colorMarkRedTextDark</item>
+        <item name="colorMarkRedBg">@color/colorMarkRedBgDark</item>
     </style>
 
     <style name="CollapsingToolbarLayoutExpandedTextStyle" parent="AppTheme">
