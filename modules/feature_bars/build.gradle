@@ -12,6 +12,7 @@ dependencies {
     implementation facebook.shimmer
     implementation vividMoney.elmslieCore
     implementation vividMoney.elmslieAndroid
+    implementation vividMoney.elmslieStoreHolder
     implementation squareup.retrofit
 
     implementation koin.core

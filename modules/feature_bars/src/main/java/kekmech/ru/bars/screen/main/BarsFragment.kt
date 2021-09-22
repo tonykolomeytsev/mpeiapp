@@ -40,6 +40,8 @@ import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.BaseFragment
 import kekmech.ru.common_navigation.addScreenForward
 import kekmech.ru.common_navigation.features.ScrollToTop
+import kekmech.ru.common_navigation.features.TabScreenStateSaver
+import kekmech.ru.common_navigation.features.TabScreenStateSaverImpl
 import kekmech.ru.common_navigation.showDialog
 import kekmech.ru.coreui.banner.showBanner
 import kekmech.ru.coreui.items.EmptyStateAdapterItem
@@ -48,13 +50,16 @@ import kekmech.ru.coreui.items.SpaceAdapterItem
 import kekmech.ru.coreui.items.TextWithIconAdapterItem
 import kekmech.ru.domain_app_settings.AppSettingsFeatureLauncher
 import org.koin.android.ext.android.inject
+import vivid.money.elmslie.storepersisting.retainInParentStoreHolder
 
 private const val JS_INTERFACE_NAME = "kti"
 
-internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), ScrollToTop {
+internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), ScrollToTop,
+    TabScreenStateSaver by TabScreenStateSaverImpl("bars") {
 
     override val initEvent: BarsEvent = Wish.Init
     override val layoutId: Int = R.layout.fragment_bars
+    override val storeHolder by retainInParentStoreHolder(storeProvider = ::createStore)
 
     private val analytics by screenAnalytics("Bars")
     private val viewBinding by viewBinding(FragmentBarsBinding::bind)
@@ -70,6 +75,8 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), 
             recyclerView.adapter = adapter
             recyclerView.addSystemTopPadding()
             recyclerView.addScrollAnalytics(analytics, "BarsRecycler")
+            restoreState(recyclerView)
+
             webViewContainer.addSystemTopPadding()
             returnBanner.setOnClickListener {
                 analytics.sendClick("BarsReturnBanner")
@@ -85,6 +92,11 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), 
                 }
             }
         }
+    }
+
+    override fun onDestroyView() {
+        saveState(viewBinding.recyclerView)
+        super.onDestroyView()
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -179,7 +191,7 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), 
         @TargetApi(Build.VERSION_CODES.N)
         override fun shouldOverrideUrlLoading(
             view: WebView,
-            request: WebResourceRequest
+            request: WebResourceRequest,
         ): Boolean {
             return handleUrlLoading(request.url.toString())
         }
@@ -195,7 +207,7 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), 
         override fun onReceivedError(
             view: WebView,
             request: WebResourceRequest,
-            error: WebResourceError
+            error: WebResourceError,
         ) {
             analytics.sendCustomAction("BarsWebViewErrorReceived")
             feature.accept(Wish.Action.PageLoadingError)
@@ -256,7 +268,8 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), 
                     analytics.sendClick("BarsShowRating")
                     feature.accept(Wish.Click.ShowRating)
                 }
-                else -> { /* no-op */ }
+                else -> { /* no-op */
+                }
             }
         },
         LoginToBarsAdapterItem {
