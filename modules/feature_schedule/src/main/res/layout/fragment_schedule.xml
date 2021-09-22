@@ -27,9 +27,8 @@
                 style="@style/H2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="12dp"
-                android:layout_marginEnd="16dp"
                 tools:text="Вторник, 7 мая" />
 
         <TextView
@@ -37,9 +36,8 @@
                 style="@style/H6.Gray70"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="4dp"
-                android:layout_marginEnd="16dp"
                 android:layout_marginBottom="8dp"
                 tools:text="Сейчас идет четная неделя №12" />
 
