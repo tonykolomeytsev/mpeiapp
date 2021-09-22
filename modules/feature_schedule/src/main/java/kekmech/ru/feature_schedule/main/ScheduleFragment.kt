@@ -81,14 +81,14 @@ internal class ScheduleFragment :
     override fun handleEffect(effect: ScheduleEffect) =
         when (effect) {
             is ScheduleEffect.NavigateToNoteList -> {
+                parentFragment?.setResultListener<EmptyResult>(NOTES_LIST_RESULT_KEY) {
+                    feature.accept(Wish.Action.NotesUpdated)
+                }
                 dependencies.notesFeatureLauncher.launchNoteList(
                     selectedClasses = effect.classes,
                     selectedDate = effect.date,
                     resultKey = NOTES_LIST_RESULT_KEY
                 )
-                setResultListener<EmptyResult>(NOTES_LIST_RESULT_KEY) {
-                    feature.accept(Wish.Action.NotesUpdated)
-                }
             }
         }
 

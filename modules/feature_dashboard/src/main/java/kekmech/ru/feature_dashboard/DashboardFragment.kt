@@ -82,14 +82,14 @@ class DashboardFragment :
         is DashboardEffect.ShowLoadingError -> showBanner(R.string.dashboard_loading_error)
         is DashboardEffect.ShowNotesLoadingError -> showBanner(R.string.something_went_wrong_error)
         is DashboardEffect.NavigateToNotesList -> {
+            parentFragment?.setResultListener<EmptyResult>(NOTES_LIST_RESULT_KEY) {
+                feature.accept(Wish.Action.SwipeToRefresh)
+            }
             dependencies.notesFeatureLauncher.launchNoteList(
                 selectedClasses = effect.classes,
                 selectedDate = effect.date,
                 resultKey = NOTES_LIST_RESULT_KEY,
             )
-            setResultListener<EmptyResult>(NOTES_LIST_RESULT_KEY) {
-                feature.accept(Wish.Action.SwipeToRefresh)
-            }
         }
     }
 
@@ -119,26 +119,26 @@ class DashboardFragment :
         },
         NoteAdapterItem(requireContext()) {
             analytics.sendClick("EditNote")
+            parentFragment?.setResultListener<EmptyResult>(EDIT_NOTE_RESULT_KEY) {
+                feature.accept(Wish.Action.SwipeToRefresh)
+            }
             dependencies.notesFeatureLauncher.launchNoteEdit(
                 note = it,
                 resultKey = EDIT_NOTE_RESULT_KEY
             )
-            setResultListener<EmptyResult>(EDIT_NOTE_RESULT_KEY) {
-                feature.accept(Wish.Action.SwipeToRefresh)
-            }
         },
         AddActionAdapterItem(),
         DayStatusAdapterItem(),
         DashboardClassesAdapterItem(requireContext(), ::clickOnClasses),
         ScheduleTypeAdapterItem {
             analytics.sendClick("ChangeGroup")
+            parentFragment?.setResultListener<String>(FIND_GROUP_RESULT_KEY) {
+                feature.accept(Wish.Action.SwipeToRefresh)
+            }
             dependencies.scheduleFeatureLauncher.launchSearchGroup(
                 continueTo = BACK_WITH_RESULT,
                 resultKey = FIND_GROUP_RESULT_KEY
             )
-            setResultListener<String>(FIND_GROUP_RESULT_KEY) {
-                feature.accept(Wish.Action.SwipeToRefresh)
-            }
         },
         EmptyStateAdapterItem(),
         FavoriteScheduleAdapterItem {
