@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.os.Parcelable
 import androidx.recyclerview.widget.RecyclerView
 
-interface BottomBarStateSaver  {
+interface TabScreenStateSaver  {
 
     val stateBundle: Bundle
 
@@ -15,7 +15,7 @@ interface BottomBarStateSaver  {
     fun restoreState(recyclerView: RecyclerView)
 }
 
-class BottomBarStateSaverImpl(private val key: String) : BottomBarStateSaver {
+class TabScreenStateSaverImpl(private val key: String) : TabScreenStateSaver {
 
     override var stateBundle: Bundle = Bundle()
         private set

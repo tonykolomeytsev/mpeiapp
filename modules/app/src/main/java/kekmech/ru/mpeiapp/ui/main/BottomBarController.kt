@@ -8,9 +8,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kekmech.ru.common_navigation.BottomTab
-import kekmech.ru.common_navigation.features.BottomBarStateSaver
 import kekmech.ru.common_navigation.features.NeedToUpdate
 import kekmech.ru.common_navigation.features.ScrollToTop
+import kekmech.ru.common_navigation.features.TabScreenStateSaver
 import kekmech.ru.domain_bars.BarsFeatureLauncher
 import kekmech.ru.domain_map.MapFeatureLauncher
 import kekmech.ru.domain_schedule.ScheduleFeatureLauncher
@@ -78,7 +78,7 @@ class BottomBarController(
             return
         }
 
-        (currentTabFragment as? BottomBarStateSaver)?.updateBundle(bundle)
+        (currentTabFragment as? TabScreenStateSaver)?.updateBundle(bundle)
 
         childFragmentManager.beginTransaction().apply {
             val newFragment = createTabFragment(tab)
@@ -107,5 +107,5 @@ class BottomBarController(
         BottomTab.SCHEDULE -> scheduleFeatureLauncher.getScreen()
         BottomTab.MAP -> mapFeatureLauncher.launchMain()
         BottomTab.PROFILE -> barsFeatureLauncher.launchMain()
-    }.apply { (this as? BottomBarStateSaver)?.restoreBundle(bundle) }
+    }.apply { (this as? TabScreenStateSaver)?.restoreBundle(bundle) }
 }
