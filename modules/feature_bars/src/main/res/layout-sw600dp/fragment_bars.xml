@@ -6,22 +6,37 @@
         android:layout_height="match_parent"
         android:background="?attr/colorGray10">
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/swipeRefresh"
-            android:layout_width="@dimen/tablet_frame_width"
+    <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
-            android:background="?attr/colorWhite">
+            android:weightSum="100"
+            android:orientation="horizontal">
 
-        <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/swipeRefresh"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:clipChildren="false"
-                android:clipToPadding="false"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                android:layout_gravity="center_horizontal"
+                android:background="?attr/colorWhite"
+                android:layout_weight="45">
 
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/disciplineDetailsFragmentContainer"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="55"/>
+
+    </LinearLayout>
 
     <FrameLayout
             android:id="@+id/webViewContainer"

@@ -3,32 +3,15 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?attr/colorGray10">
-
-    <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appBarLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/colorWhite"
-            app:layout_constraintTop_toTopOf="parent">
-
-        <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?actionBarSize" />
-
-    </com.google.android.material.appbar.AppBarLayout>
+        android:background="?attr/colorWhite">
 
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler"
-            android:layout_width="@dimen/tablet_frame_width"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             android:clipToPadding="false"
-            android:background="?attr/colorWhite"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/appBarLayout" />
+            app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

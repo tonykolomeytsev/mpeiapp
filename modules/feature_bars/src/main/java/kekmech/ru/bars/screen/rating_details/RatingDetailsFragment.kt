@@ -26,10 +26,10 @@ internal class RatingDetailsFragment : Fragment(R.layout.fragment_rating_details
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         with(binding) {
-            toolbar.setNavigationOnClickListener { close() }
-            appBarLayout.addSystemTopPadding()
+            toolbar?.setNavigationOnClickListener { close() }
+            appBarLayout?.addSystemTopPadding() ?: view.addSystemTopPadding()
             recycler.addSystemBottomPadding()
-            recycler.attachScrollListenerForAppBarLayoutShadow(appBarLayout)
+            appBarLayout?.let { recycler.attachScrollListenerForAppBarLayoutShadow(it) }
             recycler.adapter = adapter
             recycler.addScrollAnalytics(analytics, "RatingDetailsRecycler")
         }
