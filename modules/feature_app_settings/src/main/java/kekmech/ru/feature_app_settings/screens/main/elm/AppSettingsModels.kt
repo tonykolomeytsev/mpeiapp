@@ -1,11 +1,13 @@
 package kekmech.ru.feature_app_settings.screens.main.elm
 
 import kekmech.ru.domain_app_settings.AppSettings
+import kekmech.ru.domain_app_settings.dto.GitHubUser
 
 internal data class AppSettingsState(
     val appSettings: AppSettings? = null,
     val isFeatureToggleSnowFlakesEnabled: Boolean,
     val hash: String = "",
+    val contributors: List<GitHubUser>? = null
 )
 
 internal sealed class AppSettingsEvent {
@@ -34,6 +36,7 @@ internal sealed class AppSettingsEvent {
     sealed class News : AppSettingsEvent() {
         data class AppSettingsLoaded(val appSettings: AppSettings) : News()
         object AppSettingsChanged : News()
+        data class ObserveContributorsSuccess(val contributors: List<GitHubUser>) : News()
     }
 }
 
@@ -48,6 +51,7 @@ internal sealed class AppSettingsAction {
     data class ChangeLanguage(val selectedLanguage: String) : AppSettingsAction()
     data class ChangeMapType(val selectedMapType: String) : AppSettingsAction()
     object ClearSelectedGroup : AppSettingsAction()
+    object ObserveContributors : AppSettingsAction()
 }
 
 internal sealed class AppSettingsEffect {

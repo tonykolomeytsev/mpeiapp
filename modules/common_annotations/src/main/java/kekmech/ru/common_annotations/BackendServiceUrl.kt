@@ -15,5 +15,9 @@ enum class BackendServiceUrl(
     BARS(
         prodEndpoint = "https://raw.githubusercontent.com/tonykolomeytsev/mpeiapp/master/statics/bars/",
         devEndpoint = "https://raw.githubusercontent.com/tonykolomeytsev/mpeiapp/dev/statics/bars/"
+    ),
+    GITHUB(
+        prodEndpoint = "https://api.github.com/",
+        devEndpoint = "https://api.github.com/"
     )
 }

@@ -2,12 +2,24 @@ package kekmech.ru.domain_app_settings
 
 import android.content.SharedPreferences
 import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
+import kekmech.ru.common_cache.in_memory_cache.InMemoryCache
 import kekmech.ru.common_shared_preferences.boolean
 import kekmech.ru.common_shared_preferences.string
+import kekmech.ru.domain_app_settings.dto.ContributorsItem
+import kekmech.ru.domain_app_settings.dto.GitHubUser
 
 class AppSettingsRepository(
-    preferences: SharedPreferences
+    preferences: SharedPreferences,
+    inMemoryCache: InMemoryCache,
+    private val gitHubService: GitHubService,
 ) : AppSettings {
+
+    private val contributorsCache = inMemoryCache
+        .of<List<GitHubUser>>(
+            key = CONTRIBUTORS_CACHE_KEY,
+            keepAlways = false,
+        )
 
     override var isDarkThemeEnabled by preferences.boolean("app_is_dark_theme_enabled", false)
 
@@ -24,5 +36,21 @@ class AppSettingsRepository(
     override var mapAppearanceType: String by preferences.string("app_map_type", "hybrid")
 
     fun complete(runnable: AppSettingsRepository.() -> Unit): Completable =
-        Completable.fromRunnable { runnable() }
+        Completable.fromRunnable { runnable.invoke(this) }
+
+    fun observeContributors(): Observable<List<GitHubUser>> = contributorsCache.observe()
+
+    fun fetchContributors(): Completable =
+        gitHubService.getContributors()
+            .flattenAsObservable { it.sortedByDescending(ContributorsItem::total) }
+            .concatMapSingle { gitHubService.getUser(it.author.login) }
+            .map { it.copy(bio = it.bio?.trim()) }
+            .toList()
+            .doOnSuccess(contributorsCache::set)
+            .ignoreElement()
+
+    companion object {
+
+        private const val CONTRIBUTORS_CACHE_KEY = "CONTRIBUTORS_CACHE_KEY"
+    }
 }
