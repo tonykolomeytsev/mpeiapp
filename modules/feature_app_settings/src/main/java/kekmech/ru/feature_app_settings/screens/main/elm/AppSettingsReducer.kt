@@ -30,6 +30,7 @@ internal class AppSettingsReducer :
                 )
             )
             is News.AppSettingsChanged -> Result(state = state.copy(hash = UUID.randomUUID().toString()))
+            is News.ObserveContributorsSuccess -> Result(state = state.copy(contributors = event.contributors))
         }
 
     private fun reduceWish(
@@ -39,7 +40,10 @@ internal class AppSettingsReducer :
         when (event) {
             is Wish.Init -> Result(
                 state = state,
-                command = AppSettingsAction.LoadAppSettings
+                commands = listOf(
+                    AppSettingsAction.LoadAppSettings,
+                    AppSettingsAction.ObserveContributors
+                )
             )
             is Wish.Action.SetDarkThemeEnabled -> Result(
                 state = state,

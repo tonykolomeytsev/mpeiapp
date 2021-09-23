@@ -33,5 +33,6 @@ dependencies {
     implementation project(path: ':common_android')
     implementation project(path: ':common_kotlin')
     implementation project(path: ':common_adapter')
+    implementation project(path: ':common_cache')
     implementation project(path: ':coreui')
 }

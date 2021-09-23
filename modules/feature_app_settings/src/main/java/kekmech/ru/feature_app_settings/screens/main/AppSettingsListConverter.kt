@@ -77,6 +77,10 @@ internal class AppSettingsListConverter {
                 ))
             }
 
+            if (state.contributors != null) addSection(titleResId = R.string.app_settings_header_contributors) {
+                addAll(state.contributors)
+            }
+
             if (BuildConfig.DEBUG) {
                 add(SpaceItem.VERTICAL_24)
                 add(SectionHeaderItem(title = "Дебаг"))

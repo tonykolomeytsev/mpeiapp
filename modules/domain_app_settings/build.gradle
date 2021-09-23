@@ -2,8 +2,12 @@ apply from: "$gradleDir/domain-android-module.gradle"
 
 dependencies {
     implementation rx.java
+    implementation squareup.retrofit
+    implementation google.gson
 
     implementation project(path: ":common_di")
+    implementation project(path: ":common_network")
     implementation project(path: ":common_annotations")
     implementation project(path: ":common_shared_preferences")
+    implementation project(path: ":common_cache")
 }

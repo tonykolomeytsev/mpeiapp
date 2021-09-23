@@ -25,6 +25,7 @@ import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsEvent
 import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsEvent.Wish
 import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsFeatureFactory
 import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsState
+import kekmech.ru.feature_app_settings.screens.main.list.ContributorAdapterItem
 import kekmech.ru.feature_app_settings.screens.map_type.SelectMapTypeFragment
 import org.koin.android.ext.android.inject
 
@@ -110,6 +111,7 @@ internal class AppSettingsFragment :
             SpaceAdapterItem(),
             BottomLabeledTextAdapterItem { onItemClick(it.itemId) },
             RightLabeledTextAdapterItem { onItemClick(it.itemId) },
+            ContributorAdapterItem { /* no-op */ },
         )
 
     private fun onItemClick(itemId: Int?) =
