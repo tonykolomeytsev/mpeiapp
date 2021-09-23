@@ -2,6 +2,7 @@ package kekmech.ru.map
 
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.Lifecycle
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
@@ -17,6 +18,7 @@ import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.views.setMargins
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.BaseFragment
+import kekmech.ru.common_navigation.features.ScrollToTop
 import kekmech.ru.common_navigation.features.TabScreenStateSaver
 import kekmech.ru.common_navigation.features.TabScreenStateSaverImpl
 import kekmech.ru.coreui.banner.showBanner
@@ -48,6 +50,7 @@ import java.util.concurrent.TimeUnit
 
 @Suppress("TooManyFunctions")
 internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState>(),
+    ScrollToTop,
     TabScreenStateSaver by TabScreenStateSaverImpl("map") {
 
     override val initEvent = Wish.Init
@@ -193,6 +196,14 @@ internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState>(),
                         ))
                 )
             }
+    }
+
+    override fun onScrollToTop() {
+        feature.accept(Wish.Action.ScrollToTop)
+        if (lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
+            BottomSheetBehavior.from(viewBinding.recyclerView)
+                .state = BottomSheetBehavior.STATE_COLLAPSED
+        }
     }
 
     private fun createAdapter() = BaseAdapter(

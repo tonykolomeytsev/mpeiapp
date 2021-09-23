@@ -43,6 +43,7 @@ internal sealed class BarsEvent {
             object PageStarted : Wish()
             object PageLoadingError : Wish()
             object Update : Wish()
+            object ScrollToTop : Wish()
         }
 
         object Click {
@@ -94,6 +95,7 @@ internal sealed class BarsEffect {
     object ShowCommonError : BarsEffect()
     data class OpenExternalBrowser(val url: String) : BarsEffect()
     data class OpenRatingDetails(val rating: Rating) : BarsEffect()
+    object ScrollToTop : BarsEffect()
 }
 
 internal sealed class BarsAction {

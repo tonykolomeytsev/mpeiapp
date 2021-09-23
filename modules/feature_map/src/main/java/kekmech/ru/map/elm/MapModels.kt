@@ -32,6 +32,7 @@ internal sealed class MapEvent {
             data class OnListMarkerSelected(val mapMarker: MapMarker) : Wish()
             object SilentUpdate : Wish()
             object Reload : Wish()
+            object ScrollToTop : Wish()
         }
     }
 

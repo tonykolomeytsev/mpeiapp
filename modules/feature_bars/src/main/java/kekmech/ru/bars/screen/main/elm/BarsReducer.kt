@@ -90,6 +90,16 @@ internal class BarsReducer : ScreenDslReducer<
                     }
                 }
             }
+            is Wish.Action.ScrollToTop ->
+                when {
+                    state.isBrowserVisible -> state {
+                        copy(
+                            isBrowserVisible = false,
+                            isReturnBannerVisible = false,
+                        )
+                    }
+                    else -> effects { +BarsEffect.ScrollToTop }
+                }
 
             is Wish.Click.ShowBrowser -> state { copy(isBrowserVisible = true) }
             is Wish.Click.HideBrowser -> state {

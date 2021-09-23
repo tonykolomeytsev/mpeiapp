@@ -1,5 +1,6 @@
 package kekmech.ru.map.elm
 
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kekmech.ru.map.elm.MapEvent.News
 import kekmech.ru.map.elm.MapEvent.Wish
 import vivid.money.elmslie.core.store.Result
@@ -64,6 +65,9 @@ internal class MapReducer : StateReducer<MapEvent, MapState, MapEffect, MapActio
         is Wish.Action.Reload -> Result(
             state = state.copy(loadingError = null),
             command = MapAction.GetMarkers
+        )
+        is Wish.Action.ScrollToTop -> Result(
+            state = state.copy(bottomSheetState = BottomSheetBehavior.STATE_COLLAPSED)
         )
     }
 
