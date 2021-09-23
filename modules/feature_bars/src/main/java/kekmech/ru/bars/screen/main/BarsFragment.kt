@@ -152,16 +152,25 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), 
         adapter.update(BarsListConverter(requireContext()).map(state))
     }
 
-    override fun handleEffect(effect: BarsEffect) = when (effect) {
-        is BarsEffect.LoadPage -> viewBinding.webView.loadUrl(effect.url)
-        is BarsEffect.InvokeJs -> viewBinding.webView.evaluateJavascript(effect.js, null)
-        is BarsEffect.OpenSettings -> settingsFeatureLauncher.launch()
-        is BarsEffect.ShowCommonError -> showBanner(R.string.something_went_wrong_error)
-        is BarsEffect.OpenExternalBrowser ->
-            requireContext().openLinkExternal(effect.url)
-        is BarsEffect.OpenRatingDetails ->
-            addScreenForward { RatingDetailsFragment.newInstance(effect.rating) }
-    }
+    override fun handleEffect(effect: BarsEffect) =
+        when (effect) {
+            is BarsEffect.LoadPage -> viewBinding.webView.loadUrl(effect.url)
+            is BarsEffect.InvokeJs -> viewBinding.webView.evaluateJavascript(effect.js, null)
+            is BarsEffect.OpenSettings -> settingsFeatureLauncher.launch()
+            is BarsEffect.ShowCommonError -> showBanner(R.string.something_went_wrong_error)
+            is BarsEffect.OpenExternalBrowser ->
+                requireContext().openLinkExternal(effect.url)
+            is BarsEffect.OpenRatingDetails -> {
+                viewBinding.disciplineDetailsFragmentContainer?.let {
+                    childFragmentManager
+                        .beginTransaction()
+                        .replace(R.id.disciplineDetailsFragmentContainer,
+                            RatingDetailsFragment.newInstance(effect.rating))
+                        .commitAllowingStateLoss()
+                } ?: addScreenForward { RatingDetailsFragment.newInstance(effect.rating) }
+                Unit
+            }
+        }
 
     override fun onResume() {
         super.onResume()
@@ -252,7 +261,12 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), 
     private fun createAdapter() = BaseAdapter(
         AssessedDisciplineAdapterItem {
             analytics.sendClick("BarsDisciplineDetails")
-            showDialog { BarsDetailsFragment.newInstance(it) }
+            viewBinding.disciplineDetailsFragmentContainer?.let { _ ->
+                childFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.disciplineDetailsFragmentContainer, BarsDetailsFragment.newInstance(it))
+                    .commitAllowingStateLoss()
+            } ?: showDialog { BarsDetailsFragment.newInstance(it) }
         },
         SpaceAdapterItem(),
         UserNameHeaderAdapterItem {
