@@ -14,7 +14,6 @@ import androidx.core.text.toSpannable
 import androidx.core.view.forEach
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
-import androidx.lifecycle.Lifecycle
 import kekmech.ru.bars.R
 import kekmech.ru.bars.databinding.FragmentBarsBinding
 import kekmech.ru.bars.items.AssessedDisciplineAdapterItem
@@ -170,6 +169,7 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), 
                 } ?: addScreenForward { RatingDetailsFragment.newInstance(effect.rating) }
                 Unit
             }
+            is BarsEffect.ScrollToTop ->  viewBinding.recyclerView.scrollToPosition(0)
         }
 
     override fun onResume() {
@@ -178,9 +178,7 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), 
     }
 
     override fun onScrollToTop() {
-        if (lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
-            viewBinding.recyclerView.scrollToPosition(0)
-        }
+        feature.accept(Wish.Action.ScrollToTop)
     }
 
     inner class BarsWebViewClient : WebViewClient() {
