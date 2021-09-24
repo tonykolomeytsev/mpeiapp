@@ -148,7 +148,7 @@ class DashboardFragment :
         NotePreviewAdapterItem(::clickOnClasses, R.layout.item_note_preview_padding_horisontal_8dp),
         TextAdapterItem(R.layout.item_time_prediction),
         SessionAdapterItem(requireContext()),
-        ShimmerAdapterItem(EVENTS_SHIMMER_ITEM_ID, R.layout.item_events_shimmer),
+        ShimmerAdapterItem(R.layout.item_events_shimmer),
         ErrorStateAdapterItem {
             analytics.sendClick("DashboardReload")
             feature.accept(Wish.Action.SwipeToRefresh)
@@ -174,6 +174,5 @@ class DashboardFragment :
 
         internal const val SECTION_NOTES_ACTION = 1
         internal const val SECTION_FAVORITES_ACTION = 2
-        internal const val EVENTS_SHIMMER_ITEM_ID = 0
     }
 }

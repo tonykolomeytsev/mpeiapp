@@ -8,11 +8,8 @@ import kekmech.ru.bars.R
 import kekmech.ru.bars.items.LoginToBarsItem
 import kekmech.ru.bars.items.UserNameHeaderItem
 import kekmech.ru.bars.screen.main.BarsFragment.Companion.ITEM_BROWSER_LABEL
-import kekmech.ru.bars.screen.main.BarsFragment.Companion.ITEM_DISCIPLINE_SHIMMER
 import kekmech.ru.bars.screen.main.BarsFragment.Companion.ITEM_GROUP_LABEL
-import kekmech.ru.bars.screen.main.BarsFragment.Companion.ITEM_LOGIN_SHIMMER
 import kekmech.ru.bars.screen.main.BarsFragment.Companion.ITEM_RATING_LABEL
-import kekmech.ru.bars.screen.main.BarsFragment.Companion.ITEM_TEXT_SHIMMER
 import kekmech.ru.bars.screen.main.elm.BarsState
 import kekmech.ru.bars.screen.main.elm.FlowState
 import kekmech.ru.bars.screen.main.util.DeclensionHelper
@@ -25,8 +22,10 @@ import kekmech.ru.coreui.items.TextWithIconItem
 
 internal class BarsListConverter(private val context: Context) {
 
-    private val disciplineShimmers =
-        List(DISCIPLINE_SHIMMER_COUNT) { ShimmerItem(ITEM_DISCIPLINE_SHIMMER) }
+    private val disciplineShimmersItem =
+        List(DISCIPLINE_SHIMMER_COUNT) { ShimmerItem(R.layout.item_discipline_shimmer) }
+    private val textShimmerItem = ShimmerItem(R.layout.item_text_shimmer)
+    private val loginShimmerItem = ShimmerItem(R.layout.item_login_to_bars_shimmer)
 
     @Suppress("NestedBlockDepth")
     fun map(state: BarsState): List<Any> =
@@ -45,7 +44,7 @@ internal class BarsListConverter(private val context: Context) {
                             } else {
                                 addAll(disciplines)
                             }
-                        } ?: addAll(disciplineShimmers)
+                        } ?: addAll(disciplineShimmersItem)
                     } else {
                         addErrorStateItem(state)
                     }
@@ -85,7 +84,7 @@ internal class BarsListConverter(private val context: Context) {
                     tintColorAttrId = R.attr.colorGray70
                 )
             )
-        } ?: add(ShimmerItem(ITEM_TEXT_SHIMMER))
+        } ?: add(textShimmerItem)
     }
 
     private fun MutableList<Any>.addShowBarsInBrowserLabel() {
@@ -123,7 +122,7 @@ internal class BarsListConverter(private val context: Context) {
                     textStyleResId = R.style.H6_Main
                 )
             )
-        } ?: add(ShimmerItem(ITEM_TEXT_SHIMMER))
+        } ?: add(textShimmerItem)
         add(SpaceItem.VERTICAL_8)
     }
 
@@ -138,7 +137,7 @@ internal class BarsListConverter(private val context: Context) {
 
     private fun MutableList<Any>.addErrorStateItem(state: BarsState) {
         if (!state.isAfterErrorLoadingConfig) {
-            add(ShimmerItem(ITEM_LOGIN_SHIMMER))
+            add(loginShimmerItem)
         } else {
             add(
                 EmptyStateItem(

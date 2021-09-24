@@ -7,33 +7,25 @@ import com.facebook.shimmer.ShimmerFrameLayout
 import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseItemBinder
 
-data class ShimmerItem(
-    val id: Int
+open class ShimmerItem(@LayoutRes val id: Int)
+
+open class ShimmerAdapterItem(@LayoutRes layoutId: Int) : AdapterItem<ShimmerViewHolder, ShimmerItem>(
+    isType = { it is ShimmerItem && it.id == layoutId },
+    layoutRes = layoutId,
+    viewHolderGenerator = ::ShimmerViewHolder,
+    itemBinder = object : BaseItemBinder<ShimmerViewHolder, ShimmerItem>() {
+
+        override fun bind(vh: ShimmerViewHolder, model: ShimmerItem, position: Int) {
+            vh.startShimmer()
+        }
+    }
 )
 
-interface ShimmerViewHolder {
-    fun startShimmer()
-}
+class ShimmerViewHolder(
+    itemView: View,
+) : RecyclerView.ViewHolder(itemView) {
 
-class ShimmerViewHolderImpl(
-    private val containerView: View
-) : RecyclerView.ViewHolder(containerView), ShimmerViewHolder {
-
-    override fun startShimmer() {
-        (containerView as ShimmerFrameLayout).startShimmer()
+    fun startShimmer() {
+        (itemView as ShimmerFrameLayout).startShimmer()
     }
 }
-
-class ShimmerItemBinder : BaseItemBinder<ShimmerViewHolder, ShimmerItem>() {
-
-    override fun bind(vh: ShimmerViewHolder, model: ShimmerItem, position: Int) {
-        vh.startShimmer()
-    }
-}
-
-open class ShimmerAdapterItem(id: Int, @LayoutRes layout: Int) : AdapterItem<ShimmerViewHolder, ShimmerItem>(
-    isType = { it is ShimmerItem && it.id == id },
-    layoutRes = layout,
-    viewHolderGenerator = ::ShimmerViewHolderImpl,
-    itemBinder = ShimmerItemBinder()
-)

@@ -8,7 +8,7 @@ import kekmech.ru.domain_map.dto.MapMarker
 import kekmech.ru.feature_search.R
 
 internal class MapMarkerAdapterItem(
-    onClickListener: ((MapMarker) -> Unit)? = null
+    onClickListener: ((MapMarker) -> Unit)? = null,
 ) : AdapterItem<LabeledTextViewHolder, MapMarker>(
     isType = { it is MapMarker },
     layoutRes = R.layout.item_text_bottom_labeled,
@@ -17,7 +17,7 @@ internal class MapMarkerAdapterItem(
 )
 
 internal class MapMarkerItemBinder(
-    private val onClickListener: ((MapMarker) -> Unit)?
+    private val onClickListener: ((MapMarker) -> Unit)?,
 ) : BaseItemBinder<LabeledTextViewHolder, MapMarker>() {
 
     override fun bind(vh: LabeledTextViewHolder, model: MapMarker, position: Int) {

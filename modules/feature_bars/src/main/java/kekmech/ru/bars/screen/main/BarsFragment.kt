@@ -290,9 +290,9 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), 
             feature.accept(Wish.Click.Login)
         },
         EmptyStateAdapterItem(),
-        ShimmerAdapterItem(ITEM_TEXT_SHIMMER, R.layout.item_text_shimmer),
-        ShimmerAdapterItem(ITEM_DISCIPLINE_SHIMMER, R.layout.item_discipline_shimmer),
-        ShimmerAdapterItem(ITEM_LOGIN_SHIMMER, R.layout.item_login_to_bars_shimmer),
+        ShimmerAdapterItem(R.layout.item_text_shimmer),
+        ShimmerAdapterItem(R.layout.item_discipline_shimmer),
+        ShimmerAdapterItem(R.layout.item_login_to_bars_shimmer),
     )
 
     private fun WebSettings.compromiseUserAgent() {
@@ -315,9 +315,6 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), 
     }
 
     companion object {
-        const val ITEM_TEXT_SHIMMER = 0
-        const val ITEM_DISCIPLINE_SHIMMER = 1
-        const val ITEM_LOGIN_SHIMMER = 2
 
         const val ITEM_GROUP_LABEL = 0
         const val ITEM_BROWSER_LABEL = 1
