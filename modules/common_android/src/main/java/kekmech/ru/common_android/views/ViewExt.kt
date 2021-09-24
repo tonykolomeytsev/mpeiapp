@@ -2,7 +2,6 @@ package kekmech.ru.common_android.views
 
 import android.annotation.SuppressLint
 import android.os.SystemClock
-import android.view.HapticFeedbackConstants
 import android.view.MotionEvent.ACTION_DOWN
 import android.view.View
 import android.view.ViewGroup
@@ -20,17 +19,6 @@ fun View.setMargins(
         top?.let { topMargin = it }
         right?.let { rightMargin = it }
         bottom?.let { bottomMargin = it }
-    }
-}
-
-@SuppressLint("ClickableViewAccessibility")
-fun View.enableHapticFeedback() {
-    isHapticFeedbackEnabled = true
-    setOnTouchListener { _, event ->
-        if (event.action == ACTION_DOWN) {
-            performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
-        }
-        false
     }
 }
 
