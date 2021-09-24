@@ -7,7 +7,7 @@ import kekmech.ru.common_schedule.utils.withWindows
 import kekmech.ru.coreui.items.ErrorStateItem
 import kekmech.ru.coreui.items.ShimmerItem
 import kekmech.ru.coreui.items.SpaceItem
-import kekmech.ru.feature_schedule.main.ScheduleFragment.Companion.SHIMMER_ITEM_ID
+import kekmech.ru.feature_schedule.R
 import kekmech.ru.feature_schedule.main.elm.ScheduleState
 import kekmech.ru.feature_schedule.main.item.WorkingDayItem
 
@@ -31,7 +31,7 @@ internal object ScheduleClassesListConverter {
                 val dayOfWeek = it + 1
                 WorkingDayItem(
                     dayOfWeek = dayOfWeek,
-                    items = listOf(ShimmerItem(SHIMMER_ITEM_ID))
+                    items = listOf(ShimmerItem(R.layout.item_working_day_shimmer))
                 )
             }
             else -> List(DAY_ITEMS_COUNT) {

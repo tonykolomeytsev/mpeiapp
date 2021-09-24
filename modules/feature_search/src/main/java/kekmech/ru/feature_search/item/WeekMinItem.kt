@@ -12,11 +12,11 @@ import kekmech.ru.feature_search.R
 import kekmech.ru.feature_search.databinding.ItemWeekMinBinding
 
 internal data class WeekMinItem(
-    val days: List<DayItem>
+    val days: List<DayItem>,
 )
 
 internal class WeekMinViewHolder(
-    itemView: View
+    itemView: View,
 ) : RecyclerView.ViewHolder(itemView) {
 
     private val viewBinding = ItemWeekMinBinding.bind(itemView)
@@ -32,12 +32,14 @@ internal class WeekMinViewHolder(
 
 internal class WeekMinItemBinder(
     context: Context,
-    private val onDayClickListener: (DayItem) -> Unit
+    private val onDayClickListener: (DayItem) -> Unit,
 ) : BaseItemBinder<WeekMinViewHolder, WeekMinItem>() {
 
-    private val adapter by fastLazy { BaseAdapter(
-        DayAdapterItem(context, onDayClickListener, R.layout.item_day_min)
-    ) }
+    private val adapter by fastLazy {
+        BaseAdapter(
+            DayAdapterItem(context, onDayClickListener, R.layout.item_day_min)
+        )
+    }
 
     override fun bind(vh: WeekMinViewHolder, model: WeekMinItem, position: Int) {
         vh.update(adapter, model.days)

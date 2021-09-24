@@ -22,9 +22,13 @@ internal object ScheduleDetailsListConverter {
         titleRes = R.string.search_schedule_details_empty_title
     )
 
+    private val textShimmerItem = ShimmerItem(R.layout.item_text_shimmer)
+    private val classesShimmerItem = ShimmerItem(R.layout.item_classes_shimmer)
+    private val weekShimmerItem = ShimmerItem(R.layout.item_week_shimmer)
+
     private fun getFavoritesItem(isInFavorites: Boolean?): Any? {
         if (isInFavorites == null) return null
-        val (stringId, drawableId) = if (!isInFavorites){
+        val (stringId, drawableId) = if (!isInFavorites) {
             R.string.search_schedule_details_add_favorites to R.drawable.ic_star_outline_black_18dp
         } else {
             R.string.search_schedule_details_remove_favorites to R.drawable.ic_star_black_18dp
@@ -48,17 +52,17 @@ internal object ScheduleDetailsListConverter {
 
             getFavoritesItem(state.isInFavorites)?.let {
                 add(it)
-            } ?: add(ShimmerItem(ITEM_TEXT_SHIMMER_ID))
+            } ?: add(textShimmerItem)
 
             getDescriptionItem(state, context)?.let {
                 add(it)
-            } ?: add(ShimmerItem(ITEM_TEXT_SHIMMER_ID))
+            } ?: add(textShimmerItem)
 
             add(SpaceItem.VERTICAL_8)
 
             getWeekItem(state)?.let {
                 add(it)
-            } ?: add(ShimmerItem(ITEM_WEEK_SHIMMER_ID))
+            } ?: add(weekShimmerItem)
 
             add(SpaceItem.VERTICAL_8)
 
@@ -73,7 +77,7 @@ internal object ScheduleDetailsListConverter {
                     addAll(classes)
                 }
             } else {
-                add(ShimmerItem(ITEM_CLASSES_SHIMMER_ID))
+                add(classesShimmerItem)
             }
 
             add(SpaceItem.VERTICAL_8)
@@ -144,7 +148,7 @@ internal object ScheduleDetailsListConverter {
     @Suppress("MagicNumber")
     private fun adoptNumber(
         num: Int,
-        context: Context
+        context: Context,
     ): String = "$num " + when {
         num in 11..19 -> context.getString(R.string.search_schedule_details_classes_5_0)
         num % 10 == 1 -> context.getString(R.string.search_schedule_details_classes_1)

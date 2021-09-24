@@ -17,7 +17,7 @@ internal class AllNotesListConverter {
     fun map(state: AllNotesState): List<Any> {
 
         return when {
-            state.notes == null -> List(SHIMMER_ITEM_COUNT) { ShimmerItem(0) }
+            state.notes == null -> List(SHIMMER_ITEM_COUNT) { ShimmerItem(R.layout.item_note_shimmer) }
             state.notes.isEmpty() -> listOf(
                 EmptyStateItem(
                     titleRes = R.string.all_notes_empty_state_title,

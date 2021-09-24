@@ -12,7 +12,7 @@ import kekmech.ru.feature_search.R
 
 internal data class FilterItem(
     val type: FilterItemType = FilterItemType.ALL,
-    val isSelected: Boolean = false
+    val isSelected: Boolean = false,
 ) {
     companion object {
         fun resolveAllItems() = listOf(
@@ -26,7 +26,7 @@ internal data class FilterItem(
 }
 
 internal enum class FilterItemType(
-    @StringRes val nameRes: Int
+    @StringRes val nameRes: Int,
 ) {
     ALL(R.string.search_filter_all),
     GROUPS(R.string.search_filter_groups),
@@ -36,7 +36,7 @@ internal enum class FilterItemType(
 }
 
 internal class FilterAdapterItem(
-    onCLickListener: ((FilterItem) -> Unit)? = null
+    onCLickListener: ((FilterItem) -> Unit)? = null,
 ) : AdapterItem<FilterViewHolder, FilterItem>(
     isType = { it is FilterItem },
     layoutRes = R.layout.item_filter,
@@ -49,7 +49,7 @@ internal fun FilterItemType.compareFilter(filterItemType: FilterItemType) =
     this == FilterItemType.ALL || this == filterItemType
 
 internal class FilterViewHolder(
-    private val containerView: View
+    private val containerView: View,
 ) : RecyclerView.ViewHolder(containerView),
     ClickableItemViewHolder by ClickableItemViewHolderImpl(containerView) {
 
@@ -63,7 +63,7 @@ internal class FilterViewHolder(
 }
 
 private class FilterItemBinder(
-    private val onCLickListener: ((FilterItem) -> Unit)?
+    private val onCLickListener: ((FilterItem) -> Unit)?,
 ) : BaseItemBinder<FilterViewHolder, FilterItem>() {
     override fun bind(vh: FilterViewHolder, model: FilterItem, position: Int) {
         vh.setText(model.type.nameRes)

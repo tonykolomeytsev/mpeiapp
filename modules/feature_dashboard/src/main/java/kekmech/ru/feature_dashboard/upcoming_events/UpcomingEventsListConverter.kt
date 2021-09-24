@@ -8,7 +8,6 @@ import kekmech.ru.common_schedule.utils.withProgressPreview
 import kekmech.ru.coreui.items.*
 import kekmech.ru.domain_schedule.dto.Classes
 import kekmech.ru.domain_schedule.dto.ScheduleType
-import kekmech.ru.feature_dashboard.DashboardFragment.Companion.EVENTS_SHIMMER_ITEM_ID
 import kekmech.ru.feature_dashboard.R
 import kekmech.ru.feature_dashboard.elm.DashboardState
 import kekmech.ru.feature_dashboard.elm.NextClassesCondition
@@ -18,7 +17,7 @@ import kekmech.ru.feature_dashboard.helpers.getNextClassesTimeStatus
 import java.time.LocalDate
 import java.time.LocalTime
 
-class UpcomingEventsListConverter(
+internal class UpcomingEventsListConverter(
     private val context: Context,
 ) {
 
@@ -129,7 +128,7 @@ class UpcomingEventsListConverter(
     private companion object {
         private val LIST_WITH_SHIMMERS = listOf(
             SectionHeaderItem(titleRes = R.string.dashboard_section_header_events),
-            ShimmerItem(EVENTS_SHIMMER_ITEM_ID)
+            ShimmerItem(R.layout.item_events_shimmer)
         ).let { UpcomingEventsMappingResult(it, -1) }
         private val LIST_WITH_EMPTY_STATE = listOf(
             SectionHeaderItem(
