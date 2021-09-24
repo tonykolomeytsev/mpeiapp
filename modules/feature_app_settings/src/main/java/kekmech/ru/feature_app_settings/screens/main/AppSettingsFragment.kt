@@ -5,6 +5,8 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_analytics.ext.screenAnalytics
 import kekmech.ru.common_android.*
@@ -53,6 +55,7 @@ internal class AppSettingsFragment :
             recyclerView.adapter = adapter
             recyclerView.attachScrollListenerForAppBarLayoutShadow(appBarLayout)
             recyclerView.addSystemBottomPadding()
+            recyclerView.disablePicassoLoadingOnScroll()
             appBarLayout.addSystemTopPadding()
             toolbar.setTitle(R.string.app_settings_screen_title)
             toolbar.setNavigationOnClickListener { close() }
@@ -111,7 +114,9 @@ internal class AppSettingsFragment :
             SpaceAdapterItem(),
             BottomLabeledTextAdapterItem { onItemClick(it.itemId) },
             RightLabeledTextAdapterItem { onItemClick(it.itemId) },
-            ContributorAdapterItem { /* no-op */ },
+            ContributorAdapterItem {
+                requireContext().openLinkExternal(it.gitHubPageUrl)
+            },
         )
 
     private fun onItemClick(itemId: Int?) =
@@ -161,6 +166,17 @@ internal class AppSettingsFragment :
         Handler(Looper.getMainLooper())
             .postDelayed({ activity?.recreate() }, ACTIVITY_RECREATION_DELAY)
     }
+
+    private fun RecyclerView.disablePicassoLoadingOnScroll() =
+        addOnScrollListener(object : RecyclerView.OnScrollListener() {
+
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                when (newState) {
+                    RecyclerView.SCROLL_STATE_IDLE -> Picasso.get().resumeTag(ContributorAdapterItem::class)
+                    else -> Picasso.get().pauseTag(ContributorAdapterItem::class)
+                }
+            }
+        })
 
     companion object {
         const val TOGGLE_DARK_THEME = 0
