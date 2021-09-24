@@ -12,13 +12,13 @@ private const val DEFAULT_BUTTON_ITEM_ID = 0
 
 internal data class ButtonItem(
     val itemId: Int = DEFAULT_BUTTON_ITEM_ID,
-    @StringRes val textResId: Int
+    @StringRes val textResId: Int,
 )
 
 internal class ButtonAdapterItem(
     itemId: Int,
     @LayoutRes layoutRes: Int,
-    onClickListener: (ButtonItem) -> Unit
+    onClickListener: (ButtonItem) -> Unit,
 ) : AdapterItem<ButtonViewHolder, ButtonItem>(
     isType = { it is ButtonItem && it.itemId == itemId },
     layoutRes = layoutRes,
@@ -27,7 +27,7 @@ internal class ButtonAdapterItem(
 )
 
 internal class ButtonViewHolder(
-    itemView: View
+    itemView: View,
 ) : RecyclerView.ViewHolder(itemView) {
 
     private val button = itemView as Button
@@ -42,7 +42,7 @@ internal class ButtonViewHolder(
 }
 
 private class ButtonItemBinder(
-    private val onClickListener: (ButtonItem) -> Unit
+    private val onClickListener: (ButtonItem) -> Unit,
 ) : BaseItemBinder<ButtonViewHolder, ButtonItem>() {
 
     override fun bind(vh: ButtonViewHolder, model: ButtonItem, position: Int) {

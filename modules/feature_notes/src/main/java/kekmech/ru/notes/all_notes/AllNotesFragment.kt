@@ -81,7 +81,7 @@ internal class AllNotesFragment : BaseFragment<AllNotesEvent, AllNotesEffect, Al
             navigateToNoteEdit(it)
         },
         SectionHeaderAdapterItem(),
-        ShimmerAdapterItem(0, R.layout.item_note_shimmer),
+        ShimmerAdapterItem(R.layout.item_note_shimmer),
         EmptyStateAdapterItem()
     )
 
