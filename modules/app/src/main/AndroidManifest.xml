@@ -37,6 +37,7 @@
 
         <activity
                 android:name="kekmech.ru.mpeiapp.ui.SplashActivity"
+                android:exported="true"
                 android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -45,7 +46,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".deeplink.DeeplinkActivity">
+        <activity android:name=".deeplink.DeeplinkActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 

@@ -5,7 +5,7 @@ buildscript {
 
     ext {
         versions = [
-                kotlin              : "1.5.30",
+                kotlin              : "1.5.31",
                 recyclerview        : "1.2.1",
                 constraintlayout    : "2.1.0",
                 coordinatorlayout   : "1.1.0",
@@ -83,8 +83,8 @@ buildscript {
                 elmslieAndroid      : "com.github.vivid-money.elmslie:elmslie-android:1.1.4",
                 elmslieStoreHolder  : "com.github.vivid-money.elmslie:elmslie-store-persisting:1.1.4"
         ]
-        appVersionName = "1.11.0"
-        appVersionCode = 43
+        appVersionName = "1.12.0"
+        appVersionCode = 44
         gradleDir = "$rootDir/gradle"
     }
 

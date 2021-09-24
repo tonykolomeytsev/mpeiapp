@@ -38,7 +38,7 @@
 
 ### Требования приложения
 
-+ Android 5.0 Lollipop и выше (Api V21+)
++ Android 6.0 Marshmallow и выше (Api V23+)
 + Доступ к интернету
 
 ### Стек

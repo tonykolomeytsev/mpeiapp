@@ -44,12 +44,7 @@ class TextItemViewHolder(
     }
 
     fun setStyle(@StyleRes styleResId: Int) {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-            textViewTextItem.setTextAppearance(styleResId)
-        } else {
-            @Suppress("DEPRECATION")
-            textViewTextItem.setTextAppearance(containerView.context, styleResId)
-        }
+        textViewTextItem.setTextAppearance(styleResId)
     }
 
     fun setTextGravity(textGravity: Int) {

@@ -69,7 +69,6 @@ class BottomBarController(
 
     fun popStack(): Boolean = backStack.popAndPeek()?.let { switchTab(it) } != null
 
-    @Suppress("DEPRECATION")
     private fun selectTab(tab: BottomTab) {
         if (currentTabFragment?.tag == tab.name) {
             (currentTabFragment as? ScrollToTop)?.onScrollToTop()
