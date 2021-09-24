@@ -137,6 +137,7 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), 
             swipeRefresh.post {
                 swipeRefresh.isRefreshing = state.isLoading
             }
+            disciplineDetailsFragmentContainer?.let { it.isInvisible = state.isBrowserVisible }
             returnBanner.isVisible = state.isReturnBannerVisible
 
             // render webview
