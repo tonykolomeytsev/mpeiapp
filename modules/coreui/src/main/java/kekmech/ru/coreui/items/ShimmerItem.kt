@@ -18,7 +18,8 @@ open class ShimmerAdapterItem(@LayoutRes layoutId: Int) : AdapterItem<ShimmerVie
         override fun bind(vh: ShimmerViewHolder, model: ShimmerItem, position: Int) {
             vh.startShimmer()
         }
-    }
+    },
+    areItemsTheSame = { a, b -> a.id == b.id }
 )
 
 class ShimmerViewHolder(

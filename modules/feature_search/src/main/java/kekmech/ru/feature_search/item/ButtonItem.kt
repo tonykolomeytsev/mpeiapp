@@ -23,7 +23,13 @@ internal class ButtonAdapterItem(
     isType = { it is ButtonItem && it.itemId == itemId },
     layoutRes = layoutRes,
     viewHolderGenerator = ::ButtonViewHolder,
-    itemBinder = ButtonItemBinder(onClickListener)
+    itemBinder = object : BaseItemBinder<ButtonViewHolder, ButtonItem>() {
+
+        override fun bind(vh: ButtonViewHolder, model: ButtonItem, position: Int) {
+            vh.setOnCLickListener { onClickListener(model) }
+            vh.setText(model.textResId)
+        }
+    }
 )
 
 internal class ButtonViewHolder(
@@ -38,15 +44,5 @@ internal class ButtonViewHolder(
 
     fun setText(textResId: Int) {
         button.setText(textResId)
-    }
-}
-
-private class ButtonItemBinder(
-    private val onClickListener: (ButtonItem) -> Unit,
-) : BaseItemBinder<ButtonViewHolder, ButtonItem>() {
-
-    override fun bind(vh: ButtonViewHolder, model: ButtonItem, position: Int) {
-        vh.setOnCLickListener { onClickListener(model) }
-        vh.setText(model.textResId)
     }
 }
