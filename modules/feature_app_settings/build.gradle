@@ -19,6 +19,7 @@ dependencies {
     implementation facebook.shimmer
     implementation vividMoney.elmslieCore
     implementation vividMoney.elmslieAndroid
+    implementation picasso
 
     implementation project(path: ':domain_app_settings')
     implementation project(path: ':domain_schedule')

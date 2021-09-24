@@ -2,23 +2,26 @@ package kekmech.ru.domain_app_settings
 
 import android.content.SharedPreferences
 import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.core.Observable
-import kekmech.ru.common_cache.in_memory_cache.InMemoryCache
+import io.reactivex.rxjava3.core.Single
+import kekmech.ru.common_cache.persistent_cache.PersistentCache
 import kekmech.ru.common_shared_preferences.boolean
 import kekmech.ru.common_shared_preferences.string
+import kekmech.ru.domain_app_settings.dto.ContributorsCacheWrapper
 import kekmech.ru.domain_app_settings.dto.ContributorsItem
 import kekmech.ru.domain_app_settings.dto.GitHubUser
+import java.time.Duration
 
 class AppSettingsRepository(
     preferences: SharedPreferences,
-    inMemoryCache: InMemoryCache,
+    persistentCache: PersistentCache,
     private val gitHubService: GitHubService,
 ) : AppSettings {
 
-    private val contributorsCache = inMemoryCache
-        .of<List<GitHubUser>>(
+    private val contributorsCache = persistentCache
+        .of(
             key = CONTRIBUTORS_CACHE_KEY,
-            keepAlways = false,
+            valueClass = ContributorsCacheWrapper::class.java,
+            lifetime = Duration.ofDays(1)
         )
 
     override var isDarkThemeEnabled by preferences.boolean("app_is_dark_theme_enabled", false)
@@ -38,16 +41,20 @@ class AppSettingsRepository(
     fun complete(runnable: AppSettingsRepository.() -> Unit): Completable =
         Completable.fromRunnable { runnable.invoke(this) }
 
-    fun observeContributors(): Observable<List<GitHubUser>> = contributorsCache.observe()
+    fun getContributors(): Single<List<GitHubUser>> =
+        contributorsCache.getOrError()
+            .map { it.items }
+            .onErrorResumeWith(
+                fetchContributors()
+                    .doOnSuccess { contributorsCache.set(ContributorsCacheWrapper(it)) }
+            )
 
-    fun fetchContributors(): Completable =
+    private fun fetchContributors(): Single<List<GitHubUser>> =
         gitHubService.getContributors()
             .flattenAsObservable { it.sortedByDescending(ContributorsItem::total) }
             .concatMapSingle { gitHubService.getUser(it.author.login) }
             .map { it.copy(bio = it.bio?.trim()) }
             .toList()
-            .doOnSuccess(contributorsCache::set)
-            .ignoreElement()
 
     companion object {
 
