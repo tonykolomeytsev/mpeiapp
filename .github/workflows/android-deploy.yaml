@@ -50,6 +50,7 @@ jobs:
           packageName: kekmech.ru.mpeiapp
           releaseFiles: modules/app/build/outputs/bundle/release/app-release.aab
           track: internal
+          status: completed
 
       - name: Send Telegram message
         uses: appleboy/telegram-action@master
