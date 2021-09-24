@@ -7,7 +7,6 @@ import io.reactivex.rxjava3.exceptions.UndeliverableException
 import io.reactivex.rxjava3.plugins.RxJavaPlugins
 import kekmech.ru.bars.di.BarsModule
 import kekmech.ru.common_analytics.di.AnalyticsModule
-import kekmech.ru.common_android.di.CommonAndroidModule
 import kekmech.ru.common_app_database.di.AppDatabaseModule
 import kekmech.ru.common_cache.di.CacheModule
 import kekmech.ru.common_di.modules
@@ -82,7 +81,6 @@ class MpeixApp : Application(),
             DeeplinkModule,
             // commons
             NavigationModule,
-            CommonAndroidModule,
             NetworkModule,
             CacheModule,
             AppDatabaseModule,

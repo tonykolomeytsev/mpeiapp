@@ -22,12 +22,6 @@ fun Context.getThemeColor(@AttrRes attrId: Int): Int {
     return value.data
 }
 
-@ColorInt
-fun Context.getThemeAccentColor() = getThemeColor(R.attr.colorAccent)
-
-@ColorInt
-fun Context.getThemeSurfaceColor() = getThemeColor(R.attr.colorSurface)
-
 fun Context.getStringArray(@ArrayRes stringRes: Int): Array<String> =
     resources.getStringArray(stringRes)
 
@@ -37,6 +31,3 @@ fun Context.openLinkExternal(link: String) =
 fun Context.openLinkExternal(link: Uri) {
     startActivity(Intent(Intent.ACTION_VIEW, link))
 }
-
-fun Context.getRawText(@RawRes rawResId: Int) =
-    resources.openRawResource(rawResId).readBytes().decodeToString()

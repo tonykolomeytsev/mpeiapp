@@ -1,6 +1,5 @@
 package kekmech.ru.common_android
 
-import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
@@ -51,9 +50,6 @@ fun Fragment.onKeyboardShown(action: () -> Unit) {
         if (windowInsets.systemWindowInsetBottom > AVERAGE_KEYBOARD_HEIGHT) action()
     }
 }
-
-val Fragment.decorView: View
-    get() = requireActivity().window.decorView.findViewById(android.R.id.content)
 
 fun Fragment.setOnBackPressedListener(listener: () -> Unit) {
     activity?.onBackPressedDispatcher?.addCallback(
