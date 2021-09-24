@@ -42,10 +42,8 @@ internal class AppSettingsActor(
                 .complete { showNavigationButton = action.isVisible }
                 .toObservable()
 
-            is AppSettingsAction.ObserveContributors -> Observable.merge(
-                appSettingsRepository.fetchContributors().toObservable(),
-                appSettingsRepository.observeContributors()
-            )
-                .mapSuccessEvent(AppSettingsEvent.News::ObserveContributorsSuccess)
+            is AppSettingsAction.ObserveContributors ->
+                appSettingsRepository.getContributors()
+                    .mapSuccessEvent(AppSettingsEvent.News::ObserveContributorsSuccess)
         }
 }
