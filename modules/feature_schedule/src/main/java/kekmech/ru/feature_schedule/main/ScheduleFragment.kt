@@ -6,7 +6,10 @@ import androidx.core.view.isVisible
 import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_analytics.addScrollAnalytics
 import kekmech.ru.common_analytics.ext.screenAnalytics
-import kekmech.ru.common_android.*
+import kekmech.ru.common_android.EmptyResult
+import kekmech.ru.common_android.addSystemTopPadding
+import kekmech.ru.common_android.getStringArray
+import kekmech.ru.common_android.setResultListener
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.views.onPageSelected
 import kekmech.ru.common_kotlin.fastLazy
@@ -32,7 +35,6 @@ import java.time.LocalDate
 @Suppress("TooManyFunctions")
 internal class ScheduleFragment :
     BaseFragment<ScheduleEvent, ScheduleEffect, ScheduleState>(),
-    ActivityResultListener,
     TabScreenStateSaver by TabScreenStateSaverImpl("schedule") {
 
     override val initEvent = Wish.Init

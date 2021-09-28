@@ -1,7 +1,8 @@
 package kekmech.ru.domain_schedule
 
+import android.os.Parcelable
 import androidx.fragment.app.Fragment
-import java.io.Serializable
+import kotlinx.parcelize.Parcelize
 
 interface ScheduleFeatureLauncher {
 
@@ -13,5 +14,6 @@ interface ScheduleFeatureLauncher {
         resultKey: String,
     )
 
-    enum class ContinueTo : Serializable { DASHBOARD, BACK, BACK_WITH_RESULT }
+    @Parcelize
+    enum class ContinueTo : Parcelable { DASHBOARD, BACK, BACK_WITH_RESULT }
 }

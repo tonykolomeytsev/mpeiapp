@@ -11,7 +11,6 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException
 import com.google.android.gms.maps.MapsInitializer
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import kekmech.ru.common_android.onActivityResult
 import kekmech.ru.common_mvi.DisposableDelegate
 import kekmech.ru.common_mvi.DisposableDelegateImpl
 import kekmech.ru.common_navigation.BackButtonListener
@@ -94,11 +93,6 @@ class MainActivity : AppCompatActivity(), DisposableDelegate by DisposableDelega
     override fun onPause() {
         navigationHolder.unsubscribe()
         super.onPause()
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        supportFragmentManager.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun onBackPressed() {

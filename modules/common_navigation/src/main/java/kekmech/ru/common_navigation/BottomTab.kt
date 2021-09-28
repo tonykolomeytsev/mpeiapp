@@ -1,7 +1,7 @@
 package kekmech.ru.common_navigation
 
-import java.io.Serializable
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
-enum class BottomTab : Serializable {
-    DASHBOARD, SCHEDULE, MAP, PROFILE
-}
+@Parcelize
+enum class BottomTab : Parcelable { DASHBOARD, SCHEDULE, MAP, PROFILE }

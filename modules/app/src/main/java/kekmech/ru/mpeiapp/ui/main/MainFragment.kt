@@ -1,13 +1,11 @@
 package kekmech.ru.mpeiapp.ui.main
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.setPadding
 import io.reactivex.rxjava3.disposables.Disposable
 import kekmech.ru.common_android.addSystemBottomPadding
-import kekmech.ru.common_android.onActivityResult
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.BaseFragment
@@ -23,7 +21,8 @@ import kekmech.ru.mpeiapp.ui.main.elm.MainScreenState
 import org.koin.android.ext.android.inject
 
 @Suppress("TooManyFunctions")
-class MainFragment : BaseFragment<MainScreenEvent, MainScreenEffect, MainScreenState>(), BackButtonListener {
+class MainFragment : BaseFragment<MainScreenEvent, MainScreenEffect, MainScreenState>(),
+    BackButtonListener {
 
     override val initEvent: MainScreenEvent get() = MainScreenEvent.Wish.Init
     override var layoutId: Int = R.layout.fragment_main
@@ -43,7 +42,7 @@ class MainFragment : BaseFragment<MainScreenEvent, MainScreenEffect, MainScreenS
             // start observing data
             dependencies.forceUpdateChecker.check()
         } else {
-            (savedInstanceState.getSerializable(LAST_TAB_KEY) as? BottomTab)?.let { tab ->
+            (savedInstanceState.getParcelable<BottomTab>(LAST_TAB_KEY))?.let { tab ->
                 bottomBarController?.lastSelectedTab = tab
                 tabsSwitcher.changeTab(tab)
             }
@@ -97,13 +96,8 @@ class MainFragment : BaseFragment<MainScreenEvent, MainScreenEffect, MainScreenS
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         bottomBarController?.lastSelectedTab?.let {
-            outState.putSerializable(LAST_TAB_KEY, it)
+            outState.putParcelable(LAST_TAB_KEY, it)
         }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        childFragmentManager.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun onBackPressed(): Boolean {

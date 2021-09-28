@@ -1,16 +1,19 @@
 package kekmech.ru.domain_schedule.dto
 
-import java.io.Serializable
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
 data class GetSearchResultsResponse(
     val items: List<SearchResult>
 )
 
+@Parcelize
 data class SearchResult(
     val id: String,
     val name: String,
     val description: String,
     val type: SearchResultType
-) : Serializable
+) : Parcelable
 
-enum class SearchResultType : Serializable { GROUP, PERSON }
+@Parcelize
+enum class SearchResultType : Parcelable { GROUP, PERSON }

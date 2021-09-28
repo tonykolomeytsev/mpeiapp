@@ -34,7 +34,6 @@ import vivid.money.elmslie.storepersisting.retainInParentStoreHolder
 
 class DashboardFragment :
     BaseFragment<DashboardEvent, DashboardEffect, DashboardState>(),
-    ActivityResultListener,
     ScrollToTop,
     TabScreenStateSaver by TabScreenStateSaverImpl("dashboard") {
 

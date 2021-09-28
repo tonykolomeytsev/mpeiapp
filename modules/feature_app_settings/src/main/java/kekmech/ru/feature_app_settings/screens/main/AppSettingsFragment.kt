@@ -34,8 +34,7 @@ import org.koin.android.ext.android.inject
 private const val ACTIVITY_RECREATION_DELAY = 200L
 
 internal class AppSettingsFragment :
-    BaseFragment<AppSettingsEvent, AppSettingsEffect, AppSettingsState>(),
-    ActivityResultListener {
+    BaseFragment<AppSettingsEvent, AppSettingsEffect, AppSettingsState>() {
 
     override val initEvent get() = Wish.Init
 

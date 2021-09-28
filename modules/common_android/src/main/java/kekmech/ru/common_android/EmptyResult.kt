@@ -1,5 +1,7 @@
 package kekmech.ru.common_android
 
-import java.io.Serializable
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
-object EmptyResult : Serializable
+@Parcelize
+object EmptyResult : Parcelable
