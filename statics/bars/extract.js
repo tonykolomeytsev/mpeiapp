@@ -8,12 +8,15 @@ const getMeta = (metadataContainer) => {
     return JSON.stringify({ "meta": m });
 };
 const getRating = (metadataContainer) => {
-    const complexScore = document.getElementById("total_score").textContent.trim();
-    const studyScore = document.getElementById("study_score").textContent.trim();
-    const scienceScore = document.getElementById("science_score").textContent.trim();
-    const socialScore = document.getElementById("social_score").textContent.trim();
-    const sportScore = document.getElementById("sport_score").textContent.trim();
-    const socialActivityScore = document.getElementById("social_activity_score").textContent.trim();
+    const items = Array
+        .from(document.getElementById("stud_rate").parentElement.parentElement.children)
+        .map(e => e.children[1]?.textContent || e.children[0]?.textContent);
+    const complexScore = items[0].trim();
+    const studyScore = items[1].trim();
+    const scienceScore = items[4].trim();
+    const socialScore = items[5].trim();
+    const sportScore = items[7].trim();
+    const socialActivityScore = items[6].trim();
     
     const dataRows = metadataContainer.getElementsByTagName("li");
     const studyYear = Number.parseInt(dataRows.item(0).textContent.substring(6)) || 0;
