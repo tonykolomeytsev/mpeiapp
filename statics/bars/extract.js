@@ -11,13 +11,13 @@ const getRating = (metadataContainer) => {
     const items = Array
         .from(document.getElementById("stud_rate").parentElement.parentElement.children)
         .map(e => e.children[1]?.textContent || e.children[0]?.textContent)
-        .map(e => parseInt(e));
-    const complexScore = items[0].trim();
-    const studyScore = items[1].trim();
-    const scienceScore = items[4].trim();
-    const socialScore = items[5].trim();
-    const sportScore = items[7].trim();
-    const socialActivityScore = items[6].trim();
+        .map(e => parseInt(e.trim()));
+    const complexScore = items[0];
+    const studyScore = items[1];
+    const scienceScore = items[4];
+    const socialScore = items[5];
+    const sportScore = items[7];
+    const socialActivityScore = items[6];
     
     const dataRows = metadataContainer.getElementsByTagName("li");
     const studyYear = Number.parseInt(dataRows.item(0).textContent.substring(6)) || 0;
