@@ -7,6 +7,7 @@ import android.os.Build
 import android.os.Bundle
 import android.text.Spannable
 import android.text.style.ForegroundColorSpan
+import android.util.Log
 import android.view.View
 import android.webkit.*
 import androidx.appcompat.widget.Toolbar
@@ -155,7 +156,9 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), 
     override fun handleEffect(effect: BarsEffect) =
         when (effect) {
             is BarsEffect.LoadPage -> viewBinding.webView.loadUrl(effect.url)
-            is BarsEffect.InvokeJs -> viewBinding.webView.evaluateJavascript(effect.js, null)
+            is BarsEffect.InvokeJs -> viewBinding.webView.evaluateJavascript(effect.js) {
+                Log.d(javaClass.simpleName, it)
+            }
             is BarsEffect.OpenSettings -> settingsFeatureLauncher.launch()
             is BarsEffect.ShowCommonError -> showBanner(R.string.something_went_wrong_error)
             is BarsEffect.OpenExternalBrowser ->
