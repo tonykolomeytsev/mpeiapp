@@ -9,7 +9,7 @@ const getMeta = (metadataContainer) => {
 };
 const getRating = (metadataContainer) => {
     const items = Array
-        .from(document.getElementById("stud_rate").parentElement.parentElement.children)
+        .from(document.querySelector("#div-FormHeader ul").children)
         .map(e => e.children[1]?.textContent || e.children[0]?.textContent)
         .map(e => parseInt(e.trim()));
     const complexScore = items[0];
