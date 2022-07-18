@@ -2,8 +2,8 @@ name: Deploy release-alpha to Google Play
 
 on:
   push:
-    branches:
-      - release/**
+    tags:
+      - "release/*"
 
 jobs:
   build:
