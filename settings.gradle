@@ -1,2 +1,0 @@
-rootProject.name = "mpeix"
-apply(from: "gradle/project-configuration.groovy")
