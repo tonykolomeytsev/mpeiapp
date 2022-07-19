@@ -1,0 +1,27 @@
+on:
+  push:
+    paths:
+      - 'statics/map/README.md'
+      - 'statics/map/markers_gen.py'
+
+jobs:
+  map-gen:
+    name: Generate new map markers
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Run python generator script
+        run: |
+          cd statics/map
+          python3 markers_gen.py
+
+      - name: Push new markers to current branch
+        run: |
+          git config --global user.name "Anton Kolomeytsev"
+          git config --global user.email "tonykolomeytsev@gmail.com"
+          git add markers.json
+          git commit -m "Update map markers.json"
+          git push
