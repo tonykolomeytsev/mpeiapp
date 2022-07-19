@@ -66,7 +66,7 @@ for n, l in enumerate(lines):
         raise Exception("Unexpected symbol at line {num}: \"{line}\"".format(num = n_pos, line = l.strip()))
 
 if current_marker is not None:
-    current_marker.type = current_type
+    current_marker["type"] = current_type
     markers.append(current_marker)
 
 import json
