@@ -1,7 +1,8 @@
 rootProject.name = "mpeix"
 
-File(rootProject.projectDir, "modules").walk()
+rootProject.projectDir.walk()
     .filter { it.isBuildGradleScript() }
+    .filter { it != rootProject.buildFile }
     .mapNotNull { it.parentFile }
     .forEach { moduleDir ->
         val moduleName = ":${moduleDir.name}"
