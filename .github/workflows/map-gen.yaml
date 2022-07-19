@@ -3,6 +3,7 @@ on:
     paths:
       - 'statics/map/README.md'
       - 'statics/map/markers_gen.py'
+      - '.github/workflows/map-gen.yaml'
 
 jobs:
   map-gen:
