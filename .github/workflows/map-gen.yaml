@@ -25,5 +25,12 @@ jobs:
           git config --global user.name "Anton Kolomeytsev"
           git config --global user.email "tonykolomeytsev@gmail.com"
           git add markers.json
-          git commit -m "Update map markers.json"
-          git push
+
+      - name: Create pull request
+          uses: peter-evans/create-pull-request@v4
+          with:
+            commit-message: Update map markers.json
+            branch: map-gen/update-
+            branch-suffix: short-commit-hash
+            title: Update map markers.json
+            
