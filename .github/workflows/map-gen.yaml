@@ -20,6 +20,7 @@ jobs:
 
       - name: Push new markers to current branch
         run: |
+          cd statics/map
           git config --global user.name "Anton Kolomeytsev"
           git config --global user.email "tonykolomeytsev@gmail.com"
           git add markers.json
