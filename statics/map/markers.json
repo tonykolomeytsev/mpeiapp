@@ -1,812 +1,812 @@
 [
   {
-    "name": "Дикси",
     "address": "Энергетическая ул., 13",
     "location": {
       "lat": 55.757042,
       "lng": 37.71525
     },
-    "uid": "20b8ed9a-8c01-4a2a-a64b-267d8a1c6147",
-    "type": "FOOD"
+    "name": "Дикси",
+    "type": "FOOD",
+    "uid": "20b8ed9a-8c01-4a2a-a64b-267d8a1c6147"
   },
   {
-    "name": "Магазин \"Таёжный\"",
     "address": "Красноказарменная ул., 16",
     "location": {
       "lat": 55.753277,
       "lng": 37.71085
     },
-    "uid": "92b96daf-2d1c-4772-ac18-9dfbdc633244",
-    "type": "FOOD"
+    "name": "Магазин \"Таёжный\"",
+    "type": "FOOD",
+    "uid": "92b96daf-2d1c-4772-ac18-9dfbdc633244"
   },
   {
-    "name": "Пятерочка",
     "address": "Энергетическая ул., 11",
+    "icon": "",
     "location": {
       "lat": 55.757317,
       "lng": 37.71448
     },
-    "uid": "1337e454-7196-47f8-8463-8a63b8b0425a",
-    "icon": "",
-    "type": "FOOD"
+    "name": "Пятерочка",
+    "type": "FOOD",
+    "uid": "1337e454-7196-47f8-8463-8a63b8b0425a"
   },
   {
-    "name": "Столовая ЦИАМ",
     "address": "Энергетическая ул., 14",
     "location": {
       "lat": 55.759094,
       "lng": 37.709595
     },
-    "uid": "1a1d364a-a6b3-4baa-a498-175260e7f489",
-    "type": "FOOD"
+    "name": "Столовая ЦИАМ",
+    "type": "FOOD",
+    "uid": "1a1d364a-a6b3-4baa-a498-175260e7f489"
   },
   {
-    "name": "Столовая №5",
     "address": "Лефортовский вал 7Гс5",
     "location": {
       "lat": 55.758846,
       "lng": 37.70295
     },
-    "uid": "533506a0-1c57-4ab8-9a7a-9108462b30a7",
-    "type": "FOOD"
+    "name": "Столовая №5",
+    "type": "FOOD",
+    "uid": "533506a0-1c57-4ab8-9a7a-9108462b30a7"
   },
   {
-    "name": "Столовые МТУСИ",
     "address": "Здание МТУСИ, 1 и 2 этаж",
     "location": {
       "lat": 55.75521,
       "lng": 37.712208
     },
-    "uid": "f5f08940-422a-42b5-9025-cb0517e963f2",
-    "type": "FOOD"
+    "name": "Столовые МТУСИ",
+    "type": "FOOD",
+    "uid": "f5f08940-422a-42b5-9025-cb0517e963f2"
   },
   {
-    "name": "ШаурмаRoom",
     "address": "ул. Лефортовский Вал, 9А",
     "location": {
       "lat": 55.758926,
       "lng": 37.704227
     },
-    "uid": "b4e84edf-2841-4ddb-967c-b9597687452a",
-    "type": "FOOD"
+    "name": "ШаурмаRoom",
+    "type": "FOOD",
+    "uid": "b4e84edf-2841-4ddb-967c-b9597687452a"
   },
   {
-    "name": "Harvard Cafe",
     "address": "Красноказарменная 13с3",
     "location": {
       "lat": 55.755974,
       "lng": 37.70448
     },
-    "uid": "447e37a5-4923-478c-a582-de6ea9ad8c7b",
+    "name": "Harvard Cafe",
     "tag": "Кафе и рестораны",
-    "type": "FOOD"
+    "type": "FOOD",
+    "uid": "447e37a5-4923-478c-a582-de6ea9ad8c7b"
   },
   {
-    "name": "ВкусВилл",
     "address": "Авиамоторная ул., 12",
     "location": {
       "lat": 55.753265,
       "lng": 37.71574
     },
-    "uid": "a216db1e-8c63-4fc0-a5ed-2b445db717f3",
+    "name": "ВкусВилл",
     "tag": "Кафе и рестораны",
-    "type": "FOOD"
+    "type": "FOOD",
+    "uid": "a216db1e-8c63-4fc0-a5ed-2b445db717f3"
   },
   {
-    "name": "Додо Пицца",
     "address": "Энергетическая ул., 14",
     "location": {
       "lat": 55.758865,
       "lng": 37.709034
     },
-    "uid": "bfe2124e-3b00-4e7b-ab20-0c1fc68d258e",
+    "name": "Додо Пицца",
     "tag": "Кафе и рестораны",
-    "type": "FOOD"
+    "type": "FOOD",
+    "uid": "bfe2124e-3b00-4e7b-ab20-0c1fc68d258e"
   },
   {
-    "name": "Доминос Пицца",
     "address": "Энергетическая ул., 18",
     "location": {
       "lat": 55.75775,
       "lng": 37.712166
     },
-    "uid": "0d3b8f7c-5acb-4904-8668-f5e82216cb69",
+    "name": "Доминос Пицца",
     "tag": "Кафе и рестораны",
-    "type": "FOOD"
+    "type": "FOOD",
+    "uid": "0d3b8f7c-5acb-4904-8668-f5e82216cb69"
   },
   {
-    "name": "Сыто-пьяно",
     "address": "ул. Авиамоторная, 41Б",
     "location": {
       "lat": 55.753582,
       "lng": 37.716427
     },
-    "uid": "3d785d70-4e44-4c72-8cd9-a4065bf77046",
+    "name": "Сыто-пьяно",
     "tag": "Кафе и рестораны",
-    "type": "FOOD"
+    "type": "FOOD",
+    "uid": "3d785d70-4e44-4c72-8cd9-a4065bf77046"
   },
   {
-    "name": "Теремок",
     "address": "Авиамоторная ул., 41",
     "location": {
       "lat": 55.753702,
       "lng": 37.716298
     },
-    "uid": "910f67df-f39a-4c05-9777-7aa74f8aa094",
+    "name": "Теремок",
     "tag": "Кафе и рестораны",
-    "type": "FOOD"
+    "type": "FOOD",
+    "uid": "910f67df-f39a-4c05-9777-7aa74f8aa094"
   },
   {
-    "name": "Бургер Кинг",
     "address": "Авиамоторная ул., 41Б",
     "location": {
       "lat": 55.753468,
       "lng": 37.71644
     },
-    "uid": "6c0dc021-221e-45f6-ab95-da44de2cb7ec",
+    "name": "Бургер Кинг",
     "tag": "Кафе и рестораны",
-    "type": "FOOD"
+    "type": "FOOD",
+    "uid": "6c0dc021-221e-45f6-ab95-da44de2cb7ec"
   },
   {
-    "name": "KFC на Шоссе Энтузиастов",
     "address": "ш. Энтузиастов, 20",
     "location": {
       "lat": 55.750942,
       "lng": 37.715602
     },
-    "uid": "de90aec6-4029-4b44-824f-79c33c07513f",
+    "name": "KFC на Шоссе Энтузиастов",
     "tag": "Кафе и рестораны",
-    "type": "FOOD"
+    "type": "FOOD",
+    "uid": "de90aec6-4029-4b44-824f-79c33c07513f"
   },
   {
-    "name": "Блинная",
     "address": "Корпус Г, 3 этаж",
     "location": {
       "lat": 55.754726,
       "lng": 37.70907
     },
-    "uid": "486331fe-2688-4968-9a20-4788b901d4bb",
+    "name": "Блинная",
     "tag": "Столовые КСБУ МЭИ",
-    "type": "FOOD"
+    "type": "FOOD",
+    "uid": "486331fe-2688-4968-9a20-4788b901d4bb"
   },
   {
-    "name": "Буфет бассейна МЭИ",
     "address": "Энергетический пр-д, 3c3",
     "location": {
       "lat": 55.758377,
       "lng": 37.704575
     },
-    "uid": "90dc38aa-d37d-4fd0-a60e-28c708d6f2d0",
+    "name": "Буфет бассейна МЭИ",
     "tag": "Столовые КСБУ МЭИ",
-    "type": "FOOD"
+    "type": "FOOD",
+    "uid": "90dc38aa-d37d-4fd0-a60e-28c708d6f2d0"
   },
   {
-    "name": "Буфет корпуса Б",
     "address": "Корпус Б, 2 этаж",
     "location": {
       "lat": 55.75516,
       "lng": 37.707638
     },
-    "uid": "aa286419-cf8a-47b0-891d-31879c541f61",
+    "name": "Буфет корпуса Б",
     "tag": "Столовые КСБУ МЭИ",
-    "type": "FOOD"
+    "type": "FOOD",
+    "uid": "aa286419-cf8a-47b0-891d-31879c541f61"
   },
   {
-    "name": "Буфет корпуса З",
     "address": "Корпус З, 1 этаж",
     "location": {
       "lat": 55.754406,
       "lng": 37.70672
     },
-    "uid": "778c8029-abc7-4305-9431-647794ea939f",
+    "name": "Буфет корпуса З",
     "tag": "Столовые КСБУ МЭИ",
-    "type": "FOOD"
+    "type": "FOOD",
+    "uid": "778c8029-abc7-4305-9431-647794ea939f"
   },
   {
-    "name": "Столовая корпуса Ж",
     "address": "Корпус Ж, 1 этаж",
     "location": {
       "lat": 55.754116,
       "lng": 37.707825
     },
-    "uid": "111d2c3d-0ed0-451b-9852-3bcc84813503",
+    "name": "Столовая корпуса Ж",
     "tag": "Столовые КСБУ МЭИ",
-    "type": "FOOD"
+    "type": "FOOD",
+    "uid": "111d2c3d-0ed0-451b-9852-3bcc84813503"
   },
   {
-    "name": "Столовая корпуса М",
     "address": "Корпус М, 7 этаж",
     "location": {
       "lat": 55.75679,
       "lng": 37.70462
     },
-    "uid": "cb0b6b91-c11b-4940-a41a-fa948a863ecd",
+    "name": "Столовая корпуса М",
     "tag": "Столовые КСБУ МЭИ",
-    "type": "FOOD"
+    "type": "FOOD",
+    "uid": "cb0b6b91-c11b-4940-a41a-fa948a863ecd"
   },
   {
-    "name": "Столовая корпуса М",
     "address": "Корпус М, 5 этаж",
     "location": {
       "lat": 55.75679,
       "lng": 37.70462
     },
-    "uid": "ffa835a5-34ab-4ef9-9acd-408aa034fafc",
+    "name": "Столовая корпуса М",
     "tag": "Столовые КСБУ МЭИ",
-    "type": "FOOD"
+    "type": "FOOD",
+    "uid": "ffa835a5-34ab-4ef9-9acd-408aa034fafc"
   },
   {
-    "name": "Столовая корпуса С",
     "address": "Корпус С, подвал",
     "location": {
       "lat": 55.757454,
       "lng": 37.702534
     },
-    "uid": "20534c5a-17a0-4bfb-b0d8-3f2ea0502725",
+    "name": "Столовая корпуса С",
     "tag": "Столовые КСБУ МЭИ",
-    "type": "FOOD"
+    "type": "FOOD",
+    "uid": "20534c5a-17a0-4bfb-b0d8-3f2ea0502725"
   },
   {
-    "name": "Столовая №1",
     "address": "Подвал корпуса В",
     "location": {
       "lat": 55.755093,
       "lng": 37.708336
     },
-    "uid": "fd5cd4ea-42e7-470f-b8ab-855bba7d51a7",
+    "name": "Столовая №1",
     "tag": "Столовые КСБУ МЭИ",
-    "type": "FOOD"
+    "type": "FOOD",
+    "uid": "fd5cd4ea-42e7-470f-b8ab-855bba7d51a7"
   },
   {
-    "name": "Столовая №10",
     "address": "Лапина ул., 17",
     "location": {
       "lat": 55.756443,
       "lng": 37.71161
     },
-    "uid": "e0bc6de1-4cc1-4557-af1a-3972ed4a80df",
+    "name": "Столовая №10",
     "tag": "Столовые КСБУ МЭИ",
-    "type": "FOOD"
+    "type": "FOOD",
+    "uid": "e0bc6de1-4cc1-4557-af1a-3972ed4a80df"
   },
   {
-    "name": "Кирпич",
     "address": "Энергетическая ул. 18",
     "location": {
       "lat": 55.757539,
       "lng": 37.712591
     },
-    "uid": "5c35346d-1c3c-493b-985f-9919a4cd0ff2",
-    "type": "FOOD"
+    "name": "Кирпич",
+    "type": "FOOD",
+    "uid": "5c35346d-1c3c-493b-985f-9919a4cd0ff2"
   },
   {
-    "name": "Бассейн МЭИ",
     "address": "Энергетический проезд 3, строение 3",
+    "icon": ":swimming_pool:",
     "location": {
       "lat": 55.758374,
       "lng": 37.704564
     },
-    "uid": "8c566106-9fbc-44dc-b567-2e8e44eaefd8",
-    "icon": ":swimming_pool:",
-    "type": "BUILDING"
+    "name": "Бассейн МЭИ",
+    "type": "BUILDING",
+    "uid": "8c566106-9fbc-44dc-b567-2e8e44eaefd8"
   },
   {
-    "name": "Стадион Энергия",
     "address": "2-й Краснокурсантский проезд, 12",
+    "icon": ":stadium:",
     "location": {
       "lat": 55.762539,
       "lng": 37.701889
     },
-    "uid": "2909225a-644a-4ce6-b611-e90531c47a2a",
-    "icon": ":stadium:",
-    "type": "BUILDING"
+    "name": "Стадион Энергия",
+    "type": "BUILDING",
+    "uid": "2909225a-644a-4ce6-b611-e90531c47a2a"
   },
   {
-    "name": "Корпус А",
     "address": "Красноказарменная ул., 17",
+    "icon": "А",
     "location": {
       "lat": 55.755898,
       "lng": 37.707607
     },
-    "uid": "fecd30f7-be48-46c9-b777-cd8de998f1cd",
-    "icon": "А",
-    "type": "BUILDING"
+    "name": "Корпус А",
+    "type": "BUILDING",
+    "uid": "fecd30f7-be48-46c9-b777-cd8de998f1cd"
   },
   {
-    "name": "Корпус Б",
     "address": "Красноказарменная ул., 17",
+    "icon": "Б",
     "location": {
       "lat": 55.755272,
       "lng": 37.707478
     },
-    "uid": "a4ee5d45-9b31-4cc4-bd40-6bf43d277806",
-    "icon": "Б",
-    "type": "BUILDING"
+    "name": "Корпус Б",
+    "type": "BUILDING",
+    "uid": "a4ee5d45-9b31-4cc4-bd40-6bf43d277806"
   },
   {
-    "name": "Корпус В",
     "address": "Красноказарменная ул., 17",
+    "icon": "В",
     "location": {
       "lat": 55.75526,
       "lng": 37.708523
     },
-    "uid": "d0a51687-c36e-48d1-acda-572864e88ed0",
-    "icon": "В",
-    "type": "BUILDING"
+    "name": "Корпус В",
+    "type": "BUILDING",
+    "uid": "d0a51687-c36e-48d1-acda-572864e88ed0"
   },
   {
-    "name": "Корпус Г",
     "address": "Красноказарменная ул., 17",
+    "icon": "Г",
     "location": {
       "lat": 55.754757,
       "lng": 37.709007
     },
-    "uid": "d1c3819b-fedf-4fb1-addd-7a92385859f1",
-    "icon": "Г",
-    "type": "BUILDING"
+    "name": "Корпус Г",
+    "type": "BUILDING",
+    "uid": "d1c3819b-fedf-4fb1-addd-7a92385859f1"
   },
   {
-    "name": "Корпус Д",
     "address": "Красноказарменная ул., 17",
+    "icon": "Д",
     "location": {
       "lat": 55.755035,
       "lng": 37.70995
     },
-    "uid": "61506e37-7dcd-4637-9a99-a8f3bf521687",
-    "icon": "Д",
-    "type": "BUILDING"
+    "name": "Корпус Д",
+    "type": "BUILDING",
+    "uid": "61506e37-7dcd-4637-9a99-a8f3bf521687"
   },
   {
-    "name": "Корпус Е",
     "address": "Красноказарменная ул., 13Е",
+    "icon": "Е",
     "location": {
       "lat": 55.756657,
       "lng": 37.703217
     },
-    "uid": "60f4a0f1-d04e-48b4-bca4-9e05667951aa",
-    "icon": "Е",
-    "type": "BUILDING"
+    "name": "Корпус Е",
+    "type": "BUILDING",
+    "uid": "60f4a0f1-d04e-48b4-bca4-9e05667951aa"
   },
   {
-    "name": "Корпус Ж",
     "address": "Красноказарменная ул., 14",
+    "icon": "Ж",
     "location": {
       "lat": 55.754436,
       "lng": 37.707382
     },
-    "uid": "9d1176ca-9c79-453b-8894-f777834d80c2",
-    "icon": "Ж",
-    "type": "BUILDING"
+    "name": "Корпус Ж",
+    "type": "BUILDING",
+    "uid": "9d1176ca-9c79-453b-8894-f777834d80c2"
   },
   {
-    "name": "Корпус З",
     "address": "Красноказарменная ул., 14",
+    "icon": "З",
     "location": {
       "lat": 55.75436,
       "lng": 37.706696
     },
-    "uid": "45d71165-c2c8-471c-8f09-a3efefb0e7a6",
-    "icon": "З",
-    "type": "BUILDING"
+    "name": "Корпус З",
+    "type": "BUILDING",
+    "uid": "45d71165-c2c8-471c-8f09-a3efefb0e7a6"
   },
   {
-    "name": "Корпус И",
     "address": "Красноказарменная ул., 14",
+    "icon": "И",
     "location": {
       "lat": 55.75386,
       "lng": 37.708202
     },
-    "uid": "29cf1ed6-0ce7-4d79-ab15-a23f2f5da1ea",
-    "icon": "И",
-    "type": "BUILDING"
+    "name": "Корпус И",
+    "type": "BUILDING",
+    "uid": "29cf1ed6-0ce7-4d79-ab15-a23f2f5da1ea"
   },
   {
-    "name": "Корпус К",
     "address": "Красноказарменная ул., 14",
+    "icon": "К",
     "location": {
       "lat": 55.753716,
       "lng": 37.70947
     },
-    "uid": "e5e6a456-bf68-40bf-8e62-8d31a48e491a",
-    "icon": "К",
-    "type": "BUILDING"
+    "name": "Корпус К",
+    "type": "BUILDING",
+    "uid": "e5e6a456-bf68-40bf-8e62-8d31a48e491a"
   },
   {
-    "name": "Корпус Л",
     "address": "Красноказарменная ул., 14",
+    "icon": "Л",
     "location": {
       "lat": 55.75338,
       "lng": 37.70971
     },
-    "uid": "e200cdc5-fce7-4fe1-9cdc-8b299f96a7e2",
-    "icon": "Л",
-    "type": "BUILDING"
+    "name": "Корпус Л",
+    "type": "BUILDING",
+    "uid": "e200cdc5-fce7-4fe1-9cdc-8b299f96a7e2"
   },
   {
-    "name": "Корпус М",
     "address": "Красноказарменная ул., 13",
+    "icon": "М",
     "location": {
       "lat": 55.756165,
       "lng": 37.704384
     },
-    "uid": "3015d6f3-7cb5-47a3-8755-386ccb17a415",
-    "icon": "М",
-    "type": "BUILDING"
+    "name": "Корпус М",
+    "type": "BUILDING",
+    "uid": "3015d6f3-7cb5-47a3-8755-386ccb17a415"
   },
   {
-    "name": "Корпус Н",
     "address": "Красноказарменная ул., 13Н",
+    "icon": "Н",
     "location": {
       "lat": 55.757244,
       "lng": 37.703747
     },
-    "uid": "e0f8eb9f-779e-473a-b01f-5d2e3007ed4f",
-    "icon": "Н",
-    "type": "BUILDING"
+    "name": "Корпус Н",
+    "type": "BUILDING",
+    "uid": "e0f8eb9f-779e-473a-b01f-5d2e3007ed4f"
   },
   {
-    "name": "Корпус Р",
     "address": "Красноказарменная ул., 14с10",
+    "icon": "Р",
     "location": {
       "lat": 55.753757,
       "lng": 37.70681
     },
-    "uid": "bb4ee1c6-c501-4f8d-b94a-c00586a6087a",
-    "icon": "Р",
-    "type": "BUILDING"
+    "name": "Корпус Р",
+    "type": "BUILDING",
+    "uid": "bb4ee1c6-c501-4f8d-b94a-c00586a6087a"
   },
   {
-    "name": "Корпус С",
     "address": "Красноказарменная ул., 13С",
+    "icon": "С",
     "location": {
       "lat": 55.757496,
       "lng": 37.70253
     },
-    "uid": "cbb5df45-8c6d-4f97-aa64-3e382bb06b26",
-    "icon": "С",
-    "type": "BUILDING"
+    "name": "Корпус С",
+    "type": "BUILDING",
+    "uid": "cbb5df45-8c6d-4f97-aa64-3e382bb06b26"
   },
   {
-    "name": "Корпус Т",
     "address": "Красноказарменная ул., 17Т",
+    "icon": "Т",
     "location": {
       "lat": 55.756386,
       "lng": 37.70901
     },
-    "uid": "7d50c2d5-cc6a-4f26-8571-cece500bdb3f",
-    "icon": "Т",
-    "type": "BUILDING"
+    "name": "Корпус Т",
+    "type": "BUILDING",
+    "uid": "7d50c2d5-cc6a-4f26-8571-cece500bdb3f"
   },
   {
-    "name": "Корпус Ф",
     "address": "Энергетический пр-д, 3, стр. 2",
+    "icon": "Ф",
     "location": {
       "lat": 55.757786,
       "lng": 37.7056
     },
-    "uid": "b78ded15-6b7f-4f95-895c-e3e911d752bf",
-    "icon": "Ф",
-    "type": "BUILDING"
+    "name": "Корпус Ф",
+    "type": "BUILDING",
+    "uid": "b78ded15-6b7f-4f95-895c-e3e911d752bf"
   },
   {
-    "name": "Корпус Х",
     "address": "Красноказарменная ул., 17Х",
+    "icon": "Х",
     "location": {
       "lat": 55.755997,
       "lng": 37.708282
     },
-    "uid": "6bfdcf78-4b47-4b65-b261-bffddbd1df46",
-    "icon": "Х",
-    "type": "BUILDING"
+    "name": "Корпус Х",
+    "type": "BUILDING",
+    "uid": "6bfdcf78-4b47-4b65-b261-bffddbd1df46"
   },
   {
-    "name": "Корпус Э",
     "address": "Красноказарменная ул., 13",
+    "icon": "Э",
     "location": {
       "lat": 55.756287,
       "lng": 37.703957
     },
-    "uid": "87bfb19b-f705-4848-9af7-514453db66f6",
-    "icon": "Э",
-    "type": "BUILDING"
+    "name": "Корпус Э",
+    "type": "BUILDING",
+    "uid": "87bfb19b-f705-4848-9af7-514453db66f6"
   },
   {
-    "name": "10-ое общежитие",
     "address": "Энергетическая 10к1",
     "location": {
       "lat": 55.759777,
       "lng": 37.705887
     },
-    "uid": "6e899202-bde1-4729-902d-a23bc391b9cf",
-    "type": "HOSTEL"
+    "name": "10-ое общежитие",
+    "type": "HOSTEL",
+    "uid": "6e899202-bde1-4729-902d-a23bc391b9cf"
   },
   {
-    "name": "14-ое общежитие",
     "address": "Энергетическая 14",
     "location": {
       "lat": 55.759193,
       "lng": 37.70811
     },
-    "uid": "830953d9-0f84-4674-a5ed-10f5064c420b",
-    "type": "HOSTEL"
+    "name": "14-ое общежитие",
+    "type": "HOSTEL",
+    "uid": "830953d9-0f84-4674-a5ed-10f5064c420b"
   },
   {
-    "name": "18-ое общежитие",
     "address": "Энергетическая 18",
     "location": {
       "lat": 55.75742,
       "lng": 37.71289
     },
-    "uid": "635e9762-d486-4159-9a4d-beca90bf008c",
-    "type": "HOSTEL"
+    "name": "18-ое общежитие",
+    "type": "HOSTEL",
+    "uid": "635e9762-d486-4159-9a4d-beca90bf008c"
   },
   {
-    "name": "6-ое общежитие",
     "address": "Энергетическая 6",
     "location": {
       "lat": 55.760616,
       "lng": 37.70417
     },
-    "uid": "aaf9b55a-9114-4bf9-bffd-05b4a57c5ab8",
-    "type": "HOSTEL"
+    "name": "6-ое общежитие",
+    "type": "HOSTEL",
+    "uid": "aaf9b55a-9114-4bf9-bffd-05b4a57c5ab8"
   },
   {
-    "name": "Синичка 1",
     "address": "1-ая Синичкина 3к1",
     "location": {
       "lat": 55.766006,
       "lng": 37.705494
     },
-    "uid": "7e166832-9578-4cc8-bd0c-ac865a093b2d",
-    "type": "HOSTEL"
+    "name": "Синичка 1",
+    "type": "HOSTEL",
+    "uid": "7e166832-9578-4cc8-bd0c-ac865a093b2d"
   },
   {
-    "name": "Синичка 1А",
     "address": "1-ая Синичкина 3к1А",
     "location": {
       "lat": 55.76645,
       "lng": 37.704987
     },
-    "uid": "da9211af-a24e-4eb6-b1ba-e7303a03a6fe",
-    "type": "HOSTEL"
+    "name": "Синичка 1А",
+    "type": "HOSTEL",
+    "uid": "da9211af-a24e-4eb6-b1ba-e7303a03a6fe"
   },
   {
-    "name": "Санаторий-Профилакторий МЭИ",
     "address": "Энергетическая ул. 8к3",
+    "icon": ":massage:",
     "location": {
       "lat": 55.759653,
       "lng": 37.704519
     },
-    "uid": "3f84d09d-6d55-4a85-a60e-2e9d534753ef",
-    "icon": ":massage:",
-    "type": "OTHER"
+    "name": "Санаторий-Профилакторий МЭИ",
+    "type": "OTHER",
+    "uid": "3f84d09d-6d55-4a85-a60e-2e9d534753ef"
   },
   {
-    "name": "Библиотека",
     "address": "Корпус М",
+    "icon": ":library:",
     "location": {
       "lat": 55.756165,
       "lng": 37.704384
     },
-    "uid": "8bfc8987-cb0a-4dfd-8b04-5ace5e4cb085",
-    "icon": ":library:",
-    "type": "OTHER"
+    "name": "Библиотека",
+    "type": "OTHER",
+    "uid": "8bfc8987-cb0a-4dfd-8b04-5ace5e4cb085"
   },
   {
-    "name": "Студенческий городок \"Лефортово\"",
     "address": "Энергетическая 6",
+    "icon": ":hostels:",
     "location": {
       "lat": 55.760616,
       "lng": 37.70417
     },
-    "uid": "af8e23f9-f08c-4044-bc75-7d1c3712be67",
-    "icon": ":hostels:",
-    "type": "OTHER"
+    "name": "Студенческий городок \"Лефортово\"",
+    "type": "OTHER",
+    "uid": "af8e23f9-f08c-4044-bc75-7d1c3712be67"
   },
   {
-    "name": "Бывший хлебзавод",
     "address": "ул. Красноказарменная, 15",
+    "icon": "",
     "location": {
       "lat": 55.756075,
       "lng": 37.705888
     },
-    "uid": "5eaf4ef8-1eec-496b-bb2b-db76a3930669",
-    "icon": "",
-    "type": "OTHER"
+    "name": "Бывший хлебзавод",
+    "type": "OTHER",
+    "uid": "5eaf4ef8-1eec-496b-bb2b-db76a3930669"
   },
   {
-    "name": "Сачок",
     "address": "Возле колонн главного корпуса",
     "location": {
       "lat": 55.754698,
       "lng": 37.70788
     },
-    "uid": "67a60492-1ae7-4e68-bf98-f3640d8b40c9",
-    "type": "OTHER"
+    "name": "Сачок",
+    "type": "OTHER",
+    "uid": "67a60492-1ae7-4e68-bf98-f3640d8b40c9"
   },
   {
-    "name": "Бывшее здание Кирпича",
     "address": "На выходе из курпуса А",
+    "icon": ":block:",
     "location": {
       "lat": 55.756639,
       "lng": 37.707525
     },
-    "uid": "1bb73d2e-a7dd-4ba7-b28c-4f0c15bb69e3",
-    "icon": ":block:",
-    "type": "OTHER"
+    "name": "Бывшее здание Кирпича",
+    "type": "OTHER",
+    "uid": "1bb73d2e-a7dd-4ba7-b28c-4f0c15bb69e3"
   },
   {
-    "name": "СКБ МЭИ",
     "address": "Красноказарменная ул., 17Г, строение 3",
+    "icon": ":force:",
     "location": {
       "lat": 55.756494,
       "lng": 37.711079
     },
-    "uid": "9fef85eb-c6b8-4751-a73c-628790808d8c",
-    "icon": ":force:",
-    "type": "OTHER"
+    "name": "СКБ МЭИ",
+    "type": "OTHER",
+    "uid": "9fef85eb-c6b8-4751-a73c-628790808d8c"
   },
   {
-    "name": "ДК МЭИ",
     "address": "Энергетический проезд 3, строение 1",
+    "icon": ":masks:",
     "location": {
       "lat": 55.75743,
       "lng": 37.708301
     },
-    "uid": "406c2755-f1b3-4c07-841f-dc59af788988",
-    "icon": ":masks:",
-    "type": "OTHER"
+    "name": "ДК МЭИ",
+    "type": "OTHER",
+    "uid": "406c2755-f1b3-4c07-841f-dc59af788988"
   },
   {
-    "name": "Стрелковый тир МЭИ",
     "address": "Красноказарменная ул. 13, строение 4",
+    "icon": ":pistol:",
     "location": {
       "lat": 55.757151,
       "lng": 37.704905
     },
-    "uid": "bb5dc769-152d-4f15-81c2-2822c84a17cd",
-    "icon": ":pistol:",
-    "type": "OTHER"
+    "name": "Стрелковый тир МЭИ",
+    "type": "OTHER",
+    "uid": "bb5dc769-152d-4f15-81c2-2822c84a17cd"
   },
   {
-    "name": "Самолеты и вертолет",
     "address": "Красноказарменная ул. 13, возле корпуса С",
     "location": {
       "lat": 55.756771,
       "lng": 37.702126
     },
-    "uid": "8b84c3b1-da97-4551-a6cc-46f139d0f93b",
-    "type": "OTHER"
+    "name": "Самолеты и вертолет",
+    "type": "OTHER",
+    "uid": "8b84c3b1-da97-4551-a6cc-46f139d0f93b"
   },
   {
-    "name": "Кафедра робототехники, мехатроники, динамики и прочности машин (РМДиПМ)",
     "address": "Корпус С, ауд. С-212, С-216",
     "location": {
       "lat": 55.757537,
       "lng": 37.702341
     },
-    "uid": "a34c9c57-9ca6-43e9-b97e-fc25658e16ca",
+    "name": "Кафедра робототехники, мехатроники, динамики и прочности машин (РМДиПМ)",
     "tag": "ЭнМИ",
-    "type": "STRUCTURE"
+    "type": "STRUCTURE",
+    "uid": "a34c9c57-9ca6-43e9-b97e-fc25658e16ca"
   },
   {
-    "name": "Кафедра технологии металлов (ТМ)",
     "address": "Корпус Б, ауд. Б-102",
     "location": {
       "lat": 55.75546,
       "lng": 37.707151
     },
-    "uid": "8b58573b-8cbd-47e7-957c-b2f6c0b61c39",
+    "name": "Кафедра технологии металлов (ТМ)",
     "tag": "ЭнМИ",
-    "type": "STRUCTURE"
+    "type": "STRUCTURE",
+    "uid": "8b58573b-8cbd-47e7-957c-b2f6c0b61c39"
   },
   {
-    "name": "Кафедра паровых и газовых турбин (ПГТ)",
     "address": "Корпус В, Кафедра ПГТ",
     "location": {
       "lat": 55.754633,
       "lng": 37.709533
     },
-    "uid": "c2fb85e1-78a5-427e-880a-741296532d8c",
+    "name": "Кафедра паровых и газовых турбин (ПГТ)",
     "tag": "ЭнМИ",
-    "type": "STRUCTURE"
+    "type": "STRUCTURE",
+    "uid": "c2fb85e1-78a5-427e-880a-741296532d8c"
   },
   {
-    "name": "НИО Научно-исследовательский и учебный центр геотермальной энергетики (НУЦ ГЕО)",
     "address": "Здание ТЭЦ МЭИ, 3 этаж",
     "location": {
       "lat": 55.756462,
       "lng": 37.708921
     },
-    "uid": "f2b7745d-3108-4fd6-ad8d-fd8bde08191b",
+    "name": "НИО Научно-исследовательский и учебный центр геотермальной энергетики (НУЦ ГЕО)",
     "tag": "ЭнМИ",
-    "type": "STRUCTURE"
+    "type": "STRUCTURE",
+    "uid": "f2b7745d-3108-4fd6-ad8d-fd8bde08191b"
   },
   {
-    "name": "Кафедра моделирования и проектирования энергетических установок (МиПЭУ)",
     "address": "Корпус В, ауд. В-314",
     "location": {
       "lat": 55.754922,
       "lng": 37.70846
     },
-    "uid": "df89abe0-4440-43f8-a237-015b5ab9970a",
+    "name": "Кафедра моделирования и проектирования энергетических установок (МиПЭУ)",
     "tag": "ЭнМИ",
-    "type": "STRUCTURE"
+    "type": "STRUCTURE",
+    "uid": "df89abe0-4440-43f8-a237-015b5ab9970a"
   },
   {
-    "name": "Кафедра автоматизированных систем управления тепловыми процессами (АСУТП)",
     "address": "Корпус В, ауд. В-210",
     "location": {
       "lat": 55.755144,
       "lng": 37.708459
     },
-    "uid": "2dd8f3ac-a431-42da-881b-999008de69ef",
+    "name": "Кафедра автоматизированных систем управления тепловыми процессами (АСУТП)",
     "tag": "ИТАЭ",
-    "type": "STRUCTURE"
+    "type": "STRUCTURE",
+    "uid": "2dd8f3ac-a431-42da-881b-999008de69ef"
   },
   {
-    "name": "Кафедра атомных электрических станций (АЭС)",
     "address": "Корпус Т, каб. Т-302",
     "location": {
       "lat": 55.756326,
       "lng": 37.709149
     },
-    "uid": "9e297cce-fb27-4578-bb7d-533ad892cf76",
+    "name": "Кафедра атомных электрических станций (АЭС)",
     "tag": "ИТАЭ",
-    "type": "STRUCTURE"
+    "type": "STRUCTURE",
+    "uid": "9e297cce-fb27-4578-bb7d-533ad892cf76"
   },
   {
-    "name": "Кафедра инженерной теплофизики им. В.А. Кириллина (ИТФ)",
     "address": "Корпус Т, ауд. Т-205",
     "location": {
       "lat": 55.756187,
       "lng": 37.709411
     },
-    "uid": "12ca40fa-f7d3-462d-827a-ee5f84fbfd02",
+    "name": "Кафедра инженерной теплофизики им. В.А. Кириллина (ИТФ)",
     "tag": "ИТАЭ",
-    "type": "STRUCTURE"
+    "type": "STRUCTURE",
+    "uid": "12ca40fa-f7d3-462d-827a-ee5f84fbfd02"
   },
   {
-    "name": "Кафедра низких температур (НТ)",
     "address": "Корпус М, 4 этаж",
     "location": {
       "lat": 55.756529,
       "lng": 37.704264
     },
-    "uid": "212c0e08-742a-4dc6-b084-a0042c4da356",
+    "name": "Кафедра низких температур (НТ)",
     "tag": "ИТАЭ",
-    "type": "STRUCTURE"
+    "type": "STRUCTURE",
+    "uid": "212c0e08-742a-4dc6-b084-a0042c4da356"
   },
   {
-    "name": "Кафедра общей физики и ядерного синтеза (ОФиЯС)",
     "address": "Корпус А, ауд. А-110",
     "location": {
       "lat": 55.755876,
       "lng": 37.707736
     },
-    "uid": "31ded45a-d895-4681-9287-9fe0aba74e3c",
+    "name": "Кафедра общей физики и ядерного синтеза (ОФиЯС)",
     "tag": "ИТАЭ",
-    "type": "STRUCTURE"
+    "type": "STRUCTURE",
+    "uid": "31ded45a-d895-4681-9287-9fe0aba74e3c"
   },
   {
-    "name": "Кафедра теоретических основ теплотехники им.Вукаловича (ТОТ)",
     "address": "Корпус В, ауд. В-209, ауд. В-416",
     "location": {
       "lat": 55.755522,
       "lng": 37.708903
     },
-    "uid": "e3ae0eae-f481-4c65-9792-ce5143f07c1e",
+    "name": "Кафедра теоретических основ теплотехники им.Вукаловича (ТОТ)",
     "tag": "ИТАЭ",
-    "type": "STRUCTURE"
+    "type": "STRUCTURE",
+    "uid": "e3ae0eae-f481-4c65-9792-ce5143f07c1e"
   },
   {
-    "name": "Кафедра тепловых электрических станций (ТЭС)",
     "address": "Корпус Т, ауд. Т-509",
     "location": {
       "lat": 55.756443,
       "lng": 37.708661
     },
-    "uid": "23e1b130-32d4-4870-b0ac-8eee3fbe5daf",
+    "name": "Кафедра тепловых электрических станций (ТЭС)",
     "tag": "ИТАЭ",
-    "type": "STRUCTURE"
+    "type": "STRUCTURE",
+    "uid": "23e1b130-32d4-4870-b0ac-8eee3fbe5daf"
   }
 ]
