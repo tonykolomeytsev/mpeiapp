@@ -1,4 +1,6 @@
-apply from: "$gradleDir/domain-android-module.gradle"
+plugins {
+    id("mpeix.android")
+}
 
 dependencies {
     implementation timber

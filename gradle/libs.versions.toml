@@ -1,0 +1,7 @@
+[versions]
+
+agp = "7.2.1" # android gradle plugin
+minSdk = "21"
+targetSdk = "32"
+buildTools = "33.0.0"
+kotlin = "1.7.0"

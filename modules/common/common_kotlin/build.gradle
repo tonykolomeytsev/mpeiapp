@@ -1,7 +1,7 @@
-apply from: "$gradleDir/kotlin-module.gradle"
+plugins {
+    id("mpeix.kotlin")
+}
 
 dependencies {
-    implementation androidx.appcompat
-    implementation androidx.coreKtx
     implementation rx.java
 }
