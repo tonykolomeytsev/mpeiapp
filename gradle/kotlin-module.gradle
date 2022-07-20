@@ -2,5 +2,5 @@ apply plugin: "java"
 apply plugin: "java-library"
 apply plugin: "kotlin"
 
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
