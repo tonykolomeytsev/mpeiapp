@@ -71,5 +71,5 @@ if current_marker is not None:
 
 import json
 output_file = open("markers.json", "w")
-output_file.write(json.dumps(markers, ensure_ascii=False))
+output_file.write(json.dumps(markers, ensure_ascii=False, indent=2, sort_keys=True))
 output_file.close()

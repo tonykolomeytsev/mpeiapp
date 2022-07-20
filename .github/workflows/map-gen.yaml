@@ -1,9 +1,4 @@
-on:
-  push:
-    paths:
-      - 'statics/map/README.md'
-      - 'statics/map/markers_gen.py'
-      - '.github/workflows/map-gen.yaml'
+on: workflow_dispatch
 
 jobs:
   map-gen:
@@ -30,6 +25,7 @@ jobs:
         uses: peter-evans/create-pull-request@v4
         with:
           commit-message: Update map markers.json
-          branch: map-gen/update-
+          branch: map-gen/update
           branch-suffix: short-commit-hash
           title: Update map markers.json
+          body: Auto-generated changes for markers.json
