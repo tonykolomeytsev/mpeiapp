@@ -10,12 +10,14 @@ pluginManagement {
      * and the Maven Central Repository as the repositories Gradle should use to look for its dependencies.
      */
 
-    includeBuild("plugins")
     repositories {
         gradlePluginPortal()
         google()
         mavenCentral()
         maven { url = java.net.URI("https://jitpack.io") }
+    }
+    plugins {
+        id("org.jetbrains.kotlin.jvm") version "1.7.0"
     }
 }
 
@@ -41,17 +43,4 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "mpeix"
-
-File(rootProject.projectDir, "modules").walk()
-    .filter { it.isBuildGradleScript() }
-    .filter { it != rootProject.buildFile }
-    .mapNotNull { it.parentFile }
-    .forEach { moduleDir ->
-        val moduleName = ":${moduleDir.name}"
-        include(moduleName)
-        project(moduleName).projectDir = moduleDir
-    }
-
-fun File.isBuildGradleScript(): Boolean =
-    isFile && name.matches("build\\.gradle(\\.kts)?".toRegex())
+include(":libs")
