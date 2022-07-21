@@ -83,3 +83,8 @@ squareup-okhttp-logger = { module = "com.squareup.okhttp3:logging-interceptor", 
 vivid-elmslie-core = { module = "com.github.vivid-money.elmslie:elmslie-core", version.ref = "elmslie" }
 vivid-elmslie-android = { module = "com.github.vivid-money.elmslie:elmslie-android", version.ref = "elmslie" }
 vivid-elmslie-storeHolder = { module = "com.github.vivid-money.elmslie:elmslie-store-persisting", version.ref = "elmslie" }
+
+# Kotest Libraries
+kotest-runner = { module = "io.kotest:kotest-runner-junit5", version = "4.4.1" }
+kotest-assertions = { module = "io.kotest:kotest-assertions-core", version = "4.4.1" }
+kotest-property = { module = "io.kotest:kotest-property", version = "4.4.2" }
