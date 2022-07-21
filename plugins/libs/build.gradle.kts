@@ -22,6 +22,13 @@ gradlePlugin {
         description = "Gradle Plugin for setting up android library module"
         implementationClass = "mpeix.plugins.AndroidModulePlugin"
     }
+    plugins.create("mpeixComposeAndroidModulePlugin") {
+        id = "mpeix.android.compose"
+        displayName = "MpeiX Compose Android Library Plugin"
+        description =
+            "Gradle Plugin for setting up android library module with Compose dependencies"
+        implementationClass = "mpeix.plugins.ComposeAndroidModulePlugin"
+    }
     plugins.create("mpeixKotlinModulePlugin") {
         id = "mpeix.kotlin"
         displayName = "Mpeix Kotlin Plugin"
