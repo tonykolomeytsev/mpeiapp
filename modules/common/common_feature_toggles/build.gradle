@@ -1,9 +1,0 @@
-plugins {
-    id("mpeix.kotlin")
-}
-
-dependencies {
-    implementation koin.core
-
-    implementation project(path: ":common_di")
-}

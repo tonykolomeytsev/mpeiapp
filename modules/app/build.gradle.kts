@@ -26,7 +26,11 @@ android {
             applicationIdSuffix = ".dev"
         }
         configureEach {
-            resValue("string", "google_maps_api_key", project.property("mpeiapp_google_maps_api_key").toString())
+            resValue(
+                "string",
+                "google_maps_api_key",
+                project.property("mpeiapp_google_maps_api_key").toString()
+            )
         }
     }
     buildFeatures {

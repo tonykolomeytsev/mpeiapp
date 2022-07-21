@@ -3,5 +3,5 @@ plugins {
 }
 
 dependencies {
-    implementation rx.java
+    implementation(libs.rx.java)
 }
