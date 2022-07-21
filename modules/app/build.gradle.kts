@@ -5,6 +5,8 @@ plugins {
     id("com.google.firebase.crashlytics")
 }
 
+apply(from = "${rootProject.projectDir}/gradle/ci.gradle")
+
 android {
 
     defaultConfig {
