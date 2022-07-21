@@ -1,4 +1,8 @@
-apply from: "$gradleDir/feature-android-module.gradle"
+plugins {
+    id("mpeix.android")
+}
+
+android.viewBinding.setEnabled(true)
 
 dependencies {
     implementation kotlinStdLib

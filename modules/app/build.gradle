@@ -20,13 +20,14 @@ android {
         release {
             minifyEnabled true
             shrinkResources true
-            resValue('string', 'google_maps_api_key', mpeiapp_google_maps_api_key)
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
             minifyEnabled false
-            resValue('string', 'google_maps_api_key', mpeiapp_google_maps_api_key)
             applicationIdSuffix ".dev"
+        }
+        configureEach {
+            resValue('string', 'google_maps_api_key', mpeiapp_google_maps_api_key)
         }
     }
     buildFeatures {

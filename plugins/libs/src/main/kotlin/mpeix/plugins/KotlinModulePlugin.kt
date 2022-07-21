@@ -7,6 +7,7 @@ import org.gradle.api.tasks.compile.JavaCompile
 import org.gradle.api.tasks.testing.Test
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+@Suppress("unused")
 class KotlinModulePlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
