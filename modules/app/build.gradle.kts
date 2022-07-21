@@ -41,7 +41,6 @@ android {
 }
 
 dependencies {
-    coreLibraryDesugaring(libs.desugaring)
     implementation(libs.androidx.lifecycleCommonJava8)
 
     // Koin for Kotlin Android
