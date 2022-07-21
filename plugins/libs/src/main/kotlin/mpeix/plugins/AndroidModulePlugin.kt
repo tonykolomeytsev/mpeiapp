@@ -1,6 +1,7 @@
 package mpeix.plugins
 
 import com.android.build.gradle.LibraryExtension
+import mpeix.plugins.ext.requiredVersion
 import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -9,6 +10,7 @@ import org.gradle.api.artifacts.dsl.DependencyHandler
 import org.gradle.api.tasks.testing.Test
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+@Suppress("unused")
 class AndroidModulePlugin : Plugin<Project> {
 
     private val jvmTarget = JavaVersion.VERSION_11
@@ -23,9 +25,11 @@ class AndroidModulePlugin : Plugin<Project> {
         val catalog = target.extensions.getByType(VersionCatalogsExtension::class.java).named("libs")
         target.extensions.configure(LibraryExtension::class.java) { extension ->
             extension.configure(
-                minSdk = catalog.findVersion("minSdk").get().requiredVersion.toInt(),
-                targetSdk = catalog.findVersion("targetSdk").get().requiredVersion.toInt(),
-                buildTools = catalog.findVersion("buildTools").get().requiredVersion,
+                minSdk = catalog.requiredVersion("minSdk").toInt(),
+                targetSdk = catalog.requiredVersion("targetSdk").toInt(),
+                buildTools = catalog.requiredVersion("buildTools"),
+                appVersionName = catalog.requiredVersion("appVersionName"),
+                appVersionCode = catalog.requiredVersion("appVersionCode").toInt(),
             )
         }
         target.tasks.withType(KotlinCompile::class.java) { task ->
@@ -46,12 +50,26 @@ class AndroidModulePlugin : Plugin<Project> {
         minSdk: Int,
         targetSdk: Int,
         buildTools: String,
+        appVersionName: String,
+        appVersionCode: Int,
     ) {
         setCompileSdkVersion(targetSdk)
         buildToolsVersion = buildTools
         defaultConfig { config ->
             config.minSdk = minSdk
             config.targetSdk = targetSdk
+            config.versionName = appVersionName
+            config.versionCode = appVersionCode
+        }
+        // add app version name as a BuildConfig fields
+        buildTypes {
+            configureEach { buildType ->
+                buildType.buildConfigField(
+                    type = "String",
+                    name = "VERSION_NAME",
+                    value = "\"$appVersionName\"",
+                )
+            }
         }
         compileOptions { options ->
             options.targetCompatibility = jvmTarget
