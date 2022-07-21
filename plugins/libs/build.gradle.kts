@@ -10,9 +10,15 @@ dependencies {
 }
 
 gradlePlugin {
+    plugins.create("mpeixBaseAndroidModulePlugin") {
+        id = "mpeix.android.base"
+        displayName = "MpeiX Android Base Plugin"
+        description = "Gradle Plugin for setting up any android module"
+        implementationClass = "mpeix.plugins.BaseAndroidModulePlugin"
+    }
     plugins.create("mpeixAndroidModulePlugin") {
         id = "mpeix.android"
-        displayName = "MpeiX Android Plugin"
+        displayName = "MpeiX Android Library Plugin"
         description = "Gradle Plugin for setting up android library module"
         implementationClass = "mpeix.plugins.AndroidModulePlugin"
     }
