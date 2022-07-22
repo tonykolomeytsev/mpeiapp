@@ -4,13 +4,13 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
 import kekmech.ru.common_android.getStringArray
-import kekmech.ru.feature_schedule.R
+import kekmech.ru.coreui.R as coreui_R
 
 internal class GroupFormatTextWatcher(
     private val editText: EditText
 ) : TextWatcher {
 
-    private val facultyLabels = editText.context.getStringArray(R.array.faculties_labels)
+    private val facultyLabels = editText.context.getStringArray(coreui_R.array.faculties_labels)
         .sortedByDescending { it.length }
 
     override fun afterTextChanged(s: Editable?) = Unit

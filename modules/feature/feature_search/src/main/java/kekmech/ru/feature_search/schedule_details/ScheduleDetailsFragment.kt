@@ -23,6 +23,8 @@ import kekmech.ru.coreui.items.*
 import kekmech.ru.domain_schedule.dto.Classes
 import kekmech.ru.domain_schedule.dto.SearchResult
 import kekmech.ru.feature_search.R
+import kekmech.ru.coreui.R as coreui_R
+import kekmech.ru.common_schedule.R as common_schedule_R
 import kekmech.ru.feature_search.databinding.FragmentScheduleDetailsBinding
 import kekmech.ru.feature_search.item.ButtonAdapterItem
 import kekmech.ru.feature_search.item.WeekMinItem
@@ -87,7 +89,7 @@ internal class ScheduleDetailsFragment :
         TextAdapterItem(),
         SpaceAdapterItem(),
         PullAdapterItem(),
-        ShimmerAdapterItem(R.layout.item_text_shimmer),
+        ShimmerAdapterItem(coreui_R.layout.item_text_shimmer),
         ShimmerAdapterItem(R.layout.item_week_shimmer),
         ShimmerAdapterItem(R.layout.item_classes_shimmer),
         ButtonAdapterItem(ITEM_BUTTON_SWITCH, R.layout.item_button) {
@@ -114,7 +116,7 @@ internal class ScheduleDetailsFragment :
         ),
         AdapterItem(
             isType = { it is Classes },
-            layoutRes = R.layout.item_classes_padding_horisontal_16dp,
+            layoutRes = common_schedule_R.layout.item_classes_padding_horisontal_16dp,
             viewHolderGenerator = ::ClassesViewHolderImpl,
             itemBinder = ClassesItemBinder(requireContext()) { /* no-op */ }
         ),

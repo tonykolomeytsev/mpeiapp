@@ -11,6 +11,8 @@ import kekmech.ru.common_android.getStringArray
 import kekmech.ru.common_android.getThemeColor
 import kekmech.ru.common_android.moscowLocalDate
 import kekmech.ru.common_schedule.R
+import kekmech.ru.strings.StringArrays
+import kekmech.ru.coreui.R as coreui_R
 import java.time.LocalDate
 
 data class DayItem(
@@ -66,13 +68,13 @@ class DayViewHolderImpl(
         viewBackground.isVisible = isSelected
         val context = containerView.context
         if (isSelected) {
-            textDayOfMonth.setTextColor(context.getThemeColor(R.attr.colorWhite))
-            textDayOfWeek.setTextColor(context.getThemeColor(R.attr.colorWhite))
-            textMonthName.setTextColor(context.getThemeColor(R.attr.colorWhite))
+            textDayOfMonth.setTextColor(context.getThemeColor(coreui_R.attr.colorWhite))
+            textDayOfWeek.setTextColor(context.getThemeColor(coreui_R.attr.colorWhite))
+            textMonthName.setTextColor(context.getThemeColor(coreui_R.attr.colorWhite))
         } else {
-            textDayOfMonth.setTextColor(context.getThemeColor(R.attr.colorGray90))
-            textDayOfWeek.setTextColor(context.getThemeColor(R.attr.colorGray90))
-            textMonthName.setTextColor(context.getThemeColor(R.attr.colorGray70))
+            textDayOfMonth.setTextColor(context.getThemeColor(coreui_R.attr.colorGray90))
+            textDayOfWeek.setTextColor(context.getThemeColor(coreui_R.attr.colorGray90))
+            textMonthName.setTextColor(context.getThemeColor(coreui_R.attr.colorGray70))
         }
     }
 
@@ -87,8 +89,8 @@ class DayItemBinder(
     private val onDayClickListener: (DayItem) -> Unit
 ) : BaseItemBinder<DayViewHolder, DayItem>() {
 
-    private val dayNames = context.getStringArray(R.array.days_of_week_short)
-    private val monthNames = context.getStringArray(R.array.months_short)
+    private val dayNames = context.getStringArray(StringArrays.days_of_week_short)
+    private val monthNames = context.getStringArray(StringArrays.months_short)
 
     override fun bind(vh: DayViewHolder, model: DayItem, position: Int) {
         val dayName = dayNames.getOrNull(model.date.dayOfWeek.value).orEmpty()

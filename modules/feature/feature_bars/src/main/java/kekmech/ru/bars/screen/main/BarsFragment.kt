@@ -16,6 +16,7 @@ import androidx.core.view.forEach
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import kekmech.ru.bars.R
+import kekmech.ru.coreui.R as coreui_R
 import kekmech.ru.bars.databinding.FragmentBarsBinding
 import kekmech.ru.bars.items.AssessedDisciplineAdapterItem
 import kekmech.ru.bars.items.LoginToBarsAdapterItem
@@ -295,7 +296,7 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), 
             feature.accept(Wish.Click.Login)
         },
         EmptyStateAdapterItem(),
-        ShimmerAdapterItem(R.layout.item_text_shimmer),
+        ShimmerAdapterItem(coreui_R.layout.item_text_shimmer),
         ShimmerAdapterItem(R.layout.item_discipline_shimmer),
         ShimmerAdapterItem(R.layout.item_login_to_bars_shimmer),
     )
@@ -305,7 +306,7 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), 
     }
 
     private fun Toolbar.enableOverflowMenuColorWorkaround() {
-        val blackThemeColor = requireContext().getThemeColor(R.attr.colorBlack)
+        val blackThemeColor = requireContext().getThemeColor(coreui_R.attr.colorBlack)
         overflowIcon?.setTint(blackThemeColor)
         menu?.forEach { menuItem ->
             val spannable = menuItem.title.toSpannable()

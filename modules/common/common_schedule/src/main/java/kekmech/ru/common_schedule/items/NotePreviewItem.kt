@@ -9,6 +9,7 @@ import kekmech.ru.common_android.dpToPx
 import kekmech.ru.common_android.getResColor
 import kekmech.ru.common_android.getThemeColor
 import kekmech.ru.common_schedule.R
+import kekmech.ru.coreui.R as coreui_R
 import kekmech.ru.common_schedule.databinding.ItemNotePreviewBinding
 import kekmech.ru.common_schedule.drawable.ProgressBackgroundDrawable
 import kekmech.ru.coreui.items.ClickableItemViewHolder
@@ -42,15 +43,15 @@ class NotePreviewViewHolderImpl(
         val context = containerView.context
         val bg = containerView
         if (progress == null) {
-            bg.setBackgroundResource(R.drawable.background_classes_stack_end)
+            bg.setBackgroundResource(coreui_R.drawable.background_classes_stack_end)
             return
         }
         if (bg.background !is ProgressBackgroundDrawable) {
             val dp7 = context.resources.dpToPx(PROGRESS_BACKGROUND_CORNER_RADIUS).toFloat()
             val progressBackgroundDrawable = ProgressBackgroundDrawable(
                 context,
-                context.getThemeColor(R.attr.colorGray10),
-                context.getResColor(R.color.colorMain),
+                context.getThemeColor(coreui_R.attr.colorGray10),
+                context.getResColor(coreui_R.color.colorMain),
                 cornerRadius = ProgressBackgroundDrawable.CornerRadius(
                     topLeft = 0f,
                     topRight = 0f,

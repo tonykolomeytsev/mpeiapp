@@ -6,6 +6,7 @@ import androidx.annotation.StringRes
 import kekmech.ru.coreui.items.*
 import kekmech.ru.feature_app_settings.BuildConfig
 import kekmech.ru.feature_app_settings.R
+import kekmech.ru.coreui.R as coreui_R
 import kekmech.ru.feature_app_settings.screens.main.AppSettingsFragment.Companion.ITEM_GITHUB
 import kekmech.ru.feature_app_settings.screens.main.AppSettingsFragment.Companion.ITEM_SUPPORT
 import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsState
@@ -98,7 +99,7 @@ internal class AppSettingsListConverter {
                 ))
                 add(TextItem(
                     text = "Нужно перезагрузить приложение, для того чтобы настройка вступила в силу",
-                    styleResId = R.style.H8_Gray70_Medium
+                    styleResId = coreui_R.style.H8_Gray70_Medium
                 ))
             }
 
@@ -112,7 +113,7 @@ internal class AppSettingsListConverter {
         val versionName = BuildConfig.VERSION_NAME
         return TextItem(
             text = context.getString(Strings.app_settings_app_version, versionName),
-            styleResId = R.style.H6_Gray70,
+            styleResId = coreui_R.style.H6_Gray70,
             textGravity = Gravity.CENTER
         )
     }
@@ -129,7 +130,7 @@ internal class AppSettingsListConverter {
         ))
         add(TextItem(
             textResId = Strings.app_settings_section_lang_description,
-            styleResId = R.style.H8_Gray70_Medium
+            styleResId = coreui_R.style.H8_Gray70_Medium
         ))
     }
 
@@ -152,7 +153,7 @@ internal class AppSettingsListConverter {
         @StringRes descriptionResId: Int,
     ) {
         add(ToggleItem(itemId = itemId, titleRes = toggleTextResId, isChecked = isChecked))
-        add(TextItem(textResId = descriptionResId, styleResId = R.style.H8_Gray70_Medium))
+        add(TextItem(textResId = descriptionResId, styleResId = coreui_R.style.H8_Gray70_Medium))
     }
 
     private fun MutableList<Any>.addSection(

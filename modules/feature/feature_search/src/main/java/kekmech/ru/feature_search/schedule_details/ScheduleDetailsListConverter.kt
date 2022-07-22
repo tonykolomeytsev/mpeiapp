@@ -12,6 +12,7 @@ import kekmech.ru.common_android.getThemeColor
 import kekmech.ru.common_schedule.items.DayItem
 import kekmech.ru.coreui.items.*
 import kekmech.ru.feature_search.R
+import kekmech.ru.coreui.R as coreui_R
 import kekmech.ru.feature_search.item.ButtonItem
 import kekmech.ru.feature_search.item.WeekMinItem
 import kekmech.ru.feature_search.schedule_details.elm.ScheduleDetailsState
@@ -23,7 +24,7 @@ internal object ScheduleDetailsListConverter {
         titleRes = Strings.search_schedule_details_empty_title
     )
 
-    private val textShimmerItem = ShimmerItem(R.layout.item_text_shimmer)
+    private val textShimmerItem = ShimmerItem(coreui_R.layout.item_text_shimmer)
     private val classesShimmerItem = ShimmerItem(R.layout.item_classes_shimmer)
     private val weekShimmerItem = ShimmerItem(R.layout.item_week_shimmer)
 
@@ -38,17 +39,17 @@ internal object ScheduleDetailsListConverter {
             itemId = ITEM_FAVORITES,
             textResId = stringId,
             drawableResID = drawableId,
-            tintColorAttrId = R.attr.colorActive,
-            textStyleResId = R.style.H6_Main
+            tintColorAttrId = coreui_R.attr.colorActive,
+            textStyleResId = coreui_R.style.H6_Main
         )
     }
 
     fun map(state: ScheduleDetailsState, context: Context): List<Any> {
         return mutableListOf<Any>().apply {
             add(PullItem)
-            add(TextItem(text = state.searchResult.name, styleResId = R.style.H2))
+            add(TextItem(text = state.searchResult.name, styleResId = coreui_R.style.H2))
             add(SpaceItem.VERTICAL_12)
-            add(TextItem(text = state.searchResult.description, styleResId = R.style.H6_Gray70))
+            add(TextItem(text = state.searchResult.description, styleResId = coreui_R.style.H6_Gray70))
             add(SpaceItem.VERTICAL_8)
 
             getFavoritesItem(state.isInFavorites)?.let {
@@ -107,10 +108,10 @@ internal object ScheduleDetailsListConverter {
         builder.append(nextWeekDescription)
         return TextWithIconItem(
             text = builder,
-            textStyleResId = R.style.H7,
+            textStyleResId = coreui_R.style.H7,
             itemId = 2,
-            drawableResID = R.drawable.ic_navigation_schedule,
-            tintColorAttrId = R.attr.colorGray70
+            drawableResID = coreui_R.drawable.ic_navigation_schedule,
+            tintColorAttrId = coreui_R.attr.colorGray70
         )
     }
 
@@ -126,7 +127,7 @@ internal object ScheduleDetailsListConverter {
             SpannableString.valueOf(fullString).apply {
                 setSpan(StyleSpan(Typeface.BOLD), 0, adoptedNumber.length, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
                 setSpan(
-                    ForegroundColorSpan(context.getThemeColor(R.attr.colorBlack)),
+                    ForegroundColorSpan(context.getThemeColor(coreui_R.attr.colorBlack)),
                     0,
                     adoptedNumber.length,
                     Spannable.SPAN_INCLUSIVE_INCLUSIVE

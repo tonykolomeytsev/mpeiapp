@@ -15,6 +15,7 @@ import kekmech.ru.domain_schedule.dto.SessionItem
 import kekmech.ru.domain_schedule.dto.SessionItemType
 import kekmech.ru.feature_dashboard.R
 import kekmech.ru.feature_dashboard.databinding.ItemSessionBinding
+import kekmech.ru.strings.StringArrays
 import kekmech.ru.strings.Strings
 import java.time.format.DateTimeFormatter
 
@@ -93,7 +94,7 @@ private class SessionItemBinder(
 private class SessionDateTimeFormatter(
     context: Context
 ) {
-    private val months = context.getStringArray(R.array.months)
+    private val months = context.getStringArray(StringArrays.months)
     private val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
 
     fun format(sessionItem: SessionItem): String {

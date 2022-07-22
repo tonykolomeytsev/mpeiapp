@@ -7,6 +7,7 @@ import kekmech.ru.coreui.items.SectionHeaderItem
 import kekmech.ru.coreui.items.SpaceItem
 import kekmech.ru.notes.R
 import kekmech.ru.notes.note_list.elm.NoteListState
+import kekmech.ru.strings.Plurals
 import kekmech.ru.strings.Strings
 
 internal class NoteListConverter(private val context: Context) {
@@ -27,7 +28,7 @@ internal class NoteListConverter(private val context: Context) {
                 val size = state.notes.size
                 add(SectionHeaderItem(
                     titleRes = Strings.note_list_section_header,
-                    subtitle = context.resources.getQuantityString(R.plurals.note_list_section_subtitle, size, size)
+                    subtitle = context.resources.getQuantityString(Plurals.note_list_section_subtitle, size, size)
                 ))
                 add(SpaceItem.VERTICAL_16)
                 addAll(state.notes)

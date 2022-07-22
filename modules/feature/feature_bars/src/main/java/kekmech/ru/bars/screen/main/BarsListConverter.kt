@@ -5,6 +5,7 @@ import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
 import kekmech.ru.bars.R
+import kekmech.ru.coreui.R as coreui_R
 import kekmech.ru.bars.items.LoginToBarsItem
 import kekmech.ru.bars.items.UserNameHeaderItem
 import kekmech.ru.bars.screen.main.BarsFragment.Companion.ITEM_BROWSER_LABEL
@@ -19,13 +20,14 @@ import kekmech.ru.coreui.items.EmptyStateItem
 import kekmech.ru.coreui.items.ShimmerItem
 import kekmech.ru.coreui.items.SpaceItem
 import kekmech.ru.coreui.items.TextWithIconItem
+import kekmech.ru.strings.StringArrays
 import kekmech.ru.strings.Strings
 
 internal class BarsListConverter(private val context: Context) {
 
     private val disciplineShimmersItem =
         List(DISCIPLINE_SHIMMER_COUNT) { ShimmerItem(R.layout.item_discipline_shimmer) }
-    private val textShimmerItem = ShimmerItem(R.layout.item_text_shimmer)
+    private val textShimmerItem = ShimmerItem(coreui_R.layout.item_text_shimmer)
     private val loginShimmerItem = ShimmerItem(R.layout.item_login_to_bars_shimmer)
 
     @Suppress("NestedBlockDepth")
@@ -78,11 +80,11 @@ internal class BarsListConverter(private val context: Context) {
                         .append(" ")
                         .append(
                             it,
-                            ForegroundColorSpan(context.getThemeColor(R.attr.colorBlack)),
+                            ForegroundColorSpan(context.getThemeColor(coreui_R.attr.colorBlack)),
                             SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
                         ),
-                    drawableResID = R.drawable.ic_group_24,
-                    tintColorAttrId = R.attr.colorGray70
+                    drawableResID = coreui_R.drawable.ic_group_24,
+                    tintColorAttrId = coreui_R.attr.colorGray70
                 )
             )
         } ?: add(textShimmerItem)
@@ -94,8 +96,8 @@ internal class BarsListConverter(private val context: Context) {
                 itemId = ITEM_BROWSER_LABEL,
                 textResId = Strings.bars_stub_show_browser_label,
                 drawableResID = R.drawable.ic_public_24px,
-                tintColorAttrId = R.attr.colorActive,
-                textStyleResId = R.style.H6_Main
+                tintColorAttrId = coreui_R.attr.colorActive,
+                textStyleResId = coreui_R.style.H6_Main
             )
         )
     }
@@ -104,7 +106,7 @@ internal class BarsListConverter(private val context: Context) {
         state.userInfo?.rating?.let {
             val complexPoints =
                 DeclensionHelper.format(
-                    declensions = context.getStringArray(R.array.points_declensions),
+                    declensions = context.getStringArray(StringArrays.points_declensions),
                     n = it.complex.toLong()
                 )
             add(
@@ -115,12 +117,12 @@ internal class BarsListConverter(private val context: Context) {
                         .append(" ")
                         .append(
                             complexPoints,
-                            ForegroundColorSpan(context.getThemeColor(R.attr.colorBlack)),
+                            ForegroundColorSpan(context.getThemeColor(coreui_R.attr.colorBlack)),
                             SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
                         ),
                     drawableResID = R.drawable.ic_leaderboard_24dp,
-                    tintColorAttrId = R.attr.colorGray70,
-                    textStyleResId = R.style.H6_Main
+                    tintColorAttrId = coreui_R.attr.colorGray70,
+                    textStyleResId = coreui_R.style.H6_Main
                 )
             )
         } ?: add(textShimmerItem)

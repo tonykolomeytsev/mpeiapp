@@ -5,6 +5,7 @@ import android.view.View
 import androidx.annotation.StringRes
 import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.bars.R
+import kekmech.ru.coreui.R as coreui_R
 import kekmech.ru.bars.databinding.ItemCompositeRatingBinding
 import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseItemBinder
@@ -44,8 +45,8 @@ internal class CompositeRatingViewHolder(
         itemView.background =
             ProgressBackgroundDrawable(
                 context,
-                backgroundColor = context.getThemeColor(R.attr.colorGray10),
-                progressColor = context.getResColor(R.color.colorMain),
+                backgroundColor = context.getThemeColor(coreui_R.attr.colorGray10),
+                progressColor = context.getResColor(coreui_R.color.colorMain),
                 cornerRadius = ProgressBackgroundDrawable.CornerRadius
                     .of(context.resources.dpToPx(8f).toFloat())
             )

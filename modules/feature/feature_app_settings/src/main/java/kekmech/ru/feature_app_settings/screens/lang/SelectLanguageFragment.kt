@@ -14,6 +14,7 @@ import kekmech.ru.common_android.withArguments
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.coreui.items.*
 import kekmech.ru.feature_app_settings.R
+import kekmech.ru.coreui.R as coreui_R
 import kekmech.ru.feature_app_settings.databinding.FragmentChangeLanguageBinding
 import kekmech.ru.feature_app_settings.screens.lang.dto.LanguageEntry
 import kekmech.ru.feature_app_settings.screens.lang.item.LanguageAdapterItem
@@ -55,7 +56,7 @@ internal class SelectLanguageFragment : BottomSheetDialogFragment() {
             add(
                 TextItem(
                     textResId = Strings.change_language_disclaimer,
-                    styleResId = R.style.H6_Gray70
+                    styleResId = coreui_R.style.H6_Gray70
                 )
             )
         }

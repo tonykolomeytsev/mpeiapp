@@ -7,6 +7,7 @@ import android.text.style.ForegroundColorSpan
 import androidx.annotation.StringRes
 import androidx.core.text.HtmlCompat
 import kekmech.ru.bars.R
+import kekmech.ru.coreui.R as coreui_R
 import kekmech.ru.bars.screen.main.util.DeclensionHelper
 import kekmech.ru.bars.screen.rating_details.RatingDetailsFragment.Companion.ITEM_ID_SCIENCE
 import kekmech.ru.bars.screen.rating_details.RatingDetailsFragment.Companion.ITEM_ID_SOCIAL
@@ -17,6 +18,7 @@ import kekmech.ru.common_android.getThemeColor
 import kekmech.ru.coreui.items.SpaceItem
 import kekmech.ru.coreui.items.TextItem
 import kekmech.ru.domain_bars.dto.Rating
+import kekmech.ru.strings.StringArrays
 import kekmech.ru.strings.Strings
 
 internal class RatingDetailsListConverter(
@@ -56,12 +58,12 @@ internal class RatingDetailsListConverter(
         add(SpaceItem.VERTICAL_8)
         add(TextItem(
             textResId = Strings.bars_rating_complex_name,
-            styleResId = R.style.H4_Gray70,
+            styleResId = coreui_R.style.H4_Gray70,
         ))
 
         val complexRatingPoints =
             DeclensionHelper.format(
-                declensions = context.getStringArray(R.array.points_declensions),
+                declensions = context.getStringArray(StringArrays.points_declensions),
                 n = rating.complex.toLong()
             )
         add(TextItem(
@@ -69,13 +71,13 @@ internal class RatingDetailsListConverter(
                 .append(complexRatingPoints)
                 .apply {
                     setSpan(
-                        ForegroundColorSpan(context.getThemeColor(R.attr.colorActive)),
+                        ForegroundColorSpan(context.getThemeColor(coreui_R.attr.colorActive)),
                         0,
                         rating.complex.toString().length,
                         SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
                     )
                 },
-            styleResId = R.style.H1
+            styleResId = coreui_R.style.H1
         ))
         add(SpaceItem.VERTICAL_16)
     }
@@ -89,7 +91,7 @@ internal class RatingDetailsListConverter(
     ) {
         val studyRatingPoints =
             DeclensionHelper.format(
-                declensions = context.getStringArray(R.array.points_declensions),
+                declensions = context.getStringArray(StringArrays.points_declensions),
                 n = value.toLong()
             )
         add(CompositeRatingItem(
@@ -98,7 +100,7 @@ internal class RatingDetailsListConverter(
                 .append(studyRatingPoints)
                 .apply {
                     setSpan(
-                        ForegroundColorSpan(context.getThemeColor(R.attr.colorActive)),
+                        ForegroundColorSpan(context.getThemeColor(coreui_R.attr.colorActive)),
                         0,
                         value.toString().length,
                         SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
@@ -114,13 +116,13 @@ internal class RatingDetailsListConverter(
         add(SpaceItem.VERTICAL_16)
         add(TextItem(
             text = "Как рассчитывается рейтинг?",
-            styleResId = R.style.H3,
+            styleResId = coreui_R.style.H3,
         ))
         add(SpaceItem.VERTICAL_16)
         getRatingDetailsDescription().forEach { line ->
             add(TextItem(
                 text = HtmlCompat.fromHtml(line, HtmlCompat.FROM_HTML_MODE_LEGACY),
-                styleResId = R.style.H7,
+                styleResId = coreui_R.style.H7,
             ))
             add(SpaceItem.VERTICAL_16)
         }

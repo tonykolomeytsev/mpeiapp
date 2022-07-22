@@ -21,6 +21,7 @@ import kekmech.ru.coreui.items.*
 import kekmech.ru.domain_map.dto.MapMarker
 import kekmech.ru.domain_schedule.dto.SearchResult
 import kekmech.ru.feature_search.R
+import kekmech.ru.coreui.R as coreui_R
 import kekmech.ru.feature_search.databinding.FragmentSearchBinding
 import kekmech.ru.feature_search.di.SearchDependencies
 import kekmech.ru.feature_search.item.FilterAdapterItem
@@ -103,7 +104,7 @@ internal class SearchFragment : BaseFragment<SearchEvent, SearchEffect, SearchSt
         },
         AdapterItem(
             isType = { it is SearchResult },
-            layoutRes = R.layout.item_text_bottom_labeled,
+            layoutRes = coreui_R.layout.item_text_bottom_labeled,
             viewHolderGenerator = ::LabeledTextViewHolderImpl,
             itemBinder = object : BaseItemBinder<LabeledTextViewHolder, SearchResult>() {
                 override fun bind(vh: LabeledTextViewHolder, model: SearchResult, position: Int) {

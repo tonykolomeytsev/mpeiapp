@@ -13,6 +13,7 @@ import kekmech.ru.common_emoji.EmojiProvider
 import kekmech.ru.domain_map.dto.MapMarker
 import kekmech.ru.domain_map.dto.MarkerType
 import kekmech.ru.map.R
+import kekmech.ru.coreui.R as coreui_R
 
 private const val ICON_SIZE_DP = 32
 private const val TEXT_SIZE_SP = 12
@@ -46,15 +47,15 @@ internal class MarkersBitmapFactory(
         .create(context.resources, R.drawable.ic_school_24px, null)!!.apply {
             setBounds(0, 0, iconWidth / 2, iconHeight / 2)
         }
-    private val font = ResourcesCompat.getFont(context, R.font.roboto_medium)
+    private val font = ResourcesCompat.getFont(context, coreui_R.font.roboto_medium)
     private val bitmap = Bitmap.createBitmap(iconWidth, iconHeight, Bitmap.Config.ARGB_8888)
-    private val pinkColor = context.getResColor(R.color.colorPink)
-    private val greenColor = context.getResColor(R.color.colorGreen)
-    private val blueColor = context.getResColor(R.color.colorMain)
-    // private val grayColor = context.getResColor(R.color.colorGray70)
-    private val purpleColor = context.getResColor(R.color.colorPurple)
-    private val tealColor = context.getResColor(R.color.colorTeal)
-    private val whiteColor = context.getResColor(R.color.colorWhite)
+    private val pinkColor = context.getResColor(coreui_R.color.colorPink)
+    private val greenColor = context.getResColor(coreui_R.color.colorGreen)
+    private val blueColor = context.getResColor(coreui_R.color.colorMain)
+    // private val grayColor = context.getResColor(coreui_R.color.colorGray70)
+    private val purpleColor = context.getResColor(coreui_R.color.colorPurple)
+    private val tealColor = context.getResColor(coreui_R.color.colorTeal)
+    private val whiteColor = context.getResColor(coreui_R.color.colorWhite)
     private val scale = context.resources.displayMetrics.density
     private val paint = Paint().apply {
         isAntiAlias = true

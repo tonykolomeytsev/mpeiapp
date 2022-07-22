@@ -18,12 +18,14 @@ import kekmech.ru.common_android.viewbinding.lazyBinding
 import kekmech.ru.common_android.views.setOnClickListenerWithDebounce
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_schedule.R
+import kekmech.ru.coreui.R as coreui_R
 import kekmech.ru.common_schedule.drawable.ProgressBackgroundDrawable
 import kekmech.ru.coreui.items.ClickableItemViewHolder
 import kekmech.ru.coreui.items.ClickableItemViewHolderImpl
 import kekmech.ru.domain_schedule.dto.Classes
 import kekmech.ru.domain_schedule.dto.ClassesType
 import kekmech.ru.domain_schedule.dto.ScheduleType
+import kekmech.ru.strings.StringArrays
 import java.time.format.DateTimeFormatter
 
 interface ClassesViewHolder : ClickableItemViewHolder {
@@ -96,14 +98,14 @@ open class ClassesViewHolderImpl(
         val context = containerView.context
         val bg = containerView.findViewById<View>(R.id.constraintLayout)
         if (progress == null) {
-            bg.setBackgroundResource(R.drawable.background_classes)
+            bg.setBackgroundResource(coreui_R.drawable.background_classes)
             return
         }
         if (bg.background !is ProgressBackgroundDrawable) {
             val progressBackgroundDrawable = ProgressBackgroundDrawable(
                 context,
-                context.getThemeColor(R.attr.colorGray10),
-                context.getResColor(R.color.colorMain),
+                context.getThemeColor(coreui_R.attr.colorGray10),
+                context.getResColor(coreui_R.color.colorMain),
                 cornerRadius = ProgressBackgroundDrawable.CornerRadius
                     .of(context.resources.dpToPx(PROGRESS_BACKGROUND_CORNER_RADIUS).toFloat())
             )
@@ -130,7 +132,7 @@ class ClassesItemBinder(
     private val onClickListener: ((Classes) -> Unit)? = null
 ) : BaseItemBinder<ClassesViewHolder, Classes>() {
 
-    private val classesNumbers by fastLazy { context.getStringArray(R.array.classes_numbers) }
+    private val classesNumbers by fastLazy { context.getStringArray(StringArrays.classes_numbers) }
     private val classesTypes by fastLazy {
         val types = listOf(
             ClassesType.UNDEFINED to 0,
@@ -139,16 +141,16 @@ class ClassesItemBinder(
             ClassesType.LAB to 3,
             ClassesType.COURSE to 4
         )
-        val string = context.getStringArray(R.array.classes_types)
+        val string = context.getStringArray(StringArrays.classes_types)
         types.map { (k, v) -> k to string[v] }.toMap()
     }
     private val colorTags by fastLazy {
         mapOf(
-            ClassesType.UNDEFINED to context.getThemeColor(R.attr.colorGray30),
-            ClassesType.LECTURE to context.getThemeColor(R.attr.colorGreen),
-            ClassesType.PRACTICE to context.getThemeColor(R.attr.colorYellowLight),
-            ClassesType.LAB to context.getThemeColor(R.attr.colorRed),
-            ClassesType.COURSE to context.getThemeColor(R.attr.colorGray30)
+            ClassesType.UNDEFINED to context.getThemeColor(coreui_R.attr.colorGray30),
+            ClassesType.LECTURE to context.getThemeColor(coreui_R.attr.colorGreen),
+            ClassesType.PRACTICE to context.getThemeColor(coreui_R.attr.colorYellowLight),
+            ClassesType.LAB to context.getThemeColor(coreui_R.attr.colorRed),
+            ClassesType.COURSE to context.getThemeColor(coreui_R.attr.colorGray30)
         )
     }
     private val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
