@@ -3,15 +3,15 @@ plugins {
 }
 
 dependencies {
-    testImplementation(libs.kotest.runner)
     testImplementation(libs.kotest.assertions)
     testImplementation(libs.kotest.property)
+    testImplementation(libs.kotest.runner)
 
     implementation(libs.androidx.appCompat)
-    implementation(libs.koin.core)
     implementation(libs.koin.android)
+    implementation(libs.koin.core)
 
+    implementation(project(":common_android"))
     implementation(project(":common_di"))
     implementation(project(":common_kotlin"))
-    implementation(project(":common_android"))
 }
