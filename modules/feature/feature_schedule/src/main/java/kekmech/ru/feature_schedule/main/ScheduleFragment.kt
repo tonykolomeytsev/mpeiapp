@@ -25,6 +25,7 @@ import kekmech.ru.feature_schedule.main.elm.ScheduleEvent.Wish
 import kekmech.ru.feature_schedule.main.elm.ScheduleFeatureFactory
 import kekmech.ru.feature_schedule.main.elm.ScheduleState
 import kekmech.ru.feature_schedule.main.item.*
+import kekmech.ru.strings.StringArrays
 import kekmech.ru.strings.Strings
 import org.koin.android.ext.android.inject
 import vivid.money.elmslie.storepersisting.retainInParentStoreHolder
@@ -199,10 +200,10 @@ internal class ScheduleFragment :
 
     private fun getFormattedDay(day: LocalDate): String {
         val dayOfWeekName = requireContext()
-            .getStringArray(R.array.days_of_week)
+            .getStringArray(StringArrays.days_of_week)
             .getOrElse(day.dayOfWeek.value - 1) { "" }
         val dayOfMonthName = requireContext()
-            .getStringArray(R.array.months)
+            .getStringArray(StringArrays.months)
             .getOrElse(day.monthValue - 1) { "" }
         return "$dayOfWeekName, ${day.dayOfMonth} $dayOfMonthName"
     }

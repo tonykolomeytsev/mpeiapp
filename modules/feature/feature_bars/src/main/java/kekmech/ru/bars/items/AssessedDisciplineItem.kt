@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.bars.R
+import kekmech.ru.coreui.R as coreui_R
 import kekmech.ru.bars.databinding.ItemAssessedDisciplineBinding
 import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseItemBinder
@@ -50,7 +51,7 @@ internal class AssessedDisciplineViewHolder(
         viewBinding.disciplineDescription.text = SpannableStringBuilder()
             .append(
                 assessmentType,
-                ForegroundColorSpan(context.getThemeColor(R.attr.colorBlack)),
+                ForegroundColorSpan(context.getThemeColor(coreui_R.attr.colorBlack)),
                 SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
             )
             .append(BULLET_SEPARATOR)

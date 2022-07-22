@@ -4,6 +4,7 @@ import android.content.res.ColorStateList
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.bars.R
+import kekmech.ru.coreui.R as coreui_R
 import kekmech.ru.bars.databinding.ItemMarkBinding
 import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.common_android.getThemeColor
@@ -47,9 +48,9 @@ internal class MarkItemBinder : BaseItemBinder<MarkViewHolder, MarkItem>() {
 
     @Suppress("MagicNumber")
     private fun getColorsForMark(mark: Float): Pair<Int, Int> {
-        return if (mark in 3.5f..5f) R.attr.colorMarkGreenText to R.attr.colorMarkGreenBg
-        else if (3.5f > mark && mark >= 2.5f) R.attr.colorMarkYellowText to R.attr.colorMarkYellowBg
-        else if (2.5f > mark && mark >= 0f) R.attr.colorMarkRedText to R.attr.colorMarkRedBg
-        else R.attr.colorGray70 to R.attr.colorGray30
+        return if (mark in 3.5f..5f) coreui_R.attr.colorMarkGreenText to coreui_R.attr.colorMarkGreenBg
+        else if (3.5f > mark && mark >= 2.5f) coreui_R.attr.colorMarkYellowText to coreui_R.attr.colorMarkYellowBg
+        else if (2.5f > mark && mark >= 0f) coreui_R.attr.colorMarkRedText to coreui_R.attr.colorMarkRedBg
+        else coreui_R.attr.colorGray70 to coreui_R.attr.colorGray30
     }
 }

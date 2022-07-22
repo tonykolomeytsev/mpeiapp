@@ -3,6 +3,7 @@ package kekmech.ru.feature_dashboard.helpers
 import android.content.Context
 import kekmech.ru.common_android.getStringArray
 import kekmech.ru.feature_dashboard.R
+import kekmech.ru.strings.StringArrays
 import kekmech.ru.strings.Strings
 
 private const val DECLENSION_5_TO_10 = 2
@@ -12,8 +13,8 @@ private const val DECLENSION_1 = 0
 object TimeDeclensionHelper {
 
     fun formatHoursMinutes(context: Context, h: Long, m: Long): String {
-        val decHours = context.getStringArray(R.array.hours_declensions)
-        val decMinutes = context.getStringArray(R.array.minutes_declensions)
+        val decHours = context.getStringArray(StringArrays.hours_declensions)
+        val decMinutes = context.getStringArray(StringArrays.minutes_declensions)
         return "${format(decHours, h)} ${format(decMinutes, m)}".trim()
     }
 
@@ -34,7 +35,7 @@ object TimeDeclensionHelper {
         1 -> context.getString(Strings.dashboard_events_tomorrow)
         2 -> context.getString(Strings.dashboard_events_after_tomorrow)
         else -> {
-            val decDays = context.getStringArray(R.array.days_declensions)
+            val decDays = context.getStringArray(StringArrays.days_declensions)
             val adoptedOffset = offset - 1L
             context.getString(Strings.dashboard_events_n_days, format(decDays, adoptedOffset))
         }

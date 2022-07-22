@@ -45,6 +45,7 @@ import kekmech.ru.map.view.BottomSheetBackgroundDrawable
 import kekmech.ru.map.view.ControlledScrollingLayoutManager
 import kekmech.ru.map.view.MarkersBitmapFactory
 import kekmech.ru.strings.Strings
+import kekmech.ru.coreui.R as coreui_R
 import org.koin.android.ext.android.inject
 import vivid.money.elmslie.storepersisting.retainInParentStoreHolder
 import java.util.concurrent.TimeUnit
@@ -65,7 +66,7 @@ internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState>(),
     private val viewBinding by viewBinding(FragmentMapBinding::bind)
     private val bottomSheetBackground by fastLazy {
         BottomSheetBackgroundDrawable(
-            backgroundColor = requireContext().getThemeColor(R.attr.colorWhite),
+            backgroundColor = requireContext().getThemeColor(coreui_R.attr.colorWhite),
             topCornerRadius = resources.dpToPx(DEFAULT_CORNER_RADIUS).toFloat()
         )
     }

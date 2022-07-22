@@ -22,6 +22,8 @@ import kekmech.ru.domain_main_screen.MainScreenLauncher
 import kekmech.ru.domain_onboarding.OnboardingFeatureLauncher
 import kekmech.ru.mpeiapp.deeplink.DeeplinkHandlersProcessor
 import org.koin.android.ext.android.inject
+import kekmech.ru.coreui.R as coreui_R
+import kekmech.ru.common_navigation.R as common_navigation_R
 
 class MainActivity : AppCompatActivity(), DisposableDelegate by DisposableDelegateImpl() {
 
@@ -80,9 +82,9 @@ class MainActivity : AppCompatActivity(), DisposableDelegate by DisposableDelega
 
     private fun setTheme() {
         if (appSettings.isDarkThemeEnabled) {
-            setTheme(R.style.AppTheme_Dark)
+            setTheme(coreui_R.style.AppTheme_Dark)
         } else {
-            setTheme(R.style.AppTheme)
+            setTheme(coreui_R.style.AppTheme)
         }
     }
 
@@ -102,7 +104,7 @@ class MainActivity : AppCompatActivity(), DisposableDelegate by DisposableDelega
     }
 
     override fun onBackPressed() {
-        val fragment = supportFragmentManager.findFragmentById(R.id.container)
+        val fragment = supportFragmentManager.findFragmentById(common_navigation_R.id.container)
         if (fragment != null && fragment is BackButtonListener && fragment.onBackPressed()) {
             return
         } else {

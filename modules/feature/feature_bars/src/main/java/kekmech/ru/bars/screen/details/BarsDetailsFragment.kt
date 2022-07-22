@@ -6,6 +6,7 @@ import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
 import android.view.View
 import kekmech.ru.bars.R
+import kekmech.ru.coreui.R as coreui_R
 import kekmech.ru.bars.databinding.FragmentBarsDetailsBinding
 import kekmech.ru.bars.items.ControlActivityAdapterItem
 import kekmech.ru.bars.items.FinalGradeAdapterItem
@@ -47,18 +48,18 @@ class BarsDetailsFragment : BottomSheetDialogFragment() {
     @Suppress("NestedBlockDepth")
     private fun getItems(discipline: AssessedDiscipline): List<Any> = mutableListOf<Any>().apply {
         add(PullItem)
-        add(TextItem(text = discipline.name, styleResId = R.style.H2))
+        add(TextItem(text = discipline.name, styleResId = coreui_R.style.H2))
         add(SpaceItem.VERTICAL_4)
         add(
             TextItem(
                 text = SpannableStringBuilder()
                     .append(
                         discipline.assessmentType,
-                        ForegroundColorSpan(requireContext().getThemeColor(R.attr.colorBlack)),
+                        ForegroundColorSpan(requireContext().getThemeColor(coreui_R.attr.colorBlack)),
                         SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
                     )
                     .append(BULLET_SEPARATOR)
-                    .append(discipline.person), styleResId = R.style.H4_Gray70
+                    .append(discipline.person), styleResId = coreui_R.style.H4_Gray70
             )
         )
         add(SpaceItem.VERTICAL_12)

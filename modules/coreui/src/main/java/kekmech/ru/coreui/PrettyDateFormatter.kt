@@ -2,13 +2,14 @@ package kekmech.ru.coreui
 
 import android.content.Context
 import kekmech.ru.common_android.getStringArray
+import kekmech.ru.strings.StringArrays
 import kekmech.ru.strings.Strings
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit
 
 class PrettyDateFormatter(context: Context) {
-    private val listOfDayNames = context.getStringArray(R.array.days_of_week)
-    private val listOfMonths = context.getStringArray(R.array.months)
+    private val listOfDayNames = context.getStringArray(StringArrays.days_of_week)
+    private val listOfMonths = context.getStringArray(StringArrays.months)
     private val today = context.getString(Strings.today)
     private val tomorrow = context.getString(Strings.tomorrow)
     private val afterTomorrow = context.getString(Strings.after_tomorrow)

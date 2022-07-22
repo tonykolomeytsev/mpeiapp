@@ -9,6 +9,7 @@ import kekmech.ru.coreui.items.ClickableItemViewHolder
 import kekmech.ru.coreui.items.ClickableItemViewHolderImpl
 import kekmech.ru.domain_schedule.dto.ScheduleType
 import kekmech.ru.feature_dashboard.R
+import kekmech.ru.coreui.R as coreui_R
 import kekmech.ru.feature_dashboard.databinding.ItemScheduleTypeBinding
 
 data class ScheduleTypeItem(
@@ -46,7 +47,7 @@ private class ScheduleTypeItemBinder(
     override fun bind(vh: ScheduleTypeViewHolder, model: ScheduleTypeItem, position: Int) {
         vh.setScheduleName(model.selectedScheduleName)
         vh.setScheduleTypeIcon(when (model.selectedScheduleType) {
-            ScheduleType.GROUP -> R.drawable.ic_group_24
+            ScheduleType.GROUP -> coreui_R.drawable.ic_group_24
             ScheduleType.PERSON -> R.drawable.ic_person_24
         })
         vh.setOnClickListener { onClickListener() }
