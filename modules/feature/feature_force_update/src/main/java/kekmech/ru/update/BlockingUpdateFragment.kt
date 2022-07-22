@@ -8,6 +8,7 @@ import kekmech.ru.common_android.*
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.domain_force_update.dto.ForceUpdateInfo
+import kekmech.ru.strings.Strings
 import kekmech.ru.update.databinding.FragmentBlockingUpdateBinding
 
 private const val ARG_UPDATE_INFO = "Arg.UpdateInfo"
@@ -30,8 +31,8 @@ class BlockingUpdateFragment : Fragment(R.layout.fragment_blocking_update) {
                 analytics.sendClick("UpdateBlockingUpdate")
                 requireContext().openLinkExternal(updateInfo.updateUrl)
             }
-            header.setText(R.string.blocking_update_title)
-            fullText.setText(R.string.blocking_update_description)
+            header.setText(Strings.blocking_update_title)
+            fullText.setText(Strings.blocking_update_description)
             link.text = LINK_VK
             link.setOnClickListener {
                 analytics.sendClick("GoToVkBlockingUpdate")

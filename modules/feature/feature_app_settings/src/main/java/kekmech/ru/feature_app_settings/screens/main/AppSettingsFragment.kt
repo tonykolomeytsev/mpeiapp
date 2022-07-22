@@ -29,6 +29,7 @@ import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsFeatureFactor
 import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsState
 import kekmech.ru.feature_app_settings.screens.main.list.ContributorAdapterItem
 import kekmech.ru.feature_app_settings.screens.map_type.SelectMapTypeFragment
+import kekmech.ru.strings.Strings
 import org.koin.android.ext.android.inject
 
 private const val ACTIVITY_RECREATION_DELAY = 200L
@@ -57,7 +58,7 @@ internal class AppSettingsFragment :
             recyclerView.addSystemBottomPadding()
             recyclerView.disablePicassoLoadingOnScroll()
             appBarLayout.addSystemTopPadding()
-            toolbar.setTitle(R.string.app_settings_screen_title)
+            toolbar.setTitle(Strings.app_settings_screen_title)
             toolbar.setNavigationOnClickListener { close() }
         }
     }

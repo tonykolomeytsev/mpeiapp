@@ -9,6 +9,7 @@ import kekmech.ru.map.elm.FilterTab
 import kekmech.ru.map.elm.MapState
 import kekmech.ru.map.ext.toMarkerType
 import kekmech.ru.map.items.TabBarItem
+import kekmech.ru.strings.Strings
 
 private const val TAB_BAR_ITEM_SPACING = 4
 
@@ -42,19 +43,19 @@ internal class MapListConverter {
 
     private fun createSectionHeader(selectedTab: FilterTab): Any = when (selectedTab) {
         FilterTab.FOOD -> SectionHeaderItem(
-            titleRes = R.string.map_section_name_eat
+            titleRes = Strings.map_section_name_eat
         )
         FilterTab.BUILDINGS -> SectionHeaderItem(
-            titleRes = R.string.map_section_name_buildings
+            titleRes = Strings.map_section_name_buildings
         )
         FilterTab.HOSTELS -> SectionHeaderItem(
-            titleRes = R.string.map_section_name_hostels
+            titleRes = Strings.map_section_name_hostels
         )
         FilterTab.OTHERS -> SectionHeaderItem(
-            titleRes = R.string.map_section_name_others
+            titleRes = Strings.map_section_name_others
         )
         FilterTab.STRUCTURES -> SectionHeaderItem(
-            titleRes = R.string.map_section_name_structures
+            titleRes = Strings.map_section_name_structures
         )
     }
 
@@ -71,7 +72,7 @@ internal class MapListConverter {
         val otherPlaces = markers.filter { it.tag.isNullOrEmpty() }
         if (otherPlaces.isNotEmpty()) {
             list.add(SpaceItem.VERTICAL_24)
-            list.add(SectionHeaderItem(titleRes = R.string.map_section_tag_others))
+            list.add(SectionHeaderItem(titleRes = Strings.map_section_tag_others))
             list.add(SpaceItem.VERTICAL_12)
             list.addAll(otherPlaces)
         }

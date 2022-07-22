@@ -8,6 +8,7 @@ import kekmech.ru.coreui.items.SpaceItem
 import kekmech.ru.domain_notes.dto.Note
 import kekmech.ru.notes.R
 import kekmech.ru.notes.all_notes.elm.AllNotesState
+import kekmech.ru.strings.Strings
 import java.time.temporal.ChronoUnit
 
 private const val SHIMMER_ITEM_COUNT = 3
@@ -20,14 +21,14 @@ internal class AllNotesListConverter {
             state.notes == null -> List(SHIMMER_ITEM_COUNT) { ShimmerItem(R.layout.item_note_shimmer) }
             state.notes.isEmpty() -> listOf(
                 EmptyStateItem(
-                    titleRes = R.string.all_notes_empty_state_title,
-                    subtitleRes = R.string.all_notes_empty_state_subtitle
+                    titleRes = Strings.all_notes_empty_state_title,
+                    subtitleRes = Strings.all_notes_empty_state_subtitle
                 )
             )
             else -> mutableListOf<Any>().apply {
                 getForthcomingNotes(state.notes)?.let {
                     add(SectionHeaderItem(
-                        titleRes = R.string.all_notes_section_header_forthcoming
+                        titleRes = Strings.all_notes_section_header_forthcoming
                     ))
                     add(SpaceItem.VERTICAL_12)
                     addAll(it)
@@ -35,7 +36,7 @@ internal class AllNotesListConverter {
                 }
                 getPastNotes(state.notes)?.let {
                     add(SectionHeaderItem(
-                        titleRes = R.string.all_notes_section_header_past
+                        titleRes = Strings.all_notes_section_header_past
                     ))
                     add(SpaceItem.VERTICAL_12)
                     addAll(it)

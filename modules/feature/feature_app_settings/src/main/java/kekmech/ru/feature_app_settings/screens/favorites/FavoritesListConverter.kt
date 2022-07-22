@@ -7,10 +7,11 @@ import kekmech.ru.coreui.items.SpaceItem
 import kekmech.ru.feature_app_settings.R
 import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesState
 import kekmech.ru.feature_app_settings.screens.favorites.item.HelpBannerItem
+import kekmech.ru.strings.Strings
 
 internal class FavoritesListConverter(context: Context) {
 
-    private val addFavoriteItem = AddActionItem(context.getString(R.string.favorites_empty_state_add))
+    private val addFavoriteItem = AddActionItem(context.getString(Strings.favorites_empty_state_add))
 
     fun map(state: FavoritesState): List<Any> =
         when {

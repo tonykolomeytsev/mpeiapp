@@ -9,6 +9,7 @@ import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.coreui.items.ClickableItemViewHolder
 import kekmech.ru.coreui.items.ClickableItemViewHolderImpl
 import kekmech.ru.feature_search.R
+import kekmech.ru.strings.Strings
 
 internal data class FilterItem(
     val type: FilterItemType = FilterItemType.ALL,
@@ -28,11 +29,11 @@ internal data class FilterItem(
 internal enum class FilterItemType(
     @StringRes val nameRes: Int,
 ) {
-    ALL(R.string.search_filter_all),
-    GROUPS(R.string.search_filter_groups),
-    PERSONS(R.string.search_filter_persons),
-    NOTES(R.string.search_filter_notes),
-    MAP(R.string.search_filter_map)
+    ALL(Strings.search_filter_all),
+    GROUPS(Strings.search_filter_groups),
+    PERSONS(Strings.search_filter_persons),
+    NOTES(Strings.search_filter_notes),
+    MAP(Strings.search_filter_map)
 }
 
 internal class FilterAdapterItem(

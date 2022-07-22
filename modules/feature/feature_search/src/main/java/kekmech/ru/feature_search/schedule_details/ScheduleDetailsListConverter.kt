@@ -15,11 +15,12 @@ import kekmech.ru.feature_search.R
 import kekmech.ru.feature_search.item.ButtonItem
 import kekmech.ru.feature_search.item.WeekMinItem
 import kekmech.ru.feature_search.schedule_details.elm.ScheduleDetailsState
+import kekmech.ru.strings.Strings
 
 internal object ScheduleDetailsListConverter {
 
     private val classesEmptyStateItem = EmptyStateItem(
-        titleRes = R.string.search_schedule_details_empty_title
+        titleRes = Strings.search_schedule_details_empty_title
     )
 
     private val textShimmerItem = ShimmerItem(R.layout.item_text_shimmer)
@@ -29,9 +30,9 @@ internal object ScheduleDetailsListConverter {
     private fun getFavoritesItem(isInFavorites: Boolean?): Any? {
         if (isInFavorites == null) return null
         val (stringId, drawableId) = if (!isInFavorites) {
-            R.string.search_schedule_details_add_favorites to R.drawable.ic_star_outline_black_18dp
+            Strings.search_schedule_details_add_favorites to R.drawable.ic_star_outline_black_18dp
         } else {
-            R.string.search_schedule_details_remove_favorites to R.drawable.ic_star_black_18dp
+            Strings.search_schedule_details_remove_favorites to R.drawable.ic_star_black_18dp
         }
         return TextWithIconItem(
             itemId = ITEM_FAVORITES,
@@ -82,7 +83,7 @@ internal object ScheduleDetailsListConverter {
 
             add(SpaceItem.VERTICAL_8)
 
-            add(ButtonItem(ITEM_BUTTON_SWITCH, R.string.search_schedule_details_switch_schedule))
+            add(ButtonItem(ITEM_BUTTON_SWITCH, Strings.search_schedule_details_switch_schedule))
         }
     }
 
@@ -90,14 +91,14 @@ internal object ScheduleDetailsListConverter {
         if (state.isLoadingSchedule) return null
         val thisWeekDescription: CharSequence = getScheduleDescription(
             classesCount = state.thisWeek?.sumOf { it.classes.size } ?: 0,
-            weekDescription = R.string.search_schedule_details_this_week_description,
-            emptyWeekDescription = R.string.search_schedule_details_this_week_description_empty,
+            weekDescription = Strings.search_schedule_details_this_week_description,
+            emptyWeekDescription = Strings.search_schedule_details_this_week_description_empty,
             context = context
         )
         val nextWeekDescription: CharSequence = getScheduleDescription(
             classesCount = state.nextWeek?.sumOf { it.classes.size } ?: 0,
-            weekDescription = R.string.search_schedule_details_next_week_description,
-            emptyWeekDescription = R.string.search_schedule_details_next_week_description_empty,
+            weekDescription = Strings.search_schedule_details_next_week_description,
+            emptyWeekDescription = Strings.search_schedule_details_next_week_description_empty,
             context = context
         )
         val builder = SpannableStringBuilder()
@@ -150,9 +151,9 @@ internal object ScheduleDetailsListConverter {
         num: Int,
         context: Context,
     ): String = "$num " + when {
-        num in 11..19 -> context.getString(R.string.search_schedule_details_classes_5_0)
-        num % 10 == 1 -> context.getString(R.string.search_schedule_details_classes_1)
-        num % 10 in 2..4 -> context.getString(R.string.search_schedule_details_classes_2_4)
-        else -> context.getString(R.string.search_schedule_details_classes_5_0)
+        num in 11..19 -> context.getString(Strings.search_schedule_details_classes_5_0)
+        num % 10 == 1 -> context.getString(Strings.search_schedule_details_classes_1)
+        num % 10 in 2..4 -> context.getString(Strings.search_schedule_details_classes_2_4)
+        else -> context.getString(Strings.search_schedule_details_classes_5_0)
     }
 }

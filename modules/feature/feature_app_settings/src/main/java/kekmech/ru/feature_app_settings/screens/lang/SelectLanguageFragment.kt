@@ -18,6 +18,7 @@ import kekmech.ru.feature_app_settings.databinding.FragmentChangeLanguageBinding
 import kekmech.ru.feature_app_settings.screens.lang.dto.LanguageEntry
 import kekmech.ru.feature_app_settings.screens.lang.item.LanguageAdapterItem
 import kekmech.ru.feature_app_settings.screens.lang.item.LanguageItem
+import kekmech.ru.strings.Strings
 
 internal class SelectLanguageFragment : BottomSheetDialogFragment() {
 
@@ -42,7 +43,7 @@ internal class SelectLanguageFragment : BottomSheetDialogFragment() {
         mutableListOf<Any>().apply {
             add(PullItem)
             add(SpaceItem.VERTICAL_8)
-            add(SectionHeaderItem(titleRes = R.string.change_language_screen_title))
+            add(SectionHeaderItem(titleRes = Strings.change_language_screen_title))
             add(SpaceItem.VERTICAL_12)
             addAll(
                 LanguageEntry
@@ -53,7 +54,7 @@ internal class SelectLanguageFragment : BottomSheetDialogFragment() {
             add(SpaceItem.VERTICAL_16)
             add(
                 TextItem(
-                    textResId = R.string.change_language_disclaimer,
+                    textResId = Strings.change_language_disclaimer,
                     styleResId = R.style.H6_Gray70
                 )
             )

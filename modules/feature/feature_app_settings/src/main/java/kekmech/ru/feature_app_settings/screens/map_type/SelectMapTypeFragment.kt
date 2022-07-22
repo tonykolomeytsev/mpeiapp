@@ -18,6 +18,7 @@ import kekmech.ru.feature_app_settings.databinding.FragmentSelectMapTypeBinding
 import kekmech.ru.feature_app_settings.screens.map_type.dto.MapTypeEntry
 import kekmech.ru.feature_app_settings.screens.map_type.item.MapTypeAdapterItem
 import kekmech.ru.feature_app_settings.screens.map_type.item.MapTypeItem
+import kekmech.ru.strings.Strings
 
 internal class SelectMapTypeFragment : BottomSheetDialogFragment() {
 
@@ -41,7 +42,7 @@ internal class SelectMapTypeFragment : BottomSheetDialogFragment() {
     private fun getItems() = mutableListOf<Any>().apply {
         add(PullItem)
         add(SpaceItem.VERTICAL_8)
-        add(SectionHeaderItem(titleRes = R.string.change_map_type_screen_title))
+        add(SectionHeaderItem(titleRes = Strings.change_map_type_screen_title))
         add(SpaceItem.VERTICAL_12)
         addAll(
             MapTypeEntry

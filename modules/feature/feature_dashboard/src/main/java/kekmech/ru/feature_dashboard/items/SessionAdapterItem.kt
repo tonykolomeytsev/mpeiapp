@@ -15,6 +15,7 @@ import kekmech.ru.domain_schedule.dto.SessionItem
 import kekmech.ru.domain_schedule.dto.SessionItemType
 import kekmech.ru.feature_dashboard.R
 import kekmech.ru.feature_dashboard.databinding.ItemSessionBinding
+import kekmech.ru.strings.Strings
 import java.time.format.DateTimeFormatter
 
 internal class SessionAdapterItem(context: Context) : AdapterItem<SessionViewHolder, SessionItem>(
@@ -80,8 +81,8 @@ private class SessionItemBinder(
             vh.setPlace(model.place)
             vh.setTypeColor(colorTags.getValue(model.type))
             vh.setTypeName(when (model.type) {
-                SessionItemType.EXAM -> R.string.dashboard_session_item_exam
-                SessionItemType.CONSULTATION -> R.string.dashboard_session_item_consultation
+                SessionItemType.EXAM -> Strings.dashboard_session_item_exam
+                SessionItemType.CONSULTATION -> Strings.dashboard_session_item_consultation
                 else -> null
             })
             vh.setDateTime(sessionDateTimeFormatter.format(model))

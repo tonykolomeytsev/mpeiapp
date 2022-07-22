@@ -14,6 +14,7 @@ import kekmech.ru.feature_dashboard.elm.NextClassesCondition
 import kekmech.ru.feature_dashboard.elm.UpcomingEventsMappingResult
 import kekmech.ru.feature_dashboard.helpers.TimeDeclensionHelper
 import kekmech.ru.feature_dashboard.helpers.getNextClassesTimeStatus
+import kekmech.ru.strings.Strings
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -76,8 +77,8 @@ internal class UpcomingEventsListConverter(
     private fun List<Any>.withSectionHeader(actualDayOffset: Int): List<Any> =
         listOf(
             SectionHeaderItem(
-                titleRes = R.string.dashboard_section_header_events,
-                subtitleRes = R.string.dashboard_events_empty_state_title.takeIf { actualDayOffset == -1 },
+                titleRes = Strings.dashboard_section_header_events,
+                subtitleRes = Strings.dashboard_events_empty_state_title.takeIf { actualDayOffset == -1 },
                 subtitle = TimeDeclensionHelper.formatTimePrediction(context, actualDayOffset)
             ),
             SpaceItem.VERTICAL_12
@@ -104,7 +105,7 @@ internal class UpcomingEventsListConverter(
             if (classes == raw[indexOfNextClasses] && !isPredictionAdded) {
                 // add time status
                 val (condition, hours, minutes) = getNextClassesTimeStatus(currentDate, classes.time)
-                val prefix = context.getString(R.string.dashboard_item_time_prediction_prefix)
+                val prefix = context.getString(Strings.dashboard_item_time_prediction_prefix)
                 when (condition) {
                     NextClassesCondition.NOT_STARTED -> {
                         val formattedHoursMinutes =
@@ -127,18 +128,18 @@ internal class UpcomingEventsListConverter(
 
     private companion object {
         private val LIST_WITH_SHIMMERS = listOf(
-            SectionHeaderItem(titleRes = R.string.dashboard_section_header_events),
+            SectionHeaderItem(titleRes = Strings.dashboard_section_header_events),
             ShimmerItem(R.layout.item_events_shimmer)
         ).let { UpcomingEventsMappingResult(it, -1) }
         private val LIST_WITH_EMPTY_STATE = listOf(
             SectionHeaderItem(
-                titleRes = R.string.dashboard_section_header_events,
-                subtitleRes = R.string.dashboard_events_empty_state_title
+                titleRes = Strings.dashboard_section_header_events,
+                subtitleRes = Strings.dashboard_events_empty_state_title
             ),
             SpaceItem.VERTICAL_12,
             EmptyStateItem(
-                titleRes = R.string.dashboard_events_empty_state_title,
-                subtitleRes = R.string.dashboard_events_empty_state_subtitle
+                titleRes = Strings.dashboard_events_empty_state_title,
+                subtitleRes = Strings.dashboard_events_empty_state_subtitle
             )
         ).let { UpcomingEventsMappingResult(it, -1) }
     }

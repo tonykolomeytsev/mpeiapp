@@ -27,6 +27,7 @@ import kekmech.ru.notes.note_list.elm.NoteListEffect
 import kekmech.ru.notes.note_list.elm.NoteListEvent
 import kekmech.ru.notes.note_list.elm.NoteListEvent.Wish
 import kekmech.ru.notes.note_list.elm.NoteListState
+import kekmech.ru.strings.Strings
 import org.koin.android.ext.android.inject
 import java.time.LocalDate
 
@@ -70,7 +71,7 @@ internal class NoteListFragment :
 
     override fun handleEffect(effect: NoteListEffect) = when (effect) {
         is NoteListEffect.ShowNoteLoadError -> Toast
-            .makeText(requireContext(), R.string.something_went_wrong_error, Toast.LENGTH_SHORT).show()
+            .makeText(requireContext(), Strings.something_went_wrong_error, Toast.LENGTH_SHORT).show()
         is NoteListEffect.OpenNoteEdit -> {
             close()
             addScreenForward { NoteEditFragment.newInstance(effect.note, resultKey) }

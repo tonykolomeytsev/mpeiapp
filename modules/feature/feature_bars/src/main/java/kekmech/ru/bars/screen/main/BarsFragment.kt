@@ -49,6 +49,7 @@ import kekmech.ru.coreui.items.ShimmerAdapterItem
 import kekmech.ru.coreui.items.SpaceAdapterItem
 import kekmech.ru.coreui.items.TextWithIconAdapterItem
 import kekmech.ru.domain_app_settings.AppSettingsFeatureLauncher
+import kekmech.ru.strings.Strings
 import org.koin.android.ext.android.inject
 import vivid.money.elmslie.storepersisting.retainInParentStoreHolder
 
@@ -160,7 +161,7 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), 
                 Log.d(javaClass.simpleName, it)
             }
             is BarsEffect.OpenSettings -> settingsFeatureLauncher.launch()
-            is BarsEffect.ShowCommonError -> showBanner(R.string.something_went_wrong_error)
+            is BarsEffect.ShowCommonError -> showBanner(Strings.something_went_wrong_error)
             is BarsEffect.OpenExternalBrowser ->
                 requireContext().openLinkExternal(effect.url)
             is BarsEffect.OpenRatingDetails -> {

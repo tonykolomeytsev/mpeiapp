@@ -20,6 +20,7 @@ import kekmech.ru.notes.edit.elm.NoteEditEffect
 import kekmech.ru.notes.edit.elm.NoteEditEvent
 import kekmech.ru.notes.edit.elm.NoteEditEvent.Wish
 import kekmech.ru.notes.edit.elm.NoteEditState
+import kekmech.ru.strings.Strings
 import org.koin.android.ext.android.inject
 
 internal class NoteEditFragment : BaseFragment<NoteEditEvent, NoteEditEffect, NoteEditState>() {
@@ -69,7 +70,7 @@ internal class NoteEditFragment : BaseFragment<NoteEditEvent, NoteEditEffect, No
             close()
             setResult(resultKey, EmptyResult)
         }
-        is NoteEditEffect.ShowError -> showBanner(R.string.something_went_wrong_error)
+        is NoteEditEffect.ShowError -> showBanner(Strings.something_went_wrong_error)
     }
 
     private fun onNoteContentChanged(content: String) {

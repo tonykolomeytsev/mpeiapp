@@ -29,6 +29,7 @@ import kekmech.ru.feature_dashboard.elm.DashboardEvent
 import kekmech.ru.feature_dashboard.elm.DashboardEvent.Wish
 import kekmech.ru.feature_dashboard.elm.DashboardState
 import kekmech.ru.feature_dashboard.items.*
+import kekmech.ru.strings.Strings
 import org.koin.android.ext.android.inject
 import vivid.money.elmslie.storepersisting.retainInParentStoreHolder
 
@@ -79,8 +80,8 @@ class DashboardFragment :
     }
 
     override fun handleEffect(effect: DashboardEffect) = when (effect) {
-        is DashboardEffect.ShowLoadingError -> showBanner(R.string.dashboard_loading_error)
-        is DashboardEffect.ShowNotesLoadingError -> showBanner(R.string.something_went_wrong_error)
+        is DashboardEffect.ShowLoadingError -> showBanner(Strings.dashboard_loading_error)
+        is DashboardEffect.ShowNotesLoadingError -> showBanner(Strings.something_went_wrong_error)
         is DashboardEffect.NavigateToNotesList -> {
             parentFragment?.setResultListener<EmptyResult>(NOTES_LIST_RESULT_KEY) {
                 feature.accept(Wish.Action.SwipeToRefresh)
