@@ -2,7 +2,6 @@ package kekmech.ru.common_schedule.utils
 
 import kekmech.ru.common_android.moscowLocalDate
 import kekmech.ru.common_android.moscowLocalTime
-import kekmech.ru.common_kotlin.addIf
 import kekmech.ru.common_schedule.items.LunchItem
 import kekmech.ru.common_schedule.items.NotePreview
 import kekmech.ru.common_schedule.items.WindowItem
@@ -40,7 +39,9 @@ fun List<Any>.withLunch(): List<Any> = mutableListOf<Any>().apply {
         val indexOfLastSecondClasses = raw.indexOfLast { it is Classes && it.number == 2 }
         raw.forEachIndexed { index, e ->
             add(e)
-            addIf(LunchItem) { index == indexOfLastSecondClasses }
+            if (index == indexOfLastSecondClasses) {
+                add(LunchItem)
+            }
         }
     } else {
         addAll(raw)
@@ -57,9 +58,10 @@ fun List<Classes>.withWindows(): List<Any> = mutableListOf<Any>().apply {
         for (i in 1 until raw.size) {
             val currClasses = raw[i]
             val prevClasses = raw[i - 1]
-            addIf(
-                WindowItem(prevClasses.time.end, currClasses.time.start)
-            ) { currClasses.number - prevClasses.number > 1 }
+
+            if (currClasses.number - prevClasses.number > 1) {
+                add(WindowItem(prevClasses.time.end, currClasses.time.start))
+            }
             add(currClasses)
         }
     } else {

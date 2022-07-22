@@ -3,5 +3,5 @@ plugins {
 }
 
 dependencies {
-    implementation(libs.rx.java)
+    testImplementation(kotlin("test"))
 }
