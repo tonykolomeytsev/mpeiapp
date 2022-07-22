@@ -25,6 +25,7 @@ import kekmech.ru.feature_schedule.main.elm.ScheduleEvent.Wish
 import kekmech.ru.feature_schedule.main.elm.ScheduleFeatureFactory
 import kekmech.ru.feature_schedule.main.elm.ScheduleState
 import kekmech.ru.feature_schedule.main.item.*
+import kekmech.ru.strings.Strings
 import org.koin.android.ext.android.inject
 import vivid.money.elmslie.storepersisting.retainInParentStoreHolder
 import java.time.LocalDate
@@ -134,10 +135,10 @@ internal class ScheduleFragment :
             viewBinding.fab.isVisible = true
         }
         if (state.isOnCurrentWeek) {
-            viewBinding.fab.setText(R.string.schedule_fab_next)
+            viewBinding.fab.setText(Strings.schedule_fab_next)
             viewBinding.fab.setIconResource(R.drawable.ic_next_schedule)
         } else {
-            viewBinding.fab.setText(R.string.schedule_fab_prev)
+            viewBinding.fab.setText(Strings.schedule_fab_prev)
             viewBinding.fab.setIconResource(R.drawable.ic_prev_schedule)
         }
         if (state.isNavigationFabVisible) with(viewBinding.fab) {
@@ -208,9 +209,9 @@ internal class ScheduleFragment :
 
     private fun getFormattedWeek(weekNumber: Int): String {
         if (weekNumber in WEEK_MIN_NUMBER..WEEK_MAX_NUMBER) {
-            return requireContext().getString(R.string.schedule_semester_week, weekNumber)
+            return requireContext().getString(Strings.schedule_semester_week, weekNumber)
         } else {
-            return requireContext().getString(R.string.schedule_weekend_week)
+            return requireContext().getString(Strings.schedule_weekend_week)
         }
     }
 

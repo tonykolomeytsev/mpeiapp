@@ -14,6 +14,7 @@ import kekmech.ru.feature_dashboard.DashboardFragment.Companion.SECTION_NOTES_AC
 import kekmech.ru.feature_dashboard.elm.DashboardState
 import kekmech.ru.feature_dashboard.items.*
 import kekmech.ru.feature_dashboard.upcoming_events.UpcomingEventsListConverter
+import kekmech.ru.strings.Strings
 import java.time.DayOfWeek
 import java.time.LocalTime
 
@@ -29,24 +30,24 @@ class DashboardListConverter(
     private val notesHeader by fastLazy {
         SectionHeaderItem(
             itemId = SECTION_NOTES_ACTION,
-            titleRes = R.string.dashboard_section_header_notes,
-            actionNameRes = R.string.dashboard_section_header_notes_action
+            titleRes = Strings.dashboard_section_header_notes,
+            actionNameRes = Strings.dashboard_section_header_notes_action
         )
     }
 
     private val favoritesHeader by fastLazy {
         SectionHeaderItem(
             itemId = SECTION_FAVORITES_ACTION,
-            titleRes = R.string.dashboard_section_header_favorites,
-            subtitle = context.getString(R.string.dashboard_section_header_favorites_subtitle),
-            actionNameRes = R.string.dashboard_section_header_favorites_action
+            titleRes = Strings.dashboard_section_header_favorites,
+            subtitle = context.getString(Strings.dashboard_section_header_favorites_subtitle),
+            actionNameRes = Strings.dashboard_section_header_favorites_action
         )
     }
 
     private val sessionHeader by fastLazy {
         SectionHeaderItem(
-            titleRes = R.string.dashboard_section_header_session,
-            subtitle = context.getString(R.string.dashboard_section_header_session_subtitle)
+            titleRes = Strings.dashboard_section_header_session,
+            subtitle = context.getString(Strings.dashboard_section_header_session_subtitle)
         )
     }
 
@@ -127,8 +128,8 @@ class DashboardListConverter(
             } else {
                 add(
                     EmptyStateItem(
-                        titleRes = R.string.dashboard_actual_notes_empty_state_title,
-                        subtitleRes = R.string.all_notes_empty_state_subtitle
+                        titleRes = Strings.dashboard_actual_notes_empty_state_title,
+                        subtitleRes = Strings.all_notes_empty_state_subtitle
                     )
                 )
             }
@@ -139,9 +140,9 @@ class DashboardListConverter(
     private fun createDayStatusItem(state: DashboardState): DayStatusItem {
         val weekStatus = state.weekOfSemester?.let { weekOfSemester ->
             if (weekOfSemester in WEEK_MIN_NUMBER..WEEK_MAX_NUMBER) {
-                context.getString(R.string.dashboard_day_status_semester, weekOfSemester)
+                context.getString(Strings.dashboard_day_status_semester, weekOfSemester)
             } else {
-                context.getString(R.string.dashboard_day_status_not_semester)
+                context.getString(Strings.dashboard_day_status_not_semester)
             }
         }
         return DayStatusItem(

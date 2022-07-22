@@ -17,6 +17,7 @@ import kekmech.ru.common_android.getThemeColor
 import kekmech.ru.coreui.items.SpaceItem
 import kekmech.ru.coreui.items.TextItem
 import kekmech.ru.domain_bars.dto.Rating
+import kekmech.ru.strings.Strings
 
 internal class RatingDetailsListConverter(
     private val context: Context,
@@ -27,21 +28,21 @@ internal class RatingDetailsListConverter(
             addComplexRatingHeaders(rating)
 
             addCompositeRatingItem(
-                nameResId = R.string.bars_rating_study_name,
+                nameResId = Strings.bars_rating_study_name,
                 value = rating.study.value,
                 weight = rating.study.weight,
                 progress = rating.study.let { it.value * it.weight } / rating.complex,
                 itemId = ITEM_ID_STUDY
             )
             addCompositeRatingItem(
-                nameResId = R.string.bars_rating_science_name,
+                nameResId = Strings.bars_rating_science_name,
                 value = rating.science.value,
                 weight = rating.science.weight,
                 progress = rating.science.let { it.value * it.weight } / rating.complex,
                 itemId = ITEM_ID_SCIENCE
             )
             addCompositeRatingItem(
-                nameResId = R.string.bars_rating_social_name,
+                nameResId = Strings.bars_rating_social_name,
                 value = rating.social.value,
                 weight = rating.social.weight,
                 progress = rating.social.let { it.value * it.weight } / rating.complex,
@@ -54,7 +55,7 @@ internal class RatingDetailsListConverter(
     private fun MutableList<Any>.addComplexRatingHeaders(rating: Rating) {
         add(SpaceItem.VERTICAL_8)
         add(TextItem(
-            textResId = R.string.bars_rating_complex_name,
+            textResId = Strings.bars_rating_complex_name,
             styleResId = R.style.H4_Gray70,
         ))
 

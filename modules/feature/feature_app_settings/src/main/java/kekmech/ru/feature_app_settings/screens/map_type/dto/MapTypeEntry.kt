@@ -2,6 +2,7 @@ package kekmech.ru.feature_app_settings.screens.map_type.dto
 
 import androidx.annotation.StringRes
 import kekmech.ru.feature_app_settings.R
+import kekmech.ru.strings.Strings
 
 internal enum class MapTypeEntry(
     val mapTypeCode: String,
@@ -10,11 +11,11 @@ internal enum class MapTypeEntry(
 
     HYBRID(
         mapTypeCode = "hybrid",
-        descriptionRes = R.string.change_map_type_hybrid,
+        descriptionRes = Strings.change_map_type_hybrid,
     ),
 
     SCHEME(
         mapTypeCode = "scheme",
-        descriptionRes = R.string.change_map_type_scheme,
+        descriptionRes = Strings.change_map_type_scheme,
     )
 }

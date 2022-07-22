@@ -9,6 +9,7 @@ import kekmech.ru.feature_app_settings.R
 import kekmech.ru.feature_app_settings.screens.main.AppSettingsFragment.Companion.ITEM_GITHUB
 import kekmech.ru.feature_app_settings.screens.main.AppSettingsFragment.Companion.ITEM_SUPPORT
 import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsState
+import kekmech.ru.strings.Strings
 
 internal class AppSettingsListConverter {
 
@@ -19,9 +20,9 @@ internal class AppSettingsListConverter {
 
             addToggleWithDescription(
                 itemId = AppSettingsFragment.TOGGLE_DARK_THEME,
-                toggleTextResId = R.string.app_settings_dark_theme,
+                toggleTextResId = Strings.app_settings_dark_theme,
                 isChecked = appSettings.isDarkThemeEnabled,
-                descriptionResId = R.string.app_settings_dark_theme_description
+                descriptionResId = Strings.app_settings_dark_theme_description
             )
 
             addSwitchLanguageItem(state)
@@ -29,55 +30,55 @@ internal class AppSettingsListConverter {
             if (state.isFeatureToggleSnowFlakesEnabled) {
                 add(ToggleItem(
                     itemId = AppSettingsFragment.TOGGLE_SNOW_FLAKES,
-                    titleRes = R.string.app_settings_snowy_mood,
+                    titleRes = Strings.app_settings_snowy_mood,
                     isChecked = appSettings.isSnowEnabled
                 ))
             }
 
-            addSection(titleResId = R.string.app_settings_header_schedule) {
+            addSection(titleResId = Strings.app_settings_header_schedule) {
 
                 add(BottomLabeledTextItem(
                     itemId = AppSettingsFragment.ITEM_FAVORITES,
-                    mainTextResId = R.string.app_settings_favorite_schedule_title,
-                    labelResId = R.string.app_settings_favorite_schedule_description
+                    mainTextResId = Strings.app_settings_favorite_schedule_title,
+                    labelResId = Strings.app_settings_favorite_schedule_description
                 ))
 
                 addToggleWithDescription(
                     itemId = AppSettingsFragment.TOGGLE_SHOW_NAV_FAB,
-                    toggleTextResId = R.string.app_settings_show_navigation_fab,
+                    toggleTextResId = Strings.app_settings_show_navigation_fab,
                     isChecked = appSettings.showNavigationButton,
-                    descriptionResId = R.string.app_settings_show_navigation_fab_description
+                    descriptionResId = Strings.app_settings_show_navigation_fab_description
                 )
             }
 
-            addSection(titleResId = R.string.app_settings_header_map) {
+            addSection(titleResId = Strings.app_settings_header_map) {
 
                 addToggleWithDescription(
                     itemId = AppSettingsFragment.TOGGLE_AUTO_HIDE_BOTTOM_SHEET,
-                    toggleTextResId = R.string.app_settings_auto_hide_bottom_sheet,
+                    toggleTextResId = Strings.app_settings_auto_hide_bottom_sheet,
                     isChecked = appSettings.autoHideBottomSheet,
-                    descriptionResId = R.string.app_settings_auto_hide_bottom_sheet_description
+                    descriptionResId = Strings.app_settings_auto_hide_bottom_sheet_description
                 )
 
                 addSwitchMapTypeItem(state, context)
             }
 
-            addSection(titleResId = R.string.app_settings_header_support) {
+            addSection(titleResId = Strings.app_settings_header_support) {
 
                 add(BottomLabeledTextItem(
-                    mainTextResId = R.string.app_settings_section_ask,
+                    mainTextResId = Strings.app_settings_section_ask,
                     label = "vk.com/kekmech",
                     itemId = ITEM_SUPPORT
                 ))
 
                 add(BottomLabeledTextItem(
-                    mainTextResId = R.string.app_settings_section_github,
+                    mainTextResId = Strings.app_settings_section_github,
                     label = "github.com/tonykolomeytsev/mpeiapp",
                     itemId = ITEM_GITHUB
                 ))
             }
 
-            if (state.contributors != null) addSection(titleResId = R.string.app_settings_header_contributors) {
+            if (state.contributors != null) addSection(titleResId = Strings.app_settings_header_contributors) {
                 addAll(state.contributors)
             }
 
@@ -110,7 +111,7 @@ internal class AppSettingsListConverter {
     private fun getVersionItem(context: Context): Any {
         val versionName = BuildConfig.VERSION_NAME
         return TextItem(
-            text = context.getString(R.string.app_settings_app_version, versionName),
+            text = context.getString(Strings.app_settings_app_version, versionName),
             styleResId = R.style.H6_Gray70,
             textGravity = Gravity.CENTER
         )
@@ -118,7 +119,7 @@ internal class AppSettingsListConverter {
 
     private fun MutableList<Any>.addSwitchLanguageItem(state: AppSettingsState) {
         add(RightLabeledTextItem(
-            mainTextResId = R.string.app_settings_section_lang,
+            mainTextResId = Strings.app_settings_section_lang,
             label = when (state.appSettings?.languageCode) {
                 "ru_RU" -> "РУССКИЙ"
                 "en_US" -> "ENGLISH"
@@ -127,17 +128,17 @@ internal class AppSettingsListConverter {
             itemId = AppSettingsFragment.ITEM_LANGUAGE
         ))
         add(TextItem(
-            textResId = R.string.app_settings_section_lang_description,
+            textResId = Strings.app_settings_section_lang_description,
             styleResId = R.style.H8_Gray70_Medium
         ))
     }
 
     private fun MutableList<Any>.addSwitchMapTypeItem(state: AppSettingsState, context: Context) {
         add(RightLabeledTextItem(
-            mainTextResId = R.string.app_settings_map_appearance_type,
+            mainTextResId = Strings.app_settings_map_appearance_type,
             label = when (state.appSettings?.mapAppearanceType) {
-                "hybrid" -> context.getString(R.string.change_map_type_hybrid).uppercase()
-                "scheme" -> context.getString(R.string.change_map_type_scheme).uppercase()
+                "hybrid" -> context.getString(Strings.change_map_type_hybrid).uppercase()
+                "scheme" -> context.getString(Strings.change_map_type_scheme).uppercase()
                 else -> ""
             },
             itemId = AppSettingsFragment.ITEM_MAP_TYPE

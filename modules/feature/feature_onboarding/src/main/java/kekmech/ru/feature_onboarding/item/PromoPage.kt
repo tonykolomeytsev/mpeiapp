@@ -8,6 +8,7 @@ import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.feature_onboarding.R
 import kekmech.ru.feature_onboarding.databinding.ItemPromoPageBinding
+import kekmech.ru.strings.Strings
 
 internal enum class PromoPage(
     @DrawableRes val icon: Int,
@@ -17,26 +18,26 @@ internal enum class PromoPage(
 
     SCHEDULE(
         icon = R.drawable.ill_schedule,
-        title = R.string.onboarding_welcome_title_schedule,
-        subtitle = R.string.onboarding_welcome_subtitle_schedule
+        title = Strings.onboarding_welcome_title_schedule,
+        subtitle = Strings.onboarding_welcome_subtitle_schedule
     ),
 
     MAP(
         icon = R.drawable.ill_map,
-        title = R.string.onboarding_welcome_title_map,
-        subtitle = R.string.onboarding_welcome_subtitle_map
+        title = Strings.onboarding_welcome_title_map,
+        subtitle = Strings.onboarding_welcome_subtitle_map
     ),
 
     BARS(
         icon = R.drawable.ill_bars,
-        title = R.string.onboarding_welcome_title_bars,
-        subtitle = R.string.onboarding_welcome_subtitle_bars
+        title = Strings.onboarding_welcome_title_bars,
+        subtitle = Strings.onboarding_welcome_subtitle_bars
     ),
 
     NOTES(
         icon = R.drawable.ill_notes,
-        title = R.string.onboarding_welcome_title_notes,
-        subtitle = R.string.onboarding_welcome_subtitle_notes
+        title = Strings.onboarding_welcome_title_notes,
+        subtitle = Strings.onboarding_welcome_subtitle_notes
     ),
 }
 

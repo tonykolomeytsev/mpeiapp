@@ -19,6 +19,7 @@ import kekmech.ru.coreui.items.EmptyStateItem
 import kekmech.ru.coreui.items.ShimmerItem
 import kekmech.ru.coreui.items.SpaceItem
 import kekmech.ru.coreui.items.TextWithIconItem
+import kekmech.ru.strings.Strings
 
 internal class BarsListConverter(private val context: Context) {
 
@@ -51,13 +52,13 @@ internal class BarsListConverter(private val context: Context) {
                 }
             state.flowState == FlowState.NOT_LOGGED_IN && state.config != null ->
                 mutableListOf<Any>().apply {
-                    addUserHeaderWithSettingsButton(context.getString(R.string.bars_stub_student_name))
+                    addUserHeaderWithSettingsButton(context.getString(Strings.bars_stub_student_name))
                     addShowBarsInBrowserLabel()
                     add(LoginToBarsItem)
                 }
             else ->
                 mutableListOf<Any>().apply {
-                    addUserHeaderWithSettingsButton(context.getString(R.string.bars_stub_student_name))
+                    addUserHeaderWithSettingsButton(context.getString(Strings.bars_stub_student_name))
                     addShowBarsInBrowserLabel()
                     addErrorStateItem(state)
                 }
@@ -73,7 +74,7 @@ internal class BarsListConverter(private val context: Context) {
                 TextWithIconItem(
                     itemId = ITEM_GROUP_LABEL,
                     text = SpannableStringBuilder()
-                        .append(context.getString(R.string.bars_stub_student_group))
+                        .append(context.getString(Strings.bars_stub_student_group))
                         .append(" ")
                         .append(
                             it,
@@ -91,7 +92,7 @@ internal class BarsListConverter(private val context: Context) {
         add(
             TextWithIconItem(
                 itemId = ITEM_BROWSER_LABEL,
-                textResId = R.string.bars_stub_show_browser_label,
+                textResId = Strings.bars_stub_show_browser_label,
                 drawableResID = R.drawable.ic_public_24px,
                 tintColorAttrId = R.attr.colorActive,
                 textStyleResId = R.style.H6_Main
@@ -110,7 +111,7 @@ internal class BarsListConverter(private val context: Context) {
                 TextWithIconItem(
                     itemId = ITEM_RATING_LABEL,
                     text = SpannableStringBuilder()
-                        .append(context.getString(R.string.bars_complex_rating))
+                        .append(context.getString(Strings.bars_complex_rating))
                         .append(" ")
                         .append(
                             complexPoints,
@@ -129,8 +130,8 @@ internal class BarsListConverter(private val context: Context) {
     private fun MutableList<Any>.addEmptyDisciplinesItem() {
         add(
             EmptyStateItem(
-                titleRes = R.string.bars_stub_empty_disciplines_header,
-                subtitleRes = R.string.bars_stub_empty_disciplines_description
+                titleRes = Strings.bars_stub_empty_disciplines_header,
+                subtitleRes = Strings.bars_stub_empty_disciplines_description
             )
         )
     }
@@ -141,8 +142,8 @@ internal class BarsListConverter(private val context: Context) {
         } else {
             add(
                 EmptyStateItem(
-                    titleRes = R.string.bars_stub_error_loading_config_header,
-                    subtitleRes = R.string.bars_stub_error_loading_config_description
+                    titleRes = Strings.bars_stub_error_loading_config_header,
+                    subtitleRes = Strings.bars_stub_error_loading_config_description
                 )
             )
         }

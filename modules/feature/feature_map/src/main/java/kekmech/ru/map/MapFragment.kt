@@ -44,6 +44,7 @@ import kekmech.ru.map.items.TabBarAdapterItem
 import kekmech.ru.map.view.BottomSheetBackgroundDrawable
 import kekmech.ru.map.view.ControlledScrollingLayoutManager
 import kekmech.ru.map.view.MarkersBitmapFactory
+import kekmech.ru.strings.Strings
 import org.koin.android.ext.android.inject
 import vivid.money.elmslie.storepersisting.retainInParentStoreHolder
 import java.util.concurrent.TimeUnit
@@ -171,7 +172,7 @@ internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState>(),
                 Unit
             }
             is MapEffect.ShowLoadingError ->
-                showBanner(R.string.map_loading_error_message)
+                showBanner(Strings.map_loading_error_message)
         }
 
     private fun generateGoogleMapMarkers(
@@ -230,27 +231,27 @@ internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState>(),
     private fun createTabs() = listOf(
         FilterTabItem(
             drawableResId = R.drawable.ic_map_tab_eat,
-            nameResId = R.string.map_tab_name_eat,
+            nameResId = Strings.map_tab_name_eat,
             tab = FilterTab.FOOD
         ),
         FilterTabItem(
             drawableResId = R.drawable.ic_map_tab_buildings,
-            nameResId = R.string.map_tab_name_buildings,
+            nameResId = Strings.map_tab_name_buildings,
             tab = FilterTab.BUILDINGS
         ),
         FilterTabItem(
             drawableResId = R.drawable.ic_map_tab_hostels,
-            nameResId = R.string.map_tab_name_hostels,
+            nameResId = Strings.map_tab_name_hostels,
             tab = FilterTab.HOSTELS
         ),
         FilterTabItem(
             drawableResId = R.drawable.ic_map_tab_others,
-            nameResId = R.string.map_tab_name_others,
+            nameResId = Strings.map_tab_name_others,
             tab = FilterTab.OTHERS
         ),
         FilterTabItem(
             drawableResId = R.drawable.ic_map_tab_structure,
-            nameResId = R.string.map_tab_name_structures,
+            nameResId = Strings.map_tab_name_structures,
             tab = FilterTab.STRUCTURES
         )
     )

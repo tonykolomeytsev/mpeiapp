@@ -30,6 +30,7 @@ import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesEvent
 import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesEvent.Wish
 import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesState
 import kekmech.ru.feature_app_settings.screens.favorites.item.HelpBannerAdapterItem
+import kekmech.ru.strings.Strings
 import org.koin.android.ext.android.inject
 
 internal class FavoritesFragment : BaseFragment<FavoritesEvent, FavoritesEffect, FavoritesState>() {
@@ -49,7 +50,7 @@ internal class FavoritesFragment : BaseFragment<FavoritesEvent, FavoritesEffect,
         viewBinding.apply {
             appBarLayout.addSystemTopPadding()
 
-            toolbar.setTitle(R.string.favorites_screen_title)
+            toolbar.setTitle(Strings.favorites_screen_title)
             toolbar.setNavigationOnClickListener { close() }
             recyclerView.attachScrollListenerForAppBarLayoutShadow(appBarLayout)
             recyclerView.addSystemBottomPadding()

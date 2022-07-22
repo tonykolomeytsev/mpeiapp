@@ -21,6 +21,7 @@ import kekmech.ru.feature_schedule.find_schedule.elm.FindScheduleEvent.Wish
 import kekmech.ru.feature_schedule.find_schedule.elm.FindScheduleFeatureFactory
 import kekmech.ru.feature_schedule.find_schedule.elm.FindScheduleState
 import kekmech.ru.feature_schedule.find_schedule.utils.GroupFormatTextWatcher
+import kekmech.ru.strings.Strings
 import org.koin.android.ext.android.inject
 
 internal class FindScheduleFragment :
@@ -61,10 +62,10 @@ internal class FindScheduleFragment :
 
     override fun handleEffect(effect: FindScheduleEffect) = when (effect) {
         is FindScheduleEffect.ShowError -> viewBinding.groupTextLayout.setError(getString(
-            R.string.schedule_find_error_loading,
+            Strings.schedule_find_error_loading,
             viewBinding.groupText.text?.toString().orEmpty()
         ))
-        is FindScheduleEffect.ShowSomethingWentWrongError -> showBanner(R.string.something_went_wrong_error)
+        is FindScheduleEffect.ShowSomethingWentWrongError -> showBanner(Strings.something_went_wrong_error)
         is FindScheduleEffect.NavigateNextFragment -> when (effect.continueTo) {
             BACK -> close()
             DASHBOARD -> dependencies.mainScreenLauncher.launch()
