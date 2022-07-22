@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import timber.log.Timber
 
 @Suppress("TooManyFunctions")
 open class BaseAdapter(
@@ -79,7 +80,7 @@ open class BaseAdapter(
             val type = adapterItems.first { item -> item.isType(getItem(position)) }
             type.itemBinder.detachViewHolder(holder)
         } catch (e: Exception) {
-            e.printStackTrace()
+            Timber.e(e)
         }
         super.onViewDetachedFromWindow(holder)
     }

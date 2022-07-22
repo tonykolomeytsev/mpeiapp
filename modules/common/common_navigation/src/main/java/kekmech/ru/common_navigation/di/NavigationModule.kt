@@ -13,3 +13,4 @@ object NavigationModule : ModuleProvider({
         RouterImpl::class
     )
 })
+

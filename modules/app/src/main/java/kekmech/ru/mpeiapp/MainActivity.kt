@@ -22,6 +22,7 @@ import kekmech.ru.domain_main_screen.MainScreenLauncher
 import kekmech.ru.domain_onboarding.OnboardingFeatureLauncher
 import kekmech.ru.mpeiapp.deeplink.DeeplinkHandlersProcessor
 import org.koin.android.ext.android.inject
+import timber.log.Timber
 import kekmech.ru.coreui.R as coreui_R
 import kekmech.ru.common_navigation.R as common_navigation_R
 
@@ -42,7 +43,7 @@ class MainActivity : AppCompatActivity(), DisposableDelegate by DisposableDelega
         try {
             MapsInitializer.initialize(this)
         } catch (e: GooglePlayServicesNotAvailableException) {
-            e.printStackTrace()
+            Timber.e(e)
         }
         FirebaseAnalytics.getInstance(this).apply {
             setUserId(deviceIdProvider.getDeviceId())
