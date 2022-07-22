@@ -13,5 +13,6 @@ dependencies {
     implementation(project(":common_annotations"))
     implementation(project(":common_cache"))
     implementation(project(":common_di"))
+    implementation(project(":common_kotlin"))
     implementation(project(":common_shared_preferences"))
 }

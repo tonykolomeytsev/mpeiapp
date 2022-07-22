@@ -6,6 +6,7 @@ import kekmech.ru.common_app_database.migrations.Executor
 import kekmech.ru.common_app_database.migrations.LiquidSchema
 import org.intellij.lang.annotations.Language
 import org.junit.jupiter.api.assertThrows
+import java.util.*
 
 class LiquidSchemaTest : StringSpec({
     "Test create table if database is empty" {
@@ -158,7 +159,7 @@ class LiquidSchemaTest : StringSpec({
         private fun String.clear() =
             replace("\n", " ")
                 .replace("\\s{2,}".toRegex(), " ")
-                .toLowerCase()
+                .lowercase(Locale.getDefault())
                 .trim()
 
         private fun setAccumulatingExecutor(

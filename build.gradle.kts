@@ -10,7 +10,7 @@ plugins {
     id("mpeix.kotlin") apply false
 }
 
-tasks.withType<Delete>() {
+tasks.withType<Delete> {
     delete(rootProject.buildDir)
 }
 
