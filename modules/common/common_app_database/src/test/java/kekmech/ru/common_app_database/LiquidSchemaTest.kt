@@ -95,6 +95,7 @@ class LiquidSchemaTest : StringSpec({
                 column("_group", textNotNull)
             }
         }
+
         @Language("RoomSql")
         private val SCHEMA_SQL_1 = """
             create table if not exists students (
@@ -117,6 +118,7 @@ class LiquidSchemaTest : StringSpec({
                 column("groups", textNotNull)
             }
         }
+
         @Language("RoomSql")
         private val SCHEMA_SQL_2 = """
             create table if not exists teachers ( 
@@ -140,6 +142,7 @@ class LiquidSchemaTest : StringSpec({
                 column("age", integerNotNull)
             }
         }
+
         @Language("RoomSql")
         private val SCHEMA_SQL_3 = listOf(
             "alter table students add column organisations text not null;",

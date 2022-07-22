@@ -128,9 +128,10 @@ class MpeixApp : Application(),
                     break
                 }
             }
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             Timber.d("Replace app package name")
         }
         return super.getPackageName()
     }
 }
+

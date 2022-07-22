@@ -15,6 +15,7 @@ import kekmech.ru.domain_map.MapFeatureLauncher
 import kekmech.ru.domain_schedule.ScheduleFeatureLauncher
 import kekmech.ru.feature_dashboard.DashboardFragment
 import kekmech.ru.mpeiapp.R
+import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
 private const val FRAGMENT_POSTPONE_DELAY = 300L
@@ -87,7 +88,7 @@ class BottomBarController(
     private fun FragmentTransaction.commitNowIgnoreStateLossError() = try {
         commitNowAllowingStateLoss()
     } catch (e: Exception) {
-        e.printStackTrace()
+        Timber.e(e)
         // TODO: remove in future if will no exceptions
         FirebaseCrashlytics.getInstance().recordException(e)
     }
