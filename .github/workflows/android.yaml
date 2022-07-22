@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Detekt
-        uses: natiginfo/action-detekt-all@1.15.0
+        uses: natiginfo/action-detekt-all@1.20.0
         with:
           args: --config detekt.yaml --language-version 1.4 --input modules
 
