@@ -17,7 +17,7 @@ jobs:
       - name: Detekt
         uses: natiginfo/action-detekt-all@1.20.0
         with:
-          args: --config detekt.yaml --language-version 1.4 --input modules
+          args: --config detekt.yaml --language-version 1.7.0 --input modules
 
   build:
     name: Release Build

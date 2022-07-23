@@ -552,6 +552,7 @@ style:
     active: true
   NewLineAtEndOfFile:
     active: true
+    excludes: ['**/*.kts']
   NoTabs:
     active: false
   ObjectLiteralToLambda:
