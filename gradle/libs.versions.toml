@@ -24,7 +24,7 @@ fragmentKtx = "1.3.6"
 material = "1.4.0"
 
 # Koin Versions
-koin = "3.1.2"
+koin = "3.2.0"
 
 # Squareup Versions
 retrofit = "2.9.0"
@@ -92,9 +92,9 @@ vivid-elmslie-android = { module = "com.github.vivid-money.elmslie:elmslie-andro
 vivid-elmslie-storeHolder = { module = "com.github.vivid-money.elmslie:elmslie-store-persisting", version.ref = "elmslie" }
 
 # Kotest Libraries
-kotest-runner = { module = "io.kotest:kotest-runner-junit5", version = "4.4.1" }
-kotest-assertions = { module = "io.kotest:kotest-assertions-core", version = "4.4.1" }
-kotest-property = { module = "io.kotest:kotest-property", version = "4.4.2" }
+kotest-runner = { module = "io.kotest:kotest-runner-junit5", version = "5.4.0" }
+kotest-assertions = { module = "io.kotest:kotest-assertions-core", version = "5.4.0" }
+kotest-property = { module = "io.kotest:kotest-property", version = "5.4.0" }
 
 # Jetpack Compose
 ## Compose

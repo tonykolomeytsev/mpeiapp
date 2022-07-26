@@ -21,6 +21,7 @@ class ComposeAndroidModulePlugin : Plugin<Project> {
         }
         val catalog = target.extensions.getByType(VersionCatalogsExtension::class.java).named("libs")
         target.extensions.configure(LibraryExtension::class.java) { extension ->
+            extension.buildFeatures { compose = true }
             extension.composeOptions { options ->
                 options.kotlinCompilerExtensionVersion = catalog.requiredVersion("composeCompiler")
             }
