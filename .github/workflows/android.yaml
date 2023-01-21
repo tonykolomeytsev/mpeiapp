@@ -18,9 +18,9 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Detekt
-        uses: natiginfo/action-detekt-all@1.20.0
+        uses: natiginfo/action-detekt-all@1.22.0
         with:
-          args: --config detekt.yaml --language-version 1.7.0 --input modules
+          args: --config detekt.yaml --language-version 1.7.20 --input modules
 
   test:
     name: Unit Tests
@@ -28,10 +28,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
-      - name: set up JDK 11
+      - name: set up JDK 17
         uses: actions/setup-java@v1
         with:
-          java-version: 11
+          java-version: 17
 
       - name: Materialize google services
         run: .ci/materialize.sh $GOOGLE_SERVICES_DEBUG modules/app/google-services.json
@@ -73,10 +73,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - name: set up JDK 11
+      - name: set up JDK 17
         uses: actions/setup-java@v1
         with:
-          java-version: 11
+          java-version: 17
 
       - name: Materialize google services
         run: .ci/materialize.sh $GOOGLE_SERVICES_DEBUG modules/app/google-services.json
