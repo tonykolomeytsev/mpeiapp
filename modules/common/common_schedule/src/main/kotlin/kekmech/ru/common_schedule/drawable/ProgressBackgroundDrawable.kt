@@ -48,6 +48,7 @@ class ProgressBackgroundDrawable(
         paint.alpha = alpha
     }
 
+    @Deprecated("Deprecated in Java")
     override fun getOpacity() = PixelFormat.OPAQUE
 
     override fun setColorFilter(colorFilter: ColorFilter?) = Unit

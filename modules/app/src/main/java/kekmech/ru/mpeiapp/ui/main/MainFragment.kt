@@ -101,6 +101,7 @@ class MainFragment : BaseFragment<MainScreenEvent, MainScreenEffect, MainScreenS
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         childFragmentManager.onActivityResult(requestCode, resultCode, data)
