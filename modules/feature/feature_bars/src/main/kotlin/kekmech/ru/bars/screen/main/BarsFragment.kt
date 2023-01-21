@@ -16,7 +16,6 @@ import androidx.core.view.forEach
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import kekmech.ru.bars.R
-import kekmech.ru.coreui.R as coreui_R
 import kekmech.ru.bars.databinding.FragmentBarsBinding
 import kekmech.ru.bars.items.AssessedDisciplineAdapterItem
 import kekmech.ru.bars.items.LoginToBarsAdapterItem
@@ -53,6 +52,7 @@ import kekmech.ru.domain_app_settings.AppSettingsFeatureLauncher
 import kekmech.ru.strings.Strings
 import org.koin.android.ext.android.inject
 import vivid.money.elmslie.storepersisting.retainInParentStoreHolder
+import kekmech.ru.coreui.R as coreui_R
 
 private const val JS_INTERFACE_NAME = "kti"
 
@@ -198,6 +198,7 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), 
             feature.accept(Wish.Action.PageStarted)
         }
 
+        @Deprecated("Deprecated in Java")
         override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
             return handleUrlLoading(url)
         }

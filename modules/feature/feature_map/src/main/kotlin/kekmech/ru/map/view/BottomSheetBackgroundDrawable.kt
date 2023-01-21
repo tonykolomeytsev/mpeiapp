@@ -71,6 +71,7 @@ internal class BottomSheetBackgroundDrawable(
         paint.colorFilter = cf
     }
 
+    @Deprecated("Deprecated in Java")
     override fun getOpacity() = PixelFormat.TRANSLUCENT
 
     override fun setTintList(tint: ColorStateList?) {
