@@ -80,11 +80,9 @@
 
 1. В глобальный `gradle.properties` добавьте поле `mpeiapp_google_maps_api_key="{SECRET}"`, где `{SECRET}` - ключ от API Google Maps. [Инструкция](https://developers.google.com/maps/gmp-get-started) по получению ключа.
 
-1. Скачайте и установите JDK 11 версии, укажите в настройках проекта java 11 по умолчанию для Gradle и компилятора Kotlin:
+1. Скачайте и установите JDK 17 версии, укажите в настройках проекта java 17 по умолчанию для Gradle и компилятора Kotlin:
 
-   `Preferences -> Other Settings -> Kotlin Compiler -> Target JVM version`
-
-   `Project Structure... -> SDK Location -> JDK Location`
+   `File -> Settings -> Build, Execution, Deployment -> Build Tools -> Gradle`
 
 1. Установите плагин **Kotest**, с ним будет проще гонять тесты.
 
