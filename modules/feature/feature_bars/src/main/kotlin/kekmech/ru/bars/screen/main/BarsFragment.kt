@@ -26,7 +26,6 @@ import kekmech.ru.bars.screen.main.elm.BarsEvent
 import kekmech.ru.bars.screen.main.elm.BarsEvent.Wish
 import kekmech.ru.bars.screen.main.elm.BarsFeatureFactory
 import kekmech.ru.bars.screen.main.elm.BarsState
-import kekmech.ru.bars.screen.rating_details.RatingDetailsFragment
 import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_analytics.addScrollAnalytics
 import kekmech.ru.common_analytics.ext.screenAnalytics
@@ -38,7 +37,6 @@ import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.views.setProgressViewOffset
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.BaseFragment
-import kekmech.ru.common_navigation.addScreenForward
 import kekmech.ru.common_navigation.features.ScrollToTop
 import kekmech.ru.common_navigation.features.TabScreenStateSaver
 import kekmech.ru.common_navigation.features.TabScreenStateSaverImpl
@@ -165,17 +163,7 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), 
             is BarsEffect.ShowCommonError -> showBanner(Strings.something_went_wrong_error)
             is BarsEffect.OpenExternalBrowser ->
                 requireContext().openLinkExternal(effect.url)
-            is BarsEffect.OpenRatingDetails -> {
-                viewBinding.disciplineDetailsFragmentContainer?.let {
-                    childFragmentManager
-                        .beginTransaction()
-                        .replace(R.id.disciplineDetailsFragmentContainer,
-                            RatingDetailsFragment.newInstance(effect.rating))
-                        .commitAllowingStateLoss()
-                } ?: addScreenForward { RatingDetailsFragment.newInstance(effect.rating) }
-                Unit
-            }
-            is BarsEffect.ScrollToTop ->  viewBinding.recyclerView.scrollToPosition(0)
+            is BarsEffect.ScrollToTop -> viewBinding.recyclerView.scrollToPosition(0)
         }
 
     override fun onResume() {
@@ -224,6 +212,8 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), 
             request: WebResourceRequest,
             error: WebResourceError,
         ) {
+            if (request.url?.host?.contains("mpei.ru") != true) return
+
             analytics.sendCustomAction("BarsWebViewErrorReceived")
             feature.accept(Wish.Action.PageLoadingError)
         }
@@ -269,7 +259,10 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), 
             viewBinding.disciplineDetailsFragmentContainer?.let { _ ->
                 childFragmentManager
                     .beginTransaction()
-                    .replace(R.id.disciplineDetailsFragmentContainer, BarsDetailsFragment.newInstance(it))
+                    .replace(
+                        R.id.disciplineDetailsFragmentContainer,
+                        BarsDetailsFragment.newInstance(it)
+                    )
                     .commitAllowingStateLoss()
             } ?: showDialog { BarsDetailsFragment.newInstance(it) }
         },
@@ -283,10 +276,6 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), 
                 ITEM_BROWSER_LABEL -> {
                     analytics.sendClick("BarsShowBrowser")
                     feature.accept(Wish.Click.ShowBrowser)
-                }
-                ITEM_RATING_LABEL -> {
-                    analytics.sendClick("BarsShowRating")
-                    feature.accept(Wish.Click.ShowRating)
                 }
                 else -> { /* no-op */
                 }
@@ -325,6 +314,5 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), 
 
         const val ITEM_GROUP_LABEL = 0
         const val ITEM_BROWSER_LABEL = 1
-        const val ITEM_RATING_LABEL = 2
     }
 }
