@@ -220,13 +220,7 @@
     <string name="bars_stub_empty_disciplines_description">Список дисциплин для заданного семестра пуст, либо во время загрузки произошла ошибка</string>
     <string name="bars_webview_menu_refresh">Обновить страницу</string>
     <string name="bars_webview_menu_open_external">Открыть в браузере</string>
-    <string name="bars_complex_rating">Комплексный рейтинг</string>
     <string name="bars_item_no_marks">Нет оценок</string>
-
-    <string name="bars_rating_complex_name">Комплексный рейтинг</string>
-    <string name="bars_rating_study_name">Учебный рейтинг</string>
-    <string name="bars_rating_science_name">Научный рейтинг</string>
-    <string name="bars_rating_social_name">Социальный рейтинг</string>
 
     <string name="app_settings_screen_title">Настройки</string>
     <string name="app_settings_header_schedule">Расписание</string>

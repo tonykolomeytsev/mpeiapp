@@ -103,6 +103,15 @@
     <string name="something_went_wrong_error">Something went wrong…</string>
     <string name="connection_lost_error">No internet connection</string>
 
+    <string name="common_error_no_internet_title">No Internet</string>
+    <string name="common_error_no_internet_description">Check your internet connection and try loading the data again</string>
+    <string name="common_error_bad_response_title">Error on the server</string>
+    <string name="common_error_bad_response_description">The server was unable to properly respond to the request and returned an error with code %s. If the problem persists for several minutes, report it to the developers.</string>
+    <string name="common_error_handshake_title">Encryption error</string>
+    <string name="common_error_handshake_description">Make sure the time and date on your phone are correct. This is necessary to establish an encrypted connection. If this does not help, please report the problem to the developers immediately.</string>
+    <string name="common_error_view_title">Display error</string>
+    <string name="common_error_view_description">The server sent data, but we could not process it. So maybe if you haven\'t updated the app for a long time. If this is not the case, please report the problem to the developers.</string>
+
     <string name="onboarding_welcome_start_using">Let\'s go!</string>
     <string name="onboarding_welcome_title_schedule">Check your schedule</string>
     <string name="onboarding_welcome_subtitle_schedule">You can access the previously viewed schedules even without the Internet</string>
@@ -174,6 +183,7 @@
     <string name="map_tab_name_structures">Departm.</string>
     <string name="map_section_name_structures">Departments</string>
     <string name="map_section_tag_others">Remaining places</string>
+    <string name="map_loading_error_message">An error occurred while loading the list of places for the map</string>
 
     <string name="note_list_section_add">CREATE NOTE</string>
     <string name="note_list_section_header">Attached notes</string>
@@ -208,13 +218,7 @@
     <string name="bars_stub_empty_disciplines_description">The list of disciplines for the given semester is empty, or an error occurred during the download.</string>
     <string name="bars_webview_menu_refresh">Refresh page</string>
     <string name="bars_webview_menu_open_external">Open in browser</string>
-    <string name="bars_complex_rating">Complex score </string>
     <string name="bars_item_no_marks">No grades</string>
-
-    <string name="bars_rating_complex_name">Complex score</string>
-    <string name="bars_rating_study_name">Study score</string>
-    <string name="bars_rating_science_name">Science score</string>
-    <string name="bars_rating_social_name">Social score</string>
 
     <string name="app_settings_screen_title">Settings</string>
     <string name="app_settings_header_schedule">Schedule</string>
@@ -232,6 +236,7 @@
     <string name="app_settings_header_support">Support</string>
     <string name="app_settings_section_ask">Ask us a question</string>
     <string name="app_settings_section_github">Create an Issue or Pull Request</string>
+    <string name="app_settings_header_contributors">Contributors</string>
     <string name="app_settings_section_lang">App language</string>
     <string name="app_settings_section_lang_description">Sometimes after changing the language, you need to restart the application</string>
     <string name="app_settings_app_version">MpeiX for Android v%s</string>
