@@ -4,7 +4,6 @@ import android.content.Context
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
-import kekmech.ru.common_android.getStringArray
 import kekmech.ru.common_android.getThemeColor
 import kekmech.ru.coreui.items.EmptyStateItem
 import kekmech.ru.coreui.items.ShimmerItem
@@ -15,11 +14,8 @@ import kekmech.ru.feature_bars.items.LoginToBarsItem
 import kekmech.ru.feature_bars.items.UserNameHeaderItem
 import kekmech.ru.feature_bars.screen.main.BarsFragment.Companion.ITEM_BROWSER_LABEL
 import kekmech.ru.feature_bars.screen.main.BarsFragment.Companion.ITEM_GROUP_LABEL
-import kekmech.ru.feature_bars.screen.main.BarsFragment.Companion.ITEM_RATING_LABEL
 import kekmech.ru.feature_bars.screen.main.elm.BarsState
 import kekmech.ru.feature_bars.screen.main.elm.FlowState
-import kekmech.ru.feature_bars.screen.main.util.DeclensionHelper
-import kekmech.ru.strings.StringArrays
 import kekmech.ru.strings.Strings
 import kekmech.ru.coreui.R as coreui_R
 
@@ -38,7 +34,6 @@ internal class BarsListConverter(private val context: Context) {
                     addUserHeaderWithSettingsButton(state.userInfo?.name)
                     addUserGroupLabel(state.userInfo?.group)
                     addShowBarsInBrowserLabel()
-                    addComplexRatingLabel(state)
 
                     if (!state.isAfterErrorLoadingConfig) {
                         state.userInfo?.assessedDisciplines?.let { disciplines ->
@@ -100,32 +95,6 @@ internal class BarsListConverter(private val context: Context) {
                 textStyleResId = coreui_R.style.H6_Main
             )
         )
-    }
-
-    private fun MutableList<Any>.addComplexRatingLabel(state: BarsState) {
-        state.userInfo?.rating?.let {
-            val complexPoints =
-                DeclensionHelper.format(
-                    declensions = context.getStringArray(StringArrays.points_declensions),
-                    n = it.complex.toLong()
-                )
-            add(
-                TextWithIconItem(
-                    itemId = ITEM_RATING_LABEL,
-                    text = SpannableStringBuilder()
-                        .append(context.getString(Strings.bars_complex_rating))
-                        .append(" ")
-                        .append(
-                            complexPoints,
-                            ForegroundColorSpan(context.getThemeColor(coreui_R.attr.colorBlack)),
-                            SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
-                        ),
-                    drawableResID = R.drawable.ic_leaderboard_24dp,
-                    tintColorAttrId = coreui_R.attr.colorGray70,
-                    textStyleResId = coreui_R.style.H6_Main
-                )
-            )
-        } ?: add(textShimmerItem)
         add(SpaceItem.VERTICAL_8)
     }
 
