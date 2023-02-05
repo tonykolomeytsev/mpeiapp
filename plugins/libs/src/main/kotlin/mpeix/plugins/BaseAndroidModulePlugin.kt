@@ -1,7 +1,6 @@
 package mpeix.plugins
 
 import com.android.build.gradle.BaseExtension
-import com.android.build.gradle.LibraryExtension
 import mpeix.plugins.ext.requiredVersion
 import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
@@ -21,6 +20,7 @@ class BaseAndroidModulePlugin : Plugin<Project> {
         target.plugins.apply {
             apply("kotlin-android")
             apply("kotlin-parcelize")
+            apply("org.gradle.android.cache-fix")
         }
 
         val catalog = target.extensions.getByType(VersionCatalogsExtension::class.java).named("libs")

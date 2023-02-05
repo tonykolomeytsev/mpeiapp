@@ -1,5 +1,6 @@
 package mpeix.plugins
 
+import com.android.build.gradle.LibraryExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
@@ -12,6 +13,10 @@ class AndroidModulePlugin : Plugin<Project> {
             apply("kotlin-android")
             apply("kotlin-parcelize")
             apply("mpeix.android.base")
+        }
+        target.extensions.configure(LibraryExtension::class.java) { extension ->
+            // configure namespace of the package (instead of AndroidManifest.xml)
+            extension.namespace = "kekmech.ru.${target.name}"
         }
     }
 }

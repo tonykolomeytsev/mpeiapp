@@ -21,6 +21,8 @@ class ComposeAndroidModulePlugin : Plugin<Project> {
         }
         val catalog = target.extensions.getByType(VersionCatalogsExtension::class.java).named("libs")
         target.extensions.configure(LibraryExtension::class.java) { extension ->
+            // configure namespace of the package (instead of AndroidManifest.xml)
+            extension.namespace = "kekmech.ru.${target.name}"
             extension.buildFeatures { compose = true }
             extension.composeOptions { options ->
                 options.kotlinCompilerExtensionVersion = catalog.requiredVersion("composeCompiler")

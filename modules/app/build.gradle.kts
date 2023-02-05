@@ -8,6 +8,7 @@ plugins {
 apply(from = "${rootProject.projectDir}/gradle/ci.gradle")
 
 android {
+    namespace = "kekmech.ru.mpeiapp"
 
     defaultConfig {
         applicationId = "kekmech.ru.mpeiapp"

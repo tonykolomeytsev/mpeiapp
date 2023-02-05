@@ -4,6 +4,7 @@ plugins {
     kotlin("android") version "1.7.20" apply false
     id("com.google.gms.google-services") version "4.3.13" apply false
     id("com.google.firebase.crashlytics") version "2.9.1" apply false
+    id("org.gradle.android.cache-fix") version "2.6.3" apply false
     id("io.gitlab.arturbosch.detekt") version "1.22.0"
 
     id("mpeix.android") apply false
