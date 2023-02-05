@@ -6,7 +6,6 @@ import org.koin.dsl.module
 open class ModuleProvider(declaration: ModuleDeclaration) {
     val provider = module(
         createdAtStart = false,
-        override = false,
         moduleDeclaration = declaration
     )
 }

@@ -5,7 +5,6 @@ import android.content.Context
 import android.os.Build
 import io.reactivex.rxjava3.exceptions.UndeliverableException
 import io.reactivex.rxjava3.plugins.RxJavaPlugins
-import kekmech.ru.bars.di.BarsModule
 import kekmech.ru.common_analytics.di.AnalyticsModule
 import kekmech.ru.common_app_database.di.AppDatabaseModule
 import kekmech.ru.common_cache.di.CacheModule
@@ -19,16 +18,17 @@ import kekmech.ru.common_navigation.di.RouterHolder
 import kekmech.ru.common_network.di.NetworkModule
 import kekmech.ru.common_network.retrofit.ServiceUrlResolver
 import kekmech.ru.feature_app_settings.di.AppSettingsModule
+import kekmech.ru.feature_bars.di.BarsModule
 import kekmech.ru.feature_dashboard.di.DashboardModule
+import kekmech.ru.feature_force_update.di.ForceUpdateModule
+import kekmech.ru.feature_map.di.MapModule
+import kekmech.ru.feature_notes.di.NotesModule
 import kekmech.ru.feature_onboarding.di.OnboardingModule
 import kekmech.ru.feature_schedule.di.ScheduleModule
 import kekmech.ru.feature_search.di.SearchFeatureModule
-import kekmech.ru.map.di.MapModule
 import kekmech.ru.mpeiapp.deeplink.di.DeeplinkModule
 import kekmech.ru.mpeiapp.di.AppModule
 import kekmech.ru.mpeiapp.ui.main.di.MainScreenModule
-import kekmech.ru.notes.di.NotesModule
-import kekmech.ru.update.di.ForceUpdateModule
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -75,6 +75,7 @@ class MpeixApp : Application(),
     private fun initKoin() = startKoin {
         androidLogger()
         androidContext(this@MpeixApp)
+        allowOverride(false)
         modules(listOf(
             AppModule,
             MainScreenModule,

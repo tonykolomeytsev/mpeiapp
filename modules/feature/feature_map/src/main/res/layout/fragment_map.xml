@@ -5,7 +5,7 @@
         android:id="@+id/mapCoordinator"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="kekmech.ru.map.MapFragment">
+        tools:context="kekmech.ru.feature_map.MapFragment">
 
     <LinearLayout
             android:id="@+id/placeDescriptionLayout"
