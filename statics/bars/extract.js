@@ -1,10 +1,15 @@
 let getMeta = (metadataContainer) => {
     const pair = (arr) => {
-        return { "description": arr[0].trim(), "value": arr[1].trim() };
+        try {
+            return { "description": arr[0].trim(), "value": arr[1].trim() };
+        } catch (err) {
+            return null;
+        }
     };
     const m = Array
-        .from(metadataContainer.children[2].children)
-        .map((li) => pair(li.innerText.split(':')));
+        .from(metadataContainer.querySelectorAll(".list-inline-item"))
+        .map((li) => pair(li.innerText.split(':')))
+        .filter((el) => el != null);
     return JSON.stringify({ "meta": m });
 };
 let getSemesters = () => {
@@ -87,7 +92,7 @@ let getAllMarks = () => {
     }
     return JSON.stringify({ "payload": output });
 };
-let metadataContainer = document.getElementById("btnErrorInfo").parentElement;
+let metadataContainer = document.querySelector("#div-FormHeader .form-row .col-sm");
 
 let studentNameAndGroup = metadataContainer.children[0].innerText.split(/\(.*\)/gm);
 kti.onStudentNameExtracted(studentNameAndGroup[0].trim());
