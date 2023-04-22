@@ -1,63 +1,51 @@
 package kekmech.ru.feature_app_settings.screens.favorites.elm
 
 import kekmech.ru.domain_schedule.dto.FavoriteSchedule
-import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesEvent.News
-import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesEvent.Wish
-import vivid.money.elmslie.core.store.Result
-import vivid.money.elmslie.core.store.StateReducer
+import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesEvent.Internal
+import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesEvent.Ui
+import vivid.money.elmslie.core.store.dsl_reducer.ScreenDslReducer
+import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesCommand as Command
+import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesEffect as Effect
+import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesEvent as Event
+import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesState as State
 
-internal class FavoritesReducer : StateReducer<FavoritesEvent, FavoritesState, FavoritesEffect, FavoritesAction> {
+internal class FavoritesReducer :
+    ScreenDslReducer<Event, Ui, Internal, State, Effect, Command>(
+        uiEventClass = Ui::class,
+        internalEventClass = Internal::class,
+    ) {
 
-    override fun reduce(
-        event: FavoritesEvent,
-        state: FavoritesState,
-    ): Result<FavoritesState, FavoritesEffect, FavoritesAction> =
+    override fun Result.internal(event: Internal): Any =
         when (event) {
-            is Wish -> reduceWish(event, state)
-            is News -> reduceNews(event, state)
+            is Internal.LoadAllFavoritesSuccess -> state { copy(favorites = event.favorites) }
         }
 
-    private fun reduceWish(
-        event: Wish,
-        state: FavoritesState,
-    ): Result<FavoritesState, FavoritesEffect, FavoritesAction> =
+    override fun Result.ui(event: Ui): Any =
         when (event) {
-            is Wish.Init -> Result(
-                state = state,
-                command = FavoritesAction.LoadAllFavorites
-            )
-            is Wish.Click.AddFavorite -> Result(state = state)
-            is Wish.Action.UpdateFavorite -> {
+            is Ui.Init -> commands { +Command.LoadAllFavorites }
+            is Ui.Action.UpdateFavorite -> {
                 val newFavorites = state.favorites?.updateOrAdd(event.favoriteSchedule)
-                Result(
-                    state = state.copy(favorites = newFavorites),
-                    command = newFavorites?.let(FavoritesAction::SetFavorites)
-                )
+                state { copy(favorites = newFavorites) }
+                commands { +newFavorites?.let(Command::SetFavorites) }
             }
-            is Wish.Click.DeleteSchedule -> {
+            is Ui.Click.DeleteFavorite -> {
                 val newFavorites = state.favorites?.filterNot {
                     it.groupNumber.equals(event.favoriteSchedule.groupNumber, ignoreCase = true)
                 }
-                Result(
-                    state = state.copy(favorites = newFavorites),
-                    command = newFavorites?.let(FavoritesAction::SetFavorites)
-                )
+                state { copy(favorites = newFavorites) }
+                commands { +newFavorites?.let(Command::SetFavorites) }
             }
-        }
-
-    private fun reduceNews(
-        event: News,
-        state: FavoritesState,
-    ): Result<FavoritesState, FavoritesEffect, FavoritesAction> =
-        when (event) {
-            is News.AllFavoritesLoaded -> Result(
-                state = state.copy(favorites = event.favorites)
-            )
         }
 
     private fun List<FavoriteSchedule>.updateOrAdd(favoriteSchedule: FavoriteSchedule): List<FavoriteSchedule> {
         return if (any { it.groupNumber.equals(favoriteSchedule.groupNumber, ignoreCase = true) }) {
-            map { if (it.groupNumber.equals(favoriteSchedule.groupNumber, ignoreCase = true)) favoriteSchedule else it }
+            map {
+                if (it.groupNumber.equals(
+                        favoriteSchedule.groupNumber,
+                        ignoreCase = true
+                    )
+                ) favoriteSchedule else it
+            }
         } else {
             this + favoriteSchedule
         }

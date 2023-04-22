@@ -27,7 +27,7 @@ import kekmech.ru.feature_app_settings.di.AppSettingDependencies
 import kekmech.ru.feature_app_settings.screens.edit_favorite.EditFavoriteFragment
 import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesEffect
 import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesEvent
-import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesEvent.Wish
+import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesEvent.Ui
 import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesState
 import kekmech.ru.feature_app_settings.screens.favorites.item.HelpBannerAdapterItem
 import kekmech.ru.strings.Strings
@@ -35,7 +35,7 @@ import org.koin.android.ext.android.inject
 
 internal class FavoritesFragment : BaseFragment<FavoritesEvent, FavoritesEffect, FavoritesState>() {
 
-    override val initEvent get() = Wish.Init
+    override val initEvent get() = Ui.Init
     override var layoutId: Int = R.layout.fragment_favorites
 
     private val dependencies by inject<AppSettingDependencies>()
@@ -58,7 +58,7 @@ internal class FavoritesFragment : BaseFragment<FavoritesEvent, FavoritesEffect,
             recyclerView.adapter = adapter
             recyclerView.attachSwipeToDeleteCallback(isItemForDelete = { it is FavoriteScheduleItem }) {
                 analytics.sendClick("DeleteFavorite")
-                feature.accept(Wish.Click.DeleteSchedule((it as FavoriteScheduleItem).value))
+                feature.accept(Ui.Click.DeleteFavorite((it as FavoriteScheduleItem).value))
             }
         }
     }
@@ -105,7 +105,7 @@ internal class FavoritesFragment : BaseFragment<FavoritesEvent, FavoritesEffect,
     private fun setResultListenerForUpdateFavorite(resultKey: String) =
         setResultListener<Pair<String, String>>(resultKey) { (groupName, description) ->
             feature.accept(
-                Wish.Action.UpdateFavorite(
+                Ui.Action.UpdateFavorite(
                     FavoriteSchedule(groupName, description, 0)
                 )
             )

@@ -24,7 +24,7 @@ import kekmech.ru.feature_app_settings.screens.favorites.FavoritesFragment
 import kekmech.ru.feature_app_settings.screens.lang.SelectLanguageFragment
 import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsEffect
 import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsEvent
-import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsEvent.Wish
+import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsEvent.Ui
 import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsFeatureFactory
 import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsState
 import kekmech.ru.feature_app_settings.screens.main.list.ContributorAdapterItem
@@ -38,7 +38,7 @@ internal class AppSettingsFragment :
     BaseFragment<AppSettingsEvent, AppSettingsEffect, AppSettingsState>(),
     ActivityResultListener {
 
-    override val initEvent get() = Wish.Init
+    override val initEvent get() = Ui.Init
 
     override var layoutId: Int = R.layout.fragment_app_settings
 
@@ -75,7 +75,7 @@ internal class AppSettingsFragment :
                     SelectLanguageFragment.newInstance(effect.selectedLanguage, LANGUAGE_RESULT_KEY)
                 }
                 setResultListener<String>(LANGUAGE_RESULT_KEY) { selectedLanguage ->
-                    feature.accept(Wish.Action.LanguageChanged(selectedLanguage))
+                    feature.accept(Ui.Action.LanguageChanged(selectedLanguage))
                 }
             }
             is AppSettingsEffect.OpenMapTypeDialog -> {
@@ -83,7 +83,7 @@ internal class AppSettingsFragment :
                     SelectMapTypeFragment.newInstance(effect.mapType, MAP_TYPE_RESULT_KEY)
                 }
                 setResultListener<String>(MAP_TYPE_RESULT_KEY) { selectedMapType ->
-                    feature.accept(Wish.Action.MapTypeChanged(selectedMapType))
+                    feature.accept(Ui.Action.MapTypeChanged(selectedMapType))
                 }
             }
         }
@@ -93,23 +93,23 @@ internal class AppSettingsFragment :
             SectionHeaderAdapterItem(),
             ToggleAdapterItem(TOGGLE_DARK_THEME) {
                 analytics.sendChangeSetting("DarkTheme", it.toString())
-                feature.accept(Wish.Action.SetDarkThemeEnabled(it))
+                feature.accept(Ui.Action.SetDarkThemeEnabled(it))
                 fixStatusBarIssue(it)
             },
             ToggleAdapterItem(TOGGLE_AUTO_HIDE_BOTTOM_SHEET) {
                 analytics.sendChangeSetting("AutoHideMapBottomSheet", it.toString())
-                feature.accept(Wish.Action.SetAutoHideBottomSheet(it))
+                feature.accept(Ui.Action.SetAutoHideBottomSheet(it))
             },
             ToggleAdapterItem(TOGGLE_SNOW_FLAKES) {
                 analytics.sendChangeSetting("SnowFlakes", it.toString())
-                feature.accept(Wish.Action.SetSnowEnabled(it))
+                feature.accept(Ui.Action.SetSnowEnabled(it))
             },
             ToggleAdapterItem(TOGGLE_SHOW_NAV_FAB) {
                 analytics.sendChangeSetting("ShowQuickNavFab", it.toString())
-                feature.accept(Wish.Action.SetShowQuickNavigationFab(it))
+                feature.accept(Ui.Action.SetShowQuickNavigationFab(it))
             },
             ToggleAdapterItem(TOGGLE_DEBUG_CHANGE_ENV) {
-                feature.accept(Wish.Action.ChangeBackendEnvironment(it))
+                feature.accept(Ui.Action.ChangeBackendEnvironment(it))
             },
             TextAdapterItem(),
             SpaceAdapterItem(),
@@ -123,7 +123,7 @@ internal class AppSettingsFragment :
     private fun onItemClick(itemId: Int?) =
         when (itemId) {
             ITEM_DEBUG_CLEAR_SELECTED_GROUP -> {
-                feature.accept(Wish.Action.ClearSelectedGroup)
+                feature.accept(Ui.Action.ClearSelectedGroup)
                 dependencies.onboardingFeatureLauncher.launchWelcomePage(true)
             }
             ITEM_SUPPORT -> {
@@ -140,11 +140,11 @@ internal class AppSettingsFragment :
             }
             ITEM_LANGUAGE -> {
                 analytics.sendClick("SelectLanguage")
-                feature.accept(Wish.Click.OnLanguage)
+                feature.accept(Ui.Click.Language)
             }
             ITEM_MAP_TYPE -> {
                 analytics.sendClick("SelectMapType")
-                feature.accept(Wish.Click.MapType)
+                feature.accept(Ui.Click.MapType)
             }
             else -> { /* no-op */
             }

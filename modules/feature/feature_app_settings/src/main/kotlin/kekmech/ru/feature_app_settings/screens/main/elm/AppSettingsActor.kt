@@ -9,41 +9,40 @@ import vivid.money.elmslie.core.store.Actor
 internal class AppSettingsActor(
     private val appSettingsRepository: AppSettingsRepository,
     private val scheduleRepository: ScheduleRepository,
-) : Actor<AppSettingsAction, AppSettingsEvent> {
+) : Actor<AppSettingsCommand, AppSettingsEvent> {
 
-    @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
-    override fun execute(action: AppSettingsAction): Observable<AppSettingsEvent> =
-        when (action) {
-            is AppSettingsAction.LoadAppSettings -> Observable
+    override fun execute(command: AppSettingsCommand): Observable<AppSettingsEvent> =
+        when (command) {
+            is AppSettingsCommand.LoadAppSettings -> Observable
                 .just(appSettingsRepository as AppSettings)
-                .mapSuccessEvent { AppSettingsEvent.News.AppSettingsLoaded(it) }
-            is AppSettingsAction.SetDarkThemeEnabled -> appSettingsRepository
-                .complete { isDarkThemeEnabled = action.isEnabled }
-                .mapSuccessEvent(AppSettingsEvent.News.AppSettingsChanged)
-            is AppSettingsAction.SetSnowEnabled -> appSettingsRepository
-                .complete { isSnowEnabled = action.isEnabled }
-                .mapSuccessEvent(AppSettingsEvent.News.AppSettingsChanged)
-            is AppSettingsAction.SetAutoHideBottomSheet -> appSettingsRepository
-                .complete { autoHideBottomSheet = action.isEnabled }
-                .mapSuccessEvent(AppSettingsEvent.News.AppSettingsChanged)
-            is AppSettingsAction.ClearSelectedGroup -> appSettingsRepository
+                .mapSuccessEvent { AppSettingsEvent.Internal.AppSettingsLoaded(it) }
+            is AppSettingsCommand.SetDarkThemeEnabled -> appSettingsRepository
+                .complete { isDarkThemeEnabled = command.isEnabled }
+                .mapSuccessEvent(AppSettingsEvent.Internal.AppSettingsChanged)
+            is AppSettingsCommand.SetSnowEnabled -> appSettingsRepository
+                .complete { isSnowEnabled = command.isEnabled }
+                .mapSuccessEvent(AppSettingsEvent.Internal.AppSettingsChanged)
+            is AppSettingsCommand.SetAutoHideBottomSheet -> appSettingsRepository
+                .complete { autoHideBottomSheet = command.isEnabled }
+                .mapSuccessEvent(AppSettingsEvent.Internal.AppSettingsChanged)
+            is AppSettingsCommand.ClearSelectedGroup -> appSettingsRepository
                 .complete { scheduleRepository.debugClearSelectedGroup() }
                 .toObservable()
-            is AppSettingsAction.ChangeBackendEnvironment -> appSettingsRepository
-                .complete { isDebugEnvironment = action.isDebug }
+            is AppSettingsCommand.ChangeBackendEnvironment -> appSettingsRepository
+                .complete { isDebugEnvironment = command.isDebug }
                 .toObservable()
-            is AppSettingsAction.ChangeLanguage -> appSettingsRepository
-                .complete { languageCode = action.selectedLanguage }
+            is AppSettingsCommand.ChangeLanguage -> appSettingsRepository
+                .complete { languageCode = command.selectedLanguage }
                 .toObservable()
-            is AppSettingsAction.ChangeMapType -> appSettingsRepository
-                .complete { mapAppearanceType = action.selectedMapType }
+            is AppSettingsCommand.ChangeMapType -> appSettingsRepository
+                .complete { mapAppearanceType = command.selectedMapType }
                 .toObservable()
-            is AppSettingsAction.SetShowQuickNavigationFab -> appSettingsRepository
-                .complete { showNavigationButton = action.isVisible }
+            is AppSettingsCommand.SetShowQuickNavigationFab -> appSettingsRepository
+                .complete { showNavigationButton = command.isVisible }
                 .toObservable()
 
-            is AppSettingsAction.ObserveContributors ->
+            is AppSettingsCommand.ObserveContributors ->
                 appSettingsRepository.getContributors()
-                    .mapSuccessEvent(AppSettingsEvent.News::ObserveContributorsSuccess)
+                    .mapSuccessEvent(AppSettingsEvent.Internal::ObserveContributorsSuccess)
         }
 }

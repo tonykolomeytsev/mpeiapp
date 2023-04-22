@@ -10,6 +10,6 @@ internal class FavoritesFeatureFactory(
         ElmStore(
             initialState = FavoritesState(),
             reducer = FavoritesReducer(),
-            actor = actor
+            actor = actor,
         )
 }
