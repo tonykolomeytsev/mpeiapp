@@ -11,9 +11,9 @@ internal class AppSettingsFeatureFactory(
     fun create() =
         ElmStore(
             initialState = AppSettingsState(
-                isFeatureToggleSnowFlakesEnabled = featureToggles.isSnowFlakesEnabled
+                isFeatureToggleSnowFlakesEnabled = featureToggles.isSnowFlakesEnabled,
             ),
             reducer = AppSettingsReducer(),
-            actor = actor
+            actor = actor,
         )
 }

@@ -1,94 +1,72 @@
 package kekmech.ru.feature_app_settings.screens.main.elm
 
-import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsEvent.News
-import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsEvent.Wish
-import vivid.money.elmslie.core.store.Result
-import vivid.money.elmslie.core.store.StateReducer
+import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsEvent.Internal
+import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsEvent.Ui
+import vivid.money.elmslie.core.store.dsl_reducer.ScreenDslReducer
 import java.util.*
+import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsCommand as Command
+import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsEffect as Effect
+import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsEvent as Event
+import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsState as State
 
 internal class AppSettingsReducer :
-    StateReducer<AppSettingsEvent, AppSettingsState, AppSettingsEffect, AppSettingsAction> {
+    ScreenDslReducer<Event, Ui, Internal, State, Effect, Command>(
+        uiEventClass = Ui::class,
+        internalEventClass = Internal::class,
+    ) {
 
-    override fun reduce(
-        event: AppSettingsEvent,
-        state: AppSettingsState,
-    ): Result<AppSettingsState, AppSettingsEffect, AppSettingsAction> =
+    override fun Result.internal(event: Internal): Any =
         when (event) {
-            is Wish -> reduceWish(event, state)
-            is News -> reduceNews(event, state)
-        }
-
-    private fun reduceNews(
-        event: News,
-        state: AppSettingsState,
-    ): Result<AppSettingsState, AppSettingsEffect, AppSettingsAction> =
-        when (event) {
-            is News.AppSettingsLoaded -> Result(
-                state = state.copy(
+            is Internal.AppSettingsLoaded -> state {
+                copy(
                     appSettings = event.appSettings,
-                    hash = UUID.randomUUID().toString()
+                    hash = UUID.randomUUID().toString(),
                 )
-            )
-            is News.AppSettingsChanged -> Result(state = state.copy(hash = UUID.randomUUID().toString()))
-            is News.ObserveContributorsSuccess -> Result(state = state.copy(contributors = event.contributors))
+            }
+            is Internal.AppSettingsChanged -> state {
+                copy(hash = UUID.randomUUID().toString())
+            }
+            is Internal.ObserveContributorsSuccess -> state { copy(contributors = event.contributors) }
         }
 
-    private fun reduceWish(
-        event: Wish,
-        state: AppSettingsState,
-    ): Result<AppSettingsState, AppSettingsEffect, AppSettingsAction> =
+    override fun Result.ui(event: Ui): Any =
         when (event) {
-            is Wish.Init -> Result(
-                state = state,
-                commands = listOf(
-                    AppSettingsAction.LoadAppSettings,
-                    AppSettingsAction.ObserveContributors
-                )
-            )
-            is Wish.Action.SetDarkThemeEnabled -> Result(
-                state = state,
-                command = AppSettingsAction.SetDarkThemeEnabled(event.isEnabled),
-                effect = AppSettingsEffect.RecreateActivity
-                    .takeIf { event.isEnabled != state.appSettings?.isDarkThemeEnabled }
-            )
-            is Wish.Action.SetSnowEnabled -> Result(
-                state = state,
-                command = AppSettingsAction.SetSnowEnabled(event.isEnabled)
-            )
-            is Wish.Action.SetAutoHideBottomSheet -> Result(
-                state = state,
-                command = AppSettingsAction.SetAutoHideBottomSheet(event.isEnabled)
-            )
-            is Wish.Action.ClearSelectedGroup -> Result(
-                state = state,
-                command = AppSettingsAction.ClearSelectedGroup
-            )
-            is Wish.Action.ChangeBackendEnvironment -> Result(
-                state = state,
-                command = AppSettingsAction.ChangeBackendEnvironment(event.isDebug)
-            )
-            is Wish.Click.OnLanguage -> Result(
-                state = state,
-                effect = state.appSettings?.let { AppSettingsEffect.OpenLanguageSelectionDialog(it.languageCode) }
-            )
-            is Wish.Click.MapType -> Result(
-                state = state,
-                effect = state.appSettings?.let { AppSettingsEffect.OpenMapTypeDialog(it.mapAppearanceType) }
-            )
-            is Wish.Action.LanguageChanged -> Result(
-                state = state,
-                effect = AppSettingsEffect.RecreateActivity,
-                command = AppSettingsAction.ChangeLanguage(event.selectedLanguage)
-            )
-            is Wish.Action.MapTypeChanged -> Result(
-                state = state,
-                effect = AppSettingsEffect.RecreateActivity,
-                command = AppSettingsAction.ChangeMapType(event.selectedMapType)
-            )
-            is Wish.Action.SetShowQuickNavigationFab -> Result(
-                state = state,
-                command = AppSettingsAction.SetShowQuickNavigationFab(event.isVisible)
-            )
+            is Ui.Init -> commands {
+                +Command.LoadAppSettings
+                +Command.ObserveContributors
+            }
+            is Ui.Action.SetDarkThemeEnabled -> {
+                effects {
+                    +Effect.RecreateActivity.takeIf { event.isEnabled != state.appSettings?.isDarkThemeEnabled }
+                }
+                commands { +Command.SetDarkThemeEnabled(event.isEnabled) }
+            }
+            is Ui.Action.SetSnowEnabled -> commands { +Command.SetSnowEnabled(event.isEnabled) }
+            is Ui.Action.SetAutoHideBottomSheet -> commands {
+                +Command.SetAutoHideBottomSheet(event.isEnabled)
+            }
+            is Ui.Action.ClearSelectedGroup -> commands {
+                +Command.ClearSelectedGroup
+            }
+            is Ui.Action.ChangeBackendEnvironment -> commands {
+                +Command.ChangeBackendEnvironment(event.isDebug)
+            }
+            is Ui.Click.Language -> effects {
+                +state.appSettings?.let { Effect.OpenLanguageSelectionDialog(it.languageCode) }
+            }
+            is Ui.Click.MapType -> effects {
+                +state.appSettings?.let { Effect.OpenMapTypeDialog(it.mapAppearanceType) }
+            }
+            is Ui.Action.LanguageChanged -> {
+                effects { +Effect.RecreateActivity }
+                commands { +Command.ChangeLanguage(event.selectedLanguage) }
+            }
+            is Ui.Action.MapTypeChanged -> {
+                effects { +Effect.RecreateActivity }
+                commands { +Command.ChangeMapType(event.selectedMapType) }
+            }
+            is Ui.Action.SetShowQuickNavigationFab -> commands {
+                Command.SetShowQuickNavigationFab(event.isVisible)
+            }
         }
-
 }
