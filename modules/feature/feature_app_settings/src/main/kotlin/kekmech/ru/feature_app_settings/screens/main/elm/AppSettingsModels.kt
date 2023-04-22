@@ -10,52 +10,52 @@ internal data class AppSettingsState(
     val contributors: List<GitHubUser>? = null
 )
 
-internal sealed class AppSettingsEvent {
+internal sealed interface AppSettingsEvent {
 
-    sealed class Wish : AppSettingsEvent() {
+    sealed interface Ui : AppSettingsEvent {
 
-        object Init : Wish()
+        object Init : Ui
 
         object Action {
-            data class SetDarkThemeEnabled(val isEnabled: Boolean) : Wish()
-            data class SetSnowEnabled(val isEnabled: Boolean) : Wish()
-            data class SetShowQuickNavigationFab(val isVisible: Boolean) : Wish()
-            data class SetAutoHideBottomSheet(val isEnabled: Boolean) : Wish()
-            data class ChangeBackendEnvironment(val isDebug: Boolean) : Wish()
-            object ClearSelectedGroup : Wish()
-            data class LanguageChanged(val selectedLanguage: String) : Wish()
-            data class MapTypeChanged(val selectedMapType: String) : Wish()
+            data class SetDarkThemeEnabled(val isEnabled: Boolean) : Ui
+            data class SetSnowEnabled(val isEnabled: Boolean) : Ui
+            data class SetShowQuickNavigationFab(val isVisible: Boolean) : Ui
+            data class SetAutoHideBottomSheet(val isEnabled: Boolean) : Ui
+            data class ChangeBackendEnvironment(val isDebug: Boolean) : Ui
+            object ClearSelectedGroup : Ui
+            data class LanguageChanged(val selectedLanguage: String) : Ui
+            data class MapTypeChanged(val selectedMapType: String) : Ui
         }
 
         object Click {
-            object OnLanguage : Wish()
-            object MapType : Wish()
+            object Language : Ui
+            object MapType : Ui
         }
     }
 
-    sealed class News : AppSettingsEvent() {
-        data class AppSettingsLoaded(val appSettings: AppSettings) : News()
-        object AppSettingsChanged : News()
-        data class ObserveContributorsSuccess(val contributors: List<GitHubUser>) : News()
+    sealed interface Internal : AppSettingsEvent {
+        data class AppSettingsLoaded(val appSettings: AppSettings) : Internal
+        object AppSettingsChanged : Internal
+        data class ObserveContributorsSuccess(val contributors: List<GitHubUser>) : Internal
     }
 }
 
-internal sealed class AppSettingsAction {
-    object LoadAppSettings : AppSettingsAction()
+internal sealed interface AppSettingsCommand {
+    object LoadAppSettings : AppSettingsCommand
 
-    data class SetDarkThemeEnabled(val isEnabled: Boolean) : AppSettingsAction()
-    data class SetSnowEnabled(val isEnabled: Boolean) : AppSettingsAction()
-    data class SetShowQuickNavigationFab(val isVisible: Boolean) : AppSettingsAction()
-    data class SetAutoHideBottomSheet(val isEnabled: Boolean) : AppSettingsAction()
-    data class ChangeBackendEnvironment(val isDebug: Boolean) : AppSettingsAction()
-    data class ChangeLanguage(val selectedLanguage: String) : AppSettingsAction()
-    data class ChangeMapType(val selectedMapType: String) : AppSettingsAction()
-    object ClearSelectedGroup : AppSettingsAction()
-    object ObserveContributors : AppSettingsAction()
+    data class SetDarkThemeEnabled(val isEnabled: Boolean) : AppSettingsCommand
+    data class SetSnowEnabled(val isEnabled: Boolean) : AppSettingsCommand
+    data class SetShowQuickNavigationFab(val isVisible: Boolean) : AppSettingsCommand
+    data class SetAutoHideBottomSheet(val isEnabled: Boolean) : AppSettingsCommand
+    data class ChangeBackendEnvironment(val isDebug: Boolean) : AppSettingsCommand
+    data class ChangeLanguage(val selectedLanguage: String) : AppSettingsCommand
+    data class ChangeMapType(val selectedMapType: String) : AppSettingsCommand
+    object ClearSelectedGroup : AppSettingsCommand
+    object ObserveContributors : AppSettingsCommand
 }
 
-internal sealed class AppSettingsEffect {
-    object RecreateActivity : AppSettingsEffect()
-    data class OpenLanguageSelectionDialog(val selectedLanguage: String) : AppSettingsEffect()
-    data class OpenMapTypeDialog(val mapType: String) : AppSettingsEffect()
+internal sealed interface AppSettingsEffect {
+    object RecreateActivity : AppSettingsEffect
+    data class OpenLanguageSelectionDialog(val selectedLanguage: String) : AppSettingsEffect
+    data class OpenMapTypeDialog(val mapType: String) : AppSettingsEffect
 }
