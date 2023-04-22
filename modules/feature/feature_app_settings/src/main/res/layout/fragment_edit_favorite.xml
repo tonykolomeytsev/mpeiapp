@@ -10,6 +10,7 @@
             android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="?attr/colorWhite"
             app:elevation="0dp"
             app:layout_constraintTop_toTopOf="parent">
 
