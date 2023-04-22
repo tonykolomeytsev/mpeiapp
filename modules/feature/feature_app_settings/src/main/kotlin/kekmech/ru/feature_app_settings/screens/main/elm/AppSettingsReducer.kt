@@ -66,7 +66,7 @@ internal class AppSettingsReducer :
                 commands { +Command.ChangeMapType(event.selectedMapType) }
             }
             is Ui.Action.SetShowQuickNavigationFab -> commands {
-                Command.SetShowQuickNavigationFab(event.isVisible)
+                +Command.SetShowQuickNavigationFab(event.isVisible)
             }
         }
 }
