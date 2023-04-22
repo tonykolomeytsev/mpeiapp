@@ -6,29 +6,28 @@ internal data class FavoritesState(
     val favorites: List<FavoriteSchedule>? = null,
 )
 
-internal sealed class FavoritesEvent {
+internal sealed interface FavoritesEvent {
 
-    sealed class Wish : FavoritesEvent() {
-        object Init : Wish()
+    sealed interface Ui : FavoritesEvent {
+        object Init : Ui
 
         object Click {
-            object AddFavorite : Wish()
-            data class DeleteSchedule(val favoriteSchedule: FavoriteSchedule) : Wish()
+            data class DeleteFavorite(val favoriteSchedule: FavoriteSchedule) : Ui
         }
 
         object Action {
-            data class UpdateFavorite(val favoriteSchedule: FavoriteSchedule) : Wish()
+            data class UpdateFavorite(val favoriteSchedule: FavoriteSchedule) : Ui
         }
     }
 
-    sealed class News : FavoritesEvent() {
-        data class AllFavoritesLoaded(val favorites: List<FavoriteSchedule>) : News()
+    sealed interface Internal : FavoritesEvent {
+        data class LoadAllFavoritesSuccess(val favorites: List<FavoriteSchedule>) : Internal
     }
 }
 
-internal sealed class FavoritesEffect
+internal sealed interface FavoritesEffect
 
-internal sealed class FavoritesAction {
-    object LoadAllFavorites : FavoritesAction()
-    data class SetFavorites(val favorites: List<FavoriteSchedule>) : FavoritesAction()
+internal sealed interface FavoritesCommand {
+    object LoadAllFavorites : FavoritesCommand
+    data class SetFavorites(val favorites: List<FavoriteSchedule>) : FavoritesCommand
 }
