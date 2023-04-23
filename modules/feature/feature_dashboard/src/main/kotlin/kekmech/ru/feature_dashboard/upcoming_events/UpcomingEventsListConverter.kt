@@ -26,20 +26,6 @@ internal class UpcomingEventsListConverter(
         val nowDate = moscowLocalDate()
         val nowTime = moscowLocalTime()
         return when {
-            // никаких данных не загружено, показываем шиммеры
-            state.currentWeekSchedule == null && state.nextWeekSchedule == null -> LIST_WITH_SHIMMERS
-            // загружена либо текущая, либо следующая неделя
-            state.currentWeekSchedule != null && state.nextWeekSchedule == null ||
-                    state.currentWeekSchedule == null && state.nextWeekSchedule != null -> {
-                val actualDayOffset = state.getOffsetForDayWithActualEvents(nowDate, nowTime)
-                if (actualDayOffset == -1) {
-                    LIST_WITH_SHIMMERS
-                } else {
-                    state.getClassesForDayWithOffset(nowDate, nowTime, actualDayOffset)
-                        ?.handleClasses(state.selectedScheduleType, nowDate, nowTime, actualDayOffset)
-                        ?: LIST_WITH_SHIMMERS
-                }
-            }
             // загружены обе недели, никаких шиммеров в случае отсутствия актуальных данных
             state.currentWeekSchedule != null && state.nextWeekSchedule != null -> {
                 val actualDayOffset = state.getOffsetForDayWithActualEvents(nowDate, nowTime)
@@ -51,7 +37,21 @@ internal class UpcomingEventsListConverter(
                         ?: LIST_WITH_EMPTY_STATE
                 }
             }
-            else -> LIST_WITH_SHIMMERS
+            // никаких данных не загружено, показываем шиммеры
+            state.currentWeekSchedule == null && state.nextWeekSchedule == null -> {
+                LIST_WITH_SHIMMERS
+            }
+            // загружена либо текущая, либо следующая неделя
+            else -> {
+                val actualDayOffset = state.getOffsetForDayWithActualEvents(nowDate, nowTime)
+                if (actualDayOffset == -1) {
+                    LIST_WITH_SHIMMERS
+                } else {
+                    state.getClassesForDayWithOffset(nowDate, nowTime, actualDayOffset)
+                        ?.handleClasses(state.selectedScheduleType, nowDate, nowTime, actualDayOffset)
+                        ?: LIST_WITH_SHIMMERS
+                }
+            }
         }
     }
 

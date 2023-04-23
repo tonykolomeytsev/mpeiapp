@@ -2,7 +2,7 @@ package kekmech.ru.feature_dashboard.elm
 
 import vivid.money.elmslie.core.store.ElmStore
 
-class DashboardFeatureFactory(
+internal class DashboardFeatureFactory(
     private val actor: DashboardActor,
     private val reducer: DashboardReducer,
 ) {
@@ -10,6 +10,6 @@ class DashboardFeatureFactory(
     fun create() = ElmStore(
         initialState = DashboardState(),
         reducer = reducer,
-        actor = actor
+        actor = actor,
     )
 }

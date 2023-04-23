@@ -3,9 +3,9 @@ package kekmech.ru.feature_dashboard.items
 import kekmech.ru.coreui.items.ClickableAdapterItem
 import kekmech.ru.feature_dashboard.R
 
-object SearchFieldItem
+internal object SearchFieldItem
 
-class SearchFieldAdapterItem(
+internal class SearchFieldAdapterItem(
     onClickListener: (SearchFieldItem) -> Unit
 ) : ClickableAdapterItem<SearchFieldItem>(
     isType = { it is SearchFieldItem },

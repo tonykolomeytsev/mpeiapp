@@ -9,10 +9,10 @@ import kekmech.ru.coreui.items.ClickableItemViewHolder
 import kekmech.ru.coreui.items.ClickableItemViewHolderImpl
 import kekmech.ru.domain_schedule.dto.ScheduleType
 import kekmech.ru.feature_dashboard.R
-import kekmech.ru.coreui.R as coreui_R
 import kekmech.ru.feature_dashboard.databinding.ItemScheduleTypeBinding
+import kekmech.ru.coreui.R as coreui_R
 
-data class ScheduleTypeItem(
+internal data class ScheduleTypeItem(
     val selectedScheduleName: String,
     val selectedScheduleType: ScheduleType
 )
@@ -54,7 +54,7 @@ private class ScheduleTypeItemBinder(
     }
 }
 
-class ScheduleTypeAdapterItem(
+internal class ScheduleTypeAdapterItem(
     onClickListener: () -> Unit
 ) : AdapterItem<ScheduleTypeViewHolder, ScheduleTypeItem>(
     isType = { it is ScheduleTypeItem },

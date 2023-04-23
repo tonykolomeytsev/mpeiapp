@@ -26,20 +26,20 @@ import kekmech.ru.feature_dashboard.databinding.FragmentDashboardBinding
 import kekmech.ru.feature_dashboard.di.DashboardDependencies
 import kekmech.ru.feature_dashboard.elm.DashboardEffect
 import kekmech.ru.feature_dashboard.elm.DashboardEvent
-import kekmech.ru.feature_dashboard.elm.DashboardEvent.Wish
+import kekmech.ru.feature_dashboard.elm.DashboardEvent.Ui
 import kekmech.ru.feature_dashboard.elm.DashboardState
 import kekmech.ru.feature_dashboard.items.*
 import kekmech.ru.strings.Strings
 import org.koin.android.ext.android.inject
 import vivid.money.elmslie.storepersisting.retainInParentStoreHolder
 
-class DashboardFragment :
+internal class DashboardFragment :
     BaseFragment<DashboardEvent, DashboardEffect, DashboardState>(),
     ActivityResultListener,
     ScrollToTop,
     TabScreenStateSaver by TabScreenStateSaverImpl("dashboard") {
 
-    override val initEvent = Wish.Init
+    override val initEvent = Ui.Init
     override var layoutId = R.layout.fragment_dashboard
     override val storeHolder by retainInParentStoreHolder(storeProvider = ::createStore)
 
@@ -58,7 +58,7 @@ class DashboardFragment :
             recyclerView.addSystemVerticalPadding()
             recyclerView.addScrollAnalytics(analytics, "DashboardRecyclerView")
             swipeRefresh.apply {
-                setOnRefreshListener { feature.accept(Wish.Action.SwipeToRefresh) }
+                setOnRefreshListener { feature.accept(Ui.Action.SwipeToRefresh) }
                 doOnApplyWindowInsets { _, windowInsets, _ ->
                     setProgressViewOffset(windowInsets.systemWindowInsetTop)
                 }
@@ -84,7 +84,7 @@ class DashboardFragment :
         is DashboardEffect.ShowNotesLoadingError -> showBanner(Strings.something_went_wrong_error)
         is DashboardEffect.NavigateToNotesList -> {
             parentFragment?.setResultListener<EmptyResult>(NOTES_LIST_RESULT_KEY) {
-                feature.accept(Wish.Action.SwipeToRefresh)
+                feature.accept(Ui.Action.SwipeToRefresh)
             }
             dependencies.notesFeatureLauncher.launchNoteList(
                 selectedClasses = effect.classes,
@@ -121,7 +121,7 @@ class DashboardFragment :
         NoteAdapterItem(requireContext()) {
             analytics.sendClick("EditNote")
             parentFragment?.setResultListener<EmptyResult>(EDIT_NOTE_RESULT_KEY) {
-                feature.accept(Wish.Action.SwipeToRefresh)
+                feature.accept(Ui.Action.SwipeToRefresh)
             }
             dependencies.notesFeatureLauncher.launchNoteEdit(
                 note = it,
@@ -134,7 +134,7 @@ class DashboardFragment :
         ScheduleTypeAdapterItem {
             analytics.sendClick("ChangeGroup")
             parentFragment?.setResultListener<String>(FIND_GROUP_RESULT_KEY) {
-                feature.accept(Wish.Action.SwipeToRefresh)
+                feature.accept(Ui.Action.SwipeToRefresh)
             }
             dependencies.scheduleFeatureLauncher.launchSearchGroup(
                 continueTo = BACK_WITH_RESULT,
@@ -144,7 +144,7 @@ class DashboardFragment :
         EmptyStateAdapterItem(),
         FavoriteScheduleAdapterItem {
             analytics.sendClick("FavoriteSchedule")
-            feature.accept(Wish.Action.SelectFavoriteSchedule(it.value))
+            feature.accept(Ui.Action.SelectFavoriteSchedule(it.value))
         },
         NotePreviewAdapterItem(::clickOnClasses, R.layout.item_note_preview_padding_horisontal_8dp),
         TextAdapterItem(R.layout.item_time_prediction),
@@ -152,13 +152,13 @@ class DashboardFragment :
         ShimmerAdapterItem(R.layout.item_events_shimmer),
         ErrorStateAdapterItem {
             analytics.sendClick("DashboardReload")
-            feature.accept(Wish.Action.SwipeToRefresh)
+            feature.accept(Ui.Action.SwipeToRefresh)
         }
     )
 
     private fun clickOnClasses(it: Classes) {
         analytics.sendClick("ClickClasses")
-        feature.accept(Wish.Click.OnClasses(it))
+        feature.accept(Ui.Click.ClassesItem(it))
     }
 
     override fun onScrollToTop() {

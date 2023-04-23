@@ -2,7 +2,6 @@ package kekmech.ru.feature_dashboard.helpers
 
 import android.content.Context
 import kekmech.ru.common_android.getStringArray
-import kekmech.ru.feature_dashboard.R
 import kekmech.ru.strings.StringArrays
 import kekmech.ru.strings.Strings
 
@@ -10,7 +9,7 @@ private const val DECLENSION_5_TO_10 = 2
 private const val DECLENSION_2_TO_4 = 1
 private const val DECLENSION_1 = 0
 
-object TimeDeclensionHelper {
+internal object TimeDeclensionHelper {
 
     fun formatHoursMinutes(context: Context, h: Long, m: Long): String {
         val decHours = context.getStringArray(StringArrays.hours_declensions)

@@ -121,9 +121,9 @@ accompanist-pager = { module = "com.google.accompanist:accompanist-pager", versi
 
 [plugins]
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
-gradle-android-cacheFix = "org.gradle.android.cache-fix:2.7.1"
 firebase-crashlytics = "com.google.firebase.crashlytics:2.9.1"
 google-services = "com.google.gms.google-services:4.3.13"
+gradle-android-cacheFix = "org.gradle.android.cache-fix:2.7.1"
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 
 [bundles]
