@@ -12,6 +12,6 @@ internal class NoteEditFeatureFactory(
     ) = ElmStore(
         initialState = NoteEditState(note),
         reducer = NoteEditReducer(),
-        actor = actor
+        actor = actor,
     )
 }

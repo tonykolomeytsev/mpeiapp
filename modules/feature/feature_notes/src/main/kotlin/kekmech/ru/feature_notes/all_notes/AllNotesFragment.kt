@@ -6,19 +6,28 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_analytics.addScrollAnalytics
 import kekmech.ru.common_analytics.ext.screenAnalytics
-import kekmech.ru.common_android.*
+import kekmech.ru.common_android.EmptyResult
+import kekmech.ru.common_android.addSystemVerticalPadding
+import kekmech.ru.common_android.close
+import kekmech.ru.common_android.findAndRemoveArgument
+import kekmech.ru.common_android.setResultListener
 import kekmech.ru.common_android.viewbinding.viewBinding
+import kekmech.ru.common_android.withArguments
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.BaseFragment
 import kekmech.ru.common_navigation.addScreenForward
 import kekmech.ru.coreui.attachScrollListenerForAppBarLayoutShadow
-import kekmech.ru.coreui.items.*
+import kekmech.ru.coreui.items.EmptyStateAdapterItem
+import kekmech.ru.coreui.items.NoteAdapterItem
+import kekmech.ru.coreui.items.SectionHeaderAdapterItem
+import kekmech.ru.coreui.items.ShimmerAdapterItem
+import kekmech.ru.coreui.items.SpaceAdapterItem
 import kekmech.ru.coreui.touch_helpers.attachSwipeToDeleteCallback
 import kekmech.ru.domain_notes.dto.Note
 import kekmech.ru.feature_notes.R
 import kekmech.ru.feature_notes.all_notes.elm.AllNotesEffect
 import kekmech.ru.feature_notes.all_notes.elm.AllNotesEvent
-import kekmech.ru.feature_notes.all_notes.elm.AllNotesEvent.Wish
+import kekmech.ru.feature_notes.all_notes.elm.AllNotesEvent.Ui
 import kekmech.ru.feature_notes.all_notes.elm.AllNotesState
 import kekmech.ru.feature_notes.databinding.FragmentAllNotesBinding
 import kekmech.ru.feature_notes.di.NotesDependencies
@@ -27,7 +36,7 @@ import org.koin.android.ext.android.inject
 
 internal class AllNotesFragment : BaseFragment<AllNotesEvent, AllNotesEffect, AllNotesState>() {
 
-    override val initEvent = Wish.Init
+    override val initEvent = Ui.Init
     override var layoutId: Int = R.layout.fragment_all_notes
 
     private val dependencies: NotesDependencies by inject()
@@ -53,7 +62,7 @@ internal class AllNotesFragment : BaseFragment<AllNotesEvent, AllNotesEffect, Al
             recyclerView.addScrollAnalytics(analytics, "RecyclerView")
             recyclerView.attachSwipeToDeleteCallback(isItemForDelete = { it is Note }) { note ->
                 analytics.sendClick("DeleteNote")
-                feature.accept(Wish.Action.DeleteNote(note as Note))
+                feature.accept(Ui.Action.DeleteNote(note as Note))
             }
         }
     }
@@ -90,7 +99,7 @@ internal class AllNotesFragment : BaseFragment<AllNotesEvent, AllNotesEffect, Al
             NoteEditFragment.newInstance(note, NOTE_EDIT_RESULT_KEY)
         }
         setResultListener<EmptyResult>(NOTE_EDIT_RESULT_KEY) {
-            feature.accept(Wish.Init)
+            feature.accept(Ui.Init)
         }
     }
 

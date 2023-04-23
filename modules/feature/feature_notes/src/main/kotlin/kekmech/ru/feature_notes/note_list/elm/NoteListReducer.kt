@@ -2,67 +2,60 @@ package kekmech.ru.feature_notes.note_list.elm
 
 import kekmech.ru.domain_notes.dto.Note
 import kekmech.ru.domain_schedule.dto.Classes
-import kekmech.ru.feature_notes.note_list.elm.NoteListEvent.News
-import kekmech.ru.feature_notes.note_list.elm.NoteListEvent.Wish
-import vivid.money.elmslie.core.store.Result
-import vivid.money.elmslie.core.store.StateReducer
+import kekmech.ru.feature_notes.note_list.elm.NoteListEvent.Internal
+import kekmech.ru.feature_notes.note_list.elm.NoteListEvent.Ui
+import vivid.money.elmslie.core.store.dsl_reducer.ScreenDslReducer
 import java.time.LocalDate
 import java.time.LocalDateTime
+import kekmech.ru.feature_notes.note_list.elm.NoteListCommand as Command
+import kekmech.ru.feature_notes.note_list.elm.NoteListEffect as Effect
+import kekmech.ru.feature_notes.note_list.elm.NoteListEvent as Event
+import kekmech.ru.feature_notes.note_list.elm.NoteListState as State
 
 internal class NoteListReducer :
-    StateReducer<NoteListEvent, NoteListState, NoteListEffect, NoteListAction> {
+    ScreenDslReducer<Event, Ui, Internal, State, Effect, Command>(
+        uiEventClass = Ui::class,
+        internalEventClass = Internal::class
+    ) {
 
-    override fun reduce(
-        event: NoteListEvent,
-        state: NoteListState,
-    ): Result<NoteListState, NoteListEffect, NoteListAction> = when (event) {
-        is Wish -> reduceWish(event, state)
-        is News -> reduceNews(event, state)
-    }
-
-    private fun reduceNews(
-        event: News,
-        state: NoteListState,
-    ): Result<NoteListState, NoteListEffect, NoteListAction> = when (event) {
-        is News.NotesLoaded -> Result(
-            state = state.copy(
-                notes = event.notes
-                    .filter { matchesPredicate(it, state.selectedClasses, state.selectedDate) }
-            )
-        )
-        is News.NotesLoadError -> Result(
-            state = state,
-            effect = NoteListEffect.ShowNoteLoadError
-        )
-    }
-
-    private fun reduceWish(
-        event: Wish,
-        state: NoteListState,
-    ): Result<NoteListState, NoteListEffect, NoteListAction> = when (event) {
-        is Wish.Init -> Result(
-            state = state,
-            command = NoteListAction.LoadNotesForClasses(state.selectedClasses)
-        )
-        is Wish.Click.CreateNewNote -> Result(
-            state = state,
-            effect = NoteListEffect.OpenNoteEdit(
-                note = Note(
-                    content = "",
-                    dateTime = LocalDateTime.of(state.selectedDate, state.selectedClasses.time.start),
-                    classesName = state.selectedClasses.name
+    override fun Result.internal(event: Internal): Any =
+        when (event) {
+            is Internal.LoadNotesForClassesSuccess -> state {
+                copy(
+                    notes = event.notes
+                        .filter { note ->
+                            matchesPredicate(
+                                note = note,
+                                classes = state.selectedClasses,
+                                date = state.selectedDate,
+                            )
+                        }
                 )
-            )
-        )
-        is Wish.Click.EditNote -> Result(
-            state = state,
-            effect = NoteListEffect.OpenNoteEdit(event.note)
-        )
-        is Wish.Action.DeleteNote -> Result(
-            state = state.copy(notes = state.notes.filter { it != event.note }),
-            command = NoteListAction.DeleteNote(event.note)
-        )
-    }
+            }
+            is Internal.LoadNotesForClassesFailure -> effects { +Effect.ShowNoteLoadError }
+        }
+
+    override fun Result.ui(event: Ui): Any =
+        when (event) {
+            is Ui.Init -> commands { +Command.LoadNotesForClasses(state.selectedClasses) }
+            is Ui.Click.CreateNewNote -> effects {
+                +Effect.OpenNoteEdit(
+                    note = Note(
+                        content = "",
+                        dateTime = LocalDateTime.of(
+                            state.selectedDate,
+                            state.selectedClasses.time.start
+                        ),
+                        classesName = state.selectedClasses.name,
+                    )
+                )
+            }
+            is Ui.Click.EditNote -> effects { +Effect.OpenNoteEdit(event.note) }
+            is Ui.Action.DeleteNote -> {
+                state { copy(notes = state.notes.filter { it != event.note }) }
+                commands { +Command.DeleteNote(event.note) }
+            }
+        }
 
     @Suppress("ReturnCount")
     private fun matchesPredicate(note: Note, classes: Classes, date: LocalDate): Boolean {
