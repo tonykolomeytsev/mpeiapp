@@ -2,21 +2,25 @@ package kekmech.ru.feature_bars.screen.main.elm
 
 import android.webkit.CookieManager
 import kekmech.ru.domain_bars.dto.RemoteBarsConfig
-import kekmech.ru.feature_bars.screen.main.elm.BarsEvent.News
-import kekmech.ru.feature_bars.screen.main.elm.BarsEvent.Wish
+import kekmech.ru.feature_bars.screen.main.elm.BarsEvent.Internal
+import kekmech.ru.feature_bars.screen.main.elm.BarsEvent.Ui
 import kekmech.ru.feature_bars.screen.main.util.hasAuthCookie
 import kekmech.ru.feature_bars.screen.main.util.removeAuthCookie
 import vivid.money.elmslie.core.store.dsl_reducer.ScreenDslReducer
+import kekmech.ru.feature_bars.screen.main.elm.BarsCommand as Command
+import kekmech.ru.feature_bars.screen.main.elm.BarsEffect as Effect
+import kekmech.ru.feature_bars.screen.main.elm.BarsEvent as Event
+import kekmech.ru.feature_bars.screen.main.elm.BarsState as State
 
-internal class BarsReducer : ScreenDslReducer<
-        BarsEvent, Wish, News,
-        BarsState,
-        BarsEffect,
-        BarsAction>(Wish::class, News::class) {
+internal class BarsReducer :
+    ScreenDslReducer<Event, Ui, Internal, State, Effect, Command>(
+        uiEventClass = Ui::class,
+        internalEventClass = Internal::class
+    ) {
 
-    override fun Result.internal(event: News): Any =
+    override fun Result.internal(event: Internal): Any =
         when (event) {
-            is News.GetRemoteBarsConfigSuccess -> {
+            is Internal.GetRemoteBarsConfigSuccess -> {
                 state {
                     copy(
                         config = event.remoteBarsConfig,
@@ -26,13 +30,13 @@ internal class BarsReducer : ScreenDslReducer<
                 }
                 effects { +loadPageEffect { latestLoadedUrl ?: config?.loginUrl } }
             }
-            is News.GetRemoteBarsConfigFailure -> state {
+            is Internal.GetRemoteBarsConfigFailure -> state {
                 copy(
                     isAfterErrorLoadingConfig = true,
                     isLoading = false
                 )
             }
-            is News.ObserveBarsSuccess -> {
+            is Internal.ObserveBarsSuccess -> {
                 state {
                     copy(
                         userInfo = event.userBars,
@@ -41,14 +45,14 @@ internal class BarsReducer : ScreenDslReducer<
                     )
                 }
             }
-            is News.GetLatestLoadedUrlSuccess -> state {
+            is Internal.GetLatestLoadedUrlSuccess -> state {
                 copy(latestLoadedUrl = event.latestLoadedUrl)
             }
         }
 
-    override fun Result.ui(event: Wish): Any =
+    override fun Result.ui(event: Ui): Any =
         when (event) {
-            is Wish.Init -> {
+            is Ui.Init -> {
                 state {
                     val actualFlowState =
                         if (CookieManager.getInstance().hasAuthCookie()) {
@@ -59,26 +63,26 @@ internal class BarsReducer : ScreenDslReducer<
                     copy(flowState = actualFlowState)
                 }
                 commands {
-                    +BarsAction.GetLatestLoadedUrl
-                    +BarsAction.GetRemoteBarsConfig
-                    +BarsAction.ObserveBars
+                    +Command.GetLatestLoadedUrl
+                    +Command.GetRemoteBarsConfig
+                    +Command.ObserveBars
                 }
             }
-            is Wish.Action.PageStarted -> state {
+            is Ui.Action.PageStarted -> state {
                 copy(
                     webViewUiState = webViewUiState.copy(isLoading = true)
                 )
             }
-            is Wish.Action.PageLoadingError -> {
+            is Ui.Action.PageLoadingError -> {
                 state {
                     copy(
                         webViewUiState = webViewUiState.copy(isLoading = true)
                     )
                 }
-                effects { +BarsEffect.ShowCommonError }
+                effects { +Effect.ShowCommonError }
             }
-            is Wish.Action.PageFinished -> handlePageFinished(event)
-            is Wish.Action.Update -> {
+            is Ui.Action.PageFinished -> handlePageFinished(event)
+            is Ui.Action.Update -> {
                 state {
                     copy(
                         webViewUiState = webViewUiState.copy(isLoading = true)
@@ -90,7 +94,7 @@ internal class BarsReducer : ScreenDslReducer<
                     }
                 }
             }
-            is Wish.Action.ScrollToTop ->
+            is Ui.Action.ScrollToTop ->
                 when {
                     state.isBrowserVisible -> state {
                         copy(
@@ -98,17 +102,17 @@ internal class BarsReducer : ScreenDslReducer<
                             isReturnBannerVisible = false,
                         )
                     }
-                    else -> effects { +BarsEffect.ScrollToTop }
+                    else -> effects { +Effect.ScrollToTop }
                 }
 
-            is Wish.Click.ShowBrowser -> state { copy(isBrowserVisible = true) }
-            is Wish.Click.HideBrowser -> state {
+            is Ui.Click.ShowBrowser -> state { copy(isBrowserVisible = true) }
+            is Ui.Click.HideBrowser -> state {
                 copy(
                     isBrowserVisible = false,
                     isReturnBannerVisible = false,
                 )
             }
-            is Wish.Click.SwipeToRefresh -> {
+            is Ui.Click.SwipeToRefresh -> {
                 state {
                     copy(
                         isLoading = true,
@@ -118,13 +122,13 @@ internal class BarsReducer : ScreenDslReducer<
                 }
                 commands {
                     if (state.config == null) {
-                        +BarsAction.GetRemoteBarsConfig
+                        +Command.GetRemoteBarsConfig
                     }
                 }
                 effects { +loadPageEffect { latestLoadedUrl ?: config?.loginUrl } }
             }
-            is Wish.Click.Settings -> effects { +BarsEffect.OpenSettings }
-            is Wish.Click.Login -> {
+            is Ui.Click.Settings -> effects { +Effect.OpenSettings }
+            is Ui.Click.Login -> {
                 state {
                     copy(
                         isBrowserVisible = true,
@@ -133,18 +137,18 @@ internal class BarsReducer : ScreenDslReducer<
                 }
                 effects { +loadPageEffect { config?.loginUrl } }
             }
-            is Wish.Click.NotAllowedUrl -> effects { +BarsEffect.OpenExternalBrowser(event.url) }
+            is Ui.Click.NotAllowedUrl -> effects { +Effect.OpenExternalBrowser(event.url) }
 
-            is Wish.Extract.StudentName -> commands { +BarsAction.PushStudentName(event.name) }
-            is Wish.Extract.StudentGroup -> commands { +BarsAction.PushStudentGroup(event.group) }
-            is Wish.Extract.MetaData -> Unit // TODO in future versions
-            is Wish.Extract.Rating -> commands { +BarsAction.PushStudentRating(event.ratingJson) }
-            is Wish.Extract.Semesters -> Unit // TODO in future versions
-            is Wish.Extract.Marks -> commands { +BarsAction.PushMarks(event.marksJson) }
+            is Ui.Extract.StudentName -> commands { +Command.PushStudentName(event.name) }
+            is Ui.Extract.StudentGroup -> commands { +Command.PushStudentGroup(event.group) }
+            is Ui.Extract.MetaData -> Unit // TODO in future versions
+            is Ui.Extract.Rating -> commands { +Command.PushStudentRating(event.ratingJson) }
+            is Ui.Extract.Semesters -> Unit // TODO in future versions
+            is Ui.Extract.Marks -> commands { +Command.PushMarks(event.marksJson) }
         }
 
     private fun Result.handlePageFinished(
-        event: Wish.Action.PageFinished,
+        event: Ui.Action.PageFinished,
     ): Any {
         state.config ?: return Unit
         val hasAuthCookie = CookieManager.getInstance().hasAuthCookie()
@@ -163,7 +167,7 @@ internal class BarsReducer : ScreenDslReducer<
                     )
                 }
                 effects { +invokeExtractJsEffect(state) }
-                commands { +BarsAction.SetLatestLoadedUrl(event.url) }
+                commands { +Command.SetLatestLoadedUrl(event.url) }
             }
             hasAuthCookie && !event.url.contains("ReturnURL", ignoreCase = true) -> state {
                 copy(
@@ -193,16 +197,16 @@ internal class BarsReducer : ScreenDslReducer<
                         )
                     )
                 }
-                commands { +BarsAction.SetLatestLoadedUrl(null) }
+                commands { +Command.SetLatestLoadedUrl(null) }
             }
         }
     }
 
-    private fun invokeExtractJsEffect(state: BarsState) =
-        state.extractJs?.let(BarsEffect::InvokeJs)
+    private fun invokeExtractJsEffect(state: State) =
+        state.extractJs?.let(Effect::InvokeJs)
 
-    private fun Result.loadPageEffect(urlSelector: BarsState.() -> String?) =
-        state.urlSelector()?.let(BarsEffect::LoadPage)
+    private fun Result.loadPageEffect(urlSelector: State.() -> String?) =
+        state.urlSelector()?.let(Effect::LoadPage)
 
     private fun isMarksListUrl(url: String, config: RemoteBarsConfig?) =
         if (config != null) url.startsWith(config.marksListUrl, ignoreCase = true) else false
