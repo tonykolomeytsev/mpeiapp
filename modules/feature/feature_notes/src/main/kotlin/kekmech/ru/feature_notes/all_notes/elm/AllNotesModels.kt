@@ -3,31 +3,31 @@ package kekmech.ru.feature_notes.all_notes.elm
 import kekmech.ru.domain_notes.dto.Note
 
 internal data class AllNotesState(
-    val notes: List<Note>? = null
+    val notes: List<Note>? = null,
 )
 
-internal sealed class AllNotesEvent {
+internal sealed interface AllNotesEvent {
 
-    sealed class Wish : AllNotesEvent() {
+    sealed interface Ui : AllNotesEvent {
 
-        object Init : Wish()
+        object Init : Ui
 
         object Action {
-            data class DeleteNote(val note: Note) : Wish()
+            data class DeleteNote(val note: Note) : Ui
         }
     }
 
-    sealed class News : AllNotesEvent() {
-        data class NotesSuccessfullyLoaded(val notes: List<Note>) : News()
-        data class NotesLoadError(val throwable: Throwable) : News()
+    sealed interface Internal : AllNotesEvent {
+        data class LoadAllNotesSuccess(val notes: List<Note>) : Internal
+        data class LoadAllNotesFailure(val throwable: Throwable) : Internal
     }
 }
 
-internal sealed class AllNotesEffect {
-    data class ShowError(val throwable: Throwable) : AllNotesEffect()
+internal sealed interface AllNotesEffect {
+    data class ShowError(val throwable: Throwable) : AllNotesEffect
 }
 
-internal sealed class AllNotesAction {
-    object LoadAllNotes : AllNotesAction()
-    data class DeleteNote(val note: Note) : AllNotesAction()
+internal sealed interface AllNotesCommand {
+    object LoadAllNotes : AllNotesCommand
+    data class DeleteNote(val note: Note) : AllNotesCommand
 }

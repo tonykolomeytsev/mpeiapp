@@ -9,8 +9,11 @@ internal class NoteListFeatureFactory(
 ) {
 
     fun create(selectedClasses: Classes, selectedDate: LocalDate) = ElmStore(
-        initialState = NoteListState(selectedClasses, selectedDate),
+        initialState = NoteListState(
+            selectedClasses = selectedClasses,
+            selectedDate = selectedDate,
+        ),
         reducer = NoteListReducer(),
-        actor = actor
+        actor = actor,
     )
 }
