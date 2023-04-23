@@ -35,12 +35,12 @@ internal object DeeplinkHelper {
         val necessarySelectedTab = selectedMarker.type.toFilterTab() ?: return
 
         if (state.selectedTab != necessarySelectedTab) {
-            feature.accept(MapEvent.Wish.Action.SelectTab(necessarySelectedTab))
+            feature.accept(MapEvent.Ui.Action.SelectTab(necessarySelectedTab))
             return
         }
 
         Handler(Looper.getMainLooper()).postDelayed({
-            feature.accept(MapEvent.Wish.Action.OnListMarkerSelected(selectedMarker))
+            feature.accept(MapEvent.Ui.Action.OnListMarkerSelected(selectedMarker))
         }, DEFAULT_NAVIGATION_DELAY)
         deeplinkDelegate.clear()
     }
@@ -55,7 +55,7 @@ internal object DeeplinkHelper {
         val necessarySelectedTab = deeplinkDelegate.getTab() ?: return
 
         if (state.selectedTab != necessarySelectedTab) {
-            feature.accept(MapEvent.Wish.Action.SelectTab(necessarySelectedTab))
+            feature.accept(MapEvent.Ui.Action.SelectTab(necessarySelectedTab))
         }
         deeplinkDelegate.clear()
     }
