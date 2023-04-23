@@ -4,10 +4,10 @@ import kekmech.ru.domain_map.dto.MapMarker
 import kekmech.ru.feature_search.main.simplify
 
 internal class FullTextMapMarkersSearchHelper(
-    private val notes: List<MapMarker>,
+    private val mapMarkers: List<MapMarker>,
     private val query: String
 ) {
-    fun execute() = notes
+    fun execute() = mapMarkers
         .filter { note -> predicates.any { it(note, query) } }
 
     companion object {

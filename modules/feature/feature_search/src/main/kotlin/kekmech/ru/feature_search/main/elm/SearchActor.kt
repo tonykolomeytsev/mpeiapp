@@ -10,24 +10,40 @@ import kekmech.ru.domain_schedule.dto.SearchResultType.PERSON
 import kekmech.ru.feature_search.main.utils.FullTextMapMarkersSearchHelper
 import kekmech.ru.feature_search.main.utils.FullTextNotesSearchHelper
 import vivid.money.elmslie.core.store.Actor
+import kekmech.ru.feature_search.main.elm.SearchCommand as Command
+import kekmech.ru.feature_search.main.elm.SearchEvent as Event
 
 internal class SearchActor(
     private val notesRepository: NotesRepository,
     private val mapRepository: MapRepository,
-    private val scheduleRepository: ScheduleRepository
-) : Actor<SearchAction, SearchEvent> {
+    private val scheduleRepository: ScheduleRepository,
+) : Actor<Command, Event> {
 
-    @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
-    override fun execute(action: SearchAction): Observable<SearchEvent> = when (action) {
-        is SearchAction.SearchNotes -> notesRepository.getNotes()
-            .flatMap { Single.just(FullTextNotesSearchHelper(it, action.query).execute()) }
-            .mapSuccessEvent(SearchEvent.News::SearchNotesSuccess)
-        is SearchAction.SearchMap -> mapRepository.getMarkers()
-            .flatMap { Single.just(FullTextMapMarkersSearchHelper(it, action.query).execute()) }
-            .mapSuccessEvent(SearchEvent.News::SearchMapSuccess)
-        is SearchAction.SearchGroups -> scheduleRepository.getSearchResults(action.query, GROUP)
-            .mapSuccessEvent { SearchEvent.News.SearchGroupsSuccess(it.items) }
-        is SearchAction.SearchPersons -> scheduleRepository.getSearchResults(action.query, PERSON)
-            .mapSuccessEvent { SearchEvent.News.SearchPersonsSuccess(it.items) }
-    }
+    override fun execute(command: Command): Observable<Event> =
+        when (command) {
+            is Command.SearchNotes -> notesRepository.getNotes()
+                .flatMap { notes ->
+                    Single.fromCallable {
+                        FullTextNotesSearchHelper(
+                            notes = notes,
+                            query = command.query
+                        ).execute()
+                    }
+                }
+                .mapSuccessEvent(Event.Internal::SearchNotesSuccess)
+            is Command.SearchMap -> mapRepository.getMarkers()
+                .flatMap { mapMarkers ->
+                    Single.fromCallable {
+                        FullTextMapMarkersSearchHelper(
+                            mapMarkers = mapMarkers,
+                            query = command.query
+                        ).execute()
+                    }
+                }
+                .mapSuccessEvent(Event.Internal::SearchMapSuccess)
+            is Command.SearchGroups -> scheduleRepository.getSearchResults(command.query, GROUP)
+                .mapSuccessEvent { Event.Internal.SearchGroupsSuccess(it.items) }
+            is Command.SearchPersons -> scheduleRepository.getSearchResults(command.query, PERSON)
+                .mapSuccessEvent { Event.Internal.SearchPersonsSuccess(it.items) }
+        }
 }
