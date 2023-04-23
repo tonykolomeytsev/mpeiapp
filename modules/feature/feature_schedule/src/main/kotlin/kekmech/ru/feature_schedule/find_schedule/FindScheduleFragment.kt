@@ -14,8 +14,8 @@ import kekmech.ru.common_android.setResult
 import kekmech.ru.common_android.showKeyboard
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.withArguments
+import kekmech.ru.common_elm.BaseFragment
 import kekmech.ru.common_kotlin.fastLazy
-import kekmech.ru.common_mvi.BaseFragment
 import kekmech.ru.coreui.banner.showBanner
 import kekmech.ru.domain_schedule.ScheduleFeatureLauncher
 import kekmech.ru.domain_schedule.ScheduleFeatureLauncher.ContinueTo.BACK

@@ -1,4 +1,4 @@
-package kekmech.ru.common_mvi
+package kekmech.ru.common_elm
 
 import timber.log.Timber
 import vivid.money.elmslie.core.logger.strategy.LogStrategy
