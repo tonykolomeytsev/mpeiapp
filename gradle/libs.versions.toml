@@ -29,7 +29,7 @@ koin = "3.2.0"
 
 # Squareup Versions
 retrofit = "2.9.0"
-okhttp = "4.9.0"
+okhttp = "4.10.0"
 
 # Vivid Money Versions
 elmslie = "1.1.4"
