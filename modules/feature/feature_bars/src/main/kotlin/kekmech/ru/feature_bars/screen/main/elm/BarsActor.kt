@@ -4,43 +4,42 @@ import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import kekmech.ru.domain_bars.BarsRepository
-import kekmech.ru.feature_bars.screen.main.elm.BarsEvent.News
+import kekmech.ru.feature_bars.screen.main.elm.BarsEvent.Internal
 import vivid.money.elmslie.core.store.Actor
 import java.util.concurrent.TimeUnit
 
 internal class BarsActor(
     private val barsRepository: BarsRepository,
-) : Actor<BarsAction, BarsEvent> {
+) : Actor<BarsCommand, BarsEvent> {
 
-    @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
-    override fun execute(action: BarsAction): Observable<BarsEvent> = when (action) {
-        is BarsAction.GetRemoteBarsConfig -> Single.zip(
+    override fun execute(command: BarsCommand): Observable<BarsEvent> = when (command) {
+        is BarsCommand.GetRemoteBarsConfig -> Single.zip(
             barsRepository.getRemoteBarsConfig(),
             barsRepository.getExtractJs(),
             ::Pair
         )
             .delay(CONFIG_DELAY, TimeUnit.MILLISECONDS)
-            .mapSuccessEvent { (config, js) -> News.GetRemoteBarsConfigSuccess(config, js) }
-            .mapErrorEvent(News::GetRemoteBarsConfigFailure)
-        is BarsAction.ObserveBars -> barsRepository.observeUserBars()
-            .mapSuccessEvent(News::ObserveBarsSuccess)
-        is BarsAction.SetLatestLoadedUrl -> Completable
-            .fromAction { barsRepository.latestLoadedUrl = action.latestLoadedUrl.orEmpty() }
+            .mapSuccessEvent { (config, js) -> Internal.GetRemoteBarsConfigSuccess(config, js) }
+            .mapErrorEvent(Internal::GetRemoteBarsConfigFailure)
+        is BarsCommand.ObserveBars -> barsRepository.observeUserBars()
+            .mapSuccessEvent(Internal::ObserveBarsSuccess)
+        is BarsCommand.SetLatestLoadedUrl -> Completable
+            .fromAction { barsRepository.latestLoadedUrl = command.latestLoadedUrl.orEmpty() }
             .toObservable()
-        is BarsAction.GetLatestLoadedUrl -> Single
+        is BarsCommand.GetLatestLoadedUrl -> Single
             .fromCallable { barsRepository.latestLoadedUrl }
-            .mapSuccessEvent { News.GetLatestLoadedUrlSuccess(it.takeIf { it.isNotBlank() }) }
+            .mapSuccessEvent { Internal.GetLatestLoadedUrlSuccess(it.takeIf { it.isNotBlank() }) }
 
-        is BarsAction.PushMarks -> barsRepository.pushMarksJson(action.marksJson)
+        is BarsCommand.PushMarks -> barsRepository.pushMarksJson(command.marksJson)
             .onErrorComplete()
             .toObservable()
-        is BarsAction.PushStudentName -> barsRepository.pushStudentName(action.studentName)
+        is BarsCommand.PushStudentName -> barsRepository.pushStudentName(command.studentName)
             .onErrorComplete()
             .toObservable()
-        is BarsAction.PushStudentGroup -> barsRepository.pushStudentGroup(action.studentGroup)
+        is BarsCommand.PushStudentGroup -> barsRepository.pushStudentGroup(command.studentGroup)
             .onErrorComplete()
             .toObservable()
-        is BarsAction.PushStudentRating -> barsRepository.pushStudentRating(action.ratingJson)
+        is BarsCommand.PushStudentRating -> barsRepository.pushStudentRating(command.ratingJson)
             .onErrorComplete()
             .toObservable()
     }
