@@ -39,6 +39,13 @@
 # Java 8 API
 -keep class java.time.** { *; }
 
+# TODO: remove when okhttp 5.0 will be released
+# https://github.com/tonykolomeytsev/mpeiapp/issues/171
+# OkHttp
+-dontwarn org.conscrypt.**
+-dontwarn org.bouncycastle.**
+-dontwarn org.openjsse.**
+
 # Generate mapping files
 -dump release/obfuscation/class_files.txt
 -printseeds release/obfuscation/seeds.txt
