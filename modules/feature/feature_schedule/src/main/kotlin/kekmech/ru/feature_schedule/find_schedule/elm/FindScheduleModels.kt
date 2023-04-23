@@ -8,42 +8,42 @@ internal data class FindScheduleState(
     val isLoading: Boolean = false,
     val isContinueButtonEnabled: Boolean = false,
     val selectScheduleAfterSuccess: Boolean,
-    val searchResults: List<SearchResult> = emptyList()
+    val searchResults: List<SearchResult> = emptyList(),
 )
 
-internal sealed class FindScheduleEvent {
+internal sealed interface FindScheduleEvent {
 
-    sealed class Wish : FindScheduleEvent() {
+    sealed interface Ui : FindScheduleEvent {
 
-        object Init : Wish()
+        object Init : Ui
 
         object Click {
-            data class Continue(val scheduleName: String) : Wish()
+            data class Continue(val scheduleName: String) : Ui
         }
 
         object Action {
-            data class GroupNumberChanged(val scheduleName: String) : Wish()
+            data class GroupNumberChanged(val scheduleName: String) : Ui
         }
     }
 
-    sealed class News : FindScheduleEvent() {
-        data class GroupLoadedSuccessfully(val scheduleName: String) : News()
-        data class GroupLoadingError(val throwable: Throwable) : News()
-        data class SearchResultsLoaded(val results: List<SearchResult>) : News()
+    sealed interface Internal : FindScheduleEvent {
+        data class FindGroupSuccess(val scheduleName: String) : Internal
+        data class FindGroupFailure(val throwable: Throwable) : Internal
+        data class SearchForAutocompleteSuccess(val results: List<SearchResult>) : Internal
     }
 }
 
-internal sealed class FindScheduleEffect {
-    object ShowError : FindScheduleEffect()
-    object ShowSomethingWentWrongError : FindScheduleEffect()
+internal sealed interface FindScheduleEffect {
+    object ShowError : FindScheduleEffect
+    object ShowSomethingWentWrongError : FindScheduleEffect
     data class NavigateNextFragment(
         val continueTo: ScheduleFeatureLauncher.ContinueTo,
-        val groupName: String
-    ) : FindScheduleEffect()
+        val groupName: String,
+    ) : FindScheduleEffect
 }
 
-internal sealed class FindScheduleAction {
-    data class FindGroup(val scheduleName: String) : FindScheduleAction()
-    data class SelectGroup(val scheduleName: String) : FindScheduleAction()
-    data class SearchForAutocomplete(val query: String) : FindScheduleAction()
+internal sealed interface FindScheduleCommand {
+    data class FindGroup(val scheduleName: String) : FindScheduleCommand
+    data class SelectGroup(val scheduleName: String) : FindScheduleCommand
+    data class SearchForAutocomplete(val query: String) : FindScheduleCommand
 }
