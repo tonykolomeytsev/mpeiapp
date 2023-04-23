@@ -15,7 +15,11 @@ import kekmech.ru.common_android.withArguments
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.BaseBottomSheetDialogFragment
 import kekmech.ru.common_navigation.addScreenForward
-import kekmech.ru.coreui.items.*
+import kekmech.ru.coreui.items.AddActionAdapterItem
+import kekmech.ru.coreui.items.NoteAdapterItem
+import kekmech.ru.coreui.items.PullAdapterItem
+import kekmech.ru.coreui.items.SectionHeaderAdapterItem
+import kekmech.ru.coreui.items.SpaceAdapterItem
 import kekmech.ru.coreui.touch_helpers.attachSwipeToDeleteCallback
 import kekmech.ru.domain_notes.dto.Note
 import kekmech.ru.domain_schedule.dto.Classes
@@ -25,7 +29,7 @@ import kekmech.ru.feature_notes.di.NotesDependencies
 import kekmech.ru.feature_notes.edit.NoteEditFragment
 import kekmech.ru.feature_notes.note_list.elm.NoteListEffect
 import kekmech.ru.feature_notes.note_list.elm.NoteListEvent
-import kekmech.ru.feature_notes.note_list.elm.NoteListEvent.Wish
+import kekmech.ru.feature_notes.note_list.elm.NoteListEvent.Ui
 import kekmech.ru.feature_notes.note_list.elm.NoteListState
 import kekmech.ru.strings.Strings
 import org.koin.android.ext.android.inject
@@ -34,7 +38,7 @@ import java.time.LocalDate
 internal class NoteListFragment :
     BaseBottomSheetDialogFragment<NoteListEvent, NoteListEffect, NoteListState>() {
 
-    override val initEvent = Wish.Init
+    override val initEvent = Ui.Init
     override val layoutId = R.layout.fragment_note_list
 
     private val dependencies by inject<NotesDependencies>()
@@ -56,7 +60,7 @@ internal class NoteListFragment :
             recyclerView.adapter = adapter
             recyclerView.attachSwipeToDeleteCallback(isItemForDelete = { it is Note }) { note ->
                 analytics.sendClick("DeleteNote")
-                feature.accept(Wish.Action.DeleteNote(note as Note))
+                feature.accept(Ui.Action.DeleteNote(note as Note))
             }
         }
     }
@@ -83,11 +87,11 @@ internal class NoteListFragment :
         SectionHeaderAdapterItem(),
         NoteAdapterItem(requireContext()) {
             analytics.sendClick("EditNote")
-            feature.accept(Wish.Click.EditNote(it))
+            feature.accept(Ui.Click.EditNote(it))
         },
         AddActionAdapterItem {
             analytics.sendClick("NewNote")
-            feature.accept(Wish.Click.CreateNewNote)
+            feature.accept(Ui.Click.CreateNewNote)
         },
         SpaceAdapterItem()
     )
