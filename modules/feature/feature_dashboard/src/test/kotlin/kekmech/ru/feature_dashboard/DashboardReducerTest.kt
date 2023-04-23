@@ -4,8 +4,8 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldContainExactly
-import kekmech.ru.feature_dashboard.elm.DashboardAction
-import kekmech.ru.feature_dashboard.elm.DashboardEvent.Wish
+import kekmech.ru.feature_dashboard.elm.DashboardCommand
+import kekmech.ru.feature_dashboard.elm.DashboardEvent.Ui
 import kekmech.ru.feature_dashboard.elm.DashboardReducer
 import kekmech.ru.feature_dashboard.elm.DashboardState
 
@@ -15,7 +15,7 @@ internal class DashboardReducerTest : BehaviorSpec({
     Given("Initial state") {
         val givenState = STATE
         When("Wish.Init") {
-            val (state, effects, actions) = reducer.reduce(Wish.Init, givenState)
+            val (state, effects, actions) = reducer.reduce(Ui.Init, givenState)
             Then("Check state") {
                 state.isLoading.shouldBeTrue()
             }
@@ -24,12 +24,12 @@ internal class DashboardReducerTest : BehaviorSpec({
             }
             Then("Check actions") {
                 actions.shouldContainExactly(
-                    DashboardAction.GetSelectedGroupName,
-                    DashboardAction.LoadNotes,
-                    DashboardAction.LoadSchedule(0),
-                    DashboardAction.LoadSchedule(1),
-                    DashboardAction.LoadFavoriteSchedules,
-                    DashboardAction.LoadSession
+                    DashboardCommand.GetSelectedGroupName,
+                    DashboardCommand.LoadNotes,
+                    DashboardCommand.LoadSchedule(0),
+                    DashboardCommand.LoadSchedule(1),
+                    DashboardCommand.LoadFavoriteSchedules,
+                    DashboardCommand.LoadSession,
                 )
             }
         }

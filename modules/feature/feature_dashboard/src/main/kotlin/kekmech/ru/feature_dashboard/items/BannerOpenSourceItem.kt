@@ -3,9 +3,9 @@ package kekmech.ru.feature_dashboard.items
 import kekmech.ru.coreui.items.ClickableAdapterItem
 import kekmech.ru.feature_dashboard.R
 
-object BannerOpenSourceItem
+internal object BannerOpenSourceItem
 
-class BannerOpenSourceAdapterItem(
+internal class BannerOpenSourceAdapterItem(
     onClickListener: ((BannerOpenSourceItem) -> Unit)? = null
 ) : ClickableAdapterItem<BannerOpenSourceItem>(
     isType = { it is BannerOpenSourceItem },

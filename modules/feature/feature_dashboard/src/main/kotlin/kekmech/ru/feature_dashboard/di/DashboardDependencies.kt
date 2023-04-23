@@ -7,7 +7,7 @@ import kekmech.ru.domain_schedule.ScheduleFeatureLauncher
 import kekmech.ru.domain_search.SearchFeatureLauncher
 import kekmech.ru.feature_dashboard.elm.DashboardFeatureFactory
 
-data class DashboardDependencies(
+internal data class DashboardDependencies(
     val dashboardFeatureFactory: DashboardFeatureFactory,
     val bottomTabsSwitcher: BottomTabsSwitcher,
     val scheduleFeatureLauncher: ScheduleFeatureLauncher,

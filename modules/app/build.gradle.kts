@@ -1,3 +1,5 @@
+@file:Suppress("UnstableApiUsage")
+
 plugins {
     id("com.android.application")
     id("mpeix.android.base")
@@ -80,6 +82,7 @@ dependencies {
 
     implementation(project(":domain_app_settings"))
     implementation(project(":domain_bars"))
+    implementation(project(":domain_dashboard"))
     implementation(project(":domain_force_update"))
     implementation(project(":domain_main_screen"))
     implementation(project(":domain_map"))
