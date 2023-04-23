@@ -14,13 +14,13 @@ import java.time.LocalDate
 
 private const val DAY_ITEM_SPAN_COUNT = 6
 
-data class WeekItem(
+internal data class WeekItem(
     val weekOffset: Int,
     val firstDayOfWeek: LocalDate?,
     val dayItems: List<DayItem>
 )
 
-class WeekAdapterItem(
+internal class WeekAdapterItem(
     onDayClickListener: (DayItem) -> Unit
 ) : AdapterItem<WeekViewHolder, WeekItem>(
     isType = { it is WeekItem },
@@ -37,7 +37,7 @@ class WeekAdapterItem(
     }
 }
 
-class WeekViewHolder(
+internal class WeekViewHolder(
     private val containerView: View
 ) : RecyclerView.ViewHolder(containerView) {
 
@@ -75,7 +75,7 @@ class WeekViewHolder(
     }
 }
 
-class WeekItemBinder(
+internal class WeekItemBinder(
     private val recycledViewPool: RecyclerView.RecycledViewPool,
     private val onDayClickListener: (DayItem) -> Unit
 ) : BaseItemBinder<WeekViewHolder, WeekItem>() {

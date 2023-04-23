@@ -11,11 +11,16 @@ import io.kotest.matchers.shouldBe
 import kekmech.ru.common_kotlin.mutableLinkedHashMap
 import kekmech.ru.common_schedule.utils.atStartOfWeek
 import kekmech.ru.domain_app_settings.AppSettings
-import kekmech.ru.domain_schedule.dto.*
-import kekmech.ru.feature_schedule.main.elm.ScheduleAction
+import kekmech.ru.domain_schedule.dto.Classes
+import kekmech.ru.domain_schedule.dto.ClassesType
+import kekmech.ru.domain_schedule.dto.Day
+import kekmech.ru.domain_schedule.dto.Schedule
+import kekmech.ru.domain_schedule.dto.ScheduleType
+import kekmech.ru.domain_schedule.dto.Week
+import kekmech.ru.feature_schedule.main.elm.ScheduleCommand
 import kekmech.ru.feature_schedule.main.elm.ScheduleEffect
-import kekmech.ru.feature_schedule.main.elm.ScheduleEvent.News
-import kekmech.ru.feature_schedule.main.elm.ScheduleEvent.Wish
+import kekmech.ru.feature_schedule.main.elm.ScheduleEvent.Internal
+import kekmech.ru.feature_schedule.main.elm.ScheduleEvent.Ui
 import kekmech.ru.feature_schedule.main.elm.ScheduleReducer
 import kekmech.ru.feature_schedule.main.elm.ScheduleState
 import java.time.LocalDate
@@ -27,7 +32,7 @@ class ScheduleReducerTest : BehaviorSpec({
     Given("Initial state, Weekday") {
         val givenState = STATE
         When("Wish.Init") {
-            val (state, effects, actions) = reducer.reduce(Wish.Init, givenState)
+            val (state, effects, actions) = reducer.reduce(Ui.Init, givenState)
             Then("Check state") {
                 state.selectedDate shouldBe CURRENT_DATE
                 state.weekOffset shouldBe 0
@@ -40,8 +45,8 @@ class ScheduleReducerTest : BehaviorSpec({
             }
             Then("Check actions") {
                 actions.shouldContainExactly(
-                    ScheduleAction.LoadSchedule(0),
-                    ScheduleAction.LoadSchedule(1)
+                    ScheduleCommand.LoadSchedule(0),
+                    ScheduleCommand.LoadSchedule(1)
                 )
             }
         }
@@ -49,7 +54,7 @@ class ScheduleReducerTest : BehaviorSpec({
     Given("Initial state, Weekend (Saturday)") {
         val givenState = STATE.copy(selectedDate = CURRENT_DATE_WEEKEND_SAT)
         When("Wish.Init") {
-            val (state, effects, actions) = reducer.reduce(Wish.Init, givenState)
+            val (state, effects, actions) = reducer.reduce(Ui.Init, givenState)
             Then("Check state") {
                 state.selectedDate shouldBe CURRENT_DATE_WEEKEND_SAT.plusDays(2)
                 state.weekOffset shouldBe 1
@@ -62,8 +67,8 @@ class ScheduleReducerTest : BehaviorSpec({
             }
             Then("Check actions") {
                 actions.shouldContainExactly(
-                    ScheduleAction.LoadSchedule(0),
-                    ScheduleAction.LoadSchedule(1)
+                    ScheduleCommand.LoadSchedule(0),
+                    ScheduleCommand.LoadSchedule(1)
                 )
             }
         }
@@ -71,7 +76,7 @@ class ScheduleReducerTest : BehaviorSpec({
     Given("Initial state, Weekend (Sunday)") {
         val givenState = STATE.copy(selectedDate = CURRENT_DATE_WEEKEND_SUN)
         When("Wish.Init") {
-            val (state, effects, actions) = reducer.reduce(Wish.Init, givenState)
+            val (state, effects, actions) = reducer.reduce(Ui.Init, givenState)
             Then("Check state") {
                 state.selectedDate shouldBe CURRENT_DATE_WEEKEND_SUN.plusDays(1)
                 state.weekOffset shouldBe 1
@@ -84,8 +89,8 @@ class ScheduleReducerTest : BehaviorSpec({
             }
             Then("Check actions") {
                 actions.shouldContainExactly(
-                    ScheduleAction.LoadSchedule(0),
-                    ScheduleAction.LoadSchedule(1)
+                    ScheduleCommand.LoadSchedule(0),
+                    ScheduleCommand.LoadSchedule(1)
                 )
             }
         }
@@ -93,8 +98,8 @@ class ScheduleReducerTest : BehaviorSpec({
     Given("While schedule loading") {
         val givenState = STATE
         When("News.ScheduleWeekLoadSuccess (0)") {
-            val news = News.ScheduleWeekLoadSuccess(0, SCHEDULE_0)
-            val (state, effects, actions) = reducer.reduce(news, givenState)
+            val internal = Internal.LoadScheduleSuccess(0, SCHEDULE_0)
+            val (state, effects, actions) = reducer.reduce(internal, givenState)
             Then("Check state") {
                 state.schedule.shouldContainExactly(mapOf(0 to SCHEDULE_0))
                 state.isAfterError.shouldBeFalse()
@@ -107,9 +112,9 @@ class ScheduleReducerTest : BehaviorSpec({
             }
         }
         When("News.ScheduleWeekLoadError (0)") {
-            val news = News.ScheduleWeekLoadError(IllegalStateException("Wake up Neo"))
+            val internal = Internal.LoadScheduleFailure(IllegalStateException("Wake up Neo"))
             val (state, effects, actions) = reducer.reduce(
-                news,
+                internal,
                 givenState.copy(schedule = mutableLinkedHashMap(CACHE_ENTRIES_SIZE))
             )
             Then("Check state") {
@@ -127,7 +132,7 @@ class ScheduleReducerTest : BehaviorSpec({
     Given("After schedule loading success") {
         val givenState = STATE.copy(schedule = mutableLinkedHashMap(CACHE_ENTRIES_SIZE))
         When("Wish.Action.SelectWeek (1)") {
-            val (state, effects, actions) = reducer.reduce(Wish.Action.SelectWeek(1), givenState)
+            val (state, effects, actions) = reducer.reduce(Ui.Action.SelectWeek(1), givenState)
             Then("Check state") {
                 state.isAfterError.shouldBeFalse()
                 state.selectedDate shouldBe givenState.selectedDate.plusDays(7)
@@ -137,11 +142,11 @@ class ScheduleReducerTest : BehaviorSpec({
                 effects.shouldBeEmpty()
             }
             Then("Check actions") {
-                actions.shouldContainExactly(ScheduleAction.LoadSchedule(1))
+                actions.shouldContainExactly(ScheduleCommand.LoadSchedule(1))
             }
         }
         When("Wish.Action.SelectWeek (-1)") {
-            val (state, effects, actions) = reducer.reduce(Wish.Action.SelectWeek(-1), givenState)
+            val (state, effects, actions) = reducer.reduce(Ui.Action.SelectWeek(-1), givenState)
             Then("Check state") {
                 state.isAfterError.shouldBeFalse()
                 state.selectedDate shouldBe givenState.selectedDate.minusDays(7)
@@ -151,11 +156,11 @@ class ScheduleReducerTest : BehaviorSpec({
                 effects.shouldBeEmpty()
             }
             Then("Check actions") {
-                actions.shouldContainExactly(ScheduleAction.LoadSchedule(-1))
+                actions.shouldContainExactly(ScheduleCommand.LoadSchedule(-1))
             }
         }
         When("Wish.Click.Day") {
-            val (state, effects, actions) = reducer.reduce(Wish.Click.Day(CURRENT_DATE_WEEKEND_SAT), givenState)
+            val (state, effects, actions) = reducer.reduce(Ui.Click.Day(CURRENT_DATE_WEEKEND_SAT), givenState)
             Then("Check state") {
                 state.selectedDate shouldBe CURRENT_DATE_WEEKEND_SAT
                 state.isNavigationFabVisible.shouldBeTrue()
@@ -168,7 +173,7 @@ class ScheduleReducerTest : BehaviorSpec({
             }
         }
         When("Wish.Action.PageChanged") {
-            val (state, effects, actions) = reducer.reduce(Wish.Action.PageChanged(1), givenState)
+            val (state, effects, actions) = reducer.reduce(Ui.Action.PageChanged(1), givenState)
             Then("Check state") {
                 state.selectedDate shouldBe CURRENT_DATE.atStartOfWeek().plusDays(1L)
                 state.isNavigationFabVisible.shouldBeTrue()
@@ -181,7 +186,7 @@ class ScheduleReducerTest : BehaviorSpec({
             }
         }
         When("Wish.Click.Classes") {
-            val (state, effects, actions) = reducer.reduce(Wish.Click.Classes(CLASSES), givenState)
+            val (state, effects, actions) = reducer.reduce(Ui.Click.Classes(CLASSES), givenState)
             Then("Check state") {
                 state shouldBe givenState
             }
@@ -193,7 +198,7 @@ class ScheduleReducerTest : BehaviorSpec({
             }
         }
         When("Wish.Click.FAB") {
-            val (state, effects, actions) = reducer.reduce(Wish.Click.FAB, givenState)
+            val (state, effects, actions) = reducer.reduce(Ui.Click.FAB, givenState)
             Then("Check state") {
                 state.weekOffset shouldBe 1
                 state.selectedDate shouldBe CURRENT_DATE.plusDays(7L)
@@ -204,11 +209,11 @@ class ScheduleReducerTest : BehaviorSpec({
                 effects.shouldBeEmpty()
             }
             Then("Check actions") {
-                actions.shouldContainExactly(ScheduleAction.LoadSchedule(1))
+                actions.shouldContainExactly(ScheduleCommand.LoadSchedule(1))
             }
         }
         When("Wish.Action.NotesUpdated") {
-            val (state, effects, actions) = reducer.reduce(Wish.Action.UpdateScheduleIfNeeded, givenState)
+            val (state, effects, actions) = reducer.reduce(Ui.Action.UpdateScheduleIfNeeded, givenState)
             Then("Check state") {
                 state shouldBe givenState
             }
@@ -216,11 +221,11 @@ class ScheduleReducerTest : BehaviorSpec({
                 effects.shouldBeEmpty()
             }
             Then("Check actions") {
-                actions.shouldContainExactly(ScheduleAction.LoadSchedule(0))
+                actions.shouldContainExactly(ScheduleCommand.LoadSchedule(0))
             }
         }
         When("Wish.Action.UpdateScheduleIfNeeded") {
-            val (state, effects, actions) = reducer.reduce(Wish.Action.UpdateScheduleIfNeeded, givenState)
+            val (state, effects, actions) = reducer.reduce(Ui.Action.UpdateScheduleIfNeeded, givenState)
             Then("Check state") {
                 state shouldBe givenState
             }
@@ -228,11 +233,11 @@ class ScheduleReducerTest : BehaviorSpec({
                 effects.shouldBeEmpty()
             }
             Then("Check actions") {
-                actions.shouldContainExactly(ScheduleAction.LoadSchedule(0))
+                actions.shouldContainExactly(ScheduleCommand.LoadSchedule(0))
             }
         }
         When("Wish.Action.ClassesScrolled (scrolled down)") {
-            val (state, effects, actions) = reducer.reduce(Wish.Action.ClassesScrolled(1), givenState)
+            val (state, effects, actions) = reducer.reduce(Ui.Action.ClassesScrolled(1), givenState)
             Then("Check state") {
                 state.isNavigationFabVisible.shouldBeFalse()
             }
@@ -244,7 +249,7 @@ class ScheduleReducerTest : BehaviorSpec({
             }
         }
         When("Wish.Action.ClassesScrolled (scrolled up)") {
-            val (state, effects, actions) = reducer.reduce(Wish.Action.ClassesScrolled(-1), givenState)
+            val (state, effects, actions) = reducer.reduce(Ui.Action.ClassesScrolled(-1), givenState)
             Then("Check state") {
                 state.isNavigationFabVisible.shouldBeTrue()
             }

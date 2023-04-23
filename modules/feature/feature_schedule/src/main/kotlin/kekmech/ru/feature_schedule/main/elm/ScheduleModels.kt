@@ -38,36 +38,36 @@ internal data class ScheduleState(
     val isAfterError get() = loadingError != null
 }
 
-internal sealed class ScheduleEvent {
+internal sealed interface ScheduleEvent {
 
-    sealed class Wish : ScheduleEvent() {
-        object Init : Wish()
+    sealed interface Ui : ScheduleEvent {
+        object Init : Ui
         object Action {
-            data class SelectWeek(val weekOffset: Int) : Wish()
-            data class PageChanged(val page: Int) : Wish()
-            object NotesUpdated : Wish()
-            object UpdateScheduleIfNeeded : Wish()
-            data class ClassesScrolled(val dy: Int) : Wish()
+            data class SelectWeek(val weekOffset: Int) : Ui
+            data class PageChanged(val page: Int) : Ui
+            object NotesUpdated : Ui
+            object UpdateScheduleIfNeeded : Ui
+            data class ClassesScrolled(val dy: Int) : Ui
         }
 
         object Click {
-            data class Day(val date: LocalDate) : Wish()
-            data class Classes(val classes: kekmech.ru.domain_schedule.dto.Classes) : Wish()
-            object FAB : Wish()
-            object Reload : Wish()
+            data class Day(val date: LocalDate) : Ui
+            data class Classes(val classes: kekmech.ru.domain_schedule.dto.Classes) : Ui
+            object FAB : Ui
+            object Reload : Ui
         }
     }
 
-    sealed class News : ScheduleEvent() {
-        data class ScheduleWeekLoadSuccess(val weekOffset: Int, val schedule: Schedule) : News()
-        data class ScheduleWeekLoadError(val throwable: Throwable) : News()
+    sealed interface Internal : ScheduleEvent {
+        data class LoadScheduleSuccess(val weekOffset: Int, val schedule: Schedule) : Internal
+        data class LoadScheduleFailure(val throwable: Throwable) : Internal
     }
 }
 
-internal sealed class ScheduleEffect {
-    data class NavigateToNoteList(val classes: Classes, val date: LocalDate) : ScheduleEffect()
+internal sealed interface ScheduleEffect {
+    data class NavigateToNoteList(val classes: Classes, val date: LocalDate) : ScheduleEffect
 }
 
-internal sealed class ScheduleAction {
-    data class LoadSchedule(val weekOffset: Int) : ScheduleAction()
+internal sealed interface ScheduleCommand {
+    data class LoadSchedule(val weekOffset: Int) : ScheduleCommand
 }

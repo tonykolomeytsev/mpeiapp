@@ -3,71 +3,75 @@ package kekmech.ru.feature_schedule.find_schedule.elm
 import io.reactivex.rxjava3.exceptions.CompositeException
 import kekmech.ru.domain_schedule.GROUP_NUMBER_PATTERN
 import kekmech.ru.domain_schedule.PERSON_NAME_PATTERN
-import kekmech.ru.feature_schedule.find_schedule.elm.FindScheduleEvent.News
-import kekmech.ru.feature_schedule.find_schedule.elm.FindScheduleEvent.Wish
+import kekmech.ru.feature_schedule.find_schedule.elm.FindScheduleEvent.Internal
+import kekmech.ru.feature_schedule.find_schedule.elm.FindScheduleEvent.Ui
 import retrofit2.HttpException
 import vivid.money.elmslie.core.store.Result
-import vivid.money.elmslie.core.store.StateReducer
+import vivid.money.elmslie.core.store.dsl_reducer.ScreenDslReducer
+import kekmech.ru.feature_schedule.find_schedule.elm.FindScheduleCommand as Command
+import kekmech.ru.feature_schedule.find_schedule.elm.FindScheduleEffect as Effect
+import kekmech.ru.feature_schedule.find_schedule.elm.FindScheduleEvent as Event
+import kekmech.ru.feature_schedule.find_schedule.elm.FindScheduleState as State
 
-internal typealias FindScheduleResult = Result<FindScheduleState, FindScheduleEffect, FindScheduleAction>
+internal typealias FindScheduleResult = Result<State, Effect, Command>
 
 private const val HTTP_BAD_REQUEST_CODE = 400
 
 internal class FindScheduleReducer :
-    StateReducer<FindScheduleEvent, FindScheduleState, FindScheduleEffect, FindScheduleAction> {
+    ScreenDslReducer<Event, Ui, Internal, State, Effect, Command>(
+        uiEventClass = Ui::class,
+        internalEventClass = Internal::class,
+    ) {
 
-    override fun reduce(
-        event: FindScheduleEvent,
-        state: FindScheduleState
-    ): FindScheduleResult = when (event) {
-        is Wish -> reduceWish(event, state)
-        is News -> reduceNews(event, state)
-    }
+    override fun Result.internal(event: Internal): Any =
+        when (event) {
+            is Internal.FindGroupFailure -> {
+                state { copy(isLoading = false) }
+                effects { +calculateErrorEffect(event.throwable) }
+            }
+            is Internal.FindGroupSuccess -> {
+                state { copy(isLoading = false) }
+                effects { +Effect.NavigateNextFragment(state.continueTo, event.scheduleName) }
+                commands {
+                    +Command.SelectGroup(event.scheduleName)
+                        .takeIf { state.selectScheduleAfterSuccess }
+                }
+            }
+            is Internal.SearchForAutocompleteSuccess -> state {
+                copy(searchResults = event.results)
+            }
+        }
 
-    private fun reduceWish(
-        event: Wish,
-        state: FindScheduleState
-    ): FindScheduleResult = when (event) {
-        is Wish.Init -> Result(state)
-        is Wish.Click.Continue -> Result(
-            state = state.copy(isLoading = true),
-            command = FindScheduleAction.FindGroup(scheduleName = event.scheduleName)
-        )
-        is Wish.Action.GroupNumberChanged -> Result(
-            state = state.copy(
-                isContinueButtonEnabled = event.scheduleName.isValidGroupNumberOrPersonName(),
-                searchResults = state.searchResults.takeIf { event.scheduleName.length > 2 }.orEmpty()
-            ),
-            command = event.scheduleName.takeIf { it.length >= 2 }
-                ?.let(FindScheduleAction::SearchForAutocomplete)
-        )
-    }
+    override fun Result.ui(event: Ui): Any =
+        when (event) {
+            is Ui.Init -> Unit
+            is Ui.Click.Continue -> {
+                state { copy(isLoading = true) }
+                commands { +Command.FindGroup(scheduleName = event.scheduleName) }
+            }
+            is Ui.Action.GroupNumberChanged -> {
+                state {
+                    copy(
+                        isContinueButtonEnabled = event.scheduleName.isValidGroupNumberOrPersonName(),
+                        searchResults = state.searchResults.takeIf { event.scheduleName.length > 2 }
+                            .orEmpty(),
+                    )
+                }
+                commands {
+                    +event.scheduleName.takeIf { it.length >= 2 }
+                        ?.let(Command::SearchForAutocomplete)
+                }
+            }
+        }
 
-    private fun reduceNews(
-        event: News,
-        state: FindScheduleState
-    ): FindScheduleResult = when (event) {
-        is News.GroupLoadingError -> Result(
-            state = state.copy(isLoading = false),
-            effect = calculateErrorEffect(event.throwable)
-        )
-        is News.GroupLoadedSuccessfully -> Result(
-            state = state.copy(isLoading = false),
-            effect = FindScheduleEffect.NavigateNextFragment(state.continueTo, event.scheduleName),
-            command = FindScheduleAction.SelectGroup(event.scheduleName)
-                .takeIf { state.selectScheduleAfterSuccess }
-        )
-        is News.SearchResultsLoaded -> Result(
-            state = state.copy(searchResults = event.results)
-        )
-    }
 
-    private fun calculateErrorEffect(throwable: Throwable): FindScheduleEffect {
-        if (throwable is CompositeException &&
-            throwable.exceptions.any { it is HttpException && it.code() == HTTP_BAD_REQUEST_CODE }) {
-            return FindScheduleEffect.ShowError
+    private fun calculateErrorEffect(throwable: Throwable): Effect {
+        return if (throwable is CompositeException &&
+            throwable.exceptions.any { it is HttpException && it.code() == HTTP_BAD_REQUEST_CODE }
+        ) {
+            Effect.ShowError
         } else {
-            return FindScheduleEffect.ShowSomethingWentWrongError
+            Effect.ShowSomethingWentWrongError
         }
     }
 
