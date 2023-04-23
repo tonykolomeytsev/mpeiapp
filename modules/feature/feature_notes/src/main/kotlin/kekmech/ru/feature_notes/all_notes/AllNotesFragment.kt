@@ -13,8 +13,8 @@ import kekmech.ru.common_android.findAndRemoveArgument
 import kekmech.ru.common_android.setResultListener
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.withArguments
+import kekmech.ru.common_elm.BaseFragment
 import kekmech.ru.common_kotlin.fastLazy
-import kekmech.ru.common_mvi.BaseFragment
 import kekmech.ru.common_navigation.addScreenForward
 import kekmech.ru.coreui.attachScrollListenerForAppBarLayoutShadow
 import kekmech.ru.coreui.items.EmptyStateAdapterItem

@@ -12,8 +12,8 @@ import kekmech.ru.common_android.close
 import kekmech.ru.common_android.getArgument
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.withArguments
+import kekmech.ru.common_elm.BaseBottomSheetDialogFragment
 import kekmech.ru.common_kotlin.fastLazy
-import kekmech.ru.common_mvi.BaseBottomSheetDialogFragment
 import kekmech.ru.common_navigation.addScreenForward
 import kekmech.ru.coreui.items.AddActionAdapterItem
 import kekmech.ru.coreui.items.NoteAdapterItem

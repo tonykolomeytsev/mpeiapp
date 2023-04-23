@@ -11,8 +11,8 @@ import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_analytics.ext.screenAnalytics
 import kekmech.ru.common_android.*
 import kekmech.ru.common_android.viewbinding.viewBinding
+import kekmech.ru.common_elm.BaseFragment
 import kekmech.ru.common_kotlin.fastLazy
-import kekmech.ru.common_mvi.BaseFragment
 import kekmech.ru.common_navigation.addScreenForward
 import kekmech.ru.common_navigation.showDialog
 import kekmech.ru.coreui.attachScrollListenerForAppBarLayoutShadow

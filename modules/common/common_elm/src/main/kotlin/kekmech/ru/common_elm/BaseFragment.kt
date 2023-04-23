@@ -1,4 +1,4 @@
-package kekmech.ru.common_mvi
+package kekmech.ru.common_elm
 
 import android.os.Bundle
 import android.view.LayoutInflater
