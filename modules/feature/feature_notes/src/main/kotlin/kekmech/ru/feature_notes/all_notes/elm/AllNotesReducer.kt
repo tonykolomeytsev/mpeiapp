@@ -1,45 +1,31 @@
 package kekmech.ru.feature_notes.all_notes.elm
 
-import kekmech.ru.feature_notes.all_notes.elm.AllNotesEvent.News
-import kekmech.ru.feature_notes.all_notes.elm.AllNotesEvent.Wish
-import vivid.money.elmslie.core.store.Result
-import vivid.money.elmslie.core.store.StateReducer
+import kekmech.ru.feature_notes.all_notes.elm.AllNotesEvent.Internal
+import kekmech.ru.feature_notes.all_notes.elm.AllNotesEvent.Ui
+import vivid.money.elmslie.core.store.dsl_reducer.ScreenDslReducer
+import kekmech.ru.feature_notes.all_notes.elm.AllNotesCommand as Command
+import kekmech.ru.feature_notes.all_notes.elm.AllNotesEffect as Effect
+import kekmech.ru.feature_notes.all_notes.elm.AllNotesEvent as Event
+import kekmech.ru.feature_notes.all_notes.elm.AllNotesState as State
 
 internal class AllNotesReducer :
-    StateReducer<AllNotesEvent, AllNotesState, AllNotesEffect, AllNotesAction> {
+    ScreenDslReducer<Event, Ui, Internal, State, Effect, Command>(
+        uiEventClass = Ui::class,
+        internalEventClass = Internal::class
+    ) {
 
-    override fun reduce(
-        event: AllNotesEvent,
-        state: AllNotesState
-    ): Result<AllNotesState, AllNotesEffect, AllNotesAction> = when (event) {
-        is Wish -> reduceWish(event, state)
-        is News -> reduceNews(event, state)
-    }
+    override fun Result.internal(event: Internal): Any =
+        when (event) {
+            is Internal.LoadAllNotesSuccess -> state { copy(notes = event.notes) }
+            is Internal.LoadAllNotesFailure -> effects { +Effect.ShowError(event.throwable) }
+        }
 
-    private fun reduceNews(
-        event: News,
-        state: AllNotesState
-    ): Result<AllNotesState, AllNotesEffect, AllNotesAction> = when (event) {
-        is News.NotesSuccessfullyLoaded -> Result(
-            state = state.copy(notes = event.notes)
-        )
-        is News.NotesLoadError -> Result(
-            state = state,
-            effect = AllNotesEffect.ShowError(event.throwable)
-        )
-    }
-
-    private fun reduceWish(
-        event: Wish,
-        state: AllNotesState
-    ): Result<AllNotesState, AllNotesEffect, AllNotesAction> = when (event) {
-        is Wish.Init -> Result(
-            state = state,
-            command = AllNotesAction.LoadAllNotes
-        )
-        is Wish.Action.DeleteNote -> Result(
-            state = state.copy(notes = state.notes?.filter { it != event.note }),
-            command = AllNotesAction.DeleteNote(event.note)
-        )
-    }
+    override fun Result.ui(event: Ui): Any =
+        when (event) {
+            is Ui.Init -> commands { +Command.LoadAllNotes }
+            is Ui.Action.DeleteNote -> {
+                state { copy(notes = state.notes?.filter { it != event.note }) }
+                commands { +Command.DeleteNote(event.note) }
+            }
+        }
 }

@@ -1,51 +1,32 @@
 package kekmech.ru.feature_notes.edit.elm
 
-import kekmech.ru.feature_notes.edit.elm.NoteEditEvent.News
-import kekmech.ru.feature_notes.edit.elm.NoteEditEvent.Wish
-import vivid.money.elmslie.core.store.Result
-import vivid.money.elmslie.core.store.StateReducer
+import kekmech.ru.feature_notes.edit.elm.NoteEditEvent.Internal
+import kekmech.ru.feature_notes.edit.elm.NoteEditEvent.Ui
+import vivid.money.elmslie.core.store.dsl_reducer.ScreenDslReducer
+import kekmech.ru.feature_notes.edit.elm.NoteEditCommand as Command
+import kekmech.ru.feature_notes.edit.elm.NoteEditEffect as Effect
+import kekmech.ru.feature_notes.edit.elm.NoteEditEvent as Event
+import kekmech.ru.feature_notes.edit.elm.NoteEditState as State
 
 internal class NoteEditReducer :
-    StateReducer<NoteEditEvent, NoteEditState, NoteEditEffect, NoteEditAction> {
+    ScreenDslReducer<Event, Ui, Internal, State, Effect, Command>(
+        uiEventClass = Ui::class,
+        internalEventClass = Internal::class,
+    ) {
 
-    override fun reduce(
-        event: NoteEditEvent,
-        state: NoteEditState,
-    ): Result<NoteEditState, NoteEditEffect, NoteEditAction> = when (event) {
-        is Wish -> reduceWish(event, state)
-        is News -> reduceNews(event, state)
-    }
-
-    private fun reduceNews(
-        event: News,
-        state: NoteEditState,
-    ): Result<NoteEditState, NoteEditEffect, NoteEditAction> = when (event) {
-        is News.NoteSavedSuccessfully -> Result(
-            state = state,
-            effect = NoteEditEffect.CloseWithSuccess
-        )
-        is News.NoteSaveError -> Result(
-            state = state,
-            effect = NoteEditEffect.ShowError
-        )
-    }
-
-    private fun reduceWish(
-        event: Wish,
-        state: NoteEditState,
-    ): Result<NoteEditState, NoteEditEffect, NoteEditAction> = when (event) {
-        is Wish.Init -> Result(state = state)
-        is Wish.Click.SaveNote -> {
-            Result(
-                state = state,
-                command = NoteEditAction.SaveNote(state.note)
-            )
+    override fun Result.internal(event: Internal): Any =
+        when (event) {
+            is Internal.SaveNoteSuccess -> effects { +Effect.CloseWithSuccess }
+            is Internal.SaveNoteFailure -> effects { +Effect.ShowError }
         }
-        is Wish.Action.NoteContentChanged -> {
-            val newState = state.copy(
-                note = state.note.copy(content = event.content)
-            )
-            Result(state = newState)
+
+    override fun Result.ui(event: Ui): Any =
+        when (event) {
+            is Ui.Init -> Unit
+            is Ui.Click.SaveNote -> commands { +Command.SaveNote(state.note) }
+            is Ui.Action.NoteContentChanged ->
+                state {
+                    copy(note = state.note.copy(content = event.content))
+                }
         }
-    }
 }

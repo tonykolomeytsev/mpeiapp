@@ -10,33 +10,33 @@ internal data class NoteListState(
     val notes: List<Note> = emptyList(),
 )
 
-internal sealed class NoteListEvent {
+internal sealed interface NoteListEvent {
 
-    sealed class Wish : NoteListEvent() {
-        object Init : Wish()
+    sealed interface Ui : NoteListEvent {
+        object Init : Ui
 
         object Click {
-            object CreateNewNote : Wish()
-            data class EditNote(val note: Note) : Wish()
+            object CreateNewNote : Ui
+            data class EditNote(val note: Note) : Ui
         }
 
         object Action {
-            data class DeleteNote(val note: Note) : Wish()
+            data class DeleteNote(val note: Note) : Ui
         }
     }
 
-    sealed class News : NoteListEvent() {
-        data class NotesLoaded(val notes: List<Note>) : News()
-        data class NotesLoadError(val throwable: Throwable) : News()
+    sealed interface Internal : NoteListEvent {
+        data class LoadNotesForClassesSuccess(val notes: List<Note>) : Internal
+        data class LoadNotesForClassesFailure(val throwable: Throwable) : Internal
     }
 }
 
-internal sealed class NoteListEffect {
-    object ShowNoteLoadError : NoteListEffect()
-    data class OpenNoteEdit(val note: Note) : NoteListEffect()
+internal sealed interface NoteListEffect {
+    object ShowNoteLoadError : NoteListEffect
+    data class OpenNoteEdit(val note: Note) : NoteListEffect
 }
 
-internal sealed class NoteListAction {
-    data class LoadNotesForClasses(val classes: Classes) : NoteListAction()
-    data class DeleteNote(val note: Note) : NoteListAction()
+internal sealed interface NoteListCommand {
+    data class LoadNotesForClasses(val classes: Classes) : NoteListCommand
+    data class DeleteNote(val note: Note) : NoteListCommand
 }

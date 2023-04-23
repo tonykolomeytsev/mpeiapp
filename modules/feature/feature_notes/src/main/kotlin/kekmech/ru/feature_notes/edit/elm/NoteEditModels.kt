@@ -6,31 +6,31 @@ internal data class NoteEditState(
     val note: Note,
 )
 
-internal sealed class NoteEditEvent {
+internal sealed interface NoteEditEvent {
 
-    sealed class Wish : NoteEditEvent() {
-        object Init : Wish()
+    sealed interface Ui : NoteEditEvent {
+        object Init : Ui
 
         object Click {
-            object SaveNote : Wish()
+            object SaveNote : Ui
         }
 
         object Action {
-            data class NoteContentChanged(val content: String) : Wish()
+            data class NoteContentChanged(val content: String) : Ui
         }
     }
 
-    sealed class News : NoteEditEvent() {
-        object NoteSavedSuccessfully : News()
-        data class NoteSaveError(val throwable: Throwable) : News()
+    sealed interface Internal : NoteEditEvent {
+        object SaveNoteSuccess : Internal
+        data class SaveNoteFailure(val throwable: Throwable) : Internal
     }
 }
 
-internal sealed class NoteEditEffect {
-    object CloseWithSuccess : NoteEditEffect()
-    object ShowError : NoteEditEffect()
+internal sealed interface NoteEditEffect {
+    object CloseWithSuccess : NoteEditEffect
+    object ShowError : NoteEditEffect
 }
 
-internal sealed class NoteEditAction {
-    data class SaveNote(val note: Note) : NoteEditAction()
+internal sealed interface NoteEditCommand {
+    data class SaveNote(val note: Note) : NoteEditCommand
 }

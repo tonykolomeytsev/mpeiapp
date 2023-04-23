@@ -5,8 +5,13 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_analytics.ext.screenAnalytics
-import kekmech.ru.common_android.*
+import kekmech.ru.common_android.EmptyResult
+import kekmech.ru.common_android.addSystemVerticalPadding
+import kekmech.ru.common_android.close
+import kekmech.ru.common_android.getArgument
+import kekmech.ru.common_android.setResult
 import kekmech.ru.common_android.viewbinding.viewBinding
+import kekmech.ru.common_android.withArguments
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.BaseFragment
 import kekmech.ru.coreui.PrettyDateFormatter
@@ -18,14 +23,14 @@ import kekmech.ru.feature_notes.databinding.FragmentNoteEditBinding
 import kekmech.ru.feature_notes.di.NotesDependencies
 import kekmech.ru.feature_notes.edit.elm.NoteEditEffect
 import kekmech.ru.feature_notes.edit.elm.NoteEditEvent
-import kekmech.ru.feature_notes.edit.elm.NoteEditEvent.Wish
+import kekmech.ru.feature_notes.edit.elm.NoteEditEvent.Ui
 import kekmech.ru.feature_notes.edit.elm.NoteEditState
 import kekmech.ru.strings.Strings
 import org.koin.android.ext.android.inject
 
 internal class NoteEditFragment : BaseFragment<NoteEditEvent, NoteEditEffect, NoteEditState>() {
 
-    override val initEvent = Wish.Init
+    override val initEvent = Ui.Init
     override var layoutId: Int = R.layout.fragment_note_edit
 
     private val dependencies: NotesDependencies by inject()
@@ -48,7 +53,7 @@ internal class NoteEditFragment : BaseFragment<NoteEditEvent, NoteEditEffect, No
             toolbar.setNavigationOnClickListener { close() }
             buttonSave.setOnClickListener {
                 analytics.sendClick("SaveNote")
-                feature.accept(Wish.Click.SaveNote)
+                feature.accept(Ui.Click.SaveNote)
             }
             recyclerView.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, true)
@@ -75,7 +80,7 @@ internal class NoteEditFragment : BaseFragment<NoteEditEvent, NoteEditEffect, No
 
     private fun onNoteContentChanged(content: String) {
         viewBinding.appBarLayout.isSelected = viewBinding.recyclerView.canScrollVertically(-1)
-        feature.accept(Wish.Action.NoteContentChanged(content))
+        feature.accept(Ui.Action.NoteContentChanged(content))
     }
 
     companion object {

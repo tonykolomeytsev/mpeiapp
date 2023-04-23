@@ -3,12 +3,12 @@ package kekmech.ru.feature_notes.all_notes.elm
 import vivid.money.elmslie.core.store.ElmStore
 
 internal class AllNotesFeatureFactory(
-    private val actor: AllNotesActor
+    private val actor: AllNotesActor,
 ) {
 
     fun create() = ElmStore(
         initialState = AllNotesState(),
         reducer = AllNotesReducer(),
-        actor = actor
+        actor = actor,
     )
 }
