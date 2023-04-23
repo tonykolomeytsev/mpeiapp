@@ -23,7 +23,7 @@ jobs:
     name: Release Build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: set up JDK 17
         uses: actions/setup-java@v1
         with:
@@ -34,16 +34,8 @@ jobs:
         env:
           GOOGLE_SERVICES: ${{ secrets.GOOGLE_SERVICES }}
 
-      - name: Cache gradle files
-        uses: actions/cache@v1
-        with:
-          path: ~/.gradle/caches
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle
-
       - name: Cache build files
-        uses: actions/cache@v1
+        uses: actions/cache@v3
         with:
           path: build
           key: ${{ runner.OS }}-build-${{ hashFiles('**/*.kt') }}
@@ -75,11 +67,3 @@ jobs:
         with:
           name: App Release
           path: modules/app/build/outputs/bundle/release/app-release.aab
-
-      - name: Send Telegram message
-        uses: appleboy/telegram-action@master
-        with:
-          to: ${{ secrets.TELEGRAM_BOT_ID }}
-          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          format: markdown
-          message: Push to *master* successfully passed!

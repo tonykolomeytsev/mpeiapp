@@ -33,7 +33,10 @@ internal class SearchReducer :
     override fun Result.ui(event: Ui): Any =
         when (event) {
             is Ui.Init -> {
-                effects { +Effect.SetInitialQuery(state.query) }
+                effects {
+                    +Effect.SetInitialQuery(state.query)
+                        .takeIf { state.query.isNotEmpty() }
+                }
                 loadCommands(
                     simplifiedQuery = state.query.simplify(),
                     selectedFilter = state.selectedFilter,
