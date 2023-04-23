@@ -4,20 +4,27 @@ import io.reactivex.rxjava3.core.Observable
 import kekmech.ru.domain_notes.NotesScheduleTransformer
 import kekmech.ru.domain_schedule.ScheduleRepository
 import vivid.money.elmslie.core.store.Actor
+import kekmech.ru.feature_schedule.main.elm.ScheduleCommand as Command
+import kekmech.ru.feature_schedule.main.elm.ScheduleEvent as Event
 
 internal class ScheduleActor(
     private val scheduleRepository: ScheduleRepository,
-    private val notesScheduleTransformer: NotesScheduleTransformer
-) : Actor<ScheduleAction, ScheduleEvent> {
+    private val notesScheduleTransformer: NotesScheduleTransformer,
+) : Actor<Command, Event> {
 
-    @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
-    override fun execute(action: ScheduleAction): Observable<ScheduleEvent> = when (action) {
-        is ScheduleAction.LoadSchedule -> scheduleRepository
-            .loadSchedule(weekOffset = action.weekOffset)
-            .flatMap(notesScheduleTransformer::transform)
-            .mapEvents(
-                successEventMapper = { ScheduleEvent.News.ScheduleWeekLoadSuccess(action.weekOffset, it) },
-                failureEventMapper = ScheduleEvent.News::ScheduleWeekLoadError
-            )
-    }
+    override fun execute(command: Command): Observable<Event> =
+        when (command) {
+            is Command.LoadSchedule -> scheduleRepository
+                .loadSchedule(weekOffset = command.weekOffset)
+                .flatMap(notesScheduleTransformer::transform)
+                .mapEvents(
+                    successEventMapper = { schedule ->
+                        Event.Internal.LoadScheduleSuccess(
+                            weekOffset = command.weekOffset,
+                            schedule = schedule,
+                        )
+                    },
+                    failureEventMapper = Event.Internal::LoadScheduleFailure,
+                )
+        }
 }

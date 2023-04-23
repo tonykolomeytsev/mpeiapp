@@ -8,10 +8,10 @@ import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 import io.reactivex.rxjava3.exceptions.CompositeException
 import kekmech.ru.domain_schedule.ScheduleFeatureLauncher
-import kekmech.ru.feature_schedule.find_schedule.elm.FindScheduleAction
+import kekmech.ru.feature_schedule.find_schedule.elm.FindScheduleCommand
 import kekmech.ru.feature_schedule.find_schedule.elm.FindScheduleEffect
-import kekmech.ru.feature_schedule.find_schedule.elm.FindScheduleEvent.News
-import kekmech.ru.feature_schedule.find_schedule.elm.FindScheduleEvent.Wish
+import kekmech.ru.feature_schedule.find_schedule.elm.FindScheduleEvent.Internal
+import kekmech.ru.feature_schedule.find_schedule.elm.FindScheduleEvent.Ui
 import kekmech.ru.feature_schedule.find_schedule.elm.FindScheduleReducer
 import kekmech.ru.feature_schedule.find_schedule.elm.FindScheduleState
 import okhttp3.ResponseBody.Companion.toResponseBody
@@ -23,7 +23,7 @@ class FindScheduleReducerTest : BehaviorSpec({
     Given("Initial state") {
         val givenState = STATE
         When("Wish.Init") {
-            val (state, effects, actions) = reducer.reduce(Wish.Init, givenState)
+            val (state, effects, actions) = reducer.reduce(Ui.Init, givenState)
             Then("Check state") {
                 state shouldBe givenState
             }
@@ -35,7 +35,7 @@ class FindScheduleReducerTest : BehaviorSpec({
             }
         }
         When("Wish.Click.Continue") {
-            val (state, effects, actions) = reducer.reduce(Wish.Click.Continue(CORRECT_NAME), givenState)
+            val (state, effects, actions) = reducer.reduce(Ui.Click.Continue(CORRECT_NAME), givenState)
             Then("Check state") {
                 state.isLoading.shouldBeTrue()
             }
@@ -43,11 +43,11 @@ class FindScheduleReducerTest : BehaviorSpec({
                 effects.shouldBeEmpty()
             }
             Then("Check actions") {
-                actions.shouldContainExactly(FindScheduleAction.FindGroup(CORRECT_NAME))
+                actions.shouldContainExactly(FindScheduleCommand.FindGroup(CORRECT_NAME))
             }
         }
         When("Wish.Action.GroupNumberChanged (correct)") {
-            val (state, effects, actions) = reducer.reduce(Wish.Action.GroupNumberChanged(CORRECT_NAME), givenState)
+            val (state, effects, actions) = reducer.reduce(Ui.Action.GroupNumberChanged(CORRECT_NAME), givenState)
             Then("Check state") {
                 state.isContinueButtonEnabled.shouldBeTrue()
             }
@@ -55,11 +55,11 @@ class FindScheduleReducerTest : BehaviorSpec({
                 effects.shouldBeEmpty()
             }
             Then("Check actions") {
-                actions.shouldContainExactly(FindScheduleAction.SearchForAutocomplete(CORRECT_NAME))
+                actions.shouldContainExactly(FindScheduleCommand.SearchForAutocomplete(CORRECT_NAME))
             }
         }
         When("Wish.Action.GroupNumberChanged (incorrect)") {
-            val (state, effects, actions) = reducer.reduce(Wish.Action.GroupNumberChanged(INVALID_NAME), givenState)
+            val (state, effects, actions) = reducer.reduce(Ui.Action.GroupNumberChanged(INVALID_NAME), givenState)
             Then("Check state") {
                 state.isContinueButtonEnabled.shouldBeFalse()
             }
@@ -67,14 +67,14 @@ class FindScheduleReducerTest : BehaviorSpec({
                 effects.shouldBeEmpty()
             }
             Then("Check actions") {
-                actions.shouldContainExactly(FindScheduleAction.SearchForAutocomplete(INVALID_NAME))
+                actions.shouldContainExactly(FindScheduleCommand.SearchForAutocomplete(INVALID_NAME))
             }
         }
     }
     Given("Loading state") {
         val givenState = STATE.copy(isLoading = true)
         When("News.GroupLoadingError (group not found)") {
-            val (state, effects, actions) = reducer.reduce(News.GroupLoadingError(VALIDATION_ERROR), givenState)
+            val (state, effects, actions) = reducer.reduce(Internal.FindGroupFailure(VALIDATION_ERROR), givenState)
             Then("Check state") {
                 state.isLoading.shouldBeFalse()
             }
@@ -86,7 +86,7 @@ class FindScheduleReducerTest : BehaviorSpec({
             }
         }
         When("News.GroupLoadingError (unknown error)") {
-            val (state, effects, actions) = reducer.reduce(News.GroupLoadingError(UNKNOWN_ERROR), givenState)
+            val (state, effects, actions) = reducer.reduce(Internal.FindGroupFailure(UNKNOWN_ERROR), givenState)
             Then("Check state") {
                 state.isLoading.shouldBeFalse()
             }
@@ -98,7 +98,7 @@ class FindScheduleReducerTest : BehaviorSpec({
             }
         }
         When("News.News.GroupLoadedSuccessfully") {
-            val (state, effects, actions) = reducer.reduce(News.GroupLoadedSuccessfully(CORRECT_NAME), givenState)
+            val (state, effects, actions) = reducer.reduce(Internal.FindGroupSuccess(CORRECT_NAME), givenState)
             Then("Check state") {
                 state.isLoading.shouldBeFalse()
             }
@@ -115,7 +115,7 @@ class FindScheduleReducerTest : BehaviorSpec({
     Given("Loading state (selectScheduleAfterSuccess = true)") {
         val givenState = STATE.copy(selectScheduleAfterSuccess = true)
         When("News.News.GroupLoadedSuccessfully") {
-            val (state, effects, actions) = reducer.reduce(News.GroupLoadedSuccessfully(CORRECT_NAME), givenState)
+            val (state, effects, actions) = reducer.reduce(Internal.FindGroupSuccess(CORRECT_NAME), givenState)
             Then("Check state") {
                 state.isLoading.shouldBeFalse()
             }
@@ -125,7 +125,7 @@ class FindScheduleReducerTest : BehaviorSpec({
                 )
             }
             Then("Check actions") {
-                actions.shouldContainExactly(FindScheduleAction.SelectGroup(CORRECT_NAME))
+                actions.shouldContainExactly(FindScheduleCommand.SelectGroup(CORRECT_NAME))
             }
         }
     }
