@@ -44,7 +44,7 @@ import kekmech.ru.feature_bars.items.UserNameHeaderAdapterItem
 import kekmech.ru.feature_bars.screen.details.BarsDetailsFragment
 import kekmech.ru.feature_bars.screen.main.elm.BarsEffect
 import kekmech.ru.feature_bars.screen.main.elm.BarsEvent
-import kekmech.ru.feature_bars.screen.main.elm.BarsEvent.Wish
+import kekmech.ru.feature_bars.screen.main.elm.BarsEvent.Ui
 import kekmech.ru.feature_bars.screen.main.elm.BarsFeatureFactory
 import kekmech.ru.feature_bars.screen.main.elm.BarsState
 import kekmech.ru.strings.Strings
@@ -58,7 +58,7 @@ private const val JS_INTERFACE_NAME = "kti"
 internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), ScrollToTop,
     TabScreenStateSaver by TabScreenStateSaverImpl("bars") {
 
-    override val initEvent: BarsEvent = Wish.Init
+    override val initEvent: BarsEvent = Ui.Init
     override val layoutId: Int = R.layout.fragment_bars
     override val storeHolder by retainInParentStoreHolder(storeProvider = ::createStore)
 
@@ -81,12 +81,12 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), 
             webViewContainer.addSystemTopPadding()
             returnBanner.setOnClickListener {
                 analytics.sendClick("BarsReturnBanner")
-                feature.accept(Wish.Click.HideBrowser)
+                feature.accept(Ui.Click.HideBrowser)
             }
             swipeRefresh.apply {
                 setOnRefreshListener {
                     analytics.sendClick("BarsUpdate")
-                    feature.accept(Wish.Click.SwipeToRefresh)
+                    feature.accept(Ui.Click.SwipeToRefresh)
                 }
                 doOnApplyWindowInsets { _, windowInsets, _ ->
                     setProgressViewOffset(windowInsets.systemWindowInsetTop)
@@ -117,12 +117,12 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), 
             }
             webViewToolbar.setNavigationOnClickListener {
                 analytics.sendClick("BarsHideBrowser")
-                feature.accept(Wish.Click.HideBrowser)
+                feature.accept(Ui.Click.HideBrowser)
             }
             webViewToolbar.enableOverflowMenuColorWorkaround()
             webViewToolbar.setOnMenuItemClickListener { menuItem ->
                 when (menuItem.itemId) {
-                    R.id.refresh -> feature.accept(Wish.Action.Update)
+                    R.id.refresh -> feature.accept(Ui.Action.Update)
                     R.id.open_external -> webView.url?.let { requireContext().openLinkExternal(it) }
                     else -> Unit
                 }
@@ -168,22 +168,22 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), 
 
     override fun onResume() {
         super.onResume()
-        feature.accept(Wish.Action.Update)
+        feature.accept(Ui.Action.Update)
     }
 
     override fun onScrollToTop() {
-        feature.accept(Wish.Action.ScrollToTop)
+        feature.accept(Ui.Action.ScrollToTop)
     }
 
     inner class BarsWebViewClient : WebViewClient() {
 
         override fun onPageFinished(view: WebView?, url: String) {
-            feature.accept(Wish.Action.PageFinished(url, view?.title))
+            feature.accept(Ui.Action.PageFinished(url, view?.title))
         }
 
         override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
             super.onPageStarted(view, url, favicon)
-            feature.accept(Wish.Action.PageStarted)
+            feature.accept(Ui.Action.PageStarted)
         }
 
         @Deprecated("Deprecated in Java")
@@ -202,7 +202,7 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), 
         private fun handleUrlLoading(url: String): Boolean {
             val allowToFollowTheUrl = "https://bars.mpei.ru" in url
             if (!allowToFollowTheUrl) {
-                feature.accept(Wish.Click.NotAllowedUrl(url))
+                feature.accept(Ui.Click.NotAllowedUrl(url))
             }
             return !allowToFollowTheUrl
         }
@@ -215,7 +215,7 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), 
             if (request.url?.host?.contains("mpei.ru") != true) return
 
             analytics.sendCustomAction("BarsWebViewErrorReceived")
-            feature.accept(Wish.Action.PageLoadingError)
+            feature.accept(Ui.Action.PageLoadingError)
         }
     }
 
@@ -224,32 +224,32 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), 
 
         @JavascriptInterface
         fun onStudentNameExtracted(name: String) {
-            feature.accept(Wish.Extract.StudentName(name))
+            feature.accept(Ui.Extract.StudentName(name))
         }
 
         @JavascriptInterface
         fun onStudentGroupExtracted(group: String) {
-            feature.accept(Wish.Extract.StudentGroup(group))
+            feature.accept(Ui.Extract.StudentGroup(group))
         }
 
         @JavascriptInterface
         fun onStudentMetaExtracted(metadataJson: String) {
-            feature.accept(Wish.Extract.MetaData(metadataJson))
+            feature.accept(Ui.Extract.MetaData(metadataJson))
         }
 
         @JavascriptInterface
         fun onStudentRatingExtracted(ratingJson: String) {
-            feature.accept(Wish.Extract.Rating(ratingJson))
+            feature.accept(Ui.Extract.Rating(ratingJson))
         }
 
         @JavascriptInterface
         fun onSemestersExtracted(semestersJson: String, selectedSemesterName: String) {
-            feature.accept(Wish.Extract.Semesters(semestersJson, selectedSemesterName))
+            feature.accept(Ui.Extract.Semesters(semestersJson, selectedSemesterName))
         }
 
         @JavascriptInterface
         fun onMarksExtracted(marksJson: String) {
-            feature.accept(Wish.Extract.Marks(marksJson))
+            feature.accept(Ui.Extract.Marks(marksJson))
         }
     }
 
@@ -269,13 +269,13 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), 
         SpaceAdapterItem(),
         UserNameHeaderAdapterItem {
             analytics.sendClick("BarsSettings")
-            feature.accept(Wish.Click.Settings)
+            feature.accept(Ui.Click.Settings)
         },
         TextWithIconAdapterItem {
             when (it.itemId) {
                 ITEM_BROWSER_LABEL -> {
                     analytics.sendClick("BarsShowBrowser")
-                    feature.accept(Wish.Click.ShowBrowser)
+                    feature.accept(Ui.Click.ShowBrowser)
                 }
                 else -> { /* no-op */
                 }
@@ -283,7 +283,7 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), 
         },
         LoginToBarsAdapterItem {
             analytics.sendClick("BarsMainLogin")
-            feature.accept(Wish.Click.Login)
+            feature.accept(Ui.Click.Login)
         },
         EmptyStateAdapterItem(),
         ShimmerAdapterItem(coreui_R.layout.item_text_shimmer),
