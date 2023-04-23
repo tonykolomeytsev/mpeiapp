@@ -22,7 +22,7 @@ private const val WEEK_MIN_NUMBER = 0
 private const val WEEK_MAX_NUMBER = 17
 
 @Suppress("MagicNumber")
-class DashboardListConverter(
+internal class DashboardListConverter(
     private val context: Context,
 ) {
     private val upcomingEventsListConverter = UpcomingEventsListConverter(context)

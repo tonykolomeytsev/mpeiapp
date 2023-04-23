@@ -11,9 +11,9 @@ import kekmech.ru.common_navigation.BottomTab
 import kekmech.ru.common_navigation.features.ScrollToTop
 import kekmech.ru.common_navigation.features.TabScreenStateSaver
 import kekmech.ru.domain_bars.BarsFeatureLauncher
+import kekmech.ru.domain_dashboard.DashboardFeatureLauncher
 import kekmech.ru.domain_map.MapFeatureLauncher
 import kekmech.ru.domain_schedule.ScheduleFeatureLauncher
-import kekmech.ru.feature_dashboard.DashboardFragment
 import kekmech.ru.mpeiapp.R
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
@@ -22,6 +22,7 @@ private const val FRAGMENT_POSTPONE_DELAY = 300L
 
 class BottomBarController(
     fragment: Fragment,
+    private val dashboardFeatureLauncher: DashboardFeatureLauncher,
     private val scheduleFeatureLauncher: ScheduleFeatureLauncher,
     private val barsFeatureLauncher: BarsFeatureLauncher,
     private val mapFeatureLauncher: MapFeatureLauncher,
@@ -70,7 +71,6 @@ class BottomBarController(
 
     fun popStack(): Boolean = backStack.popAndPeek()?.let { switchTab(it) } != null
 
-    @Suppress("DEPRECATION")
     private fun selectTab(tab: BottomTab) {
         if (currentTabFragment?.tag == tab.name) {
             (currentTabFragment as? ScrollToTop)?.onScrollToTop()
@@ -101,7 +101,7 @@ class BottomBarController(
     }
 
     private fun createTabFragment(tab: BottomTab): Fragment = when (tab) {
-        BottomTab.DASHBOARD -> DashboardFragment()
+        BottomTab.DASHBOARD -> dashboardFeatureLauncher.getScreen()
         BottomTab.SCHEDULE -> scheduleFeatureLauncher.getScreen()
         BottomTab.MAP -> mapFeatureLauncher.launchMain()
         BottomTab.PROFILE -> barsFeatureLauncher.launchMain()

@@ -17,7 +17,7 @@ private const val NONE_OFFSET = -1
  * @param currentDay текущая дата
  * @param offset отступ от текущего дня на **offset** дней вперед
  */
-fun DashboardState.getDayWithOffset(
+internal fun DashboardState.getDayWithOffset(
     currentDay: LocalDate,
     offset: Int,
 ): Day? {
@@ -38,7 +38,7 @@ fun DashboardState.getDayWithOffset(
  * @param currentTime текущее время
  * @param offset отступ от текущего дня на **offset** дней вперед
  */
-fun DashboardState.getClassesForDayWithOffset(
+internal fun DashboardState.getClassesForDayWithOffset(
     currentDay: LocalDate,
     currentTime: LocalTime,
     offset: Int,
@@ -62,7 +62,7 @@ fun DashboardState.getClassesForDayWithOffset(
  * @param currentTime текущее время
  * @param offset отступ от текущего дня на **offset** дней вперед
  */
-fun DashboardState.hasClassesForDayWithOffset(
+internal fun DashboardState.hasClassesForDayWithOffset(
     currentDay: LocalDate,
     currentTime: LocalTime,
     offset: Int,
@@ -86,7 +86,7 @@ fun DashboardState.hasClassesForDayWithOffset(
  * @param currentDay текущая дата
  * @param currentTime текущее время
  */
-fun DashboardState.getOffsetForDayWithActualEvents(
+internal fun DashboardState.getOffsetForDayWithActualEvents(
     currentDay: LocalDate,
     currentTime: LocalTime,
 ): Int {
