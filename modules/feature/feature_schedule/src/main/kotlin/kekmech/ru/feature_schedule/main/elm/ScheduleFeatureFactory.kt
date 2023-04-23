@@ -8,9 +8,10 @@ internal class ScheduleFeatureFactory(
     private val appSettings: AppSettings,
 ) {
 
-    fun create() = ElmStore(
-        initialState = ScheduleState(appSettings = appSettings),
-        reducer = ScheduleReducer(),
-        actor = actor
-    )
+    fun create() =
+        ElmStore(
+            initialState = ScheduleState(appSettings = appSettings),
+            reducer = ScheduleReducer(),
+            actor = actor,
+        )
 }

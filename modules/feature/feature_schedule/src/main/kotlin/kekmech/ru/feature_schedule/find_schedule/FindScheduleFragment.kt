@@ -5,19 +5,28 @@ import android.view.LayoutInflater
 import android.view.View
 import com.google.android.material.chip.Chip
 import kekmech.ru.common_analytics.ext.screenAnalytics
-import kekmech.ru.common_android.*
+import kekmech.ru.common_android.addSystemBottomPadding
+import kekmech.ru.common_android.addSystemTopPadding
+import kekmech.ru.common_android.afterTextChanged
+import kekmech.ru.common_android.close
+import kekmech.ru.common_android.getArgument
+import kekmech.ru.common_android.setResult
+import kekmech.ru.common_android.showKeyboard
 import kekmech.ru.common_android.viewbinding.viewBinding
+import kekmech.ru.common_android.withArguments
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.BaseFragment
 import kekmech.ru.coreui.banner.showBanner
 import kekmech.ru.domain_schedule.ScheduleFeatureLauncher
-import kekmech.ru.domain_schedule.ScheduleFeatureLauncher.ContinueTo.*
+import kekmech.ru.domain_schedule.ScheduleFeatureLauncher.ContinueTo.BACK
+import kekmech.ru.domain_schedule.ScheduleFeatureLauncher.ContinueTo.BACK_WITH_RESULT
+import kekmech.ru.domain_schedule.ScheduleFeatureLauncher.ContinueTo.DASHBOARD
 import kekmech.ru.feature_schedule.R
 import kekmech.ru.feature_schedule.databinding.FragmentFindScheduleBinding
 import kekmech.ru.feature_schedule.di.ScheduleDependencies
 import kekmech.ru.feature_schedule.find_schedule.elm.FindScheduleEffect
 import kekmech.ru.feature_schedule.find_schedule.elm.FindScheduleEvent
-import kekmech.ru.feature_schedule.find_schedule.elm.FindScheduleEvent.Wish
+import kekmech.ru.feature_schedule.find_schedule.elm.FindScheduleEvent.Ui
 import kekmech.ru.feature_schedule.find_schedule.elm.FindScheduleFeatureFactory
 import kekmech.ru.feature_schedule.find_schedule.elm.FindScheduleState
 import kekmech.ru.feature_schedule.find_schedule.utils.GroupFormatTextWatcher
@@ -27,7 +36,7 @@ import org.koin.android.ext.android.inject
 internal class FindScheduleFragment :
     BaseFragment<FindScheduleEvent, FindScheduleEffect, FindScheduleState>() {
 
-    override val initEvent = Wish.Init
+    override val initEvent = Ui.Init
     override var layoutId = R.layout.fragment_find_schedule
 
     private val dependencies by inject<ScheduleDependencies>()
@@ -50,12 +59,12 @@ internal class FindScheduleFragment :
             groupText.showKeyboard()
             groupText.afterTextChanged {
                 groupTextLayout.error = null
-                feature.accept(Wish.Action.GroupNumberChanged(groupText.text?.toString().orEmpty()))
+                feature.accept(Ui.Action.GroupNumberChanged(groupText.text?.toString().orEmpty()))
             }
             groupText.addTextChangedListener(GroupFormatTextWatcher(groupText))
             buttonContinue.setOnClickListener {
                 analytics.sendClick("FindContinue")
-                feature.accept(Wish.Click.Continue(groupText.text?.toString().orEmpty()))
+                feature.accept(Ui.Click.Continue(groupText.text?.toString().orEmpty()))
             }
         }
     }

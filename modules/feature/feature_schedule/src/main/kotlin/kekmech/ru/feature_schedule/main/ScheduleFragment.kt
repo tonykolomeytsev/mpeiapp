@@ -21,7 +21,7 @@ import kekmech.ru.feature_schedule.main.adapter.WeeksScrollAdapter
 import kekmech.ru.feature_schedule.main.adapter.WeeksScrollHelper
 import kekmech.ru.feature_schedule.main.elm.ScheduleEffect
 import kekmech.ru.feature_schedule.main.elm.ScheduleEvent
-import kekmech.ru.feature_schedule.main.elm.ScheduleEvent.Wish
+import kekmech.ru.feature_schedule.main.elm.ScheduleEvent.Ui
 import kekmech.ru.feature_schedule.main.elm.ScheduleFeatureFactory
 import kekmech.ru.feature_schedule.main.elm.ScheduleState
 import kekmech.ru.feature_schedule.main.item.*
@@ -37,7 +37,7 @@ internal class ScheduleFragment :
     ActivityResultListener,
     TabScreenStateSaver by TabScreenStateSaverImpl("schedule") {
 
-    override val initEvent = Wish.Init
+    override val initEvent = Ui.Init
     override var layoutId = R.layout.fragment_schedule
     override val storeHolder by retainInParentStoreHolder(storeProvider = ::createStore)
 
@@ -64,12 +64,12 @@ internal class ScheduleFragment :
 
             viewPager.adapter = viewPagerAdapter
             viewPager.setCurrentItem(getSavedViewPagerCurrentItem(), false)
-            viewPager.onPageSelected { feature.accept(Wish.Action.PageChanged(it)) }
+            viewPager.onPageSelected { feature.accept(Ui.Action.PageChanged(it)) }
             viewPager.addScrollAnalytics(analytics, "WorkingDaysViewPager")
 
             appBarLayout.outlineProvider = null
             appBarLayout.addSystemTopPadding()
-            fab.setOnClickListener { feature.accept(Wish.Click.FAB) }
+            fab.setOnClickListener { feature.accept(Ui.Click.FAB) }
         }
     }
 
@@ -84,7 +84,7 @@ internal class ScheduleFragment :
         when (effect) {
             is ScheduleEffect.NavigateToNoteList -> {
                 parentFragment?.setResultListener<EmptyResult>(NOTES_LIST_RESULT_KEY) {
-                    feature.accept(Wish.Action.NotesUpdated)
+                    feature.accept(Ui.Action.NotesUpdated)
                 }
                 dependencies.notesFeatureLauncher.launchNoteList(
                     selectedClasses = effect.classes,
@@ -170,22 +170,22 @@ internal class ScheduleFragment :
 
     private fun onClassesClick(classes: Classes) {
         analytics.sendClick("ClickClasses")
-        feature.accept(Wish.Click.Classes(classes))
+        feature.accept(Ui.Click.Classes(classes))
     }
 
     private fun onClassesScroll(dy: Int) {
-        feature.accept(Wish.Action.ClassesScrolled(dy))
+        feature.accept(Ui.Action.ClassesScrolled(dy))
     }
 
     private fun onReloadClick() {
         analytics.sendClick("ClassesReload")
-        feature.accept(Wish.Click.Reload)
+        feature.accept(Ui.Click.Reload)
     }
 
     private fun createWeekDaysHelper() = WeeksScrollHelper(
         onWeekSelectListener = {
             analytics.sendClick("Week_$it")
-            feature.accept(Wish.Action.SelectWeek(it))
+            feature.accept(Ui.Action.SelectWeek(it))
         }
     )
 
@@ -193,7 +193,7 @@ internal class ScheduleFragment :
         WeekAdapterItem(
             onDayClickListener = {
                 analytics.sendClick("Day_${it.date}")
-                feature.accept(Wish.Click.Day(it.date))
+                feature.accept(Ui.Click.Day(it.date))
             }
         )
     )
