@@ -26,7 +26,10 @@ internal class FavoritesReducerTest : BehaviorSpec({
             }
         }
         When("Internal.LoadAllFavoritesSuccess") {
-            val (state, effects, commands) = reducer.reduce(Internal.LoadAllFavoritesSuccess(Mocks.FAVORITES_LIST), givenState)
+            val (state, effects, commands) = reducer.reduce(
+                Internal.LoadAllFavoritesSuccess(Mocks.FAVORITES_LIST),
+                givenState
+            )
             Then("New state") {
                 state.shouldBe(state.copy(favorites = Mocks.FAVORITES_LIST))
             }
@@ -41,7 +44,10 @@ internal class FavoritesReducerTest : BehaviorSpec({
     Given("State after favorites loading") {
         val givenState = FavoritesState(favorites = Mocks.FAVORITES_LIST)
         When("Ui.Action.UpdateFavorite (with new favorite)") {
-            val (state, effects, commands) = reducer.reduce(Ui.Action.UpdateFavorite(Mocks.NEW_FAVORITE), givenState)
+            val (state, effects, commands) = reducer.reduce(
+                Ui.Action.UpdateFavorite(Mocks.NEW_FAVORITE),
+                givenState
+            )
             val newFavorites = Mocks.FAVORITES_LIST + listOf(Mocks.NEW_FAVORITE)
             Then("New state") {
                 state.shouldBe(state.copy(favorites = newFavorites))
@@ -55,8 +61,13 @@ internal class FavoritesReducerTest : BehaviorSpec({
         }
         When("Ui.Action.UpdateFavorite (with updated favorite)") {
             val updatedFavorite = Mocks.FAVORITES_LIST.first().copy(description = "New description")
-            val (state, effects, commands) = reducer.reduce(Ui.Action.UpdateFavorite(updatedFavorite), givenState)
-            val newFavorites = Mocks.FAVORITES_LIST.mapIndexed { index, favoriteSchedule -> if (index == 0) updatedFavorite else favoriteSchedule }
+            val (state, effects, commands) = reducer.reduce(
+                event = Ui.Action.UpdateFavorite(updatedFavorite),
+                state = givenState
+            )
+            val newFavorites = Mocks.FAVORITES_LIST.mapIndexed { index, favoriteSchedule ->
+                if (index == 0) updatedFavorite else favoriteSchedule
+            }
             Then("New state") {
                 state.shouldBe(state.copy(favorites = newFavorites))
             }
@@ -69,7 +80,10 @@ internal class FavoritesReducerTest : BehaviorSpec({
         }
         When("Ui.Click.DeleteFavorite") {
             val deletedFavorite = Mocks.FAVORITES_LIST.first().copy(description = "New description")
-            val (state, effects, commands) = reducer.reduce(Ui.Click.DeleteFavorite(deletedFavorite), givenState)
+            val (state, effects, commands) = reducer.reduce(
+                event = Ui.Click.DeleteFavorite(deletedFavorite),
+                state = givenState
+            )
             val newFavorites = Mocks.FAVORITES_LIST.filterIndexed { index, _ -> index > 0 }
             Then("New state") {
                 state.shouldBe(state.copy(favorites = newFavorites))
