@@ -10,8 +10,6 @@ class AndroidModulePlugin : Plugin<Project> {
     override fun apply(target: Project) {
         target.plugins.apply {
             apply("com.android.library")
-            apply("kotlin-android")
-            apply("kotlin-parcelize")
             apply("mpeix.android.base")
         }
         target.extensions.configure(LibraryExtension::class.java) { extension ->

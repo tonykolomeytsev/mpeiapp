@@ -1,11 +1,18 @@
+buildscript {
+    dependencies {
+        // specify android gradle plugin version in versions catalog
+        classpath(libs.agp)
+    }
+}
+
 plugins {
-    id("com.android.application") version "7.4.0" apply false
-    id("com.android.library") version "7.4.0" apply false
-    kotlin("android") version "1.7.20" apply false
-    id("com.google.gms.google-services") version "4.3.13" apply false
-    id("com.google.firebase.crashlytics") version "2.9.1" apply false
-    id("org.gradle.android.cache-fix") version "2.6.3" apply false
-    id("io.gitlab.arturbosch.detekt") version "1.22.0"
+    // `apply false` in root project is just the way
+    // to specify plugin versions for all subprojects
+    alias(libs.plugins.kotlin.android) apply false
+    alias(libs.plugins.google.services) apply false
+    alias(libs.plugins.firebase.crashlytics) apply false
+    alias(libs.plugins.gradle.android.cacheFix) apply false
+    alias(libs.plugins.detekt)
 
     id("mpeix.android") apply false
     id("mpeix.kotlin") apply false
@@ -23,6 +30,6 @@ subprojects {
         config = rootProject.files("detekt.yaml")
     }
     dependencies {
-        detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.22.0")
+        detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:${detekt.toolVersion}")
     }
 }
