@@ -5,21 +5,21 @@ import vivid.money.elmslie.core.store.ElmStore
 import vivid.money.elmslie.core.store.Store
 
 internal class SearchFeatureFactory(
-    private val actor: SearchActor
+    private val actor: SearchActor,
 ) {
 
     fun create(
         query: String,
-        filter: String
+        filter: String,
     ): Store<SearchEvent, SearchEffect, SearchState> {
         val filterType = FilterItemType.valueOf(filter.uppercase())
         return ElmStore(
             initialState = SearchState(
                 query = query,
-                selectedFilter = filterType
+                selectedFilter = filterType,
             ),
             reducer = SearchReducer(),
-            actor = actor
+            actor = actor,
         )
     }
 }

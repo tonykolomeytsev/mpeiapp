@@ -10,38 +10,38 @@ internal data class SearchState(
     val searchResultsNotes: List<Any> = emptyList(),
     val searchResultsGroups: List<SearchResult> = emptyList(),
     val searchResultsPersons: List<SearchResult> = emptyList(),
-    val selectedFilter: FilterItemType = FilterItemType.ALL
+    val selectedFilter: FilterItemType = FilterItemType.ALL,
 ) {
     val filterItems: List<FilterItem> = FilterItem
         .resolveAllItems().map { it.copy(isSelected = it.type == selectedFilter) }
 }
 
-internal sealed class SearchEvent {
+internal sealed interface SearchEvent {
 
-    sealed class Wish : SearchEvent() {
-        object Init : Wish()
+    sealed interface Ui : SearchEvent {
+        object Init : Ui
 
         object Action {
-            data class SearchContent(val query: String) : Wish()
-            data class SelectFilter(val filterItem: FilterItem) : Wish()
+            data class SearchContent(val query: String) : Ui
+            data class SelectFilter(val filterItem: FilterItem) : Ui
         }
     }
 
-    sealed class News : SearchEvent() {
-        data class SearchNotesSuccess(val results: List<Any>) : News()
-        data class SearchMapSuccess(val results: List<Any>) : News()
-        data class SearchGroupsSuccess(val results: List<SearchResult>) : News()
-        data class SearchPersonsSuccess(val results: List<SearchResult>) : News()
+    sealed interface Internal : SearchEvent {
+        data class SearchNotesSuccess(val results: List<Any>) : Internal
+        data class SearchMapSuccess(val results: List<Any>) : Internal
+        data class SearchGroupsSuccess(val results: List<SearchResult>) : Internal
+        data class SearchPersonsSuccess(val results: List<SearchResult>) : Internal
     }
 }
 
-internal sealed class SearchEffect {
-    data class SetInitialQuery(val query: String) : SearchEffect()
+internal sealed interface SearchEffect {
+    data class SetInitialQuery(val query: String) : SearchEffect
 }
 
-internal sealed class SearchAction {
-    data class SearchNotes(val query: String) : SearchAction()
-    data class SearchMap(val query: String) : SearchAction()
-    data class SearchGroups(val query: String) : SearchAction()
-    data class SearchPersons(val query: String) : SearchAction()
+internal sealed interface SearchCommand {
+    data class SearchNotes(val query: String) : SearchCommand
+    data class SearchMap(val query: String) : SearchCommand
+    data class SearchGroups(val query: String) : SearchCommand
+    data class SearchPersons(val query: String) : SearchCommand
 }

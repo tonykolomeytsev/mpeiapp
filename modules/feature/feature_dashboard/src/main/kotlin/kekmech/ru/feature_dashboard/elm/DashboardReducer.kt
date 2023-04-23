@@ -62,24 +62,24 @@ internal class DashboardReducer :
                 )
             }
             is Internal.LoadSessionSuccess -> state { copy(sessionScheduleItems = event.items) }
-            is Internal.SelectGroupSuccess -> commands { refreshCommands() }
+            is Internal.SelectGroupSuccess -> refreshCommands()
         }
 
     override fun Result.ui(event: Ui): Any =
         when (event) {
             is Ui.Init -> {
                 state { copy(isLoading = true) }
-                commands { refreshCommands() }
+                refreshCommands()
             }
             is Ui.Action.SwipeToRefresh -> {
                 state { copy(isLoading = true) }
-                commands { refreshCommands() }
+                refreshCommands()
             }
             is Ui.Click.ClassesItem -> effects {
                 +state.getActualScheduleDayForView()
                     ?.let { day -> Effect.NavigateToNotesList(event.classes, day.date) }
             }
-            is Ui.Action.SilentUpdate -> commands { refreshCommands() }
+            is Ui.Action.SilentUpdate -> refreshCommands()
             is Ui.Action.SelectFavoriteSchedule -> {
                 val newGroupNumber = event.favoriteSchedule.groupNumber
                 state { copy(selectedScheduleName = newGroupNumber) }
