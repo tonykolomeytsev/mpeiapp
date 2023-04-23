@@ -48,7 +48,6 @@ class BaseAndroidModulePlugin : Plugin<Project> {
         }
     }
 
-    @Suppress("UnstableApiUsage")
     private fun BaseExtension.configure(
         minSdk: Int,
         targetSdk: Int,
@@ -63,6 +62,12 @@ class BaseAndroidModulePlugin : Plugin<Project> {
             config.targetSdk = targetSdk
             config.versionName = appVersionName
             config.versionCode = appVersionCode
+            config.testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        }
+        testOptions { options ->
+            options.unitTests.isReturnDefaultValues = true
+            options.unitTests.all { test -> test.useJUnitPlatform() }
+            options.execution = "ANDROIDX_TEST_ORCHESTRATOR"
         }
         // add app version name as a BuildConfig fields
         buildTypes {

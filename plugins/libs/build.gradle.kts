@@ -5,7 +5,7 @@ plugins {
 
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-gradle-plugin")
-    implementation("com.android.tools.build:gradle:7.4.0")
+    implementation("com.android.tools.build:gradle:8.0.0")
     implementation(gradleApi())
 }
 

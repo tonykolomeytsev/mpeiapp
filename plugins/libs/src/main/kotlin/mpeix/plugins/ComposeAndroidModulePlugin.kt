@@ -15,8 +15,6 @@ class ComposeAndroidModulePlugin : Plugin<Project> {
     override fun apply(target: Project) {
         target.plugins.apply {
             apply("com.android.library")
-            apply("kotlin-android")
-            apply("kotlin-parcelize")
             apply("mpeix.android.base")
         }
         val catalog = target.extensions.getByType(VersionCatalogsExtension::class.java).named("libs")
