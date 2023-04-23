@@ -33,7 +33,7 @@ import kekmech.ru.feature_map.di.MapDependencies
 import kekmech.ru.feature_map.elm.FilterTab
 import kekmech.ru.feature_map.elm.MapEffect
 import kekmech.ru.feature_map.elm.MapEvent
-import kekmech.ru.feature_map.elm.MapEvent.Wish
+import kekmech.ru.feature_map.elm.MapEvent.Ui
 import kekmech.ru.feature_map.elm.MapState
 import kekmech.ru.feature_map.ext.animateCameraTo
 import kekmech.ru.feature_map.ext.init
@@ -55,7 +55,7 @@ internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState>(),
     ScrollToTop,
     TabScreenStateSaver by TabScreenStateSaverImpl("map") {
 
-    override val initEvent = Wish.Init
+    override val initEvent = Ui.Init
     override val layoutId = R.layout.fragment_map
     override val storeHolder by retainInParentStoreHolder(storeProvider = ::createStore)
 
@@ -109,7 +109,7 @@ internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState>(),
                     if (newState == BottomSheetBehavior.STATE_DRAGGING) {
                         analytics.sendScroll("MapBottomSheet")
                     }
-                    feature.accept(Wish.Action.BottomSheetStateChanged(newState))
+                    feature.accept(Ui.Action.BottomSheetStateChanged(newState))
                 }
 
                 override fun onSlide(bottomSheet: View, slideOffset: Float) {
@@ -127,7 +127,7 @@ internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState>(),
             .commitAllowingStateLoss()
         mapFragment.getMapAsync {
             it.init(requireContext(), appSettings.mapAppearanceType, getSavedCameraPosition())
-            feature.accept(Wish.Action.OnMapReady(it))
+            feature.accept(Ui.Action.OnMapReady(it))
         }
     }
 
@@ -158,7 +158,7 @@ internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState>(),
                     googleMapMarkers = effect.googleMapMarkers,
                     selectedTab = effect.selectedTab
                 )
-                feature.accept(Wish.Action.GoogleMapMarkersGenerated(markers))
+                feature.accept(Ui.Action.GoogleMapMarkersGenerated(markers))
             }
             is MapEffect.AnimateCameraToPlace -> {
                 effect.googleMapMarkers.find { it.title == effect.mapMarker.name }?.let { marker ->
@@ -201,7 +201,7 @@ internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState>(),
     }
 
     override fun onScrollToTop() {
-        feature.accept(Wish.Action.ScrollToTop)
+        feature.accept(Ui.Action.ScrollToTop)
         if (lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
             BottomSheetBehavior.from(viewBinding.recyclerView)
                 .state = BottomSheetBehavior.STATE_COLLAPSED
@@ -214,18 +214,18 @@ internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState>(),
             tabs = createTabs(),
             onClickListener = {
                 analytics.sendClick("Tab_$it")
-                feature.accept(Wish.Action.SelectTab(it))
+                feature.accept(Ui.Action.SelectTab(it))
             }
         ),
         SectionHeaderAdapterItem(),
         SpaceAdapterItem(),
         MapMarkerAdapterItem {
             analytics.sendClick("ListMarker_(${it.name})")
-            feature.accept(Wish.Action.OnListMarkerSelected(it))
+            feature.accept(Ui.Action.OnListMarkerSelected(it))
         },
         ErrorStateAdapterItem {
             analytics.sendClick("MapReload")
-            feature.accept(Wish.Action.Reload)
+            feature.accept(Ui.Action.Reload)
         }
     )
 
