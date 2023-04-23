@@ -9,9 +9,9 @@ import kekmech.ru.common_analytics.di.AnalyticsModule
 import kekmech.ru.common_app_database.di.AppDatabaseModule
 import kekmech.ru.common_cache.di.CacheModule
 import kekmech.ru.common_di.modules
+import kekmech.ru.common_elm.TimberLogger
 import kekmech.ru.common_feature_toggles.di.CommonFeatureTogglesModule
 import kekmech.ru.common_kotlin.fastLazy
-import kekmech.ru.common_mvi.TimberLogger
 import kekmech.ru.common_navigation.Router
 import kekmech.ru.common_navigation.di.NavigationModule
 import kekmech.ru.common_navigation.di.RouterHolder

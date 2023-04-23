@@ -9,8 +9,8 @@ import io.reactivex.rxjava3.disposables.Disposable
 import kekmech.ru.common_android.addSystemBottomPadding
 import kekmech.ru.common_android.onActivityResult
 import kekmech.ru.common_android.viewbinding.viewBinding
+import kekmech.ru.common_elm.BaseFragment
 import kekmech.ru.common_kotlin.fastLazy
-import kekmech.ru.common_mvi.BaseFragment
 import kekmech.ru.common_navigation.BackButtonListener
 import kekmech.ru.common_navigation.BottomTab
 import kekmech.ru.mpeiapp.R

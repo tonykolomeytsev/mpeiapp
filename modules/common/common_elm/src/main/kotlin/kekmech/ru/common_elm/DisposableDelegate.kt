@@ -1,4 +1,4 @@
-package kekmech.ru.common_mvi
+package kekmech.ru.common_elm
 
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable

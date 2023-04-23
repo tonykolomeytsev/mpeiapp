@@ -1,4 +1,4 @@
-package kekmech.ru.common_mvi
+package kekmech.ru.common_elm
 
 import kekmech.ru.common_android.fragment.BottomSheetDialogFragment
 import vivid.money.elmslie.android.screen.ElmDelegate

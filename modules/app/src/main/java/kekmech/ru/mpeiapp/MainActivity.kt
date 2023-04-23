@@ -12,8 +12,8 @@ import com.google.android.gms.maps.MapsInitializer
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kekmech.ru.common_android.onActivityResult
-import kekmech.ru.common_mvi.DisposableDelegate
-import kekmech.ru.common_mvi.DisposableDelegateImpl
+import kekmech.ru.common_elm.DisposableDelegate
+import kekmech.ru.common_elm.DisposableDelegateImpl
 import kekmech.ru.common_navigation.BackButtonListener
 import kekmech.ru.common_navigation.NavigationHolder
 import kekmech.ru.common_network.device_id.DeviceIdProvider

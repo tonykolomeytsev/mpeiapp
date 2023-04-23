@@ -18,8 +18,8 @@ import kekmech.ru.common_android.hideKeyboard
 import kekmech.ru.common_android.showKeyboard
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.withArguments
+import kekmech.ru.common_elm.BaseFragment
 import kekmech.ru.common_kotlin.fastLazy
-import kekmech.ru.common_mvi.BaseFragment
 import kekmech.ru.common_navigation.BottomTab
 import kekmech.ru.common_navigation.BottomTabsSwitcher
 import kekmech.ru.common_navigation.showDialog
