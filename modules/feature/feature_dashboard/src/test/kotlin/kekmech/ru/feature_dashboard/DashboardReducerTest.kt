@@ -9,7 +9,7 @@ import kekmech.ru.feature_dashboard.elm.DashboardEvent.Wish
 import kekmech.ru.feature_dashboard.elm.DashboardReducer
 import kekmech.ru.feature_dashboard.elm.DashboardState
 
-class DashboardReducerTest : BehaviorSpec({
+internal class DashboardReducerTest : BehaviorSpec({
     val reducer = DashboardReducer()
 
     Given("Initial state") {
