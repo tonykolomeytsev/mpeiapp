@@ -1,7 +1,12 @@
 package kekmech.ru.feature_search.schedule_details.elm
 
 import kekmech.ru.common_android.moscowLocalDate
-import kekmech.ru.domain_schedule.dto.*
+import kekmech.ru.domain_schedule.dto.Day
+import kekmech.ru.domain_schedule.dto.FavoriteSchedule
+import kekmech.ru.domain_schedule.dto.Schedule
+import kekmech.ru.domain_schedule.dto.ScheduleType
+import kekmech.ru.domain_schedule.dto.SearchResult
+import kekmech.ru.domain_schedule.dto.SearchResultType
 import java.time.LocalDate
 
 internal data class ScheduleDetailsState(
@@ -10,7 +15,7 @@ internal data class ScheduleDetailsState(
     val nextWeek: List<Day>? = null,
     val isInFavorites: Boolean? = null,
     val selectedDayDate: LocalDate = moscowLocalDate(),
-    val favoriteSchedule: FavoriteSchedule? = null
+    val favoriteSchedule: FavoriteSchedule? = null,
 ) {
     val isLoadingSchedule: Boolean get() = thisWeek == null || nextWeek == null
     val scheduleType get() = when (searchResult.type) {
@@ -19,35 +24,35 @@ internal data class ScheduleDetailsState(
     }
 }
 
-internal sealed class ScheduleDetailsEvent {
+internal sealed interface ScheduleDetailsEvent {
 
-    sealed class Wish : ScheduleDetailsEvent() {
-        object Init : Wish()
+    sealed interface Ui : ScheduleDetailsEvent {
+        object Init : Ui
 
         object Click {
-            object Favorites : Wish()
-            data class Day(val date: LocalDate) : Wish()
-            object SwitchSchedule : Wish()
+            object Favorites : Ui
+            data class Day(val date: LocalDate) : Ui
+            object SwitchSchedule : Ui
         }
     }
 
-    sealed class News : ScheduleDetailsEvent() {
-        data class ScheduleLoaded(val schedule: Schedule, val weekOffset: Int) : News()
-        data class LoadScheduleError(val weekOffset: Int) : News()
-        data class FavoritesLoaded(val schedules: List<FavoriteSchedule>) : News()
-        object FavoriteRemoved : News()
-        data class FavoriteAdded(val schedule: FavoriteSchedule) : News()
+    sealed interface Internal : ScheduleDetailsEvent {
+        data class LoadScheduleSuccess(val schedule: Schedule, val weekOffset: Int) : Internal
+        data class LoadScheduleError(val weekOffset: Int) : Internal
+        data class LoadFavoritesSuccess(val schedules: List<FavoriteSchedule>) : Internal
+        object RemoveFromFavoritesSuccess : Internal
+        data class AddToFavoritesSuccess(val schedule: FavoriteSchedule) : Internal
     }
 }
 
-internal sealed class ScheduleDetailsEffect {
-    object CloseAndGoToSchedule : ScheduleDetailsEffect()
+internal sealed interface ScheduleDetailsEffect {
+    object CloseAndGoToSchedule : ScheduleDetailsEffect
 }
 
-internal sealed class ScheduleDetailsAction {
-    data class LoadSchedule(val ownerName: String, val weekOffset: Int) : ScheduleDetailsAction()
-    object LoadFavorites : ScheduleDetailsAction()
-    data class AddToFavorites(val schedule: FavoriteSchedule) : ScheduleDetailsAction()
-    data class RemoveFromFavorites(val schedule: FavoriteSchedule) : ScheduleDetailsAction()
-    data class SwitchSchedule(val scheduleName: String) : ScheduleDetailsAction()
+internal sealed interface ScheduleDetailsCommand {
+    data class LoadSchedule(val ownerName: String, val weekOffset: Int) : ScheduleDetailsCommand
+    object LoadFavorites : ScheduleDetailsCommand
+    data class AddToFavorites(val schedule: FavoriteSchedule) : ScheduleDetailsCommand
+    data class RemoveFromFavorites(val schedule: FavoriteSchedule) : ScheduleDetailsCommand
+    data class SwitchSchedule(val scheduleName: String) : ScheduleDetailsCommand
 }

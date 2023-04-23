@@ -13,10 +13,10 @@ import kekmech.ru.domain_schedule.dto.SearchResultType.GROUP
 import kekmech.ru.domain_schedule.dto.SearchResultType.PERSON
 import kekmech.ru.feature_search.item.FilterItem
 import kekmech.ru.feature_search.item.FilterItemType
-import kekmech.ru.feature_search.main.elm.SearchAction
+import kekmech.ru.feature_search.main.elm.SearchCommand
 import kekmech.ru.feature_search.main.elm.SearchEffect
-import kekmech.ru.feature_search.main.elm.SearchEvent.News
-import kekmech.ru.feature_search.main.elm.SearchEvent.Wish
+import kekmech.ru.feature_search.main.elm.SearchEvent.Internal
+import kekmech.ru.feature_search.main.elm.SearchEvent.Ui
 import kekmech.ru.feature_search.main.elm.SearchReducer
 import kekmech.ru.feature_search.main.elm.SearchState
 import kekmech.ru.feature_search.main.simplify
@@ -27,7 +27,7 @@ class SearchReducerTest : BehaviorSpec({
     Given("Initial state (empty query, filter all)") {
         val givenState = STATE
         When("Wish.Init") {
-            val (state, effects, actions) = reducer.reduce(Wish.Init, givenState)
+            val (state, effects, actions) = reducer.reduce(Ui.Init, givenState)
             Then("Check state") {
                 state shouldBe givenState
             }
@@ -42,7 +42,7 @@ class SearchReducerTest : BehaviorSpec({
     Given("Initial state (non-empty query, filter all)") {
         val givenState = STATE.copy(query = QUERY_NON_EMPTY)
         When("Wish.Init") {
-            val (state, effects, actions) = reducer.reduce(Wish.Init, givenState)
+            val (state, effects, actions) = reducer.reduce(Ui.Init, givenState)
             Then("Check state") {
                 state shouldBe givenState
             }
@@ -52,10 +52,10 @@ class SearchReducerTest : BehaviorSpec({
             Then("Check actions") {
                 val simplifiedQuery = QUERY_NON_EMPTY.simplify()
                 actions.shouldContainExactly(
-                    SearchAction.SearchNotes(simplifiedQuery),
-                    SearchAction.SearchMap(simplifiedQuery),
-                    SearchAction.SearchGroups(simplifiedQuery),
-                    SearchAction.SearchPersons(simplifiedQuery)
+                    SearchCommand.SearchNotes(simplifiedQuery),
+                    SearchCommand.SearchMap(simplifiedQuery),
+                    SearchCommand.SearchGroups(simplifiedQuery),
+                    SearchCommand.SearchPersons(simplifiedQuery)
                 )
             }
         }
@@ -63,7 +63,7 @@ class SearchReducerTest : BehaviorSpec({
     Given("Initial state (non-empty query, filter groups)") {
         val givenState = STATE.copy(query = QUERY_NON_EMPTY, selectedFilter = FilterItemType.GROUPS)
         When("Wish.Init") {
-            val (state, effects, actions) = reducer.reduce(Wish.Init, givenState)
+            val (state, effects, actions) = reducer.reduce(Ui.Init, givenState)
             Then("Check state") {
                 state shouldBe givenState
             }
@@ -73,7 +73,7 @@ class SearchReducerTest : BehaviorSpec({
             Then("Check actions") {
                 val simplifiedQuery = QUERY_NON_EMPTY.simplify()
                 actions.shouldContainExactly(
-                    SearchAction.SearchGroups(simplifiedQuery)
+                    SearchCommand.SearchGroups(simplifiedQuery)
                 )
             }
         }
@@ -81,7 +81,7 @@ class SearchReducerTest : BehaviorSpec({
     Given("User interactions (non-empty query, filter persons)") {
         val givenState = STATE.copy(query = QUERY_NON_EMPTY, selectedFilter = FilterItemType.PERSONS)
         When("Wish.Action.SearchContent") {
-            val (state, effects, actions) = reducer.reduce(Wish.Action.SearchContent(QUERY_NON_EMPTY), givenState)
+            val (state, effects, actions) = reducer.reduce(Ui.Action.SearchContent(QUERY_NON_EMPTY), givenState)
             Then("Check state") {
                 state shouldBe givenState
             }
@@ -91,12 +91,12 @@ class SearchReducerTest : BehaviorSpec({
             Then("Check actions") {
                 val simplifiedQuery = QUERY_NON_EMPTY.simplify()
                 actions.shouldContainExactly(
-                    SearchAction.SearchPersons(simplifiedQuery)
+                    SearchCommand.SearchPersons(simplifiedQuery)
                 )
             }
         }
         When("Wish.Action.SelectFilter (non-empty query)") {
-            val (state, effects, actions) = reducer.reduce(Wish.Action.SelectFilter(FILTER_ITEM_MAP), givenState)
+            val (state, effects, actions) = reducer.reduce(Ui.Action.SelectFilter(FILTER_ITEM_MAP), givenState)
             Then("Check state") {
                 state.selectedFilter shouldBe FilterItemType.MAP
             }
@@ -106,7 +106,7 @@ class SearchReducerTest : BehaviorSpec({
             Then("Check actions") {
                 val simplifiedQuery = QUERY_NON_EMPTY.simplify()
                 actions.shouldContainExactly(
-                    SearchAction.SearchMap(simplifiedQuery)
+                    SearchCommand.SearchMap(simplifiedQuery)
                 )
             }
         }
@@ -114,7 +114,7 @@ class SearchReducerTest : BehaviorSpec({
     Given("After results loading success") {
         val givenState = STATE.copy(query = QUERY_NON_EMPTY)
         When("News.SearchNotesSuccess") {
-            val (state, effects, actions) = reducer.reduce(News.SearchNotesSuccess(NOTES_RESULTS), givenState)
+            val (state, effects, actions) = reducer.reduce(Internal.SearchNotesSuccess(NOTES_RESULTS), givenState)
             Then("Check state") {
                 state.searchResultsNotes.shouldContainExactly(NOTES_RESULTS)
             }
@@ -126,7 +126,7 @@ class SearchReducerTest : BehaviorSpec({
             }
         }
         When("News.SearchMapSuccess") {
-            val (state, effects, actions) = reducer.reduce(News.SearchMapSuccess(MAP_RESULTS), givenState)
+            val (state, effects, actions) = reducer.reduce(Internal.SearchMapSuccess(MAP_RESULTS), givenState)
             Then("Check state") {
                 state.searchResultsMap.shouldContainExactly(MAP_RESULTS)
             }
@@ -138,7 +138,7 @@ class SearchReducerTest : BehaviorSpec({
             }
         }
         When("News.SearchGroupsSuccess") {
-            val (state, effects, actions) = reducer.reduce(News.SearchGroupsSuccess(GROUP_RESULTS), givenState)
+            val (state, effects, actions) = reducer.reduce(Internal.SearchGroupsSuccess(GROUP_RESULTS), givenState)
             Then("Check state") {
                 state.searchResultsGroups.shouldContainExactly(GROUP_RESULTS)
             }
@@ -150,7 +150,7 @@ class SearchReducerTest : BehaviorSpec({
             }
         }
         When("News.SearchPersonsSuccess") {
-            val (state, effects, actions) = reducer.reduce(News.SearchPersonsSuccess(PERSON_RESULTS), givenState)
+            val (state, effects, actions) = reducer.reduce(Internal.SearchPersonsSuccess(PERSON_RESULTS), givenState)
             Then("Check state") {
                 state.searchResultsPersons.shouldContainExactly(PERSON_RESULTS)
             }

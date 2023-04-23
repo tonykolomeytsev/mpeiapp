@@ -10,18 +10,28 @@ import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.common_analytics.ext.screenAnalytics
-import kekmech.ru.common_android.*
+import kekmech.ru.common_android.addSystemVerticalPadding
+import kekmech.ru.common_android.afterTextChanged
+import kekmech.ru.common_android.close
+import kekmech.ru.common_android.getArgument
+import kekmech.ru.common_android.hideKeyboard
+import kekmech.ru.common_android.showKeyboard
 import kekmech.ru.common_android.viewbinding.viewBinding
+import kekmech.ru.common_android.withArguments
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.BaseFragment
 import kekmech.ru.common_navigation.BottomTab
 import kekmech.ru.common_navigation.BottomTabsSwitcher
 import kekmech.ru.common_navigation.showDialog
-import kekmech.ru.coreui.items.*
+import kekmech.ru.coreui.items.EmptyStateAdapterItem
+import kekmech.ru.coreui.items.LabeledTextViewHolder
+import kekmech.ru.coreui.items.LabeledTextViewHolderImpl
+import kekmech.ru.coreui.items.NoteAdapterItem
+import kekmech.ru.coreui.items.SectionHeaderAdapterItem
+import kekmech.ru.coreui.items.SpaceAdapterItem
 import kekmech.ru.domain_map.dto.MapMarker
 import kekmech.ru.domain_schedule.dto.SearchResult
 import kekmech.ru.feature_search.R
-import kekmech.ru.coreui.R as coreui_R
 import kekmech.ru.feature_search.databinding.FragmentSearchBinding
 import kekmech.ru.feature_search.di.SearchDependencies
 import kekmech.ru.feature_search.item.FilterAdapterItem
@@ -32,6 +42,7 @@ import kekmech.ru.feature_search.main.elm.SearchState
 import kekmech.ru.feature_search.schedule_details.ScheduleDetailsFragment
 import org.koin.android.ext.android.inject
 import java.util.concurrent.TimeUnit
+import kekmech.ru.coreui.R as coreui_R
 
 private const val ARG_QUERY = "Arg.Query"
 private const val ARG_FILTER = "Arg.Filter"
@@ -39,7 +50,7 @@ private const val DEFAULT_INPUT_DEBOUNCE = 300L
 
 internal class SearchFragment : BaseFragment<SearchEvent, SearchEffect, SearchState>() {
 
-    override val initEvent get() = SearchEvent.Wish.Init
+    override val initEvent get() = SearchEvent.Ui.Init
     private val dependencies by inject<SearchDependencies>()
 
     override var layoutId: Int = R.layout.fragment_search
@@ -65,7 +76,7 @@ internal class SearchFragment : BaseFragment<SearchEvent, SearchEffect, SearchSt
                 .debounce(DEFAULT_INPUT_DEBOUNCE, TimeUnit.MILLISECONDS)
                 .distinctUntilChanged()
                 .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe { feature.accept(SearchEvent.Wish.Action.SearchContent(it)) }
+                .subscribe { feature.accept(SearchEvent.Ui.Action.SearchContent(it)) }
                 .let {}
             recyclerView.layoutManager = LinearLayoutManager(requireContext())
             recyclerView.adapter = adapter
@@ -123,7 +134,7 @@ internal class SearchFragment : BaseFragment<SearchEvent, SearchEffect, SearchSt
     private fun createFilterItemsAdapter() = BaseAdapter(
         FilterAdapterItem {
             analytics.sendClick("SearchFilter_${it.type}")
-            feature.accept(SearchEvent.Wish.Action.SelectFilter(it))
+            feature.accept(SearchEvent.Ui.Action.SelectFilter(it))
         }
     )
 
