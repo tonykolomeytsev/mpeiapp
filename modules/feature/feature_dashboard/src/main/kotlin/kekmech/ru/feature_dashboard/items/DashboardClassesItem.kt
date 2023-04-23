@@ -8,7 +8,7 @@ import kekmech.ru.common_schedule.items.ClassesViewHolderImpl
 import kekmech.ru.domain_schedule.dto.Classes
 import kekmech.ru.common_schedule.R as common_schedule_R
 
-class DashboardClassesAdapterItem(
+internal class DashboardClassesAdapterItem(
     context: Context,
     onClickListener: ((Classes) -> Unit)? = null
 ) : AdapterItem<ClassesViewHolder, Classes>(

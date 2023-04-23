@@ -3,7 +3,9 @@ package kekmech.ru.feature_dashboard.helpers
 import kekmech.ru.common_android.moscowLocalDate
 import kekmech.ru.common_android.moscowLocalTime
 import kekmech.ru.domain_schedule.dto.Time
-import kekmech.ru.feature_dashboard.elm.NextClassesCondition.*
+import kekmech.ru.feature_dashboard.elm.NextClassesCondition.ENDED
+import kekmech.ru.feature_dashboard.elm.NextClassesCondition.NOT_STARTED
+import kekmech.ru.feature_dashboard.elm.NextClassesCondition.STARTED
 import kekmech.ru.feature_dashboard.elm.NextClassesTimeStatus
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -11,7 +13,7 @@ import java.time.temporal.ChronoUnit
 
 private const val MINUTES_IN_HOUR = 60L
 
-fun getNextClassesTimeStatus(nextClassesDate: LocalDate, nextClassesTime: Time): NextClassesTimeStatus {
+internal fun getNextClassesTimeStatus(nextClassesDate: LocalDate, nextClassesTime: Time): NextClassesTimeStatus {
     val currentMoscowDateTime = LocalDateTime.of(moscowLocalDate(), moscowLocalTime())
     val nextClassesStartDateTime = LocalDateTime.of(nextClassesDate, nextClassesTime.start)
     val nextClassesEndDateTime = LocalDateTime.of(nextClassesDate, nextClassesTime.end)
