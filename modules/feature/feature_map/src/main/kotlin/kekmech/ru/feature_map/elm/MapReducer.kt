@@ -1,89 +1,83 @@
 package kekmech.ru.feature_map.elm
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import kekmech.ru.feature_map.elm.MapEvent.News
-import kekmech.ru.feature_map.elm.MapEvent.Wish
-import vivid.money.elmslie.core.store.Result
-import vivid.money.elmslie.core.store.StateReducer
-import java.util.*
+import kekmech.ru.feature_map.elm.MapEvent.Internal
+import kekmech.ru.feature_map.elm.MapEvent.Ui
+import vivid.money.elmslie.core.store.dsl_reducer.ScreenDslReducer
+import java.util.UUID
+import kekmech.ru.feature_map.elm.MapCommand as Command
+import kekmech.ru.feature_map.elm.MapEffect as Effect
+import kekmech.ru.feature_map.elm.MapEvent as Event
+import kekmech.ru.feature_map.elm.MapState as State
 
-internal class MapReducer : StateReducer<MapEvent, MapState, MapEffect, MapAction> {
+internal class MapReducer :
+    ScreenDslReducer<Event, Ui, Internal, State, Effect, Command>(
+        uiEventClass = Ui::class,
+        internalEventClass = Internal::class
+    ) {
 
-    override fun reduce(
-        event: MapEvent,
-        state: MapState
-    ): Result<MapState, MapEffect, MapAction> = when (event) {
-        is Wish -> reduceWish(event, state)
-        is News -> reduceNews(event, state)
-    }
-
-    private fun reduceWish(
-        event: Wish,
-        state: MapState
-    ): Result<MapState, MapEffect, MapAction> = when (event) {
-        is Wish.Init -> Result(
-            state = state,
-            command = MapAction.GetMarkers
-        )
-        is Wish.Action.OnMapReady -> Result(
-            state = state.copy(
-                map = event.map
-            ),
-            effect = MapEffect.GenerateGoogleMapMarkers(
-                map = event.map,
-                markers = state.markers,
-                googleMapMarkers = state.googleMapMarkers,
-                selectedTab = state.selectedTab
-            )
-        )
-        is Wish.Action.SelectTab -> Result(
-            state = state.copy(
-                selectedTab = event.tab
-            ),
-            effect = MapEffect.GenerateGoogleMapMarkers(state.map, state.markers, state.googleMapMarkers, event.tab)
-        )
-        is Wish.Action.BottomSheetStateChanged -> Result(
-            state = state.copy(bottomSheetState = event.newState)
-        )
-        is Wish.Action.GoogleMapMarkersGenerated -> Result(
-            state = state.copy(googleMapMarkers = event.googleMapMarkers)
-        )
-        is Wish.Action.OnListMarkerSelected -> Result(
-            state = state,
-            effect = state.map?.let { map ->
-                MapEffect.AnimateCameraToPlace(
-                    map = map,
-                    googleMapMarkers = state.googleMapMarkers,
-                    mapMarker = event.mapMarker,
-                    collapseBottomSheet = state.appSettings.autoHideBottomSheet
+    override fun Result.internal(event: Internal): Any =
+        when (event) {
+            is Internal.GetMapMarkersSuccess -> state {
+                copy(
+                    markers = event.markers,
+                    loadingError = null,
                 )
             }
-        )
-        is Wish.Action.SilentUpdate -> Result(
-            state = state.copy(hash = UUID.randomUUID().toString())
-        )
-        is Wish.Action.Reload -> Result(
-            state = state.copy(loadingError = null),
-            command = MapAction.GetMarkers
-        )
-        is Wish.Action.ScrollToTop -> Result(
-            state = state.copy(bottomSheetState = BottomSheetBehavior.STATE_COLLAPSED)
-        )
-    }
+            is Internal.GetMapMarkersFailure -> {
+                state { copy(loadingError = event.throwable) }
+                effects { +Effect.ShowLoadingError }
+            }
+        }
 
-    private fun reduceNews(
-        event: News,
-        state: MapState
-    ): Result<MapState, MapEffect, MapAction> = when (event) {
-        is News.MapMarkersLoaded -> Result(
-            state = state.copy(
-                markers = event.markers,
-                loadingError = null
-            )
-        )
-        is News.MapMarkersLoadError -> Result(
-            state = state.copy(loadingError = event.throwable),
-            effect = MapEffect.ShowLoadingError
-        )
-    }
+    override fun Result.ui(event: Ui): Any =
+        when (event) {
+            is Ui.Init -> commands { +Command.GetMapMarkers }
+            is Ui.Action.OnMapReady -> {
+                state { copy(map = event.map) }
+                effects {
+                    +Effect.GenerateGoogleMapMarkers(
+                        map = event.map,
+                        markers = state.markers,
+                        googleMapMarkers = state.googleMapMarkers,
+                        selectedTab = state.selectedTab
+                    )
+                }
+            }
+            is Ui.Action.SelectTab -> {
+                state { copy(selectedTab = event.tab) }
+                effects {
+                    +Effect.GenerateGoogleMapMarkers(
+                        state.map,
+                        state.markers,
+                        state.googleMapMarkers,
+                        event.tab
+                    )
+                }
+            }
+            is Ui.Action.BottomSheetStateChanged -> state {
+                copy(bottomSheetState = event.newState)
+            }
+            is Ui.Action.GoogleMapMarkersGenerated -> state {
+                copy(googleMapMarkers = event.googleMapMarkers)
+            }
+            is Ui.Action.OnListMarkerSelected -> effects {
+                +state.map?.let { map ->
+                    Effect.AnimateCameraToPlace(
+                        map = map,
+                        googleMapMarkers = state.googleMapMarkers,
+                        mapMarker = event.mapMarker,
+                        collapseBottomSheet = state.appSettings.autoHideBottomSheet
+                    )
+                }
+            }
+            is Ui.Action.SilentUpdate -> state { copy(hash = UUID.randomUUID().toString()) }
+            is Ui.Action.Reload -> {
+                state { copy(loadingError = null) }
+                commands { +Command.GetMapMarkers }
+            }
+            is Ui.Action.ScrollToTop -> state {
+                copy(bottomSheetState = BottomSheetBehavior.STATE_COLLAPSED)
+            }
+        }
 }
