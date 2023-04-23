@@ -3,97 +3,90 @@ package kekmech.ru.feature_search.schedule_details.elm
 import kekmech.ru.domain_schedule.dto.Day
 import kekmech.ru.domain_schedule.dto.FavoriteSchedule
 import kekmech.ru.domain_schedule.dto.Schedule
-import kekmech.ru.feature_search.schedule_details.elm.ScheduleDetailsEvent.News
-import kekmech.ru.feature_search.schedule_details.elm.ScheduleDetailsEvent.Wish
+import kekmech.ru.feature_search.schedule_details.elm.ScheduleDetailsEvent.Internal
+import kekmech.ru.feature_search.schedule_details.elm.ScheduleDetailsEvent.Ui
 import vivid.money.elmslie.core.store.Result
-import vivid.money.elmslie.core.store.StateReducer
+import vivid.money.elmslie.core.store.dsl_reducer.ScreenDslReducer
+import kekmech.ru.feature_search.schedule_details.elm.ScheduleDetailsCommand as Command
+import kekmech.ru.feature_search.schedule_details.elm.ScheduleDetailsEffect as Effect
+import kekmech.ru.feature_search.schedule_details.elm.ScheduleDetailsEvent as Event
+import kekmech.ru.feature_search.schedule_details.elm.ScheduleDetailsState as State
 
 internal class ScheduleDetailsReducer :
-    StateReducer<ScheduleDetailsEvent, ScheduleDetailsState,
-            ScheduleDetailsEffect, ScheduleDetailsAction> {
+    ScreenDslReducer<Event, Ui, Internal, State, Effect, Command>(
+        uiEventClass = Ui::class,
+        internalEventClass = Internal::class,
+    ) {
 
-    override fun reduce(
-        event: ScheduleDetailsEvent,
-        state: ScheduleDetailsState
-    ): Result<ScheduleDetailsState, ScheduleDetailsEffect, ScheduleDetailsAction> = when (event) {
-        is Wish -> reduceWish(event, state)
-        is News -> reduceNews(event, state)
-    }
-
-    private fun reduceNews(
-        event: News,
-        state: ScheduleDetailsState
-    ): Result<ScheduleDetailsState, ScheduleDetailsEffect, ScheduleDetailsAction> = when(event) {
-        is News.ScheduleLoaded -> {
-            val newState = if (event.weekOffset == 0) {
-                state.copy(thisWeek = event.schedule.mapToDays())
-            } else {
-                state.copy(nextWeek = event.schedule.mapToDays())
+    override fun Result.internal(event: Internal): Any =
+        when (event) {
+            is Internal.LoadScheduleSuccess -> state {
+                val days = event.schedule.mapToDays()
+                if (event.weekOffset == 0) {
+                    copy(thisWeek = days)
+                } else {
+                    copy(nextWeek = days)
+                }
             }
-            Result(newState)
-        }
-        is News.LoadScheduleError -> {
-            val newState = if (event.weekOffset == 0) {
-                state.copy(thisWeek = emptyList())
-            } else {
-                state.copy(nextWeek = emptyList())
+            is Internal.LoadScheduleError -> state {
+                if (event.weekOffset == 0) {
+                    copy(thisWeek = emptyList())
+                } else {
+                    copy(nextWeek = emptyList())
+                }
             }
-            Result(newState)
-        }
-        is News.FavoritesLoaded -> {
-            val favoriteSchedule = event.schedules.find { it.groupNumber == state.searchResult.name }
-            Result(
-                state.copy(
-                    isInFavorites = favoriteSchedule != null,
-                    favoriteSchedule = favoriteSchedule
+            is Internal.LoadFavoritesSuccess -> {
+                val favoriteSchedule =
+                    event.schedules.find { it.groupNumber == state.searchResult.name }
+                state {
+                    copy(
+                        isInFavorites = favoriteSchedule != null,
+                        favoriteSchedule = favoriteSchedule,
+                    )
+                }
+            }
+            is Internal.RemoveFromFavoritesSuccess -> state {
+                copy(
+                    isInFavorites = false,
+                    favoriteSchedule = null,
                 )
-            )
-        }
-        is News.FavoriteRemoved -> Result(
-            state.copy(isInFavorites = false, favoriteSchedule = null)
-        )
-        is News.FavoriteAdded -> Result(
-            state.copy(isInFavorites = true, favoriteSchedule = event.schedule)
-        )
-    }
-
-    private fun reduceWish(
-        event: Wish,
-        state: ScheduleDetailsState
-    ): Result<ScheduleDetailsState, ScheduleDetailsEffect, ScheduleDetailsAction> = when(event) {
-        is Wish.Init -> Result(
-            state = state,
-            commands = listOf(
-                ScheduleDetailsAction.LoadSchedule(state.searchResult.name, weekOffset = 0),
-                ScheduleDetailsAction.LoadSchedule(state.searchResult.name, weekOffset = 1),
-                ScheduleDetailsAction.LoadFavorites
-            )
-        )
-        is Wish.Click.Day -> Result(state.copy(selectedDayDate = event.date))
-        is Wish.Click.Favorites -> {
-            if (state.favoriteSchedule == null) {
-                val newFavorite = FavoriteSchedule(
-                    groupNumber = state.searchResult.name,
-                    description = state.searchResult.description,
-                    order = 0
-                )
-                Result(
-                    state = state.copy(isInFavorites = null),
-                    command = ScheduleDetailsAction.AddToFavorites(newFavorite)
-                )
-            } else {
-                Result(
-                    state = state.copy(isInFavorites = null),
-                    command = ScheduleDetailsAction.RemoveFromFavorites(state.favoriteSchedule)
+            }
+            is Internal.AddToFavoritesSuccess -> state {
+                copy(
+                    isInFavorites = true,
+                    favoriteSchedule = event.schedule,
                 )
             }
         }
-        is Wish.Click.SwitchSchedule -> Result(
-            state = state,
-            command = ScheduleDetailsAction.SwitchSchedule(state.searchResult.name),
-            effect = ScheduleDetailsEffect.CloseAndGoToSchedule
-        )
-    }
+
+    override fun Result.ui(event: Ui): Any =
+        when (event) {
+            is Ui.Init -> commands {
+                +Command.LoadSchedule(state.searchResult.name, weekOffset = 0)
+                +Command.LoadSchedule(state.searchResult.name, weekOffset = 1)
+                +Command.LoadFavorites
+            }
+            is Ui.Click.Day -> state { copy(selectedDayDate = event.date) }
+            is Ui.Click.Favorites -> {
+                state { copy(isInFavorites = null) }
+                val favoriteSchedule = state.favoriteSchedule
+                if (favoriteSchedule == null) {
+                    val newFavorite =
+                        FavoriteSchedule(
+                            groupNumber = state.searchResult.name,
+                            description = state.searchResult.description,
+                            order = 0,
+                        )
+                    commands { +Command.AddToFavorites(newFavorite) }
+                } else {
+                    commands { +Command.RemoveFromFavorites(favoriteSchedule) }
+                }
+            }
+            is Ui.Click.SwitchSchedule -> {
+                commands { +Command.SwitchSchedule(state.searchResult.name) }
+                effects { +Effect.CloseAndGoToSchedule }
+            }
+        }
 
     /**
      * If you modify this function, please, also modify same function in ScheduleDetailsReducerTest.Companion
@@ -109,6 +102,7 @@ internal class ScheduleDetailsReducer :
     }
 
     private companion object {
+
         private const val DAYS_IN_WEEK = 7
     }
 }

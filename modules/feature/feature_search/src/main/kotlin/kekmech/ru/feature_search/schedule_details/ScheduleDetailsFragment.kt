@@ -19,12 +19,15 @@ import kekmech.ru.common_navigation.ClearBackStack
 import kekmech.ru.common_navigation.Router
 import kekmech.ru.common_schedule.items.ClassesItemBinder
 import kekmech.ru.common_schedule.items.ClassesViewHolderImpl
-import kekmech.ru.coreui.items.*
+import kekmech.ru.coreui.items.EmptyStateAdapterItem
+import kekmech.ru.coreui.items.PullAdapterItem
+import kekmech.ru.coreui.items.ShimmerAdapterItem
+import kekmech.ru.coreui.items.SpaceAdapterItem
+import kekmech.ru.coreui.items.TextAdapterItem
+import kekmech.ru.coreui.items.TextWithIconAdapterItem
 import kekmech.ru.domain_schedule.dto.Classes
 import kekmech.ru.domain_schedule.dto.SearchResult
 import kekmech.ru.feature_search.R
-import kekmech.ru.coreui.R as coreui_R
-import kekmech.ru.common_schedule.R as common_schedule_R
 import kekmech.ru.feature_search.databinding.FragmentScheduleDetailsBinding
 import kekmech.ru.feature_search.item.ButtonAdapterItem
 import kekmech.ru.feature_search.item.WeekMinItem
@@ -32,10 +35,12 @@ import kekmech.ru.feature_search.item.WeekMinItemBinder
 import kekmech.ru.feature_search.item.WeekMinViewHolder
 import kekmech.ru.feature_search.schedule_details.elm.ScheduleDetailsEffect
 import kekmech.ru.feature_search.schedule_details.elm.ScheduleDetailsEvent
-import kekmech.ru.feature_search.schedule_details.elm.ScheduleDetailsEvent.Wish
+import kekmech.ru.feature_search.schedule_details.elm.ScheduleDetailsEvent.Ui
 import kekmech.ru.feature_search.schedule_details.elm.ScheduleDetailsFeatureFactory
 import kekmech.ru.feature_search.schedule_details.elm.ScheduleDetailsState
 import org.koin.android.ext.android.inject
+import kekmech.ru.common_schedule.R as common_schedule_R
+import kekmech.ru.coreui.R as coreui_R
 
 private const val ARG_RESULT_ITEM = "Arg.Item"
 internal const val ITEM_BUTTON_SWITCH = 1
@@ -51,7 +56,7 @@ internal class ScheduleDetailsFragment :
     private val bottomTabsSwitcher by inject<BottomTabsSwitcher>()
     private val analytics by screenAnalytics("SearchScheduleDetails")
 
-    override val initEvent: ScheduleDetailsEvent get() = Wish.Init
+    override val initEvent: ScheduleDetailsEvent get() = Ui.Init
     override var layoutId: Int = R.layout.fragment_schedule_details
 
     override fun createStore() = inject<ScheduleDetailsFeatureFactory>().value
@@ -94,13 +99,13 @@ internal class ScheduleDetailsFragment :
         ShimmerAdapterItem(R.layout.item_classes_shimmer),
         ButtonAdapterItem(ITEM_BUTTON_SWITCH, R.layout.item_button) {
             analytics.sendClick("SwitchSchedule")
-            feature.accept(Wish.Click.SwitchSchedule)
+            feature.accept(Ui.Click.SwitchSchedule)
         },
         TextWithIconAdapterItem {
             when (it.itemId) {
                 ITEM_FAVORITES -> {
                     analytics.sendClick("AddToFavorites")
-                    feature.accept(Wish.Click.Favorites)
+                    feature.accept(Ui.Click.Favorites)
                 }
                 else -> Unit
             }
@@ -110,7 +115,7 @@ internal class ScheduleDetailsFragment :
             layoutRes = R.layout.item_week_min,
             viewHolderGenerator = ::WeekMinViewHolder,
             itemBinder = WeekMinItemBinder(requireContext()) {
-                feature.accept(Wish.Click.Day(it.date))
+                feature.accept(Ui.Click.Day(it.date))
             },
             areItemsTheSame = { _, _ -> true }
         ),
