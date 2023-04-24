@@ -6,7 +6,7 @@ enum class BackendServiceUrl(
 ) {
     SCHEDULE(
         prodEndpoint = "https://api.kekmech.com/mpeix/schedule/",
-        devEndpoint = "https://dev-api.kekmech.com/mpeix/schedule/"
+        devEndpoint = "http://localhost:8080/schedule/"//"https://dev-api.kekmech.com/mpeix/schedule/"
     ),
     MAP(
         prodEndpoint = "https://raw.githubusercontent.com/tonykolomeytsev/mpeiapp/master/statics/map/",

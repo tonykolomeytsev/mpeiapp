@@ -66,6 +66,7 @@ class MpeixApp : Application(),
         initKoin()
         initTimber()
         if (Build.VERSION.SDK_INT < 25) LocaleContextWrapper.updateResourcesV24(this)
+        MpeixDevTools.init(this)
     }
 
     override fun attachBaseContext(base: Context) {
