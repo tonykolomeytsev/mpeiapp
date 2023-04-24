@@ -9,6 +9,7 @@ minSdk = "21"
 targetSdk = "32"
 buildTools = "33.0.0"
 kotlin = "1.7.20"
+coroutines = "1.6.4"
 detekt = "1.22.0"
 
 # AndroidX Versions
@@ -38,6 +39,9 @@ elmslie = "1.1.4"
 accompanist = "0.23.1"
 compose = "1.1.1"
 composeCompiler = "1.2.0"
+
+# MockServer
+ktor = "2.3.0"
 
 [libraries]
 
@@ -98,6 +102,17 @@ vivid-elmslie-storeHolder = { module = "com.github.vivid-money.elmslie:elmslie-s
 kotest-runner = { module = "io.kotest:kotest-runner-junit5", version = "5.6.1" }
 kotest-assertions = { module = "io.kotest:kotest-assertions-core", version = "5.6.1" }
 kotest-property = { module = "io.kotest:kotest-property", version = "5.6.1" }
+
+# Coroutines
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+kotlinx-coroutines-rx3 = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-rx3", version.ref = "coroutines" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
+
+# Ktor
+ktor-server-core = { module = "io.ktor:ktor-server-core", version.ref = "ktor" }
+ktor-server-netty = { module = "io.ktor:ktor-server-netty", version.ref = "ktor" }
+ktor-server-content-negotiation = { module = "io.ktor:ktor-server-content-negotiation", version.ref = "ktor" }
+ktor-serialization-gson = { module = "io.ktor:ktor-serialization-gson", version.ref = "ktor" }
 
 # Jetpack Compose
 ## Compose

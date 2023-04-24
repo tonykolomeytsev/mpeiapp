@@ -41,6 +41,11 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    packaging {
+        // This is to make it possible to use Ktor (mock_server) on android
+        // https://github.com/gnarea/minimal-ktor-server-android/blob/master/app/build.gradle
+        resources.excludes += setOf("META-INF/**", "**/attach_hotspot_windows.dll")
+    }
 }
 
 dependencies {
@@ -106,4 +111,6 @@ dependencies {
     implementation(project(":icons"))
     implementation(project(":images"))
     implementation(project(":strings"))
+
+    debugImplementation(project(":mock_server"))
 }
