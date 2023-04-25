@@ -5,7 +5,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/tonykolomeytsev/mpeiapp/blob/master/LICENSE)
 
 <p align="center">
-  <img src="https://github.com/tonykolomeytsev/mpeiapp/raw/master/screenshots/gradient_logo.png" />
+  <img src="https://github.com/tonykolomeytsev/mpeiapp/raw/master/.github/media/gradient_logo.png" />
 </p>
 
 Расписание пар, заметки, личный кабинет БАРС и крутая карта для студентов и преподавателей НИУ МЭИ. Самое функциональное, легковесное и стабильное МЭИшное приложение.
@@ -29,13 +29,13 @@
 
 Пулл реквесты приветствуются.
 
-[![](https://github.com/tonykolomeytsev/mpeiapp/raw/master/screenshots/3.png)](https://play.google.com/store/apps/details?id=kekmech.ru.mpeiapp)
+[![](https://github.com/tonykolomeytsev/mpeiapp/raw/master/.github/media/available_in_google_play.png)](https://play.google.com/store/apps/details?id=kekmech.ru.mpeiapp)
 
 ### Скриншоты
 
-![screenshots 1](https://github.com/tonykolomeytsev/mpeiapp/raw/master/screenshots/promo_wide_frame_1.png)
+![screenshots 1](https://github.com/tonykolomeytsev/mpeiapp/raw/master/.github/media/promo_wide_frame_1.png)
 
-![screenshots 2](https://github.com/tonykolomeytsev/mpeiapp/raw/master/screenshots/promo_wide_frame_2.png)
+![screenshots 2](https://github.com/tonykolomeytsev/mpeiapp/raw/master/.github/media/promo_wide_frame_2.png)
 
 ### Требования приложения
 
