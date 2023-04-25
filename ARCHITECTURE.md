@@ -11,7 +11,7 @@
 
 ## С высоты птичьего полета
 
-![](https://github.com/tonykolomeytsev/mpeiapp/raw/master/screenshots/mpeix-birds-view.png)
+![](https://github.com/tonykolomeytsev/mpeiapp/raw/master/.github/media/mpeix-birds-view.png)
 
 Рассуждая о приложении на самом высоком уровне, можно сказать что оно просто предоставляет 
 пользователям удобный способ просмотра данных, которые приходят с бекенда MpeiX.
@@ -98,7 +98,7 @@ TEA/ELM и UI сущности предоставляемые андроидом
 Если нужно создать новый экран для новой фичи, это значит нужно завести новый `feature`-модуль.
 
 <p align="center">
-  <img src="https://github.com/tonykolomeytsev/mpeiapp/raw/master/screenshots/mpeix-arch-layers-feature-module.png">
+  <img src="https://github.com/tonykolomeytsev/mpeiapp/raw/master/.github/media/mpeix-arch-layers-feature-module.png">
 </p>
 
 ### `modules/domain`
@@ -111,7 +111,7 @@ TEA/ELM и UI сущности предоставляемые андроидом
 фичи могут просто переиспользовать уже существующие `domain`-модули в разных комбинациях.
 
 <p align="center">
-  <img src="https://github.com/tonykolomeytsev/mpeiapp/raw/master/screenshots/mpeix-arch-layers-domain-module.png">
+  <img src="https://github.com/tonykolomeytsev/mpeiapp/raw/master/.github/media/mpeix-arch-layers-domain-module.png">
 </p>
 
 ### `modules/common`
