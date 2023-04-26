@@ -17,7 +17,7 @@ import kekmech.ru.common_elm.DisposableDelegateImpl
 import kekmech.ru.common_navigation.BackButtonListener
 import kekmech.ru.common_navigation.NavigationHolder
 import kekmech.ru.common_network.device_id.DeviceIdProvider
-import kekmech.ru.domain_app_settings.AppSettings
+import kekmech.ru.domain_app_settings.AppSettingsRepository
 import kekmech.ru.domain_main_screen.MainScreenLauncher
 import kekmech.ru.domain_onboarding.OnboardingFeatureLauncher
 import kekmech.ru.mpeiapp.deeplink.DeeplinkHandlersProcessor
@@ -29,7 +29,7 @@ import kekmech.ru.coreui.R as coreui_R
 class MainActivity : AppCompatActivity(), DisposableDelegate by DisposableDelegateImpl() {
 
     private val navigationHolder: NavigationHolder by inject()
-    private val appSettings: AppSettings by inject()
+    private val appSettingsRepository: AppSettingsRepository by inject()
     private val sharedPreferences: SharedPreferences by inject()
     private val onboardingFeatureLauncher: OnboardingFeatureLauncher by inject()
     private val mainScreenLauncher: MainScreenLauncher by inject()
@@ -82,7 +82,8 @@ class MainActivity : AppCompatActivity(), DisposableDelegate by DisposableDelega
     }
 
     private fun setTheme() {
-        if (appSettings.isDarkThemeEnabled) {
+        val preheatAppSettings = appSettingsRepository.getAppSettings().blockingGet()
+        if (preheatAppSettings.isDarkThemeEnabled) {
             setTheme(coreui_R.style.AppTheme_Dark)
         } else {
             setTheme(coreui_R.style.AppTheme)

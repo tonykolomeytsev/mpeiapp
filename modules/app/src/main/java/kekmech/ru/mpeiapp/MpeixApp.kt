@@ -17,6 +17,7 @@ import kekmech.ru.common_navigation.di.NavigationModule
 import kekmech.ru.common_navigation.di.RouterHolder
 import kekmech.ru.common_network.di.NetworkModule
 import kekmech.ru.common_network.retrofit.ServiceUrlResolver
+import kekmech.ru.domain_app_settings_models.AppEnvironment
 import kekmech.ru.feature_app_settings.di.AppSettingsModule
 import kekmech.ru.feature_bars.di.BarsModule
 import kekmech.ru.feature_dashboard.di.DashboardModule
@@ -42,9 +43,18 @@ class MpeixApp : Application(),
     RouterHolder {
 
     override val router by inject<Router>()
-    private val sharedPreferences by fastLazy { applicationContext.getSharedPreferences("mpeix", MODE_PRIVATE) }
-    private val isDebugBackendEnvironmentEnabled by fastLazy {
-        sharedPreferences.getBoolean("is_debug_env", false)
+    private val sharedPreferences by fastLazy {
+        applicationContext.getSharedPreferences(
+            "mpeix",
+            MODE_PRIVATE
+        )
+    }
+    private val appEnvironment by fastLazy {
+        runCatching {
+            AppEnvironment.valueOf(
+                sharedPreferences.getString("app_env", "PROD")!!
+            )
+        }.getOrDefault(AppEnvironment.PROD)
     }
 
     @Suppress("MagicNumber")
@@ -61,12 +71,15 @@ class MpeixApp : Application(),
                 }
             }
         }
-        ServiceUrlResolver.setEnvironment(debug = isDebugBackendEnvironmentEnabled)
+        ServiceUrlResolver.setAppEnvironment(appEnvironment)
         RemoteConfig.setup()
         initKoin()
         initTimber()
         if (Build.VERSION.SDK_INT < 25) LocaleContextWrapper.updateResourcesV24(this)
-        MpeixDevTools.init(this)
+        MpeixDevTools.init(
+            context = this,
+            runMockServer = appEnvironment == AppEnvironment.MOCK,
+        )
     }
 
     override fun attachBaseContext(base: Context) {
@@ -77,28 +90,30 @@ class MpeixApp : Application(),
         androidLogger()
         androidContext(this@MpeixApp)
         allowOverride(false)
-        modules(listOf(
-            AppModule,
-            MainScreenModule,
-            DeeplinkModule,
-            // commons
-            NavigationModule,
-            NetworkModule,
-            CacheModule,
-            AppDatabaseModule,
-            AnalyticsModule,
-            CommonFeatureTogglesModule,
-            // features
-            OnboardingModule,
-            DashboardModule,
-            ScheduleModule,
-            AppSettingsModule,
-            MapModule,
-            NotesModule,
-            ForceUpdateModule,
-            BarsModule,
-            SearchFeatureModule
-        ))
+        modules(
+            listOf(
+                AppModule,
+                MainScreenModule,
+                DeeplinkModule,
+                // commons
+                NavigationModule,
+                NetworkModule,
+                CacheModule,
+                AppDatabaseModule,
+                AnalyticsModule,
+                CommonFeatureTogglesModule,
+                // features
+                OnboardingModule,
+                DashboardModule,
+                ScheduleModule,
+                AppSettingsModule,
+                MapModule,
+                NotesModule,
+                ForceUpdateModule,
+                BarsModule,
+                SearchFeatureModule
+            )
+        )
     }
 
     private fun initTimber() {

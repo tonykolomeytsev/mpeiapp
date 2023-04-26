@@ -1,7 +1,6 @@
 package kekmech.ru.domain_app_settings
 
 import android.content.SharedPreferences
-import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import kekmech.ru.common_cache.persistent_cache.PersistentCache
 import kekmech.ru.common_shared_preferences.boolean
@@ -9,13 +8,15 @@ import kekmech.ru.common_shared_preferences.string
 import kekmech.ru.domain_app_settings.dto.ContributorsCacheWrapper
 import kekmech.ru.domain_app_settings.dto.ContributorsItem
 import kekmech.ru.domain_app_settings.dto.GitHubUser
+import kekmech.ru.domain_app_settings_models.AppEnvironment
+import kekmech.ru.domain_app_settings_models.AppSettings
 import java.time.Duration
 
 class AppSettingsRepository(
     preferences: SharedPreferences,
     persistentCache: PersistentCache,
     private val gitHubService: GitHubService,
-) : AppSettings {
+) {
 
     private val contributorsCache = persistentCache
         .of(
@@ -24,22 +25,39 @@ class AppSettingsRepository(
             lifetime = Duration.ofDays(1)
         )
 
-    override var isDarkThemeEnabled by preferences.boolean("app_is_dark_theme_enabled", false)
+    private var isDarkThemeEnabled by preferences.boolean("app_is_dark_theme_enabled", false)
+    private var isSnowEnabled by preferences.boolean("app_is_snow_enabled", true)
+    private var showNavigationButton by preferences.boolean("show_nav_fab", true)
+    private var autoHideBottomSheet by preferences.boolean("map_auto_hide_bottom_sheet", true)
+    private var appEnvironment by preferences.string("app_env", "PROD")
+    private var languageCode: String by preferences.string("app_lang", "ru_RU")
+    private var mapAppearanceType: String by preferences.string("app_map_type", "hybrid")
 
-    override var isSnowEnabled by preferences.boolean("app_is_snow_enabled", true)
+    fun getAppSettings(): Single<AppSettings> = Single.fromCallable {
+        AppSettings(
+            isDarkThemeEnabled = isDarkThemeEnabled,
+            isSnowEnabled = isSnowEnabled,
+            languageCode = languageCode,
+            showNavigationButton = showNavigationButton,
+            autoHideBottomSheet = autoHideBottomSheet,
+            mapAppearanceType = mapAppearanceType,
+            appEnvironment = runCatching { AppEnvironment.valueOf(appEnvironment) }
+                .getOrDefault(AppEnvironment.PROD),
+        )
+    }
 
-    override var showNavigationButton by preferences.boolean("show_nav_fab", true)
-
-    override var autoHideBottomSheet by preferences.boolean("map_auto_hide_bottom_sheet", true)
-
-    override var isDebugEnvironment by preferences.boolean("is_debug_env", false)
-
-    override var languageCode: String by preferences.string("app_lang", "ru_RU")
-
-    override var mapAppearanceType: String by preferences.string("app_map_type", "hybrid")
-
-    fun complete(runnable: AppSettingsRepository.() -> Unit): Completable =
-        Completable.fromRunnable { runnable.invoke(this) }
+    fun changeAppSettings(transform: AppSettings.() -> AppSettings): Single<AppSettings> =
+        getAppSettings()
+            .map(transform)
+            .doOnSuccess {
+                isDarkThemeEnabled = it.isDarkThemeEnabled
+                isSnowEnabled = it.isSnowEnabled
+                showNavigationButton = it.showNavigationButton
+                autoHideBottomSheet = it.autoHideBottomSheet
+                appEnvironment = it.appEnvironment.toString()
+                languageCode = it.languageCode
+                mapAppearanceType = it.mapAppearanceType
+            }
 
     fun getContributors(): Single<List<GitHubUser>> =
         contributorsCache.getOrError()

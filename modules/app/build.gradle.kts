@@ -85,6 +85,7 @@ dependencies {
     implementation(project(":feature_search"))
 
     implementation(project(":domain_app_settings"))
+    implementation(project(":domain_app_settings_models"))
     implementation(project(":domain_bars"))
     implementation(project(":domain_dashboard"))
     implementation(project(":domain_force_update"))

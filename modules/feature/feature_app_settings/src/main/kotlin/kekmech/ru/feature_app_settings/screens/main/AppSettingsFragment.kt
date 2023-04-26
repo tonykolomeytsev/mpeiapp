@@ -6,6 +6,7 @@ import android.os.Looper
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.squareup.picasso.Picasso
 import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_analytics.ext.screenAnalytics
@@ -17,6 +18,7 @@ import kekmech.ru.common_navigation.addScreenForward
 import kekmech.ru.common_navigation.showDialog
 import kekmech.ru.coreui.attachScrollListenerForAppBarLayoutShadow
 import kekmech.ru.coreui.items.*
+import kekmech.ru.domain_app_settings_models.AppEnvironment
 import kekmech.ru.feature_app_settings.R
 import kekmech.ru.feature_app_settings.databinding.FragmentAppSettingsBinding
 import kekmech.ru.feature_app_settings.di.AppSettingDependencies
@@ -108,9 +110,6 @@ internal class AppSettingsFragment :
                 analytics.sendChangeSetting("ShowQuickNavFab", it.toString())
                 feature.accept(Ui.Action.SetShowQuickNavigationFab(it))
             },
-            ToggleAdapterItem(TOGGLE_DEBUG_CHANGE_ENV) {
-                feature.accept(Ui.Action.ChangeBackendEnvironment(it))
-            },
             TextAdapterItem(),
             SpaceAdapterItem(),
             BottomLabeledTextAdapterItem { onItemClick(it.itemId) },
@@ -146,6 +145,9 @@ internal class AppSettingsFragment :
                 analytics.sendClick("SelectMapType")
                 feature.accept(Ui.Click.MapType)
             }
+            ITEM_DEBUG_SELECT_ENVIRONMENT -> {
+                showEnvironmentSelectorDialog()
+            }
             else -> { /* no-op */
             }
         }
@@ -156,9 +158,11 @@ internal class AppSettingsFragment :
             val decorView = requireActivity().window.decorView
             val oldSystemUiVisibility = decorView.systemUiVisibility
             if (isDarkThemeEnabled) {
-                decorView.systemUiVisibility = oldSystemUiVisibility xor View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                decorView.systemUiVisibility =
+                    oldSystemUiVisibility xor View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
             } else {
-                decorView.systemUiVisibility = oldSystemUiVisibility or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                decorView.systemUiVisibility =
+                    oldSystemUiVisibility or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
             }
         }
     }
@@ -168,23 +172,39 @@ internal class AppSettingsFragment :
             .postDelayed({ activity?.recreate() }, ACTIVITY_RECREATION_DELAY)
     }
 
+    private fun showEnvironmentSelectorDialog() {
+        val environments = AppEnvironment.values().map(Any::toString).toTypedArray()
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Выбрать окружение")
+            .setItems(environments) { dialog, which ->
+                dialog?.dismiss()
+                feature.accept(
+                    Ui.Action.ChangeBackendEnvironment(
+                        AppEnvironment.valueOf(environments[which])
+                    )
+                )
+            }
+            .show()
+    }
+
     private fun RecyclerView.disablePicassoLoadingOnScroll() =
         addOnScrollListener(object : RecyclerView.OnScrollListener() {
 
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 when (newState) {
-                    RecyclerView.SCROLL_STATE_IDLE -> Picasso.get().resumeTag(ContributorAdapterItem::class)
+                    RecyclerView.SCROLL_STATE_IDLE -> Picasso.get()
+                        .resumeTag(ContributorAdapterItem::class)
                     else -> Picasso.get().pauseTag(ContributorAdapterItem::class)
                 }
             }
         })
 
     companion object {
+
         const val TOGGLE_DARK_THEME = 0
         const val TOGGLE_AUTO_HIDE_BOTTOM_SHEET = 2
         const val TOGGLE_SNOW_FLAKES = 3
-        const val TOGGLE_DEBUG_CHANGE_ENV = 4
-        const val TOGGLE_SHOW_NAV_FAB = 5
+        const val TOGGLE_SHOW_NAV_FAB = 4
 
         const val ITEM_DEBUG_CLEAR_SELECTED_GROUP = 0
         const val ITEM_SUPPORT = 1
@@ -192,6 +212,7 @@ internal class AppSettingsFragment :
         const val ITEM_FAVORITES = 3
         const val ITEM_LANGUAGE = 4
         const val ITEM_MAP_TYPE = 5
+        const val ITEM_DEBUG_SELECT_ENVIRONMENT = 6
 
         private const val LANGUAGE_RESULT_KEY = "LANGUAGE_RESULT_KEY"
         private const val MAP_TYPE_RESULT_KEY = "MAP_TYPE_RESULT_KEY"
