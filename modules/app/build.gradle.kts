@@ -71,7 +71,6 @@ dependencies {
     implementation(libs.squareup.retrofit)
     implementation(libs.squareup.retrofit.gson)
     implementation(libs.squareup.retrofit.rxJava3)
-    implementation(libs.timber)
     implementation(libs.vivid.elmslie.android)
     implementation(libs.vivid.elmslie.core)
 

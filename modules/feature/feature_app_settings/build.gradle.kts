@@ -21,7 +21,6 @@ dependencies {
     implementation(libs.rx.android)
     implementation(libs.rx.java)
     implementation(libs.squareup.retrofit)
-    implementation(libs.timber)
     implementation(libs.vivid.elmslie.android)
     implementation(libs.vivid.elmslie.core)
 

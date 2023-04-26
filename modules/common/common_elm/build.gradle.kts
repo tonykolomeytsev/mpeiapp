@@ -9,7 +9,6 @@ dependencies {
     implementation(libs.google.material)
 
     implementation(libs.rx.java)
-    implementation(libs.timber)
     implementation(libs.vivid.elmslie.android)
     implementation(libs.vivid.elmslie.core)
 
