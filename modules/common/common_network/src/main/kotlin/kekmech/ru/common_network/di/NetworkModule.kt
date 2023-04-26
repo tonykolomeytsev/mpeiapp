@@ -3,12 +3,16 @@ package kekmech.ru.common_network.di
 import android.content.SharedPreferences
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import kekmech.ru.common_di.AppVersionName
 import kekmech.ru.common_di.ModuleProvider
-import kekmech.ru.common_network.BuildConfig
 import kekmech.ru.common_network.connection_tracker.ConnectionTracker
 import kekmech.ru.common_network.device_id.DeviceIdProvider
 import kekmech.ru.common_network.device_id.DeviceLocaleProvider
-import kekmech.ru.common_network.gson.*
+import kekmech.ru.common_network.gson.LocalDateDeserializer
+import kekmech.ru.common_network.gson.LocalDateSerializer
+import kekmech.ru.common_network.gson.LocalDateTimeSerializer
+import kekmech.ru.common_network.gson.LocalTimeDeserializer
+import kekmech.ru.common_network.gson.LocalTimeSerializer
 import kekmech.ru.common_network.okhttp.NoConnectionInterceptor
 import kekmech.ru.common_network.okhttp.RequiredHeadersInterceptor
 import okhttp3.OkHttpClient
@@ -31,8 +35,8 @@ object NetworkModule : ModuleProvider({
     single {
         RequiredHeadersInterceptor(
             deviceId = provideDeviceId(get()),
-            appVersion = BuildConfig.VERSION_NAME,
-            deviceLanguage = provideDeviceLocale(get())
+            appVersion = get<AppVersionName>().versionName,
+            deviceLanguage = provideDeviceLocale(get()),
         )
     }
     single { NoConnectionInterceptor(get()) }
