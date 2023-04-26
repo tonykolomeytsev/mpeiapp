@@ -13,6 +13,7 @@ class KotlinModulePlugin : Plugin<Project> {
     override fun apply(target: Project) {
         target.plugins.apply {
             apply("kotlin")
+            apply("mpeix.aar2jar")
         }
         target.tasks.withType(Test::class.java) { task -> task.useJUnitPlatform() }
         target.configureJvmTarget(JavaVersion.VERSION_11)
