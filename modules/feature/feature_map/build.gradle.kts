@@ -23,6 +23,7 @@ dependencies {
     implementation(libs.vivid.elmslie.storeHolder)
 
     implementation(project(":domain_app_settings"))
+    implementation(project(":domain_app_settings_models"))
     implementation(project(":domain_map"))
 
     implementation(project(":common_adapter"))

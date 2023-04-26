@@ -26,7 +26,7 @@ import kekmech.ru.coreui.items.ErrorStateAdapterItem
 import kekmech.ru.coreui.items.PullAdapterItem
 import kekmech.ru.coreui.items.SectionHeaderAdapterItem
 import kekmech.ru.coreui.items.SpaceAdapterItem
-import kekmech.ru.domain_app_settings.AppSettings
+import kekmech.ru.domain_app_settings.AppSettingsRepository
 import kekmech.ru.domain_map.dto.MapMarker
 import kekmech.ru.feature_map.databinding.FragmentMapBinding
 import kekmech.ru.feature_map.di.MapDependencies
@@ -70,7 +70,7 @@ internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState>(),
             topCornerRadius = resources.dpToPx(DEFAULT_CORNER_RADIUS).toFloat()
         )
     }
-    private val appSettings by inject<AppSettings>()
+    private val appSettingsRepository by inject<AppSettingsRepository>()
 
     override fun createStore() = dependencies.mapFeatureFactory.create()
 
@@ -125,9 +125,16 @@ internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState>(),
             .beginTransaction()
             .replace(R.id.mapFragmentContainer, mapFragment)
             .commitAllowingStateLoss()
-        mapFragment.getMapAsync {
-            it.init(requireContext(), appSettings.mapAppearanceType, getSavedCameraPosition())
-            feature.accept(Ui.Action.OnMapReady(it))
+        mapFragment.getMapAsync { googleMap ->
+            googleMap.init(
+                context = requireContext(),
+                mapAppearanceType = appSettingsRepository
+                    .getAppSettings()
+                    .blockingGet()
+                    .mapAppearanceType,
+                savedCameraPosition = getSavedCameraPosition(),
+            )
+            feature.accept(Ui.Action.OnMapReady(googleMap))
         }
     }
 

@@ -25,6 +25,7 @@ dependencies {
     implementation(libs.vivid.elmslie.core)
 
     implementation(project(":domain_app_settings"))
+    implementation(project(":domain_app_settings_models"))
     implementation(project(":domain_onboarding"))
     implementation(project(":domain_schedule"))
 

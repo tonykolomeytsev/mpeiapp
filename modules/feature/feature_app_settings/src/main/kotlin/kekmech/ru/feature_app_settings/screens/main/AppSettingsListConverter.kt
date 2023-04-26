@@ -5,12 +5,11 @@ import android.view.Gravity
 import androidx.annotation.StringRes
 import kekmech.ru.coreui.items.*
 import kekmech.ru.feature_app_settings.BuildConfig
-import kekmech.ru.feature_app_settings.R
-import kekmech.ru.coreui.R as coreui_R
 import kekmech.ru.feature_app_settings.screens.main.AppSettingsFragment.Companion.ITEM_GITHUB
 import kekmech.ru.feature_app_settings.screens.main.AppSettingsFragment.Companion.ITEM_SUPPORT
 import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsState
 import kekmech.ru.strings.Strings
+import kekmech.ru.coreui.R as coreui_R
 
 internal class AppSettingsListConverter {
 
@@ -69,13 +68,13 @@ internal class AppSettingsListConverter {
                 add(BottomLabeledTextItem(
                     mainTextResId = Strings.app_settings_section_ask,
                     label = "vk.com/kekmech",
-                    itemId = ITEM_SUPPORT
+                    itemId = ITEM_SUPPORT,
                 ))
 
                 add(BottomLabeledTextItem(
                     mainTextResId = Strings.app_settings_section_github,
                     label = "github.com/tonykolomeytsev/mpeiapp",
-                    itemId = ITEM_GITHUB
+                    itemId = ITEM_GITHUB,
                 ))
             }
 
@@ -90,16 +89,25 @@ internal class AppSettingsListConverter {
                 add(BottomLabeledTextItem(
                     mainText = "Очистить поле selected_group",
                     label = "После очистки будет открыт онбординг",
-                    itemId = AppSettingsFragment.ITEM_DEBUG_CLEAR_SELECTED_GROUP
+                    itemId = AppSettingsFragment.ITEM_DEBUG_CLEAR_SELECTED_GROUP,
                 ))
-                add(ToggleItem(
-                    itemId = AppSettingsFragment.TOGGLE_DEBUG_CHANGE_ENV,
-                    title = "Использовать тестовое окружение",
-                    isChecked = appSettings.isDebugEnvironment
+                add(RightLabeledTextItem(
+                    mainTextResId = Strings.app_settings_section_lang,
+                    label = when (state.appSettings.languageCode) {
+                        "ru_RU" -> "РУССКИЙ"
+                        "en_US" -> "ENGLISH"
+                        else -> ""
+                    },
+                    itemId = AppSettingsFragment.ITEM_LANGUAGE,
+                ))
+                add(RightLabeledTextItem(
+                    mainText = "Окружение приложения",
+                    label = state.appSettings.appEnvironment.toString(),
+                    itemId = AppSettingsFragment.ITEM_DEBUG_SELECT_ENVIRONMENT,
                 ))
                 add(TextItem(
                     text = "Нужно перезагрузить приложение, для того чтобы настройка вступила в силу",
-                    styleResId = coreui_R.style.H8_Gray70_Medium
+                    styleResId = coreui_R.style.H8_Gray70_Medium,
                 ))
             }
 

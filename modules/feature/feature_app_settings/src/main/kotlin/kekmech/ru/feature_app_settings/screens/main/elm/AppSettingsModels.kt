@@ -1,12 +1,12 @@
 package kekmech.ru.feature_app_settings.screens.main.elm
 
-import kekmech.ru.domain_app_settings.AppSettings
 import kekmech.ru.domain_app_settings.dto.GitHubUser
+import kekmech.ru.domain_app_settings_models.AppEnvironment
+import kekmech.ru.domain_app_settings_models.AppSettings
 
 internal data class AppSettingsState(
     val appSettings: AppSettings? = null,
     val isFeatureToggleSnowFlakesEnabled: Boolean,
-    val hash: String = "",
     val contributors: List<GitHubUser>? = null
 )
 
@@ -21,7 +21,7 @@ internal sealed interface AppSettingsEvent {
             data class SetSnowEnabled(val isEnabled: Boolean) : Ui
             data class SetShowQuickNavigationFab(val isVisible: Boolean) : Ui
             data class SetAutoHideBottomSheet(val isEnabled: Boolean) : Ui
-            data class ChangeBackendEnvironment(val isDebug: Boolean) : Ui
+            data class ChangeBackendEnvironment(val appEnvironment: AppEnvironment) : Ui
             object ClearSelectedGroup : Ui
             data class LanguageChanged(val selectedLanguage: String) : Ui
             data class MapTypeChanged(val selectedMapType: String) : Ui
@@ -34,8 +34,7 @@ internal sealed interface AppSettingsEvent {
     }
 
     sealed interface Internal : AppSettingsEvent {
-        data class AppSettingsLoaded(val appSettings: AppSettings) : Internal
-        object AppSettingsChanged : Internal
+        data class LoadAppSettingsSuccess(val appSettings: AppSettings) : Internal
         data class ObserveContributorsSuccess(val contributors: List<GitHubUser>) : Internal
     }
 }
@@ -47,7 +46,7 @@ internal sealed interface AppSettingsCommand {
     data class SetSnowEnabled(val isEnabled: Boolean) : AppSettingsCommand
     data class SetShowQuickNavigationFab(val isVisible: Boolean) : AppSettingsCommand
     data class SetAutoHideBottomSheet(val isEnabled: Boolean) : AppSettingsCommand
-    data class ChangeBackendEnvironment(val isDebug: Boolean) : AppSettingsCommand
+    data class ChangeBackendEnvironment(val appEnvironment: AppEnvironment) : AppSettingsCommand
     data class ChangeLanguage(val selectedLanguage: String) : AppSettingsCommand
     data class ChangeMapType(val selectedMapType: String) : AppSettingsCommand
     object ClearSelectedGroup : AppSettingsCommand
