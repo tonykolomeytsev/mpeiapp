@@ -32,8 +32,8 @@ private class AndroidJarFinder(private val project: Project) {
         project.files("${findSdkLocation()}/platforms/android-${compileSdk}/android.jar")
 
     private fun findSdkLocation(): File {
-        val localProperties = File(project.rootDir, "local.properties")
-        return getSdkDirFromLocalProperties(localProperties)
+        val localProperties = File(project.rootDir, "local.properties").takeIf { it.exists() }
+        return localProperties?.let(::getSdkDirFromLocalProperties)
             ?: getSdkDirFromEnvVariable()
             ?: throw RuntimeException("The Android SDK location could not be found in either " +
                     "the `local.properties` file or the ANDROID_HOME environment variable")
