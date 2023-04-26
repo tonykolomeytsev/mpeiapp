@@ -1,8 +1,8 @@
 package kekmech.ru.feature_app_settings.screens.main.elm
 
-import kekmech.ru.domain_app_settings.dto.GitHubUser
 import kekmech.ru.domain_app_settings_models.AppEnvironment
 import kekmech.ru.domain_app_settings_models.AppSettings
+import kekmech.ru.domain_github.dto.GitHubUser
 
 internal data class AppSettingsState(
     val appSettings: AppSettings? = null,
