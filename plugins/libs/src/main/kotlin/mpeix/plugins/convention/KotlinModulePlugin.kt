@@ -1,4 +1,4 @@
-package mpeix.plugins
+package mpeix.plugins.convention
 
 import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
@@ -28,4 +28,3 @@ class KotlinModulePlugin : Plugin<Project> {
         }
     }
 }
-

@@ -1,4 +1,4 @@
-package mpeix.plugins
+package mpeix.plugins.convention
 
 import com.android.build.gradle.BaseExtension
 import mpeix.plugins.ext.coreLibraryDesugaring
@@ -30,6 +30,7 @@ class BaseAndroidModulePlugin : Plugin<Project> {
         target.extensions.configure(BaseExtension::class.java) { extension ->
             extension.configure(
                 minSdk = catalog.requiredVersion("minSdk").toInt(),
+                compileSdk = catalog.requiredVersion("compileSdk").toInt(),
                 targetSdk = catalog.requiredVersion("targetSdk").toInt(),
                 buildTools = catalog.requiredVersion("buildTools"),
                 appVersionName = catalog.requiredVersion("appVersionName"),
@@ -56,12 +57,13 @@ class BaseAndroidModulePlugin : Plugin<Project> {
 
     private fun BaseExtension.configure(
         minSdk: Int,
+        compileSdk: Int,
         targetSdk: Int,
         buildTools: String,
         appVersionName: String,
         appVersionCode: Int,
     ) {
-        setCompileSdkVersion(targetSdk)
+        setCompileSdkVersion(compileSdk)
         buildToolsVersion = buildTools
         defaultConfig { config ->
             config.minSdk = minSdk
