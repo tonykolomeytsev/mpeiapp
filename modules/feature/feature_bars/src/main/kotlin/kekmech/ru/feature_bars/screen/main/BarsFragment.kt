@@ -299,7 +299,8 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), 
         val blackThemeColor = requireContext().getThemeColor(coreui_R.attr.colorBlack)
         overflowIcon?.setTint(blackThemeColor)
         menu?.forEach { menuItem ->
-            val spannable = menuItem.title.toSpannable()
+            val title = menuItem.title ?: ""
+            val spannable = title.toSpannable()
             spannable.setSpan(
                 ForegroundColorSpan(blackThemeColor),
                 0,
