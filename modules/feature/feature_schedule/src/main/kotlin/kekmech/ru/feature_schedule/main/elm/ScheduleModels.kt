@@ -2,7 +2,7 @@ package kekmech.ru.feature_schedule.main.elm
 
 import kekmech.ru.common_android.moscowLocalDate
 import kekmech.ru.common_kotlin.mutableLinkedHashMap
-import kekmech.ru.domain_app_settings.AppSettings
+import kekmech.ru.domain_app_settings_models.AppSettings
 import kekmech.ru.domain_schedule.dto.Classes
 import kekmech.ru.domain_schedule.dto.Schedule
 import java.time.LocalDate

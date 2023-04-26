@@ -6,7 +6,7 @@ import com.google.gson.JsonElement
 import java.lang.reflect.Type
 import java.time.LocalDate
 
-internal class LocalDateDeserializer : JsonDeserializer<LocalDate> {
+class LocalDateDeserializer : JsonDeserializer<LocalDate> {
 
     override fun deserialize(
         json: JsonElement,

@@ -3,7 +3,6 @@ package kekmech.ru.feature_app_settings.screens.main.elm
 import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsEvent.Internal
 import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsEvent.Ui
 import vivid.money.elmslie.core.store.dsl_reducer.ScreenDslReducer
-import java.util.*
 import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsCommand as Command
 import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsEffect as Effect
 import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsEvent as Event
@@ -17,15 +16,7 @@ internal class AppSettingsReducer :
 
     override fun Result.internal(event: Internal): Any =
         when (event) {
-            is Internal.AppSettingsLoaded -> state {
-                copy(
-                    appSettings = event.appSettings,
-                    hash = UUID.randomUUID().toString(),
-                )
-            }
-            is Internal.AppSettingsChanged -> state {
-                copy(hash = UUID.randomUUID().toString())
-            }
+            is Internal.LoadAppSettingsSuccess -> state { copy(appSettings = event.appSettings) }
             is Internal.ObserveContributorsSuccess -> state { copy(contributors = event.contributors) }
         }
 
@@ -49,7 +40,7 @@ internal class AppSettingsReducer :
                 +Command.ClearSelectedGroup
             }
             is Ui.Action.ChangeBackendEnvironment -> commands {
-                +Command.ChangeBackendEnvironment(event.isDebug)
+                +Command.ChangeBackendEnvironment(event.appEnvironment)
             }
             is Ui.Click.Language -> effects {
                 +state.appSettings?.let { Effect.OpenLanguageSelectionDialog(it.languageCode) }

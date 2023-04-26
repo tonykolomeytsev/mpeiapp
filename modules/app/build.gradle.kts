@@ -41,6 +41,11 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    packaging {
+        // This is to make it possible to use Ktor (mock_server) on android
+        // https://github.com/gnarea/minimal-ktor-server-android/blob/master/app/build.gradle
+        resources.excludes += setOf("META-INF/**", "**/attach_hotspot_windows.dll")
+    }
 }
 
 dependencies {
@@ -66,7 +71,6 @@ dependencies {
     implementation(libs.squareup.retrofit)
     implementation(libs.squareup.retrofit.gson)
     implementation(libs.squareup.retrofit.rxJava3)
-    implementation(libs.timber)
     implementation(libs.vivid.elmslie.android)
     implementation(libs.vivid.elmslie.core)
 
@@ -81,6 +85,7 @@ dependencies {
     implementation(project(":feature_search"))
 
     implementation(project(":domain_app_settings"))
+    implementation(project(":domain_app_settings_models"))
     implementation(project(":domain_bars"))
     implementation(project(":domain_dashboard"))
     implementation(project(":domain_force_update"))
@@ -106,4 +111,6 @@ dependencies {
     implementation(project(":icons"))
     implementation(project(":images"))
     implementation(project(":strings"))
+
+    debugImplementation(project(":mock_server"))
 }

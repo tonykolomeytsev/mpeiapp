@@ -1,6 +1,7 @@
 package mpeix.plugins
 
 import com.android.build.gradle.LibraryExtension
+import mpeix.plugins.ext.implementation
 import mpeix.plugins.ext.requiredVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -31,10 +32,10 @@ class ComposeAndroidModulePlugin : Plugin<Project> {
 
     private fun DependencyHandler.setupDependencies(catalog: VersionCatalog) {
         catalog.findBundle("compose").ifPresent { bundleProvider ->
-            add("implementation", bundleProvider)
+            implementation(bundleProvider)
         }
         catalog.findBundle("accompanist").ifPresent { bundleProvider ->
-            add("implementation", bundleProvider)
+            implementation(bundleProvider)
         }
     }
 }
