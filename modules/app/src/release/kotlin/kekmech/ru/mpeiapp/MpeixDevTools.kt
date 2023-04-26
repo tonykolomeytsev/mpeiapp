@@ -2,7 +2,8 @@ package kekmech.ru.mpeiapp
 
 object MpeixDevTools {
 
-    fun init(context: android.content.Context) {
+    @Suppress("UnusedPrivateMember")
+    fun init(context: android.content.Context, runMockServer: Boolean) {
         /* no-op */
     }
 }

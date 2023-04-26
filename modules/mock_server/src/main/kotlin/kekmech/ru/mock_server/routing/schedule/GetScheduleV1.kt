@@ -1,4 +1,4 @@
-package kekmech.ru.mock_server.routing
+package kekmech.ru.mock_server.routing.schedule
 
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.call
@@ -13,16 +13,14 @@ import kekmech.ru.domain_schedule.dto.Schedule
 import kekmech.ru.domain_schedule.dto.ScheduleType
 import kekmech.ru.domain_schedule.dto.Time
 import kekmech.ru.domain_schedule.dto.Week
-import kekmech.ru.mock_server.ext.randomResponseDelay
+import kekmech.ru.mock_server.randomResponseDelay
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.temporal.WeekFields
 import java.util.Locale
 
-private const val ServiceName = "schedule"
-
 internal fun Routing.getScheduleV1() {
-    get("/$ServiceName/v1/{type}/{name}/schedule/{weekOffset}") {
+    get("/schedule/v1/{type}/{name}/schedule/{weekOffset}") {
         randomResponseDelay()
         when (val weekOffset = call.parameters["weekOffset"]?.toIntOrNull()) {
             null -> call.respond(HttpStatusCode.BadRequest)
@@ -37,7 +35,6 @@ private fun LocalDate.weekOfYear(): Int =
 private fun LocalDate.monday(): LocalDate =
     minusDays(dayOfWeek.value - 1L)
 
-@Suppress("MagicNumber")
 private fun createSchedule(
     weekOffset: Int,
 ): Schedule {
@@ -58,7 +55,6 @@ private fun createSchedule(
     )
 }
 
-@Suppress("MagicNumber")
 private fun createEvenWeek(
     weekOfYear: Int,
     weekOfSemester: Int,
@@ -319,7 +315,6 @@ private fun createEvenWeek(
     )
 }
 
-@Suppress("MagicNumber")
 private fun createOddWeek(
     weekOfYear: Int,
     weekOfSemester: Int,

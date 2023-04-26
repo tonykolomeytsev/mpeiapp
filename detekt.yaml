@@ -90,7 +90,10 @@ complexity:
   LongMethod:
     active: true
     threshold: 60
-    excludes: [ '**/*Reducer.kt', '**/*ListConverter.kt' ]
+    excludes:
+      - '**/*Reducer.kt'
+      - '**/*ListConverter.kt'
+      - '**/mock_server/**'
   LongParameterList:
     active: true
     functionThreshold: 6
@@ -112,7 +115,10 @@ complexity:
     active: false
   StringLiteralDuplication:
     active: true
-    excludes: ['**/test/**', '**/androidTest/**']
+    excludes:
+      - '**/test/**'
+      - '**/androidTest/**'
+      - '**/mock_server/**'
     threshold: 3
     ignoreAnnotation: true
     excludeStringsWithLessThan5Characters: true
@@ -320,7 +326,7 @@ naming:
     packagePattern: '[a-z]+(\.[a-z][A-Za-z_0-9]*)*'
   TopLevelPropertyNaming:
     active: true
-    constantPattern: '[A-Z][_A-Z0-9]*'
+    constantPattern: '[A-Z][_A-Za-z0-9]*'
     propertyPattern: '[A-Za-z][_A-Za-z0-9]*'
     privatePropertyPattern: '_?[A-Za-z][_A-Za-z0-9]*'
   VariableMaxLength:
@@ -456,7 +462,7 @@ style:
     active: false
   DataClassContainsFunctions:
     active: false
-    conversionFunctionPrefix: 'to'
+    conversionFunctionPrefix: ['to']
   DataClassShouldBeImmutable:
     active: false
   DestructuringDeclarationWithTooManyEntries:
@@ -504,7 +510,7 @@ style:
     active: true
     ignoreOverridableFunction: true
     ignoreActualFunction: true
-    excludedFunctions: ''
+    excludedFunctions: ['']
   LibraryCodeMustSpecifyReturnType:
     active: true
     excludes: ['**']
@@ -516,7 +522,11 @@ style:
     maxJumpCount: 1
   MagicNumber:
     active: true
-    excludes: ['**/test/**', '**/androidTest/**', '**/*.kts']
+    excludes:
+      - '**/test/**'
+      - '**/androidTest/**'
+      - '**/mock_server/**'
+      - '**/*.kts'
     ignoreNumbers:
       - '-1'
       - '0'
@@ -542,6 +552,8 @@ style:
     excludePackageStatements: true
     excludeImportStatements: true
     excludeCommentStatements: false
+    excludes:
+      - '**/mock_server/**'
   MayBeConst:
     active: true
   ModifierOrder:
@@ -576,7 +588,8 @@ style:
   ReturnCount:
     active: true
     max: 3
-    excludedFunctions: 'equals'
+    excludedFunctions:
+      - 'equals'
     excludeLabeled: false
     excludeReturnFromLambda: true
     excludeGuardClauses: false
@@ -654,6 +667,8 @@ style:
     active: true
   WildcardImport:
     active: false
-    excludes: ['**/test/**', '**/androidTest/**']
+    excludes:
+      - '**/test/**'
+      - '**/androidTest/**'
     excludeImports:
       - 'java.util.*'
