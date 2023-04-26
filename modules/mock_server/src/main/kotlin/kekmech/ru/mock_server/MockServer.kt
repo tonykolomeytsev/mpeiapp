@@ -13,6 +13,7 @@ import kekmech.ru.common_network.gson.LocalDateTimeSerializer
 import kekmech.ru.common_network.gson.LocalTimeDeserializer
 import kekmech.ru.common_network.gson.LocalTimeSerializer
 import kekmech.ru.mock_server.routing.getScheduleV1
+import timber.log.Timber
 import java.text.DateFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -21,9 +22,23 @@ import java.time.LocalTime
 private const val Port = 8080
 private const val Host = "0.0.0.0"
 
+/**
+ * # Mock Server
+ *
+ * MockServer is a server that runs on the local network and can emulate the behavior of the
+ * application's backend. MockServer blocks the thread it runs on, so run it on a dedicated thread.
+ *
+ * ## Usage:
+ * ```kotlin
+ * val mockServer = MockServer(assetManager = context.assets)
+ * mockServer.start() // blocking call
+ * ```
+ *
+ * @param assetManager [AssetManager] for accessing static resources (stubs)
+ * located in the assets directory
+ */
 class MockServer(
     private val assetManager: AssetManager,
-    private val logger: MockServerLogger,
 ) {
 
     private val server by lazy {
@@ -50,8 +65,13 @@ class MockServer(
         }
     }
 
+    /**
+     * Start MockServer.
+     *
+     * This call is blocking. Don't run MockServer on the main application thread!
+     */
     fun start() {
-        logger.i("Starting mock server on $Host:$Port...")
+        Timber.i("Starting mock server on $Host:$Port...")
         server.start(wait = true)
     }
 }
