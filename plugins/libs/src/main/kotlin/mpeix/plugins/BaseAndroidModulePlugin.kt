@@ -1,6 +1,8 @@
 package mpeix.plugins
 
 import com.android.build.gradle.BaseExtension
+import mpeix.plugins.ext.coreLibraryDesugaring
+import mpeix.plugins.ext.implementation
 import mpeix.plugins.ext.requiredVersion
 import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
@@ -23,7 +25,8 @@ class BaseAndroidModulePlugin : Plugin<Project> {
             apply("org.gradle.android.cache-fix")
         }
 
-        val catalog = target.extensions.getByType(VersionCatalogsExtension::class.java).named("libs")
+        val catalog =
+            target.extensions.getByType(VersionCatalogsExtension::class.java).named("libs")
         target.extensions.configure(BaseExtension::class.java) { extension ->
             extension.configure(
                 minSdk = catalog.requiredVersion("minSdk").toInt(),
@@ -44,7 +47,10 @@ class BaseAndroidModulePlugin : Plugin<Project> {
 
     private fun DependencyHandler.setupDependencies(catalog: VersionCatalog) {
         catalog.findLibrary("desugaring").ifPresent { moduleProvider ->
-            add("coreLibraryDesugaring", moduleProvider)
+            coreLibraryDesugaring(moduleProvider)
+        }
+        catalog.findLibrary("timber").ifPresent { libraryProvider ->
+            implementation(libraryProvider)
         }
     }
 
