@@ -1,4 +1,4 @@
-package mpeix.plugins
+package mpeix.plugins.convention
 
 import com.android.build.gradle.LibraryExtension
 import org.gradle.api.Plugin

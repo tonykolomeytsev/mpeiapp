@@ -1,8 +1,10 @@
 plugins {
-    id("mpeix.android")
+    id("mpeix.kotlin")
 }
 
 dependencies {
+    compileOnly(androidJar)
+
     implementation(libs.koin.core)
     implementation(libs.squareup.okhttp)
     implementation(libs.squareup.okhttp.logger)
