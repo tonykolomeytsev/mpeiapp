@@ -1,9 +1,12 @@
 plugins {
-    id("mpeix.android")
+    id("mpeix.kotlin")
 }
 
 dependencies {
-    implementation(libs.androidx.appCompat)
+    compileOnly(androidJar)
+    compileOnlyAar(libs.androidx.fragment)
+    compileOnlyAar(libs.timber)
+
     implementation(libs.google.gson)
     implementation(libs.rx.java)
     implementation(libs.squareup.retrofit)

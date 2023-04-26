@@ -35,10 +35,16 @@ gradlePlugin {
         description = "Gradle Plugin for setting up pure kotlin library module"
         implementationClass = "mpeix.plugins.convention.KotlinModulePlugin"
     }
-    plugins.create("android-jar-finder") {
+    plugins.create("mpeixAndroidJarFinderPlugin") {
         id = "mpeix.android-jar-finder"
-        displayName = "Android Jar Finder"
+        displayName = "Android Jar Finder Plugin"
         description = "The Gradle Plugin that finds android.jar in project environment"
         implementationClass = "mpeix.plugins.dependencies.AndroidJarFinderPlugin"
+    }
+    plugins.create("mpeixAar2JarPlugin") {
+        id = "mpeix.aar2jar"
+        displayName = "Aar2Jar Plugin"
+        description = "The Gradle Plugin that transforms AAR dependencies to JAR"
+        implementationClass = "mpeix.plugins.dependencies.Aar2JarPlugin"
     }
 }
