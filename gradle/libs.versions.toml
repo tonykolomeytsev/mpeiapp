@@ -7,6 +7,7 @@ appVersionCode = "44"
 agp = "8.0.0" # android gradle plugin
 minSdk = "21"
 targetSdk = "32"
+compileSdk = "33"
 buildTools = "33.0.0"
 kotlin = "1.7.20"
 coroutines = "1.6.4"
@@ -20,7 +21,7 @@ coordinatorLayout = "1.1.0"
 viewPager2 = "1.0.0"
 cardView = "1.0.0"
 swipeRefreshLayout = "1.1.0"
-fragmentKtx = "1.5.5"
+fragment = "1.5.5"
 
 # Google Versions
 material = "1.7.0"
@@ -63,7 +64,8 @@ androidx-coordinatorLayout = { module = "androidx.coordinatorlayout:coordinatorl
 androidx-viewPager2 = { module = "androidx.viewpager2:viewpager2", version.ref = "viewPager2" }
 androidx-cardView = { module = "androidx.cardview:cardview", version.ref = "cardView" }
 androidx-swipeRefreshLayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "swipeRefreshLayout" }
-androidx-fragmentKtx = { module = "androidx.fragment:fragment-ktx", version.ref = "fragmentKtx" }
+androidx-fragment = { module = "androidx.fragment:fragment", version.ref = "fragment" }
+androidx-fragmentKtx = { module = "androidx.fragment:fragment-ktx", version.ref = "fragment" }
 androidx-coreKtx = { module = "androidx.core:core-ktx", version = "1.8.0" }
 androidx-lifecycleCommonJava8 = { module = "androidx.lifecycle:lifecycle-common-java8", version = "2.5.1" }
 androidx-lifecycleExtensions = { module = "androidx.lifecycle:lifecycle-extensions", version = "2.2.0" }

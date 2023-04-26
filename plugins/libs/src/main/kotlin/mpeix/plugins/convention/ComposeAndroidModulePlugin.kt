@@ -1,4 +1,4 @@
-package mpeix.plugins
+package mpeix.plugins.convention
 
 import com.android.build.gradle.LibraryExtension
 import mpeix.plugins.ext.implementation
@@ -18,13 +18,15 @@ class ComposeAndroidModulePlugin : Plugin<Project> {
             apply("com.android.library")
             apply("mpeix.android.base")
         }
-        val catalog = target.extensions.getByType(VersionCatalogsExtension::class.java).named("libs")
+        val catalog =
+            target.extensions.getByType(VersionCatalogsExtension::class.java).named("libs")
         target.extensions.configure(LibraryExtension::class.java) { extension ->
             // configure namespace of the package (instead of AndroidManifest.xml)
             extension.namespace = "kekmech.ru.${target.name}"
             extension.buildFeatures { compose = true }
             extension.composeOptions { options ->
-                options.kotlinCompilerExtensionVersion = catalog.requiredVersion("composeCompiler")
+                options.kotlinCompilerExtensionVersion =
+                    catalog.requiredVersion("composeCompiler")
             }
         }
         target.dependencies.setupDependencies(catalog)

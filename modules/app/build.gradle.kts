@@ -3,6 +3,7 @@
 plugins {
     id("com.android.application")
     id("mpeix.android.base")
+    id("mpeix.android-jar-finder")
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
 }

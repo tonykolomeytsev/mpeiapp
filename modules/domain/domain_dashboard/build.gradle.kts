@@ -1,7 +1,7 @@
 plugins {
-    id("mpeix.android")
+    id("mpeix.kotlin")
 }
 
 dependencies {
-    implementation(libs.androidx.appCompat)
+    compileOnlyAar(libs.androidx.fragment)
 }
