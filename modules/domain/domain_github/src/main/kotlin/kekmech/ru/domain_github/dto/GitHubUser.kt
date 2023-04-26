@@ -1,4 +1,4 @@
-package kekmech.ru.domain_app_settings.dto
+package kekmech.ru.domain_github.dto
 
 import com.google.gson.annotations.SerializedName
 
