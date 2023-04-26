@@ -1,4 +1,4 @@
-package mpeix.plugins
+package mpeix.plugins.convention
 
 import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
@@ -13,6 +13,7 @@ class KotlinModulePlugin : Plugin<Project> {
     override fun apply(target: Project) {
         target.plugins.apply {
             apply("kotlin")
+            apply("mpeix.aar2jar")
         }
         target.tasks.withType(Test::class.java) { task -> task.useJUnitPlatform() }
         target.configureJvmTarget(JavaVersion.VERSION_11)
@@ -28,4 +29,3 @@ class KotlinModulePlugin : Plugin<Project> {
         }
     }
 }
-

@@ -1,3 +1,7 @@
 plugins {
-    id("mpeix.android")
+    id("mpeix.kotlin")
+}
+
+dependencies {
+    compileOnly(androidJar)
 }

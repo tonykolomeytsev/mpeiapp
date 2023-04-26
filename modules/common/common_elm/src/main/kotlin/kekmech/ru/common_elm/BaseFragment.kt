@@ -52,7 +52,7 @@ abstract class BaseFragment<Event : Any, Effect : Any, State : Any> :
                     v.requestApplyInsets()
                 }
 
-                override fun onViewDetachedFromWindow(v: View?) = Unit
+                override fun onViewDetachedFromWindow(v: View) = Unit
             })
         }
     }

@@ -14,25 +14,37 @@ gradlePlugin {
         id = "mpeix.android.base"
         displayName = "MpeiX Android Base Plugin"
         description = "Gradle Plugin for setting up any android module"
-        implementationClass = "mpeix.plugins.BaseAndroidModulePlugin"
+        implementationClass = "mpeix.plugins.convention.BaseAndroidModulePlugin"
     }
     plugins.create("mpeixAndroidModulePlugin") {
         id = "mpeix.android"
         displayName = "MpeiX Android Library Plugin"
         description = "Gradle Plugin for setting up android library module"
-        implementationClass = "mpeix.plugins.AndroidModulePlugin"
+        implementationClass = "mpeix.plugins.convention.AndroidModulePlugin"
     }
     plugins.create("mpeixComposeAndroidModulePlugin") {
         id = "mpeix.android.compose"
         displayName = "MpeiX Compose Android Library Plugin"
         description =
             "Gradle Plugin for setting up android library module with Compose dependencies"
-        implementationClass = "mpeix.plugins.ComposeAndroidModulePlugin"
+        implementationClass = "mpeix.plugins.convention.ComposeAndroidModulePlugin"
     }
     plugins.create("mpeixKotlinModulePlugin") {
         id = "mpeix.kotlin"
         displayName = "Mpeix Kotlin Plugin"
         description = "Gradle Plugin for setting up pure kotlin library module"
-        implementationClass = "mpeix.plugins.KotlinModulePlugin"
+        implementationClass = "mpeix.plugins.convention.KotlinModulePlugin"
+    }
+    plugins.create("mpeixAndroidJarFinderPlugin") {
+        id = "mpeix.android-jar-finder"
+        displayName = "Android Jar Finder Plugin"
+        description = "The Gradle Plugin that finds android.jar in project environment"
+        implementationClass = "mpeix.plugins.dependencies.AndroidJarFinderPlugin"
+    }
+    plugins.create("mpeixAar2JarPlugin") {
+        id = "mpeix.aar2jar"
+        displayName = "Aar2Jar Plugin"
+        description = "The Gradle Plugin that transforms AAR dependencies to JAR"
+        implementationClass = "mpeix.plugins.dependencies.Aar2JarPlugin"
     }
 }

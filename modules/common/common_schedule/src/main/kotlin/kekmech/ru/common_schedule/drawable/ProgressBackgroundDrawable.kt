@@ -60,7 +60,7 @@ class ProgressBackgroundDrawable(
         path.addRoundRect(boundsF, cornerRadius.toRadFloatArray(), Path.Direction.CW)
     }
 
-    override fun onBoundsChange(bounds: Rect?) {
+    override fun onBoundsChange(bounds: Rect) {
         super.onBoundsChange(bounds)
         updateBounds(bounds)
     }

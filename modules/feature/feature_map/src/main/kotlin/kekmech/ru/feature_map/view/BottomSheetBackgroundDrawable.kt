@@ -60,7 +60,7 @@ internal class BottomSheetBackgroundDrawable(
         boundsI.set(bounds)
     }
 
-    override fun onBoundsChange(bounds: Rect?) {
+    override fun onBoundsChange(bounds: Rect) {
         super.onBoundsChange(bounds)
         updateBounds(bounds)
     }
@@ -86,7 +86,7 @@ internal class BottomSheetBackgroundDrawable(
         invalidateSelf()
     }
 
-    override fun onStateChange(stateSet: IntArray?): Boolean {
+    override fun onStateChange(stateSet: IntArray): Boolean {
         paint.color = backgroundColor
         if (tint != null && tintMode != null) {
             tintFilter = createTintFilter(tint, tintMode)
