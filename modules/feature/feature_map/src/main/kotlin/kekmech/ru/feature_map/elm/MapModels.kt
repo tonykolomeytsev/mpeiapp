@@ -3,7 +3,7 @@ package kekmech.ru.feature_map.elm
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.Marker
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import kekmech.ru.domain_app_settings.AppSettings
+import kekmech.ru.domain_app_settings_models.AppSettings
 import kekmech.ru.domain_map.dto.MapMarker
 
 internal data class MapState(

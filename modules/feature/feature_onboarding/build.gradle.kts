@@ -13,7 +13,6 @@ dependencies {
     implementation(libs.koin.android)
     implementation(libs.koin.core)
     implementation(libs.rx.java)
-    implementation(libs.timber)
     implementation(libs.tinkoff.pagerIndicator)
 
     implementation(project(":domain_main_screen"))

@@ -15,7 +15,6 @@ dependencies {
     implementation(libs.koin.core)
     implementation(libs.rx.android)
     implementation(libs.rx.java)
-    implementation(libs.timber)
 
     implementation(project(":common_di"))
 }

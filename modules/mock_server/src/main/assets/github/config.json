@@ -1,0 +1,6 @@
+{
+  "loginUrl": "https://bars.mpei.ru/bars_web",
+  "studentListUrl": "https://bars.mpei.ru/bars_web/Student/ListStudent",
+  "marksListUrl": "https://bars.mpei.ru/bars_web/ST_Study/Main/Main",
+  "logoutUrl": "https://bars.mpei.ru/bars_web/Auth/Exit"
+}

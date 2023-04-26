@@ -12,4 +12,6 @@ dependencies {
     implementation(project(":common_di"))
     implementation(project(":common_network"))
     implementation(project(":common_shared_preferences"))
+
+    implementation(project(":domain_app_settings_models"))
 }

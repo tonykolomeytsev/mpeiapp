@@ -21,12 +21,12 @@ dependencies {
     implementation(libs.rx.android)
     implementation(libs.rx.java)
     implementation(libs.squareup.retrofit)
-    implementation(libs.timber)
     implementation(libs.vivid.elmslie.android)
     implementation(libs.vivid.elmslie.core)
     implementation(libs.vivid.elmslie.storeHolder)
 
     implementation(project(":domain_app_settings"))
+    implementation(project(":domain_app_settings_models"))
     implementation(project(":domain_main_screen"))
     implementation(project(":domain_notes"))
     implementation(project(":domain_onboarding"))

@@ -1,15 +1,20 @@
 package kekmech.ru.common_network.retrofit
 
 import kekmech.ru.common_annotations.BackendServiceUrl
+import kekmech.ru.domain_app_settings_models.AppEnvironment
 
 object ServiceUrlResolver {
 
-    private var isDebugEnvironment: Boolean = false
+    private var appEnvironment: AppEnvironment = AppEnvironment.PROD
 
-    fun setEnvironment(debug: Boolean) {
-        isDebugEnvironment = debug
+    fun setAppEnvironment(appEnvironment: AppEnvironment) {
+        this.appEnvironment = appEnvironment
     }
 
     fun resolve(url: BackendServiceUrl): String =
-        if (isDebugEnvironment) url.devEndpoint else url.prodEndpoint
+        when (appEnvironment) {
+            AppEnvironment.PROD -> url.prodEndpoint
+            AppEnvironment.STAGING -> url.stagingEndpoint
+            AppEnvironment.MOCK -> url.mockEndpoint
+        }
 }
