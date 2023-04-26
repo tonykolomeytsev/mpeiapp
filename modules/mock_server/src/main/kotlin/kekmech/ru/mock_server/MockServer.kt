@@ -12,7 +12,13 @@ import kekmech.ru.common_network.gson.LocalDateSerializer
 import kekmech.ru.common_network.gson.LocalDateTimeSerializer
 import kekmech.ru.common_network.gson.LocalTimeDeserializer
 import kekmech.ru.common_network.gson.LocalTimeSerializer
-import kekmech.ru.mock_server.routing.getScheduleV1
+import kekmech.ru.mock_server.routing.bars.getExtractJs
+import kekmech.ru.mock_server.routing.bars.getRemoteBarsConfig
+import kekmech.ru.mock_server.routing.github.getContributors
+import kekmech.ru.mock_server.routing.github.getUser
+import kekmech.ru.mock_server.routing.map.getMapMarkers
+import kekmech.ru.mock_server.routing.schedule.getScheduleV1
+import kekmech.ru.mock_server.routing.schedule.getSearchResultsV1
 import timber.log.Timber
 import java.text.DateFormat
 import java.time.LocalDate
@@ -60,7 +66,24 @@ class MockServer(
                 }
             }
             routing {
+                // region schedule
                 getScheduleV1()
+                getSearchResultsV1()
+                // end region
+
+                // region map
+                getMapMarkers(assetManager)
+                // end region
+
+                // region bars
+                getExtractJs(assetManager)
+                getRemoteBarsConfig(assetManager)
+                // end region
+
+                // region github
+                getContributors()
+                getUser()
+                // end region
             }
         }
     }

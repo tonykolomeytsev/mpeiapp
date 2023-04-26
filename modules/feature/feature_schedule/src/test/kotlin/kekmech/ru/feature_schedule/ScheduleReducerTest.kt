@@ -10,7 +10,8 @@ import io.kotest.matchers.maps.shouldContainExactly
 import io.kotest.matchers.shouldBe
 import kekmech.ru.common_kotlin.mutableLinkedHashMap
 import kekmech.ru.common_schedule.utils.atStartOfWeek
-import kekmech.ru.domain_app_settings.AppSettings
+import kekmech.ru.domain_app_settings_models.AppEnvironment
+import kekmech.ru.domain_app_settings_models.AppSettings
 import kekmech.ru.domain_schedule.dto.Classes
 import kekmech.ru.domain_schedule.dto.ClassesType
 import kekmech.ru.domain_schedule.dto.Day
@@ -263,15 +264,15 @@ class ScheduleReducerTest : BehaviorSpec({
     }
 }) {
     companion object {
-        private val APP_SETTINGS = object : AppSettings {
-            override val isDarkThemeEnabled: Boolean get() = false
-            override val autoHideBottomSheet: Boolean get() = false
-            override val isSnowEnabled: Boolean get() = false
-            override val isDebugEnvironment: Boolean get() = false
-            override val languageCode: String get() = "ru_RU"
-            override val showNavigationButton: Boolean get() = false
-            override val mapAppearanceType: String get() = "hybrid"
-        }
+        private val APP_SETTINGS = AppSettings(
+            isDarkThemeEnabled = false,
+            autoHideBottomSheet = false,
+            isSnowEnabled = false,
+            appEnvironment = AppEnvironment.PROD,
+            languageCode = "ru_RU",
+            showNavigationButton = false,
+            mapAppearanceType = "hybrid",
+        )
         private const val CACHE_ENTRIES_SIZE = 2
         private val CURRENT_DATE = LocalDate.of(2020, Month.SEPTEMBER, 17)
         private val CURRENT_DATE_WEEKEND_SAT = LocalDate.of(2020, Month.SEPTEMBER, 19) // saturday

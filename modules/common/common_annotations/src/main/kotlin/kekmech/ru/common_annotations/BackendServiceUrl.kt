@@ -14,12 +14,12 @@ enum class BackendServiceUrl(
     MAP(
         prodEndpoint = "https://raw.githubusercontent.com/tonykolomeytsev/mpeiapp/master/statics/map/",
         stagingEndpoint = "https://raw.githubusercontent.com/tonykolomeytsev/mpeiapp/dev/statics/map/",
-        mockEndpoint = "http://localhost:8080/statics/map/",
+        mockEndpoint = "http://localhost:8080/map/",
     ),
     BARS(
         prodEndpoint = "https://raw.githubusercontent.com/tonykolomeytsev/mpeiapp/master/statics/bars/",
         stagingEndpoint = "https://raw.githubusercontent.com/tonykolomeytsev/mpeiapp/dev/statics/bars/",
-        mockEndpoint = "http://localhost:8080/statics/bars/",
+        mockEndpoint = "http://localhost:8080/bars/",
     ),
     GITHUB(
         prodEndpoint = "https://api.github.com/",
