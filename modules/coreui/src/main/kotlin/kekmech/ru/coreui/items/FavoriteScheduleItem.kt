@@ -8,7 +8,7 @@ import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.common_android.getThemeColor
 import kekmech.ru.coreui.R
 import kekmech.ru.coreui.databinding.ItemFavoriteScheduleBinding
-import kekmech.ru.domain_schedule.dto.FavoriteSchedule
+import kekmech.ru.domain_favorite_schedule.dto.FavoriteSchedule
 
 class FavoriteScheduleItem(
     val value: FavoriteSchedule,
@@ -22,7 +22,7 @@ class FavoriteScheduleAdapterItem(
     layoutRes = R.layout.item_favorite_schedule,
     viewHolderGenerator = ::FavoriteScheduleViewHolder,
     itemBinder = FavoriteScheduleItemBinder(onClickListener),
-    areItemsTheSame = { a, b -> a.value.groupNumber == b.value.groupNumber }
+    areItemsTheSame = { a, b -> a.value.name == b.value.name }
 )
 
 class FavoriteScheduleViewHolder(
@@ -59,7 +59,7 @@ class FavoriteScheduleItemBinder(
 ) : BaseItemBinder<FavoriteScheduleViewHolder, FavoriteScheduleItem>() {
 
     override fun bind(vh: FavoriteScheduleViewHolder, model: FavoriteScheduleItem, position: Int) {
-        vh.setTitle(model.value.groupNumber)
+        vh.setTitle(model.value.name)
         vh.setDescription(model.value.description)
         vh.setIsSelected(model.isSelected)
         onClickListener?.let { vh.setOnClickListener { it(model) } }

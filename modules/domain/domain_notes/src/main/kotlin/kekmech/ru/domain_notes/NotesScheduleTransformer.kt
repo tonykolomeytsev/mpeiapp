@@ -1,5 +1,6 @@
 package kekmech.ru.domain_notes
 
+import io.reactivex.rxjava3.core.Single
 import kekmech.ru.domain_notes.dto.Note
 import kekmech.ru.domain_schedule.ScheduleTransformer
 import kekmech.ru.domain_schedule.dto.Classes
@@ -11,7 +12,7 @@ class NotesScheduleTransformer(
     private val notesRepository: NotesRepository
 ) : ScheduleTransformer {
 
-    override fun transform(schedule: Schedule) = notesRepository.getNotes()
+    override fun transform(schedule: Schedule): Single<Schedule> = notesRepository.getNotes()
         .map { notes ->
             schedule.weeks.first().days.forEach { day ->
                 day.classes.forEach { classes ->

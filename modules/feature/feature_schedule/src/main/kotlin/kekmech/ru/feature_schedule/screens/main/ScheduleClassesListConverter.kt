@@ -40,7 +40,7 @@ internal object ScheduleClassesListConverter {
                     .find { day -> day.dayOfWeek == dayOfWeek }
                     ?.classes
                     ?.onEach { classes -> classes.scheduleType = selectedSchedule.type }
-                    ?: emptyList()
+                    .orEmpty()
                 val modifiedClasses = if (rawClasses.isEmpty()) {
                     listOf(SelfStudyItem)
                 } else {

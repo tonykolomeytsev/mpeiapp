@@ -6,7 +6,7 @@ import android.content.res.ColorStateList
 import android.graphics.*
 import android.graphics.drawable.Drawable
 
-@Suppress("TooManyFunctions")
+@Suppress("TooManyFunctions", "UnsafeCallOnNullableType")
 internal class BottomSheetBackgroundDrawable(
     private val backgroundColor: Int,
     private val topCornerRadius: Float
@@ -33,7 +33,7 @@ internal class BottomSheetBackgroundDrawable(
             updateBounds(null)
             invalidateSelf()
         }
-    private var animator: CornersAnimator? = null
+    private val animator: CornersAnimator? = null
 
     init {
         paint.color = backgroundColor

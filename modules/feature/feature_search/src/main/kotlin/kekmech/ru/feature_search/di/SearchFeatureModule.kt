@@ -15,5 +15,5 @@ object SearchFeatureModule : ModuleProvider({
     factory { SearchFeatureFactory(get()) }
     factory { SearchActor(get(), get(), get()) }
     factory { ScheduleDetailsFeatureFactory(get()) }
-    factory { ScheduleDetailsActor(get()) }
+    factory { ScheduleDetailsActor(get(), get()) }
 })

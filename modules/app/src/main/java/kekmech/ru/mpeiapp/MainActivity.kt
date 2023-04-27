@@ -17,6 +17,7 @@ import kekmech.ru.common_elm.DisposableDelegateImpl
 import kekmech.ru.common_navigation.BackButtonListener
 import kekmech.ru.common_navigation.NavigationHolder
 import kekmech.ru.common_network.device_id.DeviceIdProvider
+import kekmech.ru.coreui.banner.findBanner
 import kekmech.ru.domain_app_settings.AppSettingsRepository
 import kekmech.ru.domain_main_screen.MainScreenLauncher
 import kekmech.ru.domain_onboarding.OnboardingFeatureLauncher
@@ -36,7 +37,7 @@ class MainActivity : AppCompatActivity(), DisposableDelegate by DisposableDelega
     private val deeplinkHandlersProcessor: DeeplinkHandlersProcessor by inject()
     private val deviceIdProvider: DeviceIdProvider by inject()
 
-    @Suppress("MagicNumber", "MissingPermission")
+    @Suppress("MagicNumber", "MissingPermission", "UnnecessaryApply")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -67,7 +68,7 @@ class MainActivity : AppCompatActivity(), DisposableDelegate by DisposableDelega
         if (Build.VERSION.SDK_INT < 25) LocaleContextWrapper.updateResourcesV24(this)
     }
 
-    @Suppress("DEPRECATION") // deprecated с андроида 11, но на 11 работает норм
+    @Suppress("DEPRECATION", "UnnecessaryApply")
     private fun enableEdgeToEdge() {
         window.decorView.apply {
             systemUiVisibility = systemUiVisibility or
@@ -98,6 +99,12 @@ class MainActivity : AppCompatActivity(), DisposableDelegate by DisposableDelega
     override fun onPause() {
         navigationHolder.unsubscribe()
         super.onPause()
+    }
+
+    override fun onStop() {
+        findBanner()?.dispose()
+        dispose()
+        super.onStop()
     }
 
     @Deprecated("Deprecated in Java")

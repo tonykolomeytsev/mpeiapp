@@ -19,8 +19,8 @@ import kekmech.ru.coreui.items.FavoriteScheduleAdapterItem
 import kekmech.ru.coreui.items.FavoriteScheduleItem
 import kekmech.ru.coreui.items.SpaceAdapterItem
 import kekmech.ru.coreui.touch_helpers.attachSwipeToDeleteCallback
+import kekmech.ru.domain_favorite_schedule.dto.FavoriteSchedule
 import kekmech.ru.domain_schedule.ScheduleFeatureLauncher.ContinueTo.BACK_WITH_RESULT
-import kekmech.ru.domain_schedule.dto.FavoriteSchedule
 import kekmech.ru.feature_app_settings.R
 import kekmech.ru.feature_app_settings.databinding.FragmentFavoritesBinding
 import kekmech.ru.feature_app_settings.di.AppSettingDependencies
@@ -93,9 +93,9 @@ internal class FavoritesFragment : BaseFragment<FavoritesEvent, FavoritesEffect,
                 setResultListenerForUpdateFavorite(EDIT_FAVORITE_RESULT_KEY)
                 addScreenForward {
                     EditFavoriteFragment.newInstance(
-                        groupNumber = it.value.groupNumber,
+                        groupNumber = it.value.name,
                         description = it.value.description,
-                        resultKey = EDIT_FAVORITE_RESULT_KEY
+                        resultKey = EDIT_FAVORITE_RESULT_KEY,
                     )
                 }
             },
@@ -106,7 +106,11 @@ internal class FavoritesFragment : BaseFragment<FavoritesEvent, FavoritesEffect,
         setResultListener<Pair<String, String>>(resultKey) { (groupName, description) ->
             feature.accept(
                 Ui.Action.UpdateFavorite(
-                    FavoriteSchedule(groupName, description, 0)
+                    FavoriteSchedule(
+                        name = groupName,
+                        description = description,
+                        order = 0,
+                    )
                 )
             )
         }
