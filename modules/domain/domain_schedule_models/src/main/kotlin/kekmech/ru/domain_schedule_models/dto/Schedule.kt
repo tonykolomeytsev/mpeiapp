@@ -1,5 +1,7 @@
 package kekmech.ru.domain_schedule_models.dto
 
+import com.google.gson.annotations.JsonAdapter
+import kekmech.ru.domain_schedule_models.WeekOfSemesterJsonAdapter
 import java.io.Serializable
 import java.time.LocalDate
 import java.time.LocalTime
@@ -13,10 +15,17 @@ data class Schedule(
 
 data class Week(
     val weekOfYear: Int = 0,
-    val weekOfSemester: Int = 0,
+    val weekOfSemester: WeekOfSemester = WeekOfSemester.NonStudying,
     val firstDayOfWeek: LocalDate = LocalDate.now(),
     val days: List<Day> = emptyList(),
 ) : Serializable
+
+@JsonAdapter(value = WeekOfSemesterJsonAdapter::class, nullSafe = true)
+sealed interface WeekOfSemester {
+
+    object NonStudying : WeekOfSemester
+    data class Studying(val num: Int) : WeekOfSemester
+}
 
 data class Day(
     val dayOfWeek: Int = 0,
