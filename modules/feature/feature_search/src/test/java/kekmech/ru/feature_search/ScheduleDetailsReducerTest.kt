@@ -12,12 +12,12 @@ import kekmech.ru.domain_schedule.dto.ScheduleType
 import kekmech.ru.domain_schedule.dto.SearchResult
 import kekmech.ru.domain_schedule.dto.SearchResultType
 import kekmech.ru.domain_schedule.dto.Week
-import kekmech.ru.feature_search.schedule_details.elm.ScheduleDetailsCommand
-import kekmech.ru.feature_search.schedule_details.elm.ScheduleDetailsEffect
-import kekmech.ru.feature_search.schedule_details.elm.ScheduleDetailsEvent.Internal
-import kekmech.ru.feature_search.schedule_details.elm.ScheduleDetailsEvent.Ui
-import kekmech.ru.feature_search.schedule_details.elm.ScheduleDetailsReducer
-import kekmech.ru.feature_search.schedule_details.elm.ScheduleDetailsState
+import kekmech.ru.feature_search.screens.schedule_details.elm.ScheduleDetailsCommand
+import kekmech.ru.feature_search.screens.schedule_details.elm.ScheduleDetailsEffect
+import kekmech.ru.feature_search.screens.schedule_details.elm.ScheduleDetailsEvent.Internal
+import kekmech.ru.feature_search.screens.schedule_details.elm.ScheduleDetailsEvent.Ui
+import kekmech.ru.feature_search.screens.schedule_details.elm.ScheduleDetailsReducer
+import kekmech.ru.feature_search.screens.schedule_details.elm.ScheduleDetailsState
 import java.time.LocalDate
 import java.time.Month
 

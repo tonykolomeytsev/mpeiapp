@@ -2,11 +2,11 @@ package kekmech.ru.feature_map
 
 import android.os.Handler
 import android.os.Looper
-import kekmech.ru.feature_map.elm.MapEffect
-import kekmech.ru.feature_map.elm.MapEvent
-import kekmech.ru.feature_map.elm.MapState
-import kekmech.ru.feature_map.ext.toFilterTab
 import kekmech.ru.feature_map.launcher.DeeplinkDelegate
+import kekmech.ru.feature_map.screens.main.elm.MapEffect
+import kekmech.ru.feature_map.screens.main.elm.MapEvent
+import kekmech.ru.feature_map.screens.main.elm.MapState
+import kekmech.ru.feature_map.screens.main.ext.toFilterTab
 import vivid.money.elmslie.core.store.Store
 
 private const val DEFAULT_NAVIGATION_DELAY = 1000L
