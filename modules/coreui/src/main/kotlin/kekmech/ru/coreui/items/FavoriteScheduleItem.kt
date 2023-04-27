@@ -10,7 +10,7 @@ import kekmech.ru.coreui.R
 import kekmech.ru.coreui.databinding.ItemFavoriteScheduleBinding
 import kekmech.ru.domain_favorite_schedule.dto.FavoriteSchedule
 
-class FavoriteScheduleItem(
+data class FavoriteScheduleItem(
     val value: FavoriteSchedule,
     val isSelected: Boolean = false
 )

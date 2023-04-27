@@ -13,6 +13,7 @@ import kekmech.ru.domain_schedule_models.dto.Schedule
 import kekmech.ru.domain_schedule_models.dto.ScheduleType
 import kekmech.ru.domain_schedule_models.dto.Time
 import kekmech.ru.domain_schedule_models.dto.Week
+import kekmech.ru.domain_schedule_models.dto.WeekOfSemester
 import kekmech.ru.mock_server.randomResponseDelay
 import java.time.LocalDate
 import java.time.LocalTime
@@ -66,7 +67,7 @@ private fun createEvenWeek(
     val friday = monday.plusDays(4)
     return Week(
         weekOfYear = weekOfYear,
-        weekOfSemester = weekOfSemester,
+        weekOfSemester = WeekOfSemester.Studying(weekOfSemester),
         firstDayOfWeek = monday,
         days = listOf(
             Day(
@@ -326,7 +327,7 @@ private fun createOddWeek(
     val friday = monday.plusDays(4)
     return Week(
         weekOfYear = weekOfYear,
-        weekOfSemester = weekOfSemester,
+        weekOfSemester = WeekOfSemester.Studying(weekOfSemester),
         firstDayOfWeek = monday,
         days = listOf(
             Day(

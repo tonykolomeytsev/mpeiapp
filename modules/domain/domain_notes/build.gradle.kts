@@ -4,7 +4,6 @@ plugins {
 
 dependencies {
     implementation(libs.androidx.appCompat)
-    implementation(libs.koin.android)
     implementation(libs.koin.core)
     implementation(libs.rx.java)
 
@@ -13,4 +12,5 @@ dependencies {
 
     implementation(project(":common_android"))
     implementation(project(":common_app_database"))
+    implementation(project(":common_kotlin"))
 }

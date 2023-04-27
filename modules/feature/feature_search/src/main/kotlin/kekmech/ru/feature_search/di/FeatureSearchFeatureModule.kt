@@ -1,19 +1,20 @@
 package kekmech.ru.feature_search.di
 
-import kekmech.ru.common_di.ModuleProvider
 import kekmech.ru.domain_search.SearchFeatureLauncher
 import kekmech.ru.feature_search.launcher.SearchFeatureLauncherImpl
 import kekmech.ru.feature_search.screens.main.elm.SearchActor
 import kekmech.ru.feature_search.screens.main.elm.SearchFeatureFactory
 import kekmech.ru.feature_search.screens.schedule_details.elm.ScheduleDetailsActor
 import kekmech.ru.feature_search.screens.schedule_details.elm.ScheduleDetailsFeatureFactory
+import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.bind
+import org.koin.dsl.module
 
-object SearchFeatureModule : ModuleProvider({
-    factory { SearchFeatureLauncherImpl(get()) } bind SearchFeatureLauncher::class
-    factory { SearchDependencies(get(), get(), get()) }
-    factory { SearchFeatureFactory(get()) }
-    factory { SearchActor(get(), get(), get()) }
-    factory { ScheduleDetailsFeatureFactory(get()) }
-    factory { ScheduleDetailsActor(get(), get()) }
-})
+val FeatureSearchFeatureModule = module{
+    factoryOf(::SearchFeatureLauncherImpl) bind SearchFeatureLauncher::class
+    factoryOf(::SearchDependencies)
+    factoryOf(::SearchFeatureFactory)
+    factoryOf(::SearchActor)
+    factoryOf(::ScheduleDetailsFeatureFactory)
+    factoryOf(::ScheduleDetailsActor)
+}

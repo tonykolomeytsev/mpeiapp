@@ -39,3 +39,9 @@ fun <T : Any, R : Any> Collection<Resource<T>>.merge(
     if (isLoading) return Resource.Loading
     return Resource.Data(mergeRule(this.map { it.value!! }))
 }
+
+inline fun<reified T: Any> Resource<T>.map(transform: (T) -> T): Resource<T> =
+    when (this) {
+        is Resource.Data<T> -> Resource.Data(transform(this.value))
+        else -> this
+    }
