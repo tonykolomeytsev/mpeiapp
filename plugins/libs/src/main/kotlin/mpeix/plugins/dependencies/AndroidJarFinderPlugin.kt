@@ -1,5 +1,6 @@
 package mpeix.plugins.dependencies
 
+import AndroidJarLocationKey
 import mpeix.plugins.ext.requiredVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -10,8 +11,23 @@ import java.io.FileInputStream
 import java.util.Properties
 
 /**
- * The solution was found in https://github.com/stepango/android-jar
+ * # `android.jar` finder plugin
+ *
+ * The solution was found in https://github.com/stepango/aar2jar
  * and slightly modified to fit the needs of mpeix.
+ *
+ * ### Usage:
+ *
+ * This plugin is automatically applied for all subprojects with "mpeix.kotlin" plugin.
+ *
+ * You can use `compileOnlyAar` configuration in `dependencies` section in `build.gradle.kts` of
+ * pure-kotlin subprojects:
+ *
+ * ```kotlin
+ * dependencies {
+ *     compileOnlyAar(libs.androidx.fragment)
+ * }
+ * ```
  */
 @Suppress("unused")
 class AndroidJarFinderPlugin : Plugin<Project> {
@@ -21,7 +37,7 @@ class AndroidJarFinderPlugin : Plugin<Project> {
             target.extensions.getByType(VersionCatalogsExtension::class.java).named("libs")
         val androidJar =
             AndroidJarFinder(target).find(catalog.requiredVersion("compileSdk").toInt())
-        target.rootProject.extensions.extraProperties["androidJar"] = androidJar
+        target.extensions.extraProperties[AndroidJarLocationKey] = androidJar
     }
 }
 

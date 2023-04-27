@@ -26,6 +26,7 @@ dependencies {
 
     implementation(project(":domain_app_settings"))
     implementation(project(":domain_app_settings_models"))
+    implementation(project(":domain_favorite_schedule"))
     implementation(project(":domain_github"))
     implementation(project(":domain_onboarding"))
     implementation(project(":domain_schedule"))

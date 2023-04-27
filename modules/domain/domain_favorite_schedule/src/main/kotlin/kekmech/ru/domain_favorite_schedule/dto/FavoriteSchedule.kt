@@ -1,7 +1,7 @@
-package kekmech.ru.domain_schedule.dto
+package kekmech.ru.domain_favorite_schedule.dto
 
 data class FavoriteSchedule(
-    val groupNumber: String,
+    val name: String,
     val description: String,
     val order: Int
 )

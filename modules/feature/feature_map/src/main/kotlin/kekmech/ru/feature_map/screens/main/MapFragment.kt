@@ -106,6 +106,7 @@ internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState>(),
         view.doOnApplyWindowInsets { _, insets, padding ->
             viewBinding.coordinatorLayout.setMargins(top = insets.systemWindowInsetTop + padding.top)
         }
+        @Suppress("UnnecessaryApply")
         BottomSheetBehavior.from(viewBinding.recyclerView).apply {
             addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
 

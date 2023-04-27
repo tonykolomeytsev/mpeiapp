@@ -1,6 +1,6 @@
 package kekmech.ru.feature_app_settings.screens.favorites.elm
 
-import kekmech.ru.domain_schedule.dto.FavoriteSchedule
+import kekmech.ru.domain_favorite_schedule.dto.FavoriteSchedule
 import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesEvent.Internal
 import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesEvent.Ui
 import vivid.money.elmslie.core.store.dsl_reducer.ScreenDslReducer
@@ -30,7 +30,7 @@ internal class FavoritesReducer :
             }
             is Ui.Click.DeleteFavorite -> {
                 val newFavorites = state.favorites?.filterNot {
-                    it.groupNumber.equals(event.favoriteSchedule.groupNumber, ignoreCase = true)
+                    it.name.equals(event.favoriteSchedule.name, ignoreCase = true)
                 }
                 state { copy(favorites = newFavorites) }
                 commands { +newFavorites?.let(Command::SetFavorites) }
@@ -38,10 +38,10 @@ internal class FavoritesReducer :
         }
 
     private fun List<FavoriteSchedule>.updateOrAdd(favoriteSchedule: FavoriteSchedule): List<FavoriteSchedule> {
-        return if (any { it.groupNumber.equals(favoriteSchedule.groupNumber, ignoreCase = true) }) {
+        return if (any { it.name.equals(favoriteSchedule.name, ignoreCase = true) }) {
             map {
-                if (it.groupNumber.equals(
-                        favoriteSchedule.groupNumber,
+                if (it.name.equals(
+                        favoriteSchedule.name,
                         ignoreCase = true
                     )
                 ) favoriteSchedule else it

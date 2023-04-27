@@ -455,7 +455,7 @@ potential-bugs:
 style:
   active: true
   CanBeNonNullable:
-    active: true
+    active: false
   ClassOrdering:
     active: false
   CollapsibleIfStatements:

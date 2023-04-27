@@ -1,6 +1,7 @@
 package kekmech.ru.feature_dashboard.screens.main.elm
 
 import io.reactivex.rxjava3.core.Observable
+import kekmech.ru.domain_favorite_schedule.FavoriteScheduleRepository
 import kekmech.ru.domain_notes.NotesRepository
 import kekmech.ru.domain_notes.NotesScheduleTransformer
 import kekmech.ru.domain_schedule.ScheduleRepository
@@ -9,6 +10,7 @@ import vivid.money.elmslie.core.store.Actor
 
 internal class DashboardActor(
     private val scheduleRepository: ScheduleRepository,
+    private val favoriteScheduleRepository: FavoriteScheduleRepository,
     private val notesRepository: NotesRepository,
     private val notesScheduleTransformer: NotesScheduleTransformer,
 ) : Actor<DashboardCommand, DashboardEvent> {
@@ -28,7 +30,7 @@ internal class DashboardActor(
                 successEventMapper = Internal::LoadNotesSuccess,
                 failureEventMapper = Internal::LoadNotesFailure,
             )
-        is DashboardCommand.LoadFavoriteSchedules -> scheduleRepository.getFavorites()
+        is DashboardCommand.LoadFavoriteSchedules -> favoriteScheduleRepository.getFavorites()
             .mapSuccessEvent(Internal::LoadFavoriteSchedulesSuccess)
         is DashboardCommand.SelectGroup -> scheduleRepository.selectSchedule(command.groupName)
             .mapSuccessEvent(Internal.SelectGroupSuccess)

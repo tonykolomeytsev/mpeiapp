@@ -60,6 +60,6 @@ class NotesSourceImpl(
         attachedPictureUrls = record.get<String>("p_attachments")
             ?.split(",")
             ?.map { it.fromBase64() }
-            ?: emptyList()
+            .orEmpty()
     )
 }

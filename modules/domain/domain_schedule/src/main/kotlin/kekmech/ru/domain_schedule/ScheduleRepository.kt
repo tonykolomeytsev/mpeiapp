@@ -7,11 +7,9 @@ import io.reactivex.rxjava3.core.Single
 import kekmech.ru.common_android.moscowLocalDate
 import kekmech.ru.common_cache.persistent_cache.PersistentCache
 import kekmech.ru.common_shared_preferences.string
-import kekmech.ru.domain_schedule.dto.FavoriteSchedule
 import kekmech.ru.domain_schedule.dto.Schedule
 import kekmech.ru.domain_schedule.dto.ScheduleType
 import kekmech.ru.domain_schedule.dto.SearchResultType
-import kekmech.ru.domain_schedule.sources.FavoriteSource
 import java.time.LocalDate
 import java.time.temporal.WeekFields
 import java.util.*
@@ -23,7 +21,6 @@ val PERSON_NAME_PATTERN = "[а-яА-Я]+\\s+([а-яА-Я]+\\s?)+".toRegex()
 @Suppress("TooManyFunctions")
 class ScheduleRepository(
     private val scheduleService: ScheduleService,
-    private val favoriteSource: FavoriteSource,
     private val persistentCache: PersistentCache,
     sharedPreferences: SharedPreferences,
 ) {
@@ -45,25 +42,6 @@ class ScheduleRepository(
         }
 
     fun getSelectedScheduleName(): Single<String> = Single.just(selectedScheduleName)
-
-    fun getFavorites(): Single<List<FavoriteSchedule>> =
-        Single.just(favoriteSource.getAll())
-
-    fun setFavorites(favorites: List<FavoriteSchedule>): Completable =
-        Completable.fromRunnable {
-            favoriteSource.deleteAll()
-            favoriteSource.addAll(favorites)
-        }
-
-    fun addFavorite(favoriteSchedule: FavoriteSchedule): Completable =
-        Completable.fromRunnable {
-            favoriteSource.add(favoriteSchedule)
-        }
-
-    fun removeFavorite(favoriteSchedule: FavoriteSchedule): Completable =
-        Completable.fromRunnable {
-            favoriteSource.remove(favoriteSchedule)
-        }
 
     fun getSession(scheduleType: String = selectedScheduleName) = scheduleService
         .getSession(getScheduleType(scheduleType).pathName, scheduleType)

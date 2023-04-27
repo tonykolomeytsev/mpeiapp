@@ -1,7 +1,7 @@
 package kekmech.ru.feature_search.screens.schedule_details.elm
 
+import kekmech.ru.domain_favorite_schedule.dto.FavoriteSchedule
 import kekmech.ru.domain_schedule.dto.Day
-import kekmech.ru.domain_schedule.dto.FavoriteSchedule
 import kekmech.ru.domain_schedule.dto.Schedule
 import kekmech.ru.feature_search.screens.schedule_details.elm.ScheduleDetailsEvent.Internal
 import kekmech.ru.feature_search.screens.schedule_details.elm.ScheduleDetailsEvent.Ui
@@ -36,7 +36,7 @@ internal class ScheduleDetailsReducer :
             }
             is Internal.LoadFavoritesSuccess -> {
                 val favoriteSchedule =
-                    event.schedules.find { it.groupNumber == state.searchResult.name }
+                    event.schedules.find { it.name == state.searchResult.name }
                 state {
                     copy(
                         isInFavorites = favoriteSchedule != null,
@@ -72,7 +72,7 @@ internal class ScheduleDetailsReducer :
                 if (favoriteSchedule == null) {
                     val newFavorite =
                         FavoriteSchedule(
-                            groupNumber = state.searchResult.name,
+                            name = state.searchResult.name,
                             description = state.searchResult.description,
                             order = 0,
                         )

@@ -21,6 +21,7 @@ abstract class SwipeToDeleteCallback(
     context: Context
 ) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
 
+    @Suppress("UnsafeCallOnNullableType")
     private val deleteIcon = ContextCompat.getDrawable(context, R.drawable.ic_delete_24px)!!
     private val intrinsicWidth = deleteIcon.intrinsicWidth
     private val intrinsicHeight = deleteIcon.intrinsicHeight
@@ -89,8 +90,8 @@ abstract class SwipeToDeleteCallback(
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
     }
 
-    private fun clearCanvas(c: Canvas?, left: Float, top: Float, right: Float, bottom: Float) {
-        c?.drawRect(left, top, right, bottom, clearPaint)
+    private fun clearCanvas(c: Canvas, left: Float, top: Float, right: Float, bottom: Float) {
+        c.drawRect(left, top, right, bottom, clearPaint)
     }
 
     abstract fun isTypeForDelete(adapterPosition: Int, itemViewType: Int): Boolean
