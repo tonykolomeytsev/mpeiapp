@@ -31,21 +31,25 @@ sealed interface UpcomingEventsPrediction {
     ) : UpcomingEventsPrediction
 
     /**
-     * @param inProgress Classes that have already begun
-     * @param futureClasses Next classes after [inProgress] classes
+     * @param inProgressClasses Classes that have already begun
+     * @param inProgressFactor Progress value between `0.0` and `1.0` (0% - 100%)
+     * @param futureClasses Next classes after [inProgressClasses] classes
      */
     data class ClassesTodayStarted(
-        val inProgress: Classes,
+        val inProgressClasses: Classes,
+        val inProgressFactor: Float,
         val futureClasses: List<Classes>,
     ) : UpcomingEventsPrediction
 
     /**
      * @param date Date on which the next classes will take place
+     * @param dayOffset The number of days in which classes will be
      * @param timeLeft Time left until the start of the next classes
      * @param futureClasses Classes that will be started in [timeLeft] time
      */
     data class ClassesInNDays(
         val date: LocalDate,
+        val dayOffset: Int,
         val timeLeft: Duration,
         val futureClasses: List<Classes>,
     ) : UpcomingEventsPrediction

@@ -94,7 +94,7 @@ internal class DashboardFragment :
     override fun render(state: DashboardState) {
         adapter.update(DashboardListConverter(requireContext()).map(state))
         viewBinding.swipeRefresh.post {
-            viewBinding.swipeRefresh.isRefreshing = state.isLoading && state.currentWeekSchedule == null
+            viewBinding.swipeRefresh.isRefreshing = state.isLoading
         }
     }
 

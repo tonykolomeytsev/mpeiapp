@@ -11,6 +11,7 @@ import kekmech.ru.common_feature_toggles.RemoteConfigWrapper
 import kekmech.ru.common_feature_toggles.di.CommonFeatureTogglesModule
 import kekmech.ru.common_navigation.di.CommonNavigationModule
 import kekmech.ru.common_network.di.CommonNetworkModule
+import kekmech.ru.domain_dashboard.di.DomainDashboardModule
 import kekmech.ru.domain_favorite_schedule.di.DomainFavoriteScheduleModule
 import kekmech.ru.domain_github.di.DomainGitHubModule
 import kekmech.ru.domain_notes.di.DomainNotesModule
@@ -58,6 +59,7 @@ val AppModule = module {
             CommonNavigationModule,
             CommonNetworkModule,
             // domain
+            DomainDashboardModule,
             DomainFavoriteScheduleModule,
             DomainGitHubModule,
             DomainNotesModule,

@@ -28,14 +28,14 @@ internal object TimeDeclensionHelper {
         }
     }
 
-    fun formatTimePrediction(context: Context, offset: Int): String? = when (offset) {
+    fun formatTimePrediction(context: Context, dayOffset: Int): String? = when (dayOffset) {
         -1 -> null
         0 -> context.getString(Strings.dashboard_events_today)
         1 -> context.getString(Strings.dashboard_events_tomorrow)
         2 -> context.getString(Strings.dashboard_events_after_tomorrow)
         else -> {
             val decDays = context.getStringArray(StringArrays.days_declensions)
-            val adoptedOffset = offset - 1L
+            val adoptedOffset = dayOffset - 1L
             context.getString(Strings.dashboard_events_n_days, format(decDays, adoptedOffset))
         }
     }

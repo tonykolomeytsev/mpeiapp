@@ -6,7 +6,7 @@ import kekmech.ru.common_kotlin.moscowLocalDate
 import kekmech.ru.common_kotlin.moscowLocalTime
 import kekmech.ru.coreui.PrettyDateFormatter
 import kekmech.ru.coreui.items.EmptyStateItem
-import kekmech.ru.coreui.items.ErrorStateItem
+import kekmech.ru.coreui.items.FavoriteScheduleItem
 import kekmech.ru.coreui.items.SectionHeaderItem
 import kekmech.ru.coreui.items.SpaceItem
 import kekmech.ru.feature_dashboard.items.BannerLunchItem
@@ -29,6 +29,7 @@ private const val WEEK_MAX_NUMBER = 17
 internal class DashboardListConverter(
     private val context: Context,
 ) {
+
     private val upcomingEventsListConverter = UpcomingEventsListConverter(context)
 
     private val notesHeader by fastLazy {
@@ -48,13 +49,6 @@ internal class DashboardListConverter(
         )
     }
 
-    private val sessionHeader by fastLazy {
-        SectionHeaderItem(
-            titleRes = Strings.dashboard_section_header_session,
-            subtitle = context.getString(Strings.dashboard_section_header_session_subtitle)
-        )
-    }
-
     private val formatter = PrettyDateFormatter(context)
 
     private val lunchStartTime = LocalTime.of(12, 45) // 12:45
@@ -70,13 +64,16 @@ internal class DashboardListConverter(
             }
             add(SearchFieldItem)
             add(SpaceItem.VERTICAL_8)
-            add(
-                ScheduleTypeItem(
-                    selectedScheduleName = state.selectedScheduleName,
-                    selectedScheduleType = state.selectedScheduleType
+
+            state.selectedScheduleMetaInfo.value?.let {
+                add(
+                    ScheduleTypeItem(
+                        selectedScheduleName = it.name,
+                        selectedScheduleType = it.type,
+                    )
                 )
-            )
-            add(SpaceItem.VERTICAL_8)
+                add(SpaceItem.VERTICAL_8)
+            }
 
             listOfNotNull(
                 BannerLunchItem.takeIf { moscowLocalTime() in lunchStartTime..lunchEndTime },
@@ -89,36 +86,23 @@ internal class DashboardListConverter(
             }
 
             // ближайшие события
-            val (upcomingEvents, offset) = upcomingEventsListConverter.map(state)
-            val haveSomethingToShow = offset != -1
-
-            when {
-                haveSomethingToShow -> {
-                    addAll(upcomingEvents)
-                    add(SpaceItem.VERTICAL_16)
-                    // сессию показываем после более близких по времени событий
-                    addSession(state)
-                }
-                state.loadingError != null -> {
-                    add(ErrorStateItem(state.loadingError))
-                }
-                else -> {
-                    // если нечего показывать в разделе ближайших событий,
-                    // покажем сначала сессию, потом EmptyStateItem
-                    addSession(state)
-                    addAll(upcomingEvents)
-                }
-            }
+            val upcomingEvents = upcomingEventsListConverter.map(state)
+            addAll(upcomingEvents)
             add(SpaceItem.VERTICAL_16)
 
             // актуальные заметки
             addActualNotes(state)
 
-            state.favoriteSchedules?.let {
+            state.favoriteSchedules.value?.let { items ->
                 add(SpaceItem.VERTICAL_16)
                 add(favoritesHeader)
                 add(SpaceItem.VERTICAL_12)
-                addAll(it)
+                addAll(items.map {
+                    FavoriteScheduleItem(
+                        value = it,
+                        isSelected = it.name.uppercase() == state.selectedScheduleMetaInfo.value?.name
+                    )
+                })
             }
 
             add(SpaceItem.VERTICAL_24)
@@ -126,7 +110,7 @@ internal class DashboardListConverter(
     }
 
     private fun MutableList<Any>.addActualNotes(state: DashboardState) {
-        state.notes?.let {
+        state.actualNotes.value?.let {
             add(notesHeader)
             add(SpaceItem.VERTICAL_12)
             if (it.isNotEmpty()) {
@@ -155,12 +139,5 @@ internal class DashboardListConverter(
             formatter.formatAbsolute(moscowLocalDate()),
             weekStatus.orEmpty()
         )
-    }
-
-    private fun MutableList<Any>.addSession(state: DashboardState) {
-        if (state.sessionScheduleItems.isNullOrEmpty()) return
-        add(sessionHeader)
-        add(SpaceItem.VERTICAL_12)
-        addAll(state.sessionScheduleItems)
     }
 }
