@@ -13,13 +13,13 @@ import kekmech.ru.domain_schedule.dto.SearchResultType.GROUP
 import kekmech.ru.domain_schedule.dto.SearchResultType.PERSON
 import kekmech.ru.feature_search.item.FilterItem
 import kekmech.ru.feature_search.item.FilterItemType
-import kekmech.ru.feature_search.main.elm.SearchCommand
-import kekmech.ru.feature_search.main.elm.SearchEffect
-import kekmech.ru.feature_search.main.elm.SearchEvent.Internal
-import kekmech.ru.feature_search.main.elm.SearchEvent.Ui
-import kekmech.ru.feature_search.main.elm.SearchReducer
-import kekmech.ru.feature_search.main.elm.SearchState
-import kekmech.ru.feature_search.main.simplify
+import kekmech.ru.feature_search.screens.main.elm.SearchCommand
+import kekmech.ru.feature_search.screens.main.elm.SearchEffect
+import kekmech.ru.feature_search.screens.main.elm.SearchEvent.Internal
+import kekmech.ru.feature_search.screens.main.elm.SearchEvent.Ui
+import kekmech.ru.feature_search.screens.main.elm.SearchReducer
+import kekmech.ru.feature_search.screens.main.elm.SearchState
+import kekmech.ru.feature_search.screens.main.simplify
 import java.time.LocalDateTime
 
 class SearchReducerTest : BehaviorSpec({
