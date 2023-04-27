@@ -4,12 +4,12 @@ import android.content.SharedPreferences
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
-import kekmech.ru.common_android.moscowLocalDate
 import kekmech.ru.common_cache.persistent_cache.PersistentCache
+import kekmech.ru.common_kotlin.moscowLocalDate
 import kekmech.ru.common_shared_preferences.string
-import kekmech.ru.domain_schedule.dto.Schedule
-import kekmech.ru.domain_schedule.dto.ScheduleType
 import kekmech.ru.domain_schedule.dto.SearchResultType
+import kekmech.ru.domain_schedule_models.dto.Schedule
+import kekmech.ru.domain_schedule_models.dto.ScheduleType
 import java.time.LocalDate
 import java.time.temporal.WeekFields
 import java.util.*
@@ -50,11 +50,7 @@ class ScheduleRepository(
         scheduleService.getSearchResults(query, type)
 
     fun debugClearSelectedGroup() {
-        if (BuildConfig.DEBUG) {
-            selectedScheduleName = ""
-        } else {
-            error("Method call is allowed only in debug mode!")
-        }
+        selectedScheduleName = ""
     }
 
     private fun getScheduleType(scheduleName: String) = when {

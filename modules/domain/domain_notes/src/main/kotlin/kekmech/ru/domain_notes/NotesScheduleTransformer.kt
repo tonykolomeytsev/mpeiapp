@@ -3,8 +3,8 @@ package kekmech.ru.domain_notes
 import io.reactivex.rxjava3.core.Single
 import kekmech.ru.domain_notes.dto.Note
 import kekmech.ru.domain_schedule.ScheduleTransformer
-import kekmech.ru.domain_schedule.dto.Classes
-import kekmech.ru.domain_schedule.dto.Schedule
+import kekmech.ru.domain_schedule_models.dto.Classes
+import kekmech.ru.domain_schedule_models.dto.Schedule
 import java.time.LocalDate
 import java.time.LocalDateTime
 

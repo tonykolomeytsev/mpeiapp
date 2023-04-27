@@ -1,11 +1,11 @@
 package kekmech.ru.common_schedule.utils
 
-import kekmech.ru.common_android.moscowLocalDate
-import kekmech.ru.common_android.moscowLocalTime
+import kekmech.ru.common_kotlin.moscowLocalDate
+import kekmech.ru.common_kotlin.moscowLocalTime
 import kekmech.ru.common_schedule.items.LunchItem
 import kekmech.ru.common_schedule.items.NotePreview
 import kekmech.ru.common_schedule.items.WindowItem
-import kekmech.ru.domain_schedule.dto.Classes
+import kekmech.ru.domain_schedule_models.dto.Classes
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.temporal.ChronoUnit

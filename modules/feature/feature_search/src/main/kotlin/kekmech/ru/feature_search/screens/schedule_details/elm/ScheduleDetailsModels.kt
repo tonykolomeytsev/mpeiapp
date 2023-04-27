@@ -1,12 +1,12 @@
 package kekmech.ru.feature_search.screens.schedule_details.elm
 
-import kekmech.ru.common_android.moscowLocalDate
+import kekmech.ru.common_kotlin.moscowLocalDate
 import kekmech.ru.domain_favorite_schedule.dto.FavoriteSchedule
-import kekmech.ru.domain_schedule.dto.Day
-import kekmech.ru.domain_schedule.dto.Schedule
-import kekmech.ru.domain_schedule.dto.ScheduleType
 import kekmech.ru.domain_schedule.dto.SearchResult
 import kekmech.ru.domain_schedule.dto.SearchResultType
+import kekmech.ru.domain_schedule_models.dto.Day
+import kekmech.ru.domain_schedule_models.dto.Schedule
+import kekmech.ru.domain_schedule_models.dto.ScheduleType
 import java.time.LocalDate
 
 internal data class ScheduleDetailsState(

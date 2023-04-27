@@ -1,10 +1,10 @@
 package kekmech.ru.feature_dashboard.screens.main.elm
 
-import kekmech.ru.common_android.moscowLocalDate
-import kekmech.ru.common_android.moscowLocalDateTime
+import kekmech.ru.common_kotlin.moscowLocalDate
+import kekmech.ru.common_kotlin.moscowLocalDateTime
 import kekmech.ru.coreui.items.FavoriteScheduleItem
 import kekmech.ru.domain_notes.dto.Note
-import kekmech.ru.domain_schedule.dto.Day
+import kekmech.ru.domain_schedule_models.dto.Day
 import kekmech.ru.feature_dashboard.screens.main.elm.DashboardEvent.Internal
 import kekmech.ru.feature_dashboard.screens.main.elm.DashboardEvent.Ui
 import kekmech.ru.feature_dashboard.screens.main.upcoming_events.getDayWithOffset

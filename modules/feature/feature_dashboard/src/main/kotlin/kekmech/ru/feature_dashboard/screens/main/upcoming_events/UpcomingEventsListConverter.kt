@@ -1,13 +1,13 @@
 package kekmech.ru.feature_dashboard.screens.main.upcoming_events
 
 import android.content.Context
-import kekmech.ru.common_android.moscowLocalDate
-import kekmech.ru.common_android.moscowLocalTime
+import kekmech.ru.common_kotlin.moscowLocalDate
+import kekmech.ru.common_kotlin.moscowLocalTime
 import kekmech.ru.common_schedule.utils.withNotePreview
 import kekmech.ru.common_schedule.utils.withProgressPreview
 import kekmech.ru.coreui.items.*
-import kekmech.ru.domain_schedule.dto.Classes
-import kekmech.ru.domain_schedule.dto.ScheduleType
+import kekmech.ru.domain_schedule_models.dto.Classes
+import kekmech.ru.domain_schedule_models.dto.ScheduleType
 import kekmech.ru.feature_dashboard.R
 import kekmech.ru.feature_dashboard.screens.main.elm.DashboardState
 import kekmech.ru.feature_dashboard.screens.main.elm.NextClassesCondition

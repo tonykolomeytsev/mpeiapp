@@ -14,6 +14,7 @@ import kekmech.ru.common_navigation.di.NavigationModule
 import kekmech.ru.common_network.di.NetworkModule
 import kekmech.ru.domain_favorite_schedule.di.DomainFavoriteScheduleModule
 import kekmech.ru.domain_github.di.DomainGitHubModule
+import kekmech.ru.domain_schedule.di.DomainScheduleModule
 import kekmech.ru.feature_app_settings.di.AppSettingsModule
 import kekmech.ru.feature_bars.di.BarsModule
 import kekmech.ru.feature_dashboard.di.DashboardModule
@@ -57,6 +58,7 @@ object AppModule : ModuleProvider({
             // domain
             DomainGitHubModule,
             DomainFavoriteScheduleModule,
+            DomainScheduleModule,
             // feature
             OnboardingModule,
             DashboardModule,

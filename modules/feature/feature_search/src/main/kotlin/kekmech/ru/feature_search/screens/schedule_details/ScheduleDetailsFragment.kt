@@ -25,8 +25,8 @@ import kekmech.ru.coreui.items.ShimmerAdapterItem
 import kekmech.ru.coreui.items.SpaceAdapterItem
 import kekmech.ru.coreui.items.TextAdapterItem
 import kekmech.ru.coreui.items.TextWithIconAdapterItem
-import kekmech.ru.domain_schedule.dto.Classes
 import kekmech.ru.domain_schedule.dto.SearchResult
+import kekmech.ru.domain_schedule_models.dto.Classes
 import kekmech.ru.feature_search.R
 import kekmech.ru.feature_search.databinding.FragmentScheduleDetailsBinding
 import kekmech.ru.feature_search.item.ButtonAdapterItem

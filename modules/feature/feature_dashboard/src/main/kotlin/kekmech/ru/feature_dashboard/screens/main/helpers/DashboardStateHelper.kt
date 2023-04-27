@@ -1,8 +1,8 @@
 package kekmech.ru.feature_dashboard.screens.main.helpers
 
-import kekmech.ru.common_android.moscowLocalDate
-import kekmech.ru.common_android.moscowLocalTime
-import kekmech.ru.domain_schedule.dto.Time
+import kekmech.ru.common_kotlin.moscowLocalDate
+import kekmech.ru.common_kotlin.moscowLocalTime
+import kekmech.ru.domain_schedule_models.dto.Time
 import kekmech.ru.feature_dashboard.screens.main.elm.NextClassesCondition.ENDED
 import kekmech.ru.feature_dashboard.screens.main.elm.NextClassesCondition.NOT_STARTED
 import kekmech.ru.feature_dashboard.screens.main.elm.NextClassesCondition.STARTED

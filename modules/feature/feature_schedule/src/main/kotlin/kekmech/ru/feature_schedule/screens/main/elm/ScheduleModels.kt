@@ -1,10 +1,10 @@
 package kekmech.ru.feature_schedule.screens.main.elm
 
-import kekmech.ru.common_android.moscowLocalDate
+import kekmech.ru.common_kotlin.moscowLocalDate
 import kekmech.ru.common_kotlin.mutableLinkedHashMap
 import kekmech.ru.domain_app_settings_models.AppSettings
-import kekmech.ru.domain_schedule.dto.Classes
-import kekmech.ru.domain_schedule.dto.Schedule
+import kekmech.ru.domain_schedule_models.dto.Classes
+import kekmech.ru.domain_schedule_models.dto.Schedule
 import java.time.LocalDate
 
 private const val SCHEDULE_RAM_CACHE_CAPACITY = 5
@@ -50,7 +50,7 @@ internal sealed interface ScheduleEvent {
 
         object Click {
             data class Day(val date: LocalDate) : Ui
-            data class Classes(val classes: kekmech.ru.domain_schedule.dto.Classes) : Ui
+            data class Classes(val classes: kekmech.ru.domain_schedule_models.dto.Classes) : Ui
             object FAB : Ui
             object Reload : Ui
         }

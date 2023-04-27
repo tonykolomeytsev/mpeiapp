@@ -5,9 +5,9 @@ import io.ktor.server.response.respond
 import io.ktor.server.routing.Routing
 import io.ktor.server.routing.get
 import kekmech.ru.domain_schedule.dto.GetSearchResultsResponse
-import kekmech.ru.domain_schedule.dto.ScheduleType
 import kekmech.ru.domain_schedule.dto.SearchResult
 import kekmech.ru.domain_schedule.dto.SearchResultType
+import kekmech.ru.domain_schedule_models.dto.ScheduleType
 import kekmech.ru.mock_server.randomResponseDelay
 
 internal fun Routing.getSearchResultsV1() {

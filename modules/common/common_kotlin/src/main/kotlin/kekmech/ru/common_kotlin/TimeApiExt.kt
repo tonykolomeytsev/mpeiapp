@@ -1,4 +1,4 @@
-package kekmech.ru.common_android
+package kekmech.ru.common_kotlin
 
 import java.time.LocalDate
 import java.time.LocalDateTime
