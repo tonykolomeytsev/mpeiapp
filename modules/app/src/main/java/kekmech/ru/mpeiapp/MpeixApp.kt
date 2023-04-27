@@ -5,31 +5,14 @@ import android.content.Context
 import android.os.Build
 import io.reactivex.rxjava3.exceptions.UndeliverableException
 import io.reactivex.rxjava3.plugins.RxJavaPlugins
-import kekmech.ru.common_analytics.di.AnalyticsModule
-import kekmech.ru.common_app_database.di.AppDatabaseModule
-import kekmech.ru.common_cache.di.CacheModule
 import kekmech.ru.common_di.modules
 import kekmech.ru.common_elm.TimberLogger
-import kekmech.ru.common_feature_toggles.di.CommonFeatureTogglesModule
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_navigation.Router
-import kekmech.ru.common_navigation.di.NavigationModule
 import kekmech.ru.common_navigation.di.RouterHolder
-import kekmech.ru.common_network.di.NetworkModule
 import kekmech.ru.common_network.retrofit.ServiceUrlResolver
 import kekmech.ru.domain_app_settings_models.AppEnvironment
-import kekmech.ru.feature_app_settings.di.AppSettingsModule
-import kekmech.ru.feature_bars.di.BarsModule
-import kekmech.ru.feature_dashboard.di.DashboardModule
-import kekmech.ru.feature_force_update.di.ForceUpdateModule
-import kekmech.ru.feature_map.di.MapModule
-import kekmech.ru.feature_notes.di.NotesModule
-import kekmech.ru.feature_onboarding.di.OnboardingModule
-import kekmech.ru.feature_schedule.di.ScheduleModule
-import kekmech.ru.feature_search.di.SearchFeatureModule
-import kekmech.ru.mpeiapp.deeplink.di.DeeplinkModule
 import kekmech.ru.mpeiapp.di.AppModule
-import kekmech.ru.mpeiapp.ui.main.di.MainScreenModule
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -90,30 +73,7 @@ class MpeixApp : Application(),
         androidLogger()
         androidContext(this@MpeixApp)
         allowOverride(false)
-        modules(
-            listOf(
-                AppModule,
-                MainScreenModule,
-                DeeplinkModule,
-                // commons
-                NavigationModule,
-                NetworkModule,
-                CacheModule,
-                AppDatabaseModule,
-                AnalyticsModule,
-                CommonFeatureTogglesModule,
-                // features
-                OnboardingModule,
-                DashboardModule,
-                ScheduleModule,
-                AppSettingsModule,
-                MapModule,
-                NotesModule,
-                ForceUpdateModule,
-                BarsModule,
-                SearchFeatureModule
-            )
-        )
+        modules(listOf(AppModule))
     }
 
     private fun initTimber() {

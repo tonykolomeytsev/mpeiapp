@@ -12,7 +12,7 @@ import com.squareup.picasso.Transformation
 import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.common_android.dpToPx
-import kekmech.ru.domain_app_settings.dto.GitHubUser
+import kekmech.ru.domain_github.dto.GitHubUser
 import kekmech.ru.feature_app_settings.R
 import kekmech.ru.feature_app_settings.databinding.ItemContributorBinding
 
