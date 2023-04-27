@@ -5,8 +5,8 @@ import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
+import kekmech.ru.domain_favorite_schedule.dto.FavoriteSchedule
 import kekmech.ru.domain_schedule.dto.Day
-import kekmech.ru.domain_schedule.dto.FavoriteSchedule
 import kekmech.ru.domain_schedule.dto.Schedule
 import kekmech.ru.domain_schedule.dto.ScheduleType
 import kekmech.ru.domain_schedule.dto.SearchResult
@@ -205,12 +205,11 @@ class ScheduleDetailsReducerTest : BehaviorSpec({
         private val STATE = ScheduleDetailsState(SEARCH_RESULT)
         private val SELECTED_DATE = LocalDate.of(2020, 1, 1)
         private val FAVORITE = FavoriteSchedule(
-            groupNumber = SEARCH_RESULT.name,
-            description = SEARCH_RESULT.description,
+            name = SEARCH_RESULT.name,          description = SEARCH_RESULT.description,
             order = 0
         )
         private val FAVORITE_ANOTHER = FavoriteSchedule(
-            groupNumber = "Василий Пупкин",
+            name = "Василий Пупкин",
             description = "",
             order = 0
         )

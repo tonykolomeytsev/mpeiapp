@@ -31,7 +31,7 @@ class BottomBarController(
     private val childFragmentManager: FragmentManager = fragment.childFragmentManager
     var lastSelectedTab = BottomTab.DASHBOARD
     private var bottomNavView: BottomNavigationView? = null
-    private var bundle: Bundle = Bundle()
+    private val bundle: Bundle = Bundle()
     private val currentTabFragment: Fragment?
         get() = childFragmentManager.fragments.firstOrNull { !it.isHidden }
     private val backStack: BottomBarBackStack = BottomBarBackStack(firstTab = BottomTab.DASHBOARD)

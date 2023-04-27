@@ -10,7 +10,7 @@ import androidx.annotation.LayoutRes
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
-abstract class BottomSheetDialogFragment :
+open class BottomSheetDialogFragment :
     com.google.android.material.bottomsheet.BottomSheetDialogFragment() {
 
     @LayoutRes

@@ -3,7 +3,6 @@
 plugins {
     id("com.android.application")
     id("mpeix.android.base")
-    id("mpeix.android-jar-finder")
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
 }
@@ -89,6 +88,7 @@ dependencies {
     implementation(project(":domain_app_settings_models"))
     implementation(project(":domain_bars"))
     implementation(project(":domain_dashboard"))
+    implementation(project(":domain_favorite_schedule"))
     implementation(project(":domain_force_update"))
     implementation(project(":domain_github"))
     implementation(project(":domain_main_screen"))

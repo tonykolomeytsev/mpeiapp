@@ -6,15 +6,15 @@ import android.view.inputmethod.InputMethodManager
 
 object KeyboardUtils {
 
-    fun showSoftInput(view: View?) {
-        view?.let {
+    fun showSoftInput(view: View) {
+        view.let {
             val imm = view.context.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager?
             imm?.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
         }
     }
 
-    fun hideSoftInput(view: View?) {
-        view?.let {
+    fun hideSoftInput(view: View) {
+        view.let {
             val imm = view.context.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager?
             imm?.hideSoftInputFromWindow(view.windowToken, 0)
         }
