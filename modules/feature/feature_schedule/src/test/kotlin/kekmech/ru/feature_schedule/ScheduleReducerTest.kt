@@ -18,12 +18,12 @@ import kekmech.ru.domain_schedule.dto.Day
 import kekmech.ru.domain_schedule.dto.Schedule
 import kekmech.ru.domain_schedule.dto.ScheduleType
 import kekmech.ru.domain_schedule.dto.Week
-import kekmech.ru.feature_schedule.main.elm.ScheduleCommand
-import kekmech.ru.feature_schedule.main.elm.ScheduleEffect
-import kekmech.ru.feature_schedule.main.elm.ScheduleEvent.Internal
-import kekmech.ru.feature_schedule.main.elm.ScheduleEvent.Ui
-import kekmech.ru.feature_schedule.main.elm.ScheduleReducer
-import kekmech.ru.feature_schedule.main.elm.ScheduleState
+import kekmech.ru.feature_schedule.screens.main.elm.ScheduleCommand
+import kekmech.ru.feature_schedule.screens.main.elm.ScheduleEffect
+import kekmech.ru.feature_schedule.screens.main.elm.ScheduleEvent.Internal
+import kekmech.ru.feature_schedule.screens.main.elm.ScheduleEvent.Ui
+import kekmech.ru.feature_schedule.screens.main.elm.ScheduleReducer
+import kekmech.ru.feature_schedule.screens.main.elm.ScheduleState
 import java.time.LocalDate
 import java.time.Month
 
