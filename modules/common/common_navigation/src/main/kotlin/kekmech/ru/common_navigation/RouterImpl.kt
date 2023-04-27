@@ -7,19 +7,17 @@ internal class RouterImpl : NavigationHolder, Router {
 
     private var activity: AppCompatActivity? = null
 
-    private var activityCommandBuffer = mutableListOf<ActivityCommand>()
+    private val activityCommandBuffer = mutableListOf<ActivityCommand>()
     private val commandBuffer = mutableListOf<Command>()
 
     override fun subscribe(activity: AppCompatActivity) {
         this.activity = activity
         commandBuffer
-            .map { it }
             .forEach {
                 it.apply(activity.supportFragmentManager)
                 commandBuffer.remove(it)
             }
         activityCommandBuffer
-            .map { it }
             .forEach {
                 it.apply(activity)
                 activityCommandBuffer.remove(it)

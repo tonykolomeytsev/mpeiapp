@@ -35,7 +35,7 @@ class MpeixApp : Application(),
     private val appEnvironment by fastLazy {
         runCatching {
             AppEnvironment.valueOf(
-                sharedPreferences.getString("app_env", "PROD")!!
+                sharedPreferences.getString("app_env", "PROD").orEmpty()
             )
         }.getOrDefault(AppEnvironment.PROD)
     }

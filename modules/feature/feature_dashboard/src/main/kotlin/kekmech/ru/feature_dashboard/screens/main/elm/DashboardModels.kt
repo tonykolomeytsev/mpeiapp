@@ -2,10 +2,10 @@ package kekmech.ru.feature_dashboard.screens.main.elm
 
 import kekmech.ru.common_android.moscowLocalDateTime
 import kekmech.ru.coreui.items.FavoriteScheduleItem
+import kekmech.ru.domain_favorite_schedule.dto.FavoriteSchedule
 import kekmech.ru.domain_notes.dto.Note
 import kekmech.ru.domain_schedule.GROUP_NUMBER_PATTERN
 import kekmech.ru.domain_schedule.dto.Classes
-import kekmech.ru.domain_schedule.dto.FavoriteSchedule
 import kekmech.ru.domain_schedule.dto.Schedule
 import kekmech.ru.domain_schedule.dto.ScheduleType
 import kekmech.ru.domain_schedule.dto.SessionItem

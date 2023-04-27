@@ -19,6 +19,7 @@ private const val ICON_SIZE_DP = 32
 private const val TEXT_SIZE_SP = 12
 private const val DP_8 = 8
 
+@Suppress("UnsafeCallOnNullableType")
 internal class MarkersBitmapFactory(
     context: Context,
     private val emojiProvider: EmojiProvider

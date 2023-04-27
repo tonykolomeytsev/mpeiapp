@@ -17,10 +17,12 @@ dependencies {
 
     implementation(project(":domain_notes"))
     implementation(project(":domain_schedule"))
+    implementation(project(":domain_favorite_schedule"))
 
     implementation(project(":common_adapter"))
     implementation(project(":common_android"))
     implementation(project(":common_cache"))
+    implementation(project(":common_elm"))
     implementation(project(":common_kotlin"))
     implementation(project(":common_network"))
 

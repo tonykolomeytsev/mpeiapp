@@ -4,7 +4,7 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
-import kekmech.ru.domain_schedule.dto.FavoriteSchedule
+import kekmech.ru.domain_favorite_schedule.dto.FavoriteSchedule
 import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesEvent.Internal
 import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesEvent.Ui
 
@@ -102,19 +102,19 @@ private object Mocks {
     val FAVORITES_LIST =
         listOf(
             FavoriteSchedule(
-                groupNumber = "A-08-22",
+                name = "A-08-22",
                 description = "Hello world",
                 order = 0,
             ),
             FavoriteSchedule(
-                groupNumber = "C-08-22",
+                name = "C-08-22",
                 description = "Hello world!",
                 order = 1,
             )
         )
     val NEW_FAVORITE =
         FavoriteSchedule(
-            groupNumber = "Cэ-12-22",
+            name = "Cэ-12-22",
             description = "Hello world!",
             order = 1,
         )

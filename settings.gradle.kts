@@ -49,11 +49,13 @@ File(rootProject.projectDir, "modules").walk()
     .filter { it.isBuildGradleScript() }
     .filter { it != rootProject.buildFile }
     .mapNotNull { it.parentFile }
-    .forEach { moduleDir ->
+    .count { moduleDir ->
         val moduleName = ":${moduleDir.name}"
         include(moduleName)
         project(moduleName).projectDir = moduleDir
+        true
     }
+    .also { println("Added $it subprojects") }
 
 fun File.isBuildGradleScript(): Boolean =
-    isFile && name.matches("build\\.gradle(\\.kts)?".toRegex())
+    isFile && name == "build.gradle.kts"

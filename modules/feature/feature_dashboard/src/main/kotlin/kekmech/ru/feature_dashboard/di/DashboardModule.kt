@@ -14,6 +14,6 @@ object DashboardModule : ModuleProvider({
 
     factory { DashboardFeatureFactory(get(), get()) }
     factory { DashboardReducer() }
-    factory { DashboardActor(get(), get(), get()) }
+    factory { DashboardActor(get(), get(), get(), get()) }
     factory { DashboardFeatureLauncherImpl() } bind DashboardFeatureLauncher::class
 })

@@ -20,11 +20,15 @@ import org.gradle.plugins.ide.idea.model.IdeaModel
 import java.io.FileOutputStream
 import java.util.zip.ZipFile
 
+/**
+ * AAR to JAR transformation plugin
+ *
+ *
+ */
 @Suppress("unused")
 class Aar2JarPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
-
         val compileOnlyAar = target.configurations.register("compileOnlyAar")
         val testImplementationAar = target.configurations.register("testImplementationAar")
 

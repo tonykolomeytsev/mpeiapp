@@ -56,7 +56,7 @@ internal class DashboardReducer :
                         ?.map {
                             FavoriteScheduleItem(
                                 value = it,
-                                isSelected = it.groupNumber == state.selectedScheduleName,
+                                isSelected = it.name == state.selectedScheduleName,
                             )
                         }
                 )
@@ -81,9 +81,9 @@ internal class DashboardReducer :
             }
             is Ui.Action.SilentUpdate -> refreshCommands()
             is Ui.Action.SelectFavoriteSchedule -> {
-                val newGroupNumber = event.favoriteSchedule.groupNumber
-                state { copy(selectedScheduleName = newGroupNumber) }
-                commands { +Command.SelectGroup(newGroupNumber) }
+                val newName = event.favoriteSchedule.name
+                state { copy(selectedScheduleName = newName) }
+                commands { +Command.SelectGroup(newName) }
             }
         }
 

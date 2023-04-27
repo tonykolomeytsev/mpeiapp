@@ -28,7 +28,7 @@ internal class BarsActor(
             .toObservable()
         is BarsCommand.GetLatestLoadedUrl -> Single
             .fromCallable { barsRepository.latestLoadedUrl }
-            .mapSuccessEvent { Internal.GetLatestLoadedUrlSuccess(it.takeIf { it.isNotBlank() }) }
+            .mapSuccessEvent { url -> Internal.GetLatestLoadedUrlSuccess(url.takeIf { it.isNotBlank() }) }
 
         is BarsCommand.PushMarks -> barsRepository.pushMarksJson(command.marksJson)
             .onErrorComplete()

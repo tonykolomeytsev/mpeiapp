@@ -1,6 +1,6 @@
 package kekmech.ru.feature_app_settings.screens.favorites.elm
 
-import kekmech.ru.domain_schedule.dto.FavoriteSchedule
+import kekmech.ru.domain_favorite_schedule.dto.FavoriteSchedule
 
 internal data class FavoritesState(
     val favorites: List<FavoriteSchedule>? = null,

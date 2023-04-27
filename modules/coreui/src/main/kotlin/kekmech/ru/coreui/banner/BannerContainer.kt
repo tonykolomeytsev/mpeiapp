@@ -7,15 +7,17 @@ import android.widget.FrameLayout
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers.mainThread
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import kekmech.ru.common_android.addSystemTopPadding
+import kekmech.ru.common_elm.DisposableDelegate
+import kekmech.ru.common_elm.DisposableDelegateImpl
 import kekmech.ru.coreui.R
 import kekmech.ru.coreui.databinding.ViewBannerContainerBinding
-import java.util.*
+import java.util.Optional
 import java.util.concurrent.TimeUnit
 
 class BannerContainer @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
-) : FrameLayout(context, attrs) {
+) : FrameLayout(context, attrs), DisposableDelegate by DisposableDelegateImpl() {
 
     private val bannerSubject = BehaviorSubject.create<Optional<Banner>>().toSerialized()
     private val viewBinding: ViewBannerContainerBinding
@@ -30,8 +32,10 @@ class BannerContainer @JvmOverloads constructor(
 
         observeBannerShowing()
             .subscribe { it.map(::displayBanner) }
+            .bind()
         observeBannerHiding()
             .subscribe { it.map { hideBanner() } }
+            .bind()
     }
 
     fun show(banner: Banner) {
