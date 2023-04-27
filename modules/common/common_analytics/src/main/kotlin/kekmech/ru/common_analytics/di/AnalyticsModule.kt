@@ -1,8 +1,9 @@
 package kekmech.ru.common_analytics.di
 
 import kekmech.ru.common_analytics.AnalyticsWrapper
-import kekmech.ru.common_di.ModuleProvider
+import org.koin.core.module.dsl.singleOf
+import org.koin.dsl.module
 
-object AnalyticsModule : ModuleProvider({
-    single { AnalyticsWrapper(get(), get()) }
-})
+val CommonAnalyticsModule = module {
+    singleOf(::AnalyticsWrapper)
+}

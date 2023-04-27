@@ -1,7 +1,6 @@
 package kekmech.ru.feature_schedule.screens.main.elm
 
 import kekmech.ru.common_kotlin.moscowLocalDate
-import kekmech.ru.common_kotlin.mutableLinkedHashMap
 import kekmech.ru.domain_app_settings_models.AppSettings
 import kekmech.ru.domain_schedule_models.dto.Classes
 import kekmech.ru.domain_schedule_models.dto.Schedule
@@ -10,7 +9,7 @@ import java.time.LocalDate
 private const val SCHEDULE_RAM_CACHE_CAPACITY = 5
 
 internal data class ScheduleState(
-    val schedule: MutableMap<Int, Schedule> = mutableLinkedHashMap(SCHEDULE_RAM_CACHE_CAPACITY),
+    val schedule: Map<Int, Schedule> = LinkedHashMap(SCHEDULE_RAM_CACHE_CAPACITY),
     val loadingError: Throwable? = null,
 
     // region settings
@@ -18,7 +17,6 @@ internal data class ScheduleState(
     val selectedDate: LocalDate = moscowLocalDate(),
 
     // region ui
-    val hash: String = "",
     val appSettings: AppSettings,
     val isNavigationFabVisible: Boolean = true,
 ) {
@@ -27,7 +25,6 @@ internal data class ScheduleState(
      */
     val weekOfSemester
         get() = schedule[weekOffset]?.weeks?.firstOrNull()?.weekOfSemester
-            ?: schedule[0]?.weeks?.firstOrNull()?.weekOfSemester?.plus(weekOffset)
 
     val selectedSchedule get() = schedule[weekOffset]
 
