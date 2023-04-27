@@ -1,9 +1,9 @@
 package kekmech.ru.feature_dashboard.screens.main
 
 import android.content.Context
-import kekmech.ru.common_android.moscowLocalDate
-import kekmech.ru.common_android.moscowLocalTime
 import kekmech.ru.common_kotlin.fastLazy
+import kekmech.ru.common_kotlin.moscowLocalDate
+import kekmech.ru.common_kotlin.moscowLocalTime
 import kekmech.ru.coreui.PrettyDateFormatter
 import kekmech.ru.coreui.items.EmptyStateItem
 import kekmech.ru.coreui.items.ErrorStateItem

@@ -24,6 +24,7 @@ dependencies {
     implementation(project(":domain_map"))
     implementation(project(":domain_notes"))
     implementation(project(":domain_schedule"))
+    implementation(project(":domain_schedule_models"))
     implementation(project(":domain_favorite_schedule"))
     implementation(project(":domain_search"))
 

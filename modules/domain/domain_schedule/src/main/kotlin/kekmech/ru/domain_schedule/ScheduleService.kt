@@ -5,8 +5,8 @@ import kekmech.ru.common_annotations.BackendServiceUrl
 import kekmech.ru.common_annotations.EndpointUrl
 import kekmech.ru.domain_schedule.dto.GetSearchResultsResponse
 import kekmech.ru.domain_schedule.dto.GetSessionResponse
-import kekmech.ru.domain_schedule.dto.Schedule
 import kekmech.ru.domain_schedule.dto.SearchResultType
+import kekmech.ru.domain_schedule_models.dto.Schedule
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

@@ -10,7 +10,9 @@ dependencies {
     implementation(libs.ktor.serialization.gson)
 
     implementation(project(":common_android"))
+    implementation(project(":common_kotlin"))
     implementation(project(":common_network"))
 
     implementation(project(":domain_schedule"))
+    implementation(project(":domain_schedule_models"))
 }

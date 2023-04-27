@@ -18,15 +18,15 @@ import kekmech.ru.common_android.viewbinding.lazyBinding
 import kekmech.ru.common_android.views.setOnClickListenerWithDebounce
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_schedule.R
-import kekmech.ru.coreui.R as coreui_R
 import kekmech.ru.common_schedule.drawable.ProgressBackgroundDrawable
 import kekmech.ru.coreui.items.ClickableItemViewHolder
 import kekmech.ru.coreui.items.ClickableItemViewHolderImpl
-import kekmech.ru.domain_schedule.dto.Classes
-import kekmech.ru.domain_schedule.dto.ClassesType
-import kekmech.ru.domain_schedule.dto.ScheduleType
+import kekmech.ru.domain_schedule_models.dto.Classes
+import kekmech.ru.domain_schedule_models.dto.ClassesType
+import kekmech.ru.domain_schedule_models.dto.ScheduleType
 import kekmech.ru.strings.StringArrays
 import java.time.format.DateTimeFormatter
+import kekmech.ru.coreui.R as coreui_R
 
 interface ClassesViewHolder : ClickableItemViewHolder {
     fun setDisciplineName(name: String)

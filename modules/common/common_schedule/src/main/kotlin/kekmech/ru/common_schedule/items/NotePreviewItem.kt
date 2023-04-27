@@ -9,12 +9,12 @@ import kekmech.ru.common_android.dpToPx
 import kekmech.ru.common_android.getResColor
 import kekmech.ru.common_android.getThemeColor
 import kekmech.ru.common_schedule.R
-import kekmech.ru.coreui.R as coreui_R
 import kekmech.ru.common_schedule.databinding.ItemNotePreviewBinding
 import kekmech.ru.common_schedule.drawable.ProgressBackgroundDrawable
 import kekmech.ru.coreui.items.ClickableItemViewHolder
 import kekmech.ru.coreui.items.ClickableItemViewHolderImpl
-import kekmech.ru.domain_schedule.dto.Classes
+import kekmech.ru.domain_schedule_models.dto.Classes
+import kekmech.ru.coreui.R as coreui_R
 
 data class NotePreview(
     val preview: String,

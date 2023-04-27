@@ -1,7 +1,7 @@
 package kekmech.ru.feature_dashboard.screens.main.upcoming_events
 
-import kekmech.ru.domain_schedule.dto.Classes
-import kekmech.ru.domain_schedule.dto.Day
+import kekmech.ru.domain_schedule_models.dto.Classes
+import kekmech.ru.domain_schedule_models.dto.Day
 import kekmech.ru.feature_dashboard.screens.main.elm.DashboardState
 import java.time.DayOfWeek
 import java.time.LocalDate
