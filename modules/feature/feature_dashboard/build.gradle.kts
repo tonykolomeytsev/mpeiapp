@@ -12,6 +12,7 @@ dependencies {
     implementation(libs.androidx.appCompat)
     implementation(libs.androidx.constraintLayout)
     implementation(libs.androidx.coreKtx)
+    implementation(libs.androidx.fragment)
     implementation(libs.androidx.swipeRefreshLayout)
     implementation(libs.facebook.shimmer)
     implementation(libs.google.material)

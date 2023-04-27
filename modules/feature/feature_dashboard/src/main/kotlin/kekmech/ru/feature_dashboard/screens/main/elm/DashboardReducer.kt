@@ -1,16 +1,12 @@
 package kekmech.ru.feature_dashboard.screens.main.elm
 
+import kekmech.ru.common_kotlin.Resource
 import kekmech.ru.common_kotlin.moscowLocalDate
-import kekmech.ru.common_kotlin.moscowLocalDateTime
-import kekmech.ru.coreui.items.FavoriteScheduleItem
-import kekmech.ru.domain_notes.dto.Note
-import kekmech.ru.domain_schedule_models.dto.Day
+import kekmech.ru.common_kotlin.toResource
+import kekmech.ru.domain_dashboard.dto.UpcomingEventsPrediction
 import kekmech.ru.feature_dashboard.screens.main.elm.DashboardEvent.Internal
 import kekmech.ru.feature_dashboard.screens.main.elm.DashboardEvent.Ui
-import kekmech.ru.feature_dashboard.screens.main.upcoming_events.getDayWithOffset
-import kekmech.ru.feature_dashboard.screens.main.upcoming_events.getOffsetForDayWithActualEvents
 import vivid.money.elmslie.core.store.dsl_reducer.ScreenDslReducer
-import java.time.temporal.ChronoUnit
 import kekmech.ru.feature_dashboard.screens.main.elm.DashboardCommand as Command
 import kekmech.ru.feature_dashboard.screens.main.elm.DashboardEffect as Effect
 import kekmech.ru.feature_dashboard.screens.main.elm.DashboardEvent as Event
@@ -24,93 +20,67 @@ internal class DashboardReducer :
 
     override fun Result.internal(event: Internal): Any =
         when (event) {
-            is Internal.LoadScheduleSuccess -> state {
-                copy(
-                    currentWeekSchedule = event.schedule.takeIf { event.weekOffset == 0 }
-                        ?: state.currentWeekSchedule,
-                    nextWeekSchedule = event.schedule.takeIf { event.weekOffset == 1 }
-                        ?: state.nextWeekSchedule,
-                    loadingError = null,
-                    isLoading = false,
-                    lastUpdateDateTime = moscowLocalDateTime(),
-                )
+            is Internal.GetSelectedScheduleMetaInfoSuccess -> {
+                state { copy(selectedScheduleMetaInfo = event.info.toResource()) }
             }
-            is Internal.LoadScheduleFailure -> {
-                state {
-                    copy(
-                        loadingError = event.throwable,
-                        isLoading = false,
-                    )
-                }
-                effects { +Effect.ShowLoadingError }
+            is Internal.GetSelectedScheduleMetaInfoFailure -> {
+                state { copy(selectedScheduleMetaInfo = event.throwable.toResource()) }
             }
-            is Internal.GetSelectedGroupNameSuccess -> state {
-                copy(selectedScheduleName = event.groupName)
+            is Internal.GetUpcomingEventsSuccess -> {
+                state { copy(upcomingEvents = event.upcomingEvents.toResource()) }
             }
-            is Internal.LoadNotesSuccess -> state { copy(notes = getImportantNotes(event.notes)) }
-            is Internal.LoadNotesFailure -> effects { +Effect.ShowNotesLoadingError }
-            is Internal.LoadFavoriteSchedulesSuccess -> state {
-                copy(
-                    favoriteSchedules = event.favorites
-                        .takeIf { it.isNotEmpty() }
-                        ?.map {
-                            FavoriteScheduleItem(
-                                value = it,
-                                isSelected = it.name == state.selectedScheduleName,
-                            )
-                        }
-                )
+            is Internal.GetUpcomingEventsFailure -> {
+                state { copy(upcomingEvents = event.throwable.toResource()) }
             }
-            is Internal.LoadSessionSuccess -> state { copy(sessionScheduleItems = event.items) }
+            is Internal.GetActualNotesSuccess -> {
+                state { copy(actualNotes = event.notes.toResource()) }
+            }
+            is Internal.GetActualNotesFailure -> {
+                state { copy(actualNotes = event.throwable.toResource()) }
+            }
+            is Internal.GetFavoriteSchedulesSuccess -> {
+                state { copy(favoriteSchedules = event.favorites.toResource()) }
+            }
+            is Internal.GetFavoriteSchedulesFailure -> {
+                state { copy(favoriteSchedules = event.throwable.toResource()) }
+            }
             is Internal.SelectGroupSuccess -> refreshCommands()
         }
 
     override fun Result.ui(event: Ui): Any =
         when (event) {
-            is Ui.Init -> {
-                state { copy(isLoading = true) }
-                refreshCommands()
-            }
-            is Ui.Action.SwipeToRefresh -> {
-                state { copy(isLoading = true) }
-                refreshCommands()
-            }
+            is Ui.Init -> refreshCommands()
+            is Ui.Action.SwipeToRefresh -> refreshCommands()
             is Ui.Click.ClassesItem -> effects {
-                +state.getActualScheduleDayForView()
-                    ?.let { day -> Effect.NavigateToNotesList(event.classes, day.date) }
+                val shownDay =
+                    when (val events = state.upcomingEvents.value) {
+                        is UpcomingEventsPrediction.ClassesTodayStarted,
+                        is UpcomingEventsPrediction.ClassesTodayNotStarted,
+                        -> moscowLocalDate()
+                        is UpcomingEventsPrediction.ClassesInNDays -> events.date
+                        else -> null
+                    }
+                shownDay?.let { +Effect.NavigateToNotesList(event.classes, it) }
             }
             is Ui.Action.SilentUpdate -> refreshCommands()
             is Ui.Action.SelectFavoriteSchedule -> {
-                val newName = event.favoriteSchedule.name
-                state { copy(selectedScheduleName = newName) }
-                commands { +Command.SelectGroup(newName) }
+                state {
+                    copy(
+                        selectedScheduleMetaInfo = Resource.Loading,
+                        upcomingEvents = Resource.Loading,
+                        actualNotes = Resource.Loading,
+                    )
+                }
+                commands { +Command.SelectGroup(event.favoriteSchedule.name) }
             }
         }
 
     private fun Result.refreshCommands() {
         commands {
-            +Command.GetSelectedGroupName
-            +Command.LoadNotes
-            +Command.LoadSchedule(0)
-            +Command.LoadSchedule(1)
-            +Command.LoadFavoriteSchedules
-            +Command.LoadSession
+            +Command.GetSelectedScheduleMetaInfo
+            +Command.GetUpcomingEvents
+            +Command.GetActualNotes
+            +Command.GetFavoriteSchedules
         }
     }
-
-    @Suppress("MagicNumber")
-    private fun getImportantNotes(notes: List<Note>): List<Note> =
-        notes
-            .filter { // todo make with settings
-                ChronoUnit.DAYS.between(moscowLocalDate(), it.dateTime.toLocalDate()) in 0..7
-            }
-            .sortedBy { it.dateTime }
-            .take(5) // todo make with settings
-
-    private fun State.getActualScheduleDayForView(): Day? {
-        val nowDate = lastUpdateDateTime.toLocalDate()
-        val nowTime = lastUpdateDateTime.toLocalTime()
-        return getDayWithOffset(nowDate, getOffsetForDayWithActualEvents(nowDate, nowTime))
-    }
-
 }

@@ -33,15 +33,27 @@ fun <T : Any, R : Any> Collection<Resource<T>>.merge(
         when (e) {
             is Resource.Error -> return Resource.Error(e.error)
             is Resource.Loading -> isLoading = true
-            is Resource.Data -> { /* no-op */ }
+            is Resource.Data -> { /* no-op */
+            }
         }
     }
     if (isLoading) return Resource.Loading
     return Resource.Data(mergeRule(this.map { it.value!! }))
 }
 
-inline fun<reified T: Any> Resource<T>.map(transform: (T) -> T): Resource<T> =
+inline fun <reified T : Any> Resource<T>.map(transform: (T) -> T): Resource<T> =
     when (this) {
         is Resource.Data<T> -> Resource.Data(transform(this.value))
         else -> this
+    }
+
+inline fun <reified A : Any, reified B : Any> Resource<A>.zip(
+    another: Resource<B>,
+): Resource<Pair<A, B>> =
+    when {
+        this is Resource.Data && another is Resource.Data ->
+            (this.value to another.value).toResource()
+        this is Resource.Error -> this.error.toResource()
+        another is Resource.Error -> another.error.toResource()
+        else -> Resource.Loading
     }

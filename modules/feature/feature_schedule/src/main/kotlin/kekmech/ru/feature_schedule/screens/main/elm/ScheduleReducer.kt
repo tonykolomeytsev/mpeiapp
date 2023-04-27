@@ -5,7 +5,6 @@ import kekmech.ru.feature_schedule.screens.main.elm.ScheduleEvent.Ui
 import vivid.money.elmslie.core.store.dsl_reducer.ScreenDslReducer
 import java.time.DayOfWeek
 import java.time.LocalDate
-import java.util.UUID
 import kekmech.ru.feature_schedule.screens.main.elm.ScheduleCommand as Command
 import kekmech.ru.feature_schedule.screens.main.elm.ScheduleEffect as Effect
 import kekmech.ru.feature_schedule.screens.main.elm.ScheduleEvent as Event
@@ -20,12 +19,10 @@ internal class ScheduleReducer :
     override fun Result.internal(event: Internal): Any =
         when (event) {
             is Internal.LoadScheduleSuccess -> {
-                val schedule = state.schedule.apply { put(event.weekOffset, event.schedule) }
                 state {
                     copy(
                         loadingError = null,
-                        schedule = schedule,
-                        hash = UUID.randomUUID().toString(),
+                        schedule = schedule + mapOf(event.weekOffset to event.schedule),
                     )
                 }
             }
