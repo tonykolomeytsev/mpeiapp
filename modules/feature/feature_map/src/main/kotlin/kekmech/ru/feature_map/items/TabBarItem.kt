@@ -7,7 +7,7 @@ import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.feature_map.R
 import kekmech.ru.feature_map.databinding.ItemTabBarBinding
-import kekmech.ru.feature_map.elm.FilterTab
+import kekmech.ru.feature_map.screens.main.elm.FilterTab
 
 internal object TabBarItem
 

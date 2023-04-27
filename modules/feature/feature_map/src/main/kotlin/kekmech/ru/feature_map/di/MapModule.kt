@@ -6,11 +6,11 @@ import kekmech.ru.common_network.retrofit.buildApi
 import kekmech.ru.domain_map.MapFeatureLauncher
 import kekmech.ru.domain_map.MapRepository
 import kekmech.ru.domain_map.MapService
-import kekmech.ru.feature_map.elm.MapActor
-import kekmech.ru.feature_map.elm.MapFeatureFactory
 import kekmech.ru.feature_map.launcher.DeeplinkDelegate
 import kekmech.ru.feature_map.launcher.MapFeatureLauncherImpl
-import kekmech.ru.feature_map.view.MarkersBitmapFactory
+import kekmech.ru.feature_map.screens.main.elm.MapActor
+import kekmech.ru.feature_map.screens.main.elm.MapFeatureFactory
+import kekmech.ru.feature_map.screens.main.view.MarkersBitmapFactory
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.loadKoinModules
 import org.koin.dsl.bind

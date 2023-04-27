@@ -4,10 +4,10 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldContainExactly
-import kekmech.ru.feature_dashboard.elm.DashboardCommand
-import kekmech.ru.feature_dashboard.elm.DashboardEvent.Ui
-import kekmech.ru.feature_dashboard.elm.DashboardReducer
-import kekmech.ru.feature_dashboard.elm.DashboardState
+import kekmech.ru.feature_dashboard.screens.main.elm.DashboardCommand
+import kekmech.ru.feature_dashboard.screens.main.elm.DashboardEvent.Ui
+import kekmech.ru.feature_dashboard.screens.main.elm.DashboardReducer
+import kekmech.ru.feature_dashboard.screens.main.elm.DashboardState
 
 internal class DashboardReducerTest : BehaviorSpec({
     val reducer = DashboardReducer()
