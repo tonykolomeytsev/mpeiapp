@@ -4,7 +4,7 @@ import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import kekmech.ru.domain_app_settings.AppSettingsRepository
 import kekmech.ru.domain_github.ContributorsRepository
-import kekmech.ru.domain_schedule.ScheduleRepository
+import kekmech.ru.domain_schedule.repository.ScheduleRepository
 import vivid.money.elmslie.core.store.Actor
 
 internal class AppSettingsActor(
@@ -45,7 +45,7 @@ internal class AppSettingsActor(
                     .mapSuccessEvent(AppSettingsEvent.Internal::ObserveContributorsSuccess)
 
             is AppSettingsCommand.ClearSelectedGroup -> Completable
-                .fromAction { scheduleRepository.debugClearSelectedGroup() }
+                .fromAction { TODO("Just send user to onboarding") }
                 .toObservable()
             is AppSettingsCommand.ChangeBackendEnvironment -> appSettingsRepository
                 .changeAppSettings { copy(appEnvironment = command.appEnvironment) }

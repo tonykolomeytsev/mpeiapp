@@ -44,7 +44,6 @@ import kekmech.ru.feature_dashboard.items.DashboardClassesAdapterItem
 import kekmech.ru.feature_dashboard.items.DayStatusAdapterItem
 import kekmech.ru.feature_dashboard.items.ScheduleTypeAdapterItem
 import kekmech.ru.feature_dashboard.items.SearchFieldAdapterItem
-import kekmech.ru.feature_dashboard.items.SessionAdapterItem
 import kekmech.ru.feature_dashboard.screens.main.elm.DashboardEffect
 import kekmech.ru.feature_dashboard.screens.main.elm.DashboardEvent
 import kekmech.ru.feature_dashboard.screens.main.elm.DashboardState
@@ -152,7 +151,7 @@ internal class DashboardFragment :
         DashboardClassesAdapterItem(requireContext(), ::clickOnClasses),
         ScheduleTypeAdapterItem {
             analytics.sendClick("ChangeGroup")
-            parentFragment?.setResultListener<String>(FIND_GROUP_RESULT_KEY) {
+            parentFragment?.setResultListener<Any>(FIND_GROUP_RESULT_KEY) {
                 feature.accept(DashboardEvent.Ui.Action.SwipeToRefresh)
             }
             dependencies.scheduleFeatureLauncher.launchSearchGroup(
@@ -167,7 +166,6 @@ internal class DashboardFragment :
         },
         NotePreviewAdapterItem(::clickOnClasses, R.layout.item_note_preview_padding_horisontal_8dp),
         TextAdapterItem(R.layout.item_time_prediction),
-        SessionAdapterItem(requireContext()),
         ShimmerAdapterItem(R.layout.item_events_shimmer),
         ErrorStateAdapterItem {
             analytics.sendClick("DashboardReload")

@@ -10,8 +10,8 @@ import kekmech.ru.domain_schedule.dto.Day
 import kekmech.ru.domain_schedule.dto.Schedule
 import kekmech.ru.domain_schedule.dto.ScheduleType
 import kekmech.ru.domain_schedule.dto.SearchResult
-import kekmech.ru.domain_schedule.dto.SearchResultType
 import kekmech.ru.domain_schedule.dto.Week
+import kekmech.ru.domain_schedule.schedule_search.dto.SearchResultType
 import kekmech.ru.feature_search.screens.schedule_details.elm.ScheduleDetailsCommand
 import kekmech.ru.feature_search.screens.schedule_details.elm.ScheduleDetailsEffect
 import kekmech.ru.feature_search.screens.schedule_details.elm.ScheduleDetailsEvent.Internal

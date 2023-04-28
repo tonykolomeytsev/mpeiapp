@@ -9,6 +9,7 @@ import kekmech.ru.coreui.items.EmptyStateItem
 import kekmech.ru.coreui.items.FavoriteScheduleItem
 import kekmech.ru.coreui.items.SectionHeaderItem
 import kekmech.ru.coreui.items.SpaceItem
+import kekmech.ru.domain_schedule_models.dto.WeekOfSemester
 import kekmech.ru.feature_dashboard.items.BannerLunchItem
 import kekmech.ru.feature_dashboard.items.BannerOpenSourceItem
 import kekmech.ru.feature_dashboard.items.DayStatusItem
@@ -21,9 +22,6 @@ import kekmech.ru.feature_dashboard.screens.main.upcoming_events.UpcomingEventsL
 import kekmech.ru.strings.Strings
 import java.time.DayOfWeek
 import java.time.LocalTime
-
-private const val WEEK_MIN_NUMBER = 0
-private const val WEEK_MAX_NUMBER = 17
 
 @Suppress("MagicNumber")
 internal class DashboardListConverter(
@@ -65,7 +63,7 @@ internal class DashboardListConverter(
             add(SearchFieldItem)
             add(SpaceItem.VERTICAL_8)
 
-            state.selectedScheduleMetaInfo.value?.let {
+            state.selectedSchedule.let {
                 add(
                     ScheduleTypeItem(
                         selectedScheduleName = it.name,
@@ -100,7 +98,7 @@ internal class DashboardListConverter(
                 addAll(items.map {
                     FavoriteScheduleItem(
                         value = it,
-                        isSelected = it.name.uppercase() == state.selectedScheduleMetaInfo.value?.name
+                        isSelected = it.name.uppercase() == state.selectedSchedule.name.uppercase()
                     )
                 })
             }
@@ -128,13 +126,15 @@ internal class DashboardListConverter(
     }
 
     private fun createDayStatusItem(state: DashboardState): DayStatusItem {
-        val weekStatus = state.weekOfSemester?.let { weekOfSemester ->
-            if (weekOfSemester in WEEK_MIN_NUMBER..WEEK_MAX_NUMBER) {
-                context.getString(Strings.dashboard_day_status_semester, weekOfSemester)
-            } else {
-                context.getString(Strings.dashboard_day_status_not_semester)
+        val weekStatus =
+            when (val weekOfSemester = state.weekOfSemester.value) {
+                is WeekOfSemester.Studying -> context.getString(
+                    Strings.dashboard_day_status_semester,
+                    weekOfSemester.num,
+                )
+                is WeekOfSemester.NonStudying -> context.getString(Strings.dashboard_day_status_not_semester)
+                null -> null
             }
-        }
         return DayStatusItem(
             formatter.formatAbsolute(moscowLocalDate()),
             weekStatus.orEmpty()

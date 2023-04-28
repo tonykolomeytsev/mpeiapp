@@ -5,11 +5,11 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.FirebaseAnalytics.Event
 import com.google.firebase.analytics.FirebaseAnalytics.Param
 import kekmech.ru.common_analytics.dto.AnalyticsEvent
-import kekmech.ru.domain_schedule.ScheduleRepository
+import kekmech.ru.domain_schedule.SelectedScheduleAnalyticsProvider
 
 internal class AnalyticsWrapper(
     private val firebaseAnalytics: FirebaseAnalytics,
-    private val scheduleRepository: ScheduleRepository
+    private val selectedScheduleAnalyticsProvider: SelectedScheduleAnalyticsProvider,
 ) {
 
     fun sendEvent(event: AnalyticsEvent) {
@@ -55,8 +55,8 @@ internal class AnalyticsWrapper(
                 is Boolean -> bundle.putBoolean(k, v)
             }
         }
-        val scheduleName = scheduleRepository.getSelectedScheduleNameForAnalytics()
-        if (scheduleName.isNotBlank()) {
+        val scheduleName = selectedScheduleAnalyticsProvider.getSelectedScheduleNameForAnalytics()
+        if (!scheduleName.isNullOrBlank()) {
             setUserProperty("schedule_name", scheduleName)
         }
         logEvent(name, bundle)

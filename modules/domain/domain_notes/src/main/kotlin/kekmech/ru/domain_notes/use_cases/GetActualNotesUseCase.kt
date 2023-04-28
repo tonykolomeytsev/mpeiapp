@@ -2,20 +2,18 @@ package kekmech.ru.domain_notes.use_cases
 
 import io.reactivex.rxjava3.core.Single
 import kekmech.ru.common_kotlin.moscowLocalDate
-import kekmech.ru.domain_notes.NotesRepository
 import kekmech.ru.domain_notes.dto.Note
 import java.time.temporal.ChronoUnit
 private val ActualNotesInterval = 0..7
 private const val ActualNotesNumber = 5
 
 class GetActualNotesUseCase(
-    private val notesRepository: NotesRepository,
+    private val getNotesUseCase: GetNotesForSelectedScheduleUseCase,
 ) {
 
     fun getActualNotes(): Single<List<Note>> {
         val today = moscowLocalDate()
-        return notesRepository
-            .getNotes()
+        return getNotesUseCase.getNotes()
             .map { notes ->
                 notes
                     .filter { note ->

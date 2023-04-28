@@ -9,8 +9,8 @@ import kekmech.ru.domain_map.dto.MapMarker
 import kekmech.ru.domain_map.dto.MarkerType
 import kekmech.ru.domain_notes.dto.Note
 import kekmech.ru.domain_schedule.dto.SearchResult
-import kekmech.ru.domain_schedule.dto.SearchResultType.GROUP
-import kekmech.ru.domain_schedule.dto.SearchResultType.PERSON
+import kekmech.ru.domain_schedule.schedule_search.dto.SearchResultType.GROUP
+import kekmech.ru.domain_schedule.schedule_search.dto.SearchResultType.PERSON
 import kekmech.ru.feature_search.item.FilterItem
 import kekmech.ru.feature_search.item.FilterItemType
 import kekmech.ru.feature_search.screens.main.elm.SearchCommand

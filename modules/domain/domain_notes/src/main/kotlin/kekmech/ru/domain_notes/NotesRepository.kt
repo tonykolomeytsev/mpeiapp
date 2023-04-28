@@ -2,26 +2,18 @@ package kekmech.ru.domain_notes
 
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
-import io.reactivex.rxjava3.internal.operators.completable.CompletableFromRunnable
 import kekmech.ru.domain_notes.dto.Note
 import kekmech.ru.domain_notes.sources.NotesSource
-import kekmech.ru.domain_schedule.ScheduleRepository
+import kekmech.ru.domain_schedule.repository.schedule.dto.SelectedSchedule
 
-class NotesRepository(
-    private val notesSource: NotesSource,
-    private val scheduleRepository: ScheduleRepository
-) {
+class NotesRepository(private val notesSource: NotesSource) {
 
-    fun getNotes(): Single<List<Note>> = scheduleRepository
-        .getSelectedScheduleName()
-        .map { notesSource.getAll(it) }
+    fun getNotesBySchedule(selectedSchedule: SelectedSchedule): Single<List<Note>> =
+        Single.fromCallable { notesSource.getAll(selectedSchedule.name) }
 
-    fun putNote(note: Note): Completable = scheduleRepository
-        .getSelectedScheduleName()
-        .map { notesSource.put(it, note) }
-        .ignoreElement()
+    fun putNoteBySchedule(selectedSchedule: SelectedSchedule, note: Note): Completable =
+        Completable.fromAction { notesSource.put(selectedSchedule.name, note) }
 
-    fun deleteNote(note: Note): Completable = CompletableFromRunnable.fromRunnable {
-        notesSource.delete(note)
-    }
+    fun deleteNote(note: Note): Completable =
+        Completable.fromAction { notesSource.delete(note) }
 }
