@@ -4,6 +4,7 @@ import io.reactivex.rxjava3.core.Single
 import kekmech.ru.common_kotlin.moscowLocalDate
 import kekmech.ru.common_kotlin.moscowLocalTime
 import kekmech.ru.domain_dashboard.dto.UpcomingEventsPrediction
+import kekmech.ru.domain_notes.services.AttachNotesToScheduleService
 import kekmech.ru.domain_schedule.use_cases.GetCurrentScheduleUseCase
 import kekmech.ru.domain_schedule_models.dto.Classes
 import kekmech.ru.domain_schedule_models.dto.Day
@@ -16,6 +17,7 @@ import kotlin.time.toDuration
 
 class GetUpcomingEventsUseCase(
     private val getCurrentScheduleUseCase: GetCurrentScheduleUseCase,
+    private val attachNotesToScheduleService: AttachNotesToScheduleService,
 ) {
 
     fun getPrediction(): Single<UpcomingEventsPrediction> {
@@ -25,8 +27,9 @@ class GetUpcomingEventsUseCase(
             Single
                 .concat(
                     getCurrentScheduleUseCase.getSchedule(weekOffset = 0),
-                    getCurrentScheduleUseCase.getSchedule(weekOffset = 1),
+                    getCurrentScheduleUseCase.getSchedule(weekOffset = 1)
                 )
+                .concatMapSingle(attachNotesToScheduleService::attach)
                 .concatMapIterable { it.weeks.flatMap(Week::days) }
                 .sorted { day1, day2 -> day1.date.compareTo(day2.date) }
                 .filter { day ->
