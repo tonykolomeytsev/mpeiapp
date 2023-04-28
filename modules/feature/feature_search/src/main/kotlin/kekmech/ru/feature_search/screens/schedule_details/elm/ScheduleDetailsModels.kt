@@ -3,7 +3,7 @@ package kekmech.ru.feature_search.screens.schedule_details.elm
 import kekmech.ru.common_kotlin.moscowLocalDate
 import kekmech.ru.domain_favorite_schedule.dto.FavoriteSchedule
 import kekmech.ru.domain_schedule.dto.SearchResult
-import kekmech.ru.domain_schedule.dto.SearchResultType
+import kekmech.ru.domain_schedule.repository.schedule.dto.SelectedSchedule
 import kekmech.ru.domain_schedule_models.dto.Day
 import kekmech.ru.domain_schedule_models.dto.Schedule
 import kekmech.ru.domain_schedule_models.dto.ScheduleType
@@ -17,11 +17,9 @@ internal data class ScheduleDetailsState(
     val selectedDayDate: LocalDate = moscowLocalDate(),
     val favoriteSchedule: FavoriteSchedule? = null,
 ) {
+
     val isLoadingSchedule: Boolean get() = thisWeek == null || nextWeek == null
-    val scheduleType get() = when (searchResult.type) {
-        SearchResultType.GROUP -> ScheduleType.GROUP
-        SearchResultType.PERSON -> ScheduleType.PERSON
-    }
+    val scheduleType get() = searchResult.type
 }
 
 internal sealed interface ScheduleDetailsEvent {
@@ -50,9 +48,14 @@ internal sealed interface ScheduleDetailsEffect {
 }
 
 internal sealed interface ScheduleDetailsCommand {
-    data class LoadSchedule(val ownerName: String, val weekOffset: Int) : ScheduleDetailsCommand
+    data class LoadSchedule(
+        val type: ScheduleType,
+        val name: String,
+        val weekOffset: Int,
+    ) : ScheduleDetailsCommand
+
     object LoadFavorites : ScheduleDetailsCommand
     data class AddToFavorites(val schedule: FavoriteSchedule) : ScheduleDetailsCommand
     data class RemoveFromFavorites(val schedule: FavoriteSchedule) : ScheduleDetailsCommand
-    data class SwitchSchedule(val scheduleName: String) : ScheduleDetailsCommand
+    data class SwitchSchedule(val selectedSchedule: SelectedSchedule) : ScheduleDetailsCommand
 }

@@ -2,6 +2,7 @@ package kekmech.ru.domain_notes
 
 import io.reactivex.rxjava3.core.Single
 import kekmech.ru.domain_notes.dto.Note
+import kekmech.ru.domain_notes.use_cases.GetNotesForSelectedScheduleUseCase
 import kekmech.ru.domain_schedule.ScheduleTransformer
 import kekmech.ru.domain_schedule_models.dto.Classes
 import kekmech.ru.domain_schedule_models.dto.Schedule
@@ -9,10 +10,10 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 
 class NotesScheduleTransformer(
-    private val notesRepository: NotesRepository
+    private val getNotesUseCase: GetNotesForSelectedScheduleUseCase,
 ) : ScheduleTransformer {
 
-    override fun transform(schedule: Schedule): Single<Schedule> = notesRepository.getNotes()
+    override fun transform(schedule: Schedule): Single<Schedule> = getNotesUseCase.getNotes()
         .map { notes ->
             schedule.weeks.first().days.forEach { day ->
                 day.classes.forEach { classes ->

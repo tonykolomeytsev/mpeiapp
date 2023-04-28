@@ -1,16 +1,17 @@
 package kekmech.ru.feature_dashboard.screens.main.elm
 
 import kekmech.ru.common_kotlin.Resource
-import kekmech.ru.domain_dashboard.dto.ScheduleMetaInfo
 import kekmech.ru.domain_dashboard.dto.UpcomingEventsPrediction
 import kekmech.ru.domain_favorite_schedule.dto.FavoriteSchedule
 import kekmech.ru.domain_notes.dto.Note
+import kekmech.ru.domain_schedule.repository.schedule.dto.SelectedSchedule
 import kekmech.ru.domain_schedule_models.dto.Classes
 import kekmech.ru.domain_schedule_models.dto.WeekOfSemester
 import java.time.LocalDate
 
 internal data class DashboardState(
-    val selectedScheduleMetaInfo: Resource<ScheduleMetaInfo> = Resource.Loading,
+    val selectedSchedule: SelectedSchedule,
+    val weekOfSemester: Resource<WeekOfSemester> = Resource.Loading,
     val upcomingEvents: Resource<UpcomingEventsPrediction> = Resource.Loading,
     val actualNotes: Resource<List<Note>> = Resource.Loading,
     val favoriteSchedules: Resource<List<FavoriteSchedule>> = Resource.Loading,
@@ -18,16 +19,11 @@ internal data class DashboardState(
 
     val isLoading: Boolean =
         listOf(
-            selectedScheduleMetaInfo,
+            weekOfSemester,
             upcomingEvents,
             actualNotes,
             favoriteSchedules
         ).any { it.isLoading }
-    val weekOfSemester: Int get() =
-        when (val weekOfSemester = selectedScheduleMetaInfo.value?.weekOfSemester) {
-            is WeekOfSemester.Studying -> weekOfSemester.num
-            else -> 0
-        }
 }
 
 internal sealed interface DashboardEvent {
@@ -47,15 +43,16 @@ internal sealed interface DashboardEvent {
     }
 
     sealed interface Internal : DashboardEvent {
-        data class GetSelectedScheduleMetaInfoSuccess(val info: ScheduleMetaInfo) : Internal
-        data class GetSelectedScheduleMetaInfoFailure(val throwable: Throwable) : Internal
+        data class GetSelectedScheduleSuccess(val selectedSchedule: SelectedSchedule) : Internal
+        data class GetWeekOfSemesterSuccess(val weekOfSemester: WeekOfSemester) : Internal
+        data class GetWeekOfSemesterFailure(val throwable: Throwable) : Internal
         data class GetUpcomingEventsSuccess(val upcomingEvents: UpcomingEventsPrediction) : Internal
         data class GetUpcomingEventsFailure(val throwable: Throwable) : Internal
         data class GetActualNotesSuccess(val notes: List<Note>) : Internal
         data class GetActualNotesFailure(val throwable: Throwable) : Internal
         data class GetFavoriteSchedulesSuccess(val favorites: List<FavoriteSchedule>) : Internal
         data class GetFavoriteSchedulesFailure(val throwable: Throwable) : Internal
-        object SelectGroupSuccess : Internal
+        object SelectScheduleSuccess : Internal
     }
 }
 
@@ -66,9 +63,10 @@ internal sealed interface DashboardEffect {
 }
 
 internal sealed interface DashboardCommand {
-    object GetSelectedScheduleMetaInfo : DashboardCommand
+    object GetSelectedSchedule : DashboardCommand
+    object GetWeekOfSemester : DashboardCommand
     object GetUpcomingEvents : DashboardCommand
     object GetActualNotes : DashboardCommand
     object GetFavoriteSchedules : DashboardCommand
-    data class SelectGroup(val groupName: String) : DashboardCommand
+    data class SelectSchedule(val selectedSchedule: SelectedSchedule) : DashboardCommand
 }

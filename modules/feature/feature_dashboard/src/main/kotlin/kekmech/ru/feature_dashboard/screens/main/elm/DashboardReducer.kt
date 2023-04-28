@@ -20,11 +20,14 @@ internal class DashboardReducer :
 
     override fun Result.internal(event: Internal): Any =
         when (event) {
-            is Internal.GetSelectedScheduleMetaInfoSuccess -> {
-                state { copy(selectedScheduleMetaInfo = event.info.toResource()) }
+            is Internal.GetSelectedScheduleSuccess -> {
+                state { copy(selectedSchedule = event.selectedSchedule) }
             }
-            is Internal.GetSelectedScheduleMetaInfoFailure -> {
-                state { copy(selectedScheduleMetaInfo = event.throwable.toResource()) }
+            is Internal.GetWeekOfSemesterSuccess -> {
+                state { copy(weekOfSemester = event.weekOfSemester.toResource()) }
+            }
+            is Internal.GetWeekOfSemesterFailure -> {
+                state { copy(weekOfSemester = event.throwable.toResource()) }
             }
             is Internal.GetUpcomingEventsSuccess -> {
                 state { copy(upcomingEvents = event.upcomingEvents.toResource()) }
@@ -44,7 +47,7 @@ internal class DashboardReducer :
             is Internal.GetFavoriteSchedulesFailure -> {
                 state { copy(favoriteSchedules = event.throwable.toResource()) }
             }
-            is Internal.SelectGroupSuccess -> refreshCommands()
+            is Internal.SelectScheduleSuccess -> refreshCommands()
         }
 
     override fun Result.ui(event: Ui): Any =
@@ -66,18 +69,20 @@ internal class DashboardReducer :
             is Ui.Action.SelectFavoriteSchedule -> {
                 state {
                     copy(
-                        selectedScheduleMetaInfo = Resource.Loading,
                         upcomingEvents = Resource.Loading,
                         actualNotes = Resource.Loading,
                     )
                 }
-                commands { +Command.SelectGroup(event.favoriteSchedule.name) }
+                commands {
+                    // TODO: +Command.SelectSchedule()
+                }
             }
         }
 
     private fun Result.refreshCommands() {
         commands {
-            +Command.GetSelectedScheduleMetaInfo
+            +Command.GetSelectedSchedule
+            +Command.GetWeekOfSemester
             +Command.GetUpcomingEvents
             +Command.GetActualNotes
             +Command.GetFavoriteSchedules

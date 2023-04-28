@@ -43,7 +43,7 @@ class FindScheduleReducerTest : BehaviorSpec({
                 effects.shouldBeEmpty()
             }
             Then("Check actions") {
-                actions.shouldContainExactly(FindScheduleCommand.FindGroup(CORRECT_NAME))
+                actions.shouldContainExactly(FindScheduleCommand.FindSchedule(CORRECT_NAME))
             }
         }
         When("Wish.Action.GroupNumberChanged (correct)") {
@@ -74,7 +74,7 @@ class FindScheduleReducerTest : BehaviorSpec({
     Given("Loading state") {
         val givenState = STATE.copy(isLoading = true)
         When("News.GroupLoadingError (group not found)") {
-            val (state, effects, actions) = reducer.reduce(Internal.FindGroupFailure(VALIDATION_ERROR), givenState)
+            val (state, effects, actions) = reducer.reduce(Internal.FindScheduleFailure(VALIDATION_ERROR), givenState)
             Then("Check state") {
                 state.isLoading.shouldBeFalse()
             }
@@ -86,7 +86,7 @@ class FindScheduleReducerTest : BehaviorSpec({
             }
         }
         When("News.GroupLoadingError (unknown error)") {
-            val (state, effects, actions) = reducer.reduce(Internal.FindGroupFailure(UNKNOWN_ERROR), givenState)
+            val (state, effects, actions) = reducer.reduce(Internal.FindScheduleFailure(UNKNOWN_ERROR), givenState)
             Then("Check state") {
                 state.isLoading.shouldBeFalse()
             }
@@ -98,7 +98,7 @@ class FindScheduleReducerTest : BehaviorSpec({
             }
         }
         When("News.News.GroupLoadedSuccessfully") {
-            val (state, effects, actions) = reducer.reduce(Internal.FindGroupSuccess(CORRECT_NAME), givenState)
+            val (state, effects, actions) = reducer.reduce(Internal.FindScheduleSuccess(CORRECT_NAME), givenState)
             Then("Check state") {
                 state.isLoading.shouldBeFalse()
             }
@@ -115,7 +115,7 @@ class FindScheduleReducerTest : BehaviorSpec({
     Given("Loading state (selectScheduleAfterSuccess = true)") {
         val givenState = STATE.copy(selectScheduleAfterSuccess = true)
         When("News.News.GroupLoadedSuccessfully") {
-            val (state, effects, actions) = reducer.reduce(Internal.FindGroupSuccess(CORRECT_NAME), givenState)
+            val (state, effects, actions) = reducer.reduce(Internal.FindScheduleSuccess(CORRECT_NAME), givenState)
             Then("Check state") {
                 state.isLoading.shouldBeFalse()
             }
@@ -125,7 +125,7 @@ class FindScheduleReducerTest : BehaviorSpec({
                 )
             }
             Then("Check actions") {
-                actions.shouldContainExactly(FindScheduleCommand.SelectGroup(CORRECT_NAME))
+                actions.shouldContainExactly(FindScheduleCommand.SelectSchedule(CORRECT_NAME))
             }
         }
     }

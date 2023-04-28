@@ -4,7 +4,7 @@ import io.reactivex.rxjava3.core.Single
 import kekmech.ru.common_kotlin.moscowLocalDate
 import kekmech.ru.common_kotlin.moscowLocalTime
 import kekmech.ru.domain_dashboard.dto.UpcomingEventsPrediction
-import kekmech.ru.domain_schedule.ScheduleRepository
+import kekmech.ru.domain_schedule.use_cases.GetCurrentScheduleUseCase
 import kekmech.ru.domain_schedule_models.dto.Classes
 import kekmech.ru.domain_schedule_models.dto.Day
 import kekmech.ru.domain_schedule_models.dto.Week
@@ -15,7 +15,7 @@ import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
 class GetUpcomingEventsUseCase(
-    private val scheduleRepository: ScheduleRepository,
+    private val getCurrentScheduleUseCase: GetCurrentScheduleUseCase,
 ) {
 
     fun getPrediction(): Single<UpcomingEventsPrediction> {
@@ -24,8 +24,8 @@ class GetUpcomingEventsUseCase(
         val days =
             Single
                 .concat(
-                    scheduleRepository.loadSchedule(weekOffset = 0),
-                    scheduleRepository.loadSchedule(weekOffset = 1),
+                    getCurrentScheduleUseCase.getSchedule(weekOffset = 0),
+                    getCurrentScheduleUseCase.getSchedule(weekOffset = 1),
                 )
                 .concatMapIterable { it.weeks.flatMap(Week::days) }
                 .sorted { day1, day2 -> day1.date.compareTo(day2.date) }

@@ -2,14 +2,12 @@ package kekmech.ru.feature_dashboard.screens.main.upcoming_events
 
 import android.content.Context
 import kekmech.ru.common_kotlin.Resource
-import kekmech.ru.common_kotlin.zip
 import kekmech.ru.common_schedule.utils.withNotePreview
 import kekmech.ru.coreui.items.EmptyStateItem
 import kekmech.ru.coreui.items.ErrorStateItem
 import kekmech.ru.coreui.items.SectionHeaderItem
 import kekmech.ru.coreui.items.ShimmerItem
 import kekmech.ru.coreui.items.SpaceItem
-import kekmech.ru.domain_dashboard.dto.ScheduleMetaInfo
 import kekmech.ru.domain_dashboard.dto.UpcomingEventsPrediction
 import kekmech.ru.domain_schedule_models.dto.Classes
 import kekmech.ru.domain_schedule_models.dto.ScheduleType
@@ -24,22 +22,18 @@ internal class UpcomingEventsListConverter(
 
     fun map(state: DashboardState): List<Any> {
         val list = mutableListOf<Any>()
-        when (val composedState = state.upcomingEvents.zip(state.selectedScheduleMetaInfo)) {
+        when (state.upcomingEvents) {
             is Resource.Loading -> list.addShimmerItems()
-            is Resource.Error -> list.add(ErrorStateItem(composedState.error))
+            is Resource.Error -> list.add(ErrorStateItem(state.upcomingEvents.error))
             is Resource.Data -> {
-                val (
-                    prediction: UpcomingEventsPrediction,
-                    metaInfo: ScheduleMetaInfo,
-                ) = composedState.value
-                when (prediction) {
+                when (val prediction = state.upcomingEvents.value) {
                     is UpcomingEventsPrediction.NoClassesNextWeek -> list.addEmptyStateItems()
                     is UpcomingEventsPrediction.ClassesTodayNotStarted ->
-                        list.addClassesTodayNotStarted(metaInfo.type, prediction)
+                        list.addClassesTodayNotStarted(state.selectedSchedule.type, prediction)
                     is UpcomingEventsPrediction.ClassesTodayStarted ->
-                        list.addClassesTodayStarted(metaInfo.type, prediction)
+                        list.addClassesTodayStarted(state.selectedSchedule.type, prediction)
                     is UpcomingEventsPrediction.ClassesInNDays ->
-                        list.addClassesInNDays(metaInfo.type, prediction)
+                        list.addClassesInNDays(state.selectedSchedule.type, prediction)
                 }
             }
         }

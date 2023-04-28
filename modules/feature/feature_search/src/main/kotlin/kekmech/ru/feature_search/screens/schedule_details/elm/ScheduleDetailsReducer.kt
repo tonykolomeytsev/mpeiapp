@@ -1,6 +1,7 @@
 package kekmech.ru.feature_search.screens.schedule_details.elm
 
 import kekmech.ru.domain_favorite_schedule.dto.FavoriteSchedule
+import kekmech.ru.domain_schedule.repository.schedule.dto.SelectedSchedule
 import kekmech.ru.domain_schedule_models.dto.Day
 import kekmech.ru.domain_schedule_models.dto.Schedule
 import kekmech.ru.feature_search.screens.schedule_details.elm.ScheduleDetailsEvent.Internal
@@ -61,8 +62,10 @@ internal class ScheduleDetailsReducer :
     override fun Result.ui(event: Ui): Any =
         when (event) {
             is Ui.Init -> commands {
-                +Command.LoadSchedule(state.searchResult.name, weekOffset = 0)
-                +Command.LoadSchedule(state.searchResult.name, weekOffset = 1)
+                val type = state.scheduleType
+                val name = state.searchResult.name
+                +Command.LoadSchedule(type, name, weekOffset = 0)
+                +Command.LoadSchedule(type, name, weekOffset = 1)
                 +Command.LoadFavorites
             }
             is Ui.Click.Day -> state { copy(selectedDayDate = event.date) }
@@ -82,7 +85,14 @@ internal class ScheduleDetailsReducer :
                 }
             }
             is Ui.Click.SwitchSchedule -> {
-                commands { +Command.SwitchSchedule(state.searchResult.name) }
+                commands {
+                    +Command.SwitchSchedule(
+                        SelectedSchedule(
+                            name = state.searchResult.name,
+                            type = state.scheduleType,
+                        )
+                    )
+                }
                 effects { +Effect.CloseAndGoToSchedule }
             }
         }

@@ -1,49 +1,55 @@
 package kekmech.ru.feature_dashboard.screens.main.elm
 
 import io.reactivex.rxjava3.core.Observable
-import kekmech.ru.domain_dashboard.use_cases.GetSelectedScheduleMetaInfoUseCase
 import kekmech.ru.domain_dashboard.use_cases.GetUpcomingEventsUseCase
 import kekmech.ru.domain_favorite_schedule.FavoriteScheduleRepository
 import kekmech.ru.domain_notes.use_cases.GetActualNotesUseCase
-import kekmech.ru.domain_schedule.ScheduleRepository
+import kekmech.ru.domain_schedule.repository.ScheduleRepository
+import kekmech.ru.domain_schedule.use_cases.GetCurrentScheduleUseCase
 import kekmech.ru.feature_dashboard.screens.main.elm.DashboardEvent.Internal
 import vivid.money.elmslie.core.store.Actor
+import kekmech.ru.feature_dashboard.screens.main.elm.DashboardCommand as Command
+import kekmech.ru.feature_dashboard.screens.main.elm.DashboardEvent as Event
 
 internal class DashboardActor(
     private val scheduleRepository: ScheduleRepository,
     private val favoriteScheduleRepository: FavoriteScheduleRepository,
     private val getUpcomingEventsUseCase: GetUpcomingEventsUseCase,
-    private val getSelectedScheduleMetaInfoUseCase: GetSelectedScheduleMetaInfoUseCase,
     private val getActualNotesUseCase: GetActualNotesUseCase,
-) : Actor<DashboardCommand, DashboardEvent> {
+    private val getCurrentScheduleUseCase: GetCurrentScheduleUseCase,
+) : Actor<Command, Event> {
 
-    override fun execute(command: DashboardCommand): Observable<DashboardEvent> =
+    override fun execute(command: Command): Observable<Event> =
         when (command) {
-            is DashboardCommand.GetSelectedScheduleMetaInfo -> getSelectedScheduleMetaInfoUseCase
-                .getScheduleMetaInfo()
+            is Command.GetSelectedSchedule -> scheduleRepository.getSelectedSchedule()
+                .mapSuccessEvent(Internal::GetSelectedScheduleSuccess)
+            is Command.GetWeekOfSemester -> getCurrentScheduleUseCase
+                .getSchedule(weekOffset = 0)
+                .map { it.weeks.first().weekOfSemester }
                 .mapEvents(
-                    successEventMapper = Internal::GetSelectedScheduleMetaInfoSuccess,
-                    failureEventMapper = Internal::GetSelectedScheduleMetaInfoFailure,
+                    successEventMapper = Internal::GetWeekOfSemesterSuccess,
+                    failureEventMapper = Internal::GetWeekOfSemesterFailure,
                 )
-            is DashboardCommand.GetUpcomingEvents -> getUpcomingEventsUseCase
+            is Command.GetUpcomingEvents -> getUpcomingEventsUseCase
                 .getPrediction()
                 .mapEvents(
                     successEventMapper = Internal::GetUpcomingEventsSuccess,
                     failureEventMapper = Internal::GetUpcomingEventsFailure,
                 )
-            is DashboardCommand.GetActualNotes -> getActualNotesUseCase
+            is Command.GetActualNotes -> getActualNotesUseCase
                 .getActualNotes()
                 .mapEvents(
                     successEventMapper = Internal::GetActualNotesSuccess,
                     failureEventMapper = Internal::GetActualNotesFailure,
                 )
-            is DashboardCommand.GetFavoriteSchedules -> favoriteScheduleRepository
+            is Command.GetFavoriteSchedules -> favoriteScheduleRepository
                 .getFavorites()
                 .mapEvents(
                     successEventMapper = Internal::GetFavoriteSchedulesSuccess,
                     failureEventMapper = Internal::GetFavoriteSchedulesFailure,
                 )
-            is DashboardCommand.SelectGroup -> scheduleRepository.selectSchedule(command.groupName)
-                .mapSuccessEvent(Internal.SelectGroupSuccess)
+            is Command.SelectSchedule -> scheduleRepository
+                .setSelectedSchedule(command.selectedSchedule)
+                .mapSuccessEvent(Internal.SelectScheduleSuccess)
         }
 }

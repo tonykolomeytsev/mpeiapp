@@ -80,7 +80,7 @@ internal class FindScheduleFragment :
             DASHBOARD -> dependencies.mainScreenLauncher.launch()
             BACK_WITH_RESULT -> {
                 close()
-                setResult(resultKey, result = effect.groupName)
+                setResult(resultKey, result = effect.selectedSchedule)
             }
             else -> Unit
         }
