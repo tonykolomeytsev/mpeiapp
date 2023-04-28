@@ -47,4 +47,10 @@ gradlePlugin {
         description = "The Gradle Plugin that transforms AAR dependencies to JAR"
         implementationClass = "mpeix.plugins.dependencies.Aar2JarPlugin"
     }
+    plugins.create("mpeixKspSupportPlugin") {
+        id = "mpeix.ksp"
+        displayName = "Kotlin Symbol Processing Support Plugin"
+        description = "The Gradle Plugin that adds KSP support to the module"
+        implementationClass = "mpeix.plugins.dependencies.KspSupportPlugin"
+    }
 }

@@ -9,7 +9,8 @@ minSdk = "21"
 targetSdk = "32"
 compileSdk = "33"
 buildTools = "33.0.0"
-kotlin = "1.7.20"
+kotlin = "1.8.21"
+ksp = "1.8.21-1.0.11"
 coroutines = "1.6.4"
 detekt = "1.22.0"
 
@@ -144,6 +145,7 @@ firebase-crashlytics = "com.google.firebase.crashlytics:2.9.1"
 google-services = "com.google.gms.google-services:4.3.13"
 gradle-android-cacheFix = "org.gradle.android.cache-fix:2.7.1"
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 
 [bundles]
 

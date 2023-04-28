@@ -12,11 +12,13 @@ plugins {
     alias(libs.plugins.google.services) apply false
     alias(libs.plugins.firebase.crashlytics) apply false
     alias(libs.plugins.gradle.android.cacheFix) apply false
+    alias(libs.plugins.ksp) apply false
     alias(libs.plugins.detekt)
 
     id("mpeix.android-jar-finder")
     id("mpeix.android") apply false
     id("mpeix.kotlin") apply false
+    id("mpeix.ksp") apply false
 }
 
 subprojects {
