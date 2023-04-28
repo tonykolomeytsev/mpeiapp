@@ -21,7 +21,7 @@ import kekmech.ru.coreui.items.SpaceAdapterItem
 import kekmech.ru.coreui.touch_helpers.attachSwipeToDeleteCallback
 import kekmech.ru.domain_favorite_schedule.dto.FavoriteSchedule
 import kekmech.ru.domain_schedule.ScheduleFeatureLauncher.ContinueTo.BACK_WITH_RESULT
-import kekmech.ru.domain_schedule.repository.schedule.dto.SelectedSchedule
+import kekmech.ru.domain_schedule.dto.SelectedSchedule
 import kekmech.ru.feature_app_settings.R
 import kekmech.ru.feature_app_settings.databinding.FragmentFavoritesBinding
 import kekmech.ru.feature_app_settings.di.AppSettingDependencies

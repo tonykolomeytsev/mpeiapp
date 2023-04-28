@@ -1,6 +1,6 @@
 package kekmech.ru.domain_schedule
 
-import kekmech.ru.domain_schedule.repository.schedule.dto.SelectedSchedule
+import kekmech.ru.domain_schedule.dto.SelectedSchedule
 
 interface PreheatSelectedScheduleProvider {
 

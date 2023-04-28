@@ -4,7 +4,7 @@ import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import kekmech.ru.domain_notes.dto.Note
 import kekmech.ru.domain_notes.sources.NotesSource
-import kekmech.ru.domain_schedule.repository.schedule.dto.SelectedSchedule
+import kekmech.ru.domain_schedule.dto.SelectedSchedule
 
 class NotesRepository(private val notesSource: NotesSource) {
 

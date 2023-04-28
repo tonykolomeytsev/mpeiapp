@@ -1,7 +1,7 @@
 package kekmech.ru.feature_schedule.screens.find_schedule.elm
 
 import io.reactivex.rxjava3.exceptions.CompositeException
-import kekmech.ru.domain_schedule.repository.schedule.dto.SelectedSchedule
+import kekmech.ru.domain_schedule.dto.SelectedSchedule
 import kekmech.ru.feature_schedule.screens.find_schedule.elm.FindScheduleEvent.Internal
 import kekmech.ru.feature_schedule.screens.find_schedule.elm.FindScheduleEvent.Ui
 import retrofit2.HttpException

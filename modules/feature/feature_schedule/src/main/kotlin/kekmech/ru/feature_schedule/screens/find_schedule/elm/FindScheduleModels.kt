@@ -2,7 +2,7 @@ package kekmech.ru.feature_schedule.screens.find_schedule.elm
 
 import kekmech.ru.domain_schedule.ScheduleFeatureLauncher
 import kekmech.ru.domain_schedule.dto.SearchResult
-import kekmech.ru.domain_schedule.repository.schedule.dto.SelectedSchedule
+import kekmech.ru.domain_schedule.dto.SelectedSchedule
 import kekmech.ru.domain_schedule_models.dto.ScheduleType
 
 internal data class FindScheduleState(

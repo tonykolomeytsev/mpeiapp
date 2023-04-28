@@ -8,8 +8,8 @@ import kekmech.ru.common_cache.persistent_cache.PersistentCache
 import kekmech.ru.common_kotlin.moscowLocalDate
 import kekmech.ru.domain_analytics.SelectedScheduleAnalyticsProvider
 import kekmech.ru.domain_schedule.PreheatSelectedScheduleProvider
+import kekmech.ru.domain_schedule.dto.SelectedSchedule
 import kekmech.ru.domain_schedule.network.ScheduleService
-import kekmech.ru.domain_schedule.repository.schedule.dto.SelectedSchedule
 import kekmech.ru.domain_schedule_models.dto.Schedule
 import kekmech.ru.domain_schedule_models.dto.ScheduleType
 import java.time.LocalDate

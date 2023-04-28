@@ -1,7 +1,7 @@
 package kekmech.ru.feature_search.screens.schedule_details.elm
 
 import kekmech.ru.domain_favorite_schedule.dto.FavoriteSchedule
-import kekmech.ru.domain_schedule.repository.schedule.dto.SelectedSchedule
+import kekmech.ru.domain_schedule.dto.SelectedSchedule
 import kekmech.ru.domain_schedule_models.dto.Day
 import kekmech.ru.domain_schedule_models.dto.Schedule
 import kekmech.ru.feature_search.screens.schedule_details.elm.ScheduleDetailsEvent.Internal

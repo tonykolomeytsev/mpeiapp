@@ -4,7 +4,7 @@ import kekmech.ru.common_kotlin.Resource
 import kekmech.ru.common_kotlin.moscowLocalDate
 import kekmech.ru.common_kotlin.toResource
 import kekmech.ru.domain_dashboard.dto.UpcomingEventsPrediction
-import kekmech.ru.domain_schedule.repository.schedule.dto.SelectedSchedule
+import kekmech.ru.domain_schedule.dto.SelectedSchedule
 import kekmech.ru.feature_dashboard.screens.main.elm.DashboardEvent.Internal
 import kekmech.ru.feature_dashboard.screens.main.elm.DashboardEvent.Ui
 import vivid.money.elmslie.core.store.dsl_reducer.ScreenDslReducer
