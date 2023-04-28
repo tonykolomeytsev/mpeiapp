@@ -5,6 +5,7 @@ plugins {
 
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-gradle-plugin")
+    implementation("com.google.devtools.ksp:symbol-processing-gradle-plugin:1.8.21-1.0.11")
     implementation("com.android.tools.build:gradle:8.0.0")
     implementation(gradleApi())
 }
