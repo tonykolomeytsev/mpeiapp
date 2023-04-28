@@ -68,6 +68,8 @@
         <item>Practice</item>
         <item>Lab</item>
         <item>Course</item>
+        <item>Consultation</item>
+        <item>Exam</item>
     </string-array>
 
     <string-array name="hours_declensions">

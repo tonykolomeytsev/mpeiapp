@@ -8,6 +8,7 @@ import kekmech.ru.coreui.items.ErrorStateItem
 import kekmech.ru.coreui.items.SectionHeaderItem
 import kekmech.ru.coreui.items.ShimmerItem
 import kekmech.ru.coreui.items.SpaceItem
+import kekmech.ru.coreui.items.TextItem
 import kekmech.ru.domain_dashboard.dto.UpcomingEventsPrediction
 import kekmech.ru.domain_schedule_models.dto.Classes
 import kekmech.ru.domain_schedule_models.dto.ScheduleType
@@ -15,6 +16,7 @@ import kekmech.ru.feature_dashboard.R
 import kekmech.ru.feature_dashboard.screens.main.elm.DashboardState
 import kekmech.ru.feature_dashboard.screens.main.helpers.TimeDeclensionHelper
 import kekmech.ru.strings.Strings
+import kotlin.time.Duration
 
 internal class UpcomingEventsListConverter(
     private val context: Context,
@@ -77,6 +79,7 @@ internal class UpcomingEventsListConverter(
                 SpaceItem.VERTICAL_12,
             )
         )
+        addTimePredictionItem(prediction.timeLeft)
         addAll(prediction.futureClasses.handleClasses(selectedScheduleType))
     }
 
@@ -116,7 +119,21 @@ internal class UpcomingEventsListConverter(
                 SpaceItem.VERTICAL_12,
             )
         )
+        if (prediction.dayOffset < 2) {
+            addTimePredictionItem(prediction.timeLeft)
+        }
         addAll(prediction.futureClasses.handleClasses(selectedScheduleType))
+    }
+
+    private fun MutableList<Any>.addTimePredictionItem(timeLeft: Duration) {
+        val hours = timeLeft.inWholeHours
+        val minutes = timeLeft.inWholeMinutes % 60
+        val prefix = context.getString(Strings.dashboard_item_time_prediction_prefix)
+        val formattedHoursMinutes =
+            TimeDeclensionHelper.formatHoursMinutes(context, hours, minutes)
+        if (formattedHoursMinutes.isNotBlank()) {
+            add(TextItem("$prefix $formattedHoursMinutes"))
+        }
     }
 
     /**
@@ -125,48 +142,6 @@ internal class UpcomingEventsListConverter(
     private fun List<Any>.handleClasses(selectedScheduleType: ScheduleType) = this
         .setScheduleType(selectedScheduleType)
         .withNotePreview()
-
-    /**
-     * Prepend time prediction item for classes list
-     */
-//    @Suppress("NestedBlockDepth")
-//    private fun List<Any>.withTimePrediction(
-//        currentDate: LocalDate,
-//        offset: Int,
-//    ): List<Any> = mutableListOf<Any>().apply {
-//        val raw = this@withTimePrediction
-//        var isPredictionAdded = false
-//        if (offset > 2) return raw
-//        val indexOfNextClasses = raw
-//            .indexOfFirst { it is Classes }
-//            .takeIf { it != -1 }
-//            ?: return raw
-//
-//        for (e in raw) {
-//            val classes = e as? Classes
-//            if (classes == raw[indexOfNextClasses] && !isPredictionAdded) {
-//                // add time status
-//                val (condition, hours, minutes) = getNextClassesTimeStatus(
-//                    currentDate,
-//                    classes.time
-//                )
-//                val prefix = context.getString(Strings.dashboard_item_time_prediction_prefix)
-//                when (condition) {
-//                    NextClassesCondition.NOT_STARTED -> {
-//                        val formattedHoursMinutes =
-//                            TimeDeclensionHelper.formatHoursMinutes(context, hours, minutes)
-//                        if (formattedHoursMinutes.isNotBlank()) {
-//                            add(TextItem("$prefix $formattedHoursMinutes"))
-//                        }
-//                    }
-//                    NextClassesCondition.STARTED -> Unit
-//                    else -> Unit
-//                }
-//                isPredictionAdded = true
-//            }
-//            add(e)
-//        }
-//    }
 
     private fun List<Any>.setScheduleType(scheduleType: ScheduleType) =
         onEach { (it as? Classes)?.scheduleType = scheduleType }

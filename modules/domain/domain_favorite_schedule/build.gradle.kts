@@ -9,4 +9,6 @@ dependencies {
     implementation(project(":common_android"))
     implementation(project(":common_app_database"))
     implementation(project(":common_di"))
+
+    implementation(project(":domain_schedule_models"))
 }

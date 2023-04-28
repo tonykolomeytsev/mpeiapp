@@ -12,6 +12,7 @@ dependencies {
     implementation(libs.squareup.retrofit)
     implementation(libs.squareup.retrofit.rxJava3)
 
+    implementation(project(":domain_analytics"))
     implementation(project(":domain_schedule_models"))
 
     implementation(project(":common_kotlin"))
