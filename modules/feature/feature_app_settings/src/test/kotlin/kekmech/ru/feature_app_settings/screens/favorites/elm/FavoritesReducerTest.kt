@@ -5,6 +5,7 @@ import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 import kekmech.ru.domain_favorite_schedule.dto.FavoriteSchedule
+import kekmech.ru.domain_schedule_models.dto.ScheduleType
 import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesEvent.Internal
 import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesEvent.Ui
 
@@ -103,11 +104,13 @@ private object Mocks {
         listOf(
             FavoriteSchedule(
                 name = "A-08-22",
+                type = ScheduleType.GROUP,
                 description = "Hello world",
                 order = 0,
             ),
             FavoriteSchedule(
                 name = "C-08-22",
+                type = ScheduleType.GROUP,
                 description = "Hello world!",
                 order = 1,
             )
@@ -115,6 +118,7 @@ private object Mocks {
     val NEW_FAVORITE =
         FavoriteSchedule(
             name = "Cэ-12-22",
+            type = ScheduleType.GROUP,
             description = "Hello world!",
             order = 1,
         )

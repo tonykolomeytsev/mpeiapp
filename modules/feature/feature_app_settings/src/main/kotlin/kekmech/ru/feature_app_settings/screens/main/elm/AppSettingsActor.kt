@@ -4,12 +4,10 @@ import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import kekmech.ru.domain_app_settings.AppSettingsRepository
 import kekmech.ru.domain_github.ContributorsRepository
-import kekmech.ru.domain_schedule.repository.ScheduleRepository
 import vivid.money.elmslie.core.store.Actor
 
 internal class AppSettingsActor(
     private val appSettingsRepository: AppSettingsRepository,
-    private val scheduleRepository: ScheduleRepository,
     private val contributorsRepository: ContributorsRepository,
 ) : Actor<AppSettingsCommand, AppSettingsEvent> {
 

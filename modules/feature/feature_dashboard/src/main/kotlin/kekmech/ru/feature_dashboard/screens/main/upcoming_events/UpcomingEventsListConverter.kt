@@ -127,6 +127,7 @@ internal class UpcomingEventsListConverter(
 
     private fun MutableList<Any>.addTimePredictionItem(timeLeft: Duration) {
         val hours = timeLeft.inWholeHours
+        @Suppress("MagicNumber")
         val minutes = timeLeft.inWholeMinutes % 60
         val prefix = context.getString(Strings.dashboard_item_time_prediction_prefix)
         val formattedHoursMinutes =

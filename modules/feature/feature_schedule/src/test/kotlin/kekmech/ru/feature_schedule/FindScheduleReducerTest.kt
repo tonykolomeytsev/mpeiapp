@@ -8,6 +8,8 @@ import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 import io.reactivex.rxjava3.exceptions.CompositeException
 import kekmech.ru.domain_schedule.ScheduleFeatureLauncher
+import kekmech.ru.domain_schedule.repository.schedule.dto.SelectedSchedule
+import kekmech.ru.domain_schedule_models.dto.ScheduleType
 import kekmech.ru.feature_schedule.screens.find_schedule.elm.FindScheduleCommand
 import kekmech.ru.feature_schedule.screens.find_schedule.elm.FindScheduleEffect
 import kekmech.ru.feature_schedule.screens.find_schedule.elm.FindScheduleEvent.Internal
@@ -98,13 +100,16 @@ class FindScheduleReducerTest : BehaviorSpec({
             }
         }
         When("News.News.GroupLoadedSuccessfully") {
-            val (state, effects, actions) = reducer.reduce(Internal.FindScheduleSuccess(CORRECT_NAME), givenState)
+            val (state, effects, actions) = reducer.reduce(Internal.FindScheduleSuccess(CORRECT_NAME, ScheduleType.GROUP), givenState)
             Then("Check state") {
                 state.isLoading.shouldBeFalse()
             }
             Then("Check effects") {
                 effects.shouldContainExactly(
-                    FindScheduleEffect.NavigateNextFragment(givenState.continueTo, CORRECT_NAME)
+                    FindScheduleEffect.NavigateNextFragment(
+                        givenState.continueTo,
+                        SelectedSchedule(CORRECT_NAME, ScheduleType.GROUP),
+                    )
                 )
             }
             Then("Check actions") {
@@ -115,17 +120,22 @@ class FindScheduleReducerTest : BehaviorSpec({
     Given("Loading state (selectScheduleAfterSuccess = true)") {
         val givenState = STATE.copy(selectScheduleAfterSuccess = true)
         When("News.News.GroupLoadedSuccessfully") {
-            val (state, effects, actions) = reducer.reduce(Internal.FindScheduleSuccess(CORRECT_NAME), givenState)
+            val (state, effects, actions) = reducer.reduce(Internal.FindScheduleSuccess(CORRECT_NAME, ScheduleType.GROUP), givenState)
             Then("Check state") {
                 state.isLoading.shouldBeFalse()
             }
             Then("Check effects") {
                 effects.shouldContainExactly(
-                    FindScheduleEffect.NavigateNextFragment(givenState.continueTo, CORRECT_NAME)
+                    FindScheduleEffect.NavigateNextFragment(
+                        givenState.continueTo,
+                        SelectedSchedule(CORRECT_NAME, ScheduleType.GROUP),
+                    )
                 )
             }
             Then("Check actions") {
-                actions.shouldContainExactly(FindScheduleCommand.SelectSchedule(CORRECT_NAME))
+                actions.shouldContainExactly(FindScheduleCommand.SelectSchedule(
+                    SelectedSchedule(CORRECT_NAME, ScheduleType.GROUP),
+                ))
             }
         }
     }

@@ -4,6 +4,8 @@ import io.reactivex.rxjava3.core.Single
 import kekmech.ru.common_kotlin.moscowLocalDate
 import kekmech.ru.domain_notes.dto.Note
 import java.time.temporal.ChronoUnit
+
+@Suppress("MagicNumber")
 private val ActualNotesInterval = 0..7
 private const val ActualNotesNumber = 5
 
