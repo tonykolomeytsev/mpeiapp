@@ -12,12 +12,13 @@ import kekmech.ru.common_kotlin.mutableLinkedHashMap
 import kekmech.ru.common_schedule.utils.atStartOfWeek
 import kekmech.ru.domain_app_settings_models.AppEnvironment
 import kekmech.ru.domain_app_settings_models.AppSettings
-import kekmech.ru.domain_schedule.dto.Classes
-import kekmech.ru.domain_schedule.dto.ClassesType
-import kekmech.ru.domain_schedule.dto.Day
-import kekmech.ru.domain_schedule.dto.Schedule
-import kekmech.ru.domain_schedule.dto.ScheduleType
-import kekmech.ru.domain_schedule.dto.Week
+import kekmech.ru.domain_schedule_models.dto.Classes
+import kekmech.ru.domain_schedule_models.dto.ClassesType
+import kekmech.ru.domain_schedule_models.dto.Day
+import kekmech.ru.domain_schedule_models.dto.Schedule
+import kekmech.ru.domain_schedule_models.dto.ScheduleType
+import kekmech.ru.domain_schedule_models.dto.Week
+import kekmech.ru.domain_schedule_models.dto.WeekOfSemester
 import kekmech.ru.feature_schedule.screens.main.elm.ScheduleCommand
 import kekmech.ru.feature_schedule.screens.main.elm.ScheduleEffect
 import kekmech.ru.feature_schedule.screens.main.elm.ScheduleEvent.Internal
@@ -288,7 +289,7 @@ class ScheduleReducerTest : BehaviorSpec({
             id = "12345",
             type = ScheduleType.GROUP,
             weeks = listOf(Week(
-                weekOfSemester = 3,
+                weekOfSemester = WeekOfSemester.Studying(3),
                 weekOfYear = 36,
                 firstDayOfWeek = CURRENT_MONDAY,
                 days = listOf(
