@@ -3,5 +3,7 @@ plugins {
 }
 
 dependencies {
+    compileOnly(androidJar)
+
     testImplementation(kotlin("test"))
 }

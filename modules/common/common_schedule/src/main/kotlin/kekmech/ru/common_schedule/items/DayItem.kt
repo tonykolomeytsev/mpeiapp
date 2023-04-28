@@ -9,11 +9,11 @@ import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.common_android.getStringArray
 import kekmech.ru.common_android.getThemeColor
-import kekmech.ru.common_android.moscowLocalDate
+import kekmech.ru.common_kotlin.moscowLocalDate
 import kekmech.ru.common_schedule.R
 import kekmech.ru.strings.StringArrays
-import kekmech.ru.coreui.R as coreui_R
 import java.time.LocalDate
+import kekmech.ru.coreui.R as coreui_R
 
 data class DayItem(
     val date: LocalDate,

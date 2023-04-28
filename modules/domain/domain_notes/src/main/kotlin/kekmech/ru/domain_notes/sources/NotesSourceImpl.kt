@@ -1,9 +1,9 @@
 package kekmech.ru.domain_notes.sources
 
-import kekmech.ru.common_android.fromBase64
-import kekmech.ru.common_android.toBase64
 import kekmech.ru.common_app_database.AppDatabase
 import kekmech.ru.common_app_database.dto.Record
+import kekmech.ru.common_kotlin.fromBase64
+import kekmech.ru.common_kotlin.toBase64
 import kekmech.ru.domain_notes.dto.Note
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter

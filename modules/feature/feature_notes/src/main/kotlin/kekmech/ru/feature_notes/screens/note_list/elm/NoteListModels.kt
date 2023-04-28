@@ -1,7 +1,7 @@
 package kekmech.ru.feature_notes.screens.note_list.elm
 
 import kekmech.ru.domain_notes.dto.Note
-import kekmech.ru.domain_schedule.dto.Classes
+import kekmech.ru.domain_schedule_models.dto.Classes
 import java.time.LocalDate
 
 internal data class NoteListState(

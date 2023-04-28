@@ -11,5 +11,5 @@ dependencies {
 
     implementation(project(":common_di"))
 
-    implementation(project(":domain_schedule"))
+    implementation(project(":domain_analytics"))
 }

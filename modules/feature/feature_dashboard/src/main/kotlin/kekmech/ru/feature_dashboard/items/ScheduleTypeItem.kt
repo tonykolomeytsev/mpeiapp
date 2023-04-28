@@ -7,7 +7,7 @@ import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.coreui.items.ClickableItemViewHolder
 import kekmech.ru.coreui.items.ClickableItemViewHolderImpl
-import kekmech.ru.domain_schedule.dto.ScheduleType
+import kekmech.ru.domain_schedule_models.dto.ScheduleType
 import kekmech.ru.feature_dashboard.R
 import kekmech.ru.feature_dashboard.databinding.ItemScheduleTypeBinding
 import kekmech.ru.coreui.R as coreui_R

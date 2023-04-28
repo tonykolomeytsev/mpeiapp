@@ -94,6 +94,7 @@ class MainFragment : BaseFragment<MainScreenEvent, MainScreenEffect, MainScreenS
     override fun onPause() {
         super.onPause()
         tabsSwitcherDisposable?.dispose()
+        dependencies.prefetcher.dispose()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

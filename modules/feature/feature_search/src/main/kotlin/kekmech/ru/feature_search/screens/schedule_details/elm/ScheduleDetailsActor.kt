@@ -2,7 +2,7 @@ package kekmech.ru.feature_search.screens.schedule_details.elm
 
 import io.reactivex.rxjava3.core.Observable
 import kekmech.ru.domain_favorite_schedule.FavoriteScheduleRepository
-import kekmech.ru.domain_schedule.ScheduleRepository
+import kekmech.ru.domain_schedule.repository.ScheduleRepository
 import kekmech.ru.feature_search.screens.schedule_details.elm.ScheduleDetailsEvent.Internal
 import vivid.money.elmslie.core.store.Actor
 import kekmech.ru.feature_search.screens.schedule_details.elm.ScheduleDetailsCommand as Command
@@ -16,7 +16,7 @@ internal class ScheduleDetailsActor(
     override fun execute(command: Command): Observable<Event> =
         when (command) {
             is Command.LoadSchedule -> scheduleRepository
-                .loadSchedule(command.ownerName, command.weekOffset)
+                .getSchedule(command.type, command.name, command.weekOffset)
                 .mapSuccessEvent { Internal.LoadScheduleSuccess(it, command.weekOffset) }
             is Command.LoadFavorites -> favoriteScheduleRepository.getFavorites()
                 .mapSuccessEvent(Internal::LoadFavoritesSuccess)
@@ -26,7 +26,7 @@ internal class ScheduleDetailsActor(
                 .removeFavorite(command.schedule)
                 .mapSuccessEvent(Internal.RemoveFromFavoritesSuccess)
             is Command.SwitchSchedule -> scheduleRepository
-                .selectSchedule(command.scheduleName)
+                .setSelectedSchedule(command.selectedSchedule)
                 .toObservable()
         }
 }

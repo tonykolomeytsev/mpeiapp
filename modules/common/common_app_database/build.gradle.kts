@@ -1,17 +1,18 @@
 plugins {
-    id("mpeix.android")
+    id("mpeix.kotlin")
 }
 
 dependencies {
+    compileOnly(androidJar)
+    compileOnlyAar(libs.androidx.annotation)
+    compileOnlyAar(libs.koin.android)
+
     testImplementation(libs.kotest.assertions)
     testImplementation(libs.kotest.property)
     testImplementation(libs.kotest.runner)
 
-    implementation(libs.androidx.appCompat)
-    implementation(libs.koin.android)
     implementation(libs.koin.core)
 
-    implementation(project(":common_android"))
     implementation(project(":common_di"))
     implementation(project(":common_kotlin"))
 }

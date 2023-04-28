@@ -13,7 +13,8 @@ import kekmech.ru.common_elm.BaseFragment
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_navigation.features.TabScreenStateSaver
 import kekmech.ru.common_navigation.features.TabScreenStateSaverImpl
-import kekmech.ru.domain_schedule.dto.Classes
+import kekmech.ru.domain_schedule_models.dto.Classes
+import kekmech.ru.domain_schedule_models.dto.WeekOfSemester
 import kekmech.ru.feature_schedule.R
 import kekmech.ru.feature_schedule.databinding.FragmentScheduleBinding
 import kekmech.ru.feature_schedule.di.ScheduleDependencies
@@ -112,7 +113,7 @@ internal class ScheduleFragment :
     private fun renderStatusBar(state: ScheduleState) =
         with(viewBinding) {
             textViewHeader.text = getFormattedDay(state.selectedDate)
-            textViewDescription.text = state.weekOfSemester?.let { getFormattedWeek(it) }.orEmpty()
+            textViewDescription.text = state.weekOfSemester?.let(::getFormattedWeek).orEmpty()
         }
 
     private fun renderViewPager(state: ScheduleState) =
@@ -215,11 +216,11 @@ internal class ScheduleFragment :
         return "$dayOfWeekName, ${day.dayOfMonth} $dayOfMonthName"
     }
 
-    private fun getFormattedWeek(weekNumber: Int): String {
-        if (weekNumber in WEEK_MIN_NUMBER..WEEK_MAX_NUMBER) {
-            return requireContext().getString(Strings.schedule_semester_week, weekNumber)
-        } else {
-            return requireContext().getString(Strings.schedule_weekend_week)
+    private fun getFormattedWeek(weekOfSemester: WeekOfSemester): String {
+        return when (weekOfSemester) {
+            is WeekOfSemester.Studying -> requireContext()
+                .getString(Strings.schedule_semester_week, weekOfSemester.num)
+            is WeekOfSemester.NonStudying -> requireContext().getString(Strings.schedule_weekend_week)
         }
     }
 
@@ -231,9 +232,6 @@ internal class ScheduleFragment :
     }
 
     companion object {
-
-        private const val WEEK_MIN_NUMBER = 0
-        private const val WEEK_MAX_NUMBER = 17
 
         private const val FAB_ANIMATION_DURATION = 100L
         private const val DAYS_TO_VIEW = 6

@@ -5,7 +5,7 @@ import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_schedule.items.ClassesItemBinder
 import kekmech.ru.common_schedule.items.ClassesViewHolder
 import kekmech.ru.common_schedule.items.ClassesViewHolderImpl
-import kekmech.ru.domain_schedule.dto.Classes
+import kekmech.ru.domain_schedule_models.dto.Classes
 import kekmech.ru.common_schedule.R as common_schedule_R
 
 internal class DashboardClassesAdapterItem(

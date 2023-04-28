@@ -1,6 +1,6 @@
 package kekmech.ru.feature_notes.screens.all_notes
 
-import kekmech.ru.common_android.moscowLocalDate
+import kekmech.ru.common_kotlin.moscowLocalDate
 import kekmech.ru.coreui.items.EmptyStateItem
 import kekmech.ru.coreui.items.SectionHeaderItem
 import kekmech.ru.coreui.items.ShimmerItem

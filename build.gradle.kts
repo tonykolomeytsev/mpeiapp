@@ -19,8 +19,6 @@ plugins {
     id("mpeix.kotlin") apply false
 }
 
-println("Configure root project")
-
 subprojects {
     apply {
         plugin("io.gitlab.arturbosch.detekt")

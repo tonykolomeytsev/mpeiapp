@@ -16,7 +16,7 @@ import kekmech.ru.coreui.items.EmptyStateAdapterItem
 import kekmech.ru.coreui.items.ErrorStateAdapterItem
 import kekmech.ru.coreui.items.ShimmerAdapterItem
 import kekmech.ru.coreui.items.SpaceAdapterItem
-import kekmech.ru.domain_schedule.dto.Classes
+import kekmech.ru.domain_schedule_models.dto.Classes
 import kekmech.ru.feature_schedule.R
 import kekmech.ru.feature_schedule.databinding.ItemWorkingDayBinding
 
