@@ -5,7 +5,6 @@ import android.content.Context
 import android.os.Build
 import io.reactivex.rxjava3.exceptions.UndeliverableException
 import io.reactivex.rxjava3.plugins.RxJavaPlugins
-import kekmech.ru.common_di.modules
 import kekmech.ru.common_elm.TimberLogger
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_navigation.Router

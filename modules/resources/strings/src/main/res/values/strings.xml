@@ -70,6 +70,8 @@
         <item>Практика</item>
         <item>Лабораторная</item>
         <item>Курсовая</item>
+        <item>Консультация</item>
+        <item>Экзамен</item>
     </string-array>
 
     <string-array name="hours_declensions">

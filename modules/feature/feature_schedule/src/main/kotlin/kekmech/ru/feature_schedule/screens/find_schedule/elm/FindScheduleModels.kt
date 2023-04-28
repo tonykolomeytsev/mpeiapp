@@ -2,6 +2,8 @@ package kekmech.ru.feature_schedule.screens.find_schedule.elm
 
 import kekmech.ru.domain_schedule.ScheduleFeatureLauncher
 import kekmech.ru.domain_schedule.dto.SearchResult
+import kekmech.ru.domain_schedule.dto.SelectedSchedule
+import kekmech.ru.domain_schedule_models.dto.ScheduleType
 
 internal data class FindScheduleState(
     val continueTo: ScheduleFeatureLauncher.ContinueTo,
@@ -27,8 +29,8 @@ internal sealed interface FindScheduleEvent {
     }
 
     sealed interface Internal : FindScheduleEvent {
-        data class FindGroupSuccess(val scheduleName: String) : Internal
-        data class FindGroupFailure(val throwable: Throwable) : Internal
+        data class FindScheduleSuccess(val name: String, val type: ScheduleType) : Internal
+        data class FindScheduleFailure(val throwable: Throwable) : Internal
         data class SearchForAutocompleteSuccess(val results: List<SearchResult>) : Internal
     }
 }
@@ -38,12 +40,12 @@ internal sealed interface FindScheduleEffect {
     object ShowSomethingWentWrongError : FindScheduleEffect
     data class NavigateNextFragment(
         val continueTo: ScheduleFeatureLauncher.ContinueTo,
-        val groupName: String,
+        val selectedSchedule: SelectedSchedule,
     ) : FindScheduleEffect
 }
 
 internal sealed interface FindScheduleCommand {
-    data class FindGroup(val scheduleName: String) : FindScheduleCommand
-    data class SelectGroup(val scheduleName: String) : FindScheduleCommand
+    data class FindSchedule(val name: String) : FindScheduleCommand
+    data class SelectSchedule(val selectedSchedule: SelectedSchedule) : FindScheduleCommand
     data class SearchForAutocomplete(val query: String) : FindScheduleCommand
 }

@@ -1,7 +1,7 @@
 package kekmech.ru.feature_notes.screens.note_list.elm
 
 import kekmech.ru.domain_notes.dto.Note
-import kekmech.ru.domain_schedule.dto.Classes
+import kekmech.ru.domain_schedule_models.dto.Classes
 import kekmech.ru.feature_notes.screens.note_list.elm.NoteListEvent.Internal
 import kekmech.ru.feature_notes.screens.note_list.elm.NoteListEvent.Ui
 import vivid.money.elmslie.core.store.dsl_reducer.ScreenDslReducer

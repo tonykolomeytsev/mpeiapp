@@ -10,8 +10,8 @@ import kekmech.ru.common_schedule.utils.withLunch
 import kekmech.ru.common_schedule.utils.withNotePreview
 import kekmech.ru.common_schedule.utils.withProgressPreview
 import kekmech.ru.common_schedule.utils.withWindows
-import kekmech.ru.domain_schedule.dto.Classes
-import kekmech.ru.domain_schedule.dto.Time
+import kekmech.ru.domain_schedule_models.dto.Classes
+import kekmech.ru.domain_schedule_models.dto.Time
 import java.time.LocalTime
 
 class ConvertersExtTest : BehaviorSpec({

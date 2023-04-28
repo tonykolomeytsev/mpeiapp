@@ -7,11 +7,9 @@ import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.server.routing.routing
-import kekmech.ru.common_network.gson.LocalDateDeserializer
-import kekmech.ru.common_network.gson.LocalDateSerializer
-import kekmech.ru.common_network.gson.LocalDateTimeSerializer
-import kekmech.ru.common_network.gson.LocalTimeDeserializer
-import kekmech.ru.common_network.gson.LocalTimeSerializer
+import kekmech.ru.common_network.gson.LocalDateJsonAdapter
+import kekmech.ru.common_network.gson.LocalDateTimeJsonAdapter
+import kekmech.ru.common_network.gson.LocalTimeJsonAdapter
 import kekmech.ru.mock_server.routing.bars.getExtractJs
 import kekmech.ru.mock_server.routing.bars.getRemoteBarsConfig
 import kekmech.ru.mock_server.routing.github.getContributors
@@ -58,11 +56,9 @@ class MockServer(
                 gson {
                     setPrettyPrinting()
                     setDateFormat(DateFormat.LONG)
-                    registerTypeAdapter(LocalDate::class.java, LocalDateSerializer())
-                    registerTypeAdapter(LocalDate::class.java, LocalDateDeserializer())
-                    registerTypeAdapter(LocalTime::class.java, LocalTimeSerializer())
-                    registerTypeAdapter(LocalTime::class.java, LocalTimeDeserializer())
-                    registerTypeAdapter(LocalDateTime::class.java, LocalDateTimeSerializer())
+                    registerTypeAdapter(LocalDate::class.java, LocalDateJsonAdapter())
+                    registerTypeAdapter(LocalTime::class.java, LocalTimeJsonAdapter())
+                    registerTypeAdapter(LocalDateTime::class.java, LocalDateTimeJsonAdapter())
                 }
             }
             routing {

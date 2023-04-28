@@ -18,17 +18,18 @@ import kekmech.ru.common_android.viewbinding.lazyBinding
 import kekmech.ru.common_android.views.setOnClickListenerWithDebounce
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_schedule.R
-import kekmech.ru.coreui.R as coreui_R
 import kekmech.ru.common_schedule.drawable.ProgressBackgroundDrawable
 import kekmech.ru.coreui.items.ClickableItemViewHolder
 import kekmech.ru.coreui.items.ClickableItemViewHolderImpl
-import kekmech.ru.domain_schedule.dto.Classes
-import kekmech.ru.domain_schedule.dto.ClassesType
-import kekmech.ru.domain_schedule.dto.ScheduleType
+import kekmech.ru.domain_schedule_models.dto.Classes
+import kekmech.ru.domain_schedule_models.dto.ClassesType
+import kekmech.ru.domain_schedule_models.dto.ScheduleType
 import kekmech.ru.strings.StringArrays
 import java.time.format.DateTimeFormatter
+import kekmech.ru.coreui.R as coreui_R
 
 interface ClassesViewHolder : ClickableItemViewHolder {
+
     fun setDisciplineName(name: String)
     fun setPersonName(name: String?)
     fun setPlace(name: String)
@@ -41,7 +42,7 @@ interface ClassesViewHolder : ClickableItemViewHolder {
 }
 
 open class ClassesViewHolderImpl(
-    override val containerView: View
+    override val containerView: View,
 ) :
     ClassesViewHolder,
     ClickableItemViewHolder by ClickableItemViewHolderImpl(containerView),
@@ -122,6 +123,7 @@ open class ClassesViewHolderImpl(
     }
 
     private companion object {
+
         private const val PROGRESS_BACKGROUND_CORNER_RADIUS = 7f
     }
 }
@@ -129,7 +131,7 @@ open class ClassesViewHolderImpl(
 @Suppress("MagicNumber")
 class ClassesItemBinder(
     context: Context,
-    private val onClickListener: ((Classes) -> Unit)? = null
+    private val onClickListener: ((Classes) -> Unit)? = null,
 ) : BaseItemBinder<ClassesViewHolder, Classes>() {
 
     private val classesNumbers by fastLazy { context.getStringArray(StringArrays.classes_numbers) }
@@ -139,7 +141,9 @@ class ClassesItemBinder(
             ClassesType.LECTURE to 1,
             ClassesType.PRACTICE to 2,
             ClassesType.LAB to 3,
-            ClassesType.COURSE to 4
+            ClassesType.COURSE to 4,
+            ClassesType.CONSULTATION to 5,
+            ClassesType.EXAM to 6,
         )
         val string = context.getStringArray(StringArrays.classes_types)
         types.map { (k, v) -> k to string[v] }.toMap()
@@ -157,14 +161,16 @@ class ClassesItemBinder(
 
     override fun bind(vh: ClassesViewHolder, model: Classes, position: Int) {
         vh.setDisciplineName(model.name)
-        vh.setPersonName(when (model.scheduleType) {
-            ScheduleType.GROUP -> model.person.takeIfNotEmpty()
-            ScheduleType.PERSON -> model.groups.takeIfNotEmpty()
-        })
+        vh.setPersonName(
+            when (model.scheduleType) {
+                ScheduleType.GROUP -> model.person.takeIfNotEmpty()
+                ScheduleType.PERSON -> model.groups.takeIfNotEmpty()
+            }
+        )
         vh.setPlace(model.place)
         vh.setNumberName(classesNumbers.getOrElse(model.number) { classesNumbers[0] }.uppercase())
         vh.setTypeName(getClassesTypeName(model).uppercase())
-        vh.setTagColor(colorTags.getValue(model.type))
+        vh.setTagColor(colorTags[model.type] ?: colorTags.getValue(ClassesType.UNDEFINED))
         vh.setStartTime(model.time.start.format(timeFormatter))
         vh.setEndTime(model.time.end.format(timeFormatter))
         vh.setOnClickListener { onClickListener?.invoke(model) }
@@ -186,7 +192,7 @@ class ClassesItemBinder(
 
 class ClassesAdapterItem(
     context: Context,
-    onClickListener: ((Classes) -> Unit)? = null
+    onClickListener: ((Classes) -> Unit)? = null,
 ) : AdapterItem<ClassesViewHolder, Classes>(
     isType = { it is Classes },
     layoutRes = R.layout.item_classes,

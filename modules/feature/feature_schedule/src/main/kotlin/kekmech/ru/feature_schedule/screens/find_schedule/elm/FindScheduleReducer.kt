@@ -1,12 +1,10 @@
 package kekmech.ru.feature_schedule.screens.find_schedule.elm
 
 import io.reactivex.rxjava3.exceptions.CompositeException
-import kekmech.ru.domain_schedule.GROUP_NUMBER_PATTERN
-import kekmech.ru.domain_schedule.PERSON_NAME_PATTERN
+import kekmech.ru.domain_schedule.dto.SelectedSchedule
 import kekmech.ru.feature_schedule.screens.find_schedule.elm.FindScheduleEvent.Internal
 import kekmech.ru.feature_schedule.screens.find_schedule.elm.FindScheduleEvent.Ui
 import retrofit2.HttpException
-import vivid.money.elmslie.core.store.Result
 import vivid.money.elmslie.core.store.dsl_reducer.ScreenDslReducer
 import kekmech.ru.feature_schedule.screens.find_schedule.elm.FindScheduleCommand as Command
 import kekmech.ru.feature_schedule.screens.find_schedule.elm.FindScheduleEffect as Effect
@@ -14,6 +12,8 @@ import kekmech.ru.feature_schedule.screens.find_schedule.elm.FindScheduleEvent a
 import kekmech.ru.feature_schedule.screens.find_schedule.elm.FindScheduleState as State
 
 private const val HTTP_BAD_REQUEST_CODE = 400
+val GROUP_NUMBER_PATTERN = "[а-яА-Я]+-[а-яА-Я0-9]+-[0-9]+".toRegex()
+val PERSON_NAME_PATTERN = "[а-яА-Я]+\\s+([а-яА-Я]+\\s?)+".toRegex()
 
 internal class FindScheduleReducer :
     ScreenDslReducer<Event, Ui, Internal, State, Effect, Command>(
@@ -23,15 +23,24 @@ internal class FindScheduleReducer :
 
     override fun Result.internal(event: Internal): Any =
         when (event) {
-            is Internal.FindGroupFailure -> {
+            is Internal.FindScheduleFailure -> {
                 state { copy(isLoading = false) }
                 effects { +calculateErrorEffect(event.throwable) }
             }
-            is Internal.FindGroupSuccess -> {
+            is Internal.FindScheduleSuccess -> {
+                val selectedSchedule = SelectedSchedule(
+                    name = event.name,
+                    type = event.type,
+                )
                 state { copy(isLoading = false) }
-                effects { +Effect.NavigateNextFragment(state.continueTo, event.scheduleName) }
+                effects {
+                    +Effect.NavigateNextFragment(
+                        continueTo = state.continueTo,
+                        selectedSchedule = selectedSchedule,
+                    )
+                }
                 commands {
-                    +Command.SelectGroup(event.scheduleName)
+                    +Command.SelectSchedule(selectedSchedule)
                         .takeIf { state.selectScheduleAfterSuccess }
                 }
             }
@@ -45,7 +54,7 @@ internal class FindScheduleReducer :
             is Ui.Init -> Unit
             is Ui.Click.Continue -> {
                 state { copy(isLoading = true) }
-                commands { +Command.FindGroup(scheduleName = event.scheduleName) }
+                commands { +Command.FindSchedule(name = event.scheduleName) }
             }
             is Ui.Action.GroupNumberChanged -> {
                 state {

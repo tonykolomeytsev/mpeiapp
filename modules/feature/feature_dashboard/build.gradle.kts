@@ -12,6 +12,7 @@ dependencies {
     implementation(libs.androidx.appCompat)
     implementation(libs.androidx.constraintLayout)
     implementation(libs.androidx.coreKtx)
+    implementation(libs.androidx.fragment)
     implementation(libs.androidx.swipeRefreshLayout)
     implementation(libs.facebook.shimmer)
     implementation(libs.google.material)
@@ -28,6 +29,7 @@ dependencies {
     implementation(project(":domain_favorite_schedule"))
     implementation(project(":domain_notes"))
     implementation(project(":domain_schedule"))
+    implementation(project(":domain_schedule_models"))
     implementation(project(":domain_search"))
 
     implementation(project(":common_adapter"))

@@ -21,6 +21,7 @@ import kekmech.ru.coreui.items.SpaceAdapterItem
 import kekmech.ru.coreui.touch_helpers.attachSwipeToDeleteCallback
 import kekmech.ru.domain_favorite_schedule.dto.FavoriteSchedule
 import kekmech.ru.domain_schedule.ScheduleFeatureLauncher.ContinueTo.BACK_WITH_RESULT
+import kekmech.ru.domain_schedule.dto.SelectedSchedule
 import kekmech.ru.feature_app_settings.R
 import kekmech.ru.feature_app_settings.databinding.FragmentFavoritesBinding
 import kekmech.ru.feature_app_settings.di.AppSettingDependencies
@@ -72,12 +73,16 @@ internal class FavoritesFragment : BaseFragment<FavoritesEvent, FavoritesEffect,
             SpaceAdapterItem(),
             AddActionAdapterItem {
                 analytics.sendClick("AddFavorite")
-                setResultListener<String>(FIND_GROUP_RESULT_KEY) { groupName ->
+                setResultListener<SelectedSchedule>(FIND_GROUP_RESULT_KEY) { selectedSchedule ->
                     setResultListenerForUpdateFavorite(NEW_FAVORITE_RESULT_KEY)
                     addScreenForward {
                         EditFavoriteFragment.newInstance(
-                            groupNumber = groupName,
-                            description = "",
+                            favoriteSchedule = FavoriteSchedule(
+                                name = selectedSchedule.name,
+                                type = selectedSchedule.type,
+                                description = "",
+                                order = 0,
+                            ),
                             resultKey = NEW_FAVORITE_RESULT_KEY
                         )
                     }
@@ -93,8 +98,7 @@ internal class FavoritesFragment : BaseFragment<FavoritesEvent, FavoritesEffect,
                 setResultListenerForUpdateFavorite(EDIT_FAVORITE_RESULT_KEY)
                 addScreenForward {
                     EditFavoriteFragment.newInstance(
-                        groupNumber = it.value.name,
-                        description = it.value.description,
+                        favoriteSchedule = it.value,
                         resultKey = EDIT_FAVORITE_RESULT_KEY,
                     )
                 }
@@ -103,16 +107,8 @@ internal class FavoritesFragment : BaseFragment<FavoritesEvent, FavoritesEffect,
         )
 
     private fun setResultListenerForUpdateFavorite(resultKey: String) =
-        setResultListener<Pair<String, String>>(resultKey) { (groupName, description) ->
-            feature.accept(
-                Ui.Action.UpdateFavorite(
-                    FavoriteSchedule(
-                        name = groupName,
-                        description = description,
-                        order = 0,
-                    )
-                )
-            )
+        setResultListener<FavoriteSchedule>(resultKey) { favoriteSchedule ->
+            feature.accept(Ui.Action.UpdateFavorite(favoriteSchedule))
         }
 
     companion object {

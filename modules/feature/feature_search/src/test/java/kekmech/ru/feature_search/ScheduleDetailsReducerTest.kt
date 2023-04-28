@@ -6,12 +6,13 @@ import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import kekmech.ru.domain_favorite_schedule.dto.FavoriteSchedule
-import kekmech.ru.domain_schedule.dto.Day
-import kekmech.ru.domain_schedule.dto.Schedule
-import kekmech.ru.domain_schedule.dto.ScheduleType
 import kekmech.ru.domain_schedule.dto.SearchResult
-import kekmech.ru.domain_schedule.dto.SearchResultType
-import kekmech.ru.domain_schedule.dto.Week
+import kekmech.ru.domain_schedule.dto.SelectedSchedule
+import kekmech.ru.domain_schedule_models.dto.Day
+import kekmech.ru.domain_schedule_models.dto.Schedule
+import kekmech.ru.domain_schedule_models.dto.ScheduleType
+import kekmech.ru.domain_schedule_models.dto.Week
+import kekmech.ru.domain_schedule_models.dto.WeekOfSemester
 import kekmech.ru.feature_search.screens.schedule_details.elm.ScheduleDetailsCommand
 import kekmech.ru.feature_search.screens.schedule_details.elm.ScheduleDetailsEffect
 import kekmech.ru.feature_search.screens.schedule_details.elm.ScheduleDetailsEvent.Internal
@@ -35,9 +36,9 @@ class ScheduleDetailsReducerTest : BehaviorSpec({
             }
             Then("Check actions") {
                 actions.shouldContainExactly(
-                    ScheduleDetailsCommand.LoadSchedule(SEARCH_RESULT.name, 0),
-                    ScheduleDetailsCommand.LoadSchedule(SEARCH_RESULT.name, 1),
-                    ScheduleDetailsCommand.LoadFavorites
+                    ScheduleDetailsCommand.LoadSchedule(SEARCH_RESULT.type, SEARCH_RESULT.name, 0),
+                    ScheduleDetailsCommand.LoadSchedule(SEARCH_RESULT.type, SEARCH_RESULT.name, 1),
+                    ScheduleDetailsCommand.LoadFavorites,
                 )
             }
         }
@@ -74,11 +75,18 @@ class ScheduleDetailsReducerTest : BehaviorSpec({
                 effects.shouldContainExactly(ScheduleDetailsEffect.CloseAndGoToSchedule)
             }
             Then("Check actions") {
-                actions.shouldContainExactly(ScheduleDetailsCommand.SwitchSchedule(SEARCH_RESULT.name))
+                actions.shouldContainExactly(ScheduleDetailsCommand.SwitchSchedule(
+                    SelectedSchedule(name = SEARCH_RESULT.name, type = SEARCH_RESULT.type)
+                ))
             }
         }
         When("News.ScheduleLoaded (0)") {
-            val (state, effects, actions) = reducer.reduce(Internal.LoadScheduleSuccess(SCHEDULE_0, 0), givenState)
+            val (state, effects, actions) = reducer.reduce(
+                Internal.LoadScheduleSuccess(
+                    SCHEDULE_0,
+                    0
+                ), givenState
+            )
             Then("Check state") {
                 state.thisWeek.shouldContainExactly(SCHEDULE_0.mapToDays())
             }
@@ -90,7 +98,12 @@ class ScheduleDetailsReducerTest : BehaviorSpec({
             }
         }
         When("News.ScheduleLoaded (1)") {
-            val (state, effects, actions) = reducer.reduce(Internal.LoadScheduleSuccess(SCHEDULE_0, 1), givenState)
+            val (state, effects, actions) = reducer.reduce(
+                Internal.LoadScheduleSuccess(
+                    SCHEDULE_0,
+                    1
+                ), givenState
+            )
             Then("Check state") {
                 state.nextWeek.shouldContainExactly(SCHEDULE_0.mapToDays())
             }
@@ -102,7 +115,10 @@ class ScheduleDetailsReducerTest : BehaviorSpec({
             }
         }
         When("News.LoadScheduleError (0)") {
-            val (state, effects, actions) = reducer.reduce(Internal.LoadScheduleError(0), givenState)
+            val (state, effects, actions) = reducer.reduce(
+                Internal.LoadScheduleError(0),
+                givenState
+            )
             Then("Check state") {
                 state.thisWeek shouldBe emptyList()
             }
@@ -114,7 +130,10 @@ class ScheduleDetailsReducerTest : BehaviorSpec({
             }
         }
         When("News.LoadScheduleError (1)") {
-            val (state, effects, actions) = reducer.reduce(Internal.LoadScheduleError(1), givenState)
+            val (state, effects, actions) = reducer.reduce(
+                Internal.LoadScheduleError(1),
+                givenState
+            )
             Then("Check state") {
                 state.nextWeek shouldBe emptyList()
             }
@@ -126,7 +145,13 @@ class ScheduleDetailsReducerTest : BehaviorSpec({
             }
         }
         When("News.FavoritesLoaded (true)") {
-            val (state, effects, actions) = reducer.reduce(Internal.LoadFavoritesSuccess(listOf(FAVORITE)), givenState)
+            val (state, effects, actions) = reducer.reduce(
+                Internal.LoadFavoritesSuccess(
+                    listOf(
+                        FAVORITE
+                    )
+                ), givenState
+            )
             Then("Check state") {
                 state.isInFavorites shouldBe true
                 state.favoriteSchedule shouldBe FAVORITE
@@ -153,7 +178,10 @@ class ScheduleDetailsReducerTest : BehaviorSpec({
             }
         }
         When("News.FavoriteRemoved") {
-            val (state, effects, actions) = reducer.reduce(Internal.RemoveFromFavoritesSuccess, givenState)
+            val (state, effects, actions) = reducer.reduce(
+                Internal.RemoveFromFavoritesSuccess,
+                givenState
+            )
             Then("Check state") {
                 state.isInFavorites shouldBe false
                 state.favoriteSchedule.shouldBeNull()
@@ -166,7 +194,10 @@ class ScheduleDetailsReducerTest : BehaviorSpec({
             }
         }
         When("News.FavoriteAdded") {
-            val (state, effects, actions) = reducer.reduce(Internal.AddToFavoritesSuccess(FAVORITE), givenState)
+            val (state, effects, actions) = reducer.reduce(
+                Internal.AddToFavoritesSuccess(FAVORITE),
+                givenState
+            )
             Then("Check state") {
                 state.isInFavorites shouldBe true
                 state.favoriteSchedule shouldBe FAVORITE
@@ -195,21 +226,26 @@ class ScheduleDetailsReducerTest : BehaviorSpec({
         }
     }
 }) {
+
     private companion object {
+
         private val SEARCH_RESULT = SearchResult(
             id = "id",
             name = "Зуев Юрий Юрьевич",
             description = "",
-            type = SearchResultType.PERSON
+            type = ScheduleType.PERSON,
         )
         private val STATE = ScheduleDetailsState(SEARCH_RESULT)
         private val SELECTED_DATE = LocalDate.of(2020, 1, 1)
         private val FAVORITE = FavoriteSchedule(
-            name = SEARCH_RESULT.name,          description = SEARCH_RESULT.description,
+            name = SEARCH_RESULT.name,
+            type = ScheduleType.PERSON,
+            description = SEARCH_RESULT.description,
             order = 0
         )
         private val FAVORITE_ANOTHER = FavoriteSchedule(
             name = "Василий Пупкин",
+            type = ScheduleType.PERSON,
             description = "",
             order = 0
         )
@@ -220,17 +256,17 @@ class ScheduleDetailsReducerTest : BehaviorSpec({
             type = ScheduleType.GROUP,
             weeks = listOf(
                 Week(
-                weekOfSemester = 3,
-                weekOfYear = 36,
-                firstDayOfWeek = CURRENT_MONDAY,
-                days = listOf(
-                    Day(
-                        dayOfWeek = 1,
-                        date = CURRENT_MONDAY,
-                        classes = listOf()
+                    weekOfSemester = WeekOfSemester.Studying(3),
+                    weekOfYear = 36,
+                    firstDayOfWeek = CURRENT_MONDAY,
+                    days = listOf(
+                        Day(
+                            dayOfWeek = 1,
+                            date = CURRENT_MONDAY,
+                            classes = listOf()
+                        )
                     )
                 )
-            )
             )
         )
 

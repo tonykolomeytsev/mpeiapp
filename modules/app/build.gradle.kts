@@ -93,6 +93,7 @@ dependencies {
     implementation(project(":domain_github"))
     implementation(project(":domain_main_screen"))
     implementation(project(":domain_map"))
+    implementation(project(":domain_notes"))
     implementation(project(":domain_onboarding"))
     implementation(project(":domain_schedule"))
     implementation(project(":domain_search"))

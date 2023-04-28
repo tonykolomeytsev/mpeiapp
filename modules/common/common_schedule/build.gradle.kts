@@ -16,6 +16,7 @@ dependencies {
     implementation(project(":common_kotlin"))
 
     implementation(project(":domain_schedule"))
+    implementation(project(":domain_schedule_models"))
 
     implementation(project(":coreui"))
     implementation(project(":strings"))

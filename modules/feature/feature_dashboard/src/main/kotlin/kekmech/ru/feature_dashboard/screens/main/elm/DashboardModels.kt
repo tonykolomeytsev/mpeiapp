@@ -1,44 +1,30 @@
 package kekmech.ru.feature_dashboard.screens.main.elm
 
-import kekmech.ru.common_android.moscowLocalDateTime
-import kekmech.ru.coreui.items.FavoriteScheduleItem
+import kekmech.ru.common_kotlin.Resource
+import kekmech.ru.domain_dashboard.dto.UpcomingEventsPrediction
 import kekmech.ru.domain_favorite_schedule.dto.FavoriteSchedule
 import kekmech.ru.domain_notes.dto.Note
-import kekmech.ru.domain_schedule.GROUP_NUMBER_PATTERN
-import kekmech.ru.domain_schedule.dto.Classes
-import kekmech.ru.domain_schedule.dto.Schedule
-import kekmech.ru.domain_schedule.dto.ScheduleType
-import kekmech.ru.domain_schedule.dto.SessionItem
+import kekmech.ru.domain_schedule.dto.SelectedSchedule
+import kekmech.ru.domain_schedule_models.dto.Classes
+import kekmech.ru.domain_schedule_models.dto.WeekOfSemester
 import java.time.LocalDate
-import java.time.LocalDateTime
 
 internal data class DashboardState(
-    val isLoading: Boolean = false,
-    val loadingError: Throwable? = null,
-    val currentWeekSchedule: Schedule? = null,
-    val nextWeekSchedule: Schedule? = null,
-    val selectedScheduleName: String = "",
-    val notes: List<Note>? = null,
-    val favoriteSchedules: List<FavoriteScheduleItem>? = null,
-    val sessionScheduleItems: List<SessionItem>? = null,
-    val lastUpdateDateTime: LocalDateTime = moscowLocalDateTime(),
+    val selectedSchedule: SelectedSchedule,
+    val weekOfSemester: Resource<WeekOfSemester> = Resource.Loading,
+    val upcomingEvents: Resource<UpcomingEventsPrediction> = Resource.Loading,
+    val actualNotes: Resource<List<Note>> = Resource.Loading,
+    val favoriteSchedules: Resource<List<FavoriteSchedule>> = Resource.Loading,
 ) {
-    val weekOfSemester get() = currentWeekSchedule?.weeks?.first()?.weekOfSemester
-    val selectedScheduleType: ScheduleType get() = when {
-        selectedScheduleName.matches(GROUP_NUMBER_PATTERN) -> ScheduleType.GROUP
-        else -> ScheduleType.PERSON
-    }
+
+    val isLoading: Boolean =
+        listOf(
+            weekOfSemester,
+            upcomingEvents,
+            actualNotes,
+            favoriteSchedules
+        ).any { it.isLoading }
 }
-
-internal data class NextClassesTimeStatus(
-    val condition: NextClassesCondition,
-    val hoursUntilClasses: Long = 0,
-    val minutesUntilClasses: Long = 0,
-)
-
-internal enum class NextClassesCondition { NOT_STARTED, STARTED, ENDED }
-
-internal data class UpcomingEventsMappingResult(val list: List<Any>, val dayOffset: Int)
 
 internal sealed interface DashboardEvent {
 
@@ -57,14 +43,16 @@ internal sealed interface DashboardEvent {
     }
 
     sealed interface Internal : DashboardEvent {
-        data class LoadScheduleSuccess(val schedule: Schedule, val weekOffset: Int) : Internal
-        data class LoadScheduleFailure(val throwable: Throwable) : Internal
-        data class LoadNotesFailure(val throwable: Throwable) : Internal
-        data class GetSelectedGroupNameSuccess(val groupName: String) : Internal
-        data class LoadNotesSuccess(val notes: List<Note>) : Internal
-        data class LoadFavoriteSchedulesSuccess(val favorites: List<FavoriteSchedule>) : Internal
-        data class LoadSessionSuccess(val items: List<SessionItem>) : Internal
-        object SelectGroupSuccess : Internal
+        data class GetSelectedScheduleSuccess(val selectedSchedule: SelectedSchedule) : Internal
+        data class GetWeekOfSemesterSuccess(val weekOfSemester: WeekOfSemester) : Internal
+        data class GetWeekOfSemesterFailure(val throwable: Throwable) : Internal
+        data class GetUpcomingEventsSuccess(val upcomingEvents: UpcomingEventsPrediction) : Internal
+        data class GetUpcomingEventsFailure(val throwable: Throwable) : Internal
+        data class GetActualNotesSuccess(val notes: List<Note>) : Internal
+        data class GetActualNotesFailure(val throwable: Throwable) : Internal
+        data class GetFavoriteSchedulesSuccess(val favorites: List<FavoriteSchedule>) : Internal
+        data class GetFavoriteSchedulesFailure(val throwable: Throwable) : Internal
+        object SelectScheduleSuccess : Internal
     }
 }
 
@@ -75,10 +63,10 @@ internal sealed interface DashboardEffect {
 }
 
 internal sealed interface DashboardCommand {
-    object GetSelectedGroupName : DashboardCommand
-    data class LoadSchedule(val weekOffset: Int) : DashboardCommand
-    object LoadNotes : DashboardCommand
-    object LoadFavoriteSchedules : DashboardCommand
-    object LoadSession : DashboardCommand
-    data class SelectGroup(val groupName: String) : DashboardCommand
+    object GetSelectedSchedule : DashboardCommand
+    object GetWeekOfSemester : DashboardCommand
+    object GetUpcomingEvents : DashboardCommand
+    object GetActualNotes : DashboardCommand
+    object GetFavoriteSchedules : DashboardCommand
+    data class SelectSchedule(val selectedSchedule: SelectedSchedule) : DashboardCommand
 }

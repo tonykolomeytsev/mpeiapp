@@ -1,9 +1,8 @@
 package kekmech.ru.feature_notes.di
 
-import kekmech.ru.common_di.ModuleProvider
 import kekmech.ru.domain_notes.NotesFeatureLauncher
 import kekmech.ru.domain_notes.NotesRepository
-import kekmech.ru.domain_notes.NotesScheduleTransformer
+import kekmech.ru.domain_notes.services.AttachNotesToScheduleService
 import kekmech.ru.domain_notes.sources.CachedNotesSource
 import kekmech.ru.domain_notes.sources.NotesSource
 import kekmech.ru.domain_notes.sources.NotesSourceImpl
@@ -14,21 +13,24 @@ import kekmech.ru.feature_notes.screens.edit.elm.NoteEditActor
 import kekmech.ru.feature_notes.screens.edit.elm.NoteEditFeatureFactory
 import kekmech.ru.feature_notes.screens.note_list.elm.NoteListActor
 import kekmech.ru.feature_notes.screens.note_list.elm.NoteListFeatureFactory
+import org.koin.core.module.dsl.factoryOf
+import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
+import org.koin.dsl.module
 
-object NotesModule : ModuleProvider({
+val FeatureNotesModule = module {
     single { CachedNotesSource(NotesSourceImpl(get())) } bind NotesSource::class
-    single { NotesRepository(get(), get()) } bind NotesRepository::class
-    factory { NotesDependencies(get(), get(), get(), get()) } bind NotesDependencies::class
-    factory { NotesFeatureLauncherImpl(get()) } bind NotesFeatureLauncher::class
-    factory { NotesScheduleTransformer(get()) }
+    singleOf(::NotesRepository)
+    factoryOf(::NotesDependencies)
+    factoryOf(::NotesFeatureLauncherImpl) bind NotesFeatureLauncher::class
+    factoryOf(::AttachNotesToScheduleService)
 
-    factory { NoteListFeatureFactory(get()) } bind NoteListFeatureFactory::class
-    factory { NoteListActor(get()) } bind NoteListActor::class
+    factoryOf(::NoteListFeatureFactory)
+    factoryOf(::NoteListActor)
 
-    factory { NoteEditFeatureFactory(get()) } bind NoteEditFeatureFactory::class
-    factory { NoteEditActor(get()) } bind NoteEditActor::class
+    factoryOf(::NoteEditFeatureFactory)
+    factoryOf(::NoteEditActor)
 
-    factory { AllNotesFeatureFactory(get()) } bind AllNotesFeatureFactory::class
-    factory { AllNotesActor(get()) } bind AllNotesActor::class
-})
+    factoryOf(::AllNotesFeatureFactory)
+    factoryOf(::AllNotesActor)
+}

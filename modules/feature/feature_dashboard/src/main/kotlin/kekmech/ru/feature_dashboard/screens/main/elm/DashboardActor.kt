@@ -1,41 +1,55 @@
 package kekmech.ru.feature_dashboard.screens.main.elm
 
 import io.reactivex.rxjava3.core.Observable
+import kekmech.ru.domain_dashboard.use_cases.GetUpcomingEventsUseCase
 import kekmech.ru.domain_favorite_schedule.FavoriteScheduleRepository
-import kekmech.ru.domain_notes.NotesRepository
-import kekmech.ru.domain_notes.NotesScheduleTransformer
-import kekmech.ru.domain_schedule.ScheduleRepository
+import kekmech.ru.domain_notes.use_cases.GetActualNotesUseCase
+import kekmech.ru.domain_schedule.repository.ScheduleRepository
+import kekmech.ru.domain_schedule.use_cases.GetCurrentScheduleUseCase
 import kekmech.ru.feature_dashboard.screens.main.elm.DashboardEvent.Internal
 import vivid.money.elmslie.core.store.Actor
+import kekmech.ru.feature_dashboard.screens.main.elm.DashboardCommand as Command
+import kekmech.ru.feature_dashboard.screens.main.elm.DashboardEvent as Event
 
 internal class DashboardActor(
     private val scheduleRepository: ScheduleRepository,
     private val favoriteScheduleRepository: FavoriteScheduleRepository,
-    private val notesRepository: NotesRepository,
-    private val notesScheduleTransformer: NotesScheduleTransformer,
-) : Actor<DashboardCommand, DashboardEvent> {
+    private val getUpcomingEventsUseCase: GetUpcomingEventsUseCase,
+    private val getActualNotesUseCase: GetActualNotesUseCase,
+    private val getCurrentScheduleUseCase: GetCurrentScheduleUseCase,
+) : Actor<Command, Event> {
 
-    override fun execute(command: DashboardCommand): Observable<DashboardEvent> = when (command) {
-        is DashboardCommand.LoadSchedule -> scheduleRepository
-            .loadSchedule(weekOffset = command.weekOffset)
-            .flatMap(notesScheduleTransformer::transform)
-            .mapEvents(
-                successEventMapper = { Internal.LoadScheduleSuccess(it, command.weekOffset) },
-                failureEventMapper = Internal::LoadScheduleFailure,
-            )
-        is DashboardCommand.GetSelectedGroupName -> scheduleRepository.getSelectedScheduleName()
-            .mapSuccessEvent(Internal::GetSelectedGroupNameSuccess)
-        is DashboardCommand.LoadNotes -> notesRepository.getNotes()
-            .mapEvents(
-                successEventMapper = Internal::LoadNotesSuccess,
-                failureEventMapper = Internal::LoadNotesFailure,
-            )
-        is DashboardCommand.LoadFavoriteSchedules -> favoriteScheduleRepository.getFavorites()
-            .mapSuccessEvent(Internal::LoadFavoriteSchedulesSuccess)
-        is DashboardCommand.SelectGroup -> scheduleRepository.selectSchedule(command.groupName)
-            .mapSuccessEvent(Internal.SelectGroupSuccess)
-        is DashboardCommand.LoadSession -> scheduleRepository.getSession()
-            // The error case is intentionally ignored
-            .mapSuccessEvent { Internal.LoadSessionSuccess(it.items) }
-    }
+    override fun execute(command: Command): Observable<Event> =
+        when (command) {
+            is Command.GetSelectedSchedule -> scheduleRepository.getSelectedSchedule()
+                .mapSuccessEvent(Internal::GetSelectedScheduleSuccess)
+            is Command.GetWeekOfSemester -> getCurrentScheduleUseCase
+                .getSchedule(weekOffset = 0)
+                .map { it.weeks.first().weekOfSemester }
+                .mapEvents(
+                    successEventMapper = Internal::GetWeekOfSemesterSuccess,
+                    failureEventMapper = Internal::GetWeekOfSemesterFailure,
+                )
+            is Command.GetUpcomingEvents -> getUpcomingEventsUseCase
+                .getPrediction()
+                .mapEvents(
+                    successEventMapper = Internal::GetUpcomingEventsSuccess,
+                    failureEventMapper = Internal::GetUpcomingEventsFailure,
+                )
+            is Command.GetActualNotes -> getActualNotesUseCase
+                .getActualNotes()
+                .mapEvents(
+                    successEventMapper = Internal::GetActualNotesSuccess,
+                    failureEventMapper = Internal::GetActualNotesFailure,
+                )
+            is Command.GetFavoriteSchedules -> favoriteScheduleRepository
+                .getFavorites()
+                .mapEvents(
+                    successEventMapper = Internal::GetFavoriteSchedulesSuccess,
+                    failureEventMapper = Internal::GetFavoriteSchedulesFailure,
+                )
+            is Command.SelectSchedule -> scheduleRepository
+                .setSelectedSchedule(command.selectedSchedule)
+                .mapSuccessEvent(Internal.SelectScheduleSuccess)
+        }
 }
