@@ -5,6 +5,7 @@ plugins {
 
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-gradle-plugin")
+    implementation("com.google.devtools.ksp:symbol-processing-gradle-plugin:1.8.21-1.0.11")
     implementation("com.android.tools.build:gradle:8.0.0")
     implementation(gradleApi())
 }
@@ -46,5 +47,11 @@ gradlePlugin {
         displayName = "Aar2Jar Plugin"
         description = "The Gradle Plugin that transforms AAR dependencies to JAR"
         implementationClass = "mpeix.plugins.dependencies.Aar2JarPlugin"
+    }
+    plugins.create("mpeixKspSupportPlugin") {
+        id = "mpeix.ksp"
+        displayName = "Kotlin Symbol Processing Support Plugin"
+        description = "The Gradle Plugin that adds KSP support to the module"
+        implementationClass = "mpeix.plugins.dependencies.KspSupportPlugin"
     }
 }
