@@ -76,6 +76,7 @@ internal class ScheduleDetailsReducer :
                     val newFavorite =
                         FavoriteSchedule(
                             name = state.searchResult.name,
+                            type = state.scheduleType,
                             description = state.searchResult.description,
                             order = 0,
                         )

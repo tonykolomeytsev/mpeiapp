@@ -5,6 +5,7 @@ import kekmech.ru.common_android.toBase64
 import kekmech.ru.common_app_database.AppDatabase
 import kekmech.ru.common_app_database.dto.Record
 import kekmech.ru.domain_favorite_schedule.dto.FavoriteSchedule
+import kekmech.ru.domain_schedule_models.dto.ScheduleType
 
 class FavoriteScheduleSource(
     private val db: AppDatabase,
@@ -43,10 +44,22 @@ class FavoriteScheduleSource(
         db.fetch("delete from favorite_schedules;")
     }
 
-    private fun map(record: Record): FavoriteSchedule =
-        FavoriteSchedule(
+    private fun map(record: Record): FavoriteSchedule {
+        val name = record.get<String>("grp_num")?.fromBase64().orEmpty()
+        return FavoriteSchedule(
             name = record.get<String>("grp_num")?.fromBase64().orEmpty(),
+            type = name.deriveType(),
             description = record.get<String>("description")?.fromBase64().orEmpty(),
             order = record.get("ord") ?: 0
         )
+    }
+
+    @Deprecated("It is just incapsulated tech dept")
+    private fun String.deriveType(): ScheduleType = // TODO: add scheduleType to SQL model
+        if (matches(GROUP_NUMBER_PATTERN)) ScheduleType.GROUP else ScheduleType.PERSON
+
+    private companion object {
+
+        val GROUP_NUMBER_PATTERN = "[а-яА-Я]+-[а-яА-Я0-9]+-[0-9]+".toRegex()
+    }
 }

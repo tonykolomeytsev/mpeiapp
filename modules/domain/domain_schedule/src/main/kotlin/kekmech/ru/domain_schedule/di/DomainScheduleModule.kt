@@ -1,8 +1,8 @@
 package kekmech.ru.domain_schedule.di
 
 import kekmech.ru.common_network.retrofit.buildApi
+import kekmech.ru.domain_analytics.SelectedScheduleAnalyticsProvider
 import kekmech.ru.domain_schedule.PreheatSelectedScheduleProvider
-import kekmech.ru.domain_schedule.SelectedScheduleAnalyticsProvider
 import kekmech.ru.domain_schedule.network.ScheduleService
 import kekmech.ru.domain_schedule.repository.ScheduleRepository
 import kekmech.ru.domain_schedule.repository.ScheduleRepositoryImpl

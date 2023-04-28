@@ -34,6 +34,7 @@ import kekmech.ru.coreui.items.SpaceAdapterItem
 import kekmech.ru.coreui.items.TextAdapterItem
 import kekmech.ru.domain_app_settings.AppSettingsFeatureLauncher
 import kekmech.ru.domain_schedule.ScheduleFeatureLauncher
+import kekmech.ru.domain_schedule.repository.schedule.dto.SelectedSchedule
 import kekmech.ru.domain_schedule_models.dto.Classes
 import kekmech.ru.feature_dashboard.R
 import kekmech.ru.feature_dashboard.databinding.FragmentDashboardBinding
@@ -151,7 +152,7 @@ internal class DashboardFragment :
         DashboardClassesAdapterItem(requireContext(), ::clickOnClasses),
         ScheduleTypeAdapterItem {
             analytics.sendClick("ChangeGroup")
-            parentFragment?.setResultListener<Any>(FIND_GROUP_RESULT_KEY) {
+            parentFragment?.setResultListener<SelectedSchedule>(FIND_GROUP_RESULT_KEY) {
                 feature.accept(DashboardEvent.Ui.Action.SwipeToRefresh)
             }
             dependencies.scheduleFeatureLauncher.launchSearchGroup(

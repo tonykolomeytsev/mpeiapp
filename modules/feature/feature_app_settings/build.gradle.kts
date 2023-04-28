@@ -30,6 +30,7 @@ dependencies {
     implementation(project(":domain_github"))
     implementation(project(":domain_onboarding"))
     implementation(project(":domain_schedule"))
+    implementation(project(":domain_schedule_models"))
 
     implementation(project(":common_adapter"))
     implementation(project(":common_analytics"))

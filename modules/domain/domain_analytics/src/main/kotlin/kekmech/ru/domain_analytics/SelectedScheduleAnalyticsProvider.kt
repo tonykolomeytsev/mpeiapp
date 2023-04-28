@@ -1,4 +1,4 @@
-package kekmech.ru.domain_schedule
+package kekmech.ru.domain_analytics
 
 interface SelectedScheduleAnalyticsProvider {
 

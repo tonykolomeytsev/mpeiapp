@@ -5,7 +5,7 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.FirebaseAnalytics.Event
 import com.google.firebase.analytics.FirebaseAnalytics.Param
 import kekmech.ru.common_analytics.dto.AnalyticsEvent
-import kekmech.ru.domain_schedule.SelectedScheduleAnalyticsProvider
+import kekmech.ru.domain_analytics.SelectedScheduleAnalyticsProvider
 
 internal class AnalyticsWrapper(
     private val firebaseAnalytics: FirebaseAnalytics,

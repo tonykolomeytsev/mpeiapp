@@ -311,7 +311,7 @@ private fun createEvenWeek(
                         number = 4,
                     ),
                 ),
-            )
+            ),
         ),
     )
 }
