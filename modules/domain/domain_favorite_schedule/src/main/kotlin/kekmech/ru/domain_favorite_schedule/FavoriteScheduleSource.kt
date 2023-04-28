@@ -1,9 +1,9 @@
 package kekmech.ru.domain_favorite_schedule
 
-import kekmech.ru.common_android.fromBase64
-import kekmech.ru.common_android.toBase64
 import kekmech.ru.common_app_database.AppDatabase
 import kekmech.ru.common_app_database.dto.Record
+import kekmech.ru.common_kotlin.fromBase64
+import kekmech.ru.common_kotlin.toBase64
 import kekmech.ru.domain_favorite_schedule.dto.FavoriteSchedule
 import kekmech.ru.domain_schedule_models.dto.ScheduleType
 

@@ -58,6 +58,7 @@ tinkoff-pagerIndicator = { module = "ru.tinkoff.scrollingpagerindicator:scrollin
 
 # AndroidX Libraries
 androidx-appCompat = { module = "androidx.appcompat:appcompat", version.ref = "appCompat" }
+androidx-annotation = { module = "androidx.annotation:annotation", version = "1.5.0" }
 androidx-recyclerView = { module = "androidx.recyclerview:recyclerview", version.ref = "recyclerView" }
 androidx-constraintLayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintLayout" }
 androidx-coordinatorLayout = { module = "androidx.coordinatorlayout:coordinatorlayout", version.ref = "coordinatorLayout" }

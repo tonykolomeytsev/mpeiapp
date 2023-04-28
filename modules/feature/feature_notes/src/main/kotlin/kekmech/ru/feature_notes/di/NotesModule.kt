@@ -2,7 +2,7 @@ package kekmech.ru.feature_notes.di
 
 import kekmech.ru.domain_notes.NotesFeatureLauncher
 import kekmech.ru.domain_notes.NotesRepository
-import kekmech.ru.domain_notes.NotesScheduleTransformer
+import kekmech.ru.domain_notes.services.AttachNotesToScheduleService
 import kekmech.ru.domain_notes.sources.CachedNotesSource
 import kekmech.ru.domain_notes.sources.NotesSource
 import kekmech.ru.domain_notes.sources.NotesSourceImpl
@@ -23,7 +23,7 @@ val FeatureNotesModule = module {
     singleOf(::NotesRepository)
     factoryOf(::NotesDependencies)
     factoryOf(::NotesFeatureLauncherImpl) bind NotesFeatureLauncher::class
-    factoryOf(::NotesScheduleTransformer)
+    factoryOf(::AttachNotesToScheduleService)
 
     factoryOf(::NoteListFeatureFactory)
     factoryOf(::NoteListActor)

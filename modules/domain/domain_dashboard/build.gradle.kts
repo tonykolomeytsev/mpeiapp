@@ -10,6 +10,7 @@ dependencies {
 
     implementation(project(":common_kotlin"))
 
+    implementation(project(":domain_notes"))
     implementation(project(":domain_schedule"))
     implementation(project(":domain_schedule_models"))
 }
