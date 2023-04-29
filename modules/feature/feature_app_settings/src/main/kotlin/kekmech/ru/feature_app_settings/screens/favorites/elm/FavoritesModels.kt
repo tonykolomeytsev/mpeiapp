@@ -29,5 +29,6 @@ internal sealed interface FavoritesEffect
 
 internal sealed interface FavoritesCommand {
     object LoadAllFavorites : FavoritesCommand
-    data class SetFavorites(val favorites: List<FavoriteSchedule>) : FavoritesCommand
+    data class UpdateOrInsertFavorite(val favoriteSchedule: FavoriteSchedule) : FavoritesCommand
+    data class DeleteFavorite(val favoriteSchedule: FavoriteSchedule) : FavoritesCommand
 }

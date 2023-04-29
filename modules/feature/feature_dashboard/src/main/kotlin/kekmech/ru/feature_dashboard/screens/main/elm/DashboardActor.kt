@@ -43,7 +43,7 @@ internal class DashboardActor(
                     failureEventMapper = Internal::GetActualNotesFailure,
                 )
             is Command.GetFavoriteSchedules -> favoriteScheduleRepository
-                .getFavorites()
+                .getAllFavorites()
                 .mapEvents(
                     successEventMapper = Internal::GetFavoriteSchedulesSuccess,
                     failureEventMapper = Internal::GetFavoriteSchedulesFailure,

@@ -47,6 +47,7 @@ internal class NoteListReducer :
                             state.selectedClasses.time.start
                         ),
                         classesName = state.selectedClasses.name,
+                        target = 0,
                     )
                 )
             }
