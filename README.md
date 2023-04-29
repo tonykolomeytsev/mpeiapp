@@ -76,7 +76,11 @@
 
 ### Инструкция по сборке проекта
 
-1. Добавьте `google-services.json` от Firebase в корень модуля `app` и в `app/src/debug` (можно один и тот же). [Инструкция](https://support.google.com/firebase/answer/7015592?hl=en) по получению `google-services.json`.
+1. Создайте на Firebase два конфига `google-services.json`:
+   - Первый для release версии приложения (package name `kekmech.ru.mpeiapp`): положите его в корень модуля `app`
+   - Второй для debug версии приложения (package-name `kekmech.ru.mpeiapp.dev`): положите в `app/src/debug`. 
+
+   [Инструкция](https://support.google.com/firebase/answer/7015592?hl=en) по получению `google-services.json`.
 
 1. В глобальный `gradle.properties` добавьте поле `mpeiapp_google_maps_api_key="{SECRET}"`, где `{SECRET}` - ключ от API Google Maps. [Инструкция](https://developers.google.com/maps/gmp-get-started) по получению ключа.
 
