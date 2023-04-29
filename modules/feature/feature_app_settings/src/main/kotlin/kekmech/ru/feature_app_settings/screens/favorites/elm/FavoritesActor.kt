@@ -12,10 +12,13 @@ internal class FavoritesActor(
     override fun execute(command: FavoritesCommand): Observable<FavoritesEvent> =
         when (command) {
             is FavoritesCommand.LoadAllFavorites -> favoriteScheduleRepository
-                .getFavorites()
+                .getAllFavorites()
                 .mapSuccessEvent(Internal::LoadAllFavoritesSuccess)
-            is FavoritesCommand.SetFavorites -> favoriteScheduleRepository
-                .setFavorites(command.favorites)
+            is FavoritesCommand.UpdateOrInsertFavorite -> favoriteScheduleRepository
+                .updateOrInsertFavorite(command.favoriteSchedule)
+                .toObservable()
+            is FavoritesCommand.DeleteFavorite -> favoriteScheduleRepository
+                .deleteFavorite(command.favoriteSchedule)
                 .toObservable()
         }
 }

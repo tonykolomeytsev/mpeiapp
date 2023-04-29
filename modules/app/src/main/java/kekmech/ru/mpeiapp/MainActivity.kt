@@ -113,6 +113,7 @@ class MainActivity : AppCompatActivity(), DisposableDelegate by DisposableDelega
         supportFragmentManager.onActivityResult(requestCode, resultCode, data)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         val fragment = supportFragmentManager.findFragmentById(common_navigation_R.id.container)
         if (fragment != null && fragment is BackButtonListener && fragment.onBackPressed()) {

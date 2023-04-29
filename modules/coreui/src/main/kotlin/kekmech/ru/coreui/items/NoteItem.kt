@@ -17,7 +17,8 @@ class NoteAdapterItem(
     isType = { it is Note },
     layoutRes = R.layout.item_note,
     viewHolderGenerator = ::NoteViewHolder,
-    itemBinder = NoteItemBinder(context, onClickListener)
+    itemBinder = NoteItemBinder(context, onClickListener),
+    areItemsTheSame = { a, b -> a.same(b) },
 )
 
 class NoteViewHolder(
