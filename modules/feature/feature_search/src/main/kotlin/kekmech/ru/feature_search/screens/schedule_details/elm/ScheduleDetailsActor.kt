@@ -18,12 +18,13 @@ internal class ScheduleDetailsActor(
             is Command.LoadSchedule -> scheduleRepository
                 .getSchedule(command.type, command.name, command.weekOffset)
                 .mapSuccessEvent { Internal.LoadScheduleSuccess(it, command.weekOffset) }
-            is Command.LoadFavorites -> favoriteScheduleRepository.getFavorites()
+            is Command.LoadFavorites -> favoriteScheduleRepository.getAllFavorites()
                 .mapSuccessEvent(Internal::LoadFavoritesSuccess)
-            is Command.AddToFavorites -> favoriteScheduleRepository.addFavorite(command.schedule)
+            is Command.AddToFavorites -> favoriteScheduleRepository
+                .updateOrInsertFavorite(command.schedule)
                 .mapSuccessEvent(Internal.AddToFavoritesSuccess(command.schedule))
             is Command.RemoveFromFavorites -> favoriteScheduleRepository
-                .removeFavorite(command.schedule)
+                .deleteFavorite(command.schedule)
                 .mapSuccessEvent(Internal.RemoveFromFavoritesSuccess)
             is Command.SwitchSchedule -> scheduleRepository
                 .setSelectedSchedule(command.selectedSchedule)
