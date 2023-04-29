@@ -16,6 +16,7 @@ val CommonAppDatabaseModule = module {
                 klass = AppDatabase::class.java,
                 name = AppDatabase.Name,
             )
+        @Suppress("SpreadOperator")
         builder.addMigrations(*getAll<Migration>().toTypedArray())
         builder.build()
     }

@@ -5,6 +5,7 @@ import kekmech.ru.common_app_database_api.MigrationV6V7
 
 internal class MigrationV6V7Impl : MigrationV6V7 {
 
+    @Suppress("MaxLineLength")
     override fun migrate(database: SupportSQLiteDatabase) {
         val newTableName = "note"
         val oldTableName = "notes"
