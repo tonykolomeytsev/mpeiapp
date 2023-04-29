@@ -190,7 +190,7 @@ class SearchReducerTest : BehaviorSpec({
         private const val QUERY_NON_EMPTY = "Кек)))"
         private val STATE = SearchState(query = QUERY_EMPTY)
         private val FILTER_ITEM_MAP = FilterItem(FilterItemType.MAP, false)
-        private val NOTES_RESULTS = listOf(Note("", LocalDateTime.now(), ""))
+        private val NOTES_RESULTS = listOf(Note("", LocalDateTime.now(), "", target = 0))
         private val MAP_RESULTS = listOf(
             MapMarker("", "", Location(0.0, 0.0), "", MarkerType.OTHER, "", "")
         )
