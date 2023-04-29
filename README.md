@@ -78,13 +78,13 @@
 
 1. Создайте на Firebase два конфига `google-services.json`:
    - Для release версии приложения (package name `kekmech.ru.mpeiapp`): 
-     положите его в корень модуля `app`
+     положите конфиг в корень модуля `app`
    - Для debug версии приложения (package name `kekmech.ru.mpeiapp.dev`): 
-     положите его в `app/src/debug`. 
+     положите конфиг в `app/src/debug`. 
 
    [**Инструкция**](https://support.google.com/firebase/answer/7015592?hl=en) по получению `google-services.json`.
 
-1. В глобальный `gradle.properties` добавьте поле `mpeiapp_google_maps_api_key="{SECRET}"`, где `{SECRET}` - ключ от API Google Maps. [**Инструкци**я**](https://developers.google.com/maps/gmp-get-started) по получению ключа.
+1. В глобальный `gradle.properties` добавьте поле `mpeiapp_google_maps_api_key="{SECRET}"`, где `{SECRET}` - ключ от API Google Maps. [**Инструкция**](https://developers.google.com/maps/gmp-get-started) по получению ключа.
 
 1. Скачайте и установите JDK 17 версии, укажите в настройках проекта java 17 по умолчанию для Gradle и компилятора Kotlin:
 
