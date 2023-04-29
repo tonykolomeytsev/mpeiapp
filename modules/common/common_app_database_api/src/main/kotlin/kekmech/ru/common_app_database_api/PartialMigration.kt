@@ -1,4 +1,4 @@
-package kekmech.ru.common_app_database_migrations
+package kekmech.ru.common_app_database_api
 
 import androidx.sqlite.db.SupportSQLiteDatabase
 

@@ -2,7 +2,7 @@ package kekmech.ru.common_app_database.migrations
 
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
-import kekmech.ru.common_app_database_migrations.PartialMigration
+import kekmech.ru.common_app_database_api.PartialMigration
 
 internal open class BaseMigration<T : PartialMigration>(
     private val migrations: List<T>,

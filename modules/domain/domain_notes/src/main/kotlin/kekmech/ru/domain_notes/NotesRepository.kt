@@ -8,7 +8,6 @@ import kekmech.ru.domain_notes.database.NoteDao
 import kekmech.ru.domain_notes.database.entities.NormalNote
 import kekmech.ru.domain_notes.dto.Note
 import kekmech.ru.domain_schedule.dto.SelectedSchedule
-import java.time.LocalDateTime
 
 class NotesRepository(private val noteDao: NoteDao) {
 
@@ -17,7 +16,7 @@ class NotesRepository(private val noteDao: NoteDao) {
             .getAllNotesForSchedule(selectedSchedule.name)
             .map { it.map(::fromNormal) }
 
-    fun putNoteBySchedule(selectedSchedule: SelectedSchedule, note: Note): Completable =
+    fun updateOrInsertNoteBySchedule(selectedSchedule: SelectedSchedule, note: Note): Completable =
         noteDao.updateOrInsert(
             toNormal(
                 note = note,
@@ -31,16 +30,15 @@ class NotesRepository(private val noteDao: NoteDao) {
     private fun fromNormal(normalNote: NormalNote): Note =
         Note(
             content = normalNote.content.fromBase64(),
-            dateTime = LocalDateTime.parse(normalNote.timestamp),
+            dateTime = normalNote.timestamp,
             classesName = normalNote.classesName,
             target = normalNote.target,
-            id = normalNote.id,
-        )
+        ).apply { id = normalNote.id }
 
     private fun toNormal(note: Note, scheduleName: String = ""): NormalNote =
         NormalNote(
             content = note.content.toBase64(),
-            timestamp = note.dateTime.toString(),
+            timestamp = note.dateTime,
             classesName = note.classesName,
             target = note.target,
             id = note.id,
