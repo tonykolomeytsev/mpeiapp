@@ -1,75 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="16dp"
-        app:cardBackgroundColor="?attr/cardViewColor"
-        app:cardCornerRadius="8dp"
-        android:foreground="?attr/selectableItemBackground">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginBottom="16dp"
+    android:foreground="?attr/selectableItemBackground"
+    app:cardBackgroundColor="?attr/cardViewColor"
+    app:cardCornerRadius="8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp">
+
+        <ImageView
+            android:id="@+id/bannerIcon"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_close_black" />
+
+        <TextView
+            android:id="@+id/bannerTitle"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp">
-
-        <ImageView
-                android:id="@+id/bannerIcon"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                tools:src="@drawable/ic_close_black"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginTop="12dp"
-                android:layout_marginStart="12dp"/>
+            android:layout_marginStart="64dp"
+            android:layout_marginTop="12dp"
+            android:fontFamily="@font/roboto_medium"
+            android:textColor="?attr/colorBlack"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@id/bannerExit"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/favorites_help_title" />
 
         <TextView
-                android:id="@+id/bannerTitle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/bannerExit"
-                android:layout_marginStart="64dp"
-                android:layout_marginTop="12dp"
-                tools:text="@string/favorites_help_title"
-                android:fontFamily="@font/roboto_medium"
-                android:textSize="16sp"
-                android:textColor="?attr/colorBlack"/>
-
-        <TextView
-                android:id="@+id/bannerDescription"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/bannerTitle"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="4dp"
-                android:layout_marginStart="64dp"
-                android:layout_marginEnd="8dp"
-                tools:text="@string/favorites_help_text"
-                android:fontFamily="@font/roboto_medium"
-                android:textSize="14sp"
-                android:textColor="?attr/colorGray70"/>
+            android:id="@+id/bannerDescription"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="64dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/roboto_medium"
+            android:textColor="?attr/colorGray70"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bannerTitle"
+            tools:text="@string/favorites_help_text" />
 
         <ImageView
-                android:id="@+id/bannerExit"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_close_black"
-                android:padding="4dp"
-                android:tint="?attr/colorGray90"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginEnd="4dp"
-                android:layout_marginTop="4dp"
-                android:background="?attr/selectableItemBackgroundBorderless"/>
+            android:id="@+id/bannerExit"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="4dp"
+            android:src="@drawable/ic_close_black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="?attr/colorGray90" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 </androidx.cardview.widget.CardView>

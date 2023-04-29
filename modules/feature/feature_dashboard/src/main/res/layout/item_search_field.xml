@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="8dp"
-        app:cardCornerRadius="8dp"
-        app:cardBackgroundColor="?attr/cardViewColor"
-        android:foreground="?attr/selectableItemBackground">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginBottom="8dp"
+    android:foreground="?attr/selectableItemBackground"
+    app:cardBackgroundColor="?attr/cardViewColor"
+    app:cardCornerRadius="8dp">
 
     <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/dashboard_search_field_text"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:textColor="?attr/colorGray70"
-            android:fontFamily="@font/roboto_regular"
-            android:textSize="16sp"
-            android:layout_marginStart="56dp"
-            android:layout_marginEnd="16dp"
-            android:layout_gravity="center_vertical"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="56dp"
+        android:layout_marginEnd="16dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/roboto_regular"
+        android:maxLines="1"
+        android:text="@string/dashboard_search_field_text"
+        android:textColor="?attr/colorGray70"
+        android:textSize="16sp" />
 
     <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:tint="?attr/colorGray70"
-            android:src="@drawable/ic_outline_search_24"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="16dp"
-            tools:ignore="ContentDescription" />
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="16dp"
+        android:src="@drawable/ic_outline_search_24"
+        app:tint="?attr/colorGray70"
+        tools:ignore="ContentDescription" />
 
 </androidx.cardview.widget.CardView>
