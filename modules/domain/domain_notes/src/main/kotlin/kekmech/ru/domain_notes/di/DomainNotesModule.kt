@@ -1,6 +1,6 @@
 package kekmech.ru.domain_notes.di
 
-import kekmech.ru.common_app_database_migrations.MigrationV6V7
+import kekmech.ru.common_app_database_api.MigrationV6V7
 import kekmech.ru.domain_notes.NotesRepository
 import kekmech.ru.domain_notes.database.migrations.MigrationV6V7Impl
 import kekmech.ru.domain_notes.use_cases.GetActualNotesUseCase

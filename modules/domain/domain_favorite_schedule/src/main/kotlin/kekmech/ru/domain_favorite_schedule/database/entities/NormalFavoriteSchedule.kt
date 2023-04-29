@@ -17,7 +17,7 @@ data class NormalFavoriteSchedule(
 )
 
 @Suppress("unused")
-class NormalFavoriteScheduleTypeConverter {
+internal class NormalFavoriteScheduleTypeConverter {
 
     @TypeConverter
     fun fromScheduleType(string: String): ScheduleType =

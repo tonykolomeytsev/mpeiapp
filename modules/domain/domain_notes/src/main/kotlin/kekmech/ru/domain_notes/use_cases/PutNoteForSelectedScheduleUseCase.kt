@@ -12,5 +12,5 @@ class PutNoteForSelectedScheduleUseCase(
 
     fun putNote(note: Note): Completable =
         scheduleRepository.getSelectedSchedule()
-            .flatMapCompletable { notesRepository.putNoteBySchedule(it, note) }
+            .flatMapCompletable { notesRepository.updateOrInsertNoteBySchedule(it, note) }
 }
