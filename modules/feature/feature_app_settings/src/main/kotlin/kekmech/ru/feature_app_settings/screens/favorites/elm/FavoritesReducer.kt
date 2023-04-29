@@ -26,14 +26,14 @@ internal class FavoritesReducer :
             is Ui.Action.UpdateFavorite -> {
                 val newFavorites = state.favorites?.updateOrAdd(event.favoriteSchedule)
                 state { copy(favorites = newFavorites) }
-                commands { +newFavorites?.let(Command::SetFavorites) }
+                commands { +Command.UpdateOrInsertFavorite(event.favoriteSchedule) }
             }
             is Ui.Click.DeleteFavorite -> {
                 val newFavorites = state.favorites?.filterNot {
                     it.name.equals(event.favoriteSchedule.name, ignoreCase = true)
                 }
                 state { copy(favorites = newFavorites) }
-                commands { +newFavorites?.let(Command::SetFavorites) }
+                commands { +Command.DeleteFavorite(event.favoriteSchedule) }
             }
         }
 

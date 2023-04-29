@@ -57,7 +57,7 @@ internal class FavoritesReducerTest : BehaviorSpec({
                 effects.shouldBeEmpty()
             }
             Then("Check commands") {
-                commands.shouldContainExactly(listOf(FavoritesCommand.SetFavorites(newFavorites)))
+                commands.shouldContainExactly(listOf(FavoritesCommand.UpdateOrInsertFavorite(newFavorites)))
             }
         }
         When("Ui.Action.UpdateFavorite (with updated favorite)") {
@@ -76,7 +76,7 @@ internal class FavoritesReducerTest : BehaviorSpec({
                 effects.shouldBeEmpty()
             }
             Then("Check commands") {
-                commands.shouldContainExactly(listOf(FavoritesCommand.SetFavorites(newFavorites)))
+                commands.shouldContainExactly(listOf(FavoritesCommand.UpdateOrInsertFavorite(newFavorites)))
             }
         }
         When("Ui.Click.DeleteFavorite") {
@@ -93,7 +93,7 @@ internal class FavoritesReducerTest : BehaviorSpec({
                 effects.shouldBeEmpty()
             }
             Then("Check commands") {
-                commands.shouldContainExactly(listOf(FavoritesCommand.SetFavorites(newFavorites)))
+                commands.shouldContainExactly(listOf(FavoritesCommand.UpdateOrInsertFavorite(newFavorites)))
             }
         }
     }

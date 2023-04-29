@@ -2,8 +2,8 @@ package kekmech.ru.common_app_database
 
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.collections.shouldContainExactly
-import kekmech.ru.common_app_database.migrations.Executor
-import kekmech.ru.common_app_database.migrations.LiquidSchema
+import kekmech.ru.common_app_database.legacy.migrations.Executor
+import kekmech.ru.common_app_database.legacy.migrations.LiquidSchema
 import org.intellij.lang.annotations.Language
 import org.junit.jupiter.api.assertThrows
 import java.util.*
