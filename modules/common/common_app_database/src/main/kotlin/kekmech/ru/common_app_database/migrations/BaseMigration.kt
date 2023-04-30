@@ -4,6 +4,11 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import kekmech.ru.common_app_database_api.PartialMigration
 
+/**
+ * Aggregator of [PartialMigration]s from domain modules
+ *
+ * @see PartialMigration
+ */
 internal open class BaseMigration<T : PartialMigration>(
     private val migrations: List<T>,
     fromVersion: Int,
