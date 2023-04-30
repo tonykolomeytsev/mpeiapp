@@ -8,6 +8,7 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
+@Suppress("SpreadOperator")
 val CommonAppDatabaseModule = module {
     single {
         val builder = Room
@@ -16,10 +17,12 @@ val CommonAppDatabaseModule = module {
                 klass = AppDatabase::class.java,
                 name = AppDatabase.Name,
             )
-        @Suppress("SpreadOperator")
+        // collect all partial migrations from all domain modules
+        // in order to run them all further
         builder.addMigrations(*getAll<Migration>().toTypedArray())
         builder.build()
     }
+
     // DAOs
     factory { get<AppDatabase>().favoriteScheduleDao() }
     factory { get<AppDatabase>().noteDao() }
