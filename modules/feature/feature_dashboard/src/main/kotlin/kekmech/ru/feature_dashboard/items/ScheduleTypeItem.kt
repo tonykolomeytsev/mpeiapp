@@ -10,7 +10,7 @@ import kekmech.ru.coreui.items.ClickableItemViewHolderImpl
 import kekmech.ru.domain_schedule_models.dto.ScheduleType
 import kekmech.ru.feature_dashboard.R
 import kekmech.ru.feature_dashboard.databinding.ItemScheduleTypeBinding
-import kekmech.ru.coreui.R as coreui_R
+import kekmech.ru.icons.Icons
 
 internal data class ScheduleTypeItem(
     val selectedScheduleName: String,
@@ -47,7 +47,7 @@ private class ScheduleTypeItemBinder(
     override fun bind(vh: ScheduleTypeViewHolder, model: ScheduleTypeItem, position: Int) {
         vh.setScheduleName(model.selectedScheduleName)
         vh.setScheduleTypeIcon(when (model.selectedScheduleType) {
-            ScheduleType.GROUP -> coreui_R.drawable.ic_group_24
+            ScheduleType.GROUP -> Icons.ic_group_24
             ScheduleType.PERSON -> R.drawable.ic_person_24
         })
         vh.setOnClickListener { onClickListener() }
