@@ -16,6 +16,7 @@ import kekmech.ru.feature_bars.screen.main.BarsFragment.Companion.ITEM_BROWSER_L
 import kekmech.ru.feature_bars.screen.main.BarsFragment.Companion.ITEM_GROUP_LABEL
 import kekmech.ru.feature_bars.screen.main.elm.BarsState
 import kekmech.ru.feature_bars.screen.main.elm.FlowState
+import kekmech.ru.icons.Icons
 import kekmech.ru.strings.Strings
 import kekmech.ru.coreui.R as coreui_R
 
@@ -78,7 +79,7 @@ internal class BarsListConverter(private val context: Context) {
                             ForegroundColorSpan(context.getThemeColor(coreui_R.attr.colorBlack)),
                             SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
                         ),
-                    drawableResID = coreui_R.drawable.ic_group_24,
+                    drawableResID = Icons.ic_group_24,
                     tintColorAttrId = coreui_R.attr.colorGray70
                 )
             )

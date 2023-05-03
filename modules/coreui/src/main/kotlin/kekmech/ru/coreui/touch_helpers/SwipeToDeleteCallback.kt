@@ -13,6 +13,7 @@ import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_android.getResColor
 import kekmech.ru.common_android.getThemeColor
 import kekmech.ru.coreui.R
+import kekmech.ru.icons.Icons
 
 /**
  * According to https://medium.com/@kitek/recyclerview-swipe-to-delete-easier-than-you-thought-cff67ff5e5f6
@@ -22,7 +23,7 @@ abstract class SwipeToDeleteCallback(
 ) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
 
     @Suppress("UnsafeCallOnNullableType")
-    private val deleteIcon = ContextCompat.getDrawable(context, R.drawable.ic_delete_24px)!!
+    private val deleteIcon = ContextCompat.getDrawable(context, Icons.ic_delete_24px)!!
     private val intrinsicWidth = deleteIcon.intrinsicWidth
     private val intrinsicHeight = deleteIcon.intrinsicHeight
     private val background = ColorDrawable()

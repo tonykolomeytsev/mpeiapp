@@ -44,5 +44,6 @@ dependencies {
     implementation(project(":common_shared_preferences"))
 
     implementation(project(":coreui"))
+    implementation(project(":icons"))
     implementation(project(":strings"))
 }

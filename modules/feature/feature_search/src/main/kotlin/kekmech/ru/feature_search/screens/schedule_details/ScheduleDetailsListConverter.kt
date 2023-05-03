@@ -15,6 +15,7 @@ import kekmech.ru.feature_search.R
 import kekmech.ru.feature_search.item.ButtonItem
 import kekmech.ru.feature_search.item.WeekMinItem
 import kekmech.ru.feature_search.screens.schedule_details.elm.ScheduleDetailsState
+import kekmech.ru.icons.Icons
 import kekmech.ru.strings.Strings
 import kekmech.ru.coreui.R as coreui_R
 
@@ -110,8 +111,8 @@ internal object ScheduleDetailsListConverter {
             text = builder,
             textStyleResId = coreui_R.style.H7,
             itemId = 2,
-            drawableResID = coreui_R.drawable.ic_navigation_schedule,
-            tintColorAttrId = coreui_R.attr.colorGray70
+            drawableResID = Icons.ic_navigation_schedule,
+            tintColorAttrId = coreui_R.attr.colorGray70,
         )
     }
 
