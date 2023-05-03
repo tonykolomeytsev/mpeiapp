@@ -26,5 +26,7 @@ dependencies {
     implementation(project(":common_kotlin"))
     implementation(project(":common_network"))
 
+    implementation(project(":icons"))
+    implementation(project(":images"))
     implementation(project(":strings"))
 }

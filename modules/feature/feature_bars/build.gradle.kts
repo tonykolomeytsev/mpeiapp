@@ -38,5 +38,6 @@ dependencies {
     implementation(project(":common_schedule"))
 
     implementation(project(":coreui"))
+    implementation(project(":icons"))
     implementation(project(":strings"))
 }
