@@ -27,4 +27,5 @@ dependencies {
     implementation(project(":common_network"))
 
     implementation(project(":strings"))
+    implementation(project(":images"))
 }
