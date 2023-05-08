@@ -29,7 +29,7 @@ room = "2.5.1"
 material = "1.7.0"
 
 # Koin Versions
-koin = "3.2.0"
+koin = "3.4.0"
 
 # Squareup Versions
 retrofit = "2.9.0"
@@ -89,6 +89,7 @@ google-maps = { module = "com.google.android.gms:play-services-maps", version = 
 # Koin Libraries
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
+koin-test = { module = "io.insert-koin:koin-test", version.ref = "koin" }
 
 # Firebase Libraries
 firebase-analytics = { module = "com.google.firebase:firebase-analytics", version = "19.0.1" }
