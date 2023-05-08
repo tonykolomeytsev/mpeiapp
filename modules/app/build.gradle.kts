@@ -116,4 +116,7 @@ dependencies {
     implementation(project(":strings"))
 
     debugImplementation(project(":mock_server"))
+
+    testImplementation(libs.koin.test)
+    testImplementation(libs.kotest.runner)
 }
