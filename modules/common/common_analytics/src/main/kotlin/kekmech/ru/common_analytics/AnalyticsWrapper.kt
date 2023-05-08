@@ -8,9 +8,11 @@ import kekmech.ru.common_analytics.dto.AnalyticsEvent
 import kekmech.ru.domain_analytics.SelectedScheduleAnalyticsProvider
 
 internal class AnalyticsWrapper(
-    private val firebaseAnalytics: FirebaseAnalytics,
+    private val firebaseAnalyticsProvider: FirebaseAnalyticsProvider,
     private val selectedScheduleAnalyticsProvider: SelectedScheduleAnalyticsProvider,
 ) {
+
+    private val firebaseAnalytics get() = firebaseAnalyticsProvider.provide()
 
     fun sendEvent(event: AnalyticsEvent) {
         when (event) {

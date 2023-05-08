@@ -4,7 +4,6 @@ import android.content.SharedPreferences
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import kekmech.ru.common_di.AppVersionName
-import kekmech.ru.common_network.connection_tracker.ConnectionTracker
 import kekmech.ru.common_network.device_id.DeviceIdProvider
 import kekmech.ru.common_network.device_id.DeviceLocaleProvider
 import kekmech.ru.common_network.gson.LocalDateJsonAdapter
@@ -35,7 +34,6 @@ val CommonNetworkModule = module {
     factoryOf(::DeviceIdProvider) bind DeviceIdProvider::class
     singleOf(::provideOkHttpClient) bind OkHttpClient::class
     singleOf(::provideRetrofitBuilder) bind Retrofit.Builder::class
-    singleOf(::ConnectionTracker)
     singleOf(::provideGson) bind Gson::class
     single {
         RequiredHeadersInterceptor(

@@ -1,7 +1,7 @@
 package kekmech.ru.mpeiapp.di
 
-import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+import kekmech.ru.common_analytics.FirebaseAnalyticsProvider
 import kekmech.ru.common_analytics.di.CommonAnalyticsModule
 import kekmech.ru.common_app_database.di.CommonAppDatabaseModule
 import kekmech.ru.common_cache.di.CommonCacheModule
@@ -30,8 +30,7 @@ import kekmech.ru.mpeiapp.Prefetcher
 import kekmech.ru.mpeiapp.deeplink.di.DeeplinkModule
 import kekmech.ru.mpeiapp.ui.main.di.MainScreenModule
 import org.koin.android.ext.koin.androidApplication
-import org.koin.core.context.loadKoinModules
-import org.koin.core.module.dsl.singleOf
+import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 import java.io.File
@@ -39,48 +38,47 @@ import java.util.Locale
 
 val AppModule = module {
     single { Locale.GERMAN } bind Locale::class
-    singleOf(::Prefetcher)
-    single { FirebaseAnalytics.getInstance(androidApplication()) } bind FirebaseAnalytics::class
-    factory { RemoteConfigWrapperImpl() } bind RemoteConfigWrapper::class
+    factoryOf(::Prefetcher)
+    factoryOf(::FirebaseAnalyticsProviderImpl) bind FirebaseAnalyticsProvider::class
+    factoryOf(::RemoteConfigWrapperImpl) bind RemoteConfigWrapper::class
     factory { AppVersionName(BuildConfig.VERSION_NAME) }
     factory {
         AppCacheDir(File(androidApplication().cacheDir, "persistent"))
     } bind AppCacheDir::class
 
-    loadKoinModules(
-        listOf(
-            MainScreenModule,
-            DeeplinkModule,
-            // common
-            CommonAnalyticsModule,
-            CommonAppDatabaseModule,
-            CommonCacheModule,
-            CommonFeatureTogglesModule,
-            CommonNavigationModule,
-            CommonNetworkModule,
-            // domain
-            DomainDashboardModule,
-            DomainFavoriteScheduleModule,
-            DomainGitHubModule,
-            DomainNotesModule,
-            DomainScheduleModule,
-            // feature
-            FeatureAppSettingsModule,
-            FeatureBarsModule,
-            FeatureDashboardModule,
-            FeatureForceUpdateModule,
-            FeatureMapModule,
-            FeatureNotesModule,
-            FeatureOnboardingModule,
-            FeatureScheduleModule,
-            FeatureSearchFeatureModule,
-        )
+    includes(
+        MainScreenModule,
+        DeeplinkModule,
+        // common
+        CommonAnalyticsModule,
+        CommonAppDatabaseModule,
+        CommonCacheModule,
+        CommonFeatureTogglesModule,
+        CommonNavigationModule,
+        CommonNetworkModule,
+        // domain
+        DomainDashboardModule,
+        DomainFavoriteScheduleModule,
+        DomainGitHubModule,
+        DomainNotesModule,
+        DomainScheduleModule,
+        // feature
+        FeatureAppSettingsModule,
+        FeatureBarsModule,
+        FeatureDashboardModule,
+        FeatureForceUpdateModule,
+        FeatureMapModule,
+        FeatureNotesModule,
+        FeatureOnboardingModule,
+        FeatureScheduleModule,
+        FeatureSearchFeatureModule,
     )
 }
 
 private class RemoteConfigWrapperImpl : RemoteConfigWrapper {
 
-    private val remoteConfig = FirebaseRemoteConfig.getInstance()
+    private val remoteConfig
+        get() = FirebaseRemoteConfig.getInstance()
 
     override fun get(featureToggleKey: String): Boolean = remoteConfig.getBoolean(featureToggleKey)
 }
