@@ -8,6 +8,7 @@ import kekmech.ru.domain_notes.use_cases.GetNotesForSelectedScheduleUseCase
 import kekmech.ru.domain_notes.use_cases.PutNoteForSelectedScheduleUseCase
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
+import org.koin.core.qualifier.named
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
@@ -17,5 +18,6 @@ val DomainNotesModule = module {
     factoryOf(::GetNotesForSelectedScheduleUseCase)
     factoryOf(::PutNoteForSelectedScheduleUseCase)
 
-    factory { MigrationV6V7Impl() } bind MigrationV6V7::class
+    val migrationQualifier = named("domain_notes_migration")
+    factory(migrationQualifier) { MigrationV6V7Impl() } bind MigrationV6V7::class
 }

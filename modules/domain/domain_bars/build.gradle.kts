@@ -8,13 +8,17 @@ dependencies {
     compileOnlyAar(libs.timber)
 
     implementation(libs.google.gson)
-    implementation(libs.rx.java)
+    implementation(libs.koin.core)
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.rmr.mapmemory.core)
+    implementation(libs.rmr.mapmemory.coroutines)
     implementation(libs.squareup.retrofit)
-    implementation(libs.squareup.retrofit.rxJava3)
+    implementation(libs.androidx.datastore.preferences.core)
 
     implementation(project(":common_annotations"))
     implementation(project(":common_cache"))
     implementation(project(":common_di"))
     implementation(project(":common_kotlin"))
+    implementation(project(":common_network"))
     implementation(project(":common_shared_preferences"))
 }

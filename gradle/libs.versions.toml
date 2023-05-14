@@ -24,6 +24,7 @@ cardView = "1.0.0"
 swipeRefreshLayout = "1.1.0"
 fragment = "1.5.7"
 room = "2.5.1"
+datastore = "1.0.0"
 
 # Google Versions
 material = "1.7.0"
@@ -37,6 +38,9 @@ okhttp = "4.10.0"
 
 # Vivid Money Versions
 elmslie = "1.1.4"
+
+# RedMadRobot Versions
+rmrMapMemory = "2.1"
 
 # Jetpack Compose Versions
 accompanist = "0.23.1"
@@ -65,6 +69,8 @@ androidx-cardView = { module = "androidx.cardview:cardview", version.ref = "card
 androidx-constraintLayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintLayout" }
 androidx-coordinatorLayout = { module = "androidx.coordinatorlayout:coordinatorlayout", version.ref = "coordinatorLayout" }
 androidx-coreKtx = { module = "androidx.core:core-ktx", version = "1.8.0" }
+androidx-datastore-preferences-android = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
+androidx-datastore-preferences-core = { module = "androidx.datastore:datastore-preferences-core", version.ref = "datastore" }
 androidx-fragment = { module = "androidx.fragment:fragment", version.ref = "fragment" }
 androidx-fragmentKtx = { module = "androidx.fragment:fragment-ktx", version.ref = "fragment" }
 androidx-lifecycleCommonJava8 = { module = "androidx.lifecycle:lifecycle-common-java8", version = "2.5.1" }
@@ -112,6 +118,11 @@ vivid-elmslie-core = { module = "com.github.vivid-money.elmslie:elmslie-core", v
 vivid-elmslie-android = { module = "com.github.vivid-money.elmslie:elmslie-android", version.ref = "elmslie" }
 vivid-elmslie-storeHolder = { module = "com.github.vivid-money.elmslie:elmslie-store-persisting", version.ref = "elmslie" }
 
+# RedmadRobot Libraries
+rmr-mapmemory-core = { module = "com.redmadrobot.mapmemory:mapmemory", version.ref = "rmrMapMemory" }
+rmr-mapmemory-coroutines = { module = "com.redmadrobot.mapmemory:mapmemory-coroutines", version.ref = "rmrMapMemory" }
+rmr-mapmemory-test = { module = "com.redmadrobot.mapmemory:mapmemory-test", version.ref = "rmrMapMemory" }
+
 # Kotest Libraries
 kotest-runner = { module = "io.kotest:kotest-runner-junit5", version = "5.6.1" }
 kotest-assertions = { module = "io.kotest:kotest-assertions-core", version = "5.6.1" }
@@ -119,6 +130,7 @@ kotest-property = { module = "io.kotest:kotest-property", version = "5.6.1" }
 
 # Coroutines
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
 kotlinx-coroutines-rx3 = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-rx3", version.ref = "coroutines" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 

@@ -13,6 +13,7 @@ class KoinConfigurationCheck : StringSpec({
         AppModule.verify(
             extraTypes = listOf(
                 List::class,
+                Map::class,
                 File::class,
                 Context::class,
             ),
