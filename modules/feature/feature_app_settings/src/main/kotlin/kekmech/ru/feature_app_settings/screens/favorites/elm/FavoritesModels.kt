@@ -21,14 +21,14 @@ internal sealed interface FavoritesEvent {
     }
 
     sealed interface Internal : FavoritesEvent {
-        data class LoadAllFavoritesSuccess(val favorites: List<FavoriteSchedule>) : Internal
+        data class GetAllFavoritesSuccess(val favorites: List<FavoriteSchedule>) : Internal
     }
 }
 
 internal sealed interface FavoritesEffect
 
 internal sealed interface FavoritesCommand {
-    object LoadAllFavorites : FavoritesCommand
+    object GetAllFavorites : FavoritesCommand
     data class UpdateOrInsertFavorite(val favoriteSchedule: FavoriteSchedule) : FavoritesCommand
     data class DeleteFavorite(val favoriteSchedule: FavoriteSchedule) : FavoritesCommand
 }

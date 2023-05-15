@@ -33,7 +33,6 @@ import kekmech.ru.feature_onboarding.di.FeatureOnboardingModule
 import kekmech.ru.feature_schedule.di.FeatureScheduleModule
 import kekmech.ru.feature_search.di.FeatureSearchFeatureModule
 import kekmech.ru.mpeiapp.BuildConfig
-import kekmech.ru.mpeiapp.Prefetcher
 import kekmech.ru.mpeiapp.deeplink.di.DeeplinkModule
 import kekmech.ru.mpeiapp.ui.main.di.MainScreenModule
 import kotlinx.coroutines.CoroutineScope
@@ -48,7 +47,6 @@ import java.util.Locale
 
 val AppModule = module {
     single { Locale.GERMAN } bind Locale::class
-    factoryOf(::Prefetcher)
     factoryOf(::FirebaseAnalyticsProviderImpl) bind FirebaseAnalyticsProvider::class
     factoryOf(::RemoteConfigWrapperImpl) bind RemoteConfigWrapper::class
     factory { AppVersionName(BuildConfig.VERSION_NAME) }
@@ -56,7 +54,8 @@ val AppModule = module {
         AppCacheDir(File(androidApplication().cacheDir, "persistent"))
     } bind AppCacheDir::class
 
-    @Suppress("RemoveExplicitTypeArguments")
+    // TODO: figure out how to inject Dispatchers correctly
+    @Suppress("RemoveExplicitTypeArguments", "InjectDispatcher")
     single<DataStore<Preferences>> {
         val applicationContext: Context = androidApplication()
         val name = "mpeix.datastore.preferences"

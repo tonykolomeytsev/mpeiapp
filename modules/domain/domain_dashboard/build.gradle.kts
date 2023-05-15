@@ -6,7 +6,8 @@ dependencies {
     compileOnlyAar(libs.androidx.fragment)
 
     implementation(libs.koin.core)
-    implementation(libs.rx.java)
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.rx3)
 
     implementation(project(":common_kotlin"))
 
