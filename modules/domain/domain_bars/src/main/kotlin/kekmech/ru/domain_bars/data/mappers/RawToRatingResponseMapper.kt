@@ -1,4 +1,4 @@
-package kekmech.ru.domain_bars
+package kekmech.ru.domain_bars.data.mappers
 
 import kekmech.ru.domain_bars.dto.CompositeRating
 import kekmech.ru.domain_bars.dto.Rating

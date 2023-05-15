@@ -16,6 +16,8 @@ dependencies {
     implementation(libs.google.material)
     implementation(libs.koin.android)
     implementation(libs.koin.core)
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.rx3)
     implementation(libs.rx.java)
     implementation(libs.squareup.retrofit)
     implementation(libs.vivid.elmslie.android)
@@ -34,7 +36,6 @@ dependencies {
     implementation(project(":common_kotlin"))
     implementation(project(":common_elm"))
     implementation(project(":common_navigation"))
-    implementation(project(":common_network"))
     implementation(project(":common_schedule"))
 
     implementation(project(":coreui"))

@@ -18,6 +18,7 @@
         <item name="subtitleTextAppearance">@style/H7.Gray70</item>
         <item name="navigationIcon">@drawable/ic_close_black</item>
         <item name="navigationIconTint">?attr/colorBlack</item>
+        <item name="tint">?attr/colorBlack</item>
         <item name="popupTheme">@style/PopupMenu.WebView</item>
     </style>
 
