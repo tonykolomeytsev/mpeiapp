@@ -29,7 +29,6 @@ class GetUpcomingEventsInteractor(
                 .getSchedule(weekOffset = i)
                 .await()
                 .let { attachNotesToScheduleService.attach(it) }
-                .await()
                 .weeks
                 .flatMap(Week::days)
                 .let { days.addAll(it) }

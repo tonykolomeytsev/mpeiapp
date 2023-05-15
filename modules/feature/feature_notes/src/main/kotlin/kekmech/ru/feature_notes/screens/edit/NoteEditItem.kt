@@ -57,5 +57,5 @@ internal class NoteEditAdapterItem(
     layoutRes = R.layout.item_note_edit,
     viewHolderGenerator = ::NoteEditViewHolderImpl,
     itemBinder = NoteEditItemBinder(listener),
-    areItemsTheSame = { a, b -> a.same(b) }
+    areItemsTheSame = { a, b -> a.id == b.id }
 )

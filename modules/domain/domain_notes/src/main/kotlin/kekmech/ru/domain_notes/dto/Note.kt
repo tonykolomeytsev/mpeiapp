@@ -9,9 +9,5 @@ data class Note(
     val dateTime: LocalDateTime,
     val classesName: String,
     val target: Int, // для уточнения целевой пары при подряд идущих одинаковых парах в расписании
-) : Serializable {
-
-    internal var id: Long = DefaultId
-
-    fun same(other: Note): Boolean = id == other.id
-}
+    val id: Long = DefaultId,
+) : Serializable

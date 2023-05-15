@@ -8,6 +8,8 @@ import kekmech.ru.domain_schedule.repository.ScheduleSearchRepository
 import kekmech.ru.domain_schedule_models.dto.ScheduleType
 import kekmech.ru.feature_search.screens.main.utils.FullTextMapMarkersSearchHelper
 import kekmech.ru.feature_search.screens.main.utils.FullTextNotesSearchHelper
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.rx3.rxSingle
 import vivid.money.elmslie.core.store.Actor
 import kekmech.ru.feature_search.screens.main.elm.SearchCommand as Command
 import kekmech.ru.feature_search.screens.main.elm.SearchEvent as Event
@@ -20,7 +22,7 @@ internal class SearchActor(
 
     override fun execute(command: Command): Observable<Event> =
         when (command) {
-            is Command.SearchNotes -> getNotesUseCase.getNotes()
+            is Command.SearchNotes -> rxSingle(Dispatchers.Unconfined) { getNotesUseCase.invoke() }
                 .flatMap { notes ->
                     Single.fromCallable {
                         FullTextNotesSearchHelper(

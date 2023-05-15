@@ -54,7 +54,8 @@ val AppModule = module {
         AppCacheDir(File(androidApplication().cacheDir, "persistent"))
     } bind AppCacheDir::class
 
-    @Suppress("RemoveExplicitTypeArguments")
+    // TODO: figure out how to inject Dispatchers correctly
+    @Suppress("RemoveExplicitTypeArguments", "InjectDispatcher")
     single<DataStore<Preferences>> {
         val applicationContext: Context = androidApplication()
         val name = "mpeix.datastore.preferences"

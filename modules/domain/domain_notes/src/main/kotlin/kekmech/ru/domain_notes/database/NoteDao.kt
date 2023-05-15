@@ -12,11 +12,11 @@ import kekmech.ru.domain_notes.database.entities.NormalNote
 interface NoteDao {
 
     @Upsert
-    fun updateOrInsert(normalNote: NormalNote): Completable
+    suspend fun updateOrInsert(normalNote: NormalNote)
 
     @Query("SELECT * FROM note WHERE associatedScheduleName=:scheduleName")
-    fun getAllNotesForSchedule(scheduleName: String): Single<List<NormalNote>>
+    suspend fun getAllNotesForSchedule(scheduleName: String): List<NormalNote>
 
     @Delete
-    fun delete(normalNote: NormalNote): Completable
+    suspend fun delete(normalNote: NormalNote)
 }
