@@ -3,7 +3,7 @@ package kekmech.ru.feature_dashboard.screens.main.elm
 import io.reactivex.rxjava3.core.Observable
 import kekmech.ru.domain_dashboard.interactors.GetUpcomingEventsInteractor
 import kekmech.ru.domain_favorite_schedule.FavoriteScheduleRepository
-import kekmech.ru.domain_notes.use_cases.GetActualNotesUseCase
+import kekmech.ru.domain_notes.interactors.GetActualNotesInteractor
 import kekmech.ru.domain_schedule.repository.ScheduleRepository
 import kekmech.ru.domain_schedule.use_cases.GetCurrentScheduleUseCase
 import kekmech.ru.feature_dashboard.screens.main.elm.DashboardEvent.Internal
@@ -17,7 +17,7 @@ internal class DashboardActor(
     private val scheduleRepository: ScheduleRepository,
     private val favoriteScheduleRepository: FavoriteScheduleRepository,
     private val getUpcomingEventsInteractor: GetUpcomingEventsInteractor,
-    private val getActualNotesUseCase: GetActualNotesUseCase,
+    private val getActualNotesInteractor: GetActualNotesInteractor,
     private val getCurrentScheduleUseCase: GetCurrentScheduleUseCase,
 ) : Actor<Command, Event> {
 
@@ -39,8 +39,9 @@ internal class DashboardActor(
                     successEventMapper = Internal::GetUpcomingEventsSuccess,
                     failureEventMapper = Internal::GetUpcomingEventsFailure,
                 )
-            is Command.GetActualNotes -> getActualNotesUseCase
-                .getActualNotes()
+            is Command.GetActualNotes -> rxSingle(Dispatchers.Unconfined) {
+                getActualNotesInteractor.invoke()
+            }
                 .mapEvents(
                     successEventMapper = Internal::GetActualNotesSuccess,
                     failureEventMapper = Internal::GetActualNotesFailure,
