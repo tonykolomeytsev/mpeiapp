@@ -48,7 +48,6 @@ class MainFragment : BaseFragment<MainScreenEvent, MainScreenEffect, MainScreenS
                 tabsSwitcher.changeTab(tab)
             }
         }
-        dependencies.prefetcher.prefetch()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -94,7 +93,6 @@ class MainFragment : BaseFragment<MainScreenEvent, MainScreenEffect, MainScreenS
     override fun onPause() {
         super.onPause()
         tabsSwitcherDisposable?.dispose()
-        dependencies.prefetcher.dispose()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
