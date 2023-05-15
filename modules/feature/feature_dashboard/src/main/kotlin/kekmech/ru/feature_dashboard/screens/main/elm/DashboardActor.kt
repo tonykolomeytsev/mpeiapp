@@ -45,8 +45,9 @@ internal class DashboardActor(
                     successEventMapper = Internal::GetActualNotesSuccess,
                     failureEventMapper = Internal::GetActualNotesFailure,
                 )
-            is Command.GetFavoriteSchedules -> favoriteScheduleRepository
-                .getAllFavorites()
+            is Command.GetFavoriteSchedules -> rxSingle(Dispatchers.Unconfined) {
+                favoriteScheduleRepository.getAllFavorites()
+            }
                 .mapEvents(
                     successEventMapper = Internal::GetFavoriteSchedulesSuccess,
                     failureEventMapper = Internal::GetFavoriteSchedulesFailure,
