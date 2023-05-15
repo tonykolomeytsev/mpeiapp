@@ -1,6 +1,12 @@
 package kekmech.ru.mpeiapp.di
 
+import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.PreferenceDataStoreFactory
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStoreFile
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+import com.redmadrobot.mapmemory.MapMemory
 import kekmech.ru.common_analytics.FirebaseAnalyticsProvider
 import kekmech.ru.common_analytics.di.CommonAnalyticsModule
 import kekmech.ru.common_app_database.di.CommonAppDatabaseModule
@@ -11,6 +17,7 @@ import kekmech.ru.common_feature_toggles.RemoteConfigWrapper
 import kekmech.ru.common_feature_toggles.di.CommonFeatureTogglesModule
 import kekmech.ru.common_navigation.di.CommonNavigationModule
 import kekmech.ru.common_network.di.CommonNetworkModule
+import kekmech.ru.domain_bars.di.DomainBarsModule
 import kekmech.ru.domain_dashboard.di.DomainDashboardModule
 import kekmech.ru.domain_favorite_schedule.di.DomainFavoriteScheduleModule
 import kekmech.ru.domain_github.di.DomainGitHubModule
@@ -29,6 +36,9 @@ import kekmech.ru.mpeiapp.BuildConfig
 import kekmech.ru.mpeiapp.Prefetcher
 import kekmech.ru.mpeiapp.deeplink.di.DeeplinkModule
 import kekmech.ru.mpeiapp.ui.main.di.MainScreenModule
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import org.koin.android.ext.koin.androidApplication
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.bind
@@ -46,6 +56,23 @@ val AppModule = module {
         AppCacheDir(File(androidApplication().cacheDir, "persistent"))
     } bind AppCacheDir::class
 
+    @Suppress("RemoveExplicitTypeArguments")
+    single<DataStore<Preferences>> {
+        val applicationContext: Context = androidApplication()
+        val name = "mpeix.datastore.preferences"
+        /**
+         * Same implementation as in [androidx.datastore.preferences.preferencesDataStore] delegate
+         */
+        PreferenceDataStoreFactory.create(
+            corruptionHandler = null,
+            migrations = listOf(),
+            scope = CoroutineScope(Dispatchers.IO + SupervisorJob()),
+        ) {
+            applicationContext.preferencesDataStoreFile(name)
+        }
+    }
+    single { MapMemory() }
+
     includes(
         MainScreenModule,
         DeeplinkModule,
@@ -57,6 +84,7 @@ val AppModule = module {
         CommonNavigationModule,
         CommonNetworkModule,
         // domain
+        DomainBarsModule,
         DomainDashboardModule,
         DomainFavoriteScheduleModule,
         DomainGitHubModule,

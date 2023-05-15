@@ -46,6 +46,11 @@
 -dontwarn org.bouncycastle.**
 -dontwarn org.openjsse.**
 
+# DataStore
+-keepclassmembers class * extends androidx.datastore.preferences.protobuf.GeneratedMessageLite {
+    <fields>;
+}
+
 # Generate mapping files
 -dump release/obfuscation/class_files.txt
 -printseeds release/obfuscation/seeds.txt

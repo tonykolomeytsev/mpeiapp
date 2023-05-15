@@ -1,7 +1,6 @@
 package kekmech.ru.feature_notes.di
 
 import kekmech.ru.domain_notes.NotesFeatureLauncher
-import kekmech.ru.domain_notes.NotesRepository
 import kekmech.ru.domain_notes.services.AttachNotesToScheduleService
 import kekmech.ru.feature_notes.launcher.NotesFeatureLauncherImpl
 import kekmech.ru.feature_notes.screens.all_notes.elm.AllNotesActor
@@ -11,12 +10,10 @@ import kekmech.ru.feature_notes.screens.edit.elm.NoteEditFeatureFactory
 import kekmech.ru.feature_notes.screens.note_list.elm.NoteListActor
 import kekmech.ru.feature_notes.screens.note_list.elm.NoteListFeatureFactory
 import org.koin.core.module.dsl.factoryOf
-import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val FeatureNotesModule = module {
-    singleOf(::NotesRepository)
     factoryOf(::NotesDependencies)
     factoryOf(::NotesFeatureLauncherImpl) bind NotesFeatureLauncher::class
     factoryOf(::AttachNotesToScheduleService)

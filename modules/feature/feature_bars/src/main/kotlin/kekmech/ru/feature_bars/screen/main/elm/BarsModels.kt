@@ -1,7 +1,7 @@
 package kekmech.ru.feature_bars.screen.main.elm
 
+import kekmech.ru.domain_bars.dto.BarsUserInfo
 import kekmech.ru.domain_bars.dto.RemoteBarsConfig
-import kekmech.ru.domain_bars.dto.UserBarsInfo
 
 internal data class BarsState(
     //region config
@@ -10,7 +10,7 @@ internal data class BarsState(
 
     // region data
     val flowState: FlowState = FlowState.UNDEFINED,
-    val userInfo: UserBarsInfo? = null,
+    val userInfo: BarsUserInfo? = null,
     val latestLoadedUrl: String? = null,
 
     // region ui
@@ -78,7 +78,7 @@ internal sealed interface BarsEvent {
         }
 
         data class GetRemoteBarsConfigFailure(val throwable: Throwable) : Internal
-        data class ObserveBarsSuccess(val userBars: UserBarsInfo) : Internal
+        data class ObserveBarsSuccess(val userBars: BarsUserInfo) : Internal
         data class GetLatestLoadedUrlSuccess(val latestLoadedUrl: String?) : Internal
     }
 }
