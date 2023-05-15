@@ -17,12 +17,12 @@ internal class FavoritesReducer :
 
     override fun Result.internal(event: Internal): Any =
         when (event) {
-            is Internal.LoadAllFavoritesSuccess -> state { copy(favorites = event.favorites) }
+            is Internal.GetAllFavoritesSuccess -> state { copy(favorites = event.favorites) }
         }
 
     override fun Result.ui(event: Ui): Any =
         when (event) {
-            is Ui.Init -> commands { +Command.LoadAllFavorites }
+            is Ui.Init -> commands { +Command.GetAllFavorites }
             is Ui.Action.UpdateFavorite -> {
                 val newFavorites = state.favorites?.updateOrAdd(event.favoriteSchedule)
                 state { copy(favorites = newFavorites) }

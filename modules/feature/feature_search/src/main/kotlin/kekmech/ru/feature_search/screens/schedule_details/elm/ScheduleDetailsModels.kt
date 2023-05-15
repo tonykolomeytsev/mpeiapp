@@ -37,7 +37,7 @@ internal sealed interface ScheduleDetailsEvent {
     sealed interface Internal : ScheduleDetailsEvent {
         data class LoadScheduleSuccess(val schedule: Schedule, val weekOffset: Int) : Internal
         data class LoadScheduleError(val weekOffset: Int) : Internal
-        data class LoadFavoritesSuccess(val schedules: List<FavoriteSchedule>) : Internal
+        data class GetFavoritesSuccess(val schedules: List<FavoriteSchedule>) : Internal
         object RemoveFromFavoritesSuccess : Internal
         data class AddToFavoritesSuccess(val schedule: FavoriteSchedule) : Internal
     }
@@ -54,7 +54,7 @@ internal sealed interface ScheduleDetailsCommand {
         val weekOffset: Int,
     ) : ScheduleDetailsCommand
 
-    object LoadFavorites : ScheduleDetailsCommand
+    object GetFavorites : ScheduleDetailsCommand
     data class AddToFavorites(val schedule: FavoriteSchedule) : ScheduleDetailsCommand
     data class RemoveFromFavorites(val schedule: FavoriteSchedule) : ScheduleDetailsCommand
     data class SwitchSchedule(val selectedSchedule: SelectedSchedule) : ScheduleDetailsCommand

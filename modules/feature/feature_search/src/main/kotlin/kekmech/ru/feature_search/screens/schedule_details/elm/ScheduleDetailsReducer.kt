@@ -35,7 +35,7 @@ internal class ScheduleDetailsReducer :
                     copy(nextWeek = emptyList())
                 }
             }
-            is Internal.LoadFavoritesSuccess -> {
+            is Internal.GetFavoritesSuccess -> {
                 val favoriteSchedule =
                     event.schedules.find { it.name == state.searchResult.name }
                 state {
@@ -66,7 +66,7 @@ internal class ScheduleDetailsReducer :
                 val name = state.searchResult.name
                 +Command.LoadSchedule(type, name, weekOffset = 0)
                 +Command.LoadSchedule(type, name, weekOffset = 1)
-                +Command.LoadFavorites
+                +Command.GetFavorites
             }
             is Ui.Click.Day -> state { copy(selectedDayDate = event.date) }
             is Ui.Click.Favorites -> {

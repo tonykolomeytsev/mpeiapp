@@ -15,6 +15,8 @@ dependencies {
     implementation(libs.androidx.viewPager2)
     implementation(libs.facebook.shimmer)
     implementation(libs.google.material)
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.rx3)
     implementation(libs.koin.android)
     implementation(libs.koin.core)
     implementation(libs.picasso)

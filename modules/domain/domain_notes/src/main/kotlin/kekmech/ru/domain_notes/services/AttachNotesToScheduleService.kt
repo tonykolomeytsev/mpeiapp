@@ -1,6 +1,5 @@
 package kekmech.ru.domain_notes.services
 
-import io.reactivex.rxjava3.core.Single
 import kekmech.ru.domain_notes.dto.Note
 import kekmech.ru.domain_notes.use_cases.GetNotesForSelectedScheduleUseCase
 import kekmech.ru.domain_schedule_models.dto.Classes
@@ -12,8 +11,8 @@ class AttachNotesToScheduleService(
     private val getNotesUseCase: GetNotesForSelectedScheduleUseCase,
 ) {
 
-    fun attach(schedule: Schedule): Single<Schedule> = getNotesUseCase.getNotes()
-        .map { notes ->
+    suspend fun attach(schedule: Schedule): Schedule = getNotesUseCase.invoke()
+        .let { notes ->
             schedule.weeks.first().days.forEach { day ->
                 day.classes.forEach { classes ->
                     val firstAttachedNote = classes.relevantToThe(notes, day.date)
@@ -27,7 +26,9 @@ class AttachNotesToScheduleService(
         }
 
     private fun Classes.relevantToThe(listOfNotes: List<Note>, date: LocalDate) =
-        listOfNotes.firstOrNull { it.classesName == name && it.dateTime == LocalDateTime.of(date, time.start) }
+        listOfNotes.firstOrNull {
+            it.classesName == name && it.dateTime == LocalDateTime.of(date, time.start)
+        }
 
     private fun String.replaceNewLinesWithSpaces() = replace('\n', ' ')
 

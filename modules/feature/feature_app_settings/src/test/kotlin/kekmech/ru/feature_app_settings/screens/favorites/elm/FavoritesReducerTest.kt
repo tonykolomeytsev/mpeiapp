@@ -23,12 +23,12 @@ internal class FavoritesReducerTest : BehaviorSpec({
                 effects.shouldBeEmpty()
             }
             Then("Check commands") {
-                commands.shouldContainExactly(listOf(FavoritesCommand.LoadAllFavorites))
+                commands.shouldContainExactly(listOf(FavoritesCommand.GetAllFavorites))
             }
         }
         When("Internal.LoadAllFavoritesSuccess") {
             val (state, effects, commands) = reducer.reduce(
-                Internal.LoadAllFavoritesSuccess(Mocks.FAVORITES_LIST),
+                Internal.GetAllFavoritesSuccess(Mocks.FAVORITES_LIST),
                 givenState
             )
             Then("New state") {
