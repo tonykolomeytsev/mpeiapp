@@ -1,12 +1,14 @@
 package kekmech.ru.feature_dashboard.screens.main.elm
 
 import io.reactivex.rxjava3.core.Observable
-import kekmech.ru.domain_dashboard.use_cases.GetUpcomingEventsUseCase
+import kekmech.ru.domain_dashboard.interactors.GetUpcomingEventsInteractor
 import kekmech.ru.domain_favorite_schedule.FavoriteScheduleRepository
 import kekmech.ru.domain_notes.use_cases.GetActualNotesUseCase
 import kekmech.ru.domain_schedule.repository.ScheduleRepository
 import kekmech.ru.domain_schedule.use_cases.GetCurrentScheduleUseCase
 import kekmech.ru.feature_dashboard.screens.main.elm.DashboardEvent.Internal
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.rx3.rxSingle
 import vivid.money.elmslie.core.store.Actor
 import kekmech.ru.feature_dashboard.screens.main.elm.DashboardCommand as Command
 import kekmech.ru.feature_dashboard.screens.main.elm.DashboardEvent as Event
@@ -14,7 +16,7 @@ import kekmech.ru.feature_dashboard.screens.main.elm.DashboardEvent as Event
 internal class DashboardActor(
     private val scheduleRepository: ScheduleRepository,
     private val favoriteScheduleRepository: FavoriteScheduleRepository,
-    private val getUpcomingEventsUseCase: GetUpcomingEventsUseCase,
+    private val getUpcomingEventsInteractor: GetUpcomingEventsInteractor,
     private val getActualNotesUseCase: GetActualNotesUseCase,
     private val getCurrentScheduleUseCase: GetCurrentScheduleUseCase,
 ) : Actor<Command, Event> {
@@ -30,8 +32,9 @@ internal class DashboardActor(
                     successEventMapper = Internal::GetWeekOfSemesterSuccess,
                     failureEventMapper = Internal::GetWeekOfSemesterFailure,
                 )
-            is Command.GetUpcomingEvents -> getUpcomingEventsUseCase
-                .getPrediction()
+            is Command.GetUpcomingEvents -> rxSingle(Dispatchers.Unconfined) {
+                getUpcomingEventsInteractor.invoke()
+            }
                 .mapEvents(
                     successEventMapper = Internal::GetUpcomingEventsSuccess,
                     failureEventMapper = Internal::GetUpcomingEventsFailure,

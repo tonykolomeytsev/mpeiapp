@@ -1,6 +1,5 @@
-package kekmech.ru.domain_dashboard.use_cases
+package kekmech.ru.domain_dashboard.interactors
 
-import io.reactivex.rxjava3.core.Single
 import kekmech.ru.common_kotlin.moscowLocalDate
 import kekmech.ru.common_kotlin.moscowLocalTime
 import kekmech.ru.domain_dashboard.dto.UpcomingEventsPrediction
@@ -9,46 +8,47 @@ import kekmech.ru.domain_schedule.use_cases.GetCurrentScheduleUseCase
 import kekmech.ru.domain_schedule_models.dto.Classes
 import kekmech.ru.domain_schedule_models.dto.Day
 import kekmech.ru.domain_schedule_models.dto.Week
+import kotlinx.coroutines.rx3.await
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.temporal.ChronoUnit
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
-class GetUpcomingEventsUseCase(
+class GetUpcomingEventsInteractor(
     private val getCurrentScheduleUseCase: GetCurrentScheduleUseCase,
     private val attachNotesToScheduleService: AttachNotesToScheduleService,
 ) {
 
-    fun getPrediction(): Single<UpcomingEventsPrediction> {
+    suspend operator fun invoke(): UpcomingEventsPrediction {
         val currentDate = moscowLocalDate()
         val currentTime = moscowLocalTime()
-        val days =
-            Single
-                .concat(
-                    getCurrentScheduleUseCase.getSchedule(weekOffset = 0),
-                    getCurrentScheduleUseCase.getSchedule(weekOffset = 1)
-                )
-                .concatMapSingle(attachNotesToScheduleService::attach)
-                .concatMapIterable { it.weeks.flatMap(Week::days) }
-                .sorted { day1, day2 -> day1.date.compareTo(day2.date) }
-                .filter { day ->
-                    if (day.date == currentDate) {
-                        // keep current day only if it has classes right now or in the future
-                        day.classes.any { cls -> cls.time.end > currentTime }
-                    } else {
-                        // keep all future classes
-                        day.date > currentDate
-                    }
-                }
-                .toList()
-        return days.map {
-            createPredictionFromDays(
-                days = it,
-                currentDate = currentDate,
-                currentTime = currentTime,
-            )
+        val days = mutableListOf<Day>()
+        for (i in 0..1) {
+            getCurrentScheduleUseCase
+                .getSchedule(weekOffset = i)
+                .await()
+                .let { attachNotesToScheduleService.attach(it) }
+                .await()
+                .weeks
+                .flatMap(Week::days)
+                .let { days.addAll(it) }
         }
+        days.sortBy(Day::date)
+        days.retainAll { day ->
+            if (day.date == currentDate) {
+                // keep current day only if it has classes right now or in the future
+                day.classes.any { cls -> cls.time.end > currentTime }
+            } else {
+                // keep all future classes
+                day.date > currentDate
+            }
+        }
+        return createPredictionFromDays(
+            days = days,
+            currentDate = currentDate,
+            currentTime = currentTime,
+        )
     }
 
     private fun createPredictionFromDays(
