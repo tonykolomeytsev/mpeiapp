@@ -10,6 +10,7 @@ dependencies {
     testImplementation(libs.kotest.runner)
 
     implementation(libs.androidx.annotation)
+    implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.rx3)
     implementation(libs.koin.android)

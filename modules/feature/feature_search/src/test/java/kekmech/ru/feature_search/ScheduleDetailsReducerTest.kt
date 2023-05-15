@@ -38,7 +38,7 @@ class ScheduleDetailsReducerTest : BehaviorSpec({
                 actions.shouldContainExactly(
                     ScheduleDetailsCommand.LoadSchedule(SEARCH_RESULT.type, SEARCH_RESULT.name, 0),
                     ScheduleDetailsCommand.LoadSchedule(SEARCH_RESULT.type, SEARCH_RESULT.name, 1),
-                    ScheduleDetailsCommand.LoadFavorites,
+                    ScheduleDetailsCommand.GetFavorites,
                 )
             }
         }
@@ -146,7 +146,7 @@ class ScheduleDetailsReducerTest : BehaviorSpec({
         }
         When("News.FavoritesLoaded (true)") {
             val (state, effects, actions) = reducer.reduce(
-                Internal.LoadFavoritesSuccess(
+                Internal.GetFavoritesSuccess(
                     listOf(
                         FAVORITE
                     )
@@ -165,7 +165,7 @@ class ScheduleDetailsReducerTest : BehaviorSpec({
         }
         When("News.FavoritesLoaded (false)") {
             val (state, effects, actions) =
-                reducer.reduce(Internal.LoadFavoritesSuccess(listOf(FAVORITE_ANOTHER)), givenState)
+                reducer.reduce(Internal.GetFavoritesSuccess(listOf(FAVORITE_ANOTHER)), givenState)
             Then("Check state") {
                 state.isInFavorites shouldBe false
                 state.favoriteSchedule.shouldBeNull()
