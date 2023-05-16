@@ -47,7 +47,15 @@ jobs:
             ${{ runner.OS }}-build-
 
       - name: Unit tests
-        run: ./gradlew -Pci testDebugUnitTest
+        run: |
+          git fetch origin dev:refs/remotes/origin/dev
+          ./gradlew -Pci calculateImpact \
+            --branch1 origin/dev \
+            --branch2 HEAD \
+            --task testDebugUnitTest
+          export CALCULATED_IMPACT_FILE="$(pwd)/.gradle/calculated-impact.txt"
+          echo "Running tasks" $(cat $CALCULATED_IMPACT_FILE)
+          ./gradlew -Pci $(cat $CALCULATED_IMPACT_FILE)
         env:
           MAP_KEY: ${{ secrets.MAP_KEY }}
 
