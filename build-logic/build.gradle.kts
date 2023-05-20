@@ -110,4 +110,10 @@ gradlePlugin {
         description = "The Gradle Plugin that configures Android module with resources only"
         implementationClass = "mpeix.plugins.AndroidResourcesConventionPlugin"
     }
+    plugins.create("KotlinJvmParcelizePlugin") {
+        id = "mpeix.kotlin.parcelize"
+        displayName = "Parcelize Support Plugin"
+        description = "The plugin allows to use `@Parcelize` annotation in non-android modules"
+        implementationClass = "mpeix.plugins.KotlinJvmParcelizePlugin"
+    }
 }
