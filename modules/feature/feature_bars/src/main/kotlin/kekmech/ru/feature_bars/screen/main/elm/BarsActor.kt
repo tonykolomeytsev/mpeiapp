@@ -1,18 +1,13 @@
 package kekmech.ru.feature_bars.screen.main.elm
 
-import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.Single
+import kekmech.ru.common_elm.actorFlow
 import kekmech.ru.domain_bars.data.BarsConfigRepository
 import kekmech.ru.domain_bars.data.BarsExtractJsRepository
 import kekmech.ru.domain_bars.data.BarsUserInfoRepository
 import kekmech.ru.feature_bars.screen.main.elm.BarsEvent.Internal
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.rx3.rxCompletable
-import kotlinx.coroutines.rx3.rxObservable
-import kotlinx.coroutines.rx3.rxSingle
-import vivid.money.elmslie.core.store.Actor
-import java.util.concurrent.TimeUnit
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import vivid.money.elmslie.coroutines.Actor
 
 internal class BarsActor(
     private val barsUserInfoRepository: BarsUserInfoRepository,
@@ -20,44 +15,43 @@ internal class BarsActor(
     private val barsExtractJsRepository: BarsExtractJsRepository,
 ) : Actor<BarsCommand, BarsEvent> {
 
-    override fun execute(command: BarsCommand): Observable<BarsEvent> = when (command) {
-        is BarsCommand.GetRemoteBarsConfig -> Single.zip(
-            rxSingle(Dispatchers.Unconfined) {
-                barsConfigRepository.getBarsConfig().getOrThrow()
-            },
-            rxSingle(Dispatchers.Unconfined) {
-                barsExtractJsRepository.getExtractJs().getOrThrow()
-            },
-            ::Pair,
+    override fun execute(command: BarsCommand): Flow<BarsEvent> = when (command) {
+        is BarsCommand.GetRemoteBarsConfig -> actorFlow {
+            val config = barsConfigRepository.getBarsConfig().getOrThrow()
+            val js = barsExtractJsRepository.getExtractJs().getOrThrow()
+            delay(CONFIG_DELAY)
+            config to js
+        }.mapEvents(
+            eventMapper = { (config, js) -> Internal.GetRemoteBarsConfigSuccess(config, js) },
+            errorMapper = Internal::GetRemoteBarsConfigFailure,
         )
-            .delay(CONFIG_DELAY, TimeUnit.MILLISECONDS)
-            .mapSuccessEvent { (config, js) -> Internal.GetRemoteBarsConfigSuccess(config, js) }
-            .mapErrorEvent(Internal::GetRemoteBarsConfigFailure)
-        is BarsCommand.ObserveBars -> rxObservable(Dispatchers.Unconfined) {
-            barsUserInfoRepository.observeBarsUserInfo().collect { send(it) }
-        }.mapSuccessEvent(Internal::ObserveBarsSuccess)
 
-        is BarsCommand.SetLatestLoadedUrl -> Completable
-            .fromAction {
-                barsUserInfoRepository.latestLoadedUrl = command.latestLoadedUrl.orEmpty()
-            }
-            .toObservable()
-        is BarsCommand.GetLatestLoadedUrl -> Single
-            .fromCallable { barsUserInfoRepository.latestLoadedUrl }
-            .mapSuccessEvent { url -> Internal.GetLatestLoadedUrlSuccess(url.takeIf { it.isNotBlank() }) }
+        is BarsCommand.ObserveBars -> barsUserInfoRepository.observeBarsUserInfo()
+            .mapEvents(Internal::ObserveBarsSuccess)
 
-        is BarsCommand.PushMarks -> rxCompletable(Dispatchers.Unconfined) {
+        is BarsCommand.SetLatestLoadedUrl -> actorFlow {
+            barsUserInfoRepository.latestLoadedUrl = command.latestLoadedUrl.orEmpty()
+        }.mapEvents()
+
+        is BarsCommand.GetLatestLoadedUrl -> actorFlow {
+            barsUserInfoRepository.latestLoadedUrl.takeIf { it.isNotBlank() }
+        }.mapEvents(Internal::GetLatestLoadedUrlSuccess)
+
+        is BarsCommand.PushMarks -> actorFlow {
             barsUserInfoRepository.pushMarksJson(command.marksJson)
-        }.toObservable()
-        is BarsCommand.PushStudentName -> rxCompletable(Dispatchers.Unconfined) {
+        }.mapEvents()
+
+        is BarsCommand.PushStudentName -> actorFlow {
             barsUserInfoRepository.pushStudentName(command.studentName)
-        }.toObservable()
-        is BarsCommand.PushStudentGroup -> rxCompletable(Dispatchers.Unconfined) {
+        }.mapEvents()
+
+        is BarsCommand.PushStudentGroup -> actorFlow {
             barsUserInfoRepository.pushStudentGroup(command.studentGroup)
-        }.toObservable()
-        is BarsCommand.PushStudentRating -> rxCompletable(Dispatchers.Unconfined) {
+        }.mapEvents()
+
+        is BarsCommand.PushStudentRating -> actorFlow {
             barsUserInfoRepository.pushStudentRating(command.ratingJson)
-        }.toObservable()
+        }.mapEvents()
     }
 
     private companion object {

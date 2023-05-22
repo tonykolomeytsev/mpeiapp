@@ -20,15 +20,13 @@ import kekmech.ru.feature_app_settings.screens.map_type.item.MapTypeAdapterItem
 import kekmech.ru.feature_app_settings.screens.map_type.item.MapTypeItem
 import kekmech.ru.strings.Strings
 
-internal class SelectMapTypeFragment : BottomSheetDialogFragment() {
+internal class SelectMapTypeFragment : BottomSheetDialogFragment(R.layout.fragment_select_map_type) {
 
     private val viewBinding by viewBinding(FragmentSelectMapTypeBinding::bind)
     private val adapter by fastLazy { createAdapter() }
     private val selectMapType by fastLazy { getArgument<String>(ARG_SELECTED_MAP_TYPE) }
     private val analytics by screenAnalytics("SelectMapType")
     private val resultKey by fastLazy { getArgument<String>(ARG_RESULT_KEY) }
-
-    override val layoutId: Int = R.layout.fragment_select_map_type
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

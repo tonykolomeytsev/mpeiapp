@@ -8,6 +8,7 @@ object MainScreenFeatureFactory {
     fun create(): MainScreenStore = ElmStore(
         initialState = MainScreenState(),
         reducer = MainScreenReducer(),
-        actor = NoOpActor()
+        actor = NoOpActor(),
+        startEvent = MainScreenEvent.Wish.Init
     )
 }

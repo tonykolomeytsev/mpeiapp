@@ -51,6 +51,7 @@ internal sealed interface AppSettingsCommand {
     data class ChangeMapType(val selectedMapType: String) : AppSettingsCommand
     object ClearSelectedGroup : AppSettingsCommand
     object ObserveContributors : AppSettingsCommand
+    object FetchContributors : AppSettingsCommand
 }
 
 internal sealed interface AppSettingsEffect {

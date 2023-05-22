@@ -1,7 +1,9 @@
 package kekmech.ru.feature_map.screens.main.elm
 
 import kekmech.ru.domain_app_settings.AppSettingsRepository
-import vivid.money.elmslie.core.store.ElmStore
+import kekmech.ru.feature_map.screens.main.elm.MapEvent
+import vivid.money.elmslie.core.store.Store
+import vivid.money.elmslie.coroutines.ElmStoreCompat
 import kekmech.ru.feature_map.screens.main.elm.MapCommand as Command
 import kekmech.ru.feature_map.screens.main.elm.MapEffect as Effect
 import kekmech.ru.feature_map.screens.main.elm.MapEvent as Event
@@ -12,12 +14,13 @@ internal class MapFeatureFactory(
     private val appSettingsRepository: AppSettingsRepository,
 ) {
 
-    fun create(): ElmStore<Event, State, Effect, Command> {
+    fun create(): Store<Event, Effect, State> {
         val preheatAppSettings = appSettingsRepository.getAppSettings().blockingGet()
-        return ElmStore(
+        return ElmStoreCompat(
             initialState = State(appSettings = preheatAppSettings),
             reducer = MapReducer(),
-            actor = actor
+            actor = actor,
+            startEvent = MapEvent.Ui.Init,
         )
     }
 }

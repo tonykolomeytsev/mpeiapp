@@ -7,24 +7,33 @@ import android.view.ViewGroup
 import androidx.annotation.CallSuper
 import androidx.annotation.LayoutRes
 import kekmech.ru.common_android.hideKeyboard
-import vivid.money.elmslie.android.base.ElmFragment
-import vivid.money.elmslie.android.screen.ElmDelegate
+import vivid.money.elmslie.android.elmStore
+import vivid.money.elmslie.android.renderer.ElmRendererDelegate
+import vivid.money.elmslie.core.store.Store
+import androidx.fragment.app.Fragment
+import vivid.money.elmslie.android.renderer.ElmRenderer
 
-abstract class BaseFragment<Event : Any, Effect : Any, State : Any> :
-    ElmFragment<Event, Effect, State>(),
-    ElmDelegate<Event, Effect, State>,
+abstract class BaseFragment<Event : Any, Effect : Any, State : Any>(
+    @LayoutRes val layoutResId: Int,
+) :
+    Fragment(layoutResId),
+    ElmRendererDelegate<Effect, State>,
     DisposableDelegate by DisposableDelegateImpl() {
 
-    @LayoutRes
-    protected open val layoutId: Int = 0
+    init {
+        @Suppress("LeakingThis")
+        ElmRenderer(this, lifecycle)
+    }
 
-    protected val feature get() = store
+    override val store: Store<Event, Effect, State> by elmStore { createStore() }
+
+    abstract fun createStore(): Store<Event, Effect, State>
 
     final override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(layoutId, container, false)
+    ): View? = inflater.inflate(layoutResId, container, false)
 
     @CallSuper
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

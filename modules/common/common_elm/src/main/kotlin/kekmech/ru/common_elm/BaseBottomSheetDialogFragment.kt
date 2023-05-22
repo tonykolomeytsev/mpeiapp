@@ -1,23 +1,25 @@
 package kekmech.ru.common_elm
 
+import androidx.annotation.LayoutRes
 import kekmech.ru.common_android.fragment.BottomSheetDialogFragment
-import vivid.money.elmslie.android.screen.ElmDelegate
-import vivid.money.elmslie.android.screen.ElmScreen
-import vivid.money.elmslie.android.storeholder.LifecycleAwareStoreHolder
-import vivid.money.elmslie.android.storeholder.StoreHolder
+import vivid.money.elmslie.android.elmStore
+import vivid.money.elmslie.android.renderer.ElmRenderer
+import vivid.money.elmslie.android.renderer.ElmRendererDelegate
+import vivid.money.elmslie.core.store.Store
 
-abstract class BaseBottomSheetDialogFragment<Event : Any, Effect : Any, State : Any> :
-    BottomSheetDialogFragment(),
-    ElmDelegate<Event, Effect, State>,
+abstract class BaseBottomSheetDialogFragment<Event : Any, Effect : Any, State : Any>(@LayoutRes layoutResId: Int) :
+    BottomSheetDialogFragment(layoutResId),
+    ElmRendererDelegate<Effect, State>,
     DisposableDelegate by DisposableDelegateImpl() {
 
-    protected val feature by lazy(LazyThreadSafetyMode.NONE) { screen.store }
+    init {
+        @Suppress("LeakingThis")
+        ElmRenderer(this, lifecycle)
+    }
 
-    @Suppress("LeakingThis")
-    private val screen = ElmScreen(this, lifecycle) { requireActivity() }
+    override val store: Store<Event, Effect, State> by elmStore { createStore() }
 
-    override val storeHolder: StoreHolder<Event, Effect, State> =
-        LifecycleAwareStoreHolder(lifecycle, ::createStore)
+    abstract fun createStore(): Store<Event, Effect, State>
 
     override fun onDestroyView() {
         super.onDestroyView()

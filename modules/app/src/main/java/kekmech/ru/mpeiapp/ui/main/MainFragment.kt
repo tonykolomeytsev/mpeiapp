@@ -23,10 +23,7 @@ import kekmech.ru.mpeiapp.ui.main.elm.MainScreenState
 import org.koin.android.ext.android.inject
 
 @Suppress("TooManyFunctions")
-class MainFragment : BaseFragment<MainScreenEvent, MainScreenEffect, MainScreenState>(), BackButtonListener {
-
-    override val initEvent: MainScreenEvent get() = MainScreenEvent.Wish.Init
-    override var layoutId: Int = R.layout.fragment_main
+class MainFragment : BaseFragment<MainScreenEvent, MainScreenEffect, MainScreenState>(R.layout.fragment_main), BackButtonListener {
 
     private val dependencies by inject<MainScreenDependencies>()
     private var bottomBarController: BottomBarController? = null
