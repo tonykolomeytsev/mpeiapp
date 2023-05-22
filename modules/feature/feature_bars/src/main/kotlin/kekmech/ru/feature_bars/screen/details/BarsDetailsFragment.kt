@@ -27,9 +27,7 @@ import kekmech.ru.coreui.R as coreui_R
 private const val BULLET_SEPARATOR = " • "
 private const val ARG_DISCIPLINE_INFO = "Arg.Discipline"
 
-class BarsDetailsFragment : BottomSheetDialogFragment() {
-
-    override val layoutId: Int = R.layout.fragment_bars_details
+class BarsDetailsFragment : BottomSheetDialogFragment(R.layout.fragment_bars_details) {
 
     private val analytics by screenAnalytics("BarsDetails")
     private val viewBinding by viewBinding(FragmentBarsDetailsBinding::bind)

@@ -1,13 +1,12 @@
 package kekmech.ru.feature_search.screens.schedule_details.elm
 
-import io.reactivex.rxjava3.core.Observable
+import kekmech.ru.common_elm.actorFlow
 import kekmech.ru.domain_favorite_schedule.FavoriteScheduleRepository
 import kekmech.ru.domain_schedule.repository.ScheduleRepository
 import kekmech.ru.feature_search.screens.schedule_details.elm.ScheduleDetailsEvent.Internal
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.rx3.rxCompletable
-import kotlinx.coroutines.rx3.rxSingle
-import vivid.money.elmslie.core.store.Actor
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.rx3.await
+import vivid.money.elmslie.coroutines.Actor
 import kekmech.ru.feature_search.screens.schedule_details.elm.ScheduleDetailsCommand as Command
 import kekmech.ru.feature_search.screens.schedule_details.elm.ScheduleDetailsEvent as Event
 
@@ -16,22 +15,28 @@ internal class ScheduleDetailsActor(
     private val favoriteScheduleRepository: FavoriteScheduleRepository,
 ) : Actor<Command, Event> {
 
-    override fun execute(command: Command): Observable<Event> =
+    override fun execute(command: Command): Flow<Event> =
         when (command) {
-            is Command.LoadSchedule -> scheduleRepository
-                .getSchedule(command.type, command.name, command.weekOffset)
-                .mapSuccessEvent { Internal.LoadScheduleSuccess(it, command.weekOffset) }
-            is Command.GetFavorites -> rxSingle(Dispatchers.Unconfined) {
+            is Command.LoadSchedule -> actorFlow {
+                scheduleRepository
+                    .getSchedule(command.type, command.name, command.weekOffset).await()
+            }.mapEvents({ Internal.LoadScheduleSuccess(it, command.weekOffset) })
+
+            is Command.GetFavorites -> actorFlow {
                 favoriteScheduleRepository.getAllFavorites()
-            }.mapSuccessEvent(Internal::GetFavoritesSuccess)
-            is Command.AddToFavorites -> rxCompletable(Dispatchers.Unconfined) {
+            }.mapEvents(Internal::GetFavoritesSuccess)
+
+            is Command.AddToFavorites -> actorFlow {
                 favoriteScheduleRepository.updateOrInsertFavorite(command.schedule)
-            }.mapSuccessEvent(Internal.AddToFavoritesSuccess(command.schedule))
-            is Command.RemoveFromFavorites -> rxCompletable(Dispatchers.Unconfined) {
+            }.mapEvents({ Internal.AddToFavoritesSuccess(command.schedule) })
+
+            is Command.RemoveFromFavorites -> actorFlow {
                 favoriteScheduleRepository.deleteFavorite(command.schedule)
-            }.mapSuccessEvent(Internal.RemoveFromFavoritesSuccess)
-            is Command.SwitchSchedule -> scheduleRepository
-                .setSelectedSchedule(command.selectedSchedule)
-                .toObservable()
+            }.mapEvents({ Internal.RemoveFromFavoritesSuccess })
+
+            is Command.SwitchSchedule -> actorFlow {
+                scheduleRepository
+                    .setSelectedSchedule(command.selectedSchedule).await()
+            }.mapEvents()
         }
 }

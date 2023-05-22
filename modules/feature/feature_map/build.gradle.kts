@@ -13,6 +13,7 @@ dependencies {
     implementation(libs.google.gson)
     implementation(libs.google.maps)
     implementation(libs.google.material)
+    implementation(libs.kotlinx.coroutines.rx3)
     implementation(libs.koin.android)
     implementation(libs.koin.core)
     implementation(libs.rx.android)
@@ -20,7 +21,7 @@ dependencies {
     implementation(libs.squareup.retrofit)
     implementation(libs.vivid.elmslie.android)
     implementation(libs.vivid.elmslie.core)
-    implementation(libs.vivid.elmslie.storeHolder)
+    implementation(libs.vivid.elmslie.coroutines)
 
     implementation(project(":domain_app_settings"))
     implementation(project(":domain_app_settings_models"))

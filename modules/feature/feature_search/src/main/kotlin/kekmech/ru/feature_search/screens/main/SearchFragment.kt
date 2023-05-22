@@ -48,12 +48,9 @@ private const val ARG_QUERY = "Arg.Query"
 private const val ARG_FILTER = "Arg.Filter"
 private const val DEFAULT_INPUT_DEBOUNCE = 300L
 
-internal class SearchFragment : BaseFragment<SearchEvent, SearchEffect, SearchState>() {
+internal class SearchFragment : BaseFragment<SearchEvent, SearchEffect, SearchState>(R.layout.fragment_search) {
 
-    override val initEvent get() = SearchEvent.Ui.Init
     private val dependencies by inject<SearchDependencies>()
-
-    override var layoutId: Int = R.layout.fragment_search
     private val adapter by fastLazy { createAdapter() }
     private val filterItemsAdapter by fastLazy { createFilterItemsAdapter() }
     private val analytics by screenAnalytics("Search")
@@ -76,7 +73,7 @@ internal class SearchFragment : BaseFragment<SearchEvent, SearchEffect, SearchSt
                 .debounce(DEFAULT_INPUT_DEBOUNCE, TimeUnit.MILLISECONDS)
                 .distinctUntilChanged()
                 .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe { feature.accept(SearchEvent.Ui.Action.SearchContent(it)) }
+                .subscribe { store.accept(SearchEvent.Ui.Action.SearchContent(it)) }
                 .let {}
             recyclerView.layoutManager = LinearLayoutManager(requireContext())
             recyclerView.adapter = adapter
@@ -134,7 +131,7 @@ internal class SearchFragment : BaseFragment<SearchEvent, SearchEffect, SearchSt
     private fun createFilterItemsAdapter() = BaseAdapter(
         FilterAdapterItem {
             analytics.sendClick("SearchFilter_${it.type}")
-            feature.accept(SearchEvent.Ui.Action.SelectFilter(it))
+            store.accept(SearchEvent.Ui.Action.SelectFilter(it))
         }
     )
 

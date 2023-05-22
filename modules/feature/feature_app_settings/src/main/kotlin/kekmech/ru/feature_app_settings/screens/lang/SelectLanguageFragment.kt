@@ -21,15 +21,13 @@ import kekmech.ru.feature_app_settings.screens.lang.item.LanguageAdapterItem
 import kekmech.ru.feature_app_settings.screens.lang.item.LanguageItem
 import kekmech.ru.strings.Strings
 
-internal class SelectLanguageFragment : BottomSheetDialogFragment() {
+internal class SelectLanguageFragment : BottomSheetDialogFragment(R.layout.fragment_change_language) {
 
     private val viewBinding by viewBinding(FragmentChangeLanguageBinding::bind)
     private val adapter by fastLazy { createAdapter() }
     private val selectLanguage by fastLazy { getArgument<String>(ARG_SELECTED_LANG) }
     private val analytics by screenAnalytics("SelectLanguage")
     private val resultKey by fastLazy { getArgument<String>(ARG_RESULT_KEY) }
-
-    override val layoutId: Int = R.layout.fragment_change_language
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

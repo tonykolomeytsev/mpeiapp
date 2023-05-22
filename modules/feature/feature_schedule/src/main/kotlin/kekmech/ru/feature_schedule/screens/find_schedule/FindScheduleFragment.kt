@@ -34,10 +34,7 @@ import kekmech.ru.strings.Strings
 import org.koin.android.ext.android.inject
 
 internal class FindScheduleFragment :
-    BaseFragment<FindScheduleEvent, FindScheduleEffect, FindScheduleState>() {
-
-    override val initEvent = Ui.Init
-    override var layoutId = R.layout.fragment_find_schedule
+    BaseFragment<FindScheduleEvent, FindScheduleEffect, FindScheduleState>(R.layout.fragment_find_schedule) {
 
     private val dependencies by inject<ScheduleDependencies>()
     private val analytics by screenAnalytics("FindSchedule")
@@ -59,12 +56,12 @@ internal class FindScheduleFragment :
             groupText.showKeyboard()
             groupText.afterTextChanged {
                 groupTextLayout.error = null
-                feature.accept(Ui.Action.GroupNumberChanged(groupText.text?.toString().orEmpty()))
+                store.accept(Ui.Action.GroupNumberChanged(groupText.text?.toString().orEmpty()))
             }
             groupText.addTextChangedListener(GroupFormatTextWatcher(groupText))
             buttonContinue.setOnClickListener {
                 analytics.sendClick("FindContinue")
-                feature.accept(Ui.Click.Continue(groupText.text?.toString().orEmpty()))
+                store.accept(Ui.Click.Continue(groupText.text?.toString().orEmpty()))
             }
         }
     }

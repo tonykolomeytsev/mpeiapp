@@ -37,12 +37,8 @@ import org.koin.android.ext.android.inject
 private const val ACTIVITY_RECREATION_DELAY = 200L
 
 internal class AppSettingsFragment :
-    BaseFragment<AppSettingsEvent, AppSettingsEffect, AppSettingsState>(),
+    BaseFragment<AppSettingsEvent, AppSettingsEffect, AppSettingsState>(R.layout.fragment_app_settings),
     ActivityResultListener {
-
-    override val initEvent get() = Ui.Init
-
-    override var layoutId: Int = R.layout.fragment_app_settings
 
     private val dependencies by inject<AppSettingDependencies>()
     private val adapter by fastLazy { createAdapter() }
@@ -77,7 +73,7 @@ internal class AppSettingsFragment :
                     SelectLanguageFragment.newInstance(effect.selectedLanguage, LANGUAGE_RESULT_KEY)
                 }
                 setResultListener<String>(LANGUAGE_RESULT_KEY) { selectedLanguage ->
-                    feature.accept(Ui.Action.LanguageChanged(selectedLanguage))
+                    store.accept(Ui.Action.LanguageChanged(selectedLanguage))
                 }
             }
             is AppSettingsEffect.OpenMapTypeDialog -> {
@@ -85,7 +81,7 @@ internal class AppSettingsFragment :
                     SelectMapTypeFragment.newInstance(effect.mapType, MAP_TYPE_RESULT_KEY)
                 }
                 setResultListener<String>(MAP_TYPE_RESULT_KEY) { selectedMapType ->
-                    feature.accept(Ui.Action.MapTypeChanged(selectedMapType))
+                    store.accept(Ui.Action.MapTypeChanged(selectedMapType))
                 }
             }
         }
@@ -95,20 +91,20 @@ internal class AppSettingsFragment :
             SectionHeaderAdapterItem(),
             ToggleAdapterItem(TOGGLE_DARK_THEME) {
                 analytics.sendChangeSetting("DarkTheme", it.toString())
-                feature.accept(Ui.Action.SetDarkThemeEnabled(it))
+                store.accept(Ui.Action.SetDarkThemeEnabled(it))
                 fixStatusBarIssue(it)
             },
             ToggleAdapterItem(TOGGLE_AUTO_HIDE_BOTTOM_SHEET) {
                 analytics.sendChangeSetting("AutoHideMapBottomSheet", it.toString())
-                feature.accept(Ui.Action.SetAutoHideBottomSheet(it))
+                store.accept(Ui.Action.SetAutoHideBottomSheet(it))
             },
             ToggleAdapterItem(TOGGLE_SNOW_FLAKES) {
                 analytics.sendChangeSetting("SnowFlakes", it.toString())
-                feature.accept(Ui.Action.SetSnowEnabled(it))
+                store.accept(Ui.Action.SetSnowEnabled(it))
             },
             ToggleAdapterItem(TOGGLE_SHOW_NAV_FAB) {
                 analytics.sendChangeSetting("ShowQuickNavFab", it.toString())
-                feature.accept(Ui.Action.SetShowQuickNavigationFab(it))
+                store.accept(Ui.Action.SetShowQuickNavigationFab(it))
             },
             TextAdapterItem(),
             SpaceAdapterItem(),
@@ -122,7 +118,7 @@ internal class AppSettingsFragment :
     private fun onItemClick(itemId: Int?) =
         when (itemId) {
             ITEM_DEBUG_CLEAR_SELECTED_GROUP -> {
-                feature.accept(Ui.Action.ClearSelectedGroup)
+                store.accept(Ui.Action.ClearSelectedGroup)
                 dependencies.onboardingFeatureLauncher.launchWelcomePage(true)
             }
             ITEM_SUPPORT -> {
@@ -139,11 +135,11 @@ internal class AppSettingsFragment :
             }
             ITEM_LANGUAGE -> {
                 analytics.sendClick("SelectLanguage")
-                feature.accept(Ui.Click.Language)
+                store.accept(Ui.Click.Language)
             }
             ITEM_MAP_TYPE -> {
                 analytics.sendClick("SelectMapType")
-                feature.accept(Ui.Click.MapType)
+                store.accept(Ui.Click.MapType)
             }
             ITEM_DEBUG_SELECT_ENVIRONMENT -> {
                 showEnvironmentSelectorDialog()
@@ -178,7 +174,7 @@ internal class AppSettingsFragment :
             .setTitle("Выбрать окружение")
             .setItems(environments) { dialog, which ->
                 dialog?.dismiss()
-                feature.accept(
+                store.accept(
                     Ui.Action.ChangeBackendEnvironment(
                         AppEnvironment.valueOf(environments[which])
                     )
