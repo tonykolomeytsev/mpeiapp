@@ -1,7 +1,6 @@
 package kekmech.ru.feature_notes.screens.note_list.elm
 
 import kekmech.ru.domain_schedule_models.dto.Classes
-import vivid.money.elmslie.core.store.ElmStore
 import vivid.money.elmslie.coroutines.ElmStoreCompat
 import java.time.LocalDate
 

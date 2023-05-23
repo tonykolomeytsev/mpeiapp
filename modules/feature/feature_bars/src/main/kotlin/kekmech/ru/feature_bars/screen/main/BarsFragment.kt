@@ -46,8 +46,8 @@ import kekmech.ru.feature_bars.screen.main.elm.BarsCommand
 import kekmech.ru.feature_bars.screen.main.elm.BarsEffect
 import kekmech.ru.feature_bars.screen.main.elm.BarsEvent
 import kekmech.ru.feature_bars.screen.main.elm.BarsEvent.Ui
-import kekmech.ru.feature_bars.screen.main.elm.BarsStoreProvider
 import kekmech.ru.feature_bars.screen.main.elm.BarsState
+import kekmech.ru.feature_bars.screen.main.elm.BarsStoreProvider
 import kekmech.ru.strings.Strings
 import org.koin.android.ext.android.inject
 import vivid.money.elmslie.coroutines.ElmStoreCompat

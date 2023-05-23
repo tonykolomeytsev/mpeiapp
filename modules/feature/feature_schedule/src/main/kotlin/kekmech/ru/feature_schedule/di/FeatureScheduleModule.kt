@@ -8,7 +8,6 @@ import kekmech.ru.feature_schedule.screens.main.elm.ScheduleActor
 import kekmech.ru.feature_schedule.screens.main.elm.ScheduleStoreProvider
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
-import org.koin.core.qualifier.named
 import org.koin.dsl.bind
 import org.koin.dsl.module
 

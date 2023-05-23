@@ -4,7 +4,13 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.util.TypedValue
-import androidx.annotation.*
+import androidx.annotation.ArrayRes
+import androidx.annotation.AttrRes
+import androidx.annotation.ColorInt
+import androidx.annotation.ColorRes
+import androidx.annotation.DimenRes
+import androidx.annotation.DrawableRes
+import androidx.annotation.Px
 import androidx.core.content.ContextCompat
 
 fun Context.getResDrawable(@DrawableRes res: Int) = checkNotNull(ContextCompat.getDrawable(this, res))

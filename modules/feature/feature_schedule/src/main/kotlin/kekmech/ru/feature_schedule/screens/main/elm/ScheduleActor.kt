@@ -3,10 +3,8 @@ package kekmech.ru.feature_schedule.screens.main.elm
 import kekmech.ru.common_elm.actorFlow
 import kekmech.ru.domain_notes.services.AttachNotesToScheduleService
 import kekmech.ru.domain_schedule.use_cases.GetCurrentScheduleUseCase
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.rx3.await
-import kotlinx.coroutines.rx3.rxSingle
 import vivid.money.elmslie.coroutines.Actor
 import kekmech.ru.feature_schedule.screens.main.elm.ScheduleCommand as Command
 import kekmech.ru.feature_schedule.screens.main.elm.ScheduleEvent as Event

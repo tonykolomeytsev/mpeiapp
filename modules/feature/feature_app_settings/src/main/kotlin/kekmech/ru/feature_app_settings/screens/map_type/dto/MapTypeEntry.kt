@@ -1,7 +1,6 @@
 package kekmech.ru.feature_app_settings.screens.map_type.dto
 
 import androidx.annotation.StringRes
-import kekmech.ru.feature_app_settings.R
 import kekmech.ru.strings.Strings
 
 internal enum class MapTypeEntry(
