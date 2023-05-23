@@ -1,7 +1,6 @@
 package kekmech.ru.feature_schedule.screens.find_schedule.elm
 
 import kekmech.ru.domain_schedule.ScheduleFeatureLauncher
-import vivid.money.elmslie.core.store.ElmStore
 import vivid.money.elmslie.coroutines.ElmStoreCompat
 
 internal class FindScheduleFeatureFactory(

@@ -12,14 +12,21 @@ import kekmech.ru.common_android.setResult
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.withArguments
 import kekmech.ru.common_kotlin.fastLazy
-import kekmech.ru.coreui.items.*
+import kekmech.ru.coreui.items.PullAdapterItem
+import kekmech.ru.coreui.items.PullItem
+import kekmech.ru.coreui.items.SectionHeaderAdapterItem
+import kekmech.ru.coreui.items.SectionHeaderItem
+import kekmech.ru.coreui.items.SpaceAdapterItem
+import kekmech.ru.coreui.items.SpaceItem
+import kekmech.ru.coreui.items.TextAdapterItem
+import kekmech.ru.coreui.items.TextItem
 import kekmech.ru.feature_app_settings.R
-import kekmech.ru.coreui.R as coreui_R
 import kekmech.ru.feature_app_settings.databinding.FragmentChangeLanguageBinding
 import kekmech.ru.feature_app_settings.screens.lang.dto.LanguageEntry
 import kekmech.ru.feature_app_settings.screens.lang.item.LanguageAdapterItem
 import kekmech.ru.feature_app_settings.screens.lang.item.LanguageItem
 import kekmech.ru.strings.Strings
+import kekmech.ru.coreui.R as coreui_R
 
 internal class SelectLanguageFragment : BottomSheetDialogFragment(R.layout.fragment_change_language) {
 

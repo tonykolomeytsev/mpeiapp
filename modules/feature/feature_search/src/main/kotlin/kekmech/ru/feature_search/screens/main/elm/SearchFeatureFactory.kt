@@ -1,7 +1,6 @@
 package kekmech.ru.feature_search.screens.main.elm
 
 import kekmech.ru.feature_search.item.FilterItemType
-import vivid.money.elmslie.core.store.ElmStore
 import vivid.money.elmslie.core.store.Store
 import vivid.money.elmslie.coroutines.ElmStoreCompat
 
