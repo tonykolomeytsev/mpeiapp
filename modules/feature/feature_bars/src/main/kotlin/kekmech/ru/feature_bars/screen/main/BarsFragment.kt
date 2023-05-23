@@ -42,14 +42,18 @@ import kekmech.ru.feature_bars.items.AssessedDisciplineAdapterItem
 import kekmech.ru.feature_bars.items.LoginToBarsAdapterItem
 import kekmech.ru.feature_bars.items.UserNameHeaderAdapterItem
 import kekmech.ru.feature_bars.screen.details.BarsDetailsFragment
+import kekmech.ru.feature_bars.screen.main.elm.BarsCommand
 import kekmech.ru.feature_bars.screen.main.elm.BarsEffect
 import kekmech.ru.feature_bars.screen.main.elm.BarsEvent
 import kekmech.ru.feature_bars.screen.main.elm.BarsEvent.Ui
-import kekmech.ru.feature_bars.screen.main.elm.BarsFeatureFactory
+import kekmech.ru.feature_bars.screen.main.elm.BarsStoreProvider
 import kekmech.ru.feature_bars.screen.main.elm.BarsState
 import kekmech.ru.strings.Strings
 import org.koin.android.ext.android.inject
+import vivid.money.elmslie.coroutines.ElmStoreCompat
 import kekmech.ru.coreui.R as coreui_R
+
+private typealias BarsStore = ElmStoreCompat<BarsEvent, BarsState, BarsEffect, BarsCommand>
 
 private const val JS_INTERFACE_NAME = "kti"
 
@@ -57,15 +61,12 @@ private const val JS_INTERFACE_NAME = "kti"
 internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(R.layout.fragment_bars), ScrollToTop,
     TabScreenStateSaver by TabScreenStateSaverImpl("bars") {
 
-    //todo
-    //override val storeHolder by retainInParentStoreHolder(storeProvider = ::createStore)
-
     private val analytics by screenAnalytics("Bars")
     private val viewBinding by viewBinding(FragmentBarsBinding::bind)
     private val adapter by fastLazy { createAdapter() }
     private val settingsFeatureLauncher by inject<AppSettingsFeatureLauncher>()
 
-    override fun createStore() = inject<BarsFeatureFactory>().value.create()
+    override fun createStore() = inject<BarsStoreProvider>().value.get()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

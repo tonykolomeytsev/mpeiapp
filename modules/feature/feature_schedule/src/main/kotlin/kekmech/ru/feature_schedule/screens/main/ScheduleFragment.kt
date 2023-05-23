@@ -23,8 +23,8 @@ import kekmech.ru.feature_schedule.screens.main.adapter.WeeksScrollHelper
 import kekmech.ru.feature_schedule.screens.main.elm.ScheduleEffect
 import kekmech.ru.feature_schedule.screens.main.elm.ScheduleEvent
 import kekmech.ru.feature_schedule.screens.main.elm.ScheduleEvent.Ui
-import kekmech.ru.feature_schedule.screens.main.elm.ScheduleFeatureFactory
 import kekmech.ru.feature_schedule.screens.main.elm.ScheduleState
+import kekmech.ru.feature_schedule.screens.main.elm.ScheduleStoreProvider
 import kekmech.ru.feature_schedule.screens.main.item.DAY_OF_WEEK_FRIDAY
 import kekmech.ru.feature_schedule.screens.main.item.DAY_OF_WEEK_MONDAY
 import kekmech.ru.feature_schedule.screens.main.item.DAY_OF_WEEK_SATURDAY
@@ -44,9 +44,6 @@ internal class ScheduleFragment :
     ActivityResultListener,
     TabScreenStateSaver by TabScreenStateSaverImpl("schedule") {
 
-    //todo
-//    override val storeHolder by retainInParentStoreHolder(storeProvider = ::createStore)
-
     private val dependencies by inject<ScheduleDependencies>()
     private val viewPagerAdapter by fastLazy { createViewPagerAdapter() }
     private val weeksScrollAdapter by fastLazy { createWeekScrollAdapter() }
@@ -57,7 +54,7 @@ internal class ScheduleFragment :
     // for viewPager sliding debounce
     private var viewPagerPositionToBeSelected: Int? = null
 
-    override fun createStore() = inject<ScheduleFeatureFactory>().value.create()
+    override fun createStore() = inject<ScheduleStoreProvider>().value.get()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

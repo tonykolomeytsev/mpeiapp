@@ -48,6 +48,7 @@ import kekmech.ru.feature_dashboard.items.SearchFieldAdapterItem
 import kekmech.ru.feature_dashboard.screens.main.elm.DashboardEffect
 import kekmech.ru.feature_dashboard.screens.main.elm.DashboardEvent
 import kekmech.ru.feature_dashboard.screens.main.elm.DashboardState
+import kekmech.ru.feature_dashboard.screens.main.elm.DashboardStoreProvider
 import kekmech.ru.strings.Strings
 import org.koin.android.ext.android.inject
 
@@ -57,15 +58,12 @@ internal class DashboardFragment :
     ScrollToTop,
     TabScreenStateSaver by TabScreenStateSaverImpl("dashboard") {
 
-//    todo
-//    override val storeHolder by retainInParentStoreHolder(storeProvider = ::createStore)
-
     private val dependencies by inject<DashboardDependencies>()
     private val adapter by fastLazy { createAdapter() }
     private val analytics by screenAnalytics("Dashboard")
     private val viewBinding by viewBinding(FragmentDashboardBinding::bind)
 
-    override fun createStore() = dependencies.dashboardFeatureFactory.create()
+    override fun createStore() = inject<DashboardStoreProvider>().value.get()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

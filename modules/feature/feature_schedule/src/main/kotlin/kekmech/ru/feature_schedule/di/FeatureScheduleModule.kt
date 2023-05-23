@@ -5,8 +5,10 @@ import kekmech.ru.feature_schedule.launcher.ScheduleFeatureLauncherImpl
 import kekmech.ru.feature_schedule.screens.find_schedule.elm.FindScheduleActor
 import kekmech.ru.feature_schedule.screens.find_schedule.elm.FindScheduleFeatureFactory
 import kekmech.ru.feature_schedule.screens.main.elm.ScheduleActor
-import kekmech.ru.feature_schedule.screens.main.elm.ScheduleFeatureFactory
+import kekmech.ru.feature_schedule.screens.main.elm.ScheduleStoreProvider
 import org.koin.core.module.dsl.factoryOf
+import org.koin.core.module.dsl.singleOf
+import org.koin.core.qualifier.named
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
@@ -15,7 +17,7 @@ val FeatureScheduleModule = module {
     factoryOf(::FindScheduleActor)
 
     factoryOf(::FindScheduleFeatureFactory) bind FindScheduleFeatureFactory::class
-    factoryOf(::ScheduleFeatureFactory) bind ScheduleFeatureFactory::class
+    singleOf(::ScheduleStoreProvider)
     factoryOf(::ScheduleActor)
     factoryOf(::ScheduleDependencies)
 }
