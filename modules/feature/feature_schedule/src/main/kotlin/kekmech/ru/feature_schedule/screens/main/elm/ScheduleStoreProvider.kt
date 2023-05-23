@@ -1,27 +1,31 @@
 package kekmech.ru.feature_schedule.screens.main.elm
 
+import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.domain_app_settings.AppSettingsRepository
 import kekmech.ru.feature_schedule.screens.main.elm.ScheduleEvent
-import vivid.money.elmslie.core.store.ElmStore
 import vivid.money.elmslie.core.store.Store
 import vivid.money.elmslie.coroutines.ElmStoreCompat
-import kekmech.ru.feature_schedule.screens.main.elm.ScheduleCommand as Command
 import kekmech.ru.feature_schedule.screens.main.elm.ScheduleEffect as Effect
 import kekmech.ru.feature_schedule.screens.main.elm.ScheduleEvent as Event
 import kekmech.ru.feature_schedule.screens.main.elm.ScheduleState as State
 
-internal class ScheduleFeatureFactory(
+internal typealias ScheduleStore = Store<Event, Effect, State>
+
+internal class ScheduleStoreProvider(
     private val actor: ScheduleActor,
     private val appSettingsRepository: AppSettingsRepository,
 ) {
 
-    fun create(): Store<Event, Effect, State> {
-        val preheatAppSettings = appSettingsRepository.getAppSettings().blockingGet()
-        return ElmStoreCompat(
-            initialState = State(appSettings = preheatAppSettings),
+    private val store by fastLazy {
+        ElmStoreCompat(
+            initialState = State(
+                appSettings = appSettingsRepository.getAppSettings().blockingGet()
+            ),
             reducer = ScheduleReducer(),
             actor = actor,
             startEvent = ScheduleEvent.Ui.Init,
         )
     }
+
+    fun get(): ScheduleStore = store
 }

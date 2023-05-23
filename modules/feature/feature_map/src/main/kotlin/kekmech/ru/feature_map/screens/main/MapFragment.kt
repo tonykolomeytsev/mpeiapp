@@ -43,6 +43,7 @@ import kekmech.ru.feature_map.screens.main.elm.FilterTab
 import kekmech.ru.feature_map.screens.main.elm.MapEffect
 import kekmech.ru.feature_map.screens.main.elm.MapEvent
 import kekmech.ru.feature_map.screens.main.elm.MapState
+import kekmech.ru.feature_map.screens.main.elm.MapStoreProvider
 import kekmech.ru.feature_map.screens.main.ext.animateCameraTo
 import kekmech.ru.feature_map.screens.main.ext.init
 import kekmech.ru.feature_map.screens.main.ext.toMarkerType
@@ -58,9 +59,6 @@ internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState>(R.layou
     ScrollToTop,
     TabScreenStateSaver by TabScreenStateSaverImpl("map") {
 
-//    todo
-//    override val storeHolder by retainInParentStoreHolder(storeProvider = ::createStore)
-
     private val dependencies by inject<MapDependencies>()
     private val adapter by fastLazy { createAdapter() }
     private val analytics by screenAnalytics("Map")
@@ -74,7 +72,7 @@ internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState>(R.layou
     }
     private val appSettingsRepository by inject<AppSettingsRepository>()
 
-    override fun createStore() = dependencies.mapFeatureFactory.create()
+    override fun createStore() = inject<MapStoreProvider>().value.get()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
