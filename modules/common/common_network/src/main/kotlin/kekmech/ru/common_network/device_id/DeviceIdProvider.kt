@@ -1,7 +1,7 @@
 package kekmech.ru.common_network.device_id
 
 import android.content.Context
-import java.util.*
+import java.util.UUID
 
 private const val PREF_DEVICE_ID = "pref_device_id"
 

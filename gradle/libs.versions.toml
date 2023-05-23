@@ -37,7 +37,7 @@ retrofit = "2.9.0"
 okhttp = "4.10.0"
 
 # Vivid Money Versions
-elmslie = "1.1.4"
+elmslie = "3.0.0-alpha06"
 
 # RedMadRobot Versions
 rmrMapMemory = "2.1"
@@ -116,7 +116,7 @@ squareup-okhttp-logger = { module = "com.squareup.okhttp3:logging-interceptor", 
 # Vivid Money Libraries
 vivid-elmslie-core = { module = "com.github.vivid-money.elmslie:elmslie-core", version.ref = "elmslie" }
 vivid-elmslie-android = { module = "com.github.vivid-money.elmslie:elmslie-android", version.ref = "elmslie" }
-vivid-elmslie-storeHolder = { module = "com.github.vivid-money.elmslie:elmslie-store-persisting", version.ref = "elmslie" }
+vivid-elmslie-coroutines = { module = "com.github.vivid-money.elmslie:elmslie-coroutines", version.ref = "elmslie" }
 
 # RedmadRobot Libraries
 rmr-mapmemory-core = { module = "com.redmadrobot.mapmemory:mapmemory", version.ref = "rmrMapMemory" }

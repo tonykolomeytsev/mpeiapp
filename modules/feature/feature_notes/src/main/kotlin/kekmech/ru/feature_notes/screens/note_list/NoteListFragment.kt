@@ -36,10 +36,7 @@ import org.koin.android.ext.android.inject
 import java.time.LocalDate
 
 internal class NoteListFragment :
-    BaseBottomSheetDialogFragment<NoteListEvent, NoteListEffect, NoteListState>() {
-
-    override val initEvent = Ui.Init
-    override val layoutId = R.layout.fragment_note_list
+    BaseBottomSheetDialogFragment<NoteListEvent, NoteListEffect, NoteListState>(R.layout.fragment_note_list) {
 
     private val dependencies by inject<NotesDependencies>()
     private val adapter by fastLazy { createAdapter() }
@@ -60,7 +57,7 @@ internal class NoteListFragment :
             recyclerView.adapter = adapter
             recyclerView.attachSwipeToDeleteCallback(isItemForDelete = { it is Note }) { note ->
                 analytics.sendClick("DeleteNote")
-                feature.accept(Ui.Action.DeleteNote(note as Note))
+                store.accept(Ui.Action.DeleteNote(note as Note))
             }
         }
     }
@@ -87,11 +84,11 @@ internal class NoteListFragment :
         SectionHeaderAdapterItem(),
         NoteAdapterItem(requireContext()) {
             analytics.sendClick("EditNote")
-            feature.accept(Ui.Click.EditNote(it))
+            store.accept(Ui.Click.EditNote(it))
         },
         AddActionAdapterItem {
             analytics.sendClick("NewNote")
-            feature.accept(Ui.Click.CreateNewNote)
+            store.accept(Ui.Click.CreateNewNote)
         },
         SpaceAdapterItem()
     )

@@ -34,10 +34,8 @@ import kekmech.ru.feature_notes.screens.all_notes.elm.AllNotesState
 import kekmech.ru.feature_notes.screens.edit.NoteEditFragment
 import org.koin.android.ext.android.inject
 
-internal class AllNotesFragment : BaseFragment<AllNotesEvent, AllNotesEffect, AllNotesState>() {
-
-    override val initEvent = Ui.Init
-    override var layoutId: Int = R.layout.fragment_all_notes
+internal class AllNotesFragment :
+    BaseFragment<AllNotesEvent, AllNotesEffect, AllNotesState>(R.layout.fragment_all_notes) {
 
     private val dependencies: NotesDependencies by inject()
     private val analytics by screenAnalytics("AllNotes")
@@ -62,7 +60,7 @@ internal class AllNotesFragment : BaseFragment<AllNotesEvent, AllNotesEffect, Al
             recyclerView.addScrollAnalytics(analytics, "RecyclerView")
             recyclerView.attachSwipeToDeleteCallback(isItemForDelete = { it is Note }) { note ->
                 analytics.sendClick("DeleteNote")
-                feature.accept(Ui.Action.DeleteNote(note as Note))
+                store.accept(Ui.Action.DeleteNote(note as Note))
             }
         }
     }
@@ -99,7 +97,7 @@ internal class AllNotesFragment : BaseFragment<AllNotesEvent, AllNotesEffect, Al
             NoteEditFragment.newInstance(note, NOTE_EDIT_RESULT_KEY)
         }
         setResultListener<EmptyResult>(NOTE_EDIT_RESULT_KEY) {
-            feature.accept(Ui.Init)
+            store.accept(Ui.Init)
         }
     }
 

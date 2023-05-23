@@ -1,7 +1,7 @@
 package kekmech.ru.common_network.device_id
 
 import android.content.SharedPreferences
-import java.util.*
+import java.util.Locale
 
 /**
  * TODO: Remove in 1.4, default locale will be null (automatic)

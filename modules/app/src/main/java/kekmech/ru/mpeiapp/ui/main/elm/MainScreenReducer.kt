@@ -1,7 +1,7 @@
 package kekmech.ru.mpeiapp.ui.main.elm
 
-import vivid.money.elmslie.core.store.StateReducer
 import vivid.money.elmslie.core.store.Result
+import vivid.money.elmslie.core.store.StateReducer
 
 typealias MainScreenResult = Result<MainScreenState, MainScreenEffect, MainScreenAction>
 

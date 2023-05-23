@@ -1,7 +1,7 @@
 package kekmech.ru.feature_app_settings.screens.main.elm
 
 import kekmech.ru.common_feature_toggles.FeatureToggles
-import vivid.money.elmslie.core.store.ElmStore
+import vivid.money.elmslie.coroutines.ElmStoreCompat
 
 internal class AppSettingsFeatureFactory(
     private val actor: AppSettingsActor,
@@ -9,11 +9,12 @@ internal class AppSettingsFeatureFactory(
 ) {
 
     fun create() =
-        ElmStore(
+        ElmStoreCompat(
             initialState = AppSettingsState(
                 isFeatureToggleSnowFlakesEnabled = featureToggles.isSnowFlakesEnabled,
             ),
             reducer = AppSettingsReducer(),
             actor = actor,
+            startEvent = AppSettingsEvent.Ui.Init,
         )
 }
