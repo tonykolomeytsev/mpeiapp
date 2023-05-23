@@ -34,10 +34,8 @@ import kekmech.ru.feature_app_settings.screens.favorites.item.HelpBannerAdapterI
 import kekmech.ru.strings.Strings
 import org.koin.android.ext.android.inject
 
-internal class FavoritesFragment : BaseFragment<FavoritesEvent, FavoritesEffect, FavoritesState>() {
-
-    override val initEvent get() = Ui.Init
-    override var layoutId: Int = R.layout.fragment_favorites
+internal class FavoritesFragment :
+    BaseFragment<FavoritesEvent, FavoritesEffect, FavoritesState>(R.layout.fragment_favorites) {
 
     private val dependencies by inject<AppSettingDependencies>()
     private val analytics by screenAnalytics("Favorites")
@@ -59,7 +57,7 @@ internal class FavoritesFragment : BaseFragment<FavoritesEvent, FavoritesEffect,
             recyclerView.adapter = adapter
             recyclerView.attachSwipeToDeleteCallback(isItemForDelete = { it is FavoriteScheduleItem }) {
                 analytics.sendClick("DeleteFavorite")
-                feature.accept(Ui.Click.DeleteFavorite((it as FavoriteScheduleItem).value))
+                store.accept(Ui.Click.DeleteFavorite((it as FavoriteScheduleItem).value))
             }
         }
     }
@@ -108,7 +106,7 @@ internal class FavoritesFragment : BaseFragment<FavoritesEvent, FavoritesEffect,
 
     private fun setResultListenerForUpdateFavorite(resultKey: String) =
         setResultListener<FavoriteSchedule>(resultKey) { favoriteSchedule ->
-            feature.accept(Ui.Action.UpdateFavorite(favoriteSchedule))
+            store.accept(Ui.Action.UpdateFavorite(favoriteSchedule))
         }
 
     companion object {

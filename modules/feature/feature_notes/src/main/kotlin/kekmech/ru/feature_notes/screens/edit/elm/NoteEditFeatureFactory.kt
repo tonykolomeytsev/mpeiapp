@@ -1,7 +1,7 @@
 package kekmech.ru.feature_notes.screens.edit.elm
 
 import kekmech.ru.domain_notes.dto.Note
-import vivid.money.elmslie.core.store.ElmStore
+import vivid.money.elmslie.coroutines.ElmStoreCompat
 
 internal class NoteEditFeatureFactory(
     private val actor: NoteEditActor,
@@ -9,9 +9,10 @@ internal class NoteEditFeatureFactory(
 
     fun create(
         note: Note,
-    ) = ElmStore(
+    ) = ElmStoreCompat(
         initialState = NoteEditState(note),
         reducer = NoteEditReducer(),
         actor = actor,
+        startEvent = NoteEditEvent.Ui.Init,
     )
 }

@@ -24,6 +24,7 @@ internal class AppSettingsReducer :
         when (event) {
             is Ui.Init -> commands {
                 +Command.LoadAppSettings
+                +Command.FetchContributors
                 +Command.ObserveContributors
             }
             is Ui.Action.SetDarkThemeEnabled -> {

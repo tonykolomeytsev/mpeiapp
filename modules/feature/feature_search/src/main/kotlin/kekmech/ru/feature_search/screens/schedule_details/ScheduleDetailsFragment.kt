@@ -48,16 +48,13 @@ internal const val ITEM_FAVORITES = 1
 
 internal class ScheduleDetailsFragment :
     BaseBottomSheetDialogFragment<ScheduleDetailsEvent, ScheduleDetailsEffect,
-            ScheduleDetailsState>() {
+            ScheduleDetailsState>(R.layout.fragment_schedule_details) {
 
     private val viewBinding by viewBinding(FragmentScheduleDetailsBinding::bind)
     private val adapter by fastLazy { createAdapter() }
     private val router by inject<Router>()
     private val bottomTabsSwitcher by inject<BottomTabsSwitcher>()
     private val analytics by screenAnalytics("SearchScheduleDetails")
-
-    override val initEvent: ScheduleDetailsEvent get() = Ui.Init
-    override var layoutId: Int = R.layout.fragment_schedule_details
 
     override fun createStore() = inject<ScheduleDetailsFeatureFactory>().value
         .create(getArgument(ARG_RESULT_ITEM))
@@ -99,13 +96,13 @@ internal class ScheduleDetailsFragment :
         ShimmerAdapterItem(R.layout.item_classes_shimmer),
         ButtonAdapterItem(ITEM_BUTTON_SWITCH, R.layout.item_button) {
             analytics.sendClick("SwitchSchedule")
-            feature.accept(Ui.Click.SwitchSchedule)
+            store.accept(Ui.Click.SwitchSchedule)
         },
         TextWithIconAdapterItem {
             when (it.itemId) {
                 ITEM_FAVORITES -> {
                     analytics.sendClick("AddToFavorites")
-                    feature.accept(Ui.Click.Favorites)
+                    store.accept(Ui.Click.Favorites)
                 }
                 else -> Unit
             }
@@ -115,7 +112,7 @@ internal class ScheduleDetailsFragment :
             layoutRes = R.layout.item_week_min,
             viewHolderGenerator = ::WeekMinViewHolder,
             itemBinder = WeekMinItemBinder(requireContext()) {
-                feature.accept(Ui.Click.Day(it.date))
+                store.accept(Ui.Click.Day(it.date))
             },
             areItemsTheSame = { _, _ -> true }
         ),

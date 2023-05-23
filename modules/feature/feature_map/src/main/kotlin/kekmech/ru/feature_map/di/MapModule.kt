@@ -8,7 +8,7 @@ import kekmech.ru.domain_map.MapService
 import kekmech.ru.feature_map.launcher.DeeplinkDelegate
 import kekmech.ru.feature_map.launcher.MapFeatureLauncherImpl
 import kekmech.ru.feature_map.screens.main.elm.MapActor
-import kekmech.ru.feature_map.screens.main.elm.MapFeatureFactory
+import kekmech.ru.feature_map.screens.main.elm.MapStoreProvider
 import kekmech.ru.feature_map.screens.main.view.MarkersBitmapFactory
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.factoryOf
@@ -23,7 +23,7 @@ val FeatureMapModule = module {
     single { get<Retrofit.Builder>().buildApi<MapService>() } bind MapService::class
     singleOf(::MapRepository) bind MapRepository::class
     singleOf(::DeeplinkDelegate) // TODO: refactor this
-    factoryOf(::MapFeatureFactory)
+    singleOf(::MapStoreProvider)
     factoryOf(::MapActor)
     factoryOf(::MapDependencies)
     factory { MarkersBitmapFactory(androidContext(), get()) }

@@ -1,7 +1,8 @@
 package kekmech.ru.mpeiapp.ui.main
 
 import kekmech.ru.common_navigation.BottomTab
-import java.util.*
+import java.util.ArrayDeque
+import java.util.Deque
 
 class BottomBarBackStack(
     private val firstTab: BottomTab

@@ -4,8 +4,12 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import kekmech.ru.common_analytics.ext.screenAnalytics
-import kekmech.ru.common_android.*
+import kekmech.ru.common_android.addSystemVerticalPadding
+import kekmech.ru.common_android.close
+import kekmech.ru.common_android.getArgument
+import kekmech.ru.common_android.openLinkExternal
 import kekmech.ru.common_android.viewbinding.viewBinding
+import kekmech.ru.common_android.withArguments
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.domain_force_update.dto.ForceUpdateInfo
 import kekmech.ru.feature_force_update.databinding.FragmentBlockingUpdateBinding

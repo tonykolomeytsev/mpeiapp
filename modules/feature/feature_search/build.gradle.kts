@@ -22,6 +22,7 @@ dependencies {
     implementation(libs.rx.java)
     implementation(libs.vivid.elmslie.android)
     implementation(libs.vivid.elmslie.core)
+    implementation(libs.vivid.elmslie.coroutines)
 
     implementation(project(":domain_map"))
     implementation(project(":domain_notes"))

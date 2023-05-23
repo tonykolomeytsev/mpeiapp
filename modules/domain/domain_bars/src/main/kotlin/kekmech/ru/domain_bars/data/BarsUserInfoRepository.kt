@@ -17,7 +17,7 @@ interface BarsUserInfoRepository {
 
     var latestLoadedUrl: String
 
-    suspend fun observeBarsUserInfo(): Flow<BarsUserInfo>
+    fun observeBarsUserInfo(): Flow<BarsUserInfo>
 
     suspend fun pushMarksJson(marksJson: String)
 
@@ -37,7 +37,7 @@ internal class BarsUserInfoRepositoryImpl(
     private val barsUserInfoCache by mapMemory.stateFlow(BarsUserInfo())
     override var latestLoadedUrl by preferences.string("bars_last_loaded_link")
 
-    override suspend fun observeBarsUserInfo(): Flow<BarsUserInfo> = barsUserInfoCache
+    override fun observeBarsUserInfo(): Flow<BarsUserInfo> = barsUserInfoCache
 
     override suspend fun pushMarksJson(marksJson: String) {
         barsUserInfoCache.update { userBarsInfo ->

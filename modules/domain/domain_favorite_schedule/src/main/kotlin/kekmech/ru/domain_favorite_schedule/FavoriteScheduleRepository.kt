@@ -1,12 +1,9 @@
 package kekmech.ru.domain_favorite_schedule
 
 import kekmech.ru.domain_favorite_schedule.database.FavoriteScheduleDao
-import kekmech.ru.domain_favorite_schedule.database.entities.NormalFavoriteSchedule
 import kekmech.ru.domain_favorite_schedule.database.entities.toDomain
 import kekmech.ru.domain_favorite_schedule.database.entities.toNormal
 import kekmech.ru.domain_favorite_schedule.dto.FavoriteSchedule
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 
 class FavoriteScheduleRepository(
     private val favoriteScheduleDao: FavoriteScheduleDao,
