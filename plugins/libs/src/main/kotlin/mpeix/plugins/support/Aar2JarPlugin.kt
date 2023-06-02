@@ -1,4 +1,4 @@
-package mpeix.plugins.dependencies
+package mpeix.plugins.support
 
 import org.gradle.api.NamedDomainObjectProvider
 import org.gradle.api.Plugin
@@ -16,41 +16,60 @@ import org.gradle.api.provider.Provider
 import org.gradle.api.tasks.PathSensitive
 import org.gradle.api.tasks.PathSensitivity
 import org.gradle.api.tasks.SourceSet
+import org.gradle.kotlin.dsl.registerTransform
 import org.gradle.plugins.ide.idea.model.IdeaModel
 import java.io.FileOutputStream
 import java.util.zip.ZipFile
 
 /**
- * AAR to JAR transformation plugin
+ * # AAR to JAR transformation plugin
  *
+ * The solution was found in https://github.com/stepango/aar2jar
+ * and slightly modified to fit the needs of mpeix.
  *
+ * ### Usage:
+ *
+ * This plugin is automatically applied for all subprojects with "mpeix.kotlin" plugin.
+ *
+ * You can use `compileOnlyAar` configuration in `dependencies` section in `build.gradle.kts` of
+ * pure-kotlin subprojects:
+ *
+ * ```kotlin
+ * dependencies {
+ *     compileOnlyAar(libs.androidx.fragment)
+ * }
+ * ```
  */
 @Suppress("unused")
 class Aar2JarPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
-        val compileOnlyAar = target.configurations.register("compileOnlyAar")
-        val testImplementationAar = target.configurations.register("testImplementationAar")
+        with(target) {
+            val compileOnlyAar = configurations.register("compileOnlyAar")
+            val testImplementationAar = configurations.register("testImplementationAar")
 
-        registerConfigurationsInIdea(target, testImplementationAar, compileOnlyAar)
+            registerConfigurationsInIdea(
+                testImplementationAarAsJar = testImplementationAar,
+                compileOnlyAarAsJar = compileOnlyAar,
+            )
 
-        target.dependencies.registerTransform(Aar2JarTransformAction::class.java) { spec ->
-            spec.from.attribute(ARTIFACT_TYPE_ATTRIBUTE, "aar")
-            spec.to.attribute(ARTIFACT_TYPE_ATTRIBUTE, JAR_TYPE)
-        }
-
-        compileOnlyAar.configure { config ->
-            config.isCanBeConsumed = false
-            config.baseConfiguration(target, "main") {
-                compileClasspath += config
+            dependencies.registerTransform(Aar2JarTransformAction::class) { spec ->
+                spec.from.attribute(ARTIFACT_TYPE_ATTRIBUTE, "aar")
+                spec.to.attribute(ARTIFACT_TYPE_ATTRIBUTE, JAR_TYPE)
             }
-        }
 
-        testImplementationAar.configure { config ->
-            config.isCanBeConsumed = false
-            config.baseConfiguration(target, "test") {
-                compileClasspath += config
-                runtimeClasspath += config
+            compileOnlyAar.configure { config ->
+                config.isCanBeConsumed = false
+                config.baseConfiguration(project = target, sourceSetName = "main") {
+                    compileClasspath += config
+                }
+            }
+            testImplementationAar.configure { config ->
+                config.isCanBeConsumed = false
+                config.baseConfiguration(project = target, sourceSetName = "test") {
+                    compileClasspath += config
+                    runtimeClasspath += config
+                }
             }
         }
     }
@@ -71,12 +90,11 @@ class Aar2JarPlugin : Plugin<Project> {
         }
     }
 
-    private fun registerConfigurationsInIdea(
-        project: Project,
+    private fun Project.registerConfigurationsInIdea(
         testImplementationAarAsJar: NamedDomainObjectProvider<Configuration>,
         compileOnlyAarAsJar: NamedDomainObjectProvider<Configuration>,
     ) {
-        project.pluginManager.withPlugin("idea") {
+        pluginManager.withPlugin("idea") {
             val scopes = project.extensions
                 .getByType(IdeaModel::class.java)
                 .module
