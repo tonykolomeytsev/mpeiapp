@@ -12,12 +12,11 @@ pluginManagement {
      * and the Maven Central Repository as the repositories Gradle should use to look for its dependencies.
      */
 
-    includeBuild("plugins")
     repositories {
         gradlePluginPortal()
         google()
         mavenCentral()
-        maven { url = java.net.URI("https://jitpack.io") }
+        maven(url = "https://jitpack.io")
     }
 }
 
@@ -39,11 +38,13 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven { url = java.net.URI("https://jitpack.io") }
+        maven(url = "https://jitpack.io")
     }
 }
 
 rootProject.name = "mpeix"
+
+includeBuild("plugins")
 
 File(rootProject.projectDir, "modules").walk()
     .filter { it.isBuildGradleScript() }

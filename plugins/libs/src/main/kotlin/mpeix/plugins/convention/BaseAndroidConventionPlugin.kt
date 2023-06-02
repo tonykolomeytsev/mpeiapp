@@ -4,54 +4,57 @@ import com.android.build.gradle.BaseExtension
 import mpeix.plugins.ext.coreLibraryDesugaring
 import mpeix.plugins.ext.implementation
 import mpeix.plugins.ext.requiredVersion
+import mpeix.plugins.ext.versionCatalog
 import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.artifacts.VersionCatalog
-import org.gradle.api.artifacts.VersionCatalogsExtension
-import org.gradle.api.artifacts.dsl.DependencyHandler
 import org.gradle.api.tasks.testing.Test
+import org.gradle.kotlin.dsl.configure
+import org.gradle.kotlin.dsl.dependencies
+import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 @Suppress("unused")
-class BaseAndroidModulePlugin : Plugin<Project> {
+internal class BaseAndroidConventionPlugin : Plugin<Project> {
 
     private val jvmTarget = JavaVersion.VERSION_11
 
     override fun apply(target: Project) {
-        target.plugins.apply {
-            apply("kotlin-android")
-            apply("kotlin-parcelize")
-            apply("org.gradle.android.cache-fix")
-        }
+        with(target) {
+            with(plugins) {
+                apply("kotlin-android")
+                apply("kotlin-parcelize")
+                apply("org.gradle.android.cache-fix")
+            }
 
-        val catalog =
-            target.extensions.getByType(VersionCatalogsExtension::class.java).named("libs")
-        target.extensions.configure(BaseExtension::class.java) { extension ->
-            extension.configure(
-                minSdk = catalog.requiredVersion("minSdk").toInt(),
-                compileSdk = catalog.requiredVersion("compileSdk").toInt(),
-                targetSdk = catalog.requiredVersion("targetSdk").toInt(),
-                buildTools = catalog.requiredVersion("buildTools"),
-                appVersionName = catalog.requiredVersion("appVersionName"),
-                appVersionCode = catalog.requiredVersion("appVersionCode").toInt(),
-            )
-        }
-        target.tasks.withType(KotlinCompile::class.java) { task ->
-            task.kotlinOptions.jvmTarget = jvmTarget.toString()
-            // Allow use of @OptIn
-            task.kotlinOptions.freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
-        }
-        target.tasks.withType(Test::class.java) { task -> task.useJUnitPlatform() }
-        target.dependencies.setupDependencies(catalog)
-    }
+            val libs = versionCatalog
+            extensions.configure<BaseExtension> {
+                configure(
+                    minSdk = libs.requiredVersion("minSdk").toInt(),
+                    compileSdk = libs.requiredVersion("compileSdk").toInt(),
+                    targetSdk = libs.requiredVersion("targetSdk").toInt(),
+                    buildTools = libs.requiredVersion("buildTools"),
+                    appVersionName = libs.requiredVersion("appVersionName"),
+                    appVersionCode = libs.requiredVersion("appVersionCode").toInt(),
+                )
+                with(buildFeatures) {
+                    shaders = false
+                }
+            }
 
-    private fun DependencyHandler.setupDependencies(catalog: VersionCatalog) {
-        catalog.findLibrary("desugaring").ifPresent { moduleProvider ->
-            coreLibraryDesugaring(moduleProvider)
-        }
-        catalog.findLibrary("timber").ifPresent { libraryProvider ->
-            implementation(libraryProvider)
+            tasks.withType<KotlinCompile> {
+                kotlinOptions.jvmTarget = jvmTarget.toString()
+                // Allow use of @OptIn
+                kotlinOptions.freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
+            }
+            tasks.withType<Test> {
+                useJUnitPlatform()
+            }
+
+            dependencies {
+                coreLibraryDesugaring(libs.findLibrary("desugaring").get())
+                implementation(libs.findLibrary("timber").get())
+            }
         }
     }
 
