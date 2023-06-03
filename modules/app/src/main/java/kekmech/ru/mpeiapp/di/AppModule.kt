@@ -10,17 +10,18 @@ import com.redmadrobot.mapmemory.MapMemory
 import kekmech.ru.common_analytics.FirebaseAnalyticsProvider
 import kekmech.ru.common_analytics.di.CommonAnalyticsModule
 import kekmech.ru.common_app_database.di.CommonAppDatabaseModule
-import kekmech.ru.common_cache.di.CommonCacheModule
-import kekmech.ru.common_di.AppCacheDir
+import kekmech.ru.common_coroutines_impl.di.CommonCoroutinesModule
 import kekmech.ru.common_di.AppVersionName
 import kekmech.ru.common_feature_toggles.RemoteConfigWrapper
 import kekmech.ru.common_feature_toggles.di.CommonFeatureTogglesModule
 import kekmech.ru.common_navigation.di.CommonNavigationModule
 import kekmech.ru.common_network.di.CommonNetworkModule
+import kekmech.ru.common_persistent_cache_impl.di.CommonPersistentCacheModule
 import kekmech.ru.domain_bars.di.DomainBarsModule
 import kekmech.ru.domain_dashboard.di.DomainDashboardModule
 import kekmech.ru.domain_favorite_schedule.di.DomainFavoriteScheduleModule
 import kekmech.ru.domain_github.di.DomainGitHubModule
+import kekmech.ru.domain_map.di.DomainMapModule
 import kekmech.ru.domain_notes.di.DomainNotesModule
 import kekmech.ru.domain_schedule.di.DomainScheduleModule
 import kekmech.ru.feature_app_settings.di.FeatureAppSettingsModule
@@ -42,7 +43,6 @@ import org.koin.android.ext.koin.androidApplication
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
-import java.io.File
 import java.util.Locale
 
 val AppModule = module {
@@ -50,9 +50,6 @@ val AppModule = module {
     factoryOf(::FirebaseAnalyticsProviderImpl) bind FirebaseAnalyticsProvider::class
     factoryOf(::RemoteConfigWrapperImpl) bind RemoteConfigWrapper::class
     factory { AppVersionName(BuildConfig.VERSION_NAME) }
-    factory {
-        AppCacheDir(File(androidApplication().cacheDir, "persistent"))
-    } bind AppCacheDir::class
 
     // TODO: figure out how to inject Dispatchers correctly
     @Suppress("RemoveExplicitTypeArguments", "InjectDispatcher")
@@ -78,10 +75,11 @@ val AppModule = module {
         // common
         CommonAnalyticsModule,
         CommonAppDatabaseModule,
-        CommonCacheModule,
+        CommonCoroutinesModule,
         CommonFeatureTogglesModule,
         CommonNavigationModule,
         CommonNetworkModule,
+        CommonPersistentCacheModule,
         // domain
         DomainBarsModule,
         DomainDashboardModule,
@@ -89,6 +87,7 @@ val AppModule = module {
         DomainGitHubModule,
         DomainNotesModule,
         DomainScheduleModule,
+        DomainMapModule,
         // feature
         FeatureAppSettingsModule,
         FeatureBarsModule,

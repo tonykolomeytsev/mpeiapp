@@ -65,7 +65,7 @@ class MainFragment :
         controller.init(this, viewBinding.bottomNavigation)
         bottomBarController = controller
 
-        val preheatAppSettings = dependencies.appSettingsRepository.getAppSettings().blockingGet()
+        val preheatAppSettings = dependencies.appSettingsRepository.getAppSettings()
         if (dependencies.featureToggles.isSnowFlakesEnabled && preheatAppSettings.isSnowEnabled) {
             enableSnowFlakesEffect(view)
         }

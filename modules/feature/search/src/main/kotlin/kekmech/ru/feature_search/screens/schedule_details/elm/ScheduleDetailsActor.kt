@@ -2,10 +2,9 @@ package kekmech.ru.feature_search.screens.schedule_details.elm
 
 import kekmech.ru.common_elm.actorFlow
 import kekmech.ru.domain_favorite_schedule.FavoriteScheduleRepository
-import kekmech.ru.domain_schedule.repository.ScheduleRepository
+import kekmech.ru.domain_schedule.data.ScheduleRepository
 import kekmech.ru.feature_search.screens.schedule_details.elm.ScheduleDetailsEvent.Internal
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.rx3.await
 import vivid.money.elmslie.coroutines.Actor
 import kekmech.ru.feature_search.screens.schedule_details.elm.ScheduleDetailsCommand as Command
 import kekmech.ru.feature_search.screens.schedule_details.elm.ScheduleDetailsEvent as Event
@@ -19,7 +18,12 @@ internal class ScheduleDetailsActor(
         when (command) {
             is Command.LoadSchedule -> actorFlow {
                 scheduleRepository
-                    .getSchedule(command.type, command.name, command.weekOffset).await()
+                    .getSchedule(
+                        type = command.type,
+                        name = command.name,
+                        weekOffset = command.weekOffset,
+                    )
+                    .getOrThrow()
             }.mapEvents({ Internal.LoadScheduleSuccess(it, command.weekOffset) })
 
             is Command.GetFavorites -> actorFlow {
@@ -35,8 +39,7 @@ internal class ScheduleDetailsActor(
             }.mapEvents({ Internal.RemoveFromFavoritesSuccess })
 
             is Command.SwitchSchedule -> actorFlow {
-                scheduleRepository
-                    .setSelectedSchedule(command.selectedSchedule).await()
+                scheduleRepository.setSelectedSchedule(command.selectedSchedule)
             }.mapEvents()
         }
 }

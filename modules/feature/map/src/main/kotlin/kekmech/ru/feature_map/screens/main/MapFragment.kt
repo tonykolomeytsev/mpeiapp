@@ -131,7 +131,6 @@ internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState>(R.layou
                 context = requireContext(),
                 mapAppearanceType = appSettingsRepository
                     .getAppSettings()
-                    .blockingGet()
                     .mapAppearanceType,
                 savedCameraPosition = getSavedCameraPosition(),
             )

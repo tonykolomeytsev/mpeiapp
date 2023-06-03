@@ -21,6 +21,8 @@ plugins {
     id("mpeix.ksp") apply false
 }
 
+// TODO: https://github.com/tonykolomeytsev/mpeiapp/issues/179
+// subprojects block prevents configure-on-demand gradle feature from working
 subprojects {
     apply {
         plugin("io.gitlab.arturbosch.detekt")

@@ -1,11 +1,10 @@
 package kekmech.ru.feature_schedule.screens.find_schedule.elm
 
 import kekmech.ru.common_elm.actorFlow
-import kekmech.ru.domain_schedule.repository.ScheduleRepository
-import kekmech.ru.domain_schedule.repository.ScheduleSearchRepository
+import kekmech.ru.domain_schedule.data.ScheduleRepository
+import kekmech.ru.domain_schedule.data.ScheduleSearchRepository
 import kekmech.ru.feature_schedule.screens.find_schedule.elm.FindScheduleEvent.Internal
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.rx3.await
 import vivid.money.elmslie.coroutines.Actor
 import kekmech.ru.feature_schedule.screens.find_schedule.elm.FindScheduleCommand as Command
 
@@ -20,9 +19,10 @@ internal class FindScheduleActor(
         when (command) {
             is Command.FindSchedule -> actorFlow {
                 val searchResult = scheduleSearchRepository
-                    .getSearchResults(query = command.name).await()
-                searchResult.items.first { searchResult ->
-                    searchResult.name.equals(
+                    .getSearchResults(query = command.name)
+                    .getOrThrow()
+                searchResult.items.first {
+                    it.name.equals(
                         other = command.name,
                         ignoreCase = true,
                     )
@@ -38,13 +38,11 @@ internal class FindScheduleActor(
             )
 
             is Command.SelectSchedule -> actorFlow {
-                scheduleRepository
-                    .setSelectedSchedule(command.selectedSchedule).await()
+                scheduleRepository.setSelectedSchedule(command.selectedSchedule)
             }.mapEvents()
 
             is Command.SearchForAutocomplete -> actorFlow {
-                scheduleSearchRepository
-                    .getSearchResults(command.query).await()
+                scheduleSearchRepository.getSearchResults(command.query).getOrThrow()
             }.mapEvents({
                 Internal.SearchForAutocompleteSuccess(
                     results = it.items.take(

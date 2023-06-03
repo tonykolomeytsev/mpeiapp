@@ -1,6 +1,7 @@
 package kekmech.ru.domain_github.dto
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class GitHubUser(
     val id: Long,
@@ -9,4 +10,4 @@ data class GitHubUser(
     @SerializedName("html_url") val gitHubPageUrl: String,
     val name: String?,
     val bio: String?,
-)
+) : Serializable

@@ -3,10 +3,12 @@ package kekmech.ru.domain_schedule.di
 import kekmech.ru.common_network.retrofit.buildApi
 import kekmech.ru.domain_analytics.SelectedScheduleAnalyticsProvider
 import kekmech.ru.domain_schedule.PreheatSelectedScheduleProvider
+import kekmech.ru.domain_schedule.data.ScheduleCacheWrapper
 import kekmech.ru.domain_schedule.network.ScheduleService
-import kekmech.ru.domain_schedule.repository.ScheduleRepository
-import kekmech.ru.domain_schedule.repository.ScheduleRepositoryImpl
-import kekmech.ru.domain_schedule.repository.ScheduleSearchRepository
+import kekmech.ru.domain_schedule.data.ScheduleRepository
+import kekmech.ru.domain_schedule.data.ScheduleRepositoryImpl
+import kekmech.ru.domain_schedule.data.ScheduleSearchRepository
+import kekmech.ru.domain_schedule.data.SelectedScheduleSource
 import kekmech.ru.domain_schedule.use_cases.GetCurrentScheduleUseCase
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
@@ -23,4 +25,6 @@ val DomainScheduleModule = module {
     )
     factoryOf(::ScheduleSearchRepository)
     factoryOf(::GetCurrentScheduleUseCase)
+    factoryOf(::SelectedScheduleSource)
+    factoryOf(::ScheduleCacheWrapper)
 }

@@ -1,33 +1,18 @@
 package kekmech.ru.domain_map
 
-import io.reactivex.rxjava3.core.Single
-import kekmech.ru.common_cache.persistent_cache.PersistentCache
+import kekmech.ru.common_persistent_cache_api.PersistentCache
+import kekmech.ru.common_persistent_cache_api.ofList
 import kekmech.ru.domain_map.dto.MapMarker
-import kekmech.ru.domain_map.dto.MapMarkersCacheWrapper
 
-class MapRepository(
+class MapRepository internal constructor(
     private val mapService: MapService,
     persistentCache: PersistentCache,
 ) {
 
-    private val mapMarkersCache =
-        persistentCache.of(
-            key = MAP_CACHE_KEY,
-            valueClass = MapMarkersCacheWrapper::class.java,
-        )
+    private val mapMarkersCache by persistentCache.ofList<MapMarker>()
 
-    fun getMarkers(): Single<List<MapMarker>> =
-        mapService
-            .getMapMarkers()
-            .doOnSuccess { mapMarkersCache.set(MapMarkersCacheWrapper(it)) }
-            .onErrorResumeWith(
-                mapMarkersCache
-                    .getOrError()
-                    .map { it.mapMarkers }
-            )
-
-    private companion object {
-
-        const val MAP_CACHE_KEY = "MAP_CACHE_KEY"
-    }
+    suspend fun getMarkers(): Result<List<MapMarker>> =
+        runCatching { mapService.getMapMarkers() }
+            .onSuccess { mapMarkersCache.put(ArrayList(it)) }
+            .recoverCatching { mapMarkersCache.get().getOrThrow() }
 }

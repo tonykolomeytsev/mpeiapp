@@ -1,6 +1,5 @@
 package kekmech.ru.domain_schedule.network
 
-import io.reactivex.rxjava3.core.Single
 import kekmech.ru.common_annotations.BackendServiceUrl
 import kekmech.ru.common_annotations.EndpointUrl
 import kekmech.ru.domain_schedule.dto.GetSearchResultsResponse
@@ -14,15 +13,15 @@ import retrofit2.http.Query
 interface ScheduleService {
 
     @GET("v1/{type}/{name}/schedule/{weekOffset}")
-    fun getSchedule(
+    suspend fun getSchedule(
         @Path("type") type: String,
         @Path("name", encoded = true) name: String,
         @Path("weekOffset") weekOffset: Int
-    ): Single<Schedule>
+    ): Schedule
 
     @GET("v1/search")
-    fun getSearchResults(
+    suspend fun getSearchResults(
         @Query("q", encoded = true) query: String,
         @Query("type") type: ScheduleType?
-    ): Single<GetSearchResultsResponse>
+    ): GetSearchResultsResponse
 }
