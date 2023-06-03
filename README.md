@@ -49,13 +49,13 @@
 + TEA/ELM для presenter слоя на базе Vivid Money [**Elmslie**](https://github.com/vivid-money/elmslie)
 + Самописная навигация
 + **Retrofit** для REST Api
-+ **RxJava 3** (скоро планируется переезд на Flow)
++ **Kotlin Coroutines + Flow** + немножко **RxJava 3** (скоро будет полностью выпилена)
 + **Room** + **KSP** для хранения в БД заметок и избранных расписаний
 + **Firebase**: Crashlytics, Analytics, Remote Config
 + **Picasso** для загрузки картинок
 + **DI Koin**
 + Для тестирования используется **JUnit 5** + [**Kotest**](https://github.com/kotest/kotest)
-+ Композитный билд и кастомные Gradle плагины: конвенции для модулей и много других интересных штук
++ Композитный билд и кастомные Gradle плагины: много всяких интересных штук смотри в `./build-logic`
 
 ### Архитектура
 
