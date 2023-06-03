@@ -7,8 +7,6 @@ dependencies {
     compileOnly(androidJar)
     compileOnlyAar(libs.androidx.room.common)
     compileOnlyAar(libs.androidx.sqlite)
-
-    implementation(libs.kotlinx.coroutines.rx3)
     implementation(libs.koin.core)
 
     ksp(libs.androidx.room.compiler)

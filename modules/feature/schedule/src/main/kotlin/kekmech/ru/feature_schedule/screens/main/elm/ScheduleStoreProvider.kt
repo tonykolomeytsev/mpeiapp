@@ -19,7 +19,7 @@ internal class ScheduleStoreProvider(
     private val store by fastLazy {
         ElmStoreCompat(
             initialState = State(
-                appSettings = appSettingsRepository.getAppSettings().blockingGet()
+                appSettings = appSettingsRepository.getAppSettings()
             ),
             reducer = ScheduleReducer(),
             actor = actor,

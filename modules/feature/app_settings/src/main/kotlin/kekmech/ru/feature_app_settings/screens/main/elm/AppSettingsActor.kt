@@ -5,7 +5,6 @@ import kekmech.ru.domain_app_settings.AppSettingsRepository
 import kekmech.ru.domain_github.ContributorsRepository
 import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsEvent.Internal
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.rx3.await
 import vivid.money.elmslie.coroutines.Actor
 
 internal class AppSettingsActor(
@@ -16,37 +15,37 @@ internal class AppSettingsActor(
     override fun execute(command: AppSettingsCommand): Flow<AppSettingsEvent> =
         when (command) {
             is AppSettingsCommand.LoadAppSettings -> actorFlow {
-                appSettingsRepository.getAppSettings().await()
+                appSettingsRepository.getAppSettings()
             }.mapEvents(Internal::LoadAppSettingsSuccess)
 
             is AppSettingsCommand.SetDarkThemeEnabled -> actorFlow {
                 appSettingsRepository
-                    .changeAppSettings { copy(isDarkThemeEnabled = command.isEnabled) }.await()
+                    .changeAppSettings { copy(isDarkThemeEnabled = command.isEnabled) }
             }.mapEvents(Internal::LoadAppSettingsSuccess)
 
             is AppSettingsCommand.SetSnowEnabled -> actorFlow {
                 appSettingsRepository
-                    .changeAppSettings { copy(isSnowEnabled = command.isEnabled) }.await()
+                    .changeAppSettings { copy(isSnowEnabled = command.isEnabled) }
             }.mapEvents(Internal::LoadAppSettingsSuccess)
 
             is AppSettingsCommand.SetAutoHideBottomSheet -> actorFlow {
                 appSettingsRepository
-                    .changeAppSettings { copy(autoHideBottomSheet = command.isEnabled) }.await()
+                    .changeAppSettings { copy(autoHideBottomSheet = command.isEnabled) }
             }.mapEvents(Internal::LoadAppSettingsSuccess)
 
             is AppSettingsCommand.ChangeLanguage -> actorFlow {
                 appSettingsRepository
-                    .changeAppSettings { copy(languageCode = command.selectedLanguage) }.await()
+                    .changeAppSettings { copy(languageCode = command.selectedLanguage) }
             }.mapEvents(Internal::LoadAppSettingsSuccess)
 
             is AppSettingsCommand.ChangeMapType -> actorFlow {
                 appSettingsRepository
-                    .changeAppSettings { copy(mapAppearanceType = command.selectedMapType) }.await()
+                    .changeAppSettings { copy(mapAppearanceType = command.selectedMapType) }
             }.mapEvents(Internal::LoadAppSettingsSuccess)
 
             is AppSettingsCommand.SetShowQuickNavigationFab -> actorFlow {
                 appSettingsRepository
-                    .changeAppSettings { copy(showNavigationButton = command.isVisible) }.await()
+                    .changeAppSettings { copy(showNavigationButton = command.isVisible) }
             }.mapEvents(Internal::LoadAppSettingsSuccess)
 
             is AppSettingsCommand.FetchContributors ->
@@ -61,7 +60,7 @@ internal class AppSettingsActor(
 
             is AppSettingsCommand.ChangeBackendEnvironment -> actorFlow {
                 appSettingsRepository
-                    .changeAppSettings { copy(appEnvironment = command.appEnvironment) }.await()
+                    .changeAppSettings { copy(appEnvironment = command.appEnvironment) }
             }.mapEvents(Internal::LoadAppSettingsSuccess)
         }
 }

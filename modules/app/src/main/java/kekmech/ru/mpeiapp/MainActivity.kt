@@ -83,7 +83,7 @@ class MainActivity : AppCompatActivity(), DisposableDelegate by DisposableDelega
     }
 
     private fun setTheme() {
-        val preheatAppSettings = appSettingsRepository.getAppSettings().blockingGet()
+        val preheatAppSettings = appSettingsRepository.getAppSettings()
         if (preheatAppSettings.isDarkThemeEnabled) {
             setTheme(coreui_R.style.AppTheme_Dark)
         } else {

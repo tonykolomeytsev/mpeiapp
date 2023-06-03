@@ -19,7 +19,6 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.text.DateFormat
 import java.time.LocalDate
@@ -69,7 +68,6 @@ private fun provideRetrofitBuilder(
 ) = Retrofit.Builder()
     .client(okHttpClient)
     .addConverterFactory(GsonConverterFactory.create(gson))
-    .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
 
 private fun provideDeviceId(deviceIdProvider: DeviceIdProvider) = deviceIdProvider.getDeviceId()
 

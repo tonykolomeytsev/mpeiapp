@@ -10,7 +10,6 @@ dependencies {
     implementation(libs.squareup.okhttp.logger)
     implementation(libs.squareup.retrofit)
     implementation(libs.squareup.retrofit.gson)
-    implementation(libs.squareup.retrofit.rxJava3)
 
     implementation(project(":common_annotations"))
     implementation(project(":common_di"))

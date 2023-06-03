@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import io.reactivex.rxjava3.exceptions.CompositeException
 import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseItemBinder
-import kekmech.ru.common_cache.core.CacheIsEmptyException
 import kekmech.ru.common_network.okhttp.NoInternetConnectionException
 import kekmech.ru.coreui.R
 import kekmech.ru.coreui.databinding.ItemErrorStateBinding
@@ -71,7 +70,6 @@ private class ErrorStateItemBinder(
         when (throwable) {
             is NoInternetConnectionException,
             is UnknownHostException,
-            is CacheIsEmptyException,
             ->
                 Triple(
                     first = Strings.common_error_no_internet_title,

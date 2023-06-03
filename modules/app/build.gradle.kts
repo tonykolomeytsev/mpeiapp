@@ -72,7 +72,6 @@ dependencies {
     implementation(libs.squareup.okhttp.logger)
     implementation(libs.squareup.retrofit)
     implementation(libs.squareup.retrofit.gson)
-    implementation(libs.squareup.retrofit.rxJava3)
     implementation(libs.vivid.elmslie.android)
     implementation(libs.vivid.elmslie.core)
 
@@ -103,7 +102,6 @@ dependencies {
     implementation(project(":common_analytics"))
     implementation(project(":common_android"))
     implementation(project(":common_app_database"))
-    implementation(project(":common_cache"))
     implementation(project(":common_coroutines_api"))
     implementation(project(":common_coroutines_impl"))
     implementation(project(":common_di"))

@@ -8,7 +8,6 @@ import kekmech.ru.domain_schedule.data.ScheduleRepository
 import kekmech.ru.domain_schedule.use_cases.GetCurrentScheduleUseCase
 import kekmech.ru.feature_dashboard.screens.main.elm.DashboardEvent.Internal
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.rx3.await
 import vivid.money.elmslie.coroutines.Actor
 import kekmech.ru.feature_dashboard.screens.main.elm.DashboardCommand as Command
 import kekmech.ru.feature_dashboard.screens.main.elm.DashboardEvent as Event
