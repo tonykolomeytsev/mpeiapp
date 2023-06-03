@@ -13,9 +13,9 @@ inline fun <reified T : Serializable> PersistentCache.of(
         PersistentCacheHandleImpl(
             persistentCache = this@of,
             key = PersistentCacheKey.from(
+                prefix = key,
                 property = property,
                 valueClass = T::class.java,
-                salt = key,
             ),
             fromSerializable = { it },
             toSerializable = { it },
@@ -29,9 +29,9 @@ inline fun <reified T : Serializable> PersistentCache.ofList(
         PersistentCacheHandleImpl(
             persistentCache = this@ofList,
             key = PersistentCacheKey.from(
+                prefix = key,
                 property = property,
                 valueClass = typeOf<List<T>>().javaClass,
-                salt = key,
             ),
             fromSerializable = { it },
             toSerializable = {

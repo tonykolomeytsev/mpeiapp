@@ -18,7 +18,7 @@ internal class ScheduleActor(
         when (command) {
             is Command.LoadSchedule -> actorFlow {
                 val currentSchedule =
-                    getCurrentScheduleUseCase.getSchedule(weekOffset = command.weekOffset).await()
+                    getCurrentScheduleUseCase.getSchedule(weekOffset = command.weekOffset)
                 attachNotesToScheduleService.attach(currentSchedule)
             }.mapEvents(
                 eventMapper = { schedule ->

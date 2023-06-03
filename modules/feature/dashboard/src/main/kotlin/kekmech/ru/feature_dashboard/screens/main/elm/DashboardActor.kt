@@ -4,7 +4,7 @@ import kekmech.ru.common_elm.actorFlow
 import kekmech.ru.domain_dashboard.interactors.GetUpcomingEventsInteractor
 import kekmech.ru.domain_favorite_schedule.FavoriteScheduleRepository
 import kekmech.ru.domain_notes.interactors.GetActualNotesInteractor
-import kekmech.ru.domain_schedule.repository.ScheduleRepository
+import kekmech.ru.domain_schedule.data.ScheduleRepository
 import kekmech.ru.domain_schedule.use_cases.GetCurrentScheduleUseCase
 import kekmech.ru.feature_dashboard.screens.main.elm.DashboardEvent.Internal
 import kotlinx.coroutines.flow.Flow
@@ -24,14 +24,15 @@ internal class DashboardActor(
     override fun execute(command: Command): Flow<Event> =
         when (command) {
             is Command.GetSelectedSchedule -> actorFlow {
-                scheduleRepository.getSelectedSchedule().await()
+                scheduleRepository.getSelectedSchedule()
             }.mapEvents(Internal::GetSelectedScheduleSuccess)
 
             is Command.GetWeekOfSemester -> actorFlow {
                 getCurrentScheduleUseCase
                     .getSchedule(weekOffset = 0)
-                    .map { it.weeks.first().weekOfSemester }
-                    .await()
+                    .weeks
+                    .first()
+                    .weekOfSemester
             }.mapEvents(
                 eventMapper = Internal::GetWeekOfSemesterSuccess,
                 errorMapper = Internal::GetWeekOfSemesterFailure,
@@ -59,8 +60,7 @@ internal class DashboardActor(
             )
 
             is Command.SelectSchedule -> actorFlow {
-                scheduleRepository
-                    .setSelectedSchedule(command.selectedSchedule).await()
+                scheduleRepository.setSelectedSchedule(command.selectedSchedule)
             }.mapEvents({ Internal.SelectScheduleSuccess })
         }
 }
