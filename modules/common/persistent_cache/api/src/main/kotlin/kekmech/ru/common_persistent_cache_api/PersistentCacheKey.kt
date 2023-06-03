@@ -10,12 +10,12 @@ data class PersistentCacheKey(
     companion object {
 
         fun from(
+            prefix: String?,
             property: KProperty<*>,
             valueClass: Class<*>,
-            salt: String?,
         ): PersistentCacheKey =
             PersistentCacheKey(
-                name = "${property.name}_${salt.orEmpty()}_${valueClass.canonicalName}"
+                name = "${prefix.orEmpty()}_${property.name}_${valueClass.canonicalName}"
                     .map { if (it.isLetterOrDigit()) it else '_' }
                     .toCharArray()
                     .let(::String),
