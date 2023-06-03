@@ -1,12 +1,18 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
-    kotlin("jvm")
+    alias(libs.plugins.kotlin.jvm)
     id("java-gradle-plugin")
 }
 
+tasks.withType<KotlinCompile> {
+    kotlinOptions.jvmTarget = JavaVersion.VERSION_17.toString()
+}
+
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin")
-    implementation("com.google.devtools.ksp:symbol-processing-gradle-plugin:1.8.21-1.0.11")
-    implementation("com.android.tools.build:gradle:8.0.0")
+    implementation(libs.kotlin.gradle.plugin)
+    implementation(libs.ksp.gradle.plugin)
+    implementation(libs.android.gradle.plugin)
     implementation(gradleApi())
     implementation(gradleKotlinDsl())
 }
