@@ -4,6 +4,11 @@ import kekmech.ru.common_coroutines_api.CoroutineDispatchers
 import kekmech.ru.common_persistent_cache_api.PersistentCache
 import kekmech.ru.common_persistent_cache_api.PersistentCacheKey
 import kekmech.ru.common_persistent_cache_impl.data.PersistentCacheSource
+import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
@@ -16,9 +21,16 @@ internal class PersistentCacheImpl(
     private val source: PersistentCacheSource,
 ) : PersistentCache {
 
+    private val globalSharedFlow = MutableSharedFlow<PersistentCache.Entry<*>>(
+        replay = 1,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST,
+    )
     private val globalMutex = Mutex()
 
-    override suspend fun <T : Serializable> save(key: PersistentCacheKey, value: T): Result<Unit> =
+    override suspend fun <T : Serializable> save(
+        key: PersistentCacheKey,
+        value: T,
+    ): Result<Unit> =
         withContext(dispatchers.io()) {
             runCatching {
                 globalMutex.withLock {
@@ -51,4 +63,12 @@ internal class PersistentCacheImpl(
                 }
             }
         }
+
+    @Suppress("UNCHECKED_CAST")
+    override fun <T : Serializable> observe(
+        key: PersistentCacheKey,
+    ): Flow<PersistentCache.Entry<T>> =
+        globalSharedFlow
+            .filter { it.key == key }
+            .map { it as PersistentCache.Entry<T> }
 }

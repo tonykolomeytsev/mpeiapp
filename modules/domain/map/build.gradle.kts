@@ -5,10 +5,10 @@ plugins {
 dependencies {
     compileOnlyAar(libs.androidx.fragment)
 
-    implementation(libs.google.gson)
+    implementation(libs.koin.core)
     implementation(libs.squareup.retrofit)
-    implementation(libs.squareup.retrofit.rxJava3)
 
     implementation(project(":common_annotations"))
-    implementation(project(":common_cache"))
+    implementation(project(":common_network"))
+    implementation(project(":common_persistent_cache_api"))
 }

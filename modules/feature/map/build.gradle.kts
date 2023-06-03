@@ -2,6 +2,7 @@ plugins {
     id("mpeix.android")
 }
 
+@Suppress("UnstableApiUsage")
 android.buildFeatures.viewBinding = true
 
 dependencies {
@@ -18,7 +19,6 @@ dependencies {
     implementation(libs.koin.core)
     implementation(libs.rx.android)
     implementation(libs.rx.java)
-    implementation(libs.squareup.retrofit)
     implementation(libs.vivid.elmslie.android)
     implementation(libs.vivid.elmslie.core)
     implementation(libs.vivid.elmslie.coroutines)
@@ -36,7 +36,6 @@ dependencies {
     implementation(project(":common_kotlin"))
     implementation(project(":common_elm"))
     implementation(project(":common_navigation"))
-    implementation(project(":common_network"))
 
     implementation(project(":coreui"))
     implementation(project(":strings"))

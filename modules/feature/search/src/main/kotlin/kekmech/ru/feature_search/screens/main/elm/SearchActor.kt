@@ -27,7 +27,7 @@ internal class SearchActor(
             }.mapEvents(Event.Internal::SearchNotesSuccess)
 
             is Command.SearchMap -> actorFlow {
-                val mapMarkers = mapRepository.getMarkers().await()
+                val mapMarkers = mapRepository.getMarkers().getOrThrow()
                 FullTextMapMarkersSearchHelper(
                     mapMarkers = mapMarkers,
                     query = command.query

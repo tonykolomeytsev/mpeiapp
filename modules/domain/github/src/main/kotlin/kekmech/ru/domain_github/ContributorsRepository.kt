@@ -1,43 +1,26 @@
 package kekmech.ru.domain_github
 
-import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.core.Observable
-import kekmech.ru.common_cache.persistent_cache.PersistentCache
+import kekmech.ru.common_persistent_cache_api.PersistentCache
+import kekmech.ru.common_persistent_cache_api.ofList
 import kekmech.ru.domain_github.dto.GitHubContributor
 import kekmech.ru.domain_github.dto.GitHubUser
-import java.time.Duration
+import kotlinx.coroutines.flow.Flow
 
 class ContributorsRepository(
-    persistentCache: PersistentCache,
     private val gitHubService: GitHubService,
+    persistentCache: PersistentCache,
 ) {
 
-    private val contributorsCache = persistentCache
-        .of(
-            key = ContributorsCacheKey,
-            valueClass = ContributorsCacheWrapper::class.java,
-            lifetime = Duration.ofDays(1),
-        )
+    private val contributorsCache by persistentCache.ofList<GitHubUser>()
 
-    fun observeContributors(): Observable<List<GitHubUser>> =
+    fun observeContributors(): Flow<List<GitHubUser>> =
         contributorsCache.observe()
-            .map { it.items }
 
-    fun fetchContributors(): Completable =
-        gitHubService.getContributors()
-            .flattenAsObservable { it.sortedByDescending(GitHubContributor::total) }
-            .concatMapSingle { gitHubService.getUser(it.author.login) }
-            .map { it.copy(bio = it.bio?.trim()) }
-            .toList()
-            .doOnSuccess { contributorsCache.set(ContributorsCacheWrapper(it)) }
-            .ignoreElement()
-
-    private data class ContributorsCacheWrapper(
-        val items: List<GitHubUser>,
-    )
-
-    private companion object {
-
-        const val ContributorsCacheKey = "ContributorsCacheKey"
-    }
+    suspend fun fetchContributors(): Result<Unit> =
+        runCatching {
+            gitHubService.getContributors()
+                .sortedByDescending(GitHubContributor::total)
+                .map { gitHubService.getUser(it.author.login) }
+                .map { it.copy(bio = it.bio?.trim()) }
+        }.mapCatching { contributorsCache.put(it) }
 }

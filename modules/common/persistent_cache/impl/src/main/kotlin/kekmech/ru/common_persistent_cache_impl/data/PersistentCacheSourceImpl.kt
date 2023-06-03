@@ -11,16 +11,16 @@ internal class PersistentCacheSourceImpl(
 ) : PersistentCacheSource {
 
     override fun inputStream(key: PersistentCacheKey): InputStream =
-        File(cacheDir.dir, key)
+        File(cacheDir.dir, key.name)
             .inputStream()
             .buffered()
 
     override fun outputStream(key: PersistentCacheKey): OutputStream =
-        File(cacheDir.dir, key)
+        File(cacheDir.dir, key.name)
             .outputStream()
             .buffered()
 
     override fun delete(key: PersistentCacheKey) {
-        File(cacheDir.dir, key).delete()
+        File(cacheDir.dir, key.name).delete()
     }
 }
