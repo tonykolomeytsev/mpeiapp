@@ -3,7 +3,7 @@ package kekmech.ru.common_persistent_cache_api
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 
-@Suppress("LocalVariableName")
+@Suppress("LocalVariableName", "VariableNaming")
 class PersistentCacheHandleProperty<T>(
     initializer: (Any, KProperty<*>) -> T,
 ) : ReadOnlyProperty<Any, T> {
