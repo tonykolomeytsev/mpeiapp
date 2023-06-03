@@ -21,7 +21,7 @@ data class Week(
 ) : Serializable
 
 @JsonAdapter(value = WeekOfSemesterJsonAdapter::class, nullSafe = true)
-sealed interface WeekOfSemester {
+sealed interface WeekOfSemester : Serializable {
 
     object NonStudying : WeekOfSemester
     data class Studying(val num: Int) : WeekOfSemester
