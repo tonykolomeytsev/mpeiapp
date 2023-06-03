@@ -5,7 +5,6 @@ import kekmech.ru.domain_app_settings.AppSettingsRepository
 import kekmech.ru.domain_github.ContributorsRepository
 import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsEvent.Internal
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.rx3.asFlow
 import kotlinx.coroutines.rx3.await
 import vivid.money.elmslie.coroutines.Actor
 
@@ -51,10 +50,10 @@ internal class AppSettingsActor(
             }.mapEvents(Internal::LoadAppSettingsSuccess)
 
             is AppSettingsCommand.FetchContributors ->
-                actorFlow { contributorsRepository.fetchContributors().await() }.mapEvents()
+                actorFlow { contributorsRepository.fetchContributors() }.mapEvents()
 
             is AppSettingsCommand.ObserveContributors ->
-                contributorsRepository.observeContributors().asFlow()
+                contributorsRepository.observeContributors()
                     .mapEvents(Internal::ObserveContributorsSuccess)
 
             is AppSettingsCommand.ClearSelectedGroup ->

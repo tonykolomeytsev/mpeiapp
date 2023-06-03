@@ -1,6 +1,5 @@
 package kekmech.ru.domain_github
 
-import io.reactivex.rxjava3.core.Single
 import kekmech.ru.common_annotations.BackendServiceUrl
 import kekmech.ru.common_annotations.EndpointUrl
 import kekmech.ru.domain_github.dto.GitHubContributor
@@ -12,11 +11,11 @@ import retrofit2.http.Path
 interface GitHubService {
 
     @GET("repos/{user}/{repo}/stats/contributors")
-    fun getContributors(
+    suspend fun getContributors(
         @Path("user") user: String = "tonykolomeytsev",
         @Path("repo") repository: String = "mpeiapp",
-    ): Single<List<GitHubContributor>>
+    ): List<GitHubContributor>
 
     @GET("users/{user}")
-    fun getUser(@Path("user") login: String): Single<GitHubUser>
+    suspend fun getUser(@Path("user") login: String): GitHubUser
 }
