@@ -32,7 +32,11 @@ internal class ScheduleRepositoryImpl(
             )
         }
             .onSuccess { scheduleCacheWrapper.save(it) }
-            .recoverCatching { scheduleCacheWrapper.restore(name, weekOffset).getOrThrow() }
+            .recoverCatching { sourceThrowable ->
+                scheduleCacheWrapper.restore(name, weekOffset)
+                    .getOrNull()
+                    ?: throw sourceThrowable
+            }
 
     override fun setSelectedSchedule(selectedSchedule: SelectedSchedule) {
         this._selectedSchedule = selectedSchedule
