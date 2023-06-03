@@ -5,7 +5,6 @@ import kekmech.ru.domain_favorite_schedule.FavoriteScheduleRepository
 import kekmech.ru.domain_schedule.data.ScheduleRepository
 import kekmech.ru.feature_search.screens.schedule_details.elm.ScheduleDetailsEvent.Internal
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.rx3.await
 import vivid.money.elmslie.coroutines.Actor
 import kekmech.ru.feature_search.screens.schedule_details.elm.ScheduleDetailsCommand as Command
 import kekmech.ru.feature_search.screens.schedule_details.elm.ScheduleDetailsEvent as Event

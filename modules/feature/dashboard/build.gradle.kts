@@ -19,7 +19,6 @@ dependencies {
     implementation(libs.koin.android)
     implementation(libs.koin.core)
     implementation(libs.kotlinx.coroutines.core)
-    implementation(libs.kotlinx.coroutines.rx3)
     implementation(libs.rx.android)
     implementation(libs.rx.java)
     implementation(libs.vivid.elmslie.android)

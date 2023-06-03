@@ -21,7 +21,6 @@ dependencies {
 
     implementation(project(":common_adapter"))
     implementation(project(":common_android"))
-    implementation(project(":common_cache"))
     implementation(project(":common_elm"))
     implementation(project(":common_kotlin"))
     implementation(project(":common_network"))

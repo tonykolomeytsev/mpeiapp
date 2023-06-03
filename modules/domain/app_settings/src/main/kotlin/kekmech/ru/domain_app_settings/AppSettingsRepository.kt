@@ -1,7 +1,6 @@
 package kekmech.ru.domain_app_settings
 
 import android.content.SharedPreferences
-import io.reactivex.rxjava3.core.Single
 import kekmech.ru.common_shared_preferences.boolean
 import kekmech.ru.common_shared_preferences.string
 import kekmech.ru.domain_app_settings_models.AppEnvironment
@@ -19,7 +18,7 @@ class AppSettingsRepository(
     private var languageCode: String by preferences.string("app_lang", "ru_RU")
     private var mapAppearanceType: String by preferences.string("app_map_type", "hybrid")
 
-    fun getAppSettings(): Single<AppSettings> = Single.fromCallable {
+    fun getAppSettings(): AppSettings =
         AppSettings(
             isDarkThemeEnabled = isDarkThemeEnabled,
             isSnowEnabled = isSnowEnabled,
@@ -30,12 +29,11 @@ class AppSettingsRepository(
             appEnvironment = runCatching { AppEnvironment.valueOf(appEnvironment) }
                 .getOrDefault(AppEnvironment.PROD),
         )
-    }
 
-    fun changeAppSettings(transform: AppSettings.() -> AppSettings): Single<AppSettings> =
+    fun changeAppSettings(transform: AppSettings.() -> AppSettings): AppSettings =
         getAppSettings()
-            .map(transform)
-            .doOnSuccess {
+            .let(transform)
+            .also {
                 isDarkThemeEnabled = it.isDarkThemeEnabled
                 isSnowEnabled = it.isSnowEnabled
                 showNavigationButton = it.showNavigationButton

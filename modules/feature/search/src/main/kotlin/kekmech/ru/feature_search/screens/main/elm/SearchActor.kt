@@ -8,7 +8,6 @@ import kekmech.ru.domain_schedule_models.dto.ScheduleType
 import kekmech.ru.feature_search.screens.main.utils.FullTextMapMarkersSearchHelper
 import kekmech.ru.feature_search.screens.main.utils.FullTextNotesSearchHelper
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.rx3.await
 import vivid.money.elmslie.coroutines.Actor
 import kekmech.ru.feature_search.screens.main.elm.SearchCommand as Command
 import kekmech.ru.feature_search.screens.main.elm.SearchEvent as Event

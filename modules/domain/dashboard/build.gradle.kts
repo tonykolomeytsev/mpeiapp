@@ -7,7 +7,6 @@ dependencies {
 
     implementation(libs.koin.core)
     implementation(libs.kotlinx.coroutines.core)
-    implementation(libs.kotlinx.coroutines.rx3)
 
     implementation(project(":common_kotlin"))
 
