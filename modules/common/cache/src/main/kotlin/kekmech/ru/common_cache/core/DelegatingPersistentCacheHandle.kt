@@ -6,6 +6,7 @@ import io.reactivex.rxjava3.core.Single
 import kekmech.ru.common_cache.persistent_cache.PersistentCache
 import java.time.Duration
 
+@Deprecated("Use common_persistent_cache instead")
 class DelegatingPersistentCacheHandle<T : Any>(
     private val key: String,
     private val valueClass: Class<T>,

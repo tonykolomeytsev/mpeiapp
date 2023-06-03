@@ -11,12 +11,14 @@ import kekmech.ru.common_analytics.FirebaseAnalyticsProvider
 import kekmech.ru.common_analytics.di.CommonAnalyticsModule
 import kekmech.ru.common_app_database.di.CommonAppDatabaseModule
 import kekmech.ru.common_cache.di.CommonCacheModule
+import kekmech.ru.common_coroutines_impl.di.CommonCoroutinesModule
 import kekmech.ru.common_di.AppCacheDir
 import kekmech.ru.common_di.AppVersionName
 import kekmech.ru.common_feature_toggles.RemoteConfigWrapper
 import kekmech.ru.common_feature_toggles.di.CommonFeatureTogglesModule
 import kekmech.ru.common_navigation.di.CommonNavigationModule
 import kekmech.ru.common_network.di.CommonNetworkModule
+import kekmech.ru.common_persistent_cache_impl.di.CommonPersistentCacheModule
 import kekmech.ru.domain_bars.di.DomainBarsModule
 import kekmech.ru.domain_dashboard.di.DomainDashboardModule
 import kekmech.ru.domain_favorite_schedule.di.DomainFavoriteScheduleModule
@@ -79,9 +81,11 @@ val AppModule = module {
         CommonAnalyticsModule,
         CommonAppDatabaseModule,
         CommonCacheModule,
+        CommonCoroutinesModule,
         CommonFeatureTogglesModule,
         CommonNavigationModule,
         CommonNetworkModule,
+        CommonPersistentCacheModule,
         // domain
         DomainBarsModule,
         DomainDashboardModule,

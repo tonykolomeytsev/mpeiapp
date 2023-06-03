@@ -10,6 +10,7 @@ import io.reactivex.rxjava3.core.Single
  *
  * Taken from: https://github.com/vivid-money/lazycache
  */
+@Deprecated("Use red_mad_robot MapMemory instead")
 interface CacheHandle<T : Any> {
 
     fun set(value: T)
