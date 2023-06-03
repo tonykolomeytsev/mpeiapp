@@ -2,8 +2,7 @@ package kekmech.ru.domain_notes.use_cases
 
 import kekmech.ru.domain_notes.NotesRepository
 import kekmech.ru.domain_notes.dto.Note
-import kekmech.ru.domain_schedule.repository.ScheduleRepository
-import kotlinx.coroutines.rx3.await
+import kekmech.ru.domain_schedule.data.ScheduleRepository
 
 class PutNoteForSelectedScheduleUseCase(
     private val scheduleRepository: ScheduleRepository,
@@ -11,10 +10,11 @@ class PutNoteForSelectedScheduleUseCase(
 ) {
 
     suspend operator fun invoke(note: Note) {
-        val selectedSchedule = scheduleRepository.getSelectedSchedule().await()
-        return notesRepository.updateOrInsertNoteBySchedule(
-            selectedSchedule = selectedSchedule,
-            note = note,
-        )
+        val selectedSchedule = scheduleRepository.getSelectedSchedule()
+        return notesRepository
+            .updateOrInsertNoteBySchedule(
+                selectedSchedule = selectedSchedule,
+                note = note,
+            )
     }
 }

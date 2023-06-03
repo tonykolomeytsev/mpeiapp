@@ -8,7 +8,6 @@ import kekmech.ru.domain_schedule.use_cases.GetCurrentScheduleUseCase
 import kekmech.ru.domain_schedule_models.dto.Classes
 import kekmech.ru.domain_schedule_models.dto.Day
 import kekmech.ru.domain_schedule_models.dto.Week
-import kotlinx.coroutines.rx3.await
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.temporal.ChronoUnit
@@ -27,7 +26,6 @@ class GetUpcomingEventsInteractor(
         for (i in 0..1) {
             getCurrentScheduleUseCase
                 .getSchedule(weekOffset = i)
-                .await()
                 .let { attachNotesToScheduleService.attach(it) }
                 .weeks
                 .flatMap(Week::days)

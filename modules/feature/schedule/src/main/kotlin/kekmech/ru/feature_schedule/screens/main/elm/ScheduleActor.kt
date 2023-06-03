@@ -4,7 +4,6 @@ import kekmech.ru.common_elm.actorFlow
 import kekmech.ru.domain_notes.services.AttachNotesToScheduleService
 import kekmech.ru.domain_schedule.use_cases.GetCurrentScheduleUseCase
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.rx3.await
 import vivid.money.elmslie.coroutines.Actor
 import kekmech.ru.feature_schedule.screens.main.elm.ScheduleCommand as Command
 import kekmech.ru.feature_schedule.screens.main.elm.ScheduleEvent as Event
@@ -18,7 +17,7 @@ internal class ScheduleActor(
         when (command) {
             is Command.LoadSchedule -> actorFlow {
                 val currentSchedule =
-                    getCurrentScheduleUseCase.getSchedule(weekOffset = command.weekOffset).await()
+                    getCurrentScheduleUseCase.getSchedule(weekOffset = command.weekOffset)
                 attachNotesToScheduleService.attach(currentSchedule)
             }.mapEvents(
                 eventMapper = { schedule ->
