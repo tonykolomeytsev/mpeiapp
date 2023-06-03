@@ -1,10 +1,10 @@
-package mpeix.plugins.dependencies
+package mpeix.plugins.support
 
 import AndroidJarLocationKey
 import mpeix.plugins.ext.requiredVersion
+import mpeix.plugins.ext.versionCatalog
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.api.file.ConfigurableFileCollection
 import java.io.File
 import java.io.FileInputStream
@@ -13,19 +13,25 @@ import java.util.Properties
 /**
  * # `android.jar` finder plugin
  *
- * The solution was found in https://github.com/stepango/aar2jar
+ * The solution was found in https://github.com/stepango/android-jar
  * and slightly modified to fit the needs of mpeix.
  *
  * ### Usage:
  *
- * This plugin is automatically applied for all subprojects with "mpeix.kotlin" plugin.
+ * Apply plugin in the root project:
  *
- * You can use `compileOnlyAar` configuration in `dependencies` section in `build.gradle.kts` of
+ * ```kotlin
+ * plugins {
+ *     id("mpeix.android-jar-finder")
+ * }
+ * ```
+ *
+ * Use `androidJar` variable in `dependencies` section in `build.gradle.kts` of
  * pure-kotlin subprojects:
  *
  * ```kotlin
  * dependencies {
- *     compileOnlyAar(libs.androidx.fragment)
+ *     compileOnly(androidJar)
  * }
  * ```
  */
@@ -33,14 +39,14 @@ import java.util.Properties
 class AndroidJarFinderPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
-        val catalog =
-            target.extensions.getByType(VersionCatalogsExtension::class.java).named("libs")
-        val androidJar =
-            AndroidJarFinder(target).find(catalog.requiredVersion("compileSdk").toInt())
-        target.extensions.extraProperties[AndroidJarLocationKey] = androidJar
+        with(target) {
+            val libs = versionCatalog
+            val androidJarFinder = AndroidJarFinder(target)
+            val androidJar = androidJarFinder.find(libs.requiredVersion("compileSdk").toInt())
+            extensions.extraProperties[AndroidJarLocationKey] = androidJar
+        }
     }
 }
-
 
 private class AndroidJarFinder(private val project: Project) {
 
