@@ -16,10 +16,7 @@ pluginManagement {
         gradlePluginPortal()
         google()
         mavenCentral()
-        maven { url = java.net.URI("https://jitpack.io") }
-    }
-    plugins {
-        id("org.jetbrains.kotlin.jvm") version "1.7.20"
+        maven(url = "https://jitpack.io")
     }
 }
 
