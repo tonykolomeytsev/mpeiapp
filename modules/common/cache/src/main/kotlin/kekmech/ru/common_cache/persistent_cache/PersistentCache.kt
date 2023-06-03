@@ -14,6 +14,7 @@ import java.time.Duration
 import java.util.*
 
 @Suppress("TooManyFunctions")
+@Deprecated("Use common_persistent_cache instead")
 open class PersistentCache(
     private val gson: Gson,
     private val cacheDirectory: File,
