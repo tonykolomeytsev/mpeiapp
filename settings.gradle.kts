@@ -44,19 +44,38 @@ dependencyResolutionManagement {
 
 rootProject.name = "mpeix"
 
-includeBuild("plugins")
+includeBuild("build-logic")
 
-File(rootProject.projectDir, "modules").walk()
+// Include all submodules
+private val rootModulesDir = File(rootProject.projectDir, "modules")
+private val resourcesDir = File(rootModulesDir, "resources")
+rootModulesDir.walk()
     .filter { it.isBuildGradleScript() }
     .filter { it != rootProject.buildFile }
     .mapNotNull { it.parentFile }
-    .count { moduleDir ->
-        val moduleName = ":${moduleDir.name}"
-        include(moduleName)
-        project(moduleName).projectDir = moduleDir
-        true
+    .forEach { moduleDir ->
+        val moduleName = if (moduleDir.parentFile != resourcesDir) {
+            moduleDir.relativeTo(rootModulesDir).path.normalize()
+        } else {
+            moduleDir.name
+        }
+        val projectName = ":$moduleName"
+        include(projectName)
+        with(project(projectName)) {
+            projectDir = moduleDir
+            name = moduleName
+        }
     }
-    .also { println("Added $it subprojects") }
+Logging.getLogger("settings.gradle.kts")
+    .lifecycle("Included ${rootProject.children.size} modules")
 
-fun File.isBuildGradleScript(): Boolean =
-    isFile && name == "build.gradle.kts"
+fun File.isBuildGradleScript(): Boolean = isFile && name == "build.gradle.kts"
+
+fun String.normalize(): String = buildString {
+    this@normalize.forEach {
+        when (it) {
+            '.', '-', '/', '\\' -> append('_')
+            else -> append(it)
+        }
+    }
+}
