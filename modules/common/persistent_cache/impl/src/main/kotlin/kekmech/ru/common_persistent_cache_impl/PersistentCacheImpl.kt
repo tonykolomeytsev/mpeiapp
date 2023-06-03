@@ -54,7 +54,6 @@ internal class PersistentCacheImpl(
                             @Suppress("UNCHECKED_CAST")
                             it.readObject() as T
                         }
-                        .also { globalSharedFlow.emit(PersistentCache.Entry(key, it)) }
                 }
             }
         }
@@ -73,7 +72,10 @@ internal class PersistentCacheImpl(
         key: PersistentCacheKey,
     ): Flow<PersistentCache.Entry<T>> {
         CoroutineScope(dispatchers.io()).launch {
-            restore<T>(key) // ignore result
+            restore<T>(key)
+                .onSuccess {
+                    globalSharedFlow.emit(PersistentCache.Entry(key, it))
+                }
         }
         return globalSharedFlow
             .filter { it.key == key }
