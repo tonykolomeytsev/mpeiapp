@@ -1,4 +1,4 @@
-package kekmech.ru.common_app_database.migrations
+package kekmech.ru.common_app_database_impl.migrations
 
 import kekmech.ru.common_app_database_api.MigrationV6V7
 
