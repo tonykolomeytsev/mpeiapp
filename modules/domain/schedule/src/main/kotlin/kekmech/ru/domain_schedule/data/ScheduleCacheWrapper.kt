@@ -27,7 +27,7 @@ internal class ScheduleCacheWrapper(
 
     private fun Schedule.persistentKey(): PersistentCacheKey {
         val formattedDate = weeks.first().firstDayOfWeek.format(DateTimeFormatter.ISO_LOCAL_DATE)
-        return PersistentCacheKey(
+        return PersistentCacheKey.from(
             name = "${name.uppercase()}_[$formattedDate]",
             valueClass = Schedule::class.java,
         )
@@ -38,7 +38,7 @@ internal class ScheduleCacheWrapper(
             .plusWeeks(weekOffset.toLong())
             .with(DayOfWeek.MONDAY)
         val formattedDate = firstDayOfWeek.format(DateTimeFormatter.ISO_LOCAL_DATE)
-        return PersistentCacheKey(
+        return PersistentCacheKey.from(
             name = "${name.uppercase()}_[$formattedDate]",
             valueClass = Schedule::class.java,
         )

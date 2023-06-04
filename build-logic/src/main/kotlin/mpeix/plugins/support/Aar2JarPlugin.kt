@@ -24,6 +24,9 @@ import java.util.zip.ZipFile
 /**
  * # AAR to JAR transformation plugin
  *
+ * Allows pure-kotlin subprojects to use external dependency APIs that are only for
+ * android projects.
+ *
  * The solution was found in https://github.com/stepango/aar2jar
  * and slightly modified to fit the needs of mpeix.
  *

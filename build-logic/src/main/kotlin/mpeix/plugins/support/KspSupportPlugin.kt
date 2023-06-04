@@ -11,6 +11,9 @@ import java.io.File
 /**
  * # KSP Support Plugin
  *
+ * The plugin includes support for Kotlin Symbol Processing in the project it is
+ * applied to. Supports both android and pure-kotlin subprojects.
+ *
  * ### Usage
  *
  * Apply plugin in module/subproject:
