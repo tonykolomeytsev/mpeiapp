@@ -18,6 +18,7 @@ internal class KotlinConventionPlugin : Plugin<Project> {
             with(plugins) {
                 apply("kotlin")
                 apply("mpeix.aar2jar")
+                apply("mpeix.detekt")
             }
             tasks.withType<Test> {
                 useJUnitPlatform()
