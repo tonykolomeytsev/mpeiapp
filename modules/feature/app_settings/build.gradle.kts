@@ -2,6 +2,7 @@ plugins {
     id("mpeix.android")
 }
 
+@Suppress("UnstableApiUsage")
 android.buildFeatures.viewBinding = true
 
 dependencies {
