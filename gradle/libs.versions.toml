@@ -127,6 +127,10 @@ kotest-runner = { module = "io.kotest:kotest-runner-junit5", version = "5.6.1" }
 kotest-assertions = { module = "io.kotest:kotest-assertions-core", version = "5.6.1" }
 kotest-property = { module = "io.kotest:kotest-property", version = "5.6.1" }
 
+# Mockk Libraries
+mockk-core = { module = "io.mockk:mockk", version = "1.13.5" }
+mockk-android = { module = "io.mockk:mockk-android", version = "1.13.5" }
+
 # Coroutines
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }

@@ -34,7 +34,7 @@ internal class PersistentCacheImpl(
         value: T,
     ): Result<Unit> =
         withContext(dispatchers.io()) {
-            globalSharedFlow.emit(PersistentCache.Entry(key, value))
+            globalSharedFlow.emit(EntryImpl(key, value))
             runCatching {
                 globalMutex.withLock {
                     source.outputStream(key)
@@ -74,11 +74,16 @@ internal class PersistentCacheImpl(
         CoroutineScope(dispatchers.io()).launch {
             restore<T>(key)
                 .onSuccess {
-                    globalSharedFlow.emit(PersistentCache.Entry(key, it))
+                    globalSharedFlow.emit(EntryImpl(key, it))
                 }
         }
         return globalSharedFlow
             .filter { it.key == key }
             .map { it as PersistentCache.Entry<T> }
     }
+
+    class EntryImpl<T : Serializable>(
+        override val key: PersistentCacheKey,
+        override val value: T,
+    ) : PersistentCache.Entry<T>
 }
