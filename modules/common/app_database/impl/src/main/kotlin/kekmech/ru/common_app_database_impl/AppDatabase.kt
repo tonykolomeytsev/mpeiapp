@@ -1,4 +1,4 @@
-package kekmech.ru.common_app_database
+package kekmech.ru.common_app_database_impl
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

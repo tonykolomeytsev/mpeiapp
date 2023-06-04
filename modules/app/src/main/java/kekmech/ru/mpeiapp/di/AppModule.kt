@@ -9,7 +9,7 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.redmadrobot.mapmemory.MapMemory
 import kekmech.ru.common_analytics.FirebaseAnalyticsProvider
 import kekmech.ru.common_analytics.di.CommonAnalyticsModule
-import kekmech.ru.common_app_database.di.CommonAppDatabaseModule
+import kekmech.ru.common_app_database_impl.di.CommonAppDatabaseModule
 import kekmech.ru.common_coroutines_impl.di.CommonCoroutinesModule
 import kekmech.ru.common_di.AppVersionName
 import kekmech.ru.common_feature_toggles.RemoteConfigWrapper
