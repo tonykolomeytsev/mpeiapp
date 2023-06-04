@@ -4,7 +4,6 @@ import kekmech.ru.common_persistent_cache_api.handle.PersistentCacheHandle
 import kekmech.ru.common_persistent_cache_api.handle.PersistentCacheHandleImpl
 import java.io.Serializable
 import kotlin.properties.ReadOnlyProperty
-import kotlin.reflect.typeOf
 
 inline fun <reified T : Serializable> PersistentCache.of(
     key: String? = null,
@@ -31,7 +30,7 @@ inline fun <reified T : Serializable> PersistentCache.ofList(
             key = PersistentCacheKey.from(
                 prefix = key,
                 property = property,
-                valueClass = typeOf<List<T>>().javaClass,
+                valueClass = ArrayList::class.java,
             ),
             fromSerializable = { it },
             toSerializable = {

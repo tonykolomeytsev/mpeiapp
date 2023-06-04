@@ -13,6 +13,9 @@ import java.util.Properties
 /**
  * # `android.jar` finder plugin
  *
+ * Finds the location of the `android.jar` used in the project's Android SDK
+ * and places the path to it in a public dependency notation named `androidJar`.
+ *
  * The solution was found in https://github.com/stepango/android-jar
  * and slightly modified to fit the needs of mpeix.
  *
