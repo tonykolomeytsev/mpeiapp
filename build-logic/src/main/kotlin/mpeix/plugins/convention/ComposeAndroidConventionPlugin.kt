@@ -1,6 +1,7 @@
 package mpeix.plugins.convention
 
 import com.android.build.gradle.BaseExtension
+import mpeix.plugins.ext.debugImplementation
 import mpeix.plugins.ext.implementation
 import mpeix.plugins.ext.requiredVersion
 import mpeix.plugins.ext.versionCatalog
@@ -30,6 +31,7 @@ internal class ComposeAndroidConventionPlugin : Plugin<Project> {
                 implementation(platform(libs.findLibrary("compose.bom").get()))
                 implementation(libs.findBundle("compose").get())
                 implementation(libs.findBundle("accompanist").get())
+                debugImplementation(libs.findLibrary("compose.ui.tooling").get())
             }
         }
     }

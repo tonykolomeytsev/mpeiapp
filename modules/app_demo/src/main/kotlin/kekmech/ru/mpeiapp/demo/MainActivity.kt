@@ -4,26 +4,32 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import kekmech.ru.mpeiapp.demo.ui.theme.MpeixTheme
+import androidx.core.view.WindowCompat
+import kekmech.ru.common_compose_theme.theme.MpeixTheme
+import kekmech.ru.common_compose_theme.typography.MpeixTypography
 
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
             MpeixTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    color = MpeixTheme.Palette.Background,
                 ) {
-                    Greeting("Android")
+                    Greeting(
+                        name = "Android",
+                        modifier = Modifier.statusBarsPadding(),
+                    )
                 }
             }
         }
@@ -34,14 +40,8 @@ class MainActivity : ComponentActivity() {
 fun Greeting(name: String, modifier: Modifier = Modifier) {
     Text(
         text = "Hello $name!",
-        modifier = modifier
+        modifier = modifier,
+        style = MpeixTypography.Header1,
+        color = MpeixTheme.Palette.Content,
     )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    MpeixTheme {
-        Greeting("Android")
-    }
 }
