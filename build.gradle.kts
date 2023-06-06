@@ -13,27 +13,10 @@ plugins {
     alias(libs.plugins.firebase.crashlytics) apply false
     alias(libs.plugins.gradle.android.cacheFix) apply false
     alias(libs.plugins.ksp) apply false
-    alias(libs.plugins.detekt)
+    alias(libs.plugins.detekt) apply false
 
     id("mpeix.android-jar-finder")
     id("mpeix.android") apply false
     id("mpeix.kotlin") apply false
     id("mpeix.ksp") apply false
-}
-
-// TODO: https://github.com/tonykolomeytsev/mpeiapp/issues/179
-// subprojects block prevents configure-on-demand gradle feature from working
-subprojects {
-    apply {
-        plugin("io.gitlab.arturbosch.detekt")
-    }
-    detekt {
-        config = rootProject.files("detekt.yaml")
-    }
-    dependencies {
-        detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:${detekt.toolVersion}")
-    }
-    tasks.withType<Delete> {
-        delete(rootProject.buildDir)
-    }
 }

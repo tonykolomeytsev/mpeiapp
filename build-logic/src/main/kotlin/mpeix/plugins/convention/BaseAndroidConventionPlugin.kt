@@ -25,6 +25,7 @@ internal class BaseAndroidConventionPlugin : Plugin<Project> {
                 apply("kotlin-android")
                 apply("kotlin-parcelize")
                 apply("org.gradle.android.cache-fix")
+                apply("mpeix.detekt")
             }
 
             val libs = versionCatalog

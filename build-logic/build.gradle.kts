@@ -13,6 +13,7 @@ dependencies {
     implementation(libs.kotlin.gradle.plugin)
     implementation(libs.ksp.gradle.plugin)
     implementation(libs.android.gradle.plugin)
+    implementation(libs.detekt.gradle.plugin)
     implementation(gradleApi())
     implementation(gradleKotlinDsl())
 }
@@ -60,5 +61,11 @@ gradlePlugin {
         displayName = "Kotlin Symbol Processing Support Plugin"
         description = "The Gradle Plugin that adds KSP support to the module"
         implementationClass = "mpeix.plugins.support.KspSupportPlugin"
+    }
+    plugins.create("mpeixDetektPlugin") {
+        id = "mpeix.detekt"
+        displayName = "Detekt configuration Plugin"
+        description = "The Gradle Plugin that configures Detekt in subproject"
+        implementationClass = "mpeix.plugins.support.DetektPlugin"
     }
 }
