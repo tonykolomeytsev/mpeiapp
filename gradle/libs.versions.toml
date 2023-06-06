@@ -173,7 +173,6 @@ compose = [
     "compose-compiler",
     "compose-runtime",
     "compose-ui",
-    "compose-ui-tooling",
     "compose-ui-preview",
     "compose-ui-util",
     "compose-ui-graphics",

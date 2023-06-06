@@ -2,7 +2,6 @@ plugins {
     id("com.android.application")
     id("mpeix.android.base")
     id("mpeix.android.compose")
-    id("org.jetbrains.kotlin.android")
 }
 
 android {
@@ -23,4 +22,8 @@ android {
             isShrinkResources = false
         }
     }
+}
+
+dependencies {
+    implementation(project(":common_compose_theme"))
 }

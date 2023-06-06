@@ -9,5 +9,8 @@ internal fun DependencyHandler.project(path: String): Dependency =
 internal fun DependencyHandler.implementation(notation: Any): Dependency? =
     add("implementation", notation)
 
+internal fun DependencyHandler.debugImplementation(notation: Any): Dependency? =
+    add("debugImplementation", notation)
+
 internal fun DependencyHandler.coreLibraryDesugaring(notation: Any): Dependency? =
     add("coreLibraryDesugaring", notation)
