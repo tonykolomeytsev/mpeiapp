@@ -8,11 +8,14 @@ agp = "8.0.0" # android gradle plugin
 minSdk = "21"
 targetSdk = "32"
 compileSdk = "33"
-buildTools = "33.0.0"
+buildTools = "34.0.0-rc4"
 kotlin = "1.8.21"
 ksp = "1.8.21-1.0.11"
 coroutines = "1.6.4"
 detekt = "1.22.0"
+composeBom = "2023.05.01"
+composeCompiler = "1.4.7"
+accompanist="0.30.1"
 
 # AndroidX Versions
 appCompat = "1.5.1"
@@ -41,11 +44,6 @@ elmslie = "3.0.0-alpha06"
 
 # RedMadRobot Versions
 rmrMapMemory = "2.1"
-
-# Jetpack Compose Versions
-accompanist = "0.23.1"
-compose = "1.1.1"
-composeCompiler = "1.2.0"
 
 # MockServer
 ktor = "2.3.0"
@@ -145,22 +143,21 @@ ktor-serialization-gson = { module = "io.ktor:ktor-serialization-gson", version.
 # Jetpack Compose
 ## Compose
 compose-compiler = { module = "androidx.compose.compiler:compiler", version.ref = "composeCompiler" }
-compose-runtime = { module = "androidx.compose.runtime:runtime", version.ref = "compose" }
-compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
-compose-ui-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
-compose-ui-util = { module = "androidx.compose.ui:ui-util", version.ref = "compose" }
-compose-animation = { module = "androidx.compose.animation:animation", version.ref = "compose" }
-compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose" }
-compose-material = { module = "androidx.compose.material:material", version.ref = "compose" }
-activity-compose = { module = "androidx.activity:activity-compose", version = "1.4.0" }
+compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
+compose-runtime = { module = "androidx.compose.runtime:runtime" }
+compose-ui = { module = "androidx.compose.ui:ui" }
+compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
+compose-ui-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
+compose-ui-util = { module = "androidx.compose.ui:ui-util" }
+compose-ui-graphics = { module = "androidx.compose.ui:ui-graphics" }
+compose-animation = { module = "androidx.compose.animation:animation" }
+compose-foundation = { module = "androidx.compose.foundation:foundation" }
+compose-material3 = { module = "androidx.compose.material3:material3" }
+activity-compose = { module = "androidx.activity:activity-compose" }
+
 ## Accompanist
-accompanist-insets = { module = "com.google.accompanist:accompanist-insets", version.ref = "accompanist" }
-accompanist-insets-ui = { module = "com.google.accompanist:accompanist-insets-ui", version.ref = "accompanist" }
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist" }
 accompanist-systemUiController = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
-accompanist-swipeRefresh = { module = "com.google.accompanist:accompanist-swiperefresh", version.ref = "accompanist" }
-accompanist-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanist" }
 
 [plugins]
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
@@ -179,17 +176,14 @@ compose = [
     "compose-ui-tooling",
     "compose-ui-preview",
     "compose-ui-util",
+    "compose-ui-graphics",
     "compose-animation",
     "compose-foundation",
-    "compose-material",
+    "compose-material3",
     "activity-compose",
 ]
 
 accompanist = [
-    "accompanist-insets",
-    "accompanist-insets-ui",
     "accompanist-permissions",
     "accompanist-systemUiController",
-    "accompanist-swipeRefresh",
-    "accompanist-pager",
 ]
