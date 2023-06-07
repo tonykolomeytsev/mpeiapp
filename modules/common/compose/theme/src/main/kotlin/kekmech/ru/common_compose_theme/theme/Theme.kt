@@ -20,52 +20,52 @@ import kekmech.ru.common_compose_theme.typography.Typography
  * Simple MpeiX palette mapped into Material3 palette
  */
 private val LightColorScheme = lightColorScheme(
-    primary = LightMpeixPalette.Primary,
-    onPrimary = LightMpeixPalette.ContentAccent,
-    primaryContainer = LightMpeixPalette.PrimaryContainer,
-    onPrimaryContainer = LightMpeixPalette.Content,
-    inversePrimary = LightMpeixPalette.Primary,
-    secondary = LightMpeixPalette.Secondary,
-    onSecondary = LightMpeixPalette.ContentAccent,
-    secondaryContainer = LightMpeixPalette.SecondaryContainer,
-    onSecondaryContainer = LightMpeixPalette.Content,
-    tertiary = LightMpeixPalette.Tertiary,
-    onTertiary = LightMpeixPalette.ContentAccent,
-    tertiaryContainer = LightMpeixPalette.SecondaryContainer,
-    onTertiaryContainer = LightMpeixPalette.Content,
-    background = LightMpeixPalette.Background,
-    onBackground = LightMpeixPalette.Content,
-    surface = LightMpeixPalette.Surface,
-    onSurface = LightMpeixPalette.Content,
-    surfaceVariant = LightMpeixPalette.SurfacePlus3,
-    onSurfaceVariant = LightMpeixPalette.Content,
-    outline = LightMpeixPalette.Outline,
+    primary = LightMpeixPalette.primary,
+    onPrimary = LightMpeixPalette.contentAccent,
+    primaryContainer = LightMpeixPalette.primaryContainer,
+    onPrimaryContainer = LightMpeixPalette.content,
+    inversePrimary = LightMpeixPalette.primary,
+    secondary = LightMpeixPalette.secondary,
+    onSecondary = LightMpeixPalette.contentAccent,
+    secondaryContainer = LightMpeixPalette.secondaryContainer,
+    onSecondaryContainer = LightMpeixPalette.content,
+    tertiary = LightMpeixPalette.tertiary,
+    onTertiary = LightMpeixPalette.contentAccent,
+    tertiaryContainer = LightMpeixPalette.secondaryContainer,
+    onTertiaryContainer = LightMpeixPalette.content,
+    background = LightMpeixPalette.background,
+    onBackground = LightMpeixPalette.content,
+    surface = LightMpeixPalette.surface,
+    onSurface = LightMpeixPalette.content,
+    surfaceVariant = LightMpeixPalette.surfacePlus3,
+    onSurfaceVariant = LightMpeixPalette.content,
+    outline = LightMpeixPalette.outline,
 )
 
 /**
  * Simple MpeiX palette mapped into Material3 palette
  */
 private val DarkColorScheme = darkColorScheme(
-    primary = DarkMpeixPalette.Primary,
-    onPrimary = DarkMpeixPalette.ContentAccent,
-    primaryContainer = DarkMpeixPalette.PrimaryContainer,
-    onPrimaryContainer = DarkMpeixPalette.Content,
-    inversePrimary = DarkMpeixPalette.Primary,
-    secondary = DarkMpeixPalette.Secondary,
-    onSecondary = DarkMpeixPalette.ContentAccent,
-    secondaryContainer = DarkMpeixPalette.SecondaryContainer,
-    onSecondaryContainer = DarkMpeixPalette.Content,
-    tertiary = DarkMpeixPalette.Tertiary,
-    onTertiary = DarkMpeixPalette.ContentAccent,
-    tertiaryContainer = DarkMpeixPalette.SecondaryContainer,
-    onTertiaryContainer = DarkMpeixPalette.Content,
-    background = DarkMpeixPalette.Background,
-    onBackground = DarkMpeixPalette.Content,
-    surface = DarkMpeixPalette.Surface,
-    onSurface = DarkMpeixPalette.Content,
-    surfaceVariant = DarkMpeixPalette.SurfacePlus3,
-    onSurfaceVariant = DarkMpeixPalette.Content,
-    outline = DarkMpeixPalette.Outline,
+    primary = DarkMpeixPalette.primary,
+    onPrimary = DarkMpeixPalette.contentAccent,
+    primaryContainer = DarkMpeixPalette.primaryContainer,
+    onPrimaryContainer = DarkMpeixPalette.content,
+    inversePrimary = DarkMpeixPalette.primary,
+    secondary = DarkMpeixPalette.secondary,
+    onSecondary = DarkMpeixPalette.contentAccent,
+    secondaryContainer = DarkMpeixPalette.secondaryContainer,
+    onSecondaryContainer = DarkMpeixPalette.content,
+    tertiary = DarkMpeixPalette.tertiary,
+    onTertiary = DarkMpeixPalette.contentAccent,
+    tertiaryContainer = DarkMpeixPalette.secondaryContainer,
+    onTertiaryContainer = DarkMpeixPalette.content,
+    background = DarkMpeixPalette.background,
+    onBackground = DarkMpeixPalette.content,
+    surface = DarkMpeixPalette.surface,
+    onSurface = DarkMpeixPalette.content,
+    surfaceVariant = DarkMpeixPalette.surfacePlus3,
+    onSurfaceVariant = DarkMpeixPalette.content,
+    outline = DarkMpeixPalette.outline,
 )
 
 @Composable
@@ -96,7 +96,7 @@ fun MpeixTheme(
 
 object MpeixTheme {
 
-    val Palette: MpeixPalette
+    val palette: MpeixPalette
         @Composable
         @ReadOnlyComposable
         get() = LocalPalette.current

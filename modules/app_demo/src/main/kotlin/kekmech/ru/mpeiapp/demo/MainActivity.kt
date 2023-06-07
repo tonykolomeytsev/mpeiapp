@@ -24,7 +24,7 @@ class MainActivity : ComponentActivity() {
                 Surface(
                     modifier = Modifier
                         .fillMaxSize(),
-                    color = MpeixTheme.Palette.Background,
+                    color = MpeixTheme.palette.background,
                 ) {
                     Greeting(
                         name = "Android",
@@ -42,6 +42,6 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
         text = "Hello $name!",
         modifier = modifier,
         style = MpeixTypography.Header1,
-        color = MpeixTheme.Palette.Content,
+        color = MpeixTheme.palette.content,
     )
 }
