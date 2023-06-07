@@ -149,12 +149,13 @@ val Typography = Typography(
 
 @Composable
 @Preview(device = "spec:width=1920px,height=1080px,dpi=240")
+@Suppress("LongMethod", "MagicNumber", "StringLiteralDuplication")
 private fun TypographyPreview() {
 
     fun Modifier.drawDashedBorder(): Modifier =
         drawBehind {
             drawRoundRect(
-                color = LightMpeixPalette.Outline,
+                color = LightMpeixPalette.outline,
                 cornerRadius = CornerRadius(12.dp.toPx(), 12.dp.toPx()),
                 style = Stroke(
                     width = 1.dp.toPx(),
@@ -171,7 +172,7 @@ private fun TypographyPreview() {
     Column(
         modifier = Modifier
             .background(
-                color = LightMpeixPalette.Surface,
+                color = LightMpeixPalette.surface,
                 shape = RoundedCornerShape(12.dp),
             )
             .padding(16.dp),
@@ -185,25 +186,25 @@ private fun TypographyPreview() {
                 Text(
                     text = "Header H1 32/38",
                     style = MpeixTypography.Header1,
-                    color = LightMpeixPalette.Content,
+                    color = LightMpeixPalette.content,
                     modifier = linePaddingModifier,
                 )
                 Text(
                     text = "Header H2 28/36",
                     style = MpeixTypography.Header2,
-                    color = LightMpeixPalette.Content,
+                    color = LightMpeixPalette.content,
                     modifier = linePaddingModifier,
                 )
                 Text(
                     text = "Header H3 22/28",
                     style = MpeixTypography.Header3,
-                    color = LightMpeixPalette.Content,
+                    color = LightMpeixPalette.content,
                     modifier = linePaddingModifier,
                 )
                 Text(
                     text = "Header H4 20/24",
                     style = MpeixTypography.Header4,
-                    color = LightMpeixPalette.Content,
+                    color = LightMpeixPalette.content,
                 )
             }
             Spacer(Modifier.width(64.dp))
@@ -211,25 +212,25 @@ private fun TypographyPreview() {
                 Text(
                     text = "Заголовки экранов",
                     style = MpeixTypography.Header1,
-                    color = LightMpeixPalette.Content,
+                    color = LightMpeixPalette.content,
                     modifier =linePaddingModifier,
                 )
                 Text(
                     text = "Заголовки экранов",
                     style = MpeixTypography.Header2,
-                    color = LightMpeixPalette.Content,
+                    color = LightMpeixPalette.content,
                     modifier = linePaddingModifier,
                 )
                 Text(
                     text = "Заголовки экранов",
                     style = MpeixTypography.Header3,
-                    color = LightMpeixPalette.Content,
+                    color = LightMpeixPalette.content,
                     modifier = linePaddingModifier,
                 )
                 Text(
                     text = "Заголовки внутри блоков контента",
                     style = MpeixTypography.Header4,
-                    color = LightMpeixPalette.Content,
+                    color = LightMpeixPalette.content,
                 )
             }
         }
@@ -243,25 +244,25 @@ private fun TypographyPreview() {
                 Text(
                     text = "Paragraph Big 16/24",
                     style = MpeixTypography.ParagraphBig,
-                    color = LightMpeixPalette.Content,
+                    color = LightMpeixPalette.content,
                     modifier = linePaddingModifier,
                 )
                 Text(
                     text = "Paragraph Normal 14/20",
                     style = MpeixTypography.ParagraphNormal,
-                    color = LightMpeixPalette.Content,
+                    color = LightMpeixPalette.content,
                     modifier = linePaddingModifier,
                 )
                 Text(
                     text = "Paragraph Big Accent 16/24",
                     style = MpeixTypography.ParagraphBigAccent,
-                    color = LightMpeixPalette.Content,
+                    color = LightMpeixPalette.content,
                     modifier = linePaddingModifier,
                 )
                 Text(
                     text = "Paragraph Normal Accent 14/20",
                     style = MpeixTypography.ParagraphNormalAccent,
-                    color = LightMpeixPalette.Content,
+                    color = LightMpeixPalette.content,
                 )
             }
             Spacer(Modifier.width(64.dp))
@@ -269,25 +270,25 @@ private fun TypographyPreview() {
                 Text(
                     text = "Текстовый контент, несущий много смысла",
                     style = MpeixTypography.ParagraphBig,
-                    color = LightMpeixPalette.Content,
+                    color = LightMpeixPalette.content,
                     modifier = linePaddingModifier,
                 )
                 Text(
                     text = "Короткие надписи внутри UI, подзаголовки внутри контента",
                     style = MpeixTypography.ParagraphNormal,
-                    color = LightMpeixPalette.Content,
+                    color = LightMpeixPalette.content,
                     modifier = linePaddingModifier,
                 )
                 Text(
                     text = "Текстовый контент, несущий много смысла",
                     style = MpeixTypography.ParagraphBigAccent,
-                    color = LightMpeixPalette.Content,
+                    color = LightMpeixPalette.content,
                     modifier = linePaddingModifier,
                 )
                 Text(
                     text = "Короткие надписи внутри UI, подзаголовки внутри контента",
                     style = MpeixTypography.ParagraphNormalAccent,
-                    color = LightMpeixPalette.Content,
+                    color = LightMpeixPalette.content,
                 )
             }
         }
@@ -301,19 +302,19 @@ private fun TypographyPreview() {
                 Text(
                     text = "Label Big 14/20",
                     style = MpeixTypography.LabelBig,
-                    color = LightMpeixPalette.Content,
+                    color = LightMpeixPalette.content,
                     modifier = linePaddingModifier,
                 )
                 Text(
                     text = "Label Normal 12/16",
                     style = MpeixTypography.LabelNormal,
-                    color = LightMpeixPalette.Content,
+                    color = LightMpeixPalette.content,
                     modifier = linePaddingModifier,
                 )
                 Text(
                     text = "Label Mini 10/16",
                     style = MpeixTypography.LabelMini,
-                    color = LightMpeixPalette.Content,
+                    color = LightMpeixPalette.content,
                 )
             }
             Spacer(Modifier.width(64.dp))
@@ -321,19 +322,19 @@ private fun TypographyPreview() {
                 Text(
                     text = "Кнопки, поля ввода, ячейки",
                     style = MpeixTypography.LabelBig,
-                    color = LightMpeixPalette.Content,
+                    color = LightMpeixPalette.content,
                     modifier = linePaddingModifier,
                 )
                 Text(
                     text = "Ячейки и короткие надписи в UI",
                     style = MpeixTypography.LabelNormal,
-                    color = LightMpeixPalette.Content,
+                    color = LightMpeixPalette.content,
                     modifier = linePaddingModifier,
                 )
                 Text(
                     text = "Ячейки и короткие надписи в UI",
                     style = MpeixTypography.LabelMini,
-                    color = LightMpeixPalette.Content,
+                    color = LightMpeixPalette.content,
                 )
             }
         }

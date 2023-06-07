@@ -45,67 +45,71 @@ object MpeixColors {
     val Neutral25 = Color(0xFF2A3340)
     val Neutral20 = Color(0xFF232A35)
     val Neutral10 = Color(0xFF14181F)
+    val ClassesTypeLecture = Color(0xFF16B37C)
+    val ClassesTypePractice = Color(0xFFE8BC4C)
+    val ClassesTypeLab = Color(0xFFE864AB)
 }
 
 data class MpeixPalette(
-    val Primary: Color,
-    val Secondary: Color,
-    val Tertiary: Color,
-    val Background: Color,
-    val Surface: Color,
-    val SurfacePlus1: Color,
-    val SurfacePlus2: Color,
-    val SurfacePlus3: Color,
-    val PrimaryContainer: Color,
-    val SecondaryContainer: Color,
-    val Content: Color,
-    val ContentAccent: Color,
-    val ContentVariant: Color,
-    val ContentDisabled: Color,
-    val Outline: Color,
-    val ClassesTypeLecture: Color = Color(0xFF16B37C),
-    val ClassesTypePractice: Color = Color(0xFFE8BC4C),
-    val ClassesTypeLab: Color = Color(0xFFE864AB),
+    val primary: Color,
+    val secondary: Color,
+    val tertiary: Color,
+    val background: Color,
+    val surface: Color,
+    val surfacePlus1: Color,
+    val surfacePlus2: Color,
+    val surfacePlus3: Color,
+    val primaryContainer: Color,
+    val secondaryContainer: Color,
+    val content: Color,
+    val contentAccent: Color,
+    val contentVariant: Color,
+    val contentDisabled: Color,
+    val outline: Color,
+    val classesTypeLecture: Color = MpeixColors.ClassesTypeLecture,
+    val classesTypePractice: Color = MpeixColors.ClassesTypePractice,
+    val classesTypeLab: Color = MpeixColors.ClassesTypeLab,
 )
 
 val LightMpeixPalette = MpeixPalette(
-    Primary = MpeixColors.Primary60,
-    Secondary = MpeixColors.Secondary60,
-    Tertiary = MpeixColors.Tertiary50,
-    Background = MpeixColors.Neutral97,
-    Surface = MpeixColors.Neutral100,
-    SurfacePlus1 = MpeixColors.Neutral98,
-    SurfacePlus2 = MpeixColors.Neutral95,
-    SurfacePlus3 = MpeixColors.Neutral93,
-    PrimaryContainer = MpeixColors.Primary90,
-    SecondaryContainer = MpeixColors.Secondary90,
-    Content = MpeixColors.Neutral20,
-    ContentAccent = MpeixColors.Neutral100,
-    ContentVariant = MpeixColors.Neutral40,
-    ContentDisabled = MpeixColors.Neutral60,
-    Outline = MpeixColors.Neutral80,
+    primary = MpeixColors.Primary60,
+    secondary = MpeixColors.Secondary60,
+    tertiary = MpeixColors.Tertiary50,
+    background = MpeixColors.Neutral97,
+    surface = MpeixColors.Neutral100,
+    surfacePlus1 = MpeixColors.Neutral98,
+    surfacePlus2 = MpeixColors.Neutral95,
+    surfacePlus3 = MpeixColors.Neutral93,
+    primaryContainer = MpeixColors.Primary90,
+    secondaryContainer = MpeixColors.Secondary90,
+    content = MpeixColors.Neutral20,
+    contentAccent = MpeixColors.Neutral100,
+    contentVariant = MpeixColors.Neutral40,
+    contentDisabled = MpeixColors.Neutral60,
+    outline = MpeixColors.Neutral80,
 )
 
 val DarkMpeixPalette = MpeixPalette(
-    Primary = MpeixColors.Primary60,
-    Secondary = MpeixColors.Secondary60,
-    Tertiary = MpeixColors.Tertiary50,
-    Background = MpeixColors.Neutral10,
-    Surface = MpeixColors.Neutral20,
-    SurfacePlus1 = MpeixColors.Neutral25,
-    SurfacePlus2 = MpeixColors.Neutral30,
-    SurfacePlus3 = MpeixColors.Neutral35,
-    PrimaryContainer = MpeixColors.Primary30,
-    SecondaryContainer = MpeixColors.Secondary30,
-    Content = MpeixColors.Neutral90,
-    ContentAccent = MpeixColors.Neutral100,
-    ContentVariant = MpeixColors.Neutral80,
-    ContentDisabled = MpeixColors.Neutral70,
-    Outline = MpeixColors.Neutral60,
+    primary = MpeixColors.Primary60,
+    secondary = MpeixColors.Secondary60,
+    tertiary = MpeixColors.Tertiary50,
+    background = MpeixColors.Neutral10,
+    surface = MpeixColors.Neutral20,
+    surfacePlus1 = MpeixColors.Neutral25,
+    surfacePlus2 = MpeixColors.Neutral30,
+    surfacePlus3 = MpeixColors.Neutral35,
+    primaryContainer = MpeixColors.Primary30,
+    secondaryContainer = MpeixColors.Secondary30,
+    content = MpeixColors.Neutral90,
+    contentAccent = MpeixColors.Neutral100,
+    contentVariant = MpeixColors.Neutral80,
+    contentDisabled = MpeixColors.Neutral70,
+    outline = MpeixColors.Neutral60,
 )
 
 @Composable
 @Preview(device = "spec:width=1920px,height=1080px,dpi=240")
+@Suppress("LongMethod")
 private fun PalettePreview(
     @PreviewParameter(MpeixPaletteParameterProvider::class) palette: MpeixPalette,
 ) {
@@ -135,7 +139,7 @@ private fun PalettePreview(
         modifier = Modifier
             .wrapContentSize()
             .background(
-                color = palette.Surface,
+                color = palette.surface,
                 shape = RoundedCornerShape(24.dp),
             )
             .padding(12.dp),
@@ -147,105 +151,105 @@ private fun PalettePreview(
             fontWeight = FontWeight.Bold,
             fontSize = 24.sp,
             lineHeight = 32.sp,
-            color = palette.Content,
+            color = palette.content,
             modifier = Modifier.padding(bottom = 12.dp)
         )
         Row(Modifier.padding(bottom = 12.dp)) {
             colorItem(
                 name = "Background",
-                backgroundColor = palette.Background,
-                textColor = palette.Content,
+                backgroundColor = palette.background,
+                textColor = palette.content,
             )
             colorItem(
                 name = "Surface",
-                backgroundColor = palette.Surface,
-                textColor = palette.Content,
+                backgroundColor = palette.surface,
+                textColor = palette.content,
             )
             colorItem(
                 name = "Surface + 1",
-                backgroundColor = palette.SurfacePlus1,
-                textColor = palette.Content,
+                backgroundColor = palette.surfacePlus1,
+                textColor = palette.content,
             )
             colorItem(
                 name = "Surface + 2",
-                backgroundColor = palette.SurfacePlus2,
-                textColor = palette.Content,
+                backgroundColor = palette.surfacePlus2,
+                textColor = palette.content,
             )
             colorItem(
                 name = "Surface + 3",
-                backgroundColor = palette.SurfacePlus3,
-                textColor = palette.Content,
+                backgroundColor = palette.surfacePlus3,
+                textColor = palette.content,
             )
         }
         Row(Modifier.padding(bottom = 12.dp)) {
             colorItem(
                 name = "Primary",
-                backgroundColor = palette.Primary,
-                textColor = palette.ContentAccent,
+                backgroundColor = palette.primary,
+                textColor = palette.contentAccent,
             )
             colorItem(
                 name = "Secondary",
-                backgroundColor = palette.Secondary,
-                textColor = palette.ContentAccent,
+                backgroundColor = palette.secondary,
+                textColor = palette.contentAccent,
             )
             colorItem(
                 name = "Tertiary",
-                backgroundColor = palette.Tertiary,
-                textColor = palette.ContentAccent,
+                backgroundColor = palette.tertiary,
+                textColor = palette.contentAccent,
             )
             colorItem(
                 name = "ContentAccent",
-                backgroundColor = palette.ContentAccent,
+                backgroundColor = palette.contentAccent,
                 textColor = MpeixColors.Neutral10,
             )
         }
         Row(Modifier.padding(bottom = 12.dp)) {
             colorItem(
                 name = "Primary\nContainer",
-                backgroundColor = palette.PrimaryContainer,
-                textColor = palette.Content,
+                backgroundColor = palette.primaryContainer,
+                textColor = palette.content,
             )
             colorItem(
                 name = "Secondary\nContainer",
-                backgroundColor = palette.SecondaryContainer,
-                textColor = palette.Content,
+                backgroundColor = palette.secondaryContainer,
+                textColor = palette.content,
             )
             colorItem(
                 name = "Content",
-                backgroundColor = palette.Content,
-                textColor = palette.Surface,
+                backgroundColor = palette.content,
+                textColor = palette.surface,
             )
             colorItem(
                 name = "ContentVariant",
-                backgroundColor = palette.ContentVariant,
-                textColor = palette.Surface,
+                backgroundColor = palette.contentVariant,
+                textColor = palette.surface,
             )
             colorItem(
                 name = "Content\nDisabled",
-                backgroundColor = palette.ContentDisabled,
-                textColor = palette.ContentAccent,
+                backgroundColor = palette.contentDisabled,
+                textColor = palette.contentAccent,
             )
             colorItem(
                 name = "Outline",
-                backgroundColor = palette.Outline,
-                textColor = palette.Content,
+                backgroundColor = palette.outline,
+                textColor = palette.content,
             )
         }
         Row {
             colorItem(
                 name = "ClassesType\nLecture",
-                backgroundColor = LightMpeixPalette.ClassesTypeLecture,
-                textColor = LightMpeixPalette.ContentAccent,
+                backgroundColor = LightMpeixPalette.classesTypeLecture,
+                textColor = LightMpeixPalette.contentAccent,
             )
             colorItem(
                 name = "ClassesType\nPractice",
-                backgroundColor = LightMpeixPalette.ClassesTypePractice,
-                textColor = LightMpeixPalette.Content,
+                backgroundColor = LightMpeixPalette.classesTypePractice,
+                textColor = LightMpeixPalette.content,
             )
             colorItem(
                 name = "ClassesType\nLab",
-                backgroundColor = LightMpeixPalette.ClassesTypeLab,
-                textColor = LightMpeixPalette.ContentAccent,
+                backgroundColor = LightMpeixPalette.classesTypeLab,
+                textColor = LightMpeixPalette.contentAccent,
             )
         }
     }
