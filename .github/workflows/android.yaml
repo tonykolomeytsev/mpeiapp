@@ -74,7 +74,7 @@ jobs:
           GOOGLE_SERVICES_DEBUG: ${{ secrets.GOOGLE_SERVICES_DEBUG }}
 
       - name: Build with Gradle
-        run: ./gradlew -Pci assembleDebug
+        run: ./gradlew -Pci :app:assembleDebug
         env:
           MAP_KEY: ${{ secrets.MAP_KEY }}
 

@@ -1,6 +1,7 @@
 package mpeix.plugins.convention
 
-import com.android.build.gradle.LibraryExtension
+import com.android.build.gradle.BaseExtension
+import mpeix.plugins.ext.debugImplementation
 import mpeix.plugins.ext.implementation
 import mpeix.plugins.ext.requiredVersion
 import mpeix.plugins.ext.versionCatalog
@@ -14,26 +15,23 @@ internal class ComposeAndroidConventionPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
         with(target) {
-            with(plugins) {
-                apply("com.android.library")
-                apply("mpeix.android.base")
-            }
-
             val libs = versionCatalog
-            extensions.configure<LibraryExtension> {
+            extensions.configure<BaseExtension> {
                 namespace = "kekmech.ru.${target.name}"
-                @Suppress("UnstableApiUsage")
-                buildFeatures {
+                with(buildFeatures) {
                     compose = true
                 }
-                composeOptions {
+                @Suppress("UnstableApiUsage")
+                with(composeOptions) {
                     kotlinCompilerExtensionVersion = libs.requiredVersion("composeCompiler")
                 }
             }
 
             dependencies {
+                implementation(platform(libs.findLibrary("compose.bom").get()))
                 implementation(libs.findBundle("compose").get())
                 implementation(libs.findBundle("accompanist").get())
+                debugImplementation(libs.findLibrary("compose.ui.tooling").get())
             }
         }
     }
