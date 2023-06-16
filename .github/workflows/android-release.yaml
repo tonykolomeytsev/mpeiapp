@@ -40,6 +40,7 @@ jobs:
 
       - name: Sign AAB
         uses: r0adkll/sign-android-release@v1
+        id: sign_app
         with:
           releaseDirectory: modules/app/build/outputs/apk/release
           signingKeyBase64: ${{ secrets.KEY_STORE_FILE }}
@@ -51,4 +52,4 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: App Release
-          path: modules/app/build/outputs/apk/release/app-release.aab
+          path: ${{steps.sign_app.outputs.signedReleaseFile}}
