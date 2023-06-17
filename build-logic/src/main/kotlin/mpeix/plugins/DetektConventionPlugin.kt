@@ -1,4 +1,4 @@
-package mpeix.plugins.support
+package mpeix.plugins
 
 import io.gitlab.arturbosch.detekt.Detekt
 import io.gitlab.arturbosch.detekt.extensions.DetektExtension
@@ -18,7 +18,7 @@ import org.gradle.kotlin.dsl.withType
  * A simple plugin that configures detekt in each subproject in which it is applied
  */
 @Suppress("unused")
-class DetektPlugin : Plugin<Project> {
+class DetektConventionPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
         with(target) {

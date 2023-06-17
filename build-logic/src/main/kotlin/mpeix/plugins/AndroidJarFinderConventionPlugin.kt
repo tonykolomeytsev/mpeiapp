@@ -1,4 +1,4 @@
-package mpeix.plugins.support
+package mpeix.plugins
 
 import AndroidJarLocationKey
 import mpeix.plugins.ext.requiredVersion
@@ -39,7 +39,7 @@ import java.util.Properties
  * ```
  */
 @Suppress("unused")
-class AndroidJarFinderPlugin : Plugin<Project> {
+class AndroidJarFinderConventionPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
         with(target) {
