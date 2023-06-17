@@ -23,10 +23,13 @@ jobs:
         with:
           cache-read-only: false
 
-      - name: Materialize google services
-        run: .ci/materialize.sh $GOOGLE_SERVICES modules/app/google-services.json
+      - name: Materialize sensitive info
+        run: |
+          .ci/materialize.sh $GOOGLE_SERVICES modules/app/google-services.json
+          .ci/materialize.sh $KEY_STORE_FILE keystore.jks
         env:
           GOOGLE_SERVICES: ${{ secrets.GOOGLE_SERVICES }}
+          KEY_STORE_FILE: ${{ secrets.KEY_STORE_FILE }}
 
       - name: Release tests
         run: ./gradlew -Pci testReleaseUnitTest
@@ -37,19 +40,12 @@ jobs:
         run: ./gradlew -Pci :app:assembleRelease
         env:
           MAP_KEY: ${{ secrets.MAP_KEY }}
-
-      - name: Sign AAB
-        uses: r0adkll/sign-android-release@v1
-        id: sign_app
-        with:
-          releaseDirectory: modules/app/build/outputs/apk/release
-          signingKeyBase64: ${{ secrets.KEY_STORE_FILE }}
-          alias: ${{ secrets.ALIAS }}
-          keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
-          keyPassword: ${{ secrets.KEY_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.ALIAS }}
+          KEY_STORE_PASSWORD: ${{ secrets.KEY_STORE_PASSWORD }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
 
       - name: Upload Release APK
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v3
         with:
           name: App Release
-          path: ${{steps.sign_app.outputs.signedReleaseFile}}
+          path: modules/app/build/outputs/apk/release/app-release.apk

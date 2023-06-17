@@ -16,7 +16,7 @@ plugins {
     alias(libs.plugins.detekt) apply false
 
     id("mpeix.android-jar-finder")
-    id("mpeix.android") apply false
-    id("mpeix.kotlin") apply false
+    id("mpeix.android.lib") apply false
+    id("mpeix.kotlin.lib") apply false
     id("mpeix.ksp") apply false
 }

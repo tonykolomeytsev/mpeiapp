@@ -1,4 +1,4 @@
-package mpeix.plugins.convention
+package mpeix.plugins
 
 import com.android.build.gradle.BaseExtension
 import mpeix.plugins.ext.debugImplementation
@@ -11,7 +11,7 @@ import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
 
 @Suppress("unused")
-internal class ComposeAndroidConventionPlugin : Plugin<Project> {
+internal class AndroidComposeConventionPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
         with(target) {

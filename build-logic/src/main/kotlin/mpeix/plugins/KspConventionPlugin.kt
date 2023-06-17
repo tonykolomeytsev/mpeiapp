@@ -1,4 +1,4 @@
-package mpeix.plugins.support
+package mpeix.plugins
 
 import com.google.devtools.ksp.gradle.KspExtension
 import org.gradle.api.Plugin
@@ -25,7 +25,7 @@ import java.io.File
  * ```
  */
 @Suppress("unused")
-class KspSupportPlugin : Plugin<Project> {
+class KspConventionPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
         with(target) {
