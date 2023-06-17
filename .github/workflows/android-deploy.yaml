@@ -18,10 +18,13 @@ jobs:
           java-version: 17
           distribution: adopt
 
-      - name: Materialize google services
-        run: .ci/materialize.sh $GOOGLE_SERVICES modules/app/google-services.json
+      - name: Materialize sensitive info
+        run: |
+          .ci/materialize.sh $GOOGLE_SERVICES modules/app/google-services.json
+          .ci/materialize.sh $KEY_STORE_FILE keystore.jks
         env:
           GOOGLE_SERVICES: ${{ secrets.GOOGLE_SERVICES }}
+          KEY_STORE_FILE: ${{ secrets.KEY_STORE_FILE }}
 
       - name: Release tests
         run: ./gradlew -Pci testReleaseUnitTest
@@ -32,15 +35,9 @@ jobs:
         run: ./gradlew -Pci :app:bundleRelease
         env:
           MAP_KEY: ${{ secrets.MAP_KEY }}
-
-      - name: Sign AAB
-        uses: r0adkll/sign-android-release@v1
-        with:
-          releaseDirectory: modules/app/build/outputs/bundle/release
-          signingKeyBase64: ${{ secrets.KEY_STORE_FILE }}
-          alias: ${{ secrets.ALIAS }}
-          keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
-          keyPassword: ${{ secrets.KEY_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.ALIAS }}
+          KEY_STORE_PASSWORD: ${{ secrets.KEY_STORE_PASSWORD }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
 
       - name: Create service_account.json
         run: echo '${{ secrets.SERVICE_ACCOUNT_JSON }}' > service_account.json
