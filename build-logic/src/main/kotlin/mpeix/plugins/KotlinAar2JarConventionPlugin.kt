@@ -1,4 +1,4 @@
-package mpeix.plugins.support
+package mpeix.plugins
 
 import org.gradle.api.NamedDomainObjectProvider
 import org.gradle.api.Plugin
@@ -32,7 +32,7 @@ import java.util.zip.ZipFile
  *
  * ### Usage:
  *
- * This plugin is automatically applied for all subprojects with "mpeix.kotlin" plugin.
+ * This plugin is automatically applied for all subprojects with "mpeix.kotlin.lib" plugin.
  *
  * You can use `compileOnlyAar` configuration in `dependencies` section in `build.gradle.kts` of
  * pure-kotlin subprojects:
@@ -44,7 +44,7 @@ import java.util.zip.ZipFile
  * ```
  */
 @Suppress("unused")
-class Aar2JarPlugin : Plugin<Project> {
+class KotlinAar2JarConventionPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
         with(target) {

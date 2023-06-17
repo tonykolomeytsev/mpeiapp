@@ -19,53 +19,59 @@ dependencies {
 }
 
 gradlePlugin {
-    plugins.create("mpeixBaseAndroidModulePlugin") {
+    plugins.create("AndroidBaseConventionPlugin") {
         id = "mpeix.android.base"
         displayName = "MpeiX Android Base Plugin"
         description = "Gradle Plugin for setting up any android module"
-        implementationClass = "mpeix.plugins.convention.BaseAndroidConventionPlugin"
+        implementationClass = "mpeix.plugins.AndroidBaseConventionPlugin"
     }
-    plugins.create("mpeixAndroidModulePlugin") {
-        id = "mpeix.android"
+    plugins.create("AndroidSigningConventionPlugin") {
+        id = "mpeix.android.signing"
+        displayName = "MpeiX Android Signing Plugin"
+        description = "Gradle Plugin for signing release APK and AAB"
+        implementationClass = "mpeix.plugins.AndroidSigningConventionPlugin"
+    }
+    plugins.create("AndroidLibConventionPlugin") {
+        id = "mpeix.android.lib"
         displayName = "MpeiX Android Library Plugin"
         description = "Gradle Plugin for setting up android library module"
-        implementationClass = "mpeix.plugins.convention.AndroidLibraryConventionPlugin"
+        implementationClass = "mpeix.plugins.AndroidLibConventionPlugin"
     }
-    plugins.create("mpeixComposeAndroidModulePlugin") {
+    plugins.create("AndroidComposeConventionPlugin") {
         id = "mpeix.android.compose"
         displayName = "MpeiX Compose Android Library Plugin"
         description =
             "Gradle Plugin for setting up android library module with Compose dependencies"
-        implementationClass = "mpeix.plugins.convention.ComposeAndroidConventionPlugin"
+        implementationClass = "mpeix.plugins.AndroidComposeConventionPlugin"
     }
-    plugins.create("mpeixKotlinModulePlugin") {
-        id = "mpeix.kotlin"
+    plugins.create("KotlinLibConventionPlugin") {
+        id = "mpeix.kotlin.lib"
         displayName = "Mpeix Kotlin Plugin"
         description = "Gradle Plugin for setting up pure kotlin library module"
-        implementationClass = "mpeix.plugins.convention.KotlinConventionPlugin"
+        implementationClass = "mpeix.plugins.KotlinLibConventionPlugin"
     }
-    plugins.create("mpeixAndroidJarFinderPlugin") {
+    plugins.create("KotlinAar2JarConventionPlugin") {
+        id = "mpeix.kotlin.aar2jar"
+        displayName = "Aar2Jar Plugin"
+        description = "The Gradle Plugin that transforms AAR dependencies to JAR"
+        implementationClass = "mpeix.plugins.KotlinAar2JarConventionPlugin"
+    }
+    plugins.create("AndroidJarFinderConventionPlugin") {
         id = "mpeix.android-jar-finder"
         displayName = "Android Jar Finder Plugin"
         description = "The Gradle Plugin that finds android.jar in project environment"
-        implementationClass = "mpeix.plugins.support.AndroidJarFinderPlugin"
+        implementationClass = "mpeix.plugins.AndroidJarFinderConventionPlugin"
     }
-    plugins.create("mpeixAar2JarPlugin") {
-        id = "mpeix.aar2jar"
-        displayName = "Aar2Jar Plugin"
-        description = "The Gradle Plugin that transforms AAR dependencies to JAR"
-        implementationClass = "mpeix.plugins.support.Aar2JarPlugin"
-    }
-    plugins.create("mpeixKspSupportPlugin") {
+    plugins.create("KspConventionPlugin") {
         id = "mpeix.ksp"
         displayName = "Kotlin Symbol Processing Support Plugin"
         description = "The Gradle Plugin that adds KSP support to the module"
-        implementationClass = "mpeix.plugins.support.KspSupportPlugin"
+        implementationClass = "mpeix.plugins.KspConventionPlugin"
     }
-    plugins.create("mpeixDetektPlugin") {
+    plugins.create("DetektConventionPlugin") {
         id = "mpeix.detekt"
         displayName = "Detekt configuration Plugin"
         description = "The Gradle Plugin that configures Detekt in subproject"
-        implementationClass = "mpeix.plugins.support.DetektPlugin"
+        implementationClass = "mpeix.plugins.DetektConventionPlugin"
     }
 }

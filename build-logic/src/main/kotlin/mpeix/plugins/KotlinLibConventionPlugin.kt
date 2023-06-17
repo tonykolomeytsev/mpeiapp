@@ -1,4 +1,4 @@
-package mpeix.plugins.convention
+package mpeix.plugins
 
 import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
@@ -9,7 +9,7 @@ import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 @Suppress("unused")
-internal class KotlinConventionPlugin : Plugin<Project> {
+internal class KotlinLibConventionPlugin : Plugin<Project> {
 
     private val jvmTarget = JavaVersion.VERSION_11
 
@@ -17,7 +17,7 @@ internal class KotlinConventionPlugin : Plugin<Project> {
         return with(target) {
             with(plugins) {
                 apply("kotlin")
-                apply("mpeix.aar2jar")
+                apply("mpeix.kotlin.aar2jar")
                 apply("mpeix.detekt")
             }
             tasks.withType<Test> {

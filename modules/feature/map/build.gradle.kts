@@ -1,5 +1,5 @@
 plugins {
-    id("mpeix.android")
+    id("mpeix.android.lib")
 }
 
 @Suppress("UnstableApiUsage")

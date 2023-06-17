@@ -3,6 +3,7 @@
 plugins {
     id("com.android.application")
     id("mpeix.android.base")
+    id("mpeix.android.signing")
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
 }
@@ -18,6 +19,10 @@ android {
     }
 
     buildTypes {
+        getByName("debug") {
+            isMinifyEnabled = false
+            applicationIdSuffix = ".dev"
+        }
         getByName("release") {
             isMinifyEnabled = true
             isShrinkResources = true
@@ -25,10 +30,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-        }
-        getByName("debug") {
-            isMinifyEnabled = false
-            applicationIdSuffix = ".dev"
+            signingConfig = signingConfigs.getByName("release")
         }
         configureEach {
             resValue(

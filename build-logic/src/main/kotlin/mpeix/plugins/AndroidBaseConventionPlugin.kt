@@ -1,4 +1,4 @@
-package mpeix.plugins.convention
+package mpeix.plugins
 
 import com.android.build.gradle.BaseExtension
 import mpeix.plugins.ext.coreLibraryDesugaring
@@ -15,7 +15,7 @@ import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 @Suppress("unused")
-internal class BaseAndroidConventionPlugin : Plugin<Project> {
+internal class AndroidBaseConventionPlugin : Plugin<Project> {
 
     private val jvmTarget = JavaVersion.VERSION_11
 

@@ -1,4 +1,4 @@
-package mpeix.plugins.convention
+package mpeix.plugins
 
 import com.android.build.gradle.LibraryExtension
 import org.gradle.api.Plugin
@@ -6,7 +6,7 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 
 @Suppress("unused")
-internal class AndroidLibraryConventionPlugin : Plugin<Project> {
+internal class AndroidLibConventionPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
         with(target) {
