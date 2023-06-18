@@ -6,7 +6,5 @@ import com.bumble.appyx.core.node.Node
 
 abstract class NavTarget : Parcelable {
 
-    val key: String? = null
-
     abstract fun resolve(buildContext: BuildContext): Node
 }
