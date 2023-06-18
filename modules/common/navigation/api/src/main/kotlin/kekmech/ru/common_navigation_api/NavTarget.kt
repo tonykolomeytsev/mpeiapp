@@ -4,7 +4,7 @@ import android.os.Parcelable
 import com.bumble.appyx.core.modality.BuildContext
 import com.bumble.appyx.core.node.Node
 
-abstract class NavTarget : Parcelable {
+interface NavTarget : Parcelable {
 
-    abstract fun resolve(buildContext: BuildContext): Node
+    fun resolve(buildContext: BuildContext): Node
 }
