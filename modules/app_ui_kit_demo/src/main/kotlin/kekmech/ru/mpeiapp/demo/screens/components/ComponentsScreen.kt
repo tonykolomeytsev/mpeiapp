@@ -22,7 +22,7 @@ import kekmech.ru.common_navigation_compose.LocalBackStackNavigator
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-internal class ComponentsScreenNavTarget : NavTarget() {
+internal class ComponentsScreenNavTarget : NavTarget {
 
     override fun resolve(buildContext: BuildContext): Node =
         node(buildContext) { ComponentsScreen() }

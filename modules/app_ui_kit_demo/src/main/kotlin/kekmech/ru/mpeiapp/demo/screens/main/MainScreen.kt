@@ -25,7 +25,7 @@ import kekmech.ru.mpeiapp.demo.screens.typography.TypographyScreenNavTarget
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-internal class MainScreenNavTarget(private val greetings: String = "MpeiX UI-Kit") : NavTarget() {
+internal class MainScreenNavTarget(private val greetings: String = "MpeiX UI-Kit") : NavTarget {
 
     override fun resolve(buildContext: BuildContext): Node =
         node(buildContext) { MainScreen(greetings) }
