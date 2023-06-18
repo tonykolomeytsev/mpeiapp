@@ -52,6 +52,7 @@ object MpeixColors {
     val ClassesTypeLab = Color(0xFFE864AB)
 }
 
+@Suppress("LongParameterList")
 @Immutable
 class MpeixPalette internal constructor(
     val primary: Color,

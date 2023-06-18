@@ -15,7 +15,8 @@ coroutines = "1.6.4"
 detekt = "1.22.0"
 composeBom = "2023.05.01"
 composeCompiler = "1.4.7"
-accompanist="0.30.1"
+accompanist = "0.30.1"
+appyx = "1.2.0"
 
 # AndroidX Versions
 appCompat = "1.5.1"
@@ -90,6 +91,9 @@ google-material = { module = "com.google.android.material:material", version.ref
 google-gson = { module = "com.google.code.gson:gson", version = "2.8.8" }
 google-maps = { module = "com.google.android.gms:play-services-maps", version = "17.0.1" }
 
+# Appyx Navigation Library
+appyx-core = { module = "com.bumble.appyx:core", version.ref = "appyx" }
+
 # Koin Libraries
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
@@ -153,7 +157,7 @@ compose-ui-graphics = { module = "androidx.compose.ui:ui-graphics" }
 compose-animation = { module = "androidx.compose.animation:animation" }
 compose-foundation = { module = "androidx.compose.foundation:foundation" }
 compose-material3 = { module = "androidx.compose.material3:material3" }
-activity-compose = { module = "androidx.activity:activity-compose" }
+activity-compose = { module = "androidx.activity:activity-compose", version = "1.7.2" }
 
 ## Accompanist
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist" }

@@ -9,6 +9,8 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
+import org.gradle.kotlin.dsl.withType
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 @Suppress("unused")
 internal class AndroidComposeConventionPlugin : Plugin<Project> {
@@ -24,6 +26,17 @@ internal class AndroidComposeConventionPlugin : Plugin<Project> {
                 @Suppress("UnstableApiUsage")
                 with(composeOptions) {
                     kotlinCompilerExtensionVersion = libs.requiredVersion("composeCompiler")
+                }
+            }
+
+            tasks.withType<KotlinCompile>() {
+                kotlinOptions {
+                    freeCompilerArgs = freeCompilerArgs + listOf(
+                        "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api",
+                        "-opt-in=androidx.compose.foundation.layout.ExperimentalLayoutApi",
+                        "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi",
+                        "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi",
+                    )
                 }
             }
 
