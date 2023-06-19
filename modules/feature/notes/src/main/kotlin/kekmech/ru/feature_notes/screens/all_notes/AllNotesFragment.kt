@@ -42,7 +42,7 @@ internal class AllNotesFragment :
     private val adapter by fastLazy { createAdapter() }
     private val viewBinding by viewBinding(FragmentAllNotesBinding::bind)
 
-    override fun createStore() = dependencies.allNotesFeatureFactory.create()
+    override fun createStore() = dependencies.allNotesStoreFactory.create()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

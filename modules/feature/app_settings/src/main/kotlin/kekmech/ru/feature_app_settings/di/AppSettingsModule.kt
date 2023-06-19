@@ -6,9 +6,9 @@ import kekmech.ru.domain_app_settings.AppSettingsFeatureLauncher
 import kekmech.ru.domain_app_settings.AppSettingsRepository
 import kekmech.ru.feature_app_settings.launcher.AppSettingsFeatureLauncherImpl
 import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesActor
-import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesFeatureFactory
+import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesStoreFactory
 import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsActor
-import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsFeatureFactory
+import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsStoreFactory
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.bind
@@ -22,9 +22,9 @@ val FeatureAppSettingsModule = module {
     } bind SharedPreferences::class
     factoryOf(::AppSettingsRepository)
     factoryOf(::AppSettingsActor) bind AppSettingsActor::class
-    factoryOf(::AppSettingsFeatureFactory)
+    factoryOf(::AppSettingsStoreFactory)
     factoryOf(::AppSettingDependencies)
     factoryOf(::AppSettingsFeatureLauncherImpl) bind AppSettingsFeatureLauncher::class
     factoryOf(::FavoritesActor)
-    factoryOf(::FavoritesFeatureFactory)
+    factoryOf(::FavoritesStoreFactory)
 }

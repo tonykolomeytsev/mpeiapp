@@ -42,7 +42,7 @@ internal class FavoritesFragment :
     private val adapter by fastLazy { createAdapter() }
     private val viewBinding by viewBinding(FragmentFavoritesBinding::bind)
 
-    override fun createStore() = dependencies.favoritesFeatureFactory.create()
+    override fun createStore() = dependencies.favoritesStoreFactory.create()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
