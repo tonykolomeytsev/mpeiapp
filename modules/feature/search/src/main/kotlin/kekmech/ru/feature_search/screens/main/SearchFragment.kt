@@ -57,7 +57,7 @@ internal class SearchFragment : BaseFragment<SearchEvent, SearchEffect, SearchSt
     private val bottomTabsSwitcher by inject<BottomTabsSwitcher>()
     private val viewBinding by viewBinding(FragmentSearchBinding::bind)
 
-    override fun createStore() = dependencies.searchFeatureFactory
+    override fun createStore() = dependencies.searchStoreFactory
         .create(
             getArgument(ARG_QUERY),
             getArgument(ARG_FILTER)

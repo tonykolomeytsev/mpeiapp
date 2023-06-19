@@ -36,8 +36,8 @@ import kekmech.ru.feature_search.item.WeekMinViewHolder
 import kekmech.ru.feature_search.screens.schedule_details.elm.ScheduleDetailsEffect
 import kekmech.ru.feature_search.screens.schedule_details.elm.ScheduleDetailsEvent
 import kekmech.ru.feature_search.screens.schedule_details.elm.ScheduleDetailsEvent.Ui
-import kekmech.ru.feature_search.screens.schedule_details.elm.ScheduleDetailsFeatureFactory
 import kekmech.ru.feature_search.screens.schedule_details.elm.ScheduleDetailsState
+import kekmech.ru.feature_search.screens.schedule_details.elm.ScheduleDetailsStoreFactory
 import org.koin.android.ext.android.inject
 import kekmech.ru.common_schedule.R as common_schedule_R
 import kekmech.ru.coreui.R as coreui_R
@@ -56,7 +56,7 @@ internal class ScheduleDetailsFragment :
     private val bottomTabsSwitcher by inject<BottomTabsSwitcher>()
     private val analytics by screenAnalytics("SearchScheduleDetails")
 
-    override fun createStore() = inject<ScheduleDetailsFeatureFactory>().value
+    override fun createStore() = inject<ScheduleDetailsStoreFactory>().value
         .create(getArgument(ARG_RESULT_ITEM))
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

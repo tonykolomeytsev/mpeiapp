@@ -3,7 +3,7 @@ package kekmech.ru.feature_notes.screens.edit.elm
 import kekmech.ru.domain_notes.dto.Note
 import vivid.money.elmslie.coroutines.ElmStoreCompat
 
-internal class NoteEditFeatureFactory(
+internal class NoteEditStoreFactory(
     private val actor: NoteEditActor,
 ) {
 

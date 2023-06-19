@@ -4,7 +4,7 @@ import kekmech.ru.domain_schedule_models.dto.Classes
 import vivid.money.elmslie.coroutines.ElmStoreCompat
 import java.time.LocalDate
 
-internal class NoteListFeatureFactory(
+internal class NoteListStoreFactory(
     private val actor: NoteListActor,
 ) {
 
