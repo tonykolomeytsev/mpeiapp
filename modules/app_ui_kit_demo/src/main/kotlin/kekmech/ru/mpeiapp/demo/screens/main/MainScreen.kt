@@ -58,7 +58,7 @@ private fun MainScreen(greetings: String) {
             item("colors") {
                 SectionItem(
                     onClick = {
-                        navigator.push(ColorsScreenNavTarget())
+                        navigator.navigate(ColorsScreenNavTarget())
                     },
                     name = "Colors",
                     modifier = Modifier
@@ -69,7 +69,7 @@ private fun MainScreen(greetings: String) {
             item("typography") {
                 SectionItem(
                     onClick = {
-                        navigator.push(TypographyScreenNavTarget())
+                        navigator.navigate(TypographyScreenNavTarget())
                     },
                     name = "Typography",
                     modifier = Modifier
@@ -80,7 +80,7 @@ private fun MainScreen(greetings: String) {
             item("components") {
                 SectionItem(
                     onClick = {
-                        navigator.push(ComponentsScreenNavTarget())
+                        navigator.navigate(ComponentsScreenNavTarget())
                     },
                     name = "Components",
                     modifier = Modifier

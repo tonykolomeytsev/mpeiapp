@@ -46,7 +46,7 @@ private fun ComponentsScreen() {
                     scrolledContainerColor = MpeixTheme.palette.surface,
                 ),
                 navigationIcon = {
-                    IconButton(onClick = { navigator.pop() }) {
+                    IconButton(onClick = { navigator.back() }) {
                         Icon(
                             imageVector = Icons.Default.ArrowBack,
                             contentDescription = null,
