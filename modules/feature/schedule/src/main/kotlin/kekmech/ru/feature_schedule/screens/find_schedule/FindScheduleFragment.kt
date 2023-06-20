@@ -27,8 +27,8 @@ import kekmech.ru.feature_schedule.di.ScheduleDependencies
 import kekmech.ru.feature_schedule.screens.find_schedule.elm.FindScheduleEffect
 import kekmech.ru.feature_schedule.screens.find_schedule.elm.FindScheduleEvent
 import kekmech.ru.feature_schedule.screens.find_schedule.elm.FindScheduleEvent.Ui
-import kekmech.ru.feature_schedule.screens.find_schedule.elm.FindScheduleFeatureFactory
 import kekmech.ru.feature_schedule.screens.find_schedule.elm.FindScheduleState
+import kekmech.ru.feature_schedule.screens.find_schedule.elm.FindScheduleStoreFactory
 import kekmech.ru.feature_schedule.screens.find_schedule.utils.GroupFormatTextWatcher
 import kekmech.ru.strings.Strings
 import org.koin.android.ext.android.inject
@@ -41,7 +41,7 @@ internal class FindScheduleFragment :
     private val viewBinding by viewBinding(FragmentFindScheduleBinding::bind)
     private val resultKey by fastLazy { getArgument<String>(ARG_RESULT_KEY) }
 
-    override fun createStore() = inject<FindScheduleFeatureFactory>().value.create(
+    override fun createStore() = inject<FindScheduleStoreFactory>().value.create(
         getArgument(ARG_CONTINUE_TO),
         getArgument(ARG_SELECT_AFTER)
     )

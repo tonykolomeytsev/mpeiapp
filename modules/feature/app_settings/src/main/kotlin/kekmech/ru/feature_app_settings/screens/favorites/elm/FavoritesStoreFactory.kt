@@ -2,7 +2,7 @@ package kekmech.ru.feature_app_settings.screens.favorites.elm
 
 import vivid.money.elmslie.coroutines.ElmStoreCompat
 
-internal class FavoritesFeatureFactory(
+internal class FavoritesStoreFactory(
     private val actor: FavoritesActor,
 ) {
 

@@ -18,8 +18,8 @@ import kekmech.ru.mpeiapp.databinding.FragmentMainBinding
 import kekmech.ru.mpeiapp.ui.main.di.MainScreenDependencies
 import kekmech.ru.mpeiapp.ui.main.elm.MainScreenEffect
 import kekmech.ru.mpeiapp.ui.main.elm.MainScreenEvent
-import kekmech.ru.mpeiapp.ui.main.elm.MainScreenFeatureFactory
 import kekmech.ru.mpeiapp.ui.main.elm.MainScreenState
+import kekmech.ru.mpeiapp.ui.main.elm.MainScreenStoreFactory
 import org.koin.android.ext.android.inject
 
 @Suppress("TooManyFunctions")
@@ -33,7 +33,7 @@ class MainFragment :
     private val tabsSwitcher by fastLazy { dependencies.bottomTabsSwitcher }
     private val viewBinding by viewBinding(FragmentMainBinding::bind)
 
-    override fun createStore() = MainScreenFeatureFactory.create()
+    override fun createStore() = MainScreenStoreFactory.create()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

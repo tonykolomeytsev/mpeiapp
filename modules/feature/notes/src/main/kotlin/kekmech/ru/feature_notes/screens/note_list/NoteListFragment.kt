@@ -45,7 +45,7 @@ internal class NoteListFragment :
     private val resultKey by fastLazy { getArgument<String>(ARG_RESULT_KEY) }
     private val listConverter by fastLazy { NoteListConverter(requireContext()) }
 
-    override fun createStore() = dependencies.noteListFeatureFactory.create(
+    override fun createStore() = dependencies.noteListStoreFactory.create(
         selectedClasses = getArgument(ARG_SELECTED_CLASSES),
         selectedDate = getArgument(ARG_SELECTED_DATE)
     )
