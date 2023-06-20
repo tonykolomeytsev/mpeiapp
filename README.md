@@ -47,7 +47,7 @@
 ### Стек
 
 + TEA/ELM для presenter слоя на базе Vivid Money [**Elmslie**](https://github.com/vivid-money/elmslie)
-+ Самописная навигация
++ Навигация в Jetpack Compose на базе [**Appyx**](https://github.com/bumble-tech/appyx)
 + **Retrofit** для REST Api
 + **Kotlin Coroutines + Flow** + немножко **RxJava 3** (скоро будет полностью выпилена)
 + **Room** + **KSP** для хранения в БД заметок и избранных расписаний
