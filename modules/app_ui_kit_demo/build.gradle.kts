@@ -25,7 +25,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":common_compose_theme"))
+    implementation(project(":ui_theme"))
     implementation(project(":common_navigation_api"))
     implementation(project(":common_navigation_compose"))
 
