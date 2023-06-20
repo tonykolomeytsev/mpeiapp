@@ -1,4 +1,4 @@
-package kekmech.ru.common_compose_theme.typography
+package kekmech.ru.ui_theme.typography
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -25,9 +25,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import kekmech.ru.common_compose_theme.color.LightMpeixPalette
-import kekmech.ru.common_compose_theme.theme.MpeixTheme
 import kekmech.ru.ui_theme.R
+import kekmech.ru.ui_theme.color.LightMpeixPalette
+import kekmech.ru.ui_theme.theme.MpeixTheme
 
 internal val RobotoFontFamily: FontFamily = FontFamily(
     Font(

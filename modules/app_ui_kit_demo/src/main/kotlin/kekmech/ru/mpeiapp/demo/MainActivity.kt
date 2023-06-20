@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
 import com.bumble.appyx.core.integration.NodeHost
 import com.bumble.appyx.core.integrationpoint.NodeComponentActivity
-import kekmech.ru.common_compose_theme.theme.MpeixTheme
+import kekmech.ru.ui_theme.theme.MpeixTheme
 
 class MainActivity : NodeComponentActivity() {
 

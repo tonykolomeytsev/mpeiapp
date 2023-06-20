@@ -1,4 +1,4 @@
-package kekmech.ru.common_compose_theme.color
+package kekmech.ru.ui_theme.color
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -20,7 +20,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import kekmech.ru.common_compose_theme.typography.RobotoFontFamily
+import kekmech.ru.ui_theme.typography.RobotoFontFamily
 
 @Immutable
 object MpeixColors {
