@@ -4,7 +4,7 @@ import kekmech.ru.feature_search.item.FilterItemType
 import vivid.money.elmslie.core.store.Store
 import vivid.money.elmslie.coroutines.ElmStoreCompat
 
-internal class SearchFeatureFactory(
+internal class SearchStoreFactory(
     private val actor: SearchActor,
 ) {
 

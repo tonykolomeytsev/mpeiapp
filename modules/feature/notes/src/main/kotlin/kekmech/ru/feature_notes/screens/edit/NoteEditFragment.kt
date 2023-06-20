@@ -40,7 +40,7 @@ internal class NoteEditFragment :
     private val viewBinding by viewBinding(FragmentNoteEditBinding::bind)
     private val resultKey by fastLazy { getArgument<String>(ARG_RESULT_KEY) }
 
-    override fun createStore() = dependencies.noteEditFeatureFactory.create(
+    override fun createStore() = dependencies.noteEditStoreFactory.create(
         note = getArgument(ARG_NOTE)
     )
 

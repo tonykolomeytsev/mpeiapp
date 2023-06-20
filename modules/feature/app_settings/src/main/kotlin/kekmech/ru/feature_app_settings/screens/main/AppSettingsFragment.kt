@@ -27,8 +27,8 @@ import kekmech.ru.feature_app_settings.screens.lang.SelectLanguageFragment
 import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsEffect
 import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsEvent
 import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsEvent.Ui
-import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsFeatureFactory
 import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsState
+import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsStoreFactory
 import kekmech.ru.feature_app_settings.screens.main.list.ContributorAdapterItem
 import kekmech.ru.feature_app_settings.screens.map_type.SelectMapTypeFragment
 import kekmech.ru.strings.Strings
@@ -45,7 +45,7 @@ internal class AppSettingsFragment :
     private val analytics by screenAnalytics("AppSettings")
     private val viewBinding by viewBinding(FragmentAppSettingsBinding::bind)
 
-    override fun createStore() = inject<AppSettingsFeatureFactory>().value.create()
+    override fun createStore() = inject<AppSettingsStoreFactory>().value.create()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
