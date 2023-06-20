@@ -29,5 +29,6 @@ dependencies {
     implementation(project(":common_navigation_api"))
     implementation(project(":common_navigation_compose"))
 
+    implementation(libs.compose.activity)
     implementation(libs.appyx.core)
 }
