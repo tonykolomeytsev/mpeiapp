@@ -20,8 +20,8 @@ import kekmech.ru.common_navigation_api.NavTarget
 import kekmech.ru.common_navigation_compose.LocalBackStackNavigator
 import kekmech.ru.mpeiapp.demo.screens.colors.ColorsScreenNavTarget
 import kekmech.ru.mpeiapp.demo.screens.components.ComponentsScreenNavTarget
-import kekmech.ru.mpeiapp.demo.screens.main.ui.SectionItem
 import kekmech.ru.mpeiapp.demo.screens.typography.TypographyScreenNavTarget
+import kekmech.ru.mpeiapp.demo.ui.SectionItem
 import kotlinx.parcelize.Parcelize
 
 @Parcelize

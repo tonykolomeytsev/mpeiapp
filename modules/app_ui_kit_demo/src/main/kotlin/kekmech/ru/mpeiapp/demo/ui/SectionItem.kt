@@ -1,4 +1,4 @@
-package kekmech.ru.mpeiapp.demo.screens.main.ui
+package kekmech.ru.mpeiapp.demo.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
