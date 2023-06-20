@@ -2,19 +2,21 @@ package kekmech.ru.common_compose_theme.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Typography
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import kekmech.ru.common_compose_theme.color.DarkMpeixPalette
 import kekmech.ru.common_compose_theme.color.LightMpeixPalette
 import kekmech.ru.common_compose_theme.color.MpeixPalette
-import kekmech.ru.common_compose_theme.typography.Typography
+import kekmech.ru.common_compose_theme.typography.MpeixTypography
 
 /**
  * Simple MpeiX palette mapped into Material3 palette
@@ -74,6 +76,7 @@ fun MpeixTheme(
     content: @Composable () -> Unit,
 ) {
     val colorScheme = if (darkTheme) DarkColorScheme else LightColorScheme
+    val typography = remember { MpeixTypography() }
 
     val systemUiController = rememberSystemUiController()
     SideEffect {
@@ -84,11 +87,27 @@ fun MpeixTheme(
     }
 
     CompositionLocalProvider(
-        LocalPalette provides if (darkTheme) DarkMpeixPalette else LightMpeixPalette,
+        LocalMpeixPalette provides if (darkTheme) DarkMpeixPalette else LightMpeixPalette,
+        LocalMpeixTypography provides typography,
     ) {
         MaterialTheme(
             colorScheme = colorScheme,
-            typography = Typography,
+            typography = remember {
+                Typography(
+                    headlineLarge = typography.header1,
+                    headlineMedium = typography.header2,
+                    headlineSmall = typography.header3,
+                    titleLarge = typography.header4,
+                    titleMedium = typography.paragraphBigAccent,
+                    titleSmall = typography.paragraphNormalAccent,
+                    bodyLarge = typography.paragraphBig,
+                    bodyMedium = typography.paragraphNormal,
+                    bodySmall = typography.labelBig,
+                    labelLarge = typography.labelBig,
+                    labelMedium = typography.labelNormal,
+                    labelSmall = typography.labelMini,
+                )
+            },
             content = content,
         )
     }
@@ -99,7 +118,18 @@ object MpeixTheme {
     val palette: MpeixPalette
         @Composable
         @ReadOnlyComposable
-        get() = LocalPalette.current
+        get() = LocalMpeixPalette.current
+
+    val typography: MpeixTypography
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalMpeixTypography.current
 }
 
-internal val LocalPalette = staticCompositionLocalOf { LightMpeixPalette }
+internal val LocalMpeixPalette = staticCompositionLocalOf<MpeixPalette> {
+    error("StaticCompositionLocal LocalMpeixPalette not provided")
+}
+
+internal val LocalMpeixTypography = staticCompositionLocalOf<MpeixTypography> {
+    error("StaticCompositionLocal LocalMpeixTypography not provided")
+}
