@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import kekmech.ru.common_compose_theme.theme.MpeixTheme
+import kekmech.ru.ui_theme.theme.MpeixTheme
 
 @Composable
 internal fun SectionItem(

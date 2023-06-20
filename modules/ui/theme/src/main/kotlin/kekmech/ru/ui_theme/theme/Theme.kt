@@ -1,4 +1,4 @@
-package kekmech.ru.common_compose_theme.theme
+package kekmech.ru.ui_theme.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -13,10 +13,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import kekmech.ru.common_compose_theme.color.DarkMpeixPalette
-import kekmech.ru.common_compose_theme.color.LightMpeixPalette
-import kekmech.ru.common_compose_theme.color.MpeixPalette
-import kekmech.ru.common_compose_theme.typography.MpeixTypography
+import kekmech.ru.ui_theme.color.DarkMpeixPalette
+import kekmech.ru.ui_theme.color.LightMpeixPalette
+import kekmech.ru.ui_theme.color.MpeixPalette
+import kekmech.ru.ui_theme.typography.MpeixTypography
 
 /**
  * Simple MpeiX palette mapped into Material3 palette
