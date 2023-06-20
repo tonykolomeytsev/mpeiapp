@@ -1,19 +1,16 @@
 package kekmech.ru.mpeiapp.demo
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
+import com.bumble.appyx.core.integration.NodeHost
+import com.bumble.appyx.core.integrationpoint.NodeComponentActivity
 import kekmech.ru.common_compose_theme.theme.MpeixTheme
-import kekmech.ru.common_compose_theme.typography.MpeixTypography
 
-class MainActivity : ComponentActivity() {
+class MainActivity : NodeComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,26 +19,14 @@ class MainActivity : ComponentActivity() {
             MpeixTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
-                    modifier = Modifier
-                        .fillMaxSize(),
+                    modifier = Modifier.fillMaxSize(),
                     color = MpeixTheme.palette.background,
                 ) {
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.statusBarsPadding(),
-                    )
+                    NodeHost(integrationPoint = appyxIntegrationPoint) {
+                        BackStackRootNode(buildContext = it)
+                    }
                 }
             }
         }
     }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier,
-        style = MpeixTypography.Header1,
-        color = MpeixTheme.palette.content,
-    )
 }
