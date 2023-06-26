@@ -1,24 +1,22 @@
 package kekmech.ru.mpeiapp.demo.screens.components
 
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.unit.dp
 import com.bumble.appyx.core.modality.BuildContext
 import com.bumble.appyx.core.node.Node
 import com.bumble.appyx.core.node.node
 import kekmech.ru.common_navigation_api.NavTarget
 import kekmech.ru.common_navigation_compose.LocalBackStackNavigator
-import kekmech.ru.ui_theme.theme.MpeixTheme
+import kekmech.ru.mpeiapp.demo.screens.components.topappbar.ComponentsTopAppBarNavTarget
+import kekmech.ru.mpeiapp.demo.ui.SectionItem
+import kekmech.ru.ui_kit_topappbar.TopAppBar
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -39,23 +37,28 @@ private fun ComponentsScreen() {
             .nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             TopAppBar(
-                title = { Text(text = "Components", style = MpeixTheme.typography.header3) },
-                scrollBehavior = scrollBehavior,
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MpeixTheme.palette.background,
-                    scrolledContainerColor = MpeixTheme.palette.surface,
-                ),
+                title = "Components",
                 navigationIcon = {
-                    IconButton(onClick = { navigator.back() }) {
-                        Icon(
-                            imageVector = Icons.Default.ArrowBack,
-                            contentDescription = null,
-                        )
+                    BackIconButton {
+                        navigator.back()
                     }
-                }
+                },
+                scrollBehavior = scrollBehavior,
             )
         },
     ) { innerPadding ->
-        Box(modifier = Modifier.padding(innerPadding))
+        LazyColumn(
+            modifier = Modifier.padding(innerPadding),
+            contentPadding = PaddingValues(16.dp),
+        ) {
+            item("Top app bar") {
+                SectionItem(
+                    onClick = {
+                        navigator.navigate(ComponentsTopAppBarNavTarget())
+                    },
+                    name = "Top app bar",
+                )
+            }
+        }
     }
 }
