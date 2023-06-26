@@ -164,6 +164,7 @@ object TopAppBarNavigationIconScope {
     }
 }
 
+@Suppress("StringLiteralDuplication")
 @Preview
 @Composable
 fun TopAppBarPreview() {

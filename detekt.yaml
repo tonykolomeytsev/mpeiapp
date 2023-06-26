@@ -527,7 +527,7 @@ style:
     maxLineLength: 120
     excludePackageStatements: true
     excludeImportStatements: true
-    excludeCommentStatements: false
+    excludeCommentStatements: true
     excludes:
       - '**/mock_server/**'
   MayBeConst:
