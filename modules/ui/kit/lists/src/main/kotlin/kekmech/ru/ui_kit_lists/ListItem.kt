@@ -53,12 +53,18 @@ fun ListItem(
             )
         },
         modifier = modifier,
-        overlineContent = overlineText?.let {
-            {
-                Text(
-                    text = it,
-                    style = MpeixTheme.typography.labelMini,
-                )
+        overlineContent = when {
+            overlineText == null -> null
+            overlineText.isEmpty() -> {
+                {}
+            }
+            else -> {
+                {
+                    Text(
+                        text = overlineText,
+                        style = MpeixTheme.typography.labelMini,
+                    )
+                }
             }
         },
         supportingContent = supportingText?.let {
@@ -173,6 +179,12 @@ private fun ListItemPreview() {
                 headlineText = "Headline Text",
                 overlineText = "Overline Text",
                 supportingText = "Supporting Text",
+                modifier = Modifier.padding(bottom = 8.dp),
+            )
+            ListItem(
+                headlineText = "Headline Text",
+                overlineText = "",
+                supportingText = "Supporting Text\nWith second line",
                 modifier = Modifier.padding(bottom = 8.dp),
             )
         }
