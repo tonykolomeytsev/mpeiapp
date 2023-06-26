@@ -31,6 +31,19 @@ import kekmech.ru.ui_theme.theme.MpeixTheme
  *
  * ![Small top app bar image](https://developer.android.com/images/reference/androidx/compose/material3/small-top-app-bar.png)
  *
+ * Usage example:
+ *
+ * ```kotlin
+ * TopAppBar(
+ *     title = "My screen title",
+ *     navigationIcon = {
+ *         BackIconButton {
+ *             navigator.back()
+ *         }
+ *     },
+ * )
+ * ```
+ *
  * @param title the title to be displayed in the top app bar
  * @param modifier the [Modifier] to be applied to this top app bar
  * @param navigationIcon the navigation icon displayed at the start of the top app bar. This should
@@ -91,6 +104,19 @@ fun TopAppBar(
  *
  * This LargeTopAppBar has slots for a title, navigation icon, and actions. In its default expanded
  * state, the title is displayed in a second row under the navigation and actions.
+ *
+ * Usage example:
+ *
+ * ```kotlin
+ * LargeTopAppBar(
+ *     title = "My screen title",
+ *     navigationIcon = {
+ *         BackIconButton {
+ *             navigator.back()
+ *         }
+ *     },
+ * )
+ * ```
  *
  * @param title the title to be displayed in the top app bar. This title will be used in the app
  * bar's expanded and collapsed states, although in its collapsed state it will be composed with a
