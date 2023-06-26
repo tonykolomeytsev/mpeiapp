@@ -5,8 +5,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -21,7 +19,7 @@ import kekmech.ru.mpeiapp.demo.screens.colors.ColorsScreenNavTarget
 import kekmech.ru.mpeiapp.demo.screens.components.ComponentsScreenNavTarget
 import kekmech.ru.mpeiapp.demo.screens.typography.TypographyScreenNavTarget
 import kekmech.ru.mpeiapp.demo.ui.SectionItem
-import kekmech.ru.ui_theme.theme.MpeixTheme
+import kekmech.ru.ui_kit_topappbar.TopAppBar
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -41,12 +39,8 @@ private fun MainScreen(greetings: String) {
             .nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             TopAppBar(
-                title = { Text(text = greetings, style = MpeixTheme.typography.header3) },
+                title = greetings,
                 scrollBehavior = scrollBehavior,
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MpeixTheme.palette.background,
-                    scrolledContainerColor = MpeixTheme.palette.surface,
-                )
             )
         },
     ) { innerPadding ->
@@ -61,9 +55,7 @@ private fun MainScreen(greetings: String) {
                         navigator.navigate(ColorsScreenNavTarget())
                     },
                     name = "Colors",
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 8.dp)
+                    modifier = Modifier.fillMaxWidth()
                 )
             }
             item("typography") {
@@ -72,9 +64,7 @@ private fun MainScreen(greetings: String) {
                         navigator.navigate(TypographyScreenNavTarget())
                     },
                     name = "Typography",
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 8.dp)
+                    modifier = Modifier.fillMaxWidth()
                 )
             }
             item("components") {
@@ -83,9 +73,7 @@ private fun MainScreen(greetings: String) {
                         navigator.navigate(ComponentsScreenNavTarget())
                     },
                     name = "Components",
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 8.dp)
+                    modifier = Modifier.fillMaxWidth()
                 )
             }
         }
