@@ -104,6 +104,7 @@ private fun TopAppBarScreen() {
             modifier = Modifier.padding(innerPadding),
             contentPadding = PaddingValues(16.dp),
         ) {
+            @Suppress("MagicNumber")
             repeat(25) {
                 item {
                     SectionItem(onClick = { /* no-op */ }, name = "Item $it")
@@ -137,6 +138,7 @@ private fun LargeTopAppBarScreen() {
             modifier = Modifier.padding(innerPadding),
             contentPadding = PaddingValues(16.dp),
         ) {
+            @Suppress("MagicNumber")
             repeat(25) {
                 item {
                     SectionItem(onClick = { /* no-op */ }, name = "Item $it")
