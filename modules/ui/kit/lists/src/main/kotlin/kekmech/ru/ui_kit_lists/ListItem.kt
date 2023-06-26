@@ -24,6 +24,16 @@ import kekmech.ru.ui_theme.theme.MpeixTheme
  * Mapping implementation to [androidx.compose.material3.ListItem].
  * Lists are continuous, vertical indexes of text or images.
  *
+ * Usage example:
+ * ```kotlin
+ * ListItem(
+ *     headlineText = "Profile",
+ *     leadingContent = {
+ *         Icon(MpeixIcons.Person24)
+ *     },
+ * )
+ * ```
+ *
  * @param headlineText the headline content of the list item
  * @param modifier [Modifier] to be applied to the list item
  * @param overlineText the content displayed above the headline content
