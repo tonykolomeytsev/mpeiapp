@@ -59,6 +59,9 @@ object MpeixIcons {
 
     val GroupsOutline24
         @Composable get() = painterResource(R.drawable.ic_groups_outline_24)
+
+    val ArrowBack24
+        @Composable get() = painterResource(R.drawable.ic_arrow_back_24)
 }
 
 @Composable
@@ -87,17 +90,18 @@ fun IconsPreview() {
             columns = GridCells.Fixed(6)
         ) {
             iconItem("Whatshot\nBlack24") { MpeixIcons.WhatshotBlack24 }
-            iconItem("Whatshot\nOutilne24") { MpeixIcons.WhatshotOutline24 }
+            iconItem("Whatshot\nOutline24") { MpeixIcons.WhatshotOutline24 }
             iconItem("Event\nBlack24") { MpeixIcons.EventBlack24 }
-            iconItem("Event\nOutilne24") { MpeixIcons.EventOutline24 }
+            iconItem("Event\nOutline24") { MpeixIcons.EventOutline24 }
             iconItem("Explore\nBlack24") { MpeixIcons.ExploreBlack24 }
-            iconItem("Explore\nOutilne24") { MpeixIcons.ExploreOutline24 }
+            iconItem("Explore\nOutline24") { MpeixIcons.ExploreOutline24 }
             iconItem("Account\nBlack24") { MpeixIcons.AccountBlack24 }
-            iconItem("Account\nOutilne24") { MpeixIcons.AccountOutline24 }
+            iconItem("Account\nOutline24") { MpeixIcons.AccountOutline24 }
             iconItem("Close24") { MpeixIcons.Close24 }
             iconItem("Search24") { MpeixIcons.Search24 }
             iconItem("Person\nOutline24") { MpeixIcons.PersonOutline24 }
-            iconItem("Groups\nOutilne24") { MpeixIcons.GroupsOutline24 }
+            iconItem("Groups\nOutline24") { MpeixIcons.GroupsOutline24 }
+            iconItem("Arrow\nBack24") { MpeixIcons.ArrowBack24 }
         }
     }
 }
