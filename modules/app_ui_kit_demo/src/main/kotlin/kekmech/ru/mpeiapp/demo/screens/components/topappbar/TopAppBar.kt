@@ -15,6 +15,7 @@ import com.bumble.appyx.core.node.node
 import kekmech.ru.common_navigation_api.NavTarget
 import kekmech.ru.common_navigation_compose.LocalBackStackNavigator
 import kekmech.ru.mpeiapp.demo.ui.SectionItem
+import kekmech.ru.mpeiapp.demo.ui.UiKitScreen
 import kekmech.ru.ui_kit_topappbar.LargeTopAppBar
 import kekmech.ru.ui_kit_topappbar.TopAppBar
 import kotlinx.parcelize.Parcelize
@@ -44,18 +45,7 @@ internal class LargeTopAppBarNavTarget : NavTarget {
 private fun ComponentsTopAppBarScreen() {
     val navigator = LocalBackStackNavigator.current
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = "Top app bar",
-                navigationIcon = {
-                    BackIconButton {
-                        navigator.back()
-                    }
-                },
-            )
-        }
-    ) { innerPadding ->
+    UiKitScreen(title = "Top app bar") { innerPadding ->
         LazyColumn(
             modifier = Modifier.padding(innerPadding),
             contentPadding = PaddingValues(16.dp),

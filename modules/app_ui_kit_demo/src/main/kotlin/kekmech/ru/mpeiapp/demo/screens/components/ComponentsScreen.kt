@@ -3,11 +3,8 @@ package kekmech.ru.mpeiapp.demo.screens.components
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
 import com.bumble.appyx.core.modality.BuildContext
 import com.bumble.appyx.core.node.Node
@@ -16,7 +13,7 @@ import kekmech.ru.common_navigation_api.NavTarget
 import kekmech.ru.common_navigation_compose.LocalBackStackNavigator
 import kekmech.ru.mpeiapp.demo.screens.components.topappbar.ComponentsTopAppBarNavTarget
 import kekmech.ru.mpeiapp.demo.ui.SectionItem
-import kekmech.ru.ui_kit_topappbar.TopAppBar
+import kekmech.ru.mpeiapp.demo.ui.UiKitScreen
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -30,23 +27,8 @@ internal class ComponentsScreenNavTarget : NavTarget {
 @Composable
 private fun ComponentsScreen() {
     val navigator = LocalBackStackNavigator.current
-    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
-    Scaffold(
-        modifier = Modifier
-            .nestedScroll(scrollBehavior.nestedScrollConnection),
-        topBar = {
-            TopAppBar(
-                title = "Components",
-                navigationIcon = {
-                    BackIconButton {
-                        navigator.back()
-                    }
-                },
-                scrollBehavior = scrollBehavior,
-            )
-        },
-    ) { innerPadding ->
+    UiKitScreen(title = "Components") { innerPadding ->
         LazyColumn(
             modifier = Modifier.padding(innerPadding),
             contentPadding = PaddingValues(16.dp),
