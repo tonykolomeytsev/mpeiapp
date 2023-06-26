@@ -23,6 +23,7 @@ internal class ListItemScreenNavTarget : NavTarget {
 }
 
 @Composable
+@Suppress("LongMethod", "StringLiteralDuplication")
 private fun ListItemScreen() {
     UiKitScreen(title = "ListItem") { innerPadding ->
         LazyColumn(
