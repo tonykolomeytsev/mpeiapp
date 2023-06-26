@@ -96,8 +96,8 @@ fun MpeixTheme(
                 Typography(
                     headlineLarge = typography.header1,
                     headlineMedium = typography.header2,
-                    headlineSmall = typography.header3,
-                    titleLarge = typography.header4,
+                    headlineSmall = typography.header4,
+                    titleLarge = typography.header3,
                     titleMedium = typography.paragraphBigAccent,
                     titleSmall = typography.paragraphNormalAccent,
                     bodyLarge = typography.paragraphBig,

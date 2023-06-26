@@ -15,6 +15,7 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kekmech.ru.ui_icons.MpeixIcons
@@ -61,6 +62,8 @@ fun TopAppBar(
                 text = title,
                 style = MpeixTheme.typography.header3,
                 color = LocalContentColor.current,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
             )
         },
         modifier = modifier,
@@ -118,8 +121,9 @@ fun LargeTopAppBar(
         title = {
             Text(
                 text = title,
-                style = MpeixTheme.typography.header2,
                 color = LocalContentColor.current,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
             )
         },
         modifier = modifier,
@@ -173,7 +177,7 @@ fun TopAppBarPreview() {
             )
             Spacer(modifier = Modifier.height(16.dp))
             TopAppBar(
-                title = "Title",
+                title = "Very super giga long title with overflow",
                 navigationIcon = { CloseIconButton { /* no-op */ } },
             )
         }
@@ -188,7 +192,7 @@ fun LargeTopAppBarPreview() {
             LargeTopAppBar(title = "Title")
             Spacer(modifier = Modifier.height(16.dp))
             LargeTopAppBar(
-                title = "Title",
+                title = "Very long long title with overflow",
                 navigationIcon = { BackIconButton { /* no-op */ } },
             )
         }
