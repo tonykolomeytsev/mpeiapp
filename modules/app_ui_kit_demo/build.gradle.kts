@@ -26,6 +26,7 @@ android {
 
 dependencies {
     implementation(project(":ui_theme"))
+    implementation(project(":ui_kit_topappbar"))
     implementation(project(":common_navigation_api"))
     implementation(project(":common_navigation_compose"))
 

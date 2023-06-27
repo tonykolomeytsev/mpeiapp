@@ -29,7 +29,9 @@ internal fun SectionItem(
         colors = CardDefaults.outlinedCardColors(),
         border = CardDefaults.outlinedCardBorder(),
         elevation = CardDefaults.outlinedCardElevation(),
-        modifier = modifier.wrapContentHeight(),
+        modifier = modifier
+            .wrapContentHeight()
+            .padding(bottom = 8.dp),
     ) {
         Box(
             modifier = Modifier
