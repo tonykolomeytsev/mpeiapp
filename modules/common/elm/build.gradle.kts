@@ -1,5 +1,6 @@
 plugins {
     id("mpeix.android.lib")
+    id("mpeix.android.compose")
 }
 
 dependencies {
@@ -7,6 +8,7 @@ dependencies {
     implementation(libs.androidx.coreKtx)
     implementation(libs.androidx.lifecycleExtensions)
     implementation(libs.google.material)
+    implementation(libs.koin.compose)
 
     implementation(libs.rx.java)
     implementation(libs.vivid.elmslie.android)
