@@ -42,6 +42,7 @@ private val LightColorScheme = lightColorScheme(
     surfaceVariant = LightMpeixPalette.surfacePlus3,
     onSurfaceVariant = LightMpeixPalette.content,
     outline = LightMpeixPalette.outline,
+    outlineVariant = LightMpeixPalette.outline.copy(alpha = 0.5f),
 )
 
 /**
@@ -68,6 +69,7 @@ private val DarkColorScheme = darkColorScheme(
     surfaceVariant = DarkMpeixPalette.surfacePlus3,
     onSurfaceVariant = DarkMpeixPalette.content,
     outline = DarkMpeixPalette.outline,
+    outlineVariant = DarkMpeixPalette.outline.copy(alpha = 0.5f),
 )
 
 @Composable

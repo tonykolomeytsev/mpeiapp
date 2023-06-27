@@ -11,6 +11,7 @@ import com.bumble.appyx.core.node.Node
 import com.bumble.appyx.core.node.node
 import kekmech.ru.common_navigation_api.NavTarget
 import kekmech.ru.common_navigation_compose.LocalBackStackNavigator
+import kekmech.ru.mpeiapp.demo.screens.components.lists.ListItemScreenNavTarget
 import kekmech.ru.mpeiapp.demo.screens.components.topappbar.ComponentsTopAppBarNavTarget
 import kekmech.ru.mpeiapp.demo.ui.SectionItem
 import kekmech.ru.mpeiapp.demo.ui.UiKitScreen
@@ -33,6 +34,14 @@ private fun ComponentsScreen() {
             modifier = Modifier.padding(innerPadding),
             contentPadding = PaddingValues(16.dp),
         ) {
+            item("ListItem") {
+                SectionItem(
+                    onClick = {
+                        navigator.navigate(ListItemScreenNavTarget())
+                    },
+                    name = "ListItem",
+                )
+            }
             item("Top app bar") {
                 SectionItem(
                     onClick = {
