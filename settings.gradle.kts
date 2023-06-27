@@ -47,9 +47,11 @@ rootProject.name = "mpeix"
 includeBuild("build-logic")
 
 // Include all submodules
+private val excludedDirs = setOf("build", "gradle", ".gradle", "src", "build-logic")
 private val rootModulesDir = File(rootProject.projectDir, "modules")
 private val resourcesDir = File(rootModulesDir, "resources")
 rootModulesDir.walk()
+    .onEnter { it.name !in excludedDirs }
     .filter { it.isBuildGradleScript() }
     .filter { it != rootProject.buildFile }
     .mapNotNull { it.parentFile }
