@@ -15,24 +15,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.bumble.appyx.core.modality.BuildContext
 import com.bumble.appyx.core.node.Node
-import kekmech.ru.common_elm.ElmNavTarget
+import kekmech.ru.common_elm.elmNode
 import kekmech.ru.common_elm.rememberAcceptAction
 import kekmech.ru.common_kotlin.Resource
+import kekmech.ru.common_navigation_api.NavTarget
 import kekmech.ru.mpeiapp.demo.screens.elmslie.elm.ElmDemoStore
 import kekmech.ru.mpeiapp.demo.screens.elmslie.elm.ElmDemoStoreFactory
 import kekmech.ru.ui_kit_topappbar.TopAppBar
 import kotlinx.parcelize.Parcelize
-import kekmech.ru.mpeiapp.demo.screens.elmslie.elm.ElmDemoEffect as Effect
 import kekmech.ru.mpeiapp.demo.screens.elmslie.elm.ElmDemoEvent as Event
 import kekmech.ru.mpeiapp.demo.screens.elmslie.elm.ElmDemoState as ElmState
 
 @Parcelize
 internal class ElmDemoScreenNavTarget(
     private val randomArgument: Int,
-) : ElmNavTarget<Event, Effect, ElmState>() {
+) : NavTarget {
 
     override fun resolve(buildContext: BuildContext): Node =
-        elmNode<ElmDemoStoreFactory>(
+        elmNode<ElmDemoStoreFactory, _, _, _>(
             buildContext = buildContext,
             factory = { create(randomArgument = randomArgument) },
         ) { _, store, state -> ElmDemoScreen(store = store, state = state) }
