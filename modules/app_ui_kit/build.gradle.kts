@@ -31,7 +31,13 @@ dependencies {
     implementation(project(":ui_kit_topappbar"))
     implementation(project(":common_navigation_api"))
     implementation(project(":common_navigation_compose"))
+    implementation(project(":common_elm"))
+    implementation(project(":common_kotlin"))
 
     implementation(libs.compose.activity)
     implementation(libs.appyx.core)
+    implementation(libs.vivid.elmslie.core)
+    implementation(libs.vivid.elmslie.coroutines)
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
 }
