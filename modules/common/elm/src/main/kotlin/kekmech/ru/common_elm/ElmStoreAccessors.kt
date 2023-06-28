@@ -54,10 +54,10 @@ inline fun <reified Factory : Any, Event : Any, Effect : Any, State : Any> remem
  *
  * Usage:
  * ```kotlin
- * val acceptAction = store.rememberAcceptAction()
+ * val accept = store.rememberAcceptAction()
  *
  * SomeView(
- *     someCallback = { acceptAction(Ui.Some.Event) },
+ *     someCallback = { accept(Ui.Some.Event) },
  * )
  * ```
  *
@@ -74,10 +74,10 @@ interface ElmAcceptAction<Event : Any> {
  *
  * Usage:
  * ```kotlin
- * val acceptAction = store.rememberAcceptAction()
+ * val accept = store.rememberAcceptAction()
  *
  * SomeView(
- *     someCallback = { acceptAction(Ui.Some.Event) },
+ *     someCallback = { accept(Ui.Some.Event) },
  * )
  * ```
  *
@@ -97,5 +97,5 @@ inline fun <reified Event : Any> Store<Event, *, *>.rememberAcceptAction(): ElmA
  * Collect ELM state as Compose [State].
  */
 @Composable
-inline fun <reified ElmState : Any> Store<*, *, ElmState>.asState(): State<ElmState> =
+fun <ElmState : Any> Store<*, *, ElmState>.asState(): State<ElmState> =
     states().collectAsState(initial = currentState)

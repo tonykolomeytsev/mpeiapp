@@ -7,6 +7,7 @@ dependencies {
     implementation(libs.androidx.appCompat)
     implementation(libs.androidx.coreKtx)
     implementation(libs.androidx.lifecycleExtensions)
+    implementation(libs.appyx.core)
     implementation(libs.google.material)
     implementation(libs.koin.compose)
 
@@ -15,4 +16,5 @@ dependencies {
     implementation(libs.vivid.elmslie.core)
 
     implementation(project(":common_android"))
+    implementation(project(":common_navigation_api"))
 }
