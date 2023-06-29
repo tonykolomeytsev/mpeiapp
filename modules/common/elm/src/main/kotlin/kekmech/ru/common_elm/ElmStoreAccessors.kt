@@ -1,6 +1,7 @@
 package kekmech.ru.common_elm
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
 import org.koin.compose.LocalKoinScope
@@ -104,3 +105,24 @@ inline fun <reified Event : Any> Store<Event, *, *>.rememberAcceptAction(): ElmA
             }
         }
     }
+
+/**
+ * Support function for ELM Store Effects handling.
+ *
+ * Usage:
+ * ```kotlin
+ * EffectHandler(store.effects()) { effect ->
+ *     is Effect.MyEffect -> ...
+ * }
+ * ```
+ */
+@Composable
+fun <Effect : Any> EffectHandler(
+    effects: Flow<Effect>,
+    effectHandler: (Effect) -> Unit,
+) {
+    val currentEffectHandler by rememberUpdatedState(effectHandler)
+    LaunchedEffect(Unit) {
+        effects.collect { currentEffectHandler.invoke(it) }
+    }
+}
