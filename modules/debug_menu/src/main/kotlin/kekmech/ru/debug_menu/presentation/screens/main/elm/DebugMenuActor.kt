@@ -19,8 +19,8 @@ internal class DebugMenuActor(
             is Command.GetAppEnvironment -> actorFlow {
                 appEnvironmentRepository.getAppEnvironment()
             }.mapEvents({ Internal.GetAppEnvironmentSuccess(it) })
-            is Command.ChangeAppEnvironment -> actorFlow {
+            is Command.SetAppEnvironment -> actorFlow {
                 appEnvironmentRepository.setAppEnvironment(command.appEnvironment)
-            }.mapEvents({ Internal.ChangeAppEnvironmentSuccess(command.appEnvironment) })
+            }.mapEvents({ Internal.SetAppEnvironmentSuccess(command.appEnvironment) })
         }
 }

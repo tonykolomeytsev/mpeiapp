@@ -15,19 +15,27 @@ internal sealed interface DebugMenuEvent {
     sealed interface Ui : DebugMenuEvent {
 
         object Init : Ui
+
+        sealed interface Click : Ui {
+
+            data class Environment(val appEnvironment: AppEnvironment) : Click
+        }
     }
 
     sealed interface Internal : DebugMenuEvent {
 
         data class GetAppEnvironmentSuccess(val appEnvironment: AppEnvironment) : Internal
-        data class ChangeAppEnvironmentSuccess(val appEnvironment: AppEnvironment) : Internal
+        data class SetAppEnvironmentSuccess(val appEnvironment: AppEnvironment) : Internal
     }
 }
 
 internal sealed interface DebugMenuCommand {
 
     object GetAppEnvironment : DebugMenuCommand
-    data class ChangeAppEnvironment(val appEnvironment: AppEnvironment) : DebugMenuCommand
+    data class SetAppEnvironment(val appEnvironment: AppEnvironment) : DebugMenuCommand
 }
 
-internal sealed interface DebugMenuEffect
+internal sealed interface DebugMenuEffect {
+
+    object ReloadApp : DebugMenuEffect
+}
