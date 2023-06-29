@@ -4,7 +4,7 @@
 
     <application>
         <service
-            android:name="kekmech.ru.debug_menu.presentation.DebugMenuService"
+            android:name="kekmech.ru.debug_menu.initializer.DebugMenuService"
             android:exported="false" />
         <activity
             android:name="kekmech.ru.debug_menu.presentation.DebugMenuActivity"

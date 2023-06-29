@@ -15,6 +15,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.bumble.appyx.core.modality.BuildContext
 import com.bumble.appyx.core.node.Node
@@ -22,6 +23,7 @@ import kekmech.ru.common_elm.elmNode
 import kekmech.ru.common_elm.rememberAcceptAction
 import kekmech.ru.common_kotlin.Resource
 import kekmech.ru.common_navigation_api.NavTarget
+import kekmech.ru.debug_menu.R
 import kekmech.ru.debug_menu.presentation.screens.main.elm.DebugMenuEvent.Ui
 import kekmech.ru.debug_menu.presentation.screens.main.elm.DebugMenuState
 import kekmech.ru.debug_menu.presentation.screens.main.elm.DebugMenuStore
@@ -47,7 +49,7 @@ private fun DebugMenuScreen(
     store: DebugMenuStore,
     state: DebugMenuState,
 ) {
-    var openDialog by remember { mutableStateOf(false) }
+    var openBackendEnvironmentDialog by remember { mutableStateOf(false) }
     val accept = store.rememberAcceptAction()
 
     Scaffold(
@@ -59,36 +61,17 @@ private fun DebugMenuScreen(
             modifier = Modifier.padding(innerPadding),
         ) {
             item("environment") {
-                Column {
-                    ListItem(
-                        headlineText = "Backend environment",
-                        modifier = Modifier
-                            .clickable { openDialog = true },
-                        trailingContent = {
-                            Text(
-                                text = when (val env = state.appEnvironment) {
-                                    is Resource.Data -> env.value.name
-                                    is Resource.Loading -> "Loading..."
-                                    is Resource.Error -> "Error!"
-                                },
-                                style = MpeixTheme.typography.paragraphNormal,
-                            )
-                        }
-                    )
-                    Text(
-                        text = "For the 'Backend environment' setting to take effect, " +
-                                "you need to restart the application",
-                        style = MpeixTheme.typography.paragraphNormal,
-                        modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp),
-                    )
-                }
+                BackendEnvironmentItem(
+                    appEnvironment = state.appEnvironment,
+                    onClick = { openBackendEnvironmentDialog = true },
+                )
             }
         }
     }
 
-    if (openDialog) {
+    if (openBackendEnvironmentDialog) {
         AlertDialog(
-            onDismissRequest = { openDialog = false },
+            onDismissRequest = { openBackendEnvironmentDialog = false },
         ) {
             Surface(
                 shape = RoundedCornerShape(28.dp),
@@ -103,7 +86,7 @@ private fun DebugMenuScreen(
                                 modifier = Modifier
                                     .clickable {
                                         accept(Ui.Click.Environment(env))
-                                        openDialog = false
+                                        openBackendEnvironmentDialog = false
                                     },
                             )
                         }
@@ -111,5 +94,38 @@ private fun DebugMenuScreen(
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun BackendEnvironmentItem(
+    appEnvironment: Resource<AppEnvironment>,
+    onClick: () -> Unit,
+) {
+    Column {
+        ListItem(
+            headlineText = "Backend environment",
+            modifier = Modifier
+                .clickable(onClick = onClick),
+            leadingContent = {
+                Icon(painterResource(R.drawable.ic_category_24))
+            },
+            trailingContent = {
+                Text(
+                    text = when (appEnvironment) {
+                        is Resource.Data -> appEnvironment.value.name
+                        is Resource.Loading -> "Loading..."
+                        is Resource.Error -> "Error!"
+                    },
+                    style = MpeixTheme.typography.paragraphNormal,
+                )
+            }
+        )
+        Text(
+            text = "For the 'Backend environment' setting to take effect, " +
+                    "you need to restart the application",
+            style = MpeixTheme.typography.paragraphNormal,
+            modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp),
+        )
     }
 }

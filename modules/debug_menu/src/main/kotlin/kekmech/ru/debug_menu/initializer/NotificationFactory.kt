@@ -1,4 +1,4 @@
-package kekmech.ru.debug_menu.presentation
+package kekmech.ru.debug_menu.initializer
 
 import android.app.Notification
 import android.app.NotificationChannel
