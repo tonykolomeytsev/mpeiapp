@@ -17,9 +17,17 @@ internal sealed interface DebugMenuEvent {
         object Init : Ui
     }
 
-    sealed interface Internal : DebugMenuEvent
+    sealed interface Internal : DebugMenuEvent {
+
+        data class GetAppEnvironmentSuccess(val appEnvironment: AppEnvironment) : Internal
+        data class ChangeAppEnvironmentSuccess(val appEnvironment: AppEnvironment) : Internal
+    }
 }
 
-internal sealed interface DebugMenuCommand
+internal sealed interface DebugMenuCommand {
+
+    object GetAppEnvironment : DebugMenuCommand
+    data class ChangeAppEnvironment(val appEnvironment: AppEnvironment) : DebugMenuCommand
+}
 
 internal sealed interface DebugMenuEffect

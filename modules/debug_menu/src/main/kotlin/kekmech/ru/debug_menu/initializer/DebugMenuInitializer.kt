@@ -1,4 +1,4 @@
-package kekmech.ru.debug_menu.launcher
+package kekmech.ru.debug_menu.initializer
 
 import android.content.Context
 import android.content.Intent

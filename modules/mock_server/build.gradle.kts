@@ -8,8 +8,11 @@ dependencies {
     implementation(libs.ktor.server.netty)
     implementation(libs.ktor.server.content.negotiation)
     implementation(libs.ktor.serialization.gson)
+    implementation(libs.koin.core)
 
     implementation(project(":common_android"))
+    implementation(project(":common_app_lifecycle"))
+    implementation(project(":common_di"))
     implementation(project(":common_kotlin"))
     implementation(project(":common_network"))
 

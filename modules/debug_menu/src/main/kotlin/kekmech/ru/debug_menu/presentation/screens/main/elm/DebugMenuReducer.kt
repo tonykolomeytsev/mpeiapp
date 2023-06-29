@@ -1,5 +1,6 @@
 package kekmech.ru.debug_menu.presentation.screens.main.elm
 
+import kekmech.ru.common_kotlin.toResource
 import kekmech.ru.debug_menu.presentation.screens.main.elm.DebugMenuEvent.Internal
 import kekmech.ru.debug_menu.presentation.screens.main.elm.DebugMenuEvent.Ui
 import vivid.money.elmslie.core.store.dsl_reducer.ScreenDslReducer
@@ -13,11 +14,20 @@ internal class DebugMenuReducer : ScreenDslReducer<Event, Ui, Internal, State, E
     internalEventClass = Internal::class,
 ) {
 
-    override fun Result.internal(event: Internal): Any? {
-        TODO("Not yet implemented")
-    }
+    override fun Result.internal(event: Internal) =
+        when (event) {
+            is Internal.GetAppEnvironmentSuccess ->
+                state { copy(appEnvironment = event.appEnvironment.toResource()) }
+            is Internal.ChangeAppEnvironmentSuccess ->
+                state { copy(appEnvironment = event.appEnvironment.toResource()) }
+        }
 
-    override fun Result.ui(event: Ui): Any? {
-        TODO("Not yet implemented")
-    }
+    override fun Result.ui(event: Ui) =
+        when (event) {
+            is Ui.Init -> {
+                commands {
+                    +Command.GetAppEnvironment
+                }
+            }
+        }
 }

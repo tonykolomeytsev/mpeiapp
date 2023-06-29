@@ -2,6 +2,7 @@ package kekmech.ru.feature_app_settings.di
 
 import android.content.Context
 import android.content.SharedPreferences
+import kekmech.ru.domain_app_settings.AppEnvironmentRepository
 import kekmech.ru.domain_app_settings.AppSettingsFeatureLauncher
 import kekmech.ru.domain_app_settings.AppSettingsRepository
 import kekmech.ru.feature_app_settings.launcher.AppSettingsFeatureLauncherImpl
@@ -21,6 +22,7 @@ val FeatureAppSettingsModule = module {
         androidContext().getSharedPreferences(MpeixPreferencesName, Context.MODE_PRIVATE)
     } bind SharedPreferences::class
     factoryOf(::AppSettingsRepository)
+    factoryOf(::AppEnvironmentRepository)
     factoryOf(::AppSettingsActor) bind AppSettingsActor::class
     factoryOf(::AppSettingsStoreFactory)
     factoryOf(::AppSettingDependencies)

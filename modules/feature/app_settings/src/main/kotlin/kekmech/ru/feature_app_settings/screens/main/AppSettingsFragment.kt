@@ -6,7 +6,6 @@ import android.os.Looper
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.squareup.picasso.Picasso
 import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_analytics.ext.screenAnalytics
@@ -18,10 +17,8 @@ import kekmech.ru.common_navigation.addScreenForward
 import kekmech.ru.common_navigation.showDialog
 import kekmech.ru.coreui.attachScrollListenerForAppBarLayoutShadow
 import kekmech.ru.coreui.items.*
-import kekmech.ru.domain_app_settings_models.AppEnvironment
 import kekmech.ru.feature_app_settings.R
 import kekmech.ru.feature_app_settings.databinding.FragmentAppSettingsBinding
-import kekmech.ru.feature_app_settings.di.AppSettingDependencies
 import kekmech.ru.feature_app_settings.screens.favorites.FavoritesFragment
 import kekmech.ru.feature_app_settings.screens.lang.SelectLanguageFragment
 import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsEffect
@@ -40,7 +37,6 @@ internal class AppSettingsFragment :
     BaseFragment<AppSettingsEvent, AppSettingsEffect, AppSettingsState>(R.layout.fragment_app_settings),
     ActivityResultListener {
 
-    private val dependencies by inject<AppSettingDependencies>()
     private val adapter by fastLazy { createAdapter() }
     private val analytics by screenAnalytics("AppSettings")
     private val viewBinding by viewBinding(FragmentAppSettingsBinding::bind)
@@ -117,10 +113,6 @@ internal class AppSettingsFragment :
 
     private fun onItemClick(itemId: Int?) =
         when (itemId) {
-            ITEM_DEBUG_CLEAR_SELECTED_GROUP -> {
-                store.accept(Ui.Action.ClearSelectedGroup)
-                dependencies.onboardingFeatureLauncher.launchWelcomePage(true)
-            }
             ITEM_SUPPORT -> {
                 analytics.sendClick("VkGroup")
                 requireContext().openLinkExternal("https://vk.com/kekmech")
@@ -140,9 +132,6 @@ internal class AppSettingsFragment :
             ITEM_MAP_TYPE -> {
                 analytics.sendClick("SelectMapType")
                 store.accept(Ui.Click.MapType)
-            }
-            ITEM_DEBUG_SELECT_ENVIRONMENT -> {
-                showEnvironmentSelectorDialog()
             }
             else -> { /* no-op */
             }
@@ -168,21 +157,6 @@ internal class AppSettingsFragment :
             .postDelayed({ activity?.recreate() }, ACTIVITY_RECREATION_DELAY)
     }
 
-    private fun showEnvironmentSelectorDialog() {
-        val environments = AppEnvironment.values().map(Any::toString).toTypedArray()
-        MaterialAlertDialogBuilder(requireContext())
-            .setTitle("Выбрать окружение")
-            .setItems(environments) { dialog, which ->
-                dialog?.dismiss()
-                store.accept(
-                    Ui.Action.ChangeBackendEnvironment(
-                        AppEnvironment.valueOf(environments[which])
-                    )
-                )
-            }
-            .show()
-    }
-
     private fun RecyclerView.disablePicassoLoadingOnScroll() =
         addOnScrollListener(object : RecyclerView.OnScrollListener() {
 
@@ -202,13 +176,11 @@ internal class AppSettingsFragment :
         const val TOGGLE_SNOW_FLAKES = 3
         const val TOGGLE_SHOW_NAV_FAB = 4
 
-        const val ITEM_DEBUG_CLEAR_SELECTED_GROUP = 0
         const val ITEM_SUPPORT = 1
         const val ITEM_GITHUB = 2
         const val ITEM_FAVORITES = 3
         const val ITEM_LANGUAGE = 4
         const val ITEM_MAP_TYPE = 5
-        const val ITEM_DEBUG_SELECT_ENVIRONMENT = 6
 
         private const val LANGUAGE_RESULT_KEY = "LANGUAGE_RESULT_KEY"
         private const val MAP_TYPE_RESULT_KEY = "MAP_TYPE_RESULT_KEY"
