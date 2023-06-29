@@ -43,7 +43,11 @@ inline fun <reified Factory : Any, Event : Any, Effect : Any, State : Any> remem
     crossinline factory: Factory.() -> Store<Event, Effect, State>,
 ): Store<Event, Effect, State> {
     val storeFactoryInstance = rememberKoinInject<Factory>()
-    return remember(Factory::class) { factory.invoke(storeFactoryInstance) }
+    return remember(Factory::class) {
+        factory
+            .invoke(storeFactoryInstance)
+            .also { it.start() }
+    }
 }
 
 /**
