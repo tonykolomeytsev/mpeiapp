@@ -12,6 +12,7 @@ import com.google.android.gms.maps.MapsInitializer
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kekmech.ru.common_android.onActivityResult
+import kekmech.ru.common_app_lifecycle.MainActivityLifecycleObserver
 import kekmech.ru.common_elm.DisposableDelegate
 import kekmech.ru.common_elm.DisposableDelegateImpl
 import kekmech.ru.common_navigation.BackButtonListener
@@ -22,6 +23,7 @@ import kekmech.ru.domain_app_settings.AppSettingsRepository
 import kekmech.ru.domain_main_screen.MainScreenLauncher
 import kekmech.ru.domain_onboarding.OnboardingFeatureLauncher
 import kekmech.ru.mpeiapp.deeplink.DeeplinkHandlersProcessor
+import org.koin.android.ext.android.getKoin
 import org.koin.android.ext.android.inject
 import timber.log.Timber
 import kekmech.ru.common_navigation.R as common_navigation_R
@@ -36,10 +38,14 @@ class MainActivity : AppCompatActivity(), DisposableDelegate by DisposableDelega
     private val mainScreenLauncher: MainScreenLauncher by inject()
     private val deeplinkHandlersProcessor: DeeplinkHandlersProcessor by inject()
     private val deviceIdProvider: DeviceIdProvider by inject()
+    private val mainActivityLifecycleObservers: List<MainActivityLifecycleObserver> by lazy {
+        getKoin().getAll()
+    }
 
     @Suppress("MagicNumber", "MissingPermission", "UnnecessaryApply")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        mainActivityLifecycleObservers.forEach { it.onCreate(this) }
 
         try {
             MapsInitializer.initialize(this)

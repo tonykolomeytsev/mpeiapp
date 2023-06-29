@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Build
 import io.reactivex.rxjava3.exceptions.UndeliverableException
 import io.reactivex.rxjava3.plugins.RxJavaPlugins
+import kekmech.ru.common_app_lifecycle.AppLifecycleObserver
 import kekmech.ru.common_elm.TimberLogger
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_navigation.Router
@@ -12,9 +13,12 @@ import kekmech.ru.common_navigation.di.RouterHolder
 import kekmech.ru.common_network.retrofit.ServiceUrlResolver
 import kekmech.ru.domain_app_settings_models.AppEnvironment
 import kekmech.ru.mpeiapp.di.AppModule
+import org.koin.android.ext.android.getKoin
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
+import org.koin.android.java.KoinAndroidApplication
+import org.koin.core.KoinApplication
 import org.koin.core.context.startKoin
 import timber.log.Timber
 import timber.log.Timber.DebugTree
@@ -38,10 +42,14 @@ class MpeixApp : Application(),
             )
         }.getOrDefault(AppEnvironment.PROD)
     }
+    private val appLifecycleObservers: List<AppLifecycleObserver> by lazy { getKoin().getAll() }
 
     @Suppress("MagicNumber")
     override fun onCreate() {
         super.onCreate()
+        initKoin()
+        appLifecycleObservers.forEach { it.onCreate(applicationContext) }
+
         RxJavaPlugins.setErrorHandler { e ->
             if (e is UndeliverableException) {
                 // Merely log undeliverable exceptions
@@ -55,7 +63,6 @@ class MpeixApp : Application(),
         }
         ServiceUrlResolver.setAppEnvironment(appEnvironment)
         RemoteConfig.setup()
-        initKoin()
         initTimber()
         if (Build.VERSION.SDK_INT < 25) LocaleContextWrapper.updateResourcesV24(this)
         MpeixDevTools.init(
