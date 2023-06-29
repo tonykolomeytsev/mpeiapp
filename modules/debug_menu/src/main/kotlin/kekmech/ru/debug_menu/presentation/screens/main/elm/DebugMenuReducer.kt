@@ -18,16 +18,19 @@ internal class DebugMenuReducer : ScreenDslReducer<Event, Ui, Internal, State, E
         when (event) {
             is Internal.GetAppEnvironmentSuccess ->
                 state { copy(appEnvironment = event.appEnvironment.toResource()) }
-            is Internal.ChangeAppEnvironmentSuccess ->
+            is Internal.SetAppEnvironmentSuccess -> {
                 state { copy(appEnvironment = event.appEnvironment.toResource()) }
+                effects { +Effect.ReloadApp }
+            }
         }
 
     override fun Result.ui(event: Ui) =
         when (event) {
             is Ui.Init -> {
-                commands {
-                    +Command.GetAppEnvironment
-                }
+                commands { +Command.GetAppEnvironment }
+            }
+            is Ui.Click.Environment -> {
+                commands { +Command.SetAppEnvironment(event.appEnvironment) }
             }
         }
 }
