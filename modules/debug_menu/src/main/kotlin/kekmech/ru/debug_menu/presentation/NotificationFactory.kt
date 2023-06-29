@@ -1,4 +1,4 @@
-package kekmech.ru.feature_debug_menu.presentation
+package kekmech.ru.debug_menu.presentation
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -8,7 +8,7 @@ import android.content.Context
 import android.content.Context.NOTIFICATION_SERVICE
 import android.os.Build
 import androidx.core.app.NotificationCompat
-import kekmech.ru.feature_debug_menu.R
+import kekmech.ru.debug_menu.R
 
 internal class NotificationFactory {
 

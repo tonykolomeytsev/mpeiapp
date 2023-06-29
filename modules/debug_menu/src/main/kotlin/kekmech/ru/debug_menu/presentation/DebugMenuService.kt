@@ -1,4 +1,4 @@
-package kekmech.ru.feature_debug_menu.presentation
+package kekmech.ru.debug_menu.presentation
 
 import android.app.PendingIntent
 import android.app.Service

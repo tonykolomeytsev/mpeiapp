@@ -1,14 +1,15 @@
-package kekmech.ru.feature_debug_menu
+package kekmech.ru.debug_menu.launcher
 
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import kekmech.ru.feature_debug_menu.presentation.DebugMenuService
+import kekmech.ru.common_app_lifecycle.MainActivityLifecycleObserver
+import kekmech.ru.debug_menu.presentation.DebugMenuService
 import timber.log.Timber
 
-object DebugMenuLauncher {
+internal class DebugMenuInitializer : MainActivityLifecycleObserver {
 
-    fun launch(context: Context) {
+    override fun onCreate(context: Context) {
         Timber.d("Launching debug menu...")
         val intent = Intent(context, DebugMenuService::class.java)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

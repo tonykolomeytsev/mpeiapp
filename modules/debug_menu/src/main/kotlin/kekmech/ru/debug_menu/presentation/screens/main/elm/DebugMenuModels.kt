@@ -1,4 +1,4 @@
-package kekmech.ru.feature_debug_menu.presentation.screens.main.elm
+package kekmech.ru.debug_menu.presentation.screens.main.elm
 
 import kekmech.ru.common_kotlin.Resource
 import kekmech.ru.domain_app_settings_models.AppEnvironment

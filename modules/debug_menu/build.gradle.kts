@@ -4,12 +4,13 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":ui_theme"))
+    implementation(project(":common_app_lifecycle"))
     implementation(project(":common_elm"))
+    implementation(project(":common_kotlin"))
     implementation(project(":common_navigation_api"))
     implementation(project(":common_navigation_compose"))
     implementation(project(":domain_app_settings_models"))
-    implementation(project(":common_kotlin"))
+    implementation(project(":ui_theme"))
 
     implementation(libs.androidx.coreKtx)
     implementation(libs.appyx.core)
