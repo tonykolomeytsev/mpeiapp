@@ -1,4 +1,4 @@
-package kekmech.ru.feature_debug_menu.presentation.screens.main.elm
+package kekmech.ru.debug_menu.presentation.screens.main.elm
 
 import vivid.money.elmslie.coroutines.ElmStoreCompat
 

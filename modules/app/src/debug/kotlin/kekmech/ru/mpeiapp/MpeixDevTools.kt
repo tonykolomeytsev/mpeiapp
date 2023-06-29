@@ -2,7 +2,6 @@ package kekmech.ru.mpeiapp
 
 import android.content.Context
 import kekmech.ru.common_kotlin.fastLazy
-import kekmech.ru.feature_debug_menu.DebugMenuLauncher
 import kekmech.ru.mock_server.MockServer
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
@@ -25,6 +24,5 @@ object MpeixDevTools {
                 MockServer(assetManager = context.assets).start()
             }
         }
-        DebugMenuLauncher.launch(context)
     }
 }

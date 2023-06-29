@@ -124,7 +124,7 @@ dependencies {
     implementation(project(":strings"))
 
     debugImplementation(project(":mock_server"))
-    debugImplementation(project(":feature_debug_menu"))
+    debugImplementation(project(":debug_menu"))
 
     testImplementation(libs.koin.test)
     testImplementation(libs.kotest.runner)

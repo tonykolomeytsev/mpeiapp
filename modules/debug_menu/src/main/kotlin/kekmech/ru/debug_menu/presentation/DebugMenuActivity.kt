@@ -1,4 +1,4 @@
-package kekmech.ru.feature_debug_menu.presentation
+package kekmech.ru.debug_menu.presentation
 
 import android.os.Bundle
 import androidx.activity.compose.setContent

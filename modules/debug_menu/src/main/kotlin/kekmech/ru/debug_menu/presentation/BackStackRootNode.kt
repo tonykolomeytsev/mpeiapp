@@ -1,4 +1,4 @@
-package kekmech.ru.feature_debug_menu.presentation
+package kekmech.ru.debug_menu.presentation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -13,7 +13,7 @@ import com.bumble.appyx.navmodel.backstack.transitionhandler.rememberBackstackFa
 import kekmech.ru.common_navigation_api.NavTarget
 import kekmech.ru.common_navigation_compose.BackStackNavigator
 import kekmech.ru.common_navigation_compose.LocalBackStackNavigator
-import kekmech.ru.feature_debug_menu.presentation.screens.main.DebugMenuNavTarget
+import kekmech.ru.debug_menu.presentation.screens.main.DebugMenuNavTarget
 
 internal class BackStackRootNode(
     buildContext: BuildContext,
