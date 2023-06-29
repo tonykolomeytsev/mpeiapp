@@ -1,0 +1,16 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <application>
+        <service
+            android:name="kekmech.ru.feature_debug_menu.presentation.DebugMenuService"
+            android:exported="false"
+            android:stopWithTask="true" />
+        <activity
+            android:name="kekmech.ru.feature_debug_menu.presentation.DebugMenuActivity"
+            android:exported="false"
+            android:label="MpeiX Debug Menu"
+            android:theme="@style/Theme.Mpeix" />
+    </application>
+</manifest>

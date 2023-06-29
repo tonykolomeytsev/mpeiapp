@@ -73,6 +73,7 @@ class MpeixApp : Application(),
         androidContext(this@MpeixApp)
         allowOverride(false)
         modules(listOf(AppModule))
+        includeFeatureDebugMenuModule()
     }
 
     private fun initTimber() {
