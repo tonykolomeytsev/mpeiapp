@@ -23,7 +23,7 @@ internal class NotificationFactory {
             .setContentIntent(pendingIntent)
             .setAutoCancel(false)
             .setOngoing(true)
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setPriority(NotificationCompat.PRIORITY_LOW)
 
         return builder.build()
     }
@@ -33,7 +33,7 @@ internal class NotificationFactory {
             // Create the NotificationChannel.
             val name = CHANNEL_NAME
             val descriptionText = CHANNEL_DESCRIPTION
-            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val importance = NotificationManager.IMPORTANCE_LOW
             val mChannel = NotificationChannel(CHANNEL_ID, name, importance)
             mChannel.description = descriptionText
             // Register the channel with the system. You can't change the importance
