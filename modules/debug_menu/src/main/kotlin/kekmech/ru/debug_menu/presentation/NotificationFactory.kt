@@ -23,6 +23,7 @@ internal class NotificationFactory {
             .setContentIntent(pendingIntent)
             .setAutoCancel(false)
             .setOngoing(true)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
 
         return builder.build()
     }

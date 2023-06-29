@@ -7,18 +7,15 @@ import io.reactivex.rxjava3.exceptions.UndeliverableException
 import io.reactivex.rxjava3.plugins.RxJavaPlugins
 import kekmech.ru.common_app_lifecycle.AppLifecycleObserver
 import kekmech.ru.common_elm.TimberLogger
-import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_navigation.Router
 import kekmech.ru.common_navigation.di.RouterHolder
 import kekmech.ru.common_network.retrofit.ServiceUrlResolver
-import kekmech.ru.domain_app_settings_models.AppEnvironment
+import kekmech.ru.domain_app_settings.AppEnvironmentRepository
 import kekmech.ru.mpeiapp.di.AppModule
 import org.koin.android.ext.android.getKoin
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
-import org.koin.android.java.KoinAndroidApplication
-import org.koin.core.KoinApplication
 import org.koin.core.context.startKoin
 import timber.log.Timber
 import timber.log.Timber.DebugTree
@@ -29,19 +26,7 @@ class MpeixApp : Application(),
     RouterHolder {
 
     override val router by inject<Router>()
-    private val sharedPreferences by fastLazy {
-        applicationContext.getSharedPreferences(
-            "mpeix",
-            MODE_PRIVATE
-        )
-    }
-    private val appEnvironment by fastLazy {
-        runCatching {
-            AppEnvironment.valueOf(
-                sharedPreferences.getString("app_env", "PROD").orEmpty()
-            )
-        }.getOrDefault(AppEnvironment.PROD)
-    }
+    private val appEnvironmentRepository by inject<AppEnvironmentRepository>()
     private val appLifecycleObservers: List<AppLifecycleObserver> by lazy { getKoin().getAll() }
 
     @Suppress("MagicNumber")
@@ -61,14 +46,10 @@ class MpeixApp : Application(),
                 }
             }
         }
-        ServiceUrlResolver.setAppEnvironment(appEnvironment)
+        ServiceUrlResolver.setAppEnvironment(appEnvironmentRepository.getAppEnvironment())
         RemoteConfig.setup()
         initTimber()
         if (Build.VERSION.SDK_INT < 25) LocaleContextWrapper.updateResourcesV24(this)
-        MpeixDevTools.init(
-            context = this,
-            runMockServer = appEnvironment == AppEnvironment.MOCK,
-        )
     }
 
     override fun attachBaseContext(base: Context) {
@@ -80,7 +61,7 @@ class MpeixApp : Application(),
         androidContext(this@MpeixApp)
         allowOverride(false)
         modules(listOf(AppModule))
-        includeFeatureDebugMenuModule()
+        modules(DebugModules)
     }
 
     private fun initTimber() {

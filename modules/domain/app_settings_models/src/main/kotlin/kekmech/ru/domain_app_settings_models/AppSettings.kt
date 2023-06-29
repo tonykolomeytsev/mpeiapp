@@ -12,7 +12,4 @@ data class AppSettings(
     // map
     val autoHideBottomSheet: Boolean,
     val mapAppearanceType: String,
-
-    // debug
-    val appEnvironment: AppEnvironment,
 )
