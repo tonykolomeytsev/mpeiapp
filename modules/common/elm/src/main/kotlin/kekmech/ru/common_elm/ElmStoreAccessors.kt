@@ -2,11 +2,10 @@ package kekmech.ru.common_elm
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
-import androidx.compose.runtime.State
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
-import org.koin.compose.rememberKoinInject
+import org.koin.compose.LocalKoinScope
 import vivid.money.elmslie.core.store.Store
+import kotlin.reflect.KClass
 
 /**
  * Inject ELM Store into any Composable screen.
@@ -29,23 +28,32 @@ import vivid.money.elmslie.core.store.Store
  * Your screen's Composable:
  * ```kotlin
  * @Composable
- * fun MyScreen(
- *     arg1: String,
- *     arg2: Long,
- *     store: ElmStore<...> = rememberElmStore<MyStoreFactory, _, _, _> { create(arg1, arg2) },
- * ) {
- *     ...
+ * fun MyComposable(arg1: String, arg2: Long) {
+ *     // instantiate store
+ *     val store = rememberElmStore(MyStoreFactory::class) { create(arg1, arg2) }
  * }
  * ```
+ *
+ * For ELM Screens, please, use [elmNode] wherever possible.
+ *
+ * @see elmNode
  */
 @Composable
-inline fun <reified Factory : Any, Event : Any, Effect : Any, State : Any> rememberElmStore(
-    crossinline factory: Factory.() -> Store<Event, Effect, State>,
+inline fun <StoreFactory : Any, Event : Any, Effect : Any, State : Any> rememberElmStore(
+    storeFactoryClass: KClass<StoreFactory>,
+    crossinline factory: StoreFactory.() -> Store<Event, Effect, State>,
 ): Store<Event, Effect, State> {
-    val storeFactoryInstance = rememberKoinInject<Factory>()
-    return remember(Factory::class) {
+    val koinScope = LocalKoinScope.current
+    val storeFactory: StoreFactory = remember(storeFactoryClass, koinScope) {
+        koinScope.get(
+            clazz = storeFactoryClass,
+            qualifier = null,
+            parameters = null,
+        )
+    }
+    return remember(storeFactoryClass) {
         factory
-            .invoke(storeFactoryInstance)
+            .invoke(storeFactory)
             .also { it.start() }
     }
 }
@@ -96,10 +104,3 @@ inline fun <reified Event : Any> Store<Event, *, *>.rememberAcceptAction(): ElmA
             }
         }
     }
-
-/**
- * Collect ELM state as Compose [State].
- */
-@Composable
-fun <ElmState : Any> Store<*, *, ElmState>.asState(): State<ElmState> =
-    states().collectAsState(initial = currentState)
