@@ -32,10 +32,11 @@ internal class ElmDemoScreenNavTarget(
 ) : NavTarget {
 
     override fun resolve(buildContext: BuildContext): Node =
-        elmNode<ElmDemoStoreFactory, _, _, _>(
+        elmNode(
             buildContext = buildContext,
+            storeFactoryClass = ElmDemoStoreFactory::class,
             factory = { create(randomArgument = randomArgument) },
-        ) { _, store, state -> ElmDemoScreen(store = store, state = state) }
+        ) { store, state, _ -> ElmDemoScreen(store = store, state = state) }
 }
 
 @Composable
