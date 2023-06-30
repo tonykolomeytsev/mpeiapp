@@ -1,6 +1,6 @@
 package kekmech.ru.mpeiapp.demo.screens.elmslie.elm
 
-import kekmech.ru.common_kotlin.Resource
+import kekmech.ru.common_elm.Resource
 import kekmech.ru.mpeiapp.demo.screens.elmslie.elm.ElmDemoEvent.Internal
 import kekmech.ru.mpeiapp.demo.screens.elmslie.elm.ElmDemoEvent.Ui
 import vivid.money.elmslie.core.store.dsl_reducer.ScreenDslReducer

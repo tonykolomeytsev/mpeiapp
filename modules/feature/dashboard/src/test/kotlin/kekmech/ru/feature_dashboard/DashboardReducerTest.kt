@@ -7,8 +7,8 @@ import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeTypeOf
-import kekmech.ru.common_kotlin.Resource
-import kekmech.ru.common_kotlin.toResource
+import kekmech.ru.common_elm.Resource
+import kekmech.ru.common_elm.toResource
 import kekmech.ru.domain_dashboard.dto.UpcomingEventsPrediction
 import kekmech.ru.domain_favorite_schedule.dto.FavoriteSchedule
 import kekmech.ru.domain_notes.dto.Note

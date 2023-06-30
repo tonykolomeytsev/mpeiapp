@@ -1,8 +1,8 @@
 package kekmech.ru.feature_dashboard.screens.main.elm
 
-import kekmech.ru.common_kotlin.Resource
+import kekmech.ru.common_elm.Resource
+import kekmech.ru.common_elm.toResource
 import kekmech.ru.common_kotlin.moscowLocalDate
-import kekmech.ru.common_kotlin.toResource
 import kekmech.ru.domain_dashboard.dto.UpcomingEventsPrediction
 import kekmech.ru.domain_schedule.dto.SelectedSchedule
 import kekmech.ru.feature_dashboard.screens.main.elm.DashboardEvent.Internal

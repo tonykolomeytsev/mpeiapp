@@ -1,6 +1,6 @@
 package kekmech.ru.mpeiapp.demo.screens.elmslie.elm
 
-import kekmech.ru.common_kotlin.Resource
+import kekmech.ru.common_elm.Resource
 import vivid.money.elmslie.core.store.Store
 
 typealias ElmDemoStore = Store<ElmDemoEvent, ElmDemoEffect, ElmDemoState>
