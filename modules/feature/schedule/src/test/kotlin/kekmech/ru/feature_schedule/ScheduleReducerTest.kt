@@ -10,7 +10,6 @@ import io.kotest.matchers.maps.shouldContainExactly
 import io.kotest.matchers.shouldBe
 import kekmech.ru.common_kotlin.mutableLinkedHashMap
 import kekmech.ru.common_schedule.utils.atStartOfWeek
-import kekmech.ru.domain_app_settings_models.AppEnvironment
 import kekmech.ru.domain_app_settings_models.AppSettings
 import kekmech.ru.domain_schedule_models.dto.Classes
 import kekmech.ru.domain_schedule_models.dto.ClassesType
@@ -269,7 +268,6 @@ class ScheduleReducerTest : BehaviorSpec({
             isDarkThemeEnabled = false,
             autoHideBottomSheet = false,
             isSnowEnabled = false,
-            appEnvironment = AppEnvironment.PROD,
             languageCode = "ru_RU",
             showNavigationButton = false,
             mapAppearanceType = "hybrid",
