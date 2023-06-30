@@ -97,6 +97,7 @@ appyx-core = { module = "com.bumble.appyx:core", version.ref = "appyx" }
 # Koin Libraries
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
+koin-compose = { module = "io.insert-koin:koin-androidx-compose", version = "3.4.5" }
 koin-test = { module = "io.insert-koin:koin-test", version.ref = "koin" }
 
 # Firebase Libraries
