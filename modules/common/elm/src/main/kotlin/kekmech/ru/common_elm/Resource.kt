@@ -1,5 +1,8 @@
-package kekmech.ru.common_kotlin
+package kekmech.ru.common_elm
 
+import androidx.compose.runtime.Immutable
+
+@Immutable
 sealed class Resource<out T : Any> private constructor() {
 
     open val value: T? = null

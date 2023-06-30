@@ -15,9 +15,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.bumble.appyx.core.modality.BuildContext
 import com.bumble.appyx.core.node.Node
+import kekmech.ru.common_elm.Resource
 import kekmech.ru.common_elm.elmNode
 import kekmech.ru.common_elm.rememberAcceptAction
-import kekmech.ru.common_kotlin.Resource
 import kekmech.ru.common_navigation_api.NavTarget
 import kekmech.ru.mpeiapp.demo.screens.elmslie.elm.ElmDemoStore
 import kekmech.ru.mpeiapp.demo.screens.elmslie.elm.ElmDemoStoreFactory
