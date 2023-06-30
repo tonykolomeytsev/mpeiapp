@@ -1,7 +1,7 @@
 package kekmech.ru.feature_dashboard.screens.main.upcoming_events
 
 import android.content.Context
-import kekmech.ru.common_kotlin.Resource
+import kekmech.ru.common_elm.Resource
 import kekmech.ru.common_schedule.utils.withNotePreview
 import kekmech.ru.coreui.items.EmptyStateItem
 import kekmech.ru.coreui.items.ErrorStateItem

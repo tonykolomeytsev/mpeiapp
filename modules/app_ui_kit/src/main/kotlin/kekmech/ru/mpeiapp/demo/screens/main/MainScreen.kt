@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
@@ -17,10 +18,12 @@ import kekmech.ru.common_navigation_api.NavTarget
 import kekmech.ru.common_navigation_compose.LocalBackStackNavigator
 import kekmech.ru.mpeiapp.demo.screens.colors.ColorsScreenNavTarget
 import kekmech.ru.mpeiapp.demo.screens.components.ComponentsScreenNavTarget
+import kekmech.ru.mpeiapp.demo.screens.elmslie.ElmDemoScreenNavTarget
 import kekmech.ru.mpeiapp.demo.screens.typography.TypographyScreenNavTarget
 import kekmech.ru.mpeiapp.demo.ui.SectionItem
 import kekmech.ru.ui_kit_topappbar.TopAppBar
 import kotlinx.parcelize.Parcelize
+import kotlin.random.Random
 
 @Parcelize
 internal class MainScreenNavTarget(private val greetings: String = "MpeiX UI-Kit") : NavTarget {
@@ -73,6 +76,16 @@ private fun MainScreen(greetings: String) {
                         navigator.navigate(ComponentsScreenNavTarget())
                     },
                     name = "Components",
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+            item("elmslie") {
+                val randomArgument = remember { Random.nextInt() }
+                SectionItem(
+                    onClick = {
+                        navigator.navigate(ElmDemoScreenNavTarget(randomArgument = randomArgument))
+                    },
+                    name = "ELM Demo (arg = $randomArgument)",
                     modifier = Modifier.fillMaxWidth()
                 )
             }
