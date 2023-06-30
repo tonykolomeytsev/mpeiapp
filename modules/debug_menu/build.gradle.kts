@@ -22,4 +22,5 @@ dependencies {
     implementation(libs.compose.activity)
     implementation(libs.vivid.elmslie.core)
     implementation(libs.vivid.elmslie.coroutines)
+    debugImplementation(libs.chucker.library)
 }
