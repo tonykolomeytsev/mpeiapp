@@ -1,6 +1,6 @@
 package kekmech.ru.debug_menu.presentation.screens.main.elm
 
-import kekmech.ru.common_kotlin.Resource
+import kekmech.ru.common_elm.Resource
 import kekmech.ru.domain_app_settings_models.AppEnvironment
 import vivid.money.elmslie.core.store.Store
 
