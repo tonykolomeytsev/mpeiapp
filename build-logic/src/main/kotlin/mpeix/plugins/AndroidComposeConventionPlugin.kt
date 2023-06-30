@@ -11,6 +11,7 @@ import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import java.io.File
 
 @Suppress("unused")
 internal class AndroidComposeConventionPlugin : Plugin<Project> {
@@ -29,14 +30,14 @@ internal class AndroidComposeConventionPlugin : Plugin<Project> {
                 }
             }
 
-            tasks.withType<KotlinCompile>() {
+            tasks.withType<KotlinCompile> {
                 kotlinOptions {
-                    freeCompilerArgs = freeCompilerArgs + listOf(
-                        "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api",
-                        "-opt-in=androidx.compose.foundation.layout.ExperimentalLayoutApi",
-                        "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi",
-                        "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi",
-                    )
+                    val composeMetricsDir = buildDir.resolve("compose-metrics")
+                    val composeReportsDir = buildDir.resolve("compose-reports")
+                    freeCompilerArgs = freeCompilerArgs +
+                            getOptInExperimentalApiCompilerArgs() +
+                            getComposeCompilerMetricsCompilerArgs(composeMetricsDir) +
+                            getComposeCompilerReportsCompilerArgs(composeReportsDir)
                 }
             }
 
@@ -48,4 +49,24 @@ internal class AndroidComposeConventionPlugin : Plugin<Project> {
             }
         }
     }
+
+    private fun getOptInExperimentalApiCompilerArgs(): List<String> =
+        listOf(
+            "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api",
+            "-opt-in=androidx.compose.foundation.layout.ExperimentalLayoutApi",
+            "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi",
+            "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi",
+        )
+
+    private fun getComposeCompilerMetricsCompilerArgs(outputDir: File): List<String> =
+        listOf(
+            "-P",
+            "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=$outputDir",
+        )
+
+    private fun getComposeCompilerReportsCompilerArgs(outputDir: File): List<String> =
+        listOf(
+            "-P",
+            "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=$outputDir"
+        )
 }
