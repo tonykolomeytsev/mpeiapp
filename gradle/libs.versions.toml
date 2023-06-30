@@ -145,6 +145,9 @@ ktor-server-netty = { module = "io.ktor:ktor-server-netty", version.ref = "ktor"
 ktor-server-content-negotiation = { module = "io.ktor:ktor-server-content-negotiation", version.ref = "ktor" }
 ktor-serialization-gson = { module = "io.ktor:ktor-serialization-gson", version.ref = "ktor" }
 
+# Chucker
+chucker-library = { module = "com.github.chuckerteam.chucker:library", version = "3.5.2" }
+
 # Jetpack Compose
 ## Compose
 compose-compiler = { module = "androidx.compose.compiler:compiler", version.ref = "composeCompiler" }
