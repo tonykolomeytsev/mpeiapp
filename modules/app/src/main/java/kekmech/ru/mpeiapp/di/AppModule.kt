@@ -12,7 +12,9 @@ import kekmech.ru.common_analytics.di.CommonAnalyticsModule
 import kekmech.ru.common_app_database_impl.di.CommonAppDatabaseModule
 import kekmech.ru.common_coroutines_impl.di.CommonCoroutinesModule
 import kekmech.ru.common_di.AppVersionName
+import kekmech.ru.common_di.bindIntoList
 import kekmech.ru.common_feature_toggles.RemoteConfigWrapper
+import kekmech.ru.common_feature_toggles.RemoteVariable
 import kekmech.ru.common_feature_toggles.di.CommonFeatureTogglesModule
 import kekmech.ru.common_navigation.di.CommonNavigationModule
 import kekmech.ru.common_network.di.CommonNetworkModule
@@ -34,6 +36,7 @@ import kekmech.ru.feature_onboarding.di.FeatureOnboardingModule
 import kekmech.ru.feature_schedule.di.FeatureScheduleModule
 import kekmech.ru.feature_search.di.FeatureSearchFeatureModule
 import kekmech.ru.mpeiapp.BuildConfig
+import kekmech.ru.mpeiapp.ComposeEnabledFeatureToggle
 import kekmech.ru.mpeiapp.deeplink.di.DeeplinkModule
 import kekmech.ru.mpeiapp.ui.main.di.MainScreenModule
 import kotlinx.coroutines.CoroutineScope
@@ -50,6 +53,7 @@ val AppModule = module {
     factoryOf(::FirebaseAnalyticsProviderImpl) bind FirebaseAnalyticsProvider::class
     factoryOf(::RemoteConfigWrapperImpl) bind RemoteConfigWrapper::class
     factory { AppVersionName(BuildConfig.VERSION_NAME) }
+    factoryOf(::ComposeEnabledFeatureToggle) bindIntoList RemoteVariable::class
 
     // TODO: figure out how to inject Dispatchers correctly
     @Suppress("RemoveExplicitTypeArguments", "InjectDispatcher")
@@ -107,4 +111,7 @@ private class RemoteConfigWrapperImpl : RemoteConfigWrapper {
         get() = FirebaseRemoteConfig.getInstance()
 
     override fun getUntyped(name: String): String = remoteConfig.getString(name)
+
+    override fun getAll(): Map<String, String> =
+        remoteConfig.all.mapValues { (_, v) -> v.asString() }
 }

@@ -29,6 +29,7 @@ dependencies {
     implementation(project(":common_adapter"))
     implementation(project(":common_analytics"))
     implementation(project(":common_android"))
+    implementation(project(":common_app_lifecycle"))
     implementation(project(":common_di"))
     implementation(project(":common_emoji"))
     implementation(project(":common_kotlin"))

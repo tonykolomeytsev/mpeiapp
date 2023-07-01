@@ -9,7 +9,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithContent
-import androidx.compose.ui.graphics.PathEffect
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -92,15 +92,16 @@ private fun FeatureTogglesScreen(
                             .drawWithContent {
                                 drawContent()
                                 if (ft.overwritten) {
-                                    val interval = 4.dp.toPx()
+                                    val dp2 = 2.dp.toPx()
+                                    val dp4 = 4.dp.toPx()
                                     drawRect(
                                         color = primaryColor,
-                                        style = Stroke(
-                                            width = 2.dp.toPx(),
-                                            pathEffect = PathEffect.dashPathEffect(
-                                                intervals = floatArrayOf(interval, interval),
-                                            )
-                                        )
+                                        topLeft = Offset(dp2, dp2),
+                                        size = size.copy(
+                                            width = size.width - dp4,
+                                            height = size.height - dp4,
+                                        ),
+                                        style = Stroke(width = dp2)
                                     )
                                 }
                             }
