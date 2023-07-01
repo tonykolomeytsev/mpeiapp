@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
 import com.bumble.appyx.core.integration.NodeHost
 import com.bumble.appyx.core.integrationpoint.NodeComponentActivity
+import kekmech.ru.debug_menu.presentation.navigation.BackStackRootNode
 import kekmech.ru.ui_theme.theme.MpeixTheme
 
 internal class DebugMenuActivity : NodeComponentActivity() {
