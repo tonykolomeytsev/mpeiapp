@@ -13,5 +13,8 @@ internal val Project.versionCatalog: VersionCatalog
         .getByType<VersionCatalogsExtension>()
         .named("libs")
 
-internal fun VersionCatalog.requiredVersion(alias: String): String =
-    findVersion(alias).get().requiredVersion
+internal fun VersionCatalog.requiredVersion(alias: String): String {
+    val version = findVersion(alias)
+    if (version.isPresent) return version.get().requiredVersion
+    error("Can't find version by alias `$alias` in versions catalog")
+}
