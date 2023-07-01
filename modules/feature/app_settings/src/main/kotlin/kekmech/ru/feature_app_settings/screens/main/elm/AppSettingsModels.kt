@@ -1,6 +1,5 @@
 package kekmech.ru.feature_app_settings.screens.main.elm
 
-import kekmech.ru.domain_app_settings_models.AppEnvironment
 import kekmech.ru.domain_app_settings_models.AppSettings
 import kekmech.ru.domain_github.dto.GitHubUser
 
@@ -21,8 +20,6 @@ internal sealed interface AppSettingsEvent {
             data class SetSnowEnabled(val isEnabled: Boolean) : Ui
             data class SetShowQuickNavigationFab(val isVisible: Boolean) : Ui
             data class SetAutoHideBottomSheet(val isEnabled: Boolean) : Ui
-            data class ChangeBackendEnvironment(val appEnvironment: AppEnvironment) : Ui
-            object ClearSelectedGroup : Ui
             data class LanguageChanged(val selectedLanguage: String) : Ui
             data class MapTypeChanged(val selectedMapType: String) : Ui
         }
@@ -46,10 +43,8 @@ internal sealed interface AppSettingsCommand {
     data class SetSnowEnabled(val isEnabled: Boolean) : AppSettingsCommand
     data class SetShowQuickNavigationFab(val isVisible: Boolean) : AppSettingsCommand
     data class SetAutoHideBottomSheet(val isEnabled: Boolean) : AppSettingsCommand
-    data class ChangeBackendEnvironment(val appEnvironment: AppEnvironment) : AppSettingsCommand
     data class ChangeLanguage(val selectedLanguage: String) : AppSettingsCommand
     data class ChangeMapType(val selectedMapType: String) : AppSettingsCommand
-    object ClearSelectedGroup : AppSettingsCommand
     object ObserveContributors : AppSettingsCommand
     object FetchContributors : AppSettingsCommand
 }

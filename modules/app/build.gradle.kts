@@ -105,6 +105,7 @@ dependencies {
     implementation(project(":common_android"))
     implementation(project(":common_app_database_api"))
     implementation(project(":common_app_database_impl"))
+    implementation(project(":common_app_lifecycle"))
     implementation(project(":common_coroutines_api"))
     implementation(project(":common_coroutines_impl"))
     implementation(project(":common_di"))
@@ -123,6 +124,7 @@ dependencies {
     implementation(project(":strings"))
 
     debugImplementation(project(":mock_server"))
+    debugImplementation(project(":debug_menu"))
 
     testImplementation(libs.koin.test)
     testImplementation(libs.kotest.runner)

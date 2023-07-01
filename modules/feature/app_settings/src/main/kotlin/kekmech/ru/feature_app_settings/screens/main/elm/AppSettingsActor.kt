@@ -54,13 +54,5 @@ internal class AppSettingsActor(
             is AppSettingsCommand.ObserveContributors ->
                 contributorsRepository.observeContributors()
                     .mapEvents(Internal::ObserveContributorsSuccess)
-
-            is AppSettingsCommand.ClearSelectedGroup ->
-                actorFlow { TODO("Just send user to onboarding") }.mapEvents()
-
-            is AppSettingsCommand.ChangeBackendEnvironment -> actorFlow {
-                appSettingsRepository
-                    .changeAppSettings { copy(appEnvironment = command.appEnvironment) }
-            }.mapEvents(Internal::LoadAppSettingsSuccess)
         }
 }

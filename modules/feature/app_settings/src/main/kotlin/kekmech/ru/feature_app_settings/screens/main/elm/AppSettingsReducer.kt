@@ -37,12 +37,6 @@ internal class AppSettingsReducer :
             is Ui.Action.SetAutoHideBottomSheet -> commands {
                 +Command.SetAutoHideBottomSheet(event.isEnabled)
             }
-            is Ui.Action.ClearSelectedGroup -> commands {
-                +Command.ClearSelectedGroup
-            }
-            is Ui.Action.ChangeBackendEnvironment -> commands {
-                +Command.ChangeBackendEnvironment(event.appEnvironment)
-            }
             is Ui.Click.Language -> effects {
                 +state.appSettings?.let { Effect.OpenLanguageSelectionDialog(it.languageCode) }
             }
