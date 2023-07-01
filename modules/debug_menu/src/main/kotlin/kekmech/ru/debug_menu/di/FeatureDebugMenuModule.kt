@@ -3,6 +3,8 @@ package kekmech.ru.debug_menu.di
 import kekmech.ru.common_app_lifecycle.AppLifecycleObserver
 import kekmech.ru.common_di.bindIntoList
 import kekmech.ru.debug_menu.initializer.DebugMenuInitializer
+import kekmech.ru.debug_menu.presentation.screens.feature_toggles.elm.FeatureTogglesActor
+import kekmech.ru.debug_menu.presentation.screens.feature_toggles.elm.FeatureTogglesStoreFactory
 import kekmech.ru.debug_menu.presentation.screens.main.elm.DebugMenuActor
 import kekmech.ru.debug_menu.presentation.screens.main.elm.DebugMenuStoreFactory
 import org.koin.core.module.dsl.factoryOf
@@ -12,4 +14,7 @@ val DebugMenuModule = module {
     factory { DebugMenuInitializer() } bindIntoList AppLifecycleObserver::class
     factoryOf(::DebugMenuStoreFactory)
     factoryOf(::DebugMenuActor)
+
+    factoryOf(::FeatureTogglesStoreFactory)
+    factory { FeatureTogglesActor(remoteVariables = getAll(), rewriteRemoteVariableHandle = get()) }
 }
