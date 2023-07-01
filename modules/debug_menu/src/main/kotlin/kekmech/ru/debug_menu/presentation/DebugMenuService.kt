@@ -1,11 +1,10 @@
-package kekmech.ru.debug_menu.initializer
+package kekmech.ru.debug_menu.presentation
 
 import android.app.Notification
 import android.app.PendingIntent
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
-import kekmech.ru.debug_menu.presentation.DebugMenuActivity
 import timber.log.Timber
 
 internal class DebugMenuService : Service() {
