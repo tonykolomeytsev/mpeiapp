@@ -2,9 +2,12 @@ package kekmech.ru.feature_app_settings.di
 
 import android.content.Context
 import android.content.SharedPreferences
+import kekmech.ru.common_di.bindIntoList
+import kekmech.ru.common_feature_toggles.RemoteVariable
 import kekmech.ru.domain_app_settings.AppEnvironmentRepository
 import kekmech.ru.domain_app_settings.AppSettingsFeatureLauncher
 import kekmech.ru.domain_app_settings.AppSettingsRepository
+import kekmech.ru.domain_app_settings.feature_toggle.IsSnowFlakesEnabledFeatureToggle
 import kekmech.ru.feature_app_settings.launcher.AppSettingsFeatureLauncherImpl
 import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesActor
 import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesStoreFactory
@@ -29,4 +32,5 @@ val FeatureAppSettingsModule = module {
     factoryOf(::AppSettingsFeatureLauncherImpl) bind AppSettingsFeatureLauncher::class
     factoryOf(::FavoritesActor)
     factoryOf(::FavoritesStoreFactory)
+    factoryOf(::IsSnowFlakesEnabledFeatureToggle) bindIntoList RemoteVariable::class
 }
