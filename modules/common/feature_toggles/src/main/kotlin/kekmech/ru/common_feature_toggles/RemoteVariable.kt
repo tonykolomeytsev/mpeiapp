@@ -12,11 +12,10 @@ sealed class RemoteVariable<T : Any>(
     private val deserializationStrategy: (String) -> T,
 ) {
 
-    val value by lazy {
+    val value get() =
         valueHolder[name]
             ?.let(deserializationStrategy)
             ?: defaultValue
-    }
 }
 
 /**

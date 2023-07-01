@@ -20,12 +20,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.bumble.appyx.core.modality.BuildContext
 import com.bumble.appyx.core.node.Node
-import kekmech.ru.common_elm.Resource
 import com.chuckerteam.chucker.api.Chucker
+import kekmech.ru.common_elm.Resource
 import kekmech.ru.common_elm.elmNode
 import kekmech.ru.common_elm.rememberAcceptAction
 import kekmech.ru.common_navigation_api.NavTarget
+import kekmech.ru.common_navigation_compose.LocalBackStackNavigator
 import kekmech.ru.debug_menu.R
+import kekmech.ru.debug_menu.presentation.screens.feature_toggles.FeatureTogglesNavTarget
 import kekmech.ru.debug_menu.presentation.screens.main.elm.DebugMenuEvent.Ui
 import kekmech.ru.debug_menu.presentation.screens.main.elm.DebugMenuState
 import kekmech.ru.debug_menu.presentation.screens.main.elm.DebugMenuStore
@@ -68,6 +70,9 @@ private fun DebugMenuScreen(
                     appEnvironment = state.appEnvironment,
                     onClick = { openBackendEnvironmentDialog = true },
                 )
+            }
+            item {
+                FeatureTogglesItem()
             }
             item {
                 ChuckerItem()
@@ -131,9 +136,24 @@ private fun BackendEnvironmentItem(
             text = "For the 'Backend environment' setting to take effect, " +
                     "you need to restart the application",
             style = MpeixTheme.typography.paragraphNormal,
-            modifier = Modifier.padding(vertical = 12.dp, horizontal = 16.dp),
+            modifier = Modifier
+                .padding(horizontal = 16.dp)
+                .padding(top = 12.dp, bottom = 24.dp),
         )
     }
+}
+
+@Composable
+private fun FeatureTogglesItem() {
+    val navigator = LocalBackStackNavigator.current
+    ListItem(
+        headlineText = "Feature Toggles",
+        leadingContent = {
+            Icon(painterResource(R.drawable.ic_toggle_24))
+        },
+        modifier = Modifier
+            .clickable { navigator.navigate(FeatureTogglesNavTarget()) },
+    )
 }
 
 @Composable
@@ -146,7 +166,6 @@ private fun ChuckerItem() {
             Icon(painterResource(R.drawable.ic_public_24))
         },
         modifier = Modifier
-            .padding(vertical = 12.dp)
             .clickable {
                 context.startActivity(Chucker.getLaunchIntent(context))
             },

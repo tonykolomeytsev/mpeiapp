@@ -4,20 +4,24 @@ import java.util.concurrent.ConcurrentHashMap
 
 internal class RemoteVariableValueHolderImpl(
     private val remoteConfigWrapper: RemoteConfigWrapper,
-) : RemoteVariableValueHolder {
+) : RemoteVariableValueHolder, RewriteRemoteVariableHandle {
 
-    private val rewrittenValues by lazy { ConcurrentHashMap<String, String>() }
+    private val rewritten by lazy { ConcurrentHashMap<String, String>() }
 
     override fun get(name: String): String? =
-        rewrittenValues[name]
+        rewritten[name]
             ?: remoteConfigWrapper.getUntyped(name)
                 .takeIf { it.isNotEmpty() }
 
     override fun override(name: String, value: String?) {
         if (value == null) {
-            rewrittenValues.remove(name)
+            rewritten.remove(name)
         } else {
-            rewrittenValues[name] = value
+            rewritten[name] = value
         }
     }
+
+    override fun isRewritten(name: String): Boolean =
+        rewritten.containsKey(name) &&
+                rewritten[name] != remoteConfigWrapper.getUntyped(name)
 }
