@@ -7,6 +7,7 @@ dependencies {
 
     implementation(libs.rx.java)
 
+    implementation(project(":common_feature_toggles"))
     implementation(project(":common_shared_preferences"))
 
     implementation(project(":domain_app_settings_models"))
