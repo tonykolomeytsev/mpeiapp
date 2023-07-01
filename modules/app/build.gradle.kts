@@ -63,7 +63,6 @@ dependencies {
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.config)
     implementation(libs.firebase.crashlytics)
-    implementation(libs.google.maps)
     implementation(libs.google.material)
     implementation(libs.koin.android)
     implementation(libs.koin.core)

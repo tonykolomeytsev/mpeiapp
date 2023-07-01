@@ -7,8 +7,6 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException
-import com.google.android.gms.maps.MapsInitializer
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kekmech.ru.common_android.onActivityResult
@@ -25,7 +23,6 @@ import kekmech.ru.domain_onboarding.OnboardingFeatureLauncher
 import kekmech.ru.mpeiapp.deeplink.DeeplinkHandlersProcessor
 import org.koin.android.ext.android.getKoin
 import org.koin.android.ext.android.inject
-import timber.log.Timber
 import kekmech.ru.common_navigation.R as common_navigation_R
 import kekmech.ru.coreui.R as coreui_R
 
@@ -47,11 +44,6 @@ class MainActivity : AppCompatActivity(), DisposableDelegate by DisposableDelega
         super.onCreate(savedInstanceState)
         mainActivityLifecycleObservers.forEach { it.onCreate(this) }
 
-        try {
-            MapsInitializer.initialize(this)
-        } catch (e: GooglePlayServicesNotAvailableException) {
-            Timber.e(e)
-        }
         FirebaseAnalytics.getInstance(this).apply {
             setUserId(deviceIdProvider.getDeviceId())
         }
