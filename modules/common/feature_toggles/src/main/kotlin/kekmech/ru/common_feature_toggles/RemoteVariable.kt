@@ -13,7 +13,7 @@ sealed class RemoteVariable<T : Any>(
 ) {
 
     val value get() =
-        valueHolder[name]
+        valueHolder.get(name)
             ?.let(deserializationStrategy)
             ?: defaultValue
 }

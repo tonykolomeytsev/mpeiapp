@@ -1,4 +1,4 @@
-package kekmech.ru.debug_menu.presentation
+package kekmech.ru.debug_menu.presentation.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
