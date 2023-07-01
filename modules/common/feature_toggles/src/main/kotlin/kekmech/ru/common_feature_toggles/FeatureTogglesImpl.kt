@@ -1,5 +1,6 @@
 package kekmech.ru.common_feature_toggles
 
+@Deprecated("Use `BooleanRemoteVariable` instead")
 internal class FeatureTogglesImpl(
     private val wrapper: RemoteConfigWrapper,
 ) : FeatureToggles {
