@@ -4,6 +4,7 @@ plugins {
     id("com.android.application")
     id("mpeix.android.base")
     id("mpeix.android.signing")
+    id("mpeix.android.compose")
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
 }
@@ -60,6 +61,8 @@ dependencies {
     implementation(libs.androidx.lifecycleCommonJava8)
     implementation(libs.androidx.recyclerView)
     implementation(libs.androidx.viewPager2)
+    implementation(libs.appyx.core)
+    implementation(libs.compose.activity)
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.config)
     implementation(libs.firebase.crashlytics)
@@ -116,6 +119,8 @@ dependencies {
     implementation(project(":common_persistent_cache_api"))
     implementation(project(":common_persistent_cache_impl"))
     implementation(project(":common_shared_preferences"))
+
+    implementation(project(":ui_theme"))
 
     implementation(project(":coreui"))
     implementation(project(":icons"))
