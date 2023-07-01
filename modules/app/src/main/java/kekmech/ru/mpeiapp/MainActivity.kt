@@ -7,9 +7,6 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException
-import com.google.android.gms.maps.MapsInitializer
-import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kekmech.ru.common_android.onActivityResult
 import kekmech.ru.common_app_lifecycle.MainActivityLifecycleObserver
@@ -17,7 +14,6 @@ import kekmech.ru.common_elm.DisposableDelegate
 import kekmech.ru.common_elm.DisposableDelegateImpl
 import kekmech.ru.common_navigation.BackButtonListener
 import kekmech.ru.common_navigation.NavigationHolder
-import kekmech.ru.common_network.device_id.DeviceIdProvider
 import kekmech.ru.coreui.banner.findBanner
 import kekmech.ru.domain_app_settings.AppSettingsRepository
 import kekmech.ru.domain_main_screen.MainScreenLauncher
@@ -25,7 +21,6 @@ import kekmech.ru.domain_onboarding.OnboardingFeatureLauncher
 import kekmech.ru.mpeiapp.deeplink.DeeplinkHandlersProcessor
 import org.koin.android.ext.android.getKoin
 import org.koin.android.ext.android.inject
-import timber.log.Timber
 import kekmech.ru.common_navigation.R as common_navigation_R
 import kekmech.ru.coreui.R as coreui_R
 
@@ -37,24 +32,13 @@ class MainActivity : AppCompatActivity(), DisposableDelegate by DisposableDelega
     private val onboardingFeatureLauncher: OnboardingFeatureLauncher by inject()
     private val mainScreenLauncher: MainScreenLauncher by inject()
     private val deeplinkHandlersProcessor: DeeplinkHandlersProcessor by inject()
-    private val deviceIdProvider: DeviceIdProvider by inject()
     private val mainActivityLifecycleObservers: List<MainActivityLifecycleObserver> by lazy {
         getKoin().getAll()
     }
 
-    @Suppress("MagicNumber", "MissingPermission", "UnnecessaryApply")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mainActivityLifecycleObservers.forEach { it.onCreate(this) }
-
-        try {
-            MapsInitializer.initialize(this)
-        } catch (e: GooglePlayServicesNotAvailableException) {
-            Timber.e(e)
-        }
-        FirebaseAnalytics.getInstance(this).apply {
-            setUserId(deviceIdProvider.getDeviceId())
-        }
 
         setTheme()
         setContentView(R.layout.activity_main)
@@ -71,7 +55,9 @@ class MainActivity : AppCompatActivity(), DisposableDelegate by DisposableDelega
         }
 
         deeplinkHandlersProcessor.processDeeplink(intent.data)
-        if (Build.VERSION.SDK_INT < 25) LocaleContextWrapper.updateResourcesV24(this)
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.N) {
+            LocaleContextWrapper.updateResourcesV24(this)
+        }
     }
 
     @Suppress("DEPRECATION", "UnnecessaryApply")
