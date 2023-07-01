@@ -35,7 +35,7 @@ internal sealed interface FeatureTogglesEvent {
             val featureToggles: List<FeatureToggle>,
         ) : Internal
 
-        data class RewriteFeatureToggleSuccess(
+        data class OverwriteFeatureToggleSuccess(
             val name: String,
             val value: Boolean,
             val overwritten: Boolean,
@@ -50,7 +50,7 @@ internal sealed interface FeatureTogglesEvent {
 internal sealed interface FeatureTogglesCommand {
 
     object GetFeatureToggles : FeatureTogglesCommand
-    data class RewriteFeatureToggle(val name: String, val value: Boolean) : FeatureTogglesCommand
+    data class OverwriteFeatureToggle(val name: String, val value: Boolean) : FeatureTogglesCommand
     object ResetFeatureToggles : FeatureTogglesCommand
 }
 

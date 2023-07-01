@@ -21,14 +21,14 @@ internal class FeatureTogglesActor(
                 getFeatureToggles()
             }.mapEvents(Internal::GetFeatureTogglesSuccess)
 
-            is Command.RewriteFeatureToggle -> actorFlow {
+            is Command.OverwriteFeatureToggle -> actorFlow {
                 overwriteMiddleware.overwrite(
                     name = command.name,
                     value = command.value.toString(),
                 )
                 overwriteMiddleware.isOverwritten(command.name)
             }.mapEvents({
-                Internal.RewriteFeatureToggleSuccess(
+                Internal.OverwriteFeatureToggleSuccess(
                     name = command.name,
                     value = command.value,
                     overwritten = it,

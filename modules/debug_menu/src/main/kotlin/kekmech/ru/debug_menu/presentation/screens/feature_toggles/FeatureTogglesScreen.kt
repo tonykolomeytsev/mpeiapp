@@ -41,6 +41,7 @@ internal class FeatureTogglesNavTarget : NavTarget {
         ) { store, state, _ -> FeatureTogglesScreen(store, state) }
 }
 
+@Suppress("LongMethod")
 @Composable
 private fun FeatureTogglesScreen(
     store: FeatureTogglesStore,
