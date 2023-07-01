@@ -8,10 +8,11 @@ class RemoteVariableValueHolder internal constructor(
     /**
      * Get serialized variable value
      */
-    fun get(name: String): String? =
-        middleware?.get(name)
+    fun get(name: String): String? {
+        return middleware?.get(name)
             ?: remoteConfigWrapper.getUntyped(name)
                 .takeIf { it.isNotEmpty() }
+    }
 
     interface Middleware {
 

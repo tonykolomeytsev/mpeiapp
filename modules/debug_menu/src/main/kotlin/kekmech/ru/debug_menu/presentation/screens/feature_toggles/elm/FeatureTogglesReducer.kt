@@ -21,6 +21,7 @@ internal class FeatureTogglesReducer :
             is Internal.GetFeatureTogglesSuccess -> {
                 state { copy(featureToggles = event.featureToggles.toResource()) }
             }
+
             is Internal.RewriteFeatureToggleSuccess -> {
                 val updatedFeatureToggles = state.featureToggles.map { list ->
                     list.map {
@@ -36,6 +37,10 @@ internal class FeatureTogglesReducer :
                 }
                 state { copy(featureToggles = updatedFeatureToggles) }
             }
+
+            is Internal.ResetFeatureTogglesSuccess -> {
+                state { copy(featureToggles = event.featureToggles.toResource()) }
+            }
         }
 
     override fun Result.ui(event: Ui) =
@@ -43,6 +48,7 @@ internal class FeatureTogglesReducer :
             is Ui.Init -> {
                 commands { +Command.GetFeatureToggles }
             }
+
             is Ui.Click.Switch -> {
                 commands {
                     +Command.RewriteFeatureToggle(
@@ -50,6 +56,10 @@ internal class FeatureTogglesReducer :
                         value = event.value,
                     )
                 }
+            }
+
+            is Ui.Click.Reset -> {
+                commands { +Command.ResetFeatureToggles }
             }
         }
 }
