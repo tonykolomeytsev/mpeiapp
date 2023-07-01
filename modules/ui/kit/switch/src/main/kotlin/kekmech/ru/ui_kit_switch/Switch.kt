@@ -1,12 +1,21 @@
 package kekmech.ru.ui_kit_switch
 
+import android.content.res.Configuration
+import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.Interaction
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import kekmech.ru.ui_theme.theme.MpeixTheme
 
 /**
  * # Switch
@@ -40,7 +49,96 @@ fun Switch(
         modifier = modifier,
         thumbContent = null,
         enabled = enabled,
-        colors = SwitchDefaults.colors(),
+        colors = SwitchDefaults.colors(
+            checkedThumbColor = MpeixTheme.palette.contentAccent,
+            checkedTrackColor = MpeixTheme.palette.primary,
+            checkedBorderColor = MpeixTheme.palette.primary,
+            checkedIconColor = MpeixTheme.palette.primary,
+            uncheckedThumbColor = MpeixTheme.palette.outline,
+            uncheckedTrackColor = MpeixTheme.palette.surfacePlus1,
+            uncheckedBorderColor = MpeixTheme.palette.outline,
+            uncheckedIconColor = MpeixTheme.palette.surfacePlus1,
+            disabledCheckedThumbColor = MpeixTheme.palette.surface,
+            disabledCheckedTrackColor = MpeixTheme.palette.content.copy(alpha = 0.20f),
+            disabledCheckedBorderColor = Color.Transparent,
+            disabledCheckedIconColor = MpeixTheme.palette.content.copy(alpha = 0.30f),
+            disabledUncheckedThumbColor = MpeixTheme.palette.content.copy(alpha = 0.38f),
+            disabledUncheckedTrackColor = MpeixTheme.palette.surfacePlus1,
+            disabledUncheckedBorderColor = MpeixTheme.palette.content.copy(alpha = 0.10f),
+            disabledUncheckedIconColor = MpeixTheme.palette.surface.copy(alpha = 0.30f),
+        ),
         interactionSource = interactionSource,
     )
+}
+
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_NO or Configuration.UI_MODE_TYPE_NORMAL)
+@Composable
+private fun SwitchPreviewLight() {
+    MpeixTheme {
+        Column(
+            modifier = Modifier
+                .background(MpeixTheme.palette.background)
+                .padding(16.dp),
+        ) {
+            Row {
+                Switch(
+                    checked = false,
+                    onCheckedChange = { /* no-op */ },
+                    modifier = Modifier.padding(end = 16.dp),
+                )
+                Switch(
+                    checked = true,
+                    onCheckedChange = { /* no-op */ },
+                    modifier = Modifier.padding(end = 16.dp),
+                )
+                Switch(
+                    checked = false,
+                    onCheckedChange = { /* no-op */ },
+                    modifier = Modifier.padding(end = 16.dp),
+                    enabled = false,
+                )
+                Switch(
+                    checked = true,
+                    onCheckedChange = { /* no-op */ },
+                    enabled = false,
+                )
+            }
+        }
+    }
+}
+
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES or Configuration.UI_MODE_TYPE_NORMAL)
+@Composable
+private fun SwitchPreviewDark() {
+    MpeixTheme {
+        Column(
+            modifier = Modifier
+                .background(MpeixTheme.palette.background)
+                .padding(16.dp),
+        ) {
+            Row {
+                Switch(
+                    checked = false,
+                    onCheckedChange = { /* no-op */ },
+                    modifier = Modifier.padding(end = 16.dp),
+                )
+                Switch(
+                    checked = true,
+                    onCheckedChange = { /* no-op */ },
+                    modifier = Modifier.padding(end = 16.dp),
+                )
+                Switch(
+                    checked = false,
+                    onCheckedChange = { /* no-op */ },
+                    modifier = Modifier.padding(end = 16.dp),
+                    enabled = false,
+                )
+                Switch(
+                    checked = true,
+                    onCheckedChange = { /* no-op */ },
+                    enabled = false,
+                )
+            }
+        }
+    }
 }
