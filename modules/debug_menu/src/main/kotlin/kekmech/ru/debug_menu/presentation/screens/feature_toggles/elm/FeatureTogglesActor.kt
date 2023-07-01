@@ -3,7 +3,7 @@ package kekmech.ru.debug_menu.presentation.screens.feature_toggles.elm
 import kekmech.ru.common_elm.actorFlow
 import kekmech.ru.common_feature_toggles.BooleanRemoteVariable
 import kekmech.ru.common_feature_toggles.RemoteVariable
-import kekmech.ru.common_feature_toggles.RewriteRemoteVariableHandle
+import kekmech.ru.debug_menu.presentation.screens.feature_toggles.FeatureTogglesOverwriteMiddleware
 import kekmech.ru.debug_menu.presentation.screens.feature_toggles.elm.FeatureTogglesEvent.Internal
 import kotlinx.coroutines.flow.Flow
 import vivid.money.elmslie.coroutines.Actor
@@ -12,28 +12,21 @@ import kekmech.ru.debug_menu.presentation.screens.feature_toggles.elm.FeatureTog
 
 internal class FeatureTogglesActor(
     private val remoteVariables: List<RemoteVariable<*>>,
-    private val rewriteRemoteVariableHandle: RewriteRemoteVariableHandle,
+    private val overwriteMiddleware: FeatureTogglesOverwriteMiddleware,
 ) : Actor<Command, Event> {
 
     override fun execute(command: Command): Flow<Event> =
         when (command) {
             is Command.GetFeatureToggles -> actorFlow {
-                remoteVariables
-                    .filterIsInstance<BooleanRemoteVariable>()
-                    .map {
-                        FeatureToggle(
-                            name = it.name,
-                            value = it.value,
-                            overwritten = rewriteRemoteVariableHandle.isRewritten(it.name),
-                        )
-                    }
+                getFeatureToggles()
             }.mapEvents(Internal::GetFeatureTogglesSuccess)
+
             is Command.RewriteFeatureToggle -> actorFlow {
-                rewriteRemoteVariableHandle.override(
+                overwriteMiddleware.overwrite(
                     name = command.name,
                     value = command.value.toString(),
                 )
-                rewriteRemoteVariableHandle.isRewritten(command.name)
+                overwriteMiddleware.isOverwritten(command.name)
             }.mapEvents({
                 Internal.RewriteFeatureToggleSuccess(
                     name = command.name,
@@ -41,5 +34,20 @@ internal class FeatureTogglesActor(
                     overwritten = it,
                 )
             })
+
+            is Command.ResetFeatureToggles -> actorFlow {
+                overwriteMiddleware.reset()
+                getFeatureToggles()
+            }.mapEvents(Internal::ResetFeatureTogglesSuccess)
+        }
+
+    private fun getFeatureToggles(): List<FeatureToggle> = remoteVariables
+        .filterIsInstance<BooleanRemoteVariable>()
+        .map {
+            FeatureToggle(
+                name = it.name,
+                value = it.value,
+                overwritten = overwriteMiddleware.isOverwritten(it.name),
+            )
         }
 }

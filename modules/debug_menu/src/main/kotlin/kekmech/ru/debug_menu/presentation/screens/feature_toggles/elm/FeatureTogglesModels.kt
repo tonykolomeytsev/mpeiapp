@@ -25,6 +25,7 @@ internal sealed interface FeatureTogglesEvent {
         sealed interface Click : Ui {
 
             data class Switch(val name: String, val value: Boolean) : Click
+            object Reset : Click
         }
     }
 
@@ -39,6 +40,10 @@ internal sealed interface FeatureTogglesEvent {
             val value: Boolean,
             val overwritten: Boolean,
         ) : Internal
+
+        data class ResetFeatureTogglesSuccess(
+            val featureToggles: List<FeatureToggle>,
+        ) : Internal
     }
 }
 
@@ -46,6 +51,7 @@ internal sealed interface FeatureTogglesCommand {
 
     object GetFeatureToggles : FeatureTogglesCommand
     data class RewriteFeatureToggle(val name: String, val value: Boolean) : FeatureTogglesCommand
+    object ResetFeatureToggles : FeatureTogglesCommand
 }
 
 internal sealed interface FeatureTogglesEffect
