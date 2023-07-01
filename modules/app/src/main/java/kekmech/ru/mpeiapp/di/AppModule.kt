@@ -111,4 +111,7 @@ private class RemoteConfigWrapperImpl : RemoteConfigWrapper {
         get() = FirebaseRemoteConfig.getInstance()
 
     override fun getUntyped(name: String): String = remoteConfig.getString(name)
+
+    override fun getAll(): Map<String, String> =
+        remoteConfig.all.mapValues { (_, v) -> v.asString() }
 }
