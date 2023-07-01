@@ -15,11 +15,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.bumble.appyx.core.modality.BuildContext
 import com.bumble.appyx.core.node.Node
 import kekmech.ru.common_elm.Resource
+import com.chuckerteam.chucker.api.Chucker
 import kekmech.ru.common_elm.elmNode
 import kekmech.ru.common_elm.rememberAcceptAction
 import kekmech.ru.common_navigation_api.NavTarget
@@ -66,6 +68,9 @@ private fun DebugMenuScreen(
                     appEnvironment = state.appEnvironment,
                     onClick = { openBackendEnvironmentDialog = true },
                 )
+            }
+            item {
+                ChuckerItem()
             }
         }
     }
@@ -126,7 +131,24 @@ private fun BackendEnvironmentItem(
             text = "For the 'Backend environment' setting to take effect, " +
                     "you need to restart the application",
             style = MpeixTheme.typography.paragraphNormal,
-            modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp),
+            modifier = Modifier.padding(vertical = 12.dp, horizontal = 16.dp),
         )
     }
+}
+
+@Composable
+private fun ChuckerItem() {
+    val context = LocalContext.current
+    ListItem(
+        headlineText = "Launch Chucker",
+        supportingText = "HTTP(s) requests/responses inspector",
+        leadingContent = {
+            Icon(painterResource(R.drawable.ic_public_24))
+        },
+        modifier = Modifier
+            .padding(vertical = 12.dp)
+            .clickable {
+                context.startActivity(Chucker.getLaunchIntent(context))
+            },
+    )
 }
