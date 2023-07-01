@@ -22,7 +22,7 @@ internal class FeatureTogglesReducer :
                 state { copy(featureToggles = event.featureToggles.toResource()) }
             }
 
-            is Internal.RewriteFeatureToggleSuccess -> {
+            is Internal.OverwriteFeatureToggleSuccess -> {
                 val updatedFeatureToggles = state.featureToggles.map { list ->
                     list.map {
                         if (it.name == event.name) {
@@ -51,7 +51,7 @@ internal class FeatureTogglesReducer :
 
             is Ui.Click.Switch -> {
                 commands {
-                    +Command.RewriteFeatureToggle(
+                    +Command.OverwriteFeatureToggle(
                         name = event.name,
                         value = event.value,
                     )

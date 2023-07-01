@@ -34,7 +34,7 @@ sealed class RemoteVariable<T : Any>(
  * // 2. Bind feature toggle via DI
  * factoryOf(::MyFeatureToggle) bindIntoList RemoteVariable::class
  * //                           ^ It's important to call `bindIntoList`
- * //                             if you want override toggle in debug menu
+ * //                             if you want to overwrite toggle in debug menu
  *
  * // 3. Inject where the toggle is needed
  * internal class MyStoreFactory(private val myFeatureToggle: MyFeatureToggle) { ... }
