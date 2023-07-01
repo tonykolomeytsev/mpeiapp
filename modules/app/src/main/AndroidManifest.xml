@@ -35,6 +35,14 @@
                 android:theme="@style/AppTheme" />
 
         <activity
+                android:name="kekmech.ru.mpeiapp.ComposeMainActivity"
+                android:configChanges="layoutDirection|locale"
+                android:label="MainActivity"
+                android:launchMode="singleTask"
+                android:screenOrientation="fullUser"
+                android:theme="@style/Theme.Mpeix" />
+
+        <activity
                 android:name="kekmech.ru.mpeiapp.ui.SplashActivity"
                 android:exported="true"
                 android:theme="@style/SplashTheme">
