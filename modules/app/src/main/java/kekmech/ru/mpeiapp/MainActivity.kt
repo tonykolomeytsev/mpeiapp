@@ -36,7 +36,6 @@ class MainActivity : AppCompatActivity(), DisposableDelegate by DisposableDelega
         getKoin().getAll()
     }
 
-    @Suppress("MagicNumber", "MissingPermission", "UnnecessaryApply")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mainActivityLifecycleObservers.forEach { it.onCreate(this) }
@@ -56,7 +55,9 @@ class MainActivity : AppCompatActivity(), DisposableDelegate by DisposableDelega
         }
 
         deeplinkHandlersProcessor.processDeeplink(intent.data)
-        if (Build.VERSION.SDK_INT < 25) LocaleContextWrapper.updateResourcesV24(this)
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.N) {
+            LocaleContextWrapper.updateResourcesV24(this)
+        }
     }
 
     @Suppress("DEPRECATION", "UnnecessaryApply")

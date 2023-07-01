@@ -26,7 +26,9 @@ class ComposeMainActivity : NodeComponentActivity() {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         mainActivityLifecycleObservers.forEach { it.onCreate(this) }
-        if (Build.VERSION.SDK_INT < 25) LocaleContextWrapper.updateResourcesV24(this)
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.N) {
+            LocaleContextWrapper.updateResourcesV24(this)
+        }
 
         setContent {
             MpeixTheme {
