@@ -7,7 +7,6 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kekmech.ru.common_android.onActivityResult
 import kekmech.ru.common_app_lifecycle.MainActivityLifecycleObserver
@@ -15,7 +14,6 @@ import kekmech.ru.common_elm.DisposableDelegate
 import kekmech.ru.common_elm.DisposableDelegateImpl
 import kekmech.ru.common_navigation.BackButtonListener
 import kekmech.ru.common_navigation.NavigationHolder
-import kekmech.ru.common_network.device_id.DeviceIdProvider
 import kekmech.ru.coreui.banner.findBanner
 import kekmech.ru.domain_app_settings.AppSettingsRepository
 import kekmech.ru.domain_main_screen.MainScreenLauncher
@@ -34,7 +32,6 @@ class MainActivity : AppCompatActivity(), DisposableDelegate by DisposableDelega
     private val onboardingFeatureLauncher: OnboardingFeatureLauncher by inject()
     private val mainScreenLauncher: MainScreenLauncher by inject()
     private val deeplinkHandlersProcessor: DeeplinkHandlersProcessor by inject()
-    private val deviceIdProvider: DeviceIdProvider by inject()
     private val mainActivityLifecycleObservers: List<MainActivityLifecycleObserver> by lazy {
         getKoin().getAll()
     }
@@ -43,10 +40,6 @@ class MainActivity : AppCompatActivity(), DisposableDelegate by DisposableDelega
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mainActivityLifecycleObservers.forEach { it.onCreate(this) }
-
-        FirebaseAnalytics.getInstance(this).apply {
-            setUserId(deviceIdProvider.getDeviceId())
-        }
 
         setTheme()
         setContentView(R.layout.activity_main)
