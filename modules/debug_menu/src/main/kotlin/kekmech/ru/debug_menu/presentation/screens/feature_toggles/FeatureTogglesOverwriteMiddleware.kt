@@ -30,7 +30,9 @@ internal class FeatureTogglesOverwriteMiddleware(
 
     fun isOverwritten(name: String): Boolean =
         overwritten.containsKey(name) &&
-                overwritten[name].orEmpty() != remoteConfigWrapper.getUntyped(name)
+                remoteConfigWrapper.getAll().let {
+                    it.containsKey(name) && it[name] != overwritten[name]
+                }
 
     fun reset() {
         overwritten.clear()
