@@ -1,4 +1,4 @@
-package kekmech.ru.debug_menu.initializer
+package kekmech.ru.debug_menu
 
 import android.app.Activity
 import android.app.Application
@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import kekmech.ru.common_app_lifecycle.AppLifecycleObserver
+import kekmech.ru.debug_menu.presentation.DebugMenuService
 import timber.log.Timber
 
 internal class DebugMenuInitializer : AppLifecycleObserver {

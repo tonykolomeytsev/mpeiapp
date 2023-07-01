@@ -106,5 +106,5 @@ private class RemoteConfigWrapperImpl : RemoteConfigWrapper {
     private val remoteConfig
         get() = FirebaseRemoteConfig.getInstance()
 
-    override fun get(featureToggleKey: String): Boolean = remoteConfig.getBoolean(featureToggleKey)
+    override fun getUntyped(name: String): String = remoteConfig.getString(name)
 }

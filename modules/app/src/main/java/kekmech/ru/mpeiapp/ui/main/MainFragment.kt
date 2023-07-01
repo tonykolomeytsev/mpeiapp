@@ -66,7 +66,9 @@ class MainFragment :
         bottomBarController = controller
 
         val preheatAppSettings = dependencies.appSettingsRepository.getAppSettings()
-        if (dependencies.featureToggles.isSnowFlakesEnabled && preheatAppSettings.isSnowEnabled) {
+        if (dependencies.isSnowFlakesEnabledFeatureToggle.value
+            && preheatAppSettings.isSnowEnabled
+        ) {
             enableSnowFlakesEffect(view)
         }
     }
