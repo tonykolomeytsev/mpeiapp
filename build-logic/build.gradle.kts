@@ -86,4 +86,16 @@ gradlePlugin {
         description = "The Gradle Plugin that configures Feature Implementation module"
         implementationClass = "mpeix.plugins.FeatureImplementationConventionPlugin"
     }
+    plugins.create("KotlinExtensionConventionPlugin") {
+        id = "mpeix.kotlin.extension"
+        displayName = "MpeiX Kotlin Extension Convention"
+        description = "The Gradle Plugin that configures extensions module for jvm libraries"
+        implementationClass = "mpeix.plugins.KotlinExtensionConventionPlugin"
+    }
+    plugins.create("KotlinLibraryConventionPlugin") {
+        id = "mpeix.kotlin.library"
+        displayName = "MpeiX Kotlin Library Convention"
+        description = "The Gradle Plugin that configures Kotlin Library module"
+        implementationClass = "mpeix.plugins.KotlinLibraryConventionPlugin"
+    }
 }
