@@ -1,6 +1,5 @@
 plugins {
-    id("mpeix.android.lib")
-    id("mpeix.android.compose")
+    id("mpeix.android.ui")
 }
 
 dependencies {
