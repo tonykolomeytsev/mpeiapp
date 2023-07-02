@@ -7,7 +7,7 @@ dependencies {
     implementation(project(":library_app_lifecycle"))
     implementation(project(":common_di"))
     implementation(project(":library_elm"))
-    implementation(project(":common_feature_toggles"))
+    implementation(project(":library_feature_toggles"))
     implementation(project(":ext_kotlin"))
     implementation(project(":library_navigation_api"))
     implementation(project(":library_navigation_compose"))

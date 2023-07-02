@@ -2,7 +2,6 @@ package kekmech.ru.feature_app_settings.di
 
 import android.content.Context
 import android.content.SharedPreferences
-import kekmech.ru.common_feature_toggles.RemoteVariable
 import kekmech.ru.domain_app_settings.AppEnvironmentRepository
 import kekmech.ru.domain_app_settings.AppSettingsFeatureLauncher
 import kekmech.ru.domain_app_settings.AppSettingsRepository
@@ -13,6 +12,7 @@ import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesActor
 import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesStoreFactory
 import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsActor
 import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsStoreFactory
+import kekmech.ru.library_feature_toggles.RemoteVariable
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.bind

@@ -10,9 +10,6 @@ import com.redmadrobot.mapmemory.MapMemory
 import kekmech.ru.common_analytics.FirebaseAnalyticsProvider
 import kekmech.ru.common_analytics.di.CommonAnalyticsModule
 import kekmech.ru.common_di.AppVersionName
-import kekmech.ru.common_feature_toggles.RemoteConfigWrapper
-import kekmech.ru.common_feature_toggles.RemoteVariable
-import kekmech.ru.common_feature_toggles.di.CommonFeatureTogglesModule
 import kekmech.ru.domain_bars.di.DomainBarsModule
 import kekmech.ru.domain_dashboard.di.DomainDashboardModule
 import kekmech.ru.domain_favorite_schedule.di.DomainFavoriteScheduleModule
@@ -32,6 +29,9 @@ import kekmech.ru.feature_schedule.di.FeatureScheduleModule
 import kekmech.ru.feature_search.di.FeatureSearchFeatureModule
 import kekmech.ru.library_app_database_impl.di.CommonAppDatabaseModule
 import kekmech.ru.library_coroutines.di.LibraryCoroutinesModule
+import kekmech.ru.library_feature_toggles.RemoteConfigWrapper
+import kekmech.ru.library_feature_toggles.RemoteVariable
+import kekmech.ru.library_feature_toggles.di.CommonFeatureTogglesModule
 import kekmech.ru.library_navigation.di.CommonNavigationModule
 import kekmech.ru.library_network.di.CommonNetworkModule
 import kekmech.ru.library_persistent_cache.di.LibraryPersistentCacheModule
