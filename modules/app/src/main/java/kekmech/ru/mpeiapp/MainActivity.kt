@@ -8,11 +8,11 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import kekmech.ru.common_android.onActivityResult
 import kekmech.ru.coreui.banner.findBanner
 import kekmech.ru.domain_app_settings.AppSettingsRepository
 import kekmech.ru.domain_main_screen.MainScreenLauncher
 import kekmech.ru.domain_onboarding.OnboardingFeatureLauncher
+import kekmech.ru.ext_android.onActivityResult
 import kekmech.ru.library_app_lifecycle.MainActivityLifecycleObserver
 import kekmech.ru.library_elm.DisposableDelegate
 import kekmech.ru.library_elm.DisposableDelegateImpl

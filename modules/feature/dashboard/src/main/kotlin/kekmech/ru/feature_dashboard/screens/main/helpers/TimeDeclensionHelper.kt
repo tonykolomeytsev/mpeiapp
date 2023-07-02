@@ -1,7 +1,7 @@
 package kekmech.ru.feature_dashboard.screens.main.helpers
 
 import android.content.Context
-import kekmech.ru.common_android.getStringArray
+import kekmech.ru.ext_android.getStringArray
 import kekmech.ru.strings.StringArrays
 import kekmech.ru.strings.Strings
 

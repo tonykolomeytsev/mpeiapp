@@ -6,9 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.setPadding
 import io.reactivex.rxjava3.disposables.Disposable
-import kekmech.ru.common_android.addSystemBottomPadding
-import kekmech.ru.common_android.onActivityResult
-import kekmech.ru.common_android.viewbinding.viewBinding
+import kekmech.ru.ext_android.addSystemBottomPadding
+import kekmech.ru.ext_android.onActivityResult
+import kekmech.ru.ext_android.viewbinding.viewBinding
 import kekmech.ru.ext_kotlin.fastLazy
 import kekmech.ru.library_elm.BaseFragment
 import kekmech.ru.library_navigation.BackButtonListener

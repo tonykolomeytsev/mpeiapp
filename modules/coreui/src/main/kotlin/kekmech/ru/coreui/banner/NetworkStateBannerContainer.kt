@@ -4,9 +4,9 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
-import kekmech.ru.common_android.addSystemTopPadding
 import kekmech.ru.coreui.R
 import kekmech.ru.coreui.databinding.ViewNetworkStateBannerContainerBinding
+import kekmech.ru.ext_android.addSystemTopPadding
 
 class NetworkStateBannerContainer @JvmOverloads constructor(
     context: Context,

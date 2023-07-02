@@ -7,13 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import kekmech.ru.common_android.dpToPx
-import kekmech.ru.common_android.getThemeColor
-import kekmech.ru.common_android.views.setMargins
 import kekmech.ru.coreui.items.ClickableItemViewHolder
 import kekmech.ru.coreui.items.ClickableItemViewHolderImpl
 import kekmech.ru.domain_bars.dto.AssessedDiscipline
 import kekmech.ru.domain_bars.dto.FinalGradeType
+import kekmech.ru.ext_android.dpToPx
+import kekmech.ru.ext_android.getThemeColor
+import kekmech.ru.ext_android.views.setMargins
 import kekmech.ru.feature_bars.R
 import kekmech.ru.feature_bars.databinding.ItemAssessedDisciplineBinding
 import kekmech.ru.library_adapter.AdapterItem

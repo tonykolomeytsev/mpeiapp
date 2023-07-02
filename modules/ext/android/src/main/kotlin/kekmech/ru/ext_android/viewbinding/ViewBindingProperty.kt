@@ -1,4 +1,4 @@
-package kekmech.ru.common_android.viewbinding
+package kekmech.ru.ext_android.viewbinding
 
 import android.os.Handler
 import android.os.Looper

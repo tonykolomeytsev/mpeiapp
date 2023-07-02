@@ -1,7 +1,7 @@
 package kekmech.ru.library_elm
 
 import androidx.annotation.LayoutRes
-import kekmech.ru.common_android.fragment.BottomSheetDialogFragment
+import kekmech.ru.ext_android.fragment.BottomSheetDialogFragment
 import vivid.money.elmslie.android.elmStore
 import vivid.money.elmslie.android.renderer.ElmRenderer
 import vivid.money.elmslie.android.renderer.ElmRendererDelegate

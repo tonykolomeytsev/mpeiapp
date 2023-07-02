@@ -37,7 +37,7 @@ dependencies {
 
     implementation(project(":library_adapter"))
     implementation(project(":common_analytics"))
-    implementation(project(":common_android"))
+    implementation(project(":ext_android"))
     implementation(project(":library_app_info"))
     implementation(project(":library_feature_toggles"))
     implementation(project(":ext_kotlin"))

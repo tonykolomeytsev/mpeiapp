@@ -1,4 +1,4 @@
-package kekmech.ru.common_android
+package kekmech.ru.ext_android
 
 import android.content.Intent
 import androidx.fragment.app.FragmentManager

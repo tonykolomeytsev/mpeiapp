@@ -2,7 +2,6 @@ package kekmech.ru.feature_schedule.screens.main.item
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import kekmech.ru.common_android.openLinkExternal
 import kekmech.ru.common_schedule.items.ClassesAdapterItem
 import kekmech.ru.common_schedule.items.LunchAdapterItem
 import kekmech.ru.common_schedule.items.NotePreviewAdapterItem
@@ -13,6 +12,7 @@ import kekmech.ru.coreui.items.ErrorStateAdapterItem
 import kekmech.ru.coreui.items.ShimmerAdapterItem
 import kekmech.ru.coreui.items.SpaceAdapterItem
 import kekmech.ru.domain_schedule_models.dto.Classes
+import kekmech.ru.ext_android.openLinkExternal
 import kekmech.ru.ext_kotlin.fastLazy
 import kekmech.ru.feature_schedule.R
 import kekmech.ru.feature_schedule.databinding.ItemWorkingDayBinding

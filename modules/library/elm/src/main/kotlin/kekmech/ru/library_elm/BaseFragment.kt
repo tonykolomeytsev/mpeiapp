@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.annotation.CallSuper
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
-import kekmech.ru.common_android.hideKeyboard
+import kekmech.ru.ext_android.hideKeyboard
 import vivid.money.elmslie.android.elmStore
 import vivid.money.elmslie.android.renderer.ElmRenderer
 import vivid.money.elmslie.android.renderer.ElmRendererDelegate

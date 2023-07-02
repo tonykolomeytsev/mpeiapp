@@ -3,7 +3,7 @@ package kekmech.ru.feature_schedule.screens.find_schedule.utils
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
-import kekmech.ru.common_android.getStringArray
+import kekmech.ru.ext_android.getStringArray
 import kekmech.ru.coreui.R as coreui_R
 
 internal class GroupFormatTextWatcher(

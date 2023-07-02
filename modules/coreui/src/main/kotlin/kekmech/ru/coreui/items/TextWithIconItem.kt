@@ -7,9 +7,9 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.annotation.StyleRes
 import androidx.recyclerview.widget.RecyclerView
-import kekmech.ru.common_android.getThemeColor
 import kekmech.ru.coreui.R
 import kekmech.ru.coreui.databinding.ItemTextWithIconBinding
+import kekmech.ru.ext_android.getThemeColor
 import kekmech.ru.library_adapter.AdapterItem
 import kekmech.ru.library_adapter.BaseItemBinder
 

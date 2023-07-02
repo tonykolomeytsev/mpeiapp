@@ -3,7 +3,7 @@ package kekmech.ru.feature_bars.items
 import android.content.res.ColorStateList
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import kekmech.ru.common_android.getThemeColor
+import kekmech.ru.ext_android.getThemeColor
 import kekmech.ru.feature_bars.databinding.ItemMarkBinding
 import kekmech.ru.library_adapter.BaseItemBinder
 import kotlin.math.floor

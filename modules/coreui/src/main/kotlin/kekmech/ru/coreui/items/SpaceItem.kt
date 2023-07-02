@@ -2,9 +2,9 @@ package kekmech.ru.coreui.items
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import kekmech.ru.common_android.dpToPx
 import kekmech.ru.coreui.R
 import kekmech.ru.coreui.databinding.ItemSpaceBinding
+import kekmech.ru.ext_android.dpToPx
 import kekmech.ru.library_adapter.AdapterItem
 import kekmech.ru.library_adapter.BaseItemBinder
 

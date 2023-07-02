@@ -9,8 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import kekmech.ru.common_android.getThemeColor
 import kekmech.ru.domain_bars.dto.ControlActivity
+import kekmech.ru.ext_android.getThemeColor
 import kekmech.ru.feature_bars.R
 import kekmech.ru.feature_bars.databinding.ItemControlActivityBinding
 import kekmech.ru.library_adapter.AdapterItem

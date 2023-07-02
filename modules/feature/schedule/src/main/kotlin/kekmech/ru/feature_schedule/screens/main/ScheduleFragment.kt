@@ -5,11 +5,11 @@ import android.view.View
 import androidx.core.view.isVisible
 import kekmech.ru.common_analytics.addScrollAnalytics
 import kekmech.ru.common_analytics.ext.screenAnalytics
-import kekmech.ru.common_android.*
-import kekmech.ru.common_android.viewbinding.viewBinding
-import kekmech.ru.common_android.views.onPageSelected
 import kekmech.ru.domain_schedule_models.dto.Classes
 import kekmech.ru.domain_schedule_models.dto.WeekOfSemester
+import kekmech.ru.ext_android.*
+import kekmech.ru.ext_android.viewbinding.viewBinding
+import kekmech.ru.ext_android.views.onPageSelected
 import kekmech.ru.ext_kotlin.fastLazy
 import kekmech.ru.feature_schedule.R
 import kekmech.ru.feature_schedule.databinding.FragmentScheduleBinding

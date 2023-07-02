@@ -1,7 +1,7 @@
 package kekmech.ru.coreui
 
 import android.content.Context
-import kekmech.ru.common_android.getStringArray
+import kekmech.ru.ext_android.getStringArray
 import kekmech.ru.strings.StringArrays
 import kekmech.ru.strings.Strings
 import java.time.LocalDate

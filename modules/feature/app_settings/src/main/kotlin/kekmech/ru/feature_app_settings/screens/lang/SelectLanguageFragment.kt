@@ -4,12 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import kekmech.ru.common_analytics.ext.screenAnalytics
-import kekmech.ru.common_android.close
-import kekmech.ru.common_android.fragment.BottomSheetDialogFragment
-import kekmech.ru.common_android.getArgument
-import kekmech.ru.common_android.setResult
-import kekmech.ru.common_android.viewbinding.viewBinding
-import kekmech.ru.common_android.withArguments
 import kekmech.ru.coreui.items.PullAdapterItem
 import kekmech.ru.coreui.items.PullItem
 import kekmech.ru.coreui.items.SectionHeaderAdapterItem
@@ -18,6 +12,12 @@ import kekmech.ru.coreui.items.SpaceAdapterItem
 import kekmech.ru.coreui.items.SpaceItem
 import kekmech.ru.coreui.items.TextAdapterItem
 import kekmech.ru.coreui.items.TextItem
+import kekmech.ru.ext_android.close
+import kekmech.ru.ext_android.fragment.BottomSheetDialogFragment
+import kekmech.ru.ext_android.getArgument
+import kekmech.ru.ext_android.setResult
+import kekmech.ru.ext_android.viewbinding.viewBinding
+import kekmech.ru.ext_android.withArguments
 import kekmech.ru.ext_kotlin.fastLazy
 import kekmech.ru.feature_app_settings.R
 import kekmech.ru.feature_app_settings.databinding.FragmentChangeLanguageBinding

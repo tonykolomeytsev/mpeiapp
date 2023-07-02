@@ -1,9 +1,12 @@
 plugins {
-    id("mpeix.android.lib")
+    id("mpeix.android.extension")
 }
 
 @Suppress("UnstableApiUsage")
-android.buildFeatures.viewBinding = true
+android.buildFeatures{
+    viewBinding = true
+    androidResources = true
+}
 
 dependencies {
     implementation(libs.androidx.appCompat)
@@ -16,6 +19,4 @@ dependencies {
     implementation(libs.koin.core)
     implementation(libs.rx.android)
     implementation(libs.rx.java)
-
-    implementation(project(":library_app_info"))
 }

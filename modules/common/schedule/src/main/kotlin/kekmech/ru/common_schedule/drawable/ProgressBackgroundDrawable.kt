@@ -5,7 +5,7 @@ import android.graphics.*
 import android.graphics.drawable.Drawable
 import androidx.annotation.ColorInt
 import androidx.annotation.Dimension
-import kekmech.ru.common_android.dpToPx
+import kekmech.ru.ext_android.dpToPx
 
 class ProgressBackgroundDrawable(
     context: Context,
