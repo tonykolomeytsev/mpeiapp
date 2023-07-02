@@ -12,6 +12,7 @@ import org.gradle.kotlin.dsl.configure
 @Suppress("unused")
 class AndroidUiConventionPlugin : Plugin<Project> {
 
+    @Suppress("UnstableApiUsage")
     override fun apply(target: Project) {
         with(target) {
             with(plugins) {
@@ -23,7 +24,15 @@ class AndroidUiConventionPlugin : Plugin<Project> {
             extensions.configure<LibraryExtension> {
                 configureNamespace(this)
                 configureKotlinAndroid(this)
-                configureAndroidCompose(this, fullDependencySet = true)
+                configureAndroidCompose(this)
+
+                buildFeatures {
+                    compose = true
+                    viewBinding = false
+                    androidResources = false
+                    shaders = false
+                    resValues = false
+                }
             }
         }
     }

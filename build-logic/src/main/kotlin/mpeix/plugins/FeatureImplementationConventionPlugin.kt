@@ -25,7 +25,7 @@ class FeatureImplementationConventionPlugin : Plugin<Project> {
             extensions.configure<LibraryExtension> {
                 configureNamespace(this)
                 configureKotlinAndroid(this)
-                configureAndroidCompose(this, fullDependencySet = true)
+                configureAndroidCompose(this)
 
                 @Suppress("UnstableApiUsage")
                 with(buildFeatures) {

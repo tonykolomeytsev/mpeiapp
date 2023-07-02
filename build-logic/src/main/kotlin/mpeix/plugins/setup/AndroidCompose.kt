@@ -13,7 +13,6 @@ import java.io.File
 
 internal fun Project.configureAndroidCompose(
     extension: CommonExtension<*, *, *, *>,
-    fullDependencySet: Boolean,
 ) {
     val libs = versionCatalog
 
@@ -33,13 +32,9 @@ internal fun Project.configureAndroidCompose(
 
     dependencies {
         implementation(platform(libs.findLibrary("compose.bom").get()))
-        if (fullDependencySet) {
-            implementation(libs.findBundle("compose").get())
-            implementation(libs.findBundle("accompanist").get())
-            debugImplementation(libs.findLibrary("compose.ui.tooling").get())
-        } else {
-            implementation(libs.findLibrary("compose.runtime").get())
-        }
+        implementation(libs.findBundle("compose").get())
+        implementation(libs.findBundle("accompanist").get())
+        debugImplementation(libs.findLibrary("compose.ui.tooling").get())
     }
 }
 
