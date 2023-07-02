@@ -1,11 +1,15 @@
 package mpeix.plugins
 
+import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.dsl.CommonExtension
+import com.android.build.gradle.BaseExtension
+import com.android.build.gradle.LibraryExtension
 import mpeix.plugins.setup.Plugins
 import mpeix.plugins.setup.configureAndroidCompose
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
+import org.gradle.kotlin.dsl.findByType
 
 @Suppress("unused")
 internal class AndroidComposeConventionPlugin : Plugin<Project> {
@@ -18,7 +22,9 @@ internal class AndroidComposeConventionPlugin : Plugin<Project> {
                         "together with plugins `${Plugins.MpeixAndroidLibrary}` " +
                         "and `${Plugins.MpeixAndroidExtension}`"
             }
-            extensions.configure<CommonExtension<*, *, *, *>> {
+            extensions.findByType<LibraryExtension>()?.apply {
+                configureAndroidCompose(this, fullDependencySet = true)
+            } ?: extensions.findByType<ApplicationExtension>()?.apply {
                 configureAndroidCompose(this, fullDependencySet = true)
             }
         }
