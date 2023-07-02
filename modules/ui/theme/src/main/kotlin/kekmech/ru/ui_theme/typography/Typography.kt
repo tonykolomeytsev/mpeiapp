@@ -25,7 +25,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import kekmech.ru.ui_theme.R
+import kekmech.ru.res_fonts.R
 import kekmech.ru.ui_theme.color.LightMpeixPalette
 import kekmech.ru.ui_theme.theme.MpeixTheme
 
