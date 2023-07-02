@@ -1,6 +1,5 @@
 package kekmech.ru.domain_bars.data.mappers
 
-import kekmech.ru.common_kotlin.capitalizeSafe
 import kekmech.ru.domain_bars.dto.AssessedDiscipline
 import kekmech.ru.domain_bars.dto.ControlActivity
 import kekmech.ru.domain_bars.dto.DisciplineRowType.CONTROL_ACTIVITY
@@ -9,6 +8,7 @@ import kekmech.ru.domain_bars.dto.FinalGrade
 import kekmech.ru.domain_bars.dto.FinalGradeType
 import kekmech.ru.domain_bars.dto.MarksResponse
 import kekmech.ru.domain_bars.dto.RawMarksResponse
+import kekmech.ru.ext_kotlin.capitalizeSafe
 
 internal object RawToMarksResponseMapper {
 

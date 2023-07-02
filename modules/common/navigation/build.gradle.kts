@@ -12,5 +12,5 @@ dependencies {
     implementation(libs.rx.java)
 
     implementation(project(":common_di"))
-    implementation(project(":common_kotlin"))
+    implementation(project(":ext_kotlin"))
 }

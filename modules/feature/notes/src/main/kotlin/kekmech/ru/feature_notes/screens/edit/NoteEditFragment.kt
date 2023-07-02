@@ -12,11 +12,11 @@ import kekmech.ru.common_android.getArgument
 import kekmech.ru.common_android.setResult
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.withArguments
-import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.coreui.PrettyDateFormatter
 import kekmech.ru.coreui.attachScrollListenerForAppBarLayoutShadow
 import kekmech.ru.coreui.banner.showBanner
 import kekmech.ru.domain_notes.dto.Note
+import kekmech.ru.ext_kotlin.fastLazy
 import kekmech.ru.feature_notes.R
 import kekmech.ru.feature_notes.databinding.FragmentNoteEditBinding
 import kekmech.ru.feature_notes.di.NotesDependencies

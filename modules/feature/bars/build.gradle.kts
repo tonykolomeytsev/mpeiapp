@@ -32,7 +32,7 @@ dependencies {
     implementation(project(":common_analytics"))
     implementation(project(":common_android"))
     implementation(project(":common_di"))
-    implementation(project(":common_kotlin"))
+    implementation(project(":ext_kotlin"))
     implementation(project(":library_elm"))
     implementation(project(":common_navigation"))
     implementation(project(":common_schedule"))

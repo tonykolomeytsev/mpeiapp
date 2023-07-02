@@ -18,7 +18,6 @@ import kekmech.ru.common_android.hideKeyboard
 import kekmech.ru.common_android.showKeyboard
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.withArguments
-import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_navigation.BottomTab
 import kekmech.ru.common_navigation.BottomTabsSwitcher
 import kekmech.ru.common_navigation.showDialog
@@ -30,6 +29,7 @@ import kekmech.ru.coreui.items.SectionHeaderAdapterItem
 import kekmech.ru.coreui.items.SpaceAdapterItem
 import kekmech.ru.domain_map.dto.MapMarker
 import kekmech.ru.domain_schedule.dto.SearchResult
+import kekmech.ru.ext_kotlin.fastLazy
 import kekmech.ru.feature_search.R
 import kekmech.ru.feature_search.databinding.FragmentSearchBinding
 import kekmech.ru.feature_search.di.SearchDependencies

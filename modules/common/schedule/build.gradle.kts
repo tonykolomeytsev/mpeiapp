@@ -14,7 +14,7 @@ dependencies {
 
     implementation(project(":common_adapter"))
     implementation(project(":common_android"))
-    implementation(project(":common_kotlin"))
+    implementation(project(":ext_kotlin"))
 
     implementation(project(":domain_schedule"))
     implementation(project(":domain_schedule_models"))

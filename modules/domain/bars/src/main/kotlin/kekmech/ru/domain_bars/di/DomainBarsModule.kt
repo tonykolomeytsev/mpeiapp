@@ -1,6 +1,5 @@
 package kekmech.ru.domain_bars.di
 
-import kekmech.ru.common_network.retrofit.buildApi
 import kekmech.ru.domain_bars.BarsService
 import kekmech.ru.domain_bars.data.BarsConfigDataSource
 import kekmech.ru.domain_bars.data.BarsConfigRepository
@@ -10,6 +9,7 @@ import kekmech.ru.domain_bars.data.BarsExtractJsRepository
 import kekmech.ru.domain_bars.data.BarsExtractJsRepositoryImpl
 import kekmech.ru.domain_bars.data.BarsUserInfoRepository
 import kekmech.ru.domain_bars.data.BarsUserInfoRepositoryImpl
+import kekmech.ru.library_network.buildApi
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.bind
 import org.koin.dsl.module

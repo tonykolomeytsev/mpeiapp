@@ -5,9 +5,9 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_adapter.BaseItemBinder
-import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_schedule.items.DayAdapterItem
 import kekmech.ru.common_schedule.items.DayItem
+import kekmech.ru.ext_kotlin.fastLazy
 import kekmech.ru.feature_search.R
 import kekmech.ru.feature_search.databinding.ItemWeekMinBinding
 

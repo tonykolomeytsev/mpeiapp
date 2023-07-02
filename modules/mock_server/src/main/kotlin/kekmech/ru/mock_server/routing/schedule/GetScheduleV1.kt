@@ -5,7 +5,6 @@ import io.ktor.server.application.call
 import io.ktor.server.response.respond
 import io.ktor.server.routing.Routing
 import io.ktor.server.routing.get
-import kekmech.ru.common_kotlin.moscowLocalDate
 import kekmech.ru.domain_schedule_models.dto.Classes
 import kekmech.ru.domain_schedule_models.dto.ClassesType
 import kekmech.ru.domain_schedule_models.dto.Day
@@ -14,6 +13,7 @@ import kekmech.ru.domain_schedule_models.dto.ScheduleType
 import kekmech.ru.domain_schedule_models.dto.Time
 import kekmech.ru.domain_schedule_models.dto.Week
 import kekmech.ru.domain_schedule_models.dto.WeekOfSemester
+import kekmech.ru.ext_kotlin.moscowLocalDate
 import kekmech.ru.mock_server.randomResponseDelay
 import java.time.LocalDate
 import java.time.LocalTime

@@ -32,7 +32,7 @@ dependencies {
     implementation(project(":common_app_lifecycle"))
     implementation(project(":common_di"))
     implementation(project(":common_emoji"))
-    implementation(project(":common_kotlin"))
+    implementation(project(":ext_kotlin"))
     implementation(project(":library_elm"))
     implementation(project(":common_navigation"))
 

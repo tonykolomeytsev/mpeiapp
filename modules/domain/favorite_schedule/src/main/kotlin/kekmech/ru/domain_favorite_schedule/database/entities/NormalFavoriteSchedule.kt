@@ -4,10 +4,10 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
-import kekmech.ru.common_kotlin.fromBase64
-import kekmech.ru.common_kotlin.toBase64
 import kekmech.ru.domain_favorite_schedule.dto.FavoriteSchedule
 import kekmech.ru.domain_schedule_models.dto.ScheduleType
+import kekmech.ru.ext_kotlin.fromBase64
+import kekmech.ru.ext_kotlin.toBase64
 
 @Entity(tableName = "favorite_schedule")
 @TypeConverters(NormalFavoriteScheduleTypeConverter::class)

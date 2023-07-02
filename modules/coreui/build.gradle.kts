@@ -16,15 +16,18 @@ dependencies {
     implementation(libs.rx.java)
     implementation(libs.squareup.retrofit)
 
+    implementation(project(":common_adapter"))
+    implementation(project(":common_android"))
+    implementation(project(":ext_kotlin"))
+
     implementation(project(":domain_notes"))
     implementation(project(":domain_schedule"))
     implementation(project(":domain_favorite_schedule"))
 
-    implementation(project(":common_adapter"))
-    implementation(project(":common_android"))
+    implementation(project(":ext_okhttp"))
+
     implementation(project(":library_elm"))
-    implementation(project(":common_kotlin"))
-    implementation(project(":common_network"))
+    implementation(project(":library_network"))
 
     implementation(project(":icons"))
     implementation(project(":images"))

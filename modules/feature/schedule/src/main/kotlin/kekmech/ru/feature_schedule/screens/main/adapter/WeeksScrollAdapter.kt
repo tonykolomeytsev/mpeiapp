@@ -3,9 +3,9 @@ package kekmech.ru.feature_schedule.screens.main.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import kekmech.ru.common_kotlin.moscowLocalDate
 import kekmech.ru.common_schedule.items.DayItem
 import kekmech.ru.common_schedule.utils.atStartOfWeek
+import kekmech.ru.ext_kotlin.moscowLocalDate
 import kekmech.ru.feature_schedule.screens.main.item.WeekAdapterItem
 import kekmech.ru.feature_schedule.screens.main.item.WeekItem
 import kekmech.ru.feature_schedule.screens.main.item.WeekViewHolder

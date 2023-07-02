@@ -8,7 +8,6 @@ import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.maps.shouldBeEmpty
 import io.kotest.matchers.maps.shouldContainExactly
 import io.kotest.matchers.shouldBe
-import kekmech.ru.common_kotlin.mutableLinkedHashMap
 import kekmech.ru.common_schedule.utils.atStartOfWeek
 import kekmech.ru.domain_app_settings_models.AppSettings
 import kekmech.ru.domain_schedule_models.dto.Classes
@@ -18,6 +17,7 @@ import kekmech.ru.domain_schedule_models.dto.Schedule
 import kekmech.ru.domain_schedule_models.dto.ScheduleType
 import kekmech.ru.domain_schedule_models.dto.Week
 import kekmech.ru.domain_schedule_models.dto.WeekOfSemester
+import kekmech.ru.ext_kotlin.mutableLinkedHashMap
 import kekmech.ru.feature_schedule.screens.main.elm.ScheduleCommand
 import kekmech.ru.feature_schedule.screens.main.elm.ScheduleEffect
 import kekmech.ru.feature_schedule.screens.main.elm.ScheduleEvent.Internal

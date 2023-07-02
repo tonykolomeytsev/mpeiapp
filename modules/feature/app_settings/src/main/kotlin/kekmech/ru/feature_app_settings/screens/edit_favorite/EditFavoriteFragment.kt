@@ -13,8 +13,8 @@ import kekmech.ru.common_android.setResult
 import kekmech.ru.common_android.showKeyboard
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.withArguments
-import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.domain_favorite_schedule.dto.FavoriteSchedule
+import kekmech.ru.ext_kotlin.fastLazy
 import kekmech.ru.feature_app_settings.R
 import kekmech.ru.feature_app_settings.databinding.FragmentEditFavoriteBinding
 

@@ -11,7 +11,6 @@ import kekmech.ru.common_android.close
 import kekmech.ru.common_android.getArgument
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.withArguments
-import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_navigation.BottomTab
 import kekmech.ru.common_navigation.BottomTabsSwitcher
 import kekmech.ru.common_navigation.ClearBackStack
@@ -26,6 +25,7 @@ import kekmech.ru.coreui.items.TextAdapterItem
 import kekmech.ru.coreui.items.TextWithIconAdapterItem
 import kekmech.ru.domain_schedule.dto.SearchResult
 import kekmech.ru.domain_schedule_models.dto.Classes
+import kekmech.ru.ext_kotlin.fastLazy
 import kekmech.ru.feature_search.R
 import kekmech.ru.feature_search.databinding.FragmentScheduleDetailsBinding
 import kekmech.ru.feature_search.item.ButtonAdapterItem

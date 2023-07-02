@@ -14,12 +14,12 @@ import kekmech.ru.common_android.setResult
 import kekmech.ru.common_android.showKeyboard
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.withArguments
-import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.coreui.banner.showBanner
 import kekmech.ru.domain_schedule.ScheduleFeatureLauncher
 import kekmech.ru.domain_schedule.ScheduleFeatureLauncher.ContinueTo.BACK
 import kekmech.ru.domain_schedule.ScheduleFeatureLauncher.ContinueTo.BACK_WITH_RESULT
 import kekmech.ru.domain_schedule.ScheduleFeatureLauncher.ContinueTo.DASHBOARD
+import kekmech.ru.ext_kotlin.fastLazy
 import kekmech.ru.feature_schedule.R
 import kekmech.ru.feature_schedule.databinding.FragmentFindScheduleBinding
 import kekmech.ru.feature_schedule.di.ScheduleDependencies

@@ -24,7 +24,6 @@ import kekmech.ru.common_android.getThemeColor
 import kekmech.ru.common_android.openLinkExternal
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.views.setProgressViewOffset
-import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_navigation.features.ScrollToTop
 import kekmech.ru.common_navigation.features.TabScreenStateSaver
 import kekmech.ru.common_navigation.features.TabScreenStateSaverImpl
@@ -35,6 +34,7 @@ import kekmech.ru.coreui.items.ShimmerAdapterItem
 import kekmech.ru.coreui.items.SpaceAdapterItem
 import kekmech.ru.coreui.items.TextWithIconAdapterItem
 import kekmech.ru.domain_app_settings.AppSettingsFeatureLauncher
+import kekmech.ru.ext_kotlin.fastLazy
 import kekmech.ru.feature_bars.R
 import kekmech.ru.feature_bars.databinding.FragmentBarsBinding
 import kekmech.ru.feature_bars.items.AssessedDisciplineAdapterItem

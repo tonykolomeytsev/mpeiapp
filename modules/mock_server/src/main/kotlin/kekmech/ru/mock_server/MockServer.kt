@@ -7,9 +7,9 @@ import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.server.routing.routing
-import kekmech.ru.common_network.gson.LocalDateJsonAdapter
-import kekmech.ru.common_network.gson.LocalDateTimeJsonAdapter
-import kekmech.ru.common_network.gson.LocalTimeJsonAdapter
+import kekmech.ru.ext_gson.LocalDateJsonAdapter
+import kekmech.ru.ext_gson.LocalDateTimeJsonAdapter
+import kekmech.ru.ext_gson.LocalTimeJsonAdapter
 import kekmech.ru.mock_server.routing.bars.getExtractJs
 import kekmech.ru.mock_server.routing.bars.getRemoteBarsConfig
 import kekmech.ru.mock_server.routing.github.getContributors

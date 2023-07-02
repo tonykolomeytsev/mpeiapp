@@ -13,13 +13,14 @@ dependencies {
     implementation(project(":common_android"))
     implementation(project(":common_app_lifecycle"))
     implementation(project(":common_di"))
-    implementation(project(":common_kotlin"))
-    implementation(project(":common_network"))
+    implementation(project(":ext_kotlin"))
+    implementation(project(":library_network"))
 
     implementation(project(":domain_schedule"))
     implementation(project(":domain_schedule_models"))
     implementation(project(":domain_app_settings"))
     implementation(project(":domain_app_settings_models"))
 
+    implementation(project(":ext_gson"))
     implementation(project(":ext_koin"))
 }

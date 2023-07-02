@@ -1,5 +1,6 @@
 plugins {
-    id("mpeix.kotlin.lib")
+    id("mpeix.kotlin.library")
+    id("mpeix.kotlin.aar2jar")
 }
 
 dependencies {

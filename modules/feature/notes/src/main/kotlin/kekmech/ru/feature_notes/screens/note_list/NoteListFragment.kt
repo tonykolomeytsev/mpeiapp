@@ -12,7 +12,6 @@ import kekmech.ru.common_android.close
 import kekmech.ru.common_android.getArgument
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.withArguments
-import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_navigation.addScreenForward
 import kekmech.ru.coreui.items.AddActionAdapterItem
 import kekmech.ru.coreui.items.NoteAdapterItem
@@ -22,6 +21,7 @@ import kekmech.ru.coreui.items.SpaceAdapterItem
 import kekmech.ru.coreui.touch_helpers.attachSwipeToDeleteCallback
 import kekmech.ru.domain_notes.dto.Note
 import kekmech.ru.domain_schedule_models.dto.Classes
+import kekmech.ru.ext_kotlin.fastLazy
 import kekmech.ru.feature_notes.R
 import kekmech.ru.feature_notes.databinding.FragmentNoteListBinding
 import kekmech.ru.feature_notes.di.NotesDependencies
