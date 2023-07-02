@@ -4,12 +4,12 @@ import android.content.SharedPreferences
 import com.google.gson.Gson
 import com.redmadrobot.mapmemory.MapMemory
 import com.redmadrobot.mapmemory.stateFlow
-import kekmech.ru.common_shared_preferences.string
 import kekmech.ru.domain_bars.data.mappers.RawToMarksResponseMapper
 import kekmech.ru.domain_bars.data.mappers.RawToRatingResponseMapper
 import kekmech.ru.domain_bars.dto.BarsUserInfo
 import kekmech.ru.domain_bars.dto.RawMarksResponse
 import kekmech.ru.domain_bars.dto.RawRatingResponse
+import kekmech.ru.ext_shared_preferences.string
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.update
 

@@ -1,8 +1,8 @@
 package kekmech.ru.domain_map
 
-import kekmech.ru.common_persistent_cache_api.PersistentCache
-import kekmech.ru.common_persistent_cache_api.ofList
 import kekmech.ru.domain_map.dto.MapMarker
+import kekmech.ru.library_persistent_cache.api.PersistentCache
+import kekmech.ru.library_persistent_cache.api.ofList
 
 class MapRepository internal constructor(
     private val mapService: MapService,

@@ -1,9 +1,9 @@
 package kekmech.ru.domain_app_settings
 
 import android.content.SharedPreferences
-import kekmech.ru.common_shared_preferences.boolean
-import kekmech.ru.common_shared_preferences.string
 import kekmech.ru.domain_app_settings_models.AppSettings
+import kekmech.ru.ext_shared_preferences.boolean
+import kekmech.ru.ext_shared_preferences.string
 
 class AppSettingsRepository(
     preferences: SharedPreferences,
