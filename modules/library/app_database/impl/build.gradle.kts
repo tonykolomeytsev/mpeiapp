@@ -17,7 +17,7 @@ dependencies {
 
     ksp(libs.androidx.room.compiler)
 
-    implementation(project(":common_di"))
+    implementation(project(":library_app_info"))
 
     implementation(project(":domain_favorite_schedule"))
     implementation(project(":domain_notes"))

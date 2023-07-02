@@ -15,7 +15,7 @@ dependencies {
     implementation(project(":domain_schedule_models"))
 
     implementation(project(":ext_kotlin"))
-    implementation(project(":common_di"))
+    implementation(project(":library_app_info"))
     implementation(project(":library_network"))
 
     implementation(project(":ext_shared_preferences"))

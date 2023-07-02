@@ -3,13 +3,13 @@ package kekmech.ru.library_network.di
 import android.content.SharedPreferences
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import kekmech.ru.common_di.AppVersionName
 import kekmech.ru.ext_gson.LocalDateJsonAdapter
 import kekmech.ru.ext_gson.LocalDateTimeJsonAdapter
 import kekmech.ru.ext_gson.LocalTimeJsonAdapter
 import kekmech.ru.ext_koin.bindIntoList
 import kekmech.ru.ext_okhttp.NoConnectionInterceptor
 import kekmech.ru.ext_okhttp.RequiredHeadersInterceptor
+import kekmech.ru.library_app_info.AppVersionName
 import kekmech.ru.library_network.device_id.DeviceIdProvider
 import kekmech.ru.library_network.device_id.DeviceLocaleProvider
 import okhttp3.Interceptor

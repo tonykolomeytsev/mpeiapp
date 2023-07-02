@@ -15,7 +15,7 @@ dependencies {
     implementation(libs.squareup.retrofit)
     implementation(libs.androidx.datastore.preferences.core)
 
-    implementation(project(":common_di"))
+    implementation(project(":library_app_info"))
     implementation(project(":ext_kotlin"))
     implementation(project(":library_network"))
 
