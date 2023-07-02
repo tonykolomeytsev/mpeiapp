@@ -4,7 +4,6 @@ import android.content.SharedPreferences
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import kekmech.ru.common_di.AppVersionName
-import kekmech.ru.common_di.bindIntoList
 import kekmech.ru.common_network.device_id.DeviceIdProvider
 import kekmech.ru.common_network.device_id.DeviceLocaleProvider
 import kekmech.ru.common_network.gson.LocalDateJsonAdapter
@@ -12,6 +11,7 @@ import kekmech.ru.common_network.gson.LocalDateTimeJsonAdapter
 import kekmech.ru.common_network.gson.LocalTimeJsonAdapter
 import kekmech.ru.common_network.okhttp.NoConnectionInterceptor
 import kekmech.ru.common_network.okhttp.RequiredHeadersInterceptor
+import kekmech.ru.ext_koin.bindIntoList
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

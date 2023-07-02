@@ -12,7 +12,6 @@ import kekmech.ru.common_analytics.di.CommonAnalyticsModule
 import kekmech.ru.common_app_database_impl.di.CommonAppDatabaseModule
 import kekmech.ru.common_coroutines_impl.di.CommonCoroutinesModule
 import kekmech.ru.common_di.AppVersionName
-import kekmech.ru.common_di.bindIntoList
 import kekmech.ru.common_feature_toggles.RemoteConfigWrapper
 import kekmech.ru.common_feature_toggles.RemoteVariable
 import kekmech.ru.common_feature_toggles.di.CommonFeatureTogglesModule
@@ -26,6 +25,7 @@ import kekmech.ru.domain_github.di.DomainGitHubModule
 import kekmech.ru.domain_map.di.DomainMapModule
 import kekmech.ru.domain_notes.di.DomainNotesModule
 import kekmech.ru.domain_schedule.di.DomainScheduleModule
+import kekmech.ru.ext_koin.bindIntoList
 import kekmech.ru.feature_app_settings.di.FeatureAppSettingsModule
 import kekmech.ru.feature_bars.di.FeatureBarsModule
 import kekmech.ru.feature_dashboard.di.FeatureDashboardModule

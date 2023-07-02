@@ -101,6 +101,8 @@ dependencies {
     implementation(project(":domain_schedule"))
     implementation(project(":domain_search"))
 
+    implementation(project(":ext_koin"))
+
     implementation(project(":common_analytics"))
     implementation(project(":common_android"))
     implementation(project(":common_app_database_api"))

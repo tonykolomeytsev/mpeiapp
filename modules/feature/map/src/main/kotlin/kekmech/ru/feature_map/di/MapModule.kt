@@ -1,9 +1,9 @@
 package kekmech.ru.feature_map.di
 
 import kekmech.ru.common_app_lifecycle.MainActivityLifecycleObserver
-import kekmech.ru.common_di.bindIntoList
 import kekmech.ru.common_emoji.CommonEmojiModule
 import kekmech.ru.domain_map.MapFeatureLauncher
+import kekmech.ru.ext_koin.bindIntoList
 import kekmech.ru.feature_map.MapInitializer
 import kekmech.ru.feature_map.launcher.DeeplinkDelegate
 import kekmech.ru.feature_map.launcher.MapFeatureLauncherImpl
