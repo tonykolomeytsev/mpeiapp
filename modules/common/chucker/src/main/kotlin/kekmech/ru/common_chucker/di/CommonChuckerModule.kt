@@ -4,7 +4,7 @@ import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.chuckerteam.chucker.api.RetentionManager
-import kekmech.ru.common_di.bindIntoList
+import kekmech.ru.ext_koin.bindIntoList
 import okhttp3.Interceptor
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module

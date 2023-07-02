@@ -36,6 +36,8 @@ dependencies {
     implementation(project(":common_elm"))
     implementation(project(":common_navigation"))
 
+    implementation(project(":ext_koin"))
+
     implementation(project(":coreui"))
     implementation(project(":strings"))
 }

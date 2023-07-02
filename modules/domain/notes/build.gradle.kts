@@ -17,4 +17,6 @@ dependencies {
 
     implementation(project(":domain_schedule"))
     implementation(project(":domain_schedule_models"))
+
+    implementation(project(":ext_koin"))
 }

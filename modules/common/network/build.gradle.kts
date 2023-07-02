@@ -15,4 +15,6 @@ dependencies {
     implementation(project(":common_di"))
 
     implementation(project(":domain_app_settings_models"))
+
+    implementation(project(":ext_koin"))
 }

@@ -14,4 +14,6 @@ dependencies {
     implementation(project(":common_network"))
 
     implementation(project(":domain_analytics"))
+
+    implementation(project(":ext_koin"))
 }

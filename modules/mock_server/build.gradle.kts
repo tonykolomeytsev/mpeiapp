@@ -20,4 +20,6 @@ dependencies {
     implementation(project(":domain_schedule_models"))
     implementation(project(":domain_app_settings"))
     implementation(project(":domain_app_settings_models"))
+
+    implementation(project(":ext_koin"))
 }

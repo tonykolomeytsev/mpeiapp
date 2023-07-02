@@ -14,6 +14,8 @@ dependencies {
     implementation(project(":domain_app_settings"))
     implementation(project(":domain_app_settings_models"))
 
+    implementation(project(":ext_koin"))
+
     implementation(project(":ui_kit_lists"))
     implementation(project(":ui_kit_switch"))
     implementation(project(":ui_kit_topappbar"))

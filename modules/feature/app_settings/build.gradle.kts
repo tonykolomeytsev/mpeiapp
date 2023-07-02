@@ -45,6 +45,8 @@ dependencies {
     implementation(project(":common_navigation"))
     implementation(project(":common_network"))
 
+    implementation(project(":ext_koin"))
+
     implementation(project(":coreui"))
     implementation(project(":strings"))
 }
