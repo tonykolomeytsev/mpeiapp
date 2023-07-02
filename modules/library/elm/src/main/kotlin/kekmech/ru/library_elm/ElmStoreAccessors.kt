@@ -1,4 +1,4 @@
-package kekmech.ru.common_elm
+package kekmech.ru.library_elm
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect

@@ -1,12 +1,12 @@
 package kekmech.ru.feature_dashboard.screens.main.elm
 
-import kekmech.ru.common_elm.actorFlow
 import kekmech.ru.domain_dashboard.interactors.GetUpcomingEventsInteractor
 import kekmech.ru.domain_favorite_schedule.FavoriteScheduleRepository
 import kekmech.ru.domain_notes.interactors.GetActualNotesInteractor
 import kekmech.ru.domain_schedule.data.ScheduleRepository
 import kekmech.ru.domain_schedule.use_cases.GetCurrentScheduleUseCase
 import kekmech.ru.feature_dashboard.screens.main.elm.DashboardEvent.Internal
+import kekmech.ru.library_elm.actorFlow
 import kotlinx.coroutines.flow.Flow
 import vivid.money.elmslie.coroutines.Actor
 import kekmech.ru.feature_dashboard.screens.main.elm.DashboardCommand as Command

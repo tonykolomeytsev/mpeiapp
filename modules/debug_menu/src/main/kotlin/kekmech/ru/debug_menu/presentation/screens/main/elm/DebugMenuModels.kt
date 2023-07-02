@@ -1,7 +1,7 @@
 package kekmech.ru.debug_menu.presentation.screens.main.elm
 
-import kekmech.ru.common_elm.Resource
 import kekmech.ru.domain_app_settings_models.AppEnvironment
+import kekmech.ru.library_elm.Resource
 import vivid.money.elmslie.core.store.Store
 
 internal typealias DebugMenuStore = Store<DebugMenuEvent, DebugMenuEffect, DebugMenuState>

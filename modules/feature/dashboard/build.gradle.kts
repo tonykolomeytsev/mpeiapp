@@ -40,7 +40,7 @@ dependencies {
     implementation(project(":common_annotations"))
     implementation(project(":common_di"))
     implementation(project(":common_kotlin"))
-    implementation(project(":common_elm"))
+    implementation(project(":library_elm"))
     implementation(project(":common_navigation"))
     implementation(project(":common_schedule"))
     implementation(project(":ext_shared_preferences"))

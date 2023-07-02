@@ -29,7 +29,7 @@ dependencies {
     implementation(project(":ui_kit_topappbar"))
     implementation(project(":common_navigation_api"))
     implementation(project(":common_navigation_compose"))
-    implementation(project(":common_elm"))
+    implementation(project(":library_elm"))
     implementation(project(":common_kotlin"))
 
     implementation(libs.compose.activity)

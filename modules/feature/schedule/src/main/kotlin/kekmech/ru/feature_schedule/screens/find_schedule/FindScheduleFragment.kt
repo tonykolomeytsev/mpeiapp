@@ -14,7 +14,6 @@ import kekmech.ru.common_android.setResult
 import kekmech.ru.common_android.showKeyboard
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.withArguments
-import kekmech.ru.common_elm.BaseFragment
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.coreui.banner.showBanner
 import kekmech.ru.domain_schedule.ScheduleFeatureLauncher
@@ -30,6 +29,7 @@ import kekmech.ru.feature_schedule.screens.find_schedule.elm.FindScheduleEvent.U
 import kekmech.ru.feature_schedule.screens.find_schedule.elm.FindScheduleState
 import kekmech.ru.feature_schedule.screens.find_schedule.elm.FindScheduleStoreFactory
 import kekmech.ru.feature_schedule.screens.find_schedule.utils.GroupFormatTextWatcher
+import kekmech.ru.library_elm.BaseFragment
 import kekmech.ru.strings.Strings
 import org.koin.android.ext.android.inject
 

@@ -7,10 +7,10 @@ import android.widget.FrameLayout
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers.mainThread
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import kekmech.ru.common_android.addSystemTopPadding
-import kekmech.ru.common_elm.DisposableDelegate
-import kekmech.ru.common_elm.DisposableDelegateImpl
 import kekmech.ru.coreui.R
 import kekmech.ru.coreui.databinding.ViewBannerContainerBinding
+import kekmech.ru.library_elm.DisposableDelegate
+import kekmech.ru.library_elm.DisposableDelegateImpl
 import java.util.Optional
 import java.util.concurrent.TimeUnit
 

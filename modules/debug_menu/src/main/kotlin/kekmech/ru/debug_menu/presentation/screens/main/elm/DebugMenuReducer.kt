@@ -1,8 +1,8 @@
 package kekmech.ru.debug_menu.presentation.screens.main.elm
 
-import kekmech.ru.common_elm.toResource
 import kekmech.ru.debug_menu.presentation.screens.main.elm.DebugMenuEvent.Internal
 import kekmech.ru.debug_menu.presentation.screens.main.elm.DebugMenuEvent.Ui
+import kekmech.ru.library_elm.toResource
 import vivid.money.elmslie.core.store.dsl_reducer.ScreenDslReducer
 import kekmech.ru.debug_menu.presentation.screens.main.elm.DebugMenuCommand as Command
 import kekmech.ru.debug_menu.presentation.screens.main.elm.DebugMenuEffect as Effect

@@ -1,4 +1,4 @@
-package kekmech.ru.common_elm
+package kekmech.ru.library_elm
 
 import android.os.Bundle
 import android.view.LayoutInflater

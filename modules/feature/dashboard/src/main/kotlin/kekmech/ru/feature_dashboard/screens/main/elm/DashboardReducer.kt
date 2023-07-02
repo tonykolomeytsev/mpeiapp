@@ -1,12 +1,12 @@
 package kekmech.ru.feature_dashboard.screens.main.elm
 
-import kekmech.ru.common_elm.Resource
-import kekmech.ru.common_elm.toResource
 import kekmech.ru.common_kotlin.moscowLocalDate
 import kekmech.ru.domain_dashboard.dto.UpcomingEventsPrediction
 import kekmech.ru.domain_schedule.dto.SelectedSchedule
 import kekmech.ru.feature_dashboard.screens.main.elm.DashboardEvent.Internal
 import kekmech.ru.feature_dashboard.screens.main.elm.DashboardEvent.Ui
+import kekmech.ru.library_elm.Resource
+import kekmech.ru.library_elm.toResource
 import vivid.money.elmslie.core.store.dsl_reducer.ScreenDslReducer
 import kekmech.ru.feature_dashboard.screens.main.elm.DashboardCommand as Command
 import kekmech.ru.feature_dashboard.screens.main.elm.DashboardEffect as Effect

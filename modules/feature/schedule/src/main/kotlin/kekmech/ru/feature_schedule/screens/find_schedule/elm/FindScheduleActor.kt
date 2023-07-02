@@ -1,9 +1,9 @@
 package kekmech.ru.feature_schedule.screens.find_schedule.elm
 
-import kekmech.ru.common_elm.actorFlow
 import kekmech.ru.domain_schedule.data.ScheduleRepository
 import kekmech.ru.domain_schedule.data.ScheduleSearchRepository
 import kekmech.ru.feature_schedule.screens.find_schedule.elm.FindScheduleEvent.Internal
+import kekmech.ru.library_elm.actorFlow
 import kotlinx.coroutines.flow.Flow
 import vivid.money.elmslie.coroutines.Actor
 import kekmech.ru.feature_schedule.screens.find_schedule.elm.FindScheduleCommand as Command

@@ -1,12 +1,12 @@
 package kekmech.ru.feature_dashboard.screens.main.elm
 
-import kekmech.ru.common_elm.Resource
 import kekmech.ru.domain_dashboard.dto.UpcomingEventsPrediction
 import kekmech.ru.domain_favorite_schedule.dto.FavoriteSchedule
 import kekmech.ru.domain_notes.dto.Note
 import kekmech.ru.domain_schedule.dto.SelectedSchedule
 import kekmech.ru.domain_schedule_models.dto.Classes
 import kekmech.ru.domain_schedule_models.dto.WeekOfSemester
+import kekmech.ru.library_elm.Resource
 import java.time.LocalDate
 
 internal data class DashboardState(

@@ -1,9 +1,9 @@
 package kekmech.ru.feature_app_settings.screens.main.elm
 
-import kekmech.ru.common_elm.actorFlow
 import kekmech.ru.domain_app_settings.AppSettingsRepository
 import kekmech.ru.domain_github.ContributorsRepository
 import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsEvent.Internal
+import kekmech.ru.library_elm.actorFlow
 import kotlinx.coroutines.flow.Flow
 import vivid.money.elmslie.coroutines.Actor
 

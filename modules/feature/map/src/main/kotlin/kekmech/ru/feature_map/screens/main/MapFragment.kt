@@ -20,7 +20,6 @@ import kekmech.ru.common_android.dpToPx
 import kekmech.ru.common_android.getThemeColor
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.views.setMargins
-import kekmech.ru.common_elm.BaseFragment
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_navigation.features.ScrollToTop
 import kekmech.ru.common_navigation.features.TabScreenStateSaver
@@ -50,6 +49,7 @@ import kekmech.ru.feature_map.screens.main.ext.toMarkerType
 import kekmech.ru.feature_map.screens.main.view.BottomSheetBackgroundDrawable
 import kekmech.ru.feature_map.screens.main.view.ControlledScrollingLayoutManager
 import kekmech.ru.feature_map.screens.main.view.MarkersBitmapFactory
+import kekmech.ru.library_elm.BaseFragment
 import kekmech.ru.strings.Strings
 import org.koin.android.ext.android.inject
 import java.util.concurrent.TimeUnit

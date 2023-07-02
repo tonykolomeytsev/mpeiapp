@@ -9,7 +9,6 @@ import kekmech.ru.common_analytics.ext.screenAnalytics
 import kekmech.ru.common_android.*
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.views.onPageSelected
-import kekmech.ru.common_elm.BaseFragment
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_navigation.features.TabScreenStateSaver
 import kekmech.ru.common_navigation.features.TabScreenStateSaverImpl
@@ -33,6 +32,7 @@ import kekmech.ru.feature_schedule.screens.main.item.DAY_OF_WEEK_TUESDAY
 import kekmech.ru.feature_schedule.screens.main.item.DAY_OF_WEEK_WEDNESDAY
 import kekmech.ru.feature_schedule.screens.main.item.WeekAdapterItem
 import kekmech.ru.feature_schedule.screens.main.item.WorkingDayAdapterItem
+import kekmech.ru.library_elm.BaseFragment
 import kekmech.ru.strings.StringArrays
 import kekmech.ru.strings.Strings
 import org.koin.android.ext.android.inject

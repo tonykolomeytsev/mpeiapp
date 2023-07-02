@@ -33,7 +33,7 @@ dependencies {
     implementation(project(":common_di"))
     implementation(project(":common_emoji"))
     implementation(project(":common_kotlin"))
-    implementation(project(":common_elm"))
+    implementation(project(":library_elm"))
     implementation(project(":common_navigation"))
 
     implementation(project(":ext_koin"))
