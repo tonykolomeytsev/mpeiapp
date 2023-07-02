@@ -14,10 +14,10 @@ import kekmech.ru.common_android.getArgument
 import kekmech.ru.common_android.getThemeColor
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.withArguments
-import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.coreui.items.*
 import kekmech.ru.domain_bars.dto.AssessedDiscipline
 import kekmech.ru.domain_bars.dto.FinalGradeType
+import kekmech.ru.ext_kotlin.fastLazy
 import kekmech.ru.feature_bars.R
 import kekmech.ru.feature_bars.databinding.FragmentBarsDetailsBinding
 import kekmech.ru.feature_bars.items.ControlActivityAdapterItem

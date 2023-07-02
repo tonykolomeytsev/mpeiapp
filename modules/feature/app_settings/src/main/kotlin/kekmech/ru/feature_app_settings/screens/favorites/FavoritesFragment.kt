@@ -10,7 +10,6 @@ import kekmech.ru.common_android.addSystemTopPadding
 import kekmech.ru.common_android.close
 import kekmech.ru.common_android.setResultListener
 import kekmech.ru.common_android.viewbinding.viewBinding
-import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_navigation.addScreenForward
 import kekmech.ru.coreui.attachScrollListenerForAppBarLayoutShadow
 import kekmech.ru.coreui.items.AddActionAdapterItem
@@ -21,6 +20,7 @@ import kekmech.ru.coreui.touch_helpers.attachSwipeToDeleteCallback
 import kekmech.ru.domain_favorite_schedule.dto.FavoriteSchedule
 import kekmech.ru.domain_schedule.ScheduleFeatureLauncher.ContinueTo.BACK_WITH_RESULT
 import kekmech.ru.domain_schedule.dto.SelectedSchedule
+import kekmech.ru.ext_kotlin.fastLazy
 import kekmech.ru.feature_app_settings.R
 import kekmech.ru.feature_app_settings.databinding.FragmentFavoritesBinding
 import kekmech.ru.feature_app_settings.di.AppSettingDependencies

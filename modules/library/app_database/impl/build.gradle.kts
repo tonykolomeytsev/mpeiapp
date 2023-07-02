@@ -1,5 +1,5 @@
 plugins {
-    id("mpeix.android.lib")
+    id("mpeix.android.library")
     id("mpeix.ksp")
 }
 
@@ -17,11 +17,13 @@ dependencies {
 
     ksp(libs.androidx.room.compiler)
 
-    implementation(project(":library_app_database_api"))
     implementation(project(":common_di"))
-    implementation(project(":common_kotlin"))
 
     implementation(project(":domain_favorite_schedule"))
     implementation(project(":domain_notes"))
     implementation(project(":domain_schedule_models"))
+
+    implementation(project(":ext_kotlin"))
+
+    implementation(project(":library_app_database_api"))
 }

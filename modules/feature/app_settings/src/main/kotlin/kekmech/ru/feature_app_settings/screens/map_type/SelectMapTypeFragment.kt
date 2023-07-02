@@ -11,13 +11,13 @@ import kekmech.ru.common_android.getArgument
 import kekmech.ru.common_android.setResult
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.withArguments
-import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.coreui.items.PullAdapterItem
 import kekmech.ru.coreui.items.PullItem
 import kekmech.ru.coreui.items.SectionHeaderAdapterItem
 import kekmech.ru.coreui.items.SectionHeaderItem
 import kekmech.ru.coreui.items.SpaceAdapterItem
 import kekmech.ru.coreui.items.SpaceItem
+import kekmech.ru.ext_kotlin.fastLazy
 import kekmech.ru.feature_app_settings.R
 import kekmech.ru.feature_app_settings.databinding.FragmentSelectMapTypeBinding
 import kekmech.ru.feature_app_settings.screens.map_type.dto.MapTypeEntry

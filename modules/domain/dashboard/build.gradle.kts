@@ -8,7 +8,7 @@ dependencies {
     implementation(libs.koin.core)
     implementation(libs.kotlinx.coroutines.core)
 
-    implementation(project(":common_kotlin"))
+    implementation(project(":ext_kotlin"))
 
     implementation(project(":domain_notes"))
     implementation(project(":domain_schedule"))

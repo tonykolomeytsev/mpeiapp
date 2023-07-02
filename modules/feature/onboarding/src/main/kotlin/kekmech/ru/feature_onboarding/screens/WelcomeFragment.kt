@@ -9,8 +9,8 @@ import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_analytics.addScrollAnalytics
 import kekmech.ru.common_analytics.ext.screenAnalytics
 import kekmech.ru.common_android.viewbinding.viewBinding
-import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.domain_schedule.ScheduleFeatureLauncher.ContinueTo.DASHBOARD
+import kekmech.ru.ext_kotlin.fastLazy
 import kekmech.ru.feature_onboarding.R
 import kekmech.ru.feature_onboarding.databinding.FragmentWelcomeBinding
 import kekmech.ru.feature_onboarding.di.OnboardingDependencies

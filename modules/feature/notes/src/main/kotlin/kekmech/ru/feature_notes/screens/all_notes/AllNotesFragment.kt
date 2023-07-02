@@ -13,7 +13,6 @@ import kekmech.ru.common_android.findAndRemoveArgument
 import kekmech.ru.common_android.setResultListener
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.withArguments
-import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_navigation.addScreenForward
 import kekmech.ru.coreui.attachScrollListenerForAppBarLayoutShadow
 import kekmech.ru.coreui.items.EmptyStateAdapterItem
@@ -23,6 +22,7 @@ import kekmech.ru.coreui.items.ShimmerAdapterItem
 import kekmech.ru.coreui.items.SpaceAdapterItem
 import kekmech.ru.coreui.touch_helpers.attachSwipeToDeleteCallback
 import kekmech.ru.domain_notes.dto.Note
+import kekmech.ru.ext_kotlin.fastLazy
 import kekmech.ru.feature_notes.R
 import kekmech.ru.feature_notes.databinding.FragmentAllNotesBinding
 import kekmech.ru.feature_notes.di.NotesDependencies

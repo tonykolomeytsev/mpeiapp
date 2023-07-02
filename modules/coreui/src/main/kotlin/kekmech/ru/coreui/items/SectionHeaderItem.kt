@@ -7,8 +7,8 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseItemBinder
-import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.coreui.R
+import kekmech.ru.ext_kotlin.fastLazy
 
 private const val ITEM_SECTION_HEADER_DEFAULT_ID = 0
 

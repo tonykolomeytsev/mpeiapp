@@ -10,8 +10,8 @@ import kekmech.ru.common_android.fragment.BottomSheetDialogFragment
 import kekmech.ru.common_android.getArgument
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.withArguments
-import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.domain_force_update.dto.ForceUpdateInfo
+import kekmech.ru.ext_kotlin.fastLazy
 import kekmech.ru.feature_force_update.databinding.FragmentForceUpdateBinding
 
 private const val ARG_INFO = "Arg.Info"

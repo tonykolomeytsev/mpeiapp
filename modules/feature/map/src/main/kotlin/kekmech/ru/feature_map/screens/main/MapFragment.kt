@@ -20,7 +20,6 @@ import kekmech.ru.common_android.dpToPx
 import kekmech.ru.common_android.getThemeColor
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.views.setMargins
-import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_navigation.features.ScrollToTop
 import kekmech.ru.common_navigation.features.TabScreenStateSaver
 import kekmech.ru.common_navigation.features.TabScreenStateSaverImpl
@@ -31,6 +30,7 @@ import kekmech.ru.coreui.items.SectionHeaderAdapterItem
 import kekmech.ru.coreui.items.SpaceAdapterItem
 import kekmech.ru.domain_app_settings.AppSettingsRepository
 import kekmech.ru.domain_map.dto.MapMarker
+import kekmech.ru.ext_kotlin.fastLazy
 import kekmech.ru.feature_map.DeeplinkHelper
 import kekmech.ru.feature_map.R
 import kekmech.ru.feature_map.databinding.FragmentMapBinding

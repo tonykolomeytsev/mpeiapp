@@ -1,8 +1,8 @@
 package kekmech.ru.domain_map
 
-import kekmech.ru.common_annotations.BackendServiceUrl
-import kekmech.ru.common_annotations.EndpointUrl
 import kekmech.ru.domain_map.dto.MapMarker
+import kekmech.ru.library_network.BackendServiceUrl
+import kekmech.ru.library_network.EndpointUrl
 import retrofit2.http.GET
 
 @EndpointUrl(BackendServiceUrl.MAP)

@@ -1,7 +1,7 @@
 package kekmech.ru.feature_schedule.screens.main.elm
 
-import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.domain_app_settings.AppSettingsRepository
+import kekmech.ru.ext_kotlin.fastLazy
 import kekmech.ru.feature_schedule.screens.main.elm.ScheduleEvent
 import vivid.money.elmslie.core.store.Store
 import vivid.money.elmslie.coroutines.ElmStoreCompat

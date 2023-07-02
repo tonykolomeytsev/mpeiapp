@@ -11,11 +11,11 @@ import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_analytics.ext.screenAnalytics
 import kekmech.ru.common_android.*
 import kekmech.ru.common_android.viewbinding.viewBinding
-import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_navigation.addScreenForward
 import kekmech.ru.common_navigation.showDialog
 import kekmech.ru.coreui.attachScrollListenerForAppBarLayoutShadow
 import kekmech.ru.coreui.items.*
+import kekmech.ru.ext_kotlin.fastLazy
 import kekmech.ru.feature_app_settings.R
 import kekmech.ru.feature_app_settings.databinding.FragmentAppSettingsBinding
 import kekmech.ru.feature_app_settings.screens.favorites.FavoritesFragment

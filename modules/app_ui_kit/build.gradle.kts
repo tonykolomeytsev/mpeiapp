@@ -30,7 +30,7 @@ dependencies {
     implementation(project(":common_navigation_api"))
     implementation(project(":common_navigation_compose"))
     implementation(project(":library_elm"))
-    implementation(project(":common_kotlin"))
+    implementation(project(":ext_kotlin"))
 
     implementation(libs.compose.activity)
     implementation(libs.appyx.core)

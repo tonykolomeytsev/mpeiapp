@@ -1,8 +1,8 @@
 package kekmech.ru.domain_notes.interactors
 
-import kekmech.ru.common_kotlin.moscowLocalDate
 import kekmech.ru.domain_notes.dto.Note
 import kekmech.ru.domain_notes.use_cases.GetNotesForSelectedScheduleUseCase
+import kekmech.ru.ext_kotlin.moscowLocalDate
 import java.time.temporal.ChronoUnit
 
 @Suppress("MagicNumber")

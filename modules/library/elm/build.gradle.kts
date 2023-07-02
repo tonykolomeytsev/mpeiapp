@@ -16,4 +16,6 @@ dependencies {
 
     implementation(project(":common_android"))
     implementation(project(":common_navigation_api"))
+
+    testImplementation(kotlin("test"))
 }

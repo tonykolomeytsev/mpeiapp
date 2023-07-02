@@ -1,11 +1,11 @@
 package kekmech.ru.feature_notes.screens.all_notes
 
-import kekmech.ru.common_kotlin.moscowLocalDate
 import kekmech.ru.coreui.items.EmptyStateItem
 import kekmech.ru.coreui.items.SectionHeaderItem
 import kekmech.ru.coreui.items.ShimmerItem
 import kekmech.ru.coreui.items.SpaceItem
 import kekmech.ru.domain_notes.dto.Note
+import kekmech.ru.ext_kotlin.moscowLocalDate
 import kekmech.ru.feature_notes.R
 import kekmech.ru.feature_notes.screens.all_notes.elm.AllNotesState
 import kekmech.ru.strings.Strings

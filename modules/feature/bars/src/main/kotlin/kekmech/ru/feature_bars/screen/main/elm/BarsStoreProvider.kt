@@ -1,6 +1,6 @@
 package kekmech.ru.feature_bars.screen.main.elm
 
-import kekmech.ru.common_kotlin.fastLazy
+import kekmech.ru.ext_kotlin.fastLazy
 import vivid.money.elmslie.core.store.Store
 import vivid.money.elmslie.coroutines.ElmStoreCompat
 

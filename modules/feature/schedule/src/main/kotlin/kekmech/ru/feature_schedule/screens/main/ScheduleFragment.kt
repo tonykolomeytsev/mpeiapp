@@ -9,11 +9,11 @@ import kekmech.ru.common_analytics.ext.screenAnalytics
 import kekmech.ru.common_android.*
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.views.onPageSelected
-import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_navigation.features.TabScreenStateSaver
 import kekmech.ru.common_navigation.features.TabScreenStateSaverImpl
 import kekmech.ru.domain_schedule_models.dto.Classes
 import kekmech.ru.domain_schedule_models.dto.WeekOfSemester
+import kekmech.ru.ext_kotlin.fastLazy
 import kekmech.ru.feature_schedule.R
 import kekmech.ru.feature_schedule.databinding.FragmentScheduleBinding
 import kekmech.ru.feature_schedule.di.ScheduleDependencies
