@@ -1,39 +1,44 @@
 package mpeix.plugins
 
-import com.android.build.gradle.LibraryExtension
+import com.android.build.api.dsl.ApplicationExtension
+import mpeix.plugins.ext.requiredVersion
+import mpeix.plugins.ext.versionCatalog
 import mpeix.plugins.setup.Plugins
 import mpeix.plugins.setup.configureAndroidCompose
 import mpeix.plugins.setup.configureKotlinAndroid
-import mpeix.plugins.setup.configureNamespace
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 
 @Suppress("unused")
-class FeatureImplementationConventionPlugin : Plugin<Project> {
+class AndroidApplicationConventionPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
         with(target) {
             with(plugins) {
-                apply(Plugins.AndroidLibrary)
+                apply(Plugins.AndroidApplication)
                 apply(Plugins.KotlinAndroid)
                 apply(Plugins.KotlinParcelize)
-                apply(Plugins.GradleAndroidCacheFix)
                 apply(Plugins.MpeixDetekt)
+                apply(Plugins.GradleAndroidCacheFix)
             }
 
-            extensions.configure<LibraryExtension> {
-                configureNamespace(this)
+            val libs = versionCatalog
+
+            extensions.configure<ApplicationExtension> {
                 configureKotlinAndroid(this)
                 configureAndroidCompose(this, fullDependencySet = true)
 
-                @Suppress("UnstableApiUsage")
-                with(buildFeatures) {
+                defaultConfig {
+                    versionName = libs.requiredVersion("appVersionName")
+                    versionCode = libs.requiredVersion("appVersionCode").toInt()
+                }
+
+                buildFeatures {
                     compose = true
                     viewBinding = true // TODO: remove viewBinding after complete compose migration
-                    androidResources = false
                     shaders = false
-                    resValues = false
+                    resValues = true
                 }
             }
         }

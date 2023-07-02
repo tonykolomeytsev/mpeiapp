@@ -1,7 +1,5 @@
 plugins {
-    id("com.android.application")
-    id("mpeix.android.base")
-    id("mpeix.android.compose")
+    id("mpeix.android.application")
 }
 
 android {

@@ -3,6 +3,7 @@ package mpeix.plugins
 import com.android.build.gradle.LibraryExtension
 import mpeix.plugins.setup.Plugins
 import mpeix.plugins.setup.configureKotlinAndroid
+import mpeix.plugins.setup.configureNamespace
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
@@ -20,7 +21,7 @@ internal class AndroidLibraryConventionPlugin : Plugin<Project> {
             }
 
             extensions.configure<LibraryExtension> {
-                namespace = "kekmech.ru.$name"
+                configureNamespace(this)
                 configureKotlinAndroid(this)
 
                 @Suppress("UnstableApiUsage")

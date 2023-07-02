@@ -1,10 +1,8 @@
 @file:Suppress("UnstableApiUsage")
 
 plugins {
-    id("com.android.application")
-    id("mpeix.android.base")
+    id("mpeix.android.application")
     id("mpeix.android.signing")
-    id("mpeix.android.compose")
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
 }
