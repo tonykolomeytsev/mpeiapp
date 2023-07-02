@@ -110,4 +110,16 @@ gradlePlugin {
         description = "The Gradle Plugin that configures Android Library module"
         implementationClass = "mpeix.plugins.AndroidLibraryConventionPlugin"
     }
+    plugins.create("AndroidApplicationConventionPlugin") {
+        id = "mpeix.android.application"
+        displayName = "MpeiX Android Application Convention"
+        description = "The Gradle Plugin that configures Android application"
+        implementationClass = "mpeix.plugins.AndroidApplicationConventionPlugin"
+    }
+    plugins.create("AndroidUiConventionPlugin") {
+        id = "mpeix.android.ui"
+        displayName = "MpeiX Android Ui Convention"
+        description = "The Gradle Plugin that configures Android Library with UI Components module"
+        implementationClass = "mpeix.plugins.AndroidUiConventionPlugin"
+    }
 }
