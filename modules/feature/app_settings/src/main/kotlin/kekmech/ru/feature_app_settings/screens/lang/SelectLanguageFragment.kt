@@ -3,7 +3,6 @@ package kekmech.ru.feature_app_settings.screens.lang
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
-import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_analytics.ext.screenAnalytics
 import kekmech.ru.common_android.close
 import kekmech.ru.common_android.fragment.BottomSheetDialogFragment
@@ -25,6 +24,7 @@ import kekmech.ru.feature_app_settings.databinding.FragmentChangeLanguageBinding
 import kekmech.ru.feature_app_settings.screens.lang.dto.LanguageEntry
 import kekmech.ru.feature_app_settings.screens.lang.item.LanguageAdapterItem
 import kekmech.ru.feature_app_settings.screens.lang.item.LanguageItem
+import kekmech.ru.library_adapter.BaseAdapter
 import kekmech.ru.strings.Strings
 import kekmech.ru.coreui.R as coreui_R
 

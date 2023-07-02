@@ -9,12 +9,12 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import kekmech.ru.common_adapter.AdapterItem
-import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.common_android.getThemeColor
 import kekmech.ru.domain_bars.dto.ControlActivity
 import kekmech.ru.feature_bars.R
 import kekmech.ru.feature_bars.databinding.ItemControlActivityBinding
+import kekmech.ru.library_adapter.AdapterItem
+import kekmech.ru.library_adapter.BaseItemBinder
 import kekmech.ru.coreui.R as coreui_R
 
 internal class ControlActivityAdapterItem : AdapterItem<ControlActivityViewHolder, ControlActivity>(

@@ -6,9 +6,6 @@ import android.widget.EditText
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
-import kekmech.ru.common_adapter.AdapterItem
-import kekmech.ru.common_adapter.BaseAdapter
-import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.common_analytics.ext.screenAnalytics
 import kekmech.ru.common_android.addSystemVerticalPadding
 import kekmech.ru.common_android.afterTextChanged
@@ -36,6 +33,9 @@ import kekmech.ru.feature_search.screens.main.elm.SearchEffect
 import kekmech.ru.feature_search.screens.main.elm.SearchEvent
 import kekmech.ru.feature_search.screens.main.elm.SearchState
 import kekmech.ru.feature_search.screens.schedule_details.ScheduleDetailsFragment
+import kekmech.ru.library_adapter.AdapterItem
+import kekmech.ru.library_adapter.BaseAdapter
+import kekmech.ru.library_adapter.BaseItemBinder
 import kekmech.ru.library_elm.BaseFragment
 import kekmech.ru.library_navigation.BottomTab
 import kekmech.ru.library_navigation.BottomTabsSwitcher

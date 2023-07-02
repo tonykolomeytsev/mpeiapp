@@ -3,7 +3,6 @@ package kekmech.ru.feature_app_settings.screens.favorites
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
-import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_analytics.ext.screenAnalytics
 import kekmech.ru.common_android.addSystemBottomPadding
 import kekmech.ru.common_android.addSystemTopPadding
@@ -29,6 +28,7 @@ import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesEvent
 import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesEvent.Ui
 import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesState
 import kekmech.ru.feature_app_settings.screens.favorites.item.HelpBannerAdapterItem
+import kekmech.ru.library_adapter.BaseAdapter
 import kekmech.ru.library_elm.BaseFragment
 import kekmech.ru.library_navigation.addScreenForward
 import kekmech.ru.strings.Strings

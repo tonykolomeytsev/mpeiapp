@@ -5,12 +5,12 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.recyclerview.widget.RecyclerView
 import io.reactivex.rxjava3.exceptions.CompositeException
-import kekmech.ru.common_adapter.AdapterItem
-import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.coreui.R
 import kekmech.ru.coreui.databinding.ItemErrorStateBinding
 import kekmech.ru.ext_okhttp.NoInternetConnectionException
 import kekmech.ru.images.Images
+import kekmech.ru.library_adapter.AdapterItem
+import kekmech.ru.library_adapter.BaseItemBinder
 import kekmech.ru.strings.Strings
 import retrofit2.HttpException
 import java.net.UnknownHostException

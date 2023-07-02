@@ -2,13 +2,13 @@ package kekmech.ru.feature_app_settings.screens.lang.item
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import kekmech.ru.common_adapter.AdapterItem
-import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.coreui.items.ClickableItemViewHolder
 import kekmech.ru.coreui.items.ClickableItemViewHolderImpl
 import kekmech.ru.feature_app_settings.R
 import kekmech.ru.feature_app_settings.databinding.ItemLanguageBinding
 import kekmech.ru.feature_app_settings.screens.lang.dto.LanguageEntry
+import kekmech.ru.library_adapter.AdapterItem
+import kekmech.ru.library_adapter.BaseItemBinder
 
 internal data class LanguageItem(
     val language: LanguageEntry,

@@ -12,7 +12,7 @@ dependencies {
     testImplementation(libs.kotest.property)
     testImplementation(libs.kotest.runner)
 
-    implementation(project(":common_adapter"))
+    implementation(project(":library_adapter"))
     implementation(project(":common_android"))
     implementation(project(":ext_kotlin"))
 

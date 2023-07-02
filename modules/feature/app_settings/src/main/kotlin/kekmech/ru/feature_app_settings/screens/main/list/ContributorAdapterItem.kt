@@ -9,12 +9,12 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Transformation
-import kekmech.ru.common_adapter.AdapterItem
-import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.common_android.dpToPx
 import kekmech.ru.domain_github.dto.GitHubUser
 import kekmech.ru.feature_app_settings.R
 import kekmech.ru.feature_app_settings.databinding.ItemContributorBinding
+import kekmech.ru.library_adapter.AdapterItem
+import kekmech.ru.library_adapter.BaseItemBinder
 
 internal class ContributorAdapterItem(
     onClick: (GitHubUser) -> Unit,

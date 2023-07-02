@@ -2,12 +2,12 @@ package kekmech.ru.feature_map.items
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import kekmech.ru.common_adapter.AdapterItem
-import kekmech.ru.common_adapter.BaseAdapter
-import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.feature_map.R
 import kekmech.ru.feature_map.databinding.ItemTabBarBinding
 import kekmech.ru.feature_map.screens.main.elm.FilterTab
+import kekmech.ru.library_adapter.AdapterItem
+import kekmech.ru.library_adapter.BaseAdapter
+import kekmech.ru.library_adapter.BaseItemBinder
 
 internal object TabBarItem
 

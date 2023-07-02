@@ -3,7 +3,6 @@ package kekmech.ru.feature_notes.screens.all_notes
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
-import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_analytics.addScrollAnalytics
 import kekmech.ru.common_analytics.ext.screenAnalytics
 import kekmech.ru.common_android.EmptyResult
@@ -30,6 +29,7 @@ import kekmech.ru.feature_notes.screens.all_notes.elm.AllNotesEvent
 import kekmech.ru.feature_notes.screens.all_notes.elm.AllNotesEvent.Ui
 import kekmech.ru.feature_notes.screens.all_notes.elm.AllNotesState
 import kekmech.ru.feature_notes.screens.edit.NoteEditFragment
+import kekmech.ru.library_adapter.BaseAdapter
 import kekmech.ru.library_elm.BaseFragment
 import kekmech.ru.library_navigation.addScreenForward
 import org.koin.android.ext.android.inject

@@ -3,10 +3,10 @@ package kekmech.ru.feature_bars.items
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import kekmech.ru.common_adapter.AdapterItem
-import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.feature_bars.R
 import kekmech.ru.feature_bars.databinding.ItemUserNameHeaderBinding
+import kekmech.ru.library_adapter.AdapterItem
+import kekmech.ru.library_adapter.BaseItemBinder
 
 internal data class UserNameHeaderItem(val name: String?)
 

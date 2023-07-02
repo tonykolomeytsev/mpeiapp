@@ -3,7 +3,6 @@ package kekmech.ru.feature_notes.screens.edit
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
-import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_analytics.ext.screenAnalytics
 import kekmech.ru.common_android.EmptyResult
 import kekmech.ru.common_android.addSystemVerticalPadding
@@ -24,6 +23,7 @@ import kekmech.ru.feature_notes.screens.edit.elm.NoteEditEffect
 import kekmech.ru.feature_notes.screens.edit.elm.NoteEditEvent
 import kekmech.ru.feature_notes.screens.edit.elm.NoteEditEvent.Ui
 import kekmech.ru.feature_notes.screens.edit.elm.NoteEditState
+import kekmech.ru.library_adapter.BaseAdapter
 import kekmech.ru.library_elm.BaseFragment
 import kekmech.ru.strings.Strings
 import org.koin.android.ext.android.inject

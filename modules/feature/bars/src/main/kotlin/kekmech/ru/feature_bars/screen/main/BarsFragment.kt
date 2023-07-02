@@ -15,7 +15,6 @@ import androidx.core.text.toSpannable
 import androidx.core.view.forEach
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
-import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_analytics.addScrollAnalytics
 import kekmech.ru.common_analytics.ext.screenAnalytics
 import kekmech.ru.common_android.addSystemTopPadding
@@ -43,6 +42,7 @@ import kekmech.ru.feature_bars.screen.main.elm.BarsEvent
 import kekmech.ru.feature_bars.screen.main.elm.BarsEvent.Ui
 import kekmech.ru.feature_bars.screen.main.elm.BarsState
 import kekmech.ru.feature_bars.screen.main.elm.BarsStoreProvider
+import kekmech.ru.library_adapter.BaseAdapter
 import kekmech.ru.library_elm.BaseFragment
 import kekmech.ru.library_navigation.features.ScrollToTop
 import kekmech.ru.library_navigation.features.TabScreenStateSaver

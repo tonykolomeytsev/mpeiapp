@@ -6,7 +6,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_analytics.ext.screenAnalytics
 import kekmech.ru.common_android.close
 import kekmech.ru.common_android.getArgument
@@ -29,6 +28,7 @@ import kekmech.ru.feature_notes.screens.note_list.elm.NoteListEffect
 import kekmech.ru.feature_notes.screens.note_list.elm.NoteListEvent
 import kekmech.ru.feature_notes.screens.note_list.elm.NoteListEvent.Ui
 import kekmech.ru.feature_notes.screens.note_list.elm.NoteListState
+import kekmech.ru.library_adapter.BaseAdapter
 import kekmech.ru.library_elm.BaseBottomSheetDialogFragment
 import kekmech.ru.library_navigation.addScreenForward
 import kekmech.ru.strings.Strings

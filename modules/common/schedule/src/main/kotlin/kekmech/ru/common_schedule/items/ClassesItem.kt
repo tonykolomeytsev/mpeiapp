@@ -7,8 +7,6 @@ import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import kekmech.ru.common_adapter.AdapterItem
-import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.common_android.dpToPx
 import kekmech.ru.common_android.getResColor
 import kekmech.ru.common_android.getStringArray
@@ -24,6 +22,8 @@ import kekmech.ru.domain_schedule_models.dto.Classes
 import kekmech.ru.domain_schedule_models.dto.ClassesType
 import kekmech.ru.domain_schedule_models.dto.ScheduleType
 import kekmech.ru.ext_kotlin.fastLazy
+import kekmech.ru.library_adapter.AdapterItem
+import kekmech.ru.library_adapter.BaseItemBinder
 import kekmech.ru.strings.StringArrays
 import java.time.format.DateTimeFormatter
 import kekmech.ru.coreui.R as coreui_R

@@ -3,7 +3,6 @@ package kekmech.ru.feature_schedule.screens.main
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
-import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_analytics.addScrollAnalytics
 import kekmech.ru.common_analytics.ext.screenAnalytics
 import kekmech.ru.common_android.*
@@ -30,6 +29,7 @@ import kekmech.ru.feature_schedule.screens.main.item.DAY_OF_WEEK_TUESDAY
 import kekmech.ru.feature_schedule.screens.main.item.DAY_OF_WEEK_WEDNESDAY
 import kekmech.ru.feature_schedule.screens.main.item.WeekAdapterItem
 import kekmech.ru.feature_schedule.screens.main.item.WorkingDayAdapterItem
+import kekmech.ru.library_adapter.BaseAdapter
 import kekmech.ru.library_elm.BaseFragment
 import kekmech.ru.library_navigation.features.TabScreenStateSaver
 import kekmech.ru.library_navigation.features.TabScreenStateSaverImpl

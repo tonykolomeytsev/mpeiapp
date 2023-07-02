@@ -5,7 +5,6 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
-import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_analytics.addScrollAnalytics
 import kekmech.ru.common_analytics.ext.screenAnalytics
 import kekmech.ru.common_android.viewbinding.viewBinding
@@ -16,6 +15,7 @@ import kekmech.ru.feature_onboarding.databinding.FragmentWelcomeBinding
 import kekmech.ru.feature_onboarding.di.OnboardingDependencies
 import kekmech.ru.feature_onboarding.item.PromoPage
 import kekmech.ru.feature_onboarding.item.PromoPageAdapterItem
+import kekmech.ru.library_adapter.BaseAdapter
 import org.koin.android.ext.android.inject
 
 internal class WelcomeFragment : Fragment(R.layout.fragment_welcome) {

@@ -31,7 +31,7 @@ dependencies {
     implementation(project(":domain_favorite_schedule"))
     implementation(project(":domain_search"))
 
-    implementation(project(":common_adapter"))
+    implementation(project(":library_adapter"))
     implementation(project(":common_analytics"))
     implementation(project(":common_android"))
     implementation(project(":common_di"))

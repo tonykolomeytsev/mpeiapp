@@ -3,8 +3,6 @@ package kekmech.ru.common_schedule.items
 import android.view.View
 import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
-import kekmech.ru.common_adapter.AdapterItem
-import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.common_android.dpToPx
 import kekmech.ru.common_android.getResColor
 import kekmech.ru.common_android.getThemeColor
@@ -14,6 +12,8 @@ import kekmech.ru.common_schedule.drawable.ProgressBackgroundDrawable
 import kekmech.ru.coreui.items.ClickableItemViewHolder
 import kekmech.ru.coreui.items.ClickableItemViewHolderImpl
 import kekmech.ru.domain_schedule_models.dto.Classes
+import kekmech.ru.library_adapter.AdapterItem
+import kekmech.ru.library_adapter.BaseItemBinder
 import kekmech.ru.coreui.R as coreui_R
 
 data class NotePreview(

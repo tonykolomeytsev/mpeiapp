@@ -5,7 +5,6 @@ import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
 import android.view.View
-import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_analytics.addScrollAnalytics
 import kekmech.ru.common_analytics.ext.screenAnalytics
 import kekmech.ru.common_android.addSystemBottomPadding
@@ -22,6 +21,7 @@ import kekmech.ru.feature_bars.R
 import kekmech.ru.feature_bars.databinding.FragmentBarsDetailsBinding
 import kekmech.ru.feature_bars.items.ControlActivityAdapterItem
 import kekmech.ru.feature_bars.items.FinalGradeAdapterItem
+import kekmech.ru.library_adapter.BaseAdapter
 import kekmech.ru.coreui.R as coreui_R
 
 private const val BULLET_SEPARATOR = " • "

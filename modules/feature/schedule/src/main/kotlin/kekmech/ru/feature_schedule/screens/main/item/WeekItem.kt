@@ -3,13 +3,13 @@ package kekmech.ru.feature_schedule.screens.main.item
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kekmech.ru.common_adapter.AdapterItem
-import kekmech.ru.common_adapter.BaseAdapter
-import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.common_schedule.items.DayAdapterItem
 import kekmech.ru.common_schedule.items.DayItem
 import kekmech.ru.feature_schedule.R
 import kekmech.ru.feature_schedule.databinding.ItemWeekBinding
+import kekmech.ru.library_adapter.AdapterItem
+import kekmech.ru.library_adapter.BaseAdapter
+import kekmech.ru.library_adapter.BaseItemBinder
 import java.time.LocalDate
 
 private const val DAY_ITEM_SPAN_COUNT = 6
