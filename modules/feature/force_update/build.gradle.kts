@@ -20,7 +20,7 @@ dependencies {
     implementation(project(":common_android"))
     implementation(project(":common_di"))
     implementation(project(":ext_kotlin"))
-    implementation(project(":common_navigation"))
+    implementation(project(":library_navigation"))
 
     implementation(project(":coreui"))
     implementation(project(":strings"))

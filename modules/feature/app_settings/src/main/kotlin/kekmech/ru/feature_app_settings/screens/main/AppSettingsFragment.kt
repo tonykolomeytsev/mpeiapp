@@ -11,8 +11,6 @@ import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_analytics.ext.screenAnalytics
 import kekmech.ru.common_android.*
 import kekmech.ru.common_android.viewbinding.viewBinding
-import kekmech.ru.common_navigation.addScreenForward
-import kekmech.ru.common_navigation.showDialog
 import kekmech.ru.coreui.attachScrollListenerForAppBarLayoutShadow
 import kekmech.ru.coreui.items.*
 import kekmech.ru.ext_kotlin.fastLazy
@@ -28,6 +26,8 @@ import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsStoreFactory
 import kekmech.ru.feature_app_settings.screens.main.list.ContributorAdapterItem
 import kekmech.ru.feature_app_settings.screens.map_type.SelectMapTypeFragment
 import kekmech.ru.library_elm.BaseFragment
+import kekmech.ru.library_navigation.addScreenForward
+import kekmech.ru.library_navigation.showDialog
 import kekmech.ru.strings.Strings
 import org.koin.android.ext.android.inject
 

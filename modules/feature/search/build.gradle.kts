@@ -37,7 +37,7 @@ dependencies {
     implementation(project(":common_di"))
     implementation(project(":ext_kotlin"))
     implementation(project(":library_elm"))
-    implementation(project(":common_navigation"))
+    implementation(project(":library_navigation"))
     implementation(project(":common_schedule"))
 
     implementation(project(":coreui"))

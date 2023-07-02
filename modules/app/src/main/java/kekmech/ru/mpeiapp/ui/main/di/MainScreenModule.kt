@@ -1,7 +1,7 @@
 package kekmech.ru.mpeiapp.ui.main.di
 
-import kekmech.ru.common_navigation.BottomTabsSwitcher
 import kekmech.ru.domain_main_screen.MainScreenLauncher
+import kekmech.ru.library_navigation.BottomTabsSwitcher
 import kekmech.ru.mpeiapp.ui.main.BottomTabsSwitcherImpl
 import kekmech.ru.mpeiapp.ui.main.launcher.MainScreenLauncherImpl
 import org.koin.core.module.dsl.factoryOf

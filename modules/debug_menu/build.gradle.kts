@@ -9,8 +9,8 @@ dependencies {
     implementation(project(":library_elm"))
     implementation(project(":common_feature_toggles"))
     implementation(project(":ext_kotlin"))
-    implementation(project(":common_navigation_api"))
-    implementation(project(":common_navigation_compose"))
+    implementation(project(":library_navigation_api"))
+    implementation(project(":library_navigation_compose"))
     implementation(project(":domain_app_settings"))
     implementation(project(":domain_app_settings_models"))
 

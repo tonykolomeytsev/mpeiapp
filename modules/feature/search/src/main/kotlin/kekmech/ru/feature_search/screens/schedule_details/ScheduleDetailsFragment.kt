@@ -11,10 +11,6 @@ import kekmech.ru.common_android.close
 import kekmech.ru.common_android.getArgument
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.withArguments
-import kekmech.ru.common_navigation.BottomTab
-import kekmech.ru.common_navigation.BottomTabsSwitcher
-import kekmech.ru.common_navigation.ClearBackStack
-import kekmech.ru.common_navigation.Router
 import kekmech.ru.common_schedule.items.ClassesItemBinder
 import kekmech.ru.common_schedule.items.ClassesViewHolderImpl
 import kekmech.ru.coreui.items.EmptyStateAdapterItem
@@ -38,6 +34,10 @@ import kekmech.ru.feature_search.screens.schedule_details.elm.ScheduleDetailsEve
 import kekmech.ru.feature_search.screens.schedule_details.elm.ScheduleDetailsState
 import kekmech.ru.feature_search.screens.schedule_details.elm.ScheduleDetailsStoreFactory
 import kekmech.ru.library_elm.BaseBottomSheetDialogFragment
+import kekmech.ru.library_navigation.BottomTab
+import kekmech.ru.library_navigation.BottomTabsSwitcher
+import kekmech.ru.library_navigation.ClearBackStack
+import kekmech.ru.library_navigation.Router
 import org.koin.android.ext.android.inject
 import kekmech.ru.common_schedule.R as common_schedule_R
 import kekmech.ru.coreui.R as coreui_R

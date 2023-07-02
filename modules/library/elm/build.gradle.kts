@@ -15,7 +15,7 @@ dependencies {
     implementation(libs.vivid.elmslie.core)
 
     implementation(project(":common_android"))
-    implementation(project(":common_navigation_api"))
+    implementation(project(":library_navigation_api"))
 
     testImplementation(kotlin("test"))
 }

@@ -1,10 +1,10 @@
 package kekmech.ru.feature_onboarding.launcher
 
-import kekmech.ru.common_navigation.AddScreenForward
-import kekmech.ru.common_navigation.NewRoot
-import kekmech.ru.common_navigation.Router
 import kekmech.ru.domain_onboarding.OnboardingFeatureLauncher
 import kekmech.ru.feature_onboarding.screens.WelcomeFragment
+import kekmech.ru.library_navigation.AddScreenForward
+import kekmech.ru.library_navigation.NewRoot
+import kekmech.ru.library_navigation.Router
 
 internal class OnboardingFeatureLauncherImpl(
     private val router: Router,

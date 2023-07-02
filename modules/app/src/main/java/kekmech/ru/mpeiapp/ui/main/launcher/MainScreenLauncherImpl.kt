@@ -1,8 +1,8 @@
 package kekmech.ru.mpeiapp.ui.main.launcher
 
-import kekmech.ru.common_navigation.NewRoot
-import kekmech.ru.common_navigation.Router
 import kekmech.ru.domain_main_screen.MainScreenLauncher
+import kekmech.ru.library_navigation.NewRoot
+import kekmech.ru.library_navigation.Router
 import kekmech.ru.mpeiapp.ui.main.MainFragment
 
 class MainScreenLauncherImpl(

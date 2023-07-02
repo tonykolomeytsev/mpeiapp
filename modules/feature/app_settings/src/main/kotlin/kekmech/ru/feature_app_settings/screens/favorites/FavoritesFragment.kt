@@ -10,7 +10,6 @@ import kekmech.ru.common_android.addSystemTopPadding
 import kekmech.ru.common_android.close
 import kekmech.ru.common_android.setResultListener
 import kekmech.ru.common_android.viewbinding.viewBinding
-import kekmech.ru.common_navigation.addScreenForward
 import kekmech.ru.coreui.attachScrollListenerForAppBarLayoutShadow
 import kekmech.ru.coreui.items.AddActionAdapterItem
 import kekmech.ru.coreui.items.FavoriteScheduleAdapterItem
@@ -31,6 +30,7 @@ import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesEvent.Ui
 import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesState
 import kekmech.ru.feature_app_settings.screens.favorites.item.HelpBannerAdapterItem
 import kekmech.ru.library_elm.BaseFragment
+import kekmech.ru.library_navigation.addScreenForward
 import kekmech.ru.strings.Strings
 import org.koin.android.ext.android.inject
 
