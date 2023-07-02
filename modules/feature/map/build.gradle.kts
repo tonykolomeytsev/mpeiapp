@@ -31,7 +31,7 @@ dependencies {
     implementation(project(":ext_android"))
     implementation(project(":library_app_lifecycle"))
     implementation(project(":library_app_info"))
-    implementation(project(":common_emoji"))
+    implementation(project(":library_emoji"))
     implementation(project(":ext_kotlin"))
     implementation(project(":library_elm"))
     implementation(project(":library_navigation"))

@@ -1,4 +1,4 @@
-package kekmech.ru.common_emoji
+package kekmech.ru.library_emoji
 
 import android.content.Context
 import androidx.annotation.DrawableRes

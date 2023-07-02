@@ -1,6 +1,9 @@
 plugins {
-    id("mpeix.android.lib")
+    id("mpeix.android.library")
 }
+
+@Suppress("UnstableApiUsage")
+android.buildFeatures.androidResources = true
 
 dependencies {
     implementation(libs.androidx.appCompat)

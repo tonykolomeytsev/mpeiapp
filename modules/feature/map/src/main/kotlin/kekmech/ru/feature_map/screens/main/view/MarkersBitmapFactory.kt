@@ -7,12 +7,12 @@ import android.graphics.*
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.withTranslation
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
-import kekmech.ru.common_emoji.EmojiProvider
 import kekmech.ru.domain_map.dto.MapMarker
 import kekmech.ru.domain_map.dto.MarkerType
 import kekmech.ru.ext_android.dpToPx
 import kekmech.ru.ext_android.getResColor
 import kekmech.ru.feature_map.R
+import kekmech.ru.library_emoji.EmojiProvider
 import kekmech.ru.coreui.R as coreui_R
 
 private const val ICON_SIZE_DP = 32
