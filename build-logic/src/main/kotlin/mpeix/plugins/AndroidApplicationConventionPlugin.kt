@@ -27,7 +27,7 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
 
             extensions.configure<ApplicationExtension> {
                 configureKotlinAndroid(this)
-                configureAndroidCompose(this, fullDependencySet = true)
+                configureAndroidCompose(this)
 
                 defaultConfig {
                     versionName = libs.requiredVersion("appVersionName")

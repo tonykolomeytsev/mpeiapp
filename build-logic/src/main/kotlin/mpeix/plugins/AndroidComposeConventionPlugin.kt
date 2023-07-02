@@ -12,7 +12,7 @@ internal class AndroidComposeConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             extensions.configure<LibraryExtension> {
-                configureAndroidCompose(this, fullDependencySet = false)
+                configureAndroidCompose(this)
 
                 @Suppress("UnstableApiUsage")
                 buildFeatures {
