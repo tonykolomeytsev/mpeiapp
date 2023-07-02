@@ -1,4 +1,4 @@
-package kekmech.ru.common_app_database_api
+package kekmech.ru.library_app_database_api
 
 import androidx.sqlite.db.SupportSQLiteDatabase
 
@@ -9,7 +9,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
  *
  * ### Usage:
  *
- * Create "version-specific" migration interface in `common_app_database_api`:
+ * Create "version-specific" migration interface in `library_app_database_api`:
  * ```kotlin
  * interface MigrationV6V7 : PartialMigration
  * ```

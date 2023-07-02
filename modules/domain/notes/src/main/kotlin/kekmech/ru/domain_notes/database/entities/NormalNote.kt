@@ -4,10 +4,10 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
-import kekmech.ru.common_app_database_api.DefaultId
 import kekmech.ru.common_kotlin.fromBase64
 import kekmech.ru.common_kotlin.toBase64
 import kekmech.ru.domain_notes.dto.Note
+import kekmech.ru.library_app_database_api.DefaultId
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 

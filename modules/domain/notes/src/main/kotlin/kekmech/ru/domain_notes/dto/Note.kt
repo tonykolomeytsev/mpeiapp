@@ -1,6 +1,6 @@
 package kekmech.ru.domain_notes.dto
 
-import kekmech.ru.common_app_database_api.DefaultId
+import kekmech.ru.library_app_database_api.DefaultId
 import java.io.Serializable
 import java.time.LocalDateTime
 
