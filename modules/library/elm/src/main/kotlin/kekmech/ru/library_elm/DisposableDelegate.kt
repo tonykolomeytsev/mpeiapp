@@ -1,4 +1,4 @@
-package kekmech.ru.common_elm
+package kekmech.ru.library_elm
 
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable

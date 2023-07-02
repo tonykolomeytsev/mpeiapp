@@ -1,10 +1,10 @@
 package kekmech.ru.feature_bars.screen.main.elm
 
-import kekmech.ru.common_elm.actorFlow
 import kekmech.ru.domain_bars.data.BarsConfigRepository
 import kekmech.ru.domain_bars.data.BarsExtractJsRepository
 import kekmech.ru.domain_bars.data.BarsUserInfoRepository
 import kekmech.ru.feature_bars.screen.main.elm.BarsEvent.Internal
+import kekmech.ru.library_elm.actorFlow
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import vivid.money.elmslie.coroutines.Actor

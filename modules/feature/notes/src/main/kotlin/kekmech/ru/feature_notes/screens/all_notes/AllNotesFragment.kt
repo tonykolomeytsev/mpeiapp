@@ -13,7 +13,6 @@ import kekmech.ru.common_android.findAndRemoveArgument
 import kekmech.ru.common_android.setResultListener
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.withArguments
-import kekmech.ru.common_elm.BaseFragment
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_navigation.addScreenForward
 import kekmech.ru.coreui.attachScrollListenerForAppBarLayoutShadow
@@ -32,6 +31,7 @@ import kekmech.ru.feature_notes.screens.all_notes.elm.AllNotesEvent
 import kekmech.ru.feature_notes.screens.all_notes.elm.AllNotesEvent.Ui
 import kekmech.ru.feature_notes.screens.all_notes.elm.AllNotesState
 import kekmech.ru.feature_notes.screens.edit.NoteEditFragment
+import kekmech.ru.library_elm.BaseFragment
 import org.koin.android.ext.android.inject
 
 internal class AllNotesFragment :

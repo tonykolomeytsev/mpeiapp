@@ -1,8 +1,8 @@
 package kekmech.ru.feature_app_settings.screens.favorites.elm
 
-import kekmech.ru.common_elm.actorFlow
 import kekmech.ru.domain_favorite_schedule.FavoriteScheduleRepository
 import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesEvent.Internal
+import kekmech.ru.library_elm.actorFlow
 import kotlinx.coroutines.flow.Flow
 import vivid.money.elmslie.coroutines.Actor
 import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesCommand as Command

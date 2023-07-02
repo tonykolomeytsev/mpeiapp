@@ -10,14 +10,14 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kekmech.ru.common_android.onActivityResult
 import kekmech.ru.common_app_lifecycle.MainActivityLifecycleObserver
-import kekmech.ru.common_elm.DisposableDelegate
-import kekmech.ru.common_elm.DisposableDelegateImpl
 import kekmech.ru.common_navigation.BackButtonListener
 import kekmech.ru.common_navigation.NavigationHolder
 import kekmech.ru.coreui.banner.findBanner
 import kekmech.ru.domain_app_settings.AppSettingsRepository
 import kekmech.ru.domain_main_screen.MainScreenLauncher
 import kekmech.ru.domain_onboarding.OnboardingFeatureLauncher
+import kekmech.ru.library_elm.DisposableDelegate
+import kekmech.ru.library_elm.DisposableDelegateImpl
 import kekmech.ru.mpeiapp.deeplink.DeeplinkHandlersProcessor
 import org.koin.android.ext.android.getKoin
 import org.koin.android.ext.android.inject

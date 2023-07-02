@@ -1,4 +1,4 @@
-package kekmech.ru.common_elm
+package kekmech.ru.library_elm
 
 import androidx.annotation.LayoutRes
 import kekmech.ru.common_android.fragment.BottomSheetDialogFragment

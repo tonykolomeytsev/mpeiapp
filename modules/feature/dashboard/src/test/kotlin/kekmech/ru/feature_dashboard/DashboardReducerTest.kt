@@ -7,8 +7,6 @@ import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeTypeOf
-import kekmech.ru.common_elm.Resource
-import kekmech.ru.common_elm.toResource
 import kekmech.ru.domain_dashboard.dto.UpcomingEventsPrediction
 import kekmech.ru.domain_favorite_schedule.dto.FavoriteSchedule
 import kekmech.ru.domain_notes.dto.Note
@@ -20,6 +18,8 @@ import kekmech.ru.feature_dashboard.screens.main.elm.DashboardEvent.Internal
 import kekmech.ru.feature_dashboard.screens.main.elm.DashboardEvent.Ui
 import kekmech.ru.feature_dashboard.screens.main.elm.DashboardReducer
 import kekmech.ru.feature_dashboard.screens.main.elm.DashboardState
+import kekmech.ru.library_elm.Resource
+import kekmech.ru.library_elm.toResource
 
 internal class DashboardReducerTest : BehaviorSpec({
     val reducer = DashboardReducer()

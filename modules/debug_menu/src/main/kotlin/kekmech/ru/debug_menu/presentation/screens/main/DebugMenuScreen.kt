@@ -21,9 +21,6 @@ import androidx.compose.ui.unit.dp
 import com.bumble.appyx.core.modality.BuildContext
 import com.bumble.appyx.core.node.Node
 import com.chuckerteam.chucker.api.Chucker
-import kekmech.ru.common_elm.Resource
-import kekmech.ru.common_elm.elmNode
-import kekmech.ru.common_elm.rememberAcceptAction
 import kekmech.ru.common_navigation_api.NavTarget
 import kekmech.ru.common_navigation_compose.LocalBackStackNavigator
 import kekmech.ru.debug_menu.R
@@ -33,6 +30,9 @@ import kekmech.ru.debug_menu.presentation.screens.main.elm.DebugMenuState
 import kekmech.ru.debug_menu.presentation.screens.main.elm.DebugMenuStore
 import kekmech.ru.debug_menu.presentation.screens.main.elm.DebugMenuStoreFactory
 import kekmech.ru.domain_app_settings_models.AppEnvironment
+import kekmech.ru.library_elm.Resource
+import kekmech.ru.library_elm.elmNode
+import kekmech.ru.library_elm.rememberAcceptAction
 import kekmech.ru.ui_kit_lists.ListItem
 import kekmech.ru.ui_kit_topappbar.TopAppBar
 import kekmech.ru.ui_theme.theme.MpeixTheme
