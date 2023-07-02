@@ -2,6 +2,7 @@ package mpeix.plugins
 
 import com.android.build.gradle.LibraryExtension
 import mpeix.plugins.setup.Plugins
+import mpeix.plugins.setup.configureAndroidCompose
 import mpeix.plugins.setup.configureKotlinAndroid
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -23,6 +24,7 @@ class FeatureImplementationConventionPlugin : Plugin<Project> {
             extensions.configure<LibraryExtension> {
                 namespace = "kekmech.ru.$name"
                 configureKotlinAndroid(this)
+                configureAndroidCompose(this, fullDependencySet = true)
 
                 @Suppress("UnstableApiUsage")
                 with(buildFeatures) {
