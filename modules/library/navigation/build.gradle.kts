@@ -14,6 +14,6 @@ dependencies {
     implementation(libs.koin.core)
     implementation(libs.rx.java)
 
-    implementation(project(":common_di"))
+    implementation(project(":library_app_info"))
     implementation(project(":ext_kotlin"))
 }

@@ -17,5 +17,5 @@ dependencies {
     implementation(libs.rx.android)
     implementation(libs.rx.java)
 
-    implementation(project(":common_di"))
+    implementation(project(":library_app_info"))
 }

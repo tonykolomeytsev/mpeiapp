@@ -11,7 +11,7 @@ dependencies {
     implementation(libs.squareup.retrofit)
     implementation(libs.squareup.retrofit.gson)
 
-    implementation(project(":common_di"))
+    implementation(project(":library_app_info"))
 
     implementation(project(":domain_app_settings_models"))
 

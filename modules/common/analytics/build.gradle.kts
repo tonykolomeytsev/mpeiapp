@@ -10,7 +10,7 @@ dependencies {
     implementation(libs.koin.core)
 
     implementation(project(":library_app_lifecycle"))
-    implementation(project(":common_di"))
+    implementation(project(":library_app_info"))
     implementation(project(":library_network"))
 
     implementation(project(":domain_analytics"))

@@ -7,5 +7,5 @@ dependencies {
     implementation(libs.koin.android)
     implementation(libs.koin.core)
 
-    implementation(project(":common_di"))
+    implementation(project(":library_app_info"))
 }

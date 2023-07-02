@@ -12,7 +12,7 @@ dependencies {
     ksp(libs.androidx.room.compiler)
 
     implementation(project(":library_app_database_api"))
-    implementation(project(":common_di"))
+    implementation(project(":library_app_info"))
     implementation(project(":ext_kotlin"))
 
     implementation(project(":domain_schedule"))

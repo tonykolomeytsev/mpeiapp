@@ -30,7 +30,7 @@ dependencies {
     implementation(project(":common_analytics"))
     implementation(project(":common_android"))
     implementation(project(":library_app_lifecycle"))
-    implementation(project(":common_di"))
+    implementation(project(":library_app_info"))
     implementation(project(":common_emoji"))
     implementation(project(":ext_kotlin"))
     implementation(project(":library_elm"))

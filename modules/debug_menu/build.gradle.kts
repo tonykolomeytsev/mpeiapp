@@ -5,7 +5,7 @@ plugins {
 
 dependencies {
     implementation(project(":library_app_lifecycle"))
-    implementation(project(":common_di"))
+    implementation(project(":library_app_info"))
     implementation(project(":library_elm"))
     implementation(project(":library_feature_toggles"))
     implementation(project(":ext_kotlin"))
