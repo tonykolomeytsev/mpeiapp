@@ -9,4 +9,5 @@ internal object Plugins {
     const val KotlinJvm = "kotlin"
     const val GradleAndroidCacheFix = "org.gradle.android.cache-fix"
     const val MpeixDetekt = "mpeix.detekt"
+    const val MpeixAar2Jar = "mpeix.kotlin.aar2jar"
 }

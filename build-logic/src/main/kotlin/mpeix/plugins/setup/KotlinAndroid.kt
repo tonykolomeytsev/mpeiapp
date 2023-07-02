@@ -1,6 +1,7 @@
 package mpeix.plugins.setup
 
 import com.android.build.api.dsl.CommonExtension
+import com.android.build.gradle.BaseExtension
 import mpeix.plugins.ext.coreLibraryDesugaring
 import mpeix.plugins.ext.implementation
 import mpeix.plugins.ext.requiredVersion
@@ -25,9 +26,12 @@ internal fun Project.configureKotlinAndroid(
         defaultConfig {
             minSdk = libs.requiredVersion("minSdk").toInt()
             testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-            // No `targetSdk`, `versionCode`, `versionName` because they are useful only
-            // in ApplicationExtension
+            // No `versionCode`, `versionName` because they are useful only in ApplicationExtension
         }
+
+        // Anyway we should specify `targetSdk`
+        (extension as BaseExtension).defaultConfig.targetSdk =
+            libs.requiredVersion("targetSdk").toInt()
 
         testOptions {
             unitTests {

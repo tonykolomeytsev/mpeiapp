@@ -74,6 +74,12 @@ gradlePlugin {
         description = "The Gradle Plugin that configures Detekt in subproject"
         implementationClass = "mpeix.plugins.DetektConventionPlugin"
     }
+    plugins.create("FeatureApiConventionPlugin") {
+        id = "mpeix.feature.api"
+        displayName = "MpeiX Feature Api Convention"
+        description = "The Gradle Plugin that configures Feature Api module"
+        implementationClass = "mpeix.plugins.FeatureApiConventionPlugin"
+    }
     plugins.create("FeatureImplementationConventionPlugin") {
         id = "mpeix.feature.impl"
         displayName = "MpeiX Feature Implementation Convention"
