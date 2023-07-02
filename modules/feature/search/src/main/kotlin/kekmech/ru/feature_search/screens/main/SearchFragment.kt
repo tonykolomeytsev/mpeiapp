@@ -18,9 +18,6 @@ import kekmech.ru.common_android.hideKeyboard
 import kekmech.ru.common_android.showKeyboard
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.withArguments
-import kekmech.ru.common_navigation.BottomTab
-import kekmech.ru.common_navigation.BottomTabsSwitcher
-import kekmech.ru.common_navigation.showDialog
 import kekmech.ru.coreui.items.EmptyStateAdapterItem
 import kekmech.ru.coreui.items.LabeledTextViewHolder
 import kekmech.ru.coreui.items.LabeledTextViewHolderImpl
@@ -40,6 +37,9 @@ import kekmech.ru.feature_search.screens.main.elm.SearchEvent
 import kekmech.ru.feature_search.screens.main.elm.SearchState
 import kekmech.ru.feature_search.screens.schedule_details.ScheduleDetailsFragment
 import kekmech.ru.library_elm.BaseFragment
+import kekmech.ru.library_navigation.BottomTab
+import kekmech.ru.library_navigation.BottomTabsSwitcher
+import kekmech.ru.library_navigation.showDialog
 import org.koin.android.ext.android.inject
 import java.util.concurrent.TimeUnit
 import kekmech.ru.coreui.R as coreui_R

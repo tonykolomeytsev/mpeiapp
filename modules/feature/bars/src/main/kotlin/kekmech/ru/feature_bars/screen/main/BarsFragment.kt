@@ -24,10 +24,6 @@ import kekmech.ru.common_android.getThemeColor
 import kekmech.ru.common_android.openLinkExternal
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.views.setProgressViewOffset
-import kekmech.ru.common_navigation.features.ScrollToTop
-import kekmech.ru.common_navigation.features.TabScreenStateSaver
-import kekmech.ru.common_navigation.features.TabScreenStateSaverImpl
-import kekmech.ru.common_navigation.showDialog
 import kekmech.ru.coreui.banner.showBanner
 import kekmech.ru.coreui.items.EmptyStateAdapterItem
 import kekmech.ru.coreui.items.ShimmerAdapterItem
@@ -48,6 +44,10 @@ import kekmech.ru.feature_bars.screen.main.elm.BarsEvent.Ui
 import kekmech.ru.feature_bars.screen.main.elm.BarsState
 import kekmech.ru.feature_bars.screen.main.elm.BarsStoreProvider
 import kekmech.ru.library_elm.BaseFragment
+import kekmech.ru.library_navigation.features.ScrollToTop
+import kekmech.ru.library_navigation.features.TabScreenStateSaver
+import kekmech.ru.library_navigation.features.TabScreenStateSaverImpl
+import kekmech.ru.library_navigation.showDialog
 import kekmech.ru.strings.Strings
 import org.koin.android.ext.android.inject
 import vivid.money.elmslie.coroutines.ElmStoreCompat

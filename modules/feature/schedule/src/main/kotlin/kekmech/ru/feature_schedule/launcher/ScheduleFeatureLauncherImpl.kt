@@ -1,11 +1,11 @@
 package kekmech.ru.feature_schedule.launcher
 
 import androidx.fragment.app.Fragment
-import kekmech.ru.common_navigation.AddScreenForward
-import kekmech.ru.common_navigation.Router
 import kekmech.ru.domain_schedule.ScheduleFeatureLauncher
 import kekmech.ru.feature_schedule.screens.find_schedule.FindScheduleFragment
 import kekmech.ru.feature_schedule.screens.main.ScheduleFragment
+import kekmech.ru.library_navigation.AddScreenForward
+import kekmech.ru.library_navigation.Router
 
 internal class ScheduleFeatureLauncherImpl(
     private val router: Router,

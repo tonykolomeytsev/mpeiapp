@@ -9,8 +9,6 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kekmech.ru.common_android.onActivityResult
-import kekmech.ru.common_navigation.BackButtonListener
-import kekmech.ru.common_navigation.NavigationHolder
 import kekmech.ru.coreui.banner.findBanner
 import kekmech.ru.domain_app_settings.AppSettingsRepository
 import kekmech.ru.domain_main_screen.MainScreenLauncher
@@ -18,11 +16,13 @@ import kekmech.ru.domain_onboarding.OnboardingFeatureLauncher
 import kekmech.ru.library_app_lifecycle.MainActivityLifecycleObserver
 import kekmech.ru.library_elm.DisposableDelegate
 import kekmech.ru.library_elm.DisposableDelegateImpl
+import kekmech.ru.library_navigation.BackButtonListener
+import kekmech.ru.library_navigation.NavigationHolder
 import kekmech.ru.mpeiapp.deeplink.DeeplinkHandlersProcessor
 import org.koin.android.ext.android.getKoin
 import org.koin.android.ext.android.inject
-import kekmech.ru.common_navigation.R as common_navigation_R
 import kekmech.ru.coreui.R as coreui_R
+import kekmech.ru.library_navigation.R as common_navigation_R
 
 class MainActivity : AppCompatActivity(), DisposableDelegate by DisposableDelegateImpl() {
 

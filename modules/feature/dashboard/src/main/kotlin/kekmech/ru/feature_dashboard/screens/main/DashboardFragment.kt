@@ -15,10 +15,6 @@ import kekmech.ru.common_android.openLinkExternal
 import kekmech.ru.common_android.setResultListener
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.views.setProgressViewOffset
-import kekmech.ru.common_navigation.BottomTab
-import kekmech.ru.common_navigation.features.ScrollToTop
-import kekmech.ru.common_navigation.features.TabScreenStateSaver
-import kekmech.ru.common_navigation.features.TabScreenStateSaverImpl
 import kekmech.ru.common_schedule.items.NotePreviewAdapterItem
 import kekmech.ru.coreui.banner.showBanner
 import kekmech.ru.coreui.items.AddActionAdapterItem
@@ -49,6 +45,10 @@ import kekmech.ru.feature_dashboard.screens.main.elm.DashboardEvent
 import kekmech.ru.feature_dashboard.screens.main.elm.DashboardState
 import kekmech.ru.feature_dashboard.screens.main.elm.DashboardStoreProvider
 import kekmech.ru.library_elm.BaseFragment
+import kekmech.ru.library_navigation.BottomTab
+import kekmech.ru.library_navigation.features.ScrollToTop
+import kekmech.ru.library_navigation.features.TabScreenStateSaver
+import kekmech.ru.library_navigation.features.TabScreenStateSaverImpl
 import kekmech.ru.strings.Strings
 import org.koin.android.ext.android.inject
 

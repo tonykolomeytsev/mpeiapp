@@ -1,11 +1,11 @@
 package kekmech.ru.mpeiapp.deeplink.handlers
 
 import android.net.Uri
-import kekmech.ru.common_navigation.BottomTab
-import kekmech.ru.common_navigation.BottomTabsSwitcher
-import kekmech.ru.common_navigation.PopUntil
-import kekmech.ru.common_navigation.Router
 import kekmech.ru.domain_map.MapFeatureLauncher
+import kekmech.ru.library_navigation.BottomTab
+import kekmech.ru.library_navigation.BottomTabsSwitcher
+import kekmech.ru.library_navigation.PopUntil
+import kekmech.ru.library_navigation.Router
 import kekmech.ru.mpeiapp.deeplink.DeeplinkHandler
 import kekmech.ru.mpeiapp.ui.main.MainFragment
 

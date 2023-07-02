@@ -112,7 +112,7 @@ dependencies {
     implementation(project(":common_di"))
     implementation(project(":library_elm"))
     implementation(project(":common_feature_toggles"))
-    implementation(project(":common_navigation"))
+    implementation(project(":library_navigation"))
     implementation(project(":library_network"))
 
     implementation(project(":ext_kotlin"))

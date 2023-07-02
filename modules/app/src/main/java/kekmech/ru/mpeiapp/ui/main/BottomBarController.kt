@@ -7,13 +7,13 @@ import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import kekmech.ru.common_navigation.BottomTab
-import kekmech.ru.common_navigation.features.ScrollToTop
-import kekmech.ru.common_navigation.features.TabScreenStateSaver
 import kekmech.ru.domain_bars.BarsFeatureLauncher
 import kekmech.ru.domain_dashboard.DashboardFeatureLauncher
 import kekmech.ru.domain_map.MapFeatureLauncher
 import kekmech.ru.domain_schedule.ScheduleFeatureLauncher
+import kekmech.ru.library_navigation.BottomTab
+import kekmech.ru.library_navigation.features.ScrollToTop
+import kekmech.ru.library_navigation.features.TabScreenStateSaver
 import kekmech.ru.mpeiapp.R
 import timber.log.Timber
 import java.util.concurrent.TimeUnit

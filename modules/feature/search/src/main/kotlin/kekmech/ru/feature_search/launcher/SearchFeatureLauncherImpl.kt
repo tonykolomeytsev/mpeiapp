@@ -1,9 +1,9 @@
 package kekmech.ru.feature_search.launcher
 
-import kekmech.ru.common_navigation.AddScreenForward
-import kekmech.ru.common_navigation.Router
 import kekmech.ru.domain_search.SearchFeatureLauncher
 import kekmech.ru.feature_search.screens.main.SearchFragment
+import kekmech.ru.library_navigation.AddScreenForward
+import kekmech.ru.library_navigation.Router
 
 internal class SearchFeatureLauncherImpl(
     private val router: Router
