@@ -1,6 +1,5 @@
 package kekmech.ru.debug_menu.di
 
-import kekmech.ru.common_app_lifecycle.AppLifecycleObserver
 import kekmech.ru.common_feature_toggles.RemoteVariableValueHolder
 import kekmech.ru.debug_menu.DebugMenuInitializer
 import kekmech.ru.debug_menu.presentation.screens.feature_toggles.FeatureTogglesOverwriteMiddleware
@@ -9,6 +8,7 @@ import kekmech.ru.debug_menu.presentation.screens.feature_toggles.elm.FeatureTog
 import kekmech.ru.debug_menu.presentation.screens.main.elm.DebugMenuActor
 import kekmech.ru.debug_menu.presentation.screens.main.elm.DebugMenuStoreFactory
 import kekmech.ru.ext_koin.bindIntoList
+import kekmech.ru.library_app_lifecycle.AppLifecycleObserver
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind

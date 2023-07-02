@@ -2,8 +2,8 @@ package kekmech.ru.common_analytics.di
 
 import kekmech.ru.common_analytics.AnalyticsInitializer
 import kekmech.ru.common_analytics.AnalyticsWrapper
-import kekmech.ru.common_app_lifecycle.MainActivityLifecycleObserver
 import kekmech.ru.ext_koin.bindIntoList
+import kekmech.ru.library_app_lifecycle.MainActivityLifecycleObserver
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 

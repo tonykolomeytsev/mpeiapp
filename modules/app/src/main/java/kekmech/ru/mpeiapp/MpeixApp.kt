@@ -5,10 +5,10 @@ import android.content.Context
 import android.os.Build
 import io.reactivex.rxjava3.exceptions.UndeliverableException
 import io.reactivex.rxjava3.plugins.RxJavaPlugins
-import kekmech.ru.common_app_lifecycle.AppLifecycleObserver
 import kekmech.ru.common_navigation.Router
 import kekmech.ru.common_navigation.di.RouterHolder
 import kekmech.ru.domain_app_settings.AppEnvironmentRepository
+import kekmech.ru.library_app_lifecycle.AppLifecycleObserver
 import kekmech.ru.library_elm.TimberLogger
 import kekmech.ru.library_network.ServiceUrlResolver
 import kekmech.ru.mpeiapp.di.AppModule

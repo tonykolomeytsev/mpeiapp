@@ -107,7 +107,7 @@ dependencies {
     implementation(project(":common_android"))
     implementation(project(":library_app_database_api"))
     implementation(project(":library_app_database_impl"))
-    implementation(project(":common_app_lifecycle"))
+    implementation(project(":library_app_lifecycle"))
     implementation(project(":library_coroutines"))
     implementation(project(":common_di"))
     implementation(project(":library_elm"))
