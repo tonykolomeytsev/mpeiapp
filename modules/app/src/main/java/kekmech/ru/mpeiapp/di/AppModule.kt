@@ -9,7 +9,6 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.redmadrobot.mapmemory.MapMemory
 import kekmech.ru.common_analytics.FirebaseAnalyticsProvider
 import kekmech.ru.common_analytics.di.CommonAnalyticsModule
-import kekmech.ru.common_coroutines_impl.di.CommonCoroutinesModule
 import kekmech.ru.common_di.AppVersionName
 import kekmech.ru.common_feature_toggles.RemoteConfigWrapper
 import kekmech.ru.common_feature_toggles.RemoteVariable
@@ -33,6 +32,7 @@ import kekmech.ru.feature_onboarding.di.FeatureOnboardingModule
 import kekmech.ru.feature_schedule.di.FeatureScheduleModule
 import kekmech.ru.feature_search.di.FeatureSearchFeatureModule
 import kekmech.ru.library_app_database_impl.di.CommonAppDatabaseModule
+import kekmech.ru.library_coroutines.di.LibraryCoroutinesModule
 import kekmech.ru.library_network.di.CommonNetworkModule
 import kekmech.ru.library_persistent_cache.di.LibraryPersistentCacheModule
 import kekmech.ru.mpeiapp.BuildConfig
@@ -79,7 +79,6 @@ val AppModule = module {
         // common
         CommonAnalyticsModule,
         CommonAppDatabaseModule,
-        CommonCoroutinesModule,
         CommonFeatureTogglesModule,
         CommonNavigationModule,
         CommonNetworkModule,
@@ -103,6 +102,7 @@ val AppModule = module {
         FeatureSearchFeatureModule,
         // libraries
         LibraryPersistentCacheModule,
+        LibraryCoroutinesModule,
     )
 }
 

@@ -1,6 +1,6 @@
 package kekmech.ru.library_persistent_cache.impl
 
-import kekmech.ru.common_coroutines_api.CoroutineDispatchers
+import kekmech.ru.library_coroutines.CoroutineDispatchers
 import kekmech.ru.library_persistent_cache.api.PersistentCache
 import kekmech.ru.library_persistent_cache.api.PersistentCacheKey
 import kekmech.ru.library_persistent_cache.impl.data.PersistentCacheSource
