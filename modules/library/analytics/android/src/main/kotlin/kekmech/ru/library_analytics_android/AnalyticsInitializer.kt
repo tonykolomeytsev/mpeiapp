@@ -1,4 +1,4 @@
-package kekmech.ru.common_analytics
+package kekmech.ru.library_analytics_android
 
 import android.content.Context
 import com.google.firebase.analytics.FirebaseAnalytics

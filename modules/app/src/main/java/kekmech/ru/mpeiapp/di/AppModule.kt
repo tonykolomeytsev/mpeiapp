@@ -7,8 +7,6 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.redmadrobot.mapmemory.MapMemory
-import kekmech.ru.common_analytics.FirebaseAnalyticsProvider
-import kekmech.ru.common_analytics.di.CommonAnalyticsModule
 import kekmech.ru.domain_bars.di.DomainBarsModule
 import kekmech.ru.domain_dashboard.di.DomainDashboardModule
 import kekmech.ru.domain_favorite_schedule.di.DomainFavoriteScheduleModule
@@ -26,6 +24,8 @@ import kekmech.ru.feature_notes.di.FeatureNotesModule
 import kekmech.ru.feature_onboarding.di.FeatureOnboardingModule
 import kekmech.ru.feature_schedule.di.FeatureScheduleModule
 import kekmech.ru.feature_search.di.FeatureSearchFeatureModule
+import kekmech.ru.library_analytics_android.FirebaseAnalyticsProvider
+import kekmech.ru.library_analytics_android.di.CommonAnalyticsModule
 import kekmech.ru.library_app_database_impl.di.CommonAppDatabaseModule
 import kekmech.ru.library_app_info.AppVersionName
 import kekmech.ru.library_coroutines.di.LibraryCoroutinesModule

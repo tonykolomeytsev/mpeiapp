@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
-import kekmech.ru.common_analytics.addScrollAnalytics
-import kekmech.ru.common_analytics.ext.screenAnalytics
 import kekmech.ru.coreui.banner.showBanner
 import kekmech.ru.coreui.items.AddActionAdapterItem
 import kekmech.ru.coreui.items.EmptyStateAdapterItem
@@ -43,6 +41,8 @@ import kekmech.ru.feature_dashboard.screens.main.elm.DashboardEvent
 import kekmech.ru.feature_dashboard.screens.main.elm.DashboardState
 import kekmech.ru.feature_dashboard.screens.main.elm.DashboardStoreProvider
 import kekmech.ru.library_adapter.BaseAdapter
+import kekmech.ru.library_analytics_android.addScrollAnalytics
+import kekmech.ru.library_analytics_android.ext.screenAnalytics
 import kekmech.ru.library_elm.BaseFragment
 import kekmech.ru.library_navigation.BottomTab
 import kekmech.ru.library_navigation.features.ScrollToTop

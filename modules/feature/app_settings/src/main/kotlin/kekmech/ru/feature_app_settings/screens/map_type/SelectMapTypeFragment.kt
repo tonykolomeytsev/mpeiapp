@@ -3,7 +3,6 @@ package kekmech.ru.feature_app_settings.screens.map_type
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
-import kekmech.ru.common_analytics.ext.screenAnalytics
 import kekmech.ru.coreui.items.PullAdapterItem
 import kekmech.ru.coreui.items.PullItem
 import kekmech.ru.coreui.items.SectionHeaderAdapterItem
@@ -23,6 +22,7 @@ import kekmech.ru.feature_app_settings.screens.map_type.dto.MapTypeEntry
 import kekmech.ru.feature_app_settings.screens.map_type.item.MapTypeAdapterItem
 import kekmech.ru.feature_app_settings.screens.map_type.item.MapTypeItem
 import kekmech.ru.library_adapter.BaseAdapter
+import kekmech.ru.library_analytics_android.ext.screenAnalytics
 import kekmech.ru.strings.Strings
 
 internal class SelectMapTypeFragment : BottomSheetDialogFragment(R.layout.fragment_select_map_type) {

@@ -11,7 +11,7 @@ dependencies {
     implementation(libs.koin.core)
     implementation(libs.squareup.retrofit)
 
-    implementation(project(":domain_analytics"))
+    implementation(project(":library_analytics_api"))
     implementation(project(":domain_schedule_models"))
 
     implementation(project(":ext_kotlin"))

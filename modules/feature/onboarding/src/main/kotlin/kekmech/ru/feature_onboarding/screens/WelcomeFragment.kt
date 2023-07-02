@@ -5,8 +5,6 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
-import kekmech.ru.common_analytics.addScrollAnalytics
-import kekmech.ru.common_analytics.ext.screenAnalytics
 import kekmech.ru.domain_schedule.ScheduleFeatureLauncher.ContinueTo.DASHBOARD
 import kekmech.ru.ext_android.viewbinding.viewBinding
 import kekmech.ru.ext_kotlin.fastLazy
@@ -16,6 +14,8 @@ import kekmech.ru.feature_onboarding.di.OnboardingDependencies
 import kekmech.ru.feature_onboarding.item.PromoPage
 import kekmech.ru.feature_onboarding.item.PromoPageAdapterItem
 import kekmech.ru.library_adapter.BaseAdapter
+import kekmech.ru.library_analytics_android.addScrollAnalytics
+import kekmech.ru.library_analytics_android.ext.screenAnalytics
 import org.koin.android.ext.android.inject
 
 internal class WelcomeFragment : Fragment(R.layout.fragment_welcome) {

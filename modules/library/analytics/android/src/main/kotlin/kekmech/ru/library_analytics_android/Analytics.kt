@@ -1,6 +1,6 @@
-package kekmech.ru.common_analytics
+package kekmech.ru.library_analytics_android
 
-import kekmech.ru.common_analytics.dto.AnalyticsEvent
+import kekmech.ru.library_analytics_android.dto.AnalyticsEvent
 
 interface Analytics {
 

@@ -7,7 +7,6 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
-import kekmech.ru.common_analytics.ext.screenAnalytics
 import kekmech.ru.coreui.attachScrollListenerForAppBarLayoutShadow
 import kekmech.ru.coreui.items.*
 import kekmech.ru.ext_android.*
@@ -25,6 +24,7 @@ import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsStoreFactory
 import kekmech.ru.feature_app_settings.screens.main.list.ContributorAdapterItem
 import kekmech.ru.feature_app_settings.screens.map_type.SelectMapTypeFragment
 import kekmech.ru.library_adapter.BaseAdapter
+import kekmech.ru.library_analytics_android.ext.screenAnalytics
 import kekmech.ru.library_elm.BaseFragment
 import kekmech.ru.library_navigation.addScreenForward
 import kekmech.ru.library_navigation.showDialog

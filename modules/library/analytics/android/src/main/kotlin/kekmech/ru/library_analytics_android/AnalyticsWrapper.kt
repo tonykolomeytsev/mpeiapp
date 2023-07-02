@@ -1,11 +1,11 @@
-package kekmech.ru.common_analytics
+package kekmech.ru.library_analytics_android
 
 import android.os.Bundle
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.FirebaseAnalytics.Event
 import com.google.firebase.analytics.FirebaseAnalytics.Param
-import kekmech.ru.common_analytics.dto.AnalyticsEvent
-import kekmech.ru.domain_analytics.SelectedScheduleAnalyticsProvider
+import kekmech.ru.library_analytics_android.dto.AnalyticsEvent
+import kekmech.ru.library_analytics_api.SelectedScheduleAnalyticsProvider
 
 internal class AnalyticsWrapper(
     private val firebaseAnalyticsProvider: FirebaseAnalyticsProvider,

@@ -1,4 +1,4 @@
-package kekmech.ru.common_analytics
+package kekmech.ru.library_analytics_android
 
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2

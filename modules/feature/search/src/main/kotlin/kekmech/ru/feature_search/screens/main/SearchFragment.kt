@@ -6,7 +6,6 @@ import android.widget.EditText
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
-import kekmech.ru.common_analytics.ext.screenAnalytics
 import kekmech.ru.coreui.items.EmptyStateAdapterItem
 import kekmech.ru.coreui.items.LabeledTextViewHolder
 import kekmech.ru.coreui.items.LabeledTextViewHolderImpl
@@ -36,6 +35,7 @@ import kekmech.ru.feature_search.screens.schedule_details.ScheduleDetailsFragmen
 import kekmech.ru.library_adapter.AdapterItem
 import kekmech.ru.library_adapter.BaseAdapter
 import kekmech.ru.library_adapter.BaseItemBinder
+import kekmech.ru.library_analytics_android.ext.screenAnalytics
 import kekmech.ru.library_elm.BaseFragment
 import kekmech.ru.library_navigation.BottomTab
 import kekmech.ru.library_navigation.BottomTabsSwitcher
