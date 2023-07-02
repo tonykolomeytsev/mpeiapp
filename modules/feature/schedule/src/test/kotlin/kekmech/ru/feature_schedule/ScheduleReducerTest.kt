@@ -8,7 +8,6 @@ import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.maps.shouldBeEmpty
 import io.kotest.matchers.maps.shouldContainExactly
 import io.kotest.matchers.shouldBe
-import kekmech.ru.common_schedule.utils.atStartOfWeek
 import kekmech.ru.domain_app_settings_models.AppSettings
 import kekmech.ru.domain_schedule_models.dto.Classes
 import kekmech.ru.domain_schedule_models.dto.ClassesType
@@ -24,6 +23,7 @@ import kekmech.ru.feature_schedule.screens.main.elm.ScheduleEvent.Internal
 import kekmech.ru.feature_schedule.screens.main.elm.ScheduleEvent.Ui
 import kekmech.ru.feature_schedule.screens.main.elm.ScheduleReducer
 import kekmech.ru.feature_schedule.screens.main.elm.ScheduleState
+import kekmech.ru.library_schedule.utils.atStartOfWeek
 import java.time.LocalDate
 import java.time.Month
 

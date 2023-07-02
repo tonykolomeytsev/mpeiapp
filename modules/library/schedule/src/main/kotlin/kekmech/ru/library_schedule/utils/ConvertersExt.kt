@@ -1,11 +1,11 @@
-package kekmech.ru.common_schedule.utils
+package kekmech.ru.library_schedule.utils
 
-import kekmech.ru.common_schedule.items.LunchItem
-import kekmech.ru.common_schedule.items.NotePreview
-import kekmech.ru.common_schedule.items.WindowItem
 import kekmech.ru.domain_schedule_models.dto.Classes
 import kekmech.ru.ext_kotlin.moscowLocalDate
 import kekmech.ru.ext_kotlin.moscowLocalTime
+import kekmech.ru.library_schedule.items.LunchItem
+import kekmech.ru.library_schedule.items.NotePreview
+import kekmech.ru.library_schedule.items.WindowItem
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.temporal.ChronoUnit

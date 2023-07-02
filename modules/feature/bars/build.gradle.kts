@@ -35,7 +35,7 @@ dependencies {
     implementation(project(":ext_kotlin"))
     implementation(project(":library_elm"))
     implementation(project(":library_navigation"))
-    implementation(project(":common_schedule"))
+    implementation(project(":library_schedule"))
 
     implementation(project(":coreui"))
     implementation(project(":icons"))

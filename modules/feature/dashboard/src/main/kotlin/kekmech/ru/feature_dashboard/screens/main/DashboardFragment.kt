@@ -6,7 +6,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import kekmech.ru.common_analytics.addScrollAnalytics
 import kekmech.ru.common_analytics.ext.screenAnalytics
-import kekmech.ru.common_schedule.items.NotePreviewAdapterItem
 import kekmech.ru.coreui.banner.showBanner
 import kekmech.ru.coreui.items.AddActionAdapterItem
 import kekmech.ru.coreui.items.EmptyStateAdapterItem
@@ -49,6 +48,7 @@ import kekmech.ru.library_navigation.BottomTab
 import kekmech.ru.library_navigation.features.ScrollToTop
 import kekmech.ru.library_navigation.features.TabScreenStateSaver
 import kekmech.ru.library_navigation.features.TabScreenStateSaverImpl
+import kekmech.ru.library_schedule.items.NotePreviewAdapterItem
 import kekmech.ru.strings.Strings
 import org.koin.android.ext.android.inject
 

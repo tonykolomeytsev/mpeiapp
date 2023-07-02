@@ -1,4 +1,4 @@
-package kekmech.ru.common_schedule.utils
+package kekmech.ru.library_schedule.utils
 
 import java.time.DayOfWeek
 import java.time.LocalDate

@@ -3,7 +3,7 @@ plugins {
 }
 
 @Suppress("UnstableApiUsage")
-android.buildFeatures{
+android.buildFeatures {
     viewBinding = true
     androidResources = true
 }

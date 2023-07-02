@@ -5,8 +5,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import kekmech.ru.common_analytics.ext.screenAnalytics
-import kekmech.ru.common_schedule.items.ClassesItemBinder
-import kekmech.ru.common_schedule.items.ClassesViewHolderImpl
 import kekmech.ru.coreui.items.EmptyStateAdapterItem
 import kekmech.ru.coreui.items.PullAdapterItem
 import kekmech.ru.coreui.items.ShimmerAdapterItem
@@ -38,9 +36,11 @@ import kekmech.ru.library_navigation.BottomTab
 import kekmech.ru.library_navigation.BottomTabsSwitcher
 import kekmech.ru.library_navigation.ClearBackStack
 import kekmech.ru.library_navigation.Router
+import kekmech.ru.library_schedule.items.ClassesItemBinder
+import kekmech.ru.library_schedule.items.ClassesViewHolderImpl
 import org.koin.android.ext.android.inject
-import kekmech.ru.common_schedule.R as common_schedule_R
 import kekmech.ru.coreui.R as coreui_R
+import kekmech.ru.library_schedule.R as common_schedule_R
 
 private const val ARG_RESULT_ITEM = "Arg.Item"
 internal const val ITEM_BUTTON_SWITCH = 1

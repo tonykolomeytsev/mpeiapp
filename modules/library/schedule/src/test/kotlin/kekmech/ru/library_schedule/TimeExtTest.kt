@@ -1,8 +1,8 @@
-package kekmech.ru.common_schedule
+package kekmech.ru.library_schedule
 
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
-import kekmech.ru.common_schedule.utils.atStartOfWeek
+import kekmech.ru.library_schedule.utils.atStartOfWeek
 import java.time.LocalDate
 import java.time.Month
 

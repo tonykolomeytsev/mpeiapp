@@ -1,4 +1,4 @@
-package kekmech.ru.common_schedule.items
+package kekmech.ru.library_schedule.items
 
 import android.content.Context
 import android.content.res.ColorStateList
@@ -7,8 +7,6 @@ import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import kekmech.ru.common_schedule.R
-import kekmech.ru.common_schedule.drawable.ProgressBackgroundDrawable
 import kekmech.ru.coreui.items.ClickableItemViewHolder
 import kekmech.ru.coreui.items.ClickableItemViewHolderImpl
 import kekmech.ru.domain_schedule_models.dto.Classes
@@ -24,6 +22,8 @@ import kekmech.ru.ext_android.views.setOnClickListenerWithDebounce
 import kekmech.ru.ext_kotlin.fastLazy
 import kekmech.ru.library_adapter.AdapterItem
 import kekmech.ru.library_adapter.BaseItemBinder
+import kekmech.ru.library_schedule.R
+import kekmech.ru.library_schedule.drawable.ProgressBackgroundDrawable
 import kekmech.ru.strings.StringArrays
 import java.time.format.DateTimeFormatter
 import kekmech.ru.coreui.R as coreui_R
