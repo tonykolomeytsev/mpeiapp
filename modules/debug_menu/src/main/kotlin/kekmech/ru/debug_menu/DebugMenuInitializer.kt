@@ -6,8 +6,8 @@ import android.app.Application.ActivityLifecycleCallbacks
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import kekmech.ru.common_app_lifecycle.AppLifecycleObserver
 import kekmech.ru.debug_menu.presentation.DebugMenuService
+import kekmech.ru.library_app_lifecycle.AppLifecycleObserver
 import timber.log.Timber
 
 internal class DebugMenuInitializer : AppLifecycleObserver {

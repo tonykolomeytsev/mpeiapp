@@ -11,7 +11,7 @@ dependencies {
     implementation(libs.koin.core)
 
     implementation(project(":common_android"))
-    implementation(project(":common_app_lifecycle"))
+    implementation(project(":library_app_lifecycle"))
     implementation(project(":common_di"))
     implementation(project(":ext_kotlin"))
     implementation(project(":library_network"))

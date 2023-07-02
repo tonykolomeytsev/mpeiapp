@@ -1,4 +1,4 @@
-package kekmech.ru.common_app_lifecycle
+package kekmech.ru.library_app_lifecycle
 
 import android.content.Context
 
