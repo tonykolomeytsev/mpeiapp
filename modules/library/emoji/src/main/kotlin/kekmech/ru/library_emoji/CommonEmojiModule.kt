@@ -1,4 +1,4 @@
-package kekmech.ru.common_emoji
+package kekmech.ru.library_emoji
 
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.bind
