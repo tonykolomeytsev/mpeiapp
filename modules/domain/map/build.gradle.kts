@@ -10,5 +10,6 @@ dependencies {
 
     implementation(project(":common_annotations"))
     implementation(project(":common_network"))
-    implementation(project(":common_persistent_cache_api"))
+
+    implementation(project(":library_persistent_cache"))
 }

@@ -1,8 +1,8 @@
 package kekmech.ru.domain_schedule.data
 
-import kekmech.ru.common_persistent_cache_api.PersistentCache
-import kekmech.ru.common_persistent_cache_api.PersistentCacheKey
 import kekmech.ru.domain_schedule_models.dto.Schedule
+import kekmech.ru.library_persistent_cache.api.PersistentCache
+import kekmech.ru.library_persistent_cache.api.PersistentCacheKey
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter

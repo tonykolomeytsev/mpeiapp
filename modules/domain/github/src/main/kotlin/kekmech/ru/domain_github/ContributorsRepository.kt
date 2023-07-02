@@ -1,9 +1,9 @@
 package kekmech.ru.domain_github
 
-import kekmech.ru.common_persistent_cache_api.PersistentCache
-import kekmech.ru.common_persistent_cache_api.ofList
 import kekmech.ru.domain_github.dto.GitHubContributor
 import kekmech.ru.domain_github.dto.GitHubUser
+import kekmech.ru.library_persistent_cache.api.PersistentCache
+import kekmech.ru.library_persistent_cache.api.ofList
 import kotlinx.coroutines.flow.Flow
 
 class ContributorsRepository(

@@ -17,7 +17,6 @@ import kekmech.ru.common_feature_toggles.RemoteVariable
 import kekmech.ru.common_feature_toggles.di.CommonFeatureTogglesModule
 import kekmech.ru.common_navigation.di.CommonNavigationModule
 import kekmech.ru.common_network.di.CommonNetworkModule
-import kekmech.ru.common_persistent_cache_impl.di.CommonPersistentCacheModule
 import kekmech.ru.domain_bars.di.DomainBarsModule
 import kekmech.ru.domain_dashboard.di.DomainDashboardModule
 import kekmech.ru.domain_favorite_schedule.di.DomainFavoriteScheduleModule
@@ -35,6 +34,7 @@ import kekmech.ru.feature_notes.di.FeatureNotesModule
 import kekmech.ru.feature_onboarding.di.FeatureOnboardingModule
 import kekmech.ru.feature_schedule.di.FeatureScheduleModule
 import kekmech.ru.feature_search.di.FeatureSearchFeatureModule
+import kekmech.ru.library_persistent_cache.di.LibraryPersistentCacheModule
 import kekmech.ru.mpeiapp.BuildConfig
 import kekmech.ru.mpeiapp.ComposeEnabledFeatureToggle
 import kekmech.ru.mpeiapp.deeplink.di.DeeplinkModule
@@ -83,7 +83,6 @@ val AppModule = module {
         CommonFeatureTogglesModule,
         CommonNavigationModule,
         CommonNetworkModule,
-        CommonPersistentCacheModule,
         // domain
         DomainBarsModule,
         DomainDashboardModule,
@@ -102,6 +101,8 @@ val AppModule = module {
         FeatureOnboardingModule,
         FeatureScheduleModule,
         FeatureSearchFeatureModule,
+        // libraries
+        LibraryPersistentCacheModule,
     )
 }
 

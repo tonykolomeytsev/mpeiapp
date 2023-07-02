@@ -43,7 +43,7 @@ dependencies {
     implementation(project(":common_elm"))
     implementation(project(":common_navigation"))
     implementation(project(":common_schedule"))
-    implementation(project(":common_shared_preferences"))
+    implementation(project(":ext_shared_preferences"))
 
     implementation(project(":coreui"))
     implementation(project(":icons"))

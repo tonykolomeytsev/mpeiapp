@@ -9,6 +9,7 @@ dependencies {
     implementation(libs.squareup.retrofit)
 
     implementation(project(":common_annotations"))
-    implementation(project(":common_persistent_cache_api"))
     implementation(project(":common_network"))
+
+    implementation(project(":library_persistent_cache"))
 }
