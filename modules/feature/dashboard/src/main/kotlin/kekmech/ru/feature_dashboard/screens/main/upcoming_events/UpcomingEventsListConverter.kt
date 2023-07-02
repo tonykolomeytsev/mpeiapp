@@ -1,7 +1,6 @@
 package kekmech.ru.feature_dashboard.screens.main.upcoming_events
 
 import android.content.Context
-import kekmech.ru.common_schedule.utils.withNotePreview
 import kekmech.ru.coreui.items.EmptyStateItem
 import kekmech.ru.coreui.items.ErrorStateItem
 import kekmech.ru.coreui.items.SectionHeaderItem
@@ -15,6 +14,7 @@ import kekmech.ru.feature_dashboard.R
 import kekmech.ru.feature_dashboard.screens.main.elm.DashboardState
 import kekmech.ru.feature_dashboard.screens.main.helpers.TimeDeclensionHelper
 import kekmech.ru.library_elm.Resource
+import kekmech.ru.library_schedule.utils.withNotePreview
 import kekmech.ru.strings.Strings
 import kotlin.time.Duration
 

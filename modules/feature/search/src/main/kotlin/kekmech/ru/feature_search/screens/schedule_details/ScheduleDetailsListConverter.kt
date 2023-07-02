@@ -8,7 +8,6 @@ import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
 import androidx.annotation.StringRes
-import kekmech.ru.common_schedule.items.DayItem
 import kekmech.ru.coreui.items.*
 import kekmech.ru.ext_android.getThemeColor
 import kekmech.ru.feature_search.R
@@ -16,6 +15,7 @@ import kekmech.ru.feature_search.item.ButtonItem
 import kekmech.ru.feature_search.item.WeekMinItem
 import kekmech.ru.feature_search.screens.schedule_details.elm.ScheduleDetailsState
 import kekmech.ru.icons.Icons
+import kekmech.ru.library_schedule.items.DayItem
 import kekmech.ru.strings.Strings
 import kekmech.ru.coreui.R as coreui_R
 

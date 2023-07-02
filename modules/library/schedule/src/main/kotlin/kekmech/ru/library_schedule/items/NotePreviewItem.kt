@@ -1,11 +1,8 @@
-package kekmech.ru.common_schedule.items
+package kekmech.ru.library_schedule.items
 
 import android.view.View
 import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
-import kekmech.ru.common_schedule.R
-import kekmech.ru.common_schedule.databinding.ItemNotePreviewBinding
-import kekmech.ru.common_schedule.drawable.ProgressBackgroundDrawable
 import kekmech.ru.coreui.items.ClickableItemViewHolder
 import kekmech.ru.coreui.items.ClickableItemViewHolderImpl
 import kekmech.ru.domain_schedule_models.dto.Classes
@@ -14,6 +11,9 @@ import kekmech.ru.ext_android.getResColor
 import kekmech.ru.ext_android.getThemeColor
 import kekmech.ru.library_adapter.AdapterItem
 import kekmech.ru.library_adapter.BaseItemBinder
+import kekmech.ru.library_schedule.R
+import kekmech.ru.library_schedule.databinding.ItemNotePreviewBinding
+import kekmech.ru.library_schedule.drawable.ProgressBackgroundDrawable
 import kekmech.ru.coreui.R as coreui_R
 
 data class NotePreview(

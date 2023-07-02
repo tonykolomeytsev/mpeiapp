@@ -1,9 +1,12 @@
 plugins {
-    id("mpeix.android.lib")
+    id("mpeix.android.library")
 }
 
 @Suppress("UnstableApiUsage")
-android.buildFeatures.viewBinding = true
+android.buildFeatures{
+    viewBinding = true
+    androidResources = true
+}
 
 dependencies {
     implementation(libs.androidx.coreKtx)

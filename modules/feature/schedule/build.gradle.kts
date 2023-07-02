@@ -42,7 +42,7 @@ dependencies {
     implementation(project(":library_elm"))
     implementation(project(":library_navigation"))
     implementation(project(":library_network"))
-    implementation(project(":common_schedule"))
+    implementation(project(":library_schedule"))
 
     implementation(project(":coreui"))
     implementation(project(":strings"))

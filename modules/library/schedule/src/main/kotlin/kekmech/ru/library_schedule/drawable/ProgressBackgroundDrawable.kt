@@ -1,4 +1,4 @@
-package kekmech.ru.common_schedule.drawable
+package kekmech.ru.library_schedule.drawable
 
 import android.content.Context
 import android.graphics.*

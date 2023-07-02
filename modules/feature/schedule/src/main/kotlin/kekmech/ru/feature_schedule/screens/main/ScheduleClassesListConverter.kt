@@ -1,15 +1,15 @@
 package kekmech.ru.feature_schedule.screens.main
 
-import kekmech.ru.common_schedule.items.SelfStudyItem
-import kekmech.ru.common_schedule.utils.withLunch
-import kekmech.ru.common_schedule.utils.withNotePreview
-import kekmech.ru.common_schedule.utils.withWindows
 import kekmech.ru.coreui.items.ErrorStateItem
 import kekmech.ru.coreui.items.ShimmerItem
 import kekmech.ru.coreui.items.SpaceItem
 import kekmech.ru.feature_schedule.R
 import kekmech.ru.feature_schedule.screens.main.elm.ScheduleState
 import kekmech.ru.feature_schedule.screens.main.item.WorkingDayItem
+import kekmech.ru.library_schedule.items.SelfStudyItem
+import kekmech.ru.library_schedule.utils.withLunch
+import kekmech.ru.library_schedule.utils.withNotePreview
+import kekmech.ru.library_schedule.utils.withWindows
 
 private const val DAY_ITEMS_COUNT = 6
 

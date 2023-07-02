@@ -1,17 +1,17 @@
-package kekmech.ru.common_schedule
+package kekmech.ru.library_schedule
 
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
-import kekmech.ru.common_schedule.items.LunchItem
-import kekmech.ru.common_schedule.items.NotePreview
-import kekmech.ru.common_schedule.items.WindowItem
-import kekmech.ru.common_schedule.utils.withLunch
-import kekmech.ru.common_schedule.utils.withNotePreview
-import kekmech.ru.common_schedule.utils.withProgressPreview
-import kekmech.ru.common_schedule.utils.withWindows
 import kekmech.ru.domain_schedule_models.dto.Classes
 import kekmech.ru.domain_schedule_models.dto.Time
+import kekmech.ru.library_schedule.items.LunchItem
+import kekmech.ru.library_schedule.items.NotePreview
+import kekmech.ru.library_schedule.items.WindowItem
+import kekmech.ru.library_schedule.utils.withLunch
+import kekmech.ru.library_schedule.utils.withNotePreview
+import kekmech.ru.library_schedule.utils.withProgressPreview
+import kekmech.ru.library_schedule.utils.withWindows
 import java.time.LocalTime
 
 class ConvertersExtTest : BehaviorSpec({
