@@ -2,9 +2,6 @@ package kekmech.ru.feature_schedule.screens.main.item
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import kekmech.ru.common_adapter.AdapterItem
-import kekmech.ru.common_adapter.BaseAdapter
-import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.common_android.openLinkExternal
 import kekmech.ru.common_schedule.items.ClassesAdapterItem
 import kekmech.ru.common_schedule.items.LunchAdapterItem
@@ -19,6 +16,9 @@ import kekmech.ru.domain_schedule_models.dto.Classes
 import kekmech.ru.ext_kotlin.fastLazy
 import kekmech.ru.feature_schedule.R
 import kekmech.ru.feature_schedule.databinding.ItemWorkingDayBinding
+import kekmech.ru.library_adapter.AdapterItem
+import kekmech.ru.library_adapter.BaseAdapter
+import kekmech.ru.library_adapter.BaseItemBinder
 
 const val DAY_OF_WEEK_MONDAY = 1
 const val DAY_OF_WEEK_TUESDAY = 2

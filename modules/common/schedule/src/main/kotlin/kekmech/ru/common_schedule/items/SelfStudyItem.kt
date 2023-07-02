@@ -2,9 +2,9 @@ package kekmech.ru.common_schedule.items
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import kekmech.ru.common_adapter.AdapterItem
-import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.common_schedule.R
+import kekmech.ru.library_adapter.AdapterItem
+import kekmech.ru.library_adapter.BaseItemBinder
 
 object SelfStudyItem
 

@@ -28,7 +28,7 @@ dependencies {
     implementation(project(":domain_bars"))
     implementation(project(":domain_schedule"))
 
-    implementation(project(":common_adapter"))
+    implementation(project(":library_adapter"))
     implementation(project(":common_analytics"))
     implementation(project(":common_android"))
     implementation(project(":common_di"))

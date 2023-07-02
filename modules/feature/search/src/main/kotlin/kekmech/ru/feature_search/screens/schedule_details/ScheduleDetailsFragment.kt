@@ -4,8 +4,6 @@ import android.graphics.Point
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
-import kekmech.ru.common_adapter.AdapterItem
-import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_analytics.ext.screenAnalytics
 import kekmech.ru.common_android.close
 import kekmech.ru.common_android.getArgument
@@ -33,6 +31,8 @@ import kekmech.ru.feature_search.screens.schedule_details.elm.ScheduleDetailsEve
 import kekmech.ru.feature_search.screens.schedule_details.elm.ScheduleDetailsEvent.Ui
 import kekmech.ru.feature_search.screens.schedule_details.elm.ScheduleDetailsState
 import kekmech.ru.feature_search.screens.schedule_details.elm.ScheduleDetailsStoreFactory
+import kekmech.ru.library_adapter.AdapterItem
+import kekmech.ru.library_adapter.BaseAdapter
 import kekmech.ru.library_elm.BaseBottomSheetDialogFragment
 import kekmech.ru.library_navigation.BottomTab
 import kekmech.ru.library_navigation.BottomTabsSwitcher

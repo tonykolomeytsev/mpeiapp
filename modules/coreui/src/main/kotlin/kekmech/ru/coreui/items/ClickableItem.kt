@@ -3,8 +3,8 @@ package kekmech.ru.coreui.items
 import android.view.View
 import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
-import kekmech.ru.common_adapter.AdapterItem
-import kekmech.ru.common_adapter.BaseItemBinder
+import kekmech.ru.library_adapter.AdapterItem
+import kekmech.ru.library_adapter.BaseItemBinder
 
 interface ClickableItemViewHolder {
     fun setOnClickListener(listener: (View) -> Unit)

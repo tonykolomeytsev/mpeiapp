@@ -7,12 +7,12 @@ import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import kekmech.ru.common_adapter.AdapterItem
-import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.domain_bars.dto.FinalGrade
 import kekmech.ru.domain_bars.dto.FinalGradeType
 import kekmech.ru.feature_bars.R
 import kekmech.ru.feature_bars.databinding.ItemFinalGradeBinding
+import kekmech.ru.library_adapter.AdapterItem
+import kekmech.ru.library_adapter.BaseItemBinder
 
 internal interface FinalGradeViewHolder {
     fun setName(name: CharSequence)

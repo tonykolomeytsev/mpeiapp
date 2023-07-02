@@ -3,12 +3,12 @@ package kekmech.ru.coreui.items
 import android.content.Context
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import kekmech.ru.common_adapter.AdapterItem
-import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.coreui.PrettyDateFormatter
 import kekmech.ru.coreui.R
 import kekmech.ru.coreui.databinding.ItemNoteBinding
 import kekmech.ru.domain_notes.dto.Note
+import kekmech.ru.library_adapter.AdapterItem
+import kekmech.ru.library_adapter.BaseItemBinder
 
 class NoteAdapterItem(
     context: Context,

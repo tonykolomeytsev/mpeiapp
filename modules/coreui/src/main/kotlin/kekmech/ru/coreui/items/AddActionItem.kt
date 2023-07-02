@@ -2,11 +2,11 @@ package kekmech.ru.coreui.items
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import kekmech.ru.common_adapter.AdapterItem
-import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.common_android.views.scaleOnTouch
 import kekmech.ru.coreui.R
 import kekmech.ru.coreui.databinding.ItemAddActionBinding
+import kekmech.ru.library_adapter.AdapterItem
+import kekmech.ru.library_adapter.BaseItemBinder
 
 private const val ADD_ACTION_DEFAULT_ITEM_ID = 0
 private const val ANIMATION_SCALE_MIN = 0.9f

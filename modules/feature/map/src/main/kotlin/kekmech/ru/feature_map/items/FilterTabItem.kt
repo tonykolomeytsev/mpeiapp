@@ -4,13 +4,13 @@ import android.view.View
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.recyclerview.widget.RecyclerView
-import kekmech.ru.common_adapter.AdapterItem
-import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.coreui.items.ClickableItemViewHolder
 import kekmech.ru.coreui.items.ClickableItemViewHolderImpl
 import kekmech.ru.feature_map.R
 import kekmech.ru.feature_map.databinding.ItemFilterTabBinding
 import kekmech.ru.feature_map.screens.main.elm.FilterTab
+import kekmech.ru.library_adapter.AdapterItem
+import kekmech.ru.library_adapter.BaseItemBinder
 
 internal data class FilterTabItem(
     @DrawableRes val drawableResId: Int,

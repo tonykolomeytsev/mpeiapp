@@ -26,7 +26,7 @@ dependencies {
     implementation(project(":domain_app_settings_models"))
     implementation(project(":domain_map"))
 
-    implementation(project(":common_adapter"))
+    implementation(project(":library_adapter"))
     implementation(project(":common_analytics"))
     implementation(project(":common_android"))
     implementation(project(":library_app_lifecycle"))

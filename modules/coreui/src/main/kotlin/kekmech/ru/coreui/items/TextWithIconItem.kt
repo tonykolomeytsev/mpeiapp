@@ -7,11 +7,11 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.annotation.StyleRes
 import androidx.recyclerview.widget.RecyclerView
-import kekmech.ru.common_adapter.AdapterItem
-import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.common_android.getThemeColor
 import kekmech.ru.coreui.R
 import kekmech.ru.coreui.databinding.ItemTextWithIconBinding
+import kekmech.ru.library_adapter.AdapterItem
+import kekmech.ru.library_adapter.BaseItemBinder
 
 private const val DEFAULT_TEXT_WITH_ICON_ITEM_ID = 0
 

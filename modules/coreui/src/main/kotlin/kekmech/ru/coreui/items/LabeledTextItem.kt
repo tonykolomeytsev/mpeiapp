@@ -4,11 +4,11 @@ import android.view.View
 import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.recyclerview.widget.RecyclerView
-import kekmech.ru.common_adapter.AdapterItem
-import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.common_android.viewbinding.ReusableViewHolder
 import kekmech.ru.common_android.viewbinding.lazyBinding
 import kekmech.ru.coreui.R
+import kekmech.ru.library_adapter.AdapterItem
+import kekmech.ru.library_adapter.BaseItemBinder
 
 interface LabeledTextItem {
     val mainText: String?

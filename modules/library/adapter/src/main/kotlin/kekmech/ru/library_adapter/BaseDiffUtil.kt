@@ -1,4 +1,4 @@
-package kekmech.ru.common_adapter
+package kekmech.ru.library_adapter
 
 import androidx.recyclerview.widget.DiffUtil
 

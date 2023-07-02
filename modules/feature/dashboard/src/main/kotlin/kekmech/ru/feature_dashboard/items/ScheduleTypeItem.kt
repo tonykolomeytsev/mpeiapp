@@ -3,14 +3,14 @@ package kekmech.ru.feature_dashboard.items
 import android.view.View
 import androidx.annotation.DrawableRes
 import androidx.recyclerview.widget.RecyclerView
-import kekmech.ru.common_adapter.AdapterItem
-import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.coreui.items.ClickableItemViewHolder
 import kekmech.ru.coreui.items.ClickableItemViewHolderImpl
 import kekmech.ru.domain_schedule_models.dto.ScheduleType
 import kekmech.ru.feature_dashboard.R
 import kekmech.ru.feature_dashboard.databinding.ItemScheduleTypeBinding
 import kekmech.ru.icons.Icons
+import kekmech.ru.library_adapter.AdapterItem
+import kekmech.ru.library_adapter.BaseItemBinder
 
 internal data class ScheduleTypeItem(
     val selectedScheduleName: String,

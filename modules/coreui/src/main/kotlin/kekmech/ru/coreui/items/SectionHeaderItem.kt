@@ -5,10 +5,10 @@ import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import kekmech.ru.common_adapter.AdapterItem
-import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.coreui.R
 import kekmech.ru.ext_kotlin.fastLazy
+import kekmech.ru.library_adapter.AdapterItem
+import kekmech.ru.library_adapter.BaseItemBinder
 
 private const val ITEM_SECTION_HEADER_DEFAULT_ID = 0
 

@@ -5,12 +5,12 @@ import android.view.View
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import kekmech.ru.common_adapter.AdapterItem
-import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.common_android.getStringArray
 import kekmech.ru.common_android.getThemeColor
 import kekmech.ru.common_schedule.R
 import kekmech.ru.ext_kotlin.moscowLocalDate
+import kekmech.ru.library_adapter.AdapterItem
+import kekmech.ru.library_adapter.BaseItemBinder
 import kekmech.ru.strings.StringArrays
 import java.time.LocalDate
 import kekmech.ru.coreui.R as coreui_R

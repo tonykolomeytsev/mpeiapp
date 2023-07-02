@@ -16,7 +16,7 @@ dependencies {
     implementation(libs.rx.java)
     implementation(libs.squareup.retrofit)
 
-    implementation(project(":common_adapter"))
+    implementation(project(":library_adapter"))
     implementation(project(":common_android"))
     implementation(project(":ext_kotlin"))
 

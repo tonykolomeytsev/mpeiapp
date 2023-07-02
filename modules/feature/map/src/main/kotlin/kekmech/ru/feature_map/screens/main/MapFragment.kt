@@ -13,7 +13,6 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Completable
-import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_analytics.ext.screenAnalytics
 import kekmech.ru.common_android.doOnApplyWindowInsets
 import kekmech.ru.common_android.dpToPx
@@ -46,6 +45,7 @@ import kekmech.ru.feature_map.screens.main.ext.toMarkerType
 import kekmech.ru.feature_map.screens.main.view.BottomSheetBackgroundDrawable
 import kekmech.ru.feature_map.screens.main.view.ControlledScrollingLayoutManager
 import kekmech.ru.feature_map.screens.main.view.MarkersBitmapFactory
+import kekmech.ru.library_adapter.BaseAdapter
 import kekmech.ru.library_elm.BaseFragment
 import kekmech.ru.library_navigation.features.ScrollToTop
 import kekmech.ru.library_navigation.features.TabScreenStateSaver
