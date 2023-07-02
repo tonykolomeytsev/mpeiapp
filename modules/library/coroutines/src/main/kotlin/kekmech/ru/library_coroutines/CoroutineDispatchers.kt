@@ -1,4 +1,4 @@
-package kekmech.ru.common_coroutines_api
+package kekmech.ru.library_coroutines
 
 import kotlinx.coroutines.CoroutineDispatcher
 

@@ -3,7 +3,7 @@ package kekmech.ru.library_persistent_cache
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.equals.shouldBeEqual
-import kekmech.ru.common_coroutines_api.CoroutineDispatchers
+import kekmech.ru.library_coroutines.CoroutineDispatchers
 import kekmech.ru.library_persistent_cache.api.PersistentCacheKey
 import kekmech.ru.library_persistent_cache.api.of
 import kekmech.ru.library_persistent_cache.api.ofList

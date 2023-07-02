@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":common_coroutines_api"))
+    implementation(project(":library_coroutines"))
 
     compileOnly(androidJar)
     implementation(libs.koin.core)
