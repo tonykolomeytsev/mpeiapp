@@ -129,7 +129,7 @@ dependencies {
 
     debugImplementation(project(":mock_server"))
     debugImplementation(project(":debug_menu"))
-    debugImplementation(project(":common_chucker"))
+    debugImplementation(project(":library_chucker"))
 
     testImplementation(libs.koin.test)
     testImplementation(libs.kotest.runner)

@@ -1,4 +1,4 @@
-package kekmech.ru.common_chucker.di
+package kekmech.ru.library_chucker.di
 
 import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerCollector
@@ -9,7 +9,7 @@ import okhttp3.Interceptor
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
-val CommonChuckerModule = module {
+val LibraryChuckerModule = module {
     factoryOf(::createChuckerInterceptor) bindIntoList Interceptor::class
 }
 
