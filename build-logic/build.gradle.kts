@@ -98,4 +98,16 @@ gradlePlugin {
         description = "The Gradle Plugin that configures Kotlin Library module"
         implementationClass = "mpeix.plugins.KotlinLibraryConventionPlugin"
     }
+    plugins.create("AndroidExtensionConventionPlugin") {
+        id = "mpeix.android.extension"
+        displayName = "MpeiX Android Extension Convention"
+        description = "The Gradle Plugin that configures extensions module for android libraries"
+        implementationClass = "mpeix.plugins.AndroidExtensionConventionPlugin"
+    }
+    plugins.create("AndroidLibraryConventionPlugin") {
+        id = "mpeix.android.library"
+        displayName = "MpeiX Android Library Convention"
+        description = "The Gradle Plugin that configures Android Library module"
+        implementationClass = "mpeix.plugins.AndroidLibraryConventionPlugin"
+    }
 }

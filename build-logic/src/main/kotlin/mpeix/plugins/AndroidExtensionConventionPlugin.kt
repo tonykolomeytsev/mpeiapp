@@ -2,21 +2,20 @@ package mpeix.plugins
 
 import com.android.build.gradle.LibraryExtension
 import mpeix.plugins.setup.Plugins
-import mpeix.plugins.setup.configureAndroidCompose
 import mpeix.plugins.setup.configureKotlinAndroid
+import mpeix.plugins.setup.disallowProjectDependencies
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 
 @Suppress("unused")
-class FeatureImplementationConventionPlugin : Plugin<Project> {
+internal class AndroidExtensionConventionPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
         with(target) {
             with(plugins) {
                 apply(Plugins.AndroidLibrary)
                 apply(Plugins.KotlinAndroid)
-                apply(Plugins.KotlinParcelize)
                 apply(Plugins.GradleAndroidCacheFix)
                 apply(Plugins.MpeixDetekt)
             }
@@ -24,16 +23,19 @@ class FeatureImplementationConventionPlugin : Plugin<Project> {
             extensions.configure<LibraryExtension> {
                 namespace = "kekmech.ru.$name"
                 configureKotlinAndroid(this)
-                configureAndroidCompose(this, fullDependencySet = true)
 
                 @Suppress("UnstableApiUsage")
                 with(buildFeatures) {
-                    compose = true
-                    viewBinding = true // TODO: remove viewBinding after complete compose migration
+                    compose = false
+                    viewBinding = false
                     androidResources = false
                     shaders = false
                     resValues = false
                 }
+            }
+
+            disallowProjectDependencies {
+                "Modules of type Android Extension can only depend on external libraries"
             }
         }
     }

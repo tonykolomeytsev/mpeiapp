@@ -8,6 +8,8 @@ import org.gradle.api.tasks.testing.Test
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+@Deprecated("Use `mpeix.feature.api`, `mpeix.kotlin.library` or " +
+        "`mpeix.kotlin.extension` instead")
 @Suppress("unused")
 internal class KotlinLibConventionPlugin : Plugin<Project> {
 
