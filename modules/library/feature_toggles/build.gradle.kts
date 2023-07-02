@@ -1,5 +1,5 @@
 plugins {
-    id("mpeix.kotlin.lib")
+    id("mpeix.kotlin.library")
 }
 
 dependencies {

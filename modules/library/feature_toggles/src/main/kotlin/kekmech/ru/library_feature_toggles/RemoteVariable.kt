@@ -1,4 +1,4 @@
-package kekmech.ru.common_feature_toggles
+package kekmech.ru.library_feature_toggles
 
 /**
  * An abstraction that describes a "remote" variable, hosted in FIrebase Remote Config or otherwise.

@@ -111,7 +111,7 @@ dependencies {
     implementation(project(":library_coroutines"))
     implementation(project(":common_di"))
     implementation(project(":library_elm"))
-    implementation(project(":common_feature_toggles"))
+    implementation(project(":library_feature_toggles"))
     implementation(project(":library_navigation"))
     implementation(project(":library_network"))
 

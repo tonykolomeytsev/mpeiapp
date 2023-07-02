@@ -39,7 +39,7 @@ dependencies {
     implementation(project(":common_analytics"))
     implementation(project(":common_android"))
     implementation(project(":common_di"))
-    implementation(project(":common_feature_toggles"))
+    implementation(project(":library_feature_toggles"))
     implementation(project(":ext_kotlin"))
     implementation(project(":library_elm"))
     implementation(project(":library_navigation"))

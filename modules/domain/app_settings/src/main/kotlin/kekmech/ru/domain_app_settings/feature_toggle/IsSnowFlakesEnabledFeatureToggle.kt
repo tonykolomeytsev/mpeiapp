@@ -1,7 +1,7 @@
 package kekmech.ru.domain_app_settings.feature_toggle
 
-import kekmech.ru.common_feature_toggles.BooleanRemoteVariable
-import kekmech.ru.common_feature_toggles.RemoteVariableValueHolder
+import kekmech.ru.library_feature_toggles.BooleanRemoteVariable
+import kekmech.ru.library_feature_toggles.RemoteVariableValueHolder
 
 class IsSnowFlakesEnabledFeatureToggle(valueHolder: RemoteVariableValueHolder) :
     BooleanRemoteVariable(

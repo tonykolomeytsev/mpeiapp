@@ -1,4 +1,4 @@
-package kekmech.ru.common_feature_toggles
+package kekmech.ru.library_feature_toggles
 
 class RemoteVariableValueHolder internal constructor(
     private val remoteConfigWrapper: RemoteConfigWrapper,
