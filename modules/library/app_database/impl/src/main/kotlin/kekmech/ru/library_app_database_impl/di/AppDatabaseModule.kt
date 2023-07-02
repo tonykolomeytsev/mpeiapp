@@ -1,9 +1,9 @@
-package kekmech.ru.common_app_database_impl.di
+package kekmech.ru.library_app_database_impl.di
 
 import androidx.room.Room
 import androidx.room.migration.Migration
-import kekmech.ru.common_app_database_impl.AppDatabase
-import kekmech.ru.common_app_database_impl.migrations.MigrationV6V7Impl
+import kekmech.ru.library_app_database_impl.AppDatabase
+import kekmech.ru.library_app_database_impl.migrations.MigrationV6V7Impl
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.bind
 import org.koin.dsl.module

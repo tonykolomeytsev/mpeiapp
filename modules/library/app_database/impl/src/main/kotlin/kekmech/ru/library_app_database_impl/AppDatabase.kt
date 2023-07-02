@@ -1,4 +1,4 @@
-package kekmech.ru.common_app_database_impl
+package kekmech.ru.library_app_database_impl
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
@@ -24,7 +24,7 @@ import kekmech.ru.domain_notes.database.entities.NormalNote
  *
  * *Note: All modules with entities must have Kotlin Symbol Processing (KSP) enabled.*
  *
- * @see kekmech.ru.common_app_database_api.PartialMigration
+ * @see kekmech.ru.library_app_database_api.PartialMigration
  */
 @Database(
     entities = [

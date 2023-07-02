@@ -1,8 +1,8 @@
-package kekmech.ru.common_app_database_impl.migrations
+package kekmech.ru.library_app_database_impl.migrations
 
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
-import kekmech.ru.common_app_database_api.PartialMigration
+import kekmech.ru.library_app_database_api.PartialMigration
 
 /**
  * Aggregator of [PartialMigration]s from domain modules
