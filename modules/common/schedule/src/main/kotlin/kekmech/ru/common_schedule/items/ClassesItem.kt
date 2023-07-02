@@ -7,13 +7,6 @@ import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import kekmech.ru.common_android.dpToPx
-import kekmech.ru.common_android.getResColor
-import kekmech.ru.common_android.getStringArray
-import kekmech.ru.common_android.getThemeColor
-import kekmech.ru.common_android.viewbinding.ReusableViewHolder
-import kekmech.ru.common_android.viewbinding.lazyBinding
-import kekmech.ru.common_android.views.setOnClickListenerWithDebounce
 import kekmech.ru.common_schedule.R
 import kekmech.ru.common_schedule.drawable.ProgressBackgroundDrawable
 import kekmech.ru.coreui.items.ClickableItemViewHolder
@@ -21,6 +14,13 @@ import kekmech.ru.coreui.items.ClickableItemViewHolderImpl
 import kekmech.ru.domain_schedule_models.dto.Classes
 import kekmech.ru.domain_schedule_models.dto.ClassesType
 import kekmech.ru.domain_schedule_models.dto.ScheduleType
+import kekmech.ru.ext_android.dpToPx
+import kekmech.ru.ext_android.getResColor
+import kekmech.ru.ext_android.getStringArray
+import kekmech.ru.ext_android.getThemeColor
+import kekmech.ru.ext_android.viewbinding.ReusableViewHolder
+import kekmech.ru.ext_android.viewbinding.lazyBinding
+import kekmech.ru.ext_android.views.setOnClickListenerWithDebounce
 import kekmech.ru.ext_kotlin.fastLazy
 import kekmech.ru.library_adapter.AdapterItem
 import kekmech.ru.library_adapter.BaseItemBinder

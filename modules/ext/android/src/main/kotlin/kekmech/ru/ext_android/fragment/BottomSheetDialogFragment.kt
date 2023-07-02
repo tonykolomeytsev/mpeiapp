@@ -1,4 +1,4 @@
-package kekmech.ru.common_android.fragment
+package kekmech.ru.ext_android.fragment
 
 import android.app.Dialog
 import android.graphics.Color

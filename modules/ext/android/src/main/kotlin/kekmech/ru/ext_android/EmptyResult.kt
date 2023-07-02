@@ -1,4 +1,4 @@
-package kekmech.ru.common_android
+package kekmech.ru.ext_android
 
 import java.io.Serializable
 

@@ -2,9 +2,9 @@ package kekmech.ru.feature_notes.screens.edit
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import kekmech.ru.common_android.afterTextChanged
-import kekmech.ru.common_android.showKeyboard
 import kekmech.ru.domain_notes.dto.Note
+import kekmech.ru.ext_android.afterTextChanged
+import kekmech.ru.ext_android.showKeyboard
 import kekmech.ru.feature_notes.R
 import kekmech.ru.feature_notes.databinding.ItemNoteEditBinding
 import kekmech.ru.library_adapter.AdapterItem

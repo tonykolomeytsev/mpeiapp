@@ -5,13 +5,6 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import kekmech.ru.common_analytics.addScrollAnalytics
 import kekmech.ru.common_analytics.ext.screenAnalytics
-import kekmech.ru.common_android.EmptyResult
-import kekmech.ru.common_android.addSystemVerticalPadding
-import kekmech.ru.common_android.close
-import kekmech.ru.common_android.findAndRemoveArgument
-import kekmech.ru.common_android.setResultListener
-import kekmech.ru.common_android.viewbinding.viewBinding
-import kekmech.ru.common_android.withArguments
 import kekmech.ru.coreui.attachScrollListenerForAppBarLayoutShadow
 import kekmech.ru.coreui.items.EmptyStateAdapterItem
 import kekmech.ru.coreui.items.NoteAdapterItem
@@ -20,6 +13,13 @@ import kekmech.ru.coreui.items.ShimmerAdapterItem
 import kekmech.ru.coreui.items.SpaceAdapterItem
 import kekmech.ru.coreui.touch_helpers.attachSwipeToDeleteCallback
 import kekmech.ru.domain_notes.dto.Note
+import kekmech.ru.ext_android.EmptyResult
+import kekmech.ru.ext_android.addSystemVerticalPadding
+import kekmech.ru.ext_android.close
+import kekmech.ru.ext_android.findAndRemoveArgument
+import kekmech.ru.ext_android.setResultListener
+import kekmech.ru.ext_android.viewbinding.viewBinding
+import kekmech.ru.ext_android.withArguments
 import kekmech.ru.ext_kotlin.fastLazy
 import kekmech.ru.feature_notes.R
 import kekmech.ru.feature_notes.databinding.FragmentAllNotesBinding

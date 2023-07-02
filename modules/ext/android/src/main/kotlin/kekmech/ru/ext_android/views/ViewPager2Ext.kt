@@ -1,4 +1,4 @@
-package kekmech.ru.common_android.views
+package kekmech.ru.ext_android.views
 
 import androidx.viewpager2.widget.ViewPager2
 

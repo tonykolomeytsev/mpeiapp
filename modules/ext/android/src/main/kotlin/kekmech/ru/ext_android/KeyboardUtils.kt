@@ -1,4 +1,4 @@
-package kekmech.ru.common_android
+package kekmech.ru.ext_android
 
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.view.View

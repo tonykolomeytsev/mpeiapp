@@ -14,11 +14,6 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Completable
 import kekmech.ru.common_analytics.ext.screenAnalytics
-import kekmech.ru.common_android.doOnApplyWindowInsets
-import kekmech.ru.common_android.dpToPx
-import kekmech.ru.common_android.getThemeColor
-import kekmech.ru.common_android.viewbinding.viewBinding
-import kekmech.ru.common_android.views.setMargins
 import kekmech.ru.coreui.banner.showBanner
 import kekmech.ru.coreui.items.ErrorStateAdapterItem
 import kekmech.ru.coreui.items.PullAdapterItem
@@ -26,6 +21,11 @@ import kekmech.ru.coreui.items.SectionHeaderAdapterItem
 import kekmech.ru.coreui.items.SpaceAdapterItem
 import kekmech.ru.domain_app_settings.AppSettingsRepository
 import kekmech.ru.domain_map.dto.MapMarker
+import kekmech.ru.ext_android.doOnApplyWindowInsets
+import kekmech.ru.ext_android.dpToPx
+import kekmech.ru.ext_android.getThemeColor
+import kekmech.ru.ext_android.viewbinding.viewBinding
+import kekmech.ru.ext_android.views.setMargins
 import kekmech.ru.ext_kotlin.fastLazy
 import kekmech.ru.feature_map.DeeplinkHelper
 import kekmech.ru.feature_map.R

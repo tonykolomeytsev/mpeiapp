@@ -1,4 +1,4 @@
-package kekmech.ru.common_android.views
+package kekmech.ru.ext_android.views
 
 import android.annotation.SuppressLint
 import android.os.SystemClock

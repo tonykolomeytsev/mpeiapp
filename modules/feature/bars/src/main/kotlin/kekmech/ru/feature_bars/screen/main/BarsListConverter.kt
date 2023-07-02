@@ -4,11 +4,11 @@ import android.content.Context
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
-import kekmech.ru.common_android.getThemeColor
 import kekmech.ru.coreui.items.EmptyStateItem
 import kekmech.ru.coreui.items.ShimmerItem
 import kekmech.ru.coreui.items.SpaceItem
 import kekmech.ru.coreui.items.TextWithIconItem
+import kekmech.ru.ext_android.getThemeColor
 import kekmech.ru.feature_bars.R
 import kekmech.ru.feature_bars.items.LoginToBarsItem
 import kekmech.ru.feature_bars.items.UserNameHeaderItem

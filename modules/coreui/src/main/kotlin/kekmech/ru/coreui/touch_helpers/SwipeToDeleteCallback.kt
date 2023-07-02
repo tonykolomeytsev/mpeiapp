@@ -9,9 +9,9 @@ import android.graphics.drawable.ColorDrawable
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import kekmech.ru.common_android.getResColor
-import kekmech.ru.common_android.getThemeColor
 import kekmech.ru.coreui.R
+import kekmech.ru.ext_android.getResColor
+import kekmech.ru.ext_android.getThemeColor
 import kekmech.ru.icons.Icons
 import kekmech.ru.library_adapter.BaseAdapter
 

@@ -8,7 +8,7 @@ import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.Marker
-import kekmech.ru.common_android.dpToPx
+import kekmech.ru.ext_android.dpToPx
 import kekmech.ru.feature_map.R
 
 private const val CAMERA_ANIMATION_DURATION = 200

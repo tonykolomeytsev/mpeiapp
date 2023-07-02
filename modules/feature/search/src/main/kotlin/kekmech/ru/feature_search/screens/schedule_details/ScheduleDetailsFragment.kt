@@ -5,10 +5,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import kekmech.ru.common_analytics.ext.screenAnalytics
-import kekmech.ru.common_android.close
-import kekmech.ru.common_android.getArgument
-import kekmech.ru.common_android.viewbinding.viewBinding
-import kekmech.ru.common_android.withArguments
 import kekmech.ru.common_schedule.items.ClassesItemBinder
 import kekmech.ru.common_schedule.items.ClassesViewHolderImpl
 import kekmech.ru.coreui.items.EmptyStateAdapterItem
@@ -19,6 +15,10 @@ import kekmech.ru.coreui.items.TextAdapterItem
 import kekmech.ru.coreui.items.TextWithIconAdapterItem
 import kekmech.ru.domain_schedule.dto.SearchResult
 import kekmech.ru.domain_schedule_models.dto.Classes
+import kekmech.ru.ext_android.close
+import kekmech.ru.ext_android.getArgument
+import kekmech.ru.ext_android.viewbinding.viewBinding
+import kekmech.ru.ext_android.withArguments
 import kekmech.ru.ext_kotlin.fastLazy
 import kekmech.ru.feature_search.R
 import kekmech.ru.feature_search.databinding.FragmentScheduleDetailsBinding

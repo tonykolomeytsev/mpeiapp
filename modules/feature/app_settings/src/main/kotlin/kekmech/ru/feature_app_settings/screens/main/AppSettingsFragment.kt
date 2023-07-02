@@ -8,10 +8,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import kekmech.ru.common_analytics.ext.screenAnalytics
-import kekmech.ru.common_android.*
-import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.coreui.attachScrollListenerForAppBarLayoutShadow
 import kekmech.ru.coreui.items.*
+import kekmech.ru.ext_android.*
+import kekmech.ru.ext_android.viewbinding.viewBinding
 import kekmech.ru.ext_kotlin.fastLazy
 import kekmech.ru.feature_app_settings.R
 import kekmech.ru.feature_app_settings.databinding.FragmentAppSettingsBinding

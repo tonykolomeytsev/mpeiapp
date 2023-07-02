@@ -17,7 +17,7 @@ dependencies {
     implementation(libs.squareup.retrofit)
 
     implementation(project(":library_adapter"))
-    implementation(project(":common_android"))
+    implementation(project(":ext_android"))
     implementation(project(":ext_kotlin"))
 
     implementation(project(":domain_notes"))

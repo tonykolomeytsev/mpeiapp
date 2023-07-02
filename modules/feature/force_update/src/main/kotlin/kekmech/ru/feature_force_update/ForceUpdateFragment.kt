@@ -5,12 +5,12 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import kekmech.ru.common_analytics.ext.screenAnalytics
-import kekmech.ru.common_android.close
-import kekmech.ru.common_android.fragment.BottomSheetDialogFragment
-import kekmech.ru.common_android.getArgument
-import kekmech.ru.common_android.viewbinding.viewBinding
-import kekmech.ru.common_android.withArguments
 import kekmech.ru.domain_force_update.dto.ForceUpdateInfo
+import kekmech.ru.ext_android.close
+import kekmech.ru.ext_android.fragment.BottomSheetDialogFragment
+import kekmech.ru.ext_android.getArgument
+import kekmech.ru.ext_android.viewbinding.viewBinding
+import kekmech.ru.ext_android.withArguments
 import kekmech.ru.ext_kotlin.fastLazy
 import kekmech.ru.feature_force_update.databinding.FragmentForceUpdateBinding
 
