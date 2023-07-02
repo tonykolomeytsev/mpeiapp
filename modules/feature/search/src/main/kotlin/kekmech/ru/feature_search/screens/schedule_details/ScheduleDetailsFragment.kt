@@ -4,7 +4,6 @@ import android.graphics.Point
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
-import kekmech.ru.common_analytics.ext.screenAnalytics
 import kekmech.ru.coreui.items.EmptyStateAdapterItem
 import kekmech.ru.coreui.items.PullAdapterItem
 import kekmech.ru.coreui.items.ShimmerAdapterItem
@@ -31,6 +30,7 @@ import kekmech.ru.feature_search.screens.schedule_details.elm.ScheduleDetailsSta
 import kekmech.ru.feature_search.screens.schedule_details.elm.ScheduleDetailsStoreFactory
 import kekmech.ru.library_adapter.AdapterItem
 import kekmech.ru.library_adapter.BaseAdapter
+import kekmech.ru.library_analytics_android.ext.screenAnalytics
 import kekmech.ru.library_elm.BaseBottomSheetDialogFragment
 import kekmech.ru.library_navigation.BottomTab
 import kekmech.ru.library_navigation.BottomTabsSwitcher

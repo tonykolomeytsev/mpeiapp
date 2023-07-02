@@ -1,4 +1,4 @@
-package kekmech.ru.common_analytics.dto
+package kekmech.ru.library_analytics_android.dto
 
 sealed class AnalyticsEvent {
 

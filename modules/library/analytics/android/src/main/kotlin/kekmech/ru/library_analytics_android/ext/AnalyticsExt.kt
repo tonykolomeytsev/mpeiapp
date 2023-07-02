@@ -1,12 +1,12 @@
-package kekmech.ru.common_analytics.ext
+package kekmech.ru.library_analytics_android.ext
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
-import kekmech.ru.common_analytics.Analytics
-import kekmech.ru.common_analytics.AnalyticsImpl
-import kekmech.ru.common_analytics.AnalyticsWrapper
+import kekmech.ru.library_analytics_android.Analytics
+import kekmech.ru.library_analytics_android.AnalyticsImpl
+import kekmech.ru.library_analytics_android.AnalyticsWrapper
 import org.koin.android.ext.android.inject
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import com.google.android.material.chip.Chip
-import kekmech.ru.common_analytics.ext.screenAnalytics
 import kekmech.ru.coreui.banner.showBanner
 import kekmech.ru.domain_schedule.ScheduleFeatureLauncher
 import kekmech.ru.domain_schedule.ScheduleFeatureLauncher.ContinueTo.BACK
@@ -29,6 +28,7 @@ import kekmech.ru.feature_schedule.screens.find_schedule.elm.FindScheduleEvent.U
 import kekmech.ru.feature_schedule.screens.find_schedule.elm.FindScheduleState
 import kekmech.ru.feature_schedule.screens.find_schedule.elm.FindScheduleStoreFactory
 import kekmech.ru.feature_schedule.screens.find_schedule.utils.GroupFormatTextWatcher
+import kekmech.ru.library_analytics_android.ext.screenAnalytics
 import kekmech.ru.library_elm.BaseFragment
 import kekmech.ru.strings.Strings
 import org.koin.android.ext.android.inject

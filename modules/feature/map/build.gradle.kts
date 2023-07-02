@@ -27,7 +27,7 @@ dependencies {
     implementation(project(":domain_map"))
 
     implementation(project(":library_adapter"))
-    implementation(project(":common_analytics"))
+    implementation(project(":library_analytics_android"))
     implementation(project(":ext_android"))
     implementation(project(":library_app_lifecycle"))
     implementation(project(":library_app_info"))

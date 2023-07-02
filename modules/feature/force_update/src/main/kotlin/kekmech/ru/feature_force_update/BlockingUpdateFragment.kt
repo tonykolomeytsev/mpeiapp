@@ -3,7 +3,6 @@ package kekmech.ru.feature_force_update
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import kekmech.ru.common_analytics.ext.screenAnalytics
 import kekmech.ru.domain_force_update.dto.ForceUpdateInfo
 import kekmech.ru.ext_android.addSystemVerticalPadding
 import kekmech.ru.ext_android.close
@@ -13,6 +12,7 @@ import kekmech.ru.ext_android.viewbinding.viewBinding
 import kekmech.ru.ext_android.withArguments
 import kekmech.ru.ext_kotlin.fastLazy
 import kekmech.ru.feature_force_update.databinding.FragmentBlockingUpdateBinding
+import kekmech.ru.library_analytics_android.ext.screenAnalytics
 import kekmech.ru.strings.Strings
 
 private const val ARG_UPDATE_INFO = "Arg.UpdateInfo"

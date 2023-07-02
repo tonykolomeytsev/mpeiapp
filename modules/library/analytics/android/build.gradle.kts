@@ -1,5 +1,5 @@
 plugins {
-    id("mpeix.android.lib")
+    id("mpeix.android.library")
 }
 
 dependencies {
@@ -13,7 +13,7 @@ dependencies {
     implementation(project(":library_app_info"))
     implementation(project(":library_network"))
 
-    implementation(project(":domain_analytics"))
+    implementation(project(":library_analytics_api"))
 
     implementation(project(":ext_koin"))
 }

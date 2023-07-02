@@ -1,12 +1,12 @@
 package kekmech.ru.domain_schedule.data
 
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import kekmech.ru.domain_analytics.SelectedScheduleAnalyticsProvider
 import kekmech.ru.domain_schedule.PreheatSelectedScheduleProvider
 import kekmech.ru.domain_schedule.dto.SelectedSchedule
 import kekmech.ru.domain_schedule.network.ScheduleService
 import kekmech.ru.domain_schedule_models.dto.Schedule
 import kekmech.ru.domain_schedule_models.dto.ScheduleType
+import kekmech.ru.library_analytics_api.SelectedScheduleAnalyticsProvider
 
 internal class ScheduleRepositoryImpl(
     private val scheduleService: ScheduleService,

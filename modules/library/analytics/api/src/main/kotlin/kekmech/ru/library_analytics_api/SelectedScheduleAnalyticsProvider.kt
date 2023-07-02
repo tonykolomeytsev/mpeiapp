@@ -1,4 +1,4 @@
-package kekmech.ru.domain_analytics
+package kekmech.ru.library_analytics_api
 
 interface SelectedScheduleAnalyticsProvider {
 
