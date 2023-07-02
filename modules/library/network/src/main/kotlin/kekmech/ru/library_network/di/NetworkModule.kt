@@ -1,6 +1,5 @@
 package kekmech.ru.library_network.di
 
-import android.content.SharedPreferences
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import kekmech.ru.ext_gson.LocalDateJsonAdapter
@@ -68,6 +67,3 @@ private fun provideRetrofitBuilder(
 ) = Retrofit.Builder()
     .client(okHttpClient)
     .addConverterFactory(GsonConverterFactory.create(gson))
-
-private fun provideDeviceLocale(sharedPreferences: SharedPreferences) =
-    DeviceLocaleProvider(sharedPreferences).getLanguage()
