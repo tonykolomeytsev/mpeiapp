@@ -35,7 +35,7 @@ dependencies {
     implementation(project(":domain_notes"))
     implementation(project(":domain_schedule"))
     implementation(project(":domain_schedule_models"))
-    implementation(project(":domain_search"))
+    implementation(project(":feature_search_api"))
 
     implementation(project(":library_adapter"))
     implementation(project(":library_analytics_android"))
