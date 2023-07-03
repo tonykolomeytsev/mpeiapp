@@ -1,11 +1,11 @@
-package kekmech.ru.feature_onboarding.item
+package kekmech.ru.feature_onboarding_impl.item
 
 import android.view.View
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.recyclerview.widget.RecyclerView
-import kekmech.ru.feature_onboarding.R
-import kekmech.ru.feature_onboarding.databinding.ItemPromoPageBinding
+import kekmech.ru.feature_onboarding_impl.R
+import kekmech.ru.feature_onboarding_impl.databinding.ItemPromoPageBinding
 import kekmech.ru.library_adapter.AdapterItem
 import kekmech.ru.library_adapter.BaseItemBinder
 import kekmech.ru.strings.Strings

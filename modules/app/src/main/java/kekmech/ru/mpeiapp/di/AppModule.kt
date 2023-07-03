@@ -18,7 +18,7 @@ import kekmech.ru.feature_bars_impl.di.FeatureBarsModule
 import kekmech.ru.feature_dashboard_impl.di.FeatureDashboardModule
 import kekmech.ru.feature_map_impl.di.FeatureMapModule
 import kekmech.ru.feature_notes.di.FeatureNotesModule
-import kekmech.ru.feature_onboarding.di.FeatureOnboardingModule
+import kekmech.ru.feature_onboarding_impl.di.FeatureOnboardingModule
 import kekmech.ru.feature_schedule.di.FeatureScheduleModule
 import kekmech.ru.feature_search.di.FeatureSearchFeatureModule
 import kekmech.ru.library_analytics_android.FirebaseAnalyticsProvider
