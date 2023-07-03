@@ -1,21 +1,22 @@
 plugins {
-    id("mpeix.android.lib")
+    id("mpeix.feature.impl")
 }
 
 @Suppress("UnstableApiUsage")
-android.buildFeatures.viewBinding = true
+android.buildFeatures {
+    viewBinding = true
+    androidResources = true
+}
 
 dependencies {
-    testImplementation(libs.kotest.assertions)
-    testImplementation(libs.kotest.property)
-    testImplementation(libs.kotest.runner)
-
     implementation(libs.androidx.appCompat)
     implementation(libs.androidx.constraintLayout)
+    implementation(libs.androidx.coordinatorLayout)
+    implementation(libs.androidx.coreKtx)
     implementation(libs.androidx.recyclerView)
-    implementation(libs.facebook.shimmer)
+    implementation(libs.google.gson)
+    implementation(libs.google.maps)
     implementation(libs.google.material)
-    implementation(libs.kotlinx.coroutines.core)
     implementation(libs.koin.android)
     implementation(libs.koin.core)
     implementation(libs.rx.android)
@@ -23,24 +24,25 @@ dependencies {
     implementation(libs.vivid.elmslie.android)
     implementation(libs.vivid.elmslie.core)
     implementation(libs.vivid.elmslie.coroutines)
+    implementation(libs.squareup.retrofit)
 
+    implementation(project(":feature_app_settings_api"))
     implementation(project(":feature_map_api"))
-    implementation(project(":domain_notes"))
-    implementation(project(":domain_schedule"))
-    implementation(project(":domain_schedule_models"))
-    implementation(project(":domain_favorite_schedule"))
-    implementation(project(":domain_search"))
 
     implementation(project(":library_adapter"))
     implementation(project(":library_analytics_android"))
     implementation(project(":ext_android"))
+    implementation(project(":library_app_lifecycle"))
     implementation(project(":library_app_info"))
+    implementation(project(":library_emoji"))
     implementation(project(":ext_kotlin"))
     implementation(project(":library_elm"))
     implementation(project(":library_navigation"))
-    implementation(project(":library_schedule"))
+    implementation(project(":library_network"))
+    implementation(project(":library_persistent_cache"))
+
+    implementation(project(":ext_koin"))
 
     implementation(project(":coreui"))
-    implementation(project(":icons"))
     implementation(project(":strings"))
 }

@@ -1,4 +1,4 @@
-package kekmech.ru.feature_search.item
+package kekmech.ru.feature_map_impl.presentation.items
 
 import kekmech.ru.coreui.items.LabeledTextViewHolder
 import kekmech.ru.coreui.items.LabeledTextViewHolderImpl
