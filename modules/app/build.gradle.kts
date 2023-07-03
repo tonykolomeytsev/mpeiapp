@@ -79,7 +79,7 @@ dependencies {
 
     implementation(project(":feature_app_settings_impl"))
     implementation(project(":feature_bars_impl"))
-    implementation(project(":feature_dashboard"))
+    implementation(project(":feature_dashboard_impl"))
     implementation(project(":feature_force_update"))
     implementation(project(":feature_map"))
     implementation(project(":feature_notes"))
@@ -90,7 +90,7 @@ dependencies {
     implementation(project(":feature_app_settings_api"))
     implementation(project(":feature_app_settings_impl"))
     implementation(project(":feature_bars_api"))
-    implementation(project(":domain_dashboard"))
+    implementation(project(":feature_dashboard_api"))
     implementation(project(":domain_favorite_schedule"))
     implementation(project(":domain_force_update"))
     implementation(project(":domain_github"))
