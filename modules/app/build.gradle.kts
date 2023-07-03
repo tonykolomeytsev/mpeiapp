@@ -85,7 +85,7 @@ dependencies {
     implementation(project(":feature_notes"))
     implementation(project(":feature_onboarding_impl"))
     implementation(project(":feature_schedule"))
-    implementation(project(":feature_search"))
+    implementation(project(":feature_search_impl"))
 
     implementation(project(":feature_app_settings_api"))
     implementation(project(":feature_app_settings_impl"))
@@ -99,7 +99,7 @@ dependencies {
     implementation(project(":domain_notes"))
     implementation(project(":feature_onboarding_api"))
     implementation(project(":domain_schedule"))
-    implementation(project(":domain_search"))
+    implementation(project(":feature_search_api"))
 
     implementation(project(":ext_koin"))
 

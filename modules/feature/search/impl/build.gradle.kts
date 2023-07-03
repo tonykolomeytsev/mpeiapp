@@ -1,9 +1,12 @@
 plugins {
-    id("mpeix.android.lib")
+    id("mpeix.feature.impl")
 }
 
 @Suppress("UnstableApiUsage")
-android.buildFeatures.viewBinding = true
+android.buildFeatures {
+    viewBinding = true
+    androidResources = true
+}
 
 dependencies {
     testImplementation(libs.kotest.assertions)
@@ -12,23 +15,23 @@ dependencies {
 
     implementation(libs.androidx.appCompat)
     implementation(libs.androidx.constraintLayout)
-    implementation(libs.androidx.coordinatorLayout)
-    implementation(libs.androidx.coreKtx)
-    implementation(libs.androidx.coreKtx)
     implementation(libs.androidx.recyclerView)
     implementation(libs.facebook.shimmer)
     implementation(libs.google.material)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.koin.android)
     implementation(libs.koin.core)
+    implementation(libs.rx.android)
     implementation(libs.rx.java)
     implementation(libs.vivid.elmslie.android)
     implementation(libs.vivid.elmslie.core)
     implementation(libs.vivid.elmslie.coroutines)
 
+    implementation(project(":feature_map_api"))
     implementation(project(":domain_notes"))
     implementation(project(":domain_schedule"))
     implementation(project(":domain_schedule_models"))
+    implementation(project(":domain_favorite_schedule"))
     implementation(project(":feature_search_api"))
 
     implementation(project(":library_adapter"))
@@ -38,7 +41,9 @@ dependencies {
     implementation(project(":ext_kotlin"))
     implementation(project(":library_elm"))
     implementation(project(":library_navigation"))
+    implementation(project(":library_schedule"))
 
     implementation(project(":coreui"))
+    implementation(project(":icons"))
     implementation(project(":strings"))
 }

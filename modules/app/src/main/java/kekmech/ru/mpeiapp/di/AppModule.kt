@@ -20,7 +20,7 @@ import kekmech.ru.feature_map_impl.di.FeatureMapModule
 import kekmech.ru.feature_notes.di.FeatureNotesModule
 import kekmech.ru.feature_onboarding_impl.di.FeatureOnboardingModule
 import kekmech.ru.feature_schedule.di.FeatureScheduleModule
-import kekmech.ru.feature_search.di.FeatureSearchFeatureModule
+import kekmech.ru.feature_search_impl.di.FeatureSearchFeatureModule
 import kekmech.ru.library_analytics_android.FirebaseAnalyticsProvider
 import kekmech.ru.library_analytics_android.di.CommonAnalyticsModule
 import kekmech.ru.library_app_database_impl.di.CommonAppDatabaseModule
