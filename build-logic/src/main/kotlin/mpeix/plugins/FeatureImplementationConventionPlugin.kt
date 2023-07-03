@@ -30,7 +30,7 @@ class FeatureImplementationConventionPlugin : Plugin<Project> {
                 @Suppress("UnstableApiUsage")
                 with(buildFeatures) {
                     compose = true
-                    viewBinding = true // TODO: remove viewBinding after complete compose migration
+                    viewBinding = false
                     androidResources = false
                     shaders = false
                     resValues = false

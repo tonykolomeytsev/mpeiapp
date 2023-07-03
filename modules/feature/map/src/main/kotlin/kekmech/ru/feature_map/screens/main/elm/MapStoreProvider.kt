@@ -1,7 +1,7 @@
 package kekmech.ru.feature_map.screens.main.elm
 
-import kekmech.ru.domain_app_settings.AppSettingsRepository
 import kekmech.ru.ext_kotlin.fastLazy
+import kekmech.ru.feature_app_settings_api.data.AppSettingsRepository
 import kekmech.ru.feature_map.screens.main.elm.MapEvent
 import vivid.money.elmslie.core.store.Store
 import vivid.money.elmslie.coroutines.ElmStoreCompat

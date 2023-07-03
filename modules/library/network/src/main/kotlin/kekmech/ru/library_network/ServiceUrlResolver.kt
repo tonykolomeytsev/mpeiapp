@@ -1,7 +1,5 @@
 package kekmech.ru.library_network
 
-import kekmech.ru.domain_app_settings_models.AppEnvironment
-
 object ServiceUrlResolver {
 
     private var appEnvironment: AppEnvironment = AppEnvironment.PROD

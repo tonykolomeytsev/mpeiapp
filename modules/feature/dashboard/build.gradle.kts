@@ -26,7 +26,7 @@ dependencies {
     implementation(libs.vivid.elmslie.core)
     implementation(libs.vivid.elmslie.coroutines)
 
-    implementation(project(":domain_app_settings"))
+    implementation(project(":feature_app_settings_api"))
     implementation(project(":domain_dashboard"))
     implementation(project(":domain_favorite_schedule"))
     implementation(project(":domain_notes"))

@@ -8,7 +8,6 @@ import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.maps.shouldBeEmpty
 import io.kotest.matchers.maps.shouldContainExactly
 import io.kotest.matchers.shouldBe
-import kekmech.ru.domain_app_settings_models.AppSettings
 import kekmech.ru.domain_schedule_models.dto.Classes
 import kekmech.ru.domain_schedule_models.dto.ClassesType
 import kekmech.ru.domain_schedule_models.dto.Day
@@ -17,6 +16,7 @@ import kekmech.ru.domain_schedule_models.dto.ScheduleType
 import kekmech.ru.domain_schedule_models.dto.Week
 import kekmech.ru.domain_schedule_models.dto.WeekOfSemester
 import kekmech.ru.ext_kotlin.mutableLinkedHashMap
+import kekmech.ru.feature_app_settings_api.domain.AppSettings
 import kekmech.ru.feature_schedule.screens.main.elm.ScheduleCommand
 import kekmech.ru.feature_schedule.screens.main.elm.ScheduleEffect
 import kekmech.ru.feature_schedule.screens.main.elm.ScheduleEvent.Internal
@@ -161,7 +161,10 @@ class ScheduleReducerTest : BehaviorSpec({
             }
         }
         When("Wish.Click.Day") {
-            val (state, effects, actions) = reducer.reduce(Ui.Click.Day(CURRENT_DATE_WEEKEND_SAT), givenState)
+            val (state, effects, actions) = reducer.reduce(
+                Ui.Click.Day(CURRENT_DATE_WEEKEND_SAT),
+                givenState
+            )
             Then("Check state") {
                 state.selectedDate shouldBe CURRENT_DATE_WEEKEND_SAT
                 state.isNavigationFabVisible.shouldBeTrue()
@@ -192,7 +195,12 @@ class ScheduleReducerTest : BehaviorSpec({
                 state shouldBe givenState
             }
             Then("Check effects") {
-                effects.shouldContainExactly(ScheduleEffect.NavigateToNoteList(CLASSES, state.selectedDate))
+                effects.shouldContainExactly(
+                    ScheduleEffect.NavigateToNoteList(
+                        CLASSES,
+                        state.selectedDate
+                    )
+                )
             }
             Then("Check actions") {
                 actions.shouldBeEmpty()
@@ -214,7 +222,10 @@ class ScheduleReducerTest : BehaviorSpec({
             }
         }
         When("Wish.Action.NotesUpdated") {
-            val (state, effects, actions) = reducer.reduce(Ui.Action.UpdateScheduleIfNeeded, givenState)
+            val (state, effects, actions) = reducer.reduce(
+                Ui.Action.UpdateScheduleIfNeeded,
+                givenState
+            )
             Then("Check state") {
                 state shouldBe givenState
             }
@@ -226,7 +237,10 @@ class ScheduleReducerTest : BehaviorSpec({
             }
         }
         When("Wish.Action.UpdateScheduleIfNeeded") {
-            val (state, effects, actions) = reducer.reduce(Ui.Action.UpdateScheduleIfNeeded, givenState)
+            val (state, effects, actions) = reducer.reduce(
+                Ui.Action.UpdateScheduleIfNeeded,
+                givenState
+            )
             Then("Check state") {
                 state shouldBe givenState
             }
@@ -250,7 +264,10 @@ class ScheduleReducerTest : BehaviorSpec({
             }
         }
         When("Wish.Action.ClassesScrolled (scrolled up)") {
-            val (state, effects, actions) = reducer.reduce(Ui.Action.ClassesScrolled(-1), givenState)
+            val (state, effects, actions) = reducer.reduce(
+                Ui.Action.ClassesScrolled(-1),
+                givenState
+            )
             Then("Check state") {
                 state.isNavigationFabVisible.shouldBeTrue()
             }
@@ -263,7 +280,9 @@ class ScheduleReducerTest : BehaviorSpec({
         }
     }
 }) {
+
     companion object {
+
         private val APP_SETTINGS = AppSettings(
             isDarkThemeEnabled = false,
             autoHideBottomSheet = false,
@@ -286,18 +305,20 @@ class ScheduleReducerTest : BehaviorSpec({
             name = "C-12-16",
             id = "12345",
             type = ScheduleType.GROUP,
-            weeks = listOf(Week(
-                weekOfSemester = WeekOfSemester.Studying(3),
-                weekOfYear = 36,
-                firstDayOfWeek = CURRENT_MONDAY,
-                days = listOf(
-                    Day(
-                        dayOfWeek = 1,
-                        date = CURRENT_MONDAY,
-                        classes = listOf()
+            weeks = listOf(
+                Week(
+                    weekOfSemester = WeekOfSemester.Studying(3),
+                    weekOfYear = 36,
+                    firstDayOfWeek = CURRENT_MONDAY,
+                    days = listOf(
+                        Day(
+                            dayOfWeek = 1,
+                            date = CURRENT_MONDAY,
+                            classes = listOf()
+                        )
                     )
                 )
-            ))
+            )
         )
         private val CLASSES = Classes(
             name = "Гидропневмопривод мехатронных и робототехнчиеских систем",

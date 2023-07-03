@@ -3,8 +3,8 @@ package kekmech.ru.feature_map.screens.main.elm
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.Marker
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import kekmech.ru.domain_app_settings_models.AppSettings
 import kekmech.ru.domain_map.dto.MapMarker
+import kekmech.ru.feature_app_settings_api.domain.AppSettings
 
 internal data class MapState(
     val selectedTab: FilterTab = FilterTab.FOOD,
@@ -47,14 +47,16 @@ internal sealed interface MapEffect {
         val map: GoogleMap?,
         val markers: List<MapMarker>?,
         val googleMapMarkers: List<Marker>,
-        val selectedTab: FilterTab
+        val selectedTab: FilterTab,
     ) : MapEffect
+
     data class AnimateCameraToPlace(
         val map: GoogleMap,
         val googleMapMarkers: List<Marker>,
         val mapMarker: MapMarker,
-        val collapseBottomSheet: Boolean
+        val collapseBottomSheet: Boolean,
     ) : MapEffect
+
     object ShowLoadingError : MapEffect
 }
 

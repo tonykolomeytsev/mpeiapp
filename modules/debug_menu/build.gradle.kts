@@ -13,8 +13,8 @@ dependencies {
     implementation(project(":ext_kotlin"))
     implementation(project(":library_navigation_api"))
     implementation(project(":library_navigation_compose"))
-    implementation(project(":domain_app_settings"))
-    implementation(project(":domain_app_settings_models"))
+    implementation(project(":library_network"))
+    implementation(project(":feature_app_settings_api"))
 
     implementation(project(":ext_koin"))
 
