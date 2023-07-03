@@ -14,9 +14,9 @@ import kekmech.ru.domain_notes.di.DomainNotesModule
 import kekmech.ru.domain_schedule.di.DomainScheduleModule
 import kekmech.ru.ext_koin.bindIntoList
 import kekmech.ru.feature_app_settings_impl.di.FeatureAppSettingsModule
+import kekmech.ru.feature_app_update_impl.di.FeatureForceUpdateModule
 import kekmech.ru.feature_bars_impl.di.FeatureBarsModule
 import kekmech.ru.feature_dashboard_impl.di.FeatureDashboardModule
-import kekmech.ru.feature_force_update.di.FeatureForceUpdateModule
 import kekmech.ru.feature_map.di.FeatureMapModule
 import kekmech.ru.feature_notes.di.FeatureNotesModule
 import kekmech.ru.feature_onboarding.di.FeatureOnboardingModule

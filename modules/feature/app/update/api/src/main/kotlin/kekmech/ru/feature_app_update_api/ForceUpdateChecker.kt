@@ -1,4 +1,4 @@
-package kekmech.ru.domain_force_update
+package kekmech.ru.feature_app_update_api
 
 interface ForceUpdateChecker {
 
