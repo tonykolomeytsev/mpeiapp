@@ -8,7 +8,7 @@ import org.koin.dsl.bind
 import org.koin.dsl.module
 
 @Suppress("SpreadOperator")
-val CommonAppDatabaseModule = module {
+val LibraryAppDatabaseModule = module {
     single {
         val builder = Room
             .databaseBuilder(
