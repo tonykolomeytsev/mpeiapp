@@ -22,8 +22,7 @@ dependencies {
     implementation(libs.vivid.elmslie.core)
     implementation(libs.vivid.elmslie.coroutines)
 
-    implementation(project(":domain_app_settings"))
-    implementation(project(":domain_app_settings_models"))
+    implementation(project(":feature_app_settings_api"))
     implementation(project(":domain_map"))
 
     implementation(project(":library_adapter"))

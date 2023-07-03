@@ -20,7 +20,6 @@ import kekmech.ru.coreui.items.EmptyStateAdapterItem
 import kekmech.ru.coreui.items.ShimmerAdapterItem
 import kekmech.ru.coreui.items.SpaceAdapterItem
 import kekmech.ru.coreui.items.TextWithIconAdapterItem
-import kekmech.ru.domain_app_settings.AppSettingsFeatureLauncher
 import kekmech.ru.ext_android.addSystemTopPadding
 import kekmech.ru.ext_android.doOnApplyWindowInsets
 import kekmech.ru.ext_android.getThemeColor
@@ -28,6 +27,7 @@ import kekmech.ru.ext_android.openLinkExternal
 import kekmech.ru.ext_android.viewbinding.viewBinding
 import kekmech.ru.ext_android.views.setProgressViewOffset
 import kekmech.ru.ext_kotlin.fastLazy
+import kekmech.ru.feature_app_settings_api.AppSettingsFeatureLauncher
 import kekmech.ru.feature_bars.R
 import kekmech.ru.feature_bars.databinding.FragmentBarsBinding
 import kekmech.ru.feature_bars.items.AssessedDisciplineAdapterItem

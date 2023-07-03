@@ -1,7 +1,7 @@
 package kekmech.ru.mpeiapp.deeplink.handlers
 
 import android.net.Uri
-import kekmech.ru.domain_app_settings.AppSettingsFeatureLauncher
+import kekmech.ru.feature_app_settings_api.AppSettingsFeatureLauncher
 import kekmech.ru.library_navigation.BottomTab
 import kekmech.ru.library_navigation.BottomTabsSwitcher
 import kekmech.ru.library_navigation.PopUntil

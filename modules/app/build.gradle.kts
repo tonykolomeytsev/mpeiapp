@@ -77,7 +77,7 @@ dependencies {
     implementation(libs.vivid.elmslie.android)
     implementation(libs.vivid.elmslie.core)
 
-    implementation(project(":feature_app_settings"))
+    implementation(project(":feature_app_settings_impl"))
     implementation(project(":feature_bars"))
     implementation(project(":feature_dashboard"))
     implementation(project(":feature_force_update"))
@@ -87,8 +87,8 @@ dependencies {
     implementation(project(":feature_schedule"))
     implementation(project(":feature_search"))
 
-    implementation(project(":domain_app_settings"))
-    implementation(project(":domain_app_settings_models"))
+    implementation(project(":feature_app_settings_api"))
+    implementation(project(":feature_app_settings_impl"))
     implementation(project(":domain_bars"))
     implementation(project(":domain_dashboard"))
     implementation(project(":domain_favorite_schedule"))

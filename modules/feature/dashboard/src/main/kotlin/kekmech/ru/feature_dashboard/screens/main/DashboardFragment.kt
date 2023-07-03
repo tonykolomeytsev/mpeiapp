@@ -14,7 +14,6 @@ import kekmech.ru.coreui.items.SectionHeaderAdapterItem
 import kekmech.ru.coreui.items.ShimmerAdapterItem
 import kekmech.ru.coreui.items.SpaceAdapterItem
 import kekmech.ru.coreui.items.TextAdapterItem
-import kekmech.ru.domain_app_settings.AppSettingsFeatureLauncher
 import kekmech.ru.domain_schedule.ScheduleFeatureLauncher
 import kekmech.ru.domain_schedule.dto.SelectedSchedule
 import kekmech.ru.domain_schedule_models.dto.Classes
@@ -27,6 +26,7 @@ import kekmech.ru.ext_android.setResultListener
 import kekmech.ru.ext_android.viewbinding.viewBinding
 import kekmech.ru.ext_android.views.setProgressViewOffset
 import kekmech.ru.ext_kotlin.fastLazy
+import kekmech.ru.feature_app_settings_api.AppSettingsFeatureLauncher
 import kekmech.ru.feature_dashboard.R
 import kekmech.ru.feature_dashboard.databinding.FragmentDashboardBinding
 import kekmech.ru.feature_dashboard.di.DashboardDependencies

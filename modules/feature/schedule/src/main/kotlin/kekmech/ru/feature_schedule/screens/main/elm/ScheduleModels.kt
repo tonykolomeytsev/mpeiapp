@@ -1,9 +1,9 @@
 package kekmech.ru.feature_schedule.screens.main.elm
 
-import kekmech.ru.domain_app_settings_models.AppSettings
 import kekmech.ru.domain_schedule_models.dto.Classes
 import kekmech.ru.domain_schedule_models.dto.Schedule
 import kekmech.ru.ext_kotlin.moscowLocalDate
+import kekmech.ru.feature_app_settings_api.domain.AppSettings
 import java.time.LocalDate
 
 private const val SCHEDULE_RAM_CACHE_CAPACITY = 5
@@ -20,6 +20,7 @@ internal data class ScheduleState(
     val appSettings: AppSettings,
     val isNavigationFabVisible: Boolean = true,
 ) {
+
     /**
      * Get weekOfSemester number by weekOffset
      */

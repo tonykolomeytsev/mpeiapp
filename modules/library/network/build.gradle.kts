@@ -13,8 +13,6 @@ dependencies {
 
     implementation(project(":library_app_info"))
 
-    implementation(project(":domain_app_settings_models"))
-
     implementation(project(":ext_gson"))
     implementation(project(":ext_koin"))
     implementation(project(":ext_okhttp"))
