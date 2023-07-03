@@ -1,4 +1,4 @@
-package kekmech.ru.domain_force_update.dto
+package kekmech.ru.feature_app_update_impl.domain.models
 
 import java.io.Serializable
 

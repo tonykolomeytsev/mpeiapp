@@ -1,9 +1,8 @@
-package kekmech.ru.feature_force_update
+package kekmech.ru.feature_app_update_impl.presentation
 
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import kekmech.ru.domain_force_update.dto.ForceUpdateInfo
 import kekmech.ru.ext_android.addSystemVerticalPadding
 import kekmech.ru.ext_android.close
 import kekmech.ru.ext_android.getArgument
@@ -11,9 +10,10 @@ import kekmech.ru.ext_android.openLinkExternal
 import kekmech.ru.ext_android.viewbinding.viewBinding
 import kekmech.ru.ext_android.withArguments
 import kekmech.ru.ext_kotlin.fastLazy
-import kekmech.ru.feature_force_update.databinding.FragmentBlockingUpdateBinding
+import kekmech.ru.feature_app_update_impl.R
+import kekmech.ru.feature_app_update_impl.databinding.FragmentBlockingUpdateBinding
+import kekmech.ru.feature_app_update_impl.domain.models.ForceUpdateInfo
 import kekmech.ru.library_analytics_android.ext.screenAnalytics
-import kekmech.ru.strings.Strings
 
 private const val ARG_UPDATE_INFO = "Arg.UpdateInfo"
 private const val LINK_VK = "https://vk.com/kekmech"
@@ -35,8 +35,8 @@ class BlockingUpdateFragment : Fragment(R.layout.fragment_blocking_update) {
                 analytics.sendClick("UpdateBlockingUpdate")
                 requireContext().openLinkExternal(updateInfo.updateUrl)
             }
-            header.setText(Strings.blocking_update_title)
-            fullText.setText(Strings.blocking_update_description)
+            header.setText(kekmech.ru.strings.Strings.blocking_update_title)
+            fullText.setText(kekmech.ru.strings.Strings.blocking_update_description)
             link.text = LINK_VK
             link.setOnClickListener {
                 analytics.sendClick("GoToVkBlockingUpdate")

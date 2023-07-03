@@ -21,6 +21,7 @@ import kekmech.ru.ext_kotlin.fastLazy
 import kekmech.ru.feature_app_settings_impl.R
 import kekmech.ru.feature_app_settings_impl.databinding.FragmentFavoritesBinding
 import kekmech.ru.feature_app_settings_impl.di.AppSettingDependencies
+import kekmech.ru.feature_app_settings_impl.presentation.screens.edit_favorite.EditFavoriteFragment
 import kekmech.ru.feature_app_settings_impl.presentation.screens.favorites.elm.FavoritesEffect
 import kekmech.ru.feature_app_settings_impl.presentation.screens.favorites.elm.FavoritesEvent
 import kekmech.ru.feature_app_settings_impl.presentation.screens.favorites.elm.FavoritesEvent.Ui
@@ -73,7 +74,7 @@ internal class FavoritesFragment :
                 setResultListener<SelectedSchedule>(FIND_GROUP_RESULT_KEY) { selectedSchedule ->
                     setResultListenerForUpdateFavorite(NEW_FAVORITE_RESULT_KEY)
                     addScreenForward {
-                        kekmech.ru.feature_app_settings_impl.presentation.screens.edit_favorite.EditFavoriteFragment.newInstance(
+                        EditFavoriteFragment.newInstance(
                             favoriteSchedule = FavoriteSchedule(
                                 name = selectedSchedule.name,
                                 type = selectedSchedule.type,
@@ -94,7 +95,7 @@ internal class FavoritesFragment :
                 analytics.sendClick("EditFavorite")
                 setResultListenerForUpdateFavorite(EDIT_FAVORITE_RESULT_KEY)
                 addScreenForward {
-                    kekmech.ru.feature_app_settings_impl.presentation.screens.edit_favorite.EditFavoriteFragment.newInstance(
+                    EditFavoriteFragment.newInstance(
                         favoriteSchedule = it.value,
                         resultKey = EDIT_FAVORITE_RESULT_KEY,
                     )
