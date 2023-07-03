@@ -1,7 +1,7 @@
-package kekmech.ru.feature_onboarding.di
+package kekmech.ru.feature_onboarding_impl.di
 
-import kekmech.ru.domain_onboarding.OnboardingFeatureLauncher
-import kekmech.ru.feature_onboarding.launcher.OnboardingFeatureLauncherImpl
+import kekmech.ru.feature_onboarding_api.OnboardingFeatureLauncher
+import kekmech.ru.feature_onboarding_impl.launcher.OnboardingFeatureLauncherImpl
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.bind
 import org.koin.dsl.module

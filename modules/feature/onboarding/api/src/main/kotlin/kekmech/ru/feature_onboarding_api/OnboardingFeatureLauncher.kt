@@ -1,4 +1,4 @@
-package kekmech.ru.domain_onboarding
+package kekmech.ru.feature_onboarding_api
 
 interface OnboardingFeatureLauncher {
 

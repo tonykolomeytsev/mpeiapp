@@ -83,7 +83,7 @@ dependencies {
     implementation(project(":feature_app_update_impl"))
     implementation(project(":feature_map_impl"))
     implementation(project(":feature_notes"))
-    implementation(project(":feature_onboarding"))
+    implementation(project(":feature_onboarding_impl"))
     implementation(project(":feature_schedule"))
     implementation(project(":feature_search"))
 
@@ -97,7 +97,7 @@ dependencies {
     implementation(project(":domain_main_screen"))
     implementation(project(":feature_map_api"))
     implementation(project(":domain_notes"))
-    implementation(project(":domain_onboarding"))
+    implementation(project(":feature_onboarding_api"))
     implementation(project(":domain_schedule"))
     implementation(project(":domain_search"))
 

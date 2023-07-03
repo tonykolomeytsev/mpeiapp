@@ -33,7 +33,6 @@ dependencies {
     implementation(project(":feature_app_settings_api"))
     implementation(project(":domain_favorite_schedule"))
     implementation(project(":domain_github"))
-    implementation(project(":domain_onboarding"))
     implementation(project(":domain_schedule"))
     implementation(project(":domain_schedule_models"))
 

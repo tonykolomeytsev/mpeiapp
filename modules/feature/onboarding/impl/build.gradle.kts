@@ -1,9 +1,12 @@
 plugins {
-    id("mpeix.android.lib")
+    id("mpeix.feature.impl")
 }
 
 @Suppress("UnstableApiUsage")
-android.buildFeatures.viewBinding = true
+android.buildFeatures {
+    viewBinding = true
+    androidResources = true
+}
 
 dependencies {
     implementation(libs.androidx.appCompat)
@@ -17,7 +20,7 @@ dependencies {
     implementation(libs.tinkoff.pagerIndicator)
 
     implementation(project(":domain_main_screen"))
-    implementation(project(":domain_onboarding"))
+    implementation(project(":feature_onboarding_api"))
     implementation(project(":domain_schedule"))
 
     implementation(project(":library_adapter"))

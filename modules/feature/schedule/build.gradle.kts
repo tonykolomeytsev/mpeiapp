@@ -29,7 +29,7 @@ dependencies {
     implementation(project(":feature_app_settings_api"))
     implementation(project(":domain_main_screen"))
     implementation(project(":domain_notes"))
-    implementation(project(":domain_onboarding"))
+    implementation(project(":feature_onboarding_api"))
     implementation(project(":domain_schedule"))
     implementation(project(":domain_schedule_models"))
 
