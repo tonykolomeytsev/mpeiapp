@@ -29,7 +29,7 @@ import java.util.concurrent.TimeUnit
 
 private const val DEFAULT_REQUEST_TIMEOUT = 15L
 
-val CommonNetworkModule = module {
+val LibraryNetworkModule = module {
     factoryOf(::DeviceIdProvider)
     factoryOf(::DeviceLocaleProvider)
     singleOf(::provideRetrofitBuilder) bind Retrofit.Builder::class

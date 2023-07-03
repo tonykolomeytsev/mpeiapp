@@ -21,15 +21,15 @@ import kekmech.ru.feature_onboarding_impl.di.FeatureOnboardingModule
 import kekmech.ru.feature_schedule.di.FeatureScheduleModule
 import kekmech.ru.feature_search_impl.di.FeatureSearchFeatureModule
 import kekmech.ru.library_analytics_android.FirebaseAnalyticsProvider
-import kekmech.ru.library_analytics_android.di.CommonAnalyticsModule
-import kekmech.ru.library_app_database.di.CommonAppDatabaseModule
+import kekmech.ru.library_analytics_android.di.LibraryAnalyticsModule
+import kekmech.ru.library_app_database.di.LibraryAppDatabaseModule
 import kekmech.ru.library_app_info.AppVersionName
 import kekmech.ru.library_coroutines.di.LibraryCoroutinesModule
 import kekmech.ru.library_feature_toggles.RemoteConfigWrapper
 import kekmech.ru.library_feature_toggles.RemoteVariable
-import kekmech.ru.library_feature_toggles.di.CommonFeatureTogglesModule
-import kekmech.ru.library_navigation.di.CommonNavigationModule
-import kekmech.ru.library_network.di.CommonNetworkModule
+import kekmech.ru.library_feature_toggles.di.LibraryFeatureTogglesModule
+import kekmech.ru.library_navigation.di.LibraryNavigationModule
+import kekmech.ru.library_network.di.LibraryNetworkModule
 import kekmech.ru.library_persistent_cache.di.LibraryPersistentCacheModule
 import kekmech.ru.mpeiapp.BuildConfig
 import kekmech.ru.mpeiapp.ComposeEnabledFeatureToggle
@@ -72,12 +72,6 @@ val AppModule = module {
     includes(
         MainScreenModule,
         DeeplinkModule,
-        // common
-        CommonAnalyticsModule,
-        CommonAppDatabaseModule,
-        CommonFeatureTogglesModule,
-        CommonNavigationModule,
-        CommonNetworkModule,
         // domain
         DomainGitHubModule,
         DomainScheduleModule,
@@ -95,6 +89,11 @@ val AppModule = module {
         // libraries
         LibraryCoroutinesModule,
         LibraryPersistentCacheModule,
+        LibraryAppDatabaseModule,
+        LibraryAnalyticsModule,
+        LibraryNetworkModule,
+        LibraryFeatureTogglesModule,
+        LibraryNavigationModule,
     )
 }
 

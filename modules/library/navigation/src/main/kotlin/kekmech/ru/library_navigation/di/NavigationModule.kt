@@ -6,7 +6,7 @@ import kekmech.ru.library_navigation.RouterImpl
 import org.koin.dsl.binds
 import org.koin.dsl.module
 
-val CommonNavigationModule = module {
+val LibraryNavigationModule = module {
     single { RouterImpl() } binds arrayOf(
         Router::class,
         NavigationHolder::class,

@@ -7,7 +7,7 @@ import kekmech.ru.library_app_lifecycle.MainActivityLifecycleObserver
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
-val CommonAnalyticsModule = module {
+val LibraryAnalyticsModule = module {
     factoryOf(::AnalyticsWrapper)
     factoryOf(::AnalyticsInitializer) bindIntoList MainActivityLifecycleObserver::class
 }
