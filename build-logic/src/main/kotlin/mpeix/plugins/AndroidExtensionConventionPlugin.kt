@@ -32,6 +32,7 @@ internal class AndroidExtensionConventionPlugin : Plugin<Project> {
                     androidResources = false
                     shaders = false
                     resValues = false
+                    buildConfig = false
                 }
             }
 

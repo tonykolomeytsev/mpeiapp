@@ -34,6 +34,7 @@ class FeatureImplementationConventionPlugin : Plugin<Project> {
                     androidResources = false
                     shaders = false
                     resValues = false
+                    buildConfig = false
                 }
             }
         }
