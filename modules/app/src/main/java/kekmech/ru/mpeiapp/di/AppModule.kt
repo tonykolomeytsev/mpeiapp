@@ -7,7 +7,6 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.redmadrobot.mapmemory.MapMemory
-import kekmech.ru.domain_bars.di.DomainBarsModule
 import kekmech.ru.domain_dashboard.di.DomainDashboardModule
 import kekmech.ru.domain_favorite_schedule.di.DomainFavoriteScheduleModule
 import kekmech.ru.domain_github.di.DomainGitHubModule
@@ -16,7 +15,7 @@ import kekmech.ru.domain_notes.di.DomainNotesModule
 import kekmech.ru.domain_schedule.di.DomainScheduleModule
 import kekmech.ru.ext_koin.bindIntoList
 import kekmech.ru.feature_app_settings_impl.di.FeatureAppSettingsModule
-import kekmech.ru.feature_bars.di.FeatureBarsModule
+import kekmech.ru.feature_bars_impl.di.FeatureBarsModule
 import kekmech.ru.feature_dashboard.di.FeatureDashboardModule
 import kekmech.ru.feature_force_update.di.FeatureForceUpdateModule
 import kekmech.ru.feature_map.di.FeatureMapModule
@@ -83,7 +82,6 @@ val AppModule = module {
         CommonNavigationModule,
         CommonNetworkModule,
         // domain
-        DomainBarsModule,
         DomainDashboardModule,
         DomainFavoriteScheduleModule,
         DomainGitHubModule,
