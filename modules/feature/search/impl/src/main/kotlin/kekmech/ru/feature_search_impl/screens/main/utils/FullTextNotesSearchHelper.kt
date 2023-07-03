@@ -1,6 +1,6 @@
 package kekmech.ru.feature_search_impl.screens.main.utils
 
-import kekmech.ru.domain_notes.dto.Note
+import kekmech.ru.feature_notes_api.domain.model.Note
 import kekmech.ru.feature_search_impl.screens.main.simplify
 
 internal class FullTextNotesSearchHelper(

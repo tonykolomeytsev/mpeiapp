@@ -4,12 +4,12 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
-import kekmech.ru.domain_notes.dto.Note
 import kekmech.ru.domain_schedule.dto.SearchResult
 import kekmech.ru.domain_schedule_models.dto.ScheduleType
 import kekmech.ru.feature_map_api.domain.model.Location
 import kekmech.ru.feature_map_api.domain.model.MapMarker
 import kekmech.ru.feature_map_api.domain.model.MarkerType
+import kekmech.ru.feature_notes_api.domain.model.Note
 import kekmech.ru.feature_search_impl.item.FilterItem
 import kekmech.ru.feature_search_impl.item.FilterItemType
 import kekmech.ru.feature_search_impl.screens.main.elm.SearchCommand

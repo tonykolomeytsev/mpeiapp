@@ -5,8 +5,8 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.coreui.R
 import kekmech.ru.coreui.databinding.ItemFavoriteScheduleBinding
-import kekmech.ru.domain_favorite_schedule.dto.FavoriteSchedule
 import kekmech.ru.ext_android.getThemeColor
+import kekmech.ru.feature_favorite_schedule_api.domain.model.FavoriteSchedule
 import kekmech.ru.library_adapter.AdapterItem
 import kekmech.ru.library_adapter.BaseItemBinder
 

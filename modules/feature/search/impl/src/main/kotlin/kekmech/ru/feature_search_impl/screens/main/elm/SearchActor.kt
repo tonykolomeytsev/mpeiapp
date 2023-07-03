@@ -1,9 +1,9 @@
 package kekmech.ru.feature_search_impl.screens.main.elm
 
-import kekmech.ru.domain_notes.use_cases.GetNotesForSelectedScheduleUseCase
 import kekmech.ru.domain_schedule.data.ScheduleSearchRepository
 import kekmech.ru.domain_schedule_models.dto.ScheduleType
 import kekmech.ru.feature_map_api.data.repository.MapRepository
+import kekmech.ru.feature_notes_api.domain.usecase.GetNotesForSelectedScheduleUseCase
 import kekmech.ru.feature_search_impl.screens.main.utils.FullTextMapMarkersSearchHelper
 import kekmech.ru.feature_search_impl.screens.main.utils.FullTextNotesSearchHelper
 import kekmech.ru.library_elm.actorFlow

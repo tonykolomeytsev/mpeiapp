@@ -31,7 +31,7 @@ dependencies {
     implementation(libs.vivid.elmslie.coroutines)
 
     implementation(project(":feature_app_settings_api"))
-    implementation(project(":domain_favorite_schedule"))
+    implementation(project(":feature_favorite_schedule_api"))
     implementation(project(":domain_github"))
     implementation(project(":domain_schedule"))
     implementation(project(":domain_schedule_models"))

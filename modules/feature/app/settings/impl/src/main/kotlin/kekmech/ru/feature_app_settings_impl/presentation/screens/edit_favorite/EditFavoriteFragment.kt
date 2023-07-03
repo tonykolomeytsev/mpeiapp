@@ -3,7 +3,6 @@ package kekmech.ru.feature_app_settings_impl.presentation.screens.edit_favorite
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import kekmech.ru.domain_favorite_schedule.dto.FavoriteSchedule
 import kekmech.ru.ext_android.addSystemBottomPadding
 import kekmech.ru.ext_android.addSystemTopPadding
 import kekmech.ru.ext_android.close
@@ -16,6 +15,7 @@ import kekmech.ru.ext_android.withArguments
 import kekmech.ru.ext_kotlin.fastLazy
 import kekmech.ru.feature_app_settings_impl.R
 import kekmech.ru.feature_app_settings_impl.databinding.FragmentEditFavoriteBinding
+import kekmech.ru.feature_favorite_schedule_api.domain.model.FavoriteSchedule
 import kekmech.ru.library_analytics_android.ext.screenAnalytics
 
 internal class EditFavoriteFragment : Fragment(R.layout.fragment_edit_favorite) {

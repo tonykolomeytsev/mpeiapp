@@ -1,8 +1,8 @@
 package kekmech.ru.feature_app_settings_impl.presentation.screens.favorites.elm
 
-import kekmech.ru.domain_favorite_schedule.dto.FavoriteSchedule
 import kekmech.ru.feature_app_settings_impl.presentation.screens.favorites.elm.FavoritesEvent.Internal
 import kekmech.ru.feature_app_settings_impl.presentation.screens.favorites.elm.FavoritesEvent.Ui
+import kekmech.ru.feature_favorite_schedule_api.domain.model.FavoriteSchedule
 import vivid.money.elmslie.core.store.dsl_reducer.ScreenDslReducer
 import kekmech.ru.feature_app_settings_impl.presentation.screens.favorites.elm.FavoritesCommand as Command
 import kekmech.ru.feature_app_settings_impl.presentation.screens.favorites.elm.FavoritesEffect as Effect

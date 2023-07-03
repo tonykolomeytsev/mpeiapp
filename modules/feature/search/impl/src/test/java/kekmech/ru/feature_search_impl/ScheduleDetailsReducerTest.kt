@@ -5,7 +5,6 @@ import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
-import kekmech.ru.domain_favorite_schedule.dto.FavoriteSchedule
 import kekmech.ru.domain_schedule.dto.SearchResult
 import kekmech.ru.domain_schedule.dto.SelectedSchedule
 import kekmech.ru.domain_schedule_models.dto.Day
@@ -13,6 +12,7 @@ import kekmech.ru.domain_schedule_models.dto.Schedule
 import kekmech.ru.domain_schedule_models.dto.ScheduleType
 import kekmech.ru.domain_schedule_models.dto.Week
 import kekmech.ru.domain_schedule_models.dto.WeekOfSemester
+import kekmech.ru.feature_favorite_schedule_api.domain.model.FavoriteSchedule
 import kekmech.ru.feature_search_impl.screens.schedule_details.elm.ScheduleDetailsCommand
 import kekmech.ru.feature_search_impl.screens.schedule_details.elm.ScheduleDetailsEffect
 import kekmech.ru.feature_search_impl.screens.schedule_details.elm.ScheduleDetailsEvent.Internal
