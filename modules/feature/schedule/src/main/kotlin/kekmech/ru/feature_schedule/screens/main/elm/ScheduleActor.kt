@@ -1,7 +1,7 @@
 package kekmech.ru.feature_schedule.screens.main.elm
 
-import kekmech.ru.domain_notes.services.AttachNotesToScheduleService
 import kekmech.ru.domain_schedule.use_cases.GetCurrentScheduleUseCase
+import kekmech.ru.feature_notes_api.domain.service.AttachNotesToScheduleService
 import kekmech.ru.library_elm.actorFlow
 import kotlinx.coroutines.flow.Flow
 import vivid.money.elmslie.coroutines.Actor

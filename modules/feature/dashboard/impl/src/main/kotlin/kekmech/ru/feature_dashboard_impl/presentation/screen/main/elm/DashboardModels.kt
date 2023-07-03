@@ -1,11 +1,11 @@
 package kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm
 
-import kekmech.ru.domain_favorite_schedule.dto.FavoriteSchedule
-import kekmech.ru.domain_notes.dto.Note
 import kekmech.ru.domain_schedule.dto.SelectedSchedule
 import kekmech.ru.domain_schedule_models.dto.Classes
 import kekmech.ru.domain_schedule_models.dto.WeekOfSemester
 import kekmech.ru.feature_dashboard_impl.domain.model.UpcomingEventsPrediction
+import kekmech.ru.feature_favorite_schedule_api.domain.model.FavoriteSchedule
+import kekmech.ru.feature_notes_api.domain.model.Note
 import kekmech.ru.library_elm.Resource
 import java.time.LocalDate
 

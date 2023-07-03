@@ -7,23 +7,22 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.redmadrobot.mapmemory.MapMemory
-import kekmech.ru.domain_favorite_schedule.di.DomainFavoriteScheduleModule
 import kekmech.ru.domain_github.di.DomainGitHubModule
-import kekmech.ru.domain_notes.di.DomainNotesModule
 import kekmech.ru.domain_schedule.di.DomainScheduleModule
 import kekmech.ru.ext_koin.bindIntoList
 import kekmech.ru.feature_app_settings_impl.di.FeatureAppSettingsModule
 import kekmech.ru.feature_app_update_impl.di.FeatureForceUpdateModule
 import kekmech.ru.feature_bars_impl.di.FeatureBarsModule
 import kekmech.ru.feature_dashboard_impl.di.FeatureDashboardModule
+import kekmech.ru.feature_favorite_schedule_impl.di.FeatureFavoriteScheduleModule
 import kekmech.ru.feature_map_impl.di.FeatureMapModule
-import kekmech.ru.feature_notes.di.FeatureNotesModule
+import kekmech.ru.feature_notes_impl.di.FeatureNotesModule
 import kekmech.ru.feature_onboarding_impl.di.FeatureOnboardingModule
 import kekmech.ru.feature_schedule.di.FeatureScheduleModule
 import kekmech.ru.feature_search_impl.di.FeatureSearchFeatureModule
 import kekmech.ru.library_analytics_android.FirebaseAnalyticsProvider
 import kekmech.ru.library_analytics_android.di.CommonAnalyticsModule
-import kekmech.ru.library_app_database_impl.di.CommonAppDatabaseModule
+import kekmech.ru.library_app_database.di.CommonAppDatabaseModule
 import kekmech.ru.library_app_info.AppVersionName
 import kekmech.ru.library_coroutines.di.LibraryCoroutinesModule
 import kekmech.ru.library_feature_toggles.RemoteConfigWrapper
@@ -80,9 +79,7 @@ val AppModule = module {
         CommonNavigationModule,
         CommonNetworkModule,
         // domain
-        DomainFavoriteScheduleModule,
         DomainGitHubModule,
-        DomainNotesModule,
         DomainScheduleModule,
         // feature
         FeatureAppSettingsModule,
@@ -94,9 +91,10 @@ val AppModule = module {
         FeatureOnboardingModule,
         FeatureScheduleModule,
         FeatureSearchFeatureModule,
+        FeatureFavoriteScheduleModule,
         // libraries
-        LibraryPersistentCacheModule,
         LibraryCoroutinesModule,
+        LibraryPersistentCacheModule,
     )
 }
 

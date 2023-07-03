@@ -1,7 +1,7 @@
 package kekmech.ru.feature_search_impl.screens.schedule_details.elm
 
-import kekmech.ru.domain_favorite_schedule.FavoriteScheduleRepository
 import kekmech.ru.domain_schedule.data.ScheduleRepository
+import kekmech.ru.feature_favorite_schedule_api.data.repository.FavoriteScheduleRepository
 import kekmech.ru.feature_search_impl.screens.schedule_details.elm.ScheduleDetailsEvent.Internal
 import kekmech.ru.library_elm.actorFlow
 import kotlinx.coroutines.flow.Flow

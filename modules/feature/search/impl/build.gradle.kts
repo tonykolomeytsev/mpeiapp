@@ -28,10 +28,10 @@ dependencies {
     implementation(libs.vivid.elmslie.coroutines)
 
     implementation(project(":feature_map_api"))
-    implementation(project(":domain_notes"))
+    implementation(project(":feature_notes_api"))
     implementation(project(":domain_schedule"))
     implementation(project(":domain_schedule_models"))
-    implementation(project(":domain_favorite_schedule"))
+    implementation(project(":feature_favorite_schedule_api"))
     implementation(project(":feature_search_api"))
 
     implementation(project(":library_adapter"))

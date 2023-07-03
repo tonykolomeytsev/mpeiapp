@@ -1,9 +1,9 @@
 package kekmech.ru.feature_search_impl.screens.schedule_details.elm
 
-import kekmech.ru.domain_favorite_schedule.dto.FavoriteSchedule
 import kekmech.ru.domain_schedule.dto.SelectedSchedule
 import kekmech.ru.domain_schedule_models.dto.Day
 import kekmech.ru.domain_schedule_models.dto.Schedule
+import kekmech.ru.feature_favorite_schedule_api.domain.model.FavoriteSchedule
 import kekmech.ru.feature_search_impl.screens.schedule_details.elm.ScheduleDetailsEvent.Internal
 import kekmech.ru.feature_search_impl.screens.schedule_details.elm.ScheduleDetailsEvent.Ui
 import vivid.money.elmslie.core.store.dsl_reducer.ScreenDslReducer

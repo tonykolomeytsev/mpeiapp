@@ -9,7 +9,6 @@ import kekmech.ru.coreui.items.FavoriteScheduleAdapterItem
 import kekmech.ru.coreui.items.FavoriteScheduleItem
 import kekmech.ru.coreui.items.SpaceAdapterItem
 import kekmech.ru.coreui.touch_helpers.attachSwipeToDeleteCallback
-import kekmech.ru.domain_favorite_schedule.dto.FavoriteSchedule
 import kekmech.ru.domain_schedule.ScheduleFeatureLauncher.ContinueTo.BACK_WITH_RESULT
 import kekmech.ru.domain_schedule.dto.SelectedSchedule
 import kekmech.ru.ext_android.addSystemBottomPadding
@@ -27,6 +26,7 @@ import kekmech.ru.feature_app_settings_impl.presentation.screens.favorites.elm.F
 import kekmech.ru.feature_app_settings_impl.presentation.screens.favorites.elm.FavoritesEvent.Ui
 import kekmech.ru.feature_app_settings_impl.presentation.screens.favorites.elm.FavoritesState
 import kekmech.ru.feature_app_settings_impl.presentation.screens.favorites.item.HelpBannerAdapterItem
+import kekmech.ru.feature_favorite_schedule_api.domain.model.FavoriteSchedule
 import kekmech.ru.library_adapter.BaseAdapter
 import kekmech.ru.library_analytics_android.ext.screenAnalytics
 import kekmech.ru.library_elm.BaseFragment

@@ -7,8 +7,6 @@ import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeTypeOf
-import kekmech.ru.domain_favorite_schedule.dto.FavoriteSchedule
-import kekmech.ru.domain_notes.dto.Note
 import kekmech.ru.domain_schedule.dto.SelectedSchedule
 import kekmech.ru.domain_schedule_models.dto.ScheduleType
 import kekmech.ru.domain_schedule_models.dto.WeekOfSemester
@@ -18,6 +16,8 @@ import kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm.DashboardE
 import kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm.DashboardEvent.Ui
 import kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm.DashboardReducer
 import kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm.DashboardState
+import kekmech.ru.feature_favorite_schedule_api.domain.model.FavoriteSchedule
+import kekmech.ru.feature_notes_api.domain.model.Note
 import kekmech.ru.library_elm.Resource
 import kekmech.ru.library_elm.toResource
 

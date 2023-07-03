@@ -20,9 +20,9 @@ dependencies {
     implementation(project(":ext_android"))
     implementation(project(":ext_kotlin"))
 
-    implementation(project(":domain_notes"))
+    implementation(project(":feature_notes_api"))
     implementation(project(":domain_schedule"))
-    implementation(project(":domain_favorite_schedule"))
+    implementation(project(":feature_favorite_schedule_api"))
 
     implementation(project(":ext_okhttp"))
 
