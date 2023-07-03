@@ -7,10 +7,10 @@ import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import kekmech.ru.domain_map.MapFeatureLauncher
 import kekmech.ru.domain_schedule.ScheduleFeatureLauncher
 import kekmech.ru.feature_bars_api.BarsFeatureLauncher
 import kekmech.ru.feature_dashboard_api.DashboardFeatureLauncher
+import kekmech.ru.feature_map_api.MapFeatureLauncher
 import kekmech.ru.library_navigation.BottomTab
 import kekmech.ru.library_navigation.features.ScrollToTop
 import kekmech.ru.library_navigation.features.TabScreenStateSaver

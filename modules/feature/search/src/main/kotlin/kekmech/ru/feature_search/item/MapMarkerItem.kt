@@ -2,7 +2,7 @@ package kekmech.ru.feature_search.item
 
 import kekmech.ru.coreui.items.LabeledTextViewHolder
 import kekmech.ru.coreui.items.LabeledTextViewHolderImpl
-import kekmech.ru.domain_map.dto.MapMarker
+import kekmech.ru.feature_map_api.domain.model.MapMarker
 import kekmech.ru.library_adapter.AdapterItem
 import kekmech.ru.library_adapter.BaseItemBinder
 import kekmech.ru.coreui.R as coreui_R

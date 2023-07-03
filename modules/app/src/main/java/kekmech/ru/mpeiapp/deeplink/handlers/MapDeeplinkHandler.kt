@@ -1,7 +1,7 @@
 package kekmech.ru.mpeiapp.deeplink.handlers
 
 import android.net.Uri
-import kekmech.ru.domain_map.MapFeatureLauncher
+import kekmech.ru.feature_map_api.MapFeatureLauncher
 import kekmech.ru.library_navigation.BottomTab
 import kekmech.ru.library_navigation.BottomTabsSwitcher
 import kekmech.ru.library_navigation.PopUntil

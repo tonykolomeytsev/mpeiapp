@@ -12,7 +12,6 @@ import kekmech.ru.coreui.items.LabeledTextViewHolderImpl
 import kekmech.ru.coreui.items.NoteAdapterItem
 import kekmech.ru.coreui.items.SectionHeaderAdapterItem
 import kekmech.ru.coreui.items.SpaceAdapterItem
-import kekmech.ru.domain_map.dto.MapMarker
 import kekmech.ru.domain_schedule.dto.SearchResult
 import kekmech.ru.ext_android.addSystemVerticalPadding
 import kekmech.ru.ext_android.afterTextChanged
@@ -23,6 +22,7 @@ import kekmech.ru.ext_android.showKeyboard
 import kekmech.ru.ext_android.viewbinding.viewBinding
 import kekmech.ru.ext_android.withArguments
 import kekmech.ru.ext_kotlin.fastLazy
+import kekmech.ru.feature_map_api.domain.model.MapMarker
 import kekmech.ru.feature_search.R
 import kekmech.ru.feature_search.databinding.FragmentSearchBinding
 import kekmech.ru.feature_search.di.SearchDependencies

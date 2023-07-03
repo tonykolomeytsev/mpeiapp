@@ -9,7 +9,6 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.redmadrobot.mapmemory.MapMemory
 import kekmech.ru.domain_favorite_schedule.di.DomainFavoriteScheduleModule
 import kekmech.ru.domain_github.di.DomainGitHubModule
-import kekmech.ru.domain_map.di.DomainMapModule
 import kekmech.ru.domain_notes.di.DomainNotesModule
 import kekmech.ru.domain_schedule.di.DomainScheduleModule
 import kekmech.ru.ext_koin.bindIntoList
@@ -17,7 +16,7 @@ import kekmech.ru.feature_app_settings_impl.di.FeatureAppSettingsModule
 import kekmech.ru.feature_app_update_impl.di.FeatureForceUpdateModule
 import kekmech.ru.feature_bars_impl.di.FeatureBarsModule
 import kekmech.ru.feature_dashboard_impl.di.FeatureDashboardModule
-import kekmech.ru.feature_map.di.FeatureMapModule
+import kekmech.ru.feature_map_impl.di.FeatureMapModule
 import kekmech.ru.feature_notes.di.FeatureNotesModule
 import kekmech.ru.feature_onboarding.di.FeatureOnboardingModule
 import kekmech.ru.feature_schedule.di.FeatureScheduleModule
@@ -85,7 +84,6 @@ val AppModule = module {
         DomainGitHubModule,
         DomainNotesModule,
         DomainScheduleModule,
-        DomainMapModule,
         // feature
         FeatureAppSettingsModule,
         FeatureBarsModule,
