@@ -31,6 +31,7 @@ internal class AndroidLibraryConventionPlugin : Plugin<Project> {
                     androidResources = false
                     shaders = false
                     resValues = false
+                    buildConfig = false
                 }
             }
         }

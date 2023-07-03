@@ -38,6 +38,7 @@ class AndroidResourcesConventionPlugin : Plugin<Project> {
                     androidResources = true
                     shaders = false
                     resValues = false
+                    buildConfig = false
                 }
             }
         }
