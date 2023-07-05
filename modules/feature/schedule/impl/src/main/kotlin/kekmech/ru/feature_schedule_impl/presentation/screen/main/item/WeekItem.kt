@@ -5,11 +5,11 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.feature_schedule_impl.R
 import kekmech.ru.feature_schedule_impl.databinding.ItemWeekBinding
-import kekmech.ru.library_adapter.AdapterItem
-import kekmech.ru.library_adapter.BaseAdapter
-import kekmech.ru.library_adapter.BaseItemBinder
-import kekmech.ru.library_schedule.items.DayAdapterItem
-import kekmech.ru.library_schedule.items.DayItem
+import kekmech.ru.lib_adapter.AdapterItem
+import kekmech.ru.lib_adapter.BaseAdapter
+import kekmech.ru.lib_adapter.BaseItemBinder
+import kekmech.ru.lib_schedule.items.DayAdapterItem
+import kekmech.ru.lib_schedule.items.DayItem
 import java.time.LocalDate
 
 private const val DAY_ITEM_SPAN_COUNT = 6

@@ -2,7 +2,7 @@ package kekmech.ru.feature_notes_impl.presentation.screen.edit.elm
 
 import kekmech.ru.feature_notes_api.domain.usecase.PutNoteForSelectedScheduleUseCase
 import kekmech.ru.feature_notes_impl.presentation.screen.edit.elm.NoteEditEvent.Internal
-import kekmech.ru.library_elm.actorFlow
+import kekmech.ru.lib_elm.actorFlow
 import kotlinx.coroutines.flow.Flow
 import vivid.money.elmslie.coroutines.Actor
 import kekmech.ru.feature_notes_impl.presentation.screen.edit.elm.NoteEditCommand as Command

@@ -4,7 +4,7 @@ import kekmech.ru.debug_menu.presentation.screens.main.elm.DebugMenuCommand
 import kekmech.ru.debug_menu.presentation.screens.main.elm.DebugMenuEvent
 import kekmech.ru.debug_menu.presentation.screens.main.elm.DebugMenuEvent.Internal
 import kekmech.ru.feature_app_settings_api.data.AppEnvironmentRepository
-import kekmech.ru.library_elm.actorFlow
+import kekmech.ru.lib_elm.actorFlow
 import kotlinx.coroutines.flow.Flow
 import vivid.money.elmslie.coroutines.Actor
 import kekmech.ru.debug_menu.presentation.screens.main.elm.DebugMenuCommand as Command

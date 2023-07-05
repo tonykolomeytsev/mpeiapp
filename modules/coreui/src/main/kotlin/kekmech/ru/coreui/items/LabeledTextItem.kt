@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.coreui.R
 import kekmech.ru.ext_android.viewbinding.ReusableViewHolder
 import kekmech.ru.ext_android.viewbinding.lazyBinding
-import kekmech.ru.library_adapter.AdapterItem
-import kekmech.ru.library_adapter.BaseItemBinder
+import kekmech.ru.lib_adapter.AdapterItem
+import kekmech.ru.lib_adapter.BaseItemBinder
 
 interface LabeledTextItem {
     val mainText: String?

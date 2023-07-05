@@ -11,10 +11,10 @@ import kekmech.ru.feature_app_update_impl.domain.models.AppVersion
 import kekmech.ru.feature_app_update_impl.domain.models.ForceUpdateInfo
 import kekmech.ru.feature_app_update_impl.presentation.BlockingUpdateFragment
 import kekmech.ru.feature_app_update_impl.presentation.ForceUpdateFragment
-import kekmech.ru.library_app_info.AppVersionName
-import kekmech.ru.library_navigation.NewRoot
-import kekmech.ru.library_navigation.Router
-import kekmech.ru.library_navigation.ShowDialog
+import kekmech.ru.lib_app_info.AppVersionName
+import kekmech.ru.lib_navigation.NewRoot
+import kekmech.ru.lib_navigation.Router
+import kekmech.ru.lib_navigation.ShowDialog
 
 internal class ForceUpdateCheckerImpl(
     private val router: Router,

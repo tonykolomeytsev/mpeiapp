@@ -44,12 +44,12 @@ import kekmech.ru.feature_map_impl.presentation.screen.main.ext.toMarkerType
 import kekmech.ru.feature_map_impl.presentation.screen.main.view.BottomSheetBackgroundDrawable
 import kekmech.ru.feature_map_impl.presentation.screen.main.view.ControlledScrollingLayoutManager
 import kekmech.ru.feature_map_impl.presentation.screen.main.view.MarkersBitmapFactory
-import kekmech.ru.library_adapter.BaseAdapter
-import kekmech.ru.library_analytics_android.ext.screenAnalytics
-import kekmech.ru.library_elm.BaseFragment
-import kekmech.ru.library_navigation.features.ScrollToTop
-import kekmech.ru.library_navigation.features.TabScreenStateSaver
-import kekmech.ru.library_navigation.features.TabScreenStateSaverImpl
+import kekmech.ru.lib_adapter.BaseAdapter
+import kekmech.ru.lib_analytics_android.ext.screenAnalytics
+import kekmech.ru.lib_elm.BaseFragment
+import kekmech.ru.lib_navigation.features.ScrollToTop
+import kekmech.ru.lib_navigation.features.TabScreenStateSaver
+import kekmech.ru.lib_navigation.features.TabScreenStateSaverImpl
 import org.koin.android.ext.android.inject
 import java.util.concurrent.TimeUnit
 import kekmech.ru.coreui.R as CoreUiR

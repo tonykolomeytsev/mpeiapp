@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.coreui.items.ClickableItemViewHolder
 import kekmech.ru.coreui.items.ClickableItemViewHolderImpl
 import kekmech.ru.feature_search_impl.R
-import kekmech.ru.library_adapter.AdapterItem
-import kekmech.ru.library_adapter.BaseItemBinder
+import kekmech.ru.lib_adapter.AdapterItem
+import kekmech.ru.lib_adapter.BaseItemBinder
 import kekmech.ru.res_strings.R.string as Strings
 
 internal data class FilterItem(

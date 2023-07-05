@@ -9,8 +9,8 @@ import androidx.compose.ui.unit.dp
 import com.bumble.appyx.core.modality.BuildContext
 import com.bumble.appyx.core.node.Node
 import com.bumble.appyx.core.node.node
-import kekmech.ru.library_navigation_api.NavTarget
-import kekmech.ru.library_navigation_compose.LocalBackStackNavigator
+import kekmech.ru.lib_navigation_api.NavTarget
+import kekmech.ru.lib_navigation_compose.LocalBackStackNavigator
 import kekmech.ru.mpeiapp.demo.screens.components.lists.ListItemScreenNavTarget
 import kekmech.ru.mpeiapp.demo.screens.components.topappbar.ComponentsTopAppBarNavTarget
 import kekmech.ru.mpeiapp.demo.ui.SectionItem

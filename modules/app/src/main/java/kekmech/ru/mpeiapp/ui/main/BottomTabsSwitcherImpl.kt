@@ -2,8 +2,8 @@ package kekmech.ru.mpeiapp.ui.main
 
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.BehaviorSubject
-import kekmech.ru.library_navigation.BottomTab
-import kekmech.ru.library_navigation.BottomTabsSwitcher
+import kekmech.ru.lib_navigation.BottomTab
+import kekmech.ru.lib_navigation.BottomTabsSwitcher
 import java.util.Optional
 
 object BottomTabsSwitcherImpl : BottomTabsSwitcher {

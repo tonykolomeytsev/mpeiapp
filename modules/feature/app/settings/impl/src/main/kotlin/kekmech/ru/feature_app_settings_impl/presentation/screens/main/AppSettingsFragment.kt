@@ -33,11 +33,11 @@ import kekmech.ru.feature_app_settings_impl.presentation.screens.main.elm.AppSet
 import kekmech.ru.feature_app_settings_impl.presentation.screens.main.elm.AppSettingsStoreFactory
 import kekmech.ru.feature_app_settings_impl.presentation.screens.main.list.ContributorAdapterItem
 import kekmech.ru.feature_app_settings_impl.presentation.screens.map_type.SelectMapTypeFragment
-import kekmech.ru.library_adapter.BaseAdapter
-import kekmech.ru.library_analytics_android.ext.screenAnalytics
-import kekmech.ru.library_elm.BaseFragment
-import kekmech.ru.library_navigation.addScreenForward
-import kekmech.ru.library_navigation.showDialog
+import kekmech.ru.lib_adapter.BaseAdapter
+import kekmech.ru.lib_analytics_android.ext.screenAnalytics
+import kekmech.ru.lib_elm.BaseFragment
+import kekmech.ru.lib_navigation.addScreenForward
+import kekmech.ru.lib_navigation.showDialog
 import org.koin.android.ext.android.inject
 import kekmech.ru.res_strings.R.string as Strings
 

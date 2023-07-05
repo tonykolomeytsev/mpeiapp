@@ -5,9 +5,9 @@ import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.feature_map_impl.R
 import kekmech.ru.feature_map_impl.databinding.ItemTabBarBinding
 import kekmech.ru.feature_map_impl.presentation.screen.main.elm.FilterTab
-import kekmech.ru.library_adapter.AdapterItem
-import kekmech.ru.library_adapter.BaseAdapter
-import kekmech.ru.library_adapter.BaseItemBinder
+import kekmech.ru.lib_adapter.AdapterItem
+import kekmech.ru.lib_adapter.BaseAdapter
+import kekmech.ru.lib_adapter.BaseItemBinder
 
 internal object TabBarItem
 

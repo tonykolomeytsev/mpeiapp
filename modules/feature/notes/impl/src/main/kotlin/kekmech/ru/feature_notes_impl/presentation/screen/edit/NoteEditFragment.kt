@@ -22,9 +22,9 @@ import kekmech.ru.feature_notes_impl.presentation.screen.edit.elm.NoteEditEffect
 import kekmech.ru.feature_notes_impl.presentation.screen.edit.elm.NoteEditEvent
 import kekmech.ru.feature_notes_impl.presentation.screen.edit.elm.NoteEditEvent.Ui
 import kekmech.ru.feature_notes_impl.presentation.screen.edit.elm.NoteEditState
-import kekmech.ru.library_adapter.BaseAdapter
-import kekmech.ru.library_analytics_android.ext.screenAnalytics
-import kekmech.ru.library_elm.BaseFragment
+import kekmech.ru.lib_adapter.BaseAdapter
+import kekmech.ru.lib_analytics_android.ext.screenAnalytics
+import kekmech.ru.lib_elm.BaseFragment
 import org.koin.android.ext.android.inject
 import kekmech.ru.res_strings.R.string as Strings
 

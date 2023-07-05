@@ -28,8 +28,8 @@ import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.Fi
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.FindScheduleState
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.FindScheduleStoreFactory
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.utils.GroupFormatTextWatcher
-import kekmech.ru.library_analytics_android.ext.screenAnalytics
-import kekmech.ru.library_elm.BaseFragment
+import kekmech.ru.lib_analytics_android.ext.screenAnalytics
+import kekmech.ru.lib_elm.BaseFragment
 import org.koin.android.ext.android.inject
 import kekmech.ru.res_strings.R.string as Strings
 

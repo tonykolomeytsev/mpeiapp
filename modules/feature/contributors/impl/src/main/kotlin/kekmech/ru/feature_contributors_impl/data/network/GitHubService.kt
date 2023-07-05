@@ -2,8 +2,8 @@ package kekmech.ru.feature_contributors_impl.data.network
 
 import kekmech.ru.feature_contributors_impl.data.dto.GitHubContributor
 import kekmech.ru.feature_contributors_impl.data.dto.GitHubUser
-import kekmech.ru.library_network.BackendServiceUrl
-import kekmech.ru.library_network.EndpointUrl
+import kekmech.ru.lib_network.BackendServiceUrl
+import kekmech.ru.lib_network.EndpointUrl
 import retrofit2.http.GET
 import retrofit2.http.Path
 

@@ -3,8 +3,8 @@ package kekmech.ru.mock_server.initializer
 import android.content.Context
 import kekmech.ru.ext_kotlin.fastLazy
 import kekmech.ru.feature_app_settings_api.data.AppEnvironmentRepository
-import kekmech.ru.library_app_lifecycle.AppLifecycleObserver
-import kekmech.ru.library_network.AppEnvironment
+import kekmech.ru.lib_app_lifecycle.AppLifecycleObserver
+import kekmech.ru.lib_network.AppEnvironment
 import kekmech.ru.mock_server.MockServer
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob

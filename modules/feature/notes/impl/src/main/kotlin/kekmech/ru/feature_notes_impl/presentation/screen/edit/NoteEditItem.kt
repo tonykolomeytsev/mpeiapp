@@ -7,8 +7,8 @@ import kekmech.ru.ext_android.showKeyboard
 import kekmech.ru.feature_notes_api.domain.model.Note
 import kekmech.ru.feature_notes_impl.R
 import kekmech.ru.feature_notes_impl.databinding.ItemNoteEditBinding
-import kekmech.ru.library_adapter.AdapterItem
-import kekmech.ru.library_adapter.BaseItemBinder
+import kekmech.ru.lib_adapter.AdapterItem
+import kekmech.ru.lib_adapter.BaseItemBinder
 
 internal interface NoteEditViewHolder {
     fun showKeyboard()

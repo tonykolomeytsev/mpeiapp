@@ -20,10 +20,10 @@ import kekmech.ru.debug_menu.presentation.screens.feature_toggles.elm.FeatureTog
 import kekmech.ru.debug_menu.presentation.screens.feature_toggles.elm.FeatureTogglesState
 import kekmech.ru.debug_menu.presentation.screens.feature_toggles.elm.FeatureTogglesStore
 import kekmech.ru.debug_menu.presentation.screens.feature_toggles.elm.FeatureTogglesStoreFactory
-import kekmech.ru.library_elm.elmNode
-import kekmech.ru.library_elm.rememberAcceptAction
-import kekmech.ru.library_navigation_api.NavTarget
-import kekmech.ru.library_navigation_compose.LocalBackStackNavigator
+import kekmech.ru.lib_elm.elmNode
+import kekmech.ru.lib_elm.rememberAcceptAction
+import kekmech.ru.lib_navigation_api.NavTarget
+import kekmech.ru.lib_navigation_compose.LocalBackStackNavigator
 import kekmech.ru.ui_kit_lists.ListItem
 import kekmech.ru.ui_kit_switch.Switch
 import kekmech.ru.ui_kit_topappbar.TopAppBar

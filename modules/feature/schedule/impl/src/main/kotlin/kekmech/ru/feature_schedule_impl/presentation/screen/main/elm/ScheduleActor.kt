@@ -2,7 +2,7 @@ package kekmech.ru.feature_schedule_impl.presentation.screen.main.elm
 
 import kekmech.ru.feature_notes_api.domain.service.AttachNotesToScheduleService
 import kekmech.ru.feature_schedule_api.use_cases.GetCurrentScheduleUseCase
-import kekmech.ru.library_elm.actorFlow
+import kekmech.ru.lib_elm.actorFlow
 import kotlinx.coroutines.flow.Flow
 import vivid.money.elmslie.coroutines.Actor
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleCommand as Command

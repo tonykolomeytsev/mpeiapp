@@ -7,8 +7,8 @@ import kekmech.ru.coreui.PrettyDateFormatter
 import kekmech.ru.coreui.R
 import kekmech.ru.coreui.databinding.ItemNoteBinding
 import kekmech.ru.feature_notes_api.domain.model.Note
-import kekmech.ru.library_adapter.AdapterItem
-import kekmech.ru.library_adapter.BaseItemBinder
+import kekmech.ru.lib_adapter.AdapterItem
+import kekmech.ru.lib_adapter.BaseItemBinder
 
 class NoteAdapterItem(
     context: Context,

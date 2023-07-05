@@ -5,8 +5,8 @@ import android.widget.Button
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import androidx.recyclerview.widget.RecyclerView
-import kekmech.ru.library_adapter.AdapterItem
-import kekmech.ru.library_adapter.BaseItemBinder
+import kekmech.ru.lib_adapter.AdapterItem
+import kekmech.ru.lib_adapter.BaseItemBinder
 
 private const val DEFAULT_BUTTON_ITEM_ID = 0
 

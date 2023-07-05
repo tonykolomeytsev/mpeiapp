@@ -38,14 +38,14 @@ import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsEvent
 import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsEvent.Ui
 import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsState
 import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsStoreProvider
-import kekmech.ru.library_adapter.BaseAdapter
-import kekmech.ru.library_analytics_android.addScrollAnalytics
-import kekmech.ru.library_analytics_android.ext.screenAnalytics
-import kekmech.ru.library_elm.BaseFragment
-import kekmech.ru.library_navigation.features.ScrollToTop
-import kekmech.ru.library_navigation.features.TabScreenStateSaver
-import kekmech.ru.library_navigation.features.TabScreenStateSaverImpl
-import kekmech.ru.library_navigation.showDialog
+import kekmech.ru.lib_adapter.BaseAdapter
+import kekmech.ru.lib_analytics_android.addScrollAnalytics
+import kekmech.ru.lib_analytics_android.ext.screenAnalytics
+import kekmech.ru.lib_elm.BaseFragment
+import kekmech.ru.lib_navigation.features.ScrollToTop
+import kekmech.ru.lib_navigation.features.TabScreenStateSaver
+import kekmech.ru.lib_navigation.features.TabScreenStateSaverImpl
+import kekmech.ru.lib_navigation.showDialog
 import org.koin.android.ext.android.inject
 import timber.log.Timber
 import kekmech.ru.coreui.R as coreui_R

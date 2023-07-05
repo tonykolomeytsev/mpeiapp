@@ -4,8 +4,8 @@ import androidx.fragment.app.Fragment
 import kekmech.ru.feature_schedule_api.ScheduleFeatureLauncher
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.FindScheduleFragment
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.ScheduleFragment
-import kekmech.ru.library_navigation.AddScreenForward
-import kekmech.ru.library_navigation.Router
+import kekmech.ru.lib_navigation.AddScreenForward
+import kekmech.ru.lib_navigation.Router
 
 internal class ScheduleFeatureLauncherImpl(
     private val router: Router,

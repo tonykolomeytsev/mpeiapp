@@ -19,9 +19,9 @@ import kekmech.ru.feature_bars_impl.domain.AssessedDiscipline
 import kekmech.ru.feature_bars_impl.domain.FinalGradeType
 import kekmech.ru.feature_bars_impl.presentation.items.ControlActivityAdapterItem
 import kekmech.ru.feature_bars_impl.presentation.items.FinalGradeAdapterItem
-import kekmech.ru.library_adapter.BaseAdapter
-import kekmech.ru.library_analytics_android.addScrollAnalytics
-import kekmech.ru.library_analytics_android.ext.screenAnalytics
+import kekmech.ru.lib_adapter.BaseAdapter
+import kekmech.ru.lib_analytics_android.addScrollAnalytics
+import kekmech.ru.lib_analytics_android.ext.screenAnalytics
 import kekmech.ru.coreui.R as coreui_R
 
 private const val BULLET_SEPARATOR = " • "

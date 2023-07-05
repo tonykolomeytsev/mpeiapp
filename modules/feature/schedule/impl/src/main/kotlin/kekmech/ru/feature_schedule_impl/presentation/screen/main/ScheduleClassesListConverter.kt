@@ -6,10 +6,10 @@ import kekmech.ru.coreui.items.SpaceItem
 import kekmech.ru.feature_schedule_impl.R
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleState
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.item.WorkingDayItem
-import kekmech.ru.library_schedule.items.SelfStudyItem
-import kekmech.ru.library_schedule.utils.withLunch
-import kekmech.ru.library_schedule.utils.withNotePreview
-import kekmech.ru.library_schedule.utils.withWindows
+import kekmech.ru.lib_schedule.items.SelfStudyItem
+import kekmech.ru.lib_schedule.utils.withLunch
+import kekmech.ru.lib_schedule.utils.withNotePreview
+import kekmech.ru.lib_schedule.utils.withWindows
 
 private const val DAY_ITEMS_COUNT = 6
 

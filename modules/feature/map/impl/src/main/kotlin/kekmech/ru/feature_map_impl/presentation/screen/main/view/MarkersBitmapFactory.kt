@@ -12,7 +12,7 @@ import kekmech.ru.ext_android.getResColor
 import kekmech.ru.feature_map_api.domain.model.MapMarker
 import kekmech.ru.feature_map_api.domain.model.MarkerType
 import kekmech.ru.feature_map_impl.R
-import kekmech.ru.library_emoji.EmojiProvider
+import kekmech.ru.lib_emoji.EmojiProvider
 import kekmech.ru.coreui.R as coreui_R
 
 private const val ICON_SIZE_DP = 32

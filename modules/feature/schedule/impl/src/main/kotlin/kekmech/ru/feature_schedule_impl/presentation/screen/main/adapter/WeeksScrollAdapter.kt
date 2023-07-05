@@ -7,8 +7,8 @@ import kekmech.ru.ext_kotlin.moscowLocalDate
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.item.WeekAdapterItem
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.item.WeekItem
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.item.WeekViewHolder
-import kekmech.ru.library_schedule.items.DayItem
-import kekmech.ru.library_schedule.utils.atStartOfWeek
+import kekmech.ru.lib_schedule.items.DayItem
+import kekmech.ru.lib_schedule.utils.atStartOfWeek
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit
 

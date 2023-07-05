@@ -40,15 +40,15 @@ import kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm.DashboardS
 import kekmech.ru.feature_schedule_api.ScheduleFeatureLauncher
 import kekmech.ru.feature_schedule_api.domain.model.Classes
 import kekmech.ru.feature_schedule_api.domain.model.SelectedSchedule
-import kekmech.ru.library_adapter.BaseAdapter
-import kekmech.ru.library_analytics_android.addScrollAnalytics
-import kekmech.ru.library_analytics_android.ext.screenAnalytics
-import kekmech.ru.library_elm.BaseFragment
-import kekmech.ru.library_navigation.BottomTab
-import kekmech.ru.library_navigation.features.ScrollToTop
-import kekmech.ru.library_navigation.features.TabScreenStateSaver
-import kekmech.ru.library_navigation.features.TabScreenStateSaverImpl
-import kekmech.ru.library_schedule.items.NotePreviewAdapterItem
+import kekmech.ru.lib_adapter.BaseAdapter
+import kekmech.ru.lib_analytics_android.addScrollAnalytics
+import kekmech.ru.lib_analytics_android.ext.screenAnalytics
+import kekmech.ru.lib_elm.BaseFragment
+import kekmech.ru.lib_navigation.BottomTab
+import kekmech.ru.lib_navigation.features.ScrollToTop
+import kekmech.ru.lib_navigation.features.TabScreenStateSaver
+import kekmech.ru.lib_navigation.features.TabScreenStateSaverImpl
+import kekmech.ru.lib_schedule.items.NotePreviewAdapterItem
 import org.koin.android.ext.android.inject
 import kekmech.ru.res_strings.R.string as Strings
 

@@ -9,8 +9,8 @@ import io.reactivex.rxjava3.subjects.BehaviorSubject
 import kekmech.ru.coreui.R
 import kekmech.ru.coreui.databinding.ViewBannerContainerBinding
 import kekmech.ru.ext_android.addSystemTopPadding
-import kekmech.ru.library_elm.DisposableDelegate
-import kekmech.ru.library_elm.DisposableDelegateImpl
+import kekmech.ru.lib_elm.DisposableDelegate
+import kekmech.ru.lib_elm.DisposableDelegateImpl
 import java.util.Optional
 import java.util.concurrent.TimeUnit
 

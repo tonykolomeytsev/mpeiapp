@@ -4,8 +4,8 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.feature_bars_impl.R
 import kekmech.ru.feature_bars_impl.databinding.ItemLoginToBarsBinding
-import kekmech.ru.library_adapter.AdapterItem
-import kekmech.ru.library_adapter.BaseItemBinder
+import kekmech.ru.lib_adapter.AdapterItem
+import kekmech.ru.lib_adapter.BaseItemBinder
 
 internal object LoginToBarsItem
 

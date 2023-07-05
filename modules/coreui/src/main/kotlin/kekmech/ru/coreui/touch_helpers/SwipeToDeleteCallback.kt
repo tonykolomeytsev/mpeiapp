@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.coreui.R
 import kekmech.ru.ext_android.getResColor
 import kekmech.ru.ext_android.getThemeColor
-import kekmech.ru.library_adapter.BaseAdapter
+import kekmech.ru.lib_adapter.BaseAdapter
 import kekmech.ru.res_icons.R.drawable as Icons
 
 /**

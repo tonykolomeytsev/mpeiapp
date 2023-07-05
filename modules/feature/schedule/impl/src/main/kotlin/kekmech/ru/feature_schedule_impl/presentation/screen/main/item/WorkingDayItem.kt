@@ -11,14 +11,14 @@ import kekmech.ru.ext_kotlin.fastLazy
 import kekmech.ru.feature_schedule_api.domain.model.Classes
 import kekmech.ru.feature_schedule_impl.R
 import kekmech.ru.feature_schedule_impl.databinding.ItemWorkingDayBinding
-import kekmech.ru.library_adapter.AdapterItem
-import kekmech.ru.library_adapter.BaseAdapter
-import kekmech.ru.library_adapter.BaseItemBinder
-import kekmech.ru.library_schedule.items.ClassesAdapterItem
-import kekmech.ru.library_schedule.items.LunchAdapterItem
-import kekmech.ru.library_schedule.items.NotePreviewAdapterItem
-import kekmech.ru.library_schedule.items.SelfStudyAdapterItem
-import kekmech.ru.library_schedule.items.WindowAdapterItem
+import kekmech.ru.lib_adapter.AdapterItem
+import kekmech.ru.lib_adapter.BaseAdapter
+import kekmech.ru.lib_adapter.BaseItemBinder
+import kekmech.ru.lib_schedule.items.ClassesAdapterItem
+import kekmech.ru.lib_schedule.items.LunchAdapterItem
+import kekmech.ru.lib_schedule.items.NotePreviewAdapterItem
+import kekmech.ru.lib_schedule.items.SelfStudyAdapterItem
+import kekmech.ru.lib_schedule.items.WindowAdapterItem
 
 const val DAY_OF_WEEK_MONDAY = 1
 const val DAY_OF_WEEK_TUESDAY = 2

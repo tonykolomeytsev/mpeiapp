@@ -7,8 +7,8 @@ import kekmech.ru.coreui.R
 import kekmech.ru.coreui.databinding.ItemFavoriteScheduleBinding
 import kekmech.ru.ext_android.getThemeColor
 import kekmech.ru.feature_favorite_schedule_api.domain.model.FavoriteSchedule
-import kekmech.ru.library_adapter.AdapterItem
-import kekmech.ru.library_adapter.BaseItemBinder
+import kekmech.ru.lib_adapter.AdapterItem
+import kekmech.ru.lib_adapter.BaseItemBinder
 
 data class FavoriteScheduleItem(
     val value: FavoriteSchedule,

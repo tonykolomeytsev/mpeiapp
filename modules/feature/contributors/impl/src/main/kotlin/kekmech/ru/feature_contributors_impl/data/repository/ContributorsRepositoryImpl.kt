@@ -4,8 +4,8 @@ import kekmech.ru.feature_contributors_api.data.repository.ContributorsRepositor
 import kekmech.ru.feature_contributors_api.domain.model.Contributor
 import kekmech.ru.feature_contributors_impl.data.dto.GitHubContributor
 import kekmech.ru.feature_contributors_impl.data.network.GitHubService
-import kekmech.ru.library_persistent_cache.api.PersistentCache
-import kekmech.ru.library_persistent_cache.api.ofList
+import kekmech.ru.lib_persistent_cache.api.PersistentCache
+import kekmech.ru.lib_persistent_cache.api.ofList
 import kotlinx.coroutines.flow.Flow
 
 internal class ContributorsRepositoryImpl(

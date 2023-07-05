@@ -5,8 +5,8 @@ import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.coreui.R
 import kekmech.ru.coreui.databinding.ItemAddActionBinding
 import kekmech.ru.ext_android.views.scaleOnTouch
-import kekmech.ru.library_adapter.AdapterItem
-import kekmech.ru.library_adapter.BaseItemBinder
+import kekmech.ru.lib_adapter.AdapterItem
+import kekmech.ru.lib_adapter.BaseItemBinder
 
 private const val ADD_ACTION_DEFAULT_ITEM_ID = 0
 private const val ANIMATION_SCALE_MIN = 0.9f

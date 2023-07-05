@@ -2,8 +2,8 @@ package kekmech.ru.debug_menu.presentation.screens.feature_toggles.elm
 
 import kekmech.ru.debug_menu.presentation.screens.feature_toggles.elm.FeatureTogglesEvent.Internal
 import kekmech.ru.debug_menu.presentation.screens.feature_toggles.elm.FeatureTogglesEvent.Ui
-import kekmech.ru.library_elm.map
-import kekmech.ru.library_elm.toResource
+import kekmech.ru.lib_elm.map
+import kekmech.ru.lib_elm.toResource
 import vivid.money.elmslie.core.store.dsl_reducer.ScreenDslReducer
 import kekmech.ru.debug_menu.presentation.screens.feature_toggles.elm.FeatureTogglesCommand as Command
 import kekmech.ru.debug_menu.presentation.screens.feature_toggles.elm.FeatureTogglesEffect as Effect

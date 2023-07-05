@@ -13,8 +13,8 @@ import kekmech.ru.ext_android.getThemeColor
 import kekmech.ru.feature_bars_impl.R
 import kekmech.ru.feature_bars_impl.databinding.ItemControlActivityBinding
 import kekmech.ru.feature_bars_impl.domain.ControlActivity
-import kekmech.ru.library_adapter.AdapterItem
-import kekmech.ru.library_adapter.BaseItemBinder
+import kekmech.ru.lib_adapter.AdapterItem
+import kekmech.ru.lib_adapter.BaseItemBinder
 import kekmech.ru.coreui.R as coreui_R
 
 internal class ControlActivityAdapterItem : AdapterItem<ControlActivityViewHolder, ControlActivity>(

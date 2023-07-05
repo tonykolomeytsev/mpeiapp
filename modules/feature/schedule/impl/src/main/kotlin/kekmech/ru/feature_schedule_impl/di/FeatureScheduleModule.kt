@@ -15,8 +15,8 @@ import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.Fi
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.FindScheduleStoreFactory
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleActor
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleStoreProvider
-import kekmech.ru.library_analytics_api.SelectedScheduleAnalyticsProvider
-import kekmech.ru.library_network.buildApi
+import kekmech.ru.lib_analytics_api.SelectedScheduleAnalyticsProvider
+import kekmech.ru.lib_network.buildApi
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind

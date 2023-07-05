@@ -4,8 +4,8 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.feature_dashboard_impl.R
 import kekmech.ru.feature_dashboard_impl.databinding.ItemDayStatusBinding
-import kekmech.ru.library_adapter.AdapterItem
-import kekmech.ru.library_adapter.BaseItemBinder
+import kekmech.ru.lib_adapter.AdapterItem
+import kekmech.ru.lib_adapter.BaseItemBinder
 
 private const val ANIMATION_DURATION = 200L
 

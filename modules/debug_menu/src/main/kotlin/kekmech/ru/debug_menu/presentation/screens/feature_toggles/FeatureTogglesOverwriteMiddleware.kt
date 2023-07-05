@@ -1,8 +1,8 @@
 package kekmech.ru.debug_menu.presentation.screens.feature_toggles
 
 import android.content.Context
-import kekmech.ru.library_feature_toggles.RemoteConfigWrapper
-import kekmech.ru.library_feature_toggles.RemoteVariableValueHolder
+import kekmech.ru.lib_feature_toggles.RemoteConfigWrapper
+import kekmech.ru.lib_feature_toggles.RemoteVariableValueHolder
 import java.io.ObjectInputStream
 import java.io.ObjectOutputStream
 import java.util.concurrent.ConcurrentHashMap

@@ -11,9 +11,9 @@ import kekmech.ru.feature_bars_api.BarsFeatureLauncher
 import kekmech.ru.feature_dashboard_api.DashboardFeatureLauncher
 import kekmech.ru.feature_map_api.MapFeatureLauncher
 import kekmech.ru.feature_schedule_api.ScheduleFeatureLauncher
-import kekmech.ru.library_navigation.BottomTab
-import kekmech.ru.library_navigation.features.ScrollToTop
-import kekmech.ru.library_navigation.features.TabScreenStateSaver
+import kekmech.ru.lib_navigation.BottomTab
+import kekmech.ru.lib_navigation.features.ScrollToTop
+import kekmech.ru.lib_navigation.features.TabScreenStateSaver
 import kekmech.ru.mpeiapp.R
 import timber.log.Timber
 import java.util.concurrent.TimeUnit

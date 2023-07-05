@@ -19,7 +19,7 @@ dependencies {
     implementation(libs.rx.java)
     implementation(libs.squareup.retrofit)
 
-    implementation(project(":library_adapter"))
+    implementation(project(":lib_adapter"))
     implementation(project(":ext_android"))
     implementation(project(":ext_kotlin"))
 
@@ -29,8 +29,8 @@ dependencies {
 
     implementation(project(":ext_okhttp"))
 
-    implementation(project(":library_elm"))
-    implementation(project(":library_network"))
+    implementation(project(":lib_elm"))
+    implementation(project(":lib_network"))
 
     implementation(project(":res_icons"))
     implementation(project(":res_images"))

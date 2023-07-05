@@ -12,7 +12,7 @@ import kekmech.ru.coreui.items.ToggleItem
 import kekmech.ru.feature_app_settings_impl.presentation.screens.main.AppSettingsFragment.Companion.ITEM_GITHUB
 import kekmech.ru.feature_app_settings_impl.presentation.screens.main.AppSettingsFragment.Companion.ITEM_SUPPORT
 import kekmech.ru.feature_app_settings_impl.presentation.screens.main.elm.AppSettingsState
-import kekmech.ru.library_app_info.AppVersionName
+import kekmech.ru.lib_app_info.AppVersionName
 import kekmech.ru.coreui.R as coreui_R
 import kekmech.ru.res_strings.R.string as Strings
 

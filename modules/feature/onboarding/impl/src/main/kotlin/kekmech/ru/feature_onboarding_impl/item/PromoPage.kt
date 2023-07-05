@@ -6,8 +6,8 @@ import androidx.annotation.StringRes
 import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.feature_onboarding_impl.R
 import kekmech.ru.feature_onboarding_impl.databinding.ItemPromoPageBinding
-import kekmech.ru.library_adapter.AdapterItem
-import kekmech.ru.library_adapter.BaseItemBinder
+import kekmech.ru.lib_adapter.AdapterItem
+import kekmech.ru.lib_adapter.BaseItemBinder
 import kekmech.ru.res_strings.R.string as Strings
 
 internal enum class PromoPage(

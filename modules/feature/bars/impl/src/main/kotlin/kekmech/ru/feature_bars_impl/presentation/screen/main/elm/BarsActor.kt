@@ -4,7 +4,7 @@ import kekmech.ru.feature_bars_impl.data.repository.BarsConfigRepository
 import kekmech.ru.feature_bars_impl.data.repository.BarsExtractJsRepository
 import kekmech.ru.feature_bars_impl.data.repository.BarsUserInfoRepository
 import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsEvent.Internal
-import kekmech.ru.library_elm.actorFlow
+import kekmech.ru.lib_elm.actorFlow
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import vivid.money.elmslie.coroutines.Actor

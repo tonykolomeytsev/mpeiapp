@@ -2,7 +2,7 @@ package kekmech.ru.feature_app_settings_impl.data
 
 import android.content.SharedPreferences
 import kekmech.ru.feature_app_settings_api.data.AppEnvironmentRepository
-import kekmech.ru.library_network.AppEnvironment
+import kekmech.ru.lib_network.AppEnvironment
 
 internal class AppEnvironmentRepositoryImpl(
     private val sharedPreferences: SharedPreferences,

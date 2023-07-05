@@ -28,19 +28,19 @@ import kekmech.ru.feature_search_impl.screens.schedule_details.elm.ScheduleDetai
 import kekmech.ru.feature_search_impl.screens.schedule_details.elm.ScheduleDetailsEvent.Ui
 import kekmech.ru.feature_search_impl.screens.schedule_details.elm.ScheduleDetailsState
 import kekmech.ru.feature_search_impl.screens.schedule_details.elm.ScheduleDetailsStoreFactory
-import kekmech.ru.library_adapter.AdapterItem
-import kekmech.ru.library_adapter.BaseAdapter
-import kekmech.ru.library_analytics_android.ext.screenAnalytics
-import kekmech.ru.library_elm.BaseBottomSheetDialogFragment
-import kekmech.ru.library_navigation.BottomTab
-import kekmech.ru.library_navigation.BottomTabsSwitcher
-import kekmech.ru.library_navigation.ClearBackStack
-import kekmech.ru.library_navigation.Router
-import kekmech.ru.library_schedule.items.ClassesItemBinder
-import kekmech.ru.library_schedule.items.ClassesViewHolderImpl
+import kekmech.ru.lib_adapter.AdapterItem
+import kekmech.ru.lib_adapter.BaseAdapter
+import kekmech.ru.lib_analytics_android.ext.screenAnalytics
+import kekmech.ru.lib_elm.BaseBottomSheetDialogFragment
+import kekmech.ru.lib_navigation.BottomTab
+import kekmech.ru.lib_navigation.BottomTabsSwitcher
+import kekmech.ru.lib_navigation.ClearBackStack
+import kekmech.ru.lib_navigation.Router
+import kekmech.ru.lib_schedule.items.ClassesItemBinder
+import kekmech.ru.lib_schedule.items.ClassesViewHolderImpl
 import org.koin.android.ext.android.inject
 import kekmech.ru.coreui.R as coreui_R
-import kekmech.ru.library_schedule.R as common_schedule_R
+import kekmech.ru.lib_schedule.R as common_schedule_R
 
 private const val ARG_RESULT_ITEM = "Arg.Item"
 internal const val ITEM_BUTTON_SWITCH = 1
