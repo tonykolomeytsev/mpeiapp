@@ -1,9 +1,12 @@
 plugins {
-    id("mpeix.android.lib")
+    id("mpeix.feature.impl")
 }
 
 @Suppress("UnstableApiUsage")
-android.buildFeatures.viewBinding = true
+android.buildFeatures {
+    viewBinding = true
+    androidResources = true
+}
 
 dependencies {
     testImplementation(libs.kotest.assertions)

@@ -95,7 +95,7 @@ dependencies {
     implementation(project(":feature_favorite_schedule_impl"))
     implementation(project(":feature_app_update_api"))
     implementation(project(":domain_github"))
-    implementation(project(":domain_main_screen"))
+    implementation(project(":feature_main_screen_api"))
     implementation(project(":feature_map_api"))
     implementation(project(":feature_notes_api"))
     implementation(project(":feature_onboarding_api"))

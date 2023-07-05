@@ -19,7 +19,7 @@ dependencies {
     implementation(libs.rx.java)
     implementation(libs.tinkoff.pagerIndicator)
 
-    implementation(project(":domain_main_screen"))
+    implementation(project(":feature_main_screen_api"))
     implementation(project(":feature_onboarding_api"))
     implementation(project(":feature_schedule_api"))
 
