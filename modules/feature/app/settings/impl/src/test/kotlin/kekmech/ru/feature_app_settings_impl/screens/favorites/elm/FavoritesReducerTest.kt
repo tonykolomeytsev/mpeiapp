@@ -4,13 +4,13 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
-import kekmech.ru.domain_schedule_models.dto.ScheduleType
 import kekmech.ru.feature_app_settings_impl.presentation.screens.favorites.elm.FavoritesCommand
 import kekmech.ru.feature_app_settings_impl.presentation.screens.favorites.elm.FavoritesEvent.Internal
 import kekmech.ru.feature_app_settings_impl.presentation.screens.favorites.elm.FavoritesEvent.Ui
 import kekmech.ru.feature_app_settings_impl.presentation.screens.favorites.elm.FavoritesReducer
 import kekmech.ru.feature_app_settings_impl.presentation.screens.favorites.elm.FavoritesState
 import kekmech.ru.feature_favorite_schedule_api.domain.model.FavoriteSchedule
+import kekmech.ru.feature_schedule_api.domain.model.ScheduleType
 
 internal class FavoritesReducerTest : BehaviorSpec({
     val reducer = FavoritesReducer()
@@ -79,7 +79,13 @@ internal class FavoritesReducerTest : BehaviorSpec({
                 effects.shouldBeEmpty()
             }
             Then("Check commands") {
-                commands.shouldContainExactly(listOf(FavoritesCommand.UpdateOrInsertFavorite(updatedFavorite)))
+                commands.shouldContainExactly(
+                    listOf(
+                        FavoritesCommand.UpdateOrInsertFavorite(
+                            updatedFavorite
+                        )
+                    )
+                )
             }
         }
         When("Ui.Click.DeleteFavorite") {
@@ -103,6 +109,7 @@ internal class FavoritesReducerTest : BehaviorSpec({
 })
 
 private object Mocks {
+
     val FAVORITES_LIST =
         listOf(
             FavoriteSchedule(

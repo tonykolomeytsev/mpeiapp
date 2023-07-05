@@ -14,9 +14,6 @@ import kekmech.ru.coreui.items.SectionHeaderAdapterItem
 import kekmech.ru.coreui.items.ShimmerAdapterItem
 import kekmech.ru.coreui.items.SpaceAdapterItem
 import kekmech.ru.coreui.items.TextAdapterItem
-import kekmech.ru.domain_schedule.ScheduleFeatureLauncher
-import kekmech.ru.domain_schedule.dto.SelectedSchedule
-import kekmech.ru.domain_schedule_models.dto.Classes
 import kekmech.ru.ext_android.ActivityResultListener
 import kekmech.ru.ext_android.EmptyResult
 import kekmech.ru.ext_android.addSystemVerticalPadding
@@ -40,6 +37,9 @@ import kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm.DashboardE
 import kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm.DashboardEvent
 import kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm.DashboardState
 import kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm.DashboardStoreProvider
+import kekmech.ru.feature_schedule_api.ScheduleFeatureLauncher
+import kekmech.ru.feature_schedule_api.domain.model.Classes
+import kekmech.ru.feature_schedule_api.domain.model.SelectedSchedule
 import kekmech.ru.library_adapter.BaseAdapter
 import kekmech.ru.library_analytics_android.addScrollAnalytics
 import kekmech.ru.library_analytics_android.ext.screenAnalytics

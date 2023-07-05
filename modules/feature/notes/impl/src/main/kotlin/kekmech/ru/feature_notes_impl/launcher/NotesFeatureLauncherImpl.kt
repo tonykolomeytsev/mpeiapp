@@ -1,11 +1,11 @@
 package kekmech.ru.feature_notes_impl.launcher
 
-import kekmech.ru.domain_schedule_models.dto.Classes
 import kekmech.ru.feature_notes_api.NotesFeatureLauncher
 import kekmech.ru.feature_notes_api.domain.model.Note
 import kekmech.ru.feature_notes_impl.presentation.screen.all_notes.AllNotesFragment
 import kekmech.ru.feature_notes_impl.presentation.screen.edit.NoteEditFragment
 import kekmech.ru.feature_notes_impl.presentation.screen.note_list.NoteListFragment
+import kekmech.ru.feature_schedule_api.domain.model.Classes
 import kekmech.ru.library_navigation.AddScreenForward
 import kekmech.ru.library_navigation.Router
 import kekmech.ru.library_navigation.ShowDialog
@@ -15,7 +15,11 @@ internal class NotesFeatureLauncherImpl(
     private val router: Router,
 ) : NotesFeatureLauncher {
 
-    override fun launchNoteList(selectedClasses: Classes, selectedDate: LocalDate, resultKey: String) {
+    override fun launchNoteList(
+        selectedClasses: Classes,
+        selectedDate: LocalDate,
+        resultKey: String,
+    ) {
         router.executeCommand(
             ShowDialog {
                 NoteListFragment.newInstance(selectedClasses, selectedDate, resultKey)

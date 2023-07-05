@@ -5,14 +5,14 @@ import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
-import kekmech.ru.domain_schedule.dto.SearchResult
-import kekmech.ru.domain_schedule.dto.SelectedSchedule
-import kekmech.ru.domain_schedule_models.dto.Day
-import kekmech.ru.domain_schedule_models.dto.Schedule
-import kekmech.ru.domain_schedule_models.dto.ScheduleType
-import kekmech.ru.domain_schedule_models.dto.Week
-import kekmech.ru.domain_schedule_models.dto.WeekOfSemester
 import kekmech.ru.feature_favorite_schedule_api.domain.model.FavoriteSchedule
+import kekmech.ru.feature_schedule_api.domain.model.Day
+import kekmech.ru.feature_schedule_api.domain.model.Schedule
+import kekmech.ru.feature_schedule_api.domain.model.ScheduleType
+import kekmech.ru.feature_schedule_api.domain.model.SearchResult
+import kekmech.ru.feature_schedule_api.domain.model.SelectedSchedule
+import kekmech.ru.feature_schedule_api.domain.model.Week
+import kekmech.ru.feature_schedule_api.domain.model.WeekOfSemester
 import kekmech.ru.feature_search_impl.screens.schedule_details.elm.ScheduleDetailsCommand
 import kekmech.ru.feature_search_impl.screens.schedule_details.elm.ScheduleDetailsEffect
 import kekmech.ru.feature_search_impl.screens.schedule_details.elm.ScheduleDetailsEvent.Internal
@@ -75,9 +75,11 @@ class ScheduleDetailsReducerTest : BehaviorSpec({
                 effects.shouldContainExactly(ScheduleDetailsEffect.CloseAndGoToSchedule)
             }
             Then("Check actions") {
-                actions.shouldContainExactly(ScheduleDetailsCommand.SwitchSchedule(
-                    SelectedSchedule(name = SEARCH_RESULT.name, type = SEARCH_RESULT.type)
-                ))
+                actions.shouldContainExactly(
+                    ScheduleDetailsCommand.SwitchSchedule(
+                        SelectedSchedule(name = SEARCH_RESULT.name, type = SEARCH_RESULT.type)
+                    )
+                )
             }
         }
         When("News.ScheduleLoaded (0)") {

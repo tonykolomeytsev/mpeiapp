@@ -1,9 +1,9 @@
 package kekmech.ru.feature_notes_impl.presentation.screen.note_list.elm
 
-import kekmech.ru.domain_schedule_models.dto.Classes
 import kekmech.ru.feature_notes_api.domain.model.Note
 import kekmech.ru.feature_notes_impl.presentation.screen.note_list.elm.NoteListEvent.Internal
 import kekmech.ru.feature_notes_impl.presentation.screen.note_list.elm.NoteListEvent.Ui
+import kekmech.ru.feature_schedule_api.domain.model.Classes
 import vivid.money.elmslie.core.store.dsl_reducer.ScreenDslReducer
 import java.time.LocalDate
 import java.time.LocalDateTime

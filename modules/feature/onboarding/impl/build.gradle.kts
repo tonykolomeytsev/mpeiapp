@@ -21,7 +21,7 @@ dependencies {
 
     implementation(project(":domain_main_screen"))
     implementation(project(":feature_onboarding_api"))
-    implementation(project(":domain_schedule"))
+    implementation(project(":feature_schedule_api"))
 
     implementation(project(":library_adapter"))
     implementation(project(":library_analytics_android"))

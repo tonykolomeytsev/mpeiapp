@@ -32,7 +32,7 @@ dependencies {
 
     implementation(project(":feature_app_settings_api"))
     implementation(project(":feature_bars_api"))
-    implementation(project(":domain_schedule"))
+    implementation(project(":feature_schedule_api"))
 
     implementation(project(":library_adapter"))
     implementation(project(":library_analytics_android"))

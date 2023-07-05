@@ -8,7 +8,6 @@ import androidx.datastore.preferences.preferencesDataStoreFile
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.redmadrobot.mapmemory.MapMemory
 import kekmech.ru.domain_github.di.DomainGitHubModule
-import kekmech.ru.domain_schedule.di.DomainScheduleModule
 import kekmech.ru.ext_koin.bindIntoList
 import kekmech.ru.feature_app_settings_impl.di.FeatureAppSettingsModule
 import kekmech.ru.feature_app_update_impl.di.FeatureForceUpdateModule
@@ -18,7 +17,7 @@ import kekmech.ru.feature_favorite_schedule_impl.di.FeatureFavoriteScheduleModul
 import kekmech.ru.feature_map_impl.di.FeatureMapModule
 import kekmech.ru.feature_notes_impl.di.FeatureNotesModule
 import kekmech.ru.feature_onboarding_impl.di.FeatureOnboardingModule
-import kekmech.ru.feature_schedule.di.FeatureScheduleModule
+import kekmech.ru.feature_schedule_impl.di.FeatureScheduleModule
 import kekmech.ru.feature_search_impl.di.FeatureSearchFeatureModule
 import kekmech.ru.library_analytics_android.FirebaseAnalyticsProvider
 import kekmech.ru.library_analytics_android.di.LibraryAnalyticsModule
@@ -74,7 +73,6 @@ val AppModule = module {
         DeeplinkModule,
         // domain
         DomainGitHubModule,
-        DomainScheduleModule,
         // feature
         FeatureAppSettingsModule,
         FeatureBarsModule,

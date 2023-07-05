@@ -12,7 +12,6 @@ import kekmech.ru.coreui.items.PullAdapterItem
 import kekmech.ru.coreui.items.SectionHeaderAdapterItem
 import kekmech.ru.coreui.items.SpaceAdapterItem
 import kekmech.ru.coreui.touch_helpers.attachSwipeToDeleteCallback
-import kekmech.ru.domain_schedule_models.dto.Classes
 import kekmech.ru.ext_android.close
 import kekmech.ru.ext_android.getArgument
 import kekmech.ru.ext_android.viewbinding.viewBinding
@@ -27,6 +26,7 @@ import kekmech.ru.feature_notes_impl.presentation.screen.note_list.elm.NoteListE
 import kekmech.ru.feature_notes_impl.presentation.screen.note_list.elm.NoteListEvent
 import kekmech.ru.feature_notes_impl.presentation.screen.note_list.elm.NoteListEvent.Ui
 import kekmech.ru.feature_notes_impl.presentation.screen.note_list.elm.NoteListState
+import kekmech.ru.feature_schedule_api.domain.model.Classes
 import kekmech.ru.library_adapter.BaseAdapter
 import kekmech.ru.library_analytics_android.ext.screenAnalytics
 import kekmech.ru.library_elm.BaseBottomSheetDialogFragment
@@ -72,7 +72,8 @@ internal class NoteListFragment :
 
     override fun handleEffect(effect: NoteListEffect) = when (effect) {
         is NoteListEffect.ShowNoteLoadError -> Toast
-            .makeText(requireContext(), Strings.something_went_wrong_error, Toast.LENGTH_SHORT).show()
+            .makeText(requireContext(), Strings.something_went_wrong_error, Toast.LENGTH_SHORT)
+            .show()
         is NoteListEffect.OpenNoteEdit -> {
             close()
             addScreenForward { NoteEditFragment.newInstance(effect.note, resultKey) }

@@ -1,6 +1,6 @@
 package kekmech.ru.feature_notes_impl.presentation.screen.note_list.elm
 
-import kekmech.ru.domain_schedule_models.dto.Classes
+import kekmech.ru.feature_schedule_api.domain.model.Classes
 import vivid.money.elmslie.coroutines.ElmStoreCompat
 import java.time.LocalDate
 
