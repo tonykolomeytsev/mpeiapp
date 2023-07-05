@@ -105,7 +105,7 @@ gradlePlugin {
         implementationClass = "mpeix.plugins.AndroidUiConventionPlugin"
     }
     plugins.create("AndroidResourcesConventionPlugin") {
-        id = "mpeix.android.res"
+        id = "mpeix.android.resources"
         displayName = "MpeiX Android Resources Convention"
         description = "The Gradle Plugin that configures Android module with resources only"
         implementationClass = "mpeix.plugins.AndroidResourcesConventionPlugin"
