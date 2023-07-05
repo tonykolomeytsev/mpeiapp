@@ -49,8 +49,8 @@ import kekmech.ru.library_navigation.features.ScrollToTop
 import kekmech.ru.library_navigation.features.TabScreenStateSaver
 import kekmech.ru.library_navigation.features.TabScreenStateSaverImpl
 import kekmech.ru.library_schedule.items.NotePreviewAdapterItem
-import kekmech.ru.strings.Strings
 import org.koin.android.ext.android.inject
+import kekmech.ru.res_strings.R.string as Strings
 
 internal class DashboardFragment :
     BaseFragment<DashboardEvent, DashboardEffect, DashboardState>(R.layout.fragment_dashboard),

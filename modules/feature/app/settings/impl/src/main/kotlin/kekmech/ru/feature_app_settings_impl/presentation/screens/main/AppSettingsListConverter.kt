@@ -13,8 +13,8 @@ import kekmech.ru.feature_app_settings_impl.presentation.screens.main.AppSetting
 import kekmech.ru.feature_app_settings_impl.presentation.screens.main.AppSettingsFragment.Companion.ITEM_SUPPORT
 import kekmech.ru.feature_app_settings_impl.presentation.screens.main.elm.AppSettingsState
 import kekmech.ru.library_app_info.AppVersionName
-import kekmech.ru.strings.Strings
 import kekmech.ru.coreui.R as coreui_R
+import kekmech.ru.res_strings.R.string as Strings
 
 internal class AppSettingsListConverter {
 

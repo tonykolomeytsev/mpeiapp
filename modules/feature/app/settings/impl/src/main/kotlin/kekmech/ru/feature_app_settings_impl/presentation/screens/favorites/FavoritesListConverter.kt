@@ -6,7 +6,7 @@ import kekmech.ru.coreui.items.FavoriteScheduleItem
 import kekmech.ru.coreui.items.SpaceItem
 import kekmech.ru.feature_app_settings_impl.presentation.screens.favorites.elm.FavoritesState
 import kekmech.ru.feature_app_settings_impl.presentation.screens.favorites.item.HelpBannerItem
-import kekmech.ru.strings.Strings
+import kekmech.ru.res_strings.R.string as Strings
 
 internal class FavoritesListConverter(context: Context) {
 

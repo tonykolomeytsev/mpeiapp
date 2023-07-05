@@ -27,5 +27,5 @@ dependencies {
     implementation(project(":library_navigation"))
 
     implementation(project(":coreui"))
-    implementation(project(":strings"))
+    implementation(project(":res_strings"))
 }

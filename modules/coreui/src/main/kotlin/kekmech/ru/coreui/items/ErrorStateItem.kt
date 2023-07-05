@@ -10,11 +10,11 @@ import kekmech.ru.coreui.databinding.ItemErrorStateBinding
 import kekmech.ru.ext_okhttp.NoInternetConnectionException
 import kekmech.ru.library_adapter.AdapterItem
 import kekmech.ru.library_adapter.BaseItemBinder
-import kekmech.ru.strings.Strings
 import retrofit2.HttpException
 import java.net.UnknownHostException
 import javax.net.ssl.SSLHandshakeException
 import kekmech.ru.res_images.R.drawable as Images
+import kekmech.ru.res_strings.R.string as Strings
 
 data class ErrorStateItem(val throwable: Throwable)
 

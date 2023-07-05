@@ -9,7 +9,7 @@ import kekmech.ru.feature_map_impl.presentation.items.TabBarItem
 import kekmech.ru.feature_map_impl.presentation.screen.main.elm.FilterTab
 import kekmech.ru.feature_map_impl.presentation.screen.main.elm.MapState
 import kekmech.ru.feature_map_impl.presentation.screen.main.ext.toMarkerType
-import kekmech.ru.strings.Strings
+import kekmech.ru.res_strings.R.string as Strings
 
 private const val TAB_BAR_ITEM_SPACING = 4
 

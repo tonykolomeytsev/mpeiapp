@@ -30,8 +30,8 @@ import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.Fi
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.utils.GroupFormatTextWatcher
 import kekmech.ru.library_analytics_android.ext.screenAnalytics
 import kekmech.ru.library_elm.BaseFragment
-import kekmech.ru.strings.Strings
 import org.koin.android.ext.android.inject
+import kekmech.ru.res_strings.R.string as Strings
 
 internal class FindScheduleFragment :
     BaseFragment<FindScheduleEvent, FindScheduleEffect, FindScheduleState>(R.layout.fragment_find_schedule) {

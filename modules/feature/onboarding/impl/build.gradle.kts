@@ -33,5 +33,5 @@ dependencies {
     implementation(project(":library_network"))
 
     implementation(project(":coreui"))
-    implementation(project(":strings"))
+    implementation(project(":res_strings"))
 }

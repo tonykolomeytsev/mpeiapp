@@ -15,8 +15,8 @@ import kekmech.ru.feature_schedule_api.domain.model.Classes
 import kekmech.ru.feature_schedule_api.domain.model.ScheduleType
 import kekmech.ru.library_elm.Resource
 import kekmech.ru.library_schedule.utils.withNotePreview
-import kekmech.ru.strings.Strings
 import kotlin.time.Duration
+import kekmech.ru.res_strings.R.string as Strings
 
 internal class UpcomingEventsListConverter(
     private val context: Context,

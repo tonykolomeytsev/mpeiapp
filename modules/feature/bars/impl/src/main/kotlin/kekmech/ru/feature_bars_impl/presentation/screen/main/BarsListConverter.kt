@@ -17,8 +17,8 @@ import kekmech.ru.feature_bars_impl.presentation.screen.main.BarsFragment.Compan
 import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsState
 import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.FlowState
 import kekmech.ru.icons.Icons
-import kekmech.ru.strings.Strings
 import kekmech.ru.coreui.R as coreui_R
+import kekmech.ru.res_strings.R.string as Strings
 
 internal class BarsListConverter(private val context: Context) {
 

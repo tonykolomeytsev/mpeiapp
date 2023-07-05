@@ -24,9 +24,9 @@ import kekmech.ru.library_adapter.AdapterItem
 import kekmech.ru.library_adapter.BaseItemBinder
 import kekmech.ru.library_schedule.R
 import kekmech.ru.library_schedule.drawable.ProgressBackgroundDrawable
-import kekmech.ru.strings.StringArrays
 import java.time.format.DateTimeFormatter
 import kekmech.ru.coreui.R as coreui_R
+import kekmech.ru.res_strings.R.array as StringArrays
 
 interface ClassesViewHolder : ClickableItemViewHolder {
 

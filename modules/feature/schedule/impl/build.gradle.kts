@@ -49,5 +49,5 @@ dependencies {
     implementation(project(":library_persistent_cache"))
 
     implementation(project(":coreui"))
-    implementation(project(":strings"))
+    implementation(project(":res_strings"))
 }

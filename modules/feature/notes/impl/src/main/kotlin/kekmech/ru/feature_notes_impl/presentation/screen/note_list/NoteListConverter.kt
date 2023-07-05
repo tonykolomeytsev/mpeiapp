@@ -6,8 +6,8 @@ import kekmech.ru.coreui.items.PullItem
 import kekmech.ru.coreui.items.SectionHeaderItem
 import kekmech.ru.coreui.items.SpaceItem
 import kekmech.ru.feature_notes_impl.presentation.screen.note_list.elm.NoteListState
-import kekmech.ru.strings.Plurals
-import kekmech.ru.strings.Strings
+import kekmech.ru.res_strings.R.plurals as Plurals
+import kekmech.ru.res_strings.R.string as Strings
 
 internal class NoteListConverter(private val context: Context) {
 

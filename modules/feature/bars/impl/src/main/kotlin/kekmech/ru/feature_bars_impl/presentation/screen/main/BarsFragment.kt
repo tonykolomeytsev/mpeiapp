@@ -46,10 +46,10 @@ import kekmech.ru.library_navigation.features.ScrollToTop
 import kekmech.ru.library_navigation.features.TabScreenStateSaver
 import kekmech.ru.library_navigation.features.TabScreenStateSaverImpl
 import kekmech.ru.library_navigation.showDialog
-import kekmech.ru.strings.Strings
 import org.koin.android.ext.android.inject
 import timber.log.Timber
 import kekmech.ru.coreui.R as coreui_R
+import kekmech.ru.res_strings.R.string as Strings
 
 private const val JS_INTERFACE_NAME = "kti"
 

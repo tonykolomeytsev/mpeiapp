@@ -2,8 +2,8 @@ package kekmech.ru.feature_dashboard_impl.presentation.screen.main.helpers
 
 import android.content.Context
 import kekmech.ru.ext_android.getStringArray
-import kekmech.ru.strings.StringArrays
-import kekmech.ru.strings.Strings
+import kekmech.ru.res_strings.R.array as StringArrays
+import kekmech.ru.res_strings.R.string as Strings
 
 private const val DECLENSION_5_TO_10 = 2
 private const val DECLENSION_2_TO_4 = 1

@@ -19,9 +19,9 @@ import kekmech.ru.feature_dashboard_impl.presentation.screen.main.DashboardFragm
 import kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm.DashboardState
 import kekmech.ru.feature_dashboard_impl.presentation.screen.main.upcoming_events.UpcomingEventsListConverter
 import kekmech.ru.feature_schedule_api.domain.model.WeekOfSemester
-import kekmech.ru.strings.Strings
 import java.time.DayOfWeek
 import java.time.LocalTime
+import kekmech.ru.res_strings.R.string as Strings
 
 @Suppress("MagicNumber")
 internal class DashboardListConverter(
