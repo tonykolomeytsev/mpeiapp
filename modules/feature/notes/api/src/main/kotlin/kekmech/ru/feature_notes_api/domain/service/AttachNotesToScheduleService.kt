@@ -1,9 +1,9 @@
 package kekmech.ru.feature_notes_api.domain.service
 
-import kekmech.ru.domain_schedule_models.dto.Classes
-import kekmech.ru.domain_schedule_models.dto.Schedule
 import kekmech.ru.feature_notes_api.domain.model.Note
 import kekmech.ru.feature_notes_api.domain.usecase.GetNotesForSelectedScheduleUseCase
+import kekmech.ru.feature_schedule_api.domain.model.Classes
+import kekmech.ru.feature_schedule_api.domain.model.Schedule
 import java.time.LocalDate
 import java.time.LocalDateTime
 

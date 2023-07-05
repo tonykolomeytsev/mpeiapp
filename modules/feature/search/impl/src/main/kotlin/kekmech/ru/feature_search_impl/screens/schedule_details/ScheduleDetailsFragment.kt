@@ -10,13 +10,13 @@ import kekmech.ru.coreui.items.ShimmerAdapterItem
 import kekmech.ru.coreui.items.SpaceAdapterItem
 import kekmech.ru.coreui.items.TextAdapterItem
 import kekmech.ru.coreui.items.TextWithIconAdapterItem
-import kekmech.ru.domain_schedule.dto.SearchResult
-import kekmech.ru.domain_schedule_models.dto.Classes
 import kekmech.ru.ext_android.close
 import kekmech.ru.ext_android.getArgument
 import kekmech.ru.ext_android.viewbinding.viewBinding
 import kekmech.ru.ext_android.withArguments
 import kekmech.ru.ext_kotlin.fastLazy
+import kekmech.ru.feature_schedule_api.domain.model.Classes
+import kekmech.ru.feature_schedule_api.domain.model.SearchResult
 import kekmech.ru.feature_search_impl.R
 import kekmech.ru.feature_search_impl.databinding.FragmentScheduleDetailsBinding
 import kekmech.ru.feature_search_impl.item.ButtonAdapterItem

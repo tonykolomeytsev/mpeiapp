@@ -3,8 +3,8 @@ package kekmech.ru.library_schedule
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
-import kekmech.ru.domain_schedule_models.dto.Classes
-import kekmech.ru.domain_schedule_models.dto.Time
+import kekmech.ru.feature_schedule_api.domain.model.Classes
+import kekmech.ru.feature_schedule_api.domain.model.Time
 import kekmech.ru.library_schedule.items.LunchItem
 import kekmech.ru.library_schedule.items.NotePreview
 import kekmech.ru.library_schedule.items.WindowItem
@@ -136,7 +136,8 @@ class ConvertersExtTest : BehaviorSpec({
                 givenClasses.withWindows().shouldContainExactly(
                     CLASSES_1,
                     WindowItem(CLASSES_1.time.end, CLASSES_3.time.start),
-                    CLASSES_3)
+                    CLASSES_3
+                )
             }
         }
         When("Second and third classes") {
@@ -233,14 +234,21 @@ class ConvertersExtTest : BehaviorSpec({
 }) {
 
     private companion object {
+
         private val TIME = Time(LocalTime.of(12, 45), LocalTime.of(13, 45))
         private const val NOTE_CONTENT = "blah blah blah"
-        private val CLASSES_1 = Classes(name = "one", number = 1,
-            time = Time(LocalTime.of(9, 20), LocalTime.of(10, 55)))
-        private val CLASSES_2 = Classes(name = "two", number = 2,
-            time = Time(LocalTime.of(11, 10), LocalTime.of(12, 45)))
-        private val CLASSES_3 = Classes(name = "three", number = 3,
-            time = Time(LocalTime.of(13, 45), LocalTime.of(15, 20)))
+        private val CLASSES_1 = Classes(
+            name = "one", number = 1,
+            time = Time(LocalTime.of(9, 20), LocalTime.of(10, 55))
+        )
+        private val CLASSES_2 = Classes(
+            name = "two", number = 2,
+            time = Time(LocalTime.of(11, 10), LocalTime.of(12, 45))
+        )
+        private val CLASSES_3 = Classes(
+            name = "three", number = 3,
+            time = Time(LocalTime.of(13, 45), LocalTime.of(15, 20))
+        )
         private val CLASSES_4 = Classes(name = "four", number = 4)
         private val CLASSES_5 = Classes(name = "five", number = 5)
     }

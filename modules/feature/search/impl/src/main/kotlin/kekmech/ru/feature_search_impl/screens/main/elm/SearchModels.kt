@@ -1,6 +1,6 @@
 package kekmech.ru.feature_search_impl.screens.main.elm
 
-import kekmech.ru.domain_schedule.dto.SearchResult
+import kekmech.ru.feature_schedule_api.domain.model.SearchResult
 import kekmech.ru.feature_search_impl.item.FilterItem
 import kekmech.ru.feature_search_impl.item.FilterItemType
 

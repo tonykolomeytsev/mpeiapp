@@ -5,7 +5,6 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
-import kekmech.ru.domain_schedule.ScheduleFeatureLauncher.ContinueTo.DASHBOARD
 import kekmech.ru.ext_android.viewbinding.viewBinding
 import kekmech.ru.ext_kotlin.fastLazy
 import kekmech.ru.feature_onboarding_impl.R
@@ -13,6 +12,7 @@ import kekmech.ru.feature_onboarding_impl.databinding.FragmentWelcomeBinding
 import kekmech.ru.feature_onboarding_impl.di.OnboardingDependencies
 import kekmech.ru.feature_onboarding_impl.item.PromoPage
 import kekmech.ru.feature_onboarding_impl.item.PromoPageAdapterItem
+import kekmech.ru.feature_schedule_api.ScheduleFeatureLauncher.ContinueTo.DASHBOARD
 import kekmech.ru.library_adapter.BaseAdapter
 import kekmech.ru.library_analytics_android.addScrollAnalytics
 import kekmech.ru.library_analytics_android.ext.screenAnalytics

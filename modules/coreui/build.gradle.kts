@@ -21,7 +21,7 @@ dependencies {
     implementation(project(":ext_kotlin"))
 
     implementation(project(":feature_notes_api"))
-    implementation(project(":domain_schedule"))
+    implementation(project(":feature_schedule_api"))
     implementation(project(":feature_favorite_schedule_api"))
 
     implementation(project(":ext_okhttp"))

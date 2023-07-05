@@ -33,8 +33,7 @@ dependencies {
     implementation(project(":feature_dashboard_api"))
     implementation(project(":feature_favorite_schedule_api"))
     implementation(project(":feature_notes_api"))
-    implementation(project(":domain_schedule"))
-    implementation(project(":domain_schedule_models"))
+    implementation(project(":feature_schedule_api"))
     implementation(project(":feature_search_api"))
 
     implementation(project(":library_adapter"))

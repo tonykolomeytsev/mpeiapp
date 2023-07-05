@@ -1,13 +1,13 @@
 package kekmech.ru.feature_dashboard_impl.domain.interactor
 
-import kekmech.ru.domain_schedule.use_cases.GetCurrentScheduleUseCase
-import kekmech.ru.domain_schedule_models.dto.Classes
-import kekmech.ru.domain_schedule_models.dto.Day
-import kekmech.ru.domain_schedule_models.dto.Week
 import kekmech.ru.ext_kotlin.moscowLocalDate
 import kekmech.ru.ext_kotlin.moscowLocalTime
 import kekmech.ru.feature_dashboard_impl.domain.model.UpcomingEventsPrediction
 import kekmech.ru.feature_notes_api.domain.service.AttachNotesToScheduleService
+import kekmech.ru.feature_schedule_api.domain.model.Classes
+import kekmech.ru.feature_schedule_api.domain.model.Day
+import kekmech.ru.feature_schedule_api.domain.model.Week
+import kekmech.ru.feature_schedule_api.use_cases.GetCurrentScheduleUseCase
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.temporal.ChronoUnit

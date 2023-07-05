@@ -7,12 +7,12 @@ import kekmech.ru.coreui.items.SectionHeaderItem
 import kekmech.ru.coreui.items.ShimmerItem
 import kekmech.ru.coreui.items.SpaceItem
 import kekmech.ru.coreui.items.TextItem
-import kekmech.ru.domain_schedule_models.dto.Classes
-import kekmech.ru.domain_schedule_models.dto.ScheduleType
 import kekmech.ru.feature_dashboard_impl.R
 import kekmech.ru.feature_dashboard_impl.domain.model.UpcomingEventsPrediction
 import kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm.DashboardState
 import kekmech.ru.feature_dashboard_impl.presentation.screen.main.helpers.TimeDeclensionHelper
+import kekmech.ru.feature_schedule_api.domain.model.Classes
+import kekmech.ru.feature_schedule_api.domain.model.ScheduleType
 import kekmech.ru.library_elm.Resource
 import kekmech.ru.library_schedule.utils.withNotePreview
 import kekmech.ru.strings.Strings
@@ -127,6 +127,7 @@ internal class UpcomingEventsListConverter(
 
     private fun MutableList<Any>.addTimePredictionItem(timeLeft: Duration) {
         val hours = timeLeft.inWholeHours
+
         @Suppress("MagicNumber")
         val minutes = timeLeft.inWholeMinutes % 60
         val prefix = context.getString(Strings.dashboard_item_time_prediction_prefix)

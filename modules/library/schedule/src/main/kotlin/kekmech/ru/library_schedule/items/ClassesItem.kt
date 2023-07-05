@@ -9,9 +9,6 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.coreui.items.ClickableItemViewHolder
 import kekmech.ru.coreui.items.ClickableItemViewHolderImpl
-import kekmech.ru.domain_schedule_models.dto.Classes
-import kekmech.ru.domain_schedule_models.dto.ClassesType
-import kekmech.ru.domain_schedule_models.dto.ScheduleType
 import kekmech.ru.ext_android.dpToPx
 import kekmech.ru.ext_android.getResColor
 import kekmech.ru.ext_android.getStringArray
@@ -20,6 +17,9 @@ import kekmech.ru.ext_android.viewbinding.ReusableViewHolder
 import kekmech.ru.ext_android.viewbinding.lazyBinding
 import kekmech.ru.ext_android.views.setOnClickListenerWithDebounce
 import kekmech.ru.ext_kotlin.fastLazy
+import kekmech.ru.feature_schedule_api.domain.model.Classes
+import kekmech.ru.feature_schedule_api.domain.model.ClassesType
+import kekmech.ru.feature_schedule_api.domain.model.ScheduleType
 import kekmech.ru.library_adapter.AdapterItem
 import kekmech.ru.library_adapter.BaseItemBinder
 import kekmech.ru.library_schedule.R

@@ -1,10 +1,10 @@
 package kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm
 
-import kekmech.ru.domain_schedule.dto.SelectedSchedule
 import kekmech.ru.ext_kotlin.moscowLocalDate
 import kekmech.ru.feature_dashboard_impl.domain.model.UpcomingEventsPrediction
 import kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm.DashboardEvent.Internal
 import kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm.DashboardEvent.Ui
+import kekmech.ru.feature_schedule_api.domain.model.SelectedSchedule
 import kekmech.ru.library_elm.Resource
 import kekmech.ru.library_elm.toResource
 import vivid.money.elmslie.core.store.dsl_reducer.ScreenDslReducer

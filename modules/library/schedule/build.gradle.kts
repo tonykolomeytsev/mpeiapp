@@ -19,8 +19,7 @@ dependencies {
     implementation(project(":ext_android"))
     implementation(project(":ext_kotlin"))
 
-    implementation(project(":domain_schedule"))
-    implementation(project(":domain_schedule_models"))
+    implementation(project(":feature_schedule_api"))
 
     implementation(project(":coreui"))
     implementation(project(":strings"))

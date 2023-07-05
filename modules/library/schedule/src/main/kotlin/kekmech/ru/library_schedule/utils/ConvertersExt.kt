@@ -1,8 +1,8 @@
 package kekmech.ru.library_schedule.utils
 
-import kekmech.ru.domain_schedule_models.dto.Classes
 import kekmech.ru.ext_kotlin.moscowLocalDate
 import kekmech.ru.ext_kotlin.moscowLocalTime
+import kekmech.ru.feature_schedule_api.domain.model.Classes
 import kekmech.ru.library_schedule.items.LunchItem
 import kekmech.ru.library_schedule.items.NotePreview
 import kekmech.ru.library_schedule.items.WindowItem
@@ -78,7 +78,7 @@ fun List<Classes>.withWindows(): List<Any> = mutableListOf<Any>().apply {
 @Suppress("NestedBlockDepth")
 fun List<Any>.withProgressPreview(
     nowTime: LocalTime = moscowLocalTime(),
-    nowDate: LocalDate = moscowLocalDate()
+    nowDate: LocalDate = moscowLocalDate(),
 ): List<Any> {
     if (nowDate != moscowLocalDate()) return this
     return map { item ->

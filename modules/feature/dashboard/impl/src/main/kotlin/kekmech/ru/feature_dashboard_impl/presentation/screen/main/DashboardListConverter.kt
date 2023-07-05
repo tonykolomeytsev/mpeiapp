@@ -6,7 +6,6 @@ import kekmech.ru.coreui.items.EmptyStateItem
 import kekmech.ru.coreui.items.FavoriteScheduleItem
 import kekmech.ru.coreui.items.SectionHeaderItem
 import kekmech.ru.coreui.items.SpaceItem
-import kekmech.ru.domain_schedule_models.dto.WeekOfSemester
 import kekmech.ru.ext_kotlin.fastLazy
 import kekmech.ru.ext_kotlin.moscowLocalDate
 import kekmech.ru.ext_kotlin.moscowLocalTime
@@ -19,6 +18,7 @@ import kekmech.ru.feature_dashboard_impl.presentation.screen.main.DashboardFragm
 import kekmech.ru.feature_dashboard_impl.presentation.screen.main.DashboardFragment.Companion.SECTION_NOTES_ACTION
 import kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm.DashboardState
 import kekmech.ru.feature_dashboard_impl.presentation.screen.main.upcoming_events.UpcomingEventsListConverter
+import kekmech.ru.feature_schedule_api.domain.model.WeekOfSemester
 import kekmech.ru.strings.Strings
 import java.time.DayOfWeek
 import java.time.LocalTime
