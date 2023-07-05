@@ -47,6 +47,6 @@ dependencies {
     implementation(project(":ext_shared_preferences"))
 
     implementation(project(":coreui"))
-    implementation(project(":icons"))
+    implementation(project(":res_icons"))
     implementation(project(":res_strings"))
 }

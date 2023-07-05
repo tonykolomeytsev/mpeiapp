@@ -125,7 +125,7 @@ dependencies {
     implementation(project(":ui_theme"))
 
     implementation(project(":coreui"))
-    implementation(project(":icons"))
+    implementation(project(":res_icons"))
     implementation(project(":res_strings"))
 
     debugImplementation(project(":mock_server"))

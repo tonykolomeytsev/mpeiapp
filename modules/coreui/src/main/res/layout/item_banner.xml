@@ -25,7 +25,7 @@
             android:layout_marginTop="12dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/ic_close_black" />
+            tools:src="@drawable/ic_close_24" />
 
         <TextView
             android:id="@+id/bannerTitle"
@@ -64,7 +64,7 @@
             android:layout_marginEnd="4dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:padding="4dp"
-            android:src="@drawable/ic_close_black"
+            android:src="@drawable/ic_close_24"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:tint="?attr/colorGray90" />
