@@ -44,5 +44,5 @@ dependencies {
 
     implementation(project(":coreui"))
     implementation(project(":icons"))
-    implementation(project(":strings"))
+    implementation(project(":res_strings"))
 }

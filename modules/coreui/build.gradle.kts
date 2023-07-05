@@ -34,5 +34,5 @@ dependencies {
 
     implementation(project(":icons"))
     implementation(project(":res_images"))
-    implementation(project(":strings"))
+    implementation(project(":res_strings"))
 }

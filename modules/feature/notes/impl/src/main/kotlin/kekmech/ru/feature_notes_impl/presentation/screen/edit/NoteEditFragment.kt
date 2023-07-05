@@ -25,8 +25,8 @@ import kekmech.ru.feature_notes_impl.presentation.screen.edit.elm.NoteEditState
 import kekmech.ru.library_adapter.BaseAdapter
 import kekmech.ru.library_analytics_android.ext.screenAnalytics
 import kekmech.ru.library_elm.BaseFragment
-import kekmech.ru.strings.Strings
 import org.koin.android.ext.android.inject
+import kekmech.ru.res_strings.R.string as Strings
 
 internal class NoteEditFragment :
     BaseFragment<NoteEditEvent, NoteEditEffect, NoteEditState>(R.layout.fragment_note_edit) {

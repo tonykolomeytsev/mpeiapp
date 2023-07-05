@@ -11,21 +11,23 @@ import kekmech.ru.ext_kotlin.moscowLocalDate
 import kekmech.ru.library_adapter.AdapterItem
 import kekmech.ru.library_adapter.BaseItemBinder
 import kekmech.ru.library_schedule.R
-import kekmech.ru.strings.StringArrays
 import java.time.LocalDate
 import kekmech.ru.coreui.R as coreui_R
+import kekmech.ru.res_strings.R.array as StringArrays
 
 data class DayItem(
     val date: LocalDate,
     val weekOffset: Int,
-    val isSelected: Boolean
+    val isSelected: Boolean,
 ) {
+
     val dayOfWeek get() = date.dayOfWeek.value
 
     fun plusDays(int: Int): DayItem = copy(date = date.plusDays(int.toLong()))
 }
 
 interface DayViewHolder {
+
     var isSelected: Boolean
 
     fun setDayOfWeekName(name: String)
@@ -37,7 +39,7 @@ interface DayViewHolder {
 }
 
 class DayViewHolderImpl(
-    private val containerView: View
+    private val containerView: View,
 ) : RecyclerView.ViewHolder(containerView), DayViewHolder {
 
     private val textDayOfWeek = containerView.findViewById<TextView>(R.id.textDayOfWeek)
@@ -86,7 +88,7 @@ class DayViewHolderImpl(
 class DayItemBinder(
     context: Context,
     private val currentDate: LocalDate,
-    private val onDayClickListener: (DayItem) -> Unit
+    private val onDayClickListener: (DayItem) -> Unit,
 ) : BaseItemBinder<DayViewHolder, DayItem>() {
 
     private val dayNames = context.getStringArray(StringArrays.days_of_week_short)
@@ -111,7 +113,7 @@ class DayItemBinder(
 class DayAdapterItem(
     context: Context,
     onDayClickListener: (DayItem) -> Unit,
-    layoutRes: Int = R.layout.item_day
+    layoutRes: Int = R.layout.item_day,
 ) : AdapterItem<DayViewHolder, DayItem>(
     isType = { it is DayItem },
     layoutRes = layoutRes,

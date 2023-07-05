@@ -25,8 +25,8 @@ import kekmech.ru.feature_app_settings_impl.presentation.screens.lang.item.Langu
 import kekmech.ru.feature_app_settings_impl.presentation.screens.lang.item.LanguageItem
 import kekmech.ru.library_adapter.BaseAdapter
 import kekmech.ru.library_analytics_android.ext.screenAnalytics
-import kekmech.ru.strings.Strings
 import kekmech.ru.coreui.R as coreui_R
+import kekmech.ru.res_strings.R.string as Strings
 
 internal class SelectLanguageFragment : BottomSheetDialogFragment(R.layout.fragment_change_language) {
 

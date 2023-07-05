@@ -3,7 +3,7 @@ package kekmech.ru.feature_app_settings_impl.presentation.screens.lang.dto
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import kekmech.ru.feature_app_settings_impl.R
-import kekmech.ru.strings.Strings
+import kekmech.ru.res_strings.R.string as Strings
 
 internal enum class LanguageEntry(
     val languageCode: String,

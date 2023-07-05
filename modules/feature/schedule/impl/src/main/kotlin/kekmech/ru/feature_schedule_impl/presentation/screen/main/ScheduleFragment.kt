@@ -37,10 +37,10 @@ import kekmech.ru.library_analytics_android.ext.screenAnalytics
 import kekmech.ru.library_elm.BaseFragment
 import kekmech.ru.library_navigation.features.TabScreenStateSaver
 import kekmech.ru.library_navigation.features.TabScreenStateSaverImpl
-import kekmech.ru.strings.StringArrays
-import kekmech.ru.strings.Strings
 import org.koin.android.ext.android.inject
 import java.time.LocalDate
+import kekmech.ru.res_strings.R.array as StringArrays
+import kekmech.ru.res_strings.R.string as Strings
 
 @Suppress("TooManyFunctions")
 internal class ScheduleFragment :
@@ -167,12 +167,42 @@ internal class ScheduleFragment :
     }
 
     private fun createViewPagerAdapter() = BaseAdapter(
-        WorkingDayAdapterItem(DAY_OF_WEEK_MONDAY, ::onClassesClick, ::onClassesScroll, ::onReloadClick),
-        WorkingDayAdapterItem(DAY_OF_WEEK_TUESDAY, ::onClassesClick, ::onClassesScroll, ::onReloadClick),
-        WorkingDayAdapterItem(DAY_OF_WEEK_WEDNESDAY, ::onClassesClick, ::onClassesScroll, ::onReloadClick),
-        WorkingDayAdapterItem(DAY_OF_WEEK_THURSDAY, ::onClassesClick, ::onClassesScroll, ::onReloadClick),
-        WorkingDayAdapterItem(DAY_OF_WEEK_FRIDAY, ::onClassesClick, ::onClassesScroll, ::onReloadClick),
-        WorkingDayAdapterItem(DAY_OF_WEEK_SATURDAY, ::onClassesClick, ::onClassesScroll, ::onReloadClick)
+        WorkingDayAdapterItem(
+            DAY_OF_WEEK_MONDAY,
+            ::onClassesClick,
+            ::onClassesScroll,
+            ::onReloadClick
+        ),
+        WorkingDayAdapterItem(
+            DAY_OF_WEEK_TUESDAY,
+            ::onClassesClick,
+            ::onClassesScroll,
+            ::onReloadClick
+        ),
+        WorkingDayAdapterItem(
+            DAY_OF_WEEK_WEDNESDAY,
+            ::onClassesClick,
+            ::onClassesScroll,
+            ::onReloadClick
+        ),
+        WorkingDayAdapterItem(
+            DAY_OF_WEEK_THURSDAY,
+            ::onClassesClick,
+            ::onClassesScroll,
+            ::onReloadClick
+        ),
+        WorkingDayAdapterItem(
+            DAY_OF_WEEK_FRIDAY,
+            ::onClassesClick,
+            ::onClassesScroll,
+            ::onReloadClick
+        ),
+        WorkingDayAdapterItem(
+            DAY_OF_WEEK_SATURDAY,
+            ::onClassesClick,
+            ::onClassesScroll,
+            ::onReloadClick
+        )
     )
 
     private fun onClassesClick(classes: Classes) {

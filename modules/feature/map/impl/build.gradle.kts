@@ -44,5 +44,5 @@ dependencies {
     implementation(project(":ext_koin"))
 
     implementation(project(":coreui"))
-    implementation(project(":strings"))
+    implementation(project(":res_strings"))
 }

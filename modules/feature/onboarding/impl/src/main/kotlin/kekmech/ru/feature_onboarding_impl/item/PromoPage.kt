@@ -8,7 +8,7 @@ import kekmech.ru.feature_onboarding_impl.R
 import kekmech.ru.feature_onboarding_impl.databinding.ItemPromoPageBinding
 import kekmech.ru.library_adapter.AdapterItem
 import kekmech.ru.library_adapter.BaseItemBinder
-import kekmech.ru.strings.Strings
+import kekmech.ru.res_strings.R.string as Strings
 
 internal enum class PromoPage(
     @DrawableRes val icon: Int,

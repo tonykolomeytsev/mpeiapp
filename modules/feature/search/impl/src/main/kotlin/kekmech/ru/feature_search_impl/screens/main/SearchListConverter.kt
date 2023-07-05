@@ -10,7 +10,7 @@ import kekmech.ru.feature_search_impl.item.FilterItemType.NOTES
 import kekmech.ru.feature_search_impl.item.FilterItemType.PERSONS
 import kekmech.ru.feature_search_impl.item.compareFilter
 import kekmech.ru.feature_search_impl.screens.main.elm.SearchState
-import kekmech.ru.strings.Strings
+import kekmech.ru.res_strings.R.string as Strings
 
 internal class SearchListConverter {
 

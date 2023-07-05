@@ -9,7 +9,7 @@ import kekmech.ru.coreui.items.ClickableItemViewHolderImpl
 import kekmech.ru.feature_search_impl.R
 import kekmech.ru.library_adapter.AdapterItem
 import kekmech.ru.library_adapter.BaseItemBinder
-import kekmech.ru.strings.Strings
+import kekmech.ru.res_strings.R.string as Strings
 
 internal data class FilterItem(
     val type: FilterItemType = FilterItemType.ALL,

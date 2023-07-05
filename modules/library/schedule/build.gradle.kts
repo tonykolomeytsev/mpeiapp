@@ -22,5 +22,5 @@ dependencies {
     implementation(project(":feature_schedule_api"))
 
     implementation(project(":coreui"))
-    implementation(project(":strings"))
+    implementation(project(":res_strings"))
 }

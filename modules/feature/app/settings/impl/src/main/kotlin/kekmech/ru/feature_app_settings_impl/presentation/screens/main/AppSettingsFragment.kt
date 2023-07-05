@@ -38,8 +38,8 @@ import kekmech.ru.library_analytics_android.ext.screenAnalytics
 import kekmech.ru.library_elm.BaseFragment
 import kekmech.ru.library_navigation.addScreenForward
 import kekmech.ru.library_navigation.showDialog
-import kekmech.ru.strings.Strings
 import org.koin.android.ext.android.inject
+import kekmech.ru.res_strings.R.string as Strings
 
 private const val ACTIVITY_RECREATION_DELAY = 200L
 

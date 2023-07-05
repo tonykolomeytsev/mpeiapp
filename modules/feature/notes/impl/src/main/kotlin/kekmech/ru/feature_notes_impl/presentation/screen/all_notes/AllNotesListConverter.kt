@@ -8,8 +8,8 @@ import kekmech.ru.ext_kotlin.moscowLocalDate
 import kekmech.ru.feature_notes_api.domain.model.Note
 import kekmech.ru.feature_notes_impl.R
 import kekmech.ru.feature_notes_impl.presentation.screen.all_notes.elm.AllNotesState
-import kekmech.ru.strings.Strings
 import java.time.temporal.ChronoUnit
+import kekmech.ru.res_strings.R.string as Strings
 
 private const val SHIMMER_ITEM_COUNT = 3
 

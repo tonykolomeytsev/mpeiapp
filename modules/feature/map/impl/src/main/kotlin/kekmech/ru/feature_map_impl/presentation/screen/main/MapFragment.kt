@@ -50,10 +50,10 @@ import kekmech.ru.library_elm.BaseFragment
 import kekmech.ru.library_navigation.features.ScrollToTop
 import kekmech.ru.library_navigation.features.TabScreenStateSaver
 import kekmech.ru.library_navigation.features.TabScreenStateSaverImpl
-import kekmech.ru.strings.Strings
 import org.koin.android.ext.android.inject
 import java.util.concurrent.TimeUnit
 import kekmech.ru.coreui.R as CoreUiR
+import kekmech.ru.res_strings.R.string as Strings
 
 @Suppress("TooManyFunctions")
 internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState>(R.layout.fragment_map),

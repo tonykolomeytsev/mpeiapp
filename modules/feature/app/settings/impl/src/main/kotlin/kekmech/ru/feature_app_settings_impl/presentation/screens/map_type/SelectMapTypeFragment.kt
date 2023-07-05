@@ -23,7 +23,7 @@ import kekmech.ru.feature_app_settings_impl.presentation.screens.map_type.item.M
 import kekmech.ru.feature_app_settings_impl.presentation.screens.map_type.item.MapTypeItem
 import kekmech.ru.library_adapter.BaseAdapter
 import kekmech.ru.library_analytics_android.ext.screenAnalytics
-import kekmech.ru.strings.Strings
+import kekmech.ru.res_strings.R.string as Strings
 
 internal class SelectMapTypeFragment :
     BottomSheetDialogFragment(R.layout.fragment_select_map_type) {

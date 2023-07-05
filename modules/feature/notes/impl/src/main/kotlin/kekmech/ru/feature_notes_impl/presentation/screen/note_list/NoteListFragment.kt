@@ -31,9 +31,9 @@ import kekmech.ru.library_adapter.BaseAdapter
 import kekmech.ru.library_analytics_android.ext.screenAnalytics
 import kekmech.ru.library_elm.BaseBottomSheetDialogFragment
 import kekmech.ru.library_navigation.addScreenForward
-import kekmech.ru.strings.Strings
 import org.koin.android.ext.android.inject
 import java.time.LocalDate
+import kekmech.ru.res_strings.R.string as Strings
 
 internal class NoteListFragment :
     BaseBottomSheetDialogFragment<NoteListEvent, NoteListEffect, NoteListState>(R.layout.fragment_note_list) {
