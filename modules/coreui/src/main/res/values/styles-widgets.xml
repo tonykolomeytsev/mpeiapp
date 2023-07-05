@@ -2,21 +2,21 @@
 <resources>
 
     <style name="Toolbar" parent="Widget.AppCompat.Toolbar">
-        <item name="navigationIcon">@drawable/ic_arrow_back</item>
+        <item name="navigationIcon">@drawable/ic_arrow_back_24</item>
         <item name="navigationIconTint">?attr/colorBlack</item>
         <item name="titleTextAppearance">@style/H3</item>
         <item name="android:fontFamily">@font/roboto_bold</item>
     </style>
 
     <style name="Toolbar.Close">
-        <item name="navigationIcon">@drawable/ic_close_black</item>
+        <item name="navigationIcon">@drawable/ic_close_24</item>
         <item name="navigationIconTint">?attr/colorBlack</item>
     </style>
 
     <style name="Toolbar.WebView">
         <item name="titleTextAppearance">@style/H4</item>
         <item name="subtitleTextAppearance">@style/H7.Gray70</item>
-        <item name="navigationIcon">@drawable/ic_close_black</item>
+        <item name="navigationIcon">@drawable/ic_close_24</item>
         <item name="navigationIconTint">?attr/colorBlack</item>
         <item name="tint">?attr/colorBlack</item>
         <item name="popupTheme">@style/PopupMenu.WebView</item>

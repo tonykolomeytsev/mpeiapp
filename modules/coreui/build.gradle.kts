@@ -32,7 +32,7 @@ dependencies {
     implementation(project(":library_elm"))
     implementation(project(":library_network"))
 
-    implementation(project(":icons"))
+    implementation(project(":res_icons"))
     implementation(project(":res_images"))
     implementation(project(":res_strings"))
 }

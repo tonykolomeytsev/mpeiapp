@@ -14,9 +14,9 @@ import kekmech.ru.feature_search_impl.R
 import kekmech.ru.feature_search_impl.item.ButtonItem
 import kekmech.ru.feature_search_impl.item.WeekMinItem
 import kekmech.ru.feature_search_impl.screens.schedule_details.elm.ScheduleDetailsState
-import kekmech.ru.icons.Icons
 import kekmech.ru.library_schedule.items.DayItem
 import kekmech.ru.coreui.R as coreui_R
+import kekmech.ru.res_icons.R.drawable as Icons
 import kekmech.ru.res_strings.R.string as Strings
 
 internal object ScheduleDetailsListConverter {
