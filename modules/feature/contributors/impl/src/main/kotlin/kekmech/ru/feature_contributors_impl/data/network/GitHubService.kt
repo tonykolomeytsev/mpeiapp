@@ -1,14 +1,14 @@
-package kekmech.ru.domain_github
+package kekmech.ru.feature_contributors_impl.data.network
 
-import kekmech.ru.domain_github.dto.GitHubContributor
-import kekmech.ru.domain_github.dto.GitHubUser
+import kekmech.ru.feature_contributors_impl.data.dto.GitHubContributor
+import kekmech.ru.feature_contributors_impl.data.dto.GitHubUser
 import kekmech.ru.library_network.BackendServiceUrl
 import kekmech.ru.library_network.EndpointUrl
 import retrofit2.http.GET
 import retrofit2.http.Path
 
 @EndpointUrl(BackendServiceUrl.GITHUB)
-interface GitHubService {
+internal interface GitHubService {
 
     @GET("repos/{user}/{repo}/stats/contributors")
     suspend fun getContributors(
