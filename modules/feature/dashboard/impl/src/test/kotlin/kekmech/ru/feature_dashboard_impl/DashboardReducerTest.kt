@@ -18,8 +18,8 @@ import kekmech.ru.feature_notes_api.domain.model.Note
 import kekmech.ru.feature_schedule_api.domain.model.ScheduleType
 import kekmech.ru.feature_schedule_api.domain.model.SelectedSchedule
 import kekmech.ru.feature_schedule_api.domain.model.WeekOfSemester
-import kekmech.ru.library_elm.Resource
-import kekmech.ru.library_elm.toResource
+import kekmech.ru.lib_elm.Resource
+import kekmech.ru.lib_elm.toResource
 
 internal class DashboardReducerTest : BehaviorSpec({
     val reducer = DashboardReducer()

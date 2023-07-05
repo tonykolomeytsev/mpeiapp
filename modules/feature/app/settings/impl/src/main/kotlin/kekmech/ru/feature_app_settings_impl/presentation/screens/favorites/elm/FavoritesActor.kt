@@ -2,7 +2,7 @@ package kekmech.ru.feature_app_settings_impl.presentation.screens.favorites.elm
 
 import kekmech.ru.feature_app_settings_impl.presentation.screens.favorites.elm.FavoritesEvent.Internal
 import kekmech.ru.feature_favorite_schedule_api.data.repository.FavoriteScheduleRepository
-import kekmech.ru.library_elm.actorFlow
+import kekmech.ru.lib_elm.actorFlow
 import kotlinx.coroutines.flow.Flow
 import vivid.money.elmslie.coroutines.Actor
 import kekmech.ru.feature_app_settings_impl.presentation.screens.favorites.elm.FavoritesCommand as Command

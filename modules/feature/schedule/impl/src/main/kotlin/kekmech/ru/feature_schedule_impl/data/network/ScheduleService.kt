@@ -3,8 +3,8 @@ package kekmech.ru.feature_schedule_impl.data.network
 import kekmech.ru.feature_schedule_api.domain.model.Schedule
 import kekmech.ru.feature_schedule_api.domain.model.ScheduleType
 import kekmech.ru.feature_schedule_impl.data.dto.GetSearchResultsResponse
-import kekmech.ru.library_network.BackendServiceUrl
-import kekmech.ru.library_network.EndpointUrl
+import kekmech.ru.lib_network.BackendServiceUrl
+import kekmech.ru.lib_network.EndpointUrl
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

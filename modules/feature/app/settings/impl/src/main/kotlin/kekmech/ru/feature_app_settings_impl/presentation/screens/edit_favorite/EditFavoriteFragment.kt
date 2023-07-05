@@ -16,7 +16,7 @@ import kekmech.ru.ext_kotlin.fastLazy
 import kekmech.ru.feature_app_settings_impl.R
 import kekmech.ru.feature_app_settings_impl.databinding.FragmentEditFavoriteBinding
 import kekmech.ru.feature_favorite_schedule_api.domain.model.FavoriteSchedule
-import kekmech.ru.library_analytics_android.ext.screenAnalytics
+import kekmech.ru.lib_analytics_android.ext.screenAnalytics
 
 internal class EditFavoriteFragment : Fragment(R.layout.fragment_edit_favorite) {
 

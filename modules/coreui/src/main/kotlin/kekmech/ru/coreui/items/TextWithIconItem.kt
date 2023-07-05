@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.coreui.R
 import kekmech.ru.coreui.databinding.ItemTextWithIconBinding
 import kekmech.ru.ext_android.getThemeColor
-import kekmech.ru.library_adapter.AdapterItem
-import kekmech.ru.library_adapter.BaseItemBinder
+import kekmech.ru.lib_adapter.AdapterItem
+import kekmech.ru.lib_adapter.BaseItemBinder
 
 private const val DEFAULT_TEXT_WITH_ICON_ITEM_ID = 0
 

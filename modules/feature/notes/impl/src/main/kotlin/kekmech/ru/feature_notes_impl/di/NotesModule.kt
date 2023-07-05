@@ -17,7 +17,7 @@ import kekmech.ru.feature_notes_impl.presentation.screen.edit.elm.NoteEditActor
 import kekmech.ru.feature_notes_impl.presentation.screen.edit.elm.NoteEditStoreFactory
 import kekmech.ru.feature_notes_impl.presentation.screen.note_list.elm.NoteListActor
 import kekmech.ru.feature_notes_impl.presentation.screen.note_list.elm.NoteListStoreFactory
-import kekmech.ru.library_app_database.api.MigrationV6V7
+import kekmech.ru.lib_app_database.api.MigrationV6V7
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind

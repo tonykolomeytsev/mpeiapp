@@ -105,22 +105,21 @@ dependencies {
 
     implementation(project(":ext_koin"))
 
-    implementation(project(":library_analytics_android"))
+    implementation(project(":lib_analytics_android"))
     implementation(project(":ext_android"))
-    implementation(project(":library_app_database_api"))
-    implementation(project(":library_app_database"))
-    implementation(project(":library_app_lifecycle"))
-    implementation(project(":library_coroutines"))
-    implementation(project(":library_app_info"))
-    implementation(project(":library_elm"))
-    implementation(project(":library_feature_toggles"))
-    implementation(project(":library_navigation"))
-    implementation(project(":library_network"))
+    implementation(project(":lib_app_database"))
+    implementation(project(":lib_app_lifecycle"))
+    implementation(project(":lib_coroutines"))
+    implementation(project(":lib_app_info"))
+    implementation(project(":lib_elm"))
+    implementation(project(":lib_feature_toggles"))
+    implementation(project(":lib_navigation"))
+    implementation(project(":lib_network"))
 
     implementation(project(":ext_kotlin"))
     implementation(project(":ext_shared_preferences"))
 
-    implementation(project(":library_persistent_cache"))
+    implementation(project(":lib_persistent_cache"))
 
     implementation(project(":ui_theme"))
 
@@ -130,7 +129,7 @@ dependencies {
 
     debugImplementation(project(":mock_server"))
     debugImplementation(project(":debug_menu"))
-    debugImplementation(project(":library_chucker"))
+    debugImplementation(project(":lib_chucker"))
 
     testImplementation(libs.koin.test)
     testImplementation(libs.kotest.runner)

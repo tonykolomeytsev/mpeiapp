@@ -16,8 +16,8 @@ import kekmech.ru.feature_bars_impl.R
 import kekmech.ru.feature_bars_impl.databinding.ItemAssessedDisciplineBinding
 import kekmech.ru.feature_bars_impl.domain.AssessedDiscipline
 import kekmech.ru.feature_bars_impl.domain.FinalGradeType
-import kekmech.ru.library_adapter.AdapterItem
-import kekmech.ru.library_adapter.BaseItemBinder
+import kekmech.ru.lib_adapter.AdapterItem
+import kekmech.ru.lib_adapter.BaseItemBinder
 import kekmech.ru.coreui.R as coreui_R
 
 private const val BULLET_SEPARATOR = " • "

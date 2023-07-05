@@ -8,8 +8,8 @@ import io.reactivex.rxjava3.exceptions.CompositeException
 import kekmech.ru.coreui.R
 import kekmech.ru.coreui.databinding.ItemErrorStateBinding
 import kekmech.ru.ext_okhttp.NoInternetConnectionException
-import kekmech.ru.library_adapter.AdapterItem
-import kekmech.ru.library_adapter.BaseItemBinder
+import kekmech.ru.lib_adapter.AdapterItem
+import kekmech.ru.lib_adapter.BaseItemBinder
 import retrofit2.HttpException
 import java.net.UnknownHostException
 import javax.net.ssl.SSLHandshakeException

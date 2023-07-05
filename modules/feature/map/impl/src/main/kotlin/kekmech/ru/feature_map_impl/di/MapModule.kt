@@ -11,9 +11,9 @@ import kekmech.ru.feature_map_impl.launcher.MapFeatureLauncherImpl
 import kekmech.ru.feature_map_impl.presentation.screen.main.elm.MapActor
 import kekmech.ru.feature_map_impl.presentation.screen.main.elm.MapStoreProvider
 import kekmech.ru.feature_map_impl.presentation.screen.main.view.MarkersBitmapFactory
-import kekmech.ru.library_app_lifecycle.MainActivityLifecycleObserver
-import kekmech.ru.library_emoji.CommonEmojiModule
-import kekmech.ru.library_network.buildApi
+import kekmech.ru.lib_app_lifecycle.MainActivityLifecycleObserver
+import kekmech.ru.lib_emoji.CommonEmojiModule
+import kekmech.ru.lib_network.buildApi
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf

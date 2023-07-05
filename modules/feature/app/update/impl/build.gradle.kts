@@ -18,13 +18,13 @@ dependencies {
     implementation(libs.koin.core)
 
     implementation(project(":feature_app_update_api"))
-    implementation(project(":library_app_info"))
+    implementation(project(":lib_app_info"))
 
-    implementation(project(":library_analytics_android"))
+    implementation(project(":lib_analytics_android"))
     implementation(project(":ext_android"))
-    implementation(project(":library_app_info"))
+    implementation(project(":lib_app_info"))
     implementation(project(":ext_kotlin"))
-    implementation(project(":library_navigation"))
+    implementation(project(":lib_navigation"))
 
     implementation(project(":coreui"))
     implementation(project(":res_strings"))

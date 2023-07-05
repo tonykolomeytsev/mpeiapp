@@ -23,7 +23,7 @@ import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleEve
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleEvent.Ui
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleReducer
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleState
-import kekmech.ru.library_schedule.utils.atStartOfWeek
+import kekmech.ru.lib_schedule.utils.atStartOfWeek
 import java.time.LocalDate
 import java.time.Month
 

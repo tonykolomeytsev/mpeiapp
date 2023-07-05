@@ -27,9 +27,9 @@ dependencies {
     implementation(project(":ui_icons"))
     implementation(project(":ui_kit_lists"))
     implementation(project(":ui_kit_topappbar"))
-    implementation(project(":library_navigation_api"))
-    implementation(project(":library_navigation_compose"))
-    implementation(project(":library_elm"))
+    implementation(project(":lib_navigation_api"))
+    implementation(project(":lib_navigation_compose"))
+    implementation(project(":lib_elm"))
     implementation(project(":ext_kotlin"))
 
     implementation(libs.compose.activity)

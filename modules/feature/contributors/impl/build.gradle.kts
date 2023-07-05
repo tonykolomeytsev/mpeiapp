@@ -8,8 +8,8 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.squareup.retrofit)
 
-    implementation(project(":library_network"))
-    implementation(project(":library_persistent_cache"))
+    implementation(project(":lib_network"))
+    implementation(project(":lib_persistent_cache"))
 
     implementation(project(":feature_contributors_api"))
 }

@@ -6,9 +6,9 @@ import kekmech.ru.feature_notes_impl.presentation.screen.all_notes.AllNotesFragm
 import kekmech.ru.feature_notes_impl.presentation.screen.edit.NoteEditFragment
 import kekmech.ru.feature_notes_impl.presentation.screen.note_list.NoteListFragment
 import kekmech.ru.feature_schedule_api.domain.model.Classes
-import kekmech.ru.library_navigation.AddScreenForward
-import kekmech.ru.library_navigation.Router
-import kekmech.ru.library_navigation.ShowDialog
+import kekmech.ru.lib_navigation.AddScreenForward
+import kekmech.ru.lib_navigation.Router
+import kekmech.ru.lib_navigation.ShowDialog
 import java.time.LocalDate
 
 internal class NotesFeatureLauncherImpl(

@@ -9,8 +9,8 @@ import kekmech.ru.coreui.items.ClickableItemViewHolderImpl
 import kekmech.ru.feature_map_impl.R
 import kekmech.ru.feature_map_impl.databinding.ItemFilterTabBinding
 import kekmech.ru.feature_map_impl.presentation.screen.main.elm.FilterTab
-import kekmech.ru.library_adapter.AdapterItem
-import kekmech.ru.library_adapter.BaseItemBinder
+import kekmech.ru.lib_adapter.AdapterItem
+import kekmech.ru.lib_adapter.BaseItemBinder
 
 internal data class FilterTabItem(
     @DrawableRes val drawableResId: Int,

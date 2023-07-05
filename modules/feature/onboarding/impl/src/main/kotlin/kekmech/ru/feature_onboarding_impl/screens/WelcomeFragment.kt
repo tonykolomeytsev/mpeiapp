@@ -13,9 +13,9 @@ import kekmech.ru.feature_onboarding_impl.di.OnboardingDependencies
 import kekmech.ru.feature_onboarding_impl.item.PromoPage
 import kekmech.ru.feature_onboarding_impl.item.PromoPageAdapterItem
 import kekmech.ru.feature_schedule_api.ScheduleFeatureLauncher.ContinueTo.DASHBOARD
-import kekmech.ru.library_adapter.BaseAdapter
-import kekmech.ru.library_analytics_android.addScrollAnalytics
-import kekmech.ru.library_analytics_android.ext.screenAnalytics
+import kekmech.ru.lib_adapter.BaseAdapter
+import kekmech.ru.lib_analytics_android.addScrollAnalytics
+import kekmech.ru.lib_analytics_android.ext.screenAnalytics
 import org.koin.android.ext.android.inject
 
 internal class WelcomeFragment : Fragment(R.layout.fragment_welcome) {

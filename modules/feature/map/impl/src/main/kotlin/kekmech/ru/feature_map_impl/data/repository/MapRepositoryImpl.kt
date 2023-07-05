@@ -3,8 +3,8 @@ package kekmech.ru.feature_map_impl.data.repository
 import kekmech.ru.feature_map_api.data.repository.MapRepository
 import kekmech.ru.feature_map_api.domain.model.MapMarker
 import kekmech.ru.feature_map_impl.data.network.MapService
-import kekmech.ru.library_persistent_cache.api.PersistentCache
-import kekmech.ru.library_persistent_cache.api.ofList
+import kekmech.ru.lib_persistent_cache.api.PersistentCache
+import kekmech.ru.lib_persistent_cache.api.ofList
 
 internal class MapRepositoryImpl internal constructor(
     private val mapService: MapService,

@@ -21,8 +21,8 @@ import kekmech.ru.feature_app_settings_impl.databinding.FragmentSelectMapTypeBin
 import kekmech.ru.feature_app_settings_impl.presentation.screens.map_type.dto.MapTypeEntry
 import kekmech.ru.feature_app_settings_impl.presentation.screens.map_type.item.MapTypeAdapterItem
 import kekmech.ru.feature_app_settings_impl.presentation.screens.map_type.item.MapTypeItem
-import kekmech.ru.library_adapter.BaseAdapter
-import kekmech.ru.library_analytics_android.ext.screenAnalytics
+import kekmech.ru.lib_adapter.BaseAdapter
+import kekmech.ru.lib_analytics_android.ext.screenAnalytics
 import kekmech.ru.res_strings.R.string as Strings
 
 internal class SelectMapTypeFragment :

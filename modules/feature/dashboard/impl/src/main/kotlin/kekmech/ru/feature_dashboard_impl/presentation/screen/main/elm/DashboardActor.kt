@@ -6,7 +6,7 @@ import kekmech.ru.feature_favorite_schedule_api.data.repository.FavoriteSchedule
 import kekmech.ru.feature_notes_api.interactors.GetActualNotesInteractor
 import kekmech.ru.feature_schedule_api.data.repository.ScheduleRepository
 import kekmech.ru.feature_schedule_api.use_cases.GetCurrentScheduleUseCase
-import kekmech.ru.library_elm.actorFlow
+import kekmech.ru.lib_elm.actorFlow
 import kotlinx.coroutines.flow.Flow
 import vivid.money.elmslie.coroutines.Actor
 import kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm.DashboardCommand as Command

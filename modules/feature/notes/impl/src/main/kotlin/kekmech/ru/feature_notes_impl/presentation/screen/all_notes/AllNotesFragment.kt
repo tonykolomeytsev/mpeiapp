@@ -27,11 +27,11 @@ import kekmech.ru.feature_notes_impl.presentation.screen.all_notes.elm.AllNotesE
 import kekmech.ru.feature_notes_impl.presentation.screen.all_notes.elm.AllNotesEvent.Ui
 import kekmech.ru.feature_notes_impl.presentation.screen.all_notes.elm.AllNotesState
 import kekmech.ru.feature_notes_impl.presentation.screen.edit.NoteEditFragment
-import kekmech.ru.library_adapter.BaseAdapter
-import kekmech.ru.library_analytics_android.addScrollAnalytics
-import kekmech.ru.library_analytics_android.ext.screenAnalytics
-import kekmech.ru.library_elm.BaseFragment
-import kekmech.ru.library_navigation.addScreenForward
+import kekmech.ru.lib_adapter.BaseAdapter
+import kekmech.ru.lib_analytics_android.addScrollAnalytics
+import kekmech.ru.lib_analytics_android.ext.screenAnalytics
+import kekmech.ru.lib_elm.BaseFragment
+import kekmech.ru.lib_navigation.addScreenForward
 import org.koin.android.ext.android.inject
 
 internal class AllNotesFragment :

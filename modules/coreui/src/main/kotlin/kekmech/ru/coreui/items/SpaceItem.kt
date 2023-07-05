@@ -5,8 +5,8 @@ import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.coreui.R
 import kekmech.ru.coreui.databinding.ItemSpaceBinding
 import kekmech.ru.ext_android.dpToPx
-import kekmech.ru.library_adapter.AdapterItem
-import kekmech.ru.library_adapter.BaseItemBinder
+import kekmech.ru.lib_adapter.AdapterItem
+import kekmech.ru.lib_adapter.BaseItemBinder
 
 data class SpaceItem(
     val width: Int,

@@ -2,7 +2,7 @@ package kekmech.ru.feature_map_impl.presentation.screen.main.elm
 
 import kekmech.ru.feature_map_api.data.repository.MapRepository
 import kekmech.ru.feature_map_impl.presentation.screen.main.elm.MapEvent.Internal
-import kekmech.ru.library_elm.actorFlow
+import kekmech.ru.lib_elm.actorFlow
 import kotlinx.coroutines.flow.Flow
 import vivid.money.elmslie.coroutines.Actor
 

@@ -8,7 +8,7 @@ import java.util.*
 
 /**
  * TODO: Remove in 1.4.0 release, default locale will be null (automatic)
- * TODO: Also remove in [kekmech.ru.library_network.device_id.DeviceLocaleProvider]
+ * TODO: Also remove in [kekmech.ru.lib_network.device_id.DeviceLocaleProvider]
  */
 private const val DEFAULT_LOCALE = "ru_RU"
 

@@ -14,7 +14,7 @@ import kekmech.ru.feature_app_settings_impl.presentation.screens.favorites.elm.F
 import kekmech.ru.feature_app_settings_impl.presentation.screens.favorites.elm.FavoritesStoreFactory
 import kekmech.ru.feature_app_settings_impl.presentation.screens.main.elm.AppSettingsActor
 import kekmech.ru.feature_app_settings_impl.presentation.screens.main.elm.AppSettingsStoreFactory
-import kekmech.ru.library_feature_toggles.RemoteVariable
+import kekmech.ru.lib_feature_toggles.RemoteVariable
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.bind

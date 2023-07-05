@@ -13,16 +13,16 @@ import kekmech.ru.ext_android.onActivityResult
 import kekmech.ru.feature_app_settings_api.data.AppSettingsRepository
 import kekmech.ru.feature_main_screen_api.MainScreenLauncher
 import kekmech.ru.feature_onboarding_api.OnboardingFeatureLauncher
-import kekmech.ru.library_app_lifecycle.MainActivityLifecycleObserver
-import kekmech.ru.library_elm.DisposableDelegate
-import kekmech.ru.library_elm.DisposableDelegateImpl
-import kekmech.ru.library_navigation.BackButtonListener
-import kekmech.ru.library_navigation.NavigationHolder
+import kekmech.ru.lib_app_lifecycle.MainActivityLifecycleObserver
+import kekmech.ru.lib_elm.DisposableDelegate
+import kekmech.ru.lib_elm.DisposableDelegateImpl
+import kekmech.ru.lib_navigation.BackButtonListener
+import kekmech.ru.lib_navigation.NavigationHolder
 import kekmech.ru.mpeiapp.deeplink.DeeplinkHandlersProcessor
 import org.koin.android.ext.android.getKoin
 import org.koin.android.ext.android.inject
 import kekmech.ru.coreui.R as coreui_R
-import kekmech.ru.library_navigation.R as common_navigation_R
+import kekmech.ru.lib_navigation.R as common_navigation_R
 
 class MainActivity : AppCompatActivity(), DisposableDelegate by DisposableDelegateImpl() {
 

@@ -32,14 +32,14 @@ import kekmech.ru.feature_search_impl.screens.main.elm.SearchEffect
 import kekmech.ru.feature_search_impl.screens.main.elm.SearchEvent
 import kekmech.ru.feature_search_impl.screens.main.elm.SearchState
 import kekmech.ru.feature_search_impl.screens.schedule_details.ScheduleDetailsFragment
-import kekmech.ru.library_adapter.AdapterItem
-import kekmech.ru.library_adapter.BaseAdapter
-import kekmech.ru.library_adapter.BaseItemBinder
-import kekmech.ru.library_analytics_android.ext.screenAnalytics
-import kekmech.ru.library_elm.BaseFragment
-import kekmech.ru.library_navigation.BottomTab
-import kekmech.ru.library_navigation.BottomTabsSwitcher
-import kekmech.ru.library_navigation.showDialog
+import kekmech.ru.lib_adapter.AdapterItem
+import kekmech.ru.lib_adapter.BaseAdapter
+import kekmech.ru.lib_adapter.BaseItemBinder
+import kekmech.ru.lib_analytics_android.ext.screenAnalytics
+import kekmech.ru.lib_elm.BaseFragment
+import kekmech.ru.lib_navigation.BottomTab
+import kekmech.ru.lib_navigation.BottomTabsSwitcher
+import kekmech.ru.lib_navigation.showDialog
 import org.koin.android.ext.android.inject
 import java.util.concurrent.TimeUnit
 import kekmech.ru.coreui.R as coreui_R

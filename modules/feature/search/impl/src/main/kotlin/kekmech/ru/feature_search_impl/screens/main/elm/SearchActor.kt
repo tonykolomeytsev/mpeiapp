@@ -6,7 +6,7 @@ import kekmech.ru.feature_schedule_api.data.repository.ScheduleSearchRepository
 import kekmech.ru.feature_schedule_api.domain.model.ScheduleType
 import kekmech.ru.feature_search_impl.screens.main.utils.FullTextMapMarkersSearchHelper
 import kekmech.ru.feature_search_impl.screens.main.utils.FullTextNotesSearchHelper
-import kekmech.ru.library_elm.actorFlow
+import kekmech.ru.lib_elm.actorFlow
 import kotlinx.coroutines.flow.Flow
 import vivid.money.elmslie.coroutines.Actor
 import kekmech.ru.feature_search_impl.screens.main.elm.SearchCommand as Command

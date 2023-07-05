@@ -7,8 +7,8 @@ import kekmech.ru.coreui.items.ClickableItemViewHolderImpl
 import kekmech.ru.feature_app_settings_impl.R
 import kekmech.ru.feature_app_settings_impl.databinding.ItemLanguageBinding
 import kekmech.ru.feature_app_settings_impl.presentation.screens.lang.dto.LanguageEntry
-import kekmech.ru.library_adapter.AdapterItem
-import kekmech.ru.library_adapter.BaseItemBinder
+import kekmech.ru.lib_adapter.AdapterItem
+import kekmech.ru.lib_adapter.BaseItemBinder
 
 internal data class LanguageItem(
     val language: LanguageEntry,

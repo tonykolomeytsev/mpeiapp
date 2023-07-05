@@ -3,7 +3,7 @@ package kekmech.ru.feature_notes_impl.presentation.screen.all_notes.elm
 import kekmech.ru.feature_notes_api.domain.usecase.GetNotesForSelectedScheduleUseCase
 import kekmech.ru.feature_notes_impl.data.repository.NotesRepository
 import kekmech.ru.feature_notes_impl.presentation.screen.all_notes.elm.AllNotesEvent.Internal
-import kekmech.ru.library_elm.actorFlow
+import kekmech.ru.lib_elm.actorFlow
 import kotlinx.coroutines.flow.Flow
 import vivid.money.elmslie.coroutines.Actor
 import kekmech.ru.feature_notes_impl.presentation.screen.all_notes.elm.AllNotesCommand as Command

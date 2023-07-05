@@ -5,7 +5,7 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.ext_android.getThemeColor
 import kekmech.ru.feature_bars_impl.databinding.ItemMarkBinding
-import kekmech.ru.library_adapter.BaseItemBinder
+import kekmech.ru.lib_adapter.BaseItemBinder
 import kotlin.math.floor
 import kekmech.ru.coreui.R as coreui_R
 

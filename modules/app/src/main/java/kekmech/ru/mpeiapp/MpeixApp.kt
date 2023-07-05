@@ -6,11 +6,11 @@ import android.os.Build
 import io.reactivex.rxjava3.exceptions.UndeliverableException
 import io.reactivex.rxjava3.plugins.RxJavaPlugins
 import kekmech.ru.feature_app_settings_api.data.AppEnvironmentRepository
-import kekmech.ru.library_app_lifecycle.AppLifecycleObserver
-import kekmech.ru.library_elm.TimberLogger
-import kekmech.ru.library_navigation.Router
-import kekmech.ru.library_navigation.di.RouterHolder
-import kekmech.ru.library_network.ServiceUrlResolver
+import kekmech.ru.lib_app_lifecycle.AppLifecycleObserver
+import kekmech.ru.lib_elm.TimberLogger
+import kekmech.ru.lib_navigation.Router
+import kekmech.ru.lib_navigation.di.RouterHolder
+import kekmech.ru.lib_network.ServiceUrlResolver
 import kekmech.ru.mpeiapp.di.AppModule
 import org.koin.android.ext.android.getKoin
 import org.koin.android.ext.android.inject

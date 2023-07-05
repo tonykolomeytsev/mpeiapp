@@ -3,7 +3,7 @@ package kekmech.ru.feature_app_settings_impl.presentation.screens.main.elm
 import kekmech.ru.feature_app_settings_impl.data.AppSettingsRepositoryImpl
 import kekmech.ru.feature_app_settings_impl.presentation.screens.main.elm.AppSettingsEvent.Internal
 import kekmech.ru.feature_contributors_api.data.repository.ContributorsRepository
-import kekmech.ru.library_elm.actorFlow
+import kekmech.ru.lib_elm.actorFlow
 import kotlinx.coroutines.flow.Flow
 import vivid.money.elmslie.coroutines.Actor
 

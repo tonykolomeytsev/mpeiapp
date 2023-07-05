@@ -4,7 +4,7 @@ import kekmech.ru.feature_app_settings_api.AppSettingsFeatureLauncher
 import kekmech.ru.feature_notes_api.NotesFeatureLauncher
 import kekmech.ru.feature_schedule_api.ScheduleFeatureLauncher
 import kekmech.ru.feature_search_api.SearchFeatureLauncher
-import kekmech.ru.library_navigation.BottomTabsSwitcher
+import kekmech.ru.lib_navigation.BottomTabsSwitcher
 
 internal data class DashboardDependencies(
     val bottomTabsSwitcher: BottomTabsSwitcher,

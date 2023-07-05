@@ -1,7 +1,7 @@
 package kekmech.ru.feature_favorite_schedule_impl.data.database.migrations
 
 import androidx.sqlite.db.SupportSQLiteDatabase
-import kekmech.ru.library_app_database.api.MigrationV6V7
+import kekmech.ru.lib_app_database.api.MigrationV6V7
 
 internal class MigrationV6V7Impl : MigrationV6V7 {
 

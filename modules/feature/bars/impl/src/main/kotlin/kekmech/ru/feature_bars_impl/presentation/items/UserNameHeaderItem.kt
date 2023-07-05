@@ -5,8 +5,8 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.feature_bars_impl.R
 import kekmech.ru.feature_bars_impl.databinding.ItemUserNameHeaderBinding
-import kekmech.ru.library_adapter.AdapterItem
-import kekmech.ru.library_adapter.BaseItemBinder
+import kekmech.ru.lib_adapter.AdapterItem
+import kekmech.ru.lib_adapter.BaseItemBinder
 
 internal data class UserNameHeaderItem(val name: String?)
 

@@ -13,7 +13,7 @@ import kekmech.ru.ext_kotlin.fastLazy
 import kekmech.ru.feature_app_update_impl.R
 import kekmech.ru.feature_app_update_impl.databinding.FragmentBlockingUpdateBinding
 import kekmech.ru.feature_app_update_impl.domain.models.ForceUpdateInfo
-import kekmech.ru.library_analytics_android.ext.screenAnalytics
+import kekmech.ru.lib_analytics_android.ext.screenAnalytics
 import kekmech.ru.res_strings.R.string as Strings
 
 private const val ARG_UPDATE_INFO = "Arg.UpdateInfo"

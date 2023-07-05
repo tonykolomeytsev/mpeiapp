@@ -13,8 +13,8 @@ import kekmech.ru.ext_android.dpToPx
 import kekmech.ru.feature_app_settings_impl.R
 import kekmech.ru.feature_app_settings_impl.databinding.ItemContributorBinding
 import kekmech.ru.feature_contributors_api.domain.model.Contributor
-import kekmech.ru.library_adapter.AdapterItem
-import kekmech.ru.library_adapter.BaseItemBinder
+import kekmech.ru.lib_adapter.AdapterItem
+import kekmech.ru.lib_adapter.BaseItemBinder
 
 internal class ContributorAdapterItem(
     onClick: (Contributor) -> Unit,

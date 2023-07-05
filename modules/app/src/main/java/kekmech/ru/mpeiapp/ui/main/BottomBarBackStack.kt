@@ -1,6 +1,6 @@
 package kekmech.ru.mpeiapp.ui.main
 
-import kekmech.ru.library_navigation.BottomTab
+import kekmech.ru.lib_navigation.BottomTab
 import java.util.ArrayDeque
 import java.util.Deque
 

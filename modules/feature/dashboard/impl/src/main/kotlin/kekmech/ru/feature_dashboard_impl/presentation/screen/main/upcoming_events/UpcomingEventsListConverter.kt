@@ -13,8 +13,8 @@ import kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm.DashboardS
 import kekmech.ru.feature_dashboard_impl.presentation.screen.main.helpers.TimeDeclensionHelper
 import kekmech.ru.feature_schedule_api.domain.model.Classes
 import kekmech.ru.feature_schedule_api.domain.model.ScheduleType
-import kekmech.ru.library_elm.Resource
-import kekmech.ru.library_schedule.utils.withNotePreview
+import kekmech.ru.lib_elm.Resource
+import kekmech.ru.lib_schedule.utils.withNotePreview
 import kotlin.time.Duration
 import kekmech.ru.res_strings.R.string as Strings
 

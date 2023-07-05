@@ -10,7 +10,7 @@ import kekmech.ru.feature_bars_impl.data.repository.BarsUserInfoRepository
 import kekmech.ru.feature_bars_impl.launcher.BarsFeatureLauncherImpl
 import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsActor
 import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsStoreProvider
-import kekmech.ru.library_network.buildApi
+import kekmech.ru.lib_network.buildApi
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind

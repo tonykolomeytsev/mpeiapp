@@ -31,12 +31,12 @@ import kekmech.ru.feature_schedule_impl.presentation.screen.main.item.DAY_OF_WEE
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.item.DAY_OF_WEEK_WEDNESDAY
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.item.WeekAdapterItem
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.item.WorkingDayAdapterItem
-import kekmech.ru.library_adapter.BaseAdapter
-import kekmech.ru.library_analytics_android.addScrollAnalytics
-import kekmech.ru.library_analytics_android.ext.screenAnalytics
-import kekmech.ru.library_elm.BaseFragment
-import kekmech.ru.library_navigation.features.TabScreenStateSaver
-import kekmech.ru.library_navigation.features.TabScreenStateSaverImpl
+import kekmech.ru.lib_adapter.BaseAdapter
+import kekmech.ru.lib_analytics_android.addScrollAnalytics
+import kekmech.ru.lib_analytics_android.ext.screenAnalytics
+import kekmech.ru.lib_elm.BaseFragment
+import kekmech.ru.lib_navigation.features.TabScreenStateSaver
+import kekmech.ru.lib_navigation.features.TabScreenStateSaverImpl
 import org.koin.android.ext.android.inject
 import java.time.LocalDate
 import kekmech.ru.res_strings.R.array as StringArrays

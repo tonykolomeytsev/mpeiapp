@@ -4,7 +4,7 @@ import kekmech.ru.ext_kotlin.fromBase64
 import kekmech.ru.ext_kotlin.toBase64
 import kekmech.ru.feature_favorite_schedule_api.domain.model.FavoriteSchedule
 import kekmech.ru.feature_schedule_api.domain.model.ScheduleType
-import kekmech.ru.library_app_database.entity.NormalFavoriteSchedule
+import kekmech.ru.lib_app_database.entity.NormalFavoriteSchedule
 
 internal fun NormalFavoriteSchedule.toDomain(): FavoriteSchedule =
     FavoriteSchedule(
