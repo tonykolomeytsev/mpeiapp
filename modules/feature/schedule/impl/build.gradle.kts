@@ -31,7 +31,7 @@ dependencies {
     implementation(libs.firebase.crashlytics)
 
     implementation(project(":feature_app_settings_api"))
-    implementation(project(":domain_main_screen"))
+    implementation(project(":feature_main_screen_api"))
     implementation(project(":feature_notes_api"))
     implementation(project(":feature_onboarding_api"))
     implementation(project(":feature_schedule_api"))

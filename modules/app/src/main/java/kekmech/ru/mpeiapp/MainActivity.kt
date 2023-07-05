@@ -9,9 +9,9 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kekmech.ru.coreui.banner.findBanner
-import kekmech.ru.domain_main_screen.MainScreenLauncher
 import kekmech.ru.ext_android.onActivityResult
 import kekmech.ru.feature_app_settings_api.data.AppSettingsRepository
+import kekmech.ru.feature_main_screen_api.MainScreenLauncher
 import kekmech.ru.feature_onboarding_api.OnboardingFeatureLauncher
 import kekmech.ru.library_app_lifecycle.MainActivityLifecycleObserver
 import kekmech.ru.library_elm.DisposableDelegate
