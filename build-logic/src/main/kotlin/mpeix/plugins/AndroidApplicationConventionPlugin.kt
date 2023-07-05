@@ -39,6 +39,7 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                     viewBinding = true // TODO: remove viewBinding after complete compose migration
                     shaders = false
                     resValues = true
+                    buildConfig = true
                 }
             }
         }
