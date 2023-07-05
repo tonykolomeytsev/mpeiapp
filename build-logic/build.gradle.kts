@@ -19,12 +19,6 @@ dependencies {
 }
 
 gradlePlugin {
-    plugins.create("AndroidBaseConventionPlugin") {
-        id = "mpeix.android.base"
-        displayName = "MpeiX Android Base Plugin"
-        description = "Gradle Plugin for setting up any android module"
-        implementationClass = "mpeix.plugins.AndroidBaseConventionPlugin"
-    }
     plugins.create("AndroidSigningConventionPlugin") {
         id = "mpeix.android.signing"
         displayName = "MpeiX Android Signing Plugin"
@@ -43,12 +37,6 @@ gradlePlugin {
         description =
             "Gradle Plugin for setting up android library module with Compose dependencies"
         implementationClass = "mpeix.plugins.AndroidComposeConventionPlugin"
-    }
-    plugins.create("KotlinLibConventionPlugin") {
-        id = "mpeix.kotlin.lib"
-        displayName = "Mpeix Kotlin Plugin"
-        description = "Gradle Plugin for setting up pure kotlin library module"
-        implementationClass = "mpeix.plugins.KotlinLibConventionPlugin"
     }
     plugins.create("KotlinAar2JarConventionPlugin") {
         id = "mpeix.kotlin.aar2jar"
