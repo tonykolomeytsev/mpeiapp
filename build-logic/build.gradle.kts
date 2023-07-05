@@ -25,12 +25,6 @@ gradlePlugin {
         description = "Gradle Plugin for signing release APK and AAB"
         implementationClass = "mpeix.plugins.AndroidSigningConventionPlugin"
     }
-    plugins.create("AndroidLibConventionPlugin") {
-        id = "mpeix.android.lib"
-        displayName = "MpeiX Android Library Plugin"
-        description = "Gradle Plugin for setting up android library module"
-        implementationClass = "mpeix.plugins.AndroidLibConventionPlugin"
-    }
     plugins.create("AndroidComposeConventionPlugin") {
         id = "mpeix.android.compose"
         displayName = "MpeiX Compose Android Library Plugin"

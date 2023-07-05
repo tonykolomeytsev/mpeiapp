@@ -126,7 +126,6 @@ dependencies {
 
     implementation(project(":coreui"))
     implementation(project(":icons"))
-    implementation(project(":images"))
     implementation(project(":strings"))
 
     debugImplementation(project(":mock_server"))

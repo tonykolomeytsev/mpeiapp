@@ -1,9 +1,12 @@
 plugins {
-    id("mpeix.android.lib")
+    id("mpeix.android.library")
 }
 
 @Suppress("UnstableApiUsage")
-android.buildFeatures.viewBinding = true
+android.buildFeatures {
+    viewBinding = true
+    androidResources = true
+}
 
 dependencies {
     implementation(libs.androidx.appCompat)
@@ -30,6 +33,6 @@ dependencies {
     implementation(project(":library_network"))
 
     implementation(project(":icons"))
-    implementation(project(":images"))
+    implementation(project(":res_images"))
     implementation(project(":strings"))
 }
