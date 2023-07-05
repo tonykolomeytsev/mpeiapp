@@ -1,3 +1,3 @@
 plugins {
-    id("mpeix.android.res")
+    id("mpeix.android.resources")
 }
