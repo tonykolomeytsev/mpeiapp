@@ -9,22 +9,22 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Transformation
-import kekmech.ru.domain_github.dto.GitHubUser
 import kekmech.ru.ext_android.dpToPx
 import kekmech.ru.feature_app_settings_impl.R
 import kekmech.ru.feature_app_settings_impl.databinding.ItemContributorBinding
+import kekmech.ru.feature_contributors_api.domain.model.Contributor
 import kekmech.ru.library_adapter.AdapterItem
 import kekmech.ru.library_adapter.BaseItemBinder
 
 internal class ContributorAdapterItem(
-    onClick: (GitHubUser) -> Unit,
-) : AdapterItem<ContributorViewHolder, GitHubUser>(
-    isType = { it is GitHubUser },
+    onClick: (Contributor) -> Unit,
+) : AdapterItem<ContributorViewHolder, Contributor>(
+    isType = { it is Contributor },
     layoutRes = R.layout.item_contributor,
     viewHolderGenerator = ::ContributorViewHolder,
-    itemBinder = object : BaseItemBinder<ContributorViewHolder, GitHubUser>() {
+    itemBinder = object : BaseItemBinder<ContributorViewHolder, Contributor>() {
 
-        override fun bind(vh: ContributorViewHolder, model: GitHubUser, position: Int) {
+        override fun bind(vh: ContributorViewHolder, model: Contributor, position: Int) {
             vh.setData(model)
             vh.setOnClickListener { onClick.invoke(model) }
         }
@@ -38,19 +38,19 @@ internal class ContributorViewHolder(
     private val viewBinding = ItemContributorBinding.bind(itemView)
     private val dp8 = itemView.resources.dpToPx(dp = 24)
 
-    fun setData(gitHubUser: GitHubUser) =
+    fun setData(contributor: Contributor) =
         with(viewBinding) {
-            login.text = gitHubUser.login
+            login.text = contributor.login
 
-            bio.isVisible = gitHubUser.bio != null
-            gitHubUser.bio?.let(bio::setText)
+            bio.isVisible = contributor.bio != null
+            contributor.bio?.let(bio::setText)
 
-            name.isVisible = gitHubUser.name != null
-            gitHubUser.name?.let(name::setText)
+            name.isVisible = contributor.name != null
+            contributor.name?.let(name::setText)
 
             Picasso.get().cancelRequest(avatar)
             Picasso.get()
-                .load(gitHubUser.avatarUrl)
+                .load(contributor.avatarUrl)
                 .tag(ContributorAdapterItem::class)
                 .fit()
                 .centerCrop()

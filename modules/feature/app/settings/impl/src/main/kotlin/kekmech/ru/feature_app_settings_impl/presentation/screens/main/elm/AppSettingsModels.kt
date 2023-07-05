@@ -1,13 +1,13 @@
 package kekmech.ru.feature_app_settings_impl.presentation.screens.main.elm
 
-import kekmech.ru.domain_github.dto.GitHubUser
 import kekmech.ru.feature_app_settings_api.domain.AppSettings
+import kekmech.ru.feature_contributors_api.domain.model.Contributor
 import kekmech.ru.library_app_info.AppVersionName
 
 internal data class AppSettingsState(
     val appSettings: AppSettings? = null,
     val isFeatureToggleSnowFlakesEnabled: Boolean,
-    val contributors: List<GitHubUser>? = null,
+    val contributors: List<Contributor>? = null,
     val appVersionName: AppVersionName,
 )
 
@@ -34,7 +34,7 @@ internal sealed interface AppSettingsEvent {
 
     sealed interface Internal : AppSettingsEvent {
         data class LoadAppSettingsSuccess(val appSettings: AppSettings) : Internal
-        data class ObserveContributorsSuccess(val contributors: List<GitHubUser>) : Internal
+        data class ObserveContributorsSuccess(val contributors: List<Contributor>) : Internal
     }
 }
 

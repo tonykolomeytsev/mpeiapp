@@ -117,7 +117,7 @@ internal class AppSettingsFragment :
             BottomLabeledTextAdapterItem { onItemClick(it.itemId) },
             RightLabeledTextAdapterItem { onItemClick(it.itemId) },
             ContributorAdapterItem {
-                requireContext().openLinkExternal(it.gitHubPageUrl)
+                requireContext().openLinkExternal(it.url)
             },
         )
 
