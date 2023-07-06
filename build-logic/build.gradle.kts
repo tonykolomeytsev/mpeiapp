@@ -19,23 +19,11 @@ dependencies {
 }
 
 gradlePlugin {
-    plugins.create("AndroidBaseConventionPlugin") {
-        id = "mpeix.android.base"
-        displayName = "MpeiX Android Base Plugin"
-        description = "Gradle Plugin for setting up any android module"
-        implementationClass = "mpeix.plugins.AndroidBaseConventionPlugin"
-    }
     plugins.create("AndroidSigningConventionPlugin") {
         id = "mpeix.android.signing"
         displayName = "MpeiX Android Signing Plugin"
         description = "Gradle Plugin for signing release APK and AAB"
         implementationClass = "mpeix.plugins.AndroidSigningConventionPlugin"
-    }
-    plugins.create("AndroidLibConventionPlugin") {
-        id = "mpeix.android.lib"
-        displayName = "MpeiX Android Library Plugin"
-        description = "Gradle Plugin for setting up android library module"
-        implementationClass = "mpeix.plugins.AndroidLibConventionPlugin"
     }
     plugins.create("AndroidComposeConventionPlugin") {
         id = "mpeix.android.compose"
@@ -43,12 +31,6 @@ gradlePlugin {
         description =
             "Gradle Plugin for setting up android library module with Compose dependencies"
         implementationClass = "mpeix.plugins.AndroidComposeConventionPlugin"
-    }
-    plugins.create("KotlinLibConventionPlugin") {
-        id = "mpeix.kotlin.lib"
-        displayName = "Mpeix Kotlin Plugin"
-        description = "Gradle Plugin for setting up pure kotlin library module"
-        implementationClass = "mpeix.plugins.KotlinLibConventionPlugin"
     }
     plugins.create("KotlinAar2JarConventionPlugin") {
         id = "mpeix.kotlin.aar2jar"
@@ -73,5 +55,59 @@ gradlePlugin {
         displayName = "Detekt configuration Plugin"
         description = "The Gradle Plugin that configures Detekt in subproject"
         implementationClass = "mpeix.plugins.DetektConventionPlugin"
+    }
+    plugins.create("FeatureApiConventionPlugin") {
+        id = "mpeix.feature.api"
+        displayName = "MpeiX Feature Api Convention"
+        description = "The Gradle Plugin that configures Feature Api module"
+        implementationClass = "mpeix.plugins.FeatureApiConventionPlugin"
+    }
+    plugins.create("FeatureImplementationConventionPlugin") {
+        id = "mpeix.feature.impl"
+        displayName = "MpeiX Feature Implementation Convention"
+        description = "The Gradle Plugin that configures Feature Implementation module"
+        implementationClass = "mpeix.plugins.FeatureImplementationConventionPlugin"
+    }
+    plugins.create("KotlinExtensionConventionPlugin") {
+        id = "mpeix.kotlin.extension"
+        displayName = "MpeiX Kotlin Extension Convention"
+        description = "The Gradle Plugin that configures extensions module for jvm libraries"
+        implementationClass = "mpeix.plugins.KotlinExtensionConventionPlugin"
+    }
+    plugins.create("KotlinLibraryConventionPlugin") {
+        id = "mpeix.kotlin.library"
+        displayName = "MpeiX Kotlin Library Convention"
+        description = "The Gradle Plugin that configures Kotlin Library module"
+        implementationClass = "mpeix.plugins.KotlinLibraryConventionPlugin"
+    }
+    plugins.create("AndroidExtensionConventionPlugin") {
+        id = "mpeix.android.extension"
+        displayName = "MpeiX Android Extension Convention"
+        description = "The Gradle Plugin that configures extensions module for android libraries"
+        implementationClass = "mpeix.plugins.AndroidExtensionConventionPlugin"
+    }
+    plugins.create("AndroidLibraryConventionPlugin") {
+        id = "mpeix.android.library"
+        displayName = "MpeiX Android Library Convention"
+        description = "The Gradle Plugin that configures Android Library module"
+        implementationClass = "mpeix.plugins.AndroidLibraryConventionPlugin"
+    }
+    plugins.create("AndroidApplicationConventionPlugin") {
+        id = "mpeix.android.application"
+        displayName = "MpeiX Android Application Convention"
+        description = "The Gradle Plugin that configures Android application"
+        implementationClass = "mpeix.plugins.AndroidApplicationConventionPlugin"
+    }
+    plugins.create("AndroidUiConventionPlugin") {
+        id = "mpeix.android.ui"
+        displayName = "MpeiX Android Ui Convention"
+        description = "The Gradle Plugin that configures Android Library with UI Components module"
+        implementationClass = "mpeix.plugins.AndroidUiConventionPlugin"
+    }
+    plugins.create("AndroidResourcesConventionPlugin") {
+        id = "mpeix.android.resources"
+        displayName = "MpeiX Android Resources Convention"
+        description = "The Gradle Plugin that configures Android module with resources only"
+        implementationClass = "mpeix.plugins.AndroidResourcesConventionPlugin"
     }
 }

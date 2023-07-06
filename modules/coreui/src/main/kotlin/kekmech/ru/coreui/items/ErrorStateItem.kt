@@ -5,16 +5,16 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.recyclerview.widget.RecyclerView
 import io.reactivex.rxjava3.exceptions.CompositeException
-import kekmech.ru.common_adapter.AdapterItem
-import kekmech.ru.common_adapter.BaseItemBinder
-import kekmech.ru.common_network.okhttp.NoInternetConnectionException
 import kekmech.ru.coreui.R
 import kekmech.ru.coreui.databinding.ItemErrorStateBinding
-import kekmech.ru.images.Images
-import kekmech.ru.strings.Strings
+import kekmech.ru.ext_okhttp.NoInternetConnectionException
+import kekmech.ru.lib_adapter.AdapterItem
+import kekmech.ru.lib_adapter.BaseItemBinder
 import retrofit2.HttpException
 import java.net.UnknownHostException
 import javax.net.ssl.SSLHandshakeException
+import kekmech.ru.res_images.R.drawable as Images
+import kekmech.ru.res_strings.R.string as Strings
 
 data class ErrorStateItem(val throwable: Throwable)
 
@@ -79,7 +79,8 @@ private class ErrorStateItemBinder(
             is HttpException ->
                 Triple(
                     first = Strings.common_error_bad_response_title,
-                    second = Strings.common_error_bad_response_description to throwable.code().toString(),
+                    second = Strings.common_error_bad_response_description to throwable.code()
+                        .toString(),
                     third = Images.ill_bad_response_error,
                 )
                     .takeIf { throwable.code() in 300 until 600 }

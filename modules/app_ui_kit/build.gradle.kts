@@ -1,7 +1,5 @@
 plugins {
-    id("com.android.application")
-    id("mpeix.android.base")
-    id("mpeix.android.compose")
+    id("mpeix.android.application")
 }
 
 android {
@@ -29,10 +27,10 @@ dependencies {
     implementation(project(":ui_icons"))
     implementation(project(":ui_kit_lists"))
     implementation(project(":ui_kit_topappbar"))
-    implementation(project(":common_navigation_api"))
-    implementation(project(":common_navigation_compose"))
-    implementation(project(":common_elm"))
-    implementation(project(":common_kotlin"))
+    implementation(project(":lib_navigation_api"))
+    implementation(project(":lib_navigation_compose"))
+    implementation(project(":lib_elm"))
+    implementation(project(":ext_kotlin"))
 
     implementation(libs.compose.activity)
     implementation(libs.appyx.core)

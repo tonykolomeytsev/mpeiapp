@@ -1,18 +1,22 @@
 plugins {
-    id("mpeix.android.lib")
-    id("mpeix.android.compose")
+    id("mpeix.feature.impl")
 }
 
+@Suppress("UnstableApiUsage")
+android.buildFeatures.androidResources = true
+
 dependencies {
-    implementation(project(":common_app_lifecycle"))
-    implementation(project(":common_di"))
-    implementation(project(":common_elm"))
-    implementation(project(":common_feature_toggles"))
-    implementation(project(":common_kotlin"))
-    implementation(project(":common_navigation_api"))
-    implementation(project(":common_navigation_compose"))
-    implementation(project(":domain_app_settings"))
-    implementation(project(":domain_app_settings_models"))
+    implementation(project(":lib_app_lifecycle"))
+    implementation(project(":lib_app_info"))
+    implementation(project(":lib_elm"))
+    implementation(project(":lib_feature_toggles"))
+    implementation(project(":ext_kotlin"))
+    implementation(project(":lib_navigation_api"))
+    implementation(project(":lib_navigation_compose"))
+    implementation(project(":lib_network"))
+    implementation(project(":feature_app_settings_api"))
+
+    implementation(project(":ext_koin"))
 
     implementation(project(":ui_kit_lists"))
     implementation(project(":ui_kit_switch"))

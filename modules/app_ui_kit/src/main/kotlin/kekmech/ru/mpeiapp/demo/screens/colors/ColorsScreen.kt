@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import com.bumble.appyx.core.modality.BuildContext
 import com.bumble.appyx.core.node.Node
 import com.bumble.appyx.core.node.node
-import kekmech.ru.common_navigation_api.NavTarget
+import kekmech.ru.lib_navigation_api.NavTarget
 import kekmech.ru.mpeiapp.demo.ui.UiKitScreen
 import kotlinx.parcelize.Parcelize
 

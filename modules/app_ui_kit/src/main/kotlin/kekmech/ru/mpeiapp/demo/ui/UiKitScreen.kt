@@ -6,7 +6,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import kekmech.ru.common_navigation_compose.LocalBackStackNavigator
+import kekmech.ru.lib_navigation_compose.LocalBackStackNavigator
 import kekmech.ru.ui_kit_topappbar.TopAppBar
 
 @Composable

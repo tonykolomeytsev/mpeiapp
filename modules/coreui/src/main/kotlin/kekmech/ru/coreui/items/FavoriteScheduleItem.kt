@@ -3,12 +3,12 @@ package kekmech.ru.coreui.items
 import android.content.res.ColorStateList
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import kekmech.ru.common_adapter.AdapterItem
-import kekmech.ru.common_adapter.BaseItemBinder
-import kekmech.ru.common_android.getThemeColor
 import kekmech.ru.coreui.R
 import kekmech.ru.coreui.databinding.ItemFavoriteScheduleBinding
-import kekmech.ru.domain_favorite_schedule.dto.FavoriteSchedule
+import kekmech.ru.ext_android.getThemeColor
+import kekmech.ru.feature_favorite_schedule_api.domain.model.FavoriteSchedule
+import kekmech.ru.lib_adapter.AdapterItem
+import kekmech.ru.lib_adapter.BaseItemBinder
 
 data class FavoriteScheduleItem(
     val value: FavoriteSchedule,

@@ -12,7 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
 import com.bumble.appyx.core.integrationpoint.NodeComponentActivity
-import kekmech.ru.common_app_lifecycle.MainActivityLifecycleObserver
+import kekmech.ru.lib_app_lifecycle.MainActivityLifecycleObserver
 import kekmech.ru.ui_theme.theme.MpeixTheme
 import org.koin.android.ext.android.getKoin
 
