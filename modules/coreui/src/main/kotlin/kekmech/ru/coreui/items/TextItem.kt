@@ -7,11 +7,11 @@ import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import androidx.annotation.StyleRes
 import androidx.recyclerview.widget.RecyclerView
-import kekmech.ru.common_adapter.AdapterItem
-import kekmech.ru.common_adapter.BaseItemBinder
-import kekmech.ru.common_android.viewbinding.ReusableViewHolder
-import kekmech.ru.common_android.viewbinding.lazyBinding
 import kekmech.ru.coreui.R
+import kekmech.ru.ext_android.viewbinding.ReusableViewHolder
+import kekmech.ru.ext_android.viewbinding.lazyBinding
+import kekmech.ru.lib_adapter.AdapterItem
+import kekmech.ru.lib_adapter.BaseItemBinder
 
 data class TextItem(
     val text: CharSequence? = null,

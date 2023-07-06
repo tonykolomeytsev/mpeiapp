@@ -1,11 +1,11 @@
 package kekmech.ru.coreui
 
 import android.content.Context
-import kekmech.ru.common_android.getStringArray
-import kekmech.ru.strings.StringArrays
-import kekmech.ru.strings.Strings
+import kekmech.ru.ext_android.getStringArray
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit
+import kekmech.ru.res_strings.R.array as StringArrays
+import kekmech.ru.res_strings.R.string as Strings
 
 class PrettyDateFormatter(context: Context) {
     private val listOfDayNames = context.getStringArray(StringArrays.days_of_week)

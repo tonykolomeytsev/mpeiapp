@@ -8,21 +8,21 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import kekmech.ru.common_android.onActivityResult
-import kekmech.ru.common_app_lifecycle.MainActivityLifecycleObserver
-import kekmech.ru.common_elm.DisposableDelegate
-import kekmech.ru.common_elm.DisposableDelegateImpl
-import kekmech.ru.common_navigation.BackButtonListener
-import kekmech.ru.common_navigation.NavigationHolder
 import kekmech.ru.coreui.banner.findBanner
-import kekmech.ru.domain_app_settings.AppSettingsRepository
-import kekmech.ru.domain_main_screen.MainScreenLauncher
-import kekmech.ru.domain_onboarding.OnboardingFeatureLauncher
+import kekmech.ru.ext_android.onActivityResult
+import kekmech.ru.feature_app_settings_api.data.AppSettingsRepository
+import kekmech.ru.feature_main_screen_api.MainScreenLauncher
+import kekmech.ru.feature_onboarding_api.OnboardingFeatureLauncher
+import kekmech.ru.lib_app_lifecycle.MainActivityLifecycleObserver
+import kekmech.ru.lib_elm.DisposableDelegate
+import kekmech.ru.lib_elm.DisposableDelegateImpl
+import kekmech.ru.lib_navigation.BackButtonListener
+import kekmech.ru.lib_navigation.NavigationHolder
 import kekmech.ru.mpeiapp.deeplink.DeeplinkHandlersProcessor
 import org.koin.android.ext.android.getKoin
 import org.koin.android.ext.android.inject
-import kekmech.ru.common_navigation.R as common_navigation_R
 import kekmech.ru.coreui.R as coreui_R
+import kekmech.ru.lib_navigation.R as common_navigation_R
 
 class MainActivity : AppCompatActivity(), DisposableDelegate by DisposableDelegateImpl() {
 

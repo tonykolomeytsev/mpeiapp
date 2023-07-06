@@ -15,10 +15,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.bumble.appyx.core.modality.BuildContext
 import com.bumble.appyx.core.node.Node
-import kekmech.ru.common_elm.Resource
-import kekmech.ru.common_elm.elmNode
-import kekmech.ru.common_elm.rememberAcceptAction
-import kekmech.ru.common_navigation_api.NavTarget
+import kekmech.ru.lib_elm.Resource
+import kekmech.ru.lib_elm.elmNode
+import kekmech.ru.lib_elm.rememberAcceptAction
+import kekmech.ru.lib_navigation_api.NavTarget
 import kekmech.ru.mpeiapp.demo.screens.elmslie.elm.ElmDemoStore
 import kekmech.ru.mpeiapp.demo.screens.elmslie.elm.ElmDemoStoreFactory
 import kekmech.ru.ui_kit_topappbar.TopAppBar

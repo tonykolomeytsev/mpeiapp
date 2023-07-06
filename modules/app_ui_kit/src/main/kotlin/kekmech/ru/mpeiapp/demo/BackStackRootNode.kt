@@ -10,9 +10,9 @@ import com.bumble.appyx.core.node.Node
 import com.bumble.appyx.core.node.ParentNode
 import com.bumble.appyx.navmodel.backstack.BackStack
 import com.bumble.appyx.navmodel.backstack.transitionhandler.rememberBackstackFader
-import kekmech.ru.common_navigation_api.NavTarget
-import kekmech.ru.common_navigation_compose.BackStackNavigator
-import kekmech.ru.common_navigation_compose.LocalBackStackNavigator
+import kekmech.ru.lib_navigation_api.NavTarget
+import kekmech.ru.lib_navigation_compose.BackStackNavigator
+import kekmech.ru.lib_navigation_compose.LocalBackStackNavigator
 import kekmech.ru.mpeiapp.demo.screens.main.MainScreenNavTarget
 
 internal class BackStackRootNode(

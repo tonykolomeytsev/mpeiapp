@@ -1,9 +1,12 @@
 plugins {
-    id("mpeix.android.lib")
+    id("mpeix.android.library")
 }
 
 @Suppress("UnstableApiUsage")
-android.buildFeatures.viewBinding = true
+android.buildFeatures {
+    viewBinding = true
+    androidResources = true
+}
 
 dependencies {
     implementation(libs.androidx.appCompat)
@@ -16,17 +19,20 @@ dependencies {
     implementation(libs.rx.java)
     implementation(libs.squareup.retrofit)
 
-    implementation(project(":domain_notes"))
-    implementation(project(":domain_schedule"))
-    implementation(project(":domain_favorite_schedule"))
+    implementation(project(":lib_adapter"))
+    implementation(project(":ext_android"))
+    implementation(project(":ext_kotlin"))
 
-    implementation(project(":common_adapter"))
-    implementation(project(":common_android"))
-    implementation(project(":common_elm"))
-    implementation(project(":common_kotlin"))
-    implementation(project(":common_network"))
+    implementation(project(":feature_notes_api"))
+    implementation(project(":feature_schedule_api"))
+    implementation(project(":feature_favorite_schedule_api"))
 
-    implementation(project(":icons"))
-    implementation(project(":images"))
-    implementation(project(":strings"))
+    implementation(project(":ext_okhttp"))
+
+    implementation(project(":lib_elm"))
+    implementation(project(":lib_network"))
+
+    implementation(project(":res_icons"))
+    implementation(project(":res_images"))
+    implementation(project(":res_strings"))
 }

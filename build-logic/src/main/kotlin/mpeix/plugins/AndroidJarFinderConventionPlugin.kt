@@ -43,6 +43,10 @@ class AndroidJarFinderConventionPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
         with(target) {
+            assert(project == rootProject) {
+                "Plugin `mpeix.android-jar-finder` can be applied only to root project"
+            }
+
             val libs = versionCatalog
             val androidJarFinder = AndroidJarFinder(target)
             val androidJar = androidJarFinder.find(libs.requiredVersion("compileSdk").toInt())

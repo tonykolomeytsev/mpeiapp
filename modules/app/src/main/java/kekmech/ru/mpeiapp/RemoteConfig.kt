@@ -1,7 +1,7 @@
 package kekmech.ru.mpeiapp
 
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
-import kekmech.ru.domain_force_update.ForceUpdateChecker
+import kekmech.ru.feature_app_update_api.ForceUpdateChecker
 
 private const val REMOTE_CONFIG_FETCH_INTERVAL_SEC = 60L
 
