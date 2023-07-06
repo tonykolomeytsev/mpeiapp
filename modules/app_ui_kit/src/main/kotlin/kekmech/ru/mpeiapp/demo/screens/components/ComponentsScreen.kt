@@ -12,6 +12,7 @@ import com.bumble.appyx.core.node.node
 import kekmech.ru.common_navigation_api.NavTarget
 import kekmech.ru.common_navigation_compose.LocalBackStackNavigator
 import kekmech.ru.mpeiapp.demo.screens.components.lists.ListItemScreenNavTarget
+import kekmech.ru.mpeiapp.demo.screens.components.search.DockedSearchBarScreenNavTarget
 import kekmech.ru.mpeiapp.demo.screens.components.topappbar.ComponentsTopAppBarNavTarget
 import kekmech.ru.mpeiapp.demo.ui.SectionItem
 import kekmech.ru.mpeiapp.demo.ui.UiKitScreen
@@ -48,6 +49,12 @@ private fun ComponentsScreen() {
                         navigator.navigate(ComponentsTopAppBarNavTarget())
                     },
                     name = "Top app bar",
+                )
+            }
+            item("Search bar") {
+                SectionItem(
+                    onClick = { navigator.navigate(DockedSearchBarScreenNavTarget()) },
+                    name = "Docked search bar",
                 )
             }
         }
