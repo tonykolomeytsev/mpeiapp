@@ -55,7 +55,7 @@ fun NavigationBar(
         modifier = modifier,
         containerColor = MpeixTheme.palette.surface,
         contentColor = MpeixTheme.palette.content,
-        tonalElevation = 3.dp,
+        tonalElevation = 0.dp,
         windowInsets = windowInsets,
         content = content,
     )
