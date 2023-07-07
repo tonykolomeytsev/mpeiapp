@@ -49,18 +49,13 @@ includeBuild("build-logic")
 // Include all submodules
 private val excludedDirs = setOf("build", "gradle", ".gradle", "src", "build-logic")
 private val rootModulesDir = File(rootProject.projectDir, "modules")
-private val resourcesDir = File(rootModulesDir, "resources")
 rootModulesDir.walk()
     .onEnter { it.name !in excludedDirs }
     .filter { it.isBuildGradleScript() }
     .filter { it != rootProject.buildFile }
     .mapNotNull { it.parentFile }
     .forEach { moduleDir ->
-        val moduleName = if (moduleDir.parentFile != resourcesDir) {
-            moduleDir.relativeTo(rootModulesDir).path.normalize()
-        } else {
-            moduleDir.name
-        }
+        val moduleName = moduleDir.relativeTo(rootModulesDir).path.normalize()
         val projectName = ":$moduleName"
         include(projectName)
         with(project(projectName)) {

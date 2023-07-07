@@ -27,6 +27,7 @@ dependencies {
     implementation(project(":ui_icons"))
     implementation(project(":ui_kit_lists"))
     implementation(project(":ui_kit_topappbar"))
+    implementation(project(":ui_kit_navigationbar"))
     implementation(project(":lib_navigation_api"))
     implementation(project(":lib_navigation_compose"))
     implementation(project(":lib_elm"))

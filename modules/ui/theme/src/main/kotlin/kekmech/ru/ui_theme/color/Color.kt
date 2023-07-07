@@ -27,7 +27,7 @@ object MpeixColors {
 
     val Primary90 = Color(0xFFDBE6FA)
     val Primary60 = Color(0xFF4C83E8)
-    val Primary30 = Color(0xFF113883)
+    val Primary50 = Color(0xFF1D62E2)
     val Secondary90 = Color(0xFFD1EDFA)
     val Secondary60 = Color(0xFF4BB7E9)
     val Secondary30 = Color(0xFF105F84)
@@ -102,7 +102,7 @@ val DarkMpeixPalette = MpeixPalette(
     surfacePlus1 = MpeixColors.Neutral25,
     surfacePlus2 = MpeixColors.Neutral30,
     surfacePlus3 = MpeixColors.Neutral35,
-    primaryContainer = MpeixColors.Primary30,
+    primaryContainer = MpeixColors.Primary50,
     secondaryContainer = MpeixColors.Secondary30,
     content = MpeixColors.Neutral90,
     contentAccent = MpeixColors.Neutral100,
