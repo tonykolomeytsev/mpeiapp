@@ -31,6 +31,7 @@ internal class NavigationBarScreenNavTarget : NavTarget {
         node(buildContext) { NavigationBarScreen() }
 }
 
+@Suppress("LongMethod", "MagicNumber")
 @Composable
 private fun NavigationBarScreen() {
     UiKitScreen(
