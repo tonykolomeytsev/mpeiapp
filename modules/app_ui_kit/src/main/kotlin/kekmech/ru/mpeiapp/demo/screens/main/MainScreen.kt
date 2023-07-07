@@ -21,6 +21,7 @@ import kekmech.ru.mpeiapp.demo.screens.components.ComponentsScreenNavTarget
 import kekmech.ru.mpeiapp.demo.screens.elmslie.ElmDemoScreenNavTarget
 import kekmech.ru.mpeiapp.demo.screens.typography.TypographyScreenNavTarget
 import kekmech.ru.mpeiapp.demo.ui.SectionItem
+import kekmech.ru.mpeiapp.demo.ui.ToggleThemeActionButton
 import kekmech.ru.ui_kit_topappbar.TopAppBar
 import kotlinx.parcelize.Parcelize
 import kotlin.random.Random
@@ -32,6 +33,7 @@ internal class MainScreenNavTarget(private val greetings: String = "MpeiX UI-Kit
         node(buildContext) { MainScreen(greetings) }
 }
 
+@Suppress("LongMethod")
 @Composable
 private fun MainScreen(greetings: String) {
     val navigator = LocalBackStackNavigator.current
@@ -44,6 +46,9 @@ private fun MainScreen(greetings: String) {
             TopAppBar(
                 title = greetings,
                 scrollBehavior = scrollBehavior,
+                actions = {
+                    ToggleThemeActionButton()
+                }
             )
         },
     ) { innerPadding ->
