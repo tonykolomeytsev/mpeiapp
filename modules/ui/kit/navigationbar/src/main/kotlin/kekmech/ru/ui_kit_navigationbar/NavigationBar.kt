@@ -41,6 +41,26 @@ import androidx.compose.material3.NavigationBarItem as Material3NavigationBarIte
  * destination. See [Material3NavigationBarItem] for configuration specific to each item, and not the overall
  * [NavigationBar] component.
  *
+ * Usage:
+ * ```kotlin
+ * NavigationBar(
+ *     modifier = Modifier.fillMaxWidth(),
+ * ) {
+ *     NavigationBarItem(
+ *         selected = selectedItemIdx == 0,
+ *         onClick = { selectedItemIdx = 0 },
+ *         icon = {
+ *             Icon(
+ *                 painterSelected = MpeixIcons.WhatshotBlack24,
+ *                 painterUnselected = MpeixIcons.WhatshotOutline24,
+ *             )
+ *         },
+ *         label = "Dashboard",
+ *     )
+ *     // more items ...
+ * }
+ * ```
+ *
  * @param modifier the [Modifier] to be applied to this navigation bar
  * @param windowInsets a window insets of the navigation bar.
  * @param content the content of this navigation bar, typically 3-5 [Material3NavigationBarItem]s

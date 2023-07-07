@@ -33,6 +33,7 @@ internal class MainScreenNavTarget(private val greetings: String = "MpeiX UI-Kit
         node(buildContext) { MainScreen(greetings) }
 }
 
+@Suppress("LongMethod")
 @Composable
 private fun MainScreen(greetings: String) {
     val navigator = LocalBackStackNavigator.current
