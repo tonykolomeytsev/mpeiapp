@@ -1,0 +1,12 @@
+plugins {
+    id("mpeix.feature.impl")
+}
+
+dependencies {
+    implementation(libs.appyx.core)
+    implementation(libs.koin.core)
+    implementation(project(":feature_main_screen_api"))
+    implementation(project(":lib_navigation_compose"))
+    implementation(project(":ui_icons"))
+    implementation(project(":ui_kit_navigationbar"))
+}
