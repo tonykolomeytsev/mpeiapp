@@ -116,6 +116,7 @@ dependencies {
     implementation(project(":lib_elm"))
     implementation(project(":lib_feature_toggles"))
     implementation(project(":lib_navigation"))
+    implementation(project(":lib_navigation_compose"))
     implementation(project(":lib_network"))
     implementation(project(":lib_persistent_cache"))
 

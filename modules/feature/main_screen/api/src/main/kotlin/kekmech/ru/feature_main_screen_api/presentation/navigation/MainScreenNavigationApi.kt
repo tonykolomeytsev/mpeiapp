@@ -4,5 +4,5 @@ import kekmech.ru.lib_navigation_api.NavTarget
 
 interface MainScreenNavigationApi {
 
-    fun getNavTarget(tab: MainScreenTab): NavTarget
+    fun getNavTarget(): NavTarget
 }

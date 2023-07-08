@@ -1,4 +1,4 @@
-package kekmech.ru.mpeiapp.demo
+package kekmech.ru.lib_navigation_compose.node.backstack
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -13,12 +13,12 @@ import com.bumble.appyx.navmodel.backstack.transitionhandler.rememberBackstackFa
 import kekmech.ru.lib_navigation_api.NavTarget
 import kekmech.ru.lib_navigation_compose.BackStackNavigator
 import kekmech.ru.lib_navigation_compose.LocalBackStackNavigator
-import kekmech.ru.mpeiapp.demo.screens.main.MainScreenNavTarget
 
-internal class BackStackRootNode(
+class BackStackNode(
     buildContext: BuildContext,
+    rootNavTarget: NavTarget,
     private val backStack: BackStack<NavTarget> = BackStack(
-        initialElement = MainScreenNavTarget(),
+        initialElement = rootNavTarget,
         savedStateMap = buildContext.savedStateMap,
     ),
 ) : ParentNode<NavTarget>(

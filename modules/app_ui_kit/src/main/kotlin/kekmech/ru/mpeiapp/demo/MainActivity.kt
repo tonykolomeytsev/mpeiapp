@@ -14,7 +14,9 @@ import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
 import com.bumble.appyx.core.integration.NodeHost
 import com.bumble.appyx.core.integrationpoint.NodeComponentActivity
+import kekmech.ru.lib_navigation_compose.node.backstack.BackStackNode
 import kekmech.ru.mpeiapp.demo.di.AppModule
+import kekmech.ru.mpeiapp.demo.screens.main.MainScreenNavTarget
 import kekmech.ru.mpeiapp.demo.ui.LocalUiKitThemeController
 import kekmech.ru.mpeiapp.demo.ui.UiKitThemeController
 import kekmech.ru.ui_theme.theme.MpeixTheme
@@ -53,8 +55,11 @@ class MainActivity : NodeComponentActivity() {
                         modifier = Modifier.fillMaxSize(),
                         color = MpeixTheme.palette.background,
                     ) {
-                        NodeHost(integrationPoint = appyxIntegrationPoint) {
-                            BackStackRootNode(buildContext = it)
+                        NodeHost(integrationPoint = appyxIntegrationPoint) { buildContext ->
+                            BackStackNode(
+                                buildContext = buildContext,
+                                rootNavTarget = MainScreenNavTarget(),
+                            )
                         }
                     }
                 }
