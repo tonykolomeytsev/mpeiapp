@@ -20,13 +20,14 @@ import kekmech.ru.mpeiapp.demo.screens.main.MainScreenNavTarget
 import kekmech.ru.mpeiapp.demo.ui.LocalUiKitThemeController
 import kekmech.ru.mpeiapp.demo.ui.UiKitThemeController
 import kekmech.ru.ui_theme.theme.MpeixTheme
+import org.koin.core.context.GlobalContext
 import org.koin.core.context.startKoin
 
 class MainActivity : NodeComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        startKoin {
+        GlobalContext.getOrNull() ?: startKoin {
             modules(AppModule)
         }
         WindowCompat.setDecorFitsSystemWindows(window, false)
