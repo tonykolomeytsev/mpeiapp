@@ -35,7 +35,7 @@ internal class BackStackRootNode(
         val backStackNavigator = remember { BackStackNavigator(backStack) }
 
         CompositionLocalProvider(
-          LocalBackStackNavigator provides backStackNavigator,
+            LocalBackStackNavigator provides backStackNavigator,
         ) {
             Children(
                 navModel = backStack,
