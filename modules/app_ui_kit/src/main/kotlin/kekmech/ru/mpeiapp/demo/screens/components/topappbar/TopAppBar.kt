@@ -107,14 +107,14 @@ private fun TopAppBarScreen() {
 @Composable
 private fun LargeTopAppBarScreen() {
     val navigator = LocalBackStackNavigator.current
-    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
 
     Scaffold(
         modifier = Modifier
             .nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             LargeTopAppBar(
-                title = "LargeTopAppBar (enterAlways)",
+                title = "LargeTopAppBar",
                 navigationIcon = {
                     BackIconButton {
                         navigator.back()
