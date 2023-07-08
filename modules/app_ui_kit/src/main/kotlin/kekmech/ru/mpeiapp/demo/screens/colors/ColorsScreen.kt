@@ -35,6 +35,7 @@ internal class ColorsScreenNavTarget : NavTarget {
         node(buildContext) { ColorsScreen() }
 }
 
+@Suppress("LongMethod")
 @Composable
 private fun ColorsScreen() {
     UiKitScreen(title = "Colors") { innerPadding ->
