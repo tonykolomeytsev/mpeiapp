@@ -263,14 +263,13 @@ private fun ThemeSelectionItem(
 @Composable
 private fun AppVersionItem(versionName: String) {
     val context = LocalContext.current
+    val onClick: () -> Unit = {
+        context.copyToClipboard(versionName, label = "MpeiX version")
+    }
     ListItem(
         headlineText = versionName,
         overlineText = "App version",
-        trailingContent = {
-            Icon(painter = painterResource(R.drawable.ic_content_copy_24))
-        },
-        modifier = Modifier.clickable {
-            context.copyToClipboard(versionName, label = "MpeiX version")
-        }
+        modifier = Modifier
+            .clickable(onClick = onClick),
     )
 }
