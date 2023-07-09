@@ -15,7 +15,7 @@ import kekmech.ru.lib_navigation_api.NavTarget
 import kekmech.ru.lib_navigation_compose.BackStackNavigator
 import kekmech.ru.lib_navigation_compose.LocalBackStackNavigator
 
-class BackStackNode(
+open class BackStackNode(
     buildContext: BuildContext,
     rootNavTarget: NavTarget,
     private val backStack: BackStack<NavTarget> = BackStack(

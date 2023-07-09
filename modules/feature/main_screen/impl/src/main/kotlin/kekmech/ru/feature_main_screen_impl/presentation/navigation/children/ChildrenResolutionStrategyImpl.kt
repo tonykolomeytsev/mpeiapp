@@ -6,12 +6,13 @@ import com.bumble.appyx.core.node.Node
 import com.bumble.appyx.core.node.node
 import kekmech.ru.feature_dashboard_api.presentation.navigation.DashboardNavigationApi
 import kekmech.ru.feature_main_screen_api.presentation.navigation.MainScreenTab
+import kekmech.ru.feature_main_screen_api.presentation.navigation.children.ChildrenResolutionStrategy
 
-internal class ChildrenResolutionStrategy(
+internal class ChildrenResolutionStrategyImpl(
     private val dashboardNavigationApi: DashboardNavigationApi,
-) {
+) : ChildrenResolutionStrategy {
 
-    fun resolve(navTarget: MainScreenTab, buildContext: BuildContext): Node =
+    override fun resolve(navTarget: MainScreenTab, buildContext: BuildContext): Node =
         when (navTarget) {
             MainScreenTab.Dashboard ->
                 dashboardNavigationApi.getNavTarget().resolve(buildContext)

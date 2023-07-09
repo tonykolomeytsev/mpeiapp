@@ -21,15 +21,15 @@ import com.bumble.appyx.navmodel.spotlight.operation.activate
 import com.bumble.appyx.navmodel.spotlight.transitionhandler.rememberSpotlightFader
 import kekmech.ru.feature_main_screen_api.presentation.navigation.MainScreenTab
 import kekmech.ru.feature_main_screen_api.presentation.navigation.MainScreenTabSwitcher
+import kekmech.ru.feature_main_screen_api.presentation.navigation.children.ChildrenResolutionStrategy
 import kekmech.ru.feature_main_screen_impl.presentation.navigation.MainScreenTabStateHolder
-import kekmech.ru.feature_main_screen_impl.presentation.navigation.children.ChildrenResolutionStrategy
+import kekmech.ru.feature_main_screen_impl.presentation.navigation.children.DependencyInjectionPlugin
 import kekmech.ru.lib_navigation_api.NavTarget
 import kekmech.ru.ui_icons.MpeixIcons
 import kekmech.ru.ui_kit_navigationbar.NavigationBar
 import kekmech.ru.ui_kit_navigationbar.NavigationBarItem
 import kotlinx.parcelize.Parcelize
 import org.koin.compose.rememberKoinInject
-import org.koin.core.context.GlobalContext
 
 @Parcelize
 internal class MainScreenNavTarget : NavTarget {
@@ -54,11 +54,11 @@ internal class MainScreenNode(
     ParentNode<MainScreenTab>(
         buildContext = buildContext,
         navModel = spotlight,
+        plugins = listOf(DependencyInjectionPlugin()),
     ) {
 
-    // Appyx call `resolve` method before any plugin gets callback in whenChildAttached.
-    // We forced to use global DI context to inject this strategy here
-    private val resolutionStrategy: ChildrenResolutionStrategy by lazy { GlobalContext.get().get() }
+    // will be injected in DependencyInjectionPlugin
+    lateinit var resolutionStrategy: ChildrenResolutionStrategy
 
     override fun resolve(navTarget: MainScreenTab, buildContext: BuildContext): Node =
         resolutionStrategy.resolve(navTarget, buildContext)
