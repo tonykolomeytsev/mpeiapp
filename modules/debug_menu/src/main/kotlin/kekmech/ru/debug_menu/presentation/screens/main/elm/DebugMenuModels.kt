@@ -1,5 +1,6 @@
 package kekmech.ru.debug_menu.presentation.screens.main.elm
 
+import kekmech.ru.lib_app_info.AppVersionName
 import kekmech.ru.lib_elm.Resource
 import kekmech.ru.lib_network.AppEnvironment
 import vivid.money.elmslie.core.store.Store
@@ -8,6 +9,7 @@ internal typealias DebugMenuStore = Store<DebugMenuEvent, DebugMenuEffect, Debug
 
 internal data class DebugMenuState(
     val appEnvironment: Resource<AppEnvironment> = Resource.Loading,
+    val appVersionName: AppVersionName,
 )
 
 internal sealed interface DebugMenuEvent {
