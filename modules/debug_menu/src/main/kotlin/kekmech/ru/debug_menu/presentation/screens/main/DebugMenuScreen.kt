@@ -27,6 +27,7 @@ import kekmech.ru.debug_menu.presentation.screens.main.elm.DebugMenuEvent.Ui
 import kekmech.ru.debug_menu.presentation.screens.main.elm.DebugMenuState
 import kekmech.ru.debug_menu.presentation.screens.main.elm.DebugMenuStore
 import kekmech.ru.debug_menu.presentation.screens.main.elm.DebugMenuStoreFactory
+import kekmech.ru.ext_android.copyToClipboard
 import kekmech.ru.lib_elm.Resource
 import kekmech.ru.lib_elm.elmNode
 import kekmech.ru.lib_elm.rememberAcceptAction
@@ -65,7 +66,7 @@ private fun DebugMenuScreen(
         LazyColumn(
             modifier = Modifier.padding(innerPadding),
         ) {
-            item("environment") {
+            item {
                 BackendEnvironmentItem(
                     appEnvironment = state.appEnvironment,
                     onClick = { openBackendEnvironmentDialog = true },
@@ -76,6 +77,18 @@ private fun DebugMenuScreen(
             }
             item {
                 ChuckerItem()
+            }
+            item {
+                Text(
+                    text = "Build info",
+                    style = MpeixTheme.typography.header3,
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp)
+                        .padding(top = 24.dp, bottom = 12.dp)
+                )
+            }
+            item {
+                AppVersionItem(versionName = state.appVersionName.versionName)
             }
         }
     }
@@ -169,5 +182,20 @@ private fun ChuckerItem() {
             .clickable {
                 context.startActivity(Chucker.getLaunchIntent(context))
             },
+    )
+}
+
+@Composable
+private fun AppVersionItem(versionName: String) {
+    val context = LocalContext.current
+    ListItem(
+        headlineText = versionName,
+        overlineText = "App version",
+        trailingContent = {
+            Icon(painter = painterResource(R.drawable.ic_content_copy_24))
+        },
+        modifier = Modifier.clickable {
+            context.copyToClipboard(versionName, label = "MpeiX version")
+        }
     )
 }

@@ -163,6 +163,14 @@ object ListItemTrailingContentScope {
             color = MpeixTheme.palette.contentVariant,
         )
     }
+
+    @Composable
+    fun Icon(painter: Painter) {
+        androidx.compose.material3.Icon(
+            painter = painter,
+            contentDescription = null,
+        )
+    }
 }
 
 @Suppress("StringLiteralDuplication")
