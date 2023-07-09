@@ -17,7 +17,9 @@ dependencies {
     implementation(libs.androidx.constraintLayout)
     implementation(libs.androidx.coreKtx)
     implementation(libs.androidx.viewPager2)
+    implementation(libs.appyx.core)
     implementation(libs.facebook.shimmer)
+    implementation(libs.firebase.crashlytics)
     implementation(libs.google.gson)
     implementation(libs.google.material)
     implementation(libs.koin.android)
@@ -28,7 +30,6 @@ dependencies {
     implementation(libs.vivid.elmslie.android)
     implementation(libs.vivid.elmslie.core)
     implementation(libs.vivid.elmslie.coroutines)
-    implementation(libs.firebase.crashlytics)
 
     implementation(project(":feature_app_settings_api"))
     implementation(project(":feature_main_screen_api"))
@@ -44,9 +45,12 @@ dependencies {
     implementation(project(":ext_kotlin"))
     implementation(project(":lib_elm"))
     implementation(project(":lib_navigation"))
+    implementation(project(":lib_navigation_compose"))
     implementation(project(":lib_network"))
     implementation(project(":lib_schedule"))
     implementation(project(":lib_persistent_cache"))
+
+    implementation(project(":ui_theme"))
 
     implementation(project(":coreui"))
     implementation(project(":res_strings"))
