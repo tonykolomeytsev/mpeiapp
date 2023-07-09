@@ -7,8 +7,10 @@ import kekmech.ru.feature_app_settings_api.AppSettingsFeatureLauncher
 import kekmech.ru.feature_app_settings_api.IsSnowFlakesEnabledFeatureToggle
 import kekmech.ru.feature_app_settings_api.data.AppEnvironmentRepository
 import kekmech.ru.feature_app_settings_api.data.AppSettingsRepository
+import kekmech.ru.feature_app_settings_api.domain.usecase.ObserveAppThemeUseCase
 import kekmech.ru.feature_app_settings_impl.data.AppEnvironmentRepositoryImpl
 import kekmech.ru.feature_app_settings_impl.data.AppSettingsRepositoryImpl
+import kekmech.ru.feature_app_settings_impl.domain.usecase.ObserveAppThemeUseCaseImpl
 import kekmech.ru.feature_app_settings_impl.launcher.AppSettingsFeatureLauncherImpl
 import kekmech.ru.feature_app_settings_impl.presentation.screens.favorites.elm.FavoritesActor
 import kekmech.ru.feature_app_settings_impl.presentation.screens.favorites.elm.FavoritesStoreFactory
@@ -30,6 +32,7 @@ val FeatureAppSettingsModule = module {
     // single, because repository holds stateFlow
     singleOf(::AppSettingsRepositoryImpl) bind AppSettingsRepository::class
     factoryOf(::AppEnvironmentRepositoryImpl) bind AppEnvironmentRepository::class
+    factoryOf(::ObserveAppThemeUseCaseImpl) bind ObserveAppThemeUseCase::class
 
     factoryOf(::AppSettingsActor) bind AppSettingsActor::class
     factoryOf(::AppSettingsStoreFactory)

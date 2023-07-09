@@ -1,4 +1,4 @@
-package kekmech.ru.feature_app_settings_api.domain
+package kekmech.ru.feature_app_settings_api.domain.model
 
 enum class AppTheme {
     Light,
