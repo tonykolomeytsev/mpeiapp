@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
 import com.bumble.appyx.core.integration.NodeHost
 import com.bumble.appyx.core.integrationpoint.NodeComponentActivity
+import kekmech.ru.feature_main_screen_api.presentation.navigation.MainScreenDependencyComponent
 import kekmech.ru.feature_main_screen_api.presentation.navigation.MainScreenNavigationApi
 import kekmech.ru.lib_app_lifecycle.MainActivityLifecycleObserver
 import kekmech.ru.lib_navigation_compose.node.backstack.BackStackNode
@@ -23,6 +24,7 @@ class ComposeMainActivity : NodeComponentActivity() {
         getKoin().getAll()
     }
     private val mainScreenNavigationApi: MainScreenNavigationApi by inject()
+    private val mainScreenDependencyComponent: MainScreenDependencyComponent by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,10 +43,11 @@ class ComposeMainActivity : NodeComponentActivity() {
                 ) {
                     NodeHost(integrationPoint = appyxIntegrationPoint) { buildContext ->
                         // TODO: replace with auth-aware node
-                        BackStackNode(
+                        object : BackStackNode(
                             buildContext = buildContext,
                             rootNavTarget = mainScreenNavigationApi.getNavTarget(),
-                        )
+                        ), MainScreenDependencyComponent by mainScreenDependencyComponent
+                        { /* no-op */ }
                     }
                 }
             }
