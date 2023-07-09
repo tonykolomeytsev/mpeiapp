@@ -9,7 +9,8 @@ import io.kotest.matchers.maps.shouldBeEmpty
 import io.kotest.matchers.maps.shouldContainExactly
 import io.kotest.matchers.shouldBe
 import kekmech.ru.ext_kotlin.mutableLinkedHashMap
-import kekmech.ru.feature_app_settings_api.domain.AppSettings
+import kekmech.ru.feature_app_settings_api.domain.model.AppSettings
+import kekmech.ru.feature_app_settings_api.domain.model.AppTheme
 import kekmech.ru.feature_schedule_api.domain.model.Classes
 import kekmech.ru.feature_schedule_api.domain.model.ClassesType
 import kekmech.ru.feature_schedule_api.domain.model.Day
@@ -285,6 +286,7 @@ class ScheduleReducerTest : BehaviorSpec({
 
         private val APP_SETTINGS = AppSettings(
             isDarkThemeEnabled = false,
+            appTheme = AppTheme.System,
             autoHideBottomSheet = false,
             isSnowEnabled = false,
             languageCode = "ru_RU",

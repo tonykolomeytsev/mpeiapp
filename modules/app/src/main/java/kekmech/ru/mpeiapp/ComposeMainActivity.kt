@@ -13,8 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
 import com.bumble.appyx.core.integration.NodeHost
 import com.bumble.appyx.core.integrationpoint.NodeComponentActivity
-import kekmech.ru.feature_app_settings_api.data.AppSettingsRepository
-import kekmech.ru.feature_app_settings_api.domain.AppTheme
+import kekmech.ru.feature_app_settings_api.domain.model.AppTheme
+import kekmech.ru.feature_app_settings_api.domain.usecase.ObserveAppThemeUseCase
 import kekmech.ru.feature_main_screen_api.presentation.navigation.MainScreenDependencyComponent
 import kekmech.ru.feature_main_screen_api.presentation.navigation.MainScreenNavigationApi
 import kekmech.ru.lib_app_lifecycle.MainActivityLifecycleObserver
@@ -25,7 +25,7 @@ import org.koin.android.ext.android.inject
 
 class ComposeMainActivity : NodeComponentActivity() {
 
-    private val appSettingsRepository: AppSettingsRepository by inject()
+    private val observeAppThemeUseCase: ObserveAppThemeUseCase by inject()
     private val mainActivityLifecycleObservers: List<MainActivityLifecycleObserver> by lazy {
         getKoin().getAll()
     }
@@ -41,7 +41,7 @@ class ComposeMainActivity : NodeComponentActivity() {
         }
 
         setContent {
-            val appTheme by appSettingsRepository.observeAppTheme().collectAsState()
+            val appTheme by observeAppThemeUseCase.invoke().collectAsState()
             val darkTheme = when (appTheme) {
                 AppTheme.Light -> false
                 AppTheme.Dark -> true

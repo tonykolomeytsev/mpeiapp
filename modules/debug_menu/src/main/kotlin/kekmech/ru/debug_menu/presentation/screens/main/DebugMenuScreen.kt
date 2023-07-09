@@ -29,7 +29,7 @@ import kekmech.ru.debug_menu.presentation.screens.main.elm.DebugMenuState
 import kekmech.ru.debug_menu.presentation.screens.main.elm.DebugMenuStore
 import kekmech.ru.debug_menu.presentation.screens.main.elm.DebugMenuStoreFactory
 import kekmech.ru.ext_android.copyToClipboard
-import kekmech.ru.feature_app_settings_api.domain.AppTheme
+import kekmech.ru.feature_app_settings_api.domain.model.AppTheme
 import kekmech.ru.lib_elm.ElmAcceptAction
 import kekmech.ru.lib_elm.Resource
 import kekmech.ru.lib_elm.elmNode

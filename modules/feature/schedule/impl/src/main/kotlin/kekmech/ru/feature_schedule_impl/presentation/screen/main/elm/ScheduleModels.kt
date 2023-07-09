@@ -1,7 +1,7 @@
 package kekmech.ru.feature_schedule_impl.presentation.screen.main.elm
 
 import kekmech.ru.ext_kotlin.moscowLocalDate
-import kekmech.ru.feature_app_settings_api.domain.AppSettings
+import kekmech.ru.feature_app_settings_api.domain.model.AppSettings
 import kekmech.ru.feature_schedule_api.domain.model.Schedule
 import java.time.LocalDate
 
