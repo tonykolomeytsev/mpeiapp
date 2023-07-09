@@ -1,4 +1,4 @@
-package kekmech.ru.feature_dashboard_impl.presentation.screen.main
+package kekmech.ru.feature_schedule_impl.presentation.screen.main
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material3.Text
@@ -13,14 +13,14 @@ import kekmech.ru.ui_theme.theme.MpeixTheme
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-internal class DashboardScreenNavTarget : NavTarget {
+internal class ScheduleScreenNavTarget : NavTarget {
 
     override fun resolve(buildContext: BuildContext): Node =
-        node(buildContext) { modifier -> DashboardScreen(modifier) }
+        node(buildContext) { modifier -> MapScreen(modifier) }
 }
 
 @Composable
-private fun DashboardScreen(
+private fun MapScreen(
     modifier: Modifier = Modifier,
 ) {
     Box(
@@ -28,7 +28,7 @@ private fun DashboardScreen(
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = "Dashboard",
+            text = "Schedule",
             style = MpeixTheme.typography.header2,
         )
     }
