@@ -17,6 +17,7 @@ import kekmech.ru.feature_app_settings_impl.presentation.screens.main.elm.AppSet
 import kekmech.ru.lib_feature_toggles.RemoteVariable
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.factoryOf
+import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
@@ -26,7 +27,8 @@ val FeatureAppSettingsModule = module {
     factory {
         androidContext().getSharedPreferences(MpeixPreferencesName, Context.MODE_PRIVATE)
     } bind SharedPreferences::class
-    factoryOf(::AppSettingsRepositoryImpl) bind AppSettingsRepository::class
+    // single, because repository holds stateFlow
+    singleOf(::AppSettingsRepositoryImpl) bind AppSettingsRepository::class
     factoryOf(::AppEnvironmentRepositoryImpl) bind AppEnvironmentRepository::class
 
     factoryOf(::AppSettingsActor) bind AppSettingsActor::class
