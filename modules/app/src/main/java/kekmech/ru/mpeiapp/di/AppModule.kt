@@ -50,6 +50,7 @@ val AppModule = module {
     }
     single { MapMemory() }
 
+    @Suppress("SpreadOperator")
     includes(
         MainScreenModule,
         DeeplinkModule,
