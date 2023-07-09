@@ -4,11 +4,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.Modifier
 import com.bumble.appyx.core.composable.Children
 import com.bumble.appyx.core.modality.BuildContext
@@ -18,7 +16,6 @@ import com.bumble.appyx.navmodel.spotlight.Spotlight
 import com.bumble.appyx.navmodel.spotlight.backpresshandler.GoToPrevious
 import com.bumble.appyx.navmodel.spotlight.current
 import com.bumble.appyx.navmodel.spotlight.operation.activate
-import com.bumble.appyx.navmodel.spotlight.transitionhandler.rememberSpotlightFader
 import kekmech.ru.feature_main_screen_api.presentation.navigation.MainScreenTab
 import kekmech.ru.feature_main_screen_api.presentation.navigation.MainScreenTabSwitcher
 import kekmech.ru.feature_main_screen_api.presentation.navigation.children.ChildrenResolutionStrategy
@@ -42,7 +39,7 @@ internal class MainScreenNavTarget : NavTarget {
 
 internal class MainScreenNode(
     buildContext: BuildContext,
-    private val spotlight: Spotlight<MainScreenTab> = Spotlight(
+    val spotlight: Spotlight<MainScreenTab> = Spotlight(
         items = MainScreenTab.values().asList(),
         initialActiveIndex = 0,
         savedStateMap = buildContext.savedStateMap,
@@ -65,16 +62,8 @@ internal class MainScreenNode(
 
     @Composable
     override fun View(modifier: Modifier) {
-        CompositionLocalProvider(
-            LocalSpotlight provides spotlight,
-        ) {
-            composable(modifier)
-        }
+        composable(modifier)
     }
-}
-
-private val LocalSpotlight = compositionLocalOf<Spotlight<MainScreenTab>> {
-    error("LocalSpotlight not provided")
 }
 
 @Composable
@@ -82,7 +71,6 @@ private fun MainScreenNode.MainScreen(
     modifier: Modifier = Modifier,
 ) {
     val tabStateHolder = rememberKoinInject<MainScreenTabStateHolder>()
-    val spotlight = LocalSpotlight.current
 
     LaunchedEffect(Unit) {
         // subscribe nav model to tabStateHolder changes
@@ -101,7 +89,6 @@ private fun MainScreenNode.MainScreen(
         Children(
             navModel = spotlight,
             modifier = Modifier.padding(innerPadding),
-            transitionHandler = rememberSpotlightFader(),
         )
     }
 }
