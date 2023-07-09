@@ -48,6 +48,8 @@ dependencies {
     implementation(project(":lib_navigation_compose"))
     implementation(project(":lib_schedule"))
 
+    implementation(project(":ui_theme"))
+
     implementation(project(":coreui"))
     implementation(project(":res_icons"))
     implementation(project(":res_strings"))
