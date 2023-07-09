@@ -4,16 +4,16 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -23,11 +23,14 @@ import com.bumble.appyx.core.node.Node
 import com.chuckerteam.chucker.api.Chucker
 import kekmech.ru.debug_menu.R
 import kekmech.ru.debug_menu.presentation.screens.feature_toggles.FeatureTogglesNavTarget
+import kekmech.ru.debug_menu.presentation.screens.main.elm.DebugMenuEvent
 import kekmech.ru.debug_menu.presentation.screens.main.elm.DebugMenuEvent.Ui
 import kekmech.ru.debug_menu.presentation.screens.main.elm.DebugMenuState
 import kekmech.ru.debug_menu.presentation.screens.main.elm.DebugMenuStore
 import kekmech.ru.debug_menu.presentation.screens.main.elm.DebugMenuStoreFactory
 import kekmech.ru.ext_android.copyToClipboard
+import kekmech.ru.feature_app_settings_api.domain.AppTheme
+import kekmech.ru.lib_elm.ElmAcceptAction
 import kekmech.ru.lib_elm.Resource
 import kekmech.ru.lib_elm.elmNode
 import kekmech.ru.lib_elm.rememberAcceptAction
@@ -55,8 +58,9 @@ private fun DebugMenuScreen(
     store: DebugMenuStore,
     state: DebugMenuState,
 ) {
-    var openBackendEnvironmentDialog by remember { mutableStateOf(false) }
-    val accept = store.rememberAcceptAction()
+    val showBackendEnvDialog = remember { mutableStateOf(false) }
+    val showThemeSelectionDialog = remember { mutableStateOf(false) }
+    val onAccept = store.rememberAcceptAction()
 
     Scaffold(
         topBar = {
@@ -69,7 +73,7 @@ private fun DebugMenuScreen(
             item {
                 BackendEnvironmentItem(
                     appEnvironment = state.appEnvironment,
-                    onClick = { openBackendEnvironmentDialog = true },
+                    onClick = { showBackendEnvDialog.value = true },
                 )
             }
             item {
@@ -77,6 +81,12 @@ private fun DebugMenuScreen(
             }
             item {
                 ChuckerItem()
+            }
+            item {
+                ThemeSelectionItem(
+                    state.appTheme,
+                    onClick = { showThemeSelectionDialog.value = true },
+                )
             }
             item {
                 Text(
@@ -93,9 +103,18 @@ private fun DebugMenuScreen(
         }
     }
 
-    if (openBackendEnvironmentDialog) {
+    BackendEnvDialog(showBackendEnvDialog, onAccept)
+    ThemeSelectionDialog(showThemeSelectionDialog, onAccept)
+}
+
+@Composable
+private fun BackendEnvDialog(
+    showDialog: MutableState<Boolean>,
+    onAccept: ElmAcceptAction<DebugMenuEvent>,
+) {
+    if (showDialog.value) {
         AlertDialog(
-            onDismissRequest = { openBackendEnvironmentDialog = false },
+            onDismissRequest = { showDialog.value = false },
         ) {
             Surface(
                 shape = RoundedCornerShape(28.dp),
@@ -109,11 +128,42 @@ private fun DebugMenuScreen(
                                 headlineText = env.name,
                                 modifier = Modifier
                                     .clickable {
-                                        accept(Ui.Click.Environment(env))
-                                        openBackendEnvironmentDialog = false
+                                        onAccept(Ui.Click.Environment(env))
+                                        showDialog.value = false
                                     },
                             )
                         }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun ThemeSelectionDialog(
+    showDialog: MutableState<Boolean>,
+    onAccept: ElmAcceptAction<DebugMenuEvent>,
+) {
+    if (showDialog.value) {
+        AlertDialog(
+            onDismissRequest = { showDialog.value = false },
+        ) {
+            Surface(
+                shape = RoundedCornerShape(28.dp),
+                color = MpeixTheme.palette.surface,
+                contentColor = MpeixTheme.palette.content,
+            ) {
+                LazyColumn {
+                    items(AppTheme.values()) { theme ->
+                        ListItem(
+                            headlineText = theme.name,
+                            modifier = Modifier
+                                .clickable {
+                                    onAccept(Ui.Click.Theme(theme))
+                                    showDialog.value = false
+                                },
+                        )
                     }
                 }
             }
@@ -182,6 +232,31 @@ private fun ChuckerItem() {
             .clickable {
                 context.startActivity(Chucker.getLaunchIntent(context))
             },
+    )
+}
+
+@Composable
+private fun ThemeSelectionItem(
+    appTheme: Resource<AppTheme>,
+    onClick: () -> Unit,
+) {
+    ListItem(
+        headlineText = "Selected theme",
+        leadingContent = {
+            Icon(painterResource(R.drawable.ic_color_lens_24))
+        },
+        trailingContent = {
+            Text(
+                text = when (appTheme) {
+                    is Resource.Data -> appTheme.value.toString()
+                    is Resource.Loading -> "Loading..."
+                    is Resource.Error -> "Error!"
+                },
+                style = MpeixTheme.typography.paragraphNormal,
+            )
+        },
+        modifier = Modifier
+            .clickable(onClick = onClick),
     )
 }
 

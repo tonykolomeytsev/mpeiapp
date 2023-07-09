@@ -4,12 +4,17 @@ import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
 import com.bumble.appyx.core.integration.NodeHost
 import com.bumble.appyx.core.integrationpoint.NodeComponentActivity
+import kekmech.ru.feature_app_settings_api.data.AppSettingsRepository
+import kekmech.ru.feature_app_settings_api.domain.AppTheme
 import kekmech.ru.feature_main_screen_api.presentation.navigation.MainScreenDependencyComponent
 import kekmech.ru.feature_main_screen_api.presentation.navigation.MainScreenNavigationApi
 import kekmech.ru.lib_app_lifecycle.MainActivityLifecycleObserver
@@ -20,6 +25,7 @@ import org.koin.android.ext.android.inject
 
 class ComposeMainActivity : NodeComponentActivity() {
 
+    private val appSettingsRepository: AppSettingsRepository by inject()
     private val mainActivityLifecycleObservers: List<MainActivityLifecycleObserver> by lazy {
         getKoin().getAll()
     }
@@ -35,7 +41,14 @@ class ComposeMainActivity : NodeComponentActivity() {
         }
 
         setContent {
-            MpeixTheme {
+            val appTheme by appSettingsRepository.observeAppTheme().collectAsState()
+            val darkTheme = when (appTheme) {
+                AppTheme.Light -> false
+                AppTheme.Dark -> true
+                AppTheme.System -> isSystemInDarkTheme()
+            }
+
+            MpeixTheme(darkTheme = darkTheme) {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
@@ -46,8 +59,8 @@ class ComposeMainActivity : NodeComponentActivity() {
                         object : BackStackNode(
                             buildContext = buildContext,
                             rootNavTarget = mainScreenNavigationApi.getNavTarget(),
-                        ), MainScreenDependencyComponent by mainScreenDependencyComponent
-                        { /* no-op */ }
+                        ),
+                            MainScreenDependencyComponent by mainScreenDependencyComponent { /* no-op */ }
                     }
                 }
             }
