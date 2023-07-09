@@ -1,5 +1,6 @@
 package kekmech.ru.lib_navigation_compose
 
+import androidx.compose.runtime.Stable
 import com.bumble.appyx.navmodel.backstack.BackStack
 import com.bumble.appyx.navmodel.backstack.operation.pop
 import com.bumble.appyx.navmodel.backstack.operation.push
@@ -14,6 +15,7 @@ import kekmech.ru.lib_navigation_api.NavTarget
  * @see BackStackNavigator.navigate
  * @see BackStackNavigator.replace
  */
+@Stable
 class BackStackNavigator(private val backStack: BackStack<NavTarget>) {
 
     /**
