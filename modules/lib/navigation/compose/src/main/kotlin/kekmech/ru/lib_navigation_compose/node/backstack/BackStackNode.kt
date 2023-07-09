@@ -1,4 +1,4 @@
-package kekmech.ru.mpeiapp.demo
+package kekmech.ru.lib_navigation_compose.node.backstack
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -8,22 +8,25 @@ import com.bumble.appyx.core.composable.Children
 import com.bumble.appyx.core.modality.BuildContext
 import com.bumble.appyx.core.node.Node
 import com.bumble.appyx.core.node.ParentNode
+import com.bumble.appyx.core.plugin.Plugin
 import com.bumble.appyx.navmodel.backstack.BackStack
 import com.bumble.appyx.navmodel.backstack.transitionhandler.rememberBackstackFader
 import kekmech.ru.lib_navigation_api.NavTarget
 import kekmech.ru.lib_navigation_compose.BackStackNavigator
 import kekmech.ru.lib_navigation_compose.LocalBackStackNavigator
-import kekmech.ru.mpeiapp.demo.screens.main.MainScreenNavTarget
 
-internal class BackStackRootNode(
+open class BackStackNode(
     buildContext: BuildContext,
+    rootNavTarget: NavTarget,
     private val backStack: BackStack<NavTarget> = BackStack(
-        initialElement = MainScreenNavTarget(),
+        initialElement = rootNavTarget,
         savedStateMap = buildContext.savedStateMap,
     ),
+    plugins: List<Plugin> = emptyList(),
 ) : ParentNode<NavTarget>(
     navModel = backStack,
     buildContext = buildContext,
+    plugins = plugins,
 ) {
 
     override fun resolve(navTarget: NavTarget, buildContext: BuildContext): Node =
@@ -35,7 +38,7 @@ internal class BackStackRootNode(
         val backStackNavigator = remember { BackStackNavigator(backStack) }
 
         CompositionLocalProvider(
-          LocalBackStackNavigator provides backStackNavigator,
+            LocalBackStackNavigator provides backStackNavigator,
         ) {
             Children(
                 navModel = backStack,
