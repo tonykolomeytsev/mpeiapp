@@ -8,12 +8,15 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -40,6 +43,7 @@ import kekmech.ru.lib_network.AppEnvironment
 import kekmech.ru.ui_kit_lists.ListItem
 import kekmech.ru.ui_kit_topappbar.TopAppBar
 import kekmech.ru.ui_theme.theme.MpeixTheme
+import kotlinx.coroutines.launch
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -61,11 +65,16 @@ private fun DebugMenuScreen(
     val showBackendEnvDialog = remember { mutableStateOf(false) }
     val showThemeSelectionDialog = remember { mutableStateOf(false) }
     val onAccept = store.rememberAcceptAction()
+    val snackbarHostState = remember { SnackbarHostState() }
+    val coroutineScope = rememberCoroutineScope()
 
     Scaffold(
         topBar = {
             TopAppBar(title = "MpeiX Debug Menu")
         },
+        snackbarHost = {
+            SnackbarHost(snackbarHostState)
+        }
     ) { innerPadding ->
         LazyColumn(
             modifier = Modifier.padding(innerPadding),
@@ -98,7 +107,17 @@ private fun DebugMenuScreen(
                 )
             }
             item {
-                AppVersionItem(versionName = state.appVersionName.versionName)
+                val context = LocalContext.current
+                val versionName = state.appVersionName.versionName
+                AppVersionItem(
+                    versionName = versionName,
+                    onClick = {
+                        context.copyToClipboard(versionName, label = "MpeiX version")
+                        coroutineScope.launch {
+                            snackbarHostState.showSnackbar(message = "MpeiX version copied")
+                        }
+                    }
+                )
             }
         }
     }
@@ -261,11 +280,10 @@ private fun ThemeSelectionItem(
 }
 
 @Composable
-private fun AppVersionItem(versionName: String) {
-    val context = LocalContext.current
-    val onClick: () -> Unit = {
-        context.copyToClipboard(versionName, label = "MpeiX version")
-    }
+private fun AppVersionItem(
+    versionName: String,
+    onClick: () -> Unit,
+) {
     ListItem(
         headlineText = versionName,
         overlineText = "App version",
