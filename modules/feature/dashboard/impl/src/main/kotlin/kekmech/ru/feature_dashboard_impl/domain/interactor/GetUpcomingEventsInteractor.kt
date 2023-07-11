@@ -7,7 +7,7 @@ import kekmech.ru.feature_notes_api.domain.service.AttachNotesToScheduleService
 import kekmech.ru.feature_schedule_api.domain.model.Classes
 import kekmech.ru.feature_schedule_api.domain.model.Day
 import kekmech.ru.feature_schedule_api.domain.model.Week
-import kekmech.ru.feature_schedule_api.use_cases.GetCurrentScheduleUseCase
+import kekmech.ru.feature_schedule_api.domain.usecase.GetCurrentScheduleUseCase
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.temporal.ChronoUnit

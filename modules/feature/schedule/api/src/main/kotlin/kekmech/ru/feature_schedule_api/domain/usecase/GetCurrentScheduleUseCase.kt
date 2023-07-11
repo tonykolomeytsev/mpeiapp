@@ -1,4 +1,4 @@
-package kekmech.ru.feature_schedule_api.use_cases
+package kekmech.ru.feature_schedule_api.domain.usecase
 
 import kekmech.ru.feature_schedule_api.data.repository.ScheduleRepository
 import kekmech.ru.feature_schedule_api.domain.model.Schedule
