@@ -7,6 +7,7 @@ import kekmech.ru.feature_schedule_api.data.repository.ScheduleSearchRepository
 import kekmech.ru.feature_schedule_api.domain.usecase.GetCurrentScheduleUseCase
 import kekmech.ru.feature_schedule_api.domain.usecase.HasSelectedScheduleUseCase
 import kekmech.ru.feature_schedule_api.presentation.navigation.ScheduleScreenApi
+import kekmech.ru.feature_schedule_api.presentation.navigation.ScheduleSearchScreenApi
 import kekmech.ru.feature_schedule_impl.data.datasource.ScheduleCacheWrapper
 import kekmech.ru.feature_schedule_impl.data.datasource.SelectedScheduleSource
 import kekmech.ru.feature_schedule_impl.data.network.ScheduleService
@@ -15,6 +16,7 @@ import kekmech.ru.feature_schedule_impl.data.repository.ScheduleSearchRepository
 import kekmech.ru.feature_schedule_impl.domain.usecase.HasSelectedScheduleUseCaseImpl
 import kekmech.ru.feature_schedule_impl.launcher.ScheduleFeatureLauncherImpl
 import kekmech.ru.feature_schedule_impl.presentation.navigation.ScheduleScreenApiImpl
+import kekmech.ru.feature_schedule_impl.presentation.navigation.ScheduleSearchScreenApiImpl
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.FindScheduleActor
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.FindScheduleStoreFactory
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleActor
@@ -49,4 +51,5 @@ val FeatureScheduleModule = module {
     factoryOf(::ScheduleCacheWrapper)
     factoryOf(::ScheduleScreenApiImpl) bind ScheduleScreenApi::class
     factoryOf(::HasSelectedScheduleUseCaseImpl) bind HasSelectedScheduleUseCase::class
+    factoryOf(::ScheduleSearchScreenApiImpl) bind ScheduleSearchScreenApi::class
 }

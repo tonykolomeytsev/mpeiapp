@@ -17,6 +17,7 @@ dependencies {
     implementation(libs.google.material)
     implementation(libs.koin.android)
     implementation(libs.koin.core)
+    implementation(libs.koin.compose)
     implementation(libs.rx.java)
     implementation(libs.tinkoff.pagerIndicator)
 
