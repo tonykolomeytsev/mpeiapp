@@ -1,6 +1,6 @@
 package kekmech.ru.feature_app_settings_impl.presentation.screens.main.elm
 
-import kekmech.ru.feature_app_settings_api.domain.AppSettings
+import kekmech.ru.feature_app_settings_api.domain.model.AppSettings
 import kekmech.ru.feature_contributors_api.domain.model.Contributor
 import kekmech.ru.lib_app_info.AppVersionName
 

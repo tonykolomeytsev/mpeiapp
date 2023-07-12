@@ -1,6 +1,6 @@
 package kekmech.ru.feature_app_settings_api.data
 
-import kekmech.ru.feature_app_settings_api.domain.AppSettings
+import kekmech.ru.feature_app_settings_api.domain.model.AppSettings
 
 interface AppSettingsRepository {
 

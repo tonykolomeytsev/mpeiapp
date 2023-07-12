@@ -1,4 +1,4 @@
-package kekmech.ru.feature_onboarding_impl.item
+package kekmech.ru.feature_onboarding_impl.presentation.item
 
 import android.view.View
 import androidx.annotation.DrawableRes

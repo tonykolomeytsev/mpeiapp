@@ -1,8 +1,10 @@
-package kekmech.ru.feature_app_settings_api.domain
+package kekmech.ru.feature_app_settings_api.domain.model
 
 data class AppSettings(
     // all app
+    @Deprecated("use appTheme")
     val isDarkThemeEnabled: Boolean,
+    val appTheme: AppTheme,
     val isSnowEnabled: Boolean,
     val languageCode: String,
 
