@@ -1,6 +1,7 @@
 package kekmech.ru.lib_navigation_compose
 
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.compositionLocalOf
 import com.bumble.appyx.navmodel.backstack.BackStack
 import com.bumble.appyx.navmodel.backstack.operation.pop
 import com.bumble.appyx.navmodel.backstack.operation.push
@@ -74,4 +75,8 @@ class BackStackNavigator(private val backStack: BackStack<NavTarget>) {
     fun replace(navTarget: NavTarget) {
         backStack.replace(navTarget)
     }
+}
+
+val LocalBackStackNavigator = compositionLocalOf<BackStackNavigator> {
+    error("LocalBackStackNavigator not provided")
 }

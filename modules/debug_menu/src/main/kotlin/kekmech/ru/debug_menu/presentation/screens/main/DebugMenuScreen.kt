@@ -57,6 +57,7 @@ internal class DebugMenuNavTarget : NavTarget {
         ) { store, state, _ -> DebugMenuScreen(store, state) }
 }
 
+@Suppress("LongMethod")
 @Composable
 private fun DebugMenuScreen(
     store: DebugMenuStore,

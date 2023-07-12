@@ -14,8 +14,9 @@ import androidx.core.view.WindowCompat
 import com.bumble.appyx.core.integrationpoint.NodeComponentActivity
 import kekmech.ru.feature_app_settings_api.domain.model.AppTheme
 import kekmech.ru.feature_app_settings_api.domain.usecase.ObserveAppThemeUseCase
+import kekmech.ru.feature_main_screen_api.presentation.navigation.MainScreenApi
 import kekmech.ru.feature_main_screen_api.presentation.navigation.MainScreenDependencyComponent
-import kekmech.ru.feature_main_screen_api.presentation.navigation.MainScreenNavigationApi
+import kekmech.ru.feature_onboarding_api.presentation.navigation.OnboardingScreenApi
 import kekmech.ru.feature_schedule_api.domain.usecase.HasSelectedScheduleUseCase
 import kekmech.ru.lib_app_lifecycle.MainActivityLifecycleObserver
 import kekmech.ru.mpeiapp.presentation.navigation.ComposableAppRoot
@@ -30,7 +31,8 @@ class ComposeMainActivity : NodeComponentActivity() {
     private val mainActivityLifecycleObservers: List<MainActivityLifecycleObserver> by lazy {
         getKoin().getAll()
     }
-    private val mainScreenNavigationApi: MainScreenNavigationApi by inject()
+    private val mainScreenApi: MainScreenApi by inject()
+    private val onboardingScreenApi: OnboardingScreenApi by inject()
     private val mainScreenDependencyComponent: MainScreenDependencyComponent by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,8 +57,8 @@ class ComposeMainActivity : NodeComponentActivity() {
                     color = MpeixTheme.palette.background,
                 ) {
                     ComposableAppRoot(
-                        authorizedNavTarget = { mainScreenNavigationApi.getNavTarget() },
-                        unauthorizedNavTarget = { TODO() },
+                        authorizedNavTarget = { mainScreenApi.navTarget() },
+                        unauthorizedNavTarget = { onboardingScreenApi.navTarget() },
                         authorized = hasSelectedScheduleUseCase.invoke(),
                         mainScreenDependencyComponent = mainScreenDependencyComponent,
                     )
