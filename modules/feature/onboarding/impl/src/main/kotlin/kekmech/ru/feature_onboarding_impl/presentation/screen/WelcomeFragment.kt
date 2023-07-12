@@ -1,4 +1,4 @@
-package kekmech.ru.feature_onboarding_impl.screens
+package kekmech.ru.feature_onboarding_impl.presentation.screen
 
 import android.os.Bundle
 import android.view.View
@@ -10,8 +10,8 @@ import kekmech.ru.ext_kotlin.fastLazy
 import kekmech.ru.feature_onboarding_impl.R
 import kekmech.ru.feature_onboarding_impl.databinding.FragmentWelcomeBinding
 import kekmech.ru.feature_onboarding_impl.di.OnboardingDependencies
-import kekmech.ru.feature_onboarding_impl.item.PromoPage
-import kekmech.ru.feature_onboarding_impl.item.PromoPageAdapterItem
+import kekmech.ru.feature_onboarding_impl.presentation.item.PromoPage
+import kekmech.ru.feature_onboarding_impl.presentation.item.PromoPageAdapterItem
 import kekmech.ru.feature_schedule_api.ScheduleFeatureLauncher.ContinueTo.DASHBOARD
 import kekmech.ru.lib_adapter.BaseAdapter
 import kekmech.ru.lib_analytics_android.addScrollAnalytics
