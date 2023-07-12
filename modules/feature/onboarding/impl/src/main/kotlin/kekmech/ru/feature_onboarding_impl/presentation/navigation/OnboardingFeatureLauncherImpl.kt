@@ -1,7 +1,7 @@
-package kekmech.ru.feature_onboarding_impl.launcher
+package kekmech.ru.feature_onboarding_impl.presentation.navigation
 
 import kekmech.ru.feature_onboarding_api.OnboardingFeatureLauncher
-import kekmech.ru.feature_onboarding_impl.screens.WelcomeFragment
+import kekmech.ru.feature_onboarding_impl.presentation.screen.WelcomeFragment
 import kekmech.ru.lib_navigation.AddScreenForward
 import kekmech.ru.lib_navigation.NewRoot
 import kekmech.ru.lib_navigation.Router
