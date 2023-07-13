@@ -2,24 +2,21 @@ package kekmech.ru.debug_menu.presentation.screens.main
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.bumble.appyx.core.modality.BuildContext
 import com.bumble.appyx.core.node.Node
@@ -40,6 +37,9 @@ import kekmech.ru.lib_elm.rememberAcceptAction
 import kekmech.ru.lib_navigation_api.NavTarget
 import kekmech.ru.lib_navigation_compose.LocalBackStackNavigator
 import kekmech.ru.lib_network.AppEnvironment
+import kekmech.ru.ui_kit_dialogs.AlertDialog
+import kekmech.ru.ui_kit_dialogs.AlertDialogState
+import kekmech.ru.ui_kit_dialogs.rememberAlertDialogState
 import kekmech.ru.ui_kit_lists.ListItem
 import kekmech.ru.ui_kit_topappbar.TopAppBar
 import kekmech.ru.ui_theme.theme.MpeixTheme
@@ -63,8 +63,8 @@ private fun DebugMenuScreen(
     store: DebugMenuStore,
     state: DebugMenuState,
 ) {
-    val showBackendEnvDialog = remember { mutableStateOf(false) }
-    val showThemeSelectionDialog = remember { mutableStateOf(false) }
+    val backendEnvDialog = rememberAlertDialogState()
+    val themeSelectionDialog = rememberAlertDialogState()
     val onAccept = store.rememberAcceptAction()
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
@@ -83,7 +83,7 @@ private fun DebugMenuScreen(
             item {
                 BackendEnvironmentItem(
                     appEnvironment = state.appEnvironment,
-                    onClick = { showBackendEnvDialog.value = true },
+                    onClick = { backendEnvDialog.showDialog() },
                 )
             }
             item {
@@ -95,7 +95,7 @@ private fun DebugMenuScreen(
             item {
                 ThemeSelectionItem(
                     state.appTheme,
-                    onClick = { showThemeSelectionDialog.value = true },
+                    onClick = { themeSelectionDialog.showDialog() },
                 )
             }
             item {
@@ -123,38 +123,39 @@ private fun DebugMenuScreen(
         }
     }
 
-    BackendEnvDialog(showBackendEnvDialog, onAccept)
-    ThemeSelectionDialog(showThemeSelectionDialog, onAccept)
+    BackendEnvDialog(backendEnvDialog, onAccept)
+    ThemeSelectionDialog(themeSelectionDialog, onAccept)
 }
 
 @Composable
 private fun BackendEnvDialog(
-    showDialog: MutableState<Boolean>,
+    state: AlertDialogState,
     onAccept: ElmAcceptAction<DebugMenuEvent>,
 ) {
-    if (showDialog.value) {
-        AlertDialog(
-            onDismissRequest = { showDialog.value = false },
-        ) {
-            Surface(
-                shape = RoundedCornerShape(28.dp),
-                color = MpeixTheme.palette.surface,
-                contentColor = MpeixTheme.palette.content,
-            ) {
-                LazyColumn {
-                    for (env in AppEnvironment.values()) {
-                        item(env) {
-                            ListItem(
-                                headlineText = env.name,
-                                modifier = Modifier
-                                    .clickable {
-                                        onAccept(Ui.Click.Environment(env))
-                                        showDialog.value = false
-                                    },
-                            )
-                        }
-                    }
-                }
+    AlertDialog(
+        onDismissRequest = { state.hideDialog() },
+        state = state,
+    ) { innerPadding ->
+        LazyColumn(Modifier.padding(innerPadding)) {
+            item {
+                Text(
+                    text = "Select backend environment",
+                    style = MpeixTheme.typography.header3,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 16.dp),
+                )
+            }
+            items(AppEnvironment.values()) { env ->
+                ListItem(
+                    headlineText = env.name,
+                    modifier = Modifier
+                        .clickable {
+                            state.hideDialog()
+                            onAccept(Ui.Click.Environment(env))
+                        },
+                )
             }
         }
     }
@@ -162,30 +163,33 @@ private fun BackendEnvDialog(
 
 @Composable
 private fun ThemeSelectionDialog(
-    showDialog: MutableState<Boolean>,
+    state: AlertDialogState,
     onAccept: ElmAcceptAction<DebugMenuEvent>,
 ) {
-    if (showDialog.value) {
-        AlertDialog(
-            onDismissRequest = { showDialog.value = false },
-        ) {
-            Surface(
-                shape = RoundedCornerShape(28.dp),
-                color = MpeixTheme.palette.surface,
-                contentColor = MpeixTheme.palette.content,
-            ) {
-                LazyColumn {
-                    items(AppTheme.values()) { theme ->
-                        ListItem(
-                            headlineText = theme.name,
-                            modifier = Modifier
-                                .clickable {
-                                    onAccept(Ui.Click.Theme(theme))
-                                    showDialog.value = false
-                                },
-                        )
-                    }
-                }
+    AlertDialog(
+        onDismissRequest = { state.hideDialog() },
+        state = state,
+    ) { innerPadding ->
+        LazyColumn(Modifier.padding(innerPadding)) {
+            item {
+                Text(
+                    text = "Select theme",
+                    style = MpeixTheme.typography.header3,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 24.dp),
+                )
+            }
+            items(AppTheme.values()) { theme ->
+                ListItem(
+                    headlineText = theme.name,
+                    modifier = Modifier
+                        .clickable {
+                            state.hideDialog()
+                            onAccept(Ui.Click.Theme(theme))
+                        },
+                )
             }
         }
     }
