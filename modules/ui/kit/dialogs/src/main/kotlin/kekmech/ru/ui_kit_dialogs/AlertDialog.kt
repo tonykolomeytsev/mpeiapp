@@ -3,13 +3,17 @@ package kekmech.ru.ui_kit_dialogs
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ShoppingCart
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -57,6 +61,21 @@ fun rememberAlertDialogState(dialogVisible: Boolean = false): AlertDialogState =
  * By default, the displayed dialog has the minimum height and width that the Material Design spec
  * defines. If required, these constraints can be overwritten by providing a `width` or `height`
  * [Modifier]s.
+ *
+ * Usage:
+ *
+ * ```kotlin
+ * val myAlert = rememberAlertDialogState()
+ *
+ * Button(
+ *     onClick = { myAlert.showDialog() },
+ * ) { ... }
+ *
+ * AlertDialog(
+ *     onDismissRequest = { myAlert.hideDialog() },
+ *     state = myAlert,
+ * ) { ... }
+ * ```
  *
  * @param onDismissRequest called when the user tries to dismiss the Dialog by clicking outside
  * or pressing the back button. This is not called when the dismiss button is clicked.
@@ -109,6 +128,23 @@ fun AlertDialog(
  * By default it will try to place them horizontally next to each other and fallback to horizontal
  * placement if not enough space is available.
  *
+ * Usage:
+ *
+ * ```kotlin
+ * val myAlert = rememberAlertDialogState()
+ *
+ * Button(
+ *     onClick = { myAlert.showDialog() },
+ * ) { ... }
+ *
+ * AlertDialog(
+ *     onDismissRequest = { myAlert.hideDialog() },
+ *     confirmButton = { ... },
+ *     state = myAlert,
+ *     ...
+ * )
+ * ```
+ *
  * @param onDismissRequest called when the user tries to dismiss the Dialog by clicking outside
  * or pressing the back button. This is not called when the dismiss button is clicked.
  * @param confirmButton button which is meant to confirm a proposed action, thus resolving what
@@ -138,6 +174,7 @@ fun AlertDialog(
     icon: @Composable (() -> Unit)? = null,
     title: String? = null,
     text: String? = null,
+    content: @Composable (() -> Unit)? = null,
     properties: DialogProperties = DialogProperties(),
 ) {
     AnimatedVisibility(
@@ -162,15 +199,34 @@ fun AlertDialog(
                     )
                 }
             } else null,
-            text = if (text != null) {
-                @Composable {
-                    Text(
-                        text = text,
-                        style = MpeixTheme.typography.paragraphNormal,
-                        color = MpeixTheme.palette.contentVariant,
-                    )
+            text = when {
+                text != null && content != null -> {
+                    {
+                        Column {
+                            Text(
+                                text = text,
+                                style = MpeixTheme.typography.paragraphNormal,
+                                color = MpeixTheme.palette.contentVariant,
+                                modifier = Modifier.padding(bottom = 16.dp),
+                            )
+                            Divider()
+                            content.invoke()
+                            Divider()
+                        }
+                    }
                 }
-            } else null,
+                text != null && content == null -> {
+                    {
+                        Text(
+                            text = text,
+                            style = MpeixTheme.typography.paragraphNormal,
+                            color = MpeixTheme.palette.contentVariant,
+                        )
+                    }
+                }
+                text == null && content != null -> content
+                else -> null
+            },
             shape = RoundedCornerShape(28.dp),
             containerColor = MpeixTheme.palette.surface,
             iconContentColor = MpeixTheme.palette.contentVariant,
@@ -228,7 +284,18 @@ private fun LayoutAlertDialogPreview() {
                 Icon(Icons.Outlined.ShoppingCart, contentDescription = null)
             },
             title = "Are you sure?",
-            text = "Are you really sure what you do? Just go out and touch the grass!",
+            text = "Are you really sure what you do? Just go out and touch the grass:",
+            content = {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(48.dp)
+                        .background(MpeixTheme.palette.surfacePlus1),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Text(text = "Some grass to be touched")
+                }
+            }
         )
     }
 }

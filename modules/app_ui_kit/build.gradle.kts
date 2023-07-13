@@ -26,6 +26,7 @@ android {
 dependencies {
     implementation(project(":ui_theme"))
     implementation(project(":ui_icons"))
+    implementation(project(":ui_shimmer"))
     implementation(project(":ui_kit_lists"))
     implementation(project(":ui_kit_topappbar"))
     implementation(project(":ui_kit_navigationbar"))
