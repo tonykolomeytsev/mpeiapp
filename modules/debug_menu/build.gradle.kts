@@ -23,6 +23,7 @@ dependencies {
     implementation(project(":ui_kit_lists"))
     implementation(project(":ui_kit_switch"))
     implementation(project(":ui_kit_topappbar"))
+    implementation(project(":ui_kit_dialogs"))
     implementation(project(":ui_theme"))
 
     implementation(libs.androidx.coreKtx)

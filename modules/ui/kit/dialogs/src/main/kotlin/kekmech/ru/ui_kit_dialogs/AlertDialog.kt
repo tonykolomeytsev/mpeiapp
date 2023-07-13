@@ -27,22 +27,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import kekmech.ru.ui_theme.theme.MpeixTheme
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
 
 @Stable
 class AlertDialogState(dialogVisible: Boolean = false) {
 
-    private val mutex = Mutex()
-
     var dialogVisible by mutableStateOf(dialogVisible)
         private set
 
-    suspend fun showDialog() = mutex.withLock {
+    fun showDialog() {
         dialogVisible = true
     }
 
-    suspend fun hideDialog() = mutex.withLock {
+    fun hideDialog() {
         dialogVisible = false
     }
 }
@@ -64,9 +60,9 @@ fun rememberAlertDialogState(dialogVisible: Boolean = false): AlertDialogState =
  *
  * @param onDismissRequest called when the user tries to dismiss the Dialog by clicking outside
  * or pressing the back button. This is not called when the dismiss button is clicked.
- * @param modifier the [Modifier] to be applied to this dialog's content.
  * @param state the state by which the showing and hiding of the dialog is controlled. See
  * [AlertDialogState.showDialog] and [AlertDialogState.hideDialog]
+ * @param modifier the [Modifier] to be applied to this dialog's content.
  * @param properties typically platform specific properties to further configure the dialog.
  * @param content the content of the dialog
  *
@@ -75,8 +71,8 @@ fun rememberAlertDialogState(dialogVisible: Boolean = false): AlertDialogState =
 @Composable
 fun AlertDialog(
     onDismissRequest: () -> Unit,
+    state: AlertDialogState,
     modifier: Modifier = Modifier,
-    state: AlertDialogState = rememberAlertDialogState(),
     properties: DialogProperties = DialogProperties(),
     content: @Composable (PaddingValues) -> Unit,
 ) {
@@ -118,9 +114,9 @@ fun AlertDialog(
  * @param confirmButton button which is meant to confirm a proposed action, thus resolving what
  * triggered the dialog. The dialog does not set up any events for this button so they need to be
  * set up by the caller.
- * @param modifier the [Modifier] to be applied to this dialog
  * @param state the state by which the showing and hiding of the dialog is controlled. See
  * [AlertDialogState.showDialog] and [AlertDialogState.hideDialog]
+ * @param modifier the [Modifier] to be applied to this dialog
  * @param dismissButton button which is meant to dismiss the dialog. The dialog does not set up any
  * events for this button so they need to be set up by the caller.
  * @param icon optional icon that will appear above the [title] or above the [text], in case a
@@ -135,9 +131,9 @@ fun AlertDialog(
 @Composable
 fun AlertDialog(
     onDismissRequest: () -> Unit,
+    state: AlertDialogState,
     confirmButton: @Composable () -> Unit,
     modifier: Modifier = Modifier,
-    state: AlertDialogState = rememberAlertDialogState(),
     dismissButton: @Composable (() -> Unit)? = null,
     icon: @Composable (() -> Unit)? = null,
     title: String? = null,
