@@ -19,6 +19,7 @@ import kekmech.ru.lib_navigation_compose.LocalBackStackNavigator
 import kekmech.ru.mpeiapp.demo.screens.colors.ColorsScreenNavTarget
 import kekmech.ru.mpeiapp.demo.screens.components.ComponentsScreenNavTarget
 import kekmech.ru.mpeiapp.demo.screens.elmslie.ElmDemoScreenNavTarget
+import kekmech.ru.mpeiapp.demo.screens.shimmers.ShimmersScreenNavTarget
 import kekmech.ru.mpeiapp.demo.screens.typography.TypographyScreenNavTarget
 import kekmech.ru.mpeiapp.demo.ui.SectionItem
 import kekmech.ru.mpeiapp.demo.ui.ToggleThemeActionButton
@@ -91,6 +92,15 @@ private fun MainScreen(greetings: String) {
                         navigator.navigate(ElmDemoScreenNavTarget(randomArgument = randomArgument))
                     },
                     name = "ELM Demo (arg = $randomArgument)",
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+            item("shimmers") {
+                SectionItem(
+                    onClick = {
+                        navigator.navigate(ShimmersScreenNavTarget())
+                    },
+                    name = "Shimmers",
                     modifier = Modifier.fillMaxWidth()
                 )
             }
