@@ -34,6 +34,15 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                     versionCode = libs.requiredVersion("appVersionCode").toInt()
                 }
 
+                packaging {
+                    resources {
+                        excludes += setOf(
+                            "**/META-INF/LICENSE*",
+                            "**/META-INF/*.kotlin_module",
+                        )
+                    }
+                }
+
                 buildFeatures {
                     compose = true
                     viewBinding = true // TODO: remove viewBinding after complete compose migration

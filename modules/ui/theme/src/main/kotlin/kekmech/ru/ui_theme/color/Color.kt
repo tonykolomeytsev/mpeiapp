@@ -159,101 +159,41 @@ private fun PalettePreview(
             modifier = Modifier.padding(bottom = 12.dp)
         )
         Row(Modifier.padding(bottom = 12.dp)) {
-            colorItem(
-                name = "Background",
-                backgroundColor = palette.background,
-                textColor = palette.content,
-            )
-            colorItem(
-                name = "Surface",
-                backgroundColor = palette.surface,
-                textColor = palette.content,
-            )
-            colorItem(
-                name = "Surface + 1",
-                backgroundColor = palette.surfacePlus1,
-                textColor = palette.content,
-            )
-            colorItem(
-                name = "Surface + 2",
-                backgroundColor = palette.surfacePlus2,
-                textColor = palette.content,
-            )
-            colorItem(
-                name = "Surface + 3",
-                backgroundColor = palette.surfacePlus3,
-                textColor = palette.content,
-            )
+            colorItem("Background", palette.background, palette.content)
+            colorItem("Surface", palette.surface, palette.content)
+            colorItem("Surface + 1", palette.surfacePlus1, palette.content)
+            colorItem("Surface + 2", palette.surfacePlus2, palette.content)
+            colorItem("Surface + 3", palette.surfacePlus3, palette.content)
         }
         Row(Modifier.padding(bottom = 12.dp)) {
-            colorItem(
-                name = "Primary",
-                backgroundColor = palette.primary,
-                textColor = palette.contentAccent,
-            )
-            colorItem(
-                name = "Secondary",
-                backgroundColor = palette.secondary,
-                textColor = palette.contentAccent,
-            )
-            colorItem(
-                name = "Tertiary",
-                backgroundColor = palette.tertiary,
-                textColor = palette.contentAccent,
-            )
-            colorItem(
-                name = "ContentAccent",
-                backgroundColor = palette.contentAccent,
-                textColor = MpeixColors.Neutral10,
-            )
+            colorItem("Primary", palette.primary, palette.contentAccent)
+            colorItem("Secondary", palette.secondary, palette.contentAccent)
+            colorItem("Tertiary", palette.tertiary, palette.contentAccent)
+            colorItem("ContentAccent", palette.contentAccent, MpeixColors.Neutral10)
         }
         Row(Modifier.padding(bottom = 12.dp)) {
-            colorItem(
-                name = "Primary\nContainer",
-                backgroundColor = palette.primaryContainer,
-                textColor = palette.content,
-            )
-            colorItem(
-                name = "Secondary\nContainer",
-                backgroundColor = palette.secondaryContainer,
-                textColor = palette.content,
-            )
-            colorItem(
-                name = "Content",
-                backgroundColor = palette.content,
-                textColor = palette.surface,
-            )
-            colorItem(
-                name = "ContentVariant",
-                backgroundColor = palette.contentVariant,
-                textColor = palette.surface,
-            )
-            colorItem(
-                name = "Content\nDisabled",
-                backgroundColor = palette.contentDisabled,
-                textColor = palette.contentAccent,
-            )
-            colorItem(
-                name = "Outline",
-                backgroundColor = palette.outline,
-                textColor = palette.content,
-            )
+            colorItem("Primary\nContainer", palette.primaryContainer, palette.content)
+            colorItem("Secondary\nContainer", palette.secondaryContainer, palette.content)
+            colorItem("Content", palette.content, palette.surface)
+            colorItem("ContentVariant", palette.contentVariant, palette.surface)
+            colorItem("Content\nDisabled", palette.contentDisabled, palette.contentAccent)
+            colorItem("Outline", palette.outline, palette.content)
         }
         Row {
             colorItem(
-                name = "ClassesType\nLecture",
-                backgroundColor = LightMpeixPalette.classesTypeLecture,
-                textColor = LightMpeixPalette.contentAccent,
+                "ClassesType\nLecture",
+                LightMpeixPalette.classesTypeLecture,
+                LightMpeixPalette.contentAccent,
             )
             colorItem(
-                name = "ClassesType\nPractice",
-                backgroundColor = LightMpeixPalette.classesTypePractice,
-                textColor = LightMpeixPalette.content,
+                "ClassesType\nPractice",
+                LightMpeixPalette.classesTypePractice,
+                LightMpeixPalette.content,
             )
             colorItem(
-                name = "ClassesType\nLab",
-                backgroundColor = LightMpeixPalette.classesTypeLab,
-                textColor = LightMpeixPalette.contentAccent,
+                "ClassesType\nLab",
+                LightMpeixPalette.classesTypeLab,
+                LightMpeixPalette.contentAccent,
             )
         }
     }
