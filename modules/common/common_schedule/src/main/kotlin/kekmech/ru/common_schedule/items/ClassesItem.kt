@@ -1,5 +1,6 @@
 package kekmech.ru.common_schedule.items
 
+import kekmech.ru.coreui.R as coreui_R
 import android.content.Context
 import android.content.res.ColorStateList
 import android.view.View
@@ -7,6 +8,7 @@ import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import java.time.format.DateTimeFormatter
 import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.common_android.dpToPx
@@ -18,7 +20,6 @@ import kekmech.ru.common_android.viewbinding.lazyBinding
 import kekmech.ru.common_android.views.setOnClickListenerWithDebounce
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_schedule.R
-import kekmech.ru.coreui.R as coreui_R
 import kekmech.ru.common_schedule.drawable.ProgressBackgroundDrawable
 import kekmech.ru.coreui.items.ClickableItemViewHolder
 import kekmech.ru.coreui.items.ClickableItemViewHolderImpl
@@ -26,7 +27,6 @@ import kekmech.ru.domain_schedule.dto.Classes
 import kekmech.ru.domain_schedule.dto.ClassesType
 import kekmech.ru.domain_schedule.dto.ScheduleType
 import kekmech.ru.strings.StringArrays
-import java.time.format.DateTimeFormatter
 
 interface ClassesViewHolder : ClickableItemViewHolder {
     fun setDisciplineName(name: String)
@@ -97,7 +97,7 @@ open class ClassesViewHolderImpl(
     override fun setProgress(progress: Float?) {
         val context = containerView.context
         val bg = containerView.findViewById<View>(R.id.constraintLayout)
-        if (progress == null) {
+        if (progress==null) {
             bg.setBackgroundResource(coreui_R.drawable.background_classes)
             return
         }
@@ -158,7 +158,7 @@ class ClassesItemBinder(
     override fun bind(vh: ClassesViewHolder, model: Classes, position: Int) {
         vh.setDisciplineName(model.name)
         vh.setPersonName(when (model.scheduleType) {
-            ScheduleType.GROUP -> model.person.takeIfNotEmpty()
+            ScheduleType.GROUP -> buildGroupLabel(model).takeIfNotEmpty()
             ScheduleType.PERSON -> model.groups.takeIfNotEmpty()
         })
         vh.setPlace(model.place)
@@ -171,16 +171,35 @@ class ClassesItemBinder(
         vh.setProgress(model.progress)
     }
 
+    private fun buildGroupLabel(model: Classes): String =
+        buildString {
+            val hasSubgroupLabel = SUBGROUP_MARKER_PATTERN.containsMatchIn(model.groups)
+            if (model.person.isNotEmpty()) {
+                append(model.person)
+                if (hasSubgroupLabel) append('\n')
+            }
+            // Покажем еще и номер подгруппы, т.к. в большинстве случаев его наличие говорит о
+            // "сдвоенных" парах в расписании, расположенных в одно время. Обычно относится к
+            // раздеделению на подгруппы и т.д.
+            if (hasSubgroupLabel) {
+                append(model.groups)
+            }
+        }
+
     private fun String.takeIfNotEmpty() = takeIf {
         isNotBlank() && !it.contains("Вакансия", ignoreCase = true)
     }
 
     private fun getClassesTypeName(classes: Classes): String {
-        return if (classes.type == ClassesType.UNDEFINED && classes.rawType != null) {
+        return if (classes.type==ClassesType.UNDEFINED && classes.rawType!=null) {
             classes.rawType.orEmpty()
         } else {
             classesTypes[classes.type].orEmpty()
         }
+    }
+
+    private companion object {
+        private val SUBGROUP_MARKER_PATTERN = """\\\d(п|П)""".toRegex()
     }
 }
 
