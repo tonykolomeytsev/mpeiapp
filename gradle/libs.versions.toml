@@ -6,7 +6,7 @@ appVersionCode = "45"
 
 agp = "7.4.0" # android gradle plugin
 minSdk = "21"
-targetSdk = "32"
+targetSdk = "33"
 buildTools = "33.0.0"
 kotlin = "1.7.20"
 
