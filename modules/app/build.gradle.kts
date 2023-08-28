@@ -3,6 +3,7 @@ plugins {
     id("mpeix.android.base")
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
+    id("mpeix.android.signing")
 }
 
 apply(from = "${rootProject.projectDir}/gradle/ci.gradle")
@@ -22,6 +23,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("release")
         }
         getByName("debug") {
             isMinifyEnabled = false

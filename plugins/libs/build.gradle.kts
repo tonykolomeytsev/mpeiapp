@@ -7,6 +7,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-gradle-plugin")
     implementation("com.android.tools.build:gradle:7.4.0")
     implementation(gradleApi())
+    implementation(gradleKotlinDsl())
 }
 
 gradlePlugin {
@@ -34,5 +35,11 @@ gradlePlugin {
         displayName = "Mpeix Kotlin Plugin"
         description = "Gradle Plugin for setting up pure kotlin library module"
         implementationClass = "mpeix.plugins.KotlinModulePlugin"
+    }
+    plugins.create("AndroidSigningConventionPlugin") {
+        id = "mpeix.android.signing"
+        displayName = "MpeiX Android Signing Plugin"
+        description = "Gradle Plugin for signing release APK and AAB"
+        implementationClass = "mpeix.plugins.AndroidSigningConventionPlugin"
     }
 }
