@@ -1,8 +1,8 @@
 [versions]
 
 # mpeix application version
-appVersionName = "1.12.0"
-appVersionCode = "44"
+appVersionName = "1.12.1"
+appVersionCode = "45"
 
 agp = "7.4.0" # android gradle plugin
 minSdk = "21"
