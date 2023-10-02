@@ -45,7 +45,7 @@ private fun ShimmersScreen() {
 
 @Composable
 private fun ShimmerItem() {
-    val color = MpeixTheme.palette.surfacePlus3
+    val color = MpeixTheme.palette.shimmer
     val radius = 4.dp
     Row(
         Modifier

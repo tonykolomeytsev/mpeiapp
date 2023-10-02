@@ -1,6 +1,5 @@
 package kekmech.ru.ui_shimmer
 
-
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
@@ -74,6 +73,7 @@ internal class ShimmerArea(
         translationDistance = distanceCornerToRotatedCenterLine * 2 + shimmerWidthPx
     }
 
+    @Suppress("MagicNumber")
     private fun Float.toRadian(): Float = this / 180 * Math.PI.toFloat()
 
     override fun equals(other: Any?): Boolean {

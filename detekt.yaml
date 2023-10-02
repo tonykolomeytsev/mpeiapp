@@ -90,6 +90,7 @@ complexity:
   LongMethod:
     active: true
     threshold: 60
+    ignoreAnnotated: ['Composable']
     excludes:
       - '**/*Reducer.kt'
       - '**/*ListConverter.kt'
