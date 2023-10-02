@@ -38,6 +38,7 @@ object MpeixColors {
     val Neutral95 = Color(0xFFF0F2F5)
     val Neutral93 = Color(0xFFE3E7ED)
     val Neutral90 = Color(0xFFE0E4EB)
+    val Neutral85 = Color(0xFFD1D7E0)
     val Neutral80 = Color(0xFFC2CAD6)
     val Neutral70 = Color(0xFFA3AFC2)
     val Neutral60 = Color(0xFF8494AE)
@@ -63,6 +64,7 @@ class MpeixPalette internal constructor(
     val surfacePlus1: Color,
     val surfacePlus2: Color,
     val surfacePlus3: Color,
+    val shimmer: Color,
     val primaryContainer: Color,
     val secondaryContainer: Color,
     val content: Color,
@@ -84,6 +86,7 @@ val LightMpeixPalette = MpeixPalette(
     surfacePlus1 = MpeixColors.Neutral98,
     surfacePlus2 = MpeixColors.Neutral95,
     surfacePlus3 = MpeixColors.Neutral93,
+    shimmer = MpeixColors.Neutral85,
     primaryContainer = MpeixColors.Primary90,
     secondaryContainer = MpeixColors.Secondary90,
     content = MpeixColors.Neutral20,
@@ -102,6 +105,7 @@ val DarkMpeixPalette = MpeixPalette(
     surfacePlus1 = MpeixColors.Neutral25,
     surfacePlus2 = MpeixColors.Neutral30,
     surfacePlus3 = MpeixColors.Neutral35,
+    shimmer = MpeixColors.Neutral25,
     primaryContainer = MpeixColors.Primary50,
     secondaryContainer = MpeixColors.Secondary30,
     content = MpeixColors.Neutral90,
@@ -164,6 +168,7 @@ private fun PalettePreview(
             colorItem("Surface + 1", palette.surfacePlus1, palette.content)
             colorItem("Surface + 2", palette.surfacePlus2, palette.content)
             colorItem("Surface + 3", palette.surfacePlus3, palette.content)
+            colorItem("Shimmer", palette.surfacePlus3, palette.content)
         }
         Row(Modifier.padding(bottom = 12.dp)) {
             colorItem("Primary", palette.primary, palette.contentAccent)
