@@ -14,7 +14,7 @@ internal object ShimmerTokens {
     val Width: Dp = 400.dp
     val AnimationSpec: AnimationSpec<Float> = infiniteRepeatable(
         animation = tween(
-            durationMillis = 500,
+            durationMillis = 700,
             easing = LinearEasing,
             delayMillis = 500,
         ),

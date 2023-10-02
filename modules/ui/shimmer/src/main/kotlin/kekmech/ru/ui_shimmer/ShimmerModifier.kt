@@ -1,6 +1,5 @@
 package kekmech.ru.ui_shimmer
 
-
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier

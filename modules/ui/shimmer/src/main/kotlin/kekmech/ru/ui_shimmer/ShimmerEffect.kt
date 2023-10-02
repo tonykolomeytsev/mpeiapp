@@ -1,6 +1,5 @@
 package kekmech.ru.ui_shimmer
 
-
 import android.graphics.Matrix
 import androidx.compose.animation.core.Animatable
 import androidx.compose.runtime.Composable
