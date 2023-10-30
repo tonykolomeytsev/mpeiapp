@@ -1,3 +1,12 @@
+try {
+    let body = document.getElementsByTagName("body")[0];
+    if (!body.firstChild) {
+        body.innerHTML = "<div style=\"font: 16pt sans-serif;\"><p>С сожалением сообщаем, что функциональность данного раздела временно недоступна.</p><p>В ИВЦ МЭИ не хотят, чтобы студенты пользовались БАРС из приложения MpeiX. Приносим свои извинения за возможные неудобства.</p><p>Команда MpeiX</p>";
+    }
+} catch (err) {
+    console.log("Cannot check body emptiness")
+}
+
 let getMeta = (metadataContainer) => {
     const pair = (arr) => {
         try {
