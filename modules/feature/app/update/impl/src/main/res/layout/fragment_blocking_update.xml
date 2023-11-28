@@ -5,6 +5,7 @@
         android:layout_height="match_parent"
         android:clipToPadding="false"
         android:fillViewport="true"
+        android:background="?attr/colorWhite"
         android:theme="@style/AppTheme">
 
     <androidx.constraintlayout.widget.ConstraintLayout
