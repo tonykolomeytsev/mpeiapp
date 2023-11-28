@@ -223,6 +223,13 @@
     <string name="bars_webview_menu_refresh">Обновить страницу</string>
     <string name="bars_webview_menu_open_external">Открыть в браузере</string>
     <string name="bars_item_no_marks">Нет оценок</string>
+    <string name="bars_bypassing_item">Обход блокировок БАРС</string>
+    <string name="bars_bypassing_title">Блокировки БАРС</string>
+    <string name="bars_bypassing_description_1">ИВЦ МЭИ блокирует доступ к БАРСу из приложения MpeiX. Из-за этого вы можете видеть в разделе БАРС бесконечную загрузку или пустой экран.\n\nСуществует временное решение для обхода блокировок. Нужно перейти в настройки Android System WebView и включить флаг со следующим именем:</string>
+    <string name="bars_bypassing_description_2">После этого перезапустите приложение, БАРС в MpeiX должен снова заработать.</string>
+    <string name="bars_bypassing_flag">WebViewXRequestedWithHeaderControl</string>
+    <string name="bars_bypassing_go_to_settings">Перейти к настройкам</string>
+    <string name="bars_bypassing_error">Не удалось запустить настройки Android System WebView</string>
 
     <string name="app_settings_screen_title">Настройки</string>
     <string name="app_settings_header_schedule">Расписание</string>

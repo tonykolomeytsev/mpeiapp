@@ -33,6 +33,7 @@ import kekmech.ru.feature_bars_impl.databinding.FragmentBarsBinding
 import kekmech.ru.feature_bars_impl.presentation.items.AssessedDisciplineAdapterItem
 import kekmech.ru.feature_bars_impl.presentation.items.LoginToBarsAdapterItem
 import kekmech.ru.feature_bars_impl.presentation.items.UserNameHeaderAdapterItem
+import kekmech.ru.feature_bars_impl.presentation.screen.bypassing.BypassingFragment
 import kekmech.ru.feature_bars_impl.presentation.screen.details.BarsDetailsFragment
 import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsEffect
 import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsEvent.Ui
@@ -41,11 +42,11 @@ import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsStoreFactor
 import kekmech.ru.lib_adapter.BaseAdapter
 import kekmech.ru.lib_analytics_android.addScrollAnalytics
 import kekmech.ru.lib_analytics_android.ext.screenAnalytics
+import kekmech.ru.lib_navigation.addScreenForward
 import kekmech.ru.lib_navigation.features.ScrollToTop
 import kekmech.ru.lib_navigation.features.TabScreenStateSaver
 import kekmech.ru.lib_navigation.features.TabScreenStateSaverImpl
 import kekmech.ru.lib_navigation.showDialog
-import money.vivid.elmslie.android.elmStore
 import money.vivid.elmslie.android.renderer.ElmRendererDelegate
 import money.vivid.elmslie.android.renderer.androidElmStore
 import org.koin.android.ext.android.inject
@@ -282,6 +283,10 @@ internal class BarsFragment :
                     analytics.sendClick("BarsShowBrowser")
                     store.accept(Ui.Click.ShowBrowser)
                 }
+                ITEM_BYPASSING_LABEL -> {
+                    analytics.sendClick("BarsBypassing")
+                    addScreenForward { BypassingFragment() }
+                }
 
                 else -> { /* no-op */
                 }
@@ -321,5 +326,6 @@ internal class BarsFragment :
 
         const val ITEM_GROUP_LABEL = 0
         const val ITEM_BROWSER_LABEL = 1
+        const val ITEM_BYPASSING_LABEL = 2
     }
 }
