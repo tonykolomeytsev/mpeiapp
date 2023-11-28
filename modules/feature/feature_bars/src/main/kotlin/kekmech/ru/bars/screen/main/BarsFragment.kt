@@ -20,6 +20,7 @@ import kekmech.ru.bars.databinding.FragmentBarsBinding
 import kekmech.ru.bars.items.AssessedDisciplineAdapterItem
 import kekmech.ru.bars.items.LoginToBarsAdapterItem
 import kekmech.ru.bars.items.UserNameHeaderAdapterItem
+import kekmech.ru.bars.screen.bypassing.BypassingFragment
 import kekmech.ru.bars.screen.details.BarsDetailsFragment
 import kekmech.ru.bars.screen.main.elm.BarsEffect
 import kekmech.ru.bars.screen.main.elm.BarsEvent
@@ -37,9 +38,11 @@ import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.views.setProgressViewOffset
 import kekmech.ru.common_kotlin.fastLazy
 import kekmech.ru.common_mvi.BaseFragment
+import kekmech.ru.common_navigation.addScreenForward
 import kekmech.ru.common_navigation.features.ScrollToTop
 import kekmech.ru.common_navigation.features.TabScreenStateSaver
 import kekmech.ru.common_navigation.features.TabScreenStateSaverImpl
+import kekmech.ru.common_navigation.getRouter
 import kekmech.ru.common_navigation.showDialog
 import kekmech.ru.coreui.banner.showBanner
 import kekmech.ru.coreui.items.EmptyStateAdapterItem
@@ -277,6 +280,10 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), 
                     analytics.sendClick("BarsShowBrowser")
                     feature.accept(Wish.Click.ShowBrowser)
                 }
+                ITEM_BYPASSING_LABEL -> {
+                    analytics.sendClick("BarsBypassing")
+                    addScreenForward { BypassingFragment() }
+                }
                 else -> { /* no-op */
                 }
             }
@@ -314,5 +321,6 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), 
 
         const val ITEM_GROUP_LABEL = 0
         const val ITEM_BROWSER_LABEL = 1
+        const val ITEM_BYPASSING_LABEL = 2
     }
 }

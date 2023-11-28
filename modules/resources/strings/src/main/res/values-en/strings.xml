@@ -222,6 +222,13 @@
     <string name="bars_webview_menu_open_external">Open in browser</string>
     <string name="bars_complex_rating">Complex score </string>
     <string name="bars_item_no_marks">No grades</string>
+    <string name="bars_bypassing_item">Bypassing BARS blocking</string>
+    <string name="bars_bypassing_title">Blocking BARS</string>
+    <string name="bars_bypassing_description_1">ИВЦ МЭИ blocks access to BARS from the MpeiX application. Because of this, you may see endless loading or a blank screen in the BARS tab.\n\nThere is a temporary solution to bypass the blocking. You need to go to the Android System WebView settings and enable the flag with the following name:</string>
+    <string name="bars_bypassing_description_2">After that, restart the application, then BARS in MpeiX should work again.</string>
+    <string name="bars_bypassing_flag">WebViewXRequestedWithHeaderControl</string>
+    <string name="bars_bypassing_go_to_settings">Go to settings</string>
+    <string name="bars_bypassing_error">Unable to open Android System WebView settings</string>
 
     <string name="bars_rating_complex_name">Complex score</string>
     <string name="bars_rating_study_name">Study score</string>

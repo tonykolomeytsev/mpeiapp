@@ -1,6 +1,7 @@
 package kekmech.ru.bars.screen.main
 
 import android.content.Context
+import android.os.Build
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
@@ -8,6 +9,7 @@ import kekmech.ru.bars.R
 import kekmech.ru.bars.items.LoginToBarsItem
 import kekmech.ru.bars.items.UserNameHeaderItem
 import kekmech.ru.bars.screen.main.BarsFragment.Companion.ITEM_BROWSER_LABEL
+import kekmech.ru.bars.screen.main.BarsFragment.Companion.ITEM_BYPASSING_LABEL
 import kekmech.ru.bars.screen.main.BarsFragment.Companion.ITEM_GROUP_LABEL
 import kekmech.ru.bars.screen.main.elm.BarsState
 import kekmech.ru.bars.screen.main.elm.FlowState
@@ -34,6 +36,8 @@ internal class BarsListConverter(private val context: Context) {
                     addUserHeaderWithSettingsButton(state.userInfo?.name)
                     addUserGroupLabel(state.userInfo?.group)
                     addShowBarsInBrowserLabel()
+                    maybeAddBypassingLabel()
+                    add(SpaceItem.VERTICAL_8)
 
                     if (!state.isAfterErrorLoadingConfig) {
                         state.userInfo?.assessedDisciplines?.let { disciplines ->
@@ -51,12 +55,16 @@ internal class BarsListConverter(private val context: Context) {
                 mutableListOf<Any>().apply {
                     addUserHeaderWithSettingsButton(context.getString(Strings.bars_stub_student_name))
                     addShowBarsInBrowserLabel()
+                    maybeAddBypassingLabel()
+                    add(SpaceItem.VERTICAL_8)
                     add(LoginToBarsItem)
                 }
             else ->
                 mutableListOf<Any>().apply {
                     addUserHeaderWithSettingsButton(context.getString(Strings.bars_stub_student_name))
                     addShowBarsInBrowserLabel()
+                    maybeAddBypassingLabel()
+                    add(SpaceItem.VERTICAL_8)
                     addErrorStateItem(state)
                 }
         }
@@ -95,7 +103,20 @@ internal class BarsListConverter(private val context: Context) {
                 textStyleResId = coreui_R.style.H6_Main
             )
         )
-        add(SpaceItem.VERTICAL_8)
+    }
+
+    private fun MutableList<Any>.maybeAddBypassingLabel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            add(
+                TextWithIconItem(
+                    itemId = ITEM_BYPASSING_LABEL,
+                    textResId = Strings.bars_bypassing_item,
+                    drawableResID = R.drawable.ic_warning24,
+                    tintColorAttrId = coreui_R.attr.colorActive,
+                    textStyleResId = coreui_R.style.H6_Main,
+                )
+            )
+        }
     }
 
     private fun MutableList<Any>.addEmptyDisciplinesItem() {
