@@ -171,6 +171,8 @@
     <string name="dashboard_day_status_semester">The academic week #%d is in progress</string>
     <string name="dashboard_day_status_not_semester">Non-academic week</string>
     <string name="dashboard_item_time_prediction_prefix">The class will start in</string>
+    <string name="dashboard_item_end_of_support_short">Your device will no longer be able to receive MpeiX updates</string>
+    <string name="dashboard_item_end_of_support_long">The current version of MpeiX will continue to work, but you will no longer be able to receive updates.\n\nNew versions of MpeiX now require Android version 7 or higher to run.</string>
 
     <string name="map_tab_name_eat">Food</string>
     <string name="map_section_name_eat">Food</string>

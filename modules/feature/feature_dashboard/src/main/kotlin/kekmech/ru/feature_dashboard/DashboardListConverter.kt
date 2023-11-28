@@ -1,6 +1,7 @@
 package kekmech.ru.feature_dashboard
 
 import android.content.Context
+import android.os.Build
 import kekmech.ru.common_android.moscowLocalDate
 import kekmech.ru.common_android.moscowLocalTime
 import kekmech.ru.common_kotlin.fastLazy
@@ -9,6 +10,7 @@ import kekmech.ru.coreui.items.EmptyStateItem
 import kekmech.ru.coreui.items.ErrorStateItem
 import kekmech.ru.coreui.items.SectionHeaderItem
 import kekmech.ru.coreui.items.SpaceItem
+import kekmech.ru.coreui.items.TextWithIconItem
 import kekmech.ru.feature_dashboard.DashboardFragment.Companion.SECTION_FAVORITES_ACTION
 import kekmech.ru.feature_dashboard.DashboardFragment.Companion.SECTION_NOTES_ACTION
 import kekmech.ru.feature_dashboard.elm.DashboardState
@@ -70,6 +72,13 @@ class DashboardListConverter(
                 selectedScheduleName = state.selectedScheduleName,
                 selectedScheduleType = state.selectedScheduleType
             ))
+            if (Build.VERSION.SDK_INT in Build.VERSION_CODES.LOLLIPOP..Build.VERSION_CODES.M) {
+                add(TextWithIconItem(
+                    textResId = Strings.dashboard_item_end_of_support_short,
+                    drawableResID = R.drawable.ic_android,
+                    tintColorAttrId = kekmech.ru.coreui.R.attr.colorBlack,
+                ))
+            }
             add(SpaceItem.VERTICAL_8)
 
             listOfNotNull(

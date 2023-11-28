@@ -173,6 +173,8 @@
     <string name="dashboard_day_status_semester">Идет %d учебная неделя</string>
     <string name="dashboard_day_status_not_semester">Неучебная неделя</string>
     <string name="dashboard_item_time_prediction_prefix">Пара начнется через</string>
+    <string name="dashboard_item_end_of_support_short">Ваше устройство больше не сможет получать обновления MpeiX</string>
+    <string name="dashboard_item_end_of_support_long">Текущая версия MpeiX продолжит работу, но вы больше не сможете получать обновления.\n\nНовые версии MpeiX теперь требуют для работы Android версии 7 или выше.</string>
 
     <string name="map_tab_name_eat">Еда</string>
     <string name="map_section_name_eat">Еда</string>

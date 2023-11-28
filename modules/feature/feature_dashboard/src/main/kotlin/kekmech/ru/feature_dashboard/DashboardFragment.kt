@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_analytics.addScrollAnalytics
 import kekmech.ru.common_analytics.ext.screenAnalytics
@@ -150,6 +151,12 @@ class DashboardFragment :
         TextAdapterItem(R.layout.item_time_prediction),
         SessionAdapterItem(requireContext()),
         ShimmerAdapterItem(R.layout.item_events_shimmer),
+        TextWithIconAdapterItem {
+            MaterialAlertDialogBuilder(requireContext())
+                .setMessage(Strings.dashboard_item_end_of_support_long)
+                .create()
+                .show()
+        },
         ErrorStateAdapterItem {
             analytics.sendClick("DashboardReload")
             feature.accept(Wish.Action.SwipeToRefresh)
