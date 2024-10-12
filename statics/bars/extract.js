@@ -104,7 +104,7 @@ let getAllMarks = () => {
     }
     return JSON.stringify({ "payload": output });
 };
-let metadataContainer = document.querySelector("#div-FormHeader .form-row .col-sm");
+let metadataContainer = document.querySelector("#div-FormHeader .row .col-sm");
 
 let studentNameAndGroup = metadataContainer.children[0].innerText.split(/\(.*\)/gm);
 kti.onStudentNameExtracted(studentNameAndGroup[0].trim());
