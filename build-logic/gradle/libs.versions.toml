@@ -1,14 +1,7 @@
 [versions]
-kotlin = "1.9.0"
-ksp = "1.9.0-1.0.13"
-agp = "8.0.2"
-detekt = "1.22.0"
+kotlin = "2.1.21"
+agp = "8.10.1"
 
 [libraries]
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
-ksp-gradle-plugin = { module = "com.google.devtools.ksp:symbol-processing-gradle-plugin", version.ref = "ksp" }
 android-gradle-plugin = { module = "com.android.tools.build:gradle", version.ref = "agp" }
-detekt-gradle-plugin = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt" }
-
-[plugins]
-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }

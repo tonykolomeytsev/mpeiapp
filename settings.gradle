@@ -1,0 +1,48 @@
+pluginManagement {
+    includeBuild("build-logic")
+    repositories {
+        gradlePluginPortal()
+        google()
+    }
+}
+
+plugins {
+    id("com.gradle.develocity") version "4.1.1"
+}
+
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+
+        // TODO: completely remove jitpack repo from the project
+        maven {
+            url = "https://jitpack.io"
+            content {
+                // Only allow this group from jitpack
+                includeGroup("com.github.jetradarmobile")
+            }
+        }
+    }
+    versionCatalogs.create("mpeix").from(files("gradle/mpeix.versions.toml"))
+}
+
+rootProject.name = "mpeix"
+
+// Automatically add all project modules
+def sourcesDir = layout.rootDirectory.dir("modules").asFile
+fileTree(sourcesDir) {
+    exclude("**/build/**", "**/src/**", "build-logic", ".*")
+    include("*/**/build.gradle")
+}.forEach { buildScriptFile ->
+    def moduleDir = buildScriptFile.parentFile
+    // do NOT use absolute paths, or Gradle will shit himself
+    def relativePath = sourcesDir.toPath().relativize(moduleDir.toPath())
+    def moduleName = ":$relativePath".replace(File.separator, "_")
+
+    include(moduleName)
+    project(moduleName).projectDir = moduleDir
+}
+
+

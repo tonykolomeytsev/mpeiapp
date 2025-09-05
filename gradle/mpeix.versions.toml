@@ -1,0 +1,8 @@
+[plugins]
+root = { id = "mpeix.root" }
+app = { id = "mpeix.app" }
+feature-impl = { id = "mpeix.feature.impl" }
+lib-kotlin = { id = "mpeix.lib.kotlin" }
+lib-android = { id = "mpeix.lib.android" }
+util-kotlin = { id = "mpeix.util.kotlin" }
+util-android = { id = "mpeix.util.android" }
