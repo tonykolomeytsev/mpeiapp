@@ -3,14 +3,14 @@ package kekmech.ru.common_elm
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 
-interface DisposableDelegate : Disposable {
+public interface DisposableDelegate : Disposable {
 
-    fun Disposable.bind()
+    public fun Disposable.bind()
 
-    fun clearDisposables()
+    public fun clearDisposables()
 }
 
-class DisposableDelegateImpl : DisposableDelegate {
+public class DisposableDelegateImpl : DisposableDelegate {
 
     private val disposables: CompositeDisposable = CompositeDisposable()
 

@@ -28,20 +28,20 @@ import kekmech.ru.strings.StringArrays
 import java.time.format.DateTimeFormatter
 import kekmech.ru.coreui.R as coreui_R
 
-interface ClassesViewHolder : ClickableItemViewHolder {
+public interface ClassesViewHolder : ClickableItemViewHolder {
 
-    fun setDisciplineName(name: String)
-    fun setPersonName(name: String?)
-    fun setPlace(name: String)
-    fun setNumberName(name: String)
-    fun setTypeName(name: String)
-    fun setTagColor(@ColorInt color: Int)
-    fun setStartTime(time: String)
-    fun setEndTime(time: String)
-    fun setProgress(progress: Float?)
+    public fun setDisciplineName(name: String)
+    public fun setPersonName(name: String?)
+    public fun setPlace(name: String)
+    public fun setNumberName(name: String)
+    public fun setTypeName(name: String)
+    public fun setTagColor(@ColorInt color: Int)
+    public fun setStartTime(time: String)
+    public fun setEndTime(time: String)
+    public fun setProgress(progress: Float?)
 }
 
-open class ClassesViewHolderImpl(
+public open class ClassesViewHolderImpl(
     override val containerView: View,
 ) :
     ClassesViewHolder,
@@ -129,7 +129,7 @@ open class ClassesViewHolderImpl(
 }
 
 @Suppress("MagicNumber")
-class ClassesItemBinder(
+public class ClassesItemBinder(
     context: Context,
     private val onClickListener: ((Classes) -> Unit)? = null,
 ) : BaseItemBinder<ClassesViewHolder, Classes>() {
@@ -190,7 +190,7 @@ class ClassesItemBinder(
     }
 }
 
-class ClassesAdapterItem(
+public class ClassesAdapterItem(
     context: Context,
     onClickListener: ((Classes) -> Unit)? = null,
 ) : AdapterItem<ClassesViewHolder, Classes>(

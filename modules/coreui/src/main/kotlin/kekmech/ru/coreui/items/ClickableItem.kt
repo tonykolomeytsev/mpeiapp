@@ -6,11 +6,11 @@ import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseItemBinder
 
-interface ClickableItemViewHolder {
-    fun setOnClickListener(listener: (View) -> Unit)
+public interface ClickableItemViewHolder {
+    public fun setOnClickListener(listener: (View) -> Unit)
 }
 
-class ClickableItemViewHolderImpl(
+public class ClickableItemViewHolderImpl(
     private val containerView: View
 ) : RecyclerView.ViewHolder(containerView), ClickableItemViewHolder {
 
@@ -19,7 +19,7 @@ class ClickableItemViewHolderImpl(
     }
 }
 
-open class ClickableAdapterItem<T : Any>(
+public open class ClickableAdapterItem<T : Any>(
     isType: (Any) -> Boolean,
     @LayoutRes layoutRes: Int,
     onClickListener: ((T) -> Unit)? = null

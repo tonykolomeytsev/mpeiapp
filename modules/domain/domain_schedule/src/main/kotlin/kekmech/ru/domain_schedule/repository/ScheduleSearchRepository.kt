@@ -5,11 +5,11 @@ import kekmech.ru.domain_schedule.dto.GetSearchResultsResponse
 import kekmech.ru.domain_schedule.network.ScheduleService
 import kekmech.ru.domain_schedule_models.dto.ScheduleType
 
-class ScheduleSearchRepository(
+public class ScheduleSearchRepository(
     private val scheduleService: ScheduleService,
 ) {
 
-    fun getSearchResults(
+    public fun getSearchResults(
         query: String,
         type: ScheduleType? = null,
     ): Single<GetSearchResultsResponse> =

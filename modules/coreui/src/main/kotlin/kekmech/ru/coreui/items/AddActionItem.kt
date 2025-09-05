@@ -11,12 +11,12 @@ import kekmech.ru.coreui.databinding.ItemAddActionBinding
 private const val ADD_ACTION_DEFAULT_ITEM_ID = 0
 private const val ANIMATION_SCALE_MIN = 0.9f
 
-data class AddActionItem(
+public data class AddActionItem(
     val title: String,
     val itemId: Int = ADD_ACTION_DEFAULT_ITEM_ID
 )
 
-class AddActionAdapterItem(
+public class AddActionAdapterItem(
     isType: (Any) -> Boolean = { it is AddActionItem && it.itemId == ADD_ACTION_DEFAULT_ITEM_ID },
     onClickListener: ((AddActionItem) -> Unit)? = null
 ) : AdapterItem<AddActionViewHolder, AddActionItem>(
@@ -26,7 +26,7 @@ class AddActionAdapterItem(
     itemBinder = AddActionItemBinder(onClickListener)
 )
 
-class AddActionViewHolder(
+public class AddActionViewHolder(
     containerView: View
 ) : RecyclerView.ViewHolder(containerView),
     ClickableItemViewHolder by ClickableItemViewHolderImpl(containerView)
@@ -37,12 +37,12 @@ class AddActionViewHolder(
         containerView.scaleOnTouch(factor = ANIMATION_SCALE_MIN)
     }
 
-    fun setTitle(title: String) {
+    public fun setTitle(title: String) {
         viewBinding.textViewActionName.text = title
     }
 }
 
-class AddActionItemBinder(
+public class AddActionItemBinder(
     private val onClickListener: ((AddActionItem) -> Unit)?
 ) : BaseItemBinder<AddActionViewHolder, AddActionItem>() {
 

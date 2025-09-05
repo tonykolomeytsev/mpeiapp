@@ -7,51 +7,61 @@ import kekmech.ru.domain_dashboard.dto.UpcomingEventsPrediction
 import kekmech.ru.domain_schedule.dto.SelectedSchedule
 import kekmech.ru.feature_dashboard.screens.main.elm.DashboardEvent.Internal
 import kekmech.ru.feature_dashboard.screens.main.elm.DashboardEvent.Ui
-import vivid.money.elmslie.core.store.dsl_reducer.ScreenDslReducer
+import money.vivid.elmslie.core.store.ScreenReducer
 import kekmech.ru.feature_dashboard.screens.main.elm.DashboardCommand as Command
 import kekmech.ru.feature_dashboard.screens.main.elm.DashboardEffect as Effect
 import kekmech.ru.feature_dashboard.screens.main.elm.DashboardEvent as Event
 import kekmech.ru.feature_dashboard.screens.main.elm.DashboardState as State
 
 internal class DashboardReducer :
-    ScreenDslReducer<Event, Ui, Internal, State, Effect, Command>(
+    ScreenReducer<Event, Ui, Internal, State, Effect, Command>(
         uiEventClass = Ui::class,
         internalEventClass = Internal::class,
     ) {
 
-    override fun Result.internal(event: Internal): Any =
+    override fun Result.internal(event: Internal) {
         when (event) {
             is Internal.GetSelectedScheduleSuccess -> {
                 state { copy(selectedSchedule = event.selectedSchedule) }
             }
+
             is Internal.GetWeekOfSemesterSuccess -> {
                 state { copy(weekOfSemester = event.weekOfSemester.toResource()) }
             }
+
             is Internal.GetWeekOfSemesterFailure -> {
                 state { copy(weekOfSemester = event.throwable.toResource()) }
             }
+
             is Internal.GetUpcomingEventsSuccess -> {
                 state { copy(upcomingEvents = event.upcomingEvents.toResource()) }
             }
+
             is Internal.GetUpcomingEventsFailure -> {
                 state { copy(upcomingEvents = event.throwable.toResource()) }
             }
+
             is Internal.GetActualNotesSuccess -> {
                 state { copy(actualNotes = event.notes.toResource()) }
             }
+
             is Internal.GetActualNotesFailure -> {
                 state { copy(actualNotes = event.throwable.toResource()) }
             }
+
             is Internal.GetFavoriteSchedulesSuccess -> {
                 state { copy(favoriteSchedules = event.favorites.toResource()) }
             }
+
             is Internal.GetFavoriteSchedulesFailure -> {
                 state { copy(favoriteSchedules = event.throwable.toResource()) }
             }
+
             is Internal.SelectScheduleSuccess -> refreshCommands()
         }
+    }
 
-    override fun Result.ui(event: Ui): Any =
+    override fun Result.ui(event: Ui) {
         when (event) {
             is Ui.Init -> refreshCommands()
             is Ui.Action.SwipeToRefresh -> refreshCommands()
@@ -60,12 +70,14 @@ internal class DashboardReducer :
                     when (val events = state.upcomingEvents.value) {
                         is UpcomingEventsPrediction.ClassesTodayStarted,
                         is UpcomingEventsPrediction.ClassesTodayNotStarted,
-                        -> moscowLocalDate()
+                            -> moscowLocalDate()
+
                         is UpcomingEventsPrediction.ClassesInNDays -> events.date
                         else -> null
                     }
                 shownDay?.let { +Effect.NavigateToNotesList(event.classes, it) }
             }
+
             is Ui.Action.SilentUpdate -> refreshCommands()
             is Ui.Action.SelectFavoriteSchedule -> {
                 state {
@@ -84,6 +96,7 @@ internal class DashboardReducer :
                 }
             }
         }
+    }
 
     private fun Result.refreshCommands() {
         commands {

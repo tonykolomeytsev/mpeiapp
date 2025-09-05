@@ -1,6 +1,6 @@
 package kekmech.ru.domain_onboarding
 
-interface OnboardingFeatureLauncher {
+public interface OnboardingFeatureLauncher {
 
-    fun launchWelcomePage(asNewRoot: Boolean = true)
+    public fun launchWelcomePage(asNewRoot: Boolean = true)
 }

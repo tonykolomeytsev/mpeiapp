@@ -1,5 +1,6 @@
 package kekmech.ru.feature_app_settings.screens.main.list
 
+import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Paint
@@ -71,8 +72,9 @@ private class RoundedCornersTransformation(val radius: Float) : Transformation {
         addCircle(radius, radius, radius, Path.Direction.CW)
     }
 
+    @SuppressLint("UseKtx")
     override fun transform(source: Bitmap): Bitmap {
-        val output = Bitmap.createBitmap(source.width, source.height, source.config)
+        val output = Bitmap.createBitmap(source.width, source.height, source.config!!)
         val canvas = Canvas(output)
         canvas.clipPath(clipPath)
         canvas.drawBitmap(source, 0f, 0f, Paint())

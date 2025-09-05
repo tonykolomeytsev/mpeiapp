@@ -1,3 +1,3 @@
 package kekmech.ru.icons
 
-typealias Icons = R.drawable
+public typealias Icons = R.drawable

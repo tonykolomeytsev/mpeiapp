@@ -8,19 +8,19 @@ import kekmech.ru.domain_favorite_schedule.database.FavoriteScheduleDao
 import kekmech.ru.domain_favorite_schedule.database.entities.NormalFavoriteSchedule
 import kekmech.ru.domain_favorite_schedule.dto.FavoriteSchedule
 
-class FavoriteScheduleRepository(
+public class FavoriteScheduleRepository(
     private val favoriteScheduleDao: FavoriteScheduleDao,
 ) {
 
-    fun updateOrInsertFavorite(favoriteSchedule: FavoriteSchedule): Completable =
+    public fun updateOrInsertFavorite(favoriteSchedule: FavoriteSchedule): Completable =
         favoriteScheduleDao.updateOrInsert(toNormal(favoriteSchedule))
 
-    fun getAllFavorites(): Single<List<FavoriteSchedule>> =
+    public fun getAllFavorites(): Single<List<FavoriteSchedule>> =
         favoriteScheduleDao
             .getAll()
             .map { it.map(::fromNormal) }
 
-    fun deleteFavorite(favoriteSchedule: FavoriteSchedule): Completable =
+    public fun deleteFavorite(favoriteSchedule: FavoriteSchedule): Completable =
         favoriteScheduleDao.delete(toNormal(favoriteSchedule))
 
     private fun toNormal(favoriteSchedule: FavoriteSchedule): NormalFavoriteSchedule =

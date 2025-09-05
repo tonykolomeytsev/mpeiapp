@@ -3,7 +3,7 @@ package kekmech.ru.feature_map.screens.main.elm
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kekmech.ru.feature_map.screens.main.elm.MapEvent.Internal
 import kekmech.ru.feature_map.screens.main.elm.MapEvent.Ui
-import vivid.money.elmslie.core.store.dsl_reducer.ScreenDslReducer
+import money.vivid.elmslie.core.store.ScreenReducer
 import java.util.UUID
 import kekmech.ru.feature_map.screens.main.elm.MapCommand as Command
 import kekmech.ru.feature_map.screens.main.elm.MapEffect as Effect
@@ -11,12 +11,12 @@ import kekmech.ru.feature_map.screens.main.elm.MapEvent as Event
 import kekmech.ru.feature_map.screens.main.elm.MapState as State
 
 internal class MapReducer :
-    ScreenDslReducer<Event, Ui, Internal, State, Effect, Command>(
+    ScreenReducer<Event, Ui, Internal, State, Effect, Command>(
         uiEventClass = Ui::class,
         internalEventClass = Internal::class
     ) {
 
-    override fun Result.internal(event: Internal): Any =
+    override fun Result.internal(event: Internal) {
         when (event) {
             is Internal.GetMapMarkersSuccess -> state {
                 copy(
@@ -24,13 +24,15 @@ internal class MapReducer :
                     loadingError = null,
                 )
             }
+
             is Internal.GetMapMarkersFailure -> {
                 state { copy(loadingError = event.throwable) }
                 effects { +Effect.ShowLoadingError }
             }
         }
+    }
 
-    override fun Result.ui(event: Ui): Any =
+    override fun Result.ui(event: Ui) {
         when (event) {
             is Ui.Init -> commands { +Command.GetMapMarkers }
             is Ui.Action.OnMapReady -> {
@@ -44,6 +46,7 @@ internal class MapReducer :
                     )
                 }
             }
+
             is Ui.Action.SelectTab -> {
                 state { copy(selectedTab = event.tab) }
                 effects {
@@ -55,12 +58,15 @@ internal class MapReducer :
                     )
                 }
             }
+
             is Ui.Action.BottomSheetStateChanged -> state {
                 copy(bottomSheetState = event.newState)
             }
+
             is Ui.Action.GoogleMapMarkersGenerated -> state {
                 copy(googleMapMarkers = event.googleMapMarkers)
             }
+
             is Ui.Action.OnListMarkerSelected -> effects {
                 +state.map?.let { map ->
                     Effect.AnimateCameraToPlace(
@@ -71,13 +77,16 @@ internal class MapReducer :
                     )
                 }
             }
+
             is Ui.Action.SilentUpdate -> state { copy(hash = UUID.randomUUID().toString()) }
             is Ui.Action.Reload -> {
                 state { copy(loadingError = null) }
                 commands { +Command.GetMapMarkers }
             }
+
             is Ui.Action.ScrollToTop -> state {
                 copy(bottomSheetState = BottomSheetBehavior.STATE_COLLAPSED)
             }
         }
+    }
 }

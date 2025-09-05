@@ -2,19 +2,19 @@ package kekmech.ru.common_analytics
 
 import kekmech.ru.common_analytics.dto.AnalyticsEvent
 
-interface Analytics {
+public interface Analytics {
 
-    val screenName: String
+    public val screenName: String
 
-    fun sendFirstOpen()
-    fun sendAppOpen()
-    fun sendScreenShown()
-    fun sendScreenVisibilityChanged(visibility: Boolean)
-    fun sendClick(elementName: String)
-    fun sendChangeSetting(settingName: String, settingValue: String)
-    fun sendErrorEvent(errorMessage: String)
-    fun sendScroll(elementName: String)
-    fun sendCustomAction(actionName: String)
+    public fun sendFirstOpen()
+    public fun sendAppOpen()
+    public fun sendScreenShown()
+    public fun sendScreenVisibilityChanged(visibility: Boolean)
+    public fun sendClick(elementName: String)
+    public fun sendChangeSetting(settingName: String, settingValue: String)
+    public fun sendErrorEvent(errorMessage: String)
+    public fun sendScroll(elementName: String)
+    public fun sendCustomAction(actionName: String)
 }
 
 internal class AnalyticsImpl(

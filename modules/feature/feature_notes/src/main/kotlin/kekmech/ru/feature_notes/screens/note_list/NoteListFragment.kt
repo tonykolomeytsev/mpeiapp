@@ -28,18 +28,15 @@ import kekmech.ru.feature_notes.databinding.FragmentNoteListBinding
 import kekmech.ru.feature_notes.di.NotesDependencies
 import kekmech.ru.feature_notes.screens.edit.NoteEditFragment
 import kekmech.ru.feature_notes.screens.note_list.elm.NoteListEffect
-import kekmech.ru.feature_notes.screens.note_list.elm.NoteListEvent
 import kekmech.ru.feature_notes.screens.note_list.elm.NoteListEvent.Ui
 import kekmech.ru.feature_notes.screens.note_list.elm.NoteListState
 import kekmech.ru.strings.Strings
+import money.vivid.elmslie.android.renderer.androidElmStore
 import org.koin.android.ext.android.inject
 import java.time.LocalDate
 
 internal class NoteListFragment :
-    BaseBottomSheetDialogFragment<NoteListEvent, NoteListEffect, NoteListState>() {
-
-    override val initEvent = Ui.Init
-    override val layoutId = R.layout.fragment_note_list
+    BaseBottomSheetDialogFragment<NoteListEffect, NoteListState>(R.layout.fragment_note_list) {
 
     private val dependencies by inject<NotesDependencies>()
     private val adapter by fastLazy { createAdapter() }
@@ -48,10 +45,12 @@ internal class NoteListFragment :
     private val resultKey by fastLazy { getArgument<String>(ARG_RESULT_KEY) }
     private val listConverter by fastLazy { NoteListConverter(requireContext()) }
 
-    override fun createStore() = dependencies.noteListFeatureFactory.create(
-        selectedClasses = getArgument(ARG_SELECTED_CLASSES),
-        selectedDate = getArgument(ARG_SELECTED_DATE)
-    )
+    private val store by androidElmStore {
+        dependencies.noteListFeatureFactory.create(
+            selectedClasses = getArgument(ARG_SELECTED_CLASSES),
+            selectedDate = getArgument(ARG_SELECTED_DATE)
+        )
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -60,7 +59,7 @@ internal class NoteListFragment :
             recyclerView.adapter = adapter
             recyclerView.attachSwipeToDeleteCallback(isItemForDelete = { it is Note }) { note ->
                 analytics.sendClick("DeleteNote")
-                feature.accept(Ui.Action.DeleteNote(note as Note))
+                store.accept(Ui.Action.DeleteNote(note as Note))
             }
         }
     }
@@ -75,7 +74,9 @@ internal class NoteListFragment :
 
     override fun handleEffect(effect: NoteListEffect) = when (effect) {
         is NoteListEffect.ShowNoteLoadError -> Toast
-            .makeText(requireContext(), Strings.something_went_wrong_error, Toast.LENGTH_SHORT).show()
+            .makeText(requireContext(), Strings.something_went_wrong_error, Toast.LENGTH_SHORT)
+            .show()
+
         is NoteListEffect.OpenNoteEdit -> {
             close()
             addScreenForward { NoteEditFragment.newInstance(effect.note, resultKey) }
@@ -87,11 +88,11 @@ internal class NoteListFragment :
         SectionHeaderAdapterItem(),
         NoteAdapterItem(requireContext()) {
             analytics.sendClick("EditNote")
-            feature.accept(Ui.Click.EditNote(it))
+            store.accept(Ui.Click.EditNote(it))
         },
         AddActionAdapterItem {
             analytics.sendClick("NewNote")
-            feature.accept(Ui.Click.CreateNewNote)
+            store.accept(Ui.Click.CreateNewNote)
         },
         SpaceAdapterItem()
     )

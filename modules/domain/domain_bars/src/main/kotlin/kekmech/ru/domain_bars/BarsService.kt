@@ -7,12 +7,12 @@ import kekmech.ru.domain_bars.dto.RemoteBarsConfig
 import okhttp3.ResponseBody
 import retrofit2.http.GET
 
-@EndpointUrl(BackendServiceUrl.BARS)
-interface BarsService {
+@EndpointUrl(value = BackendServiceUrl.BARS)
+public interface BarsService {
 
     @GET("config.json")
-    fun getRemoteBarsConfig(): Single<RemoteBarsConfig>
+    public fun getRemoteBarsConfig(): Single<RemoteBarsConfig>
 
     @GET("extract.js")
-    fun getExtractJs(): Single<ResponseBody>
+    public fun getExtractJs(): Single<ResponseBody>
 }

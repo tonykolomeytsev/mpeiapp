@@ -10,7 +10,7 @@ import kekmech.ru.coreui.R
 import kekmech.ru.coreui.databinding.ItemNoteBinding
 import kekmech.ru.domain_notes.dto.Note
 
-class NoteAdapterItem(
+public class NoteAdapterItem(
     context: Context,
     onClickListener: ((Note) -> Unit)? = null
 ) : AdapterItem<NoteViewHolder, Note>(
@@ -21,7 +21,7 @@ class NoteAdapterItem(
     areItemsTheSame = { a, b -> a.same(b) },
 )
 
-class NoteViewHolder(
+public class NoteViewHolder(
     private val containerView: View
 ) :
     RecyclerView.ViewHolder(containerView),
@@ -29,20 +29,20 @@ class NoteViewHolder(
 
     private val viewBinding = ItemNoteBinding.bind(containerView)
 
-    fun setContent(content: String) {
+    public fun setContent(content: String) {
         viewBinding.textViewNoteContent.text = content
     }
 
-    fun setDate(date: String) {
+    public fun setDate(date: String) {
         viewBinding.textViewNoteDate.text = date
     }
 
-    fun setDisciplineName(name: String) {
+    public fun setDisciplineName(name: String) {
         viewBinding.textViewNoteDiscipline.text = name
     }
 }
 
-class NoteItemBinder(
+public class NoteItemBinder(
     context: Context,
     private val onClickListener: ((Note) -> Unit)?
 ) : BaseItemBinder<NoteViewHolder, Note>() {

@@ -1,0 +1,5 @@
+plugins {
+    alias(mpeix.plugins.lib.android)
+}
+
+android.buildFeatures.androidResources = true

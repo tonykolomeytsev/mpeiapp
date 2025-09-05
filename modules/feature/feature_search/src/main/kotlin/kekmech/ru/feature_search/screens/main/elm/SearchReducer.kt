@@ -9,27 +9,28 @@ import kekmech.ru.feature_search.item.compareFilter
 import kekmech.ru.feature_search.screens.main.elm.SearchEvent.Internal
 import kekmech.ru.feature_search.screens.main.elm.SearchEvent.Ui
 import kekmech.ru.feature_search.screens.main.simplify
-import vivid.money.elmslie.core.store.dsl_reducer.ScreenDslReducer
+import money.vivid.elmslie.core.store.ScreenReducer
 import kekmech.ru.feature_search.screens.main.elm.SearchCommand as Command
 import kekmech.ru.feature_search.screens.main.elm.SearchEffect as Effect
 import kekmech.ru.feature_search.screens.main.elm.SearchEvent as Event
 import kekmech.ru.feature_search.screens.main.elm.SearchState as State
 
 internal class SearchReducer :
-    ScreenDslReducer<Event, Ui, Internal, State, Effect, Command>(
+    ScreenReducer<Event, Ui, Internal, State, Effect, Command>(
         uiEventClass = Ui::class,
         internalEventClass = Internal::class,
     ) {
 
-    override fun Result.internal(event: Internal): Any =
+    override fun Result.internal(event: Internal) {
         when (event) {
             is Internal.SearchNotesSuccess -> state { copy(searchResultsNotes = event.results) }
             is Internal.SearchMapSuccess -> state { copy(searchResultsMap = event.results) }
             is Internal.SearchGroupsSuccess -> state { copy(searchResultsGroups = event.results) }
             is Internal.SearchPersonsSuccess -> state { copy(searchResultsPersons = event.results) }
         }
+    }
 
-    override fun Result.ui(event: Ui): Any =
+    override fun Result.ui(event: Ui) {
         when (event) {
             is Ui.Init -> {
                 effects {
@@ -41,6 +42,7 @@ internal class SearchReducer :
                     selectedFilter = state.selectedFilter,
                 )
             }
+
             is Ui.Action.SearchContent -> {
                 state { copy(query = event.query) }
                 loadCommands(
@@ -48,6 +50,7 @@ internal class SearchReducer :
                     selectedFilter = state.selectedFilter,
                 )
             }
+
             is Ui.Action.SelectFilter -> {
                 val selectedFilter = event.filterItem.type
                 state { copy(selectedFilter = selectedFilter) }
@@ -57,6 +60,7 @@ internal class SearchReducer :
                 )
             }
         }
+    }
 
     private fun Result.loadCommands(
         simplifiedQuery: String,

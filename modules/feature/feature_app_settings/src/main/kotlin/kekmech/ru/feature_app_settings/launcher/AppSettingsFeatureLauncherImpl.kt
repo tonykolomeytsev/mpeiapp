@@ -13,7 +13,7 @@ internal class AppSettingsFeatureLauncherImpl(
 
     override fun launch(subPage: AppSettingsFeatureLauncher.SubPage?) {
         when (subPage) {
-            FAVORITES -> router.executeCommand(AddScreenForward { FavoritesFragment() })
+            FAVORITES -> router.executeCommand(AddScreenForward { FavoritesFragment()  })
             else -> router.executeCommand(AddScreenForward { AppSettingsFragment() })
         }
     }

@@ -1,6 +1,6 @@
 package kekmech.ru.common_feature_toggles
 
-interface FeatureToggles {
-    val isWorkInProgressBannerEnabled: Boolean
-    val isSnowFlakesEnabled: Boolean
+public interface FeatureToggles {
+    public val isWorkInProgressBannerEnabled: Boolean
+    public val isSnowFlakesEnabled: Boolean
 }

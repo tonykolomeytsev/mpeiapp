@@ -1,0 +1,20 @@
+plugins {
+    alias(mpeix.plugins.lib.kotlin)
+}
+
+dependencies {
+    compileOnly(androidJar)
+    aarCompileOnly(libs.androidx.fragment)
+    aarCompileOnly(libs.timber)
+
+    implementation(libs.google.gson)
+    implementation(libs.rx.java)
+    implementation(libs.squareup.retrofit)
+    implementation(libs.squareup.retrofit.rxJava3)
+
+    implementation(project(":common_annotations"))
+    implementation(project(":common_cache"))
+    implementation(project(":common_di"))
+    implementation(project(":common_kotlin"))
+    implementation(project(":common_shared_preferences"))
+}

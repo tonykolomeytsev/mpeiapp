@@ -6,14 +6,14 @@ import io.reactivex.rxjava3.core.Single
 import kekmech.ru.common_cache.persistent_cache.PersistentCache
 import java.time.Duration
 
-class DelegatingPersistentCacheHandle<T : Any>(
+public class DelegatingPersistentCacheHandle<T : Any>(
     private val key: String,
     private val valueClass: Class<T>,
     private val lifetime: Duration?,
     private val cache: PersistentCache,
 ) : CacheHandle<T> {
 
-    override fun set(value: T) = cache.put(key, value)
+    override fun set(value: T): Unit = cache.put(key, value)
 
     override fun get(): Maybe<T> = cache.get(key, valueClass, lifetime)
 
@@ -21,14 +21,14 @@ class DelegatingPersistentCacheHandle<T : Any>(
 
     override fun observe(): Observable<T> = cache.observe(key, valueClass, lifetime)
 
-    override fun clear() = cache.remove(key)
+    override fun clear(): Unit = cache.remove(key)
 
     override fun peek(): T? = cache.peek(key, valueClass, lifetime)
 
-    override fun updateIfPresent(newValue: (previousValue: T) -> T) =
+    override fun updateIfPresent(newValue: (previousValue: T) -> T): Unit =
         cache.putIfPresent(key, valueClass, lifetime, newValue)
 
-    override fun update(newValue: (previousValue: T?) -> T) =
+    override fun update(newValue: (previousValue: T?) -> T): Unit =
         cache.put(key, valueClass, lifetime, newValue)
 
     override fun hasValue(): Boolean = cache.contains(key)

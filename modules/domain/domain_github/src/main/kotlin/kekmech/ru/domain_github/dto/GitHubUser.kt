@@ -2,7 +2,7 @@ package kekmech.ru.domain_github.dto
 
 import com.google.gson.annotations.SerializedName
 
-data class GitHubUser(
+public data class GitHubUser(
     val id: Long,
     val login: String,
     @SerializedName("avatar_url") val avatarUrl: String,

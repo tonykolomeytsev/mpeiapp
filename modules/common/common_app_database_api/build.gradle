@@ -1,0 +1,8 @@
+plugins {
+    alias(mpeix.plugins.lib.kotlin)
+}
+
+dependencies {
+    compileOnly(androidJar)
+    aarCompileOnly(libs.androidx.sqlite)
+}

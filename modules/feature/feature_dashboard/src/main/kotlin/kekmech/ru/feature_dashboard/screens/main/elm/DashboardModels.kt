@@ -52,7 +52,7 @@ internal sealed interface DashboardEvent {
         data class GetActualNotesFailure(val throwable: Throwable) : Internal
         data class GetFavoriteSchedulesSuccess(val favorites: List<FavoriteSchedule>) : Internal
         data class GetFavoriteSchedulesFailure(val throwable: Throwable) : Internal
-        object SelectScheduleSuccess : Internal
+        data object SelectScheduleSuccess : Internal
     }
 }
 

@@ -9,19 +9,19 @@ import androidx.recyclerview.widget.RecyclerView
 import timber.log.Timber
 
 @Suppress("TooManyFunctions")
-open class BaseAdapter(
+public open class BaseAdapter(
     private vararg val adapterItems: AdapterItem<*, *>
 ) : ListAdapter<Any, RecyclerView.ViewHolder>(BaseDiffUtil(adapterItems)) {
 
-    var allData: List<Any> = mutableListOf()
-    var isLoading: Boolean = false
+    public var allData: List<Any> = mutableListOf()
+    public var isLoading: Boolean = false
 
-    open fun update(dataList: List<Any>) {
+    public open fun update(dataList: List<Any>) {
         allData = dataList
         submitList(dataList)
     }
 
-    open fun move(fromPosition: Int, toPosition: Int) {
+    public open fun move(fromPosition: Int, toPosition: Int) {
         val item = getItem(fromPosition)
         val newData = allData.toMutableList()
         newData.removeAt(fromPosition)
@@ -29,12 +29,12 @@ open class BaseAdapter(
         update(newData)
     }
 
-    open fun insert(dataList: List<Any>) {
+    public open fun insert(dataList: List<Any>) {
         allData = allData + dataList
         submitList(allData)
     }
 
-    override fun getItemCount() = getContentSize() + if (isLoading) 1 else 0
+    override fun getItemCount(): Int = getContentSize() + if (isLoading) 1 else 0
 
     private fun getContentSize() = super.getItemCount()
 
@@ -85,7 +85,7 @@ open class BaseAdapter(
         super.onViewDetachedFromWindow(holder)
     }
 
-    fun getAdapterItemByPosition(position: Int): AdapterItem<*, *> =
+    public fun getAdapterItemByPosition(position: Int): AdapterItem<*, *> =
         adapterItems[getItemViewType(position)]
 
     protected open fun createItemViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

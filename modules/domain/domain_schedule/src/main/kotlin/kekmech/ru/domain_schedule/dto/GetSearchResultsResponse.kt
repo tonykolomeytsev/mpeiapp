@@ -1,6 +1,6 @@
 package kekmech.ru.domain_schedule.dto
 
-data class GetSearchResultsResponse(
+public data class GetSearchResultsResponse(
     val items: List<SearchResult>,
 )
 

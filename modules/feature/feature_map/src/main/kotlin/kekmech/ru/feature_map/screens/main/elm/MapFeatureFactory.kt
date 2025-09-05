@@ -1,7 +1,7 @@
 package kekmech.ru.feature_map.screens.main.elm
 
 import kekmech.ru.domain_app_settings.AppSettingsRepository
-import vivid.money.elmslie.core.store.ElmStore
+import money.vivid.elmslie.core.store.ElmStore
 import kekmech.ru.feature_map.screens.main.elm.MapCommand as Command
 import kekmech.ru.feature_map.screens.main.elm.MapEffect as Effect
 import kekmech.ru.feature_map.screens.main.elm.MapEvent as Event

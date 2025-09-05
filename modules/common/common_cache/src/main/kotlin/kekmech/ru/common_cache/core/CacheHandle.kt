@@ -10,23 +10,23 @@ import io.reactivex.rxjava3.core.Single
  *
  * Taken from: https://github.com/vivid-money/lazycache
  */
-interface CacheHandle<T : Any> {
+public interface CacheHandle<T : Any> {
 
-    fun set(value: T)
+    public fun set(value: T)
 
-    fun get(): Maybe<T>
+    public fun get(): Maybe<T>
 
-    fun getOrError(): Single<T>
+    public fun getOrError(): Single<T>
 
-    fun observe(): Observable<T>
+    public fun observe(): Observable<T>
 
-    fun clear()
+    public fun clear()
 
-    fun peek(): T?
+    public fun peek(): T?
 
-    fun updateIfPresent(newValue: (previousValue: T) -> T)
+    public fun updateIfPresent(newValue: (previousValue: T) -> T)
 
-    fun update(newValue: (previousValue: T?) -> T)
+    public fun update(newValue: (previousValue: T?) -> T)
 
-    fun hasValue(): Boolean
+    public fun hasValue(): Boolean
 }

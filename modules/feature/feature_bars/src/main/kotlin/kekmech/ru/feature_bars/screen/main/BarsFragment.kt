@@ -9,7 +9,12 @@ import android.text.Spannable
 import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.View
-import android.webkit.*
+import android.webkit.JavascriptInterface
+import android.webkit.WebResourceError
+import android.webkit.WebResourceRequest
+import android.webkit.WebSettings
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.appcompat.widget.Toolbar
 import androidx.core.text.toSpannable
 import androidx.core.view.forEach
@@ -43,31 +48,28 @@ import kekmech.ru.feature_bars.items.LoginToBarsAdapterItem
 import kekmech.ru.feature_bars.items.UserNameHeaderAdapterItem
 import kekmech.ru.feature_bars.screen.details.BarsDetailsFragment
 import kekmech.ru.feature_bars.screen.main.elm.BarsEffect
-import kekmech.ru.feature_bars.screen.main.elm.BarsEvent
 import kekmech.ru.feature_bars.screen.main.elm.BarsEvent.Ui
 import kekmech.ru.feature_bars.screen.main.elm.BarsFeatureFactory
 import kekmech.ru.feature_bars.screen.main.elm.BarsState
 import kekmech.ru.strings.Strings
+import money.vivid.elmslie.android.renderer.androidElmStore
 import org.koin.android.ext.android.inject
-import vivid.money.elmslie.storepersisting.retainInParentStoreHolder
 import kekmech.ru.coreui.R as coreui_R
 
 private const val JS_INTERFACE_NAME = "kti"
 
 @Suppress("TooManyFunctions")
-internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), ScrollToTop,
+internal class BarsFragment : BaseFragment<BarsEffect, BarsState>(R.layout.fragment_bars),
+    ScrollToTop,
     TabScreenStateSaver by TabScreenStateSaverImpl("bars") {
-
-    override val initEvent: BarsEvent = Ui.Init
-    override val layoutId: Int = R.layout.fragment_bars
-    override val storeHolder by retainInParentStoreHolder(storeProvider = ::createStore)
-
     private val analytics by screenAnalytics("Bars")
     private val viewBinding by viewBinding(FragmentBarsBinding::bind)
     private val adapter by fastLazy { createAdapter() }
     private val settingsFeatureLauncher by inject<AppSettingsFeatureLauncher>()
 
-    override fun createStore() = inject<BarsFeatureFactory>().value.create()
+    private val store by androidElmStore {
+        inject<BarsFeatureFactory>().value.create()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -81,12 +83,12 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), 
             webViewContainer.addSystemTopPadding()
             returnBanner.setOnClickListener {
                 analytics.sendClick("BarsReturnBanner")
-                feature.accept(Ui.Click.HideBrowser)
+                store.accept(Ui.Click.HideBrowser)
             }
             swipeRefresh.apply {
                 setOnRefreshListener {
                     analytics.sendClick("BarsUpdate")
-                    feature.accept(Ui.Click.SwipeToRefresh)
+                    store.accept(Ui.Click.SwipeToRefresh)
                 }
                 doOnApplyWindowInsets { _, windowInsets, _ ->
                     setProgressViewOffset(windowInsets.systemWindowInsetTop)
@@ -117,12 +119,12 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), 
             }
             webViewToolbar.setNavigationOnClickListener {
                 analytics.sendClick("BarsHideBrowser")
-                feature.accept(Ui.Click.HideBrowser)
+                store.accept(Ui.Click.HideBrowser)
             }
             webViewToolbar.enableOverflowMenuColorWorkaround()
             webViewToolbar.setOnMenuItemClickListener { menuItem ->
                 when (menuItem.itemId) {
-                    R.id.refresh -> feature.accept(Ui.Action.Update)
+                    R.id.refresh -> store.accept(Ui.Action.Update)
                     R.id.open_external -> webView.url?.let { requireContext().openLinkExternal(it) }
                     else -> Unit
                 }
@@ -159,31 +161,33 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), 
             is BarsEffect.InvokeJs -> viewBinding.webView.evaluateJavascript(effect.js) {
                 Log.d(javaClass.simpleName, it)
             }
+
             is BarsEffect.OpenSettings -> settingsFeatureLauncher.launch()
             is BarsEffect.ShowCommonError -> showBanner(Strings.something_went_wrong_error)
             is BarsEffect.OpenExternalBrowser ->
                 requireContext().openLinkExternal(effect.url)
+
             is BarsEffect.ScrollToTop -> viewBinding.recyclerView.scrollToPosition(0)
         }
 
     override fun onResume() {
         super.onResume()
-        feature.accept(Ui.Action.Update)
+        store.accept(Ui.Action.Update)
     }
 
     override fun onScrollToTop() {
-        feature.accept(Ui.Action.ScrollToTop)
+        store.accept(Ui.Action.ScrollToTop)
     }
 
     inner class BarsWebViewClient : WebViewClient() {
 
         override fun onPageFinished(view: WebView?, url: String) {
-            feature.accept(Ui.Action.PageFinished(url, view?.title))
+            store.accept(Ui.Action.PageFinished(url, view?.title))
         }
 
         override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
             super.onPageStarted(view, url, favicon)
-            feature.accept(Ui.Action.PageStarted)
+            store.accept(Ui.Action.PageStarted)
         }
 
         @Deprecated("Deprecated in Java")
@@ -202,7 +206,7 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), 
         private fun handleUrlLoading(url: String): Boolean {
             val allowToFollowTheUrl = "https://bars.mpei.ru" in url
             if (!allowToFollowTheUrl) {
-                feature.accept(Ui.Click.NotAllowedUrl(url))
+                store.accept(Ui.Click.NotAllowedUrl(url))
             }
             return !allowToFollowTheUrl
         }
@@ -215,7 +219,7 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), 
             if (request.url?.host?.contains("mpei.ru") != true) return
 
             analytics.sendCustomAction("BarsWebViewErrorReceived")
-            feature.accept(Ui.Action.PageLoadingError)
+            store.accept(Ui.Action.PageLoadingError)
         }
     }
 
@@ -224,32 +228,32 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), 
 
         @JavascriptInterface
         fun onStudentNameExtracted(name: String) {
-            feature.accept(Ui.Extract.StudentName(name))
+            store.accept(Ui.Extract.StudentName(name))
         }
 
         @JavascriptInterface
         fun onStudentGroupExtracted(group: String) {
-            feature.accept(Ui.Extract.StudentGroup(group))
+            store.accept(Ui.Extract.StudentGroup(group))
         }
 
         @JavascriptInterface
         fun onStudentMetaExtracted(metadataJson: String) {
-            feature.accept(Ui.Extract.MetaData(metadataJson))
+            store.accept(Ui.Extract.MetaData(metadataJson))
         }
 
         @JavascriptInterface
         fun onStudentRatingExtracted(ratingJson: String) {
-            feature.accept(Ui.Extract.Rating(ratingJson))
+            store.accept(Ui.Extract.Rating(ratingJson))
         }
 
         @JavascriptInterface
         fun onSemestersExtracted(semestersJson: String, selectedSemesterName: String) {
-            feature.accept(Ui.Extract.Semesters(semestersJson, selectedSemesterName))
+            store.accept(Ui.Extract.Semesters(semestersJson, selectedSemesterName))
         }
 
         @JavascriptInterface
         fun onMarksExtracted(marksJson: String) {
-            feature.accept(Ui.Extract.Marks(marksJson))
+            store.accept(Ui.Extract.Marks(marksJson))
         }
     }
 
@@ -269,21 +273,22 @@ internal class BarsFragment : BaseFragment<BarsEvent, BarsEffect, BarsState>(), 
         SpaceAdapterItem(),
         UserNameHeaderAdapterItem {
             analytics.sendClick("BarsSettings")
-            feature.accept(Ui.Click.Settings)
+            store.accept(Ui.Click.Settings)
         },
         TextWithIconAdapterItem {
             when (it.itemId) {
                 ITEM_BROWSER_LABEL -> {
                     analytics.sendClick("BarsShowBrowser")
-                    feature.accept(Ui.Click.ShowBrowser)
+                    store.accept(Ui.Click.ShowBrowser)
                 }
+
                 else -> { /* no-op */
                 }
             }
         },
         LoginToBarsAdapterItem {
             analytics.sendClick("BarsMainLogin")
-            feature.accept(Ui.Click.Login)
+            store.accept(Ui.Click.Login)
         },
         EmptyStateAdapterItem(),
         ShimmerAdapterItem(coreui_R.layout.item_text_shimmer),

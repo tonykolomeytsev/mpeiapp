@@ -1,6 +1,6 @@
 package kekmech.ru.feature_bars.screen.main.elm
 
-import vivid.money.elmslie.core.store.ElmStore
+import money.vivid.elmslie.core.store.ElmStore
 
 internal class BarsFeatureFactory(
     private val actor: BarsActor,

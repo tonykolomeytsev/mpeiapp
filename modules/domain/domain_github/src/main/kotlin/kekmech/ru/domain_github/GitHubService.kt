@@ -9,14 +9,14 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 @EndpointUrl(BackendServiceUrl.GITHUB)
-interface GitHubService {
+public interface GitHubService {
 
     @GET("repos/{user}/{repo}/stats/contributors")
-    fun getContributors(
+    public fun getContributors(
         @Path("user") user: String = "tonykolomeytsev",
         @Path("repo") repository: String = "mpeiapp",
     ): Single<List<GitHubContributor>>
 
     @GET("users/{user}")
-    fun getUser(@Path("user") login: String): Single<GitHubUser>
+    public fun getUser(@Path("user") login: String): Single<GitHubUser>
 }

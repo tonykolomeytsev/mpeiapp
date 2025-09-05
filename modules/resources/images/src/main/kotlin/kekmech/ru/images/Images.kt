@@ -1,3 +1,3 @@
 package kekmech.ru.images
 
-typealias Images = R.drawable
+public typealias Images = R.drawable

@@ -1,6 +1,6 @@
 package kekmech.ru.domain_analytics
 
-interface SelectedScheduleAnalyticsProvider {
+public interface SelectedScheduleAnalyticsProvider {
 
-    fun getSelectedScheduleNameForAnalytics(): String?
+    public fun getSelectedScheduleNameForAnalytics(): String?
 }

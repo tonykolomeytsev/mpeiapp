@@ -11,7 +11,7 @@ import kekmech.ru.coreui.databinding.ViewProgressButtonBinding
 
 private const val LOOP_TIME = 1000L
 
-class ProgressButton @JvmOverloads constructor(
+public class ProgressButton @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
@@ -19,7 +19,7 @@ class ProgressButton @JvmOverloads constructor(
 
     private val viewBinding = ViewProgressButtonBinding.inflate(LayoutInflater.from(context), this)
     private var isLoading: Boolean = false
-    var text: String? = null
+    public var text: String? = null
         set(value) {
             field = value
             if (!isLoading) viewBinding.progressButton.text = value
@@ -44,11 +44,11 @@ class ProgressButton @JvmOverloads constructor(
         }
     }
 
-    fun setText(@StringRes textRes: Int) {
+    public fun setText(@StringRes textRes: Int) {
         text = context.getString(textRes)
     }
 
-    fun setLoading(isLoading: Boolean) {
+    public fun setLoading(isLoading: Boolean) {
         setDotsVisibility(isLoading)
         if (!this.isLoading && isLoading) {
             startLoadingAnimation()
@@ -59,7 +59,7 @@ class ProgressButton @JvmOverloads constructor(
         this.isLoading = isLoading
     }
 
-    fun isLoading() = isLoading
+    public fun isLoading(): Boolean = isLoading
 
     private fun setDotsVisibility(isVisible: Boolean) {
         viewBinding.progressButton.text = text.takeIf { !isVisible }

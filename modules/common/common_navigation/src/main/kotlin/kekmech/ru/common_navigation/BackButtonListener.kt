@@ -1,6 +1,6 @@
 package kekmech.ru.common_navigation
 
-interface BackButtonListener {
+public interface BackButtonListener {
 
-    fun onBackPressed(): Boolean
+    public fun onBackPressed(): Boolean
 }

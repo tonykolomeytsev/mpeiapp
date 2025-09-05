@@ -25,29 +25,28 @@ import kekmech.ru.feature_schedule.R
 import kekmech.ru.feature_schedule.databinding.FragmentFindScheduleBinding
 import kekmech.ru.feature_schedule.di.ScheduleDependencies
 import kekmech.ru.feature_schedule.screens.find_schedule.elm.FindScheduleEffect
-import kekmech.ru.feature_schedule.screens.find_schedule.elm.FindScheduleEvent
 import kekmech.ru.feature_schedule.screens.find_schedule.elm.FindScheduleEvent.Ui
 import kekmech.ru.feature_schedule.screens.find_schedule.elm.FindScheduleFeatureFactory
 import kekmech.ru.feature_schedule.screens.find_schedule.elm.FindScheduleState
 import kekmech.ru.feature_schedule.screens.find_schedule.utils.GroupFormatTextWatcher
 import kekmech.ru.strings.Strings
+import money.vivid.elmslie.android.renderer.androidElmStore
 import org.koin.android.ext.android.inject
 
 internal class FindScheduleFragment :
-    BaseFragment<FindScheduleEvent, FindScheduleEffect, FindScheduleState>() {
-
-    override val initEvent = Ui.Init
-    override var layoutId = R.layout.fragment_find_schedule
+    BaseFragment<FindScheduleEffect, FindScheduleState>(R.layout.fragment_find_schedule) {
 
     private val dependencies by inject<ScheduleDependencies>()
     private val analytics by screenAnalytics("FindSchedule")
     private val viewBinding by viewBinding(FragmentFindScheduleBinding::bind)
     private val resultKey by fastLazy { getArgument<String>(ARG_RESULT_KEY) }
 
-    override fun createStore() = inject<FindScheduleFeatureFactory>().value.create(
-        getArgument(ARG_CONTINUE_TO),
-        getArgument(ARG_SELECT_AFTER)
-    )
+    private val store by androidElmStore {
+        inject<FindScheduleFeatureFactory>().value.create(
+            getArgument(ARG_CONTINUE_TO),
+            getArgument(ARG_SELECT_AFTER)
+        )
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -59,21 +58,24 @@ internal class FindScheduleFragment :
             groupText.showKeyboard()
             groupText.afterTextChanged {
                 groupTextLayout.error = null
-                feature.accept(Ui.Action.GroupNumberChanged(groupText.text?.toString().orEmpty()))
+                store.accept(Ui.Action.GroupNumberChanged(groupText.text?.toString().orEmpty()))
             }
             groupText.addTextChangedListener(GroupFormatTextWatcher(groupText))
             buttonContinue.setOnClickListener {
                 analytics.sendClick("FindContinue")
-                feature.accept(Ui.Click.Continue(groupText.text?.toString().orEmpty()))
+                store.accept(Ui.Click.Continue(groupText.text?.toString().orEmpty()))
             }
         }
     }
 
     override fun handleEffect(effect: FindScheduleEffect) = when (effect) {
-        is FindScheduleEffect.ShowError -> viewBinding.groupTextLayout.setError(getString(
-            Strings.schedule_find_error_loading,
-            viewBinding.groupText.text?.toString().orEmpty()
-        ))
+        is FindScheduleEffect.ShowError -> viewBinding.groupTextLayout.setError(
+            getString(
+                Strings.schedule_find_error_loading,
+                viewBinding.groupText.text?.toString().orEmpty()
+            )
+        )
+
         is FindScheduleEffect.ShowSomethingWentWrongError -> showBanner(Strings.something_went_wrong_error)
         is FindScheduleEffect.NavigateNextFragment -> when (effect.continueTo) {
             BACK -> close()
@@ -82,7 +84,6 @@ internal class FindScheduleFragment :
                 close()
                 setResult(resultKey, result = effect.selectedSchedule)
             }
-            else -> Unit
         }
     }
 

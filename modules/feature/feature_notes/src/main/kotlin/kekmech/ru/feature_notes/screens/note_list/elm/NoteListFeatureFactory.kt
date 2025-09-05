@@ -1,7 +1,7 @@
 package kekmech.ru.feature_notes.screens.note_list.elm
 
 import kekmech.ru.domain_schedule_models.dto.Classes
-import vivid.money.elmslie.core.store.ElmStore
+import money.vivid.elmslie.core.store.ElmStore
 import java.time.LocalDate
 
 internal class NoteListFeatureFactory(

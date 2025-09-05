@@ -41,7 +41,7 @@ private const val Host = "0.0.0.0"
  * @param assetManager [AssetManager] for accessing static resources (stubs)
  * located in the assets directory
  */
-class MockServer(
+public class MockServer(
     private val assetManager: AssetManager,
 ) {
 
@@ -89,7 +89,7 @@ class MockServer(
      *
      * This call is blocking. Don't run MockServer on the main application thread!
      */
-    fun start() {
+    public fun start() {
         Timber.i("Starting mock server on $Host:$Port...")
         server.start(wait = true)
     }

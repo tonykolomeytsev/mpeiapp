@@ -25,31 +25,31 @@ import kekmech.ru.feature_app_settings.di.AppSettingDependencies
 import kekmech.ru.feature_app_settings.screens.favorites.FavoritesFragment
 import kekmech.ru.feature_app_settings.screens.lang.SelectLanguageFragment
 import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsEffect
-import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsEvent
 import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsEvent.Ui
 import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsFeatureFactory
 import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsState
 import kekmech.ru.feature_app_settings.screens.main.list.ContributorAdapterItem
 import kekmech.ru.feature_app_settings.screens.map_type.SelectMapTypeFragment
 import kekmech.ru.strings.Strings
+import money.vivid.elmslie.android.renderer.androidElmStore
 import org.koin.android.ext.android.inject
 
 private const val ACTIVITY_RECREATION_DELAY = 200L
 
-internal class AppSettingsFragment :
-    BaseFragment<AppSettingsEvent, AppSettingsEffect, AppSettingsState>(),
+internal class AppSettingsFragment : BaseFragment<AppSettingsEffect, AppSettingsState>(
+    layoutId = R.layout.fragment_app_settings
+),
     ActivityResultListener {
 
-    override val initEvent get() = Ui.Init
-
-    override var layoutId: Int = R.layout.fragment_app_settings
 
     private val dependencies by inject<AppSettingDependencies>()
     private val adapter by fastLazy { createAdapter() }
     private val analytics by screenAnalytics("AppSettings")
     private val viewBinding by viewBinding(FragmentAppSettingsBinding::bind)
 
-    override fun createStore() = inject<AppSettingsFeatureFactory>().value.create()
+    private val store by androidElmStore {
+        inject<AppSettingsFeatureFactory>().value.create()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -77,15 +77,16 @@ internal class AppSettingsFragment :
                     SelectLanguageFragment.newInstance(effect.selectedLanguage, LANGUAGE_RESULT_KEY)
                 }
                 setResultListener<String>(LANGUAGE_RESULT_KEY) { selectedLanguage ->
-                    feature.accept(Ui.Action.LanguageChanged(selectedLanguage))
+                    store.accept(Ui.Action.LanguageChanged(selectedLanguage))
                 }
             }
+
             is AppSettingsEffect.OpenMapTypeDialog -> {
                 showDialog {
                     SelectMapTypeFragment.newInstance(effect.mapType, MAP_TYPE_RESULT_KEY)
                 }
                 setResultListener<String>(MAP_TYPE_RESULT_KEY) { selectedMapType ->
-                    feature.accept(Ui.Action.MapTypeChanged(selectedMapType))
+                    store.accept(Ui.Action.MapTypeChanged(selectedMapType))
                 }
             }
         }
@@ -95,20 +96,20 @@ internal class AppSettingsFragment :
             SectionHeaderAdapterItem(),
             ToggleAdapterItem(TOGGLE_DARK_THEME) {
                 analytics.sendChangeSetting("DarkTheme", it.toString())
-                feature.accept(Ui.Action.SetDarkThemeEnabled(it))
+                store.accept(Ui.Action.SetDarkThemeEnabled(it))
                 fixStatusBarIssue(it)
             },
             ToggleAdapterItem(TOGGLE_AUTO_HIDE_BOTTOM_SHEET) {
                 analytics.sendChangeSetting("AutoHideMapBottomSheet", it.toString())
-                feature.accept(Ui.Action.SetAutoHideBottomSheet(it))
+                store.accept(Ui.Action.SetAutoHideBottomSheet(it))
             },
             ToggleAdapterItem(TOGGLE_SNOW_FLAKES) {
                 analytics.sendChangeSetting("SnowFlakes", it.toString())
-                feature.accept(Ui.Action.SetSnowEnabled(it))
+                store.accept(Ui.Action.SetSnowEnabled(it))
             },
             ToggleAdapterItem(TOGGLE_SHOW_NAV_FAB) {
                 analytics.sendChangeSetting("ShowQuickNavFab", it.toString())
-                feature.accept(Ui.Action.SetShowQuickNavigationFab(it))
+                store.accept(Ui.Action.SetShowQuickNavigationFab(it))
             },
             TextAdapterItem(),
             SpaceAdapterItem(),
@@ -122,32 +123,39 @@ internal class AppSettingsFragment :
     private fun onItemClick(itemId: Int?) =
         when (itemId) {
             ITEM_DEBUG_CLEAR_SELECTED_GROUP -> {
-                feature.accept(Ui.Action.ClearSelectedGroup)
+                store.accept(Ui.Action.ClearSelectedGroup)
                 dependencies.onboardingFeatureLauncher.launchWelcomePage(true)
             }
+
             ITEM_SUPPORT -> {
                 analytics.sendClick("VkGroup")
                 requireContext().openLinkExternal("https://vk.com/kekmech")
             }
+
             ITEM_GITHUB -> {
                 analytics.sendClick("GitHub")
                 requireContext().openLinkExternal("https://github.com/tonykolomeytsev/mpeiapp")
             }
+
             ITEM_FAVORITES -> {
                 analytics.sendClick("Favorites")
                 addScreenForward { FavoritesFragment() }
             }
+
             ITEM_LANGUAGE -> {
                 analytics.sendClick("SelectLanguage")
-                feature.accept(Ui.Click.Language)
+                store.accept(Ui.Click.Language)
             }
+
             ITEM_MAP_TYPE -> {
                 analytics.sendClick("SelectMapType")
-                feature.accept(Ui.Click.MapType)
+                store.accept(Ui.Click.MapType)
             }
+
             ITEM_DEBUG_SELECT_ENVIRONMENT -> {
                 showEnvironmentSelectorDialog()
             }
+
             else -> { /* no-op */
             }
         }
@@ -173,12 +181,12 @@ internal class AppSettingsFragment :
     }
 
     private fun showEnvironmentSelectorDialog() {
-        val environments = AppEnvironment.values().map(Any::toString).toTypedArray()
+        val environments = AppEnvironment.entries.map(Any::toString).toTypedArray()
         MaterialAlertDialogBuilder(requireContext())
             .setTitle("Выбрать окружение")
             .setItems(environments) { dialog, which ->
                 dialog?.dismiss()
-                feature.accept(
+                store.accept(
                     Ui.Action.ChangeBackendEnvironment(
                         AppEnvironment.valueOf(environments[which])
                     )
@@ -194,6 +202,7 @@ internal class AppSettingsFragment :
                 when (newState) {
                     RecyclerView.SCROLL_STATE_IDLE -> Picasso.get()
                         .resumeTag(ContributorAdapterItem::class)
+
                     else -> Picasso.get().pauseTag(ContributorAdapterItem::class)
                 }
             }

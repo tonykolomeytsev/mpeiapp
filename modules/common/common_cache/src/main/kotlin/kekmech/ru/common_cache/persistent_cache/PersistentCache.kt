@@ -14,7 +14,7 @@ import java.time.Duration
 import java.util.*
 
 @Suppress("TooManyFunctions")
-open class PersistentCache(
+public open class PersistentCache(
     private val gson: Gson,
     private val cacheDirectory: File,
 ) {
@@ -24,20 +24,20 @@ open class PersistentCache(
         WeakHashMap<String, Any>(MEMORY_CACHE_CAPACITY)
     )
 
-    fun <T : Any> put(key: String, value: T) {
+    public fun <T : Any> put(key: String, value: T) {
         updatePersistentInternal(key, value)
         cache[key] = value
         commonSubject.onNext(PipelineEntry(key, Optional.of(value)))
     }
 
-    fun remove(key: String) {
+    public fun remove(key: String) {
         removePersistentInternal(key)
         cache.remove(key)
         commonSubject.onNext(PipelineEntry(key, Optional.empty()))
     }
 
     @Suppress("UNCHECKED_CAST")
-    fun <T : Any> peek(
+    public fun <T : Any> peek(
         key: String,
         valueClass: Class<T>,
         lifetime: Duration?,
@@ -53,7 +53,7 @@ open class PersistentCache(
                 }
     }
 
-    fun <T : Any> putIfPresent(
+    public fun <T : Any> putIfPresent(
         key: String,
         valueClass: Class<T>,
         lifetime: Duration?,
@@ -63,7 +63,7 @@ open class PersistentCache(
         previousValue?.let { put(key, modifier.invoke(it)) }
     }
 
-    fun <T : Any> put(
+    public fun <T : Any> put(
         key: String,
         valueClass: Class<T>,
         lifetime: Duration?,
@@ -73,7 +73,7 @@ open class PersistentCache(
         put(key, modifier.invoke(previousValue))
     }
 
-    fun <T : Any> get(
+    public fun <T : Any> get(
         key: String,
         valueClass: Class<T>,
         lifetime: Duration?,
@@ -86,7 +86,7 @@ open class PersistentCache(
             }
             .observeOn(io())
 
-    fun <T : Any> getOrError(
+    public fun <T : Any> getOrError(
         key: String,
         valueClass: Class<T>,
         lifetime: Duration?,
@@ -100,7 +100,7 @@ open class PersistentCache(
             .observeOn(io())
 
     @Suppress("UNCHECKED_CAST")
-    fun <T : Any> observe(
+    public fun <T : Any> observe(
         key: String,
         valueClass: Class<T>,
         lifetime: Duration?,
@@ -112,21 +112,21 @@ open class PersistentCache(
             .mapOptional { (_, optional) -> optional.map { it as T } }
     }
 
-    fun contains(key: String): Boolean {
+    public fun contains(key: String): Boolean {
         val storedInMemory = cache.containsKey(key)
         val storedInCacheDir =
             File(cacheDirectory, key).let { it.exists() && it.isFile }
         return storedInMemory or storedInCacheDir
     }
 
-    fun <T : Any> of(
+    public fun <T : Any> of(
         key: String,
         valueClass: Class<T>,
         lifetime: Duration? = null,
     ): CacheHandle<T> =
         DelegatingPersistentCacheHandle(key, valueClass, lifetime, this)
 
-    fun clear() {
+    public fun clear() {
         cache.clear()
         cacheDirectory.listFiles()?.forEach { it.delete() }
         commonSubject.onNext(PipelineEntry("", Optional.empty()))

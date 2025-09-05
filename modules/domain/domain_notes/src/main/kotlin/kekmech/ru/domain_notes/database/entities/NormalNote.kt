@@ -10,7 +10,7 @@ import java.time.format.DateTimeFormatter
 
 @Entity(tableName = "note")
 @TypeConverters(NormalNoteTypeConverter::class)
-data class NormalNote(
+public data class NormalNote(
     @PrimaryKey(autoGenerate = true)
     val id: Long = DefaultId,
     val content: String,
@@ -21,13 +21,13 @@ data class NormalNote(
 )
 
 @Suppress("unused")
-internal class NormalNoteTypeConverter {
+public class NormalNoteTypeConverter {
 
     @TypeConverter
-    fun toLocalDateTime(string: String): LocalDateTime =
+    public fun toLocalDateTime(string: String): LocalDateTime =
         LocalDateTime.parse(string, DateTimeFormatter.ISO_LOCAL_DATE_TIME)
 
     @TypeConverter
-    fun fromLocalDateTime(dateTime: LocalDateTime): String =
+    public fun fromLocalDateTime(dateTime: LocalDateTime): String =
         dateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
 }

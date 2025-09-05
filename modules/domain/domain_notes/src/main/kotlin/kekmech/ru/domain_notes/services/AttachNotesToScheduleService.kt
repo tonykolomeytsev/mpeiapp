@@ -8,11 +8,11 @@ import kekmech.ru.domain_schedule_models.dto.Schedule
 import java.time.LocalDate
 import java.time.LocalDateTime
 
-class AttachNotesToScheduleService(
+public class AttachNotesToScheduleService(
     private val getNotesUseCase: GetNotesForSelectedScheduleUseCase,
 ) {
 
-    fun attach(schedule: Schedule): Single<Schedule> = getNotesUseCase.getNotes()
+    public fun attach(schedule: Schedule): Single<Schedule> = getNotesUseCase.getNotes()
         .map { notes ->
             schedule.weeks.first().days.forEach { day ->
                 day.classes.forEach { classes ->

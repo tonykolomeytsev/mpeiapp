@@ -17,15 +17,15 @@ import kotlin.time.Duration
  * started or even ended
  * - [ClassesInNDays] - Nearest events will take place during the week
  */
-sealed interface UpcomingEventsPrediction {
+public sealed interface UpcomingEventsPrediction {
 
-    object NoClassesNextWeek : UpcomingEventsPrediction
+    public object NoClassesNextWeek : UpcomingEventsPrediction
 
     /**
      * @param timeLeft Time left until the start of the today's classes
      * @param futureClasses Classes that will be started today
      */
-    data class ClassesTodayNotStarted(
+    public data class ClassesTodayNotStarted(
         val timeLeft: Duration,
         val futureClasses: List<Classes>,
     ) : UpcomingEventsPrediction
@@ -35,7 +35,7 @@ sealed interface UpcomingEventsPrediction {
      * @param inProgressFactor Progress value between `0.0` and `1.0` (0% - 100%)
      * @param futureClasses Next classes after [inProgressClasses] classes
      */
-    data class ClassesTodayStarted(
+    public data class ClassesTodayStarted(
         val inProgressClasses: Classes,
         val inProgressFactor: Float,
         val futureClasses: List<Classes>,
@@ -47,7 +47,7 @@ sealed interface UpcomingEventsPrediction {
      * @param timeLeft Time left until the start of the next classes
      * @param futureClasses Classes that will be started in [timeLeft] time
      */
-    data class ClassesInNDays(
+    public data class ClassesInNDays(
         val date: LocalDate,
         val dayOffset: Int,
         val timeLeft: Duration,

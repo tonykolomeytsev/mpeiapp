@@ -14,7 +14,7 @@ import kekmech.ru.coreui.databinding.ViewBannerContainerBinding
 import java.util.Optional
 import java.util.concurrent.TimeUnit
 
-class BannerContainer @JvmOverloads constructor(
+public class BannerContainer @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
 ) : FrameLayout(context, attrs), DisposableDelegate by DisposableDelegateImpl() {
@@ -38,7 +38,7 @@ class BannerContainer @JvmOverloads constructor(
             .bind()
     }
 
-    fun show(banner: Banner) {
+    public fun show(banner: Banner) {
         bannerSubject.onNext(Optional.of(banner))
     }
 

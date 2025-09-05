@@ -122,7 +122,7 @@ internal class ScheduleRepositoryImpl(
     }
 }
 
-fun Single<Schedule>.orFromPersistentCache(
+private fun Single<Schedule>.orFromPersistentCache(
     key: Pair<String, Int>,
     persistentCache: PersistentCache,
 ): Single<Schedule> = this

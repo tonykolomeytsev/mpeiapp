@@ -6,7 +6,11 @@ import androidx.core.view.isVisible
 import kekmech.ru.common_adapter.BaseAdapter
 import kekmech.ru.common_analytics.addScrollAnalytics
 import kekmech.ru.common_analytics.ext.screenAnalytics
-import kekmech.ru.common_android.*
+import kekmech.ru.common_android.ActivityResultListener
+import kekmech.ru.common_android.EmptyResult
+import kekmech.ru.common_android.addSystemTopPadding
+import kekmech.ru.common_android.getStringArray
+import kekmech.ru.common_android.setResultListener
 import kekmech.ru.common_android.viewbinding.viewBinding
 import kekmech.ru.common_android.views.onPageSelected
 import kekmech.ru.common_elm.BaseFragment
@@ -21,7 +25,6 @@ import kekmech.ru.feature_schedule.di.ScheduleDependencies
 import kekmech.ru.feature_schedule.screens.main.adapter.WeeksScrollAdapter
 import kekmech.ru.feature_schedule.screens.main.adapter.WeeksScrollHelper
 import kekmech.ru.feature_schedule.screens.main.elm.ScheduleEffect
-import kekmech.ru.feature_schedule.screens.main.elm.ScheduleEvent
 import kekmech.ru.feature_schedule.screens.main.elm.ScheduleEvent.Ui
 import kekmech.ru.feature_schedule.screens.main.elm.ScheduleFeatureFactory
 import kekmech.ru.feature_schedule.screens.main.elm.ScheduleState
@@ -35,19 +38,15 @@ import kekmech.ru.feature_schedule.screens.main.item.WeekAdapterItem
 import kekmech.ru.feature_schedule.screens.main.item.WorkingDayAdapterItem
 import kekmech.ru.strings.StringArrays
 import kekmech.ru.strings.Strings
+import money.vivid.elmslie.android.renderer.androidElmStore
 import org.koin.android.ext.android.inject
-import vivid.money.elmslie.storepersisting.retainInParentStoreHolder
 import java.time.LocalDate
 
 @Suppress("TooManyFunctions")
 internal class ScheduleFragment :
-    BaseFragment<ScheduleEvent, ScheduleEffect, ScheduleState>(),
+    BaseFragment<ScheduleEffect, ScheduleState>(R.layout.fragment_schedule),
     ActivityResultListener,
     TabScreenStateSaver by TabScreenStateSaverImpl("schedule") {
-
-    override val initEvent = Ui.Init
-    override var layoutId = R.layout.fragment_schedule
-    override val storeHolder by retainInParentStoreHolder(storeProvider = ::createStore)
 
     private val dependencies by inject<ScheduleDependencies>()
     private val viewPagerAdapter by fastLazy { createViewPagerAdapter() }
@@ -59,7 +58,7 @@ internal class ScheduleFragment :
     // for viewPager sliding debounce
     private var viewPagerPositionToBeSelected: Int? = null
 
-    override fun createStore() = inject<ScheduleFeatureFactory>().value.create()
+    private val store by androidElmStore { inject<ScheduleFeatureFactory>().value.create() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -72,12 +71,12 @@ internal class ScheduleFragment :
 
             viewPager.adapter = viewPagerAdapter
             viewPager.setCurrentItem(getSavedViewPagerCurrentItem(), false)
-            viewPager.onPageSelected { feature.accept(Ui.Action.PageChanged(it)) }
+            viewPager.onPageSelected { store.accept(Ui.Action.PageChanged(it)) }
             viewPager.addScrollAnalytics(analytics, "WorkingDaysViewPager")
 
             appBarLayout.outlineProvider = null
             appBarLayout.addSystemTopPadding()
-            fab.setOnClickListener { feature.accept(Ui.Click.FAB) }
+            fab.setOnClickListener { store.accept(Ui.Click.FAB) }
         }
     }
 
@@ -92,7 +91,7 @@ internal class ScheduleFragment :
         when (effect) {
             is ScheduleEffect.NavigateToNoteList -> {
                 parentFragment?.setResultListener<EmptyResult>(NOTES_LIST_RESULT_KEY) {
-                    feature.accept(Ui.Action.NotesUpdated)
+                    store.accept(Ui.Action.NotesUpdated)
                 }
                 dependencies.notesFeatureLauncher.launchNoteList(
                     selectedClasses = effect.classes,
@@ -168,32 +167,62 @@ internal class ScheduleFragment :
     }
 
     private fun createViewPagerAdapter() = BaseAdapter(
-        WorkingDayAdapterItem(DAY_OF_WEEK_MONDAY, ::onClassesClick, ::onClassesScroll, ::onReloadClick),
-        WorkingDayAdapterItem(DAY_OF_WEEK_TUESDAY, ::onClassesClick, ::onClassesScroll, ::onReloadClick),
-        WorkingDayAdapterItem(DAY_OF_WEEK_WEDNESDAY, ::onClassesClick, ::onClassesScroll, ::onReloadClick),
-        WorkingDayAdapterItem(DAY_OF_WEEK_THURSDAY, ::onClassesClick, ::onClassesScroll, ::onReloadClick),
-        WorkingDayAdapterItem(DAY_OF_WEEK_FRIDAY, ::onClassesClick, ::onClassesScroll, ::onReloadClick),
-        WorkingDayAdapterItem(DAY_OF_WEEK_SATURDAY, ::onClassesClick, ::onClassesScroll, ::onReloadClick)
+        WorkingDayAdapterItem(
+            DAY_OF_WEEK_MONDAY,
+            ::onClassesClick,
+            ::onClassesScroll,
+            ::onReloadClick
+        ),
+        WorkingDayAdapterItem(
+            DAY_OF_WEEK_TUESDAY,
+            ::onClassesClick,
+            ::onClassesScroll,
+            ::onReloadClick
+        ),
+        WorkingDayAdapterItem(
+            DAY_OF_WEEK_WEDNESDAY,
+            ::onClassesClick,
+            ::onClassesScroll,
+            ::onReloadClick
+        ),
+        WorkingDayAdapterItem(
+            DAY_OF_WEEK_THURSDAY,
+            ::onClassesClick,
+            ::onClassesScroll,
+            ::onReloadClick
+        ),
+        WorkingDayAdapterItem(
+            DAY_OF_WEEK_FRIDAY,
+            ::onClassesClick,
+            ::onClassesScroll,
+            ::onReloadClick
+        ),
+        WorkingDayAdapterItem(
+            DAY_OF_WEEK_SATURDAY,
+            ::onClassesClick,
+            ::onClassesScroll,
+            ::onReloadClick
+        )
     )
 
     private fun onClassesClick(classes: Classes) {
         analytics.sendClick("ClickClasses")
-        feature.accept(Ui.Click.Classes(classes))
+        store.accept(Ui.Click.Classes(classes))
     }
 
     private fun onClassesScroll(dy: Int) {
-        feature.accept(Ui.Action.ClassesScrolled(dy))
+        store.accept(Ui.Action.ClassesScrolled(dy))
     }
 
     private fun onReloadClick() {
         analytics.sendClick("ClassesReload")
-        feature.accept(Ui.Click.Reload)
+        store.accept(Ui.Click.Reload)
     }
 
     private fun createWeekDaysHelper() = WeeksScrollHelper(
         onWeekSelectListener = {
             analytics.sendClick("Week_$it")
-            feature.accept(Ui.Action.SelectWeek(it))
+            store.accept(Ui.Action.SelectWeek(it))
         }
     )
 
@@ -201,7 +230,7 @@ internal class ScheduleFragment :
         WeekAdapterItem(
             onDayClickListener = {
                 analytics.sendClick("Day_${it.date}")
-                feature.accept(Ui.Click.Day(it.date))
+                store.accept(Ui.Click.Day(it.date))
             }
         )
     )
@@ -220,6 +249,7 @@ internal class ScheduleFragment :
         return when (weekOfSemester) {
             is WeekOfSemester.Studying -> requireContext()
                 .getString(Strings.schedule_semester_week, weekOfSemester.num)
+
             is WeekOfSemester.NonStudying -> requireContext().getString(Strings.schedule_weekend_week)
         }
     }

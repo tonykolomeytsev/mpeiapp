@@ -1,6 +1,6 @@
 package kekmech.ru.domain_app_settings_models
 
-data class AppSettings(
+public data class AppSettings(
     // all app
     val isDarkThemeEnabled: Boolean,
     val isSnowEnabled: Boolean,

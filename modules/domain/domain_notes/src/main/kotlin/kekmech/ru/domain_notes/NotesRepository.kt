@@ -9,14 +9,14 @@ import kekmech.ru.domain_notes.database.entities.NormalNote
 import kekmech.ru.domain_notes.dto.Note
 import kekmech.ru.domain_schedule.dto.SelectedSchedule
 
-class NotesRepository(private val noteDao: NoteDao) {
+public class NotesRepository(private val noteDao: NoteDao) {
 
-    fun getNotesBySchedule(selectedSchedule: SelectedSchedule): Single<List<Note>> =
+    public fun getNotesBySchedule(selectedSchedule: SelectedSchedule): Single<List<Note>> =
         noteDao
             .getAllNotesForSchedule(selectedSchedule.name)
             .map { it.map(::fromNormal) }
 
-    fun updateOrInsertNoteBySchedule(selectedSchedule: SelectedSchedule, note: Note): Completable =
+    public fun updateOrInsertNoteBySchedule(selectedSchedule: SelectedSchedule, note: Note): Completable =
         noteDao.updateOrInsert(
             toNormal(
                 note = note,
@@ -24,7 +24,7 @@ class NotesRepository(private val noteDao: NoteDao) {
             )
         )
 
-    fun deleteNote(note: Note): Completable =
+    public fun deleteNote(note: Note): Completable =
         noteDao.delete(toNormal(note))
 
     private fun fromNormal(normalNote: NormalNote): Note =

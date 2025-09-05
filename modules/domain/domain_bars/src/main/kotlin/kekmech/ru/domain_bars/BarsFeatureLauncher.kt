@@ -2,7 +2,7 @@ package kekmech.ru.domain_bars
 
 import androidx.fragment.app.Fragment
 
-interface BarsFeatureLauncher {
+public interface BarsFeatureLauncher {
 
-    fun launchMain(): Fragment
+    public fun launchMain(): Fragment
 }

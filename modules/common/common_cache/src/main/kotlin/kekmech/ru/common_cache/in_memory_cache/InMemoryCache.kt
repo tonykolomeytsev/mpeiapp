@@ -16,39 +16,39 @@ import java.util.concurrent.ConcurrentHashMap
  * Taken from: https://github.com/vivid-money/lazycache
  */
 @Suppress("TooManyFunctions")
-class InMemoryCache(
+public class InMemoryCache(
     private val gson: Gson,
 ) {
 
     private val keysToBeCleared = Collections.newSetFromMap(ConcurrentHashMap<String, Boolean>())
     private val cache = ConcurrentHashMap<String, BehaviorSubject<Optional<Any>>>()
 
-    fun <T : Any> put(key: String, value: T) {
+    public fun <T : Any> put(key: String, value: T) {
         getSubject<T>(key).onNext(Optional.of(value))
     }
 
-    fun remove(key: String) {
+    public fun remove(key: String) {
         cache[key]?.onNext(Optional.empty())
     }
 
-    fun <T : Any> peek(key: String): T? =
+    public fun <T : Any> peek(key: String): T? =
         getSubject<T>(key).value
             ?.orElse(null)
 
 
-    fun <T : Any> putIfPresent(
+    public fun <T : Any> putIfPresent(
         key: String,
         newValue: (previousValue: T) -> T,
-    ) = updateInternal<T>(key) { oldValue ->
+    ): Unit = updateInternal<T>(key) { oldValue ->
         oldValue?.let { newValue.invoke(it) }
     }
 
-    fun <T : Any> put(
+    public fun <T : Any> put(
         key: String,
         newValue: (previousValue: T?) -> T,
-    ) = updateInternal(key, newValue)
+    ): Unit = updateInternal(key, newValue)
 
-    fun <T : Any> get(key: String): Maybe<T> =
+    public fun <T : Any> get(key: String): Maybe<T> =
         Maybe
             .create<T> { emitter ->
                 getSubject<T>(key).value
@@ -58,7 +58,7 @@ class InMemoryCache(
             }
             .observeOn(io())
 
-    fun <T : Any> getOrError(key: String): Single<T> =
+    public fun <T : Any> getOrError(key: String): Single<T> =
         Single
             .create<T> { emitter ->
                 getSubject<T>(key).value
@@ -69,18 +69,18 @@ class InMemoryCache(
             .observeOn(io())
 
 
-    fun <T : Any> observe(key: String): Observable<T> =
+    public fun <T : Any> observe(key: String): Observable<T> =
         getSubject<T>(key)
             .hide()
             .observeOn(io())
             .mapOptional { it }
 
-    fun contains(key: String): Boolean =
+    public fun contains(key: String): Boolean =
         getSubject<Any>(key).value
             ?.isPresent
             ?: false
 
-    fun <T : Any> of(
+    public fun <T : Any> of(
         key: String,
         keepAlways: Boolean,
     ): CacheHandle<T> {
@@ -91,7 +91,7 @@ class InMemoryCache(
     /**
      * Clears data in cache and all previously returned [CacheHandle]s, except then ones created with keepAlways = true
      */
-    fun clear() {
+    public fun clear() {
         keysToBeCleared.forEach { remove(it) }
     }
 

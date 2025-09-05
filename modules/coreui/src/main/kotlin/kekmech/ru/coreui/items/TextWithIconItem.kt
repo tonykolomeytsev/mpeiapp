@@ -15,7 +15,7 @@ import kekmech.ru.coreui.databinding.ItemTextWithIconBinding
 
 private const val DEFAULT_TEXT_WITH_ICON_ITEM_ID = 0
 
-data class TextWithIconItem(
+public data class TextWithIconItem(
     val itemId: Int = DEFAULT_TEXT_WITH_ICON_ITEM_ID,
     val text: CharSequence? = null,
     @StringRes val textResId: Int = 0,
@@ -24,12 +24,12 @@ data class TextWithIconItem(
     @StyleRes val textStyleResId: Int? = null
 )
 
-interface TextWithIconViewHolder : ClickableItemViewHolder {
-    fun setText(text: CharSequence)
-    fun setText(@StringRes textResId: Int)
-    fun setIcon(@DrawableRes drawableResID: Int)
-    fun setTintColor(@AttrRes tintColorAttrId: Int)
-    fun setTextStyle(@StyleRes styleResId: Int)
+public interface TextWithIconViewHolder : ClickableItemViewHolder {
+    public fun setText(text: CharSequence)
+    public fun setText(@StringRes textResId: Int)
+    public fun setIcon(@DrawableRes drawableResID: Int)
+    public fun setTintColor(@AttrRes tintColorAttrId: Int)
+    public fun setTextStyle(@StyleRes styleResId: Int)
 }
 
 private class TextWithIconViewHolderImpl(itemView: View) :
@@ -71,7 +71,7 @@ private class TextWithIconViewHolderImpl(itemView: View) :
     }
 }
 
-class TextWithIconAdapterItem(
+public class TextWithIconAdapterItem(
     onCLickListener: (TextWithIconItem) -> Unit
 ) : AdapterItem<TextWithIconViewHolder, TextWithIconItem>(
     isType = { it is TextWithIconItem },

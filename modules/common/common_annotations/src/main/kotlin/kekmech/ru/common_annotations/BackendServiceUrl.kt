@@ -1,10 +1,10 @@
 package kekmech.ru.common_annotations
 
 @Suppress("MaxLineLength")
-enum class BackendServiceUrl(
-    val prodEndpoint: String,
-    val stagingEndpoint: String,
-    val mockEndpoint: String,
+public enum class BackendServiceUrl(
+    public val prodEndpoint: String,
+    public val stagingEndpoint: String,
+    public val mockEndpoint: String,
 ) {
     SCHEDULE(
         prodEndpoint = "https://api.kekmech.com/mpeix/schedule/",

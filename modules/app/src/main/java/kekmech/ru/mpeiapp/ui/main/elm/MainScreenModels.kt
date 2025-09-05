@@ -1,6 +1,6 @@
 package kekmech.ru.mpeiapp.ui.main.elm
 
-import vivid.money.elmslie.core.store.Store
+import money.vivid.elmslie.core.store.Store
 
 typealias MainScreenStore = Store<MainScreenEvent, MainScreenEffect, MainScreenState>
 

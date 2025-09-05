@@ -11,7 +11,7 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import java.util.concurrent.TimeUnit
 
-class ConnectionTracker(
+public class ConnectionTracker(
     private val context: Context,
 ) {
 
@@ -22,7 +22,7 @@ class ConnectionTracker(
         startTracking()
     }
 
-    fun observeConnectionState(): Observable<Boolean> =
+    public fun observeConnectionState(): Observable<Boolean> =
         Observable
             .combineLatest(wifiStateBehavior, cellularStateBehavior, ::Pair)
             .debounce(NETWORK_STATE_DEBOUNCE, TimeUnit.MILLISECONDS)

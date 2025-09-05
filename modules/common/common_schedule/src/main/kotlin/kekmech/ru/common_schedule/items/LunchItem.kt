@@ -8,9 +8,9 @@ import kekmech.ru.common_schedule.R
 import kekmech.ru.coreui.items.ClickableItemViewHolder
 import kekmech.ru.coreui.items.ClickableItemViewHolderImpl
 
-object LunchItem
+public object LunchItem
 
-interface LunchViewHolder : ClickableItemViewHolder
+public interface LunchViewHolder : ClickableItemViewHolder
 
 private class LunchViewHolderImpl(
     containerView: View
@@ -27,7 +27,7 @@ private class LunchItemBinder(
     }
 }
 
-class LunchAdapterItem(
+public class LunchAdapterItem(
     onClickListener: () -> Unit
 ) : AdapterItem<LunchViewHolder, LunchItem>(
     isType = { it is LunchItem },

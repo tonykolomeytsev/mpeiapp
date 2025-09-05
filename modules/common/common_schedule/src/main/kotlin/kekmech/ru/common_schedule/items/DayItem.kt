@@ -15,28 +15,28 @@ import kekmech.ru.strings.StringArrays
 import java.time.LocalDate
 import kekmech.ru.coreui.R as coreui_R
 
-data class DayItem(
+public data class DayItem(
     val date: LocalDate,
     val weekOffset: Int,
     val isSelected: Boolean
 ) {
-    val dayOfWeek get() = date.dayOfWeek.value
+    val dayOfWeek: Int get() = date.dayOfWeek.value
 
-    fun plusDays(int: Int): DayItem = copy(date = date.plusDays(int.toLong()))
+    public fun plusDays(int: Int): DayItem = copy(date = date.plusDays(int.toLong()))
 }
 
-interface DayViewHolder {
-    var isSelected: Boolean
+public interface DayViewHolder {
+    public var isSelected: Boolean
 
-    fun setDayOfWeekName(name: String)
-    fun setDayOfMonthNumber(number: Int)
-    fun setMonthName(name: String)
-    fun setIsCurrentDay(isCurrentDay: Boolean)
-    fun setIsSelected(isSelected: Boolean)
-    fun setOnClickListener(listener: (View) -> Unit)
+    public fun setDayOfWeekName(name: String)
+    public fun setDayOfMonthNumber(number: Int)
+    public fun setMonthName(name: String)
+    public fun setIsCurrentDay(isCurrentDay: Boolean)
+    public fun setIsSelected(isSelected: Boolean)
+    public fun setOnClickListener(listener: (View) -> Unit)
 }
 
-class DayViewHolderImpl(
+public class DayViewHolderImpl(
     private val containerView: View
 ) : RecyclerView.ViewHolder(containerView), DayViewHolder {
 
@@ -45,7 +45,7 @@ class DayViewHolderImpl(
     private val textMonthName = containerView.findViewById<TextView>(R.id.textMonthName)
     private val viewMarker = containerView.findViewById<View>(R.id.viewMarker)
     private val viewBackground = containerView.findViewById<View>(R.id.viewBackground)
-    override var isSelected = false
+    override var isSelected: Boolean = false
 
     override fun setDayOfWeekName(name: String) {
         textDayOfWeek.text = name
@@ -83,7 +83,7 @@ class DayViewHolderImpl(
     }
 }
 
-class DayItemBinder(
+public class DayItemBinder(
     context: Context,
     private val currentDate: LocalDate,
     private val onDayClickListener: (DayItem) -> Unit
@@ -108,7 +108,7 @@ class DayItemBinder(
     }
 }
 
-class DayAdapterItem(
+public class DayAdapterItem(
     context: Context,
     onDayClickListener: (DayItem) -> Unit,
     layoutRes: Int = R.layout.item_day

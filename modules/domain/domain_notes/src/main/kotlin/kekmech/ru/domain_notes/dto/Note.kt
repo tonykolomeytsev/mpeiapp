@@ -4,7 +4,7 @@ import kekmech.ru.common_app_database_api.DefaultId
 import java.io.Serializable
 import java.time.LocalDateTime
 
-data class Note(
+public data class Note(
     val content: String,
     val dateTime: LocalDateTime,
     val classesName: String,
@@ -13,5 +13,5 @@ data class Note(
 
     internal var id: Long = DefaultId
 
-    fun same(other: Note): Boolean = id == other.id
+    public fun same(other: Note): Boolean = id == other.id
 }

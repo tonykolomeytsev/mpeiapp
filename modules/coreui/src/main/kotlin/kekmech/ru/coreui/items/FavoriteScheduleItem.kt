@@ -10,12 +10,12 @@ import kekmech.ru.coreui.R
 import kekmech.ru.coreui.databinding.ItemFavoriteScheduleBinding
 import kekmech.ru.domain_favorite_schedule.dto.FavoriteSchedule
 
-data class FavoriteScheduleItem(
+public data class FavoriteScheduleItem(
     val value: FavoriteSchedule,
     val isSelected: Boolean = false
 )
 
-class FavoriteScheduleAdapterItem(
+public class FavoriteScheduleAdapterItem(
     onClickListener: ((FavoriteScheduleItem) -> Unit)? = null
 ) : AdapterItem<FavoriteScheduleViewHolder, FavoriteScheduleItem>(
     isType = { it is FavoriteScheduleItem },
@@ -25,22 +25,22 @@ class FavoriteScheduleAdapterItem(
     areItemsTheSame = { a, b -> a.value.name == b.value.name }
 )
 
-class FavoriteScheduleViewHolder(
+public class FavoriteScheduleViewHolder(
     private val containerView: View
 ) : RecyclerView.ViewHolder(containerView),
     ClickableItemViewHolder by ClickableItemViewHolderImpl(containerView) {
 
     private val viewBinding = ItemFavoriteScheduleBinding.bind(containerView)
 
-    fun setTitle(title: String) {
+    public fun setTitle(title: String) {
         viewBinding.textViewTitle.text = title
     }
 
-    fun setDescription(description: String) {
+    public fun setDescription(description: String) {
         viewBinding.textViewDescription.text = description
     }
 
-    fun setIsSelected(isSelected: Boolean) = with(viewBinding) {
+    public fun setIsSelected(isSelected: Boolean): Unit = with(viewBinding) {
         val context = containerView.context
         if (isSelected) {
             containerView.backgroundTintList = ColorStateList.valueOf(context.getThemeColor(R.attr.colorMain))
@@ -54,7 +54,7 @@ class FavoriteScheduleViewHolder(
     }
 }
 
-class FavoriteScheduleItemBinder(
+public class FavoriteScheduleItemBinder(
     private val onClickListener: ((FavoriteScheduleItem) -> Unit)? = null
 ) : BaseItemBinder<FavoriteScheduleViewHolder, FavoriteScheduleItem>() {
 

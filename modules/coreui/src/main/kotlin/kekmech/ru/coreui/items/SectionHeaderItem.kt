@@ -12,7 +12,7 @@ import kekmech.ru.coreui.R
 
 private const val ITEM_SECTION_HEADER_DEFAULT_ID = 0
 
-data class SectionHeaderItem(
+public data class SectionHeaderItem(
     val title: String? = null,
     @StringRes val titleRes: Int? = null,
     val subtitle: String? = null,
@@ -21,17 +21,17 @@ data class SectionHeaderItem(
     @StringRes val actionNameRes: Int? = null
 )
 
-interface SectionHeaderViewHolder {
-    fun setTitle(title: String)
-    fun setTitle(@StringRes resId: Int)
-    fun setSubtitle(subtitle: String)
-    fun setSubtitle(@StringRes resId: Int)
-    fun setSubtitleVisibility(isVisible: Boolean)
-    fun setActionName(actionNameRes: Int)
-    fun setOnActionClickListener(listener: (View) -> Unit)
+public interface SectionHeaderViewHolder {
+    public fun setTitle(title: String)
+    public fun setTitle(@StringRes resId: Int)
+    public fun setSubtitle(subtitle: String)
+    public fun setSubtitle(@StringRes resId: Int)
+    public fun setSubtitleVisibility(isVisible: Boolean)
+    public fun setActionName(actionNameRes: Int)
+    public fun setOnActionClickListener(listener: (View) -> Unit)
 }
 
-class SectionHeaderViewHolderImpl(
+public class SectionHeaderViewHolderImpl(
     containerView: View
 ) : RecyclerView.ViewHolder(containerView), SectionHeaderViewHolder {
 
@@ -73,7 +73,7 @@ class SectionHeaderViewHolderImpl(
     }
 }
 
-class SectionHeaderItemBinder(
+public class SectionHeaderItemBinder(
     private val onActionClickListener: ((SectionHeaderItem) -> Unit)?
 ) : BaseItemBinder<SectionHeaderViewHolder, SectionHeaderItem>() {
 
@@ -88,7 +88,7 @@ class SectionHeaderItemBinder(
     }
 }
 
-class SectionHeaderAdapterItem(
+public class SectionHeaderAdapterItem(
     itemId: Int = ITEM_SECTION_HEADER_DEFAULT_ID,
     onActionClickListener: ((SectionHeaderItem) -> Unit)? = null
 ) : AdapterItem<SectionHeaderViewHolder, SectionHeaderItem>(

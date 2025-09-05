@@ -16,9 +16,9 @@ import retrofit2.HttpException
 import java.net.UnknownHostException
 import javax.net.ssl.SSLHandshakeException
 
-data class ErrorStateItem(val throwable: Throwable)
+public data class ErrorStateItem(val throwable: Throwable)
 
-class ErrorStateAdapterItem(
+public class ErrorStateAdapterItem(
     onReloadClick: () -> Unit,
 ) : AdapterItem<ErrorStateViewHolder, ErrorStateItem>(
     isType = { it is ErrorStateItem },
@@ -27,26 +27,26 @@ class ErrorStateAdapterItem(
     itemBinder = ErrorStateItemBinder(onReloadClick)
 )
 
-class ErrorStateViewHolder(
+public class ErrorStateViewHolder(
     itemView: View,
 ) : RecyclerView.ViewHolder(itemView) {
 
     private val viewBinding = ItemErrorStateBinding.bind(itemView)
 
-    fun setTitle(@StringRes titleResId: Int) {
+    public fun setTitle(@StringRes titleResId: Int) {
         viewBinding.title.setText(titleResId)
     }
 
-    fun setDescription(@StringRes descriptionResId: Int, arg: String? = null) {
+    public fun setDescription(@StringRes descriptionResId: Int, arg: String? = null) {
         val description = viewBinding.root.context.getString(descriptionResId, arg)
         viewBinding.description.text = description
     }
 
-    fun setIllustration(@DrawableRes illustrationResId: Int) {
+    public fun setIllustration(@DrawableRes illustrationResId: Int) {
         viewBinding.illustration.setImageResource(illustrationResId)
     }
 
-    fun setOnReloadClickListener(listener: () -> Unit) {
+    public fun setOnReloadClickListener(listener: () -> Unit) {
         viewBinding.reload.setOnClickListener { listener.invoke() }
     }
 }

@@ -15,7 +15,7 @@ import kekmech.ru.domain_bars.dto.UserBarsInfo
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
-class BarsRepository(
+public class BarsRepository(
     private val barsService: BarsService,
     private val gson: Gson,
     preferences: SharedPreferences,
@@ -36,33 +36,33 @@ class BarsRepository(
             key = BARS_JS_CACHE_KEY,
             valueClass = String::class.java,
         )
-    var latestLoadedUrl by preferences.string("bars_last_loaded_link")
+    public var latestLoadedUrl: String by preferences.string("bars_last_loaded_link")
 
-    fun getRemoteBarsConfig(): Single<RemoteBarsConfig> =
+    public fun getRemoteBarsConfig(): Single<RemoteBarsConfig> =
         barsService
             .getRemoteBarsConfig()
             .doOnSuccess(remoteBarsConfigCache::set)
             .onErrorResumeWith(remoteBarsConfigCache.get().toSingle())
 
-    fun getExtractJs(): Single<String> =
+    public fun getExtractJs(): Single<String> =
         barsService
             .getExtractJs()
             .map { it.charStream().buffered().readText() }
             .doOnSuccess(extractJsCache::set)
             .onErrorResumeWith(extractJsCache.get().toSingle())
 
-    fun observeUserBars(): Observable<UserBarsInfo> =
+    public fun observeUserBars(): Observable<UserBarsInfo> =
         userBarsCache
             .observe()
             .debounce(INFO_CHANGING_DEBOUNCE, TimeUnit.MILLISECONDS)
 
-    fun pushMarksJson(marksJson: String): Completable =
+    public fun pushMarksJson(marksJson: String): Completable =
         updateUserBarsCache {
             val rawMarksResponse = gson.fromJson(marksJson, RawMarksResponse::class.java)
             copy(assessedDisciplines = RawToMarksResponseMapper.map(rawMarksResponse).payload)
         }
 
-    fun pushStudentName(studentName: String): Completable =
+    public fun pushStudentName(studentName: String): Completable =
         updateUserBarsCache {
             val studentNames = studentName.split("\\s+".toRegex())
             if (studentNames.size > 2) {
@@ -72,12 +72,12 @@ class BarsRepository(
             }
         }
 
-    fun pushStudentGroup(studentGroup: String): Completable =
+    public fun pushStudentGroup(studentGroup: String): Completable =
         updateUserBarsCache {
             copy(group = studentGroup)
         }
 
-    fun pushStudentRating(ratingJson: String): Completable =
+    public fun pushStudentRating(ratingJson: String): Completable =
         updateUserBarsCache {
             val rawRatingResponse = gson.fromJson(ratingJson, RawRatingResponse::class.java)
             copy(rating = RawToRatingResponseMapper.map(rawRatingResponse))
@@ -94,7 +94,7 @@ class BarsRepository(
         }
             .doOnError(Timber::e)
 
-    companion object {
+    private companion object {
 
         private const val INFO_CHANGING_DEBOUNCE = 150L
         private const val BARS_USER_INFO_KEY = "BARS_USER_INFO_KEY"

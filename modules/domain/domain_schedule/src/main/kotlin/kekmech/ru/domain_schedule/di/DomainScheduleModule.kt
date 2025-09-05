@@ -8,13 +8,14 @@ import kekmech.ru.domain_schedule.repository.ScheduleRepository
 import kekmech.ru.domain_schedule.repository.ScheduleRepositoryImpl
 import kekmech.ru.domain_schedule.repository.ScheduleSearchRepository
 import kekmech.ru.domain_schedule.use_cases.GetCurrentScheduleUseCase
+import org.koin.core.module.Module
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.binds
 import org.koin.dsl.module
 import retrofit2.Retrofit
 
-val DomainScheduleModule = module {
+public val DomainScheduleModule: Module = module {
     factory { get<Retrofit.Builder>().buildApi<ScheduleService>() }
     singleOf(::ScheduleRepositoryImpl) binds arrayOf(
         ScheduleRepository::class,

@@ -7,7 +7,7 @@ import kekmech.ru.domain_github.dto.GitHubContributor
 import kekmech.ru.domain_github.dto.GitHubUser
 import java.time.Duration
 
-class ContributorsRepository(
+public class ContributorsRepository(
     persistentCache: PersistentCache,
     private val gitHubService: GitHubService,
 ) {
@@ -19,11 +19,11 @@ class ContributorsRepository(
             lifetime = Duration.ofDays(1),
         )
 
-    fun observeContributors(): Observable<List<GitHubUser>> =
+    public fun observeContributors(): Observable<List<GitHubUser>> =
         contributorsCache.observe()
             .map { it.items }
 
-    fun fetchContributors(): Completable =
+    public fun fetchContributors(): Completable =
         gitHubService.getContributors()
             .flattenAsObservable { it.sortedByDescending(GitHubContributor::total) }
             .concatMapSingle { gitHubService.getUser(it.author.login) }

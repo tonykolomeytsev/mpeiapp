@@ -6,14 +6,14 @@ import java.io.Serializable
 import java.time.LocalDate
 import java.time.LocalTime
 
-data class Schedule(
+public data class Schedule(
     val name: String = "",
     val id: String = "",
     val type: ScheduleType = ScheduleType.GROUP,
     val weeks: List<Week> = emptyList(),
 ) : Serializable
 
-data class Week(
+public data class Week(
     val weekOfYear: Int = 0,
     val weekOfSemester: WeekOfSemester = WeekOfSemester.NonStudying,
     val firstDayOfWeek: LocalDate = LocalDate.now(),
@@ -21,19 +21,19 @@ data class Week(
 ) : Serializable
 
 @JsonAdapter(value = WeekOfSemesterJsonAdapter::class, nullSafe = true)
-sealed interface WeekOfSemester {
+public sealed interface WeekOfSemester {
 
-    object NonStudying : WeekOfSemester
-    data class Studying(val num: Int) : WeekOfSemester
+    public object NonStudying : WeekOfSemester
+    public data class Studying(val num: Int) : WeekOfSemester
 }
 
-data class Day(
+public data class Day(
     val dayOfWeek: Int = 0,
     val date: LocalDate = LocalDate.now(),
     val classes: List<Classes> = emptyList(),
 ) : Serializable
 
-data class Classes(
+public data class Classes(
     val name: String = "",
     val type: ClassesType = ClassesType.UNDEFINED,
     val rawType: String? = null,
@@ -52,12 +52,12 @@ data class Classes(
     var scheduleType: ScheduleType = ScheduleType.GROUP
 }
 
-data class Time(
+public data class Time(
     val start: LocalTime = LocalTime.now(),
     val end: LocalTime = LocalTime.now(),
 ) : Serializable
 
-enum class ClassesType : Serializable {
+public enum class ClassesType : Serializable {
     UNDEFINED,
     LECTURE,
     PRACTICE,
@@ -67,7 +67,7 @@ enum class ClassesType : Serializable {
     CONSULTATION,
 }
 
-enum class ScheduleType(val pathName: String) : Serializable {
+public enum class ScheduleType(public val pathName: String) : Serializable {
     GROUP("group"),
     PERSON("person"),
 }

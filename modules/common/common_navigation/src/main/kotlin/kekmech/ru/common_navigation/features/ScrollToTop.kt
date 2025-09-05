@@ -1,5 +1,5 @@
 package kekmech.ru.common_navigation.features
 
-interface ScrollToTop {
-    fun onScrollToTop()
+public interface ScrollToTop {
+    public fun onScrollToTop()
 }

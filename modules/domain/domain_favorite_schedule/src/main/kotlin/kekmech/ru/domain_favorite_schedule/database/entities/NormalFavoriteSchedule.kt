@@ -8,7 +8,7 @@ import kekmech.ru.domain_schedule_models.dto.ScheduleType
 
 @Entity(tableName = "favorite_schedule")
 @TypeConverters(NormalFavoriteScheduleTypeConverter::class)
-data class NormalFavoriteSchedule(
+public data class NormalFavoriteSchedule(
     @PrimaryKey
     val name: String,
     val type: ScheduleType,
@@ -17,12 +17,12 @@ data class NormalFavoriteSchedule(
 )
 
 @Suppress("unused")
-internal class NormalFavoriteScheduleTypeConverter {
+public class NormalFavoriteScheduleTypeConverter {
 
     @TypeConverter
-    fun fromScheduleType(string: String): ScheduleType =
-        ScheduleType.values().first { it.name.equals(string, ignoreCase = true) }
+    public fun fromScheduleType(string: String): ScheduleType =
+        ScheduleType.entries.first { it.name.equals(string, ignoreCase = true) }
 
     @TypeConverter
-    fun toScheduleType(scheduleType: ScheduleType): String = scheduleType.name
+    public fun toScheduleType(scheduleType: ScheduleType): String = scheduleType.name
 }

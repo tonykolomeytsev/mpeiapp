@@ -11,7 +11,7 @@ import kekmech.ru.coreui.databinding.ItemBannerBinding
 
 private const val DEFAULT_BANNER_ID = 0
 
-data class BannerItem(
+public data class BannerItem(
     val title: String? = null,
     @StringRes val titleRes: Int? = null,
     val description: String? = null,
@@ -20,17 +20,17 @@ data class BannerItem(
     val itemId: Int = DEFAULT_BANNER_ID
 )
 
-interface BannerViewHolder {
-    fun setTitle(title: String)
-    fun setTitle(@StringRes titleRes: Int)
-    fun setDescription(description: String)
-    fun setDescription(@StringRes descriptionRes: Int)
-    fun setIcon(@DrawableRes iconRes: Int)
-    fun setOnClickListener(listener: (View) -> Unit)
-    fun setOnCloseListener(listener: (View) -> Unit)
+public interface BannerViewHolder {
+    public fun setTitle(title: String)
+    public fun setTitle(@StringRes titleRes: Int)
+    public fun setDescription(description: String)
+    public fun setDescription(@StringRes descriptionRes: Int)
+    public fun setIcon(@DrawableRes iconRes: Int)
+    public fun setOnClickListener(listener: (View) -> Unit)
+    public fun setOnCloseListener(listener: (View) -> Unit)
 }
 
-class BannerViewHolderImpl(
+public class BannerViewHolderImpl(
     private val containerView: View
 ) : RecyclerView.ViewHolder(containerView), BannerViewHolder {
 
@@ -66,7 +66,7 @@ class BannerViewHolderImpl(
 }
 
 
-class BannerItemBinder(
+public class BannerItemBinder(
     private val onClickListener: ((BannerItem) -> Unit)? = null,
     private val onCloseListener: ((BannerItem) -> Unit)? = null
 ) : BaseItemBinder<BannerViewHolder, BannerItem>() {
@@ -82,7 +82,7 @@ class BannerItemBinder(
     }
 }
 
-class BannerAdapterItem(
+public class BannerAdapterItem(
     onClickListener: ((BannerItem) -> Unit)? = null,
     onCloseListener: ((BannerItem) -> Unit)? = null
 ) : AdapterItem<BannerViewHolder, BannerItem>(

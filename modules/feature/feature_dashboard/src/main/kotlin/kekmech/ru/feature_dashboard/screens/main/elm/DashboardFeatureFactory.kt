@@ -1,7 +1,7 @@
 package kekmech.ru.feature_dashboard.screens.main.elm
 
 import kekmech.ru.domain_schedule.PreheatSelectedScheduleProvider
-import vivid.money.elmslie.core.store.ElmStore
+import money.vivid.elmslie.core.store.ElmStore
 import kekmech.ru.feature_dashboard.screens.main.elm.DashboardCommand as Command
 import kekmech.ru.feature_dashboard.screens.main.elm.DashboardEffect as Effect
 import kekmech.ru.feature_dashboard.screens.main.elm.DashboardEvent as Event

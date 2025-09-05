@@ -15,12 +15,12 @@ import java.time.temporal.ChronoUnit
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
-class GetUpcomingEventsUseCase(
+public class GetUpcomingEventsUseCase(
     private val getCurrentScheduleUseCase: GetCurrentScheduleUseCase,
     private val attachNotesToScheduleService: AttachNotesToScheduleService,
 ) {
 
-    fun getPrediction(): Single<UpcomingEventsPrediction> {
+    public fun getPrediction(): Single<UpcomingEventsPrediction> {
         val currentDate = moscowLocalDate()
         val currentTime = moscowLocalTime()
         val days =

@@ -1,7 +1,7 @@
 package kekmech.ru.mpeiapp.ui.main.elm
 
-import vivid.money.elmslie.core.store.ElmStore
-import vivid.money.elmslie.core.store.NoOpActor
+import money.vivid.elmslie.core.store.ElmStore
+import money.vivid.elmslie.core.store.NoOpActor
 
 object MainScreenFeatureFactory {
 

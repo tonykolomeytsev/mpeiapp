@@ -11,17 +11,17 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 @EndpointUrl(BackendServiceUrl.SCHEDULE)
-interface ScheduleService {
+public interface ScheduleService {
 
     @GET("v1/{type}/{name}/schedule/{weekOffset}")
-    fun getSchedule(
+    public fun getSchedule(
         @Path("type") type: String,
         @Path("name", encoded = true) name: String,
         @Path("weekOffset") weekOffset: Int
     ): Single<Schedule>
 
     @GET("v1/search")
-    fun getSearchResults(
+    public fun getSearchResults(
         @Query("q", encoded = true) query: String,
         @Query("type") type: ScheduleType?
     ): Single<GetSearchResultsResponse>

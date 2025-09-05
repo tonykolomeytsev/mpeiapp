@@ -7,7 +7,7 @@ import kekmech.ru.common_shared_preferences.string
 import kekmech.ru.domain_app_settings_models.AppEnvironment
 import kekmech.ru.domain_app_settings_models.AppSettings
 
-class AppSettingsRepository(
+public class AppSettingsRepository(
     preferences: SharedPreferences,
 ) {
 
@@ -19,7 +19,7 @@ class AppSettingsRepository(
     private var languageCode: String by preferences.string("app_lang", "ru_RU")
     private var mapAppearanceType: String by preferences.string("app_map_type", "hybrid")
 
-    fun getAppSettings(): Single<AppSettings> = Single.fromCallable {
+    public fun getAppSettings(): Single<AppSettings> = Single.fromCallable {
         AppSettings(
             isDarkThemeEnabled = isDarkThemeEnabled,
             isSnowEnabled = isSnowEnabled,
@@ -32,7 +32,7 @@ class AppSettingsRepository(
         )
     }
 
-    fun changeAppSettings(transform: AppSettings.() -> AppSettings): Single<AppSettings> =
+    public fun changeAppSettings(transform: AppSettings.() -> AppSettings): Single<AppSettings> =
         getAppSettings()
             .map(transform)
             .doOnSuccess {

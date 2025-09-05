@@ -6,6 +6,7 @@ import kekmech.ru.domain_favorite_schedule.database.FavoriteScheduleDao
 import kekmech.ru.domain_favorite_schedule.database.entities.NormalFavoriteSchedule
 import kekmech.ru.domain_notes.database.NoteDao
 import kekmech.ru.domain_notes.database.entities.NormalNote
+import androidx.sqlite.db.SupportSQLiteDatabase
 
 /**
  * # Whole app database

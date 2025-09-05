@@ -26,12 +26,11 @@ import kekmech.ru.feature_notes.screens.edit.elm.NoteEditEvent
 import kekmech.ru.feature_notes.screens.edit.elm.NoteEditEvent.Ui
 import kekmech.ru.feature_notes.screens.edit.elm.NoteEditState
 import kekmech.ru.strings.Strings
+import money.vivid.elmslie.android.renderer.androidElmStore
 import org.koin.android.ext.android.inject
 
-internal class NoteEditFragment : BaseFragment<NoteEditEvent, NoteEditEffect, NoteEditState>() {
-
-    override val initEvent = Ui.Init
-    override var layoutId: Int = R.layout.fragment_note_edit
+internal class NoteEditFragment :
+    BaseFragment<NoteEditEffect, NoteEditState>(R.layout.fragment_note_edit) {
 
     private val dependencies: NotesDependencies by inject()
     private val analytics by screenAnalytics("NoteEdit")
@@ -42,9 +41,11 @@ internal class NoteEditFragment : BaseFragment<NoteEditEvent, NoteEditEffect, No
     private val viewBinding by viewBinding(FragmentNoteEditBinding::bind)
     private val resultKey by fastLazy { getArgument<String>(ARG_RESULT_KEY) }
 
-    override fun createStore() = dependencies.noteEditFeatureFactory.create(
-        note = getArgument(ARG_NOTE)
-    )
+    private val store by androidElmStore {
+        dependencies.noteEditFeatureFactory.create(
+            note = getArgument(ARG_NOTE)
+        )
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -53,7 +54,7 @@ internal class NoteEditFragment : BaseFragment<NoteEditEvent, NoteEditEffect, No
             toolbar.setNavigationOnClickListener { close() }
             buttonSave.setOnClickListener {
                 analytics.sendClick("SaveNote")
-                feature.accept(Ui.Click.SaveNote)
+                store.accept(Ui.Click.SaveNote)
             }
             recyclerView.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, true)
@@ -67,7 +68,8 @@ internal class NoteEditFragment : BaseFragment<NoteEditEvent, NoteEditEffect, No
         if (adapter.allData.isEmpty())
             adapter.update(listOf(state.note))
         viewBinding.textViewNoteDiscipline.text = state.note.classesName
-        viewBinding.textViewNoteDate.text = formatter.formatRelative(state.note.dateTime.toLocalDate())
+        viewBinding.textViewNoteDate.text =
+            formatter.formatRelative(state.note.dateTime.toLocalDate())
     }
 
     override fun handleEffect(effect: NoteEditEffect) = when (effect) {
@@ -75,12 +77,13 @@ internal class NoteEditFragment : BaseFragment<NoteEditEvent, NoteEditEffect, No
             close()
             setResult(resultKey, EmptyResult)
         }
+
         is NoteEditEffect.ShowError -> showBanner(Strings.something_went_wrong_error)
     }
 
     private fun onNoteContentChanged(content: String) {
         viewBinding.appBarLayout.isSelected = viewBinding.recyclerView.canScrollVertically(-1)
-        feature.accept(Ui.Action.NoteContentChanged(content))
+        store.accept(Ui.Action.NoteContentChanged(content))
     }
 
     companion object {

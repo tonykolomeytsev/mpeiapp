@@ -1,31 +1,31 @@
 package kekmech.ru.common_kotlin
 
-sealed class Resource<out T : Any> private constructor() {
+public sealed class Resource<out T : Any> private constructor() {
 
-    open val value: T? = null
-    open val error: Throwable? = null
+    public open val value: T? = null
+    public open val error: Throwable? = null
 
-    val isLoading get() = this is Loading
-    val isError get() = this is Error
-    val isData get() = this is Data
+    public val isLoading: Boolean get() = this is Loading
+    public val isError: Boolean get() = this is Error
+    public val isData: Boolean get() = this is Data
 
-    object Loading : Resource<Nothing>()
-    data class Data<T : Any>(override val value: T) : Resource<T>()
-    data class Error(override val error: Throwable) : Resource<Nothing>()
+    public data object Loading : Resource<Nothing>()
+    public data class Data<T : Any>(override val value: T) : Resource<T>()
+    public data class Error(override val error: Throwable) : Resource<Nothing>()
 }
 
-inline fun <reified T : Any> Any.toResource(): Resource<T> =
+public inline fun <reified T : Any> Any.toResource(): Resource<T> =
     when (this) {
         is Throwable -> Resource.Error(this)
         is T -> Resource.Data(this)
         else -> error("Cannot convert $this to Resource<T>")
     }
 
-fun <T : Any> Resource<T>.toLoadingIfError(): Resource<T> =
+public fun <T : Any> Resource<T>.toLoadingIfError(): Resource<T> =
     Resource.Loading.takeIf { isError } ?: this
 
 @Suppress("UNCHECKED_CAST")
-fun <T : Any, R : Any> Collection<Resource<T>>.merge(
+public fun <T : Any, R : Any> Collection<Resource<T>>.merge(
     mergeRule: (Collection<T>) -> R = { it as R },
 ): Resource<R> {
     var isLoading = false
@@ -41,13 +41,13 @@ fun <T : Any, R : Any> Collection<Resource<T>>.merge(
     return Resource.Data(mergeRule(this.map { it.value!! }))
 }
 
-inline fun <reified T : Any> Resource<T>.map(transform: (T) -> T): Resource<T> =
+public inline fun <reified T : Any> Resource<T>.map(transform: (T) -> T): Resource<T> =
     when (this) {
         is Resource.Data<T> -> Resource.Data(transform(this.value))
         else -> this
     }
 
-inline fun <reified A : Any, reified B : Any> Resource<A>.zip(
+public inline fun <reified A : Any, reified B : Any> Resource<A>.zip(
     another: Resource<B>,
 ): Resource<Pair<A, B>> =
     when {

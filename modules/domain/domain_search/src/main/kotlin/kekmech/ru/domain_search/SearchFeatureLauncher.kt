@@ -1,5 +1,5 @@
 package kekmech.ru.domain_search
 
-interface SearchFeatureLauncher {
-    fun launch(query: String = "", filter: String = "ALL")
+public interface SearchFeatureLauncher {
+    public fun launch(query: String = "", filter: String = "ALL")
 }

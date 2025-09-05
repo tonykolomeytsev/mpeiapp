@@ -1,3 +1,3 @@
 package kekmech.ru.domain_map.dto
 
-data class MapMarkersCacheWrapper(val mapMarkers: List<MapMarker>)
+public data class MapMarkersCacheWrapper(val mapMarkers: List<MapMarker>)

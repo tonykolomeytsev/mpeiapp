@@ -9,11 +9,11 @@ import java.time.temporal.ChronoUnit
 private val ActualNotesInterval = 0..7
 private const val ActualNotesNumber = 5
 
-class GetActualNotesUseCase(
+public class GetActualNotesUseCase(
     private val getNotesUseCase: GetNotesForSelectedScheduleUseCase,
 ) {
 
-    fun getActualNotes(): Single<List<Note>> {
+    public fun getActualNotes(): Single<List<Note>> {
         val today = moscowLocalDate()
         return getNotesUseCase.getNotes()
             .map { notes ->

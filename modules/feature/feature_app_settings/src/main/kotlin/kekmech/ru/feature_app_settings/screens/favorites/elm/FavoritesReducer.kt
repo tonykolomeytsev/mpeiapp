@@ -3,24 +3,24 @@ package kekmech.ru.feature_app_settings.screens.favorites.elm
 import kekmech.ru.domain_favorite_schedule.dto.FavoriteSchedule
 import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesEvent.Internal
 import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesEvent.Ui
-import vivid.money.elmslie.core.store.dsl_reducer.ScreenDslReducer
+import money.vivid.elmslie.core.store.ScreenReducer
 import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesCommand as Command
 import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesEffect as Effect
 import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesEvent as Event
 import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesState as State
 
 internal class FavoritesReducer :
-    ScreenDslReducer<Event, Ui, Internal, State, Effect, Command>(
+    ScreenReducer<Event, Ui, Internal, State, Effect, Command>(
         uiEventClass = Ui::class,
         internalEventClass = Internal::class,
     ) {
 
-    override fun Result.internal(event: Internal): Any =
+    override fun Result.internal(event: Internal) =
         when (event) {
             is Internal.LoadAllFavoritesSuccess -> state { copy(favorites = event.favorites) }
         }
 
-    override fun Result.ui(event: Ui): Any =
+    override fun Result.ui(event: Ui) =
         when (event) {
             is Ui.Init -> commands { +Command.LoadAllFavorites }
             is Ui.Action.UpdateFavorite -> {

@@ -1,0 +1,17 @@
+plugins {
+    alias(mpeix.plugins.lib.android)
+}
+
+dependencies {
+    implementation(libs.androidx.appCompat)
+    implementation(libs.androidx.coreKtx)
+    implementation(libs.androidx.lifecycleExtensions)
+    implementation(libs.google.material)
+
+    implementation(libs.rx.java)
+    implementation(libs.vivid.elmslie.android)
+    implementation(libs.vivid.elmslie.core)
+    compileOnly(libs.timber)
+
+    implementation(project(":common_android"))
+}

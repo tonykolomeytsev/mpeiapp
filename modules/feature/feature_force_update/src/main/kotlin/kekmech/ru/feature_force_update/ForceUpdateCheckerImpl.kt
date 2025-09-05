@@ -22,7 +22,7 @@ internal class ForceUpdateCheckerImpl(
 
         val isUpdateRequired = remoteConfig.getBoolean(KEY_UPDATE_REQUIRED)
         val actualVersion = AppVersion(remoteConfig.getString(KEY_CURRENT_VERSION))
-        val appVersion = AppVersion(BuildConfig.VERSION_NAME)
+        val appVersion = AppVersion("2.0.0")
         val updateUrl = remoteConfig.getString(KEY_UPDATE_URL)
         val description = remoteConfig.getString(KEY_UPDATE_DESCRIPTION)
         val minRequiredVersion = AppVersion(remoteConfig.getString(KEY_MIN_REQUIRED_VERSION))

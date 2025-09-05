@@ -7,8 +7,8 @@ import kekmech.ru.domain_map.dto.MapMarker
 import retrofit2.http.GET
 
 @EndpointUrl(BackendServiceUrl.MAP)
-interface MapService {
+public interface MapService {
 
     @GET("markers.json")
-    fun getMapMarkers(): Single<List<MapMarker>>
+    public fun getMapMarkers(): Single<List<MapMarker>>
 }

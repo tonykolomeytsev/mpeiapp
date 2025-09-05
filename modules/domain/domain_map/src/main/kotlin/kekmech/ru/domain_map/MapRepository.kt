@@ -5,7 +5,7 @@ import kekmech.ru.common_cache.persistent_cache.PersistentCache
 import kekmech.ru.domain_map.dto.MapMarker
 import kekmech.ru.domain_map.dto.MapMarkersCacheWrapper
 
-class MapRepository(
+public class MapRepository(
     private val mapService: MapService,
     persistentCache: PersistentCache,
 ) {
@@ -16,7 +16,7 @@ class MapRepository(
             valueClass = MapMarkersCacheWrapper::class.java,
         )
 
-    fun getMarkers(): Single<List<MapMarker>> =
+    public fun getMarkers(): Single<List<MapMarker>> =
         mapService
             .getMapMarkers()
             .doOnSuccess { mapMarkersCache.set(MapMarkersCacheWrapper(it)) }

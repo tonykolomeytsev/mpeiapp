@@ -1,6 +1,6 @@
 package kekmech.ru.domain_map.dto
 
-data class MapMarker(
+public data class MapMarker(
     val uid: String,
     val address: String,
     val location: Location,
@@ -10,9 +10,9 @@ data class MapMarker(
     val tag: String?,
 )
 
-data class Location(val lat: Double, val lng: Double)
+public data class Location(val lat: Double, val lng: Double)
 
-enum class MarkerType {
+public enum class MarkerType {
     FOOD,
     BUILDING,
     HOSTEL,

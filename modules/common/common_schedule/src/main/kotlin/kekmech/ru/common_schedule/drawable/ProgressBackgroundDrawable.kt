@@ -7,7 +7,7 @@ import androidx.annotation.ColorInt
 import androidx.annotation.Dimension
 import kekmech.ru.common_android.dpToPx
 
-class ProgressBackgroundDrawable(
+public class ProgressBackgroundDrawable(
     context: Context,
     @ColorInt private val backgroundColor: Int,
     @ColorInt private val progressColor: Int,
@@ -17,7 +17,7 @@ class ProgressBackgroundDrawable(
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.DITHER_FLAG)
     private val boundsF: RectF = RectF()
     private val path: Path = Path()
-    var progress: Float = 0f
+    public var progress: Float = 0f
         set(value) {
             field = value
             invalidateSelf()
@@ -49,9 +49,9 @@ class ProgressBackgroundDrawable(
     }
 
     @Deprecated("Deprecated in Java")
-    override fun getOpacity() = PixelFormat.OPAQUE
+    override fun getOpacity(): Int = PixelFormat.OPAQUE
 
-    override fun setColorFilter(colorFilter: ColorFilter?) = Unit
+    override fun setColorFilter(colorFilter: ColorFilter?): Unit = Unit
 
     private fun updateBounds(boundsForUpdate: Rect?) {
         val bounds: Rect = boundsForUpdate ?: bounds
@@ -68,19 +68,19 @@ class ProgressBackgroundDrawable(
     private fun RectF.set(left: Int, top: Int, right: Int, bottom: Int) =
         set(left.toFloat(), top.toFloat(), right.toFloat(), bottom.toFloat())
 
-    data class CornerRadius(
+    public data class CornerRadius(
         @Dimension val topLeft: Float,
         @Dimension val topRight: Float,
         @Dimension val bottomRight: Float,
         @Dimension val bottomLeft: Float
     ) {
 
-        fun toRadFloatArray() = floatArrayOf(
+        public fun toRadFloatArray(): FloatArray = floatArrayOf(
             topLeft, topLeft, topRight, topRight, bottomRight, bottomRight, bottomLeft, bottomLeft
         )
 
-        companion object {
-            fun of(@Dimension radius: Float) = CornerRadius(radius, radius, radius, radius)
+        public companion object {
+            public fun of(@Dimension radius: Float): CornerRadius = CornerRadius(radius, radius, radius, radius)
         }
     }
 

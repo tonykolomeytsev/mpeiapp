@@ -5,14 +5,14 @@ import android.widget.FrameLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 
-fun Dialog.setExpandedBottomSheet(): Dialog = apply {
+public fun Dialog.setExpandedBottomSheet(): Dialog = apply {
     setOnShowListener {
         val bottomSheet = getBottomSheetFrame()
         setBottomSheetStateExpanded(bottomSheet)
     }
 }
 
-fun Dialog.setFullHeightBottomSheet(): Dialog = apply {
+public fun Dialog.setFullHeightBottomSheet(): Dialog = apply {
     setOnShowListener {
         val bottomSheet = getBottomSheetFrame()
         val lp = bottomSheet.layoutParams as CoordinatorLayout.LayoutParams
@@ -22,7 +22,7 @@ fun Dialog.setFullHeightBottomSheet(): Dialog = apply {
     }
 }
 
-fun Dialog.getBottomSheetFrame(): FrameLayout =
+public fun Dialog.getBottomSheetFrame(): FrameLayout =
     findViewById(com.google.android.material.R.id.design_bottom_sheet)
 
 private fun setBottomSheetStateExpanded(bottomSheet: FrameLayout) {

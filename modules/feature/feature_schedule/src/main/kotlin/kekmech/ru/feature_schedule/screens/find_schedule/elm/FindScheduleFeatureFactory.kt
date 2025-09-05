@@ -1,7 +1,7 @@
 package kekmech.ru.feature_schedule.screens.find_schedule.elm
 
 import kekmech.ru.domain_schedule.ScheduleFeatureLauncher
-import vivid.money.elmslie.core.store.ElmStore
+import money.vivid.elmslie.core.store.ElmStore
 
 internal class FindScheduleFeatureFactory(
     private val findScheduleActor: FindScheduleActor,

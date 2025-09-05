@@ -3,4 +3,4 @@ package kekmech.ru.common_di
 import java.io.File
 
 @JvmInline
-value class AppCacheDir(val dir: File)
+public value class AppCacheDir(public val dir: File)

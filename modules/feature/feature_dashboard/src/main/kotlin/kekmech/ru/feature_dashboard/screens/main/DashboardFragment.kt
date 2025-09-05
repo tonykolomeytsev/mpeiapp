@@ -49,25 +49,23 @@ import kekmech.ru.feature_dashboard.screens.main.elm.DashboardEffect
 import kekmech.ru.feature_dashboard.screens.main.elm.DashboardEvent
 import kekmech.ru.feature_dashboard.screens.main.elm.DashboardState
 import kekmech.ru.strings.Strings
+import money.vivid.elmslie.android.renderer.androidElmStore
 import org.koin.android.ext.android.inject
-import vivid.money.elmslie.storepersisting.retainInParentStoreHolder
 
 internal class DashboardFragment :
-    BaseFragment<DashboardEvent, DashboardEffect, DashboardState>(),
+    BaseFragment<DashboardEffect, DashboardState>(R.layout.fragment_dashboard),
     ActivityResultListener,
     ScrollToTop,
     TabScreenStateSaver by TabScreenStateSaverImpl("dashboard") {
-
-    override val initEvent = DashboardEvent.Ui.Init
-    override var layoutId = R.layout.fragment_dashboard
-    override val storeHolder by retainInParentStoreHolder(storeProvider = ::createStore)
 
     private val dependencies by inject<DashboardDependencies>()
     private val adapter by fastLazy { createAdapter() }
     private val analytics by screenAnalytics("Dashboard")
     private val viewBinding by viewBinding(FragmentDashboardBinding::bind)
 
-    override fun createStore() = dependencies.dashboardFeatureFactory.create()
+    private val store by androidElmStore {
+        dependencies.dashboardFeatureFactory.create()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -77,7 +75,7 @@ internal class DashboardFragment :
             recyclerView.addSystemVerticalPadding()
             recyclerView.addScrollAnalytics(analytics, "DashboardRecyclerView")
             swipeRefresh.apply {
-                setOnRefreshListener { feature.accept(DashboardEvent.Ui.Action.SwipeToRefresh) }
+                setOnRefreshListener { store.accept(DashboardEvent.Ui.Action.SwipeToRefresh) }
                 doOnApplyWindowInsets { _, windowInsets, _ ->
                     setProgressViewOffset(windowInsets.systemWindowInsetTop)
                 }
@@ -103,7 +101,7 @@ internal class DashboardFragment :
         is DashboardEffect.ShowNotesLoadingError -> showBanner(Strings.something_went_wrong_error)
         is DashboardEffect.NavigateToNotesList -> {
             parentFragment?.setResultListener<EmptyResult>(NOTES_LIST_RESULT_KEY) {
-                feature.accept(DashboardEvent.Ui.Action.SwipeToRefresh)
+                store.accept(DashboardEvent.Ui.Action.SwipeToRefresh)
             }
             dependencies.notesFeatureLauncher.launchNoteList(
                 selectedClasses = effect.classes,
@@ -140,7 +138,7 @@ internal class DashboardFragment :
         NoteAdapterItem(requireContext()) {
             analytics.sendClick("EditNote")
             parentFragment?.setResultListener<EmptyResult>(EDIT_NOTE_RESULT_KEY) {
-                feature.accept(DashboardEvent.Ui.Action.SwipeToRefresh)
+                store.accept(DashboardEvent.Ui.Action.SwipeToRefresh)
             }
             dependencies.notesFeatureLauncher.launchNoteEdit(
                 note = it,
@@ -153,7 +151,7 @@ internal class DashboardFragment :
         ScheduleTypeAdapterItem {
             analytics.sendClick("ChangeGroup")
             parentFragment?.setResultListener<SelectedSchedule>(FIND_GROUP_RESULT_KEY) {
-                feature.accept(DashboardEvent.Ui.Action.SwipeToRefresh)
+                store.accept(DashboardEvent.Ui.Action.SwipeToRefresh)
             }
             dependencies.scheduleFeatureLauncher.launchSearchGroup(
                 continueTo = ScheduleFeatureLauncher.ContinueTo.BACK_WITH_RESULT,
@@ -163,20 +161,20 @@ internal class DashboardFragment :
         EmptyStateAdapterItem(),
         FavoriteScheduleAdapterItem {
             analytics.sendClick("FavoriteSchedule")
-            feature.accept(DashboardEvent.Ui.Action.SelectFavoriteSchedule(it.value))
+            store.accept(DashboardEvent.Ui.Action.SelectFavoriteSchedule(it.value))
         },
         NotePreviewAdapterItem(::clickOnClasses, R.layout.item_note_preview_padding_horisontal_8dp),
         TextAdapterItem(R.layout.item_time_prediction),
         ShimmerAdapterItem(R.layout.item_events_shimmer),
         ErrorStateAdapterItem {
             analytics.sendClick("DashboardReload")
-            feature.accept(DashboardEvent.Ui.Action.SwipeToRefresh)
+            store.accept(DashboardEvent.Ui.Action.SwipeToRefresh)
         }
     )
 
     private fun clickOnClasses(it: Classes) {
         analytics.sendClick("ClickClasses")
-        feature.accept(DashboardEvent.Ui.Click.ClassesItem(it))
+        store.accept(DashboardEvent.Ui.Click.ClassesItem(it))
     }
 
     override fun onScrollToTop() {

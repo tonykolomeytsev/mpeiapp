@@ -27,24 +27,25 @@ import kekmech.ru.feature_app_settings.databinding.FragmentFavoritesBinding
 import kekmech.ru.feature_app_settings.di.AppSettingDependencies
 import kekmech.ru.feature_app_settings.screens.edit_favorite.EditFavoriteFragment
 import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesEffect
-import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesEvent
 import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesEvent.Ui
 import kekmech.ru.feature_app_settings.screens.favorites.elm.FavoritesState
 import kekmech.ru.feature_app_settings.screens.favorites.item.HelpBannerAdapterItem
 import kekmech.ru.strings.Strings
+import money.vivid.elmslie.android.renderer.androidElmStore
 import org.koin.android.ext.android.inject
 
-internal class FavoritesFragment : BaseFragment<FavoritesEvent, FavoritesEffect, FavoritesState>() {
-
-    override val initEvent get() = Ui.Init
-    override var layoutId: Int = R.layout.fragment_favorites
+internal class FavoritesFragment : BaseFragment<FavoritesEffect, FavoritesState>(
+    layoutId = R.layout.fragment_favorites
+) {
 
     private val dependencies by inject<AppSettingDependencies>()
     private val analytics by screenAnalytics("Favorites")
     private val adapter by fastLazy { createAdapter() }
     private val viewBinding by viewBinding(FragmentFavoritesBinding::bind)
 
-    override fun createStore() = dependencies.favoritesFeatureFactory.create()
+    private val store by androidElmStore {
+        dependencies.favoritesFeatureFactory.create()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -59,7 +60,7 @@ internal class FavoritesFragment : BaseFragment<FavoritesEvent, FavoritesEffect,
             recyclerView.adapter = adapter
             recyclerView.attachSwipeToDeleteCallback(isItemForDelete = { it is FavoriteScheduleItem }) {
                 analytics.sendClick("DeleteFavorite")
-                feature.accept(Ui.Click.DeleteFavorite((it as FavoriteScheduleItem).value))
+                store.accept(Ui.Click.DeleteFavorite((it as FavoriteScheduleItem).value))
             }
         }
     }
@@ -108,7 +109,7 @@ internal class FavoritesFragment : BaseFragment<FavoritesEvent, FavoritesEffect,
 
     private fun setResultListenerForUpdateFavorite(resultKey: String) =
         setResultListener<FavoriteSchedule>(resultKey) { favoriteSchedule ->
-            feature.accept(Ui.Action.UpdateFavorite(favoriteSchedule))
+            store.accept(Ui.Action.UpdateFavorite(favoriteSchedule))
         }
 
     companion object {

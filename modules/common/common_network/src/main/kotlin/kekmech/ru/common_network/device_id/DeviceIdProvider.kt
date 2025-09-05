@@ -5,13 +5,13 @@ import java.util.*
 
 private const val PREF_DEVICE_ID = "pref_device_id"
 
-class DeviceIdProvider(private val context: Context) {
+public class DeviceIdProvider(private val context: Context) {
 
     @Volatile
     private var deviceId: String? = null
 
     @Synchronized
-    fun getDeviceId(): String {
+    public fun getDeviceId(): String {
         if (deviceId == null) {
             val sharedPrefs = context.getSharedPreferences(
                 PREF_DEVICE_ID,

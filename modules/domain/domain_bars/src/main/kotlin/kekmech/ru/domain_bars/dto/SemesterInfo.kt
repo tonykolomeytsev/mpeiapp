@@ -1,11 +1,11 @@
 package kekmech.ru.domain_bars.dto
 
-data class SemesterInfo(
+public data class SemesterInfo(
     val currentSemesterId: String,
     val allSemesters: List<SemesterEntry>
 )
 
-data class SemesterEntry(
+public data class SemesterEntry(
     val id: String,
     val name: String
 )

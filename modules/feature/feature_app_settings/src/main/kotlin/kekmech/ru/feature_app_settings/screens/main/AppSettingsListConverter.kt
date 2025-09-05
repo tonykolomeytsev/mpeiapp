@@ -4,7 +4,6 @@ import android.content.Context
 import android.view.Gravity
 import androidx.annotation.StringRes
 import kekmech.ru.coreui.items.*
-import kekmech.ru.feature_app_settings.BuildConfig
 import kekmech.ru.feature_app_settings.screens.main.AppSettingsFragment.Companion.ITEM_GITHUB
 import kekmech.ru.feature_app_settings.screens.main.AppSettingsFragment.Companion.ITEM_SUPPORT
 import kekmech.ru.feature_app_settings.screens.main.elm.AppSettingsState
@@ -82,7 +81,7 @@ internal class AppSettingsListConverter {
                 addAll(state.contributors)
             }
 
-            if (BuildConfig.DEBUG) {
+//            if (BuildConfig.DEBUG) {
                 add(SpaceItem.VERTICAL_24)
                 add(SectionHeaderItem(title = "Дебаг"))
                 add(SpaceItem.VERTICAL_12)
@@ -109,7 +108,7 @@ internal class AppSettingsListConverter {
                     text = "Нужно перезагрузить приложение, для того чтобы настройка вступила в силу",
                     styleResId = coreui_R.style.H8_Gray70_Medium,
                 ))
-            }
+//            }
 
             add(SpaceItem.VERTICAL_24)
             add(getVersionItem(context))
@@ -118,7 +117,7 @@ internal class AppSettingsListConverter {
     }
 
     private fun getVersionItem(context: Context): Any {
-        val versionName = BuildConfig.VERSION_NAME
+        val versionName = "2.0.0"
         return TextItem(
             text = context.getString(Strings.app_settings_app_version, versionName),
             styleResId = coreui_R.style.H6_Gray70,

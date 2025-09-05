@@ -2,9 +2,9 @@ package kekmech.ru.common_navigation
 
 import androidx.appcompat.app.AppCompatActivity
 
-interface NavigationHolder {
+public interface NavigationHolder {
 
-    fun subscribe(activity: AppCompatActivity)
+    public fun subscribe(activity: AppCompatActivity)
 
-    fun unsubscribe()
+    public fun unsubscribe()
 }

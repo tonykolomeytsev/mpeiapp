@@ -2,6 +2,6 @@ package kekmech.ru.common_android.viewbinding
 
 import android.view.View
 
-interface ReusableViewHolder {
-    val containerView: View
+public interface ReusableViewHolder {
+    public val containerView: View
 }

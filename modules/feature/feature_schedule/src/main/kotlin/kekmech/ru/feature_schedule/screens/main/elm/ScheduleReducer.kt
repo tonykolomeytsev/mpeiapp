@@ -2,7 +2,7 @@ package kekmech.ru.feature_schedule.screens.main.elm
 
 import kekmech.ru.feature_schedule.screens.main.elm.ScheduleEvent.Internal
 import kekmech.ru.feature_schedule.screens.main.elm.ScheduleEvent.Ui
-import vivid.money.elmslie.core.store.dsl_reducer.ScreenDslReducer
+import money.vivid.elmslie.core.store.ScreenReducer
 import java.time.DayOfWeek
 import java.time.LocalDate
 import kekmech.ru.feature_schedule.screens.main.elm.ScheduleCommand as Command
@@ -11,12 +11,12 @@ import kekmech.ru.feature_schedule.screens.main.elm.ScheduleEvent as Event
 import kekmech.ru.feature_schedule.screens.main.elm.ScheduleState as State
 
 internal class ScheduleReducer :
-    ScreenDslReducer<Event, Ui, Internal, State, Effect, Command>(
+    ScreenReducer<Event, Ui, Internal, State, Effect, Command>(
         uiEventClass = Ui::class,
         internalEventClass = Internal::class,
     ) {
 
-    override fun Result.internal(event: Internal): Any =
+    override fun Result.internal(event: Internal) =
         when (event) {
             is Internal.LoadScheduleSuccess -> {
                 state {
@@ -29,7 +29,7 @@ internal class ScheduleReducer :
             is Internal.LoadScheduleFailure -> state { copy(loadingError = event.throwable) }
         }
 
-    override fun Result.ui(event: Ui): Any =
+    override fun Result.ui(event: Ui) =
         when (event) {
             is Ui.Init -> {
                 state { showNextWeekIfWeekend() }

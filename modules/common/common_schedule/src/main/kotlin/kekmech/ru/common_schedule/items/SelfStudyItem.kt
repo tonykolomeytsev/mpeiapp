@@ -6,9 +6,9 @@ import kekmech.ru.common_adapter.AdapterItem
 import kekmech.ru.common_adapter.BaseItemBinder
 import kekmech.ru.common_schedule.R
 
-object SelfStudyItem
+public object SelfStudyItem
 
-interface SelfStudyViewHolder
+public interface SelfStudyViewHolder
 
 private class SelfStudyViewHolderImpl(
     containerView: View
@@ -18,7 +18,7 @@ private class SelfStudyItemBinder : BaseItemBinder<SelfStudyViewHolder, SelfStud
     override fun bind(vh: SelfStudyViewHolder, model: SelfStudyItem, position: Int) = Unit
 }
 
-class SelfStudyAdapterItem : AdapterItem<SelfStudyViewHolder, SelfStudyItem>(
+public class SelfStudyAdapterItem : AdapterItem<SelfStudyViewHolder, SelfStudyItem>(
     isType = { it is SelfStudyItem },
     layoutRes = R.layout.item_self_study,
     viewHolderGenerator = ::SelfStudyViewHolderImpl,

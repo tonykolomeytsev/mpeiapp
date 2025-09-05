@@ -15,6 +15,7 @@ import kekmech.ru.common_network.okhttp.RequiredHeadersInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.logging.HttpLoggingInterceptor.Level
+import org.koin.core.module.Module
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
@@ -30,7 +31,7 @@ import java.util.concurrent.TimeUnit
 
 private const val DEFAULT_REQUEST_TIMEOUT = 15L
 
-val CommonNetworkModule = module {
+public val CommonNetworkModule: Module = module {
     factoryOf(::NoConnectionInterceptor)
     factoryOf(::DeviceIdProvider) bind DeviceIdProvider::class
     singleOf(::provideOkHttpClient) bind OkHttpClient::class

@@ -1,6 +1,6 @@
 package kekmech.ru.domain_bars.dto
 
-data class RemoteBarsConfig(
+public data class RemoteBarsConfig(
     val loginUrl: String,
     val studentListUrl: String,
     val marksListUrl: String,

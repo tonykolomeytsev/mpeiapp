@@ -3,11 +3,11 @@ package kekmech.ru.common_navigation
 import io.reactivex.rxjava3.core.Observable
 import java.util.*
 
-interface BottomTabsSwitcher {
+public interface BottomTabsSwitcher {
 
-    fun changeTab(tab: BottomTab)
+    public fun changeTab(tab: BottomTab)
 
-    fun clearTab()
+    public fun clearTab()
 
-    fun observe(): Observable<Optional<BottomTab>>
+    public fun observe(): Observable<Optional<BottomTab>>
 }

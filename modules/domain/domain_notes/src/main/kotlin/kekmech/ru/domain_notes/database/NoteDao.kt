@@ -9,14 +9,14 @@ import io.reactivex.rxjava3.core.Single
 import kekmech.ru.domain_notes.database.entities.NormalNote
 
 @Dao
-interface NoteDao {
+public interface NoteDao {
 
     @Upsert
-    fun updateOrInsert(normalNote: NormalNote): Completable
+    public fun updateOrInsert(normalNote: NormalNote): Completable
 
     @Query("SELECT * FROM note WHERE associatedScheduleName=:scheduleName")
-    fun getAllNotesForSchedule(scheduleName: String): Single<List<NormalNote>>
+    public fun getAllNotesForSchedule(scheduleName: String): Single<List<NormalNote>>
 
     @Delete
-    fun delete(normalNote: NormalNote): Completable
+    public fun delete(normalNote: NormalNote): Completable
 }

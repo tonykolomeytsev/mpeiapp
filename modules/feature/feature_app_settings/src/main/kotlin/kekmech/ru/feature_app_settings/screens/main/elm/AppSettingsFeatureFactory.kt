@@ -1,7 +1,7 @@
 package kekmech.ru.feature_app_settings.screens.main.elm
 
 import kekmech.ru.common_feature_toggles.FeatureToggles
-import vivid.money.elmslie.core.store.ElmStore
+import money.vivid.elmslie.core.store.ElmStore
 
 internal class AppSettingsFeatureFactory(
     private val actor: AppSettingsActor,

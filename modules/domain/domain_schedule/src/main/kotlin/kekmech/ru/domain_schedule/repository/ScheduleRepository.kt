@@ -6,11 +6,11 @@ import kekmech.ru.domain_schedule.dto.SelectedSchedule
 import kekmech.ru.domain_schedule_models.dto.Schedule
 import kekmech.ru.domain_schedule_models.dto.ScheduleType
 
-interface ScheduleRepository {
+public interface ScheduleRepository {
 
-    fun getSchedule(type: ScheduleType, name: String, weekOffset: Int): Single<Schedule>
+    public fun getSchedule(type: ScheduleType, name: String, weekOffset: Int): Single<Schedule>
 
-    fun setSelectedSchedule(selectedSchedule: SelectedSchedule): Completable
+    public fun setSelectedSchedule(selectedSchedule: SelectedSchedule): Completable
 
-    fun getSelectedSchedule(): Single<SelectedSchedule>
+    public fun getSelectedSchedule(): Single<SelectedSchedule>
 }

@@ -1,0 +1,40 @@
+plugins {
+    id("org.jetbrains.kotlin.jvm")
+    id("java-gradle-plugin")
+}
+
+dependencies {
+    implementation(libs.kotlin.gradle.plugin)
+    implementation(libs.android.gradle.plugin)
+}
+
+gradlePlugin {
+    plugins.create("RootProjectConventionPlugin") {
+        id = "mpeix.root"
+        implementationClass = "mpeix.plugins.RootProjectConventionPlugin"
+    }
+    plugins.create("AppConventionPlugin") {
+        id = "mpeix.app"
+        implementationClass = "mpeix.plugins.AppConventionPlugin"
+    }
+    plugins.create("FeatureImplConventionPlugin") {
+        id = "mpeix.feature.impl"
+        implementationClass = "mpeix.plugins.FeatureImplConventionPlugin"
+    }
+    plugins.create("LibAndroidConventionPlugin") {
+        id = "mpeix.lib.android"
+        implementationClass = "mpeix.plugins.LibAndroidConventionPlugin"
+    }
+    plugins.create("UtilAndroidConventionPlugin") {
+        id = "mpeix.util.android"
+        implementationClass = "mpeix.plugins.UtilAndroidConventionPlugin"
+    }
+    plugins.create("LibKotlinConventionPlugin") {
+        id = "mpeix.lib.kotlin"
+        implementationClass = "mpeix.plugins.LibKotlinConventionPlugin"
+    }
+    plugins.create("UtilKotlinConventionPlugin") {
+        id = "mpeix.util.kotlin"
+        implementationClass = "mpeix.plugins.UtilKotlinConventionPlugin"
+    }
+}

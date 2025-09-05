@@ -1,6 +1,6 @@
 package kekmech.ru.common_feature_toggles
 
-interface RemoteConfigWrapper {
+public interface RemoteConfigWrapper {
 
-    operator fun get(featureToggleKey: String): Boolean
+    public operator fun get(featureToggleKey: String): Boolean
 }

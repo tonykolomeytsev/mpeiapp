@@ -6,19 +6,19 @@ import kekmech.ru.domain_schedule_models.dto.Day
 import kekmech.ru.domain_schedule_models.dto.Schedule
 import kekmech.ru.feature_search.screens.schedule_details.elm.ScheduleDetailsEvent.Internal
 import kekmech.ru.feature_search.screens.schedule_details.elm.ScheduleDetailsEvent.Ui
-import vivid.money.elmslie.core.store.dsl_reducer.ScreenDslReducer
+import money.vivid.elmslie.core.store.ScreenReducer
 import kekmech.ru.feature_search.screens.schedule_details.elm.ScheduleDetailsCommand as Command
 import kekmech.ru.feature_search.screens.schedule_details.elm.ScheduleDetailsEffect as Effect
 import kekmech.ru.feature_search.screens.schedule_details.elm.ScheduleDetailsEvent as Event
 import kekmech.ru.feature_search.screens.schedule_details.elm.ScheduleDetailsState as State
 
 internal class ScheduleDetailsReducer :
-    ScreenDslReducer<Event, Ui, Internal, State, Effect, Command>(
+    ScreenReducer<Event, Ui, Internal, State, Effect, Command>(
         uiEventClass = Ui::class,
         internalEventClass = Internal::class,
     ) {
 
-    override fun Result.internal(event: Internal): Any =
+    override fun Result.internal(event: Internal) =
         when (event) {
             is Internal.LoadScheduleSuccess -> state {
                 val days = event.schedule.mapToDays()
@@ -59,7 +59,7 @@ internal class ScheduleDetailsReducer :
             }
         }
 
-    override fun Result.ui(event: Ui): Any =
+    override fun Result.ui(event: Ui) =
         when (event) {
             is Ui.Init -> commands {
                 val type = state.scheduleType

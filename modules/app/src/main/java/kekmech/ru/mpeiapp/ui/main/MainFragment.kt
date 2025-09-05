@@ -20,13 +20,12 @@ import kekmech.ru.mpeiapp.ui.main.elm.MainScreenEffect
 import kekmech.ru.mpeiapp.ui.main.elm.MainScreenEvent
 import kekmech.ru.mpeiapp.ui.main.elm.MainScreenFeatureFactory
 import kekmech.ru.mpeiapp.ui.main.elm.MainScreenState
+import money.vivid.elmslie.android.renderer.androidElmStore
 import org.koin.android.ext.android.inject
 
 @Suppress("TooManyFunctions")
-class MainFragment : BaseFragment<MainScreenEvent, MainScreenEffect, MainScreenState>(), BackButtonListener {
-
-    override val initEvent: MainScreenEvent get() = MainScreenEvent.Wish.Init
-    override var layoutId: Int = R.layout.fragment_main
+class MainFragment : BaseFragment<MainScreenEffect, MainScreenState>(R.layout.fragment_main),
+    BackButtonListener {
 
     private val dependencies by inject<MainScreenDependencies>()
     private var bottomBarController: BottomBarController? = null
@@ -34,7 +33,8 @@ class MainFragment : BaseFragment<MainScreenEvent, MainScreenEffect, MainScreenS
     private val tabsSwitcher by fastLazy { dependencies.bottomTabsSwitcher }
     private val viewBinding by viewBinding(FragmentMainBinding::bind)
 
-    override fun createStore() = MainScreenFeatureFactory.create()
+    @Suppress("Unused")
+    private val store by androidElmStore { MainScreenFeatureFactory.create() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
