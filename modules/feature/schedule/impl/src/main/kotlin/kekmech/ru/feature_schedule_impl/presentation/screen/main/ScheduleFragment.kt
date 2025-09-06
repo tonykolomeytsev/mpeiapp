@@ -20,10 +20,9 @@ import kekmech.ru.feature_schedule_impl.di.ScheduleDependencies
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.adapter.WeeksScrollAdapter
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.adapter.WeeksScrollHelper
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleEffect
-import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleEvent
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleEvent.Ui
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleState
-import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleStoreProvider
+import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleStoreFactory
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.item.DAY_OF_WEEK_FRIDAY
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.item.DAY_OF_WEEK_MONDAY
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.item.DAY_OF_WEEK_SATURDAY
@@ -61,7 +60,7 @@ internal class ScheduleFragment :
     // for viewPager sliding debounce
     private var viewPagerPositionToBeSelected: Int? = null
 
-    private val store by androidElmStore { inject<ScheduleStoreProvider>().value.get() }
+    private val store by androidElmStore { inject<ScheduleStoreFactory>().value.create() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

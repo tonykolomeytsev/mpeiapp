@@ -16,7 +16,7 @@ import kekmech.ru.feature_schedule_impl.launcher.ScheduleFeatureApiImpl
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.FindScheduleActor
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.FindScheduleStoreFactory
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleActor
-import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleStoreProvider
+import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleStoreFactory
 import kekmech.ru.lib_analytics_api.SelectedScheduleAnalyticsProvider
 import kekmech.ru.lib_network.buildApi
 import org.koin.core.module.dsl.factoryOf
@@ -31,7 +31,7 @@ val FeatureScheduleModule = module {
     factoryOf(::FindScheduleActor)
 
     factoryOf(::FindScheduleStoreFactory) bind FindScheduleStoreFactory::class
-    singleOf(::ScheduleStoreProvider)
+    singleOf(::ScheduleStoreFactory)
     factoryOf(::ScheduleActor)
     factoryOf(::ScheduleDependencies)
 

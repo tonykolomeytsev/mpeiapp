@@ -9,7 +9,7 @@ import kekmech.ru.feature_bars_impl.data.repository.BarsExtractJsRepository
 import kekmech.ru.feature_bars_impl.data.repository.BarsUserInfoRepository
 import kekmech.ru.feature_bars_impl.launcher.BarsFeatureLauncherImpl
 import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsActor
-import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsStoreProvider
+import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsStoreFactory
 import kekmech.ru.lib_network.buildApi
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
@@ -19,7 +19,7 @@ import retrofit2.Retrofit
 
 val FeatureBarsModule = module {
     factoryOf(::BarsActor)
-    singleOf(::BarsStoreProvider)
+    singleOf(::BarsStoreFactory)
     factoryOf(::BarsFeatureLauncherImpl) bind BarsFeatureLauncher::class
 
     factoryOf(::BarsConfigDataSource)

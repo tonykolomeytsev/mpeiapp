@@ -1,6 +1,5 @@
 package kekmech.ru.feature_map_impl.presentation.screen.main.elm
 
-import kekmech.ru.ext_kotlin.fastLazy
 import kekmech.ru.feature_app_settings_api.data.AppSettingsRepository
 import kekmech.ru.feature_map_impl.presentation.screen.main.elm.MapEvent
 import money.vivid.elmslie.core.store.ElmStore
@@ -11,21 +10,17 @@ import kekmech.ru.feature_map_impl.presentation.screen.main.elm.MapState as Stat
 
 internal typealias MapStore = Store<Event, Effect, State>
 
-internal class MapStoreProvider(
+internal class MapStoreFactory(
     private val actor: MapActor,
     private val appSettingsRepository: AppSettingsRepository,
 ) {
 
-    private val store by fastLazy {
-        ElmStore(
-            initialState = State(
-                appSettings = appSettingsRepository.getAppSettings()
-            ),
-            reducer = MapReducer(),
-            actor = actor,
-            startEvent = MapEvent.Ui.Init,
-        )
-    }
-
-    fun get(): MapStore = store
+    fun create(): MapStore = ElmStore(
+        initialState = State(
+            appSettings = appSettingsRepository.getAppSettings()
+        ),
+        reducer = MapReducer(),
+        actor = actor,
+        startEvent = MapEvent.Ui.Init,
+    )
 }

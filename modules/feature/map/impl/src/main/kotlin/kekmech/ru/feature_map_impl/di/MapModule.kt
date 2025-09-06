@@ -9,7 +9,7 @@ import kekmech.ru.feature_map_impl.data.repository.MapRepositoryImpl
 import kekmech.ru.feature_map_impl.launcher.DeeplinkDelegate
 import kekmech.ru.feature_map_impl.launcher.MapFeatureLauncherImpl
 import kekmech.ru.feature_map_impl.presentation.screen.main.elm.MapActor
-import kekmech.ru.feature_map_impl.presentation.screen.main.elm.MapStoreProvider
+import kekmech.ru.feature_map_impl.presentation.screen.main.elm.MapStoreFactory
 import kekmech.ru.feature_map_impl.presentation.screen.main.view.MarkersBitmapFactory
 import kekmech.ru.lib_app_lifecycle.MainActivityLifecycleObserver
 import kekmech.ru.lib_emoji.CommonEmojiModule
@@ -25,7 +25,7 @@ val FeatureMapModule = module {
     includes(CommonEmojiModule)
 
     singleOf(::DeeplinkDelegate) // TODO: refactor this
-    singleOf(::MapStoreProvider)
+    singleOf(::MapStoreFactory)
     factoryOf(::MapActor)
     factoryOf(::MapDependencies)
     factory { MarkersBitmapFactory(androidContext(), get()) }
