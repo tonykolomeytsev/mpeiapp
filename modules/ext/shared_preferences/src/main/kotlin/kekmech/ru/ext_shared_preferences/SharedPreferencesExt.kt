@@ -4,10 +4,10 @@ import android.content.SharedPreferences
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
-sealed class SharedPreferencesDelegate<T>(open val sharedPreferences: SharedPreferences) :
+public sealed class SharedPreferencesDelegate<T>(public open val sharedPreferences: SharedPreferences) :
     ReadWriteProperty<Any, T>
 
-class StringPreference(
+public class StringPreference(
     preferences: SharedPreferences,
     private val key: String,
     private val defaultValue: String = "",
@@ -24,7 +24,7 @@ class StringPreference(
     }
 }
 
-class IntPreference(
+public class IntPreference(
     preferences: SharedPreferences,
     private val key: String,
     private val defaultValue: Int = 0,
@@ -41,7 +41,7 @@ class IntPreference(
     }
 }
 
-class BooleanPreference(
+public class BooleanPreference(
     preferences: SharedPreferences,
     private val key: String,
     private val defaultValue: Boolean = false,
@@ -58,7 +58,7 @@ class BooleanPreference(
     }
 }
 
-class TypedPreference<T>(
+public class TypedPreference<T>(
     preferences: SharedPreferences,
     private val key: String,
     private val toString: (T) -> String,
@@ -80,18 +80,18 @@ class TypedPreference<T>(
     }
 }
 
-fun SharedPreferences.string(key: String, defaultValue: String = "") =
+public fun SharedPreferences.string(key: String, defaultValue: String = ""): StringPreference =
     StringPreference(this, key, defaultValue)
 
-fun SharedPreferences.int(key: String, defaultValue: Int = 0) =
+public fun SharedPreferences.int(key: String, defaultValue: Int = 0): IntPreference =
     IntPreference(this, key, defaultValue)
 
-fun SharedPreferences.boolean(key: String, defaultValue: Boolean = false) =
+public fun SharedPreferences.boolean(key: String, defaultValue: Boolean = false): BooleanPreference =
     BooleanPreference(this, key, defaultValue)
 
-fun<T> SharedPreferences.typed(
+public fun<T> SharedPreferences.typed(
     key: String,
     toString: (T) -> String,
     fromString: (String) -> T,
     defaultValue: T,
-) = TypedPreference(this, key, toString, fromString, defaultValue)
+): TypedPreference<T> = TypedPreference(this, key, toString, fromString, defaultValue)

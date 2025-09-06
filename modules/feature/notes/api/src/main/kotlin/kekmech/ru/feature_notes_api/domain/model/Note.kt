@@ -3,7 +3,7 @@ package kekmech.ru.feature_notes_api.domain.model
 import java.io.Serializable
 import java.time.LocalDateTime
 
-data class Note(
+public data class Note(
     val content: String,
     val dateTime: LocalDateTime,
     val classesName: String,

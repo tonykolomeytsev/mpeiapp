@@ -2,7 +2,7 @@ package kekmech.ru.feature_map_api.data.repository
 
 import kekmech.ru.feature_map_api.domain.model.MapMarker
 
-interface MapRepository {
+public interface MapRepository {
 
-    suspend fun getMarkers(): Result<List<MapMarker>>
+    public suspend fun getMarkers(): Result<List<MapMarker>>
 }

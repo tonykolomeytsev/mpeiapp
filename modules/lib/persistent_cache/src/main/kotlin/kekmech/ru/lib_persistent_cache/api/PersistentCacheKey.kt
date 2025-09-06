@@ -10,12 +10,12 @@ import kotlin.reflect.KProperty
  *
  * Use factory method [from] to create your own key instance.
  */
-class PersistentCacheKey private constructor(
+public class PersistentCacheKey private constructor(
     internal val name: String,
     internal val valueClass: Class<*>,
 ) {
 
-    fun filename(): String = name
+    public fun filename(): String = name
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -36,15 +36,15 @@ class PersistentCacheKey private constructor(
     }
 
 
-    companion object {
+    public companion object {
 
-        fun <T : Serializable> from(name: String, valueClass: Class<T>): PersistentCacheKey =
+        public fun <T : Serializable> from(name: String, valueClass: Class<T>): PersistentCacheKey =
             PersistentCacheKey(
                 name = name.normalize(),
                 valueClass = valueClass,
             )
 
-        fun <T : Serializable> from(
+        public fun <T : Serializable> from(
             prefix: String?,
             property: KProperty<*>,
             valueClass: Class<T>,

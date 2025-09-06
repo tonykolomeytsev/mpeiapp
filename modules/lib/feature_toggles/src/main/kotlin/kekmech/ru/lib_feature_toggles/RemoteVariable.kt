@@ -42,7 +42,7 @@ public sealed class RemoteVariable<T : Any>(
  *
  * @see RemoteVariable
  */
-open class BooleanRemoteVariable(
+public open class BooleanRemoteVariable(
     name: String,
     defaultValue: Boolean,
     valueHolder: RemoteVariableValueHolder,

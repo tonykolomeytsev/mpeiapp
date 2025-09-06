@@ -1,14 +1,14 @@
 package kekmech.ru.lib_network
 
-object ServiceUrlResolver {
+public object ServiceUrlResolver {
 
     private var appEnvironment: AppEnvironment = AppEnvironment.PROD
 
-    fun setAppEnvironment(appEnvironment: AppEnvironment) {
+    public fun setAppEnvironment(appEnvironment: AppEnvironment) {
         ServiceUrlResolver.appEnvironment = appEnvironment
     }
 
-    fun resolve(url: BackendServiceUrl): String =
+    public fun resolve(url: BackendServiceUrl): String =
         when (appEnvironment) {
             AppEnvironment.PROD -> url.prodEndpoint
             AppEnvironment.STAGING -> url.stagingEndpoint

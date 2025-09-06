@@ -10,14 +10,16 @@ import org.gradle.api.Project
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
 
-internal fun Project.configureKotlinAndroid(
+context(
+    project: Project,
     extension: CommonExtension<*, *, *, *, *, *>,
-    explicitApi: Boolean = true,
+)
+internal fun configureKotlinAndroid(
+    explicitApi: Boolean,
 ) {
-    setupUnitTests()
-    val config = getAndroidProjectConfiguration()
+    project.setupUnitTests()
+    val config = project.getAndroidProjectConfiguration()
     with(extension) {
-        // Да, у нас compileSdk == targetSdk
         compileSdk = config.targetSdk.get()
         buildToolsVersion = config.buildToolsVersion.get()
 
@@ -36,13 +38,14 @@ internal fun Project.configureKotlinAndroid(
             sourceCompatibility = JavaVersion.VERSION_17
         }
     }
-    extensions.configure<KotlinAndroidProjectExtension> {
-//        if (explicitApi) explicitApi()
+    project.extensions.configure<KotlinAndroidProjectExtension> {
+        if (explicitApi) explicitApi()
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_17)
+            freeCompilerArgs.add("-Xannotation-target-all")
         }
     }
-    dependencies.add(
+    project.dependencies.add(
         "coreLibraryDesugaring",
         "com.android.tools:desugar_jdk_libs:${config.coreLibraryDesugaringVersion.get()}"
     )

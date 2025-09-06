@@ -22,7 +22,7 @@ internal abstract class FeatureImplConventionPlugin : Plugin<Project> {
 
         extensions.configure<LibraryExtension> {
             configureAndroidNamespace(this)
-            configureKotlinAndroid(this, explicitApi = false)
+            configureKotlinAndroid(explicitApi = false)
 
             with(buildFeatures) {
                 compose = false

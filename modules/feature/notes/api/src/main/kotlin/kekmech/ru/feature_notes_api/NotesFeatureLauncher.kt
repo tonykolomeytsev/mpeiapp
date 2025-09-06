@@ -4,11 +4,11 @@ import kekmech.ru.feature_notes_api.domain.model.Note
 import kekmech.ru.feature_schedule_api.domain.model.Classes
 import java.time.LocalDate
 
-interface NotesFeatureLauncher {
+public interface NotesFeatureLauncher {
 
-    fun launchNoteList(selectedClasses: Classes, selectedDate: LocalDate, resultKey: String)
+    public fun launchNoteList(selectedClasses: Classes, selectedDate: LocalDate, resultKey: String)
 
-    fun launchNoteEdit(note: Note, resultKey: String)
+    public fun launchNoteEdit(note: Note, resultKey: String)
 
-    fun launchAllNotes(selectedNote: Note? = null)
+    public fun launchAllNotes(selectedNote: Note? = null)
 }

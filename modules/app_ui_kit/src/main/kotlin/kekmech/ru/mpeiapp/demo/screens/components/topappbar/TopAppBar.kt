@@ -12,7 +12,6 @@ import androidx.compose.ui.unit.dp
 import com.bumble.appyx.core.modality.BuildContext
 import com.bumble.appyx.core.node.Node
 import com.bumble.appyx.core.node.node
-import kekmech.ru.lib_navigation_api.NavTarget
 import kekmech.ru.lib_navigation_compose.LocalBackStackNavigator
 import kekmech.ru.mpeiapp.demo.ui.SectionItem
 import kekmech.ru.mpeiapp.demo.ui.UiKitScreen

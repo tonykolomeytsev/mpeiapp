@@ -9,11 +9,11 @@ import java.time.temporal.ChronoUnit
 private val ActualNotesInterval = 0..7
 private const val ActualNotesNumber = 5
 
-class GetActualNotesInteractor(
+public class GetActualNotesInteractor(
     private val getNotesUseCase: GetNotesForSelectedScheduleUseCase,
 ) {
 
-    suspend operator fun invoke(): List<Note> {
+    public suspend operator fun invoke(): List<Note> {
         val today = moscowLocalDate()
         return getNotesUseCase.invoke()
             .filter { note ->

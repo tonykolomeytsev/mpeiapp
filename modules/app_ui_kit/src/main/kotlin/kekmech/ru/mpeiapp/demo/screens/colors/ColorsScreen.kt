@@ -23,7 +23,6 @@ import androidx.compose.ui.unit.dp
 import com.bumble.appyx.core.modality.BuildContext
 import com.bumble.appyx.core.node.Node
 import com.bumble.appyx.core.node.node
-import kekmech.ru.lib_navigation_api.NavTarget
 import kekmech.ru.mpeiapp.demo.ui.UiKitScreen
 import kekmech.ru.ui_theme.theme.MpeixTheme
 import kotlinx.parcelize.Parcelize

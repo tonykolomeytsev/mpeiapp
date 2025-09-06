@@ -7,13 +7,13 @@ import kotlinx.coroutines.CoroutineDispatcher
  * Instead of directly using Dispatchers in an application, this interface should always be
  * injected
  */
-interface CoroutineDispatchers {
+public interface CoroutineDispatchers {
 
-    fun default(): CoroutineDispatcher
+    public fun default(): CoroutineDispatcher
 
-    fun main(): CoroutineDispatcher
+    public fun main(): CoroutineDispatcher
 
-    fun unconfined(): CoroutineDispatcher
+    public fun unconfined(): CoroutineDispatcher
 
-    fun io(): CoroutineDispatcher
+    public fun io(): CoroutineDispatcher
 }

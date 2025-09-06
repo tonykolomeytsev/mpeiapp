@@ -4,7 +4,7 @@ import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 
 @Suppress("LocalVariableName", "VariableNaming")
-class PersistentCacheHandleProperty<T>(
+public class PersistentCacheHandleProperty<T>(
     initializer: (Any, KProperty<*>) -> T,
 ) : ReadOnlyProperty<Any, T> {
 

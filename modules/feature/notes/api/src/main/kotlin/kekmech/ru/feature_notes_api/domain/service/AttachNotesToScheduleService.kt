@@ -7,11 +7,11 @@ import kekmech.ru.feature_schedule_api.domain.model.Schedule
 import java.time.LocalDate
 import java.time.LocalDateTime
 
-class AttachNotesToScheduleService(
+public class AttachNotesToScheduleService(
     private val getNotesUseCase: GetNotesForSelectedScheduleUseCase,
 ) {
 
-    suspend fun attach(schedule: Schedule): Schedule = getNotesUseCase.invoke()
+    public suspend fun attach(schedule: Schedule): Schedule = getNotesUseCase.invoke()
         .let { notes ->
             schedule.weeks.first().days.forEach { day ->
                 day.classes.forEach { classes ->

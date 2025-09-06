@@ -5,7 +5,7 @@ package kekmech.ru.feature_main_screen_api.presentation.navigation
  *
  * @see MainScreenTabSwitcher
  */
-enum class MainScreenTab {
+public enum class MainScreenTab {
     Dashboard,
     Schedule,
     Map,

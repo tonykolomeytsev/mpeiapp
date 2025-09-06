@@ -4,11 +4,11 @@ import kekmech.ru.feature_schedule_api.domain.model.Schedule
 import kekmech.ru.feature_schedule_api.domain.model.ScheduleType
 import kekmech.ru.feature_schedule_api.domain.model.SelectedSchedule
 
-interface ScheduleRepository {
+public interface ScheduleRepository {
 
-    suspend fun getSchedule(type: ScheduleType, name: String, weekOffset: Int): Result<Schedule>
+    public suspend fun getSchedule(type: ScheduleType, name: String, weekOffset: Int): Result<Schedule>
 
-    fun setSelectedSchedule(selectedSchedule: SelectedSchedule)
+    public fun setSelectedSchedule(selectedSchedule: SelectedSchedule)
 
-    fun getSelectedSchedule(): SelectedSchedule
+    public fun getSelectedSchedule(): SelectedSchedule
 }
