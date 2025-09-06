@@ -1,9 +1,8 @@
 package kekmech.ru.feature_search_impl.screens.main.elm
 
 import kekmech.ru.feature_search_impl.item.FilterItemType
-import vivid.money.elmslie.core.store.Store
-import vivid.money.elmslie.coroutines.ElmStoreCompat
-
+import money.vivid.elmslie.core.store.Store
+import money.vivid.elmslie.core.store.ElmStore
 internal class SearchStoreFactory(
     private val actor: SearchActor,
 ) {
@@ -13,7 +12,7 @@ internal class SearchStoreFactory(
         filter: String,
     ): Store<SearchEvent, SearchEffect, SearchState> {
         val filterType = FilterItemType.valueOf(filter.uppercase())
-        return ElmStoreCompat(
+        return ElmStore(
             initialState = SearchState(
                 query = query,
                 selectedFilter = filterType,

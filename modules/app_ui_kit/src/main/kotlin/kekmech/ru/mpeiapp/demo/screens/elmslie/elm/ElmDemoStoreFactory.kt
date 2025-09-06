@@ -1,7 +1,6 @@
 package kekmech.ru.mpeiapp.demo.screens.elmslie.elm
 
-import vivid.money.elmslie.coroutines.ElmStoreCompat
-
+import money.vivid.elmslie.core.store.ElmStore
 internal class ElmDemoStoreFactory {
 
     fun create(randomArgument: Int): ElmDemoStore =

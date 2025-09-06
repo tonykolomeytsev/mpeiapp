@@ -4,13 +4,13 @@ import kekmech.ru.feature_notes_api.domain.usecase.PutNoteForSelectedScheduleUse
 import kekmech.ru.feature_notes_impl.presentation.screen.edit.elm.NoteEditEvent.Internal
 import kekmech.ru.lib_elm.actorFlow
 import kotlinx.coroutines.flow.Flow
-import vivid.money.elmslie.coroutines.Actor
+import money.vivid.elmslie.core.store.Actor
 import kekmech.ru.feature_notes_impl.presentation.screen.edit.elm.NoteEditCommand as Command
 import kekmech.ru.feature_notes_impl.presentation.screen.edit.elm.NoteEditEvent as Event
 
 internal class NoteEditActor(
     private val putNoteUseCase: PutNoteForSelectedScheduleUseCase,
-) : Actor<Command, Event> {
+) : Actor<Command, Event>() {
 
     override fun execute(command: Command): Flow<Event> =
         when (command) {

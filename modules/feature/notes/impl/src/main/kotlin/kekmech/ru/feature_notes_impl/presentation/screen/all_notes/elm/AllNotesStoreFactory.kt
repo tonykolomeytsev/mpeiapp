@@ -1,12 +1,12 @@
 package kekmech.ru.feature_notes_impl.presentation.screen.all_notes.elm
 
-import vivid.money.elmslie.coroutines.ElmStoreCompat
+import money.vivid.elmslie.core.store.ElmStore
 
 internal class AllNotesStoreFactory(
     private val actor: AllNotesActor,
 ) {
 
-    fun create() = ElmStoreCompat(
+    fun create() = ElmStore(
         initialState = AllNotesState(),
         reducer = AllNotesReducer(),
         actor = actor,

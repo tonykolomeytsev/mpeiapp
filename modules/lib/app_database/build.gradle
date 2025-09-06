@@ -1,0 +1,19 @@
+plugins {
+    alias(mpeix.plugins.lib.android)
+    alias(libs.plugins.ksp)
+}
+
+dependencies {
+
+    testImplementation(libs.kotest.assertions)
+    testImplementation(libs.kotest.property)
+    testImplementation(libs.kotest.runner)
+
+    implementation(libs.androidx.annotation)
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.koin.core)
+
+    ksp(libs.androidx.room.compiler)
+
+    implementation(project(":ext_kotlin"))
+}

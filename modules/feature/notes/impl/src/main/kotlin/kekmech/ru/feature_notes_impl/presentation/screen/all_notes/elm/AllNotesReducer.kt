@@ -2,25 +2,26 @@ package kekmech.ru.feature_notes_impl.presentation.screen.all_notes.elm
 
 import kekmech.ru.feature_notes_impl.presentation.screen.all_notes.elm.AllNotesEvent.Internal
 import kekmech.ru.feature_notes_impl.presentation.screen.all_notes.elm.AllNotesEvent.Ui
-import vivid.money.elmslie.core.store.dsl_reducer.ScreenDslReducer
+import money.vivid.elmslie.core.store.ScreenReducer
 import kekmech.ru.feature_notes_impl.presentation.screen.all_notes.elm.AllNotesCommand as Command
 import kekmech.ru.feature_notes_impl.presentation.screen.all_notes.elm.AllNotesEffect as Effect
 import kekmech.ru.feature_notes_impl.presentation.screen.all_notes.elm.AllNotesEvent as Event
 import kekmech.ru.feature_notes_impl.presentation.screen.all_notes.elm.AllNotesState as State
 
 internal class AllNotesReducer :
-    ScreenDslReducer<Event, Ui, Internal, State, Effect, Command>(
+    ScreenReducer<Event, Ui, Internal, State, Effect, Command>(
         uiEventClass = Ui::class,
         internalEventClass = Internal::class
     ) {
 
-    override fun Result.internal(event: Internal): Any =
+    override fun Result.internal(event: Internal) {
         when (event) {
             is Internal.LoadAllNotesSuccess -> state { copy(notes = event.notes) }
             is Internal.LoadAllNotesFailure -> effects { +Effect.ShowError(event.throwable) }
         }
+    }
 
-    override fun Result.ui(event: Ui): Any =
+    override fun Result.ui(event: Ui) {
         when (event) {
             is Ui.Init -> commands { +Command.LoadAllNotes }
             is Ui.Action.DeleteNote -> {
@@ -28,4 +29,5 @@ internal class AllNotesReducer :
                 commands { +Command.DeleteNote(event.note) }
             }
         }
+    }
 }

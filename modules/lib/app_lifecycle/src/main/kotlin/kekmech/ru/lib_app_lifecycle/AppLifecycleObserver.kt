@@ -34,10 +34,10 @@ import android.content.Context
  * @see MainActivityLifecycleObserver
  * @see onCreate
 */
-interface AppLifecycleObserver {
+public interface AppLifecycleObserver {
 
     /**
      * This method be called at the same time as MpeixApp.onCreate()
      */
-    fun onCreate(context: Context) = Unit
+    public fun onCreate(context: Context): Unit = Unit
 }

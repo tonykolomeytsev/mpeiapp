@@ -10,7 +10,7 @@ import java.lang.reflect.Type
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-class LocalDateTimeJsonAdapter : JsonSerializer<LocalDateTime>, JsonDeserializer<LocalDateTime> {
+public class LocalDateTimeJsonAdapter : JsonSerializer<LocalDateTime>, JsonDeserializer<LocalDateTime> {
 
     override fun serialize(
         src: LocalDateTime?,

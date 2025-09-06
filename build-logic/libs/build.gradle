@@ -4,8 +4,9 @@ plugins {
 }
 
 dependencies {
-    implementation(libs.kotlin.gradle.plugin)
-    implementation(libs.android.gradle.plugin)
+    compileOnly(libs.kotlin.gradle.plugin)
+    compileOnly(libs.android.gradle.plugin)
+    compileOnly(libs.compose.compiler.plugin)
 }
 
 gradlePlugin {
@@ -21,9 +22,17 @@ gradlePlugin {
         id = "mpeix.feature.impl"
         implementationClass = "mpeix.plugins.FeatureImplConventionPlugin"
     }
+    plugins.create("FeatureApiConventionPlugin") {
+        id = "mpeix.feature.api"
+        implementationClass = "mpeix.plugins.FeatureApiConventionPlugin"
+    }
     plugins.create("LibAndroidConventionPlugin") {
         id = "mpeix.lib.android"
         implementationClass = "mpeix.plugins.LibAndroidConventionPlugin"
+    }
+    plugins.create("LibAndroidComposeConventionPlugin") {
+        id = "mpeix.lib.android.compose"
+        implementationClass = "mpeix.plugins.LibAndroidComposeConventionPlugin"
     }
     plugins.create("UtilAndroidConventionPlugin") {
         id = "mpeix.util.android"

@@ -4,7 +4,7 @@ import kekmech.ru.feature_notes_api.domain.model.Note
 import kekmech.ru.feature_notes_impl.presentation.screen.note_list.elm.NoteListEvent.Internal
 import kekmech.ru.feature_notes_impl.presentation.screen.note_list.elm.NoteListEvent.Ui
 import kekmech.ru.feature_schedule_api.domain.model.Classes
-import vivid.money.elmslie.core.store.dsl_reducer.ScreenDslReducer
+import money.vivid.elmslie.core.store.ScreenReducer
 import java.time.LocalDate
 import java.time.LocalDateTime
 import kekmech.ru.feature_notes_impl.presentation.screen.note_list.elm.NoteListCommand as Command
@@ -13,12 +13,12 @@ import kekmech.ru.feature_notes_impl.presentation.screen.note_list.elm.NoteListE
 import kekmech.ru.feature_notes_impl.presentation.screen.note_list.elm.NoteListState as State
 
 internal class NoteListReducer :
-    ScreenDslReducer<Event, Ui, Internal, State, Effect, Command>(
+    ScreenReducer<Event, Ui, Internal, State, Effect, Command>(
         uiEventClass = Ui::class,
         internalEventClass = Internal::class
     ) {
 
-    override fun Result.internal(event: Internal): Any =
+    override fun Result.internal(event: Internal) {
         when (event) {
             is Internal.LoadNotesForClassesSuccess -> state {
                 copy(
@@ -32,10 +32,12 @@ internal class NoteListReducer :
                         }
                 )
             }
+
             is Internal.LoadNotesForClassesFailure -> effects { +Effect.ShowNoteLoadError }
         }
+    }
 
-    override fun Result.ui(event: Ui): Any =
+    override fun Result.ui(event: Ui) {
         when (event) {
             is Ui.Init -> commands { +Command.LoadNotesForClasses(state.selectedClasses) }
             is Ui.Click.CreateNewNote -> effects {
@@ -51,12 +53,14 @@ internal class NoteListReducer :
                     )
                 )
             }
+
             is Ui.Click.EditNote -> effects { +Effect.OpenNoteEdit(event.note) }
             is Ui.Action.DeleteNote -> {
                 state { copy(notes = state.notes.filter { it != event.note }) }
                 commands { +Command.DeleteNote(event.note) }
             }
         }
+    }
 
     @Suppress("ReturnCount")
     private fun matchesPredicate(note: Note, classes: Classes, date: LocalDate): Boolean {

@@ -1,0 +1,14 @@
+plugins {
+    alias(mpeix.plugins.feature.impl)
+}
+
+dependencies {
+    implementation(libs.koin.core)
+    implementation(project(":feature_main_screen_api"))
+    implementation(project(":feature_dashboard_api"))
+    implementation(project(":feature_schedule_api"))
+    implementation(project(":feature_map_api"))
+    implementation(project(":feature_bars_api"))
+    implementation(project(":lib_navigation_compose"))
+    implementation(project(":ui_icons"))
+}

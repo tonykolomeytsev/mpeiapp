@@ -5,12 +5,12 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.ZoneId
 
-fun moscowLocalTime(): LocalTime {
+public fun moscowLocalTime(): LocalTime {
     return LocalTime.now(ZoneId.of("Europe/Moscow"))
 }
 
-fun moscowLocalDate(): LocalDate {
+public fun moscowLocalDate(): LocalDate {
     return LocalDate.now(ZoneId.of("Europe/Moscow"))
 }
 
-fun moscowLocalDateTime(): LocalDateTime = LocalDateTime.of(moscowLocalDate(), moscowLocalTime())
+public fun moscowLocalDateTime(): LocalDateTime = LocalDateTime.of(moscowLocalDate(), moscowLocalTime())

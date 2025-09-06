@@ -7,7 +7,7 @@ import kekmech.ru.feature_map_impl.presentation.screen.main.elm.MapEffect
 import kekmech.ru.feature_map_impl.presentation.screen.main.elm.MapEvent
 import kekmech.ru.feature_map_impl.presentation.screen.main.elm.MapState
 import kekmech.ru.feature_map_impl.presentation.screen.main.ext.toFilterTab
-import vivid.money.elmslie.core.store.Store
+import money.vivid.elmslie.core.store.Store
 
 private const val DEFAULT_NAVIGATION_DELAY = 1000L
 

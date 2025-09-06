@@ -5,7 +5,7 @@ import kekmech.ru.feature_schedule_api.domain.model.SelectedSchedule
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.FindScheduleEvent.Internal
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.FindScheduleEvent.Ui
 import retrofit2.HttpException
-import vivid.money.elmslie.core.store.dsl_reducer.ScreenDslReducer
+import money.vivid.elmslie.core.store.ScreenReducer
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.FindScheduleCommand as Command
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.FindScheduleEffect as Effect
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.FindScheduleEvent as Event
@@ -16,17 +16,18 @@ val GROUP_NUMBER_PATTERN = "[а-яА-Я]+-[а-яА-Я0-9]+-[0-9]+".toRegex()
 val PERSON_NAME_PATTERN = "[а-яА-Я]+\\s+([а-яА-Я]+\\s?)+".toRegex()
 
 internal class FindScheduleReducer :
-    ScreenDslReducer<Event, Ui, Internal, State, Effect, Command>(
+    ScreenReducer<Event, Ui, Internal, State, Effect, Command>(
         uiEventClass = Ui::class,
         internalEventClass = Internal::class,
     ) {
 
-    override fun Result.internal(event: Internal): Any =
+    override fun Result.internal(event: Internal) {
         when (event) {
             is Internal.FindScheduleFailure -> {
                 state { copy(isLoading = false) }
                 effects { +calculateErrorEffect(event.throwable) }
             }
+
             is Internal.FindScheduleSuccess -> {
                 val selectedSchedule = SelectedSchedule(
                     name = event.name,
@@ -44,18 +45,21 @@ internal class FindScheduleReducer :
                         .takeIf { state.selectScheduleAfterSuccess }
                 }
             }
+
             is Internal.SearchForAutocompleteSuccess -> state {
                 copy(searchResults = event.results)
             }
         }
+    }
 
-    override fun Result.ui(event: Ui): Any =
+    override fun Result.ui(event: Ui) {
         when (event) {
             is Ui.Init -> Unit
             is Ui.Click.Continue -> {
                 state { copy(isLoading = true) }
                 commands { +Command.FindSchedule(name = event.scheduleName) }
             }
+
             is Ui.Action.GroupNumberChanged -> {
                 state {
                     copy(
@@ -70,6 +74,7 @@ internal class FindScheduleReducer :
                 }
             }
         }
+    }
 
 
     private fun calculateErrorEffect(throwable: Throwable): Effect {

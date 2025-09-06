@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
@@ -35,23 +36,25 @@ import kekmech.ru.feature_app_settings_impl.presentation.screens.main.list.Contr
 import kekmech.ru.feature_app_settings_impl.presentation.screens.map_type.SelectMapTypeFragment
 import kekmech.ru.lib_adapter.BaseAdapter
 import kekmech.ru.lib_analytics_android.ext.screenAnalytics
-import kekmech.ru.lib_elm.BaseFragment
 import kekmech.ru.lib_navigation.addScreenForward
 import kekmech.ru.lib_navigation.showDialog
+import money.vivid.elmslie.android.renderer.ElmRendererDelegate
+import money.vivid.elmslie.android.renderer.androidElmStore
 import org.koin.android.ext.android.inject
 import kekmech.ru.res_strings.R.string as Strings
 
 private const val ACTIVITY_RECREATION_DELAY = 200L
 
 internal class AppSettingsFragment :
-    BaseFragment<AppSettingsEvent, AppSettingsEffect, AppSettingsState>(R.layout.fragment_app_settings),
+    Fragment(R.layout.fragment_app_settings),
+    ElmRendererDelegate<AppSettingsEffect, AppSettingsState>,
     ActivityResultListener {
 
     private val adapter by fastLazy { createAdapter() }
     private val analytics by screenAnalytics("AppSettings")
     private val viewBinding by viewBinding(FragmentAppSettingsBinding::bind)
 
-    override fun createStore() = inject<AppSettingsStoreFactory>().value.create()
+    private val store by androidElmStore { inject<AppSettingsStoreFactory>().value.create() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

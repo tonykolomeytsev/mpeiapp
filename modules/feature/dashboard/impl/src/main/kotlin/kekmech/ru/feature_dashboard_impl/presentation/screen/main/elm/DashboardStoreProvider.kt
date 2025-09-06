@@ -3,8 +3,8 @@ package kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm
 import kekmech.ru.ext_kotlin.fastLazy
 import kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm.DashboardEvent
 import kekmech.ru.feature_schedule_api.PreheatSelectedScheduleProvider
-import vivid.money.elmslie.core.store.Store
-import vivid.money.elmslie.coroutines.ElmStoreCompat
+import money.vivid.elmslie.core.store.ElmStore
+import money.vivid.elmslie.core.store.Store
 import kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm.DashboardEffect as Effect
 import kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm.DashboardEvent as Event
 import kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm.DashboardState as State
@@ -17,7 +17,7 @@ internal class DashboardStoreProvider(
 ) {
 
     private val store by fastLazy {
-        ElmStoreCompat(
+        ElmStore(
             initialState = State(selectedSchedule = preheatSelectedScheduleProvider.getSelectedScheduleImmediately()),
             reducer = DashboardReducer(),
             actor = actor,

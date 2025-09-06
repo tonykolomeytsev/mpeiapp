@@ -7,13 +7,13 @@ import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsEvent.Inter
 import kekmech.ru.lib_elm.actorFlow
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
-import vivid.money.elmslie.coroutines.Actor
+import money.vivid.elmslie.core.store.Actor
 
 internal class BarsActor(
     private val barsUserInfoRepository: BarsUserInfoRepository,
     private val barsConfigRepository: BarsConfigRepository,
     private val barsExtractJsRepository: BarsExtractJsRepository,
-) : Actor<BarsCommand, BarsEvent> {
+) : Actor<BarsCommand, BarsEvent>() {
 
     override fun execute(command: BarsCommand): Flow<BarsEvent> = when (command) {
         is BarsCommand.GetRemoteBarsConfig -> actorFlow {

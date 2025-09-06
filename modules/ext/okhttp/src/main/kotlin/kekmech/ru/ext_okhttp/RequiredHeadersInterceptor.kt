@@ -3,7 +3,7 @@ package kekmech.ru.ext_okhttp
 import okhttp3.Interceptor
 import okhttp3.Response
 
-class RequiredHeadersInterceptor(
+public class RequiredHeadersInterceptor(
     private val deviceId: String,
     private val appVersion: String,
     private val deviceLanguage: String

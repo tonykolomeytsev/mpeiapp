@@ -1,8 +1,8 @@
 package kekmech.ru.lib_elm
 
-import androidx.compose.runtime.Immutable
+//import androidx.compose.runtime.Immutable
 
-@Immutable
+//@Immutable
 sealed class Resource<out T : Any> private constructor() {
 
     open val value: T? = null

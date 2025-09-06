@@ -4,14 +4,14 @@ import kekmech.ru.feature_notes_api.domain.service.AttachNotesToScheduleService
 import kekmech.ru.feature_schedule_api.domain.usecase.GetCurrentScheduleUseCase
 import kekmech.ru.lib_elm.actorFlow
 import kotlinx.coroutines.flow.Flow
-import vivid.money.elmslie.coroutines.Actor
+import money.vivid.elmslie.core.store.Actor
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleCommand as Command
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleEvent as Event
 
 internal class ScheduleActor(
     private val getCurrentScheduleUseCase: GetCurrentScheduleUseCase,
     private val attachNotesToScheduleService: AttachNotesToScheduleService,
-) : Actor<Command, Event> {
+) : Actor<Command, Event>() {
 
     override fun execute(command: Command): Flow<Event> =
         when (command) {

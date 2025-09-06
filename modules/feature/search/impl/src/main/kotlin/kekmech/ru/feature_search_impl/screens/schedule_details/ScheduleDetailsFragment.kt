@@ -11,6 +11,7 @@ import kekmech.ru.coreui.items.SpaceAdapterItem
 import kekmech.ru.coreui.items.TextAdapterItem
 import kekmech.ru.coreui.items.TextWithIconAdapterItem
 import kekmech.ru.ext_android.close
+import kekmech.ru.ext_android.fragment.BottomSheetDialogFragment
 import kekmech.ru.ext_android.getArgument
 import kekmech.ru.ext_android.viewbinding.viewBinding
 import kekmech.ru.ext_android.withArguments
@@ -31,13 +32,14 @@ import kekmech.ru.feature_search_impl.screens.schedule_details.elm.ScheduleDetai
 import kekmech.ru.lib_adapter.AdapterItem
 import kekmech.ru.lib_adapter.BaseAdapter
 import kekmech.ru.lib_analytics_android.ext.screenAnalytics
-import kekmech.ru.lib_elm.BaseBottomSheetDialogFragment
 import kekmech.ru.lib_navigation.BottomTab
 import kekmech.ru.lib_navigation.BottomTabsSwitcher
 import kekmech.ru.lib_navigation.ClearBackStack
 import kekmech.ru.lib_navigation.Router
 import kekmech.ru.lib_schedule.items.ClassesItemBinder
 import kekmech.ru.lib_schedule.items.ClassesViewHolderImpl
+import money.vivid.elmslie.android.renderer.ElmRendererDelegate
+import money.vivid.elmslie.android.renderer.androidElmStore
 import org.koin.android.ext.android.inject
 import kekmech.ru.coreui.R as coreui_R
 import kekmech.ru.lib_schedule.R as common_schedule_R
@@ -47,8 +49,8 @@ internal const val ITEM_BUTTON_SWITCH = 1
 internal const val ITEM_FAVORITES = 1
 
 internal class ScheduleDetailsFragment :
-    BaseBottomSheetDialogFragment<ScheduleDetailsEvent, ScheduleDetailsEffect,
-            ScheduleDetailsState>(R.layout.fragment_schedule_details) {
+    BottomSheetDialogFragment(R.layout.fragment_schedule_details),
+    ElmRendererDelegate<ScheduleDetailsEffect, ScheduleDetailsState> {
 
     private val viewBinding by viewBinding(FragmentScheduleDetailsBinding::bind)
     private val adapter by fastLazy { createAdapter() }
@@ -56,8 +58,10 @@ internal class ScheduleDetailsFragment :
     private val bottomTabsSwitcher by inject<BottomTabsSwitcher>()
     private val analytics by screenAnalytics("SearchScheduleDetails")
 
-    override fun createStore() = inject<ScheduleDetailsStoreFactory>().value
-        .create(getArgument(ARG_RESULT_ITEM))
+    private val store by androidElmStore {
+        inject<ScheduleDetailsStoreFactory>().value
+            .create(getArgument(ARG_RESULT_ITEM))
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -104,6 +108,7 @@ internal class ScheduleDetailsFragment :
                     analytics.sendClick("AddToFavorites")
                     store.accept(Ui.Click.Favorites)
                 }
+
                 else -> Unit
             }
         },

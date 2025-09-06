@@ -1,0 +1,7 @@
+plugins {
+    alias(mpeix.plugins.feature.api)
+}
+
+dependencies {
+    implementation(project(":lib_navigation_api"))
+}

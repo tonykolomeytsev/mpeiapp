@@ -1,0 +1,8 @@
+plugins {
+    alias(mpeix.plugins.util.kotlin)
+}
+
+dependencies {
+    compileOnly(androidJar)
+    implementation(libs.squareup.okhttp)
+}

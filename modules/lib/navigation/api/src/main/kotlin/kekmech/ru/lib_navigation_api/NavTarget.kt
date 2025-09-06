@@ -1,8 +1,6 @@
 package kekmech.ru.lib_navigation_api
 
 import android.os.Parcelable
-import com.bumble.appyx.core.modality.BuildContext
-import com.bumble.appyx.core.node.Node
 
 /**
  * Navigation target for global backstack model navigation.
@@ -20,5 +18,5 @@ import com.bumble.appyx.core.node.Node
  */
 interface NavTarget : Parcelable {
 
-    fun resolve(buildContext: BuildContext): Node
+    fun resolve(buildContext: Any): Any
 }

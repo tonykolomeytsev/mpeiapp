@@ -1,4 +1,4 @@
 package kekmech.ru.lib_app_info
 
 @JvmInline
-value class AppVersionName(val versionName: String)
+public value class AppVersionName(public val versionName: String)

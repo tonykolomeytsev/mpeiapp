@@ -5,11 +5,11 @@ import android.os.Parcelable
 import java.io.Serializable
 import kotlin.reflect.KClass
 
-inline fun <reified T : Any> Bundle?.getArgument(key: String): T =
+public inline fun <reified T : Any> Bundle?.getArgument(key: String): T =
     findArgument(key) ?: error("Argument with key = $key required")
 
 @Suppress("IMPLICIT_CAST_TO_ANY")
-inline fun <reified T : Any> Bundle?.findArgument(key: String): T? =
+public inline fun <reified T : Any> Bundle?.findArgument(key: String): T? =
     findArgument(key) {
         val type = T::class
         when {
@@ -26,8 +26,8 @@ inline fun <reified T : Any> Bundle?.findArgument(key: String): T? =
     }
 
 
-inline fun <reified T : Any> Bundle?.findArgument(key: String, getArgument: Bundle.() -> T?): T? =
+public inline fun <reified T : Any> Bundle?.findArgument(key: String, getArgument: Bundle.() -> T?): T? =
     this?.let { if (it.containsKey(key)) it.getArgument() else null }
 
-fun KClass<*>.isSubclassOf(base: KClass<*>): Boolean =
+public fun KClass<*>.isSubclassOf(base: KClass<*>): Boolean =
     this == base || base.java.isAssignableFrom(this.java)

@@ -8,7 +8,7 @@ import kekmech.ru.feature_schedule_api.data.repository.ScheduleRepository
 import kekmech.ru.feature_schedule_api.domain.usecase.GetCurrentScheduleUseCase
 import kekmech.ru.lib_elm.actorFlow
 import kotlinx.coroutines.flow.Flow
-import vivid.money.elmslie.coroutines.Actor
+import money.vivid.elmslie.core.store.Actor
 import kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm.DashboardCommand as Command
 import kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm.DashboardEvent as Event
 
@@ -18,7 +18,7 @@ internal class DashboardActor(
     private val getUpcomingEventsInteractor: GetUpcomingEventsInteractor,
     private val getActualNotesInteractor: GetActualNotesInteractor,
     private val getCurrentScheduleUseCase: GetCurrentScheduleUseCase,
-) : Actor<Command, Event> {
+) : Actor<Command, Event>() {
 
     override fun execute(command: Command): Flow<Event> =
         when (command) {

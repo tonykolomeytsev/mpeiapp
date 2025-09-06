@@ -2,8 +2,6 @@ package kekmech.ru.feature_bars_impl.data.repository
 
 import android.content.SharedPreferences
 import com.google.gson.Gson
-import com.redmadrobot.mapmemory.MapMemory
-import com.redmadrobot.mapmemory.stateFlow
 import kekmech.ru.ext_shared_preferences.string
 import kekmech.ru.feature_bars_impl.data.dto.RawMarksResponse
 import kekmech.ru.feature_bars_impl.data.dto.RawRatingResponse
@@ -11,15 +9,15 @@ import kekmech.ru.feature_bars_impl.data.mapper.RawToMarksResponseMapper
 import kekmech.ru.feature_bars_impl.data.mapper.RawToRatingResponseMapper
 import kekmech.ru.feature_bars_impl.domain.BarsUserInfo
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 
 internal class BarsUserInfoRepository(
     private val gson: Gson,
-    mapMemory: MapMemory,
     preferences: SharedPreferences,
 ) {
 
-    private val barsUserInfoCache by mapMemory.stateFlow(BarsUserInfo())
+    private val barsUserInfoCache = MutableStateFlow(BarsUserInfo())
     var latestLoadedUrl by preferences.string("bars_last_loaded_link")
 
     fun observeBarsUserInfo(): Flow<BarsUserInfo> = barsUserInfoCache

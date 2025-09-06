@@ -4,7 +4,6 @@ import kekmech.ru.feature_dashboard_api.DashboardFeatureLauncher
 import kekmech.ru.feature_dashboard_api.presentation.navigation.DashboardScreenApi
 import kekmech.ru.feature_dashboard_impl.domain.interactor.GetUpcomingEventsInteractor
 import kekmech.ru.feature_dashboard_impl.launcher.DashboardFeatureLauncherImpl
-import kekmech.ru.feature_dashboard_impl.presentation.navigation.DashboardScreenApiImpl
 import kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm.DashboardActor
 import kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm.DashboardReducer
 import kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm.DashboardStoreProvider
@@ -21,5 +20,4 @@ val FeatureDashboardModule = module {
     factoryOf(::DashboardActor)
     factoryOf(::DashboardFeatureLauncherImpl) bind DashboardFeatureLauncher::class
     factoryOf(::GetUpcomingEventsInteractor)
-    factoryOf(::DashboardScreenApiImpl) bind DashboardScreenApi::class
 }

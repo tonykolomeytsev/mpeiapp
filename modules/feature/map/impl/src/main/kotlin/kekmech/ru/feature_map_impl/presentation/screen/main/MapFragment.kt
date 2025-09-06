@@ -2,6 +2,7 @@ package kekmech.ru.feature_map_impl.presentation.screen.main
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
@@ -13,6 +14,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.disposables.Disposable
 import kekmech.ru.coreui.banner.showBanner
 import kekmech.ru.coreui.items.ErrorStateAdapterItem
 import kekmech.ru.coreui.items.PullAdapterItem
@@ -46,19 +48,24 @@ import kekmech.ru.feature_map_impl.presentation.screen.main.view.ControlledScrol
 import kekmech.ru.feature_map_impl.presentation.screen.main.view.MarkersBitmapFactory
 import kekmech.ru.lib_adapter.BaseAdapter
 import kekmech.ru.lib_analytics_android.ext.screenAnalytics
-import kekmech.ru.lib_elm.BaseFragment
+import kekmech.ru.lib_elm.DisposableDelegate
+import kekmech.ru.lib_elm.DisposableDelegateImpl
 import kekmech.ru.lib_navigation.features.ScrollToTop
 import kekmech.ru.lib_navigation.features.TabScreenStateSaver
 import kekmech.ru.lib_navigation.features.TabScreenStateSaverImpl
+import money.vivid.elmslie.android.renderer.ElmRendererDelegate
+import money.vivid.elmslie.android.renderer.androidElmStore
 import org.koin.android.ext.android.inject
 import java.util.concurrent.TimeUnit
 import kekmech.ru.coreui.R as CoreUiR
 import kekmech.ru.res_strings.R.string as Strings
 
 @Suppress("TooManyFunctions")
-internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState>(R.layout.fragment_map),
+internal class MapFragment : Fragment(R.layout.fragment_map),
+    ElmRendererDelegate<MapEffect, MapState>,
     ScrollToTop,
-    TabScreenStateSaver by TabScreenStateSaverImpl("map") {
+    TabScreenStateSaver by TabScreenStateSaverImpl("map"),
+    Disposable by DisposableDelegateImpl() {
 
     private val dependencies by inject<MapDependencies>()
     private val adapter by fastLazy { createAdapter() }
@@ -73,16 +80,13 @@ internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState>(R.layou
     }
     private val appSettingsRepository by inject<AppSettingsRepository>()
 
-    override fun createStore() = inject<MapStoreProvider>().value.get()
+    private val store by androidElmStore { inject<MapStoreProvider>().value.get() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         if (isMapStateEmpty()) {
-            Completable.timer(MAP_START_UP_DELAY, TimeUnit.MILLISECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(::createMap)
-                .bind()
+            view.postDelayed(::createMap, MAP_START_UP_DELAY)
         } else {
             createMap()
         }
@@ -168,6 +172,7 @@ internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState>(R.layou
                 )
                 store.accept(MapEvent.Ui.Action.GoogleMapMarkersGenerated(markers))
             }
+
             is MapEffect.AnimateCameraToPlace -> {
                 effect.googleMapMarkers.find { it.title == effect.mapMarker.name }?.let { marker ->
                     effect.map.animateCameraTo(marker)
@@ -180,6 +185,7 @@ internal class MapFragment : BaseFragment<MapEvent, MapEffect, MapState>(R.layou
                 }
                 Unit
             }
+
             is MapEffect.ShowLoadingError ->
                 showBanner(Strings.map_loading_error_message)
         }

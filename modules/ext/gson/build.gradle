@@ -1,0 +1,7 @@
+plugins {
+    alias(mpeix.plugins.util.kotlin)
+}
+
+dependencies {
+    implementation(libs.squareup.retrofit.gson)
+}

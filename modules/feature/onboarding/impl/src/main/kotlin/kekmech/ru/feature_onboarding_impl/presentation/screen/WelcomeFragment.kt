@@ -25,7 +25,7 @@ internal class WelcomeFragment : Fragment(R.layout.fragment_welcome) {
     private val analytics by screenAnalytics("OnboardingWelcome")
     private val adapter by fastLazy { createAdapter() }
     private val snapHelper by fastLazy { PagerSnapHelper() }
-    private val pages by fastLazy { PromoPage.values().asList() }
+    private val pages by fastLazy { PromoPage.entries }
     private val viewBinding by viewBinding(FragmentWelcomeBinding::bind)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

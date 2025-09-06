@@ -6,19 +6,19 @@ import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsEvent.Inter
 import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsEvent.Ui
 import kekmech.ru.feature_bars_impl.presentation.screen.main.util.hasAuthCookie
 import kekmech.ru.feature_bars_impl.presentation.screen.main.util.removeAuthCookie
-import vivid.money.elmslie.core.store.dsl_reducer.ScreenDslReducer
+import money.vivid.elmslie.core.store.ScreenReducer
 import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsCommand as Command
 import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsEffect as Effect
 import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsEvent as Event
 import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsState as State
 
 internal class BarsReducer :
-    ScreenDslReducer<Event, Ui, Internal, State, Effect, Command>(
+    ScreenReducer<Event, Ui, Internal, State, Effect, Command>(
         uiEventClass = Ui::class,
         internalEventClass = Internal::class
     ) {
 
-    override fun Result.internal(event: Internal): Any =
+    override fun Result.internal(event: Internal) {
         when (event) {
             is Internal.GetRemoteBarsConfigSuccess -> {
                 state {
@@ -30,12 +30,14 @@ internal class BarsReducer :
                 }
                 effects { +loadPageEffect { latestLoadedUrl ?: config?.loginUrl } }
             }
+
             is Internal.GetRemoteBarsConfigFailure -> state {
                 copy(
                     isAfterErrorLoadingConfig = true,
                     isLoading = false
                 )
             }
+
             is Internal.ObserveBarsSuccess -> {
                 state {
                     copy(
@@ -45,12 +47,14 @@ internal class BarsReducer :
                     )
                 }
             }
+
             is Internal.GetLatestLoadedUrlSuccess -> state {
                 copy(latestLoadedUrl = event.latestLoadedUrl)
             }
         }
+    }
 
-    override fun Result.ui(event: Ui): Any =
+    override fun Result.ui(event: Ui) {
         when (event) {
             is Ui.Init -> {
                 state {
@@ -68,11 +72,13 @@ internal class BarsReducer :
                     +Command.ObserveBars
                 }
             }
+
             is Ui.Action.PageStarted -> state {
                 copy(
                     webViewUiState = webViewUiState.copy(isLoading = true)
                 )
             }
+
             is Ui.Action.PageLoadingError -> {
                 state {
                     copy(
@@ -81,6 +87,7 @@ internal class BarsReducer :
                 }
                 effects { +Effect.ShowCommonError }
             }
+
             is Ui.Action.PageFinished -> handlePageFinished(event)
             is Ui.Action.Update -> {
                 state {
@@ -94,6 +101,7 @@ internal class BarsReducer :
                     }
                 }
             }
+
             is Ui.Action.ScrollToTop ->
                 when {
                     state.isBrowserVisible -> state {
@@ -102,6 +110,7 @@ internal class BarsReducer :
                             isReturnBannerVisible = false,
                         )
                     }
+
                     else -> effects { +Effect.ScrollToTop }
                 }
 
@@ -112,6 +121,7 @@ internal class BarsReducer :
                     isReturnBannerVisible = false,
                 )
             }
+
             is Ui.Click.SwipeToRefresh -> {
                 state {
                     copy(
@@ -127,6 +137,7 @@ internal class BarsReducer :
                 }
                 effects { +loadPageEffect { latestLoadedUrl ?: config?.loginUrl } }
             }
+
             is Ui.Click.Settings -> effects { +Effect.OpenSettings }
             is Ui.Click.Login -> {
                 state {
@@ -137,6 +148,7 @@ internal class BarsReducer :
                 }
                 effects { +loadPageEffect { config?.loginUrl } }
             }
+
             is Ui.Click.NotAllowedUrl -> effects { +Effect.OpenExternalBrowser(event.url) }
 
             is Ui.Extract.StudentName -> commands { +Command.PushStudentName(event.name) }
@@ -146,6 +158,7 @@ internal class BarsReducer :
             is Ui.Extract.Semesters -> Unit // TODO in future versions
             is Ui.Extract.Marks -> commands { +Command.PushMarks(event.marksJson) }
         }
+    }
 
     private fun Result.handlePageFinished(
         event: Ui.Action.PageFinished,

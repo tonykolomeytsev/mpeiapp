@@ -1,0 +1,41 @@
+plugins {
+    alias(mpeix.plugins.app)
+}
+
+android {
+    namespace = "kekmech.ru.mpeiapp.demo"
+
+    defaultConfig {
+        applicationId = "kekmech.ru.mpeiapp.demo"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled = true
+            shrinkResources = true
+            signingConfig = signingConfigs.getByName("debug")
+        }
+        debug {
+            minifyEnabled = false
+            shrinkResources = false
+        }
+    }
+}
+
+dependencies {
+    implementation(project(":ui_theme"))
+    implementation(project(":ui_icons"))
+    implementation(project(":ui_shimmer"))
+    implementation(project(":ui_kit_lists"))
+    implementation(project(":ui_kit_topappbar"))
+    implementation(project(":ui_kit_navigationbar"))
+    implementation(project(":lib_navigation_api"))
+    implementation(project(":lib_navigation_compose"))
+    implementation(project(":lib_elm"))
+    implementation(project(":ext_kotlin"))
+
+    implementation(libs.vivid.elmslie.core)
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
+}

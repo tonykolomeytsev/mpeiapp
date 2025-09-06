@@ -11,7 +11,7 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
 internal fun Project.configureKotlinJvm() {
     setupUnitTests()
     extensions.configure<KotlinJvmProjectExtension> {
-        explicitApi()
+//        explicitApi()
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_17)
         }

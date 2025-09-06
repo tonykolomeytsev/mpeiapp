@@ -3,13 +3,11 @@ package kekmech.ru.feature_map_impl.di
 import kekmech.ru.ext_koin.bindIntoList
 import kekmech.ru.feature_map_api.MapFeatureLauncher
 import kekmech.ru.feature_map_api.data.repository.MapRepository
-import kekmech.ru.feature_map_api.presentation.navigation.MapScreenApi
 import kekmech.ru.feature_map_impl.MapInitializer
 import kekmech.ru.feature_map_impl.data.network.MapService
 import kekmech.ru.feature_map_impl.data.repository.MapRepositoryImpl
 import kekmech.ru.feature_map_impl.launcher.DeeplinkDelegate
 import kekmech.ru.feature_map_impl.launcher.MapFeatureLauncherImpl
-import kekmech.ru.feature_map_impl.presentation.navigation.MapScreenApiImpl
 import kekmech.ru.feature_map_impl.presentation.screen.main.elm.MapActor
 import kekmech.ru.feature_map_impl.presentation.screen.main.elm.MapStoreProvider
 import kekmech.ru.feature_map_impl.presentation.screen.main.view.MarkersBitmapFactory
@@ -36,5 +34,4 @@ val FeatureMapModule = module {
 
     single { get<Retrofit.Builder>().buildApi<MapService>() } bind MapService::class
     factoryOf(::MapRepositoryImpl) bind MapRepository::class
-    factoryOf(::MapScreenApiImpl) bind MapScreenApi::class
 }

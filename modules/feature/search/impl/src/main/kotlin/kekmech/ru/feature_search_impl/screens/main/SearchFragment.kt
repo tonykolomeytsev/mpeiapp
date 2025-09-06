@@ -3,6 +3,7 @@ package kekmech.ru.feature_search_impl.screens.main
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
@@ -36,10 +37,11 @@ import kekmech.ru.lib_adapter.AdapterItem
 import kekmech.ru.lib_adapter.BaseAdapter
 import kekmech.ru.lib_adapter.BaseItemBinder
 import kekmech.ru.lib_analytics_android.ext.screenAnalytics
-import kekmech.ru.lib_elm.BaseFragment
 import kekmech.ru.lib_navigation.BottomTab
 import kekmech.ru.lib_navigation.BottomTabsSwitcher
 import kekmech.ru.lib_navigation.showDialog
+import money.vivid.elmslie.android.renderer.ElmRendererDelegate
+import money.vivid.elmslie.android.renderer.androidElmStore
 import org.koin.android.ext.android.inject
 import java.util.concurrent.TimeUnit
 import kekmech.ru.coreui.R as coreui_R
@@ -48,7 +50,8 @@ private const val ARG_QUERY = "Arg.Query"
 private const val ARG_FILTER = "Arg.Filter"
 private const val DEFAULT_INPUT_DEBOUNCE = 300L
 
-internal class SearchFragment : BaseFragment<SearchEvent, SearchEffect, SearchState>(R.layout.fragment_search) {
+internal class SearchFragment : Fragment(R.layout.fragment_search),
+    ElmRendererDelegate<SearchEffect, SearchState> {
 
     private val dependencies by inject<SearchDependencies>()
     private val adapter by fastLazy { createAdapter() }
@@ -57,11 +60,13 @@ internal class SearchFragment : BaseFragment<SearchEvent, SearchEffect, SearchSt
     private val bottomTabsSwitcher by inject<BottomTabsSwitcher>()
     private val viewBinding by viewBinding(FragmentSearchBinding::bind)
 
-    override fun createStore() = dependencies.searchStoreFactory
-        .create(
-            getArgument(ARG_QUERY),
-            getArgument(ARG_FILTER)
-        )
+    private val store by androidElmStore {
+        dependencies.searchStoreFactory
+            .create(
+                getArgument(ARG_QUERY),
+                getArgument(ARG_FILTER)
+            )
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

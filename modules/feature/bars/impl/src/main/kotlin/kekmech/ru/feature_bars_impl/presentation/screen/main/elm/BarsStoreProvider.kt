@@ -1,8 +1,8 @@
 package kekmech.ru.feature_bars_impl.presentation.screen.main.elm
 
 import kekmech.ru.ext_kotlin.fastLazy
-import vivid.money.elmslie.core.store.Store
-import vivid.money.elmslie.coroutines.ElmStoreCompat
+import money.vivid.elmslie.core.store.ElmStore
+import money.vivid.elmslie.core.store.Store
 
 internal typealias BarsStore = Store<BarsEvent, BarsEffect, BarsState>
 
@@ -12,7 +12,7 @@ internal class BarsStoreProvider(
 ) {
 
     private val store by fastLazy {
-        ElmStoreCompat(
+        ElmStore(
             initialState = BarsState(),
             reducer = BarsReducer(),
             actor = actor,
