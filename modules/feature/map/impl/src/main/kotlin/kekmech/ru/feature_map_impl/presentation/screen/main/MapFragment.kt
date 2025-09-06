@@ -36,7 +36,7 @@ import kekmech.ru.feature_map_impl.presentation.screen.main.elm.FilterTab
 import kekmech.ru.feature_map_impl.presentation.screen.main.elm.MapEffect
 import kekmech.ru.feature_map_impl.presentation.screen.main.elm.MapEvent
 import kekmech.ru.feature_map_impl.presentation.screen.main.elm.MapState
-import kekmech.ru.feature_map_impl.presentation.screen.main.elm.MapStoreProvider
+import kekmech.ru.feature_map_impl.presentation.screen.main.elm.MapStoreFactory
 import kekmech.ru.feature_map_impl.presentation.screen.main.ext.animateCameraTo
 import kekmech.ru.feature_map_impl.presentation.screen.main.ext.init
 import kekmech.ru.feature_map_impl.presentation.screen.main.ext.toMarkerType
@@ -73,7 +73,7 @@ internal class MapFragment : Fragment(R.layout.fragment_map),
     }
     private val appSettingsRepository by inject<AppSettingsRepository>()
 
-    private val store by androidElmStore { inject<MapStoreProvider>().value.get() }
+    private val store by androidElmStore { inject<MapStoreFactory>().value.create() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

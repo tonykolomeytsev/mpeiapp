@@ -37,7 +37,7 @@ import kekmech.ru.feature_bars_impl.presentation.screen.details.BarsDetailsFragm
 import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsEffect
 import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsEvent.Ui
 import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsState
-import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsStoreProvider
+import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsStoreFactory
 import kekmech.ru.lib_adapter.BaseAdapter
 import kekmech.ru.lib_analytics_android.addScrollAnalytics
 import kekmech.ru.lib_analytics_android.ext.screenAnalytics
@@ -57,8 +57,8 @@ private const val JS_INTERFACE_NAME = "kti"
 @Suppress("TooManyFunctions")
 internal class BarsFragment :
     Fragment(R.layout.fragment_bars),
-    ScrollToTop,
     ElmRendererDelegate<BarsEffect, BarsState>,
+    ScrollToTop,
     TabScreenStateSaver by TabScreenStateSaverImpl("bars") {
 
     private val analytics by screenAnalytics("Bars")
@@ -66,7 +66,7 @@ internal class BarsFragment :
     private val adapter by fastLazy { createAdapter() }
     private val settingsFeatureLauncher by inject<AppSettingsFeatureLauncher>()
 
-    private val store by androidElmStore { inject<BarsStoreProvider>().value.get() }
+    private val store by androidElmStore { inject<BarsStoreFactory>().value.create() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

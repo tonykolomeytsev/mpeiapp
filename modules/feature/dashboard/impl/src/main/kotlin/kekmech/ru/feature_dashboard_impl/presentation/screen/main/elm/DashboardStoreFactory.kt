@@ -1,6 +1,5 @@
 package kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm
 
-import kekmech.ru.ext_kotlin.fastLazy
 import kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm.DashboardEvent
 import kekmech.ru.feature_schedule_api.PreheatSelectedScheduleProvider
 import money.vivid.elmslie.core.store.ElmStore
@@ -11,19 +10,15 @@ import kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm.DashboardS
 
 internal typealias DashboardStore = Store<Event, Effect, State>
 
-internal class DashboardStoreProvider(
+internal class DashboardStoreFactory(
     private val actor: DashboardActor,
     private val preheatSelectedScheduleProvider: PreheatSelectedScheduleProvider,
 ) {
 
-    private val store by fastLazy {
-        ElmStore(
-            initialState = State(selectedSchedule = preheatSelectedScheduleProvider.getSelectedScheduleImmediately()),
-            reducer = DashboardReducer(),
-            actor = actor,
-            startEvent = DashboardEvent.Ui.Init,
-        )
-    }
-
-    fun get(): DashboardStore = store
+    fun create(): DashboardStore = ElmStore(
+        initialState = State(selectedSchedule = preheatSelectedScheduleProvider.getSelectedScheduleImmediately()),
+        reducer = DashboardReducer(),
+        actor = actor,
+        startEvent = DashboardEvent.Ui.Init,
+    )
 }

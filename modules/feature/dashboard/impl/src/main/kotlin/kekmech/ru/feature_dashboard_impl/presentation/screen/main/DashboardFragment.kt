@@ -19,7 +19,6 @@ import kekmech.ru.ext_android.ActivityResultListener
 import kekmech.ru.ext_android.EmptyResult
 import kekmech.ru.ext_android.addSystemVerticalPadding
 import kekmech.ru.ext_android.doOnApplyWindowInsets
-import kekmech.ru.ext_android.openLinkExternal
 import kekmech.ru.ext_android.setResultListener
 import kekmech.ru.ext_android.viewbinding.viewBinding
 import kekmech.ru.ext_android.views.setProgressViewOffset
@@ -36,7 +35,7 @@ import kekmech.ru.feature_dashboard_impl.presentation.items.SearchFieldAdapterIt
 import kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm.DashboardEffect
 import kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm.DashboardEvent
 import kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm.DashboardState
-import kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm.DashboardStoreProvider
+import kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm.DashboardStoreFactory
 import kekmech.ru.feature_schedule_api.ScheduleFeatureApi
 import kekmech.ru.feature_schedule_api.domain.model.Classes
 import kekmech.ru.feature_schedule_api.domain.model.SelectedSchedule
@@ -67,7 +66,7 @@ internal class DashboardFragment :
     private val analytics by screenAnalytics("Dashboard")
     private val viewBinding by viewBinding(FragmentDashboardBinding::bind)
     private val router by inject<Router>()
-    private val store by androidElmStore { inject<DashboardStoreProvider>().value.get() }
+    private val store by androidElmStore { inject<DashboardStoreFactory>().value.create() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
