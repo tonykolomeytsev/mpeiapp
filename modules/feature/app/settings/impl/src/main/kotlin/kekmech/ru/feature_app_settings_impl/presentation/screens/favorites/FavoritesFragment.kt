@@ -21,15 +21,16 @@ import kekmech.ru.feature_app_settings_impl.databinding.FragmentFavoritesBinding
 import kekmech.ru.feature_app_settings_impl.di.AppSettingDependencies
 import kekmech.ru.feature_app_settings_impl.presentation.screens.edit_favorite.EditFavoriteFragment
 import kekmech.ru.feature_app_settings_impl.presentation.screens.favorites.elm.FavoritesEffect
-import kekmech.ru.feature_app_settings_impl.presentation.screens.favorites.elm.FavoritesEvent
 import kekmech.ru.feature_app_settings_impl.presentation.screens.favorites.elm.FavoritesEvent.Ui
 import kekmech.ru.feature_app_settings_impl.presentation.screens.favorites.elm.FavoritesState
 import kekmech.ru.feature_app_settings_impl.presentation.screens.favorites.item.HelpBannerAdapterItem
 import kekmech.ru.feature_favorite_schedule_api.domain.model.FavoriteSchedule
-import kekmech.ru.feature_schedule_api.ScheduleFeatureLauncher.ContinueTo.BACK_WITH_RESULT
+import kekmech.ru.feature_schedule_api.ScheduleFeatureApi.ContinueTo.BACK_WITH_RESULT
 import kekmech.ru.feature_schedule_api.domain.model.SelectedSchedule
 import kekmech.ru.lib_adapter.BaseAdapter
 import kekmech.ru.lib_analytics_android.ext.screenAnalytics
+import kekmech.ru.lib_navigation.AddScreenForward
+import kekmech.ru.lib_navigation.Router
 import kekmech.ru.lib_navigation.addScreenForward
 import money.vivid.elmslie.android.renderer.ElmRendererDelegate
 import money.vivid.elmslie.android.renderer.androidElmStore
@@ -44,7 +45,7 @@ internal class FavoritesFragment :
     private val analytics by screenAnalytics("Favorites")
     private val adapter by fastLazy { createAdapter() }
     private val viewBinding by viewBinding(FragmentFavoritesBinding::bind)
-
+    private val router by inject<Router>()
     private val store by androidElmStore { dependencies.favoritesStoreFactory.create() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -88,11 +89,13 @@ internal class FavoritesFragment :
                         )
                     }
                 }
-                dependencies.scheduleFeatureLauncher.launchSearchGroup(
-                    continueTo = BACK_WITH_RESULT,
-                    selectGroupAfterSuccess = false,
-                    resultKey = FIND_GROUP_RESULT_KEY
-                )
+                router.executeCommand(AddScreenForward {
+                    dependencies.scheduleFeatureApi.getSearchGroupScreen(
+                        continueTo = BACK_WITH_RESULT,
+                        selectGroupAfterSuccess = false,
+                        resultKey = FIND_GROUP_RESULT_KEY
+                    )
+                })
             },
             FavoriteScheduleAdapterItem {
                 analytics.sendClick("EditFavorite")

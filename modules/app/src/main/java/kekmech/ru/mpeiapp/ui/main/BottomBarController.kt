@@ -10,7 +10,7 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kekmech.ru.feature_bars_api.BarsFeatureLauncher
 import kekmech.ru.feature_dashboard_api.DashboardFeatureLauncher
 import kekmech.ru.feature_map_api.MapFeatureLauncher
-import kekmech.ru.feature_schedule_api.ScheduleFeatureLauncher
+import kekmech.ru.feature_schedule_api.ScheduleFeatureApi
 import kekmech.ru.lib_navigation.BottomTab
 import kekmech.ru.lib_navigation.features.ScrollToTop
 import kekmech.ru.lib_navigation.features.TabScreenStateSaver
@@ -23,7 +23,7 @@ private const val FRAGMENT_POSTPONE_DELAY = 300L
 class BottomBarController(
     fragment: Fragment,
     private val dashboardFeatureLauncher: DashboardFeatureLauncher,
-    private val scheduleFeatureLauncher: ScheduleFeatureLauncher,
+    private val scheduleFeatureApi: ScheduleFeatureApi,
     private val barsFeatureLauncher: BarsFeatureLauncher,
     private val mapFeatureLauncher: MapFeatureLauncher,
 ) {
@@ -102,7 +102,7 @@ class BottomBarController(
 
     private fun createTabFragment(tab: BottomTab): Fragment = when (tab) {
         BottomTab.DASHBOARD -> dashboardFeatureLauncher.getScreen()
-        BottomTab.SCHEDULE -> scheduleFeatureLauncher.getScreen()
+        BottomTab.SCHEDULE -> scheduleFeatureApi.getTabScreen()
         BottomTab.MAP -> mapFeatureLauncher.launchMain()
         BottomTab.PROFILE -> barsFeatureLauncher.launchMain()
     }.apply { (this as? TabScreenStateSaver)?.restoreBundle(bundle) }
