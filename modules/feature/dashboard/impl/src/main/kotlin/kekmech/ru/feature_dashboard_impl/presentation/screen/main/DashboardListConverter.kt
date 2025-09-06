@@ -10,7 +10,6 @@ import kekmech.ru.ext_kotlin.fastLazy
 import kekmech.ru.ext_kotlin.moscowLocalDate
 import kekmech.ru.ext_kotlin.moscowLocalTime
 import kekmech.ru.feature_dashboard_impl.presentation.items.BannerLunchItem
-import kekmech.ru.feature_dashboard_impl.presentation.items.BannerOpenSourceItem
 import kekmech.ru.feature_dashboard_impl.presentation.items.DayStatusItem
 import kekmech.ru.feature_dashboard_impl.presentation.items.ScheduleTypeItem
 import kekmech.ru.feature_dashboard_impl.presentation.items.SearchFieldItem
@@ -19,7 +18,6 @@ import kekmech.ru.feature_dashboard_impl.presentation.screen.main.DashboardFragm
 import kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm.DashboardState
 import kekmech.ru.feature_dashboard_impl.presentation.screen.main.upcoming_events.UpcomingEventsListConverter
 import kekmech.ru.feature_schedule_api.domain.model.WeekOfSemester
-import java.time.DayOfWeek
 import java.time.LocalTime
 import kekmech.ru.res_strings.R.string as Strings
 
@@ -75,7 +73,6 @@ internal class DashboardListConverter(
 
             listOfNotNull(
                 BannerLunchItem.takeIf { moscowLocalTime() in lunchStartTime..lunchEndTime },
-                BannerOpenSourceItem.takeIf { moscowLocalDate().dayOfWeek in DayOfWeek.SATURDAY..DayOfWeek.SUNDAY }
             ).let {
                 if (it.isNotEmpty()) {
                     addAll(it)
@@ -132,6 +129,7 @@ internal class DashboardListConverter(
                     Strings.dashboard_day_status_semester,
                     weekOfSemester.num,
                 )
+
                 is WeekOfSemester.NonStudying -> context.getString(Strings.dashboard_day_status_not_semester)
                 null -> null
             }
