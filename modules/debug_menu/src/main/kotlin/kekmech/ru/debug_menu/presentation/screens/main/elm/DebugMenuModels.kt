@@ -4,7 +4,7 @@ import kekmech.ru.feature_app_settings_api.domain.model.AppTheme
 import kekmech.ru.lib_app_info.AppVersionName
 import kekmech.ru.lib_elm.Resource
 import kekmech.ru.lib_network.AppEnvironment
-import vivid.money.elmslie.core.store.Store
+import money.vivid.elmslie.core.store.Store
 
 internal typealias DebugMenuStore = Store<DebugMenuEvent, DebugMenuEffect, DebugMenuState>
 

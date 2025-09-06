@@ -1,7 +1,6 @@
 package kekmech.ru.debug_menu.presentation.screens.feature_toggles.elm
 
-import vivid.money.elmslie.coroutines.ElmStoreCompat
-
+import money.vivid.elmslie.core.store.ElmStore
 internal class FeatureTogglesStoreFactory(
     private val actor: FeatureTogglesActor,
 ) {

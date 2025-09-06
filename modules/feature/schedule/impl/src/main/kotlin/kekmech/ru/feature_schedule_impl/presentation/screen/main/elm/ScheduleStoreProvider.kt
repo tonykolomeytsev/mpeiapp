@@ -3,8 +3,8 @@ package kekmech.ru.feature_schedule_impl.presentation.screen.main.elm
 import kekmech.ru.ext_kotlin.fastLazy
 import kekmech.ru.feature_app_settings_api.data.AppSettingsRepository
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleEvent
-import vivid.money.elmslie.core.store.Store
-import vivid.money.elmslie.coroutines.ElmStoreCompat
+import money.vivid.elmslie.core.store.Store
+import money.vivid.elmslie.core.store.ElmStore
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleEffect as Effect
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleEvent as Event
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleState as State
@@ -17,7 +17,7 @@ internal class ScheduleStoreProvider(
 ) {
 
     private val store by fastLazy {
-        ElmStoreCompat(
+        ElmStore(
             initialState = State(
                 appSettings = appSettingsRepository.getAppSettings()
             ),

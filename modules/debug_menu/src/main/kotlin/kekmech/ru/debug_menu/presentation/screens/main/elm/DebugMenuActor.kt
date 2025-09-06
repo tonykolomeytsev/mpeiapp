@@ -7,7 +7,7 @@ import kekmech.ru.feature_app_settings_api.data.AppEnvironmentRepository
 import kekmech.ru.feature_app_settings_api.data.AppSettingsRepository
 import kekmech.ru.lib_elm.actorFlow
 import kotlinx.coroutines.flow.Flow
-import vivid.money.elmslie.coroutines.Actor
+import money.vivid.elmslie.core.store.Actor
 import kekmech.ru.debug_menu.presentation.screens.main.elm.DebugMenuCommand as Command
 import kekmech.ru.debug_menu.presentation.screens.main.elm.DebugMenuEvent as Event
 

@@ -1,7 +1,7 @@
 package kekmech.ru.debug_menu.presentation.screens.feature_toggles.elm
 
 import kekmech.ru.lib_elm.Resource
-import vivid.money.elmslie.core.store.Store
+import money.vivid.elmslie.core.store.Store
 
 internal typealias FeatureTogglesStore =
         Store<FeatureTogglesEvent, FeatureTogglesEffect, FeatureTogglesState>

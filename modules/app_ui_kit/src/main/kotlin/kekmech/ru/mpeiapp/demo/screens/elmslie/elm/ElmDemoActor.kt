@@ -6,7 +6,7 @@ import kekmech.ru.mpeiapp.demo.screens.elmslie.elm.ElmDemoEvent.Internal
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import vivid.money.elmslie.coroutines.Actor
+import money.vivid.elmslie.core.store.Actor
 import java.util.UUID
 import kotlin.random.Random
 import kekmech.ru.mpeiapp.demo.screens.elmslie.elm.ElmDemoCommand as Command

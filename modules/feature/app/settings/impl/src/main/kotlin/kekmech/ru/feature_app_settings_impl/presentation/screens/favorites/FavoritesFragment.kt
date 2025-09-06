@@ -2,6 +2,7 @@ package kekmech.ru.feature_app_settings_impl.presentation.screens.favorites
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import kekmech.ru.coreui.attachScrollListenerForAppBarLayoutShadow
 import kekmech.ru.coreui.items.AddActionAdapterItem
@@ -29,20 +30,22 @@ import kekmech.ru.feature_schedule_api.ScheduleFeatureLauncher.ContinueTo.BACK_W
 import kekmech.ru.feature_schedule_api.domain.model.SelectedSchedule
 import kekmech.ru.lib_adapter.BaseAdapter
 import kekmech.ru.lib_analytics_android.ext.screenAnalytics
-import kekmech.ru.lib_elm.BaseFragment
 import kekmech.ru.lib_navigation.addScreenForward
+import money.vivid.elmslie.android.renderer.ElmRendererDelegate
+import money.vivid.elmslie.android.renderer.androidElmStore
 import org.koin.android.ext.android.inject
 import kekmech.ru.res_strings.R.string as Strings
 
 internal class FavoritesFragment :
-    BaseFragment<FavoritesEvent, FavoritesEffect, FavoritesState>(R.layout.fragment_favorites) {
+    Fragment(R.layout.fragment_favorites),
+    ElmRendererDelegate<FavoritesEffect, FavoritesState> {
 
     private val dependencies by inject<AppSettingDependencies>()
     private val analytics by screenAnalytics("Favorites")
     private val adapter by fastLazy { createAdapter() }
     private val viewBinding by viewBinding(FragmentFavoritesBinding::bind)
 
-    override fun createStore() = dependencies.favoritesStoreFactory.create()
+    private val store by androidElmStore { dependencies.favoritesStoreFactory.create() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

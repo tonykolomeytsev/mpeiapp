@@ -5,14 +5,14 @@ import kekmech.ru.feature_schedule_api.data.repository.ScheduleRepository
 import kekmech.ru.feature_search_impl.screens.schedule_details.elm.ScheduleDetailsEvent.Internal
 import kekmech.ru.lib_elm.actorFlow
 import kotlinx.coroutines.flow.Flow
-import vivid.money.elmslie.coroutines.Actor
+import money.vivid.elmslie.core.store.Actor
 import kekmech.ru.feature_search_impl.screens.schedule_details.elm.ScheduleDetailsCommand as Command
 import kekmech.ru.feature_search_impl.screens.schedule_details.elm.ScheduleDetailsEvent as Event
 
 internal class ScheduleDetailsActor(
     private val scheduleRepository: ScheduleRepository,
     private val favoriteScheduleRepository: FavoriteScheduleRepository,
-) : Actor<Command, Event> {
+) : Actor<Command, Event>() {
 
     override fun execute(command: Command): Flow<Event> =
         when (command) {

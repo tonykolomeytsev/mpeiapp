@@ -5,12 +5,12 @@ import kekmech.ru.feature_app_settings_impl.presentation.screens.main.elm.AppSet
 import kekmech.ru.feature_contributors_api.data.repository.ContributorsRepository
 import kekmech.ru.lib_elm.actorFlow
 import kotlinx.coroutines.flow.Flow
-import vivid.money.elmslie.coroutines.Actor
+import money.vivid.elmslie.core.store.Actor
 
 internal class AppSettingsActor(
     private val appSettingsRepository: AppSettingsRepositoryImpl,
     private val contributorsRepository: ContributorsRepository,
-) : Actor<AppSettingsCommand, AppSettingsEvent> {
+) : Actor<AppSettingsCommand, AppSettingsEvent>() {
 
     override fun execute(command: AppSettingsCommand): Flow<AppSettingsEvent> =
         when (command) {

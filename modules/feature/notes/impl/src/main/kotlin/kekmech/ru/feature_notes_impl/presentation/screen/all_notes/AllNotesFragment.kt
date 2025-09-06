@@ -2,6 +2,7 @@ package kekmech.ru.feature_notes_impl.presentation.screen.all_notes
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import kekmech.ru.coreui.attachScrollListenerForAppBarLayoutShadow
 import kekmech.ru.coreui.items.EmptyStateAdapterItem
@@ -30,19 +31,21 @@ import kekmech.ru.feature_notes_impl.presentation.screen.edit.NoteEditFragment
 import kekmech.ru.lib_adapter.BaseAdapter
 import kekmech.ru.lib_analytics_android.addScrollAnalytics
 import kekmech.ru.lib_analytics_android.ext.screenAnalytics
-import kekmech.ru.lib_elm.BaseFragment
 import kekmech.ru.lib_navigation.addScreenForward
+import money.vivid.elmslie.android.renderer.ElmRendererDelegate
+import money.vivid.elmslie.android.renderer.androidElmStore
 import org.koin.android.ext.android.inject
 
 internal class AllNotesFragment :
-    BaseFragment<AllNotesEvent, AllNotesEffect, AllNotesState>(R.layout.fragment_all_notes) {
+    Fragment(R.layout.fragment_all_notes),
+    ElmRendererDelegate<AllNotesEffect, AllNotesState> {
 
     private val dependencies: NotesDependencies by inject()
     private val analytics by screenAnalytics("AllNotes")
     private val adapter by fastLazy { createAdapter() }
     private val viewBinding by viewBinding(FragmentAllNotesBinding::bind)
 
-    override fun createStore() = dependencies.allNotesStoreFactory.create()
+    private val store by androidElmStore { dependencies.allNotesStoreFactory.create() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

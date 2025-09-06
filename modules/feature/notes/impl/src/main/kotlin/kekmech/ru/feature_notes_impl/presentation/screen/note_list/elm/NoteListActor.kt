@@ -5,14 +5,14 @@ import kekmech.ru.feature_notes_impl.data.repository.NotesRepository
 import kekmech.ru.feature_notes_impl.presentation.screen.note_list.elm.NoteListEvent.Internal
 import kekmech.ru.lib_elm.actorFlow
 import kotlinx.coroutines.flow.Flow
-import vivid.money.elmslie.coroutines.Actor
+import money.vivid.elmslie.core.store.Actor
 import kekmech.ru.feature_notes_impl.presentation.screen.note_list.elm.NoteListCommand as Command
 import kekmech.ru.feature_notes_impl.presentation.screen.note_list.elm.NoteListEvent as Event
 
 internal class NoteListActor(
     private val getNotesUseCase: GetNotesForSelectedScheduleUseCase,
     private val notesRepository: NotesRepository,
-) : Actor<Command, Event> {
+) : Actor<Command, Event>() {
 
     override fun execute(command: Command): Flow<Event> =
         when (command) {

@@ -7,12 +7,14 @@ interface DisposableDelegate : Disposable {
 
     fun Disposable.bind()
 
+    fun bindDisposable(disposable: Disposable)
+
     fun clearDisposables()
 }
 
 class DisposableDelegateImpl : DisposableDelegate {
 
-    private val disposables: CompositeDisposable = CompositeDisposable()
+    protected val disposables: CompositeDisposable = CompositeDisposable()
 
     override fun isDisposed(): Boolean = disposables.isDisposed
 
@@ -26,5 +28,9 @@ class DisposableDelegateImpl : DisposableDelegate {
 
     override fun Disposable.bind() {
         disposables.add(this)
+    }
+
+    override fun bindDisposable(disposable: Disposable) {
+        disposable.bind()
     }
 }

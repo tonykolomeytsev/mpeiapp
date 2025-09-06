@@ -37,7 +37,7 @@ internal fun Project.configureKotlinAndroid(
         }
     }
     extensions.configure<KotlinAndroidProjectExtension> {
-        if (explicitApi) explicitApi()
+//        if (explicitApi) explicitApi()
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_17)
         }

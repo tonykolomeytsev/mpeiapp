@@ -2,6 +2,7 @@ package kekmech.ru.feature_dashboard_impl.presentation.screen.main
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import kekmech.ru.coreui.banner.showBanner
@@ -43,17 +44,19 @@ import kekmech.ru.feature_schedule_api.domain.model.SelectedSchedule
 import kekmech.ru.lib_adapter.BaseAdapter
 import kekmech.ru.lib_analytics_android.addScrollAnalytics
 import kekmech.ru.lib_analytics_android.ext.screenAnalytics
-import kekmech.ru.lib_elm.BaseFragment
 import kekmech.ru.lib_navigation.BottomTab
 import kekmech.ru.lib_navigation.features.ScrollToTop
 import kekmech.ru.lib_navigation.features.TabScreenStateSaver
 import kekmech.ru.lib_navigation.features.TabScreenStateSaverImpl
 import kekmech.ru.lib_schedule.items.NotePreviewAdapterItem
+import money.vivid.elmslie.android.renderer.ElmRendererDelegate
+import money.vivid.elmslie.android.renderer.androidElmStore
 import org.koin.android.ext.android.inject
 import kekmech.ru.res_strings.R.string as Strings
 
 internal class DashboardFragment :
-    BaseFragment<DashboardEvent, DashboardEffect, DashboardState>(R.layout.fragment_dashboard),
+    Fragment(R.layout.fragment_dashboard),
+    ElmRendererDelegate<DashboardEffect, DashboardState>,
     ActivityResultListener,
     ScrollToTop,
     TabScreenStateSaver by TabScreenStateSaverImpl("dashboard") {
@@ -63,7 +66,7 @@ internal class DashboardFragment :
     private val analytics by screenAnalytics("Dashboard")
     private val viewBinding by viewBinding(FragmentDashboardBinding::bind)
 
-    override fun createStore() = inject<DashboardStoreProvider>().value.get()
+    private val store by androidElmStore { inject<DashboardStoreProvider>().value.get() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

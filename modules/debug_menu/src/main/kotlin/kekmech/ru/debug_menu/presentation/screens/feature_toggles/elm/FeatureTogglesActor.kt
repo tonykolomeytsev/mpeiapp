@@ -6,7 +6,7 @@ import kekmech.ru.lib_elm.actorFlow
 import kekmech.ru.lib_feature_toggles.BooleanRemoteVariable
 import kekmech.ru.lib_feature_toggles.RemoteVariable
 import kotlinx.coroutines.flow.Flow
-import vivid.money.elmslie.coroutines.Actor
+import money.vivid.elmslie.core.store.Actor
 import kekmech.ru.debug_menu.presentation.screens.feature_toggles.elm.FeatureTogglesCommand as Command
 import kekmech.ru.debug_menu.presentation.screens.feature_toggles.elm.FeatureTogglesEvent as Event
 

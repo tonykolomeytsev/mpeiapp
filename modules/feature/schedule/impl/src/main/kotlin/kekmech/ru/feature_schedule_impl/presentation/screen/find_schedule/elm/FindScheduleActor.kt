@@ -5,7 +5,7 @@ import kekmech.ru.feature_schedule_api.data.repository.ScheduleSearchRepository
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.FindScheduleEvent.Internal
 import kekmech.ru.lib_elm.actorFlow
 import kotlinx.coroutines.flow.Flow
-import vivid.money.elmslie.coroutines.Actor
+import money.vivid.elmslie.core.store.Actor
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.FindScheduleCommand as Command
 
 private const val MaxSearchResultsNumber = 10
@@ -13,7 +13,7 @@ private const val MaxSearchResultsNumber = 10
 internal class FindScheduleActor(
     private val scheduleRepository: ScheduleRepository,
     private val scheduleSearchRepository: ScheduleSearchRepository,
-) : Actor<Command, FindScheduleEvent> {
+) : Actor<Command, FindScheduleEvent>() {
 
     override fun execute(command: Command): Flow<FindScheduleEvent> =
         when (command) {

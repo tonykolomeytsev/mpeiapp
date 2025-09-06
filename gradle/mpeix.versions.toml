@@ -2,7 +2,9 @@
 root = { id = "mpeix.root" }
 app = { id = "mpeix.app" }
 feature-impl = { id = "mpeix.feature.impl" }
+feature-api = { id = "mpeix.feature.api" }
 lib-kotlin = { id = "mpeix.lib.kotlin" }
 lib-android = { id = "mpeix.lib.android" }
+lib-android-compose = { id = "mpeix.lib.android.compose" }
 util-kotlin = { id = "mpeix.util.kotlin" }
 util-android = { id = "mpeix.util.android" }

@@ -6,14 +6,10 @@ import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
-import com.redmadrobot.mapmemory.MapMemory
-import kekmech.ru.ext_koin.bindIntoList
 import kekmech.ru.lib_analytics_android.FirebaseAnalyticsProvider
 import kekmech.ru.lib_app_info.AppVersionName
 import kekmech.ru.lib_feature_toggles.RemoteConfigWrapper
-import kekmech.ru.lib_feature_toggles.RemoteVariable
 import kekmech.ru.mpeiapp.BuildConfig
-import kekmech.ru.mpeiapp.ComposeEnabledFeatureToggle
 import kekmech.ru.mpeiapp.deeplink.di.DeeplinkModule
 import kekmech.ru.mpeiapp.ui.main.di.MainScreenModule
 import kotlinx.coroutines.CoroutineScope
@@ -30,10 +26,9 @@ val AppModule = module {
     factoryOf(::FirebaseAnalyticsProviderImpl) bind FirebaseAnalyticsProvider::class
     factoryOf(::RemoteConfigWrapperImpl) bind RemoteConfigWrapper::class
     factory { AppVersionName(BuildConfig.VERSION_NAME) }
-    factoryOf(::ComposeEnabledFeatureToggle) bindIntoList RemoteVariable::class
 
     // TODO: figure out how to inject Dispatchers correctly
-    @Suppress("RemoveExplicitTypeArguments", "InjectDispatcher")
+    @Suppress( "InjectDispatcher")
     single<DataStore<Preferences>> {
         val applicationContext: Context = androidApplication()
         val name = "mpeix.datastore.preferences"
@@ -48,7 +43,6 @@ val AppModule = module {
             applicationContext.preferencesDataStoreFile(name)
         }
     }
-    single { MapMemory() }
 
     @Suppress("SpreadOperator")
     includes(

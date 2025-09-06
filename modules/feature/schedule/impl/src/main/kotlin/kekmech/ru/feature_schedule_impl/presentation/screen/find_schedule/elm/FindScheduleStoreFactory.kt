@@ -1,7 +1,7 @@
 package kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm
 
 import kekmech.ru.feature_schedule_api.ScheduleFeatureLauncher
-import vivid.money.elmslie.coroutines.ElmStoreCompat
+import money.vivid.elmslie.core.store.ElmStore
 
 internal class FindScheduleStoreFactory(
     private val findScheduleActor: FindScheduleActor,
@@ -11,7 +11,7 @@ internal class FindScheduleStoreFactory(
         continueTo: ScheduleFeatureLauncher.ContinueTo,
         selectGroupAfterSuccess: Boolean,
     ) =
-        ElmStoreCompat(
+        ElmStore(
             initialState = FindScheduleState(
                 continueTo = continueTo,
                 selectScheduleAfterSuccess = selectGroupAfterSuccess,

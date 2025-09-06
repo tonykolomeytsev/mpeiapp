@@ -1,0 +1,9 @@
+plugins {
+    alias(mpeix.plugins.lib.android.compose)
+}
+
+dependencies {
+    implementation(libs.compose.material3)
+    implementation(libs.accompanist.systemUiController)
+    implementation(project(":res_fonts"))
+}

@@ -5,15 +5,15 @@ package kekmech.ru.lib_feature_toggles
  *
  * @see BooleanRemoteVariable
  */
-sealed class RemoteVariable<T : Any>(
-    val name: String,
+public sealed class RemoteVariable<T : Any>(
+    public val name: String,
     private val defaultValue: T,
     private val valueHolder: RemoteVariableValueHolder,
     private val deserializationStrategy: (String) -> T,
 ) {
 
-    val value get() =
-        valueHolder.get(name)
+    public val value: T
+        get() = valueHolder.get(name)
             ?.let(deserializationStrategy)
             ?: defaultValue
 }

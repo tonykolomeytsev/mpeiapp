@@ -1,7 +1,7 @@
 package kekmech.ru.lib_elm
 
 import timber.log.Timber
-import vivid.money.elmslie.core.logger.strategy.LogStrategy
+import money.vivid.elmslie.core.logger.strategy.LogStrategy
 
 object TimberLogger {
 
@@ -10,5 +10,5 @@ object TimberLogger {
 
     private fun invoke(
         log: (Throwable?, String) -> Unit
-    ) = LogStrategy { _, message, throwable -> log(throwable, message) }
+    ) = LogStrategy { _, _, message, throwable -> log(throwable, message) }
 }

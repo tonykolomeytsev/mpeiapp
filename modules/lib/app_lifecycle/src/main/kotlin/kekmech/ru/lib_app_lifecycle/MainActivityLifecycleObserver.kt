@@ -34,10 +34,10 @@ import android.content.Context
  * @see AppLifecycleObserver
  * @see onCreate
  */
-interface MainActivityLifecycleObserver {
+public interface MainActivityLifecycleObserver {
 
     /**
      * This method be called at the same time as MainActivity.onCreate()
      */
-    fun onCreate(context: Context) = Unit
+    public fun onCreate(context: Context): Unit = Unit
 }

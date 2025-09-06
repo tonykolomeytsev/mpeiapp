@@ -1,0 +1,7 @@
+plugins {
+    alias(mpeix.plugins.util.kotlin)
+}
+
+dependencies {
+    compileOnly(androidJar)
+}

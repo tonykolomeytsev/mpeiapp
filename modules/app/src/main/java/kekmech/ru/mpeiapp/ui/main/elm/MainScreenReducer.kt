@@ -1,14 +1,15 @@
 package kekmech.ru.mpeiapp.ui.main.elm
 
-import vivid.money.elmslie.core.store.Result
-import vivid.money.elmslie.core.store.StateReducer
+import money.vivid.elmslie.core.store.Result
+import money.vivid.elmslie.core.store.StateReducer
 
 typealias MainScreenResult = Result<MainScreenState, MainScreenEffect, MainScreenAction>
 
-class MainScreenReducer : StateReducer<MainScreenEvent, MainScreenState, MainScreenEffect, MainScreenAction> {
+class MainScreenReducer : StateReducer<MainScreenEvent, MainScreenState, MainScreenEffect, MainScreenAction>() {
 
-    override fun reduce(
-        event: MainScreenEvent,
-        state: MainScreenState
-    ): MainScreenResult = Result(state = state.copy())
+    override fun StateReducer<MainScreenEvent, MainScreenState, MainScreenEffect, MainScreenAction>.Result.reduce(
+        event: MainScreenEvent
+    ) {
+        /* no-op */
+    }
 }

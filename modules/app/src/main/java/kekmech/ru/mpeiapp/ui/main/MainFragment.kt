@@ -5,12 +5,12 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.setPadding
+import androidx.fragment.app.Fragment
 import io.reactivex.rxjava3.disposables.Disposable
 import kekmech.ru.ext_android.addSystemBottomPadding
 import kekmech.ru.ext_android.onActivityResult
 import kekmech.ru.ext_android.viewbinding.viewBinding
 import kekmech.ru.ext_kotlin.fastLazy
-import kekmech.ru.lib_elm.BaseFragment
 import kekmech.ru.lib_navigation.BackButtonListener
 import kekmech.ru.lib_navigation.BottomTab
 import kekmech.ru.mpeiapp.R
@@ -20,11 +20,14 @@ import kekmech.ru.mpeiapp.ui.main.elm.MainScreenEffect
 import kekmech.ru.mpeiapp.ui.main.elm.MainScreenEvent
 import kekmech.ru.mpeiapp.ui.main.elm.MainScreenState
 import kekmech.ru.mpeiapp.ui.main.elm.MainScreenStoreFactory
+import money.vivid.elmslie.android.renderer.ElmRendererDelegate
+import money.vivid.elmslie.android.renderer.androidElmStore
 import org.koin.android.ext.android.inject
 
 @Suppress("TooManyFunctions")
 class MainFragment :
-    BaseFragment<MainScreenEvent, MainScreenEffect, MainScreenState>(R.layout.fragment_main),
+    Fragment(R.layout.fragment_main),
+    ElmRendererDelegate<MainScreenEffect, MainScreenState>,
     BackButtonListener {
 
     private val dependencies by inject<MainScreenDependencies>()
@@ -33,7 +36,8 @@ class MainFragment :
     private val tabsSwitcher by fastLazy { dependencies.bottomTabsSwitcher }
     private val viewBinding by viewBinding(FragmentMainBinding::bind)
 
-    override fun createStore() = MainScreenStoreFactory.create()
+    @Suppress("Unused")
+    private val store by androidElmStore { MainScreenStoreFactory.create() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

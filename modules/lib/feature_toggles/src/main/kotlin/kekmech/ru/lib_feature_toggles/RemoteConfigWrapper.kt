@@ -1,8 +1,8 @@
 package kekmech.ru.lib_feature_toggles
 
-interface RemoteConfigWrapper {
+public interface RemoteConfigWrapper {
 
-    fun getUntyped(name: String): String
+    public fun getUntyped(name: String): String
 
-    fun getAll(): Map<String, String>
+    public fun getAll(): Map<String, String>
 }

@@ -1,0 +1,10 @@
+plugins {
+    alias(mpeix.plugins.lib.android)
+}
+
+dependencies {
+    implementation(libs.koin.core)
+    implementation(libs.squareup.okhttp)
+    implementation(project(":ext_koin"))
+    compileOnly(libs.chucker.impl)
+}

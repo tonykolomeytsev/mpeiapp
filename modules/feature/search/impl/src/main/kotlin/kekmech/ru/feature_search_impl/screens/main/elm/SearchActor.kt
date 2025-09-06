@@ -8,7 +8,7 @@ import kekmech.ru.feature_search_impl.screens.main.utils.FullTextMapMarkersSearc
 import kekmech.ru.feature_search_impl.screens.main.utils.FullTextNotesSearchHelper
 import kekmech.ru.lib_elm.actorFlow
 import kotlinx.coroutines.flow.Flow
-import vivid.money.elmslie.coroutines.Actor
+import money.vivid.elmslie.core.store.Actor
 import kekmech.ru.feature_search_impl.screens.main.elm.SearchCommand as Command
 import kekmech.ru.feature_search_impl.screens.main.elm.SearchEvent as Event
 
@@ -16,7 +16,7 @@ internal class SearchActor(
     private val getNotesUseCase: GetNotesForSelectedScheduleUseCase,
     private val mapRepository: MapRepository,
     private val scheduleSearchRepository: ScheduleSearchRepository,
-) : Actor<Command, Event> {
+) : Actor<Command, Event>() {
 
     override fun execute(command: Command): Flow<Event> =
         when (command) {

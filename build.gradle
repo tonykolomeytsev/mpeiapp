@@ -33,5 +33,12 @@ androidProjectConfiguration {
     minSdk = 24
     buildToolsVersion = "35.0.0"
     coreLibraryDesugaringVersion = "2.1.5"
+
+    defaultComposeDependencies {
+        add("implementation", platform(libs.compose.bom))
+        add("implementation", libs.bundles.compose)
+        add("debugImplementation", libs.compose.ui.tooling)
+        add("debugImplementation", libs.compose.ui.preview)
+    }
 }
 

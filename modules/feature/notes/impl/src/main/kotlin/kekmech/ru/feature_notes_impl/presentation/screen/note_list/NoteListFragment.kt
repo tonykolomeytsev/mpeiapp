@@ -29,14 +29,16 @@ import kekmech.ru.feature_notes_impl.presentation.screen.note_list.elm.NoteListS
 import kekmech.ru.feature_schedule_api.domain.model.Classes
 import kekmech.ru.lib_adapter.BaseAdapter
 import kekmech.ru.lib_analytics_android.ext.screenAnalytics
-import kekmech.ru.lib_elm.BaseBottomSheetDialogFragment
 import kekmech.ru.lib_navigation.addScreenForward
+import money.vivid.elmslie.android.renderer.ElmRendererDelegate
+import money.vivid.elmslie.android.renderer.androidElmStore
 import org.koin.android.ext.android.inject
 import java.time.LocalDate
 import kekmech.ru.res_strings.R.string as Strings
 
 internal class NoteListFragment :
-    BaseBottomSheetDialogFragment<NoteListEvent, NoteListEffect, NoteListState>(R.layout.fragment_note_list) {
+    BottomSheetDialogFragment(R.layout.fragment_note_list),
+    ElmRendererDelegate<NoteListEffect, NoteListState> {
 
     private val dependencies by inject<NotesDependencies>()
     private val adapter by fastLazy { createAdapter() }
@@ -45,10 +47,12 @@ internal class NoteListFragment :
     private val resultKey by fastLazy { getArgument<String>(ARG_RESULT_KEY) }
     private val listConverter by fastLazy { NoteListConverter(requireContext()) }
 
-    override fun createStore() = dependencies.noteListStoreFactory.create(
-        selectedClasses = getArgument(ARG_SELECTED_CLASSES),
-        selectedDate = getArgument(ARG_SELECTED_DATE)
-    )
+    private val store by androidElmStore {
+        dependencies.noteListStoreFactory.create(
+            selectedClasses = getArgument(ARG_SELECTED_CLASSES),
+            selectedDate = getArgument(ARG_SELECTED_DATE)
+        )
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -74,6 +78,7 @@ internal class NoteListFragment :
         is NoteListEffect.ShowNoteLoadError -> Toast
             .makeText(requireContext(), Strings.something_went_wrong_error, Toast.LENGTH_SHORT)
             .show()
+
         is NoteListEffect.OpenNoteEdit -> {
             close()
             addScreenForward { NoteEditFragment.newInstance(effect.note, resultKey) }

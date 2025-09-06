@@ -4,14 +4,14 @@ import kekmech.ru.debug_menu.presentation.screens.feature_toggles.elm.FeatureTog
 import kekmech.ru.debug_menu.presentation.screens.feature_toggles.elm.FeatureTogglesEvent.Ui
 import kekmech.ru.lib_elm.map
 import kekmech.ru.lib_elm.toResource
-import vivid.money.elmslie.core.store.dsl_reducer.ScreenDslReducer
+import money.vivid.elmslie.core.store.ScreenReducer
 import kekmech.ru.debug_menu.presentation.screens.feature_toggles.elm.FeatureTogglesCommand as Command
 import kekmech.ru.debug_menu.presentation.screens.feature_toggles.elm.FeatureTogglesEffect as Effect
 import kekmech.ru.debug_menu.presentation.screens.feature_toggles.elm.FeatureTogglesEvent as Event
 import kekmech.ru.debug_menu.presentation.screens.feature_toggles.elm.FeatureTogglesState as State
 
 internal class FeatureTogglesReducer :
-    ScreenDslReducer<Event, Ui, Internal, State, Effect, Command>(
+    ScreenReducer<Event, Ui, Internal, State, Effect, Command>(
         uiEventClass = Ui::class,
         internalEventClass = Internal::class,
     ) {

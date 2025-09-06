@@ -4,13 +4,13 @@ import kekmech.ru.feature_app_settings_impl.presentation.screens.favorites.elm.F
 import kekmech.ru.feature_favorite_schedule_api.data.repository.FavoriteScheduleRepository
 import kekmech.ru.lib_elm.actorFlow
 import kotlinx.coroutines.flow.Flow
-import vivid.money.elmslie.coroutines.Actor
+import money.vivid.elmslie.core.store.Actor
 import kekmech.ru.feature_app_settings_impl.presentation.screens.favorites.elm.FavoritesCommand as Command
 import kekmech.ru.feature_app_settings_impl.presentation.screens.favorites.elm.FavoritesEvent as Event
 
 internal class FavoritesActor(
     private val favoriteScheduleRepository: FavoriteScheduleRepository,
-) : Actor<Command, Event> {
+) : Actor<Command, Event>() {
 
     override fun execute(command: Command): Flow<Event> =
         when (command) {

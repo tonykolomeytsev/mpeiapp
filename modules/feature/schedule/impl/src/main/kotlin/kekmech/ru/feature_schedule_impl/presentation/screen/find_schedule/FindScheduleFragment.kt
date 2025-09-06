@@ -3,6 +3,7 @@ package kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import androidx.fragment.app.Fragment
 import com.google.android.material.chip.Chip
 import kekmech.ru.coreui.banner.showBanner
 import kekmech.ru.ext_android.addSystemBottomPadding
@@ -29,22 +30,26 @@ import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.Fi
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.FindScheduleStoreFactory
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.utils.GroupFormatTextWatcher
 import kekmech.ru.lib_analytics_android.ext.screenAnalytics
-import kekmech.ru.lib_elm.BaseFragment
+import money.vivid.elmslie.android.renderer.ElmRendererDelegate
+import money.vivid.elmslie.android.renderer.androidElmStore
 import org.koin.android.ext.android.inject
 import kekmech.ru.res_strings.R.string as Strings
 
 internal class FindScheduleFragment :
-    BaseFragment<FindScheduleEvent, FindScheduleEffect, FindScheduleState>(R.layout.fragment_find_schedule) {
+    Fragment(R.layout.fragment_find_schedule),
+    ElmRendererDelegate<FindScheduleEffect, FindScheduleState> {
 
     private val dependencies by inject<ScheduleDependencies>()
     private val analytics by screenAnalytics("FindSchedule")
     private val viewBinding by viewBinding(FragmentFindScheduleBinding::bind)
     private val resultKey by fastLazy { getArgument<String>(ARG_RESULT_KEY) }
 
-    override fun createStore() = inject<FindScheduleStoreFactory>().value.create(
-        getArgument(ARG_CONTINUE_TO),
-        getArgument(ARG_SELECT_AFTER)
-    )
+    private val store by androidElmStore {
+        inject<FindScheduleStoreFactory>().value.create(
+            getArgument(ARG_CONTINUE_TO),
+            getArgument(ARG_SELECT_AFTER)
+        )
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -67,10 +72,13 @@ internal class FindScheduleFragment :
     }
 
     override fun handleEffect(effect: FindScheduleEffect) = when (effect) {
-        is FindScheduleEffect.ShowError -> viewBinding.groupTextLayout.setError(getString(
-            Strings.schedule_find_error_loading,
-            viewBinding.groupText.text?.toString().orEmpty()
-        ))
+        is FindScheduleEffect.ShowError -> viewBinding.groupTextLayout.setError(
+            getString(
+                Strings.schedule_find_error_loading,
+                viewBinding.groupText.text?.toString().orEmpty()
+            )
+        )
+
         is FindScheduleEffect.ShowSomethingWentWrongError -> showBanner(Strings.something_went_wrong_error)
         is FindScheduleEffect.NavigateNextFragment -> when (effect.continueTo) {
             BACK -> close()
@@ -79,6 +87,7 @@ internal class FindScheduleFragment :
                 close()
                 setResult(resultKey, result = effect.selectedSchedule)
             }
+
             else -> Unit
         }
     }

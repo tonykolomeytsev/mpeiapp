@@ -6,19 +6,19 @@ import kekmech.ru.feature_schedule_api.domain.model.Schedule
 import kekmech.ru.feature_schedule_api.domain.model.SelectedSchedule
 import kekmech.ru.feature_search_impl.screens.schedule_details.elm.ScheduleDetailsEvent.Internal
 import kekmech.ru.feature_search_impl.screens.schedule_details.elm.ScheduleDetailsEvent.Ui
-import vivid.money.elmslie.core.store.dsl_reducer.ScreenDslReducer
+import money.vivid.elmslie.core.store.ScreenReducer
 import kekmech.ru.feature_search_impl.screens.schedule_details.elm.ScheduleDetailsCommand as Command
 import kekmech.ru.feature_search_impl.screens.schedule_details.elm.ScheduleDetailsEffect as Effect
 import kekmech.ru.feature_search_impl.screens.schedule_details.elm.ScheduleDetailsEvent as Event
 import kekmech.ru.feature_search_impl.screens.schedule_details.elm.ScheduleDetailsState as State
 
 internal class ScheduleDetailsReducer :
-    ScreenDslReducer<Event, Ui, Internal, State, Effect, Command>(
+    ScreenReducer<Event, Ui, Internal, State, Effect, Command>(
         uiEventClass = Ui::class,
         internalEventClass = Internal::class,
     ) {
 
-    override fun Result.internal(event: Internal): Any =
+    override fun Result.internal(event: Internal) {
         when (event) {
             is Internal.LoadScheduleSuccess -> state {
                 val days = event.schedule.mapToDays()
@@ -28,6 +28,7 @@ internal class ScheduleDetailsReducer :
                     copy(nextWeek = days)
                 }
             }
+
             is Internal.LoadScheduleError -> state {
                 if (event.weekOffset == 0) {
                     copy(thisWeek = emptyList())
@@ -35,6 +36,7 @@ internal class ScheduleDetailsReducer :
                     copy(nextWeek = emptyList())
                 }
             }
+
             is Internal.GetFavoritesSuccess -> {
                 val favoriteSchedule =
                     event.schedules.find { it.name == state.searchResult.name }
@@ -45,12 +47,14 @@ internal class ScheduleDetailsReducer :
                     )
                 }
             }
+
             is Internal.RemoveFromFavoritesSuccess -> state {
                 copy(
                     isInFavorites = false,
                     favoriteSchedule = null,
                 )
             }
+
             is Internal.AddToFavoritesSuccess -> state {
                 copy(
                     isInFavorites = true,
@@ -58,8 +62,9 @@ internal class ScheduleDetailsReducer :
                 )
             }
         }
+    }
 
-    override fun Result.ui(event: Ui): Any =
+    override fun Result.ui(event: Ui) {
         when (event) {
             is Ui.Init -> commands {
                 val type = state.scheduleType
@@ -68,6 +73,7 @@ internal class ScheduleDetailsReducer :
                 +Command.LoadSchedule(type, name, weekOffset = 1)
                 +Command.GetFavorites
             }
+
             is Ui.Click.Day -> state { copy(selectedDayDate = event.date) }
             is Ui.Click.Favorites -> {
                 state { copy(isInFavorites = null) }
@@ -85,6 +91,7 @@ internal class ScheduleDetailsReducer :
                     commands { +Command.RemoveFromFavorites(favoriteSchedule) }
                 }
             }
+
             is Ui.Click.SwitchSchedule -> {
                 commands {
                     +Command.SwitchSchedule(
@@ -97,6 +104,7 @@ internal class ScheduleDetailsReducer :
                 effects { +Effect.CloseAndGoToSchedule }
             }
         }
+    }
 
     /**
      * If you modify this function, please, also modify same function in ScheduleDetailsReducerTest.Companion

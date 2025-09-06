@@ -6,7 +6,7 @@ import android.net.ConnectivityManager
 import okhttp3.Interceptor
 import okhttp3.Response
 
-class NoConnectionInterceptor(private val context: Context) : Interceptor {
+public class NoConnectionInterceptor(private val context: Context) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
         if (isConnected()) {

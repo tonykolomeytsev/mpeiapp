@@ -35,7 +35,7 @@ import kotlin.reflect.KClass
  * ```
  */
 @OptionDslMarker
-inline infix fun <S : Any, reified T : S> KoinDefinition<T>.bindIntoList(
+public inline infix fun <S : Any, reified T : S> KoinDefinition<T>.bindIntoList(
     clazz: KClass<S>,
 ): KoinDefinition<out S> {
     factory.beanDefinition.qualifier = TypeQualifier(T::class)

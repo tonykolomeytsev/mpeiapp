@@ -19,8 +19,8 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import timber.log.Timber
 import timber.log.Timber.DebugTree
-import vivid.money.elmslie.android.logger.strategy.Crash
-import vivid.money.elmslie.core.config.ElmslieConfig
+import money.vivid.elmslie.android.logger.strategy.Crash
+import money.vivid.elmslie.core.config.ElmslieConfig
 
 class MpeixApp : Application(),
     RouterHolder {

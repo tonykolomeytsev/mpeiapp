@@ -3,6 +3,7 @@ package kekmech.ru.feature_schedule_impl.presentation.screen.main
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import kekmech.ru.ext_android.ActivityResultListener
 import kekmech.ru.ext_android.EmptyResult
 import kekmech.ru.ext_android.addSystemTopPadding
@@ -34,9 +35,10 @@ import kekmech.ru.feature_schedule_impl.presentation.screen.main.item.WorkingDay
 import kekmech.ru.lib_adapter.BaseAdapter
 import kekmech.ru.lib_analytics_android.addScrollAnalytics
 import kekmech.ru.lib_analytics_android.ext.screenAnalytics
-import kekmech.ru.lib_elm.BaseFragment
 import kekmech.ru.lib_navigation.features.TabScreenStateSaver
 import kekmech.ru.lib_navigation.features.TabScreenStateSaverImpl
+import money.vivid.elmslie.android.renderer.ElmRendererDelegate
+import money.vivid.elmslie.android.renderer.androidElmStore
 import org.koin.android.ext.android.inject
 import java.time.LocalDate
 import kekmech.ru.res_strings.R.array as StringArrays
@@ -44,7 +46,8 @@ import kekmech.ru.res_strings.R.string as Strings
 
 @Suppress("TooManyFunctions")
 internal class ScheduleFragment :
-    BaseFragment<ScheduleEvent, ScheduleEffect, ScheduleState>(R.layout.fragment_schedule),
+    Fragment(R.layout.fragment_schedule),
+    ElmRendererDelegate<ScheduleEffect, ScheduleState>,
     ActivityResultListener,
     TabScreenStateSaver by TabScreenStateSaverImpl("schedule") {
 
@@ -58,7 +61,7 @@ internal class ScheduleFragment :
     // for viewPager sliding debounce
     private var viewPagerPositionToBeSelected: Int? = null
 
-    override fun createStore() = inject<ScheduleStoreProvider>().value.get()
+    private val store by androidElmStore { inject<ScheduleStoreProvider>().value.get() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

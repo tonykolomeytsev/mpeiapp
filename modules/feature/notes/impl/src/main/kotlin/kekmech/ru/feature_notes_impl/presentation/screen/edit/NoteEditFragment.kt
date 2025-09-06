@@ -2,6 +2,7 @@ package kekmech.ru.feature_notes_impl.presentation.screen.edit
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import kekmech.ru.coreui.PrettyDateFormatter
 import kekmech.ru.coreui.attachScrollListenerForAppBarLayoutShadow
@@ -24,12 +25,14 @@ import kekmech.ru.feature_notes_impl.presentation.screen.edit.elm.NoteEditEvent.
 import kekmech.ru.feature_notes_impl.presentation.screen.edit.elm.NoteEditState
 import kekmech.ru.lib_adapter.BaseAdapter
 import kekmech.ru.lib_analytics_android.ext.screenAnalytics
-import kekmech.ru.lib_elm.BaseFragment
+import money.vivid.elmslie.android.renderer.ElmRendererDelegate
+import money.vivid.elmslie.android.renderer.androidElmStore
 import org.koin.android.ext.android.inject
 import kekmech.ru.res_strings.R.string as Strings
 
 internal class NoteEditFragment :
-    BaseFragment<NoteEditEvent, NoteEditEffect, NoteEditState>(R.layout.fragment_note_edit) {
+    Fragment(R.layout.fragment_note_edit),
+    ElmRendererDelegate<NoteEditEffect, NoteEditState> {
 
     private val dependencies: NotesDependencies by inject()
     private val analytics by screenAnalytics("NoteEdit")
@@ -40,9 +43,11 @@ internal class NoteEditFragment :
     private val viewBinding by viewBinding(FragmentNoteEditBinding::bind)
     private val resultKey by fastLazy { getArgument<String>(ARG_RESULT_KEY) }
 
-    override fun createStore() = dependencies.noteEditStoreFactory.create(
-        note = getArgument(ARG_NOTE)
-    )
+    private val store by androidElmStore {
+        dependencies.noteEditStoreFactory.create(
+            note = getArgument(ARG_NOTE)
+        )
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -2,7 +2,7 @@ package kekmech.ru.feature_schedule_impl.presentation.screen.main.elm
 
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleEvent.Internal
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleEvent.Ui
-import vivid.money.elmslie.core.store.dsl_reducer.ScreenDslReducer
+import money.vivid.elmslie.core.store.ScreenReducer
 import java.time.DayOfWeek
 import java.time.LocalDate
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleCommand as Command
@@ -11,12 +11,12 @@ import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleEve
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleState as State
 
 internal class ScheduleReducer :
-    ScreenDslReducer<Event, Ui, Internal, State, Effect, Command>(
+    ScreenReducer<Event, Ui, Internal, State, Effect, Command>(
         uiEventClass = Ui::class,
         internalEventClass = Internal::class,
     ) {
 
-    override fun Result.internal(event: Internal): Any =
+    override fun Result.internal(event: Internal) {
         when (event) {
             is Internal.LoadScheduleSuccess -> {
                 state {
@@ -26,10 +26,12 @@ internal class ScheduleReducer :
                     )
                 }
             }
+
             is Internal.LoadScheduleFailure -> state { copy(loadingError = event.throwable) }
         }
+    }
 
-    override fun Result.ui(event: Ui): Any =
+    override fun Result.ui(event: Ui) {
         when (event) {
             is Ui.Init -> {
                 state { showNextWeekIfWeekend() }
@@ -38,6 +40,7 @@ internal class ScheduleReducer :
                     +Command.LoadSchedule(1)
                 }
             }
+
             is Ui.Action.SelectWeek -> selectWeek(event)
             is Ui.Click.Day -> state {
                 copy(
@@ -45,6 +48,7 @@ internal class ScheduleReducer :
                     isNavigationFabVisible = true,
                 )
             }
+
             is Ui.Action.PageChanged -> {
                 val oldSelectedDay = state.selectedDate.dayOfWeek.value
                 val newSelectedDay = event.page + 1L
@@ -56,19 +60,23 @@ internal class ScheduleReducer :
                     )
                 }
             }
+
             is Ui.Click.Classes -> effects {
                 +Effect.NavigateToNoteList(
                     classes = event.classes,
                     date = state.selectedDate,
                 )
             }
+
             is Ui.Action.NotesUpdated, is Ui.Action.UpdateScheduleIfNeeded -> commands {
                 +Command.LoadSchedule(state.weekOffset)
             }
+
             is Ui.Action.ClassesScrolled -> state { copy(isNavigationFabVisible = event.dy <= 0) }
             is Ui.Click.FAB -> selectWeek(Ui.Action.SelectWeek(if (state.weekOffset != 0) 0 else 1))
             is Ui.Click.Reload -> commands { +Command.LoadSchedule(state.weekOffset) }
         }
+    }
 
     private fun Result.selectWeek(
         event: Ui.Action.SelectWeek,

@@ -14,6 +14,7 @@ import androidx.core.text.toSpannable
 import androidx.core.view.forEach
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import kekmech.ru.coreui.banner.showBanner
 import kekmech.ru.coreui.items.EmptyStateAdapterItem
 import kekmech.ru.coreui.items.ShimmerAdapterItem
@@ -34,18 +35,18 @@ import kekmech.ru.feature_bars_impl.presentation.items.LoginToBarsAdapterItem
 import kekmech.ru.feature_bars_impl.presentation.items.UserNameHeaderAdapterItem
 import kekmech.ru.feature_bars_impl.presentation.screen.details.BarsDetailsFragment
 import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsEffect
-import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsEvent
 import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsEvent.Ui
 import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsState
 import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsStoreProvider
 import kekmech.ru.lib_adapter.BaseAdapter
 import kekmech.ru.lib_analytics_android.addScrollAnalytics
 import kekmech.ru.lib_analytics_android.ext.screenAnalytics
-import kekmech.ru.lib_elm.BaseFragment
 import kekmech.ru.lib_navigation.features.ScrollToTop
 import kekmech.ru.lib_navigation.features.TabScreenStateSaver
 import kekmech.ru.lib_navigation.features.TabScreenStateSaverImpl
 import kekmech.ru.lib_navigation.showDialog
+import money.vivid.elmslie.android.renderer.ElmRendererDelegate
+import money.vivid.elmslie.android.renderer.androidElmStore
 import org.koin.android.ext.android.inject
 import timber.log.Timber
 import kekmech.ru.coreui.R as coreui_R
@@ -55,7 +56,9 @@ private const val JS_INTERFACE_NAME = "kti"
 
 @Suppress("TooManyFunctions")
 internal class BarsFragment :
-    BaseFragment<BarsEvent, BarsEffect, BarsState>(R.layout.fragment_bars), ScrollToTop,
+    Fragment(R.layout.fragment_bars),
+    ScrollToTop,
+    ElmRendererDelegate<BarsEffect, BarsState>,
     TabScreenStateSaver by TabScreenStateSaverImpl("bars") {
 
     private val analytics by screenAnalytics("Bars")
@@ -63,7 +66,7 @@ internal class BarsFragment :
     private val adapter by fastLazy { createAdapter() }
     private val settingsFeatureLauncher by inject<AppSettingsFeatureLauncher>()
 
-    override fun createStore() = inject<BarsStoreProvider>().value.get()
+    private val store by androidElmStore { inject<BarsStoreProvider>().value.get() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -155,10 +158,12 @@ internal class BarsFragment :
             is BarsEffect.InvokeJs -> viewBinding.webView.evaluateJavascript(effect.js) {
                 Timber.d(it)
             }
+
             is BarsEffect.OpenSettings -> settingsFeatureLauncher.launch()
             is BarsEffect.ShowCommonError -> showBanner(Strings.something_went_wrong_error)
             is BarsEffect.OpenExternalBrowser ->
                 requireContext().openLinkExternal(effect.url)
+
             is BarsEffect.ScrollToTop -> viewBinding.recyclerView.scrollToPosition(0)
         }
 
@@ -273,6 +278,7 @@ internal class BarsFragment :
                     analytics.sendClick("BarsShowBrowser")
                     store.accept(Ui.Click.ShowBrowser)
                 }
+
                 else -> { /* no-op */
                 }
             }

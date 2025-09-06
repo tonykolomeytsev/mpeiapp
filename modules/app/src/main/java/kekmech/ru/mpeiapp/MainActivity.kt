@@ -69,9 +69,9 @@ class MainActivity : AppCompatActivity(), DisposableDelegate by DisposableDelega
         }
     }
 
-    override fun onNewIntent(intent: Intent?) {
+    override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
-        deeplinkHandlersProcessor.processDeeplink(intent?.data)
+        deeplinkHandlersProcessor.processDeeplink(intent.data)
     }
 
     private fun setTheme() {

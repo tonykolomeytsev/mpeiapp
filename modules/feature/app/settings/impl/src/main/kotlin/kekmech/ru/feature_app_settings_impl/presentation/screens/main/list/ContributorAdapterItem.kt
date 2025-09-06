@@ -72,7 +72,7 @@ private class RoundedCornersTransformation(val radius: Float) : Transformation {
     }
 
     override fun transform(source: Bitmap): Bitmap {
-        val output = Bitmap.createBitmap(source.width, source.height, source.config)
+        val output = Bitmap.createBitmap(source.width, source.height, source.config!!)
         val canvas = Canvas(output)
         canvas.clipPath(clipPath)
         canvas.drawBitmap(source, 0f, 0f, Paint())

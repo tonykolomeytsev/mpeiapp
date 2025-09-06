@@ -1,0 +1,8 @@
+plugins {
+    alias(mpeix.plugins.feature.api)
+}
+
+dependencies {
+    aarCompileOnly(libs.androidx.fragment)
+    implementation(project(":lib_navigation_api"))
+}
