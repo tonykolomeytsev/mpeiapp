@@ -4,5 +4,4 @@ plugins {
 
 dependencies {
     compileOnly(androidJar)
-    implementation(project(":lib_navigation_api"))
 }

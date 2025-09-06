@@ -1,7 +1,0 @@
-plugins {
-    alias(mpeix.plugins.lib.android)
-}
-
-dependencies {
-    api(project(":lib_navigation_api"))
-}

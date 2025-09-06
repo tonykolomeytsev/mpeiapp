@@ -40,7 +40,6 @@ dependencies {
     implementation(project(":lib_app_info"))
     implementation(project(":lib_elm"))
     implementation(project(":lib_navigation"))
-    implementation(project(":lib_navigation_compose"))
     implementation(project(":lib_schedule"))
 
     implementation(project(":ui_theme"))
