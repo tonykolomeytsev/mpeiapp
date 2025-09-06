@@ -47,7 +47,7 @@ import kekmech.ru.ui_theme.theme.MpeixTheme
  * @see androidx.compose.material3.ListItem
  */
 @Composable
-fun ListItem(
+public fun ListItem(
     headlineText: String,
     modifier: Modifier = Modifier,
     overlineText: String? = null,
@@ -111,13 +111,13 @@ fun ListItem(
     )
 }
 
-object ListItemLeadingContentScope {
+public object ListItemLeadingContentScope {
 
     /**
      * Leading icon for [ListItem]
      */
     @Composable
-    fun Icon(painter: Painter) {
+    public fun Icon(painter: Painter) {
         androidx.compose.material3.Icon(
             painter = painter,
             contentDescription = null,
@@ -130,7 +130,7 @@ object ListItemLeadingContentScope {
      * Leading monogram (Avatar placeholder with letter) for [ListItem]
      */
     @Composable
-    fun Monogram(letter: Char) {
+    public fun Monogram(letter: Char) {
         val backgroundColor = MpeixTheme.palette.primaryContainer
         Box(
             modifier = Modifier
@@ -150,13 +150,13 @@ object ListItemLeadingContentScope {
     }
 }
 
-object ListItemTrailingContentScope {
+public object ListItemTrailingContentScope {
 
     /**
      * Small trailing text for [ListItem]
      */
     @Composable
-    fun SupportingText(text: String) {
+    public fun SupportingText(text: String) {
         Text(
             text = text,
             style = MpeixTheme.typography.labelMini,

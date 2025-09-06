@@ -6,10 +6,11 @@ import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.chuckerteam.chucker.api.RetentionManager
 import kekmech.ru.ext_koin.bindIntoList
 import okhttp3.Interceptor
+import org.koin.core.module.Module
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
-val LibraryChuckerModule = module {
+public val LibraryChuckerModule: Module = module {
     factoryOf(::createChuckerInterceptor) bindIntoList Interceptor::class
 }
 

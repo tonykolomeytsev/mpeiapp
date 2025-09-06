@@ -33,22 +33,22 @@ import androidx.compose.ui.window.DialogProperties
 import kekmech.ru.ui_theme.theme.MpeixTheme
 
 @Stable
-class AlertDialogState(dialogVisible: Boolean = false) {
+public class AlertDialogState(dialogVisible: Boolean = false) {
 
-    var dialogVisible by mutableStateOf(dialogVisible)
+    public var dialogVisible: Boolean by mutableStateOf(dialogVisible)
         private set
 
-    fun showDialog() {
+    public fun showDialog() {
         dialogVisible = true
     }
 
-    fun hideDialog() {
+    public fun hideDialog() {
         dialogVisible = false
     }
 }
 
 @Composable
-fun rememberAlertDialogState(dialogVisible: Boolean = false): AlertDialogState =
+public fun rememberAlertDialogState(dialogVisible: Boolean = false): AlertDialogState =
     remember { AlertDialogState(dialogVisible) }
 
 /**
@@ -88,7 +88,7 @@ fun rememberAlertDialogState(dialogVisible: Boolean = false): AlertDialogState =
  * @see AlertDialogState
  */
 @Composable
-fun AlertDialog(
+public fun AlertDialog(
     onDismissRequest: () -> Unit,
     state: AlertDialogState,
     modifier: Modifier = Modifier,
@@ -165,7 +165,7 @@ fun AlertDialog(
  * @see AlertDialogState
  */
 @Composable
-fun AlertDialog(
+public fun AlertDialog(
     onDismissRequest: () -> Unit,
     state: AlertDialogState,
     confirmButton: @Composable () -> Unit,

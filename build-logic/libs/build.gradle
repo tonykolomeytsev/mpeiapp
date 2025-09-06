@@ -22,6 +22,10 @@ gradlePlugin {
         id = "mpeix.feature.impl"
         implementationClass = "mpeix.plugins.FeatureImplConventionPlugin"
     }
+    plugins.create("FeatureImplComposeConventionPlugin") {
+        id = "mpeix.feature.impl.compose"
+        implementationClass = "mpeix.plugins.FeatureImplComposeConventionPlugin"
+    }
     plugins.create("FeatureApiConventionPlugin") {
         id = "mpeix.feature.api"
         implementationClass = "mpeix.plugins.FeatureApiConventionPlugin"

@@ -23,61 +23,61 @@ import androidx.compose.ui.unit.sp
 import kekmech.ru.ui_theme.typography.RobotoFontFamily
 
 @Immutable
-object MpeixColors {
+public object MpeixColors {
 
-    val Primary90 = Color(0xFFDBE6FA)
-    val Primary60 = Color(0xFF4C83E8)
-    val Primary50 = Color(0xFF1D62E2)
-    val Secondary90 = Color(0xFFD1EDFA)
-    val Secondary60 = Color(0xFF4BB7E9)
-    val Secondary30 = Color(0xFF105F84)
-    val Tertiary50 = Color(0xFF1CE39D)
-    val Neutral100 = Color(0xFFFFFFFF)
-    val Neutral98 = Color(0xFFF6F7F9)
-    val Neutral97 = Color(0xFFF3F5F7)
-    val Neutral95 = Color(0xFFF0F2F5)
-    val Neutral93 = Color(0xFFE3E7ED)
-    val Neutral90 = Color(0xFFE0E4EB)
-    val Neutral85 = Color(0xFFD1D7E0)
-    val Neutral80 = Color(0xFFC2CAD6)
-    val Neutral70 = Color(0xFFA3AFC2)
-    val Neutral60 = Color(0xFF8494AE)
-    val Neutral40 = Color(0xFF51617B)
-    val Neutral35 = Color(0xFF3B4759)
-    val Neutral30 = Color(0xFF333D4D)
-    val Neutral25 = Color(0xFF2A3340)
-    val Neutral20 = Color(0xFF232A35)
-    val Neutral10 = Color(0xFF14181F)
-    val ClassesTypeLecture = Color(0xFF16B37C)
-    val ClassesTypePractice = Color(0xFFE8BC4C)
-    val ClassesTypeLab = Color(0xFFE864AB)
+    public val Primary90: Color = Color(0xFFDBE6FA)
+    public val Primary60: Color = Color(0xFF4C83E8)
+    public val Primary50: Color = Color(0xFF1D62E2)
+    public val Secondary90: Color = Color(0xFFD1EDFA)
+    public val Secondary60: Color = Color(0xFF4BB7E9)
+    public val Secondary30: Color = Color(0xFF105F84)
+    public val Tertiary50: Color = Color(0xFF1CE39D)
+    public val Neutral100: Color = Color(0xFFFFFFFF)
+    public val Neutral98: Color = Color(0xFFF6F7F9)
+    public val Neutral97: Color = Color(0xFFF3F5F7)
+    public val Neutral95: Color = Color(0xFFF0F2F5)
+    public val Neutral93: Color = Color(0xFFE3E7ED)
+    public val Neutral90: Color = Color(0xFFE0E4EB)
+    public val Neutral85: Color = Color(0xFFD1D7E0)
+    public val Neutral80: Color = Color(0xFFC2CAD6)
+    public val Neutral70: Color = Color(0xFFA3AFC2)
+    public val Neutral60: Color = Color(0xFF8494AE)
+    public val Neutral40: Color = Color(0xFF51617B)
+    public val Neutral35: Color = Color(0xFF3B4759)
+    public val Neutral30: Color = Color(0xFF333D4D)
+    public val Neutral25: Color = Color(0xFF2A3340)
+    public val Neutral20: Color = Color(0xFF232A35)
+    public val Neutral10: Color = Color(0xFF14181F)
+    public val ClassesTypeLecture: Color = Color(0xFF16B37C)
+    public val ClassesTypePractice: Color = Color(0xFFE8BC4C)
+    public val ClassesTypeLab: Color = Color(0xFFE864AB)
 }
 
 @Suppress("LongParameterList")
 @Immutable
-class MpeixPalette internal constructor(
-    val primary: Color,
-    val secondary: Color,
-    val tertiary: Color,
-    val background: Color,
-    val surface: Color,
-    val surfacePlus1: Color,
-    val surfacePlus2: Color,
-    val surfacePlus3: Color,
-    val shimmer: Color,
-    val primaryContainer: Color,
-    val secondaryContainer: Color,
-    val content: Color,
-    val contentAccent: Color,
-    val contentVariant: Color,
-    val contentDisabled: Color,
-    val outline: Color,
-    val classesTypeLecture: Color = MpeixColors.ClassesTypeLecture,
-    val classesTypePractice: Color = MpeixColors.ClassesTypePractice,
-    val classesTypeLab: Color = MpeixColors.ClassesTypeLab,
+public class MpeixPalette internal constructor(
+    public val primary: Color,
+    public val secondary: Color,
+    public val tertiary: Color,
+    public val background: Color,
+    public val surface: Color,
+    public val surfacePlus1: Color,
+    public val surfacePlus2: Color,
+    public val surfacePlus3: Color,
+    public val shimmer: Color,
+    public val primaryContainer: Color,
+    public val secondaryContainer: Color,
+    public val content: Color,
+    public val contentAccent: Color,
+    public val contentVariant: Color,
+    public val contentDisabled: Color,
+    public val outline: Color,
+    public val classesTypeLecture: Color = MpeixColors.ClassesTypeLecture,
+    public val classesTypePractice: Color = MpeixColors.ClassesTypePractice,
+    public val classesTypeLab: Color = MpeixColors.ClassesTypeLab,
 )
 
-val LightMpeixPalette = MpeixPalette(
+public val LightMpeixPalette: MpeixPalette = MpeixPalette(
     primary = MpeixColors.Primary60,
     secondary = MpeixColors.Secondary60,
     tertiary = MpeixColors.Tertiary50,
@@ -96,7 +96,7 @@ val LightMpeixPalette = MpeixPalette(
     outline = MpeixColors.Neutral80,
 )
 
-val DarkMpeixPalette = MpeixPalette(
+public val DarkMpeixPalette: MpeixPalette = MpeixPalette(
     primary = MpeixColors.Primary60,
     secondary = MpeixColors.Secondary60,
     tertiary = MpeixColors.Tertiary50,
