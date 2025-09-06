@@ -13,48 +13,50 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.bumble.appyx.core.modality.BuildContext
-import com.bumble.appyx.core.node.Node
+import androidx.navigation3.runtime.NavKey
 import kekmech.ru.debug_menu.R
+import kekmech.ru.debug_menu.presentation.navigation.LocalNavBackStack
+import kekmech.ru.debug_menu.presentation.navigation.NavScreen
+import kekmech.ru.debug_menu.presentation.screens.feature_toggles.elm.FeatureTogglesEvent
 import kekmech.ru.debug_menu.presentation.screens.feature_toggles.elm.FeatureTogglesEvent.Ui
 import kekmech.ru.debug_menu.presentation.screens.feature_toggles.elm.FeatureTogglesState
-import kekmech.ru.debug_menu.presentation.screens.feature_toggles.elm.FeatureTogglesStore
 import kekmech.ru.debug_menu.presentation.screens.feature_toggles.elm.FeatureTogglesStoreFactory
-import kekmech.ru.lib_elm.elmNode
-import kekmech.ru.lib_elm.rememberAcceptAction
-import kekmech.ru.lib_navigation_compose.LocalBackStackNavigator
+import kekmech.ru.lib_elm_compose.ElmContent
 import kekmech.ru.ui_kit_lists.ListItem
 import kekmech.ru.ui_kit_switch.Switch
 import kekmech.ru.ui_kit_topappbar.TopAppBar
 import kekmech.ru.ui_theme.theme.MpeixTheme
-import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
 
-@Parcelize
-internal class FeatureTogglesNavTarget : NavTarget {
+@Serializable
+internal object FeatureTogglesScreen : NavScreen {
 
-    override fun resolve(buildContext: BuildContext): Node =
-        elmNode(
-            buildContext = buildContext,
-            storeFactoryClass = FeatureTogglesStoreFactory::class,
+    @Composable
+    override fun Content() {
+        ElmContent<FeatureTogglesStoreFactory, _, _, _>(
             factory = { create() },
-        ) { store, state, _ -> FeatureTogglesScreen(store, state) }
+            composable = { onAccept, state, modifier ->
+                FeatureTogglesScreen(onAccept, state, modifier)
+            },
+        )
+    }
 }
 
 @Suppress("LongMethod")
 @Composable
 private fun FeatureTogglesScreen(
-    store: FeatureTogglesStore,
+    onAccept: (FeatureTogglesEvent) -> Unit,
     state: FeatureTogglesState,
+    modifier: Modifier = Modifier,
 ) {
-    val navigator = LocalBackStackNavigator.current
-    val onAccept = store.rememberAcceptAction()
+    val backStack = LocalNavBackStack.current
 
     Scaffold(
         topBar = {
             TopAppBar(
                 title = "Feature Toggles",
                 navigationIcon = {
-                    BackIconButton { navigator.back() }
+                    BackIconButton { backStack.removeLastOrNull() }
                 },
             )
         },
@@ -69,7 +71,8 @@ private fun FeatureTogglesScreen(
                 },
                 onClick = { onAccept(Ui.Click.Reset) },
             )
-        }
+        },
+        modifier = modifier,
     ) { innerPadding ->
         val primaryColor = MpeixTheme.palette.primary
         LazyColumn(

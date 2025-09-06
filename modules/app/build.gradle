@@ -105,7 +105,6 @@ dependencies {
     implementation(project(":lib_elm"))
     implementation(project(":lib_feature_toggles"))
     implementation(project(":lib_navigation"))
-//    implementation(project(":lib_navigation_compose"))
     implementation(project(":lib_network"))
     implementation(project(":lib_persistent_cache"))
     implementation(project(":lib_snowfall"))
@@ -114,9 +113,9 @@ dependencies {
     implementation(project(":res_icons"))
     implementation(project(":res_strings"))
 
-//    debugImplementation(project(":mock_server"))
-//    debugImplementation(project(":debug_menu"))
-//    debugImplementation(project(":lib_chucker"))
+    debugImplementation(project(":mock_server"))
+    debugImplementation(project(":debug_menu"))
+    debugImplementation(project(":lib_chucker"))
 
     testImplementation(libs.kotest.runner)
 }

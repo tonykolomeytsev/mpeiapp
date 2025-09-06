@@ -29,7 +29,7 @@ plugins {
 }
 
 androidProjectConfiguration {
-    targetSdk = 35
+    targetSdk = 36
     minSdk = 24
     buildToolsVersion = "35.0.0"
     coreLibraryDesugaringVersion = "2.1.5"

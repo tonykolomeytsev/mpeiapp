@@ -13,7 +13,7 @@ import kekmech.ru.debug_menu.presentation.screens.feature_toggles.elm.FeatureTog
 internal class FeatureTogglesActor(
     private val remoteVariables: List<RemoteVariable<*>>,
     private val overwriteMiddleware: FeatureTogglesOverwriteMiddleware,
-) : Actor<Command, Event> {
+) : Actor<Command, Event>() {
 
     override fun execute(command: Command): Flow<Event> =
         when (command) {

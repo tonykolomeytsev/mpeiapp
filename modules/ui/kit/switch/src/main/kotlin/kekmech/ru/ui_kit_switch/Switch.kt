@@ -36,7 +36,7 @@ import kekmech.ru.ui_theme.theme.MpeixTheme
  */
 @Composable
 @NonRestartableComposable
-fun Switch(
+public fun Switch(
     checked: Boolean,
     onCheckedChange: ((Boolean) -> Unit)?,
     modifier: Modifier = Modifier,

@@ -18,23 +18,20 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.bumble.appyx.core.modality.BuildContext
-import com.bumble.appyx.core.node.Node
+import androidx.navigation3.runtime.NavKey
 import com.chuckerteam.chucker.api.Chucker
 import kekmech.ru.debug_menu.R
-import kekmech.ru.debug_menu.presentation.screens.feature_toggles.FeatureTogglesNavTarget
+import kekmech.ru.debug_menu.presentation.navigation.LocalNavBackStack
+import kekmech.ru.debug_menu.presentation.navigation.NavScreen
+import kekmech.ru.debug_menu.presentation.screens.feature_toggles.FeatureTogglesScreen
 import kekmech.ru.debug_menu.presentation.screens.main.elm.DebugMenuEvent
 import kekmech.ru.debug_menu.presentation.screens.main.elm.DebugMenuEvent.Ui
 import kekmech.ru.debug_menu.presentation.screens.main.elm.DebugMenuState
-import kekmech.ru.debug_menu.presentation.screens.main.elm.DebugMenuStore
 import kekmech.ru.debug_menu.presentation.screens.main.elm.DebugMenuStoreFactory
 import kekmech.ru.ext_android.copyToClipboard
 import kekmech.ru.feature_app_settings_api.domain.model.AppTheme
-import kekmech.ru.lib_elm.ElmAcceptAction
 import kekmech.ru.lib_elm.Resource
-import kekmech.ru.lib_elm.elmNode
-import kekmech.ru.lib_elm.rememberAcceptAction
-import kekmech.ru.lib_navigation_compose.LocalBackStackNavigator
+import kekmech.ru.lib_elm_compose.ElmContent
 import kekmech.ru.lib_network.AppEnvironment
 import kekmech.ru.ui_kit_dialogs.AlertDialog
 import kekmech.ru.ui_kit_dialogs.AlertDialogState
@@ -43,30 +40,34 @@ import kekmech.ru.ui_kit_lists.ListItem
 import kekmech.ru.ui_kit_topappbar.TopAppBar
 import kekmech.ru.ui_theme.theme.MpeixTheme
 import kotlinx.coroutines.launch
-import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
 
-@Parcelize
-internal class DebugMenuNavTarget : NavTarget {
+@Serializable
+internal object DebugMenuScreen : NavScreen {
 
-    override fun resolve(buildContext: BuildContext): Node =
-        elmNode(
-            buildContext = buildContext,
-            storeFactoryClass = DebugMenuStoreFactory::class,
+    @Composable
+    override fun Content() {
+        ElmContent<DebugMenuStoreFactory, _, _, _>(
             factory = { create() },
-        ) { store, state, _ -> DebugMenuScreen(store, state) }
+            composable = { store, state, modifier ->
+                DebugMenuScreen(store, state, modifier)
+            },
+        )
+    }
 }
 
 @Suppress("LongMethod")
 @Composable
 private fun DebugMenuScreen(
-    store: DebugMenuStore,
+    onAccept: (DebugMenuEvent) -> Unit,
     state: DebugMenuState,
+    modifier: Modifier = Modifier,
 ) {
     val backendEnvDialog = rememberAlertDialogState()
     val themeSelectionDialog = rememberAlertDialogState()
-    val onAccept = store.rememberAcceptAction()
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
+    val backStack = LocalNavBackStack.current
 
     Scaffold(
         topBar = {
@@ -74,7 +75,8 @@ private fun DebugMenuScreen(
         },
         snackbarHost = {
             SnackbarHost(snackbarHostState)
-        }
+        },
+        modifier = modifier,
     ) { innerPadding ->
         LazyColumn(
             modifier = Modifier.padding(innerPadding),
@@ -86,7 +88,11 @@ private fun DebugMenuScreen(
                 )
             }
             item {
-                FeatureTogglesItem()
+                FeatureTogglesItem(
+                    onClick = {
+                        backStack.add(FeatureTogglesScreen)
+                    }
+                )
             }
             item {
                 ChuckerItem()
@@ -129,7 +135,7 @@ private fun DebugMenuScreen(
 @Composable
 private fun BackendEnvDialog(
     state: AlertDialogState,
-    onAccept: ElmAcceptAction<DebugMenuEvent>,
+    onAccept: (DebugMenuEvent) -> Unit,
 ) {
     AlertDialog(
         onDismissRequest = { state.hideDialog() },
@@ -163,7 +169,7 @@ private fun BackendEnvDialog(
 @Composable
 private fun ThemeSelectionDialog(
     state: AlertDialogState,
-    onAccept: ElmAcceptAction<DebugMenuEvent>,
+    onAccept: (DebugMenuEvent) -> Unit,
 ) {
     AlertDialog(
         onDismissRequest = { state.hideDialog() },
@@ -230,15 +236,16 @@ private fun BackendEnvironmentItem(
 }
 
 @Composable
-private fun FeatureTogglesItem() {
-    val navigator = LocalBackStackNavigator.current
+private fun FeatureTogglesItem(
+    onClick: () -> Unit,
+) {
     ListItem(
         headlineText = "Feature Toggles",
         leadingContent = {
             Icon(painterResource(R.drawable.ic_toggle_24))
         },
         modifier = Modifier
-            .clickable { navigator.navigate(FeatureTogglesNavTarget()) },
+            .clickable { onClick() },
     )
 }
 

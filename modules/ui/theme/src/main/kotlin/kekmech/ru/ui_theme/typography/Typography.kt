@@ -51,78 +51,78 @@ internal val RobotoFontFamily: FontFamily = FontFamily(
 )
 
 @Immutable
-class MpeixTypography internal constructor(
-    val header1: TextStyle = TextStyle(
+public class MpeixTypography internal constructor(
+    public val header1: TextStyle = TextStyle(
         fontFamily = RobotoFontFamily,
         fontSize = 32.sp,
         lineHeight = 38.sp,
         fontWeight = FontWeight.Normal,
         fontStyle = FontStyle.Normal,
     ),
-    val header2: TextStyle = TextStyle(
+    public val header2: TextStyle = TextStyle(
         fontFamily = RobotoFontFamily,
         fontSize = 28.sp,
         lineHeight = 36.sp,
         fontWeight = FontWeight.Normal,
         fontStyle = FontStyle.Normal,
     ),
-    val header3: TextStyle = TextStyle(
+    public val header3: TextStyle = TextStyle(
         fontFamily = RobotoFontFamily,
         fontSize = 22.sp,
         lineHeight = 28.sp,
         fontWeight = FontWeight.Normal,
         fontStyle = FontStyle.Normal,
     ),
-    val header4: TextStyle = TextStyle(
+    public val header4: TextStyle = TextStyle(
         fontFamily = RobotoFontFamily,
         fontSize = 20.sp,
         lineHeight = 24.sp,
         fontWeight = FontWeight.Medium,
         fontStyle = FontStyle.Normal,
     ),
-    val paragraphBig: TextStyle = TextStyle(
+    public val paragraphBig: TextStyle = TextStyle(
         fontFamily = RobotoFontFamily,
         fontSize = 16.sp,
         lineHeight = 24.sp,
         fontWeight = FontWeight.Normal,
         fontStyle = FontStyle.Normal,
     ),
-    val paragraphNormal: TextStyle = TextStyle(
+    public val paragraphNormal: TextStyle = TextStyle(
         fontFamily = RobotoFontFamily,
         fontSize = 14.sp,
         lineHeight = 20.sp,
         fontWeight = FontWeight.Normal,
         fontStyle = FontStyle.Normal,
     ),
-    val paragraphBigAccent: TextStyle = TextStyle(
+    public val paragraphBigAccent: TextStyle = TextStyle(
         fontFamily = RobotoFontFamily,
         fontSize = 16.sp,
         lineHeight = 24.sp,
         fontWeight = FontWeight.Bold,
         fontStyle = FontStyle.Normal,
     ),
-    val paragraphNormalAccent: TextStyle = TextStyle(
+    public val paragraphNormalAccent: TextStyle = TextStyle(
         fontFamily = RobotoFontFamily,
         fontSize = 14.sp,
         lineHeight = 20.sp,
         fontWeight = FontWeight.Bold,
         fontStyle = FontStyle.Normal,
     ),
-    val labelBig: TextStyle = TextStyle(
+    public val labelBig: TextStyle = TextStyle(
         fontFamily = RobotoFontFamily,
         fontSize = 14.sp,
         lineHeight = 20.sp,
         fontWeight = FontWeight.Medium,
         fontStyle = FontStyle.Normal,
     ),
-    val labelNormal: TextStyle = TextStyle(
+    public val labelNormal: TextStyle = TextStyle(
         fontFamily = RobotoFontFamily,
         fontSize = 12.sp,
         lineHeight = 16.sp,
         fontWeight = FontWeight.Medium,
         fontStyle = FontStyle.Normal,
     ),
-    val labelMini: TextStyle = TextStyle(
+    public val labelMini: TextStyle = TextStyle(
         fontFamily = RobotoFontFamily,
         fontSize = 10.sp,
         lineHeight = 16.sp,

@@ -14,7 +14,7 @@ import kekmech.ru.debug_menu.presentation.screens.main.elm.DebugMenuEvent as Eve
 internal class DebugMenuActor(
     private val appEnvironmentRepository: AppEnvironmentRepository,
     private val appSettingsRepository: AppSettingsRepository,
-) : Actor<Command, Event> {
+) : Actor<Command, Event>() {
 
     override fun execute(command: DebugMenuCommand): Flow<DebugMenuEvent> =
         when (command) {

@@ -73,7 +73,7 @@ private val DarkColorScheme = darkColorScheme(
 )
 
 @Composable
-fun MpeixTheme(
+public fun MpeixTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit,
 ) {
@@ -115,14 +115,14 @@ fun MpeixTheme(
     }
 }
 
-object MpeixTheme {
+public object MpeixTheme {
 
-    val palette: MpeixPalette
+    public val palette: MpeixPalette
         @Composable
         @ReadOnlyComposable
         get() = LocalMpeixPalette.current
 
-    val typography: MpeixTypography
+    public val typography: MpeixTypography
         @Composable
         @ReadOnlyComposable
         get() = LocalMpeixTypography.current

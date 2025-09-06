@@ -17,6 +17,7 @@ swipeRefreshLayout = "1.1.0"
 fragment = "1.8.9"
 room = "2.7.2"
 
+nav3 = "1.0.0-alpha08"
 # Google Versions
 material = "1.12.0"
 
@@ -67,6 +68,9 @@ androidx-swipeRefreshLayout = { module = "androidx.swiperefreshlayout:swiperefre
 androidx-viewPager2 = { module = "androidx.viewpager2:viewpager2", version.ref = "viewPager2" }
 androidx-datastore-prefs = { module = "androidx.datastore:datastore-preferences", version = "1.1.7" }
 
+androidx-navigation3-runtime = { group = "androidx.navigation3", name = "navigation3-runtime", version.ref = "nav3" }
+androidx-navigation3-ui = { group = "androidx.navigation3", name = "navigation3-ui", version.ref = "nav3" }
+
 # Google Libraries
 google-material = { module = "com.google.android.material:material", version.ref = "material" }
 google-gson = { module = "com.google.code.gson:gson", version = "2.13.1" }
@@ -75,6 +79,7 @@ google-maps = { module = "com.google.android.gms:play-services-maps", version = 
 # Koin Libraries
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
+koin-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
 
 # Firebase Libraries
 firebase-analytics = { module = "com.google.firebase:firebase-analytics", version = "19.0.1" }
@@ -120,7 +125,8 @@ compose-ui-util = { module = "androidx.compose.ui:ui-util" }
 compose-animation = { module = "androidx.compose.animation:animation" }
 compose-foundation = { module = "androidx.compose.foundation:foundation" }
 compose-material3 = { module = "androidx.compose.material3:material3" }
-activity-compose = { module = "androidx.activity:activity-compose", version = "1.4.0" }
+compose-activity = { module = "androidx.activity:activity-compose", version = "1.10.1" }
+
 ## Accompanist
 accompanist-insets = { module = "com.google.accompanist:accompanist-insets", version.ref = "accompanist" }
 accompanist-insets-ui = { module = "com.google.accompanist:accompanist-insets-ui", version.ref = "accompanist" }
@@ -133,6 +139,7 @@ accompanist-pager = { module = "com.google.accompanist:accompanist-pager", versi
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }

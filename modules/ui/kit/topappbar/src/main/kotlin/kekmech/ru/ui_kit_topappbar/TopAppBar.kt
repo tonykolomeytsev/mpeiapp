@@ -61,7 +61,7 @@ import kekmech.ru.ui_theme.theme.MpeixTheme
  * @see androidx.compose.material3.TopAppBar
  */
 @Composable
-fun TopAppBar(
+public fun TopAppBar(
     title: String,
     modifier: Modifier = Modifier,
     navigationIcon: @Composable TopAppBarNavigationIconScope.() -> Unit = {},
@@ -135,7 +135,7 @@ fun TopAppBar(
  * scrolls. See [TopAppBarScrollBehavior.nestedScrollConnection].
  */
 @Composable
-fun LargeTopAppBar(
+public fun LargeTopAppBar(
     title: String,
     modifier: Modifier = Modifier,
     navigationIcon: @Composable TopAppBarNavigationIconScope.() -> Unit = {},
@@ -167,10 +167,10 @@ fun LargeTopAppBar(
     )
 }
 
-object TopAppBarNavigationIconScope {
+public object TopAppBarNavigationIconScope {
 
     @Composable
-    fun BackIconButton(onClick: () -> Unit) {
+    public fun BackIconButton(onClick: () -> Unit) {
         IconButton(onClick = onClick) {
             Icon(
                 painter = MpeixIcons.ArrowBack24,
@@ -180,7 +180,7 @@ object TopAppBarNavigationIconScope {
     }
 
     @Composable
-    fun CloseIconButton(onClick: () -> Unit) {
+    public fun CloseIconButton(onClick: () -> Unit) {
         IconButton(onClick = onClick) {
             Icon(
                 painter = MpeixIcons.Close24,
@@ -193,7 +193,7 @@ object TopAppBarNavigationIconScope {
 @Suppress("StringLiteralDuplication")
 @Preview
 @Composable
-fun TopAppBarPreview() {
+public fun TopAppBarPreview() {
     MpeixTheme {
         Column {
             TopAppBar(title = "Title")
@@ -213,7 +213,7 @@ fun TopAppBarPreview() {
 
 @Preview
 @Composable
-fun LargeTopAppBarPreview() {
+public fun LargeTopAppBarPreview() {
     MpeixTheme {
         Column {
             LargeTopAppBar(title = "Title")
