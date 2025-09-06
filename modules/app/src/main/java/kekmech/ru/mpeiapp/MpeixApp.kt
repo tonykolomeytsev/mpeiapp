@@ -3,8 +3,6 @@ package kekmech.ru.mpeiapp
 import android.app.Application
 import android.content.Context
 import android.os.Build
-import io.reactivex.rxjava3.exceptions.UndeliverableException
-import io.reactivex.rxjava3.plugins.RxJavaPlugins
 import kekmech.ru.feature_app_settings_api.data.AppEnvironmentRepository
 import kekmech.ru.lib_app_lifecycle.AppLifecycleObserver
 import kekmech.ru.lib_elm.TimberLogger
@@ -34,18 +32,6 @@ class MpeixApp : Application(),
         super.onCreate()
         initKoin()
         appLifecycleObservers.forEach { it.onCreate(applicationContext) }
-
-        RxJavaPlugins.setErrorHandler { e ->
-            if (e is UndeliverableException) {
-                // Merely log undeliverable exceptions
-                Timber.e(e)
-            } else {
-                // Forward all others to current thread's uncaught exception handler
-                Thread.currentThread().also { thread ->
-                    thread.uncaughtExceptionHandler?.uncaughtException(thread, e)
-                }
-            }
-        }
         ServiceUrlResolver.setAppEnvironment(appEnvironmentRepository.getAppEnvironment())
         RemoteConfig.setup()
         initTimber()

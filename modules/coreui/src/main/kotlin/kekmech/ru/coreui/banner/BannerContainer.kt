@@ -4,24 +4,31 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers.mainThread
-import io.reactivex.rxjava3.subjects.BehaviorSubject
+import androidx.lifecycle.findViewTreeLifecycleOwner
+import androidx.lifecycle.lifecycleScope
 import kekmech.ru.coreui.R
 import kekmech.ru.coreui.databinding.ViewBannerContainerBinding
 import kekmech.ru.ext_android.addSystemTopPadding
-import kekmech.ru.lib_elm.DisposableDelegate
-import kekmech.ru.lib_elm.DisposableDelegateImpl
-import java.util.Optional
-import java.util.concurrent.TimeUnit
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
+@FlowPreview
 class BannerContainer @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
-) : FrameLayout(context, attrs), DisposableDelegate by DisposableDelegateImpl() {
+) : FrameLayout(context, attrs) {
 
-    private val bannerSubject = BehaviorSubject.create<Optional<Banner>>().toSerialized()
+    private val bannerFlow = MutableStateFlow<Banner?>(null)
     private val viewBinding: ViewBannerContainerBinding
     private val bannerText get() = viewBinding.bannerText
+
+    private var job: Job? = null
 
     init {
         View.inflate(context, R.layout.view_banner_container, this)
@@ -30,16 +37,28 @@ class BannerContainer @JvmOverloads constructor(
         bannerText.alpha = 0f
         bannerText.addSystemTopPadding()
 
-        observeBannerShowing()
-            .subscribe { it.map(::displayBanner) }
-            .bind()
-        observeBannerHiding()
-            .subscribe { it.map { hideBanner() } }
-            .bind()
+        findViewTreeLifecycleOwner()?.lifecycleScope?.launch {
+            bannerFlow
+                .onEach { banner ->
+                    if (banner != null) {
+                        displayBanner(banner)
+                    } else {
+                        hideBanner()
+                    }
+                }
+                .launchIn(this)
+
+            // Автоматическое скрытие баннера
+            bannerFlow
+                .filterNotNull()
+                .debounce(BANNER_SHOWING_DURATION)
+                .onEach { bannerFlow.value = null }
+                .launchIn(this)
+        }
     }
 
     fun show(banner: Banner) {
-        bannerSubject.onNext(Optional.of(banner))
+        bannerFlow.value = banner
     }
 
     private fun displayBanner(banner: Banner) {
@@ -61,17 +80,6 @@ class BannerContainer @JvmOverloads constructor(
             .setDuration(ANIMATION_DURATION)
             .start()
     }
-
-    private fun observeBannerShowing() =
-        bannerSubject
-            .distinctUntilChanged()
-            .observeOn(mainThread())
-
-    private fun observeBannerHiding() =
-        bannerSubject
-            .debounce(BANNER_SHOWING_DURATION, TimeUnit.MILLISECONDS)
-            .doOnNext { bannerSubject.onNext(Optional.empty()) }
-            .observeOn(mainThread())
 
     private companion object {
 

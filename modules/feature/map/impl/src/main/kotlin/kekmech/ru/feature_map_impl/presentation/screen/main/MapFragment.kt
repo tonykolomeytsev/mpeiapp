@@ -12,9 +12,6 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.disposables.Disposable
 import kekmech.ru.coreui.banner.showBanner
 import kekmech.ru.coreui.items.ErrorStateAdapterItem
 import kekmech.ru.coreui.items.PullAdapterItem
@@ -48,15 +45,12 @@ import kekmech.ru.feature_map_impl.presentation.screen.main.view.ControlledScrol
 import kekmech.ru.feature_map_impl.presentation.screen.main.view.MarkersBitmapFactory
 import kekmech.ru.lib_adapter.BaseAdapter
 import kekmech.ru.lib_analytics_android.ext.screenAnalytics
-import kekmech.ru.lib_elm.DisposableDelegate
-import kekmech.ru.lib_elm.DisposableDelegateImpl
 import kekmech.ru.lib_navigation.features.ScrollToTop
 import kekmech.ru.lib_navigation.features.TabScreenStateSaver
 import kekmech.ru.lib_navigation.features.TabScreenStateSaverImpl
 import money.vivid.elmslie.android.renderer.ElmRendererDelegate
 import money.vivid.elmslie.android.renderer.androidElmStore
 import org.koin.android.ext.android.inject
-import java.util.concurrent.TimeUnit
 import kekmech.ru.coreui.R as CoreUiR
 import kekmech.ru.res_strings.R.string as Strings
 
@@ -64,8 +58,7 @@ import kekmech.ru.res_strings.R.string as Strings
 internal class MapFragment : Fragment(R.layout.fragment_map),
     ElmRendererDelegate<MapEffect, MapState>,
     ScrollToTop,
-    TabScreenStateSaver by TabScreenStateSaverImpl("map"),
-    Disposable by DisposableDelegateImpl() {
+    TabScreenStateSaver by TabScreenStateSaverImpl("map") {
 
     private val dependencies by inject<MapDependencies>()
     private val adapter by fastLazy { createAdapter() }

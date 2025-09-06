@@ -1,11 +1,10 @@
 package kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm
 
-import io.reactivex.rxjava3.exceptions.CompositeException
 import kekmech.ru.feature_schedule_api.domain.model.SelectedSchedule
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.FindScheduleEvent.Internal
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.FindScheduleEvent.Ui
-import retrofit2.HttpException
 import money.vivid.elmslie.core.store.ScreenReducer
+import retrofit2.HttpException
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.FindScheduleCommand as Command
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.FindScheduleEffect as Effect
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.FindScheduleEvent as Event
@@ -78,9 +77,7 @@ internal class FindScheduleReducer :
 
 
     private fun calculateErrorEffect(throwable: Throwable): Effect {
-        return if (throwable is CompositeException &&
-            throwable.exceptions.any { it is HttpException && it.code() == HTTP_BAD_REQUEST_CODE }
-        ) {
+        return if (throwable is HttpException && throwable.code() == HTTP_BAD_REQUEST_CODE) {
             Effect.ShowError
         } else {
             Effect.ShowSomethingWentWrongError

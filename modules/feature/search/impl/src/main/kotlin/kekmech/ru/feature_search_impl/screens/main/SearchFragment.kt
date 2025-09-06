@@ -3,10 +3,10 @@ package kekmech.ru.feature_search_impl.screens.main
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Observable
 import kekmech.ru.coreui.items.EmptyStateAdapterItem
 import kekmech.ru.coreui.items.LabeledTextViewHolder
 import kekmech.ru.coreui.items.LabeledTextViewHolderImpl
@@ -40,10 +40,18 @@ import kekmech.ru.lib_analytics_android.ext.screenAnalytics
 import kekmech.ru.lib_navigation.BottomTab
 import kekmech.ru.lib_navigation.BottomTabsSwitcher
 import kekmech.ru.lib_navigation.showDialog
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.launch
 import money.vivid.elmslie.android.renderer.ElmRendererDelegate
 import money.vivid.elmslie.android.renderer.androidElmStore
 import org.koin.android.ext.android.inject
 import java.util.concurrent.TimeUnit
+import kotlin.time.Duration.Companion.milliseconds
 import kekmech.ru.coreui.R as coreui_R
 
 private const val ARG_QUERY = "Arg.Query"
@@ -68,18 +76,21 @@ internal class SearchFragment : Fragment(R.layout.fragment_search),
             )
     }
 
+    @OptIn(FlowPreview::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.addSystemVerticalPadding()
         viewBinding.apply {
             navBackButton.setOnClickListener { close() }
             searchView.showKeyboard()
-            searchView.observeChanges()
-                .debounce(DEFAULT_INPUT_DEBOUNCE, TimeUnit.MILLISECONDS)
-                .distinctUntilChanged()
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe { store.accept(SearchEvent.Ui.Action.SearchContent(it)) }
-                .let {}
+            viewLifecycleOwner.lifecycleScope.launch {
+                searchView.observeChanges()
+                    .debounce(DEFAULT_INPUT_DEBOUNCE.milliseconds)
+                    .distinctUntilChanged()
+                    .collect { text ->
+                        store.accept(SearchEvent.Ui.Action.SearchContent(text))
+                    }
+            }
             recyclerView.layoutManager = LinearLayoutManager(requireContext())
             recyclerView.adapter = adapter
             filterItemsRecycler.layoutManager =
@@ -100,8 +111,11 @@ internal class SearchFragment : Fragment(R.layout.fragment_search),
         }
     }
 
-    private fun EditText.observeChanges() = Observable.create<String> { emitter ->
-        afterTextChanged { emitter.onNext(it) }
+    fun EditText.observeChanges(): Flow<String> = callbackFlow {
+        val watcher = addTextChangedListener { text ->
+            trySend(text?.toString().orEmpty())
+        }
+        awaitClose { removeTextChangedListener(watcher) }
     }
 
     private fun createAdapter() = BaseAdapter(

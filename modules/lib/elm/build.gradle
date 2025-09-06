@@ -8,7 +8,6 @@ dependencies {
     implementation(libs.google.material)
     compileOnly(libs.timber)
 
-    implementation(libs.rx.java)
     implementation(libs.vivid.elmslie.android)
     implementation(libs.vivid.elmslie.core)
 
