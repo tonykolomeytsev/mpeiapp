@@ -73,7 +73,10 @@ internal class MapFragment : Fragment(R.layout.fragment_map),
     }
     private val appSettingsRepository by inject<AppSettingsRepository>()
 
-    private val store by androidElmStore { inject<MapStoreFactory>().value.create() }
+    private val store by androidElmStore(
+        viewModelStoreOwner = { requireActivity() },
+        savedStateRegistryOwner = { requireActivity() },
+    ) { inject<MapStoreFactory>().value.create() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
