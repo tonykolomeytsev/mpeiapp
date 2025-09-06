@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 import kekmech.ru.lib_app_database.api.DefaultId
 
 @Entity(tableName = "note")
-data class NormalNote(
+public data class NormalNote(
     @PrimaryKey(autoGenerate = true)
     val id: Long = DefaultId,
     val content: String,

@@ -8,7 +8,7 @@ import android.view.ViewGroup
 
 private const val DEFAULT_DEBOUNCE_MILLIS = 300L
 
-fun View.setMargins(
+public fun View.setMargins(
     left: Int? = null,
     top: Int? = null,
     right: Int? = null,
@@ -22,10 +22,11 @@ fun View.setMargins(
     }
 }
 
-fun View.setOnClickListenerWithDebounce(onClickListener: View.OnClickListener) =
+public fun View.setOnClickListenerWithDebounce(onClickListener: View.OnClickListener) {
     setOnClickListenerWithDebounce(DEFAULT_DEBOUNCE_MILLIS, onClickListener)
+}
 
-fun View.setOnClickListenerWithDebounce(debounceDuration: Long, onClickListener: View.OnClickListener) {
+public fun View.setOnClickListenerWithDebounce(debounceDuration: Long, onClickListener: View.OnClickListener) {
     setOnClickListener(object : View.OnClickListener {
         private var lastClickMillis = SystemClock.uptimeMillis()
 
@@ -40,11 +41,11 @@ fun View.setOnClickListenerWithDebounce(debounceDuration: Long, onClickListener:
 }
 
 
-const val SCALE_ON_TOUCH_FACTOR = 0.97f
-const val SCALE_ON_TOUCH_DURATION = 100L
+public const val SCALE_ON_TOUCH_FACTOR: Float = 0.97f
+public const val SCALE_ON_TOUCH_DURATION: Long = 100L
 
 @SuppressLint("ClickableViewAccessibility")
-fun View.scaleOnTouch(
+public fun View.scaleOnTouch(
     factor: Float = SCALE_ON_TOUCH_FACTOR,
     duration: Long = SCALE_ON_TOUCH_DURATION,
 ) {

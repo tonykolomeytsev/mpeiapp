@@ -10,7 +10,7 @@ import androidx.annotation.LayoutRes
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
-open class BottomSheetDialogFragment(@LayoutRes val layoutResId: Int,) :
+public open class BottomSheetDialogFragment(@LayoutRes public val layoutResId: Int,) :
     com.google.android.material.bottomsheet.BottomSheetDialogFragment() {
 
     override fun onCreateView(

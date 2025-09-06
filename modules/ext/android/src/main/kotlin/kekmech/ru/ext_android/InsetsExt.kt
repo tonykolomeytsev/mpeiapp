@@ -5,7 +5,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 
-fun View.doOnApplyWindowInsets(f: (View, WindowInsetsCompat, InitialPadding) -> Unit) {
+public fun View.doOnApplyWindowInsets(f: (View, WindowInsetsCompat, InitialPadding) -> Unit) {
     val initialPadding = recordInitialPaddingForView(this)
     ViewCompat.setOnApplyWindowInsetsListener(this) { v, insets ->
         f(v, insets, initialPadding)
@@ -14,13 +14,13 @@ fun View.doOnApplyWindowInsets(f: (View, WindowInsetsCompat, InitialPadding) -> 
     requestApplyInsetsWhenAttached()
 }
 
-data class InitialPadding(val left: Int, val top: Int,
-                          val right: Int, val bottom: Int)
+public data class InitialPadding(val left: Int, val top: Int,
+                                 val right: Int, val bottom: Int)
 
 private fun recordInitialPaddingForView(view: View) = InitialPadding(
     view.paddingLeft, view.paddingTop, view.paddingRight, view.paddingBottom)
 
-fun View.requestApplyInsetsWhenAttached() {
+public fun View.requestApplyInsetsWhenAttached() {
     if (isAttachedToWindow) {
         requestApplyInsets()
     } else {
@@ -35,7 +35,7 @@ fun View.requestApplyInsetsWhenAttached() {
     }
 }
 
-fun View.addSystemVerticalPadding() {
+public fun View.addSystemVerticalPadding() {
     doOnApplyWindowInsets { _, windowInsets, initialPadding ->
         updatePadding(
             top = windowInsets.systemWindowInsetTop + initialPadding.top,
@@ -44,13 +44,13 @@ fun View.addSystemVerticalPadding() {
     }
 }
 
-fun View.addSystemBottomPadding() {
+public fun View.addSystemBottomPadding() {
     doOnApplyWindowInsets { view, insets, padding ->
         view.updatePadding(bottom = padding.bottom + insets.systemWindowInsetBottom)
     }
 }
 
-fun View.addSystemTopPadding() {
+public fun View.addSystemTopPadding() {
     doOnApplyWindowInsets { view, insets, padding ->
         view.updatePadding(top = padding.top + insets.systemWindowInsetTop)
     }

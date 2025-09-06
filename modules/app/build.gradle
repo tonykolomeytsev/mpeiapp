@@ -110,8 +110,6 @@ dependencies {
     implementation(project(":lib_persistent_cache"))
     implementation(project(":lib_snowfall"))
 
-//    implementation(project(":ui_theme"))
-
     implementation(project(":coreui"))
     implementation(project(":res_icons"))
     implementation(project(":res_strings"))

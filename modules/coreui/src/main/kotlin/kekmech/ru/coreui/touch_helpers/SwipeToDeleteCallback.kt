@@ -18,7 +18,7 @@ import kekmech.ru.res_icons.R.drawable as Icons
 /**
  * According to https://medium.com/@kitek/recyclerview-swipe-to-delete-easier-than-you-thought-cff67ff5e5f6
  */
-abstract class SwipeToDeleteCallback(
+public abstract class SwipeToDeleteCallback(
     context: Context
 ) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
 
@@ -49,7 +49,7 @@ abstract class SwipeToDeleteCallback(
         recyclerView: RecyclerView,
         viewHolder: RecyclerView.ViewHolder,
         target: RecyclerView.ViewHolder
-    ) = false
+    ): Boolean = false
 
     override fun onChildDraw(
         c: Canvas,
@@ -95,10 +95,10 @@ abstract class SwipeToDeleteCallback(
         c.drawRect(left, top, right, bottom, clearPaint)
     }
 
-    abstract fun isTypeForDelete(adapterPosition: Int, itemViewType: Int): Boolean
+    public abstract fun isTypeForDelete(adapterPosition: Int, itemViewType: Int): Boolean
 }
 
-fun RecyclerView.attachSwipeToDeleteCallback(
+public fun RecyclerView.attachSwipeToDeleteCallback(
     isItemForDelete: (Any) -> Boolean,
     callback: (Any) -> Unit
 ) {

@@ -41,8 +41,6 @@ dependencies {
     implementation(project(":lib_network"))
     implementation(project(":lib_schedule"))
 
-    implementation(project(":ui_theme"))
-
     implementation(project(":coreui"))
     implementation(project(":res_icons"))
     implementation(project(":res_strings"))

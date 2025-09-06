@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "favorite_schedule")
-data class NormalFavoriteSchedule(
+public data class NormalFavoriteSchedule(
     @PrimaryKey
     val name: String,
     val type: String,

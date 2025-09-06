@@ -7,14 +7,14 @@ import androidx.room.Upsert
 import kekmech.ru.lib_app_database.entity.NormalFavoriteSchedule
 
 @Dao
-interface FavoriteScheduleDao {
+public interface FavoriteScheduleDao {
 
     @Upsert
-    suspend fun updateOrInsert(favoriteSchedule: NormalFavoriteSchedule)
+    public suspend fun updateOrInsert(favoriteSchedule: NormalFavoriteSchedule)
 
     @Query("SELECT * FROM favorite_schedule")
-    suspend fun getAll(): List<NormalFavoriteSchedule>
+    public suspend fun getAll(): List<NormalFavoriteSchedule>
 
     @Delete
-    suspend fun delete(favoriteSchedule: NormalFavoriteSchedule)
+    public suspend fun delete(favoriteSchedule: NormalFavoriteSchedule)
 }

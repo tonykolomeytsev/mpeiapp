@@ -4,18 +4,18 @@ import android.os.Bundle
 import android.os.Parcelable
 import androidx.recyclerview.widget.RecyclerView
 
-interface TabScreenStateSaver  {
+public interface TabScreenStateSaver  {
 
-    val stateBundle: Bundle
+    public val stateBundle: Bundle
 
-    fun restoreBundle(commonBundle: Bundle)
-    fun updateBundle(commonBundle: Bundle)
+    public fun restoreBundle(commonBundle: Bundle)
+    public fun updateBundle(commonBundle: Bundle)
 
-    fun saveState(recyclerView: RecyclerView)
-    fun restoreState(recyclerView: RecyclerView)
+    public fun saveState(recyclerView: RecyclerView)
+    public fun restoreState(recyclerView: RecyclerView)
 }
 
-class TabScreenStateSaverImpl(private val key: String) : TabScreenStateSaver {
+public class TabScreenStateSaverImpl(private val key: String) : TabScreenStateSaver {
 
     override var stateBundle: Bundle = Bundle()
         private set

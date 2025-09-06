@@ -10,15 +10,15 @@ import kekmech.ru.ext_android.viewbinding.lazyBinding
 import kekmech.ru.lib_adapter.AdapterItem
 import kekmech.ru.lib_adapter.BaseItemBinder
 
-interface LabeledTextItem {
-    val mainText: String?
-    val mainTextResId: Int?
-    val label: String?
-    val labelResId: Int?
-    val itemId: Int?
+public interface LabeledTextItem {
+    public val mainText: String?
+    public val mainTextResId: Int?
+    public val label: String?
+    public val labelResId: Int?
+    public val itemId: Int?
 }
 
-data class TopLabeledTextItem(
+public data class TopLabeledTextItem(
     override val mainText: String? = null,
     @StringRes override val mainTextResId: Int? = null,
     override val label: String? = null,
@@ -26,7 +26,7 @@ data class TopLabeledTextItem(
     override val itemId: Int? = null
 ) : LabeledTextItem
 
-data class BottomLabeledTextItem(
+public data class BottomLabeledTextItem(
     override val mainText: String? = null,
     @StringRes override val mainTextResId: Int? = null,
     override val label: String? = null,
@@ -34,7 +34,7 @@ data class BottomLabeledTextItem(
     override val itemId: Int? = null
 ) : LabeledTextItem
 
-data class RightLabeledTextItem(
+public data class RightLabeledTextItem(
     override val mainText: String? = null,
     @StringRes override val mainTextResId: Int? = null,
     override val label: String? = null,
@@ -42,14 +42,14 @@ data class RightLabeledTextItem(
     override val itemId: Int? = null
 ) : LabeledTextItem
 
-interface LabeledTextViewHolder : ClickableItemViewHolder {
-    fun setMainText(mainText: String)
-    fun setMainText(@StringRes mainTextResId: Int)
-    fun setLabel(labelText: String)
-    fun setLabel(@StringRes labelTextResId: Int)
+public interface LabeledTextViewHolder : ClickableItemViewHolder {
+    public fun setMainText(mainText: String)
+    public fun setMainText(@StringRes mainTextResId: Int)
+    public fun setLabel(labelText: String)
+    public fun setLabel(@StringRes labelTextResId: Int)
 }
 
-class LabeledTextViewHolderImpl(
+public class LabeledTextViewHolderImpl(
     override val containerView: View
 ) :
     LabeledTextViewHolder,
@@ -77,7 +77,7 @@ class LabeledTextViewHolderImpl(
     }
 }
 
-class LabeledTextItemBinder(
+public class LabeledTextItemBinder(
     private val onClickListener: ((LabeledTextItem) -> Unit)?
 ) : BaseItemBinder<LabeledTextViewHolder, LabeledTextItem>() {
 
@@ -90,7 +90,7 @@ class LabeledTextItemBinder(
     }
 }
 
-class TopLabeledTextAdapterItem(
+public class TopLabeledTextAdapterItem(
     onClickListener: ((LabeledTextItem) -> Unit)? = null
 ) : AdapterItem<LabeledTextViewHolder, TopLabeledTextItem>(
     isType = { it is TopLabeledTextItem },
@@ -99,7 +99,7 @@ class TopLabeledTextAdapterItem(
     itemBinder = LabeledTextItemBinder(onClickListener)
 )
 
-class BottomLabeledTextAdapterItem(
+public class BottomLabeledTextAdapterItem(
     onClickListener: ((LabeledTextItem) -> Unit)? = null
 ) : AdapterItem<LabeledTextViewHolder, BottomLabeledTextItem>(
     isType = { it is BottomLabeledTextItem },
@@ -108,7 +108,7 @@ class BottomLabeledTextAdapterItem(
     itemBinder = LabeledTextItemBinder(onClickListener)
 )
 
-class RightLabeledTextAdapterItem(
+public class RightLabeledTextAdapterItem(
     onClickListener: ((LabeledTextItem) -> Unit)? = null
 ) : AdapterItem<LabeledTextViewHolder, BottomLabeledTextItem>(
     isType = { it is RightLabeledTextItem },

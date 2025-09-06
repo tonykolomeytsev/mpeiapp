@@ -38,6 +38,10 @@ gradlePlugin {
         id = "mpeix.util.android"
         implementationClass = "mpeix.plugins.UtilAndroidConventionPlugin"
     }
+    plugins.create("UtilAndroidComposeConventionPlugin") {
+        id = "mpeix.util.android.compose"
+        implementationClass = "mpeix.plugins.UtilAndroidComposeConventionPlugin"
+    }
     plugins.create("LibKotlinConventionPlugin") {
         id = "mpeix.lib.kotlin"
         implementationClass = "mpeix.plugins.LibKotlinConventionPlugin"

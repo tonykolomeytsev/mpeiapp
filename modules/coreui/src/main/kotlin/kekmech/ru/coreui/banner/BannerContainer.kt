@@ -18,8 +18,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
-@FlowPreview
-class BannerContainer @JvmOverloads constructor(
+public class BannerContainer @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
 ) : FrameLayout(context, attrs) {
@@ -27,8 +26,6 @@ class BannerContainer @JvmOverloads constructor(
     private val bannerFlow = MutableStateFlow<Banner?>(null)
     private val viewBinding: ViewBannerContainerBinding
     private val bannerText get() = viewBinding.bannerText
-
-    private var job: Job? = null
 
     init {
         View.inflate(context, R.layout.view_banner_container, this)
@@ -57,7 +54,7 @@ class BannerContainer @JvmOverloads constructor(
         }
     }
 
-    fun show(banner: Banner) {
+    public fun show(banner: Banner) {
         bannerFlow.value = banner
     }
 

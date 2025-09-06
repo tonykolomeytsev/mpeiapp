@@ -28,7 +28,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
  *
  * **Profit!**
  */
-interface PartialMigration {
+public interface PartialMigration {
 
-    fun migrate(database: SupportSQLiteDatabase)
+    public fun migrate(database: SupportSQLiteDatabase)
 }

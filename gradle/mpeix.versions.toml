@@ -8,3 +8,4 @@ lib-android = { id = "mpeix.lib.android" }
 lib-android-compose = { id = "mpeix.lib.android.compose" }
 util-kotlin = { id = "mpeix.util.kotlin" }
 util-android = { id = "mpeix.util.android" }
+util-android-compose = { id = "mpeix.util.android.compose" }

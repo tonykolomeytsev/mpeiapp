@@ -16,7 +16,7 @@ private const val CLASSES_AFTER_LUNCH_NUMBER = 3
 /**
  * Insert notes preview items after classes items and return new list
  */
-fun List<Any>.withNotePreview(): List<Any> = mutableListOf<Any>().apply {
+public fun List<Any>.withNotePreview(): List<Any> = mutableListOf<Any>().apply {
     val raw = this@withNotePreview
     for (e in raw) {
         add(e)
@@ -30,7 +30,7 @@ fun List<Any>.withNotePreview(): List<Any> = mutableListOf<Any>().apply {
 /**
  * Insert lunch item between second and third classes (if exists) and return new list
  */
-fun List<Any>.withLunch(): List<Any> = mutableListOf<Any>().apply {
+public fun List<Any>.withLunch(): List<Any> = mutableListOf<Any>().apply {
     val raw = this@withLunch
     val hasSecondAndThirdClasses =
         raw.any { it is Classes && it.number == CLASSES_BEFORE_LUNCH_NUMBER } &&
@@ -51,7 +51,7 @@ fun List<Any>.withLunch(): List<Any> = mutableListOf<Any>().apply {
 /**
  * Insert window item between classes with numbers N and N + x, (x >= 2) and return new list
  */
-fun List<Classes>.withWindows(): List<Any> = mutableListOf<Any>().apply {
+public fun List<Classes>.withWindows(): List<Any> = mutableListOf<Any>().apply {
     val raw = this@withWindows
     if (raw.size > 1) {
         add(raw.first())
@@ -76,7 +76,7 @@ fun List<Classes>.withWindows(): List<Any> = mutableListOf<Any>().apply {
  * @param nowTime current time of processing
  */
 @Suppress("NestedBlockDepth")
-fun List<Any>.withProgressPreview(
+public fun List<Any>.withProgressPreview(
     nowTime: LocalTime = moscowLocalTime(),
     nowDate: LocalDate = moscowLocalDate(),
 ): List<Any> {
