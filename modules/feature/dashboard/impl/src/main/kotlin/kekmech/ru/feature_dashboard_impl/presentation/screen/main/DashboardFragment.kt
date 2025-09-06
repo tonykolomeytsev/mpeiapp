@@ -49,6 +49,7 @@ import kekmech.ru.lib_navigation.features.ScrollToTop
 import kekmech.ru.lib_navigation.features.TabScreenStateSaver
 import kekmech.ru.lib_navigation.features.TabScreenStateSaverImpl
 import kekmech.ru.lib_schedule.items.NotePreviewAdapterItem
+import money.vivid.elmslie.android.elmStore
 import money.vivid.elmslie.android.renderer.ElmRendererDelegate
 import money.vivid.elmslie.android.renderer.androidElmStore
 import org.koin.android.ext.android.inject
@@ -66,7 +67,10 @@ internal class DashboardFragment :
     private val analytics by screenAnalytics("Dashboard")
     private val viewBinding by viewBinding(FragmentDashboardBinding::bind)
     private val router by inject<Router>()
-    private val store by androidElmStore { inject<DashboardStoreFactory>().value.create() }
+    private val store by androidElmStore(
+        viewModelStoreOwner = { requireActivity() },
+        savedStateRegistryOwner = { requireActivity() },
+    ) { inject<DashboardStoreFactory>().value.create() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -45,6 +45,7 @@ import kekmech.ru.lib_navigation.features.ScrollToTop
 import kekmech.ru.lib_navigation.features.TabScreenStateSaver
 import kekmech.ru.lib_navigation.features.TabScreenStateSaverImpl
 import kekmech.ru.lib_navigation.showDialog
+import money.vivid.elmslie.android.elmStore
 import money.vivid.elmslie.android.renderer.ElmRendererDelegate
 import money.vivid.elmslie.android.renderer.androidElmStore
 import org.koin.android.ext.android.inject
@@ -66,7 +67,10 @@ internal class BarsFragment :
     private val adapter by fastLazy { createAdapter() }
     private val settingsFeatureLauncher by inject<AppSettingsFeatureLauncher>()
 
-    private val store by androidElmStore { inject<BarsStoreFactory>().value.create() }
+    private val store by androidElmStore(
+        viewModelStoreOwner = { requireActivity() },
+        savedStateRegistryOwner = { requireActivity() },
+    ) { inject<BarsStoreFactory>().value.create() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

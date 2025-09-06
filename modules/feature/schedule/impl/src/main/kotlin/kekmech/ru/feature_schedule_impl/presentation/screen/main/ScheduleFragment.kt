@@ -36,6 +36,7 @@ import kekmech.ru.lib_analytics_android.addScrollAnalytics
 import kekmech.ru.lib_analytics_android.ext.screenAnalytics
 import kekmech.ru.lib_navigation.features.TabScreenStateSaver
 import kekmech.ru.lib_navigation.features.TabScreenStateSaverImpl
+import money.vivid.elmslie.android.elmStore
 import money.vivid.elmslie.android.renderer.ElmRendererDelegate
 import money.vivid.elmslie.android.renderer.androidElmStore
 import org.koin.android.ext.android.inject
@@ -60,7 +61,10 @@ internal class ScheduleFragment :
     // for viewPager sliding debounce
     private var viewPagerPositionToBeSelected: Int? = null
 
-    private val store by androidElmStore { inject<ScheduleStoreFactory>().value.create() }
+    private val store by androidElmStore(
+        viewModelStoreOwner = { requireActivity() },
+        savedStateRegistryOwner = { requireActivity() },
+    ) { inject<ScheduleStoreFactory>().value.create() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
