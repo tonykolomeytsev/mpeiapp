@@ -8,12 +8,15 @@ import org.gradle.api.plugins.JavaPluginExtension
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
 
-internal fun Project.configureKotlinJvm() {
+internal fun Project.configureKotlinJvm(
+    explicitApi: Boolean,
+) {
     setupUnitTests()
     extensions.configure<KotlinJvmProjectExtension> {
-//        explicitApi()
+        if (explicitApi) explicitApi()
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_17)
+            freeCompilerArgs.add("-Xannotation-target-all")
         }
     }
     extensions.configure<JavaPluginExtension> {

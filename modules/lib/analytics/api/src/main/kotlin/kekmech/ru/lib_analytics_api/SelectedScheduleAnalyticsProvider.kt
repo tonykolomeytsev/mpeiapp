@@ -1,6 +1,6 @@
 package kekmech.ru.lib_analytics_api
 
-interface SelectedScheduleAnalyticsProvider {
+public interface SelectedScheduleAnalyticsProvider {
 
-    fun getSelectedScheduleNameForAnalytics(): String?
+    public fun getSelectedScheduleNameForAnalytics(): String?
 }

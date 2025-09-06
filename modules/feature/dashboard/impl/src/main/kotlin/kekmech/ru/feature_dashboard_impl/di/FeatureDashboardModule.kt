@@ -1,7 +1,6 @@
 package kekmech.ru.feature_dashboard_impl.di
 
 import kekmech.ru.feature_dashboard_api.DashboardFeatureLauncher
-import kekmech.ru.feature_dashboard_api.presentation.navigation.DashboardScreenApi
 import kekmech.ru.feature_dashboard_impl.domain.interactor.GetUpcomingEventsInteractor
 import kekmech.ru.feature_dashboard_impl.launcher.DashboardFeatureLauncherImpl
 import kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm.DashboardActor

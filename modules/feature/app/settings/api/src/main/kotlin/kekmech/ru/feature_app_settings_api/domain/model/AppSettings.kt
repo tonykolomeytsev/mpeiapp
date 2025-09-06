@@ -1,6 +1,6 @@
 package kekmech.ru.feature_app_settings_api.domain.model
 
-data class AppSettings(
+public data class AppSettings(
     // all app
     @Deprecated("use appTheme")
     val isDarkThemeEnabled: Boolean,

@@ -34,7 +34,6 @@ import kekmech.ru.lib_elm.ElmAcceptAction
 import kekmech.ru.lib_elm.Resource
 import kekmech.ru.lib_elm.elmNode
 import kekmech.ru.lib_elm.rememberAcceptAction
-import kekmech.ru.lib_navigation_api.NavTarget
 import kekmech.ru.lib_navigation_compose.LocalBackStackNavigator
 import kekmech.ru.lib_network.AppEnvironment
 import kekmech.ru.ui_kit_dialogs.AlertDialog

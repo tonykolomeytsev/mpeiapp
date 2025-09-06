@@ -2,9 +2,9 @@ package kekmech.ru.feature_app_settings_api.data
 
 import kekmech.ru.lib_network.AppEnvironment
 
-interface AppEnvironmentRepository {
+public interface AppEnvironmentRepository {
 
-    fun getAppEnvironment(): AppEnvironment
+    public fun getAppEnvironment(): AppEnvironment
 
-    fun setAppEnvironment(appEnvironment: AppEnvironment)
+    public fun setAppEnvironment(appEnvironment: AppEnvironment)
 }

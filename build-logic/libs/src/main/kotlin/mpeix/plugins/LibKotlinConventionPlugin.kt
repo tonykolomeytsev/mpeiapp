@@ -16,7 +16,7 @@ internal abstract class LibKotlinConventionPlugin : Plugin<Project> {
             apply(Plugins.AndroidLint)
         }
         val config = getAndroidProjectConfiguration()
-        configureKotlinJvm()
+        configureKotlinJvm(explicitApi = true)
         createAndroidJarAccessorExtension()
         registerAarToJarTransform()
         config.defaultDependencies.orNull?.execute(dependencies)

@@ -20,7 +20,7 @@ internal abstract class AppConventionPlugin : Plugin<Project> {
 
         val config = getAndroidProjectConfiguration()
         extensions.configure<ApplicationExtension> {
-            configureKotlinAndroid(this, explicitApi = false)
+            configureKotlinAndroid(explicitApi = false)
             defaultConfig {
                 setProguardFiles(projectProguardFiles() + getDefaultProguardFile("proguard-android-optimize.txt"))
             }

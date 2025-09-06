@@ -4,7 +4,7 @@ import kekmech.ru.lib_persistent_cache.impl.PersistentCacheHandleImpl
 import java.io.Serializable
 import kotlin.properties.ReadOnlyProperty
 
-inline fun <reified T : Serializable> PersistentCache.of(
+public inline fun <reified T : Serializable> PersistentCache.of(
     key: String? = null,
 ): ReadOnlyProperty<Any, PersistentCacheHandle<T>> =
     PersistentCacheHandleProperty { _, property ->
@@ -20,7 +20,7 @@ inline fun <reified T : Serializable> PersistentCache.of(
         )
     }
 
-inline fun <reified T : Serializable> PersistentCache.ofList(
+public inline fun <reified T : Serializable> PersistentCache.ofList(
     key: String? = null,
 ): ReadOnlyProperty<Any, PersistentCacheHandle<List<T>>> =
     PersistentCacheHandleProperty { _, property ->

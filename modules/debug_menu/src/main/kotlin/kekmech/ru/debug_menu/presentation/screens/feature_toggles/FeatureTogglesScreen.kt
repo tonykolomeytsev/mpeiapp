@@ -22,7 +22,6 @@ import kekmech.ru.debug_menu.presentation.screens.feature_toggles.elm.FeatureTog
 import kekmech.ru.debug_menu.presentation.screens.feature_toggles.elm.FeatureTogglesStoreFactory
 import kekmech.ru.lib_elm.elmNode
 import kekmech.ru.lib_elm.rememberAcceptAction
-import kekmech.ru.lib_navigation_api.NavTarget
 import kekmech.ru.lib_navigation_compose.LocalBackStackNavigator
 import kekmech.ru.ui_kit_lists.ListItem
 import kekmech.ru.ui_kit_switch.Switch

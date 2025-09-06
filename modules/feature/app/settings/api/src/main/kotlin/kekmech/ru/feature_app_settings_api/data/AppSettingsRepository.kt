@@ -2,9 +2,9 @@ package kekmech.ru.feature_app_settings_api.data
 
 import kekmech.ru.feature_app_settings_api.domain.model.AppSettings
 
-interface AppSettingsRepository {
+public interface AppSettingsRepository {
 
-    fun getAppSettings(): AppSettings
+    public fun getAppSettings(): AppSettings
 
-    fun updateAppSettings(updateAction: AppSettings.() -> AppSettings): AppSettings
+    public fun updateAppSettings(updateAction: AppSettings.() -> AppSettings): AppSettings
 }

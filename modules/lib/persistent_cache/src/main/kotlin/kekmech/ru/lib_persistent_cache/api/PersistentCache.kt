@@ -42,22 +42,22 @@ import java.io.Serializable
  * @see of
  * @see ofList
  */
-interface PersistentCache {
+public interface PersistentCache {
 
     /**
      * Store value in persistent cache.
      */
-    suspend fun <T : Serializable> save(key: PersistentCacheKey, value: T): Result<Unit>
+    public suspend fun <T : Serializable> save(key: PersistentCacheKey, value: T): Result<Unit>
 
     /**
      * Restore value from persistent cache
      */
-    suspend fun <T : Serializable> restore(key: PersistentCacheKey): Result<T>
+    public suspend fun <T : Serializable> restore(key: PersistentCacheKey): Result<T>
 
     /**
      * Delete value from persistent cache
      */
-    suspend fun invalidate(key: PersistentCacheKey): Result<Unit>
+    public suspend fun invalidate(key: PersistentCacheKey): Result<Unit>
 
     /**
      * Subscribe to changes to a specific key in the persistent cache.
@@ -66,11 +66,11 @@ interface PersistentCache {
      * to that key, the value will be emitted. Also, the value will be emitted when a new
      * value for this key is stored in the cache.
      */
-    fun <T : Serializable> observe(key: PersistentCacheKey): Flow<Entry<T>>
+    public fun <T : Serializable> observe(key: PersistentCacheKey): Flow<Entry<T>>
 
-    interface Entry<T : Serializable> {
+    public interface Entry<T : Serializable> {
 
-        val key: PersistentCacheKey
-        val value: T
+        public val key: PersistentCacheKey
+        public val value: T
     }
 }

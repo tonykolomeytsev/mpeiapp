@@ -8,33 +8,33 @@ import kotlinx.coroutines.flow.Flow
  * @see [of]
  * @see [ofList]
  */
-interface PersistentCacheHandle<T> {
+public interface PersistentCacheHandle<T> {
 
     /**
      * Store value in persistent cache.
      *
      * Shortened version of [PersistentCache.save]
      */
-    suspend fun put(value: T): Result<Unit>
+    public suspend fun put(value: T): Result<Unit>
 
     /**
      * Restore value from persistent cache
      *
      * Shortened version of [PersistentCache.restore]
      */
-    suspend fun get(): Result<T>
+    public suspend fun get(): Result<T>
 
     /**
      * Delete value from persistent cache
      *
      * Shortened version of [PersistentCache.invalidate]
      */
-    suspend fun clear(): Result<Unit>
+    public suspend fun clear(): Result<Unit>
 
     /**
      * Subscribe to changes of this value in the persistent cache.
      *
      * Shortened version of [PersistentCache.observe]
      */
-    fun observe(): Flow<T>
+    public fun observe(): Flow<T>
 }

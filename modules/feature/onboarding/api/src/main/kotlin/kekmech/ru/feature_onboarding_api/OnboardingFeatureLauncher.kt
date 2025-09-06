@@ -1,6 +1,6 @@
 package kekmech.ru.feature_onboarding_api
 
-interface OnboardingFeatureLauncher {
+public interface OnboardingFeatureLauncher {
 
-    fun launchWelcomePage(asNewRoot: Boolean = true)
+    public fun launchWelcomePage(asNewRoot: Boolean = true)
 }

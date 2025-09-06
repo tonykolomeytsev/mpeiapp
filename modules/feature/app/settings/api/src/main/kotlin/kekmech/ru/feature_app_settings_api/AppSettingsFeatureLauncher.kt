@@ -1,8 +1,8 @@
 package kekmech.ru.feature_app_settings_api
 
-interface AppSettingsFeatureLauncher {
+public interface AppSettingsFeatureLauncher {
 
-    fun launch(subPage: SubPage? = null)
+    public fun launch(subPage: SubPage? = null)
 
-    enum class SubPage { FAVORITES }
+    public enum class SubPage { FAVORITES }
 }

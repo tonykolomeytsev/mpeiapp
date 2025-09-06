@@ -25,7 +25,7 @@ internal abstract class LibAndroidComposeConventionPlugin : Plugin<Project> {
         val config = getAndroidProjectConfiguration()
         extensions.configure<LibraryExtension> {
             configureAndroidNamespace(this)
-            configureKotlinAndroid(this)
+            configureKotlinAndroid(explicitApi = false)
 
             with(buildFeatures) {
                 compose = false

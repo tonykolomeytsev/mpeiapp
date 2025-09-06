@@ -15,6 +15,7 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.logging.HttpLoggingInterceptor.Level
+import org.koin.core.module.Module
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
@@ -29,7 +30,7 @@ import java.util.concurrent.TimeUnit
 
 private const val DEFAULT_REQUEST_TIMEOUT = 15L
 
-val LibraryNetworkModule = module {
+public val LibraryNetworkModule: Module = module {
     factoryOf(::DeviceIdProvider)
     factoryOf(::DeviceLocaleProvider)
     singleOf(::provideRetrofitBuilder) bind Retrofit.Builder::class

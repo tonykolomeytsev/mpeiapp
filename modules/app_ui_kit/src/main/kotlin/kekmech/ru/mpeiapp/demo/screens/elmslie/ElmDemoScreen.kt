@@ -18,7 +18,6 @@ import com.bumble.appyx.core.node.Node
 import kekmech.ru.lib_elm.Resource
 import kekmech.ru.lib_elm.elmNode
 import kekmech.ru.lib_elm.rememberAcceptAction
-import kekmech.ru.lib_navigation_api.NavTarget
 import kekmech.ru.mpeiapp.demo.screens.elmslie.elm.ElmDemoStore
 import kekmech.ru.mpeiapp.demo.screens.elmslie.elm.ElmDemoStoreFactory
 import kekmech.ru.ui_kit_topappbar.TopAppBar
