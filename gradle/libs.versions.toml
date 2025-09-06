@@ -62,7 +62,6 @@ androidx-recyclerView = { module = "androidx.recyclerview:recyclerview", version
 androidx-room-common = { module = "androidx.room:room-common", version.ref = "room" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
-androidx-room-rx3 = { module = "androidx.room:room-rxjava3", version.ref = "room" }
 androidx-sqlite = { module = "androidx.sqlite:sqlite", version = "2.5.2" }
 androidx-swipeRefreshLayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "swipeRefreshLayout" }
 androidx-viewPager2 = { module = "androidx.viewpager2:viewpager2", version.ref = "viewPager2" }
@@ -82,13 +81,8 @@ firebase-analytics = { module = "com.google.firebase:firebase-analytics", versio
 firebase-config = { module = "com.google.firebase:firebase-config", version = "21.0.1" }
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics", version = "18.2.1" }
 
-# RxJava Libraries
-rx-java = { module = "io.reactivex.rxjava3:rxjava", version = "3.1.11" }
-rx-android = { module = "io.reactivex.rxjava3:rxandroid", version = "3.0.2" }
-
 # Squareup Libraries
 squareup-retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
-squareup-retrofit-rxJava3 = { module = "com.squareup.retrofit2:adapter-rxjava3", version.ref = "retrofit" }
 squareup-retrofit-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
 squareup-okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
 squareup-okhttp-logger = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp" }
@@ -107,7 +101,6 @@ kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotl
 # Coroutines
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
-kotlinx-coroutines-rx3 = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-rx3", version.ref = "coroutines" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 
 # Ktor

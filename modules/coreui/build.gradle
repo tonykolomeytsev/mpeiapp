@@ -14,8 +14,6 @@ dependencies {
     implementation(libs.androidx.recyclerView)
     implementation(libs.facebook.shimmer)
     implementation(libs.google.material)
-    implementation(libs.rx.android)
-    implementation(libs.rx.java)
     implementation(libs.squareup.retrofit)
 
     implementation(project(":lib_adapter"))

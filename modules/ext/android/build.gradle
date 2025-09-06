@@ -16,7 +16,5 @@ dependencies {
     implementation(libs.google.material)
     implementation(libs.koin.android)
     implementation(libs.koin.core)
-    implementation(libs.rx.android)
-    implementation(libs.rx.java)
     compileOnly(libs.timber)
 }

@@ -4,7 +4,6 @@ import android.view.View
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.recyclerview.widget.RecyclerView
-import io.reactivex.rxjava3.exceptions.CompositeException
 import kekmech.ru.coreui.R
 import kekmech.ru.coreui.databinding.ItemErrorStateBinding
 import kekmech.ru.ext_okhttp.NoInternetConnectionException
@@ -91,8 +90,6 @@ private class ErrorStateItemBinder(
                     second = Strings.common_error_handshake_description to null,
                     third = Images.ill_handshake_error,
                 )
-            is CompositeException ->
-                getErrorStateContent(throwable.exceptions.firstOrNull())
             else ->
                 Triple(
                     first = Strings.common_error_view_title,

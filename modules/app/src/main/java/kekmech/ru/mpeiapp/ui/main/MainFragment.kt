@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.setPadding
 import androidx.fragment.app.Fragment
-import io.reactivex.rxjava3.disposables.Disposable
+import androidx.lifecycle.lifecycleScope
 import kekmech.ru.ext_android.addSystemBottomPadding
 import kekmech.ru.ext_android.onActivityResult
 import kekmech.ru.ext_android.viewbinding.viewBinding
@@ -17,9 +17,9 @@ import kekmech.ru.mpeiapp.R
 import kekmech.ru.mpeiapp.databinding.FragmentMainBinding
 import kekmech.ru.mpeiapp.ui.main.di.MainScreenDependencies
 import kekmech.ru.mpeiapp.ui.main.elm.MainScreenEffect
-import kekmech.ru.mpeiapp.ui.main.elm.MainScreenEvent
 import kekmech.ru.mpeiapp.ui.main.elm.MainScreenState
 import kekmech.ru.mpeiapp.ui.main.elm.MainScreenStoreFactory
+import kotlinx.coroutines.launch
 import money.vivid.elmslie.android.renderer.ElmRendererDelegate
 import money.vivid.elmslie.android.renderer.androidElmStore
 import org.koin.android.ext.android.inject
@@ -32,7 +32,6 @@ class MainFragment :
 
     private val dependencies by inject<MainScreenDependencies>()
     private var bottomBarController: BottomBarController? = null
-    private var tabsSwitcherDisposable: Disposable? = null
     private val tabsSwitcher by fastLazy { dependencies.bottomTabsSwitcher }
     private val viewBinding by viewBinding(FragmentMainBinding::bind)
 
@@ -87,17 +86,14 @@ class MainFragment :
 
     override fun onResume() {
         super.onResume()
-        tabsSwitcherDisposable = tabsSwitcher.observe().subscribe {
-            it.map { tab ->
-                bottomBarController?.switchTab(tab)
-                tabsSwitcher.clearTab()
+        lifecycleScope.launch {
+            tabsSwitcher.observe().collect { tab ->
+                tab?.let {
+                    bottomBarController?.switchTab(it)
+                    tabsSwitcher.clearTab()
+                }
             }
         }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        tabsSwitcherDisposable?.dispose()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

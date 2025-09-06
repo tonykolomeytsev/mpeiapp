@@ -22,8 +22,6 @@ dependencies {
     implementation(libs.koin.android)
     implementation(libs.koin.core)
     implementation(libs.picasso)
-    implementation(libs.rx.android)
-    implementation(libs.rx.java)
     implementation(libs.squareup.retrofit)
     implementation(libs.vivid.elmslie.android)
     implementation(libs.vivid.elmslie.core)
