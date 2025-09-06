@@ -4,7 +4,7 @@ import android.animation.AnimatorInflater
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.AppBarLayout
 
-fun RecyclerView.attachScrollListenerForAppBarLayoutShadow(appBarLayout: AppBarLayout) {
+public fun RecyclerView.attachScrollListenerForAppBarLayoutShadow(appBarLayout: AppBarLayout) {
     appBarLayout.stateListAnimator = AnimatorInflater.loadStateListAnimator(context, R.animator.app_bar_elevation)
     appBarLayout.isLiftOnScroll = true
     addOnScrollListener(object : RecyclerView.OnScrollListener() {

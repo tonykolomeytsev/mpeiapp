@@ -5,13 +5,13 @@ import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
 
 @Suppress("LongParameterList")
-open class AdapterItem <in VH, in Model>(
-    val isType: (Any) -> Boolean,
+public open class AdapterItem <in VH, in Model>(
+    public val isType: (Any) -> Boolean,
     @LayoutRes
-    val layoutRes: Int,
-    val viewHolderGenerator: (View) -> RecyclerView.ViewHolder,
-    val itemBinder: BaseItemBinder<VH, Model>,
-    val areItemsTheSame: (Model, Model) -> Boolean = { first, second -> first == second},
-    val equals: (Model, Model) -> Boolean = { first, second -> first == second},
-    val changePayload: (Model, Model) -> Any? = { oldItem, _ -> oldItem }
+    public val layoutRes: Int,
+    public val viewHolderGenerator: (View) -> RecyclerView.ViewHolder,
+    public val itemBinder: BaseItemBinder<VH, Model>,
+    public val areItemsTheSame: (Model, Model) -> Boolean = { first, second -> first == second},
+    public val equals: (Model, Model) -> Boolean = { first, second -> first == second},
+    public val changePayload: (Model, Model) -> Any? = { oldItem, _ -> oldItem }
 )

@@ -7,14 +7,14 @@ import androidx.room.Upsert
 import kekmech.ru.lib_app_database.entity.NormalNote
 
 @Dao
-interface NoteDao {
+public interface NoteDao {
 
     @Upsert
-    suspend fun updateOrInsert(normalNote: NormalNote)
+    public suspend fun updateOrInsert(normalNote: NormalNote)
 
     @Query("SELECT * FROM note WHERE associatedScheduleName=:scheduleName")
-    suspend fun getAllNotesForSchedule(scheduleName: String): List<NormalNote>
+    public suspend fun getAllNotesForSchedule(scheduleName: String): List<NormalNote>
 
     @Delete
-    suspend fun delete(normalNote: NormalNote)
+    public suspend fun delete(normalNote: NormalNote)
 }

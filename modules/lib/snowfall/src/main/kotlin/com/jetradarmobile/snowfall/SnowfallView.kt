@@ -24,7 +24,7 @@ import android.os.HandlerThread
 import android.util.AttributeSet
 import android.view.View
 
-class SnowfallView(context: Context, attrs: AttributeSet) : View(context, attrs) {
+public class SnowfallView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
 
     private val snowflakesNum: Int
@@ -125,11 +125,11 @@ class SnowfallView(context: Context, attrs: AttributeSet) : View(context, attrs)
         }
     }
 
-    fun stopFalling() {
+    public fun stopFalling() {
         snowflakes?.forEach { it.shouldRecycleFalling = false }
     }
 
-    fun restartFalling() {
+    public fun restartFalling() {
         snowflakes?.forEach { it.shouldRecycleFalling = true }
     }
 
@@ -181,7 +181,7 @@ class SnowfallView(context: Context, attrs: AttributeSet) : View(context, attrs)
         }
     }
 
-    companion object {
+    private companion object {
         private const val DEFAULT_SNOWFLAKES_NUM = 200
         private const val DEFAULT_SNOWFLAKE_ALPHA_MIN = 150
         private const val DEFAULT_SNOWFLAKE_ALPHA_MAX = 250

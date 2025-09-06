@@ -9,5 +9,4 @@ dependencies {
     implementation(project(":feature_schedule_api"))
     implementation(project(":feature_map_api"))
     implementation(project(":feature_bars_api"))
-    implementation(project(":ui_icons"))
 }

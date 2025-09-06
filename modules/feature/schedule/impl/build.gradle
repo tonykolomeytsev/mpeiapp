@@ -44,8 +44,6 @@ dependencies {
     implementation(project(":lib_schedule"))
     implementation(project(":lib_persistent_cache"))
 
-    implementation(project(":ui_theme"))
-
     implementation(project(":coreui"))
     implementation(project(":res_strings"))
 }

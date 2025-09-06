@@ -10,12 +10,12 @@ import kekmech.ru.feature_favorite_schedule_api.domain.model.FavoriteSchedule
 import kekmech.ru.lib_adapter.AdapterItem
 import kekmech.ru.lib_adapter.BaseItemBinder
 
-data class FavoriteScheduleItem(
+public data class FavoriteScheduleItem(
     val value: FavoriteSchedule,
     val isSelected: Boolean = false
 )
 
-class FavoriteScheduleAdapterItem(
+public class FavoriteScheduleAdapterItem(
     onClickListener: ((FavoriteScheduleItem) -> Unit)? = null
 ) : AdapterItem<FavoriteScheduleViewHolder, FavoriteScheduleItem>(
     isType = { it is FavoriteScheduleItem },
@@ -25,36 +25,40 @@ class FavoriteScheduleAdapterItem(
     areItemsTheSame = { a, b -> a.value.name == b.value.name }
 )
 
-class FavoriteScheduleViewHolder(
+public class FavoriteScheduleViewHolder(
     private val containerView: View
 ) : RecyclerView.ViewHolder(containerView),
     ClickableItemViewHolder by ClickableItemViewHolderImpl(containerView) {
 
     private val viewBinding = ItemFavoriteScheduleBinding.bind(containerView)
 
-    fun setTitle(title: String) {
+    public fun setTitle(title: String) {
         viewBinding.textViewTitle.text = title
     }
 
-    fun setDescription(description: String) {
+    public fun setDescription(description: String) {
         viewBinding.textViewDescription.text = description
     }
 
-    fun setIsSelected(isSelected: Boolean) = with(viewBinding) {
-        val context = containerView.context
-        if (isSelected) {
-            containerView.backgroundTintList = ColorStateList.valueOf(context.getThemeColor(R.attr.colorMain))
-            textViewTitle.setTextColor(context.getThemeColor(R.attr.colorWhite))
-            textViewDescription.setTextColor(context.getThemeColor(R.attr.colorGray10))
-        } else {
-            containerView.backgroundTintList = ColorStateList.valueOf(context.getThemeColor(R.attr.colorGray10))
-            textViewTitle.setTextColor(context.getThemeColor(R.attr.colorBlack))
-            textViewDescription.setTextColor(context.getThemeColor(R.attr.colorGray70))
+    public fun setIsSelected(isSelected: Boolean) {
+        with(viewBinding) {
+            val context = containerView.context
+            if (isSelected) {
+                containerView.backgroundTintList =
+                    ColorStateList.valueOf(context.getThemeColor(R.attr.colorMain))
+                textViewTitle.setTextColor(context.getThemeColor(R.attr.colorWhite))
+                textViewDescription.setTextColor(context.getThemeColor(R.attr.colorGray10))
+            } else {
+                containerView.backgroundTintList =
+                    ColorStateList.valueOf(context.getThemeColor(R.attr.colorGray10))
+                textViewTitle.setTextColor(context.getThemeColor(R.attr.colorBlack))
+                textViewDescription.setTextColor(context.getThemeColor(R.attr.colorGray70))
+            }
         }
     }
 }
 
-class FavoriteScheduleItemBinder(
+public class FavoriteScheduleItemBinder(
     private val onClickListener: ((FavoriteScheduleItem) -> Unit)? = null
 ) : BaseItemBinder<FavoriteScheduleViewHolder, FavoriteScheduleItem>() {
 

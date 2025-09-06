@@ -2,12 +2,12 @@ package kekmech.ru.lib_navigation
 
 import androidx.fragment.app.FragmentManager
 
-interface Router {
+public interface Router {
 
-    fun executeCommand(vararg commands: Command)
+    public fun executeCommand(vararg commands: Command)
 
-    fun executeCommand(command: ActivityCommand)
+    public fun executeCommand(command: ActivityCommand)
 
-    fun executeCommand(fragmentManager: FragmentManager, command: Command)
+    public fun executeCommand(fragmentManager: FragmentManager, command: Command)
 
 }

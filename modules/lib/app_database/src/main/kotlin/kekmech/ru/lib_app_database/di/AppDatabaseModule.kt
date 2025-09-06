@@ -4,11 +4,12 @@ import androidx.room.Room
 import androidx.room.migration.Migration
 import kekmech.ru.lib_app_database.AppDatabase
 import kekmech.ru.lib_app_database.migrations.MigrationV6V7Impl
+import org.koin.core.module.Module
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
 @Suppress("SpreadOperator")
-val LibraryAppDatabaseModule = module {
+public val LibraryAppDatabaseModule: Module = module {
     single {
         val builder = Room
             .databaseBuilder(

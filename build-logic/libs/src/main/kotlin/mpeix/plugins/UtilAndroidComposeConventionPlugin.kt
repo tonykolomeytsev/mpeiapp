@@ -13,7 +13,7 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import mpeix.plugins.setup.Plugins
 
-internal abstract class LibAndroidComposeConventionPlugin : Plugin<Project> {
+internal abstract class UtilAndroidComposeConventionPlugin : Plugin<Project> {
 
     override fun apply(target: Project): Unit = with(target) {
         with(plugins) {

@@ -7,7 +7,7 @@ import java.time.temporal.ChronoUnit
 import kekmech.ru.res_strings.R.array as StringArrays
 import kekmech.ru.res_strings.R.string as Strings
 
-class PrettyDateFormatter(context: Context) {
+public class PrettyDateFormatter(context: Context) {
     private val listOfDayNames = context.getStringArray(StringArrays.days_of_week)
     private val listOfMonths = context.getStringArray(StringArrays.months)
     private val today = context.getString(Strings.today)
@@ -17,7 +17,7 @@ class PrettyDateFormatter(context: Context) {
     private val beforeYesterday = context.getString(Strings.before_yesterday)
 
     @Suppress("MagicNumber")
-    fun formatRelative(date: LocalDate): String {
+    public fun formatRelative(date: LocalDate): String {
         val now = LocalDate.now()
         val deltaDays = ChronoUnit.DAYS.between(now, date)
         return when (deltaDays) {
@@ -41,7 +41,7 @@ class PrettyDateFormatter(context: Context) {
         }
     }
 
-    fun formatAbsolute(date: LocalDate): String {
+    public fun formatAbsolute(date: LocalDate): String {
         val dayOfWeek = listOfDayNames
             .getOrNull(date.dayOfWeek.value - 1)
             .orEmpty()

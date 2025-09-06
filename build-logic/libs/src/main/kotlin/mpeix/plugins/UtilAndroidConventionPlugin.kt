@@ -23,7 +23,7 @@ internal abstract class UtilAndroidConventionPlugin : Plugin<Project> {
         val config = getAndroidProjectConfiguration()
         extensions.configure<LibraryExtension> {
             configureAndroidNamespace(this)
-            configureKotlinAndroid(explicitApi = false)
+            configureKotlinAndroid(explicitApi = true)
 
             with(buildFeatures) {
                 compose = false

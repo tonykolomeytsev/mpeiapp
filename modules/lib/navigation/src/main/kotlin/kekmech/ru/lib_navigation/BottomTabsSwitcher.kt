@@ -2,11 +2,11 @@ package kekmech.ru.lib_navigation
 
 import kotlinx.coroutines.flow.Flow
 
-interface BottomTabsSwitcher {
+public interface BottomTabsSwitcher {
 
-    fun changeTab(tab: BottomTab)
+    public fun changeTab(tab: BottomTab)
 
-    fun clearTab()
+    public fun clearTab()
 
-    fun observe(): Flow<BottomTab?>
+    public fun observe(): Flow<BottomTab?>
 }

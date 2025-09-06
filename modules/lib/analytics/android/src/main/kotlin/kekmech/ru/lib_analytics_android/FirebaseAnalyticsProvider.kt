@@ -2,7 +2,7 @@ package kekmech.ru.lib_analytics_android
 
 import com.google.firebase.analytics.FirebaseAnalytics
 
-interface FirebaseAnalyticsProvider {
+public interface FirebaseAnalyticsProvider {
 
-    fun provide(): FirebaseAnalytics
+    public fun provide(): FirebaseAnalytics
 }

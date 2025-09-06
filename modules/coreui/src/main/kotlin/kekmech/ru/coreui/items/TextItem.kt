@@ -13,14 +13,14 @@ import kekmech.ru.ext_android.viewbinding.lazyBinding
 import kekmech.ru.lib_adapter.AdapterItem
 import kekmech.ru.lib_adapter.BaseItemBinder
 
-data class TextItem(
+public data class TextItem(
     val text: CharSequence? = null,
     @StringRes val textResId: Int? = null,
     @StyleRes val styleResId: Int? = null,
     val textGravity: Int = Gravity.START,
 )
 
-class TextAdapterItem(
+public class TextAdapterItem(
     @LayoutRes layoutRes: Int = R.layout.item_text
 ) : AdapterItem<TextItemViewHolder, TextItem>(
     isType = { it is TextItem },
@@ -29,35 +29,30 @@ class TextAdapterItem(
     itemBinder = TextItemBinder()
 )
 
-class TextItemViewHolder(
+public class TextItemViewHolder(
     override val containerView: View
 ) : RecyclerView.ViewHolder(containerView), ReusableViewHolder {
 
     private val textViewTextItem by lazyBinding<TextView>(R.id.textViewTextItem)
 
-    fun setText(text: CharSequence) {
+    public fun setText(text: CharSequence) {
         textViewTextItem.text = text
     }
 
-    fun setText(@StringRes textResId: Int) {
+    public fun setText(@StringRes textResId: Int) {
         textViewTextItem.setText(textResId)
     }
 
-    fun setStyle(@StyleRes styleResId: Int) {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-            textViewTextItem.setTextAppearance(styleResId)
-        } else {
-            @Suppress("DEPRECATION")
-            textViewTextItem.setTextAppearance(containerView.context, styleResId)
-        }
+    public fun setStyle(@StyleRes styleResId: Int) {
+        textViewTextItem.setTextAppearance(styleResId)
     }
 
-    fun setTextGravity(textGravity: Int) {
+    public fun setTextGravity(textGravity: Int) {
         textViewTextItem.gravity = textGravity
     }
 }
 
-class TextItemBinder : BaseItemBinder<TextItemViewHolder, TextItem>() {
+public class TextItemBinder : BaseItemBinder<TextItemViewHolder, TextItem>() {
 
     override fun bind(vh: TextItemViewHolder, model: TextItem, position: Int) {
         model.apply {

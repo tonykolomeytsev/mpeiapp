@@ -10,34 +10,38 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.commit
 import kotlin.reflect.KClass
 
-interface Command {
-    fun apply(supportFragmentManager: FragmentManager)
+public interface Command {
+    public fun apply(supportFragmentManager: FragmentManager)
 }
 
-interface ActivityCommand {
-    fun apply(activity: AppCompatActivity)
+public interface ActivityCommand {
+    public fun apply(activity: AppCompatActivity)
 }
 
-class AddScreenForward(private val fragmentProvider: () -> Fragment) : Command {
+public class AddScreenForward(private val fragmentProvider: () -> Fragment) : Command {
 
-    override fun apply(supportFragmentManager: FragmentManager) = supportFragmentManager.commit {
-        setDefaultAnimation()
-        replace(R.id.container, fragmentProvider())
-        addToBackStack(null)
+    override fun apply(supportFragmentManager: FragmentManager) {
+        supportFragmentManager.commit {
+            setDefaultAnimation()
+            replace(R.id.container, fragmentProvider())
+            addToBackStack(null)
+        }
     }
 }
 
-class AddScreenAbove(private val fragmentProvider: () -> Fragment) : Command {
+public class AddScreenAbove(private val fragmentProvider: () -> Fragment) : Command {
 
-    override fun apply(supportFragmentManager: FragmentManager) = supportFragmentManager.commit {
-        setDefaultAnimation()
-        setReorderingAllowed(true)
-        add(R.id.container, fragmentProvider())
-        addToBackStack(null)
+    override fun apply(supportFragmentManager: FragmentManager) {
+        supportFragmentManager.commit {
+            setDefaultAnimation()
+            setReorderingAllowed(true)
+            add(R.id.container, fragmentProvider())
+            addToBackStack(null)
+        }
     }
 }
 
-class ReplaceScreen(private val fragmentProvider: () -> Fragment) : Command {
+public class ReplaceScreen(private val fragmentProvider: () -> Fragment) : Command {
 
     override fun apply(supportFragmentManager: FragmentManager) {
         supportFragmentManager.popBackStack()
@@ -50,14 +54,14 @@ class ReplaceScreen(private val fragmentProvider: () -> Fragment) : Command {
     }
 }
 
-class ShowDialog(private val fragmentProvider: () -> DialogFragment) : Command {
+public class ShowDialog(private val fragmentProvider: () -> DialogFragment) : Command {
 
     override fun apply(supportFragmentManager: FragmentManager) {
         fragmentProvider().show(supportFragmentManager, null)
     }
 }
 
-class NewRoot(private  val fragmentProvider: () -> Fragment) : Command {
+public class NewRoot(private  val fragmentProvider: () -> Fragment) : Command {
 
     override fun apply(supportFragmentManager: FragmentManager) {
         ClearBackStack().apply(supportFragmentManager)
@@ -69,14 +73,14 @@ class NewRoot(private  val fragmentProvider: () -> Fragment) : Command {
     }
 }
 
-class ClearBackStack : Command {
+public class ClearBackStack : Command {
 
     override fun apply(supportFragmentManager: FragmentManager) {
         supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
     }
 }
 
-class PopUntil<T : Fragment>(
+public class PopUntil<T : Fragment>(
     private val fragmentClass: KClass<T>,
     private val inclusive: Boolean = false
 ) : Command {
@@ -98,7 +102,7 @@ class PopUntil<T : Fragment>(
     }
 }
 
-class StartActivity(private val intentProvider: (Context) -> Intent) : ActivityCommand {
+public class StartActivity(private val intentProvider: (Context) -> Intent) : ActivityCommand {
 
     override fun apply(activity: AppCompatActivity) {
         activity.startActivity(intentProvider(activity))

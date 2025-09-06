@@ -30,8 +30,6 @@ dependencies {
     implementation(project(":lib_navigation"))
     implementation(project(":lib_network"))
 
-    implementation(project(":ui_theme"))
-
     implementation(project(":coreui"))
     implementation(project(":res_strings"))
 }

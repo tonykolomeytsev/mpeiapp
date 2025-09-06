@@ -23,45 +23,45 @@ import kekmech.ru.res_icons.R
 /**
  * MpeiX Icons Library
  */
-object MpeixIcons {
+public object MpeixIcons {
 
-    val WhatshotBlack24
+    public val WhatshotBlack24
         @Composable get() = painterResource(R.drawable.ic_whatshot_black_24)
 
-    val WhatshotOutline24
+    public val WhatshotOutline24
         @Composable get() = painterResource(R.drawable.ic_whatshot_outline_24)
 
-    val EventBlack24
+    public val EventBlack24
         @Composable get() = painterResource(R.drawable.ic_event_black_24)
 
-    val EventOutline24
+    public val EventOutline24
         @Composable get() = painterResource(R.drawable.ic_event_outline_24)
 
-    val ExploreBlack24
+    public val ExploreBlack24
         @Composable get() = painterResource(R.drawable.ic_explore_black_24)
 
-    val ExploreOutline24
+    public val ExploreOutline24
         @Composable get() = painterResource(R.drawable.ic_explore_outline_24)
 
-    val AccountBlack24
+    public val AccountBlack24
         @Composable get() = painterResource(R.drawable.ic_account_black_24)
 
-    val AccountOutline24
+    public val AccountOutline24
         @Composable get() = painterResource(R.drawable.ic_account_outline_24)
 
-    val Close24
+    public val Close24
         @Composable get() = painterResource(R.drawable.ic_close_24)
 
-    val Search24
+    public val Search24
         @Composable get() = painterResource(R.drawable.ic_search_24)
 
-    val PersonOutline24
+    public val PersonOutline24
         @Composable get() = painterResource(R.drawable.ic_person_outline_24)
 
-    val GroupsOutline24
+    public val GroupsOutline24
         @Composable get() = painterResource(R.drawable.ic_groups_outline_24)
 
-    val ArrowBack24
+    public val ArrowBack24
         @Composable get() = painterResource(R.drawable.ic_arrow_back_24)
 }
 

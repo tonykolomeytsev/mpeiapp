@@ -4,7 +4,7 @@ import android.content.Context.INPUT_METHOD_SERVICE
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 
-object KeyboardUtils {
+internal object KeyboardUtils {
 
     fun showSoftInput(view: View) {
         view.let {

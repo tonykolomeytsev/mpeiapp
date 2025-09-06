@@ -11,21 +11,21 @@ import kekmech.ru.lib_adapter.BaseItemBinder
 
 private const val DEFAULT_TOGGLE_ITEM_ID = 0
 
-data class ToggleItem(
+public data class ToggleItem(
     val title: String? = null,
     @StringRes val titleRes: Int? = null,
     val isChecked: Boolean = false,
     val itemId: Int = DEFAULT_TOGGLE_ITEM_ID
 )
 
-interface ToggleViewHolder {
-    fun setTitle(title: String)
-    fun setTitle(@StringRes titleRes: Int)
-    fun setIsChecked(isChecked: Boolean, withAnimation: Boolean = false)
-    fun onCheckedChanged(onCheckedChangeListener: CompoundButton.OnCheckedChangeListener)
+public interface ToggleViewHolder {
+    public fun setTitle(title: String)
+    public fun setTitle(@StringRes titleRes: Int)
+    public fun setIsChecked(isChecked: Boolean, withAnimation: Boolean = false)
+    public fun onCheckedChanged(onCheckedChangeListener: CompoundButton.OnCheckedChangeListener)
 }
 
-class ToggleViewHolderImpl(
+public class ToggleViewHolderImpl(
     containerView: View
 ) : RecyclerView.ViewHolder(containerView), ToggleViewHolder {
 
@@ -54,7 +54,7 @@ class ToggleViewHolderImpl(
     }
 }
 
-class ToggleItemBinder(
+public class ToggleItemBinder(
     private val onCheckedChangeListener: (Boolean) -> Unit
 ) : BaseItemBinder<ToggleViewHolder, ToggleItem>() {
 
@@ -77,7 +77,7 @@ class ToggleItemBinder(
     }
 }
 
-class ToggleAdapterItem(
+public class ToggleAdapterItem(
     itemId: Int = DEFAULT_TOGGLE_ITEM_ID,
     onCheckedChangeListener: (Boolean) -> Unit
 ) : AdapterItem<ToggleViewHolder, ToggleItem>(

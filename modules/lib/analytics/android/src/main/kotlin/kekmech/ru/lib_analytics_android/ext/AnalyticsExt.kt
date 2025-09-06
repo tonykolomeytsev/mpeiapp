@@ -11,7 +11,7 @@ import org.koin.android.ext.android.inject
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 
-class ScreenAnalyticsDelegate<T : Analytics>(
+public class ScreenAnalyticsDelegate<T : Analytics>(
     fragment: Fragment,
     analyticsProvider: () -> T
 ) : ReadOnlyProperty<Fragment, T> {
@@ -44,7 +44,7 @@ class ScreenAnalyticsDelegate<T : Analytics>(
     }
 }
 
-fun Fragment.screenAnalytics(screenName: String): ScreenAnalyticsDelegate<Analytics> {
+public fun Fragment.screenAnalytics(screenName: String): ScreenAnalyticsDelegate<Analytics> {
     val analyticsWrapper by inject<AnalyticsWrapper>()
     return ScreenAnalyticsDelegate(this) { AnalyticsImpl(analyticsWrapper, screenName) }
 }

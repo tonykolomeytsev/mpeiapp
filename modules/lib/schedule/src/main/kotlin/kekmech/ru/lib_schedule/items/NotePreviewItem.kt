@@ -16,19 +16,19 @@ import kekmech.ru.lib_schedule.databinding.ItemNotePreviewBinding
 import kekmech.ru.lib_schedule.drawable.ProgressBackgroundDrawable
 import kekmech.ru.coreui.R as coreui_R
 
-data class NotePreview(
+public data class NotePreview(
     val preview: String,
     val linkedClasses: Classes,
     val progress: Float? = null,
 )
 
-interface NotePreviewViewHolder : ClickableItemViewHolder {
+public interface NotePreviewViewHolder : ClickableItemViewHolder {
 
-    fun setText(text: String)
-    fun setProgress(progress: Float?)
+    public fun setText(text: String)
+    public fun setProgress(progress: Float?)
 }
 
-class NotePreviewViewHolderImpl(
+public class NotePreviewViewHolderImpl(
     private val containerView: View,
 ) : NotePreviewViewHolder,
     RecyclerView.ViewHolder(containerView),
@@ -74,7 +74,7 @@ class NotePreviewViewHolderImpl(
     }
 }
 
-class ClassesNoteItemBinder(
+public class ClassesNoteItemBinder(
     private val onClickListener: ((Classes) -> Unit)? = null,
 ) : BaseItemBinder<NotePreviewViewHolder, NotePreview>() {
 
@@ -85,7 +85,7 @@ class ClassesNoteItemBinder(
     }
 }
 
-class NotePreviewAdapterItem(
+public class NotePreviewAdapterItem(
     onClickListener: ((Classes) -> Unit)? = null,
     @LayoutRes layoutRes: Int = R.layout.item_note_preview,
 ) : AdapterItem<NotePreviewViewHolder, NotePreview>(

@@ -3,10 +3,10 @@ package kekmech.ru.lib_elm
 import timber.log.Timber
 import money.vivid.elmslie.core.logger.strategy.LogStrategy
 
-object TimberLogger {
+public object TimberLogger {
 
-    val E = invoke(Timber::e)
-    val D = invoke(Timber::d)
+    public val E: LogStrategy = invoke(Timber::e)
+    public val D: LogStrategy = invoke(Timber::d)
 
     private fun invoke(
         log: (Throwable?, String) -> Unit

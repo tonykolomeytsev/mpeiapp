@@ -8,25 +8,25 @@ import kekmech.ru.coreui.R
 import kekmech.ru.coreui.databinding.ViewNetworkStateBannerContainerBinding
 import kekmech.ru.ext_android.addSystemTopPadding
 
-class NetworkStateBannerContainer @JvmOverloads constructor(
+public class NetworkStateBannerContainer @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
 ) : FrameLayout(context, attrs) {
 
     private val viewBinding: ViewNetworkStateBannerContainerBinding
     private val bannerText get() = viewBinding.bannerText
-    var isVisible = false
+    public var isVisible: Boolean = false
         private set
 
     init {
-        View.inflate(context, R.layout.view_network_state_banner_container, this)
+        inflate(context, R.layout.view_network_state_banner_container, this)
         viewBinding = ViewNetworkStateBannerContainerBinding.bind(this)
         id = R.id.networkStateBannerContainer
         bannerText.alpha = 0f
         bannerText.addSystemTopPadding()
     }
 
-    fun showBanner() {
+    public fun showBanner() {
         isVisible = true
         bannerText.animate().cancel()
         bannerText.animate()
@@ -35,7 +35,7 @@ class NetworkStateBannerContainer @JvmOverloads constructor(
             .start()
     }
 
-    fun hideBanner() {
+    public fun hideBanner() {
         isVisible = false
         bannerText.animate().cancel()
         bannerText.animate()

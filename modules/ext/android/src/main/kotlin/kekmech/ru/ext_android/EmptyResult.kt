@@ -2,4 +2,6 @@ package kekmech.ru.ext_android
 
 import java.io.Serializable
 
-object EmptyResult : Serializable
+public data object EmptyResult : Serializable {
+    private fun readResolve(): Any = EmptyResult
+}
