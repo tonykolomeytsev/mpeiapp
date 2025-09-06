@@ -29,7 +29,6 @@ import kekmech.ru.feature_dashboard_impl.R
 import kekmech.ru.feature_dashboard_impl.databinding.FragmentDashboardBinding
 import kekmech.ru.feature_dashboard_impl.di.DashboardDependencies
 import kekmech.ru.feature_dashboard_impl.presentation.items.BannerLunchAdapterItem
-import kekmech.ru.feature_dashboard_impl.presentation.items.BannerOpenSourceAdapterItem
 import kekmech.ru.feature_dashboard_impl.presentation.items.DashboardClassesAdapterItem
 import kekmech.ru.feature_dashboard_impl.presentation.items.DayStatusAdapterItem
 import kekmech.ru.feature_dashboard_impl.presentation.items.ScheduleTypeAdapterItem
@@ -124,10 +123,6 @@ internal class DashboardFragment :
         BannerLunchAdapterItem {
             analytics.sendClick("BannerLunch")
             dependencies.bottomTabsSwitcher.changeTab(BottomTab.MAP)
-        },
-        BannerOpenSourceAdapterItem {
-            analytics.sendClick("BannerOpenSource")
-            requireContext().openLinkExternal("https://vk.com/kekmech")
         },
         SectionHeaderAdapterItem(),
         SectionHeaderAdapterItem(SECTION_NOTES_ACTION) {
