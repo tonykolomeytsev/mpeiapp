@@ -1,0 +1,8 @@
+plugins {
+    alias(mpeix.plugins.lib.android)
+}
+
+android {
+    namespace = "com.jetradarmobile.snowfall"
+    buildFeatures.androidResources = true
+}

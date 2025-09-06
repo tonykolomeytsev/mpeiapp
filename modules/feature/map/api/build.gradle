@@ -4,5 +4,4 @@ plugins {
 
 dependencies {
     aarCompileOnly(libs.androidx.fragment)
-    implementation(project(":lib_navigation_api"))
 }

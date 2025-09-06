@@ -15,15 +15,6 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-
-        // TODO: completely remove jitpack repo from the project
-        maven {
-            url = "https://jitpack.io"
-            content {
-                // Only allow this group from jitpack
-                includeGroup("com.github.jetradarmobile")
-            }
-        }
     }
     versionCatalogs.create("mpeix").from(files("gradle/mpeix.versions.toml"))
 }
