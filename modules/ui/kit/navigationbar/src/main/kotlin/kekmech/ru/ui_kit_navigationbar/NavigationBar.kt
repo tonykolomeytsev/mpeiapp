@@ -15,7 +15,6 @@ import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBarDefaults
-import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -66,7 +65,7 @@ import androidx.compose.material3.NavigationBarItem as Material3NavigationBarIte
  * @param content the content of this navigation bar, typically 3-5 [Material3NavigationBarItem]s
  */
 @Composable
-fun NavigationBar(
+public fun NavigationBar(
     modifier: Modifier = Modifier,
     windowInsets: WindowInsets = NavigationBarDefaults.windowInsets,
     content: @Composable RowScope.() -> Unit,
@@ -112,7 +111,7 @@ fun NavigationBar(
  * @see NavigationBarItemIconScope.Icon
  */
 @Composable
-fun RowScope.NavigationBarItem(
+public fun RowScope.NavigationBarItem(
     selected: Boolean,
     onClick: () -> Unit,
     icon: @Composable NavigationBarItemIconScope.() -> Unit,
@@ -156,10 +155,10 @@ private val LocalNavigationBarItemSelectedState = compositionLocalOf<Boolean> {
     error("LocalNavigationBarItemSelectedState not provided")
 }
 
-object NavigationBarItemIconScope {
+public object NavigationBarItemIconScope {
 
     @Composable
-    fun Icon(
+    public fun Icon(
         painterSelected: Painter,
         painterUnselected: Painter,
     ) {
@@ -174,7 +173,7 @@ object NavigationBarItemIconScope {
     }
 
     @Composable
-    fun Icon(
+    public fun Icon(
         imageVectorSelected: ImageVector,
         imageVectorUnselected: ImageVector,
     ) {

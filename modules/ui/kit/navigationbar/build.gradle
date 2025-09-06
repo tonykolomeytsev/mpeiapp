@@ -4,4 +4,5 @@ plugins {
 
 dependencies {
     implementation(project(":ui_theme"))
+    implementation(libs.compose.material3)
 }

@@ -13,7 +13,7 @@ import androidx.compose.ui.layout.positionInWindow
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.debugInspectorInfo
 
-fun Modifier.shimmer(): Modifier = composed(
+public fun Modifier.shimmer(): Modifier = composed(
     factory = {
         val bounds = rememberShimmerBounds()
         val shimmerWidthPx = with(LocalDensity.current) { ShimmerTokens.Width.toPx() }
