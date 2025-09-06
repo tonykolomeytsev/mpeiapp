@@ -1,6 +1,6 @@
 package kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm
 
-import kekmech.ru.feature_schedule_api.ScheduleFeatureLauncher
+import kekmech.ru.feature_schedule_api.ScheduleFeatureApi
 import money.vivid.elmslie.core.store.ElmStore
 
 internal class FindScheduleStoreFactory(
@@ -8,7 +8,7 @@ internal class FindScheduleStoreFactory(
 ) {
 
     fun create(
-        continueTo: ScheduleFeatureLauncher.ContinueTo,
+        continueTo: ScheduleFeatureApi.ContinueTo,
         selectGroupAfterSuccess: Boolean,
     ) =
         ElmStore(

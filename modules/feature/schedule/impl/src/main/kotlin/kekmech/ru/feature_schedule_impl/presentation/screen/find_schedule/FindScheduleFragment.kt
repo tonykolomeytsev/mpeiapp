@@ -11,20 +11,20 @@ import kekmech.ru.ext_android.addSystemTopPadding
 import kekmech.ru.ext_android.afterTextChanged
 import kekmech.ru.ext_android.close
 import kekmech.ru.ext_android.getArgument
+import kekmech.ru.ext_android.hideKeyboard
 import kekmech.ru.ext_android.setResult
 import kekmech.ru.ext_android.showKeyboard
 import kekmech.ru.ext_android.viewbinding.viewBinding
 import kekmech.ru.ext_android.withArguments
 import kekmech.ru.ext_kotlin.fastLazy
-import kekmech.ru.feature_schedule_api.ScheduleFeatureLauncher
-import kekmech.ru.feature_schedule_api.ScheduleFeatureLauncher.ContinueTo.BACK
-import kekmech.ru.feature_schedule_api.ScheduleFeatureLauncher.ContinueTo.BACK_WITH_RESULT
-import kekmech.ru.feature_schedule_api.ScheduleFeatureLauncher.ContinueTo.DASHBOARD
+import kekmech.ru.feature_schedule_api.ScheduleFeatureApi
+import kekmech.ru.feature_schedule_api.ScheduleFeatureApi.ContinueTo.BACK
+import kekmech.ru.feature_schedule_api.ScheduleFeatureApi.ContinueTo.BACK_WITH_RESULT
+import kekmech.ru.feature_schedule_api.ScheduleFeatureApi.ContinueTo.DASHBOARD
 import kekmech.ru.feature_schedule_impl.R
 import kekmech.ru.feature_schedule_impl.databinding.FragmentFindScheduleBinding
 import kekmech.ru.feature_schedule_impl.di.ScheduleDependencies
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.FindScheduleEffect
-import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.FindScheduleEvent
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.FindScheduleEvent.Ui
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.FindScheduleState
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.FindScheduleStoreFactory
@@ -117,6 +117,11 @@ internal class FindScheduleFragment :
         }
     }
 
+    override fun onPause() {
+        hideKeyboard()
+        super.onPause()
+    }
+
     companion object {
 
         private const val ARG_CONTINUE_TO = "Arg.ContinueTo"
@@ -124,7 +129,7 @@ internal class FindScheduleFragment :
         private const val ARG_RESULT_KEY = "Arg.ResultKey"
 
         fun newInstance(
-            continueTo: ScheduleFeatureLauncher.ContinueTo = BACK,
+            continueTo: ScheduleFeatureApi.ContinueTo = BACK,
             selectGroupAfterSuccess: Boolean = true,
             resultKey: String,
         ) = FindScheduleFragment().withArguments(

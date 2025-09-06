@@ -7,7 +7,7 @@ import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 import io.reactivex.rxjava3.exceptions.CompositeException
-import kekmech.ru.feature_schedule_api.ScheduleFeatureLauncher
+import kekmech.ru.feature_schedule_api.ScheduleFeatureApi
 import kekmech.ru.feature_schedule_api.domain.model.ScheduleType
 import kekmech.ru.feature_schedule_api.domain.model.SelectedSchedule
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.FindScheduleCommand
@@ -159,7 +159,7 @@ class FindScheduleReducerTest : BehaviorSpec({
     private companion object {
 
         private val STATE = FindScheduleState(
-            continueTo = ScheduleFeatureLauncher.ContinueTo.BACK,
+            continueTo = ScheduleFeatureApi.ContinueTo.BACK,
             selectScheduleAfterSuccess = false
         )
         private const val CORRECT_NAME = "С-06-18"

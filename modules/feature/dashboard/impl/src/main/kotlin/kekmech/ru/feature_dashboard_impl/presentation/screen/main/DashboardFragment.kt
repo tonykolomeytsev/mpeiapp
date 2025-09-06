@@ -38,13 +38,15 @@ import kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm.DashboardE
 import kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm.DashboardEvent
 import kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm.DashboardState
 import kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm.DashboardStoreProvider
-import kekmech.ru.feature_schedule_api.ScheduleFeatureLauncher
+import kekmech.ru.feature_schedule_api.ScheduleFeatureApi
 import kekmech.ru.feature_schedule_api.domain.model.Classes
 import kekmech.ru.feature_schedule_api.domain.model.SelectedSchedule
 import kekmech.ru.lib_adapter.BaseAdapter
 import kekmech.ru.lib_analytics_android.addScrollAnalytics
 import kekmech.ru.lib_analytics_android.ext.screenAnalytics
+import kekmech.ru.lib_navigation.AddScreenForward
 import kekmech.ru.lib_navigation.BottomTab
+import kekmech.ru.lib_navigation.Router
 import kekmech.ru.lib_navigation.features.ScrollToTop
 import kekmech.ru.lib_navigation.features.TabScreenStateSaver
 import kekmech.ru.lib_navigation.features.TabScreenStateSaverImpl
@@ -65,7 +67,7 @@ internal class DashboardFragment :
     private val adapter by fastLazy { createAdapter() }
     private val analytics by screenAnalytics("Dashboard")
     private val viewBinding by viewBinding(FragmentDashboardBinding::bind)
-
+    private val router by inject<Router>()
     private val store by androidElmStore { inject<DashboardStoreProvider>().value.get() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -154,10 +156,12 @@ internal class DashboardFragment :
             parentFragment?.setResultListener<SelectedSchedule>(FIND_GROUP_RESULT_KEY) {
                 store.accept(DashboardEvent.Ui.Action.SwipeToRefresh)
             }
-            dependencies.scheduleFeatureLauncher.launchSearchGroup(
-                continueTo = ScheduleFeatureLauncher.ContinueTo.BACK_WITH_RESULT,
-                resultKey = FIND_GROUP_RESULT_KEY
-            )
+            router.executeCommand(AddScreenForward {
+                dependencies.scheduleFeatureApi.getSearchGroupScreen(
+                    continueTo = ScheduleFeatureApi.ContinueTo.BACK_WITH_RESULT,
+                    resultKey = FIND_GROUP_RESULT_KEY
+                )
+            })
         },
         EmptyStateAdapterItem(),
         FavoriteScheduleAdapterItem {

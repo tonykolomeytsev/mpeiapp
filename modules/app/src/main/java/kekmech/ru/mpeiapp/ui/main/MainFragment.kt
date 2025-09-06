@@ -61,7 +61,7 @@ class MainFragment :
         val controller = bottomBarController ?: BottomBarController(
             this,
             dependencies.dashboardFeatureLauncher,
-            dependencies.scheduleFeatureLauncher,
+            dependencies.scheduleFeatureApi,
             dependencies.barsFeatureLauncher,
             dependencies.mapFeatureLauncher
         )
