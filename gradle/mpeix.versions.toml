@@ -1,6 +1,7 @@
 [plugins]
 root = { id = "mpeix.root" }
 app = { id = "mpeix.app" }
+app-signing = { id = "mpeix.app.signing" }
 feature-impl = { id = "mpeix.feature.impl" }
 feature-impl-compose = { id = "mpeix.feature.impl.compose" }
 feature-api = { id = "mpeix.feature.api" }

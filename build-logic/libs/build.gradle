@@ -54,4 +54,8 @@ gradlePlugin {
         id = "mpeix.util.kotlin"
         implementationClass = "mpeix.plugins.UtilKotlinConventionPlugin"
     }
+    plugins.create("AndroidSigningConventionPlugin") {
+        id = "mpeix.app.signing"
+        implementationClass = "mpeix.plugins.features.signing.AndroidSigningConventionPlugin"
+    }
 }
