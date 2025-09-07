@@ -33,7 +33,7 @@
             android:textSize="14sp"
             android:maxLines="1"
             android:ellipsize="end"
-            tools:text="vk.com/kekmech"
+            tools:text="t.me/tonykolomeytsev"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>

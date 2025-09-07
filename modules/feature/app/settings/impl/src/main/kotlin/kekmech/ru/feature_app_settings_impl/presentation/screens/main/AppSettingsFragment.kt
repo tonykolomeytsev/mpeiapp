@@ -126,10 +126,6 @@ internal class AppSettingsFragment :
 
     private fun onItemClick(itemId: Int?) =
         when (itemId) {
-            ITEM_SUPPORT -> {
-                analytics.sendClick("VkGroup")
-                requireContext().openLinkExternal("https://vk.com/kekmech")
-            }
             ITEM_GITHUB -> {
                 analytics.sendClick("GitHub")
                 requireContext().openLinkExternal("https://github.com/tonykolomeytsev/mpeiapp")

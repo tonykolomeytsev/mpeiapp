@@ -76,14 +76,6 @@ internal class AppSettingsListConverter {
 
                 add(
                     BottomLabeledTextItem(
-                        mainTextResId = Strings.app_settings_section_ask,
-                        label = "vk.com/kekmech",
-                        itemId = ITEM_SUPPORT,
-                    )
-                )
-
-                add(
-                    BottomLabeledTextItem(
                         mainTextResId = Strings.app_settings_section_github,
                         label = "github.com/tonykolomeytsev/mpeiapp",
                         itemId = ITEM_GITHUB,
