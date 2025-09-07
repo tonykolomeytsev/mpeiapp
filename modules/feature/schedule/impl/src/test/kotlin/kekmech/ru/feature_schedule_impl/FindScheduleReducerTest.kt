@@ -6,7 +6,6 @@ import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
-import io.reactivex.rxjava3.exceptions.CompositeException
 import kekmech.ru.feature_schedule_api.ScheduleFeatureApi
 import kekmech.ru.feature_schedule_api.domain.model.ScheduleType
 import kekmech.ru.feature_schedule_api.domain.model.SelectedSchedule
@@ -165,7 +164,7 @@ class FindScheduleReducerTest : BehaviorSpec({
         private const val CORRECT_NAME = "С-06-18"
         private const val INVALID_NAME = "С-vv--"
         private val VALIDATION_ERROR =
-            CompositeException(HttpException(Response.error<Unit>(400, "".toResponseBody())))
+            HttpException(Response.error<Unit>(400, "".toResponseBody()))
         private val UNKNOWN_ERROR = IllegalStateException("Unknown error!")
     }
 }

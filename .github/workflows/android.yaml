@@ -32,7 +32,7 @@ jobs:
 
       - name: Unit tests
         run: |
-          ./gradlew -Pci testDebugUnitTest
+          ./gradlew -Pci test
         env:
           MAP_KEY: ${{ secrets.MAP_KEY }}
 

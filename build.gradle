@@ -37,8 +37,8 @@ androidProjectConfiguration {
     defaultComposeDependencies {
         add("implementation", platform(libs.compose.bom))
         add("implementation", libs.bundles.compose)
+        add("implementation", libs.compose.ui.preview)
         add("debugImplementation", libs.compose.ui.tooling)
-        add("debugImplementation", libs.compose.ui.preview)
     }
 }
 
