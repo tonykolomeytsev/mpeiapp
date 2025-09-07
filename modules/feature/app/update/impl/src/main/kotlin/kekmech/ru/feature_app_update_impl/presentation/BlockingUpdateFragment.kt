@@ -17,7 +17,7 @@ import kekmech.ru.lib_analytics_android.ext.screenAnalytics
 import kekmech.ru.res_strings.R.string as Strings
 
 private const val ARG_UPDATE_INFO = "Arg.UpdateInfo"
-private const val LINK_VK = "https://vk.com/kekmech"
+private const val LINK_GITHUB = "https://github.com/tonykolomeytsev/mpeiapp/issues"
 
 class BlockingUpdateFragment : Fragment(R.layout.fragment_blocking_update) {
 
@@ -38,10 +38,10 @@ class BlockingUpdateFragment : Fragment(R.layout.fragment_blocking_update) {
             }
             header.setText(Strings.blocking_update_title)
             fullText.setText(Strings.blocking_update_description)
-            link.text = LINK_VK
+            link.text = LINK_GITHUB
             link.setOnClickListener {
                 analytics.sendClick("GoToVkBlockingUpdate")
-                requireContext().openLinkExternal(LINK_VK)
+                requireContext().openLinkExternal(LINK_GITHUB)
             }
         }
         view.addSystemVerticalPadding()

@@ -32,6 +32,6 @@
             android:maxLines="1"
             android:ellipsize="end"
             android:layout_marginTop="2dp"
-            tools:text="vk.com/kekmech"/>
+            tools:text="t.me/tonykolomeytsev"/>
 
 </LinearLayout>
