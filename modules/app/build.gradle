@@ -20,6 +20,7 @@ android {
         release {
             minifyEnabled = true
             shrinkResources = true
+            matchingFallbacks = ["release", "debug"]
         }
         debug {
             minifyEnabled = false
