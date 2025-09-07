@@ -21,6 +21,7 @@ android {
             minifyEnabled = true
             shrinkResources = true
             signingConfig = signingConfigs.getByName("debug")
+            matchingFallbacks += ["debug"]
         }
         debug {
             minifyEnabled = false
@@ -36,8 +37,8 @@ android {
 dependencies {
     add("implementation", platform(libs.compose.bom))
     add("implementation", libs.bundles.compose)
+    add("implementation", libs.compose.ui.preview)
     add("debugImplementation", libs.compose.ui.tooling)
-    add("debugImplementation", libs.compose.ui.preview)
 
     implementation(project(":ui_theme"))
     implementation(project(":ui_icons"))
