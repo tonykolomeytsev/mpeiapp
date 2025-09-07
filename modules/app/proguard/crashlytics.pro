@@ -1,0 +1,3 @@
+-keepattributes *Annotation*
+-keepattributes SourceFile,LinenumberTable
+-keep public class * extends java.lang.Exception

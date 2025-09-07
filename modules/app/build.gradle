@@ -1,5 +1,6 @@
 plugins {
     alias(mpeix.plugins.app)
+    alias(mpeix.plugins.app.signing)
     alias(libs.plugins.google.services)
     alias(libs.plugins.firebase.crashlytics)
 }
