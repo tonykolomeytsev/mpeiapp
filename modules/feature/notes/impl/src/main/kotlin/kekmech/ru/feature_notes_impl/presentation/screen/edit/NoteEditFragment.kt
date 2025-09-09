@@ -11,6 +11,7 @@ import kekmech.ru.ext_android.EmptyResult
 import kekmech.ru.ext_android.addSystemVerticalPadding
 import kekmech.ru.ext_android.close
 import kekmech.ru.ext_android.getArgument
+import kekmech.ru.ext_android.hideKeyboard
 import kekmech.ru.ext_android.setResult
 import kekmech.ru.ext_android.viewbinding.viewBinding
 import kekmech.ru.ext_android.withArguments
@@ -86,6 +87,11 @@ internal class NoteEditFragment :
     private fun onNoteContentChanged(content: String) {
         viewBinding.appBarLayout.isSelected = viewBinding.recyclerView.canScrollVertically(-1)
         store.accept(Ui.Action.NoteContentChanged(content))
+    }
+
+    override fun onPause() {
+        hideKeyboard()
+        super.onPause()
     }
 
     companion object {
