@@ -1,8 +1,10 @@
 package kekmech.ru.feature_contributors_impl.data.dto
 
+import com.google.errorprone.annotations.Keep
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
+@Keep
 internal data class GitHubUser(
     val id: Long,
     val login: String,
