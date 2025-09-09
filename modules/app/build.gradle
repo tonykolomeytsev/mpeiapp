@@ -29,6 +29,7 @@ android {
             shrinkResources = true
             applicationIdSuffix = ".dev"
             matchingFallbacks += ["debug"]
+            signingConfig = signingConfigs.getByName("debug")
         }
         debug {
             minifyEnabled = false
