@@ -86,6 +86,11 @@ internal class ScheduleFragment :
         }
     }
 
+    override fun onResume() {
+        store.accept(Ui.Action.UpdateScheduleIfNeeded)
+        super.onResume()
+    }
+
     override fun onDestroyView() {
         saveViewPagerState()
         viewBinding.viewPager.adapter = null
