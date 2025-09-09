@@ -124,8 +124,11 @@ dependencies {
     implementation(project(":res_strings"))
 
     debugImplementation(project(":mock_server"))
+    qaImplementation(project(":mock_server"))
     debugImplementation(project(":debug_menu"))
+    qaImplementation(project(":debug_menu"))
     debugImplementation(project(":lib_chucker"))
+    qaImplementation(project(":lib_chucker"))
 
     testImplementation(libs.kotest.runner)
 }
