@@ -4,5 +4,6 @@ plugins {
 
 dependencies {
     aarCompileOnly(libs.androidx.fragment)
+    aarCompileOnly(libs.androidx.annotation)
     implementation(libs.google.gson)
 }
