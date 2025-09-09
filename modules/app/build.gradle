@@ -23,6 +23,13 @@ android {
             shrinkResources = true
             matchingFallbacks += ["debug"]
         }
+        qa {
+            debuggable = false
+            minifyEnabled = true
+            shrinkResources = true
+            applicationIdSuffix = ".dev"
+            matchingFallbacks += ["debug"]
+        }
         debug {
             minifyEnabled = false
             applicationIdSuffix = ".dev"
