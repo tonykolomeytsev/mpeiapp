@@ -2,6 +2,12 @@ plugins {
     alias(mpeix.plugins.lib.android)
 }
 
+android {
+    defaultConfig {
+        consumerProguardFiles(file("proguard-consumer-rules.pro"))
+    }
+}
+
 dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.ktor.server.core)
