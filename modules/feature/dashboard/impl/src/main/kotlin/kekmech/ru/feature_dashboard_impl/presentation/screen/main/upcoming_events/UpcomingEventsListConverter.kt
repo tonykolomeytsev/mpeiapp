@@ -14,6 +14,7 @@ import kekmech.ru.feature_dashboard_impl.presentation.screen.main.helpers.TimeDe
 import kekmech.ru.feature_schedule_api.domain.model.Classes
 import kekmech.ru.feature_schedule_api.domain.model.ScheduleType
 import kekmech.ru.lib_elm.Resource
+import kekmech.ru.lib_schedule.items.NotePreview
 import kekmech.ru.lib_schedule.utils.withNotePreview
 import kotlin.time.Duration
 import kekmech.ru.res_strings.R.string as Strings
@@ -32,8 +33,10 @@ internal class UpcomingEventsListConverter(
                     is UpcomingEventsPrediction.NoClassesNextWeek -> list.addEmptyStateItems()
                     is UpcomingEventsPrediction.ClassesTodayNotStarted ->
                         list.addClassesTodayNotStarted(state.selectedSchedule.type, prediction)
+
                     is UpcomingEventsPrediction.ClassesTodayStarted ->
                         list.addClassesTodayStarted(state.selectedSchedule.type, prediction)
+
                     is UpcomingEventsPrediction.ClassesInNDays ->
                         list.addClassesInNDays(state.selectedSchedule.type, prediction)
                 }
@@ -100,6 +103,16 @@ internal class UpcomingEventsListConverter(
             )
         )
         add(prediction.inProgressClasses.copy(progress = prediction.inProgressFactor))
+        // Add note preview (if exists)
+        prediction.inProgressClasses.attachedNotePreview?.let { notePreviewContent ->
+            add(
+                NotePreview(
+                    notePreviewContent,
+                    linkedClasses = prediction.inProgressClasses,
+                    prediction.inProgressFactor
+                )
+            )
+        }
         addAll(prediction.futureClasses.handleClasses(selectedScheduleType))
     }
 
