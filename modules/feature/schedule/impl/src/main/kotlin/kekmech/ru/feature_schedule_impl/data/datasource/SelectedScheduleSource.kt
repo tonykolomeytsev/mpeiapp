@@ -37,14 +37,11 @@ internal class SelectedScheduleSource(
             ?.takeIf { it.isNotBlank() }
             ?: throw IllegalStateException("SelectedSchedule is empty")
         // derive type from name if it is absent in preferences (for app update v1+ to v2+)
-        val rawType = sharedPreferences.getString(KeySelectedScheduleType, null).orEmpty()
-        val selectedScheduleType = runCatching { ScheduleType.valueOf(rawType) }
-            .getOrElse {
-                when {
-                    rawType.matches(GroupNumberPattern) -> ScheduleType.GROUP
-                    else -> ScheduleType.PERSON
-                }
-            }
+        val selectedScheduleType = when {
+            selectedScheduleName.matches(GroupNumberPattern) -> ScheduleType.GROUP
+            else -> ScheduleType.PERSON
+        }
+
         return SelectedSchedule(
             name = selectedScheduleName,
             type = selectedScheduleType,
