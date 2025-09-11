@@ -106,9 +106,10 @@ let getAllMarks = () => {
 };
 let metadataContainer = document.querySelector("#div-FormHeader .row .col-sm");
 
-let studentNameAndGroup = metadataContainer.children[0].innerText.split(/\(.*\)/gm);
-kti.onStudentNameExtracted(studentNameAndGroup[0].trim());
-kti.onStudentGroupExtracted(studentNameAndGroup[1].trim());
+let studentName = metadataContainer.children[0].innerText.split(/\(.*\)/gm)[0].trim();
+let studentGroup = metadataContainer.children[1].innerText.trim();
+kti.onStudentNameExtracted(studentName);
+kti.onStudentGroupExtracted(studentGroup);
 try {
     kti.onStudentMetaExtracted(getMeta(metadataContainer));
 } catch (err) {
