@@ -2,9 +2,14 @@ plugins {
     alias(mpeix.plugins.feature.impl)
 }
 
-android.buildFeatures {
-    viewBinding = true
-    androidResources = true
+android{
+    defaultConfig {
+        consumerProguardFiles(file("proguard-consumer-rules.pro"))
+    }
+    buildFeatures {
+        viewBinding = true
+        androidResources = true
+    }
 }
 
 dependencies {
