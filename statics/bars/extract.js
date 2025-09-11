@@ -106,10 +106,15 @@ let getAllMarks = () => {
 };
 let metadataContainer = document.querySelector("#div-FormHeader .row .col-sm");
 
-let studentName = metadataContainer.children[0].innerText.split(/\(.*\)/gm)[0].trim();
-let studentGroup = metadataContainer.children[1].innerText.trim();
-kti.onStudentNameExtracted(studentName);
-kti.onStudentGroupExtracted(studentGroup);
+try {
+    let studentName = metadataContainer.children[0].innerText.split(/\(.*\)/gm)[0].trim();
+    let studentGroup = metadataContainer.children[1].innerText.trim();
+    kti.onStudentNameExtracted(studentName);
+    kti.onStudentGroupExtracted(studentGroup);
+} catch (err) {
+    console.log("Cannot extract name and group from the page")
+}
+
 try {
     kti.onStudentMetaExtracted(getMeta(metadataContainer));
 } catch (err) {
