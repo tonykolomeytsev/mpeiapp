@@ -41,14 +41,14 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: MpeiX APK
-          path: modules/app/build/outputs/apk/release/app-release.apk
+          path: modules/app/build/outputs/apk/release/app-release-signed.apk
 
       - name: Publish Draft Release on GitHub
         uses: softprops/action-gh-release@v2.2.2
         with:
           draft: true
           files: |
-            modules/app/build/outputs/apk/release/app-release.apk
+            modules/app/build/outputs/apk/release/app-release-signed.apk
 #
 #      - name: Create service_account.json
 #        run: echo '${{ secrets.SERVICE_ACCOUNT_JSON }}' > service_account.json
