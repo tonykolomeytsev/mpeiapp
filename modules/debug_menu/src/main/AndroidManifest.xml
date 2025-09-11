@@ -1,11 +1,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
 
     <application>
         <service
             android:name="kekmech.ru.debug_menu.presentation.DebugMenuService"
-            android:exported="false" />
+            android:exported="false"
+            android:foregroundServiceType="specialUse"/>
         <activity
             android:name="kekmech.ru.debug_menu.presentation.DebugMenuActivity"
             android:exported="false"
