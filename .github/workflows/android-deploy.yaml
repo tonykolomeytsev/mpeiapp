@@ -37,6 +37,11 @@ jobs:
           KEY_STORE_PASSWORD: ${{ secrets.KEY_STORE_PASSWORD }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
 
+      - name: Look for artifact name
+        run: |
+          ls modules/app/build/outputs/apk/release
+          ls modules/app/build/outputs/bundle/release
+
       - name: Publish Release APK artifact
         uses: actions/upload-artifact@v4
         with:
