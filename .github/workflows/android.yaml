@@ -7,7 +7,7 @@ on:
   pull_request:
 
 env:
-  GRADLE_OPTS: --no-configuration-cache
+  GRADLE_OPTS: "-Dorg.gradle.unsafe.configuration-cache=false"
 
 jobs:
   test:
