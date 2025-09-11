@@ -40,24 +40,26 @@ jobs:
           KEY_STORE_PASSWORD: ${{ secrets.KEY_STORE_PASSWORD }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
 
-      - name: Look for artifact name
+      - name: Rename signed release APK
         run: |
-          ls modules/app/build/outputs/apk/release
-          ls modules/app/build/outputs/bundle/release
+          VERSION="${GITHUB_REF#refs/tags/release/}"
+          ORIGINAL_APK="modules/app/build/outputs/apk/release/app-release.apk"
+          RENAMED_APK="mpeix-gms-${VERSION}-release.apk"
+          mv "$ORIGINAL_APK" "$RENAMED_APK"
+          echo "Renamed APK to $RENAMED_APK"
 
       - name: Publish Release APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: MpeiX APK
-          path: modules/app/build/outputs/apk/release/app-release-signed.apk
+          path: "*.apk"
 
       - name: Publish Draft Release on GitHub
         uses: softprops/action-gh-release@v2.2.2
         with:
           draft: true
-          files: |
-            modules/app/build/outputs/apk/release/app-release-signed.apk
-#
+          files: "*.apk"
+
 #      - name: Create service_account.json
 #        run: echo '${{ secrets.SERVICE_ACCOUNT_JSON }}' > service_account.json
 #
