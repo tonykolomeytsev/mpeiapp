@@ -9,8 +9,9 @@ import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import kekmech.ru.ext_android.R
 
-public open class BottomSheetDialogFragment(@LayoutRes public val layoutResId: Int,) :
+public open class BottomSheetDialogFragment(@LayoutRes public val layoutResId: Int) :
     com.google.android.material.bottomsheet.BottomSheetDialogFragment() {
 
     override fun onCreateView(
@@ -20,7 +21,7 @@ public open class BottomSheetDialogFragment(@LayoutRes public val layoutResId: I
     ): View? = inflater.inflate(layoutResId, container, false)
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val dialog = super.onCreateDialog(savedInstanceState)
+        val dialog = BottomSheetDialog(requireContext(), R.style.BottomSheetDialogTheme)
         dialog.setOnShowListener { dialogInterface ->
             dialogInterface as BottomSheetDialog
             val view = dialogInterface

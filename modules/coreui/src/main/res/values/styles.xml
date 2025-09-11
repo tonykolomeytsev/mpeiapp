@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
@@ -9,7 +9,7 @@
         <item name="colorControlNormal">@color/colorGray30</item>
         <item name="colorControlHighlight">#50CDCDCD</item>
         <item name="android:textColor">@color/colorWhite</item>
-        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
+        <item name="android:windowLightStatusBar">true</item>
 
         <!-- Transparent statusBar -->
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
@@ -65,7 +65,7 @@
         <item name="colorControlNormal">@color/colorGray30</item>
         <item name="colorControlHighlight">#50BABABA</item>
         <item name="android:textColor">@color/colorBlack</item>
-        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
+        <item name="android:windowLightStatusBar">false</item>
 
         <!-- Transparent statusBar -->
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
@@ -118,15 +118,6 @@
         <item name="android:fontFamily">sans-serif-light</item>
     </style>
 
-    <style name="BottomSheet" parent="@style/Widget.Design.BottomSheet.Modal">
-        <item name="android:background">@android:color/transparent</item>
-    </style>
-
-    <style name="BaseBottomSheetDialog" parent="@style/Theme.Design.Light.BottomSheetDialog">
-        <item name="android:windowIsFloating">false</item>
-        <item name="bottomSheetStyle">@style/BottomSheet</item>
-    </style>
-
     <style name="TextViewMapTab" parent="Widget.AppCompat.TextView">
         <item name="android:paddingTop">6dp</item>
         <item name="android:paddingBottom">6dp</item>
@@ -136,7 +127,5 @@
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textColor">@color/colorGray90</item>
     </style>
-
-    <style name="BottomSheetDialogTheme" parent="BaseBottomSheetDialog" />
 
 </resources>
