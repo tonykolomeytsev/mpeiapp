@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kekmech.ru.coreui.items.AddActionAdapterItem
 import kekmech.ru.coreui.items.NoteAdapterItem
 import kekmech.ru.coreui.items.PullAdapterItem
@@ -13,6 +12,7 @@ import kekmech.ru.coreui.items.SectionHeaderAdapterItem
 import kekmech.ru.coreui.items.SpaceAdapterItem
 import kekmech.ru.coreui.touch_helpers.attachSwipeToDeleteCallback
 import kekmech.ru.ext_android.close
+import kekmech.ru.ext_android.fragment.BottomSheetDialogFragment
 import kekmech.ru.ext_android.getArgument
 import kekmech.ru.ext_android.viewbinding.viewBinding
 import kekmech.ru.ext_android.withArguments
@@ -23,7 +23,6 @@ import kekmech.ru.feature_notes_impl.databinding.FragmentNoteListBinding
 import kekmech.ru.feature_notes_impl.di.NotesDependencies
 import kekmech.ru.feature_notes_impl.presentation.screen.edit.NoteEditFragment
 import kekmech.ru.feature_notes_impl.presentation.screen.note_list.elm.NoteListEffect
-import kekmech.ru.feature_notes_impl.presentation.screen.note_list.elm.NoteListEvent
 import kekmech.ru.feature_notes_impl.presentation.screen.note_list.elm.NoteListEvent.Ui
 import kekmech.ru.feature_notes_impl.presentation.screen.note_list.elm.NoteListState
 import kekmech.ru.feature_schedule_api.domain.model.Classes
