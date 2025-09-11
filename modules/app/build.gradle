@@ -22,6 +22,7 @@ android {
             minifyEnabled = true
             shrinkResources = true
             matchingFallbacks += ["debug"]
+            signingConfigs = signingConfigs.getByName("release")
         }
         qa {
             debuggable = false
