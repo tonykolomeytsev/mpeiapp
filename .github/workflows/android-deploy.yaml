@@ -5,6 +5,9 @@ on:
     tags:
       - "release/*"
 
+env:
+  GRADLE_OPTS: --no-configuration-cache
+
 jobs:
   build:
     name: Release Build
