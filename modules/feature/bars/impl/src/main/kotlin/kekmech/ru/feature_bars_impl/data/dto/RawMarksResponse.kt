@@ -1,9 +1,13 @@
 package kekmech.ru.feature_bars_impl.data.dto
 
+import androidx.annotation.Keep
+
+@Keep
 internal class RawMarksResponse(
     val payload: List<DisciplineRow>
 )
 
+@Keep
 internal class DisciplineRow(
     val disciplineName: String,
     val personName: String,
@@ -12,6 +16,7 @@ internal class DisciplineRow(
     val activities: List<ControlActivityRow>
 )
 
+@Keep
 internal class ControlActivityRow(
     val type: DisciplineRowType,
     val name: String? = null,
@@ -20,6 +25,7 @@ internal class ControlActivityRow(
     val markAndDate: String? = null
 )
 
+@Keep
 @Suppress("unused")
 internal enum class DisciplineRowType {
     UNDEFINED,

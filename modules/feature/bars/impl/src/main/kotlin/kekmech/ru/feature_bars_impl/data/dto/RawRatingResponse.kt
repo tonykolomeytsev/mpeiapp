@@ -1,5 +1,8 @@
 package kekmech.ru.feature_bars_impl.data.dto
 
+import androidx.annotation.Keep
+
+@Keep
 internal data class RawRatingResponse(
     val complexScore: Int,
     val studyScore: Int,
@@ -10,6 +13,7 @@ internal data class RawRatingResponse(
     val weights: RawRatingWeights,
 )
 
+@Keep
 internal data class RawRatingWeights(
     val studyScoreWeight: Float,
     val scienceScoreWeight: Float,
