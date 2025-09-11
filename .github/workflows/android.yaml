@@ -6,6 +6,9 @@ on:
       - master
   pull_request:
 
+env:
+  GRADLE_OPTS: --no-configuration-cache
+
 jobs:
   test:
     name: Unit Tests
