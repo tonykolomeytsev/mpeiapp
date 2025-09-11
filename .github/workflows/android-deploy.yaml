@@ -40,11 +40,14 @@ jobs:
           KEY_STORE_PASSWORD: ${{ secrets.KEY_STORE_PASSWORD }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
 
+      - name: Put release version from tag name to ENV
+        run: |
+          echo "RELEASE_VERSION=${GITHUB_REF#refs/*/*/}" >> $GITHUB_ENV
+
       - name: Rename signed release APK
         run: |
-          VERSION="${GITHUB_REF#refs/tags/release/}"
           ORIGINAL_APK="modules/app/build/outputs/apk/release/app-release.apk"
-          RENAMED_APK="mpeix-gms-${VERSION}-release.apk"
+          RENAMED_APK="mpeix-gms-${RELEASE_VERSION}-release.apk"
           mv "$ORIGINAL_APK" "$RENAMED_APK"
           echo "Renamed APK to $RENAMED_APK"
 
@@ -57,29 +60,26 @@ jobs:
       - name: Publish Draft Release on GitHub
         uses: softprops/action-gh-release@v2.2.2
         with:
+          name: ${{ env.RELEASE_VERSION }}
           draft: true
           files: "*.apk"
 
-#      - name: Create service_account.json
-#        run: echo '${{ secrets.SERVICE_ACCOUNT_JSON }}' > service_account.json
-#
-#      - name: Deploy to Google Play (ALPHA)
-#        uses: r0adkll/upload-google-play@v1
-#        with:
-#          serviceAccountJson: service_account.json
-#          packageName: kekmech.ru.mpeiapp
-#          releaseFiles: modules/app/build/outputs/bundle/release/app-release.aab
-#          track: internal
-#          status: completed
-#
-#      - name: Put release version from tag name to ENV
-#        run: |
-#          echo "RELEASE_VERSION=${GITHUB_REF#refs/*/*/}" >> $GITHUB_ENV
-#
-#      - name: Send Telegram message
-#        uses: appleboy/telegram-action@master
-#        with:
-#          to: ${{ secrets.TELEGRAM_BOT_ID }}
-#          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-#          format: markdown
-#          message: 📱 **MpeiX Android ${{ env.RELEASE_VERSION }}** has been deployed to Google Play
+      - name: Create service_account.json
+        run: echo '${{ secrets.SERVICE_ACCOUNT_JSON }}' > service_account.json
+
+      - name: Deploy to Google Play (ALPHA)
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJson: service_account.json
+          packageName: kekmech.ru.mpeiapp
+          releaseFiles: modules/app/build/outputs/bundle/release/app-release.aab
+          track: internal
+          status: completed
+
+      - name: Send Telegram message
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_BOT_ID }}
+          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          format: markdown
+          message: 📱 **MpeiX Android ${{ env.RELEASE_VERSION }}** has been deployed to Google Play
