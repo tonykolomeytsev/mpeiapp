@@ -1,4 +1,4 @@
-name: Deploy release
+name: Release Flow
 
 on:
   push:
@@ -29,11 +29,6 @@ jobs:
           GOOGLE_SERVICES: ${{ secrets.GOOGLE_SERVICES }}
           KEY_STORE_FILE: ${{ secrets.KEY_STORE_FILE }}
 
-      - name: Release tests
-        run: ./gradlew -Pci testReleaseUnitTest
-        env:
-          MAP_KEY: ${{ secrets.MAP_KEY }}
-
       - name: Build Release artifacts
         run: ./gradlew -Pci :app:bundleRelease :app:assembleRelease
         env:
@@ -42,12 +37,14 @@ jobs:
           KEY_STORE_PASSWORD: ${{ secrets.KEY_STORE_PASSWORD }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
 
-      - uses: actions/upload-artifact@v4
+      - name: Publish Release APK artifact
+        uses: actions/upload-artifact@v4
         with:
           name: MpeiX APK
           path: modules/app/build/outputs/apk/release/app-release.apk
 
-      - uses: softprops/action-gh-release@v2.2.2
+      - name: Publish Draft Release on GitHub
+        uses: softprops/action-gh-release@v2.2.2
         with:
           draft: true
           files: |

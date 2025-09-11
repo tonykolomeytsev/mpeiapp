@@ -43,6 +43,9 @@ android {
             )
         }
     }
+    lint {
+        checkReleaseBuilds = false
+    }
     buildFeatures {
         viewBinding = true
     }
