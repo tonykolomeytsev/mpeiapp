@@ -3,7 +3,12 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
 }
 
-android.buildFeatures.androidResources = true
+android {
+    defaultConfig {
+        consumerProguardFiles(file("proguard-consumer-rules.pro"))
+    }
+    buildFeatures.androidResources = true
+}
 
 dependencies {
     implementation(project(":feature_app_settings_api"))

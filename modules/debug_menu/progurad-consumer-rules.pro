@@ -1,0 +1,2 @@
+-keep class kekmech.ru.debug_menu.** { *; }
+-keep class com.chuckerteam.chucker.** { *; }
