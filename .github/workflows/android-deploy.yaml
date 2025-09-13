@@ -10,11 +10,13 @@ env:
 
 jobs:
   build:
-    name: Release Build
+    name: Build Artifacts
     runs-on: ubuntu-latest
     permissions:
       id-token: write
       contents: write
+    outputs:
+      release_version: ${{ steps.version.outputs.release_version }}
     steps:
       - uses: actions/checkout@v4
 
@@ -23,6 +25,9 @@ jobs:
         with:
           java-version: 17
           distribution: adopt
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
 
       - name: Materialize sensitive info
         run: |
@@ -40,29 +45,58 @@ jobs:
           KEY_STORE_PASSWORD: ${{ secrets.KEY_STORE_PASSWORD }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
 
-      - name: Put release version from tag name to ENV
+      - name: Extract release version
+        id: version
         run: |
-          echo "RELEASE_VERSION=${GITHUB_REF#refs/*/*/}" >> $GITHUB_ENV
+          echo "release_version=${GITHUB_REF#refs/*/*/}" >> $GITHUB_OUTPUT
 
       - name: Rename signed release APK
         run: |
           ORIGINAL_APK="modules/app/build/outputs/apk/release/app-release.apk"
-          RENAMED_APK="mpeix-gms-${RELEASE_VERSION}-release.apk"
+          RENAMED_APK="mpeix-gms-${{ steps.version.outputs.release_version }}-release.apk"
           mv "$ORIGINAL_APK" "$RENAMED_APK"
           echo "Renamed APK to $RENAMED_APK"
 
-      - name: Publish Release APK artifact
+      - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: MpeiX APK
           path: "*.apk"
 
+      - name: Upload AAB artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: MpeiX AAB
+          path: modules/app/build/outputs/bundle/release/app-release.aab
+
+  github-release:
+    name: Publish GitHub Release
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Download APK artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: MpeiX APK
+          path: .
+
       - name: Publish Draft Release on GitHub
         uses: softprops/action-gh-release@v2.2.2
         with:
-          name: ${{ env.RELEASE_VERSION }}
+          name: ${{ needs.build.outputs.release_version }}
           draft: true
           files: "*.apk"
+
+  google-play:
+    name: Publish to Google Play
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Download AAB artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: MpeiX AAB
+          path: .
 
       - name: Create service_account.json
         run: echo '${{ secrets.SERVICE_ACCOUNT_JSON }}' > service_account.json
@@ -72,7 +106,7 @@ jobs:
         with:
           serviceAccountJson: service_account.json
           packageName: kekmech.ru.mpeiapp
-          releaseFiles: modules/app/build/outputs/bundle/release/app-release.aab
+          releaseFiles: app-release.aab
           track: internal
           status: completed
 
@@ -82,4 +116,4 @@ jobs:
           to: ${{ secrets.TELEGRAM_BOT_ID }}
           token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           format: markdown
-          message: 📱 **MpeiX Android ${{ env.RELEASE_VERSION }}** has been deployed to Google Play
+          message: 📱 **MpeiX Android ${{ needs.build.outputs.release_version }}** has been deployed to Google Play
