@@ -31,14 +31,14 @@ jobs:
 
       - name: Materialize sensitive info
         run: |
-          .ci/materialize.sh $GOOGLE_SERVICES modules/app/google-services.json
-          .ci/materialize.sh $KEY_STORE_FILE keystore.jks
+          .github/materialize.sh $GOOGLE_SERVICES modules/app/google-services.json
+          .github/materialize.sh $KEY_STORE_FILE keystore.jks
         env:
           GOOGLE_SERVICES: ${{ secrets.GOOGLE_SERVICES }}
           KEY_STORE_FILE: ${{ secrets.KEY_STORE_FILE }}
 
       - name: Build Release artifacts
-        run: ./gradlew -Pci :app:bundleRelease :app:assembleRelease
+        run: ./gradlew :app:bundleRelease :app:assembleRelease
         env:
           MAP_KEY: ${{ secrets.MAP_KEY }}
           KEY_ALIAS: ${{ secrets.ALIAS }}
