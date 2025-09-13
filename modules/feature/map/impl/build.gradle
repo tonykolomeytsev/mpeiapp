@@ -1,5 +1,13 @@
 plugins {
     alias(mpeix.plugins.feature.impl)
+    alias(mpeix.plugins.util.secrets)
+}
+
+secrets {
+    register("google_maps_api_key") {
+        local.set(providers.gradleProperty("mpeiapp_google_maps_api_key"))
+        ci.set(providers.environmentVariable("MAP_KEY"))
+    }
 }
 
 android {
@@ -9,11 +17,7 @@ android {
         androidResources = true
     }
     defaultConfig {
-        resValue(
-            "string",
-            "google_maps_api_key",
-            project.property("mpeiapp_google_maps_api_key").toString()
-        )
+        resValue("string", "google_maps_api_key", secrets.get("google_maps_api_key"))
     }
 }
 
