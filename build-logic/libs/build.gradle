@@ -58,4 +58,8 @@ gradlePlugin {
         id = "mpeix.app.signing"
         implementationClass = "mpeix.plugins.features.signing.AndroidSigningConventionPlugin"
     }
+    plugins.create("SecretsPlugin") {
+        id = "mpeix.util.secrets"
+        implementationClass = "mpeix.plugins.features.secrets.SecretsPlugin"
+    }
 }
