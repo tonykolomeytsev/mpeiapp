@@ -3,6 +3,10 @@ plugins {
     alias(libs.plugins.ksp)
 }
 
+ksp {
+    arg("room.schemaLocation", "modules/lib/app_database/schemas")
+}
+
 dependencies {
 
     testImplementation(libs.kotest.assertions)
