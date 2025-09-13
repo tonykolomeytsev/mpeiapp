@@ -2,9 +2,19 @@ plugins {
     alias(mpeix.plugins.feature.impl)
 }
 
-android.buildFeatures {
-    viewBinding = true
-    androidResources = true
+android {
+    buildFeatures {
+        resValues = true
+        viewBinding = true
+        androidResources = true
+    }
+    defaultConfig {
+        resValue(
+            "string",
+            "google_maps_api_key",
+            project.property("mpeiapp_google_maps_api_key").toString()
+        )
+    }
 }
 
 dependencies {

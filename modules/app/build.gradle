@@ -36,13 +36,6 @@ android {
             minifyEnabled = false
             applicationIdSuffix = ".dev"
         }
-        configureEach {
-            resValue(
-                "string",
-                "google_maps_api_key",
-                project.property("mpeiapp_google_maps_api_key").toString()
-            )
-        }
     }
     lint {
         checkReleaseBuilds = false
