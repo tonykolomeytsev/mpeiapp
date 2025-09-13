@@ -2,6 +2,7 @@ package mpeix.plugins.features.signing
 
 import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
 import mpeix.plugins.ext.configure
+import mpeix.plugins.ext.isCiBuild
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
@@ -12,7 +13,7 @@ internal class AndroidSigningConventionPlugin : Plugin<Project> {
         with(target) {
             extensions.configure<BaseAppModuleExtension> {
                 with(signingConfigs.maybeCreate("release")) {
-                    if (project.hasProperty("ci")) {
+                    if (isCiBuild) {
                         storeFile = rootProject.file("keystore.jks")
                         storePassword = System.getenv("KEY_STORE_PASSWORD")
                         keyAlias = System.getenv("KEY_ALIAS")
