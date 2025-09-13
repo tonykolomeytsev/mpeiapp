@@ -8,10 +8,10 @@ internal inline fun <reified T : Any> ExtensionContainer.configure(noinline acti
     configure(T::class.java, action)
 
 internal inline fun <reified T : Any> ExtensionContainer.create(
-    name: String,
-    vararg constructionArguments: Any
-) =
-    create(name, T::class.java, *constructionArguments)
+    name: String, vararg constructionArguments: Any
+) = create(name, T::class.java, *constructionArguments)
 
 internal inline fun <reified T : Task> TaskContainer.configureLazy(noinline action: T.() -> Unit) =
     withType(T::class.java).configureEach(action)
+
+internal val isCiBuild: Boolean = System.getenv("CI") == "true"
