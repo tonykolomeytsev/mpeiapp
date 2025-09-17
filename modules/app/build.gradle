@@ -39,6 +39,9 @@ android {
     }
     lint {
         checkReleaseBuilds = false
+        checkDependencies = true
+        ignoreTestSources = true
+        checkAllWarnings = false
     }
     buildFeatures {
         viewBinding = true
@@ -52,6 +55,7 @@ android {
 
 dependencies {
     implementation(libs.androidx.appCompat)
+    implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintLayout)
     implementation(libs.androidx.coordinatorLayout)
     implementation(libs.androidx.coreKtx)

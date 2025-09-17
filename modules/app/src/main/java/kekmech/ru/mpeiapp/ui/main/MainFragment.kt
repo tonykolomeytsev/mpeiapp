@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
 import androidx.core.view.setPadding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -11,7 +13,6 @@ import kekmech.ru.ext_android.addSystemBottomPadding
 import kekmech.ru.ext_android.onActivityResult
 import kekmech.ru.ext_android.viewbinding.viewBinding
 import kekmech.ru.ext_kotlin.fastLazy
-import kekmech.ru.lib_navigation.BackButtonListener
 import kekmech.ru.lib_navigation.BottomTab
 import kekmech.ru.mpeiapp.R
 import kekmech.ru.mpeiapp.databinding.FragmentMainBinding
@@ -27,13 +28,13 @@ import org.koin.android.ext.android.inject
 @Suppress("TooManyFunctions")
 class MainFragment :
     Fragment(R.layout.fragment_main),
-    ElmRendererDelegate<MainScreenEffect, MainScreenState>,
-    BackButtonListener {
+    ElmRendererDelegate<MainScreenEffect, MainScreenState> {
 
     private val dependencies by inject<MainScreenDependencies>()
     private var bottomBarController: BottomBarController? = null
     private val tabsSwitcher by fastLazy { dependencies.bottomTabsSwitcher }
     private val viewBinding by viewBinding(FragmentMainBinding::bind)
+    private var backPressedCallback: OnBackPressedCallback? = null
 
     @Suppress("Unused")
     private val store by androidElmStore { MainScreenStoreFactory.create() }
@@ -50,6 +51,14 @@ class MainFragment :
                 tabsSwitcher.changeTab(tab)
             }
         }
+
+        backPressedCallback =
+            requireActivity().onBackPressedDispatcher.addCallback(enabled = false) {
+                bottomBarController?.let { controller ->
+                    controller.popStack()
+                    isEnabled = !controller.isReadyToExit()
+                }
+            }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -59,11 +68,12 @@ class MainFragment :
         view.addSystemBottomPadding()
 
         val controller = bottomBarController ?: BottomBarController(
-            this,
-            dependencies.dashboardFeatureLauncher,
-            dependencies.scheduleFeatureApi,
-            dependencies.barsFeatureLauncher,
-            dependencies.mapFeatureLauncher
+            fragment = this,
+            dashboardFeatureLauncher = dependencies.dashboardFeatureLauncher,
+            scheduleFeatureApi = dependencies.scheduleFeatureApi,
+            barsFeatureLauncher = dependencies.barsFeatureLauncher,
+            mapFeatureLauncher = dependencies.mapFeatureLauncher,
+            onNewTabSelected = { backPressedCallback?.isEnabled = true }
         )
         controller.init(this, viewBinding.bottomNavigation)
         bottomBarController = controller
@@ -107,10 +117,6 @@ class MainFragment :
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         childFragmentManager.onActivityResult(requestCode, resultCode, data)
-    }
-
-    override fun onBackPressed(): Boolean {
-        return bottomBarController?.popStack() == true
     }
 
     companion object {

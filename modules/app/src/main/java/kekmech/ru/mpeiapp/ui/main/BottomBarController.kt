@@ -26,6 +26,7 @@ class BottomBarController(
     private val scheduleFeatureApi: ScheduleFeatureApi,
     private val barsFeatureLauncher: BarsFeatureLauncher,
     private val mapFeatureLauncher: MapFeatureLauncher,
+    private val onNewTabSelected: () -> Unit,
 ) {
 
     private val childFragmentManager: FragmentManager = fragment.childFragmentManager
@@ -48,6 +49,7 @@ class BottomBarController(
             selectTab(it)
             backStack.push(it)
         }
+        onNewTabSelected.invoke()
         true
     }
 
@@ -69,7 +71,11 @@ class BottomBarController(
         bottomNavView?.let { it.selectedItemId = getItemByTab(tab) }
     }
 
-    fun popStack(): Boolean = backStack.popAndPeek()?.let { switchTab(it) } != null
+    fun popStack() {
+        backStack.popAndPeek()?.let { switchTab(it) }
+    }
+
+    fun isReadyToExit(): Boolean = backStack.isReadyToExit()
 
     private fun selectTab(tab: BottomTab) {
         if (currentTabFragment?.tag == tab.name) {
