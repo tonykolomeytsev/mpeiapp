@@ -60,7 +60,7 @@
 + **DI Koin**
 + Для тестирования используется **JUnit 5** + [**Kotest**](https://github.com/kotest/kotest)
 + Композитный билд и кастомные Gradle плагины: много всяких интересных штук смотри в `./build-logic`
-+ Для импорта ресурсов используется тулза [**figx**](https://github.com/tonykolomeytsev/figx)
++ Для импорта ресурсов из Figma в проект используется тулза [**figx**](https://github.com/tonykolomeytsev/figx)
 
 ### Архитектура
 
