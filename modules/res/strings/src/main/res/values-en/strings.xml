@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- НУМЕРАЦИЯ ПАР-->
     <string-array name="classes_numbers">
         <item>Some class</item>
@@ -190,7 +190,7 @@
     <string name="note_list_section_add">CREATE NOTE</string>
     <string name="note_list_section_header">Attached notes</string>
     <string name="note_list_section_subtitle_empty">This class has no notes</string>
-    <plurals name="note_list_section_subtitle">
+    <plurals name="note_list_section_subtitle" tools:ignore="UnusedQuantity">
         <item quantity="one">This class has one note</item>
         <item quantity="two">This class has two notes</item>
         <item quantity="other">This class has %d notes</item>

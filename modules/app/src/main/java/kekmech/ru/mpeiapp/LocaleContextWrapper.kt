@@ -16,20 +16,11 @@ object LocaleContextWrapper {
         return context.createConfigurationContext(newConfig)
     }
 
-    fun updateResourcesV24(context: Context) {
-        val locale = createLocaleFromSharedPreferences(context) ?: return
-        Locale.setDefault(locale)
-        val res: Resources = context.resources
-        val config = Configuration(res.configuration)
-        config.setLocale(locale)
-        @Suppress("DEPRECATION")
-        res.updateConfiguration(config, res.displayMetrics)
-    }
-
     private fun createLocaleFromSharedPreferences(context: Context): Locale? {
         val prefs = context.getSharedPreferences("mpeix", Context.MODE_PRIVATE)
         val lang = prefs.getString("app_lang", null)?.split("_") ?: return null
         val (language, country) = lang[0] to lang[1]
+        @Suppress("DEPRECATION")
         return Locale(language, country)
     }
 }

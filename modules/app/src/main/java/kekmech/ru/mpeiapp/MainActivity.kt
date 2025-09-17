@@ -53,9 +53,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         deeplinkHandlersProcessor.processDeeplink(intent.data)
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.N) {
-            LocaleContextWrapper.updateResourcesV24(this)
-        }
     }
 
     override fun onNewIntent(intent: Intent) {
