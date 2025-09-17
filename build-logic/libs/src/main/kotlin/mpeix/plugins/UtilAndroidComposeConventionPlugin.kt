@@ -27,10 +27,10 @@ internal abstract class UtilAndroidComposeConventionPlugin : Plugin<Project> {
             configureAndroidNamespace(this)
             configureKotlinAndroid(explicitApi = true)
 
+            androidResources.enable = false
             with(buildFeatures) {
                 compose = true
                 viewBinding = false
-                androidResources = false
                 shaders = false
                 resValues = false
                 buildConfig = false
