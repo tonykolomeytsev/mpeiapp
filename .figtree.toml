@@ -1,0 +1,7 @@
+[remotes.illustrations]
+# https://www.figma.com/design/3cje3YWUHKijv62CW3DKfw/MpeiX-Android-2.0?node-id=603-298
+file_key = "3cje3YWUHKijv62CW3DKfw"
+container_node_ids = ["603-298"]
+
+[profiles.illustrations]
+extends = "android-webp"

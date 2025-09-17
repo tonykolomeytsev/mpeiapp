@@ -1,0 +1,8 @@
+[illustrations]
+ill_bars = "ill_bars"
+ill_notes = "ill_notes"
+ill_schedule = "ill_schedule"
+
+# raster images inside
+ill_map = { name = "ill_map", quality = 75 }
+gradient_logo = { name = "gradient_logo_classic", quality = 80 }
