@@ -54,9 +54,10 @@ androidx-annotation = { module = "androidx.annotation:annotation", version = "1.
 androidx-appCompat = { module = "androidx.appcompat:appcompat", version.ref = "appCompat" }
 androidx-constraintLayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintLayout" }
 androidx-coordinatorLayout = { module = "androidx.coordinatorlayout:coordinatorlayout", version.ref = "coordinatorLayout" }
-androidx-coreKtx = { module = "androidx.core:core-ktx", version = "1.16.0" }
+androidx-coreKtx = { module = "androidx.core:core-ktx", version = "1.17.0" }
 androidx-fragment = { module = "androidx.fragment:fragment", version.ref = "fragment" }
 androidx-fragmentKtx = { module = "androidx.fragment:fragment-ktx", version.ref = "fragment" }
+androidx-activity = { module = "androidx.activity:activity", version = "1.11.0" }
 androidx-lifecycleCommonJava8 = { module = "androidx.lifecycle:lifecycle-common-java8", version = "2.9.3" }
 androidx-lifecycleExtensions = { module = "androidx.lifecycle:lifecycle-extensions", version = "2.2.0" }
 androidx-recyclerView = { module = "androidx.recyclerview:recyclerview", version.ref = "recyclerView" }
@@ -125,7 +126,7 @@ compose-ui-util = { module = "androidx.compose.ui:ui-util" }
 compose-animation = { module = "androidx.compose.animation:animation" }
 compose-foundation = { module = "androidx.compose.foundation:foundation" }
 compose-material3 = { module = "androidx.compose.material3:material3" }
-compose-activity = { module = "androidx.activity:activity-compose", version = "1.10.1" }
+compose-activity = { module = "androidx.activity:activity-compose", version = "1.11.0" }
 
 ## Accompanist
 accompanist-insets = { module = "com.google.accompanist:accompanist-insets", version.ref = "accompanist" }

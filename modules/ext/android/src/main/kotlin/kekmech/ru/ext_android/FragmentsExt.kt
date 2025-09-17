@@ -51,15 +51,3 @@ public fun Fragment.onKeyboardShown(action: () -> Unit) {
         if (windowInsets.systemWindowInsetBottom > AVERAGE_KEYBOARD_HEIGHT) action()
     }
 }
-
-public fun Fragment.setOnBackPressedListener(listener: () -> Unit) {
-    activity?.onBackPressedDispatcher?.addCallback(
-        viewLifecycleOwner,
-        object : OnBackPressedCallback(true) {
-
-            override fun handleOnBackPressed() {
-                listener.invoke()
-            }
-        }
-    )
-}

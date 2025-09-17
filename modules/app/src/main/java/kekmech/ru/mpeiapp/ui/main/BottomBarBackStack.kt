@@ -28,4 +28,6 @@ class BottomBarBackStack(
         }
         backStack.push(tab)
     }
+
+    fun isReadyToExit(): Boolean = backStack.size <= 1
 }

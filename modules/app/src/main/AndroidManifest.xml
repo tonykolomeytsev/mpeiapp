@@ -1,38 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:installLocation="auto">
+    android:installLocation="auto">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
-            android:name=".MpeixApp"
-            android:allowBackup="true"
-            android:hardwareAccelerated="true"
-            android:icon="@mipmap/ic_launcher"
-            android:label="@string/app_name"
-            android:requestLegacyExternalStorage="true"
-            android:roundIcon="@mipmap/ic_launcher_round"
-            android:supportsRtl="true"
-            android:theme="@style/AppTheme"
-            tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+        android:name=".MpeixApp"
+        android:allowBackup="true"
+        android:hardwareAccelerated="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:enableOnBackInvokedCallback="true">
 
         <activity
-                android:name="kekmech.ru.mpeiapp.MainActivity"
-                android:configChanges="layoutDirection|locale"
-                android:label="MainActivity"
-                android:launchMode="singleTask"
-                android:theme="@style/AppTheme" />
+            android:name="kekmech.ru.mpeiapp.MainActivity"
+            android:configChanges="layoutDirection|locale"
+            android:label="MainActivity"
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme" />
 
         <activity
-                android:name="kekmech.ru.mpeiapp.ui.SplashActivity"
-                android:exported="true"
-                android:theme="@style/SplashTheme">
+            android:name="kekmech.ru.mpeiapp.ui.SplashActivity"
+            android:exported="true"
+            android:theme="@style/SplashTheme">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -43,8 +41,8 @@
         </activity>
 
         <activity
-                android:name=".deeplink.DeeplinkActivity"
-                android:exported="true">
+            android:name=".deeplink.DeeplinkActivity"
+            android:exported="true">
 
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
