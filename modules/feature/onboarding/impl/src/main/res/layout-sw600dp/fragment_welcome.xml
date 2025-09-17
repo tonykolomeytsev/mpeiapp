@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/gradientLogo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
         android:importantForAccessibility="no"
         android:src="@drawable/gradient_logo"
         app:layout_constraintBottom_toTopOf="@id/recycler"
