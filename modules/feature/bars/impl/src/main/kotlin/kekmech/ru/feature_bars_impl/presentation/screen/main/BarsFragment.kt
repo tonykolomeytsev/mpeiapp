@@ -112,9 +112,7 @@ internal class BarsFragment :
                 settings.allowContentAccess = false
                 settings.javaScriptEnabled = true
                 settings.compromiseUserAgent()
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    settings.safeBrowsingEnabled = false
-                }
+                settings.safeBrowsingEnabled = false
 
                 addJavascriptInterface(JSInterface(), JS_INTERFACE_NAME)
                 webViewClient = BarsWebViewClient()
@@ -192,12 +190,6 @@ internal class BarsFragment :
             store.accept(Ui.Action.PageStarted)
         }
 
-        @Deprecated("Deprecated in Java")
-        override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-            return handleUrlLoading(url)
-        }
-
-        @TargetApi(Build.VERSION_CODES.N)
         override fun shouldOverrideUrlLoading(
             view: WebView,
             request: WebResourceRequest,

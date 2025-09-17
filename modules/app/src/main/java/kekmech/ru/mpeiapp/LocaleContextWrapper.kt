@@ -6,19 +6,11 @@ import android.content.res.Resources
 import android.os.Build
 import java.util.*
 
-/**
- * TODO: Remove in 1.4.0 release, default locale will be null (automatic)
- * TODO: Also remove in [kekmech.ru.lib_network.device_id.DeviceLocaleProvider]
- */
-private const val DEFAULT_LOCALE = "ru_RU"
-
 object LocaleContextWrapper {
 
     @Suppress("MagicNumber")
     fun wrapContext(context: Context): Context {
-        if (Build.VERSION.SDK_INT < 25) return context
         val savedLocale = createLocaleFromSharedPreferences(context) ?: return context
-
         val newConfig = Configuration(context.resources.configuration)
         newConfig.setLocale(savedLocale)
         return context.createConfigurationContext(newConfig)
@@ -36,7 +28,7 @@ object LocaleContextWrapper {
 
     private fun createLocaleFromSharedPreferences(context: Context): Locale? {
         val prefs = context.getSharedPreferences("mpeix", Context.MODE_PRIVATE)
-        val lang = prefs.getString("app_lang", DEFAULT_LOCALE)?.split("_") ?: return null
+        val lang = prefs.getString("app_lang", null)?.split("_") ?: return null
         val (language, country) = lang[0] to lang[1]
         return Locale(language, country)
     }
