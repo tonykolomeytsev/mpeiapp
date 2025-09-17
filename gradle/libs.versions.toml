@@ -1,6 +1,6 @@
 [versions]
 
-agp = "8.10.1" # android gradle plugin
+agp = "8.12.3" # android gradle plugin
 kotlin = "2.2.10"
 ksp = "2.2.10-2.0.2"
 coroutines = "1.10.2"

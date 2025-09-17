@@ -25,10 +25,10 @@ internal abstract class LibAndroidConventionPlugin : Plugin<Project> {
             configureAndroidNamespace(this)
             configureKotlinAndroid(explicitApi = true)
 
+            androidResources.enable = false
             with(buildFeatures) {
                 compose = false
                 viewBinding = false
-                androidResources = false
                 shaders = false
                 resValues = false
                 buildConfig = false
