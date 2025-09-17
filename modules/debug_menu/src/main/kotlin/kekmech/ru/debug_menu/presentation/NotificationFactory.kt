@@ -29,18 +29,16 @@ internal class NotificationFactory {
     }
 
     private fun createNotificationChannel(context: Context) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            // Create the NotificationChannel.
-            val name = CHANNEL_NAME
-            val descriptionText = CHANNEL_DESCRIPTION
-            val importance = NotificationManager.IMPORTANCE_LOW
-            val mChannel = NotificationChannel(CHANNEL_ID, name, importance)
-            mChannel.description = descriptionText
-            // Register the channel with the system. You can't change the importance
-            // or other notification behaviors after this.
-            val notificationManager = context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(mChannel)
-        }
+        // Create the NotificationChannel.
+        val name = CHANNEL_NAME
+        val descriptionText = CHANNEL_DESCRIPTION
+        val importance = NotificationManager.IMPORTANCE_LOW
+        val mChannel = NotificationChannel(CHANNEL_ID, name, importance)
+        mChannel.description = descriptionText
+        // Register the channel with the system. You can't change the importance
+        // or other notification behaviors after this.
+        val notificationManager = context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(mChannel)
     }
 
     private companion object {

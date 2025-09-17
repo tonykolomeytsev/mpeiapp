@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <lint>
+    <!-- Useless rules -->
+    <issue id="UseKtx" severity="ignore" />
+
     <!-- Rules for XML layouts are irrelevant because all new features will be on Compose only -->
     <issue id="InconsistentLayout" severity="ignore" />
     <issue id="Typos" severity="ignore" />
     <issue id="Overdraw" severity="ignore" />
     <issue id="UseCompoundDrawables" severity="ignore" />
+    <issue id="SmallSp" severity="ignore" />
 </lint>

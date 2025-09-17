@@ -2,7 +2,6 @@ package kekmech.ru.mpeiapp
 
 import android.app.Application
 import android.content.Context
-import android.os.Build
 import kekmech.ru.feature_app_settings_api.data.AppEnvironmentRepository
 import kekmech.ru.lib_app_lifecycle.AppLifecycleObserver
 import kekmech.ru.lib_elm.TimberLogger
@@ -10,6 +9,8 @@ import kekmech.ru.lib_navigation.Router
 import kekmech.ru.lib_navigation.di.RouterHolder
 import kekmech.ru.lib_network.ServiceUrlResolver
 import kekmech.ru.mpeiapp.di.AppModule
+import money.vivid.elmslie.android.logger.strategy.Crash
+import money.vivid.elmslie.core.config.ElmslieConfig
 import org.koin.android.ext.android.getKoin
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
@@ -17,8 +18,6 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import timber.log.Timber
 import timber.log.Timber.DebugTree
-import money.vivid.elmslie.android.logger.strategy.Crash
-import money.vivid.elmslie.core.config.ElmslieConfig
 
 class MpeixApp : Application(),
     RouterHolder {
@@ -35,7 +34,6 @@ class MpeixApp : Application(),
         ServiceUrlResolver.setAppEnvironment(appEnvironmentRepository.getAppEnvironment())
         RemoteConfig.setup()
         initTimber()
-        if (Build.VERSION.SDK_INT < 25) LocaleContextWrapper.updateResourcesV24(this)
     }
 
     override fun attachBaseContext(base: Context) {
