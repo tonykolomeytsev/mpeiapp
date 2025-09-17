@@ -1,8 +1,8 @@
 [illustrations]
-ill_bars = "ill_bars"
-ill_notes = "ill_notes"
-ill_schedule = "ill_schedule"
+ill_bars = "Onboarding / Bars"
+ill_notes = "Onboarding / Notes"
+ill_schedule = "Onboarding / Schedule"
 
 # raster images inside
-ill_map = { name = "ill_map", quality = 75 }
-gradient_logo = { name = "gradient_logo_classic", quality = 80 }
+ill_map = { name = "Onboarding / Map", quality = 75 }
+gradient_logo = { name = "Onboarding / Logo", quality = 80 }
