@@ -1,7 +1,7 @@
 package kekmech.ru.feature_schedule_impl.data.network
 
 import kekmech.ru.feature_schedule_api.domain.model.ScheduleType
-import kekmech.ru.feature_schedule_impl.data.dto.GetSearchResultsResponse
+import kekmech.ru.feature_schedule_impl.data.model.GetSearchResultsResponse
 import kekmech.ru.feature_schedule_impl.data.model.ScheduleDto
 import kekmech.ru.lib_network.BackendServiceUrl
 import kekmech.ru.lib_network.EndpointUrl

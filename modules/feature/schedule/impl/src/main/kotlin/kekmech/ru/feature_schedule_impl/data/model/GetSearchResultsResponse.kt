@@ -1,6 +1,5 @@
-package kekmech.ru.feature_schedule_impl.data.dto
+package kekmech.ru.feature_schedule_impl.data.model
 
-import kekmech.ru.feature_schedule_impl.data.model.SearchResultDto
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -9,5 +8,3 @@ internal data class GetSearchResultsResponse(
     @SerialName("items")
     val items: List<SearchResultDto>,
 )
-
-

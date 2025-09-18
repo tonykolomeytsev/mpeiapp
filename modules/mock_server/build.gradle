@@ -23,7 +23,6 @@ dependencies {
     implementation(project(":ext_kotlin"))
     implementation(project(":lib_network"))
 
-    implementation(project(":feature_schedule_api"))
     implementation(project(":feature_app_settings_api"))
 
     implementation(project(":ext_json"))
