@@ -1,17 +1,18 @@
 package kekmech.ru.lib_network.di
 
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import kekmech.ru.ext_gson.LocalDateJsonAdapter
-import kekmech.ru.ext_gson.LocalDateTimeJsonAdapter
-import kekmech.ru.ext_gson.LocalTimeJsonAdapter
+import kekmech.ru.ext_json.LocalDateSerializer
+import kekmech.ru.ext_json.LocalDateTimeSerializer
+import kekmech.ru.ext_json.LocalTimeSerializer
 import kekmech.ru.ext_koin.bindIntoList
 import kekmech.ru.ext_okhttp.NoConnectionInterceptor
 import kekmech.ru.ext_okhttp.RequiredHeadersInterceptor
 import kekmech.ru.lib_app_info.AppVersionName
 import kekmech.ru.lib_network.device_id.DeviceIdProvider
 import kekmech.ru.lib_network.device_id.DeviceLocaleProvider
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.modules.SerializersModule
 import okhttp3.Interceptor
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.logging.HttpLoggingInterceptor.Level
@@ -21,8 +22,7 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import java.text.DateFormat
+import retrofit2.converter.kotlinx.serialization.asConverterFactory
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -34,7 +34,7 @@ public val LibraryNetworkModule: Module = module {
     factoryOf(::DeviceIdProvider)
     factoryOf(::DeviceLocaleProvider)
     singleOf(::provideRetrofitBuilder) bind Retrofit.Builder::class
-    singleOf(::provideGson) bind Gson::class
+    singleOf(::provideJson) bind Json::class
     single { provideOkHttpClient(getAll()) } bind OkHttpClient::class
 
     single {
@@ -47,12 +47,16 @@ public val LibraryNetworkModule: Module = module {
     factoryOf(::NoConnectionInterceptor) bindIntoList Interceptor::class
 }
 
-private fun provideGson() = GsonBuilder()
-    .setDateFormat(DateFormat.LONG)
-    .registerTypeAdapter(LocalDate::class.java, LocalDateJsonAdapter())
-    .registerTypeAdapter(LocalTime::class.java, LocalTimeJsonAdapter())
-    .registerTypeAdapter(LocalDateTime::class.java, LocalDateTimeJsonAdapter())
-    .create()
+private fun provideJson() = Json {
+    encodeDefaults = true
+    ignoreUnknownKeys = true
+    coerceInputValues = true
+    serializersModule = SerializersModule {
+        contextual(LocalDate::class, LocalDateSerializer)
+        contextual(LocalTime::class, LocalTimeSerializer)
+        contextual(LocalDateTime::class, LocalDateTimeSerializer)
+    }
+}
 
 private fun provideOkHttpClient(interceptors: List<Interceptor>) = OkHttpClient.Builder()
     .addNetworkInterceptor(HttpLoggingInterceptor().apply { level = Level.BODY })
@@ -64,7 +68,7 @@ private fun provideOkHttpClient(interceptors: List<Interceptor>) = OkHttpClient.
 
 private fun provideRetrofitBuilder(
     okHttpClient: OkHttpClient,
-    gson: Gson,
+    json: Json,
 ) = Retrofit.Builder()
     .client(okHttpClient)
-    .addConverterFactory(GsonConverterFactory.create(gson))
+    .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
