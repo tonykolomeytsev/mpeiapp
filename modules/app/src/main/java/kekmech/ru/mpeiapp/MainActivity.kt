@@ -3,10 +3,10 @@ package kekmech.ru.mpeiapp
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.os.Build
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kekmech.ru.ext_android.onActivityResult
 import kekmech.ru.feature_app_settings_api.data.AppSettingsRepository
@@ -35,6 +35,7 @@ class MainActivity : AppCompatActivity() {
     private val router: Router by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        installSplashScreen()
         super.onCreate(savedInstanceState)
         mainActivityLifecycleObservers.forEach { it.onCreate(this) }
 

@@ -68,6 +68,7 @@ androidx-sqlite = { module = "androidx.sqlite:sqlite", version = "2.5.2" }
 androidx-swipeRefreshLayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "swipeRefreshLayout" }
 androidx-viewPager2 = { module = "androidx.viewpager2:viewpager2", version.ref = "viewPager2" }
 androidx-datastore-prefs = { module = "androidx.datastore:datastore-preferences", version = "1.1.7" }
+androidx-splashscreen = { module = "androidx.core:core-splashscreen", version = "1.0.1" }
 
 androidx-navigation3-runtime = { group = "androidx.navigation3", name = "navigation3-runtime", version.ref = "nav3" }
 androidx-navigation3-ui = { group = "androidx.navigation3", name = "navigation3-ui", version.ref = "nav3" }
