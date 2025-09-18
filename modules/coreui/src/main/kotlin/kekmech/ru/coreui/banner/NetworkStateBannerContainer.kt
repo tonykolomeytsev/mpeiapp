@@ -2,7 +2,6 @@ package kekmech.ru.coreui.banner
 
 import android.content.Context
 import android.util.AttributeSet
-import android.view.View
 import android.widget.FrameLayout
 import kekmech.ru.coreui.R
 import kekmech.ru.coreui.databinding.ViewNetworkStateBannerContainerBinding

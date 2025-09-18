@@ -36,7 +36,6 @@ import kekmech.ru.lib_analytics_android.addScrollAnalytics
 import kekmech.ru.lib_analytics_android.ext.screenAnalytics
 import kekmech.ru.lib_navigation.features.TabScreenStateSaver
 import kekmech.ru.lib_navigation.features.TabScreenStateSaverImpl
-import money.vivid.elmslie.android.elmStore
 import money.vivid.elmslie.android.renderer.ElmRendererDelegate
 import money.vivid.elmslie.android.renderer.androidElmStore
 import org.koin.android.ext.android.inject

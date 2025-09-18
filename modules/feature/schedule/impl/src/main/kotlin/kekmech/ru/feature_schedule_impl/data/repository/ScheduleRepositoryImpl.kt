@@ -9,7 +9,6 @@ import kekmech.ru.feature_schedule_api.domain.model.SelectedSchedule
 import kekmech.ru.feature_schedule_impl.data.datasource.ScheduleCacheWrapper
 import kekmech.ru.feature_schedule_impl.data.datasource.SelectedScheduleSource
 import kekmech.ru.feature_schedule_impl.data.mapper.ScheduleMapper
-import kekmech.ru.feature_schedule_impl.data.model.ScheduleDto
 import kekmech.ru.feature_schedule_impl.data.network.ScheduleService
 import kekmech.ru.lib_analytics_api.SelectedScheduleAnalyticsProvider
 

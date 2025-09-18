@@ -49,7 +49,6 @@ import kekmech.ru.lib_navigation.features.ScrollToTop
 import kekmech.ru.lib_navigation.features.TabScreenStateSaver
 import kekmech.ru.lib_navigation.features.TabScreenStateSaverImpl
 import kekmech.ru.lib_schedule.items.NotePreviewAdapterItem
-import money.vivid.elmslie.android.elmStore
 import money.vivid.elmslie.android.renderer.ElmRendererDelegate
 import money.vivid.elmslie.android.renderer.androidElmStore
 import org.koin.android.ext.android.inject

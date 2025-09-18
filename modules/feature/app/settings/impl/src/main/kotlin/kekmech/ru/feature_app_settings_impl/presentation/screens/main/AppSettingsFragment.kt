@@ -28,7 +28,6 @@ import kekmech.ru.feature_app_settings_impl.databinding.FragmentAppSettingsBindi
 import kekmech.ru.feature_app_settings_impl.presentation.screens.favorites.FavoritesFragment
 import kekmech.ru.feature_app_settings_impl.presentation.screens.lang.SelectLanguageFragment
 import kekmech.ru.feature_app_settings_impl.presentation.screens.main.elm.AppSettingsEffect
-import kekmech.ru.feature_app_settings_impl.presentation.screens.main.elm.AppSettingsEvent
 import kekmech.ru.feature_app_settings_impl.presentation.screens.main.elm.AppSettingsEvent.Ui
 import kekmech.ru.feature_app_settings_impl.presentation.screens.main.elm.AppSettingsState
 import kekmech.ru.feature_app_settings_impl.presentation.screens.main.elm.AppSettingsStoreFactory

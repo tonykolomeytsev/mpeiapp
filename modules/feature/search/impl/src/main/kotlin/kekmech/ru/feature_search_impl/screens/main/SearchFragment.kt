@@ -14,7 +14,6 @@ import kekmech.ru.coreui.items.NoteAdapterItem
 import kekmech.ru.coreui.items.SectionHeaderAdapterItem
 import kekmech.ru.coreui.items.SpaceAdapterItem
 import kekmech.ru.ext_android.addSystemVerticalPadding
-import kekmech.ru.ext_android.afterTextChanged
 import kekmech.ru.ext_android.close
 import kekmech.ru.ext_android.getArgument
 import kekmech.ru.ext_android.hideKeyboard
@@ -50,7 +49,6 @@ import kotlinx.coroutines.launch
 import money.vivid.elmslie.android.renderer.ElmRendererDelegate
 import money.vivid.elmslie.android.renderer.androidElmStore
 import org.koin.android.ext.android.inject
-import java.util.concurrent.TimeUnit
 import kotlin.time.Duration.Companion.milliseconds
 import kekmech.ru.coreui.R as coreui_R
 
