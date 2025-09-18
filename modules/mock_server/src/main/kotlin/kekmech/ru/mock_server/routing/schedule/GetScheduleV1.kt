@@ -6,15 +6,14 @@ import io.ktor.server.response.respond
 import io.ktor.server.routing.Routing
 import io.ktor.server.routing.get
 import kekmech.ru.ext_kotlin.moscowLocalDate
-import kekmech.ru.feature_schedule_api.domain.model.Classes
-import kekmech.ru.feature_schedule_api.domain.model.ClassesType
-import kekmech.ru.feature_schedule_api.domain.model.Day
-import kekmech.ru.feature_schedule_api.domain.model.Schedule
-import kekmech.ru.feature_schedule_api.domain.model.ScheduleType
-import kekmech.ru.feature_schedule_api.domain.model.Time
-import kekmech.ru.feature_schedule_api.domain.model.Week
-import kekmech.ru.feature_schedule_api.domain.model.WeekOfSemester
 import kekmech.ru.mock_server.randomResponseDelay
+import kekmech.ru.mock_server.routing.schedule.model.ClassesDto
+import kekmech.ru.mock_server.routing.schedule.model.ClassesTypeDto
+import kekmech.ru.mock_server.routing.schedule.model.DayDto
+import kekmech.ru.mock_server.routing.schedule.model.ScheduleDto
+import kekmech.ru.mock_server.routing.schedule.model.ScheduleTypeDto
+import kekmech.ru.mock_server.routing.schedule.model.TimeDto
+import kekmech.ru.mock_server.routing.schedule.model.WeekDto
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.temporal.WeekFields
@@ -38,14 +37,14 @@ private fun LocalDate.monday(): LocalDate =
 
 private fun createSchedule(
     weekOffset: Int,
-): Schedule {
+): ScheduleDto {
     val weekOfYear = moscowLocalDate().weekOfYear() + weekOffset
     val weekOfSemester = 12 + weekOffset
     val monday = LocalDate.now().monday().plusWeeks(weekOffset.toLong())
-    return Schedule(
+    return ScheduleDto(
         name = "Сэ-12-21",
         id = "12345",
-        type = ScheduleType.GROUP,
+        type = ScheduleTypeDto.GROUP,
         weeks = listOf(
             if (weekOffset % 2 == 0) {
                 createEvenWeek(weekOfYear, weekOfSemester, monday)
@@ -60,313 +59,277 @@ private fun createEvenWeek(
     weekOfYear: Int,
     weekOfSemester: Int,
     monday: LocalDate,
-): Week {
+): WeekDto {
     val tuesday = monday.plusDays(1)
     val wednesday = monday.plusDays(2)
     val thursday = monday.plusDays(3)
     val friday = monday.plusDays(4)
-    return Week(
+    return WeekDto(
         weekOfYear = weekOfYear,
-        weekOfSemester = WeekOfSemester.Studying(weekOfSemester),
+        weekOfSemester = weekOfSemester,
         firstDayOfWeek = monday,
         days = listOf(
-            Day(
+            DayDto(
                 dayOfWeek = monday.dayOfWeek.value,
                 date = monday,
                 classes = listOf(
-                    Classes(
+                    ClassesDto(
                         name = "Электротехника и электроника",
-                        type = ClassesType.PRACTICE,
+                        type = ClassesTypeDto.PRACTICE,
                         place = "Б-409",
                         groups = "Сэ-12-21",
                         person = "ст. преп. Куликова Е.А.",
-                        time = Time(
+                        time = TimeDto(
                             start = LocalTime.of(11, 10),
                             end = LocalTime.of(12, 45),
                         ),
                         number = 2,
-                        rawType = TODO(),
-                        attachedNotePreview = TODO(),
-                        progress = TODO(),
+                        rawType = "Практика",
                     ),
-                    Classes(
+                    ClassesDto(
                         name = "Физика",
-                        type = ClassesType.LECTURE,
+                        type = ClassesTypeDto.LECTURE,
                         place = "Н-201",
                         groups = "Сэ-12-21",
                         person = "доц. Губкин М.К.",
-                        time = Time(
+                        time = TimeDto(
                             start = LocalTime.of(13, 45),
                             end = LocalTime.of(15, 20),
                         ),
                         number = 3,
-                        rawType = TODO(),
-                        attachedNotePreview = TODO(),
-                        progress = TODO(),
+                        rawType = "Лекция",
                     ),
-                    Classes(
+                    ClassesDto(
                         name = "Электротехника и электроника",
-                        type = ClassesType.LAB,
+                        type = ClassesTypeDto.LAB,
                         place = "В-400а",
                         groups = "Сэ-12-21",
                         person = "ст. преп. Куликова Е.А.",
-                        time = Time(
+                        time = TimeDto(
                             start = LocalTime.of(15, 35),
                             end = LocalTime.of(17, 10),
                         ),
                         number = 4,
-                        rawType = TODO(),
-                        attachedNotePreview = TODO(),
-                        progress = TODO(),
+                        rawType = "Лабораторная",
                     ),
                 ),
             ),
-            Day(
+            DayDto(
                 dayOfWeek = tuesday.dayOfWeek.value,
                 date = tuesday,
                 classes = listOf(
-                    Classes(
+                    ClassesDto(
                         name = "Иностранный язык",
-                        type = ClassesType.PRACTICE,
+                        type = ClassesTypeDto.PRACTICE,
                         place = "М-812",
                         groups = "Сэ-12-21",
                         person = "",
-                        time = Time(
+                        time = TimeDto(
                             start = LocalTime.of(9, 20),
                             end = LocalTime.of(10, 55),
                         ),
                         number = 1,
-                        rawType = TODO(),
-                        attachedNotePreview = TODO(),
-                        progress = TODO(),
+                        rawType = "Практика",
                     ),
-                    Classes(
+                    ClassesDto(
                         name = "Механика материалов и конструкций",
-                        type = ClassesType.LECTURE,
+                        type = ClassesTypeDto.LECTURE,
                         place = "Б-413",
                         groups = "Сэ-12-21",
                         person = "доц. Догадина Т.Н.",
-                        time = Time(
+                        time = TimeDto(
                             start = LocalTime.of(11, 10),
                             end = LocalTime.of(12, 45),
                         ),
                         number = 2,
-                        rawType = TODO(),
-                        attachedNotePreview = TODO(),
-                        progress = TODO(),
+                        rawType = "Лекция",
                     ),
-                    Classes(
+                    ClassesDto(
                         name = "Элективные курсы по физической культуре и спорту",
-                        type = ClassesType.PRACTICE,
+                        type = ClassesTypeDto.PRACTICE,
                         place = "Спортзал",
                         groups = "Сэ-12-21",
-                        time = Time(
+                        time = TimeDto(
                             start = LocalTime.of(13, 45),
                             end = LocalTime.of(15, 20),
                         ),
                         number = 3,
-                        rawType = TODO(),
-                        attachedNotePreview = TODO(),
-                        progress = TODO(),
-                        person = TODO(),
+                        rawType = "Практика",
+                        person = "",
                     ),
                 ),
             ),
-            Day(
+            DayDto(
                 dayOfWeek = wednesday.dayOfWeek.value,
                 date = wednesday,
                 classes = listOf(
-                    Classes(
+                    ClassesDto(
                         name = "Механика жидкости и газа",
-                        type = ClassesType.PRACTICE,
+                        type = ClassesTypeDto.PRACTICE,
                         place = "Б-409",
                         groups = "Сэ-12-21",
                         person = "доц. Почернина Н.И.",
-                        time = Time(
+                        time = TimeDto(
                             start = LocalTime.of(9, 20),
                             end = LocalTime.of(10, 55),
                         ),
                         number = 1,
-                        rawType = TODO(),
-                        attachedNotePreview = TODO(),
-                        progress = TODO(),
+                        rawType = "Практика",
                     ),
-                    Classes(
+                    ClassesDto(
                         name = "Высшая математика",
-                        type = ClassesType.LECTURE,
+                        type = ClassesTypeDto.LECTURE,
                         place = "Б-411",
                         groups = "Сэ-12-21",
                         person = "ст. преп. Капицына Т.В.",
-                        time = Time(
+                        time = TimeDto(
                             start = LocalTime.of(11, 10),
                             end = LocalTime.of(12, 45),
                         ),
                         number = 2,
-                        rawType = TODO(),
-                        attachedNotePreview = TODO(),
-                        progress = TODO(),
+                        rawType = "Практика",
                     ),
-                    Classes(
+                    ClassesDto(
                         name = "Основы PR-коммуникаций",
-                        type = ClassesType.LECTURE,
+                        type = ClassesTypeDto.LECTURE,
                         place = "Б-413",
                         groups = "Сэ-12-21",
                         person = "доц. Веселов А.А.",
-                        time = Time(
+                        time = TimeDto(
                             start = LocalTime.of(13, 45),
                             end = LocalTime.of(15, 20),
                         ),
                         number = 3,
-                        rawType = TODO(),
-                        attachedNotePreview = TODO(),
-                        progress = TODO(),
+                        rawType = "Лекция",
                     ),
-                    Classes(
+                    ClassesDto(
                         name = "Иностранный язык",
-                        type = ClassesType.PRACTICE,
+                        type = ClassesTypeDto.PRACTICE,
                         place = "М-910",
                         groups = "Сэ-12-21",
-                        time = Time(
+                        time = TimeDto(
                             start = LocalTime.of(15, 35),
                             end = LocalTime.of(17, 10),
                         ),
                         number = 4,
-                        rawType = TODO(),
-                        attachedNotePreview = TODO(),
-                        progress = TODO(),
-                        person = TODO(),
+                        rawType = "Практика",
+                        person = "",
                     ),
                 ),
             ),
-            Day(
+            DayDto(
                 dayOfWeek = thursday.dayOfWeek.value,
                 date = thursday,
                 classes = listOf(
-                    Classes(
+                    ClassesDto(
                         name = "Высшая математика",
-                        type = ClassesType.LECTURE,
+                        type = ClassesTypeDto.LECTURE,
                         place = "Б-409",
                         groups = "Сэ-12-21",
                         person = "ст. преп. Капицына Т.В.",
-                        time = Time(
+                        time = TimeDto(
                             start = LocalTime.of(9, 20),
                             end = LocalTime.of(10, 55),
                         ),
                         number = 1,
-                        rawType = TODO(),
-                        attachedNotePreview = TODO(),
-                        progress = TODO(),
+                        rawType = "Лекция",
                     ),
-                    Classes(
+                    ClassesDto(
                         name = "Механика материалов и конструкций",
-                        type = ClassesType.PRACTICE,
+                        type = ClassesTypeDto.PRACTICE,
                         place = "Б-409",
                         groups = "Сэ-12-21",
                         person = "доц. Догадина Т.Н.",
-                        time = Time(
+                        time = TimeDto(
                             start = LocalTime.of(11, 10),
                             end = LocalTime.of(12, 45),
                         ),
                         number = 2,
-                        rawType = TODO(),
-                        attachedNotePreview = TODO(),
-                        progress = TODO(),
+                        rawType = "Практика",
                     ),
-                    Classes(
+                    ClassesDto(
                         name = "Высшая математика",
-                        type = ClassesType.PRACTICE,
+                        type = ClassesTypeDto.PRACTICE,
                         place = "Б-413",
                         groups = "Сэ-12-21",
                         person = "ст. преп. Капицына Т.В.",
-                        time = Time(
+                        time = TimeDto(
                             start = LocalTime.of(13, 45),
                             end = LocalTime.of(15, 20),
                         ),
                         number = 3,
-                        rawType = TODO(),
-                        attachedNotePreview = TODO(),
-                        progress = TODO(),
+                        rawType = "Практика",
                     ),
-                    Classes(
+                    ClassesDto(
                         name = "Элективные курсы по физической культуре и спорту",
-                        type = ClassesType.PRACTICE,
+                        type = ClassesTypeDto.PRACTICE,
                         place = "Спортзал",
                         groups = "Сэ-12-21",
-                        time = Time(
+                        time = TimeDto(
                             start = LocalTime.of(15, 35),
                             end = LocalTime.of(17, 10),
                         ),
                         number = 4,
-                        rawType = TODO(),
-                        attachedNotePreview = TODO(),
-                        progress = TODO(),
-                        person = TODO(),
+                        rawType = "Практика",
+                        person = "",
                     ),
                 ),
             ),
-            Day(
+            DayDto(
                 dayOfWeek = friday.dayOfWeek.value,
                 date = friday,
                 classes = listOf(
-                    Classes(
+                    ClassesDto(
                         name = "Основы компьютерного моделирования и проектирования робототехнических устройств и систем",
-                        type = ClassesType.LECTURE,
+                        type = ClassesTypeDto.LECTURE,
                         place = "Б-406",
                         groups = "Сэ-12-21",
                         person = "ассист. Салимов М.С.",
-                        time = Time(
+                        time = TimeDto(
                             start = LocalTime.of(9, 20),
                             end = LocalTime.of(10, 55),
                         ),
                         number = 1,
-                        rawType = TODO(),
-                        attachedNotePreview = TODO(),
-                        progress = TODO(),
+                        rawType = "Лекция",
                     ),
-                    Classes(
+                    ClassesDto(
                         name = "Механика жидкости и газа",
-                        type = ClassesType.LECTURE,
+                        type = ClassesTypeDto.LECTURE,
                         place = "Г-404",
                         groups = "Сэ-12-21",
                         person = "проф. Ляпин В.Ю.",
-                        time = Time(
+                        time = TimeDto(
                             start = LocalTime.of(11, 10),
                             end = LocalTime.of(12, 45),
                         ),
                         number = 2,
-                        rawType = TODO(),
-                        attachedNotePreview = TODO(),
-                        progress = TODO(),
+                        rawType = "Лекция",
                     ),
-                    Classes(
+                    ClassesDto(
                         name = "Электротехника и электроника",
-                        type = ClassesType.LECTURE,
+                        type = ClassesTypeDto.LECTURE,
                         place = "Б-409",
                         groups = "Сэ-12-21",
                         person = "ст. преп. Куликова Е.А.",
-                        time = Time(
+                        time = TimeDto(
                             start = LocalTime.of(13, 45),
                             end = LocalTime.of(15, 20),
                         ),
                         number = 3,
-                        rawType = TODO(),
-                        attachedNotePreview = TODO(),
-                        progress = TODO(),
+                        rawType = "Лекция",
                     ),
-                    Classes(
+                    ClassesDto(
                         name = "Иностранный язык",
-                        type = ClassesType.PRACTICE,
+                        type = ClassesTypeDto.PRACTICE,
                         place = "М-814",
                         groups = "Сэ-12-21",
-                        time = Time(
+                        time = TimeDto(
                             start = LocalTime.of(15, 35),
                             end = LocalTime.of(17, 10),
                         ),
                         number = 4,
-                        rawType = TODO(),
-                        attachedNotePreview = TODO(),
-                        progress = TODO(),
-                        person = TODO(),
+                        rawType = "Практика",
+                        person = "",
                     ),
                 ),
             ),
@@ -378,277 +341,245 @@ private fun createOddWeek(
     weekOfYear: Int,
     weekOfSemester: Int,
     monday: LocalDate,
-): Week {
+): WeekDto {
     val tuesday = monday.plusDays(1)
     val wednesday = monday.plusDays(2)
     val thursday = monday.plusDays(3)
     val friday = monday.plusDays(4)
-    return Week(
+    return WeekDto(
         weekOfYear = weekOfYear,
-        weekOfSemester = WeekOfSemester.Studying(weekOfSemester),
+        weekOfSemester = weekOfSemester,
         firstDayOfWeek = monday,
         days = listOf(
-            Day(
+            DayDto(
                 dayOfWeek = tuesday.dayOfWeek.value,
                 date = tuesday,
                 classes = listOf(
-                    Classes(
+                    ClassesDto(
                         name = "Иностранный язык",
-                        type = ClassesType.PRACTICE,
+                        type = ClassesTypeDto.PRACTICE,
                         place = "М-812",
                         groups = "Сэ-12-21",
                         person = "",
-                        time = Time(
+                        time = TimeDto(
                             start = LocalTime.of(9, 20),
                             end = LocalTime.of(10, 55),
                         ),
                         number = 1,
-                        rawType = TODO(),
-                        attachedNotePreview = TODO(),
-                        progress = TODO(),
+                        rawType = "Практика",
                     ),
-                    Classes(
+                    ClassesDto(
                         name = "Механика материалов и конструкций",
-                        type = ClassesType.LECTURE,
+                        type = ClassesTypeDto.LECTURE,
                         place = "Б-413",
                         groups = "Сэ-12-21",
                         person = "доц. Догадина Т.Н.",
-                        time = Time(
+                        time = TimeDto(
                             start = LocalTime.of(11, 10),
                             end = LocalTime.of(12, 45),
                         ),
                         number = 2,
-                        rawType = TODO(),
-                        attachedNotePreview = TODO(),
-                        progress = TODO(),
+                        rawType = "Лекция",
                     ),
-                    Classes(
+                    ClassesDto(
                         name = "Физическая культура и спорт",
-                        type = ClassesType.PRACTICE,
+                        type = ClassesTypeDto.PRACTICE,
                         place = "Спортзал",
                         groups = "Сэ-12-21",
-                        time = Time(
+                        time = TimeDto(
                             start = LocalTime.of(13, 45),
                             end = LocalTime.of(15, 20),
                         ),
                         number = 3,
-                        rawType = TODO(),
-                        attachedNotePreview = TODO(),
-                        progress = TODO(),
-                        person = TODO(),
+                        rawType = "Практика",
+                        person = "",
                     ),
                 ),
             ),
-            Day(
+            DayDto(
                 dayOfWeek = wednesday.dayOfWeek.value,
                 date = wednesday,
                 classes = listOf(
-                    Classes(
+                    ClassesDto(
                         name = "Физика",
-                        type = ClassesType.LAB,
+                        type = ClassesTypeDto.LAB,
                         place = "А-305",
                         groups = "Сэ-12-21",
                         person = "доц. Губкин М.К.",
-                        time = Time(
+                        time = TimeDto(
                             start = LocalTime.of(9, 20),
                             end = LocalTime.of(10, 55),
                         ),
                         number = 1,
-                        rawType = TODO(),
-                        attachedNotePreview = TODO(),
-                        progress = TODO(),
+                        rawType = "Лабораторная",
                     ),
-                    Classes(
+                    ClassesDto(
                         name = "Физика",
-                        type = ClassesType.LAB,
+                        type = ClassesTypeDto.LAB,
                         place = "А-305",
                         groups = "Сэ-12-21",
                         person = "проф. Иванов Д.А.",
-                        time = Time(
+                        time = TimeDto(
                             start = LocalTime.of(11, 10),
                             end = LocalTime.of(12, 45),
                         ),
                         number = 2,
-                        rawType = TODO(),
-                        attachedNotePreview = TODO(),
-                        progress = TODO(),
+                        rawType = "Лабораторная",
                     ),
-                    Classes(
+                    ClassesDto(
                         name = "Основы PR-коммуникаций",
-                        type = ClassesType.LECTURE,
+                        type = ClassesTypeDto.LECTURE,
                         place = "Б-413",
                         groups = "Сэ-12-21",
                         person = "доц. Веселов А.А.",
-                        time = Time(
+                        time = TimeDto(
                             start = LocalTime.of(13, 45),
                             end = LocalTime.of(15, 20),
                         ),
                         number = 3,
-                        rawType = TODO(),
-                        attachedNotePreview = TODO(),
-                        progress = TODO(),
+                        rawType = "Лекция",
                     ),
-                    Classes(
+                    ClassesDto(
                         name = "Иностранный язык",
-                        type = ClassesType.PRACTICE,
+                        type = ClassesTypeDto.PRACTICE,
                         place = "М-910",
                         groups = "Сэ-12-21",
-                        time = Time(
+                        time = TimeDto(
                             start = LocalTime.of(15, 35),
                             end = LocalTime.of(17, 10),
                         ),
                         number = 4,
-                        rawType = TODO(),
-                        attachedNotePreview = TODO(),
-                        progress = TODO(),
-                        person = TODO(),
+                        rawType = "Практика",
+                        person = "",
                     ),
                 ),
             ),
-            Day(
+            DayDto(
                 dayOfWeek = thursday.dayOfWeek.value,
                 date = thursday,
                 classes = listOf(
-                    Classes(
+                    ClassesDto(
                         name = "Высшая математика",
-                        type = ClassesType.LECTURE,
+                        type = ClassesTypeDto.LECTURE,
                         place = "Б-409",
                         groups = "Сэ-12-21",
                         person = "ст. преп. Капицына Т.В.",
-                        time = Time(
+                        time = TimeDto(
                             start = LocalTime.of(9, 20),
                             end = LocalTime.of(10, 55),
                         ),
                         number = 1,
-                        rawType = TODO(),
-                        attachedNotePreview = TODO(),
-                        progress = TODO(),
+                        rawType = "Лекция",
                     ),
-                    Classes(
+                    ClassesDto(
                         name = "Механика материалов и конструкций",
-                        type = ClassesType.PRACTICE,
+                        type = ClassesTypeDto.PRACTICE,
                         place = "Б-409",
                         groups = "Сэ-12-21",
                         person = "доц. Догадина Т.Н.",
-                        time = Time(
+                        time = TimeDto(
                             start = LocalTime.of(11, 10),
                             end = LocalTime.of(12, 45),
                         ),
                         number = 2,
-                        rawType = TODO(),
-                        attachedNotePreview = TODO(),
-                        progress = TODO(),
+                        rawType = "Практика",
                     ),
-                    Classes(
+                    ClassesDto(
                         name = "Высшая математика",
-                        type = ClassesType.PRACTICE,
+                        type = ClassesTypeDto.PRACTICE,
                         place = "Б-413",
                         groups = "Сэ-12-21",
                         person = "ст. преп. Капицына Т.В.",
-                        time = Time(
+                        time = TimeDto(
                             start = LocalTime.of(13, 45),
                             end = LocalTime.of(15, 20),
                         ),
                         number = 3,
-                        rawType = TODO(),
-                        attachedNotePreview = TODO(),
-                        progress = TODO(),
+                        rawType = "Практика",
                     ),
-                    Classes(
+                    ClassesDto(
                         name = "Элективные курсы по физической культуре и спорту",
-                        type = ClassesType.PRACTICE,
+                        type = ClassesTypeDto.PRACTICE,
                         place = "Спортзал",
                         groups = "Сэ-12-21",
-                        time = Time(
+                        time = TimeDto(
                             start = LocalTime.of(15, 35),
                             end = LocalTime.of(17, 10),
                         ),
                         number = 4,
-                        rawType = TODO(),
-                        attachedNotePreview = TODO(),
-                        progress = TODO(),
-                        person = TODO(),
+                        rawType = "Практика",
+                        person = "",
                     ),
                 ),
             ),
-            Day(
+            DayDto(
                 dayOfWeek = friday.dayOfWeek.value,
                 date = friday,
                 classes = listOf(
-                    Classes(
+                    ClassesDto(
                         name = "Основы компьютерного моделирования и проектирования робототехнических устройств и систем",
-                        type = ClassesType.LAB,
+                        type = ClassesTypeDto.LAB,
                         place = "Б-406",
                         groups = """Сэ-12-21\1п.""",
                         person = "ассист. Салимов М.С.",
-                        time = Time(
+                        time = TimeDto(
                             start = LocalTime.of(9, 20),
                             end = LocalTime.of(10, 55),
                         ),
                         number = 1,
-                        rawType = TODO(),
-                        attachedNotePreview = TODO(),
-                        progress = TODO(),
+                        rawType = "Лабораторная",
                     ),
-                    Classes(
+                    ClassesDto(
                         name = "Основы компьютерного моделирования и проектирования робототехнических устройств и систем",
-                        type = ClassesType.LAB,
+                        type = ClassesTypeDto.LAB,
                         place = "Б-406",
                         groups = """Сэ-12-21\2п.""",
                         person = "ассист. Салимов М.С.",
-                        time = Time(
+                        time = TimeDto(
                             start = LocalTime.of(9, 20),
                             end = LocalTime.of(10, 55),
                         ),
                         number = 1,
-                        rawType = TODO(),
-                        attachedNotePreview = TODO(),
-                        progress = TODO(),
+                        rawType = "Лабораторная",
                     ),
-                    Classes(
+                    ClassesDto(
                         name = "Механика жидкости и газа",
-                        type = ClassesType.LECTURE,
+                        type = ClassesTypeDto.LECTURE,
                         place = "Г-404",
                         groups = "Сэ-12-21",
                         person = "проф. Ляпин В.Ю.",
-                        time = Time(
+                        time = TimeDto(
                             start = LocalTime.of(11, 10),
                             end = LocalTime.of(12, 45),
                         ),
                         number = 2,
-                        rawType = TODO(),
-                        attachedNotePreview = TODO(),
-                        progress = TODO(),
+                        rawType = "Лекция",
                     ),
-                    Classes(
+                    ClassesDto(
                         name = "Электротехника и электроника",
-                        type = ClassesType.LECTURE,
+                        type = ClassesTypeDto.LECTURE,
                         place = "Б-409",
                         groups = "Сэ-12-21",
                         person = "ст. преп. Куликова Е.А.",
-                        time = Time(
+                        time = TimeDto(
                             start = LocalTime.of(13, 45),
                             end = LocalTime.of(15, 20),
                         ),
                         number = 3,
-                        rawType = TODO(),
-                        attachedNotePreview = TODO(),
-                        progress = TODO(),
+                        rawType = "Лекция",
                     ),
-                    Classes(
+                    ClassesDto(
                         name = "Иностранный язык",
-                        type = ClassesType.PRACTICE,
+                        type = ClassesTypeDto.PRACTICE,
                         place = "М-814",
                         groups = "Сэ-12-21",
-                        time = Time(
+                        time = TimeDto(
                             start = LocalTime.of(15, 35),
                             end = LocalTime.of(17, 10),
                         ),
                         number = 4,
-                        rawType = TODO(),
-                        attachedNotePreview = TODO(),
-                        progress = TODO(),
-                        person = TODO(),
+                        rawType = "Практика",
+                        person = "",
                     ),
                 ),
             )
