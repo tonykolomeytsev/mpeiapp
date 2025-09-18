@@ -1,9 +1,9 @@
 package kekmech.ru.feature_bars_impl.data.mapper
 
 import kekmech.ru.ext_kotlin.capitalizeSafe
-import kekmech.ru.feature_bars_impl.data.dto.DisciplineRowType.CONTROL_ACTIVITY
-import kekmech.ru.feature_bars_impl.data.dto.DisciplineRowType.UNDEFINED
-import kekmech.ru.feature_bars_impl.data.dto.RawMarksResponse
+import kekmech.ru.feature_bars_impl.data.model.DisciplineRowType.CONTROL_ACTIVITY
+import kekmech.ru.feature_bars_impl.data.model.DisciplineRowType.UNDEFINED
+import kekmech.ru.feature_bars_impl.data.model.RawMarksResponse
 import kekmech.ru.feature_bars_impl.domain.AssessedDiscipline
 import kekmech.ru.feature_bars_impl.domain.ControlActivity
 import kekmech.ru.feature_bars_impl.domain.FinalGrade
