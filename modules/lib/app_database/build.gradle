@@ -13,7 +13,6 @@ dependencies {
     testImplementation(libs.kotest.property)
     testImplementation(libs.kotest.runner)
 
-    implementation(libs.androidx.annotation)
     implementation(libs.androidx.room.runtime)
     implementation(libs.koin.core)
 
