@@ -75,7 +75,6 @@ androidx-navigation3-ui = { group = "androidx.navigation3", name = "navigation3-
 
 # Google Libraries
 google-material = { module = "com.google.android.material:material", version.ref = "material" }
-google-gson = { module = "com.google.code.gson:gson", version = "2.13.1" }
 google-maps = { module = "com.google.android.gms:play-services-maps", version = "19.2.0" }
 
 # Koin Libraries
@@ -90,7 +89,6 @@ firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics", ve
 
 # Squareup Libraries
 squareup-retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
-squareup-retrofit-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
 squareup-retrofit-kser = { module = "com.squareup.retrofit2:converter-kotlinx-serialization", version.ref = "retrofit" }
 squareup-okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
 squareup-okhttp-logger = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp" }
@@ -115,7 +113,7 @@ kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-t
 ktor-server-core = { module = "io.ktor:ktor-server-core", version.ref = "ktor" }
 ktor-server-netty = { module = "io.ktor:ktor-server-netty", version.ref = "ktor" }
 ktor-server-content-negotiation = { module = "io.ktor:ktor-server-content-negotiation", version.ref = "ktor" }
-ktor-serialization-gson = { module = "io.ktor:ktor-serialization-gson", version.ref = "ktor" }
+ktor-serialization-kser = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 
 # Jetpack Compose
 ## Compose

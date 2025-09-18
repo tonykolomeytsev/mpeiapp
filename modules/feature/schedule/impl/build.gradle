@@ -19,7 +19,6 @@ dependencies {
     implementation(libs.androidx.viewPager2)
     implementation(libs.facebook.shimmer)
     implementation(libs.firebase.crashlytics)
-    implementation(libs.google.gson)
     implementation(libs.google.material)
     implementation(libs.koin.android)
     implementation(libs.koin.core)
