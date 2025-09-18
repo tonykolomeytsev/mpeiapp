@@ -1,11 +1,13 @@
 package kekmech.ru.feature_schedule_impl.data.dto
 
-import androidx.annotation.Keep
-import kekmech.ru.feature_schedule_api.domain.model.SearchResult
+import kekmech.ru.feature_schedule_impl.data.model.SearchResultDto
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-@Keep
+@Serializable
 internal data class GetSearchResultsResponse(
-    val items: List<SearchResult>,
+    @SerialName("items")
+    val items: List<SearchResultDto>,
 )
 
 

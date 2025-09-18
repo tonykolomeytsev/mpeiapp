@@ -1,8 +1,8 @@
 package kekmech.ru.feature_schedule_impl.data.network
 
-import kekmech.ru.feature_schedule_api.domain.model.Schedule
 import kekmech.ru.feature_schedule_api.domain.model.ScheduleType
 import kekmech.ru.feature_schedule_impl.data.dto.GetSearchResultsResponse
+import kekmech.ru.feature_schedule_impl.data.model.ScheduleDto
 import kekmech.ru.lib_network.BackendServiceUrl
 import kekmech.ru.lib_network.EndpointUrl
 import retrofit2.http.GET
@@ -17,7 +17,7 @@ internal interface ScheduleService {
         @Path("type") type: String,
         @Path("name", encoded = true) name: String,
         @Path("weekOffset") weekOffset: Int,
-    ): Schedule
+    ): ScheduleDto
 
     @GET("v1/search")
     suspend fun getSearchResults(
