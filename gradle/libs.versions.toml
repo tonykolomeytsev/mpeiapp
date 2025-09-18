@@ -51,7 +51,6 @@ tinkoff-pagerIndicator = { module = "ru.tinkoff.scrollingpagerindicator:scrollin
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version = "1.9.0" }
 
 # AndroidX Libraries
-androidx-annotation = { module = "androidx.annotation:annotation", version = "1.9.1" }
 androidx-appCompat = { module = "androidx.appcompat:appcompat", version.ref = "appCompat" }
 androidx-constraintLayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintLayout" }
 androidx-coordinatorLayout = { module = "androidx.coordinatorlayout:coordinatorlayout", version.ref = "coordinatorLayout" }

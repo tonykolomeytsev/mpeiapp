@@ -25,7 +25,6 @@ import kekmech.ru.feature_search_impl.item.WeekMinItem
 import kekmech.ru.feature_search_impl.item.WeekMinItemBinder
 import kekmech.ru.feature_search_impl.item.WeekMinViewHolder
 import kekmech.ru.feature_search_impl.screens.schedule_details.elm.ScheduleDetailsEffect
-import kekmech.ru.feature_search_impl.screens.schedule_details.elm.ScheduleDetailsEvent
 import kekmech.ru.feature_search_impl.screens.schedule_details.elm.ScheduleDetailsEvent.Ui
 import kekmech.ru.feature_search_impl.screens.schedule_details.elm.ScheduleDetailsState
 import kekmech.ru.feature_search_impl.screens.schedule_details.elm.ScheduleDetailsStoreFactory
