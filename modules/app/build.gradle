@@ -79,7 +79,7 @@ dependencies {
     implementation(libs.squareup.okhttp)
     implementation(libs.squareup.okhttp.logger)
     implementation(libs.squareup.retrofit)
-    implementation(libs.squareup.retrofit.gson)
+    implementation(libs.squareup.retrofit.kser)
     implementation(libs.vivid.elmslie.android)
     implementation(libs.vivid.elmslie.core)
     implementation(libs.timber)
