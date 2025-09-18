@@ -1,5 +1,6 @@
 plugins {
     alias(mpeix.plugins.feature.impl)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android.buildFeatures {
@@ -22,6 +23,7 @@ dependencies {
     implementation(libs.google.material)
     implementation(libs.koin.android)
     implementation(libs.koin.core)
+    implementation(libs.kotlinx.serialization.json)
     implementation(libs.squareup.retrofit)
     implementation(libs.vivid.elmslie.android)
     implementation(libs.vivid.elmslie.core)
