@@ -18,7 +18,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.navigation3.runtime.NavKey
 import com.chuckerteam.chucker.api.Chucker
 import kekmech.ru.debug_menu.R
 import kekmech.ru.debug_menu.presentation.navigation.LocalNavBackStack

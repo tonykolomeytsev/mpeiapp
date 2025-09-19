@@ -21,7 +21,6 @@ import kekmech.ru.feature_notes_impl.R
 import kekmech.ru.feature_notes_impl.databinding.FragmentNoteEditBinding
 import kekmech.ru.feature_notes_impl.di.NotesDependencies
 import kekmech.ru.feature_notes_impl.presentation.screen.edit.elm.NoteEditEffect
-import kekmech.ru.feature_notes_impl.presentation.screen.edit.elm.NoteEditEvent
 import kekmech.ru.feature_notes_impl.presentation.screen.edit.elm.NoteEditEvent.Ui
 import kekmech.ru.feature_notes_impl.presentation.screen.edit.elm.NoteEditState
 import kekmech.ru.lib_adapter.BaseAdapter

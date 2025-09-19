@@ -6,3 +6,4 @@ local.properties
 **/build
 **/google-services.json
 **/.DS_Store
+.figx-out

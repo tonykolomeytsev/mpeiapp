@@ -1,15 +1,16 @@
 package kekmech.ru.mock_server
 
 import android.content.res.AssetManager
-import io.ktor.serialization.gson.gson
+import io.ktor.http.ContentType
+import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.install
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.server.routing.routing
-import kekmech.ru.ext_gson.LocalDateJsonAdapter
-import kekmech.ru.ext_gson.LocalDateTimeJsonAdapter
-import kekmech.ru.ext_gson.LocalTimeJsonAdapter
+import kekmech.ru.ext_json.LocalDateSerializer
+import kekmech.ru.ext_json.LocalDateTimeSerializer
+import kekmech.ru.ext_json.LocalTimeSerializer
 import kekmech.ru.mock_server.routing.bars.getExtractJs
 import kekmech.ru.mock_server.routing.bars.getRemoteBarsConfig
 import kekmech.ru.mock_server.routing.github.getContributors
@@ -17,8 +18,9 @@ import kekmech.ru.mock_server.routing.github.getUser
 import kekmech.ru.mock_server.routing.map.getMapMarkers
 import kekmech.ru.mock_server.routing.schedule.getScheduleV1
 import kekmech.ru.mock_server.routing.schedule.getSearchResultsV1
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.modules.SerializersModule
 import timber.log.Timber
-import java.text.DateFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -53,13 +55,18 @@ public class MockServer(
             watchPaths = emptyList(),
         ) {
             install(ContentNegotiation) {
-                gson {
-                    setPrettyPrinting()
-                    setDateFormat(DateFormat.LONG)
-                    registerTypeAdapter(LocalDate::class.java, LocalDateJsonAdapter())
-                    registerTypeAdapter(LocalTime::class.java, LocalTimeJsonAdapter())
-                    registerTypeAdapter(LocalDateTime::class.java, LocalDateTimeJsonAdapter())
-                }
+                json(Json {
+                    encodeDefaults = true
+                    ignoreUnknownKeys = true
+                    coerceInputValues = true
+                    explicitNulls = false
+                    prettyPrint = true
+                    serializersModule = SerializersModule {
+                        contextual(LocalDate::class, LocalDateSerializer)
+                        contextual(LocalTime::class, LocalTimeSerializer)
+                        contextual(LocalDateTime::class, LocalDateTimeSerializer)
+                    }
+                }, ContentType.parse("application/json"))
             }
             routing {
                 // region schedule

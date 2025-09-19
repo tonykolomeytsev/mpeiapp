@@ -1,14 +1,17 @@
 package kekmech.ru.feature_bars_impl.presentation.screen.main
 
 import android.annotation.SuppressLint
-import android.annotation.TargetApi
 import android.graphics.Bitmap
-import android.os.Build
 import android.os.Bundle
 import android.text.Spannable
 import android.text.style.ForegroundColorSpan
 import android.view.View
-import android.webkit.*
+import android.webkit.JavascriptInterface
+import android.webkit.WebResourceError
+import android.webkit.WebResourceRequest
+import android.webkit.WebSettings
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.appcompat.widget.Toolbar
 import androidx.core.text.toSpannable
 import androidx.core.view.forEach

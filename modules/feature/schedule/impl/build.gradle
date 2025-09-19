@@ -1,5 +1,6 @@
 plugins {
     alias(mpeix.plugins.feature.impl)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android.buildFeatures {
@@ -18,10 +19,10 @@ dependencies {
     implementation(libs.androidx.viewPager2)
     implementation(libs.facebook.shimmer)
     implementation(libs.firebase.crashlytics)
-    implementation(libs.google.gson)
     implementation(libs.google.material)
     implementation(libs.koin.android)
     implementation(libs.koin.core)
+    implementation(libs.kotlinx.serialization.json)
     implementation(libs.squareup.retrofit)
     implementation(libs.vivid.elmslie.android)
     implementation(libs.vivid.elmslie.core)

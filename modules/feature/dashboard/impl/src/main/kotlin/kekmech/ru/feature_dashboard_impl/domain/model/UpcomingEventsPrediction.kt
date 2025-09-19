@@ -1,9 +1,5 @@
 package kekmech.ru.feature_dashboard_impl.domain.model
 
-import kekmech.ru.feature_dashboard_impl.domain.model.UpcomingEventsPrediction.ClassesInNDays
-import kekmech.ru.feature_dashboard_impl.domain.model.UpcomingEventsPrediction.ClassesTodayNotStarted
-import kekmech.ru.feature_dashboard_impl.domain.model.UpcomingEventsPrediction.ClassesTodayStarted
-import kekmech.ru.feature_dashboard_impl.domain.model.UpcomingEventsPrediction.NoClassesNextWeek
 import kekmech.ru.feature_schedule_api.domain.model.Classes
 import java.time.LocalDate
 import kotlin.time.Duration

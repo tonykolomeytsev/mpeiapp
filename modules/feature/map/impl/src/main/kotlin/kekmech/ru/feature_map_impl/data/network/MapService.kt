@@ -1,6 +1,6 @@
 package kekmech.ru.feature_map_impl.data.network
 
-import kekmech.ru.feature_map_api.domain.model.MapMarker
+import kekmech.ru.feature_map_impl.data.model.MapMarkerDto
 import kekmech.ru.lib_network.BackendServiceUrl
 import kekmech.ru.lib_network.EndpointUrl
 import retrofit2.http.GET
@@ -9,5 +9,5 @@ import retrofit2.http.GET
 internal interface MapService {
 
     @GET("markers.json")
-    suspend fun getMapMarkers(): List<MapMarker>
+    suspend fun getMapMarkers(): List<MapMarkerDto>
 }

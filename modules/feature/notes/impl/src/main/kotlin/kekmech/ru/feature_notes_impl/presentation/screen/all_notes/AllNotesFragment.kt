@@ -24,7 +24,6 @@ import kekmech.ru.feature_notes_impl.R
 import kekmech.ru.feature_notes_impl.databinding.FragmentAllNotesBinding
 import kekmech.ru.feature_notes_impl.di.NotesDependencies
 import kekmech.ru.feature_notes_impl.presentation.screen.all_notes.elm.AllNotesEffect
-import kekmech.ru.feature_notes_impl.presentation.screen.all_notes.elm.AllNotesEvent
 import kekmech.ru.feature_notes_impl.presentation.screen.all_notes.elm.AllNotesEvent.Ui
 import kekmech.ru.feature_notes_impl.presentation.screen.all_notes.elm.AllNotesState
 import kekmech.ru.feature_notes_impl.presentation.screen.edit.NoteEditFragment

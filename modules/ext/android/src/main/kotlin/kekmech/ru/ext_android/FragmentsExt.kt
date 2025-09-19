@@ -1,6 +1,5 @@
 package kekmech.ru.ext_android
 
-import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment

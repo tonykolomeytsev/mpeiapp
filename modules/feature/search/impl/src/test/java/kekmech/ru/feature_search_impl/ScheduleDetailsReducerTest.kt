@@ -278,7 +278,11 @@ class ScheduleDetailsReducerTest : BehaviorSpec({
             return (1..7)
                 .map { dayOfWeek ->
                     days.find { it.dayOfWeek == dayOfWeek }
-                        ?: Day(dayOfWeek, week.firstDayOfWeek.plusDays(dayOfWeek - 1L))
+                        ?: Day(
+                            dayOfWeek = dayOfWeek,
+                            date = week.firstDayOfWeek.plusDays(dayOfWeek - 1L),
+                            classes = emptyList(),
+                        )
                 }
         }
     }

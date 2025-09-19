@@ -2,7 +2,7 @@ package kekmech.ru.feature_contributors_impl.data.repository
 
 import kekmech.ru.feature_contributors_api.data.repository.ContributorsRepository
 import kekmech.ru.feature_contributors_api.domain.model.Contributor
-import kekmech.ru.feature_contributors_impl.data.dto.GitHubContributor
+import kekmech.ru.feature_contributors_impl.data.model.GitHubContributorDto
 import kekmech.ru.feature_contributors_impl.data.network.GitHubService
 import kekmech.ru.lib_persistent_cache.api.PersistentCache
 import kekmech.ru.lib_persistent_cache.api.ofList
@@ -21,7 +21,7 @@ internal class ContributorsRepositoryImpl(
     override suspend fun fetchContributors(): Result<Unit> =
         runCatching {
             gitHubService.getContributors()
-                .sortedByDescending(GitHubContributor::total)
+                .sortedByDescending(GitHubContributorDto::total)
                 .map { gitHubService.getUser(it.author.login) }
                 .map {
                     Contributor(

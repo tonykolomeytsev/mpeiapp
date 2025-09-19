@@ -2,8 +2,6 @@ package kekmech.ru.ui_shimmer
 
 import android.graphics.Matrix
 import androidx.compose.animation.core.Animatable
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.toRect
 import androidx.compose.ui.graphics.BlendMode
