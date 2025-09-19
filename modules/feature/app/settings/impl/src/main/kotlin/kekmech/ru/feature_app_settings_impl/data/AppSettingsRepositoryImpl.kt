@@ -33,7 +33,7 @@ internal class AppSettingsRepositoryImpl(
             else -> "en_US"
         }
     )
-    private var mapAppearanceType: String by preferences.string("app_map_type", "hybrid")
+    private var mapAppearanceType: String by preferences.string("app_map_type", "scheme")
 
     private val appThemeStateFlow = MutableStateFlow(appTheme)
 
