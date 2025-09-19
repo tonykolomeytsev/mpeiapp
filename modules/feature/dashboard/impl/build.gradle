@@ -24,6 +24,7 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.vivid.elmslie.android)
     implementation(libs.vivid.elmslie.core)
+    implementation(libs.firebase.crashlytics)
 
     implementation(project(":feature_app_settings_api"))
     implementation(project(":feature_dashboard_api"))
