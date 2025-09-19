@@ -40,9 +40,12 @@ internal class DashboardReducer :
             }
 
             is Internal.GetUpcomingEventsFailure -> {
-                FirebaseCrashlytics.getInstance().recordException(event.throwable) {
-                    key("schedule_name", state.selectedSchedule.name)
-                    key("week_of_semester_loaded", state.weekOfSemester.isData)
+                // For unit tests
+                runCatching {
+                    FirebaseCrashlytics.getInstance().recordException(event.throwable) {
+                        key("schedule_name", state.selectedSchedule.name)
+                        key("week_of_semester_loaded", state.weekOfSemester.isData)
+                    }
                 }
                 state { copy(upcomingEvents = event.throwable.toResource()) }
             }
