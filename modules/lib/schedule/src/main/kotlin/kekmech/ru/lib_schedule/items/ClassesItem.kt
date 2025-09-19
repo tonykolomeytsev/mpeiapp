@@ -146,7 +146,7 @@ public class ClassesItemBinder(
             ClassesType.EXAM to 6,
         )
         val string = context.getStringArray(StringArrays.classes_types)
-        types.map { (k, v) -> k to string[v] }.toMap()
+        types.associate { (k, v) -> k to string[v] }
     }
     private val colorTags by fastLazy {
         mapOf(
@@ -163,7 +163,7 @@ public class ClassesItemBinder(
         vh.setDisciplineName(model.name)
         vh.setPersonName(
             when (model.scheduleType) {
-                ScheduleType.GROUP -> model.person.takeIfNotEmpty()
+                ScheduleType.GROUP -> buildGroupLabel(model).takeIfNotEmpty()
                 ScheduleType.PERSON -> model.groups.takeIfNotEmpty()
             }
         )
@@ -177,6 +177,22 @@ public class ClassesItemBinder(
         vh.setProgress(model.progress)
     }
 
+    private fun buildGroupLabel(model: Classes): String =
+        buildString {
+            val hasSubgroupLabel = SUBGROUP_MARKER_PATTERN.containsMatchIn(model.groups)
+            if (model.person.isNotEmpty()) {
+                append(model.person)
+                if (hasSubgroupLabel) append('\n')
+            }
+            // Покажем еще и номер подгруппы, т.к. в большинстве случаев его наличие говорит о
+            // "сдвоенных" парах в расписании, расположенных в одно время. Обычно относится к
+            // раздеделению на подгруппы и т.д.
+            if (hasSubgroupLabel) {
+                append(model.groups)
+            }
+        }
+
+
     private fun String.takeIfNotEmpty() = takeIf {
         isNotBlank() && !it.contains("Вакансия", ignoreCase = true)
     }
@@ -187,6 +203,10 @@ public class ClassesItemBinder(
         } else {
             classesTypes[classes.type].orEmpty()
         }
+    }
+
+    private companion object {
+        private val SUBGROUP_MARKER_PATTERN = """\\\d(п|П)""".toRegex()
     }
 }
 
