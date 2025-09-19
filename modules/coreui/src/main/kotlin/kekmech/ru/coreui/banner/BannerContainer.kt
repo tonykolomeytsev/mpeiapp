@@ -9,8 +9,6 @@ import androidx.lifecycle.lifecycleScope
 import kekmech.ru.coreui.R
 import kekmech.ru.coreui.databinding.ViewBannerContainerBinding
 import kekmech.ru.ext_android.addSystemTopPadding
-import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.filterNotNull

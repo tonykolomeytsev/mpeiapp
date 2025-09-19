@@ -115,7 +115,11 @@ internal class ScheduleDetailsReducer :
         return (1..DAYS_IN_WEEK)
             .map { dayOfWeek ->
                 days.find { it.dayOfWeek == dayOfWeek }
-                    ?: Day(dayOfWeek, week.firstDayOfWeek.plusDays(dayOfWeek - 1L))
+                    ?: Day(
+                        dayOfWeek = dayOfWeek,
+                        date = week.firstDayOfWeek.plusDays(dayOfWeek - 1L),
+                        classes = emptyList(),
+                    )
             }
     }
 

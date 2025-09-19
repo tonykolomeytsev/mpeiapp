@@ -4,6 +4,7 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 import kekmech.ru.feature_schedule_api.domain.model.Classes
+import kekmech.ru.feature_schedule_api.domain.model.ClassesType
 import kekmech.ru.feature_schedule_api.domain.model.Time
 import kekmech.ru.lib_schedule.items.LunchItem
 import kekmech.ru.lib_schedule.items.NotePreview
@@ -168,33 +169,36 @@ class ConvertersExtTest : BehaviorSpec({
         When("Time before first classes") {
             val givenClassesCopy = givenClasses.map { it.copy() }
             Then("No progress") {
-                check(givenClassesCopy
-                    .withProgressPreview(nowTime = LocalTime.of(9, 0))
-                    .all { (it as Classes).progress == null }
+                check(
+                    givenClassesCopy
+                        .withProgressPreview(nowTime = LocalTime.of(9, 0))
+                        .all { (it as Classes).progress == null }
                 )
             }
         }
         When("Time in first classes") {
             val givenClassesCopy = givenClasses.map { it.copy() }
             Then("First classes progress not null") {
-                check(givenClassesCopy
-                    .withProgressPreview(nowTime = LocalTime.of(9, 30))
-                    .all {
-                        if ((it as Classes).number == 1) {
-                            it.progress != null
-                        } else {
-                            it.progress == null
+                check(
+                    givenClassesCopy
+                        .withProgressPreview(nowTime = LocalTime.of(9, 30))
+                        .all {
+                            if ((it as Classes).number == 1) {
+                                it.progress != null
+                            } else {
+                                it.progress == null
+                            }
                         }
-                    }
                 )
             }
         }
         When("Time between first and second classes") {
             val givenClassesCopy = givenClasses.map { it.copy() }
             Then("No progress") {
-                check(givenClassesCopy
-                    .withProgressPreview(nowTime = LocalTime.of(11, 0))
-                    .all { (it as Classes).progress == null }
+                check(
+                    givenClassesCopy
+                        .withProgressPreview(nowTime = LocalTime.of(11, 0))
+                        .all { (it as Classes).progress == null }
                 )
             }
         }
@@ -202,15 +206,16 @@ class ConvertersExtTest : BehaviorSpec({
             val currentTime = LocalTime.of(13, 45)
             val givenClassesCopy = givenClasses.map { it.copy() }
             Then("Third classes has 0% progress") {
-                check(givenClassesCopy
-                    .withProgressPreview(nowTime = currentTime)
-                    .all {
-                        if ((it as Classes).number == 3) {
-                            it.progress == 0f
-                        } else {
-                            it.progress == null
+                check(
+                    givenClassesCopy
+                        .withProgressPreview(nowTime = currentTime)
+                        .all {
+                            if ((it as Classes).number == 3) {
+                                it.progress == 0f
+                            } else {
+                                it.progress == null
+                            }
                         }
-                    }
                 )
             }
         }
@@ -218,15 +223,16 @@ class ConvertersExtTest : BehaviorSpec({
             val currentTime = LocalTime.of(15, 20)
             val givenClassesCopy = givenClasses.map { it.copy() }
             Then("Third classes has 100% progress") {
-                check(givenClassesCopy
-                    .withProgressPreview(nowTime = currentTime)
-                    .all {
-                        if ((it as Classes).number == 3) {
-                            it.progress == 1f
-                        } else {
-                            it.progress == null
+                check(
+                    givenClassesCopy
+                        .withProgressPreview(nowTime = currentTime)
+                        .all {
+                            if ((it as Classes).number == 3) {
+                                it.progress == 1f
+                            } else {
+                                it.progress == null
+                            }
                         }
-                    }
                 )
             }
         }
@@ -239,17 +245,60 @@ class ConvertersExtTest : BehaviorSpec({
         private const val NOTE_CONTENT = "blah blah blah"
         private val CLASSES_1 = Classes(
             name = "one", number = 1,
-            time = Time(LocalTime.of(9, 20), LocalTime.of(10, 55))
+            time = Time(LocalTime.of(9, 20), LocalTime.of(10, 55)),
+            type = ClassesType.LECTURE,
+            rawType = "lecture",
+            place = "",
+            groups = "",
+            person = "Mr. Brightside",
+            attachedNotePreview = null,
+            progress = null,
         )
         private val CLASSES_2 = Classes(
             name = "two", number = 2,
-            time = Time(LocalTime.of(11, 10), LocalTime.of(12, 45))
+            time = Time(LocalTime.of(11, 10), LocalTime.of(12, 45)),
+            type = ClassesType.LECTURE,
+            rawType = "lecture",
+            place = "",
+            groups = "",
+            person = "Mr. Brightside",
+            attachedNotePreview = null,
+            progress = null,
         )
         private val CLASSES_3 = Classes(
             name = "three", number = 3,
-            time = Time(LocalTime.of(13, 45), LocalTime.of(15, 20))
+            time = Time(LocalTime.of(13, 45), LocalTime.of(15, 20)),
+            type = ClassesType.LECTURE,
+            rawType = "lecture",
+            place = "",
+            groups = "",
+            person = "Mr. Brightside",
+            attachedNotePreview = null,
+            progress = null,
         )
-        private val CLASSES_4 = Classes(name = "four", number = 4)
-        private val CLASSES_5 = Classes(name = "five", number = 5)
+        private val CLASSES_4 = Classes(
+            name = "four",
+            number = 4,
+            time = Time(start = LocalTime.now(), end = LocalTime.now()),
+            type = ClassesType.LECTURE,
+            rawType = "lecture",
+            place = "",
+            groups = "",
+            person = "Mr. Brightside",
+            attachedNotePreview = null,
+            progress = null,
+        )
+        private val CLASSES_5 = Classes(
+            name = "five",
+            number = 5,
+            time = Time(start = LocalTime.now(), end = LocalTime.now()),
+            type = ClassesType.LECTURE,
+            rawType = "lecture",
+            place = "",
+            groups = "",
+            person = "Mr. Brightside",
+            attachedNotePreview = null,
+            progress = null,
+        )
     }
 }

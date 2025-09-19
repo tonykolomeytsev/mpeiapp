@@ -2,9 +2,7 @@ package kekmech.ru.mpeiapp
 
 import android.content.Context
 import android.content.res.Configuration
-import android.content.res.Resources
-import android.os.Build
-import java.util.*
+import java.util.Locale
 
 object LocaleContextWrapper {
 

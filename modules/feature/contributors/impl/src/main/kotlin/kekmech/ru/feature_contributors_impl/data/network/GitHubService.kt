@@ -1,7 +1,7 @@
 package kekmech.ru.feature_contributors_impl.data.network
 
-import kekmech.ru.feature_contributors_impl.data.dto.GitHubContributor
-import kekmech.ru.feature_contributors_impl.data.dto.GitHubUser
+import kekmech.ru.feature_contributors_impl.data.model.GitHubContributorDto
+import kekmech.ru.feature_contributors_impl.data.model.GitHubUserDto
 import kekmech.ru.lib_network.BackendServiceUrl
 import kekmech.ru.lib_network.EndpointUrl
 import retrofit2.http.GET
@@ -14,8 +14,8 @@ internal interface GitHubService {
     suspend fun getContributors(
         @Path("user") user: String = "tonykolomeytsev",
         @Path("repo") repository: String = "mpeiapp",
-    ): List<GitHubContributor>
+    ): List<GitHubContributorDto>
 
     @GET("users/{user}")
-    suspend fun getUser(@Path("user") login: String): GitHubUser
+    suspend fun getUser(@Path("user") login: String): GitHubUserDto
 }

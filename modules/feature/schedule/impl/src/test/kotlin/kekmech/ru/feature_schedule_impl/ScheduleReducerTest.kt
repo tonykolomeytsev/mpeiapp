@@ -16,6 +16,7 @@ import kekmech.ru.feature_schedule_api.domain.model.ClassesType
 import kekmech.ru.feature_schedule_api.domain.model.Day
 import kekmech.ru.feature_schedule_api.domain.model.Schedule
 import kekmech.ru.feature_schedule_api.domain.model.ScheduleType
+import kekmech.ru.feature_schedule_api.domain.model.Time
 import kekmech.ru.feature_schedule_api.domain.model.Week
 import kekmech.ru.feature_schedule_api.domain.model.WeekOfSemester
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleCommand
@@ -26,6 +27,7 @@ import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleRed
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleState
 import kekmech.ru.lib_schedule.utils.atStartOfWeek
 import java.time.LocalDate
+import java.time.LocalTime
 import java.time.Month
 
 class ScheduleReducerTest : BehaviorSpec({
@@ -329,7 +331,10 @@ class ScheduleReducerTest : BehaviorSpec({
             groups = "С-12-16",
             place = "",
             person = "Зуев Ю.Ю.",
-            number = 4
+            number = 4,
+            time = Time(start = LocalTime.now(), end = LocalTime.now()),
+            attachedNotePreview = null,
+            progress = null,
         )
     }
 }

@@ -1,6 +1,6 @@
 package kekmech.ru.feature_bars_impl.data.mapper
 
-import kekmech.ru.feature_bars_impl.data.dto.RawRatingResponse
+import kekmech.ru.feature_bars_impl.data.model.RawRatingResponse
 import kekmech.ru.feature_bars_impl.domain.CompositeRating
 import kekmech.ru.feature_bars_impl.domain.Rating
 import kekmech.ru.feature_bars_impl.domain.SocialCompositeRating

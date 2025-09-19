@@ -87,8 +87,6 @@ internal class FindScheduleFragment :
                 close()
                 setResult(resultKey, result = effect.selectedSchedule)
             }
-
-            else -> Unit
         }
     }
 
