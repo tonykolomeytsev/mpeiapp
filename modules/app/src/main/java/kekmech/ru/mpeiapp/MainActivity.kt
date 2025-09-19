@@ -65,7 +65,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun setTheme() {
         val preheatAppSettings = appSettingsRepository.getAppSettings()
-        if (preheatAppSettings.isDarkThemeEnabled) {
+        val darkTheme = preheatAppSettings.isDarkThemeEnabled
+        if (darkTheme) {
             setTheme(coreui_R.style.AppTheme_Dark)
         } else {
             setTheme(coreui_R.style.AppTheme)
@@ -74,7 +75,7 @@ class MainActivity : AppCompatActivity() {
             statusBarStyle = SystemBarStyle.auto(
                 lightScrim = Color.TRANSPARENT,
                 darkScrim = Color.TRANSPARENT,
-                detectDarkMode = { preheatAppSettings.isDarkThemeEnabled },
+                detectDarkMode = { darkTheme },
             )
         )
     }
