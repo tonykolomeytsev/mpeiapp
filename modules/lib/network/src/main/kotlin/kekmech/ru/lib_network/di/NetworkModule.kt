@@ -51,6 +51,7 @@ private fun provideJson() = Json {
     encodeDefaults = true
     ignoreUnknownKeys = true
     coerceInputValues = true
+    explicitNulls = false
     serializersModule = SerializersModule {
         contextual(LocalDate::class, LocalDateSerializer)
         contextual(LocalTime::class, LocalTimeSerializer)

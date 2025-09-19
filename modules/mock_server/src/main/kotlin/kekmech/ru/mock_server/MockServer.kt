@@ -59,6 +59,7 @@ public class MockServer(
                     encodeDefaults = true
                     ignoreUnknownKeys = true
                     coerceInputValues = true
+                    explicitNulls = false
                     prettyPrint = true
                     serializersModule = SerializersModule {
                         contextual(LocalDate::class, LocalDateSerializer)

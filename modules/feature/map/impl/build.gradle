@@ -1,6 +1,7 @@
 plugins {
     alias(mpeix.plugins.feature.impl)
     alias(mpeix.plugins.util.secrets)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 secrets {
