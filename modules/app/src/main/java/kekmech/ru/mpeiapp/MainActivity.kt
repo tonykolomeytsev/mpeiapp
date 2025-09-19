@@ -76,7 +76,12 @@ class MainActivity : AppCompatActivity() {
                 lightScrim = Color.TRANSPARENT,
                 darkScrim = Color.TRANSPARENT,
                 detectDarkMode = { darkTheme },
-            )
+            ),
+            navigationBarStyle = SystemBarStyle.auto(
+                lightScrim = Color.TRANSPARENT,
+                darkScrim = Color.TRANSPARENT,
+                detectDarkMode = { darkTheme },
+            ),
         )
     }
 
