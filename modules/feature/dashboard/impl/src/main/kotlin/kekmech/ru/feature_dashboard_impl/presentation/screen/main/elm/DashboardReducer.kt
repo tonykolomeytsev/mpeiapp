@@ -1,5 +1,7 @@
 package kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm
 
+import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.google.firebase.crashlytics.recordException
 import kekmech.ru.ext_kotlin.moscowLocalDate
 import kekmech.ru.feature_dashboard_impl.domain.model.UpcomingEventsPrediction
 import kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm.DashboardEvent.Internal
@@ -38,6 +40,10 @@ internal class DashboardReducer :
             }
 
             is Internal.GetUpcomingEventsFailure -> {
+                FirebaseCrashlytics.getInstance().recordException(event.throwable) {
+                    key("schedule_name", state.selectedSchedule.name)
+                    key("week_of_semester_loaded", state.weekOfSemester.isData)
+                }
                 state { copy(upcomingEvents = event.throwable.toResource()) }
             }
 
