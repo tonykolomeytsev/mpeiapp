@@ -9,6 +9,7 @@ import kekmech.ru.feature_app_settings_api.domain.model.AppSettings
 import kekmech.ru.feature_app_settings_api.domain.model.AppTheme
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import java.util.Locale
 
 internal class AppSettingsRepositoryImpl(
     preferences: SharedPreferences,
@@ -25,7 +26,13 @@ internal class AppSettingsRepositoryImpl(
     private var isSnowEnabled by preferences.boolean("app_is_snow_enabled", true)
     private var showNavigationButton by preferences.boolean("show_nav_fab", true)
     private var autoHideBottomSheet by preferences.boolean("map_auto_hide_bottom_sheet", true)
-    private var languageCode: String by preferences.string("app_lang", "ru_RU")
+    private var languageCode: String by preferences.string(
+        key = "app_lang",
+        defaultValue = when (Locale.getDefault().language) {
+            "ru" -> "ru_RU"
+            else -> "en_US"
+        }
+    )
     private var mapAppearanceType: String by preferences.string("app_map_type", "hybrid")
 
     private val appThemeStateFlow = MutableStateFlow(appTheme)
