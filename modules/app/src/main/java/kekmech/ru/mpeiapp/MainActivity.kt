@@ -3,10 +3,13 @@ package kekmech.ru.mpeiapp
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.os.Bundle
+import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.core.view.WindowCompat
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kekmech.ru.ext_android.onActivityResult
 import kekmech.ru.feature_app_settings_api.data.AppSettingsRepository
@@ -41,7 +44,6 @@ class MainActivity : AppCompatActivity() {
 
         setTheme()
         setContentView(R.layout.activity_main)
-        enableEdgeToEdge()
 
         if (savedInstanceState == null) {
             val selectedGroup = sharedPreferences.getString("selected_group", "")
@@ -68,6 +70,13 @@ class MainActivity : AppCompatActivity() {
         } else {
             setTheme(coreui_R.style.AppTheme)
         }
+        enableEdgeToEdge(
+            statusBarStyle = SystemBarStyle.auto(
+                lightScrim = Color.TRANSPARENT,
+                darkScrim = Color.TRANSPARENT,
+                detectDarkMode = { preheatAppSettings.isDarkThemeEnabled },
+            )
+        )
     }
 
     override fun onResumeFragments() {
