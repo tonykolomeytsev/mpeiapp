@@ -2,8 +2,7 @@ package kekmech.ru.lib_analytics_android.ext
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.OnLifecycleEvent
+import androidx.lifecycle.LifecycleEventObserver
 import kekmech.ru.lib_analytics_android.Analytics
 import kekmech.ru.lib_analytics_android.AnalyticsImpl
 import kekmech.ru.lib_analytics_android.AnalyticsWrapper
@@ -19,24 +18,17 @@ public class ScreenAnalyticsDelegate<T : Analytics>(
     private val analytics by lazy(LazyThreadSafetyMode.NONE) { analyticsProvider() }
 
     init {
-        @Suppress("UNUSED")
-        fragment.lifecycle.addObserver(object : LifecycleObserver {
-
-            @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
-            fun onCreate() {
-                analytics.sendScreenShown()
-            }
-
-            @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-            fun onResume() {
-                analytics.sendScreenVisibilityChanged(true)
-            }
-
-            @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
-            fun onPause() {
-                analytics.sendScreenVisibilityChanged(false)
-            }
-        })
+        fragment.lifecycle.addObserver(
+            LifecycleEventObserver { _, event ->
+                when (event) {
+                    Lifecycle.Event.ON_CREATE -> analytics.sendScreenShown()
+                    Lifecycle.Event.ON_RESUME -> analytics.sendScreenVisibilityChanged(true)
+                    Lifecycle.Event.ON_PAUSE -> analytics.sendScreenVisibilityChanged(false)
+                    else -> {
+                        /* no-op */
+                    }
+                }
+            })
     }
 
     override fun getValue(thisRef: Fragment, property: KProperty<*>): T {
