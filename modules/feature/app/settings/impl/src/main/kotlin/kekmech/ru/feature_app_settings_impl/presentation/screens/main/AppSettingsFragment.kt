@@ -108,7 +108,6 @@ internal class AppSettingsFragment :
             ToggleAdapterItem(TOGGLE_DARK_THEME) {
                 analytics.sendChangeSetting("DarkTheme", it.toString())
                 store.accept(Ui.Action.SetDarkThemeEnabled(it))
-                fixStatusBarIssue(it)
             },
             ToggleAdapterItem(TOGGLE_AUTO_HIDE_BOTTOM_SHEET) {
                 analytics.sendChangeSetting("AutoHideMapBottomSheet", it.toString())
@@ -156,19 +155,6 @@ internal class AppSettingsFragment :
             else -> { /* no-op */
             }
         }
-
-    @Suppress("DEPRECATION") // потому что это фикс для старых версий
-    private fun fixStatusBarIssue(isDarkThemeEnabled: Boolean) {
-        val decorView = requireActivity().window.decorView
-        val oldSystemUiVisibility = decorView.systemUiVisibility
-        if (isDarkThemeEnabled) {
-            decorView.systemUiVisibility =
-                oldSystemUiVisibility xor View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-        } else {
-            decorView.systemUiVisibility =
-                oldSystemUiVisibility or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-        }
-    }
 
     private fun recreateActivity() {
         Handler(Looper.getMainLooper())
