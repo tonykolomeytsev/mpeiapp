@@ -14,4 +14,5 @@ dependencies {
 
     implementation(project(":lib_app_info"))
     implementation(project(":ext_kotlin"))
+    implementation(project(":ext_android"))
 }

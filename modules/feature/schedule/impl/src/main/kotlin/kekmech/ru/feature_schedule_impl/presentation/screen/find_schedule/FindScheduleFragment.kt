@@ -9,9 +9,11 @@ import kekmech.ru.coreui.banner.showBanner
 import kekmech.ru.ext_android.addSystemBottomPadding
 import kekmech.ru.ext_android.addSystemTopPadding
 import kekmech.ru.ext_android.afterTextChanged
+import kekmech.ru.ext_android.booleanArg
 import kekmech.ru.ext_android.close
-import kekmech.ru.ext_android.getArgument
 import kekmech.ru.ext_android.hideKeyboard
+import kekmech.ru.ext_android.notNullSerializableArg
+import kekmech.ru.ext_android.notNullStringArg
 import kekmech.ru.ext_android.setResult
 import kekmech.ru.ext_android.showKeyboard
 import kekmech.ru.ext_android.viewbinding.viewBinding
@@ -42,12 +44,12 @@ internal class FindScheduleFragment :
     private val dependencies by inject<ScheduleDependencies>()
     private val analytics by screenAnalytics("FindSchedule")
     private val viewBinding by viewBinding(FragmentFindScheduleBinding::bind)
-    private val resultKey by fastLazy { getArgument<String>(ARG_RESULT_KEY) }
+    private val resultKey by fastLazy { notNullStringArg(ARG_RESULT_KEY) }
 
     private val store by androidElmStore {
         inject<FindScheduleStoreFactory>().value.create(
-            getArgument(ARG_CONTINUE_TO),
-            getArgument(ARG_SELECT_AFTER)
+            continueTo = notNullSerializableArg(ARG_CONTINUE_TO),
+            selectGroupAfterSuccess = booleanArg(ARG_SELECT_AFTER),
         )
     }
 

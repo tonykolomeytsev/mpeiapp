@@ -3,8 +3,9 @@ package kekmech.ru.lib_navigation.features
 import android.os.Bundle
 import android.os.Parcelable
 import androidx.recyclerview.widget.RecyclerView
+import kekmech.ru.ext_android.parcelable
 
-public interface TabScreenStateSaver  {
+public interface TabScreenStateSaver {
 
     public val stateBundle: Bundle
 
@@ -36,7 +37,7 @@ public class TabScreenStateSaverImpl(private val key: String) : TabScreenStateSa
 
     override fun restoreState(recyclerView: RecyclerView) {
         val layoutManager = recyclerView.layoutManager
-        val savedState = stateBundle.getParcelable<Parcelable>(recyclerView.key)
+        val savedState: Parcelable? = stateBundle.parcelable(recyclerView.key)
         if (layoutManager != null && savedState != null) {
             layoutManager.onRestoreInstanceState(savedState)
         }

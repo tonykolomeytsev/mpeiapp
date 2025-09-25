@@ -13,6 +13,7 @@ import kekmech.ru.coreui.touch_helpers.attachSwipeToDeleteCallback
 import kekmech.ru.ext_android.addSystemBottomPadding
 import kekmech.ru.ext_android.addSystemTopPadding
 import kekmech.ru.ext_android.close
+import kekmech.ru.ext_android.notNullSerializable
 import kekmech.ru.ext_android.setResultListener
 import kekmech.ru.ext_android.viewbinding.viewBinding
 import kekmech.ru.ext_kotlin.fastLazy
@@ -75,7 +76,10 @@ internal class FavoritesFragment :
             SpaceAdapterItem(),
             AddActionAdapterItem {
                 analytics.sendClick("AddFavorite")
-                setResultListener<SelectedSchedule>(FIND_GROUP_RESULT_KEY) { selectedSchedule ->
+                setResultListener<SelectedSchedule>(
+                    key = FIND_GROUP_RESULT_KEY,
+                    resultMapper = Bundle::notNullSerializable,
+                ) { selectedSchedule ->
                     setResultListenerForUpdateFavorite(NEW_FAVORITE_RESULT_KEY)
                     addScreenForward {
                         EditFavoriteFragment.newInstance(
@@ -111,7 +115,10 @@ internal class FavoritesFragment :
         )
 
     private fun setResultListenerForUpdateFavorite(resultKey: String) =
-        setResultListener<FavoriteSchedule>(resultKey) { favoriteSchedule ->
+        setResultListener<FavoriteSchedule>(
+            key = resultKey,
+            resultMapper = Bundle::notNullSerializable,
+        ) { favoriteSchedule ->
             store.accept(Ui.Action.UpdateFavorite(favoriteSchedule))
         }
 

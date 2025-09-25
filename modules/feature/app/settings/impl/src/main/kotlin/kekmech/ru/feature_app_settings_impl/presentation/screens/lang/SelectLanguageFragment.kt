@@ -13,7 +13,7 @@ import kekmech.ru.coreui.items.TextAdapterItem
 import kekmech.ru.coreui.items.TextItem
 import kekmech.ru.ext_android.close
 import kekmech.ru.ext_android.fragment.BottomSheetDialogFragment
-import kekmech.ru.ext_android.getArgument
+import kekmech.ru.ext_android.notNullStringArg
 import kekmech.ru.ext_android.setResult
 import kekmech.ru.ext_android.viewbinding.viewBinding
 import kekmech.ru.ext_android.withArguments
@@ -32,9 +32,9 @@ internal class SelectLanguageFragment : BottomSheetDialogFragment(R.layout.fragm
 
     private val viewBinding by viewBinding(FragmentChangeLanguageBinding::bind)
     private val adapter by fastLazy { createAdapter() }
-    private val selectLanguage by fastLazy { getArgument<String>(ARG_SELECTED_LANG) }
+    private val selectLanguage by fastLazy { notNullStringArg(ARG_SELECTED_LANG) }
     private val analytics by screenAnalytics("SelectLanguage")
-    private val resultKey by fastLazy { getArgument<String>(ARG_RESULT_KEY) }
+    private val resultKey by fastLazy { notNullStringArg(ARG_RESULT_KEY) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

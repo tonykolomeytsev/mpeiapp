@@ -2,32 +2,20 @@ package kekmech.ru.ext_android
 
 import android.os.Bundle
 import android.os.Parcelable
+import androidx.core.os.BundleCompat
 import java.io.Serializable
-import kotlin.reflect.KClass
 
-public inline fun <reified T : Any> Bundle?.getArgument(key: String): T =
-    findArgument(key) ?: error("Argument with key = $key required")
+public fun Bundle.string(key: String): String? = getString(key)
 
-@Suppress("IMPLICIT_CAST_TO_ANY")
-public inline fun <reified T : Any> Bundle?.findArgument(key: String): T? =
-    findArgument(key) {
-        val type = T::class
-        when {
-            type == String::class -> getString(key)
-            type == Int::class -> getInt(key)
-            type == Long::class -> getLong(key)
-            type == Boolean::class -> getBoolean(key)
-            type == Set::class -> getSerializable(key)
-            type.isSubclassOf(CharSequence::class) -> getCharSequence(key)
-            type.isSubclassOf(Parcelable::class) -> getParcelable(key)
-            type.isSubclassOf(Serializable::class) -> getSerializable(key)
-            else -> error("Unknown argument type = ${type.simpleName}")
-        } as T?
-    }
+public fun Bundle.notNullString(key: String): String = requireNotNull(getString(key))
 
+public fun Bundle.bool(key: String): Boolean = getBoolean(key, false)
 
-public inline fun <reified T : Any> Bundle?.findArgument(key: String, getArgument: Bundle.() -> T?): T? =
-    this?.let { if (it.containsKey(key)) it.getArgument() else null }
+public inline fun <reified T : Serializable> Bundle.serializable(key: String): T? =
+    BundleCompat.getSerializable(this, key, T::class.java)
 
-public fun KClass<*>.isSubclassOf(base: KClass<*>): Boolean =
-    this == base || base.java.isAssignableFrom(this.java)
+public inline fun <reified T : Serializable> Bundle.notNullSerializable(key: String): T =
+    requireNotNull(serializable(key))
+
+public inline fun <reified T : Parcelable> Bundle.parcelable(key: String): T? =
+    BundleCompat.getParcelable(this, key, T::class.java)

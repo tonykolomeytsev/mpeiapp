@@ -10,8 +10,9 @@ import kekmech.ru.coreui.banner.showBanner
 import kekmech.ru.ext_android.EmptyResult
 import kekmech.ru.ext_android.addSystemVerticalPadding
 import kekmech.ru.ext_android.close
-import kekmech.ru.ext_android.getArgument
 import kekmech.ru.ext_android.hideKeyboard
+import kekmech.ru.ext_android.notNullSerializableArg
+import kekmech.ru.ext_android.notNullStringArg
 import kekmech.ru.ext_android.setResult
 import kekmech.ru.ext_android.viewbinding.viewBinding
 import kekmech.ru.ext_android.withArguments
@@ -41,11 +42,11 @@ internal class NoteEditFragment :
     }
     private val formatter by fastLazy { PrettyDateFormatter(requireContext()) }
     private val viewBinding by viewBinding(FragmentNoteEditBinding::bind)
-    private val resultKey by fastLazy { getArgument<String>(ARG_RESULT_KEY) }
+    private val resultKey by fastLazy { notNullStringArg(ARG_RESULT_KEY) }
 
     private val store by androidElmStore {
         dependencies.noteEditStoreFactory.create(
-            note = getArgument(ARG_NOTE)
+            note = notNullSerializableArg(ARG_NOTE)
         )
     }
 

@@ -12,7 +12,7 @@ import kekmech.ru.coreui.items.TextAdapterItem
 import kekmech.ru.coreui.items.TextWithIconAdapterItem
 import kekmech.ru.ext_android.close
 import kekmech.ru.ext_android.fragment.BottomSheetDialogFragment
-import kekmech.ru.ext_android.getArgument
+import kekmech.ru.ext_android.notNullSerializableArg
 import kekmech.ru.ext_android.viewbinding.viewBinding
 import kekmech.ru.ext_android.withArguments
 import kekmech.ru.ext_kotlin.fastLazy
@@ -58,8 +58,9 @@ internal class ScheduleDetailsFragment :
     private val analytics by screenAnalytics("SearchScheduleDetails")
 
     private val store by androidElmStore {
-        inject<ScheduleDetailsStoreFactory>().value
-            .create(getArgument(ARG_RESULT_ITEM))
+        inject<ScheduleDetailsStoreFactory>().value.create(
+            searchResult = notNullSerializableArg(ARG_RESULT_ITEM)
+        )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
