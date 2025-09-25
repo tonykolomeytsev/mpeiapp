@@ -11,7 +11,7 @@ import kekmech.ru.coreui.items.SpaceAdapterItem
 import kekmech.ru.coreui.items.SpaceItem
 import kekmech.ru.ext_android.close
 import kekmech.ru.ext_android.fragment.BottomSheetDialogFragment
-import kekmech.ru.ext_android.getArgument
+import kekmech.ru.ext_android.notNullStringArg
 import kekmech.ru.ext_android.setResult
 import kekmech.ru.ext_android.viewbinding.viewBinding
 import kekmech.ru.ext_android.withArguments
@@ -30,9 +30,9 @@ internal class SelectMapTypeFragment :
 
     private val viewBinding by viewBinding(FragmentSelectMapTypeBinding::bind)
     private val adapter by fastLazy { createAdapter() }
-    private val selectMapType by fastLazy { getArgument<String>(ARG_SELECTED_MAP_TYPE) }
+    private val selectMapType by fastLazy { notNullStringArg(ARG_SELECTED_MAP_TYPE) }
     private val analytics by screenAnalytics("SelectMapType")
-    private val resultKey by fastLazy { getArgument<String>(ARG_RESULT_KEY) }
+    private val resultKey by fastLazy { notNullStringArg(ARG_RESULT_KEY) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -49,9 +49,7 @@ internal class SelectMapTypeFragment :
         add(SectionHeaderItem(titleRes = Strings.change_map_type_screen_title))
         add(SpaceItem.VERTICAL_12)
         addAll(
-            MapTypeEntry
-                .values()
-                .asList()
+            MapTypeEntry.entries
                 .map { MapTypeItem(it, it.mapTypeCode == selectMapType) }
         )
         add(SpaceItem.VERTICAL_16)

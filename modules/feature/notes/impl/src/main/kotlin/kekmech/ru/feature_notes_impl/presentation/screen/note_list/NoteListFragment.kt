@@ -13,7 +13,8 @@ import kekmech.ru.coreui.items.SpaceAdapterItem
 import kekmech.ru.coreui.touch_helpers.attachSwipeToDeleteCallback
 import kekmech.ru.ext_android.close
 import kekmech.ru.ext_android.fragment.BottomSheetDialogFragment
-import kekmech.ru.ext_android.getArgument
+import kekmech.ru.ext_android.notNullSerializableArg
+import kekmech.ru.ext_android.notNullStringArg
 import kekmech.ru.ext_android.viewbinding.viewBinding
 import kekmech.ru.ext_android.withArguments
 import kekmech.ru.ext_kotlin.fastLazy
@@ -43,13 +44,13 @@ internal class NoteListFragment :
     private val adapter by fastLazy { createAdapter() }
     private val analytics by screenAnalytics("NoteList")
     private val viewBinding by viewBinding(FragmentNoteListBinding::bind)
-    private val resultKey by fastLazy { getArgument<String>(ARG_RESULT_KEY) }
+    private val resultKey by fastLazy { notNullStringArg(ARG_RESULT_KEY) }
     private val listConverter by fastLazy { NoteListConverter(requireContext()) }
 
     private val store by androidElmStore {
         dependencies.noteListStoreFactory.create(
-            selectedClasses = getArgument(ARG_SELECTED_CLASSES),
-            selectedDate = getArgument(ARG_SELECTED_DATE)
+            selectedClasses = notNullSerializableArg(ARG_SELECTED_CLASSES),
+            selectedDate = notNullSerializableArg(ARG_SELECTED_DATE)
         )
     }
 

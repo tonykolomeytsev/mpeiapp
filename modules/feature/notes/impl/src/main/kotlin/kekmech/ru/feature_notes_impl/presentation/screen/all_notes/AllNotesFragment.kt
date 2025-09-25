@@ -14,7 +14,9 @@ import kekmech.ru.coreui.touch_helpers.attachSwipeToDeleteCallback
 import kekmech.ru.ext_android.EmptyResult
 import kekmech.ru.ext_android.addSystemVerticalPadding
 import kekmech.ru.ext_android.close
-import kekmech.ru.ext_android.findAndRemoveArgument
+import kekmech.ru.ext_android.notNullSerializable
+import kekmech.ru.ext_android.removeArg
+import kekmech.ru.ext_android.serializableArg
 import kekmech.ru.ext_android.setResultListener
 import kekmech.ru.ext_android.viewbinding.viewBinding
 import kekmech.ru.ext_android.withArguments
@@ -74,7 +76,8 @@ internal class AllNotesFragment :
 
     private fun scrollToSelectedNote(state: AllNotesState) {
         if (!state.notes.isNullOrEmpty()) {
-            findAndRemoveArgument<Note>(ARG_SELECTED_NOTE)?.let { note ->
+            serializableArg<Note>(ARG_SELECTED_NOTE)?.let { note ->
+                removeArg(ARG_SELECTED_NOTE)
                 val position = adapter.allData.indexOf(note)
                 if (position != -1) {
                     viewBinding.recyclerView.scrollToPosition(position)
@@ -98,7 +101,10 @@ internal class AllNotesFragment :
         addScreenForward {
             NoteEditFragment.newInstance(note, NOTE_EDIT_RESULT_KEY)
         }
-        setResultListener<EmptyResult>(NOTE_EDIT_RESULT_KEY) {
+        setResultListener<EmptyResult>(
+            key = NOTE_EDIT_RESULT_KEY,
+            resultMapper = Bundle::notNullSerializable,
+        ) {
             store.accept(Ui.Init)
         }
     }

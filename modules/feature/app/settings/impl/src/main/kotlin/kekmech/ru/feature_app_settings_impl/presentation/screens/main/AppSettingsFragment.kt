@@ -19,6 +19,7 @@ import kekmech.ru.ext_android.ActivityResultListener
 import kekmech.ru.ext_android.addSystemBottomPadding
 import kekmech.ru.ext_android.addSystemTopPadding
 import kekmech.ru.ext_android.close
+import kekmech.ru.ext_android.notNullString
 import kekmech.ru.ext_android.openLinkExternal
 import kekmech.ru.ext_android.setResultListener
 import kekmech.ru.ext_android.viewbinding.viewBinding
@@ -80,15 +81,22 @@ internal class AppSettingsFragment :
                 showDialog {
                     SelectLanguageFragment.newInstance(effect.selectedLanguage, LANGUAGE_RESULT_KEY)
                 }
-                setResultListener<String>(LANGUAGE_RESULT_KEY) { selectedLanguage ->
+                setResultListener(
+                    key = LANGUAGE_RESULT_KEY,
+                    resultMapper = Bundle::notNullString,
+                ) { selectedLanguage ->
                     store.accept(Ui.Action.LanguageChanged(selectedLanguage))
                 }
             }
+
             is AppSettingsEffect.OpenMapTypeDialog -> {
                 showDialog {
                     SelectMapTypeFragment.newInstance(effect.mapType, MAP_TYPE_RESULT_KEY)
                 }
-                setResultListener<String>(MAP_TYPE_RESULT_KEY) { selectedMapType ->
+                setResultListener(
+                    key = MAP_TYPE_RESULT_KEY,
+                    resultMapper = Bundle::notNullString,
+                ) { selectedMapType ->
                     store.accept(Ui.Action.MapTypeChanged(selectedMapType))
                 }
             }
@@ -129,18 +137,22 @@ internal class AppSettingsFragment :
                 analytics.sendClick("GitHub")
                 requireContext().openLinkExternal("https://github.com/tonykolomeytsev/mpeiapp")
             }
+
             ITEM_FAVORITES -> {
                 analytics.sendClick("Favorites")
                 addScreenForward { FavoritesFragment() }
             }
+
             ITEM_LANGUAGE -> {
                 analytics.sendClick("SelectLanguage")
                 store.accept(Ui.Click.Language)
             }
+
             ITEM_MAP_TYPE -> {
                 analytics.sendClick("SelectMapType")
                 store.accept(Ui.Click.MapType)
             }
+
             else -> { /* no-op */
             }
         }
@@ -170,6 +182,7 @@ internal class AppSettingsFragment :
                 when (newState) {
                     RecyclerView.SCROLL_STATE_IDLE -> Picasso.get()
                         .resumeTag(ContributorAdapterItem::class)
+
                     else -> Picasso.get().pauseTag(ContributorAdapterItem::class)
                 }
             }

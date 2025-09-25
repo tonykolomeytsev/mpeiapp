@@ -19,6 +19,7 @@ import kekmech.ru.ext_android.ActivityResultListener
 import kekmech.ru.ext_android.EmptyResult
 import kekmech.ru.ext_android.addSystemVerticalPadding
 import kekmech.ru.ext_android.doOnApplyWindowInsets
+import kekmech.ru.ext_android.notNullSerializable
 import kekmech.ru.ext_android.setResultListener
 import kekmech.ru.ext_android.viewbinding.viewBinding
 import kekmech.ru.ext_android.views.setProgressViewOffset
@@ -104,7 +105,10 @@ internal class DashboardFragment :
         is DashboardEffect.ShowLoadingError -> showBanner(Strings.dashboard_loading_error)
         is DashboardEffect.ShowNotesLoadingError -> showBanner(Strings.something_went_wrong_error)
         is DashboardEffect.NavigateToNotesList -> {
-            parentFragment?.setResultListener<EmptyResult>(NOTES_LIST_RESULT_KEY) {
+            parentFragment?.setResultListener<EmptyResult>(
+                key = NOTES_LIST_RESULT_KEY,
+                resultMapper = Bundle::notNullSerializable,
+            ) {
                 store.accept(DashboardEvent.Ui.Action.SwipeToRefresh)
             }
             dependencies.notesFeatureLauncher.launchNoteList(
@@ -137,7 +141,10 @@ internal class DashboardFragment :
         },
         NoteAdapterItem(requireContext()) {
             analytics.sendClick("EditNote")
-            parentFragment?.setResultListener<EmptyResult>(EDIT_NOTE_RESULT_KEY) {
+            parentFragment?.setResultListener<EmptyResult>(
+                key = EDIT_NOTE_RESULT_KEY,
+                resultMapper = Bundle::notNullSerializable,
+            ) {
                 store.accept(DashboardEvent.Ui.Action.SwipeToRefresh)
             }
             dependencies.notesFeatureLauncher.launchNoteEdit(
@@ -150,7 +157,10 @@ internal class DashboardFragment :
         DashboardClassesAdapterItem(requireContext(), ::clickOnClasses),
         ScheduleTypeAdapterItem {
             analytics.sendClick("ChangeGroup")
-            parentFragment?.setResultListener<SelectedSchedule>(FIND_GROUP_RESULT_KEY) {
+            parentFragment?.setResultListener<SelectedSchedule>(
+                key = FIND_GROUP_RESULT_KEY,
+                resultMapper = Bundle::notNullSerializable,
+            ) {
                 store.accept(DashboardEvent.Ui.Action.SwipeToRefresh)
             }
             router.executeCommand(AddScreenForward {

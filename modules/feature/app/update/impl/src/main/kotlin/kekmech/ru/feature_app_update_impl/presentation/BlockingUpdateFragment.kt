@@ -5,7 +5,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import kekmech.ru.ext_android.addSystemVerticalPadding
 import kekmech.ru.ext_android.close
-import kekmech.ru.ext_android.getArgument
+import kekmech.ru.ext_android.notNullSerializableArg
 import kekmech.ru.ext_android.openLinkExternal
 import kekmech.ru.ext_android.viewbinding.viewBinding
 import kekmech.ru.ext_android.withArguments
@@ -22,7 +22,7 @@ private const val LINK_GITHUB = "https://github.com/tonykolomeytsev/mpeiapp/issu
 class BlockingUpdateFragment : Fragment(R.layout.fragment_blocking_update) {
 
     private val viewBinding by viewBinding(FragmentBlockingUpdateBinding::bind)
-    private val updateInfo: ForceUpdateInfo by fastLazy { getArgument(ARG_UPDATE_INFO) }
+    private val updateInfo: ForceUpdateInfo by fastLazy { notNullSerializableArg(ARG_UPDATE_INFO) }
     private val analytics by screenAnalytics("BlockingUpdate")
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

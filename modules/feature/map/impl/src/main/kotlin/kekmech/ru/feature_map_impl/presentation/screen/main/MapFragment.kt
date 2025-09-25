@@ -20,6 +20,7 @@ import kekmech.ru.coreui.items.SpaceAdapterItem
 import kekmech.ru.ext_android.doOnApplyWindowInsets
 import kekmech.ru.ext_android.dpToPx
 import kekmech.ru.ext_android.getThemeColor
+import kekmech.ru.ext_android.parcelable
 import kekmech.ru.ext_android.viewbinding.viewBinding
 import kekmech.ru.ext_android.views.setMargins
 import kekmech.ru.ext_kotlin.fastLazy
@@ -274,7 +275,7 @@ internal class MapFragment : Fragment(R.layout.fragment_map),
     }
 
     private fun getSavedCameraPosition(): CameraPosition? =
-        stateBundle.getBundle("map_state")?.getParcelable("camera")
+        stateBundle.getBundle("map_state")?.parcelable("camera")
 
     private fun isMapStateEmpty(): Boolean =
         stateBundle.getBundle("map_state") == null

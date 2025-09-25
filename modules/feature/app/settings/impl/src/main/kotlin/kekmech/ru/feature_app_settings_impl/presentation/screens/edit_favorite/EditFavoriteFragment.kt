@@ -6,8 +6,9 @@ import androidx.fragment.app.Fragment
 import kekmech.ru.ext_android.addSystemBottomPadding
 import kekmech.ru.ext_android.addSystemTopPadding
 import kekmech.ru.ext_android.close
-import kekmech.ru.ext_android.getArgument
 import kekmech.ru.ext_android.hideKeyboard
+import kekmech.ru.ext_android.notNullSerializableArg
+import kekmech.ru.ext_android.notNullStringArg
 import kekmech.ru.ext_android.setResult
 import kekmech.ru.ext_android.showKeyboard
 import kekmech.ru.ext_android.viewbinding.viewBinding
@@ -22,8 +23,10 @@ internal class EditFavoriteFragment : Fragment(R.layout.fragment_edit_favorite) 
 
     private val viewBinding by viewBinding(FragmentEditFavoriteBinding::bind)
     private val analytics by screenAnalytics("EditFavorite")
-    private val resultKey by fastLazy { getArgument<String>(ArgResultKey) }
-    private val favoriteSchedule by fastLazy { getArgument<FavoriteSchedule>(ArgFavoriteSchedule) }
+    private val resultKey by fastLazy { notNullStringArg(ArgResultKey) }
+    private val favoriteSchedule by fastLazy {
+        notNullSerializableArg<FavoriteSchedule>(ArgFavoriteSchedule)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

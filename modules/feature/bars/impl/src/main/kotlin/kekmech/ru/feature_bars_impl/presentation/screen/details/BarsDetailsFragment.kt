@@ -5,11 +5,18 @@ import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
 import android.view.View
-import kekmech.ru.coreui.items.*
+import kekmech.ru.coreui.items.PullAdapterItem
+import kekmech.ru.coreui.items.PullItem
+import kekmech.ru.coreui.items.SectionHeaderAdapterItem
+import kekmech.ru.coreui.items.SectionHeaderItem
+import kekmech.ru.coreui.items.SpaceAdapterItem
+import kekmech.ru.coreui.items.SpaceItem
+import kekmech.ru.coreui.items.TextAdapterItem
+import kekmech.ru.coreui.items.TextItem
 import kekmech.ru.ext_android.addSystemBottomPadding
 import kekmech.ru.ext_android.fragment.BottomSheetDialogFragment
-import kekmech.ru.ext_android.getArgument
 import kekmech.ru.ext_android.getThemeColor
+import kekmech.ru.ext_android.notNullSerializableArg
 import kekmech.ru.ext_android.viewbinding.viewBinding
 import kekmech.ru.ext_android.withArguments
 import kekmech.ru.ext_kotlin.fastLazy
@@ -40,7 +47,7 @@ class BarsDetailsFragment : BottomSheetDialogFragment(R.layout.fragment_bars_det
             recyclerView.adapter = adapter
             recyclerView.addScrollAnalytics(analytics, "BarsDetailsRecycler")
         }
-        adapter.update(getItems(getArgument(ARG_DISCIPLINE_INFO)))
+        adapter.update(getItems(notNullSerializableArg(ARG_DISCIPLINE_INFO)))
     }
 
     @Suppress("NestedBlockDepth")

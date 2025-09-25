@@ -8,6 +8,7 @@ import kekmech.ru.ext_android.ActivityResultListener
 import kekmech.ru.ext_android.EmptyResult
 import kekmech.ru.ext_android.addSystemTopPadding
 import kekmech.ru.ext_android.getStringArray
+import kekmech.ru.ext_android.notNullSerializable
 import kekmech.ru.ext_android.setResultListener
 import kekmech.ru.ext_android.viewbinding.viewBinding
 import kekmech.ru.ext_android.views.onPageSelected
@@ -100,7 +101,10 @@ internal class ScheduleFragment :
     override fun handleEffect(effect: ScheduleEffect) =
         when (effect) {
             is ScheduleEffect.NavigateToNoteList -> {
-                parentFragment?.setResultListener<EmptyResult>(NOTES_LIST_RESULT_KEY) {
+                parentFragment?.setResultListener<EmptyResult>(
+                    key = NOTES_LIST_RESULT_KEY,
+                    resultMapper = Bundle::notNullSerializable,
+                ) {
                     store.accept(Ui.Action.NotesUpdated)
                 }
                 dependencies.notesFeatureLauncher.launchNoteList(
@@ -259,6 +263,7 @@ internal class ScheduleFragment :
         return when (weekOfSemester) {
             is WeekOfSemester.Studying -> requireContext()
                 .getString(Strings.schedule_semester_week, weekOfSemester.num)
+
             is WeekOfSemester.NonStudying -> requireContext().getString(Strings.schedule_weekend_week)
         }
     }

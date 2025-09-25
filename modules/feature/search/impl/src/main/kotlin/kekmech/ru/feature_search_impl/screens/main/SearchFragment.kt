@@ -15,8 +15,8 @@ import kekmech.ru.coreui.items.SectionHeaderAdapterItem
 import kekmech.ru.coreui.items.SpaceAdapterItem
 import kekmech.ru.ext_android.addSystemVerticalPadding
 import kekmech.ru.ext_android.close
-import kekmech.ru.ext_android.getArgument
 import kekmech.ru.ext_android.hideKeyboard
+import kekmech.ru.ext_android.notNullStringArg
 import kekmech.ru.ext_android.showKeyboard
 import kekmech.ru.ext_android.viewbinding.viewBinding
 import kekmech.ru.ext_android.withArguments
@@ -69,8 +69,8 @@ internal class SearchFragment : Fragment(R.layout.fragment_search),
     private val store by androidElmStore {
         dependencies.searchStoreFactory
             .create(
-                getArgument(ARG_QUERY),
-                getArgument(ARG_FILTER)
+                query = notNullStringArg(ARG_QUERY),
+                filter = notNullStringArg(ARG_FILTER)
             )
     }
 
