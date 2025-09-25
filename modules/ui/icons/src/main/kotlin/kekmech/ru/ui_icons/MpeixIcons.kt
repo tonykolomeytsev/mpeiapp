@@ -82,6 +82,7 @@ private fun IconsPreview() {
         }
     }
 
+    @Suppress("DEPRECATION")
     Column(
         modifier = Modifier
             .background(Color.White)
