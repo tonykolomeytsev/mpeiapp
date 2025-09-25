@@ -15,10 +15,10 @@ internal open class BaseMigration<T : PartialMigration>(
     toVersion: Int,
 ) : Migration(fromVersion, toVersion) {
 
-    override fun migrate(database: SupportSQLiteDatabase) {
-        database.beginTransaction()
-        migrations.forEach { it.migrate(database) }
-        database.setTransactionSuccessful()
-        database.endTransaction()
+    override fun migrate(db: SupportSQLiteDatabase) {
+        db.beginTransaction()
+        migrations.forEach { it.migrate(db) }
+        db.setTransactionSuccessful()
+        db.endTransaction()
     }
 }
