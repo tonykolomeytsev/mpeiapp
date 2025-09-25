@@ -6,6 +6,9 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.height
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.ArrowBack
+import androidx.compose.material.icons.outlined.Close
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalContentColor
@@ -18,7 +21,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import kekmech.ru.ui_icons.MpeixIcons
 import kekmech.ru.ui_theme.theme.MpeixTheme
 
 /**
@@ -173,7 +175,7 @@ public object TopAppBarNavigationIconScope {
     public fun BackIconButton(onClick: () -> Unit) {
         IconButton(onClick = onClick) {
             Icon(
-                painter = MpeixIcons.ArrowBack24,
+                imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
                 contentDescription = "Back",
             )
         }
@@ -183,7 +185,7 @@ public object TopAppBarNavigationIconScope {
     public fun CloseIconButton(onClick: () -> Unit) {
         IconButton(onClick = onClick) {
             Icon(
-                painter = MpeixIcons.Close24,
+                imageVector = Icons.Outlined.Close,
                 contentDescription = "Close",
             )
         }
