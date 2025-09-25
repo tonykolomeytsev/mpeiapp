@@ -2,6 +2,7 @@ package kekmech.ru.feature_map_impl.presentation.screen.main
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import com.google.android.gms.maps.GoogleMap
@@ -102,7 +103,8 @@ internal class MapFragment : Fragment(R.layout.fragment_map),
 
     private fun createBottomSheet(view: View) {
         view.doOnApplyWindowInsets { _, insets, padding ->
-            viewBinding.coordinatorLayout.setMargins(top = insets.systemWindowInsetTop + padding.top)
+            val systemBarsInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            viewBinding.coordinatorLayout.setMargins(top = systemBarsInsets.top + padding.top)
         }
         @Suppress("UnnecessaryApply")
         BottomSheetBehavior.from(viewBinding.recyclerView).apply {
