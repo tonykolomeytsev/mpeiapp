@@ -17,6 +17,7 @@ public val LibraryAppDatabaseModule: Module = module {
                 klass = AppDatabase::class.java,
                 name = AppDatabase.Name,
             )
+            .enableMultiInstanceInvalidation()
         // collect all partial migrations from all domain modules
         // in order to run them all further
         builder.addMigrations(*getAll<Migration>().toTypedArray())
