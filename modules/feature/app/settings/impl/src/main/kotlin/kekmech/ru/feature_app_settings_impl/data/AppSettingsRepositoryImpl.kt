@@ -15,13 +15,16 @@ internal class AppSettingsRepositoryImpl(
     preferences: SharedPreferences,
 ) : AppSettingsRepository {
 
-    @Deprecated("Use appTheme instead")
+    // TODO: Удалить во время каникул между семестрами и сделать deafultValue = AppTheme.System
     private var isDarkThemeEnabled by preferences.boolean("app_is_dark_theme_enabled", false)
     private var appTheme by preferences.typed(
         key = "app_theme",
         toString = AppTheme::name,
         fromString = AppTheme::valueOf,
-        defaultValue = AppTheme.System,
+        defaultValue = when (isDarkThemeEnabled) {
+            true -> AppTheme.Dark
+            else -> AppTheme.System
+        },
     )
     private var isSnowEnabled by preferences.boolean("app_is_snow_enabled", true)
     private var showNavigationButton by preferences.boolean("show_nav_fab", true)
