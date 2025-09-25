@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import kekmech.ru.ext_android.addSystemBottomPadding
 import kekmech.ru.ext_android.onActivityResult
+import kekmech.ru.ext_android.serializable
 import kekmech.ru.ext_android.viewbinding.viewBinding
 import kekmech.ru.ext_kotlin.fastLazy
 import kekmech.ru.lib_navigation.BottomTab
@@ -46,7 +47,7 @@ class MainFragment :
             // start observing data
             dependencies.forceUpdateChecker.check()
         } else {
-            (savedInstanceState.getSerializable(LAST_TAB_KEY) as? BottomTab)?.let { tab ->
+            savedInstanceState.serializable<BottomTab>(LAST_TAB_KEY)?.let { tab ->
                 bottomBarController?.lastSelectedTab = tab
                 tabsSwitcher.changeTab(tab)
             }
