@@ -13,7 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ShoppingCart
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -101,7 +101,7 @@ public fun AlertDialog(
         exit = fadeOut(),
         label = "AlertDialogAnimatedVisibility"
     ) {
-        androidx.compose.material3.AlertDialog(
+        androidx.compose.material3.BasicAlertDialog(
             onDismissRequest = onDismissRequest,
             modifier = modifier,
             properties = properties,
@@ -209,9 +209,9 @@ public fun AlertDialog(
                                 color = MpeixTheme.palette.contentVariant,
                                 modifier = Modifier.padding(bottom = 16.dp),
                             )
-                            Divider()
+                            HorizontalDivider()
                             content.invoke()
-                            Divider()
+                            HorizontalDivider()
                         }
                     }
                 }
