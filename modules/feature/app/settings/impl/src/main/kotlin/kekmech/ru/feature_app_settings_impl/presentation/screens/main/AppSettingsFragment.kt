@@ -15,7 +15,6 @@ import kekmech.ru.coreui.items.SectionHeaderAdapterItem
 import kekmech.ru.coreui.items.SpaceAdapterItem
 import kekmech.ru.coreui.items.TextAdapterItem
 import kekmech.ru.coreui.items.ToggleAdapterItem
-import kekmech.ru.ext_android.ActivityResultListener
 import kekmech.ru.ext_android.addSystemBottomPadding
 import kekmech.ru.ext_android.addSystemTopPadding
 import kekmech.ru.ext_android.close
@@ -47,8 +46,7 @@ private const val ACTIVITY_RECREATION_DELAY = 200L
 
 internal class AppSettingsFragment :
     Fragment(R.layout.fragment_app_settings),
-    ElmRendererDelegate<AppSettingsEffect, AppSettingsState>,
-    ActivityResultListener {
+    ElmRendererDelegate<AppSettingsEffect, AppSettingsState> {
 
     private val adapter by fastLazy { createAdapter() }
     private val analytics by screenAnalytics("AppSettings")

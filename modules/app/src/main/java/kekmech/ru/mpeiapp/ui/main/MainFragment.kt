@@ -1,6 +1,5 @@
 package kekmech.ru.mpeiapp.ui.main
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +9,6 @@ import androidx.core.view.setPadding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import kekmech.ru.ext_android.addSystemBottomPadding
-import kekmech.ru.ext_android.onActivityResult
 import kekmech.ru.ext_android.serializable
 import kekmech.ru.ext_android.viewbinding.viewBinding
 import kekmech.ru.ext_kotlin.fastLazy
@@ -112,12 +110,6 @@ class MainFragment :
         bottomBarController?.lastSelectedTab?.let {
             outState.putSerializable(LAST_TAB_KEY, it)
         }
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        childFragmentManager.onActivityResult(requestCode, resultCode, data)
     }
 
     companion object {
