@@ -4,6 +4,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.DateRange
+import androidx.compose.material.icons.outlined.ShoppingCart
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -11,11 +14,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import kekmech.ru.ui_icons.MpeixIcons
 import kekmech.ru.ui_theme.theme.MpeixTheme
 
 /**
@@ -68,6 +71,7 @@ public fun ListItem(
             overlineText.isEmpty() -> {
                 {}
             }
+
             else -> {
                 {
                     Text(
@@ -120,6 +124,19 @@ public object ListItemLeadingContentScope {
     public fun Icon(painter: Painter) {
         androidx.compose.material3.Icon(
             painter = painter,
+            contentDescription = null,
+            modifier = Modifier.size(24.dp),
+            tint = MpeixTheme.palette.contentVariant,
+        )
+    }
+
+    /**
+     * Leading icon for [ListItem]
+     */
+    @Composable
+    public fun Icon(imageVector: ImageVector) {
+        androidx.compose.material3.Icon(
+            imageVector = imageVector,
             contentDescription = null,
             modifier = Modifier.size(24.dp),
             tint = MpeixTheme.palette.contentVariant,
@@ -210,7 +227,7 @@ private fun ListItemWithLeadingIconPreview() {
             ListItem(
                 headlineText = "Headline",
                 leadingContent = {
-                    Icon(painter = MpeixIcons.GroupsOutline24)
+                    Icon(Icons.Outlined.DateRange)
                 },
                 modifier = Modifier.padding(bottom = 8.dp),
             )
@@ -219,7 +236,7 @@ private fun ListItemWithLeadingIconPreview() {
                 overlineText = "Overline Text",
                 supportingText = "Supporting Text",
                 leadingContent = {
-                    Icon(painter = MpeixIcons.GroupsOutline24)
+                    Icon(Icons.Outlined.ShoppingCart)
                 },
                 modifier = Modifier.padding(bottom = 8.dp),
             )
