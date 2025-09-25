@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import kekmech.ru.ext_android.ActivityResultListener
 import kekmech.ru.ext_android.EmptyResult
 import kekmech.ru.ext_android.addSystemTopPadding
 import kekmech.ru.ext_android.getStringArray
@@ -48,7 +47,6 @@ import kekmech.ru.res_strings.R.string as Strings
 internal class ScheduleFragment :
     Fragment(R.layout.fragment_schedule),
     ElmRendererDelegate<ScheduleEffect, ScheduleState>,
-    ActivityResultListener,
     TabScreenStateSaver by TabScreenStateSaverImpl("schedule") {
 
     private val dependencies by inject<ScheduleDependencies>()

@@ -16,7 +16,6 @@ import kekmech.ru.coreui.items.SectionHeaderAdapterItem
 import kekmech.ru.coreui.items.ShimmerAdapterItem
 import kekmech.ru.coreui.items.SpaceAdapterItem
 import kekmech.ru.coreui.items.TextAdapterItem
-import kekmech.ru.ext_android.ActivityResultListener
 import kekmech.ru.ext_android.EmptyResult
 import kekmech.ru.ext_android.addSystemVerticalPadding
 import kekmech.ru.ext_android.doOnApplyWindowInsets
@@ -59,7 +58,6 @@ import kekmech.ru.res_strings.R.string as Strings
 internal class DashboardFragment :
     Fragment(R.layout.fragment_dashboard),
     ElmRendererDelegate<DashboardEffect, DashboardState>,
-    ActivityResultListener,
     ScrollToTop,
     TabScreenStateSaver by TabScreenStateSaverImpl("dashboard") {
 

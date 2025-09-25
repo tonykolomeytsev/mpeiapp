@@ -9,9 +9,7 @@ import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.core.view.WindowCompat
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import kekmech.ru.ext_android.onActivityResult
 import kekmech.ru.feature_app_settings_api.data.AppSettingsRepository
 import kekmech.ru.feature_main_screen_api.MainScreenLauncher
 import kekmech.ru.feature_onboarding_api.OnboardingFeatureApi
@@ -93,12 +91,6 @@ class MainActivity : AppCompatActivity() {
     override fun onPause() {
         navigationHolder.unsubscribe()
         super.onPause()
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        supportFragmentManager.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun attachBaseContext(newBase: Context) {
