@@ -3,6 +3,9 @@ package kekmech.ru.feature_search_impl.screens.schedule_details
 import android.graphics.Point
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
+import android.view.WindowMetrics
+import androidx.core.view.WindowCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import kekmech.ru.coreui.items.EmptyStateAdapterItem
 import kekmech.ru.coreui.items.PullAdapterItem
@@ -72,6 +75,7 @@ internal class ScheduleDetailsFragment :
         setFixedSizeWorkaround()
     }
 
+    @Suppress("DEPRECATION") // currentWindowMetrics requires minApi = 30
     private fun setFixedSizeWorkaround() {
         val display = requireActivity().windowManager.defaultDisplay
         val point = Point()
