@@ -9,6 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import kekmech.ru.coreui.R
 import kekmech.ru.coreui.databinding.ViewBannerContainerBinding
 import kekmech.ru.ext_android.addSystemTopPadding
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.filterNotNull
@@ -16,6 +17,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
+@OptIn(FlowPreview::class)
 public class BannerContainer @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
