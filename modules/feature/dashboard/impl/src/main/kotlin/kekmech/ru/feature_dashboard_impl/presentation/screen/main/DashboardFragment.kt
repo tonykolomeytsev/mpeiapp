@@ -2,6 +2,7 @@ package kekmech.ru.feature_dashboard_impl.presentation.screen.main
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -82,7 +83,9 @@ internal class DashboardFragment :
             swipeRefresh.apply {
                 setOnRefreshListener { store.accept(DashboardEvent.Ui.Action.SwipeToRefresh) }
                 doOnApplyWindowInsets { _, windowInsets, _ ->
-                    setProgressViewOffset(windowInsets.systemWindowInsetTop)
+                    val systemBarsInsets =
+                        windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+                    setProgressViewOffset(systemBarsInsets.top)
                 }
             }
             restoreState(recyclerView)
