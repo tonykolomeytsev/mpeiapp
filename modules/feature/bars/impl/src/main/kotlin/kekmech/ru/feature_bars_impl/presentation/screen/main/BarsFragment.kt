@@ -14,6 +14,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.appcompat.widget.Toolbar
 import androidx.core.text.toSpannable
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.forEach
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
@@ -96,7 +97,9 @@ internal class BarsFragment :
                     store.accept(Ui.Click.SwipeToRefresh)
                 }
                 doOnApplyWindowInsets { _, windowInsets, _ ->
-                    setProgressViewOffset(windowInsets.systemWindowInsetTop)
+                    val systemBarsInsets =
+                        windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+                    setProgressViewOffset(systemBarsInsets.top)
                 }
             }
         }
@@ -278,6 +281,7 @@ internal class BarsFragment :
                     analytics.sendClick("BarsShowBrowser")
                     store.accept(Ui.Click.ShowBrowser)
                 }
+
                 ITEM_BYPASSING_LABEL -> {
                     analytics.sendClick("BarsBypassing")
                     addScreenForward { BypassingFragment() }
