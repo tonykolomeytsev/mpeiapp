@@ -14,11 +14,15 @@ public fun View.doOnApplyWindowInsets(f: (View, WindowInsetsCompat, InitialPaddi
     requestApplyInsetsWhenAttached()
 }
 
-public data class InitialPadding(val left: Int, val top: Int,
-                                 val right: Int, val bottom: Int)
+public data class InitialPadding(
+    val left: Int,
+    val top: Int,
+    val right: Int,
+    val bottom: Int
+)
 
-private fun recordInitialPaddingForView(view: View) = InitialPadding(
-    view.paddingLeft, view.paddingTop, view.paddingRight, view.paddingBottom)
+private fun recordInitialPaddingForView(view: View) =
+    InitialPadding(view.paddingLeft, view.paddingTop, view.paddingRight, view.paddingBottom)
 
 public fun View.requestApplyInsetsWhenAttached() {
     if (isAttachedToWindow) {
@@ -37,21 +41,24 @@ public fun View.requestApplyInsetsWhenAttached() {
 
 public fun View.addSystemVerticalPadding() {
     doOnApplyWindowInsets { _, windowInsets, initialPadding ->
+        val systemBarsInsets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
         updatePadding(
-            top = windowInsets.systemWindowInsetTop + initialPadding.top,
-            bottom = windowInsets.systemWindowInsetBottom + initialPadding.bottom
+            top = systemBarsInsets.top + initialPadding.top,
+            bottom = systemBarsInsets.bottom + initialPadding.bottom
         )
     }
 }
 
 public fun View.addSystemBottomPadding() {
     doOnApplyWindowInsets { view, insets, padding ->
-        view.updatePadding(bottom = padding.bottom + insets.systemWindowInsetBottom)
+        val systemBarsInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+        view.updatePadding(bottom = padding.bottom + systemBarsInsets.bottom)
     }
 }
 
 public fun View.addSystemTopPadding() {
     doOnApplyWindowInsets { view, insets, padding ->
-        view.updatePadding(top = padding.top + insets.systemWindowInsetTop)
+        val systemBarsInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+        view.updatePadding(top = padding.top + systemBarsInsets.top)
     }
 }
