@@ -3,6 +3,7 @@ package kekmech.ru.ext_okhttp
 import android.annotation.SuppressLint
 import android.content.Context
 import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import okhttp3.Interceptor
 import okhttp3.Response
 
@@ -18,8 +19,10 @@ public class NoConnectionInterceptor(private val context: Context) : Interceptor
 
     @SuppressLint("MissingPermission")
     private fun isConnected(): Boolean {
-        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val netInfo = connectivityManager.activeNetworkInfo
-        return netInfo != null && netInfo.isConnectedOrConnecting
+        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val network = cm.activeNetwork ?: return false
+        val caps = cm.getNetworkCapabilities(network) ?: return false
+        return caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) &&
+                caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
     }
 }
