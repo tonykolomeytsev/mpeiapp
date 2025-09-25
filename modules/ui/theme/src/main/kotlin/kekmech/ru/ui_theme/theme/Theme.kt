@@ -12,6 +12,7 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalInspectionMode
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import kekmech.ru.ui_theme.color.DarkMpeixPalette
 import kekmech.ru.ui_theme.color.LightMpeixPalette
@@ -79,13 +80,16 @@ public fun MpeixTheme(
 ) {
     val colorScheme = if (darkTheme) DarkColorScheme else LightColorScheme
     val typography = remember { MpeixTypography() }
+    val isInPreview = LocalInspectionMode.current
 
-    val systemUiController = rememberSystemUiController()
-    SideEffect {
-        systemUiController.setSystemBarsColor(
-            color = Color.Transparent,
-            darkIcons = !darkTheme,
-        )
+    if (!isInPreview) {
+        val systemUiController = rememberSystemUiController()
+        SideEffect {
+            systemUiController.setSystemBarsColor(
+                color = Color.Transparent,
+                darkIcons = !darkTheme,
+            )
+        }
     }
 
     CompositionLocalProvider(
