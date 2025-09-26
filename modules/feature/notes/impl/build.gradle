@@ -27,6 +27,9 @@ dependencies {
     implementation(libs.vivid.elmslie.android)
     implementation(libs.vivid.elmslie.core)
 
+    // For non-fatals
+    compileOnly(libs.firebase.crashlytics)
+
     implementation(project(":feature_notes_api"))
     implementation(project(":feature_schedule_api"))
     implementation(project(":feature_search_api"))
