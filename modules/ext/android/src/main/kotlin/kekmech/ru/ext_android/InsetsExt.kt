@@ -40,8 +40,9 @@ public fun View.requestApplyInsetsWhenAttached() {
 }
 
 public fun View.addSystemVerticalPadding() {
-    doOnApplyWindowInsets { _, windowInsets, initialPadding ->
-        val systemBarsInsets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+    doOnApplyWindowInsets { _, insets, initialPadding ->
+        val systemBarsInsets =
+            insets.getInsets(WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.ime())
         updatePadding(
             top = systemBarsInsets.top + initialPadding.top,
             bottom = systemBarsInsets.bottom + initialPadding.bottom
@@ -51,7 +52,8 @@ public fun View.addSystemVerticalPadding() {
 
 public fun View.addSystemBottomPadding() {
     doOnApplyWindowInsets { view, insets, padding ->
-        val systemBarsInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+        val systemBarsInsets =
+            insets.getInsets(WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.ime())
         view.updatePadding(bottom = padding.bottom + systemBarsInsets.bottom)
     }
 }
