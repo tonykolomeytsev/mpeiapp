@@ -26,6 +26,10 @@ dependencies {
     implementation(libs.vivid.elmslie.core)
     implementation(libs.firebase.crashlytics)
 
+    // for non-fatal analytics
+    compileOnly(libs.squareup.retrofit)
+    compileOnly(project(":ext_okhttp"))
+
     implementation(project(":feature_app_settings_api"))
     implementation(project(":feature_dashboard_api"))
     implementation(project(":feature_favorite_schedule_api"))
