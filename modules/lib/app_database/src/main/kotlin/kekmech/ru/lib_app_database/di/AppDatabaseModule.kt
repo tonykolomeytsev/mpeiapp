@@ -18,6 +18,7 @@ public val LibraryAppDatabaseModule: Module = module {
                 name = AppDatabase.Name,
             )
             .enableMultiInstanceInvalidation()
+            .fallbackToDestructiveMigration(dropAllTables = true)
         // collect all partial migrations from all domain modules
         // in order to run them all further
         builder.addMigrations(*getAll<Migration>().toTypedArray())
