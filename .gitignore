@@ -7,3 +7,4 @@ local.properties
 **/google-services.json
 **/.DS_Store
 .figx-out
+.kotlin
