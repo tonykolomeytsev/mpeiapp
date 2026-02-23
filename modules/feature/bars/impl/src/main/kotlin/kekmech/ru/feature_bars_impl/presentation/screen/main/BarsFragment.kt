@@ -37,7 +37,6 @@ import kekmech.ru.feature_bars_impl.databinding.FragmentBarsBinding
 import kekmech.ru.feature_bars_impl.presentation.items.AssessedDisciplineAdapterItem
 import kekmech.ru.feature_bars_impl.presentation.items.LoginToBarsAdapterItem
 import kekmech.ru.feature_bars_impl.presentation.items.UserNameHeaderAdapterItem
-import kekmech.ru.feature_bars_impl.presentation.screen.bypassing.BypassingFragment
 import kekmech.ru.feature_bars_impl.presentation.screen.details.BarsDetailsFragment
 import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsEffect
 import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsEvent.Ui
@@ -257,6 +256,7 @@ internal class BarsFragment :
         }
     }
 
+    @Suppress("CommitTransaction")
     private fun createAdapter() = BaseAdapter(
         AssessedDisciplineAdapterItem {
             analytics.sendClick("BarsDisciplineDetails")
@@ -280,11 +280,6 @@ internal class BarsFragment :
                 ITEM_BROWSER_LABEL -> {
                     analytics.sendClick("BarsShowBrowser")
                     store.accept(Ui.Click.ShowBrowser)
-                }
-
-                ITEM_BYPASSING_LABEL -> {
-                    analytics.sendClick("BarsBypassing")
-                    addScreenForward { BypassingFragment() }
                 }
 
                 else -> { /* no-op */
@@ -325,6 +320,5 @@ internal class BarsFragment :
 
         const val ITEM_GROUP_LABEL = 0
         const val ITEM_BROWSER_LABEL = 1
-        const val ITEM_BYPASSING_LABEL = 2
     }
 }
