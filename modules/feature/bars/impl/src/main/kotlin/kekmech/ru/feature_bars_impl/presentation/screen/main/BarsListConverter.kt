@@ -1,7 +1,6 @@
 package kekmech.ru.feature_bars_impl.presentation.screen.main
 
 import android.content.Context
-import android.os.Build
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
@@ -14,7 +13,6 @@ import kekmech.ru.feature_bars_impl.R
 import kekmech.ru.feature_bars_impl.presentation.items.LoginToBarsItem
 import kekmech.ru.feature_bars_impl.presentation.items.UserNameHeaderItem
 import kekmech.ru.feature_bars_impl.presentation.screen.main.BarsFragment.Companion.ITEM_BROWSER_LABEL
-import kekmech.ru.feature_bars_impl.presentation.screen.main.BarsFragment.Companion.ITEM_BYPASSING_LABEL
 import kekmech.ru.feature_bars_impl.presentation.screen.main.BarsFragment.Companion.ITEM_GROUP_LABEL
 import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsState
 import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.FlowState
@@ -37,7 +35,6 @@ internal class BarsListConverter(private val context: Context) {
                     addUserHeaderWithSettingsButton(state.userInfo?.name)
                     addUserGroupLabel(state.userInfo?.group)
                     addShowBarsInBrowserLabel()
-                    maybeAddBypassingLabel()
                     add(SpaceItem.VERTICAL_8)
 
                     if (!state.isAfterErrorLoadingConfig) {
@@ -52,19 +49,19 @@ internal class BarsListConverter(private val context: Context) {
                         addErrorStateItem(state)
                     }
                 }
+
             state.flowState == FlowState.NOT_LOGGED_IN && state.config != null ->
                 mutableListOf<Any>().apply {
                     addUserHeaderWithSettingsButton(context.getString(Strings.bars_stub_student_name))
                     addShowBarsInBrowserLabel()
-                    maybeAddBypassingLabel()
                     add(SpaceItem.VERTICAL_8)
                     add(LoginToBarsItem)
                 }
+
             else ->
                 mutableListOf<Any>().apply {
                     addUserHeaderWithSettingsButton(context.getString(Strings.bars_stub_student_name))
                     addShowBarsInBrowserLabel()
-                    maybeAddBypassingLabel()
                     add(SpaceItem.VERTICAL_8)
                     addErrorStateItem(state)
                 }
@@ -104,20 +101,6 @@ internal class BarsListConverter(private val context: Context) {
                 textStyleResId = coreui_R.style.H6_Main
             )
         )
-    }
-
-    private fun MutableList<Any>.maybeAddBypassingLabel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            add(
-                TextWithIconItem(
-                    itemId = ITEM_BYPASSING_LABEL,
-                    textResId = Strings.bars_bypassing_item,
-                    drawableResID = R.drawable.ic_warning24,
-                    tintColorAttrId = coreui_R.attr.colorActive,
-                    textStyleResId = coreui_R.style.H6_Main,
-                )
-            )
-        }
     }
 
     private fun MutableList<Any>.addEmptyDisciplinesItem() {
