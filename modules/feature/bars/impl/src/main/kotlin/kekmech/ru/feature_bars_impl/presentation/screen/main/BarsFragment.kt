@@ -45,7 +45,6 @@ import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsStoreFactor
 import kekmech.ru.lib_adapter.BaseAdapter
 import kekmech.ru.lib_analytics_android.addScrollAnalytics
 import kekmech.ru.lib_analytics_android.ext.screenAnalytics
-import kekmech.ru.lib_navigation.addScreenForward
 import kekmech.ru.lib_navigation.features.ScrollToTop
 import kekmech.ru.lib_navigation.features.TabScreenStateSaver
 import kekmech.ru.lib_navigation.features.TabScreenStateSaverImpl
@@ -102,6 +101,7 @@ internal class BarsFragment :
                 }
             }
         }
+        store.accept(Ui.Action.Update)
     }
 
     override fun onDestroyView() {
@@ -162,7 +162,14 @@ internal class BarsFragment :
 
     override fun handleEffect(effect: BarsEffect) =
         when (effect) {
-            is BarsEffect.LoadPage -> viewBinding.webView.loadUrl(effect.url)
+            is BarsEffect.LoadPage -> {
+                if (viewBinding.webView.url != effect.url) {
+                    viewBinding.webView.loadUrl(effect.url)
+                } else {
+                    store.accept(Ui.Action.PageFinished(effect.url, viewBinding.webView.title))
+                }
+            }
+
             is BarsEffect.InvokeJs -> viewBinding.webView.evaluateJavascript(effect.js) {
                 Timber.d(it)
             }
@@ -174,11 +181,6 @@ internal class BarsFragment :
 
             is BarsEffect.ScrollToTop -> viewBinding.recyclerView.scrollToPosition(0)
         }
-
-    override fun onResume() {
-        super.onResume()
-        store.accept(Ui.Action.Update)
-    }
 
     override fun onScrollToTop() {
         store.accept(Ui.Action.ScrollToTop)
