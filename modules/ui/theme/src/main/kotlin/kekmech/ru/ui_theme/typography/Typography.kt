@@ -29,7 +29,7 @@ import kekmech.ru.res_fonts.R
 import kekmech.ru.ui_theme.color.LightMpeixPalette
 import kekmech.ru.ui_theme.theme.MpeixTheme
 
-internal val RobotoFontFamily: FontFamily = FontFamily(
+public val RobotoFontFamily: FontFamily = FontFamily(
     Font(
         resId = R.font.roboto_regular,
         weight = FontWeight.Normal,
@@ -153,174 +153,177 @@ private fun TypographyPreview() {
 
     val linePaddingModifier = Modifier.padding(bottom = 8.dp)
 
-    Column(
-        modifier = Modifier
-            .background(
-                color = LightMpeixPalette.surface,
-                shape = RoundedCornerShape(12.dp),
-            )
-            .padding(16.dp),
-    ) {
-        Row(
+    MpeixTheme {
+        Column(
             modifier = Modifier
-                .drawDashedBorder()
-                .padding(16.dp)
+                .background(
+                    color = LightMpeixPalette.surface,
+                    shape = RoundedCornerShape(12.dp),
+                )
+                .padding(16.dp),
         ) {
-            Column {
-                Text(
-                    text = "Header H1 32/38",
-                    style = MpeixTheme.typography.header1,
-                    color = LightMpeixPalette.content,
-                    modifier = linePaddingModifier,
-                )
-                Text(
-                    text = "Header H2 28/36",
-                    style = MpeixTheme.typography.header2,
-                    color = LightMpeixPalette.content,
-                    modifier = linePaddingModifier,
-                )
-                Text(
-                    text = "Header H3 22/28",
-                    style = MpeixTheme.typography.header3,
-                    color = LightMpeixPalette.content,
-                    modifier = linePaddingModifier,
-                )
-                Text(
-                    text = "Header H4 20/24",
-                    style = MpeixTheme.typography.header4,
-                    color = LightMpeixPalette.content,
-                )
+            Row(
+                modifier = Modifier
+                    .drawDashedBorder()
+                    .padding(16.dp)
+            ) {
+                Column {
+                    Text(
+                        text = "Header H1 32/38",
+                        style = MpeixTheme.typography.header1,
+                        color = LightMpeixPalette.content,
+                        modifier = linePaddingModifier,
+                    )
+                    Text(
+                        text = "Header H2 28/36",
+                        style = MpeixTheme.typography.header2,
+                        color = LightMpeixPalette.content,
+                        modifier = linePaddingModifier,
+                    )
+                    Text(
+                        text = "Header H3 22/28",
+                        style = MpeixTheme.typography.header3,
+                        color = LightMpeixPalette.content,
+                        modifier = linePaddingModifier,
+                    )
+                    Text(
+                        text = "Header H4 20/24",
+                        style = MpeixTheme.typography.header4,
+                        color = LightMpeixPalette.content,
+                    )
+                }
+                Spacer(Modifier.width(64.dp))
+                Column {
+                    Text(
+                        text = "Заголовки экранов",
+                        style = MpeixTheme.typography.header1,
+                        color = LightMpeixPalette.content,
+                        modifier = linePaddingModifier,
+                    )
+                    Text(
+                        text = "Заголовки экранов",
+                        style = MpeixTheme.typography.header2,
+                        color = LightMpeixPalette.content,
+                        modifier = linePaddingModifier,
+                    )
+                    Text(
+                        text = "Заголовки экранов",
+                        style = MpeixTheme.typography.header3,
+                        color = LightMpeixPalette.content,
+                        modifier = linePaddingModifier,
+                    )
+                    Text(
+                        text = "Заголовки внутри блоков контента",
+                        style = MpeixTheme.typography.header4,
+                        color = LightMpeixPalette.content,
+                    )
+                }
             }
-            Spacer(Modifier.width(64.dp))
-            Column {
-                Text(
-                    text = "Заголовки экранов",
-                    style = MpeixTheme.typography.header1,
-                    color = LightMpeixPalette.content,
-                    modifier = linePaddingModifier,
-                )
-                Text(
-                    text = "Заголовки экранов",
-                    style = MpeixTheme.typography.header2,
-                    color = LightMpeixPalette.content,
-                    modifier = linePaddingModifier,
-                )
-                Text(
-                    text = "Заголовки экранов",
-                    style = MpeixTheme.typography.header3,
-                    color = LightMpeixPalette.content,
-                    modifier = linePaddingModifier,
-                )
-                Text(
-                    text = "Заголовки внутри блоков контента",
-                    style = MpeixTheme.typography.header4,
-                    color = LightMpeixPalette.content,
-                )
+            Spacer(Modifier.height(16.dp))
+            Row(
+                modifier = Modifier
+                    .drawDashedBorder()
+                    .padding(16.dp)
+            ) {
+                Column {
+                    Text(
+                        text = "Paragraph Big 16/24",
+                        style = MpeixTheme.typography.paragraphBig,
+                        color = LightMpeixPalette.content,
+                        modifier = linePaddingModifier,
+                    )
+                    Text(
+                        text = "Paragraph Normal 14/20",
+                        style = MpeixTheme.typography.paragraphNormal,
+                        color = LightMpeixPalette.content,
+                        modifier = linePaddingModifier,
+                    )
+                    Text(
+                        text = "Paragraph Big Accent 16/24",
+                        style = MpeixTheme.typography.paragraphBigAccent,
+                        color = LightMpeixPalette.content,
+                        modifier = linePaddingModifier,
+                    )
+                    Text(
+                        text = "Paragraph Normal Accent 14/20",
+                        style = MpeixTheme.typography.paragraphNormalAccent,
+                        color = LightMpeixPalette.content,
+                    )
+                }
+                Spacer(Modifier.width(64.dp))
+                Column {
+                    Text(
+                        text = "Текстовый контент, несущий много смысла",
+                        style = MpeixTheme.typography.paragraphBig,
+                        color = LightMpeixPalette.content,
+                        modifier = linePaddingModifier,
+                    )
+                    Text(
+                        text = "Короткие надписи внутри UI, подзаголовки внутри контента",
+                        style = MpeixTheme.typography.paragraphNormal,
+                        color = LightMpeixPalette.content,
+                        modifier = linePaddingModifier,
+                    )
+                    Text(
+                        text = "Текстовый контент, несущий много смысла",
+                        style = MpeixTheme.typography.paragraphBigAccent,
+                        color = LightMpeixPalette.content,
+                        modifier = linePaddingModifier,
+                    )
+                    Text(
+                        text = "Короткие надписи внутри UI, подзаголовки внутри контента",
+                        style = MpeixTheme.typography.paragraphNormalAccent,
+                        color = LightMpeixPalette.content,
+                    )
+                }
             }
-        }
-        Spacer(Modifier.height(16.dp))
-        Row(
-            modifier = Modifier
-                .drawDashedBorder()
-                .padding(16.dp)
-        ) {
-            Column {
-                Text(
-                    text = "Paragraph Big 16/24",
-                    style = MpeixTheme.typography.paragraphBig,
-                    color = LightMpeixPalette.content,
-                    modifier = linePaddingModifier,
-                )
-                Text(
-                    text = "Paragraph Normal 14/20",
-                    style = MpeixTheme.typography.paragraphNormal,
-                    color = LightMpeixPalette.content,
-                    modifier = linePaddingModifier,
-                )
-                Text(
-                    text = "Paragraph Big Accent 16/24",
-                    style = MpeixTheme.typography.paragraphBigAccent,
-                    color = LightMpeixPalette.content,
-                    modifier = linePaddingModifier,
-                )
-                Text(
-                    text = "Paragraph Normal Accent 14/20",
-                    style = MpeixTheme.typography.paragraphNormalAccent,
-                    color = LightMpeixPalette.content,
-                )
-            }
-            Spacer(Modifier.width(64.dp))
-            Column {
-                Text(
-                    text = "Текстовый контент, несущий много смысла",
-                    style = MpeixTheme.typography.paragraphBig,
-                    color = LightMpeixPalette.content,
-                    modifier = linePaddingModifier,
-                )
-                Text(
-                    text = "Короткие надписи внутри UI, подзаголовки внутри контента",
-                    style = MpeixTheme.typography.paragraphNormal,
-                    color = LightMpeixPalette.content,
-                    modifier = linePaddingModifier,
-                )
-                Text(
-                    text = "Текстовый контент, несущий много смысла",
-                    style = MpeixTheme.typography.paragraphBigAccent,
-                    color = LightMpeixPalette.content,
-                    modifier = linePaddingModifier,
-                )
-                Text(
-                    text = "Короткие надписи внутри UI, подзаголовки внутри контента",
-                    style = MpeixTheme.typography.paragraphNormalAccent,
-                    color = LightMpeixPalette.content,
-                )
-            }
-        }
-        Spacer(Modifier.height(16.dp))
-        Row(
-            modifier = Modifier
-                .drawDashedBorder()
-                .padding(16.dp)
-        ) {
-            Column {
-                Text(
-                    text = "Label Big 14/20",
-                    style = MpeixTheme.typography.labelBig,
-                    color = LightMpeixPalette.content,
-                    modifier = linePaddingModifier,
-                )
-                Text(
-                    text = "Label Normal 12/16",
-                    style = MpeixTheme.typography.labelNormal,
-                    color = LightMpeixPalette.content,
-                    modifier = linePaddingModifier,
-                )
-                Text(
-                    text = "Label Mini 10/16",
-                    style = MpeixTheme.typography.labelMini,
-                    color = LightMpeixPalette.content,
-                )
-            }
-            Spacer(Modifier.width(64.dp))
-            Column {
-                Text(
-                    text = "Кнопки, поля ввода, ячейки",
-                    style = MpeixTheme.typography.labelBig,
-                    color = LightMpeixPalette.content,
-                    modifier = linePaddingModifier,
-                )
-                Text(
-                    text = "Ячейки и короткие надписи в UI",
-                    style = MpeixTheme.typography.labelNormal,
-                    color = LightMpeixPalette.content,
-                    modifier = linePaddingModifier,
-                )
-                Text(
-                    text = "Ячейки и короткие надписи в UI",
-                    style = MpeixTheme.typography.labelMini,
-                    color = LightMpeixPalette.content,
-                )
+            Spacer(Modifier.height(16.dp))
+            Row(
+                modifier = Modifier
+                    .drawDashedBorder()
+                    .padding(16.dp)
+            ) {
+                Column {
+                    Text(
+                        text = "Label Big 14/20",
+                        style = MpeixTheme.typography.labelBig,
+                        color = LightMpeixPalette.content,
+                        modifier = linePaddingModifier,
+                    )
+                    Text(
+                        text = "Label Normal 12/16",
+                        style = MpeixTheme.typography.labelNormal,
+                        color = LightMpeixPalette.content,
+                        modifier = linePaddingModifier,
+                    )
+                    Text(
+                        text = "Label Mini 10/16",
+                        style = MpeixTheme.typography.labelMini,
+                        color = LightMpeixPalette.content,
+                    )
+                }
+                Spacer(Modifier.width(64.dp))
+                Column {
+                    Text(
+                        text = "Кнопки, поля ввода, ячейки",
+                        style = MpeixTheme.typography.labelBig,
+                        color = LightMpeixPalette.content,
+                        modifier = linePaddingModifier,
+                    )
+                    Text(
+                        text = "Ячейки и короткие надписи в UI",
+                        style = MpeixTheme.typography.labelNormal,
+                        color = LightMpeixPalette.content,
+                        modifier = linePaddingModifier,
+                    )
+                    Text(
+                        text = "Ячейки и короткие надписи в UI",
+                        style = MpeixTheme.typography.labelMini,
+                        color = LightMpeixPalette.content,
+                    )
+                }
             }
         }
     }
+
 }

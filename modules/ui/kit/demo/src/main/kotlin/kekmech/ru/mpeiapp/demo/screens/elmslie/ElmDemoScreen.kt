@@ -32,7 +32,7 @@ internal class ElmDemoScreen(
     override fun Content() {
         ElmContent<ElmDemoStoreFactory, _, _, _>(
             factory = { create(randomArgument = randomArgument) },
-            composable = { onAccept, state, _ -> ElmDemoScreen(onAccept, state) }
+            composable = { onAccept, state, _, _ -> ElmDemoScreen(onAccept, state) }
         )
     }
 }

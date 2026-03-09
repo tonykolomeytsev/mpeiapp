@@ -30,6 +30,7 @@ dependencies {
     implementation(project(":feature_favorite_schedule_api"))
     implementation(project(":feature_contributors_api"))
     implementation(project(":feature_schedule_api"))
+    implementation(project(":feature_bars_api"))
 
     implementation(project(":lib_adapter"))
     implementation(project(":lib_analytics_android"))

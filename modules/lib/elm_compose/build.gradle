@@ -6,4 +6,5 @@ dependencies {
     implementation(libs.koin.core)
     implementation(libs.koin.compose)
     implementation(libs.vivid.elmslie.core)
+    implementation(libs.vivid.elmslie.android)
 }

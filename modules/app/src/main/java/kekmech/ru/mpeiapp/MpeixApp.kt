@@ -2,6 +2,7 @@ package kekmech.ru.mpeiapp
 
 import android.app.Application
 import android.content.Context
+import com.tencent.mmkv.MMKV
 import kekmech.ru.feature_app_settings_api.data.AppEnvironmentRepository
 import kekmech.ru.lib_app_lifecycle.AppLifecycleObserver
 import kekmech.ru.lib_elm.TimberLogger
@@ -34,6 +35,7 @@ class MpeixApp : Application(),
         ServiceUrlResolver.setAppEnvironment(appEnvironmentRepository.getAppEnvironment())
         RemoteConfig.setup()
         initTimber()
+        MMKV.initialize(this)
     }
 
     override fun attachBaseContext(base: Context) {
@@ -63,24 +65,6 @@ class MpeixApp : Application(),
                 fatal(TimberLogger.E)
             }
         }
-    }
-
-    @Suppress("NestedBlockDepth")
-    override fun getPackageName(): String {
-        try {
-            val stackTrace = Thread.currentThread().stackTrace
-            for (element in stackTrace) {
-                if ("org.chromium.base.BuildInfo".equals(element.className, true)) {
-                    if ("getAll".equals(element.methodName, ignoreCase = true)) {
-                        return "com.android.chrome"
-                    }
-                    break
-                }
-            }
-        } catch (_: Exception) {
-            Timber.d("Replace app package name")
-        }
-        return super.getPackageName()
     }
 }
 

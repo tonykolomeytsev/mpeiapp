@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -33,6 +34,7 @@ import kekmech.ru.feature_app_settings_impl.presentation.screens.main.elm.AppSet
 import kekmech.ru.feature_app_settings_impl.presentation.screens.main.elm.AppSettingsStoreFactory
 import kekmech.ru.feature_app_settings_impl.presentation.screens.main.list.ContributorAdapterItem
 import kekmech.ru.feature_app_settings_impl.presentation.screens.map_type.SelectMapTypeFragment
+import kekmech.ru.feature_bars_api.BarsLogoutHandle
 import kekmech.ru.lib_adapter.BaseAdapter
 import kekmech.ru.lib_analytics_android.ext.screenAnalytics
 import kekmech.ru.lib_navigation.addScreenForward
@@ -51,6 +53,7 @@ internal class AppSettingsFragment :
     private val adapter by fastLazy { createAdapter() }
     private val analytics by screenAnalytics("AppSettings")
     private val viewBinding by viewBinding(FragmentAppSettingsBinding::bind)
+    private val logoutHandle by inject<BarsLogoutHandle>()
 
     private val store by androidElmStore { inject<AppSettingsStoreFactory>().value.create() }
 
@@ -150,6 +153,16 @@ internal class AppSettingsFragment :
                 store.accept(Ui.Click.MapType)
             }
 
+            ITEM_BARS_LOGOUT -> {
+                analytics.sendClick("BarsLogout")
+                if (logoutHandle.logout()) {
+                    Toast
+                        .makeText(requireContext(), "Вы вышли из БАРС", Toast.LENGTH_SHORT)
+                        .show()
+                }
+                Unit
+            }
+
             else -> { /* no-op */
             }
         }
@@ -184,6 +197,7 @@ internal class AppSettingsFragment :
         const val ITEM_FAVORITES = 3
         const val ITEM_LANGUAGE = 4
         const val ITEM_MAP_TYPE = 5
+        const val ITEM_BARS_LOGOUT = 6
 
         private const val LANGUAGE_RESULT_KEY = "LANGUAGE_RESULT_KEY"
         private const val MAP_TYPE_RESULT_KEY = "MAP_TYPE_RESULT_KEY"
