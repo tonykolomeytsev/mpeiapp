@@ -36,12 +36,12 @@ public object MpeixColors {
     public val Neutral98: Color = Color(0xFFF6F7F9)
     public val Neutral97: Color = Color(0xFFF3F5F7)
     public val Neutral95: Color = Color(0xFFF0F2F5)
-    public val Neutral93: Color = Color(0xFFE3E7ED)
-    public val Neutral90: Color = Color(0xFFE0E4EB)
-    public val Neutral85: Color = Color(0xFFD1D7E0)
-    public val Neutral80: Color = Color(0xFFC2CAD6)
-    public val Neutral70: Color = Color(0xFFA3AFC2)
-    public val Neutral60: Color = Color(0xFF8494AE)
+    public val Neutral93: Color = Color(0xFFE3E7E7)
+    public val Neutral90: Color = Color(0xFFE0E4E4)
+    public val Neutral85: Color = Color(0xFFD1D7D7)
+    public val Neutral80: Color = Color(0xFFC2CACA)
+    public val Neutral70: Color = Color(0xFFA3AFAF)
+    public val Neutral60: Color = Color(0xFF849494)
     public val Neutral40: Color = Color(0xFF51617B)
     public val Neutral35: Color = Color(0xFF3B4759)
     public val Neutral30: Color = Color(0xFF333D4D)
@@ -75,14 +75,20 @@ public class MpeixPalette internal constructor(
     public val classesTypeLecture: Color = MpeixColors.ClassesTypeLecture,
     public val classesTypePractice: Color = MpeixColors.ClassesTypePractice,
     public val classesTypeLab: Color = MpeixColors.ClassesTypeLab,
+    public val greenMarkColor: Color,
+    public val greenBgMarkColor: Color,
+    public val yellowMarkColor: Color,
+    public val yellowBgMarkColor: Color,
+    public val redMarkColor: Color,
+    public val redBgMarkColor: Color,
 )
 
 public val LightMpeixPalette: MpeixPalette = MpeixPalette(
     primary = MpeixColors.Primary60,
     secondary = MpeixColors.Secondary60,
     tertiary = MpeixColors.Tertiary50,
-    background = MpeixColors.Neutral97,
-    surface = MpeixColors.Neutral100,
+    background = MpeixColors.Neutral100,
+    surface = MpeixColors.Neutral97,
     surfacePlus1 = MpeixColors.Neutral98,
     surfacePlus2 = MpeixColors.Neutral95,
     surfacePlus3 = MpeixColors.Neutral93,
@@ -94,14 +100,20 @@ public val LightMpeixPalette: MpeixPalette = MpeixPalette(
     contentVariant = MpeixColors.Neutral40,
     contentDisabled = MpeixColors.Neutral60,
     outline = MpeixColors.Neutral80,
+    greenMarkColor = Color(0xFF47720C),
+    greenBgMarkColor = Color(0xFFC8D9B2),
+    yellowMarkColor = Color(0xFFA7761C),
+    yellowBgMarkColor = Color(0xFFE6D3B1),
+    redMarkColor = Color(0xFFB73F3F),
+    redBgMarkColor = Color(0xFFEBBDBD),
 )
 
 public val DarkMpeixPalette: MpeixPalette = MpeixPalette(
     primary = MpeixColors.Primary60,
     secondary = MpeixColors.Secondary60,
     tertiary = MpeixColors.Tertiary50,
-    background = MpeixColors.Neutral10,
-    surface = MpeixColors.Neutral20,
+    background = Color(0xFF1a1a1a),
+    surface = Color(0xFF2A2A2A),
     surfacePlus1 = MpeixColors.Neutral25,
     surfacePlus2 = MpeixColors.Neutral30,
     surfacePlus3 = MpeixColors.Neutral35,
@@ -113,6 +125,12 @@ public val DarkMpeixPalette: MpeixPalette = MpeixPalette(
     contentVariant = MpeixColors.Neutral80,
     contentDisabled = MpeixColors.Neutral70,
     outline = MpeixColors.Neutral60,
+    greenMarkColor = Color(0xFFFFFFFF),
+    greenBgMarkColor = Color(0xFF47720C),
+    yellowMarkColor = Color(0xFFFFFFFF),
+    yellowBgMarkColor = Color(0xFFA7761C),
+    redMarkColor = Color(0xFFFFFFFF),
+    redBgMarkColor = Color(0xFFB73F3F),
 )
 
 @Composable

@@ -61,7 +61,7 @@ public class ShowDialog(private val fragmentProvider: () -> DialogFragment) : Co
     }
 }
 
-public class NewRoot(private  val fragmentProvider: () -> Fragment) : Command {
+public class NewRoot(private val fragmentProvider: () -> Fragment) : Command {
 
     override fun apply(supportFragmentManager: FragmentManager) {
         ClearBackStack().apply(supportFragmentManager)
@@ -77,6 +77,12 @@ public class ClearBackStack : Command {
 
     override fun apply(supportFragmentManager: FragmentManager) {
         supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+    }
+}
+
+public class PopBackStack : Command {
+    override fun apply(supportFragmentManager: FragmentManager) {
+        supportFragmentManager.popBackStack()
     }
 }
 

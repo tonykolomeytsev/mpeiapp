@@ -34,7 +34,7 @@ internal object FeatureTogglesScreen : NavScreen {
     override fun Content() {
         ElmContent<FeatureTogglesStoreFactory, _, _, _>(
             factory = { create() },
-            composable = { onAccept, state, modifier ->
+            composable = { onAccept, state, _, modifier ->
                 FeatureTogglesScreen(onAccept, state, modifier)
             },
         )

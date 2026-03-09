@@ -1,0 +1,11 @@
+plugins {
+    alias(mpeix.plugins.lib.android.compose)
+}
+
+dependencies {
+    implementation(libs.androidx.fragmentKtx)
+    implementation(libs.androidx.fragment.compose)
+    implementation(libs.vivid.elmslie.core)
+    implementation(project(":lib_navigation"))
+    implementation(project(":ui_theme"))
+}

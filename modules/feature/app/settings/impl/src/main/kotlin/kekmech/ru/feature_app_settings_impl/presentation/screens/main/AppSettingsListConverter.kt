@@ -9,6 +9,7 @@ import kekmech.ru.coreui.items.SectionHeaderItem
 import kekmech.ru.coreui.items.SpaceItem
 import kekmech.ru.coreui.items.TextItem
 import kekmech.ru.coreui.items.ToggleItem
+import kekmech.ru.feature_app_settings_impl.presentation.screens.main.AppSettingsFragment.Companion.ITEM_BARS_LOGOUT
 import kekmech.ru.feature_app_settings_impl.presentation.screens.main.AppSettingsFragment.Companion.ITEM_GITHUB
 import kekmech.ru.feature_app_settings_impl.presentation.screens.main.elm.AppSettingsState
 import kekmech.ru.lib_app_info.AppVersionName
@@ -69,6 +70,17 @@ internal class AppSettingsListConverter {
                 )
 
                 addSwitchMapTypeItem(state, context)
+            }
+
+            addSection(titleResId = Strings.app_settings_header_bars) {
+
+                add(
+                    BottomLabeledTextItem(
+                        mainText = "Выйти из аккаунта",
+                        label = "Нажмите чтобы завершить сессию в БАРС",
+                        itemId = ITEM_BARS_LOGOUT,
+                    )
+                )
             }
 
             addSection(titleResId = Strings.app_settings_header_support) {
