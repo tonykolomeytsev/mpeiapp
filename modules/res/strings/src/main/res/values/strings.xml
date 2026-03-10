@@ -209,7 +209,7 @@
     <string name="bars_stub_student_name">Анонимный Пользователь</string>
     <string name="bars_stub_student_group">Группа</string>
     <string name="bars_stub_login_header">Вы не вошли в БАРС</string>
-    <string name="bars_stub_login_description">Вход в БАРС осуществляется через встроенный браузер, после этого просмотр всей информации происходит в приложении</string>
+    <string name="bars_stub_login_description">Вход в БАРС осуществляется прямо в приложении, после этого вводить логин и пароль больше не нужно</string>
     <string name="bars_stub_login_button">Войти в БАРС</string>
     <string name="bars_stub_show_browser_label">Показать БАРС в браузере</string>
     <string name="bars_stub_banner_return">Данные обновлены. Нажмите на баннер, чтобы вернуться к обычному отображению</string>
