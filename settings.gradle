@@ -25,6 +25,16 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven {
+            name = "MpeixGitHubPackages"
+            url = uri("https://maven.pkg.github.com/tonykolomeytsev/mpeiapp")
+            // readonly access token
+            credentials {
+                username = "tonykolomeytsev"
+                password = new String("Z2l0aHViX3BhdF8xMUFFT0U2RlEwaEZRRnJSV0xtQ1R6XzdETjZ3bGJFWVlV".decodeBase64()) +
+                        new String("MWR6QXFqRXFGcUFLTVFjaTl1NXR2YkRFbW00Q0VYMWJDVzRTTUFXWG95NXVrRmRD".decodeBase64())
+            }
+        }
     }
     versionCatalogs.create("mpeix").from(files("gradle/mpeix.versions.toml"))
 }

@@ -1,11 +1,20 @@
 package kekmech.ru.lib_elm_compose
 
+import android.os.Bundle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
+import androidx.savedstate.SavedStateRegistryOwner
+import androidx.savedstate.compose.LocalSavedStateRegistryOwner
 import kotlinx.coroutines.flow.Flow
+import money.vivid.elmslie.android.RetainedElmStore
+import money.vivid.elmslie.android.RetainedElmStoreFactory
 import money.vivid.elmslie.core.store.Store
 import org.koin.compose.koinInject
 
@@ -35,12 +44,9 @@ import org.koin.compose.koinInject
  *     val store = rememberElmStore(MyStoreFactory::class) { create(arg1, arg2) }
  * }
  * ```
- *
- * For ELM Screens, please, use [elmNode] wherever possible.
- *
- * @see elmNode
  */
 @Composable
+@Deprecated("Use rememberElmStore(key = \"\", ...) implementation")
 public inline fun <reified StoreFactory : Any, Event : Any, Effect : Any, State : Any> rememberElmStore(
     crossinline factory: StoreFactory.() -> Store<Event, Effect, State>,
 ): Store<Event, Effect, State> {
@@ -49,6 +55,27 @@ public inline fun <reified StoreFactory : Any, Event : Any, Effect : Any, State 
         factory
             .invoke(factoryInstance)
             .also { it.start() }
+    }
+}
+
+@Composable
+public fun <Event : Any, Effect : Any, State : Any> rememberElmStore(
+    key: String,
+    viewModelStoreOwner: ViewModelStoreOwner = LocalViewModelStoreOwner.current ?: error("No ViewModelStoreOwner"),
+    savedStateRegistryOwner: SavedStateRegistryOwner = LocalSavedStateRegistryOwner.current,
+    saveState: Bundle.(State) -> Unit = {},
+    storeFactory: SavedStateHandle.() -> Store<Event, Effect, State>
+): Store<Event, Effect, State> {
+    return remember(key) {
+        val factory = RetainedElmStoreFactory(
+            stateRegistryOwner = savedStateRegistryOwner,
+            defaultArgs = Bundle.EMPTY,
+            storeFactory = storeFactory,
+            saveState = saveState,
+        )
+        val provider = ViewModelProvider(viewModelStoreOwner, factory)
+        @Suppress("UNCHECKED_CAST")
+        provider[key, RetainedElmStore::class.java].store as Store<Event, Effect, State>
     }
 }
 
