@@ -48,7 +48,7 @@ internal object DebugMenuScreen : NavScreen {
     override fun Content() {
         ElmContent<DebugMenuStoreFactory, _, _, _>(
             factory = { create() },
-            composable = { store, state, modifier ->
+            composable = { store, state, _, modifier ->
                 DebugMenuScreen(store, state, modifier)
             },
         )

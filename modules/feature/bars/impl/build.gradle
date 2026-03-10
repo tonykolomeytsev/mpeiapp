@@ -1,6 +1,7 @@
 plugins {
-    alias(mpeix.plugins.feature.impl)
+    alias(mpeix.plugins.feature.impl.compose)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.kotlin.parcelize)
 }
 
 android{
@@ -14,6 +15,9 @@ android{
 }
 
 dependencies {
+    implementation(libs.bundles.compose)
+    implementation(libs.compose.material3)
+
     implementation(libs.androidx.appCompat)
     implementation(libs.androidx.constraintLayout)
     implementation(libs.androidx.coordinatorLayout)
@@ -21,15 +25,21 @@ dependencies {
     implementation(libs.androidx.recyclerView)
     implementation(libs.androidx.swipeRefreshLayout)
     implementation(libs.androidx.datastore.prefs)
+    implementation(libs.androidx.webkit)
+    implementation(libs.kekmech.lib.bars)
     implementation(libs.facebook.shimmer)
+    implementation(libs.firebase.crashlytics)
     implementation(libs.google.material)
     implementation(libs.koin.android)
     implementation(libs.koin.core)
+    implementation(libs.koin.compose)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.squareup.retrofit)
+    implementation(libs.squareup.okhttp.logger)
     implementation(libs.vivid.elmslie.android)
     implementation(libs.vivid.elmslie.core)
+    implementation(libs.mmkv)
     compileOnly(libs.timber)
 
     implementation(project(":feature_app_settings_api"))
@@ -46,6 +56,13 @@ dependencies {
     implementation(project(":lib_navigation"))
     implementation(project(":lib_network"))
     implementation(project(":lib_schedule"))
+    implementation(project(":lib_fragment"))
+    implementation(project(":lib_elm_compose"))
+
+    implementation(project(":ui_theme"))
+    implementation(project(":ui_shimmer"))
+    implementation(project(":ui_kit_topappbar"))
+    implementation(project(":ui_kit_buttons"))
 
     implementation(project(":coreui"))
     implementation(project(":res_icons"))

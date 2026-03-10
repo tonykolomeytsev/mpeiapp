@@ -49,6 +49,8 @@ coil = { module = "io.coil-kt:coil", version = "2.7.0" }
 facebook-shimmer = { module = "com.facebook.shimmer:shimmer", version = "0.5.0" }
 tinkoff-pagerIndicator = { module = "ru.tinkoff.scrollingpagerindicator:scrollingpagerindicator", version = "1.2.1" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version = "1.9.0" }
+kekmech-lib-bars = { module = "com.kekmech:lib_bars", version = "0.4.0" }
+mmkv = { module = "com.tencent:mmkv", version = "2.3.0" }
 
 # AndroidX Libraries
 androidx-appCompat = { module = "androidx.appcompat:appcompat", version.ref = "appCompat" }
@@ -57,6 +59,7 @@ androidx-coordinatorLayout = { module = "androidx.coordinatorlayout:coordinatorl
 androidx-coreKtx = { module = "androidx.core:core-ktx", version = "1.17.0" }
 androidx-fragment = { module = "androidx.fragment:fragment", version.ref = "fragment" }
 androidx-fragmentKtx = { module = "androidx.fragment:fragment-ktx", version.ref = "fragment" }
+androidx-fragment-compose = { module = "androidx.fragment:fragment-compose", version.ref = "fragment" }
 androidx-activity = { module = "androidx.activity:activity", version = "1.11.0" }
 androidx-lifecycleCommonJava8 = { module = "androidx.lifecycle:lifecycle-common-java8", version = "2.9.4" }
 androidx-lifecycleExtensions = { module = "androidx.lifecycle:lifecycle-extensions", version = "2.2.0" }
@@ -70,6 +73,7 @@ androidx-swipeRefreshLayout = { module = "androidx.swiperefreshlayout:swiperefre
 androidx-viewPager2 = { module = "androidx.viewpager2:viewpager2", version.ref = "viewPager2" }
 androidx-datastore-prefs = { module = "androidx.datastore:datastore-preferences", version = "1.1.7" }
 androidx-splashscreen = { module = "androidx.core:core-splashscreen", version = "1.0.1" }
+androidx-webkit = { module = "androidx.webkit:webkit", version = "1.15.0" }
 
 androidx-navigation3-runtime = { group = "androidx.navigation3", name = "navigation3-runtime", version.ref = "nav3" }
 androidx-navigation3-ui = { group = "androidx.navigation3", name = "navigation3-ui", version.ref = "nav3" }
@@ -127,7 +131,8 @@ compose-ui-util = { module = "androidx.compose.ui:ui-util" }
 compose-animation = { module = "androidx.compose.animation:animation" }
 compose-foundation = { module = "androidx.compose.foundation:foundation" }
 compose-material3 = { module = "androidx.compose.material3:material3" }
-compose-activity = { module = "androidx.activity:activity-compose", version = "1.11.0" }
+compose-activity = { module = "androidx.activity:activity-compose", version = "1.12.4" }
+compose-ui-fonts = { module = "androidx.compose.ui:ui-text-google-fonts", version = "1.10.4" }
 
 ## Accompanist
 accompanist-insets = { module = "com.google.accompanist:accompanist-insets", version.ref = "accompanist" }
@@ -143,6 +148,7 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+kotlin-parcelize = { id = "kotlin-parcelize" }
 
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 firebase-crashlytics = "com.google.firebase.crashlytics:3.0.6"
