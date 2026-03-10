@@ -45,7 +45,7 @@ val FeatureBarsModule = module {
     single { DataStore(androidApplication().dataDir) }
     single {
         val loggingInterceptor = getAll<Interceptor>().find { it is HttpLoggingInterceptor }
-        BarsHandle(get()) {
+        BarsHandle(androidApplication(),get()) {
             loggingInterceptor?.let(::addNetworkInterceptor)
             this
         }
