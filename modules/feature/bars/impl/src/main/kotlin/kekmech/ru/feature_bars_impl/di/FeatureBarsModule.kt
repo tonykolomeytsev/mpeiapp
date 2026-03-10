@@ -14,8 +14,6 @@ import kekmech.ru.feature_bars_impl.data.repository.BarsUserInfoRepository
 import kekmech.ru.feature_bars_impl.launcher.BarsFeatureLauncherImpl
 import kekmech.ru.feature_bars_impl.presentation.screen.login.elm.BarsLoginActor
 import kekmech.ru.feature_bars_impl.presentation.screen.login.elm.BarsLoginStoreFactory
-import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsActor
-import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsStoreFactory
 import kekmech.ru.feature_bars_impl.presentation.screen.main_compose.elm.BarsComposeActor
 import kekmech.ru.feature_bars_impl.presentation.screen.main_compose.elm.BarsComposeStoreFactory
 import kekmech.ru.lib_network.buildApi
@@ -30,10 +28,8 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 
 val FeatureBarsModule = module {
-    factoryOf(::BarsActor)
     factoryOf(::BarsComposeActor)
     factoryOf(::BarsLoginActor)
-    singleOf(::BarsStoreFactory)
     singleOf(::BarsComposeStoreFactory)
     singleOf(::BarsLoginStoreFactory)
     factoryOf(::BarsFeatureLauncherImpl) bind BarsFeatureLauncher::class
