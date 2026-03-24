@@ -28,6 +28,8 @@ import kekmech.ru.feature_app_settings_api.AppSettingsFeatureLauncher
 import kekmech.ru.feature_dashboard_impl.R
 import kekmech.ru.feature_dashboard_impl.databinding.FragmentDashboardBinding
 import kekmech.ru.feature_dashboard_impl.di.DashboardDependencies
+import kekmech.ru.feature_dashboard_impl.presentation.eol.EolFragment
+import kekmech.ru.feature_dashboard_impl.presentation.items.BannerEolAdapterItem
 import kekmech.ru.feature_dashboard_impl.presentation.items.BannerLunchAdapterItem
 import kekmech.ru.feature_dashboard_impl.presentation.items.DashboardClassesAdapterItem
 import kekmech.ru.feature_dashboard_impl.presentation.items.DayStatusAdapterItem
@@ -46,6 +48,7 @@ import kekmech.ru.lib_analytics_android.ext.screenAnalytics
 import kekmech.ru.lib_navigation.AddScreenForward
 import kekmech.ru.lib_navigation.BottomTab
 import kekmech.ru.lib_navigation.Router
+import kekmech.ru.lib_navigation.addScreenForward
 import kekmech.ru.lib_navigation.features.ScrollToTop
 import kekmech.ru.lib_navigation.features.TabScreenStateSaver
 import kekmech.ru.lib_navigation.features.TabScreenStateSaverImpl
@@ -131,6 +134,9 @@ internal class DashboardFragment :
             analytics.sendClick("BannerLunch")
             dependencies.bottomTabsSwitcher.changeTab(BottomTab.MAP)
         },
+        BannerEolAdapterItem {
+            addScreenForward { EolFragment() }
+        },
         SectionHeaderAdapterItem(),
         SectionHeaderAdapterItem(SECTION_NOTES_ACTION) {
             analytics.sendClick("ShowAllNotes")
@@ -182,7 +188,7 @@ internal class DashboardFragment :
         ErrorStateAdapterItem {
             analytics.sendClick("DashboardReload")
             store.accept(DashboardEvent.Ui.Action.SwipeToRefresh)
-        }
+        },
     )
 
     private fun clickOnClasses(it: Classes) {
