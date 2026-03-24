@@ -1,0 +1,24 @@
+plugins {
+    alias(mpeix.plugins.feature.impl.compose)
+}
+
+dependencies {
+    implementation(libs.bundles.compose)
+    implementation(libs.compose.material3)
+    implementation(libs.koin.core)
+    implementation(libs.koin.compose)
+    implementation(libs.vivid.elmslie.core)
+    implementation(libs.vivid.elmslie.android)
+
+    implementation(project(":feature_bars_auth_api"))
+    implementation(project(":feature_app_settings_api"))
+
+    implementation(project(":lib_fragment"))
+    implementation(project(":lib_elm_compose"))
+    implementation(project(":lib_elm"))
+
+    implementation(project(":ui_theme"))
+    implementation(project(":ui_shimmer"))
+    implementation(project(":ui_kit_topappbar"))
+    implementation(project(":ui_kit_buttons"))
+}

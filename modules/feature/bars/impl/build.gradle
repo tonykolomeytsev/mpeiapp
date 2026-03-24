@@ -26,7 +26,7 @@ dependencies {
     implementation(libs.androidx.swipeRefreshLayout)
     implementation(libs.androidx.datastore.prefs)
     implementation(libs.androidx.webkit)
-    implementation(libs.kekmech.lib.bars)
+    implementation(libs.kekmech.perf.sdk)
     implementation(libs.facebook.shimmer)
     implementation(libs.firebase.crashlytics)
     implementation(libs.google.material)

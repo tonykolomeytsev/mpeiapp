@@ -1,0 +1,8 @@
+plugins {
+    alias(mpeix.plugins.feature.api)
+}
+
+dependencies {
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.arrow.core)
+}
