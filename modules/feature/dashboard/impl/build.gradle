@@ -1,5 +1,5 @@
 plugins {
-    alias(mpeix.plugins.feature.impl)
+    alias(mpeix.plugins.feature.impl.compose)
 }
 
 android.buildFeatures{
@@ -11,7 +11,10 @@ dependencies {
     testImplementation(libs.kotest.assertions)
     testImplementation(libs.kotest.property)
     testImplementation(libs.kotest.runner)
-    
+
+    implementation(libs.bundles.compose)
+    implementation(libs.compose.material3)
+
     implementation(libs.androidx.appCompat)
     implementation(libs.androidx.constraintLayout)
     implementation(libs.androidx.coreKtx)
@@ -46,6 +49,10 @@ dependencies {
     implementation(project(":lib_elm"))
     implementation(project(":lib_navigation"))
     implementation(project(":lib_schedule"))
+    implementation(project(":lib_fragment"))
+
+    implementation(project(":ui_theme"))
+    implementation(project(":ui_kit_topappbar"))
 
     implementation(project(":coreui"))
     implementation(project(":res_icons"))

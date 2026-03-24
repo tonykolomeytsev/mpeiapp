@@ -9,6 +9,7 @@ import kekmech.ru.coreui.items.SpaceItem
 import kekmech.ru.ext_kotlin.fastLazy
 import kekmech.ru.ext_kotlin.moscowLocalDate
 import kekmech.ru.ext_kotlin.moscowLocalTime
+import kekmech.ru.feature_dashboard_impl.presentation.items.BannerEolItem
 import kekmech.ru.feature_dashboard_impl.presentation.items.BannerLunchItem
 import kekmech.ru.feature_dashboard_impl.presentation.items.DayStatusItem
 import kekmech.ru.feature_dashboard_impl.presentation.items.ScheduleTypeItem
@@ -70,6 +71,8 @@ internal class DashboardListConverter(
                 )
                 add(SpaceItem.VERTICAL_8)
             }
+
+            add(BannerEolItem)
 
             listOfNotNull(
                 BannerLunchItem.takeIf { moscowLocalTime() in lunchStartTime..lunchEndTime },
