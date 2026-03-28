@@ -14,7 +14,7 @@ internal class TwoFactorStoreFactory(
 
     fun create(): TwoFactorStore =
         ElmStore(
-            initialState = State,
+            initialState = State(),
             reducer = TwoFactorReducer(),
             actor = actor,
             startEvent = Event.Ui.Init,

@@ -38,7 +38,11 @@ androidProjectConfiguration {
         add("implementation", platform(libs.compose.bom))
         add("implementation", libs.bundles.compose)
         add("implementation", libs.compose.ui.preview)
-        add("debugImplementation", libs.compose.ui.tooling)
+        if (System.getenv("CI") != "true") {
+            add("implementation", libs.compose.ui.tooling)
+        } else {
+            add("compileOnly", libs.compose.ui.tooling)
+        }
     }
 }
 

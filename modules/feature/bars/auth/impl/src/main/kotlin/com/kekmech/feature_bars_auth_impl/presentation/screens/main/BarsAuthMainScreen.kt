@@ -1,6 +1,7 @@
 package com.kekmech.feature_bars_auth_impl.presentation.screens.main
 
 import androidx.compose.runtime.Composable
+import com.kekmech.feature_bars_auth_impl.presentation.screens.error.ErrorScreen
 import com.kekmech.feature_bars_auth_impl.presentation.screens.main.elm.AuthStage
 import com.kekmech.feature_bars_auth_impl.presentation.screens.step1.LoginPasswordScreen
 import com.kekmech.feature_bars_auth_impl.presentation.screens.step2.TwoFactorScreen
@@ -23,6 +24,7 @@ internal fun BarsAuthMainScreen(
         AuthStage.LoginPassword -> LoginPasswordScreen()
         AuthStage.TwoFactor -> TwoFactorScreen()
         AuthStage.AccountList -> AccountListScreen()
+        AuthStage.IrrecoverableError -> ErrorScreen()
         else -> Unit
     }
 }

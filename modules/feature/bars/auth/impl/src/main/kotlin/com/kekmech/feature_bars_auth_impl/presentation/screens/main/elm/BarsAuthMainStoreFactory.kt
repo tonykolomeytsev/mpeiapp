@@ -14,7 +14,7 @@ internal class BarsAuthMainStoreFactory(
 
     fun create(): BarsAuthMainStore =
         ElmStore(
-            initialState = State,
+            initialState = State(),
             reducer = BarsAuthMainReducer(),
             actor = actor,
             startEvent = Event.Ui.Init,

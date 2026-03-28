@@ -14,7 +14,7 @@ internal class LoginPasswordStoreFactory(
 
     fun create(): LoginPasswordStore =
         ElmStore(
-            initialState = State,
+            initialState = State(),
             reducer = LoginPasswordReducer(),
             actor = actor,
             startEvent = Event.Ui.Init,

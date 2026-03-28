@@ -2,6 +2,8 @@ plugins {
     alias(mpeix.plugins.feature.impl.compose)
 }
 
+android.namespace = "com.kekmech.feature_bars_auth_impl"
+
 dependencies {
     implementation(libs.bundles.compose)
     implementation(libs.compose.material3)
@@ -9,6 +11,8 @@ dependencies {
     implementation(libs.koin.compose)
     implementation(libs.vivid.elmslie.core)
     implementation(libs.vivid.elmslie.android)
+    implementation(libs.kekmech.perf.sdk)
+    implementation(libs.arrow.core)
 
     implementation(project(":feature_bars_auth_api"))
     implementation(project(":feature_app_settings_api"))
@@ -16,8 +20,10 @@ dependencies {
     implementation(project(":lib_fragment"))
     implementation(project(":lib_elm_compose"))
     implementation(project(":lib_elm"))
+    implementation(project(":lib_navigation"))
 
     implementation(project(":ui_theme"))
+    implementation(project(":ui_preview"))
     implementation(project(":ui_shimmer"))
     implementation(project(":ui_kit_topappbar"))
     implementation(project(":ui_kit_buttons"))

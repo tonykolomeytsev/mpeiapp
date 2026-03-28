@@ -11,7 +11,8 @@ internal data class BarsAuthMainState(
 internal enum class AuthStage {
     LoginPassword,
     TwoFactor,
-    AccountList
+    AccountList,
+    IrrecoverableError,
 }
 
 internal sealed interface BarsAuthMainEvent {
