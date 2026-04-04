@@ -1,9 +1,9 @@
 package com.kekmech.feature_bars_auth_impl.di
 
-import com.kekmech.feature_bars_auth_api.SelectAccountAutomaticallyUseCase
+import com.kekmech.feature_bars_auth_api.AccountAutoSelectionService
 import com.kekmech.feature_bars_auth_api.SubscribeToAuthStateUseCase
 import com.kekmech.feature_bars_auth_impl.data.AuthRepository
-import com.kekmech.feature_bars_auth_impl.domain.SelectAccountAutomaticallyUseCaseImpl
+import com.kekmech.feature_bars_auth_impl.domain.AccountAutoSelectionServiceImpl
 import com.kekmech.feature_bars_auth_impl.domain.SubscribeToAuthStateUseCaseImpl
 import com.kekmech.feature_bars_auth_impl.presentation.screens.main.elm.BarsAuthMainActor
 import com.kekmech.feature_bars_auth_impl.presentation.screens.main.elm.BarsAuthMainStoreFactory
@@ -18,7 +18,7 @@ import org.koin.dsl.module
 val FeatureBarsAuthModule = module {
     factoryOf(::AuthRepository)
     factoryOf(::SubscribeToAuthStateUseCaseImpl) bind SubscribeToAuthStateUseCase::class
-    factoryOf(::SelectAccountAutomaticallyUseCaseImpl) bind SelectAccountAutomaticallyUseCase::class
+    factoryOf(::AccountAutoSelectionServiceImpl) bind AccountAutoSelectionService::class
 
     // region: Presentation
     factoryOf(::BarsAuthMainActor)

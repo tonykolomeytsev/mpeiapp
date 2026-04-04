@@ -1,0 +1,7 @@
+plugins {
+    alias(mpeix.plugins.feature.impl)
+}
+
+dependencies {
+    implementation(project(":feature_bars_grades_api"))
+}

@@ -1,6 +1,6 @@
 package com.kekmech.feature_bars_auth_impl.presentation.screens.main.elm
 
-import com.kekmech.feature_bars_auth_api.SelectAccountAutomaticallyUseCase
+import com.kekmech.feature_bars_auth_api.AccountAutoSelectionService
 import com.kekmech.feature_bars_auth_impl.data.AuthRepository
 import com.kekmech.feature_bars_auth_impl.presentation.screens.main.elm.BarsAuthMainEvent.Internal
 import kekmech.ru.lib_elm.actorFlow
@@ -19,7 +19,7 @@ import com.kekmech.feature_bars_auth_impl.presentation.screens.main.elm.BarsAuth
 internal class BarsAuthMainActor(
     private val authRepository: AuthRepository,
     private val router: Router,
-    private val selectAccountAutomaticallyUseCase: SelectAccountAutomaticallyUseCase,
+    private val accountAutoSelectionService: AccountAutoSelectionService,
 ) : Actor<Command, Event>() {
 
     override fun execute(command: Command): Flow<Event> = when (command) {
@@ -41,7 +41,7 @@ internal class BarsAuthMainActor(
             if (command.afterRetry) {
                 delay(3.seconds)
             }
-            selectAccountAutomaticallyUseCase.invoke().fold(
+            accountAutoSelectionService.invoke().fold(
                 ifLeft = Internal::SelectAccountAutomaticallyFailure,
                 ifRight = { Internal.SelectAccountAutomaticallySuccess },
             )

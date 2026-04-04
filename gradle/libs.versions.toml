@@ -1,8 +1,8 @@
 [versions]
 
 agp = "8.12.3" # android gradle plugin
-kotlin = "2.2.10"
-ksp = "2.2.10-2.0.2"
+kotlin = "2.3.20"
+ksp = "2.3.6"
 coroutines = "1.10.2"
 detekt = "1.23.8"
 
@@ -48,9 +48,11 @@ picasso = { module = "com.squareup.picasso:picasso", version = "2.8" }
 coil = { module = "io.coil-kt:coil", version = "2.7.0" }
 facebook-shimmer = { module = "com.facebook.shimmer:shimmer", version = "0.5.0" }
 tinkoff-pagerIndicator = { module = "ru.tinkoff.scrollingpagerindicator:scrollingpagerindicator", version = "1.2.1" }
-kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version = "1.9.0" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version = "1.10.0" }
+kotlinx-serialization-cbor = { module = "org.jetbrains.kotlinx:kotlinx-serialization-cbor", version = "1.10.0" }
 kekmech-perf-sdk = { module = "com.kekmech:perf_sdk", version = "0.5.0-SNAPSHOT" }
 mmkv = { module = "com.tencent:mmkv", version = "1.3.16" }
+mockk-android = { module = "io.mockk:mockk-android", version = "1.14.9" }
 
 # AndroidX Libraries
 androidx-appCompat = { module = "androidx.appcompat:appcompat", version.ref = "appCompat" }

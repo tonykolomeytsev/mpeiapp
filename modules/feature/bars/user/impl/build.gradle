@@ -1,0 +1,17 @@
+plugins {
+    alias(mpeix.plugins.feature.impl)
+    alias(libs.plugins.kotlin.serialization)
+}
+
+dependencies {
+    implementation(libs.koin.android)
+    implementation(libs.arrow.core)
+    implementation(libs.kekmech.perf.sdk)
+    implementation(libs.mmkv)
+    implementation(libs.kotlinx.serialization.cbor)
+    implementation(project(":feature_bars_auth_api"))
+    implementation(project(":feature_bars_user_api"))
+
+    testImplementation(libs.kotlin.test)
+    testImplementation(libs.mockk.android)
+}

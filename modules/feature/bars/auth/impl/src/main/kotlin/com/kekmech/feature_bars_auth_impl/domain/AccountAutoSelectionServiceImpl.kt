@@ -2,14 +2,14 @@ package com.kekmech.feature_bars_auth_impl.domain
 
 import arrow.core.Either
 import arrow.core.raise.either
-import com.kekmech.feature_bars_auth_api.SelectAccountAutomaticallyUseCase
+import com.kekmech.feature_bars_auth_api.AccountAutoSelectionService
 import com.kekmech.feature_bars_auth_api.SelectAccountError
 import com.kekmech.feature_bars_auth_impl.data.AuthRepository
 import kotlinx.coroutines.flow.first
 
-internal class SelectAccountAutomaticallyUseCaseImpl(
+internal class AccountAutoSelectionServiceImpl(
     private val authRepository: AuthRepository,
-) : SelectAccountAutomaticallyUseCase {
+) : AccountAutoSelectionService {
 
     override suspend fun invoke(): Either<SelectAccountError, Unit> = either {
         if (authRepository.subscribeAuthState().first() is InternalAuthState.LoggedIn) {
