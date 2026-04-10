@@ -124,6 +124,7 @@ ktor-serialization-kser = { module = "io.ktor:ktor-serialization-kotlinx-json", 
 
 # Arrow
 arrow-core = { module = "io.arrow-kt:arrow-core", version = "2.2.2" }
+arrow-serialization = { module = "io.arrow-kt:arrow-core-serialization", version = "2.2.2" }
 
 # Jetpack Compose
 ## Compose

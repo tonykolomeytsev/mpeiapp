@@ -16,15 +16,19 @@ internal class CachedUserDataSource(
 ) {
 
     fun put(user: User) {
-        val dto = user.toDto()
-        val bytes = Cbor.encodeToByteArray(dto)
-        cache.encode(CURRENT_USER_KEY, bytes)
+        runCatching {
+            val dto = user.toDto()
+            val bytes = Cbor.encodeToByteArray(dto)
+            cache.encode(CURRENT_USER_KEY, bytes)
+        }
     }
 
     fun get(): User? {
-        val bytes = cache.decodeBytes(CURRENT_USER_KEY) ?: return null
-        val dto = Cbor.decodeFromByteArray<UserDto>(bytes)
-        return dto.toDomain()
+        return runCatching {
+            val bytes = cache.decodeBytes(CURRENT_USER_KEY) ?: return null
+            val dto = Cbor.decodeFromByteArray<UserDto>(bytes)
+            dto.toDomain()
+        }.getOrNull()
     }
 
     private companion object {

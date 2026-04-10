@@ -12,13 +12,14 @@ import com.kekmech.feature_bars_auth_impl.presentation.screens.step1.elm.LoginPa
 import com.kekmech.feature_bars_auth_impl.presentation.screens.step2.elm.TwoFactorActor
 import com.kekmech.feature_bars_auth_impl.presentation.screens.step2.elm.TwoFactorStoreFactory
 import org.koin.core.module.dsl.factoryOf
+import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val FeatureBarsAuthModule = module {
     factoryOf(::AuthRepository)
     factoryOf(::SubscribeToAuthStateUseCaseImpl) bind SubscribeToAuthStateUseCase::class
-    factoryOf(::AccountAutoSelectionServiceImpl) bind AccountAutoSelectionService::class
+    singleOf(::AccountAutoSelectionServiceImpl) bind AccountAutoSelectionService::class
 
     // region: Presentation
     factoryOf(::BarsAuthMainActor)
