@@ -42,8 +42,11 @@ dependencies {
     implementation(libs.mmkv)
     compileOnly(libs.timber)
 
-    implementation(project(":feature_app_settings_api"))
     implementation(project(":feature_bars_api"))
+    implementation(project(":feature_bars_auth_api"))
+    implementation(project(":feature_bars_user_api"))
+    implementation(project(":feature_bars_grades_api"))
+    implementation(project(":feature_app_settings_api"))
     implementation(project(":feature_schedule_api"))
 
     implementation(project(":ext_android"))
@@ -61,6 +64,7 @@ dependencies {
 
     implementation(project(":ui_theme"))
     implementation(project(":ui_shimmer"))
+    implementation(project(":ui_preview"))
     implementation(project(":ui_kit_topappbar"))
     implementation(project(":ui_kit_buttons"))
 

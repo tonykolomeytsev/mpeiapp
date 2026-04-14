@@ -1,6 +1,7 @@
 package kekmech.ru.feature_bars_impl.presentation.screen.main_compose.elm
 
 import kekmech.ru.feature_bars_impl.domain.AssessedDiscipline
+import kekmech.ru.feature_bars_impl.presentation.screen.main_compose.compose.DisciplineItem
 import kekmech.ru.feature_bars_impl.presentation.screen.main_compose.compose.DisciplineUiItem
 import kekmech.ru.lib_elm.Resource
 
@@ -10,7 +11,7 @@ internal data class BarsComposeState(
     val profile: Resource<BarsProfile> = Resource.Loading,
     val isRefreshing: Boolean = false,
     val isLoginRequired: Boolean = false,
-    val disciplines: Resource<List<DisciplineUiItem>> = Resource.Loading,
+    val disciplines: Resource<List<DisciplineItem>> = Resource.Loading,
 )
 
 internal sealed interface AuthStatus {

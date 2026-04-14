@@ -48,7 +48,7 @@ internal fun UserHeader(
 ) {
     Row(
         modifier = modifier
-            .padding(top = 6.dp, bottom = 12.dp)
+            .padding(bottom = 12.dp)
             .fillMaxWidth()
     ) {
         Column(
@@ -60,39 +60,26 @@ internal fun UserHeader(
                 Box(
                     modifier = Modifier
                         .shimmer()
-                        .height(32.dp)
-                        .fillMaxWidth()
+                        .height(40.dp)
+                        .fillMaxWidth(0.75f)
                         .background(
                             color = MpeixTheme.palette.shimmer,
-                            shape = RoundedCornerShape(8.dp),
+                            shape = RoundedCornerShape(100),
                         )
                 )
-            } else {
-                Text(
-                    text = name ?: stringResource(Strings.bars_stub_student_name),
-                    style = LegacyH2,
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis,
+            } else if (group != null && name != null) {
+                ProfileMenu(
+                    onClick = { /* no-op */ },
+                    name = name,
+                    group = group,
                 )
-            }
-            if (group != null && !isLoading) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
-                    modifier = Modifier.padding(top = 8.dp)
-                ) {
-                    Icon(
-                        painter = painterResource(Icons.ic_groups_black_24),
-                        contentDescription = null,
-                        modifier = Modifier.size(18.dp),
-                        tint = MpeixTheme.palette.contentVariant,
-                    )
-                    Text(
-                        text = group,
-                        style = MpeixTheme.typography.labelBig,
-                        color = MpeixTheme.palette.contentVariant,
-                    )
-                }
+            } else {
+//                Text(
+//                    text = stringResource(Strings.bars_stub_student_name),
+//                    style = LegacyH2,
+//                    maxLines = 2,
+//                    overflow = TextOverflow.Ellipsis,
+//                )
             }
         }
         IconButton(

@@ -1,5 +1,8 @@
 package kekmech.ru.mpeiapp.di
 
+import com.kekmech.feature_bars_auth_impl.di.FeatureBarsAuthModule
+import com.kekmech.feature_bars_grades_impl.di.FeatureBarsGradesModule
+import com.kekmech.feature_bars_user_impl.di.FeatureBarsUserModule
 import kekmech.ru.feature_app_settings_impl.di.FeatureAppSettingsModule
 import kekmech.ru.feature_app_update_impl.di.FeatureForceUpdateModule
 import kekmech.ru.feature_bars_impl.di.FeatureBarsModule
@@ -16,6 +19,9 @@ import kekmech.ru.feature_search_impl.di.FeatureSearchFeatureModule
 internal val FeatureModules = arrayOf(
     FeatureAppSettingsModule,
     FeatureBarsModule,
+    FeatureBarsAuthModule,
+    FeatureBarsUserModule,
+    FeatureBarsGradesModule,
     FeatureDashboardModule,
     FeatureForceUpdateModule,
     FeatureMapModule,

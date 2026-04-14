@@ -206,7 +206,7 @@
     <string name="all_notes_empty_state_subtitle">Для создания заметки нажмите на любую пару в разделе расписания</string>
     <string name="all_notes_search_menu_item">Поиск</string>
 
-    <string name="bars_stub_student_name">Анонимный Пользователь</string>
+    <string name="bars_stub_student_name">Успеваемость</string>
     <string name="bars_stub_student_group">Группа</string>
     <string name="bars_stub_login_header">Вы не вошли в БАРС</string>
     <string name="bars_stub_login_description">Вход в БАРС осуществляется прямо в приложении, после этого вводить логин и пароль больше не нужно</string>
