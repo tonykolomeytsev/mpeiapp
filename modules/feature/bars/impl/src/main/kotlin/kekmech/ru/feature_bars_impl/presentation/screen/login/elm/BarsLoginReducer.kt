@@ -33,8 +33,16 @@ internal class BarsLoginReducer :
             }
 
             is Internal.CheckAuthStatusFailure -> {
-                // Should never fail in this version of lib_bars due to lack of network activity (nothing to fall)
-                // Will fix this state in future releases
+                // auth.init() performs a network request and can fail (e.g. BARS is down
+                // or the request timed out). Show the login screen with an error instead
+                // of hanging on the loading stage forever.
+                state { copy(stage = BarsLoginStage.LOGIN_PASSWORD) }
+                loginPasswordState {
+                    copy(
+                        failure = event.throwable,
+                        isLoading = false,
+                    )
+                }
             }
 
             is Internal.LoginWithPasswordSuccess -> {
@@ -62,7 +70,12 @@ internal class BarsLoginReducer :
             }
 
             is Internal.LoginWithPasswordFailure -> {
-                loginPasswordState { copy(failure = event.throwable) }
+                loginPasswordState {
+                    copy(
+                        failure = event.throwable,
+                        isLoading = false,
+                    )
+                }
             }
 
             is Internal.RequestTwoFactorCodeSuccess -> {
@@ -91,7 +104,17 @@ internal class BarsLoginReducer :
             }
 
             is Internal.RequestTwoFactorCodeFailure -> {
-                twoFactorCodeState { copy(failure = event.throwable) }
+                twoFactorCodeState {
+                    copy(
+                        failure = event.throwable,
+                        isLoading = false,
+                        // Restore the resend links so the user can retry with the same
+                        // or another provider after a failed code request
+                        codeState = (codeState as? CodeState.SendingCode)
+                            ?.let { CodeState.CodeSent(it.provider, resendDebounceSec = 0) }
+                            ?: codeState,
+                    )
+                }
             }
 
             is Internal.Submit2faCodeSuccess -> {
@@ -106,7 +129,12 @@ internal class BarsLoginReducer :
             }
 
             is Internal.Submit2faCodeFailure -> {
-                twoFactorCodeState { copy(failure = event.throwable) }
+                twoFactorCodeState {
+                    copy(
+                        failure = event.throwable,
+                        isLoading = false,
+                    )
+                }
             }
 
             is Internal.GetAccountsSuccess -> {
@@ -126,7 +154,12 @@ internal class BarsLoginReducer :
             }
 
             is Internal.GetAccountsFailure -> {
-                accountSelectionState { copy(failure = event.throwable) }
+                accountSelectionState {
+                    copy(
+                        failure = event.throwable,
+                        isLoading = false,
+                    )
+                }
             }
         }
 
