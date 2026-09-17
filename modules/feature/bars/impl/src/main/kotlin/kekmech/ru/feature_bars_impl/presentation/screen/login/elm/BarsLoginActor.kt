@@ -29,11 +29,19 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.withTimeoutOrNull
 import money.vivid.elmslie.core.store.Actor
 import kekmech.ru.feature_bars_impl.presentation.screen.login.elm.BarsLoginCommand as Command
 import kekmech.ru.feature_bars_impl.presentation.screen.login.elm.BarsLoginEvent as Event
 
 private const val TWO_FACTOR_DEBOUNCE_SEC = 30
+
+/**
+ * bars.mpei.ru is unstable and sometimes accepts a TCP connection but never responds.
+ * lib_bars has no call timeout of its own, so without this guard the login screen
+ * would show an endless loading state.
+ */
+private const val BARS_REQUEST_TIMEOUT_MS = 30_000L
 
 internal class BarsLoginActor(
     private val barsHandle: BarsHandle,
@@ -46,7 +54,10 @@ internal class BarsLoginActor(
     override fun execute(command: Command): Flow<Event> =
         when (command) {
             is Command.CheckAuthStatus -> actorFlow {
-                when (barsHandle.auth.init()) {
+                val initResult = withTimeoutOrNull(BARS_REQUEST_TIMEOUT_MS) {
+                    barsHandle.auth.init()
+                } ?: error("BARS request timeout: auth.init")
+                when (initResult) {
                     is InitResult.LoginRequired -> AuthStatus.LoginRequired
                     is InitResult.AccountSelectionRequired -> AuthStatus.AccountSelectionRequired
                     is InitResult.AlreadyLoggedIn -> AuthStatus.LoggedIn
@@ -65,13 +76,15 @@ internal class BarsLoginActor(
             )
 
             is Command.LoginWithPassword -> actorFlow {
-                val loginResult = barsHandle.auth.login(
-                    data = LoginData(
-                        username = command.login,
-                        password = command.password,
-                        remember = false,
+                val loginResult = withTimeoutOrNull(BARS_REQUEST_TIMEOUT_MS) {
+                    barsHandle.auth.login(
+                        data = LoginData(
+                            username = command.login,
+                            password = command.password,
+                            remember = false,
+                        )
                     )
-                )
+                } ?: error("BARS request timeout: auth.login")
                 when (loginResult) {
                     is LoginResult.WrongCredentials -> LoginStatus.WrongCredentials
                     is LoginResult.Success -> LoginStatus.AccountSelectionRequired
@@ -94,7 +107,10 @@ internal class BarsLoginActor(
             )
 
             is Command.RequestTwoFactorCode -> actorFlow {
-                when (barsHandle.auth.requestTwoFactorCode(command.provider.toLib())) {
+                val requestResult = withTimeoutOrNull(BARS_REQUEST_TIMEOUT_MS) {
+                    barsHandle.auth.requestTwoFactorCode(command.provider.toLib())
+                } ?: error("BARS request timeout: auth.requestTwoFactorCode")
+                when (requestResult) {
                     RequestTwoFactorResult.Error -> error("Unable to send code")
                     RequestTwoFactorResult.Success -> Unit
                 }
@@ -124,13 +140,15 @@ internal class BarsLoginActor(
             }.mapEvents(::SubscribeTwoFactorCodeTimerSuccess)
 
             is Command.Submit2faCode -> actorFlow {
-                val result = barsHandle.auth.submitTwoFactorCode(
-                    data = TwoFactorData(
-                        username = command.login,
-                        code = command.code,
-                        remember = false,
-                    ),
-                )
+                val result = withTimeoutOrNull(BARS_REQUEST_TIMEOUT_MS) {
+                    barsHandle.auth.submitTwoFactorCode(
+                        data = TwoFactorData(
+                            username = command.login,
+                            code = command.code,
+                            remember = false,
+                        ),
+                    )
+                } ?: error("BARS request timeout: auth.submitTwoFactorCode")
                 when (result) {
                     is SubmitTwoFactorResult.AccountSelectionRequired,
                     is SubmitTwoFactorResult.Success -> TwoFactorCodeStatus.AccountSelectionRequired
@@ -152,7 +170,10 @@ internal class BarsLoginActor(
             )
 
             is Command.GetAccounts -> actorFlow {
-                val accounts = when (val result = barsHandle.auth.getStudentList()) {
+                val listResult = withTimeoutOrNull(BARS_REQUEST_TIMEOUT_MS) {
+                    barsHandle.auth.getStudentList()
+                } ?: error("BARS request timeout: auth.getStudentList")
+                val accounts = when (val result = listResult) {
                     is GetStudentListResult.Success -> result.list.map { it.toDomain() }
                     is GetStudentListResult.Error -> error("Error while getting accounts")
                 }
@@ -172,7 +193,9 @@ internal class BarsLoginActor(
             )
 
             is Command.SubmitAccountId -> actorFlow {
-                barsHandle.auth.selectStudentById(command.id)
+                withTimeoutOrNull(BARS_REQUEST_TIMEOUT_MS) {
+                    barsHandle.auth.selectStudentById(command.id)
+                } ?: error("BARS request timeout: auth.selectStudentById")
                 barsRepository.saveCurrentUserId(command.id)
                 barsRepository.loginStateTrigger.emit(Unit)
                 withContext(Dispatchers.Main) {

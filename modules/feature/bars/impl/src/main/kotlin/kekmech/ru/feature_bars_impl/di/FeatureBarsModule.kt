@@ -7,6 +7,7 @@ import kekmech.ru.feature_bars_api.BarsLogoutHandle
 import kekmech.ru.feature_bars_impl.data.datasource.BarsConfigDataSource
 import kekmech.ru.feature_bars_impl.data.datasource.BarsExtractJsDataSource
 import kekmech.ru.feature_bars_impl.data.network.BarsService
+import kekmech.ru.feature_bars_impl.data.network.BarsTwoFactorCompatInterceptor
 import kekmech.ru.feature_bars_impl.data.repository.BarsConfigRepository
 import kekmech.ru.feature_bars_impl.data.repository.BarsExtractJsRepository
 import kekmech.ru.feature_bars_impl.data.repository.BarsRepository
@@ -46,6 +47,7 @@ val FeatureBarsModule = module {
     single {
         val loggingInterceptor = getAll<Interceptor>().find { it is HttpLoggingInterceptor }
         BarsHandle(androidApplication(),get()) {
+            addNetworkInterceptor(BarsTwoFactorCompatInterceptor())
             loggingInterceptor?.let(::addNetworkInterceptor)
             this
         }
