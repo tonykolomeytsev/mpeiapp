@@ -58,9 +58,11 @@ internal class BarsLoginActor(
     override fun execute(command: Command): Flow<Event> =
         when (command) {
             is Command.CheckAuthStatus -> actorFlow {
+                timber.log.Timber.d("BarsLoginActor: Starting auth.init()")
                 val initResult = withTimeoutOrNull(BARS_REQUEST_TIMEOUT_MS) {
                     barsHandle.auth.init()
                 } ?: error("BARS request timeout: auth.init")
+                timber.log.Timber.d("BarsLoginActor: Init result: ${initResult.javaClass.simpleName}")
                 when (initResult) {
                     is InitResult.LoginRequired -> AuthStatus.LoginRequired
                     is InitResult.AccountSelectionRequired -> AuthStatus.AccountSelectionRequired
@@ -80,7 +82,9 @@ internal class BarsLoginActor(
             )
 
             is Command.LoginWithPassword -> actorFlow {
+                timber.log.Timber.d("BarsLoginActor: Starting login with username=${command.login}")
                 val loginResult = withTimeoutOrNull(BARS_REQUEST_TIMEOUT_MS) {
+                    timber.log.Timber.d("BarsLoginActor: Calling barsHandle.auth.login()")
                     barsHandle.auth.login(
                         data = LoginData(
                             username = command.login,
@@ -89,20 +93,18 @@ internal class BarsLoginActor(
                         )
                     )
                 } ?: error("BARS request timeout: auth.login")
+                timber.log.Timber.d("BarsLoginActor: Login result: ${loginResult.javaClass.simpleName}")
                 when (loginResult) {
                     is LoginResult.WrongCredentials -> LoginStatus.WrongCredentials
                     is LoginResult.Success -> LoginStatus.AccountSelectionRequired
                     is LoginResult.TwoFactorRequired -> {
                         val defaultProvider = loginResult.defaultProvider.toDomain()
-                        // lib_bars may detect only the default provider on the 2FA page.
-                        // Offer all known providers for resending the code; if the account
-                        // has no linked messenger for one of them, the server simply
-                        // returns an error which is shown to the user.
                         val providers = (
                             loginResult.availableProviders.map { it.toDomain() } +
-                                CodeProvider.entries
+                                listOf(CodeProvider.EMAIL, CodeProvider.MAX)
                             )
                             .distinct()
+                            .filter { it == CodeProvider.EMAIL || it == CodeProvider.MAX }
                             .sortedByDescending { it == defaultProvider }
                         LoginStatus.TwoFactorRequired(
                             defaultProvider = defaultProvider,
@@ -233,7 +235,7 @@ internal class BarsLoginActor(
         when (this) {
             TwoFactorProvider.MAX -> CodeProvider.MAX
             TwoFactorProvider.VK -> CodeProvider.VK
-            TwoFactorProvider.TG -> CodeProvider.TG
+            TwoFactorProvider.TG -> CodeProvider.EMAIL
         }
 
     private fun CodeProvider.toLib(): TwoFactorProvider =
@@ -241,6 +243,8 @@ internal class BarsLoginActor(
             CodeProvider.MAX -> TwoFactorProvider.MAX
             CodeProvider.VK -> TwoFactorProvider.VK
             CodeProvider.TG -> TwoFactorProvider.TG
+            // Map EMAIL to TG (ID 1) - BarsTwoFactorCompatInterceptor rewrites tid=1 to tid=5 on the wire
+            CodeProvider.EMAIL -> TwoFactorProvider.TG
         }
 
     private fun StudentEntry.toDomain(): Account =

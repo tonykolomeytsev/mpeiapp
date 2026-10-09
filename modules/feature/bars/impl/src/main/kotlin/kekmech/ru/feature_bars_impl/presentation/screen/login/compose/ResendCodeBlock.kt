@@ -105,6 +105,7 @@ private fun CodeProvider.humanReadableName(): String =
         CodeProvider.MAX -> "MAX"
         CodeProvider.VK -> "Вконтакте"
         CodeProvider.TG -> "Telegram"
+        CodeProvider.EMAIL -> "Email"
     }
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)

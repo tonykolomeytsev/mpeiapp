@@ -90,7 +90,7 @@ internal fun BarsTwoFactorCodeScreen(
                 },
                 modifier = Modifier.fillMaxWidth(),
                 shape = shape,
-                label = { Text("Код из мессенджера") },
+                label = { Text("Код подтверждения") },
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
                 singleLine = true,
                 supportingText = {

@@ -53,6 +53,27 @@ internal class BarsTwoFactorCompatInterceptorTest : StringSpec({
         return interceptor.intercept(chain)
     }
 
+    "intercept rewrites 2FA page with provider 5 (email) as default" {
+        val html = """
+            <html>
+            <body>
+            <a id="btnSend" href="#" onclick="af2_code_send('btnSend', '/bars_web/Auth/JSON_SendAF2_Code', '5', '6');" data-text="Войти по одноразовому коду">
+            <a id="btnSend3" href="#" onclick="af2_code_send('btnSend3', '/bars_web/Auth/JSON_SendAF2_Code', '3', '4');" data-text="Отправить повторно через МАКС">
+            </body>
+            </html>
+        """.trimIndent()
+
+        val response = execute(html)
+        val body = response.body?.string().orEmpty()
+
+        // Provider 5 (email) should be mapped to provider 1 (legacy slot in lib_bars)
+        body shouldContain "af2_code_send('btnSend', '/bars_web/Auth/JSON_SendAF2_Code', '1')"
+        // Provider 3 (MAX) remains provider 3
+        body shouldContain "af2_code_send('btnSend', '/bars_web/Auth/JSON_SendAF2_Code', '3')"
+        body shouldContain "lib_bars_compat_shim"
+        body shouldContain "onclick=\" af2_code_send"
+    }
+
     "intercept rewrites 2FA page with telegram button first" {
         val html = """
             <html>
@@ -134,5 +155,65 @@ internal class BarsTwoFactorCompatInterceptorTest : StringSpec({
 
         body shouldContain "lib_bars_compat_shim"
         body shouldContain "af2_code_send('btnSend', '/bars_web/Auth/JSON_SendAF2_Code', '3')"
+    }
+
+    "intercept rewrites outgoing request tid=1 to tid=5 for Email" {
+        var passedRequest: Request? = null
+        val chain = object : Interceptor.Chain {
+            override fun request(): Request = Request.Builder()
+                .url("https://bars.mpei.ru/bars_web/Auth/JSON_SendAF2_Code?tid=1")
+                .build()
+            override fun proceed(request: Request): Response {
+                passedRequest = request
+                return Response.Builder()
+                    .request(request)
+                    .protocol(Protocol.HTTP_1_1)
+                    .code(200)
+                    .message("OK")
+                    .body("{}".toResponseBody("application/json".toMediaType()))
+                    .build()
+            }
+            override fun connection() = null
+            override fun call() = throw UnsupportedOperationException()
+            override fun connectTimeoutMillis() = 0
+            override fun withConnectTimeout(timeout: Int, unit: java.util.concurrent.TimeUnit) = this
+            override fun readTimeoutMillis() = 0
+            override fun withReadTimeout(timeout: Int, unit: java.util.concurrent.TimeUnit) = this
+            override fun writeTimeoutMillis() = 0
+            override fun withWriteTimeout(timeout: Int, unit: java.util.concurrent.TimeUnit) = this
+        }
+
+        interceptor.intercept(chain)
+        passedRequest?.url?.queryParameter("tid") shouldBe "5"
+    }
+
+    "intercept keeps outgoing request tid=3 untouched for MAX" {
+        var passedRequest: Request? = null
+        val chain = object : Interceptor.Chain {
+            override fun request(): Request = Request.Builder()
+                .url("https://bars.mpei.ru/bars_web/Auth/JSON_SendAF2_Code?tid=3")
+                .build()
+            override fun proceed(request: Request): Response {
+                passedRequest = request
+                return Response.Builder()
+                    .request(request)
+                    .protocol(Protocol.HTTP_1_1)
+                    .code(200)
+                    .message("OK")
+                    .body("{}".toResponseBody("application/json".toMediaType()))
+                    .build()
+            }
+            override fun connection() = null
+            override fun call() = throw UnsupportedOperationException()
+            override fun connectTimeoutMillis() = 0
+            override fun withConnectTimeout(timeout: Int, unit: java.util.concurrent.TimeUnit) = this
+            override fun readTimeoutMillis() = 0
+            override fun withReadTimeout(timeout: Int, unit: java.util.concurrent.TimeUnit) = this
+            override fun writeTimeoutMillis() = 0
+            override fun withWriteTimeout(timeout: Int, unit: java.util.concurrent.TimeUnit) = this
+        }
+
+        interceptor.intercept(chain)
+        passedRequest?.url?.queryParameter("tid") shouldBe "3"
     }
 })

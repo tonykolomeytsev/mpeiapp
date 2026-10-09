@@ -34,7 +34,12 @@ internal sealed interface CodeState {
     ) : CodeState
 }
 
-internal enum class CodeProvider { MAX, VK, TG }
+internal enum class CodeProvider { 
+    MAX,   // Provider ID 3 - МАКС messenger
+    VK,    // Provider ID 2 - ВКонтакте (legacy, may not be available)
+    TG,    // Provider ID 1 - Telegram (legacy, may not be available)
+    EMAIL  // Provider ID 5 - Email (одноразовый код)
+}
 
 internal data class BarsAccountSelectionState(
     val selectedAccountId: String? = null,
