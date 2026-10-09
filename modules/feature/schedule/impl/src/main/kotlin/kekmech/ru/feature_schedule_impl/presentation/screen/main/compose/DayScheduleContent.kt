@@ -37,6 +37,7 @@ internal fun DayScheduleContent(
     errorMessage: String?,
     onClassesClick: (Classes) -> Unit,
     onReloadClick: () -> Unit,
+    isFilterActive: Boolean = false,
     modifier: Modifier = Modifier,
 ) {
     Box(
@@ -63,7 +64,11 @@ internal fun DayScheduleContent(
             }
 
             classesList.isNullOrEmpty() -> {
-                SelfStudyContent()
+                if (isFilterActive) {
+                    FilterEmptyContent()
+                } else {
+                    SelfStudyContent()
+                }
             }
 
             else -> {
@@ -182,3 +187,41 @@ private fun ErrorStateContent(
         }
     }
 }
+
+@Composable
+private fun FilterEmptyContent() {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(24.dp),
+        contentAlignment = Alignment.Center,
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+        ) {
+            Text(
+                text = "🔍",
+                fontSize = 44.sp,
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            Text(
+                text = "Занятия не найдены",
+                style = MpeixTheme.typography.header3.copy(
+                    fontWeight = FontWeight.Bold,
+                    color = MpeixTheme.palette.content,
+                    textAlign = TextAlign.Center,
+                ),
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = "В этот день нет пар, подходящих под выбранные фильтры. Выберите другой день или сбросьте параметры поиска.",
+                style = MpeixTheme.typography.paragraphNormal.copy(
+                    color = MpeixTheme.palette.contentVariant,
+                    textAlign = TextAlign.Center,
+                ),
+            )
+        }
+    }
+}
+

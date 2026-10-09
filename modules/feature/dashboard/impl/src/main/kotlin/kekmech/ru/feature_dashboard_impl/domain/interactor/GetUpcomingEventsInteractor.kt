@@ -23,13 +23,15 @@ internal class GetUpcomingEventsInteractor(
         val currentDate = moscowLocalDate()
         val currentTime = moscowLocalTime()
         val days = mutableListOf<Day>()
-        for (i in 0..1) {
-            getCurrentScheduleUseCase
-                .getSchedule(weekOffset = i)
-                .let { attachNotesToScheduleService.attach(it) }
-                .weeks
-                .flatMap(Week::days)
-                .let { days.addAll(it) }
+        for (i in 0..2) {
+            runCatching {
+                getCurrentScheduleUseCase
+                    .getSchedule(weekOffset = i)
+                    .let { attachNotesToScheduleService.attach(it) }
+                    .weeks
+                    .flatMap(Week::days)
+                    .let { days.addAll(it) }
+            }
         }
         days.sortBy(Day::date)
         days.retainAll { day ->
@@ -38,7 +40,7 @@ internal class GetUpcomingEventsInteractor(
                 day.classes.any { cls -> cls.time.end > currentTime }
             } else {
                 // keep all future classes
-                day.date > currentDate
+                day.date > currentDate && day.classes.isNotEmpty()
             }
         }
         return createPredictionFromDays(
@@ -67,7 +69,19 @@ internal class GetUpcomingEventsInteractor(
             if (inProgressClasses != null) {
                 predictClassesTodayStarted(actualDay, currentTime, inProgressClasses)
             } else {
-                predictClassesTodayNotStarted(actualDay, currentTime)
+                val futureClasses = actualDay
+                    .classes
+                    .filter { cls -> cls.time.start > currentTime }
+                if (futureClasses.isNotEmpty()) {
+                    predictClassesTodayNotStarted(actualDay, currentTime, futureClasses)
+                } else {
+                    val nextDays = days.drop(1)
+                    if (nextDays.isNotEmpty()) {
+                        predictClassesInNDays(nextDays.first(), currentDate, currentTime)
+                    } else {
+                        UpcomingEventsPrediction.NoClassesNextWeek
+                    }
+                }
             }
         } else {
             predictClassesInNDays(actualDay, currentDate, currentTime)
@@ -78,18 +92,19 @@ internal class GetUpcomingEventsInteractor(
         actualDay: Day,
         currentDate: LocalDate,
         currentTime: LocalTime,
-    ): UpcomingEventsPrediction.ClassesInNDays {
+    ): UpcomingEventsPrediction {
         // in the future days we can have only classes in future
-        val firstClassesStartDateTime = actualDay
-            .classes
-            .first()
+        val firstClass = actualDay.classes.firstOrNull()
+            ?: return UpcomingEventsPrediction.NoClassesNextWeek
+        val firstClassesStartDateTime = firstClass
             .time
             .start
             .atDate(actualDay.date)
-        val timeLeft = currentDate
-            .atTime(currentTime)
+        val currentDateTime = currentDate.atTime(currentTime)
+        val secondsUntil = currentDateTime
             .until(firstClassesStartDateTime, ChronoUnit.SECONDS)
-            .toDuration(DurationUnit.SECONDS)
+            .coerceAtLeast(0)
+        val timeLeft = secondsUntil.toDuration(DurationUnit.SECONDS)
         return UpcomingEventsPrediction.ClassesInNDays(
             date = actualDay.date,
             dayOffset = currentDate.until(actualDay.date, ChronoUnit.DAYS).toInt(),
@@ -101,13 +116,12 @@ internal class GetUpcomingEventsInteractor(
     private fun predictClassesTodayNotStarted(
         actualDay: Day,
         currentTime: LocalTime,
+        futureClasses: List<Classes>,
     ): UpcomingEventsPrediction.ClassesTodayNotStarted {
-        // we do not have classes in progress, only future classes
-        val futureClasses = actualDay
-            .classes
-            .filter { cls -> cls.time.start > currentTime }
+        val firstStart = futureClasses.firstOrNull()?.time?.start ?: currentTime
         val timeLeft = currentTime
-            .until(futureClasses.first().time.start, ChronoUnit.SECONDS)
+            .until(firstStart, ChronoUnit.SECONDS)
+            .coerceAtLeast(0)
             .toDuration(DurationUnit.SECONDS)
         return UpcomingEventsPrediction.ClassesTodayNotStarted(
             timeLeft = timeLeft,

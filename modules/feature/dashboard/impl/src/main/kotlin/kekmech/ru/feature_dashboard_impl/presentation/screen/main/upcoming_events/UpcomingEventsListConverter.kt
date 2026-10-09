@@ -132,22 +132,23 @@ internal class UpcomingEventsListConverter(
                 SpaceItem.VERTICAL_12,
             )
         )
-        if (prediction.dayOffset < 2) {
-            addTimePredictionItem(prediction.timeLeft)
-        }
+        addTimePredictionItem(prediction.timeLeft)
         addAll(prediction.futureClasses.handleClasses(selectedScheduleType))
     }
 
     private fun MutableList<Any>.addTimePredictionItem(timeLeft: Duration) {
-        val hours = timeLeft.inWholeHours
-
-        @Suppress("MagicNumber")
+        val totalHours = timeLeft.inWholeHours
+        val days = timeLeft.inWholeDays
+        val hours = totalHours % 24
         val minutes = timeLeft.inWholeMinutes % 60
         val prefix = context.getString(Strings.dashboard_item_time_prediction_prefix)
-        val formattedHoursMinutes =
-            TimeDeclensionHelper.formatHoursMinutes(context, hours, minutes)
-        if (formattedHoursMinutes.isNotBlank()) {
-            add(TextItem("$prefix $formattedHoursMinutes"))
+        val formattedTime = if (days > 0) {
+            TimeDeclensionHelper.formatDaysHoursMinutes(context, days, hours, minutes)
+        } else {
+            TimeDeclensionHelper.formatHoursMinutes(context, totalHours, minutes)
+        }
+        if (formattedTime.isNotBlank()) {
+            add(TextItem("$prefix $formattedTime"))
         }
     }
 

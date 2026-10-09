@@ -17,6 +17,13 @@ internal object TimeDeclensionHelper {
         return "${format(decHours, h)} ${format(decMinutes, m)}".trim()
     }
 
+    fun formatDaysHoursMinutes(context: Context, d: Long, h: Long, m: Long): String {
+        val decDays = context.getStringArray(StringArrays.days_declensions)
+        val formattedDays = if (d > 0) "${format(decDays, d)} " else ""
+        val formattedHoursMinutes = formatHoursMinutes(context, h, m)
+        return "$formattedDays$formattedHoursMinutes".trim()
+    }
+
     @Suppress("MagicNumber")
     private fun format(declensions: Array<String>, n: Long): String {
         if (n == 0L) return ""

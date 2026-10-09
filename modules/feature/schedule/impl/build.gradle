@@ -65,6 +65,7 @@ dependencies {
     implementation(project(":ui_kit_dialogs"))
     implementation(project(":ui_kit_buttons"))
     implementation(project(":ui_icons"))
+    implementation(project(":res_icons"))
     implementation(project(":coreui"))
     implementation(project(":res_strings"))
 }
