@@ -42,12 +42,13 @@ internal fun ClassesItemCard(
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(12.dp))
+            .clip(RoundedCornerShape(16.dp))
             .clickable(onClick = onClick),
-        shape = RoundedCornerShape(12.dp),
+        shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
             containerColor = MpeixTheme.palette.surfacePlus1,
         ),
+        border = androidx.compose.foundation.BorderStroke(1.dp, MpeixTheme.palette.outline.copy(alpha = 0.25f)),
         elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
     ) {
         Column(
@@ -108,10 +109,10 @@ internal fun ClassesItemCard(
             // Place / auditorium
             if (classes.place.isNotBlank()) {
                 Text(
-                    text = classes.place,
+                    text = "📍 ${classes.place}",
                     style = MpeixTheme.typography.paragraphNormal.copy(
-                        color = MpeixTheme.palette.contentAccent,
-                        fontWeight = FontWeight.Medium,
+                        color = MpeixTheme.palette.primary,
+                        fontWeight = FontWeight.SemiBold,
                     ),
                 )
                 Spacer(modifier = Modifier.height(4.dp))
@@ -120,7 +121,7 @@ internal fun ClassesItemCard(
             // Person / Lecturer
             if (classes.person.isNotBlank()) {
                 Text(
-                    text = classes.person,
+                    text = "👤 ${classes.person}",
                     style = MpeixTheme.typography.paragraphNormal.copy(
                         color = MpeixTheme.palette.contentVariant,
                     ),

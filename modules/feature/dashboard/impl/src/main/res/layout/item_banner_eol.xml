@@ -5,18 +5,18 @@
     android:layout_height="wrap_content"
     android:layout_marginStart="16dp"
     android:layout_marginEnd="16dp"
-    android:layout_marginBottom="8dp"
-    android:elevation="4dp"
+    android:layout_marginBottom="12dp"
+    android:elevation="2dp"
     android:foreground="?attr/selectableItemBackground"
     app:cardBackgroundColor="?attr/cardViewColor"
-    app:cardCornerRadius="8dp">
+    app:cardCornerRadius="16dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="112dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="80dp"
+        android:layout_marginBottom="14dp"
         android:orientation="vertical"
         android:paddingStart="16dp"
         android:paddingEnd="16dp">
@@ -25,19 +25,28 @@
             android:id="@+id/bannerHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto_medium"
+            android:fontFamily="@font/roboto_bold"
             android:text="@string/dashboard_banner_eol"
-            android:textColor="?attr/colorBlack"
+            android:textColor="?attr/colorMain"
             android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/bannerSubtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/roboto_regular"
+            android:text="@string/dashboard_banner_eol_desc"
+            android:textColor="?attr/colorGray70"
+            android:textSize="13sp" />
 
     </LinearLayout>
 
     <ImageView
-        android:layout_width="58dp"
-        android:layout_height="58dp"
-        android:layout_gravity="end|bottom"
-        android:layout_marginEnd="-20dp"
-        android:layout_marginBottom="-12dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="end|center_vertical"
+        android:layout_marginEnd="16dp"
         android:importantForAccessibility="no"
-        android:src="@drawable/ic_banner_eol" />
+        android:src="@drawable/ic_banner_open_source" />
 </androidx.cardview.widget.CardView>

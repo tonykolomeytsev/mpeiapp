@@ -50,7 +50,6 @@ internal class MarkersBitmapFactory(
             setBounds(0, 0, iconWidth / 2, iconHeight / 2)
         }
     private val font = ResourcesCompat.getFont(context, coreui_R.font.roboto_medium)
-    private val bitmap = Bitmap.createBitmap(iconWidth, iconHeight, Bitmap.Config.ARGB_8888)
     private val pinkColor = context.getResColor(coreui_R.color.colorPink)
     private val greenColor = context.getResColor(coreui_R.color.colorGreen)
     private val blueColor = context.getResColor(coreui_R.color.colorMain)
@@ -71,21 +70,20 @@ internal class MarkersBitmapFactory(
     }
 
     fun getBitmap(mapMarker: MapMarker): Bitmap {
+        val markerBitmap = Bitmap.createBitmap(iconWidth, iconHeight, Bitmap.Config.ARGB_8888)
         val emoji = emojiProvider.provideEmoji(mapMarker.icon.orEmpty())
         if (emoji != null) {
             emoji.setBounds(0, 0, iconWidth, iconHeight)
-            val canvas = Canvas(bitmap)
-            canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR)
+            val canvas = Canvas(markerBitmap)
             emoji.draw(canvas)
-            return bitmap
+            return markerBitmap
         }
 
-        val canvas = Canvas(bitmap)
-        canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR)
+        val canvas = Canvas(markerBitmap)
         defaultDrawable.setTint(getTintColor(mapMarker.type))
         defaultDrawable.draw(canvas)
         drawDecor(mapMarker, canvas)
-        return bitmap
+        return markerBitmap
     }
 
     private fun getTintColor(markerType: MarkerType) = when (markerType) {

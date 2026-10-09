@@ -194,6 +194,7 @@ internal class MapFragment : Fragment(R.layout.fragment_map),
                 Marker(map).apply {
                     title = markerData.name
                     snippet = markerData.address
+                    subDescription = markerData.tag
                     position = GeoPoint(markerData.location.lat, markerData.location.lng)
                     icon = BitmapDrawable(resources, markersBitmapFactory.getBitmap(markerData))
                     setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
