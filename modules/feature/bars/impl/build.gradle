@@ -15,6 +15,11 @@ android{
 }
 
 dependencies {
+    testImplementation(libs.kotest.assertions)
+    testImplementation(libs.kotest.property)
+    testImplementation(libs.kotest.runner)
+    testImplementation(libs.kotlin.test)
+
     implementation(libs.bundles.compose)
     implementation(libs.compose.material3)
 
