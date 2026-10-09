@@ -1,5 +1,6 @@
 package kekmech.ru.mpeiapp.ui.main.di
 
+import kekmech.ru.feature_app_settings_api.AppSettingsFeatureLauncher
 import kekmech.ru.feature_app_settings_api.IsSnowFlakesEnabledFeatureToggle
 import kekmech.ru.feature_app_settings_api.data.AppSettingsRepository
 import kekmech.ru.feature_app_update_api.ForceUpdateChecker
@@ -15,6 +16,7 @@ data class MainScreenDependencies(
     val scheduleFeatureApi: ScheduleFeatureApi,
     val barsFeatureLauncher: BarsFeatureLauncher,
     val mapFeatureLauncher: MapFeatureLauncher,
+    val appSettingsFeatureLauncher: AppSettingsFeatureLauncher,
     val forceUpdateChecker: ForceUpdateChecker,
     val isSnowFlakesEnabledFeatureToggle: IsSnowFlakesEnabledFeatureToggle,
     val appSettingsRepository: AppSettingsRepository,

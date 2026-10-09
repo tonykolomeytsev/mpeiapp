@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import kekmech.ru.feature_app_settings_api.AppSettingsFeatureLauncher
 import kekmech.ru.feature_bars_api.BarsFeatureLauncher
 import kekmech.ru.feature_dashboard_api.DashboardFeatureLauncher
 import kekmech.ru.feature_map_api.MapFeatureLauncher
@@ -26,6 +27,7 @@ class BottomBarController(
     private val scheduleFeatureApi: ScheduleFeatureApi,
     private val barsFeatureLauncher: BarsFeatureLauncher,
     private val mapFeatureLauncher: MapFeatureLauncher,
+    private val appSettingsFeatureLauncher: AppSettingsFeatureLauncher,
     private val onNewTabSelected: () -> Unit,
 ) {
 
@@ -41,6 +43,7 @@ class BottomBarController(
         val tab = when (item.itemId) {
             R.id.navigation_dashboard -> BottomTab.DASHBOARD
             R.id.navigation_schedule -> BottomTab.SCHEDULE
+            R.id.navigation_bars -> BottomTab.BARS
             R.id.navigation_map -> BottomTab.MAP
             R.id.navigation_profile -> BottomTab.PROFILE
             else -> null
@@ -102,6 +105,7 @@ class BottomBarController(
     private fun getItemByTab(tab: BottomTab) = when (tab) {
         BottomTab.DASHBOARD -> R.id.navigation_dashboard
         BottomTab.SCHEDULE -> R.id.navigation_schedule
+        BottomTab.BARS -> R.id.navigation_bars
         BottomTab.MAP -> R.id.navigation_map
         BottomTab.PROFILE -> R.id.navigation_profile
     }
@@ -109,7 +113,8 @@ class BottomBarController(
     private fun createTabFragment(tab: BottomTab): Fragment = when (tab) {
         BottomTab.DASHBOARD -> dashboardFeatureLauncher.getScreen()
         BottomTab.SCHEDULE -> scheduleFeatureApi.getTabScreen()
+        BottomTab.BARS -> barsFeatureLauncher.launchMain()
         BottomTab.MAP -> mapFeatureLauncher.launchMain()
-        BottomTab.PROFILE -> barsFeatureLauncher.launchMain()
+        BottomTab.PROFILE -> appSettingsFeatureLauncher.getScreen()
     }.apply { (this as? TabScreenStateSaver)?.restoreBundle(bundle) }
 }

@@ -12,6 +12,11 @@
             android:title="@string/navigation_name_schedule"/>
 
     <item
+            android:id="@+id/navigation_bars"
+            android:icon="@drawable/ic_navigation_bars"
+            android:title="@string/navigation_name_bars"/>
+
+    <item
             android:id="@+id/navigation_map"
             android:icon="@drawable/ic_navigation_map"
             android:title="@string/navigation_name_map"/>

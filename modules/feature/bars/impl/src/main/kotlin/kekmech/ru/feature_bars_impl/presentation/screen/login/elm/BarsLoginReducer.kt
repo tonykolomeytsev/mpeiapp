@@ -33,8 +33,8 @@ internal class BarsLoginReducer :
             }
 
             is Internal.CheckAuthStatusFailure -> {
-                // Should never fail in this version of lib_bars due to lack of network activity (nothing to fall)
-                // Will fix this state in future releases
+                loginPasswordState { copy(isLoading = false, failure = event.throwable) }
+                state { copy(stage = BarsLoginStage.LOGIN_PASSWORD) }
             }
 
             is Internal.LoginWithPasswordSuccess -> {
@@ -62,7 +62,7 @@ internal class BarsLoginReducer :
             }
 
             is Internal.LoginWithPasswordFailure -> {
-                loginPasswordState { copy(failure = event.throwable) }
+                loginPasswordState { copy(isLoading = false, failure = event.throwable) }
             }
 
             is Internal.RequestTwoFactorCodeSuccess -> {
@@ -91,7 +91,7 @@ internal class BarsLoginReducer :
             }
 
             is Internal.RequestTwoFactorCodeFailure -> {
-                twoFactorCodeState { copy(failure = event.throwable) }
+                twoFactorCodeState { copy(isLoading = false, failure = event.throwable) }
             }
 
             is Internal.Submit2faCodeSuccess -> {
@@ -106,7 +106,7 @@ internal class BarsLoginReducer :
             }
 
             is Internal.Submit2faCodeFailure -> {
-                twoFactorCodeState { copy(failure = event.throwable) }
+                twoFactorCodeState { copy(isLoading = false, failure = event.throwable) }
             }
 
             is Internal.GetAccountsSuccess -> {
@@ -126,7 +126,7 @@ internal class BarsLoginReducer :
             }
 
             is Internal.GetAccountsFailure -> {
-                accountSelectionState { copy(failure = event.throwable) }
+                accountSelectionState { copy(isLoading = false, failure = event.throwable) }
             }
         }
 

@@ -47,18 +47,19 @@ internal class AppSettingsComposeFragment : ComposeFragment() {
             content = { onAccept, state, effects ->
                 val isDarkTheme = state.appSettings?.isDarkThemeEnabled ?: false
                 MpeixTheme(darkTheme = isDarkTheme) {
+                    val isRootTab = parentFragment != null
                     AppSettingsComposeScreen(
                         state = state,
                         effects = effects,
                         onAccept = onAccept,
-                        onBackClick = { close() },
+                        onBackClick = if (isRootTab) null else ({ close() }),
                         onOpenFavorites = {
                             analytics.sendClick("Favorites")
                             addScreenForward { FavoritesFragment() }
                         },
                         onOpenGithub = {
                             analytics.sendClick("GitHub")
-                            requireContext().openLinkExternal("https://github.com/tonykolomeytsev/mpeiapp")
+                            requireContext().openLinkExternal("https://github.com/ghostoftheeleven/mpei-next")
                         },
                         onOpenContributor = { url ->
                             requireContext().openLinkExternal(url)

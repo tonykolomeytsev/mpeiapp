@@ -32,7 +32,7 @@ internal fun AppSettingsComposeScreen(
     state: AppSettingsState,
     effects: Flow<AppSettingsEffect>,
     onAccept: (AppSettingsEvent) -> Unit,
-    onBackClick: () -> Unit,
+    onBackClick: (() -> Unit)? = null,
     onOpenFavorites: () -> Unit,
     onOpenGithub: () -> Unit,
     onOpenContributor: (String) -> Unit,
@@ -57,7 +57,7 @@ internal fun AppSettingsComposeScreen(
             TopAppBar(
                 title = stringResource(Strings.app_settings_screen_title),
                 navigationIcon = {
-                    BackIconButton(onClick = onBackClick)
+                    onBackClick?.let { BackIconButton(onClick = it) }
                 },
             )
         },

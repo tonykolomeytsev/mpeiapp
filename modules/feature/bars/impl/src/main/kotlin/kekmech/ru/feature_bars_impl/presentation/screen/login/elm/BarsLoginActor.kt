@@ -16,9 +16,13 @@ import kekmech.ru.feature_bars_impl.data.repository.BarsRepository
 import kekmech.ru.feature_bars_impl.domain.ExceptionWithId
 import kekmech.ru.feature_bars_impl.presentation.screen.login.elm.BarsLoginEvent.Internal.CheckAuthStatusFailure
 import kekmech.ru.feature_bars_impl.presentation.screen.login.elm.BarsLoginEvent.Internal.CheckAuthStatusSuccess
+import kekmech.ru.feature_bars_impl.presentation.screen.login.elm.BarsLoginEvent.Internal.GetAccountsFailure
 import kekmech.ru.feature_bars_impl.presentation.screen.login.elm.BarsLoginEvent.Internal.GetAccountsSuccess
+import kekmech.ru.feature_bars_impl.presentation.screen.login.elm.BarsLoginEvent.Internal.LoginWithPasswordFailure
 import kekmech.ru.feature_bars_impl.presentation.screen.login.elm.BarsLoginEvent.Internal.LoginWithPasswordSuccess
+import kekmech.ru.feature_bars_impl.presentation.screen.login.elm.BarsLoginEvent.Internal.RequestTwoFactorCodeFailure
 import kekmech.ru.feature_bars_impl.presentation.screen.login.elm.BarsLoginEvent.Internal.RequestTwoFactorCodeSuccess
+import kekmech.ru.feature_bars_impl.presentation.screen.login.elm.BarsLoginEvent.Internal.Submit2faCodeFailure
 import kekmech.ru.feature_bars_impl.presentation.screen.login.elm.BarsLoginEvent.Internal.Submit2faCodeSuccess
 import kekmech.ru.feature_bars_impl.presentation.screen.login.elm.BarsLoginEvent.Internal.SubscribeTwoFactorCodeTimerSuccess
 import kekmech.ru.lib_elm.actorFlow
@@ -89,7 +93,7 @@ internal class BarsLoginActor(
                         key("stage", "auth.login")
                         key("exception_id", e.uuid)
                     }
-                    CheckAuthStatusFailure(e)
+                    LoginWithPasswordFailure(e)
                 },
             )
 
@@ -112,7 +116,7 @@ internal class BarsLoginActor(
                         key("stage", "auth.requestTwoFactorCode")
                         key("exception_id", e.uuid)
                     }
-                    CheckAuthStatusFailure(e)
+                    RequestTwoFactorCodeFailure(e)
                 },
             )
 
@@ -147,7 +151,7 @@ internal class BarsLoginActor(
                         key("stage", "auth.submitTwoFactorCode")
                         key("exception_id", e.uuid)
                     }
-                    CheckAuthStatusFailure(e)
+                    Submit2faCodeFailure(e)
                 },
             )
 
@@ -167,7 +171,7 @@ internal class BarsLoginActor(
                         key("stage", "auth.getStudentList")
                         key("exception_id", e.uuid)
                     }
-                    CheckAuthStatusFailure(e)
+                    GetAccountsFailure(e)
                 },
             )
 

@@ -72,6 +72,7 @@ class MainFragment :
             scheduleFeatureApi = dependencies.scheduleFeatureApi,
             barsFeatureLauncher = dependencies.barsFeatureLauncher,
             mapFeatureLauncher = dependencies.mapFeatureLauncher,
+            appSettingsFeatureLauncher = dependencies.appSettingsFeatureLauncher,
             onNewTabSelected = { backPressedCallback?.isEnabled = true }
         )
         controller.init(this, viewBinding.bottomNavigation)

@@ -17,4 +17,6 @@ internal class AppSettingsFeatureLauncherImpl(
             else -> router.executeCommand(AddScreenForward { AppSettingsComposeFragment() })
         }
     }
+
+    override fun getScreen(): androidx.fragment.app.Fragment = AppSettingsComposeFragment()
 }

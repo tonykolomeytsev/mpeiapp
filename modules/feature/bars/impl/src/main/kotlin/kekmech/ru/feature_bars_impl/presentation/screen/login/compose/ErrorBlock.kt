@@ -24,22 +24,33 @@ internal fun ErrorBlock(
 ) {
     Text(
         text = buildAnnotatedString {
-            appendLine("Произошла ошибка во время загрузки данных.")
+            appendLine("Произошла ошибка при подключении к БАРС МЭИ.")
             if (throwable is ExceptionWithId) {
-                append("Идентификатор ошибки: ")
+                append("Код: ")
                 appendLine(throwable.uuid)
             }
-            append("Если ошибка повторяется, можете сообщить о ней по почте ")
+            appendLine("Портал bars.mpei.ru может требовать подтверждения двухфакторной аутентификации.")
+            append("Открыть ")
             withLink(
                 LinkAnnotation.Url(
-                    url = "mailto:antonkolomeytsev@gmail.com",
+                    url = "https://bars.mpei.ru/bars_web/",
                     styles = TextLinkStyles(SpanStyle(MpeixTheme.palette.primary)),
                 )
             ) {
-                append("antonkolomeytsev@gmail.com")
+                append("портал БАРС в браузере")
+            }
+            appendLine(".")
+            append("Сообщить о проблеме: ")
+            withLink(
+                LinkAnnotation.Url(
+                    url = "https://github.com/ghostoftheeleven/mpei-next/issues",
+                    styles = TextLinkStyles(SpanStyle(MpeixTheme.palette.primary)),
+                )
+            ) {
+                append("GitHub Issues")
             }
         },
-        style = MpeixTheme.typography.paragraphBig,
+        style = MpeixTheme.typography.paragraphNormal,
         color = MpeixTheme.palette.redMarkColor,
         modifier = modifier,
     )

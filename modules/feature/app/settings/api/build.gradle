@@ -3,6 +3,7 @@ plugins {
 }
 
 dependencies {
+    aarCompileOnly(libs.androidx.fragment)
     implementation(libs.kotlinx.coroutines.core)
     implementation(project(":lib_feature_toggles"))
     implementation(project(":lib_network"))
