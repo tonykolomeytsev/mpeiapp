@@ -91,7 +91,17 @@ internal class BarsLoginReducer :
             }
 
             is Internal.RequestTwoFactorCodeFailure -> {
-                twoFactorCodeState { copy(isLoading = false, failure = event.throwable) }
+                twoFactorCodeState {
+                    copy(
+                        failure = event.throwable,
+                        isLoading = false,
+                        // Restore the resend links so the user can retry with the same
+                        // or another provider after a failed code request
+                        codeState = (codeState as? CodeState.SendingCode)
+                            ?.let { CodeState.CodeSent(it.provider, resendDebounceSec = 0) }
+                            ?: codeState,
+                    )
+                }
             }
 
             is Internal.Submit2faCodeSuccess -> {

@@ -1,11 +1,13 @@
 package kekmech.ru.feature_schedule_impl.di
 
+import kekmech.ru.ext_koin.bindIntoList
 import kekmech.ru.feature_schedule_api.PreheatSelectedScheduleProvider
 import kekmech.ru.feature_schedule_api.ScheduleFeatureApi
 import kekmech.ru.feature_schedule_api.data.repository.ScheduleRepository
 import kekmech.ru.feature_schedule_api.data.repository.ScheduleSearchRepository
 import kekmech.ru.feature_schedule_api.domain.usecase.GetCurrentScheduleUseCase
 import kekmech.ru.feature_schedule_api.domain.usecase.HasSelectedScheduleUseCase
+import kekmech.ru.feature_schedule_impl.SchedulePreheatLifecycleObserver
 import kekmech.ru.feature_schedule_impl.data.datasource.ScheduleCacheWrapper
 import kekmech.ru.feature_schedule_impl.data.datasource.SelectedScheduleSource
 import kekmech.ru.feature_schedule_impl.data.network.LegacyScheduleService
@@ -21,6 +23,7 @@ import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.Fi
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleActor
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleStoreFactory
 import kekmech.ru.lib_analytics_api.SelectedScheduleAnalyticsProvider
+import kekmech.ru.lib_app_lifecycle.AppLifecycleObserver
 import kekmech.ru.lib_network.buildApi
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
@@ -56,4 +59,5 @@ val FeatureScheduleModule = module {
     factoryOf(::SelectedScheduleSource)
     factoryOf(::ScheduleCacheWrapper)
     factoryOf(::HasSelectedScheduleUseCaseImpl) bind HasSelectedScheduleUseCase::class
+    factoryOf(::SchedulePreheatLifecycleObserver) bindIntoList AppLifecycleObserver::class
 }

@@ -45,7 +45,8 @@ val FeatureBarsModule = module {
     single { DataStore(androidApplication().dataDir) }
     single {
         val loggingInterceptor = getAll<Interceptor>().find { it is HttpLoggingInterceptor }
-        BarsHandle(androidApplication(),get()) {
+        BarsHandle(androidApplication(), get()) {
+            addNetworkInterceptor(kekmech.ru.feature_bars_impl.data.network.BarsTwoFactorCompatInterceptor())
             loggingInterceptor?.let(::addNetworkInterceptor)
             this
         }

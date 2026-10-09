@@ -29,9 +29,17 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.withTimeoutOrNull
 import money.vivid.elmslie.core.store.Actor
 import kekmech.ru.feature_bars_impl.presentation.screen.main_compose.elm.BarsComposeCommand as Command
 import kekmech.ru.feature_bars_impl.presentation.screen.main_compose.elm.BarsComposeEvent as Event
+
+/**
+ * bars.mpei.ru is unstable and sometimes accepts a TCP connection but never responds.
+ * lib_bars has no call timeout of its own, so without this guard the screen
+ * would show an endless loading state.
+ */
+private const val BARS_REQUEST_TIMEOUT_MS = 30_000L
 
 internal class BarsComposeActor(
     private val barsHandle: BarsHandle,
@@ -46,7 +54,10 @@ internal class BarsComposeActor(
         when (command) {
             is Command.SubscribeAuthStatus -> barsRepository.loginStateTrigger
                 .map {
-                    when (barsHandle.auth.init()) {
+                    val initResult = withTimeoutOrNull(BARS_REQUEST_TIMEOUT_MS) {
+                        barsHandle.auth.init()
+                    } ?: error("BARS request timeout: auth.init")
+                    when (initResult) {
                         is InitResult.AlreadyLoggedIn -> AuthStatus.LoggedIn
                         is InitResult.AccountSelectionRequired,
                         is InitResult.LoginRequired -> AuthStatus.LoginRequired
@@ -88,7 +99,10 @@ internal class BarsComposeActor(
                     emit(GetMarksSuccess(cached, true))
                 }
 
-                val actual = LibToMarksResponseMapper.map(barsHandle.user.getMarks().disciplines)
+                val marks = withTimeoutOrNull(BARS_REQUEST_TIMEOUT_MS) {
+                    barsHandle.user.getMarks()
+                } ?: error("BARS request timeout: user.getMarks")
+                val actual = LibToMarksResponseMapper.map(marks.disciplines)
                 barsRepository.saveDisciplines(actual.payload)
                 emit(GetMarksSuccess(actual.payload, false))
             }.mapEvents(
