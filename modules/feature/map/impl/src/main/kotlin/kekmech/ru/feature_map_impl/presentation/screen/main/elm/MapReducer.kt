@@ -38,10 +38,10 @@ internal class MapReducer :
             is Ui.Action.OnMapReady -> {
                 state { copy(map = event.map) }
                 effects {
-                    +Effect.GenerateGoogleMapMarkers(
+                    +Effect.GenerateMapMarkers(
                         map = event.map,
                         markers = state.markers,
-                        googleMapMarkers = state.googleMapMarkers,
+                        mapMarkers = state.mapMarkers,
                         selectedTab = state.selectedTab
                     )
                 }
@@ -50,10 +50,10 @@ internal class MapReducer :
             is Ui.Action.SelectTab -> {
                 state { copy(selectedTab = event.tab) }
                 effects {
-                    +Effect.GenerateGoogleMapMarkers(
+                    +Effect.GenerateMapMarkers(
                         state.map,
                         state.markers,
-                        state.googleMapMarkers,
+                        state.mapMarkers,
                         event.tab
                     )
                 }
@@ -63,15 +63,15 @@ internal class MapReducer :
                 copy(bottomSheetState = event.newState)
             }
 
-            is Ui.Action.GoogleMapMarkersGenerated -> state {
-                copy(googleMapMarkers = event.googleMapMarkers)
+            is Ui.Action.MapMarkersGenerated -> state {
+                copy(mapMarkers = event.mapMarkers)
             }
 
             is Ui.Action.OnListMarkerSelected -> effects {
                 +state.map?.let { map ->
                     Effect.AnimateCameraToPlace(
                         map = map,
-                        googleMapMarkers = state.googleMapMarkers,
+                        mapMarkers = state.mapMarkers,
                         mapMarker = event.mapMarker,
                         collapseBottomSheet = state.appSettings.autoHideBottomSheet
                     )

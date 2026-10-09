@@ -1,100 +1,119 @@
-# MpeiX - приложение МЭИ здорового человека
+# MpeiX — приложение МЭИ здорового человека
 
-> 🚧 **Проект в активной фазе рефакторинга** 🚧
-> 
-> Все что написано ниже, может быть неправдой
-
-![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/tonykolomeytsev/mpeiapp?label=version) 
-[![Build status](https://github.com/tonykolomeytsev/mpeiapp/actions/workflows/android.yaml/badge.svg?branch=master)](https://github.com/tonykolomeytsev/mpeiapp/actions/workflows/android-release.yaml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/tonykolomeytsev/mpeiapp/blob/master/LICENSE)
+[![Kotlin](https://img.shields.io/badge/Kotlin-2.2.10-blue.svg?logo=kotlin)](https://kotlinlang.org)
+[![Android Gradle Plugin](https://img.shields.io/badge/AGP-8.12.3-green.svg?logo=android)](https://developer.android.com/studio/releases/gradle-plugin)
+[![Jetpack Compose](https://img.shields.io/badge/Jetpack_Compose-Enabled-4285F4.svg?logo=jetpackcompose)](https://developer.android.com/jetpack/compose)
+[![Glance Widget](https://img.shields.io/badge/Glance_Widget-Included-3DDC84.svg?logo=android)](https://developer.android.com/jetpack/compose/glance)
+[![OpenStreetMap](https://img.shields.io/badge/Map-OpenStreetMap-7EBC6F.svg?logo=openstreetmap)](https://www.openstreetmap.org)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 
 <p align="center">
-  <img src="https://github.com/tonykolomeytsev/mpeiapp/raw/master/.github/media/gradient_logo.png" />
+  <img src="https://github.com/tonykolomeytsev/mpeiapp/raw/master/.github/media/gradient_logo.png" alt="MpeiX Logo" width="120" />
 </p>
 
-Расписание пар, заметки, личный кабинет БАРС и крутая карта для студентов и преподавателей НИУ МЭИ. Самое функциональное, легковесное и стабильное МЭИшное приложение.
+Расписание пар, заметки, личный кабинет БАРС, офлайн-карта кампуса и домашний виджет для студентов и преподавателей **НИУ «МЭИ»**. Самое быстрое, современное и независимое студенческое приложение.
 
-**Фичи приложения:**
-+ Просмотр расписаний **групп и преподавателей**
-+ Карта корпусов, общежитий, мест общепита, известных мест кампуса МЭИ и кафедр.
-+ Добавление **заметок** к парам.
-+ Просмотр ЛК **БАРС**.
-+ Дашборд с ближайшими парами, заметками, расписанием сессии и объявлениями.
-+ Быстрое переключение между **избранными расписаниями**.
-+ Переключение между **ТЁМНОЙ ТЕМОЙ** и светлой темой.
-+ Переключение между русским и английским языком в приложении.
-+ Поиск по заметкам, карте, группам и преподавателям.
-+ Предпросмотр расписаний групп и преподавателей прямо с экрана поиска.
-+ Кэширование расписаний и геометок на устройстве.
-+ Поддержка версии для планшетов.
-+ Самый маленький вес приложения по сравнению с конкурентами.
-+ Открiтый исходнiй код.
-+ Меми.🤗💪😸😃
+---
 
-Пулл реквесты приветствуются.
+## ✨ Возможности
 
-[![](https://github.com/tonykolomeytsev/mpeiapp/raw/master/.github/media/available_in_google_play.png)](https://play.google.com/store/apps/details?id=kekmech.ru.mpeiapp)
++ 📅 **Расписание без посредников**: Прямая интеграция с официальным API расписания МЭИ (`ts.mpei.ru/api`) для всех студенческих групп и преподавателей.
++ 📱 **Домашний виджет (Jetpack Glance)**: Расписание на сегодня прямо на рабочем столе Android со временем, аудиториями и типами пар.
++ 🗺️ **Свободная карта без ключей Google (OpenStreetMap)**: Корпуса, общежития, столовые, спорткомплекс и кафедры на базе `osmdroid` — работает без Google Play Services и без API-ключей.
++ 🎨 **Jetpack Compose + MpeiX UI Kit**: Современный декларативный интерфейс (экраны расписания, настроек) с поддержкой светлой и тёмной тем.
++ 💾 **Offline-first**: Расписание, заметки и геометки кэшируются на устройстве в базе данных Room. Приложение работает даже при нестабильной связи в подвальных аудиториях.
++ ⚡ **Блиц-доступ**: Быстрое переключение между избранными группами в один тап.
++ 📝 **Заметки к парам**: Прикрепление личных заметок и напоминаний к конкретным занятиям.
++ 🎓 **Интеграция с БАРС**: Просмотр оценок и контрольных недель в личном кабинете студента.
++ 🌐 **Двуязычность**: Полная поддержка русского и английского языков.
 
-### Скриншоты
+---
 
-![screenshots 1](https://github.com/tonykolomeytsev/mpeiapp/raw/master/.github/media/promo_wide_frame_1.png)
+## 🛠️ Стек технологий и архитектура
 
-![screenshots 2](https://github.com/tonykolomeytsev/mpeiapp/raw/master/.github/media/promo_wide_frame_2.png)
+Проект построен на принципах **Clean Architecture** и многомодульности (`modules/feature/*`, `modules/ui/*`, `modules/lib/*`):
 
-### Требования приложения
+| Слой / Компонент | Используемые технологии |
+|---|---|
+| **Язык & Сборка** | Kotlin 2.2.10, Java 17/21, AGP 8.12.3, Gradle Composite Builds (`build-logic`) |
+| **UI** | Jetpack Compose, Compose Material 3, собственная дизайн-система `MpeixTheme` + UI Kit (`ui_kit_lists`, `ui_kit_switch`, `ui_kit_topappbar`, `ui_kit_dialogs`) |
+| **Виджеты** | Jetpack Glance (`glance-appwidget`, `glance-material3`) |
+| **MVI / Presentation** | TEA/ELM на базе [Vivid Money **Elmslie**](https://github.com/vivid-money/elmslie) + `lib_elm_compose` |
+| **Карты** | **OpenStreetMap (osmdroid 6.1.20)** — независим от Google Maps SDK |
+| **Сеть** | **Retrofit 3**, OkHttp 5, Kotlinx Serialization, прямой клиент к `ts.mpei.ru/api` |
+| **База данных & Кэш** | **Room 2.8** (KSP), MMKV, SharedPreferences |
+| **Dependency Injection** | **Koin 4.1** (`koin-android`, `koin-compose`) |
+| **Тестирование** | JUnit 5, **Kotest**, Mock-движок |
 
-+ Android 8.0 и выше (Api V26+)
-+ Доступ к интернету
+Подробное описание слоев и взаимодействия модулей см. в [ARCHITECTURE.md](./ARCHITECTURE.md).
 
-## Интересное для разработчиков
+---
 
-### Стек
+## 🚀 Быстрый старт (Сборка проекта)
 
-+ TEA/ELM для presenter слоя на базе Vivid Money [**Elmslie**](https://github.com/vivid-money/elmslie)
-+ Навигация самописная копипаста похожая на Cicerone (будет заменена на гугловую навигацию после переезда на Compose)
-+ **Retrofit** для REST Api
-+ **Kotlin Coroutines + Flow** во всем приложении, ни капельки RxJava
-+ **Room** + **KSP** для хранения в БД заметок и избранных расписаний
-+ **Firebase**: Crashlytics, Analytics, Remote Config
-+ **Picasso** для загрузки картинок
-+ **DI Koin**
-+ Для тестирования используется **JUnit 5** + [**Kotest**](https://github.com/kotest/kotest)
-+ Композитный билд и кастомные Gradle плагины: много всяких интересных штук смотри в `./build-logic`
-+ Для импорта ресурсов из Figma в проект используется тулза [**figx**](https://github.com/tonykolomeytsev/figx)
+Больше **никаких сложных настроек, скрытых секретов и блокирующих API-ключей**. Проект подготовлен для чистой локальной сборки «из коробки»:
 
-### Архитектура
+### Требования
+- **JDK 17** или **JDK 21**
+- **Android Studio** (Ladybug / Iguana / Hedgehog или новее)
+- Android SDK (API 34/35)
 
-В проекте используется **Clean Architecture**, в некоторых местах допускаются упрощения.
+### Сборка из командной строки
+```bash
+# Клонирование репозитория
+git clone https://github.com/tonykolomeytsev/mpeiapp.git
+cd mpeiapp
 
-Если хотите разобраться в устройстве проекта, специально для вас создан файлик [ARCHITECTURE.md](https://github.com/tonykolomeytsev/mpeiapp/blob/master/ARCHITECTURE.md).
+# Сборка debug APK
+./gradlew assembleDebug
 
-### Планы на будущее
+# Запуск тестов маппера и расписания
+./gradlew testDebugUnitTest
+```
 
-1. Переход с Fragments на Jetpack Compose. Это позволит уменьшить вес приложения, увеличить скорость 
-   билда, да и в целом упростить поддержку кодовой базы, что положительно скажется на частоте обновлений приложения.
-2. Редизайн приложения в соответствии с новыми гайдлайнами Material 3 и более новых.
-3. Полировка существующих фич и добавление нового функционала. Новые фичи сейчас на стадии рисовки 
-   в Figma. Добавляться будут только реально необходимые функции. Лишная фигня, которой пользуются 
-   раз в год и которую сложно поддерживать, в приложении появляться не будет.
+> 💡 **Секреты и ключи не требуются:**
+> - Для Google Services в репозиторий уже включены безопасные локальные конфигурации `google-services.json`.
+> - Google Maps SDK полностью удален в пользу OpenStreetMap, поэтому `mpeiapp_google_maps_api_key` больше не нужен.
+> - Если локальные ключи отсутствуют, плагин `mpeix.secrets` автоматически подставляет безопасные значения-заглушки без сбоя сборки.
 
-### Инструкция по сборке проекта
+---
 
-1. Создайте на Firebase два конфига `google-services.json`:
-   - Для release версии приложения (package name `kekmech.ru.mpeiapp`): 
-     положите конфиг в корень модуля `app`
-   - Для debug версии приложения (package name `kekmech.ru.mpeiapp.dev`): 
-     положите конфиг в `app/src/debug` и `app/src/qa` (да просто скопипастить два раза). 
+## 📂 Структура проекта
 
-   [**Инструкция**](https://support.google.com/firebase/answer/7015592?hl=en) по получению `google-services.json`.
+```text
+mpei-next-master/
+├── build-logic/                # Конвенции сборки и кастомные Gradle-плагины
+├── gradle/                     # Каталоги версий (libs.versions.toml)
+├── modules/
+│   ├── app/                    # Точка входа, Application, навигация
+│   ├── feature/
+│   │   ├── schedule/           # Расписание (API, impl, Compose-экран, Glance-виджет, парсер ts.mpei.ru)
+│   │   ├── map/                # Карта кампуса на OpenStreetMap (osmdroid)
+│   │   ├── app/settings/       # Настройки приложения (Compose + UI Kit)
+│   │   ├── bars/               # Интеграция с ЛК БАРС
+│   │   ├── dashboard/          # Дашборд студента
+│   │   └── notes/              # Личные заметки к парам
+│   ├── ui/
+│   │   ├── theme/              # Дизайн-токены, палитра MpeixTheme, типографика
+│   │   ├── kit/                # Компоненты UI Kit (списки, свитчи, топ-бары, диалоги)
+│   │   └── icons/              # Векторная иконографика
+│   └── lib/                    # Сеть, навигация, утилиты, ELM Compose bridge
+└── README.md
+```
 
-1. В глобальный `gradle.properties` добавьте поле `mpeiapp_google_maps_api_key="{SECRET}"`, где `{SECRET}` - ключ от API Google Maps. [**Инструкция**](https://developers.google.com/maps/gmp-get-started) по получению ключа.
+---
 
-1. Скачайте и установите JDK 17 версии, укажите в настройках проекта java 17 по умолчанию для Gradle и компилятора Kotlin:
+## 🤝 Участие в разработке
 
-   `File -> Settings -> Build, Execution, Deployment -> Build Tools -> Gradle`
+Приветствуются любые предложения и Pull Request'ы:
+1. Форкните репозиторий.
+2. Создайте ветку под вашу фичу (`git checkout -b feature/amazing-feature`).
+3. Закоммитьте изменения (`git commit -m 'Add amazing feature'`).
+4. Запушьте ветку (`git push origin feature/amazing-feature`).
+5. Откройте **Pull Request**.
 
-1. Установите плагин **Kotest**, с ним будет проще гонять тесты.
+---
 
-После первых двух пунктов проект соберется, после двух других начнут работать тесты. В связи с выходом Gradle 7.5.0 и AGP 7.4.0 проект перешел на Java 17.
+## 📄 Лицензия
 
-По понятным причинам в репозитории не будут опубликованы оригинальные ключи от Google Maps API и Firebase API. Используйте свои ключики.
+Проект распространяется под лицензией **MIT**. Подробности в файле [LICENSE](./LICENSE).

@@ -28,7 +28,7 @@ internal object DeeplinkHelper {
         state: MapState,
         feature: Store<MapEvent, MapEffect, MapState>
     ) {
-        state.googleMapMarkers.takeIf { it.isNotEmpty() } ?: return
+        state.mapMarkers.takeIf { it.isNotEmpty() } ?: return
         state.map ?: return
         val selectedPlaceUid = deeplinkDelegate.getPlaceUid() ?: return
         val selectedMarker = state.markers.find { it.uid == selectedPlaceUid } ?: return
@@ -50,7 +50,7 @@ internal object DeeplinkHelper {
         state: MapState,
         feature: Store<MapEvent, MapEffect, MapState>
     ) {
-        state.googleMapMarkers.takeIf { it.isNotEmpty() } ?: return
+        state.mapMarkers.takeIf { it.isNotEmpty() } ?: return
         state.map ?: return
         val necessarySelectedTab = deeplinkDelegate.getTab() ?: return
 

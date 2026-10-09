@@ -11,6 +11,11 @@ public enum class BackendServiceUrl(
         stagingEndpoint = "https://dev-api.kekmech.com/mpeix/schedule/",
         mockEndpoint = "http://localhost:8080/schedule/",
     ),
+    MPEI_TIMETABLE(
+        prodEndpoint = "https://ts.mpei.ru/api/",
+        stagingEndpoint = "https://ts.mpei.ru/api/",
+        mockEndpoint = "http://localhost:8080/api/",
+    ),
     MAP(
         prodEndpoint = "https://raw.githubusercontent.com/tonykolomeytsev/mpeiapp/master/statics/map/",
         stagingEndpoint = "https://raw.githubusercontent.com/tonykolomeytsev/mpeiapp/dev/statics/map/",

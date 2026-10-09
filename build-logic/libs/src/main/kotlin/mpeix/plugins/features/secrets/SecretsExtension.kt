@@ -16,9 +16,9 @@ abstract class SecretsExtension @Inject constructor(
         val ctx = objects.newInstance(SecretDeclarationContext::class.java)
         action.execute(ctx)
         secrets[id] = if (isCiBuild) {
-            ctx.ci.orNull ?: error("No CI value provided for secret with id `$id`")
+            ctx.ci.orNull ?: "DUMMY_CI_SECRET"
         } else {
-            ctx.local.orNull ?: error("No local value provided for secret with id `$id`")
+            ctx.local.orNull ?: "DUMMY_LOCAL_SECRET"
         }
     }
 

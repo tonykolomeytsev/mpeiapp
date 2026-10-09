@@ -1,11 +1,13 @@
 plugins {
-    alias(mpeix.plugins.feature.impl)
+    alias(mpeix.plugins.feature.impl.compose)
     alias(libs.plugins.kotlin.serialization)
 }
 
-android.buildFeatures {
-    viewBinding = true
-    androidResources = true
+android {
+    buildFeatures {
+        viewBinding = true
+        androidResources = true
+    }
 }
 
 dependencies {
@@ -13,15 +15,20 @@ dependencies {
     testImplementation(libs.kotest.property)
     testImplementation(libs.kotest.runner)
 
+    implementation(libs.bundles.compose)
+    implementation(libs.compose.material3)
     implementation(libs.androidx.appCompat)
     implementation(libs.androidx.constraintLayout)
     implementation(libs.androidx.coreKtx)
+    implementation(libs.androidx.glance.appwidget)
+    implementation(libs.androidx.glance.material3)
     implementation(libs.androidx.viewPager2)
     implementation(libs.facebook.shimmer)
     implementation(libs.firebase.crashlytics)
     implementation(libs.google.material)
     implementation(libs.koin.android)
     implementation(libs.koin.core)
+    implementation(libs.koin.compose)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.squareup.retrofit)
     implementation(libs.vivid.elmslie.android)
@@ -44,7 +51,16 @@ dependencies {
     implementation(project(":lib_network"))
     implementation(project(":lib_schedule"))
     implementation(project(":lib_persistent_cache"))
+    implementation(project(":lib_fragment"))
+    implementation(project(":lib_elm_compose"))
 
+    implementation(project(":ui_theme"))
+    implementation(project(":ui_kit_lists"))
+    implementation(project(":ui_kit_switch"))
+    implementation(project(":ui_kit_topappbar"))
+    implementation(project(":ui_kit_dialogs"))
+    implementation(project(":ui_kit_buttons"))
+    implementation(project(":ui_icons"))
     implementation(project(":coreui"))
     implementation(project(":res_strings"))
 }

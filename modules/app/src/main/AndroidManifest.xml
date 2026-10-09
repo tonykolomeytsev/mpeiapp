@@ -21,6 +21,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Mpeix.SplashScreen"
         android:enableOnBackInvokedCallback="true"
+        android:usesCleartextTraffic="true"
         tools:targetApi="33">
 
         <activity
@@ -51,6 +52,18 @@
             </intent-filter>
 
         </activity>
+
+        <receiver
+            android:name="kekmech.ru.feature_schedule_impl.presentation.widget.ScheduleGlanceWidgetReceiver"
+            android:label="@string/schedule_widget_name"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/schedule_widget_info" />
+        </receiver>
 
     </application>
 

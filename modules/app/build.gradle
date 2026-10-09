@@ -90,7 +90,6 @@ dependencies {
 
     implementation(project(":feature_app_settings_api"))
     implementation(project(":feature_app_settings_impl"))
-    implementation(project(":feature_app_settings_impl"))
     implementation(project(":feature_app_update_api"))
     implementation(project(":feature_app_update_impl"))
     implementation(project(":feature_bars_api"))

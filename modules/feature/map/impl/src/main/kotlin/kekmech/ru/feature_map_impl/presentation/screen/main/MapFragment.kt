@@ -1,17 +1,11 @@
 package kekmech.ru.feature_map_impl.presentation.screen.main
 
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.CameraPosition
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kekmech.ru.coreui.banner.showBanner
 import kekmech.ru.coreui.items.ErrorStateAdapterItem
@@ -21,7 +15,6 @@ import kekmech.ru.coreui.items.SpaceAdapterItem
 import kekmech.ru.ext_android.doOnApplyWindowInsets
 import kekmech.ru.ext_android.dpToPx
 import kekmech.ru.ext_android.getThemeColor
-import kekmech.ru.ext_android.parcelable
 import kekmech.ru.ext_android.viewbinding.viewBinding
 import kekmech.ru.ext_android.views.setMargins
 import kekmech.ru.ext_kotlin.fastLazy
@@ -53,6 +46,9 @@ import kekmech.ru.lib_navigation.features.TabScreenStateSaverImpl
 import money.vivid.elmslie.android.renderer.ElmRendererDelegate
 import money.vivid.elmslie.android.renderer.androidElmStore
 import org.koin.android.ext.android.inject
+import org.osmdroid.util.GeoPoint
+import org.osmdroid.views.MapView
+import org.osmdroid.views.overlay.Marker
 import kekmech.ru.coreui.R as CoreUiR
 import kekmech.ru.res_strings.R.string as Strings
 
@@ -83,11 +79,7 @@ internal class MapFragment : Fragment(R.layout.fragment_map),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (isMapStateEmpty()) {
-            view.postDelayed(::createMap, MAP_START_UP_DELAY)
-        } else {
-            createMap()
-        }
+        createMap()
 
         viewBinding.recyclerView.layoutManager = ControlledScrollingLayoutManager(requireContext())
         viewBinding.recyclerView.adapter = adapter
@@ -96,8 +88,18 @@ internal class MapFragment : Fragment(R.layout.fragment_map),
         createBottomSheet(view)
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewBinding.mapView.onResume()
+    }
+
+    override fun onPause() {
+        viewBinding.mapView.onPause()
+        super.onPause()
+    }
+
     override fun onDestroyView() {
-        saveMapState()
+        viewBinding.mapView.onDetach()
         super.onDestroyView()
     }
 
@@ -125,21 +127,9 @@ internal class MapFragment : Fragment(R.layout.fragment_map),
     }
 
     private fun createMap() {
-        val mapFragment = SupportMapFragment()
-        childFragmentManager
-            .beginTransaction()
-            .replace(R.id.mapFragmentContainer, mapFragment)
-            .commitAllowingStateLoss()
-        mapFragment.getMapAsync { googleMap ->
-            googleMap.init(
-                context = requireContext(),
-                mapAppearanceType = appSettingsRepository
-                    .getAppSettings()
-                    .mapAppearanceType,
-                savedCameraPosition = getSavedCameraPosition(),
-            )
-            store.accept(MapEvent.Ui.Action.OnMapReady(googleMap))
-        }
+        val mapView = viewBinding.mapView
+        mapView.init(requireContext())
+        store.accept(MapEvent.Ui.Action.OnMapReady(mapView))
     }
 
     override fun render(state: MapState) {
@@ -162,18 +152,18 @@ internal class MapFragment : Fragment(R.layout.fragment_map),
 
     override fun handleEffect(effect: MapEffect) =
         when (effect) {
-            is MapEffect.GenerateGoogleMapMarkers -> {
-                val markers = generateGoogleMapMarkers(
+            is MapEffect.GenerateMapMarkers -> {
+                val markers = generateMapMarkers(
                     map = effect.map,
                     markers = effect.markers,
-                    googleMapMarkers = effect.googleMapMarkers,
+                    mapMarkers = effect.mapMarkers,
                     selectedTab = effect.selectedTab
                 )
-                store.accept(MapEvent.Ui.Action.GoogleMapMarkersGenerated(markers))
+                store.accept(MapEvent.Ui.Action.MapMarkersGenerated(markers))
             }
 
             is MapEffect.AnimateCameraToPlace -> {
-                effect.googleMapMarkers.find { it.title == effect.mapMarker.name }?.let { marker ->
+                effect.mapMarkers.find { it.title == effect.mapMarker.name }?.let { marker ->
                     effect.map.animateCameraTo(marker)
                     marker.showInfoWindow()
                 }
@@ -189,30 +179,33 @@ internal class MapFragment : Fragment(R.layout.fragment_map),
                 showBanner(Strings.map_loading_error_message)
         }
 
-    private fun generateGoogleMapMarkers(
-        map: GoogleMap?,
+    private fun generateMapMarkers(
+        map: MapView?,
         markers: List<MapMarker>?,
-        googleMapMarkers: List<Marker>,
+        mapMarkers: List<Marker>,
         selectedTab: FilterTab,
     ): List<Marker> {
         if (markers.isNullOrEmpty() || map == null) return emptyList()
-        googleMapMarkers.forEach { it.remove() }
-        map.clear()
-        return markers
+        mapMarkers.forEach { map.overlays.remove(it) }
+
+        val newMarkers = markers
             .filter { it.type == selectedTab.toMarkerType() }
-            .mapNotNull {
-                map.addMarker(
-                    MarkerOptions()
-                        .title(it.name)
-                        .snippet(it.address)
-                        .position(LatLng(it.location.lat, it.location.lng))
-                        .icon(
-                            BitmapDescriptorFactory.fromBitmap(
-                                markersBitmapFactory.getBitmap(it)
-                            )
-                        )
-                )
+            .map { markerData ->
+                Marker(map).apply {
+                    title = markerData.name
+                    snippet = markerData.address
+                    position = GeoPoint(markerData.location.lat, markerData.location.lng)
+                    icon = BitmapDrawable(resources, markersBitmapFactory.getBitmap(markerData))
+                    setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
+                    setOnMarkerClickListener { _, _ ->
+                        showInfoWindow()
+                        true
+                    }
+                }
             }
+        map.overlays.addAll(newMarkers)
+        map.invalidate()
+        return newMarkers
     }
 
     override fun onScrollToTop() {
@@ -272,19 +265,8 @@ internal class MapFragment : Fragment(R.layout.fragment_map),
         )
     )
 
-    private fun saveMapState() {
-        childFragmentManager.fragments.firstOrNull()?.onSaveInstanceState(stateBundle)
-    }
-
-    private fun getSavedCameraPosition(): CameraPosition? =
-        stateBundle.getBundle("map_state")?.parcelable("camera")
-
-    private fun isMapStateEmpty(): Boolean =
-        stateBundle.getBundle("map_state") == null
-
     companion object {
 
-        private const val MAP_START_UP_DELAY = 100L // ms
         private const val MAX_OVERLAY_ALPHA = 0.5f
         private const val DEFAULT_CORNER_RADIUS = 16f // dp
     }

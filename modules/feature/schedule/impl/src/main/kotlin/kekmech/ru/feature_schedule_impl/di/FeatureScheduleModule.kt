@@ -8,7 +8,10 @@ import kekmech.ru.feature_schedule_api.domain.usecase.GetCurrentScheduleUseCase
 import kekmech.ru.feature_schedule_api.domain.usecase.HasSelectedScheduleUseCase
 import kekmech.ru.feature_schedule_impl.data.datasource.ScheduleCacheWrapper
 import kekmech.ru.feature_schedule_impl.data.datasource.SelectedScheduleSource
+import kekmech.ru.feature_schedule_impl.data.network.LegacyScheduleService
+import kekmech.ru.feature_schedule_impl.data.network.MpeiDirectScheduleService
 import kekmech.ru.feature_schedule_impl.data.network.ScheduleService
+import kekmech.ru.feature_schedule_impl.data.network.mpei.MpeiScheduleService
 import kekmech.ru.feature_schedule_impl.data.repository.ScheduleRepositoryImpl
 import kekmech.ru.feature_schedule_impl.data.repository.ScheduleSearchRepositoryImpl
 import kekmech.ru.feature_schedule_impl.domain.usecase.HasSelectedScheduleUseCaseImpl
@@ -35,7 +38,14 @@ val FeatureScheduleModule = module {
     factoryOf(::ScheduleActor)
     factoryOf(::ScheduleDependencies)
 
-    factory { get<Retrofit.Builder>().buildApi<ScheduleService>() }
+    factory { get<Retrofit.Builder>().buildApi<LegacyScheduleService>() }
+    factory { get<Retrofit.Builder>().buildApi<MpeiScheduleService>() }
+    single<ScheduleService> {
+        MpeiDirectScheduleService(
+            mpeiService = get(),
+            legacyService = get(),
+        )
+    }
     singleOf(::ScheduleRepositoryImpl) binds arrayOf(
         ScheduleRepository::class,
         SelectedScheduleAnalyticsProvider::class,

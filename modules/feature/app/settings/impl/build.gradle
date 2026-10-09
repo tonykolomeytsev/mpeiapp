@@ -1,10 +1,12 @@
 plugins {
-    alias(mpeix.plugins.feature.impl)
+    alias(mpeix.plugins.feature.impl.compose)
 }
 
-android.buildFeatures {
-    viewBinding = true
-    androidResources = true
+android {
+    buildFeatures {
+        viewBinding = true
+        androidResources = true
+    }
 }
 
 dependencies {
@@ -12,6 +14,8 @@ dependencies {
     testImplementation(libs.kotest.property)
     testImplementation(libs.kotest.runner)
 
+    implementation(libs.bundles.compose)
+    implementation(libs.compose.material3)
     implementation(libs.androidx.appCompat)
     implementation(libs.androidx.constraintLayout)
     implementation(libs.androidx.coreKtx)
@@ -21,6 +25,7 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.koin.android)
     implementation(libs.koin.core)
+    implementation(libs.koin.compose)
     implementation(libs.picasso)
     implementation(libs.squareup.retrofit)
     implementation(libs.vivid.elmslie.android)
@@ -41,10 +46,19 @@ dependencies {
     implementation(project(":lib_elm"))
     implementation(project(":lib_navigation"))
     implementation(project(":lib_network"))
+    implementation(project(":lib_fragment"))
+    implementation(project(":lib_elm_compose"))
 
     implementation(project(":ext_koin"))
     implementation(project(":ext_shared_preferences"))
 
+    implementation(project(":ui_theme"))
+    implementation(project(":ui_kit_lists"))
+    implementation(project(":ui_kit_switch"))
+    implementation(project(":ui_kit_topappbar"))
+    implementation(project(":ui_kit_dialogs"))
+    implementation(project(":ui_kit_buttons"))
+    implementation(project(":ui_icons"))
     implementation(project(":coreui"))
     implementation(project(":res_strings"))
 }
