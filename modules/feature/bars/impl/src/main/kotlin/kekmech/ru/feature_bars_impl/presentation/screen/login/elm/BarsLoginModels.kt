@@ -31,14 +31,16 @@ internal sealed interface CodeState {
     data class CodeSent(
         val provider: CodeProvider,
         val resendDebounceSec: Int,
+        val serverMessage: String? = null,
     ) : CodeState
 }
 
 internal enum class CodeProvider { 
+    TOTP,  // Provider ID 5 - Одноразовый код (приложение-аутентификатор: Google Authenticator, Яндекс Ключ и др.)
     MAX,   // Provider ID 3 - МАКС messenger
     VK,    // Provider ID 2 - ВКонтакте (legacy, may not be available)
     TG,    // Provider ID 1 - Telegram (legacy, may not be available)
-    EMAIL  // Provider ID 5 - Email (одноразовый код)
+    EMAIL, // Email (одноразовый код на почту)
 }
 
 internal data class BarsAccountSelectionState(
@@ -69,6 +71,7 @@ internal sealed interface LoginStatus {
     data class TwoFactorRequired(
         val defaultProvider: CodeProvider,
         val providers: List<CodeProvider>,
+        val serverMessage: String? = null,
     ) : LoginStatus
 
     data object AccountSelectionRequired : LoginStatus
@@ -115,6 +118,7 @@ internal sealed interface BarsLoginEvent {
         data class RequestTwoFactorCodeSuccess(
             val provider: CodeProvider,
             val debounceSec: Int,
+            val serverMessage: String? = null,
         ) : Internal
 
         data class RequestTwoFactorCodeFailure(val throwable: Throwable) : Internal

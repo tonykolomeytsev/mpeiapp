@@ -48,15 +48,27 @@ internal class BarsLoginReducer :
                     is LoginStatus.AccountSelectionRequired -> handleAccountSelection()
 
                     is LoginStatus.TwoFactorRequired -> {
+                        val isTotp = status.defaultProvider == CodeProvider.TOTP
                         twoFactorCodeState {
                             copy(
                                 providers = status.providers,
-                                codeState = CodeState.SendingCode(status.defaultProvider),
-                                isLoading = true,
+                                codeState = if (isTotp) {
+                                    CodeState.CodeSent(
+                                        provider = CodeProvider.TOTP,
+                                        resendDebounceSec = 0,
+                                        serverMessage = null,
+                                    )
+                                } else {
+                                    CodeState.SendingCode(status.defaultProvider)
+                                },
+                                isLoading = false,
                             )
                         }
                         state { copy(stage = BarsLoginStage.TWO_FACTOR_CODE) }
-                        commands { +Command.RequestTwoFactorCode(status.defaultProvider) }
+                        if (!isTotp) {
+                            commands { +Command.RequestTwoFactorCode(status.defaultProvider) }
+                        }
+                        Unit
                     }
                 }
             }
@@ -71,7 +83,8 @@ internal class BarsLoginReducer :
                     copy(
                         codeState = CodeState.CodeSent(
                             provider = event.provider,
-                            resendDebounceSec = 30,
+                            resendDebounceSec = event.debounceSec,
+                            serverMessage = event.serverMessage,
                         ),
                         isLoading = false,
                         failure = null,
@@ -98,7 +111,7 @@ internal class BarsLoginReducer :
                         // Restore the resend links so the user can retry with the same
                         // or another provider after a failed code request
                         codeState = (codeState as? CodeState.SendingCode)
-                            ?.let { CodeState.CodeSent(it.provider, resendDebounceSec = 0) }
+                            ?.let { CodeState.CodeSent(it.provider, resendDebounceSec = 0, serverMessage = null) }
                             ?: codeState,
                     )
                 }

@@ -98,17 +98,19 @@ internal class BarsLoginActor(
                     is LoginResult.WrongCredentials -> LoginStatus.WrongCredentials
                     is LoginResult.Success -> LoginStatus.AccountSelectionRequired
                     is LoginResult.TwoFactorRequired -> {
-                        val defaultProvider = loginResult.defaultProvider.toDomain()
+                        val session = kekmech.ru.feature_bars_impl.data.network.BarsTwoFactorSessionHolder.currentSession
+                        val defaultProvider = session?.defaultProvider ?: loginResult.defaultProvider.toDomain()
                         val providers = (
-                            loginResult.availableProviders.map { it.toDomain() } +
-                                listOf(CodeProvider.EMAIL, CodeProvider.MAX)
+                            session?.availableProviders
+                                ?: (loginResult.availableProviders.map { it.toDomain() } + listOf(defaultProvider))
                             )
                             .distinct()
-                            .filter { it == CodeProvider.EMAIL || it == CodeProvider.MAX }
                             .sortedByDescending { it == defaultProvider }
+
                         LoginStatus.TwoFactorRequired(
                             defaultProvider = defaultProvider,
                             providers = providers,
+                            serverMessage = session?.lastServerMessage,
                         )
                     }
                 }
@@ -133,11 +135,13 @@ internal class BarsLoginActor(
                     RequestTwoFactorResult.Error -> error("Unable to send code")
                     RequestTwoFactorResult.Success -> Unit
                 }
+                kekmech.ru.feature_bars_impl.data.network.BarsTwoFactorSessionHolder.currentSession?.lastServerMessage
             }.mapEvents(
-                eventMapper = {
+                eventMapper = { serverMsg ->
                     RequestTwoFactorCodeSuccess(
                         provider = command.provider,
                         debounceSec = TWO_FACTOR_DEBOUNCE_SEC,
+                        serverMessage = serverMsg,
                     )
                 },
                 errorMapper = { e ->
@@ -235,7 +239,7 @@ internal class BarsLoginActor(
         when (this) {
             TwoFactorProvider.MAX -> CodeProvider.MAX
             TwoFactorProvider.VK -> CodeProvider.VK
-            TwoFactorProvider.TG -> CodeProvider.EMAIL
+            TwoFactorProvider.TG -> CodeProvider.TOTP
         }
 
     private fun CodeProvider.toLib(): TwoFactorProvider =
@@ -243,7 +247,8 @@ internal class BarsLoginActor(
             CodeProvider.MAX -> TwoFactorProvider.MAX
             CodeProvider.VK -> TwoFactorProvider.VK
             CodeProvider.TG -> TwoFactorProvider.TG
-            // Map EMAIL to TG (ID 1) - BarsTwoFactorCompatInterceptor rewrites tid=1 to tid=5 on the wire
+            // Map TOTP and EMAIL to TG (slot 1) - BarsTwoFactorCompatInterceptor rewrites tid=1 to tid=5 on the wire
+            CodeProvider.TOTP -> TwoFactorProvider.TG
             CodeProvider.EMAIL -> TwoFactorProvider.TG
         }
 

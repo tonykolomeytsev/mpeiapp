@@ -13,6 +13,8 @@ import okhttp3.ResponseBody.Companion.toResponseBody
 import java.io.ByteArrayOutputStream
 import java.util.zip.GZIPOutputStream
 
+import kekmech.ru.feature_bars_impl.presentation.screen.login.elm.CodeProvider
+
 internal class BarsTwoFactorCompatInterceptorTest : StringSpec({
 
     val interceptor = BarsTwoFactorCompatInterceptor()
@@ -53,10 +55,13 @@ internal class BarsTwoFactorCompatInterceptorTest : StringSpec({
         return interceptor.intercept(chain)
     }
 
-    "intercept rewrites 2FA page with provider 5 (email) as default" {
+    "intercept rewrites 2FA page with provider 5 (TOTP) as default and detects session" {
         val html = """
             <html>
             <body>
+            <script>
+                af2_code_send('btnSend', '/bars_web/Auth/JSON_SendAF2_Code', '5', '6');
+            </script>
             <a id="btnSend" href="#" onclick="af2_code_send('btnSend', '/bars_web/Auth/JSON_SendAF2_Code', '5', '6');" data-text="Войти по одноразовому коду">
             <a id="btnSend3" href="#" onclick="af2_code_send('btnSend3', '/bars_web/Auth/JSON_SendAF2_Code', '3', '4');" data-text="Отправить повторно через МАКС">
             </body>
@@ -66,12 +71,16 @@ internal class BarsTwoFactorCompatInterceptorTest : StringSpec({
         val response = execute(html)
         val body = response.body?.string().orEmpty()
 
-        // Provider 5 (email) should be mapped to provider 1 (legacy slot in lib_bars)
+        // Provider 5 (TOTP) should be mapped to provider 1 (legacy slot in lib_bars)
         body shouldContain "af2_code_send('btnSend', '/bars_web/Auth/JSON_SendAF2_Code', '1')"
         // Provider 3 (MAX) remains provider 3
         body shouldContain "af2_code_send('btnSend', '/bars_web/Auth/JSON_SendAF2_Code', '3')"
         body shouldContain "lib_bars_compat_shim"
         body shouldContain "onclick=\" af2_code_send"
+
+        BarsTwoFactorSessionHolder.currentSession?.defaultProvider shouldBe CodeProvider.TOTP
+        BarsTwoFactorSessionHolder.currentSession?.isTotp shouldBe true
+        BarsTwoFactorSessionHolder.currentSession?.availableProviders shouldBe listOf(CodeProvider.TOTP, CodeProvider.MAX)
     }
 
     "intercept rewrites 2FA page with telegram button first" {
@@ -215,5 +224,33 @@ internal class BarsTwoFactorCompatInterceptorTest : StringSpec({
 
         interceptor.intercept(chain)
         passedRequest?.url?.queryParameter("tid") shouldBe "3"
+    }
+
+    "intercept captures server response message from JSON_SendAF2_Code" {
+        val chain = object : Interceptor.Chain {
+            override fun request(): Request = Request.Builder()
+                .url("https://bars.mpei.ru/bars_web/Auth/JSON_SendAF2_Code?tid=3")
+                .build()
+            override fun proceed(request: Request): Response {
+                return Response.Builder()
+                    .request(request)
+                    .protocol(Protocol.HTTP_1_1)
+                    .code(200)
+                    .message("OK")
+                    .body("""{"success":true,"message":"Сообщение отправлено в 'MAX'"}""".toResponseBody("application/json".toMediaType()))
+                    .build()
+            }
+            override fun connection() = null
+            override fun call() = throw UnsupportedOperationException()
+            override fun connectTimeoutMillis() = 0
+            override fun withConnectTimeout(timeout: Int, unit: java.util.concurrent.TimeUnit) = this
+            override fun readTimeoutMillis() = 0
+            override fun withReadTimeout(timeout: Int, unit: java.util.concurrent.TimeUnit) = this
+            override fun writeTimeoutMillis() = 0
+            override fun withWriteTimeout(timeout: Int, unit: java.util.concurrent.TimeUnit) = this
+        }
+
+        interceptor.intercept(chain)
+        BarsTwoFactorSessionHolder.currentSession?.lastServerMessage shouldBe "Сообщение отправлено в 'MAX'"
     }
 })

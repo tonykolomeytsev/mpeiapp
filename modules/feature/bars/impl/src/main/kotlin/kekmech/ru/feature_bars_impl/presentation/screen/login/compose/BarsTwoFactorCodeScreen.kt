@@ -21,6 +21,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kekmech.ru.feature_bars_impl.domain.ExceptionWithId
@@ -91,7 +92,10 @@ internal fun BarsTwoFactorCodeScreen(
                 modifier = Modifier.fillMaxWidth(),
                 shape = shape,
                 label = { Text("Код подтверждения") },
-                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Next,
+                    keyboardType = KeyboardType.Number,
+                ),
                 singleLine = true,
                 supportingText = {
                     if (wrongCodeAlert) {
