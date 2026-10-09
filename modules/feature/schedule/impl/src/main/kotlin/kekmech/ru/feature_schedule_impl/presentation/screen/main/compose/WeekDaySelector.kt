@@ -90,7 +90,7 @@ private fun DaySelectorItem(
     ) {
         Text(
             text = dayName,
-            style = MpeixTheme.typography.paragraphSmall.copy(
+            style = MpeixTheme.typography.labelNormal.copy(
                 fontWeight = if (isSelected || isToday) FontWeight.Bold else FontWeight.Normal,
                 color = if (isSelected) MpeixTheme.palette.primary else MpeixTheme.palette.contentVariant,
                 fontSize = 12.sp,

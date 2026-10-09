@@ -66,9 +66,9 @@ internal fun ScheduleComposeScreen(
         modifier = modifier.fillMaxSize(),
         containerColor = MpeixTheme.palette.background,
         topBar = {
+            val titleText = state.selectedSchedule?.name?.let { "$it • $weekSubtitle" } ?: "Расписание"
             TopAppBar(
-                title = state.selectedSchedule?.name ?: "Расписание",
-                subtitle = weekSubtitle,
+                title = titleText,
                 actions = {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         // Previous week
@@ -93,7 +93,7 @@ internal fun ScheduleComposeScreen(
                             ) {
                                 Text(
                                     text = if (state.weekOffset > 0) "+${state.weekOffset}" else "${state.weekOffset}",
-                                    style = MpeixTheme.typography.paragraphSmall.copy(
+                                    style = MpeixTheme.typography.labelNormal.copy(
                                         color = MpeixTheme.palette.primary,
                                         fontWeight = FontWeight.Bold,
                                     ),
@@ -133,7 +133,7 @@ internal fun ScheduleComposeScreen(
                     ) {
                         Text(
                             text = "Сегодня",
-                            style = MpeixTheme.typography.buttonNormal.copy(
+                            style = MpeixTheme.typography.labelBig.copy(
                                 color = MpeixTheme.palette.contentAccent,
                                 fontWeight = FontWeight.Bold,
                             ),

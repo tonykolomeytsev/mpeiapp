@@ -7,8 +7,8 @@ import kekmech.ru.feature_schedule_impl.data.model.GetSearchResultsResponse
 import kekmech.ru.feature_schedule_impl.data.model.ScheduleDto
 import kekmech.ru.feature_schedule_impl.data.model.ScheduleTypeDto
 import kekmech.ru.feature_schedule_impl.data.network.mpei.MpeiScheduleService
-import kekmech.ru.lib_schedule.utils.atStartOfWeek
 import timber.log.Timber
+import kekmech.ru.lib_schedule.utils.atStartOfWeek
 import java.time.format.DateTimeFormatter
 import java.util.concurrent.ConcurrentHashMap
 

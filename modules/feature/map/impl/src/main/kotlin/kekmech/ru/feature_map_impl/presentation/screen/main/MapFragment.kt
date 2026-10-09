@@ -90,16 +90,16 @@ internal class MapFragment : Fragment(R.layout.fragment_map),
 
     override fun onResume() {
         super.onResume()
-        viewBinding.mapView.onResume()
+        viewBinding.mapView?.onResume()
     }
 
     override fun onPause() {
-        viewBinding.mapView.onPause()
+        viewBinding.mapView?.onPause()
         super.onPause()
     }
 
     override fun onDestroyView() {
-        viewBinding.mapView.onDetach()
+        viewBinding.mapView?.onDetach()
         super.onDestroyView()
     }
 
@@ -127,7 +127,7 @@ internal class MapFragment : Fragment(R.layout.fragment_map),
     }
 
     private fun createMap() {
-        val mapView = viewBinding.mapView
+        val mapView = viewBinding.mapView ?: return
         mapView.init(requireContext())
         store.accept(MapEvent.Ui.Action.OnMapReady(mapView))
     }

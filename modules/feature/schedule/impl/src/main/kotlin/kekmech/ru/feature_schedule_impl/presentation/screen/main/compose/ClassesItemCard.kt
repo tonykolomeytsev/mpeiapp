@@ -72,7 +72,7 @@ internal fun ClassesItemCard(
                         ) {
                             Text(
                                 text = classes.number.toString(),
-                                style = MpeixTheme.typography.paragraphSmall.copy(
+                                style = MpeixTheme.typography.paragraphNormal.copy(
                                     fontWeight = FontWeight.Bold,
                                     color = MpeixTheme.palette.primary,
                                 ),
@@ -121,7 +121,7 @@ internal fun ClassesItemCard(
             if (classes.person.isNotBlank()) {
                 Text(
                     text = classes.person,
-                    style = MpeixTheme.typography.paragraphSmall.copy(
+                    style = MpeixTheme.typography.paragraphNormal.copy(
                         color = MpeixTheme.palette.contentVariant,
                     ),
                     maxLines = 1,
@@ -134,7 +134,7 @@ internal fun ClassesItemCard(
                 Spacer(modifier = Modifier.height(2.dp))
                 Text(
                     text = classes.groups,
-                    style = MpeixTheme.typography.paragraphSmall.copy(
+                    style = MpeixTheme.typography.paragraphNormal.copy(
                         color = MpeixTheme.palette.contentDisabled,
                         fontSize = 11.sp,
                     ),
@@ -155,7 +155,7 @@ internal fun ClassesItemCard(
                 ) {
                     Text(
                         text = "📝 $note",
-                        style = MpeixTheme.typography.paragraphSmall.copy(
+                        style = MpeixTheme.typography.paragraphNormal.copy(
                             color = MpeixTheme.palette.content,
                         ),
                         maxLines = 2,
@@ -191,7 +191,7 @@ private fun ClassesTypeBadge(
     ) {
         Text(
             text = label,
-            style = MpeixTheme.typography.paragraphSmall.copy(
+            style = MpeixTheme.typography.paragraphNormal.copy(
                 fontWeight = FontWeight.SemiBold,
                 color = badgeColor,
                 fontSize = 11.sp,

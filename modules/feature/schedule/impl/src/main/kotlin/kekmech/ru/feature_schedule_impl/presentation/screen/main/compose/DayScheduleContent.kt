@@ -174,7 +174,7 @@ private fun ErrorStateContent(
             ) {
                 Text(
                     text = "Повторить",
-                    style = MpeixTheme.typography.buttonNormal.copy(
+                    style = MpeixTheme.typography.labelBig.copy(
                         color = MpeixTheme.palette.contentAccent,
                     ),
                 )

@@ -219,11 +219,12 @@ internal fun AppSettingsComposeScreen(
                         SettingsSectionHeader(title = stringResource(Strings.app_settings_header_contributors))
                     }
                     items(contributors) { contributor ->
+                        val displayName = contributor.name ?: contributor.login
                         ListItem(
-                            headlineText = contributor.name,
-                            supportingText = contributor.description,
+                            headlineText = displayName,
+                            supportingText = contributor.bio,
                             leadingContent = {
-                                Monogram(letter = contributor.name.firstOrNull() ?: 'C')
+                                Monogram(letter = displayName.firstOrNull() ?: 'C')
                             },
                             modifier = Modifier.clickable {
                                 onOpenContributor(contributor.url)

@@ -32,7 +32,7 @@ import androidx.glance.layout.width
 import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
-import androidx.glance.unit.ColorProvider
+import androidx.glance.color.ColorProvider
 import kekmech.ru.feature_schedule_api.data.repository.ScheduleRepository
 import kekmech.ru.feature_schedule_api.domain.model.Classes
 import kekmech.ru.feature_schedule_api.domain.model.ClassesType
@@ -102,10 +102,7 @@ private fun ScheduleWidgetRoot(
     today: LocalDate,
     classes: List<Classes>,
 ) {
-    val launchIntent = Intent().apply {
-        component = ComponentName(context.packageName, "kekmech.ru.mpeiapp.MainActivity")
-        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-    }
+    val launchComponent = ComponentName(context.packageName, "kekmech.ru.mpeiapp.MainActivity")
 
     val dateFormatter = DateTimeFormatter.ofPattern("EEEE, d MMMM", Locale("ru"))
     val formattedDate = today.format(dateFormatter)
@@ -117,7 +114,7 @@ private fun ScheduleWidgetRoot(
             .background(ColorProvider(day = Color(0xFFF7F8FA), night = Color(0xFF1E1E1E)))
             .cornerRadius(16.dp)
             .padding(12.dp)
-            .clickable(actionStartActivity(launchIntent)),
+            .clickable(actionStartActivity(launchComponent)),
     ) {
         // Widget Header
         Row(
