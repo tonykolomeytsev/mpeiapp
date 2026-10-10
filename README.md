@@ -1,19 +1,10 @@
-# MpeiX — приложение МЭИ здорового человека
+# MPEI-NEXT - Альтернатива для МЭИ
 
-[![Kotlin](https://img.shields.io/badge/Kotlin-2.2.10-blue.svg?logo=kotlin)](https://kotlinlang.org)
-[![Android Gradle Plugin](https://img.shields.io/badge/AGP-8.12.3-green.svg?logo=android)](https://developer.android.com/studio/releases/gradle-plugin)
-[![Jetpack Compose](https://img.shields.io/badge/Jetpack_Compose-Enabled-4285F4.svg?logo=jetpackcompose)](https://developer.android.com/jetpack/compose)
-[![Glance Widget](https://img.shields.io/badge/Glance_Widget-Included-3DDC84.svg?logo=android)](https://developer.android.com/jetpack/compose/glance)
-[![OpenStreetMap](https://img.shields.io/badge/Map-OpenStreetMap-7EBC6F.svg?logo=openstreetmap)](https://www.openstreetmap.org)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+**Когда мы форкнули этот проект, только три человека на планете знали как он работает. Теперь ни одна живая душа этого не знает**
 
-<p align="center">
-  <img src="https://github.com/tonykolomeytsev/mpeiapp/raw/master/.github/media/gradient_logo.png" alt="MpeiX Logo" width="120" />
-</p>
+## Форк https://github.com/tonykolomeytsev/mpeiapp
 
-Расписание пар, заметки, личный кабинет БАРС, офлайн-карта кампуса и домашний виджет для студентов и преподавателей **НИУ «МЭИ»**. Самое быстрое, современное и независимое студенческое приложение.
-
----
+### Расписание пар, заметки, личный кабинет БАРС, офлайн-карта кампуса и домашний виджет для студентов и преподавателей **НИУ «МЭИ»**. Самое быстрое, современное и независимое студенческое приложение.
 
 ## ✨ Возможности
 
