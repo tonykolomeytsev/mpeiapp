@@ -65,9 +65,9 @@ internal class BarsLoginReducer :
                             )
                         }
                         state { copy(stage = BarsLoginStage.TWO_FACTOR_CODE) }
-                        if (!isTotp) {
-                            commands { +Command.RequestTwoFactorCode(status.defaultProvider) }
-                        }
+                        // Always request two factor code to ensure BARS initializes the challenge session
+                        // (for TOTP, BARS requires GET /bars_web/Auth/JSON_SendAF2_Code?tid=5 before code verification)
+                        commands { +Command.RequestTwoFactorCode(status.defaultProvider) }
                         Unit
                     }
                 }
@@ -78,12 +78,15 @@ internal class BarsLoginReducer :
             }
 
             is Internal.RequestTwoFactorCodeSuccess -> {
-                commands { +Command.SubscribeTwoFactorCodeTimer }
+                val isTotp = event.provider == CodeProvider.TOTP
+                if (!isTotp) {
+                    commands { +Command.SubscribeTwoFactorCodeTimer }
+                }
                 twoFactorCodeState {
                     copy(
                         codeState = CodeState.CodeSent(
                             provider = event.provider,
-                            resendDebounceSec = event.debounceSec,
+                            resendDebounceSec = if (isTotp) 0 else event.debounceSec,
                             serverMessage = event.serverMessage,
                         ),
                         isLoading = false,
@@ -118,7 +121,7 @@ internal class BarsLoginReducer :
             }
 
             is Internal.Submit2faCodeSuccess -> {
-                twoFactorCodeState { copy(failure = null) }
+                twoFactorCodeState { copy(failure = null, isLoading = false) }
                 when (event.status) {
                     TwoFactorCodeStatus.InvalidCode -> {
                         effects { +Effect.ShowInvalidCodeText }

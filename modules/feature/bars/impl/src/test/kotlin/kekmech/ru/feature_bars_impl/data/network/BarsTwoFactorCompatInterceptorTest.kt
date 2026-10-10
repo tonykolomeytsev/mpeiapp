@@ -253,4 +253,42 @@ internal class BarsTwoFactorCompatInterceptorTest : StringSpec({
         interceptor.intercept(chain)
         BarsTwoFactorSessionHolder.currentSession?.lastServerMessage shouldBe "Сообщение отправлено в 'MAX'"
     }
+
+    "intercept rewrites LoginCode unknown verification error with IncorrectCode" {
+        val html = """
+            <html>
+            <body>
+            <span class="field-validation-error">Не удалось определить данные кода подтверждения</span>
+            </body>
+            </html>
+        """.trimIndent()
+
+        val chain = object : Interceptor.Chain {
+            override fun request(): Request = Request.Builder()
+                .url("https://bars.mpei.ru/bars_web/Auth/LoginCode")
+                .build()
+            override fun proceed(request: Request): Response {
+                return Response.Builder()
+                    .request(request)
+                    .protocol(Protocol.HTTP_1_1)
+                    .code(200)
+                    .message("OK")
+                    .body(html.toResponseBody("text/html; charset=utf-8".toMediaType()))
+                    .build()
+            }
+            override fun connection() = null
+            override fun call() = throw UnsupportedOperationException()
+            override fun connectTimeoutMillis() = 0
+            override fun withConnectTimeout(timeout: Int, unit: java.util.concurrent.TimeUnit) = this
+            override fun readTimeoutMillis() = 0
+            override fun withReadTimeout(timeout: Int, unit: java.util.concurrent.TimeUnit) = this
+            override fun writeTimeoutMillis() = 0
+            override fun withWriteTimeout(timeout: Int, unit: java.util.concurrent.TimeUnit) = this
+        }
+
+        val response = interceptor.intercept(chain)
+        val body = response.body?.string().orEmpty()
+
+        body shouldContain "Некорректный код подтверждения"
+    }
 })

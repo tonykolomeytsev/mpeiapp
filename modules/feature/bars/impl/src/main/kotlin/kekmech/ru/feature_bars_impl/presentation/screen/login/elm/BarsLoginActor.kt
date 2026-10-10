@@ -54,6 +54,7 @@ internal class BarsLoginActor(
 ) : Actor<Command, Event>() {
 
     private val crashlytics get() = FirebaseCrashlytics.getInstance()
+    private var activeRequestCodeDeferred: kotlinx.coroutines.CompletableDeferred<Unit>? = null
 
     override fun execute(command: Command): Flow<Event> =
         when (command) {
@@ -128,14 +129,22 @@ internal class BarsLoginActor(
             )
 
             is Command.RequestTwoFactorCode -> actorFlow {
-                val requestResult = withTimeoutOrNull(BARS_REQUEST_TIMEOUT_MS) {
-                    barsHandle.auth.requestTwoFactorCode(command.provider.toLib())
-                } ?: error("BARS request timeout: auth.requestTwoFactorCode")
-                when (requestResult) {
-                    RequestTwoFactorResult.Error -> error("Unable to send code")
-                    RequestTwoFactorResult.Success -> Unit
+                val deferred = kotlinx.coroutines.CompletableDeferred<Unit>()
+                activeRequestCodeDeferred = deferred
+                try {
+                    val requestResult = withTimeoutOrNull(BARS_REQUEST_TIMEOUT_MS) {
+                        barsHandle.auth.requestTwoFactorCode(command.provider.toLib())
+                    } ?: error("BARS request timeout: auth.requestTwoFactorCode")
+                    when (requestResult) {
+                        RequestTwoFactorResult.Error -> error("Unable to send code")
+                        RequestTwoFactorResult.Success -> Unit
+                    }
+                    deferred.complete(Unit)
+                    kekmech.ru.feature_bars_impl.data.network.BarsTwoFactorSessionHolder.currentSession?.lastServerMessage
+                } catch (e: Throwable) {
+                    deferred.completeExceptionally(e)
+                    throw e
                 }
-                kekmech.ru.feature_bars_impl.data.network.BarsTwoFactorSessionHolder.currentSession?.lastServerMessage
             }.mapEvents(
                 eventMapper = { serverMsg ->
                     RequestTwoFactorCodeSuccess(
@@ -163,6 +172,7 @@ internal class BarsLoginActor(
             }.mapEvents(::SubscribeTwoFactorCodeTimerSuccess)
 
             is Command.Submit2faCode -> actorFlow {
+                runCatching { activeRequestCodeDeferred?.await() }
                 val result = withTimeoutOrNull(BARS_REQUEST_TIMEOUT_MS) {
                     barsHandle.auth.submitTwoFactorCode(
                         data = TwoFactorData(

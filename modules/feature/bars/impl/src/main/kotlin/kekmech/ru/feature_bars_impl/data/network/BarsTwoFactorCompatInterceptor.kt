@@ -113,10 +113,27 @@ internal class BarsTwoFactorCompatInterceptor : Interceptor {
             return response.rebuildWith(rawBytes, contentType, stripEncoding = false)
         }
 
+        val isLoginCodeResponse = url.encodedPath.endsWith("LoginCode") || url.encodedPath.contains("LoginCode")
+        if (isLoginCodeResponse) {
+            var fixedLoginCode = text
+            if (text.contains("Не удалось определить данные кода подтверждения") &&
+                !text.contains("Некорректный код подтверждения")
+            ) {
+                fixedLoginCode = "$fixedLoginCode\n<!-- $SHIM_MARKER --><div style=\"display:none\">Некорректный код подтверждения</div>"
+            }
+            if (fixedLoginCode != text) {
+                return response.rebuildWith(
+                    bytes = fixedLoginCode.toByteArray(Charsets.UTF_8),
+                    contentType = contentType,
+                    stripEncoding = isGzipped,
+                )
+            }
+            return response.rebuildWith(rawBytes, contentType, stripEncoding = false)
+        }
+
         val is2faPage = text.contains("af2_code_send") ||
             text.contains("JSON_SendAF2_Code") ||
-            text.contains("AF2_Code") ||
-            text.contains("LoginCode")
+            text.contains("AF2_Code")
 
         val isLoginFailurePage = (text.contains("Пользователь не найден") ||
             text.contains("Неверный логин") ||
@@ -175,10 +192,10 @@ internal class BarsTwoFactorCompatInterceptor : Interceptor {
     }
 
     private fun parseAndStoreSession(html: String) {
-        val scriptMatch = scriptCallRegex.find(html)
-        val defaultBtnId = scriptMatch?.groupValues?.get(1).orEmpty()
-        val defaultTid = scriptMatch?.groupValues?.get(3).orEmpty()
-        val defaultLen = scriptMatch?.groupValues?.get(4)?.ifEmpty { "6" } ?: "6"
+        val scriptMatch = scriptCallRegex.find(html) ?: return
+        val defaultBtnId = scriptMatch.groupValues[1]
+        val defaultTid = scriptMatch.groupValues[3]
+        val defaultLen = scriptMatch.groupValues.getOrNull(4)?.ifEmpty { "6" } ?: "6"
 
         val buttons = parseButtons(html)
         val defaultButton = buttons.find { it.id == defaultBtnId } ?: buttons.find { it.tid == defaultTid }
