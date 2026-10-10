@@ -71,6 +71,13 @@ internal fun ScheduleComposeScreen(
     var isFilterExpanded by rememberSaveable { mutableStateOf(false) }
     var isWeeklyGridMode by rememberSaveable { mutableStateOf(false) }
 
+    // Reset discipline filter when switching weeks if it doesn't exist in the new week
+    LaunchedEffect(state.weekOffset, state.selectedSchedule?.name) {
+        selectedDiscipline = null
+        searchQuery = ""
+        selectedClassesType = null
+    }
+
     // Collect all classes for the active week
     val rawDays = state.selectedSchedule?.weeks?.firstOrNull()?.days.orEmpty()
     val allWeekClasses = remember(rawDays) {
@@ -128,9 +135,11 @@ internal fun ScheduleComposeScreen(
         daysWithFilteredClasses.sumOf { it.second.size }
     }
 
-    // Classes for the currently selected day
+    // Classes for the currently selected day (fallback to dayOfWeek if date mismatch)
     val selectedDayClasses = remember(daysWithFilteredClasses, state.selectedDate) {
-        daysWithFilteredClasses.find { it.first.date == state.selectedDate }?.second
+        daysWithFilteredClasses.find {
+            it.first.date == state.selectedDate || it.first.dayOfWeek == state.selectedDate.dayOfWeek.value
+        }?.second
     }
 
     val weekSubtitle = when (val weekOfSemester = state.weekOfSemester) {
