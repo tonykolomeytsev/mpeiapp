@@ -17,7 +17,7 @@ import kekmech.ru.lib_analytics_android.ext.screenAnalytics
 import kekmech.ru.res_strings.R.string as Strings
 
 private const val ARG_UPDATE_INFO = "Arg.UpdateInfo"
-private const val LINK_GITHUB = "https://github.com/tonykolomeytsev/mpeiapp/issues"
+private const val LINK_GITHUB = "https://github.com/ghostoftheeleven/mpei-next/issues"
 
 class BlockingUpdateFragment : Fragment(R.layout.fragment_blocking_update) {
 

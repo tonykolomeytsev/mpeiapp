@@ -17,13 +17,13 @@ public enum class BackendServiceUrl(
         mockEndpoint = "http://localhost:8080/api/",
     ),
     MAP(
-        prodEndpoint = "https://raw.githubusercontent.com/tonykolomeytsev/mpeiapp/master/statics/map/",
-        stagingEndpoint = "https://raw.githubusercontent.com/tonykolomeytsev/mpeiapp/dev/statics/map/",
+        prodEndpoint = "https://raw.githubusercontent.com/ghostoftheeleven/mpei-next/master/statics/map/",
+        stagingEndpoint = "https://raw.githubusercontent.com/ghostoftheeleven/mpei-next/dev/statics/map/",
         mockEndpoint = "http://localhost:8080/map/",
     ),
     BARS(
-        prodEndpoint = "https://raw.githubusercontent.com/tonykolomeytsev/mpeiapp/master/statics/bars/",
-        stagingEndpoint = "https://raw.githubusercontent.com/tonykolomeytsev/mpeiapp/dev/statics/bars/",
+        prodEndpoint = "https://raw.githubusercontent.com/ghostoftheeleven/mpei-next/master/statics/bars/",
+        stagingEndpoint = "https://raw.githubusercontent.com/ghostoftheeleven/mpei-next/dev/statics/bars/",
         mockEndpoint = "http://localhost:8080/bars/",
     ),
     GITHUB(
