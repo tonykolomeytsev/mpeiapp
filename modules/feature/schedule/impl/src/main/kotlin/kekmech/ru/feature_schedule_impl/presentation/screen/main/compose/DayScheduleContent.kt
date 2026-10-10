@@ -13,7 +13,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -77,10 +77,10 @@ internal fun DayScheduleContent(
                     contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
                     verticalArrangement = Arrangement.spacedBy(10.dp),
                 ) {
-                    items(
+                    itemsIndexed(
                         items = classesList,
-                        key = { "${it.number}_${it.name}_${it.time.start}" },
-                    ) { cls ->
+                        key = { index, it -> "${index}_${it.number}_${it.name}_${it.time.start}_${it.person}_${it.groups}" },
+                    ) { _, cls ->
                         ClassesItemCard(
                             classes = cls,
                             onClick = { onClassesClick(cls) },
