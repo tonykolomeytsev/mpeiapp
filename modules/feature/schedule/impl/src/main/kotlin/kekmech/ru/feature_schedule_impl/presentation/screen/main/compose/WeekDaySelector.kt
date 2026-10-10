@@ -32,25 +32,30 @@ private val dayNames = listOf("ПН", "ВТ", "СР", "ЧТ", "ПТ", "СБ")
 internal fun WeekDaySelector(
     firstDayOfWeek: LocalDate,
     selectedDate: LocalDate,
+    classesCountByDate: Map<LocalDate, Int>? = null,
     onDayClick: (LocalDate) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val today = moscowLocalDate()
+    val hasSundayClasses = (classesCountByDate?.get(firstDayOfWeek.plusDays(6)) ?: 0) > 0
+    val daysCount = if (hasSundayClasses) 7 else 6
 
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 12.dp, vertical = 8.dp),
+            .padding(horizontal = 8.dp, vertical = 4.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
-        (0..5).forEach { dayOffset ->
+        (0 until daysCount).forEach { dayOffset ->
             val date = firstDayOfWeek.plusDays(dayOffset.toLong())
             val isSelected = date == selectedDate
             val isToday = date == today
+            val count = classesCountByDate?.get(date)
 
             DaySelectorItem(
-                dayName = dayNames[dayOffset],
+                dayName = dayNames.getOrElse(dayOffset) { "" },
                 dayNumber = date.dayOfMonth,
+                classesCount = count,
                 isSelected = isSelected,
                 isToday = isToday,
                 onClick = { onDayClick(date) },
@@ -64,6 +69,7 @@ internal fun WeekDaySelector(
 private fun DaySelectorItem(
     dayName: String,
     dayNumber: Int,
+    classesCount: Int?,
     isSelected: Boolean,
     isToday: Boolean,
     onClick: () -> Unit,
@@ -83,9 +89,9 @@ private fun DaySelectorItem(
 
     Column(
         modifier = modifier
-            .clip(RoundedCornerShape(12.dp))
+            .clip(RoundedCornerShape(10.dp))
             .clickable(onClick = onClick)
-            .padding(vertical = 6.dp),
+            .padding(vertical = 4.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
@@ -93,15 +99,15 @@ private fun DaySelectorItem(
             style = MpeixTheme.typography.labelNormal.copy(
                 fontWeight = if (isSelected || isToday) FontWeight.Bold else FontWeight.Normal,
                 color = if (isSelected) MpeixTheme.palette.primary else MpeixTheme.palette.contentVariant,
-                fontSize = 12.sp,
+                fontSize = 11.sp,
             ),
         )
 
-        Spacer(modifier = Modifier.height(4.dp))
+        Spacer(modifier = Modifier.height(2.dp))
 
         Box(
             modifier = Modifier
-                .size(36.dp)
+                .size(32.dp)
                 .clip(CircleShape)
                 .background(backgroundColor),
             contentAlignment = Alignment.Center,
@@ -111,19 +117,27 @@ private fun DaySelectorItem(
                 style = MpeixTheme.typography.paragraphNormal.copy(
                     fontWeight = if (isSelected || isToday) FontWeight.Bold else FontWeight.Medium,
                     color = textColor,
+                    fontSize = 13.sp,
                 ),
             )
         }
 
         Spacer(modifier = Modifier.height(2.dp))
 
-        // Small indicator dot for today
+        // Indicator dot for today or class count
         if (isToday) {
             Box(
                 modifier = Modifier
                     .size(4.dp)
                     .clip(CircleShape)
-                    .background(MpeixTheme.palette.primary),
+                    .background(if (isSelected) MpeixTheme.palette.primary else MpeixTheme.palette.primary),
+            )
+        } else if (classesCount != null && classesCount > 0) {
+            Box(
+                modifier = Modifier
+                    .size(4.dp)
+                    .clip(CircleShape)
+                    .background(if (isSelected) MpeixTheme.palette.primary else MpeixTheme.palette.primary.copy(alpha = 0.5f)),
             )
         } else {
             Spacer(modifier = Modifier.height(4.dp))

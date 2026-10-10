@@ -54,9 +54,9 @@ internal fun ClassesItemCard(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(12.dp),
         ) {
-            // Top row: time + lesson type badge
+            // Top row: lesson number + time + lesson type badge
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -66,7 +66,7 @@ internal fun ClassesItemCard(
                     if (classes.number > 0) {
                         Box(
                             modifier = Modifier
-                                .size(24.dp)
+                                .size(22.dp)
                                 .clip(CircleShape)
                                 .background(MpeixTheme.palette.primary.copy(alpha = 0.12f)),
                             contentAlignment = Alignment.Center,
@@ -76,16 +76,18 @@ internal fun ClassesItemCard(
                                 style = MpeixTheme.typography.paragraphNormal.copy(
                                     fontWeight = FontWeight.Bold,
                                     color = MpeixTheme.palette.primary,
+                                    fontSize = 11.sp,
                                 ),
                             )
                         }
-                        Spacer(modifier = Modifier.width(8.dp))
+                        Spacer(modifier = Modifier.width(6.dp))
                     }
                     Text(
                         text = "${classes.time.start.format(timeFormatter)} - ${classes.time.end.format(timeFormatter)}",
                         style = MpeixTheme.typography.paragraphNormal.copy(
                             fontWeight = FontWeight.SemiBold,
                             color = MpeixTheme.palette.content,
+                            fontSize = 13.sp,
                         ),
                     )
                 }
@@ -93,7 +95,7 @@ internal fun ClassesItemCard(
                 ClassesTypeBadge(classesType = classes.type, rawType = classes.rawType)
             }
 
-            Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = Modifier.height(6.dp))
 
             // Discipline name
             Text(
@@ -101,33 +103,51 @@ internal fun ClassesItemCard(
                 style = MpeixTheme.typography.header4.copy(
                     fontWeight = FontWeight.Bold,
                     color = MpeixTheme.palette.content,
+                    fontSize = 15.sp,
                 ),
             )
 
-            Spacer(modifier = Modifier.height(6.dp))
-
-            // Place / auditorium
-            if (classes.place.isNotBlank()) {
-                Text(
-                    text = "📍 ${classes.place}",
-                    style = MpeixTheme.typography.paragraphNormal.copy(
-                        color = MpeixTheme.palette.primary,
-                        fontWeight = FontWeight.SemiBold,
-                    ),
-                )
+            if (classes.place.isNotBlank() || classes.person.isNotBlank()) {
                 Spacer(modifier = Modifier.height(4.dp))
-            }
-
-            // Person / Lecturer
-            if (classes.person.isNotBlank()) {
-                Text(
-                    text = "👤 ${classes.person}",
-                    style = MpeixTheme.typography.paragraphNormal.copy(
-                        color = MpeixTheme.palette.contentVariant,
-                    ),
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    if (classes.place.isNotBlank()) {
+                        Text(
+                            text = "📍 ${classes.place}",
+                            style = MpeixTheme.typography.paragraphNormal.copy(
+                                color = MpeixTheme.palette.primary,
+                                fontWeight = FontWeight.SemiBold,
+                                fontSize = 12.sp,
+                            ),
+                            maxLines = 1,
+                        )
+                    }
+                    if (classes.place.isNotBlank() && classes.person.isNotBlank()) {
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(
+                            text = "•",
+                            style = MpeixTheme.typography.paragraphNormal.copy(
+                                color = MpeixTheme.palette.contentDisabled,
+                                fontSize = 10.sp,
+                            ),
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                    }
+                    if (classes.person.isNotBlank()) {
+                        Text(
+                            text = "👤 ${classes.person}",
+                            style = MpeixTheme.typography.paragraphNormal.copy(
+                                color = MpeixTheme.palette.contentVariant,
+                                fontSize = 12.sp,
+                            ),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            modifier = Modifier.weight(1f, fill = false),
+                        )
+                    }
+                }
             }
 
             // Groups

@@ -64,13 +64,13 @@ internal fun WeeklyTimelineGrid(
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(10.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 // Left Column: Day badge & Timeline
                 Column(
                     modifier = Modifier
-                        .width(62.dp)
-                        .clip(RoundedCornerShape(12.dp))
+                        .width(48.dp)
+                        .clip(RoundedCornerShape(10.dp))
                         .background(
                             if (isToday) MpeixTheme.palette.primary.copy(alpha = 0.12f)
                             else MpeixTheme.palette.surfacePlus1
@@ -79,10 +79,10 @@ internal fun WeeklyTimelineGrid(
                             width = 1.dp,
                             color = if (isToday) MpeixTheme.palette.primary.copy(alpha = 0.5f)
                             else MpeixTheme.palette.outline.copy(alpha = 0.15f),
-                            shape = RoundedCornerShape(12.dp),
+                            shape = RoundedCornerShape(10.dp),
                         )
                         .clickable { onDayHeaderClick(day.date) }
-                        .padding(vertical = 10.dp, horizontal = 4.dp),
+                        .padding(vertical = 6.dp, horizontal = 2.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     Text(
@@ -90,28 +90,20 @@ internal fun WeeklyTimelineGrid(
                         style = MpeixTheme.typography.labelNormal.copy(
                             fontWeight = FontWeight.Bold,
                             color = if (isToday) MpeixTheme.palette.primary else MpeixTheme.palette.contentVariant,
-                            fontSize = 12.sp,
+                            fontSize = 11.sp,
                         ),
                     )
-                    Spacer(modifier = Modifier.height(2.dp))
+                    Spacer(modifier = Modifier.height(1.dp))
                     Text(
                         text = day.date.dayOfMonth.toString(),
                         style = MpeixTheme.typography.header3.copy(
                             fontWeight = FontWeight.Bold,
                             color = if (isToday) MpeixTheme.palette.primary else MpeixTheme.palette.content,
-                            fontSize = 18.sp,
-                        ),
-                    )
-                    Spacer(modifier = Modifier.height(2.dp))
-                    Text(
-                        text = runCatching { day.date.format(DateTimeFormatter.ofPattern("MMM", Locale.forLanguageTag("ru"))) }.getOrDefault(""),
-                        style = MpeixTheme.typography.paragraphNormal.copy(
-                            color = MpeixTheme.palette.contentDisabled,
-                            fontSize = 10.sp,
+                            fontSize = 15.sp,
                         ),
                     )
                     if (classes.isNotEmpty()) {
-                        Spacer(modifier = Modifier.height(6.dp))
+                        Spacer(modifier = Modifier.height(4.dp))
                         Box(
                             modifier = Modifier
                                 .clip(RoundedCornerShape(4.dp))
@@ -119,14 +111,14 @@ internal fun WeeklyTimelineGrid(
                                     if (isToday) MpeixTheme.palette.primary
                                     else MpeixTheme.palette.surfacePlus3
                                 )
-                                .padding(horizontal = 5.dp, vertical = 2.dp),
+                                .padding(horizontal = 4.dp, vertical = 1.dp),
                         ) {
                             Text(
                                 text = "${classes.size}",
                                 style = MpeixTheme.typography.paragraphNormal.copy(
                                     fontWeight = FontWeight.Bold,
                                     color = if (isToday) MpeixTheme.palette.contentAccent else MpeixTheme.palette.content,
-                                    fontSize = 10.sp,
+                                    fontSize = 9.sp,
                                 ),
                             )
                         }
