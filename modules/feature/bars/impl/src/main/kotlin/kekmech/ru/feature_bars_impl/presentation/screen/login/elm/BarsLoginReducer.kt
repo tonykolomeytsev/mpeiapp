@@ -65,9 +65,9 @@ internal class BarsLoginReducer :
                             )
                         }
                         state { copy(stage = BarsLoginStage.TWO_FACTOR_CODE) }
-                        // Always request two factor code to ensure BARS initializes the challenge session
-                        // (for TOTP, BARS requires GET /bars_web/Auth/JSON_SendAF2_Code?tid=5 before code verification)
-                        commands { +Command.RequestTwoFactorCode(status.defaultProvider) }
+                        if (!isTotp) {
+                            commands { +Command.RequestTwoFactorCode(status.defaultProvider) }
+                        }
                         Unit
                     }
                 }

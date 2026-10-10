@@ -210,9 +210,11 @@ internal class BarsTwoFactorCompatInterceptor : Interceptor {
 
         BarsTwoFactorSessionHolder.currentSession = BarsTwoFactorSession(
             defaultProvider = defaultProvider,
+            activeProvider = defaultProvider,
             availableProviders = availableProviders,
             codeLength = defaultLen.toIntOrNull() ?: 6,
             isTotp = isTotp,
+            isTotpInitialized = false,
         )
     }
 

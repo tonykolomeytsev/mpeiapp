@@ -35,8 +35,31 @@ internal class BarsLoginReducerTest : BehaviorSpec({
                     serverMessage = null,
                 )
             }
-            Then("Commands contain RequestTwoFactorCode(TOTP)") {
-                commands.shouldContainExactly(listOf(Command.RequestTwoFactorCode(CodeProvider.TOTP)))
+            Then("No RequestTwoFactorCode command is emitted for TOTP on init") {
+                commands shouldBe emptyList()
+            }
+        }
+
+        When("Internal.LoginWithPasswordSuccess with TwoFactorRequired (MAX)") {
+            val (state, _, commands) = reducer.reduce(
+                Internal.LoginWithPasswordSuccess(
+                    LoginStatus.TwoFactorRequired(
+                        defaultProvider = CodeProvider.MAX,
+                        providers = listOf(CodeProvider.MAX, CodeProvider.TOTP),
+                        serverMessage = null,
+                    )
+                ),
+                initialState,
+            )
+
+            Then("Stage is TWO_FACTOR_CODE") {
+                state.stage shouldBe BarsLoginStage.TWO_FACTOR_CODE
+            }
+            Then("CodeState is SendingCode with provider MAX") {
+                state.twoFactorCodeState.codeState shouldBe CodeState.SendingCode(CodeProvider.MAX)
+            }
+            Then("Commands contain RequestTwoFactorCode(MAX)") {
+                commands.shouldContainExactly(listOf(Command.RequestTwoFactorCode(CodeProvider.MAX)))
             }
         }
 

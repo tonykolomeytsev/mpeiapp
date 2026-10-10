@@ -131,6 +131,8 @@ internal class BarsLoginActor(
             is Command.RequestTwoFactorCode -> actorFlow {
                 val deferred = kotlinx.coroutines.CompletableDeferred<Unit>()
                 activeRequestCodeDeferred = deferred
+                val isTotp = command.provider == CodeProvider.TOTP
+                kekmech.ru.feature_bars_impl.data.network.BarsTwoFactorSessionHolder.setActiveProvider(command.provider)
                 try {
                     val requestResult = withTimeoutOrNull(BARS_REQUEST_TIMEOUT_MS) {
                         barsHandle.auth.requestTwoFactorCode(command.provider.toLib())
@@ -138,6 +140,9 @@ internal class BarsLoginActor(
                     when (requestResult) {
                         RequestTwoFactorResult.Error -> error("Unable to send code")
                         RequestTwoFactorResult.Success -> Unit
+                    }
+                    if (isTotp) {
+                        kekmech.ru.feature_bars_impl.data.network.BarsTwoFactorSessionHolder.markTotpInitialized()
                     }
                     deferred.complete(Unit)
                     kekmech.ru.feature_bars_impl.data.network.BarsTwoFactorSessionHolder.currentSession?.lastServerMessage
@@ -173,6 +178,15 @@ internal class BarsLoginActor(
 
             is Command.Submit2faCode -> actorFlow {
                 runCatching { activeRequestCodeDeferred?.await() }
+                val session = kekmech.ru.feature_bars_impl.data.network.BarsTwoFactorSessionHolder.currentSession
+                if (session?.isTotp == true && !session.isTotpInitialized) {
+                    val initResult = withTimeoutOrNull(BARS_REQUEST_TIMEOUT_MS) {
+                        barsHandle.auth.requestTwoFactorCode(TwoFactorProvider.TG)
+                    }
+                    if (initResult == RequestTwoFactorResult.Success) {
+                        kekmech.ru.feature_bars_impl.data.network.BarsTwoFactorSessionHolder.markTotpInitialized()
+                    }
+                }
                 val result = withTimeoutOrNull(BARS_REQUEST_TIMEOUT_MS) {
                     barsHandle.auth.submitTwoFactorCode(
                         data = TwoFactorData(
