@@ -15,22 +15,34 @@ internal class ContributorsRepositoryImpl(
 
     private val contributorsCache by persistentCache.ofList<Contributor>()
 
+    private val leadContributor = Contributor(
+        login = "ghostoftheeleven",
+        name = "Расул Рустамов",
+        bio = "Разработчик MpeiX Next • студент МЭИ",
+        url = "https://github.com/ghostoftheeleven",
+        avatarUrl = "https://avatars.githubusercontent.com/u/98048622?v=4",
+    )
+
     override fun observeContributors(): Flow<List<Contributor>> =
         contributorsCache.observe()
 
     override suspend fun fetchContributors(): Result<Unit> =
         runCatching {
-            gitHubService.getContributors()
-                .sortedByDescending(GitHubContributorDto::total)
-                .map { gitHubService.getUser(it.author.login) }
-                .map {
-                    Contributor(
-                        login = it.login,
-                        name = it.name,
-                        bio = it.bio?.trim(),
-                        url = it.gitHubPageUrl,
-                        avatarUrl = it.avatarUrl,
-                    )
-                }
+            val originalContributors = runCatching {
+                gitHubService.getContributors()
+                    .sortedByDescending(GitHubContributorDto::total)
+                    .map { gitHubService.getUser(it.author.login) }
+                    .map {
+                        Contributor(
+                            login = it.login,
+                            name = it.name,
+                            bio = it.bio?.trim(),
+                            url = it.gitHubPageUrl,
+                            avatarUrl = it.avatarUrl,
+                        )
+                    }
+            }.getOrDefault(emptyList())
+
+            listOf(leadContributor) + originalContributors.filterNot { it.login.equals("ghostoftheeleven", ignoreCase = true) }
         }.mapCatching { contributorsCache.put(it) }
 }

@@ -5,48 +5,77 @@
         <vector
             android:width="108dp"
             android:height="108dp"
-            android:viewportWidth="210.52632"
-            android:viewportHeight="210.52632">
+            android:viewportWidth="108"
+            android:viewportHeight="108">
+
+            <!-- Rounded diamond badge with gradient-style deep blue fill -->
+            <path
+                android:fillColor="#1D62E2"
+                android:pathData="M54,12 C72,12 96,36 96,54 C96,72 72,96 54,96 C36,96 12,72 12,54 C12,36 36,12 54,12 Z" />
+
+            <!-- Stylized 'M' emblem for MPEI / Next -->
+            <path
+                android:fillColor="#FFFFFF"
+                android:pathData="M32,68 L32,40 L44,53 L54,43 L64,53 L76,40 L76,68 L68,68 L68,52 L59,61 L54,56 L49,61 L40,52 L40,68 Z" />
+
+            <!-- Dynamic 'N'/'X' pulse accent dot -->
             <group
-                android:translateX="45.263157"
-                android:translateY="45.263157">
+                android:name="pulseGroup"
+                android:pivotX="54.0"
+                android:pivotY="30.0">
                 <path
-                    android:fillAlpha="1"
-                    android:fillColor="#f3ffff"
-                    android:pathData="m53.2,60.656v2.554l21.341,0.002c-0.665,7.183 -6.708,12.806 -14.065,12.806 -6.411,0 -11.825,-4.271 -13.551,-10.123l-26.315,7.843c5.101,17.191 21.019,29.73 39.866,29.73 22.963,0 41.577,-18.615 41.577,-41.577 0,-22.963 -18.615,-41.577 -41.577,-41.577v0c-19.02,0 -35.057,12.771 -40.003,30.205l26.426,7.456c1.698,-5.897 7.134,-10.211 13.577,-10.211 7.385,0 13.447,5.668 14.072,12.891z"
-                    android:strokeWidth="0.26458332"
-                    android:strokeAlpha="1"
-                    android:strokeColor="#00000000"
-                    android:strokeLineCap="butt"
-                    android:strokeLineJoin="miter" />
+                    android:fillColor="#4BB7E9"
+                    android:pathData="M54,25 A5,5 0 1,1 53.99,25 Z" />
             </group>
+
+            <!-- Orbiting energetic energy ring -->
             <group
-                android:name="rotationGroup"
-                android:pivotX="60.0"
-                android:pivotY="60.0"
-                android:translateX="45.263157"
-                android:translateY="45.263157">
+                android:name="orbitGroup"
+                android:pivotX="54.0"
+                android:pivotY="54.0">
                 <path
-                    android:fillAlpha="1"
-                    android:fillColor="#f3ffff"
-                    android:pathData="M94.494,13.411m-8.315,0a8.315,8.315 0,1 1,16.631 0a8.315,8.315 0,1 1,-16.631 0"
-                    android:strokeWidth="0.55000001"
-                    android:strokeAlpha="1"
-                    android:strokeColor="#00000000"
+                    android:strokeColor="#1CE39D"
+                    android:strokeWidth="2.5"
                     android:strokeLineCap="round"
-                    android:strokeLineJoin="round" />
+                    android:pathData="M30,30 A34,34 0 0,1 78,30" />
+                <path
+                    android:strokeColor="#FFFFFF"
+                    android:strokeWidth="2.5"
+                    android:strokeLineCap="round"
+                    android:pathData="M78,78 A34,34 0 0,1 30,78" />
             </group>
         </vector>
     </aapt:attr>
 
-    <target android:name="rotationGroup">
+    <!-- Smooth orbit rotation -->
+    <target android:name="orbitGroup">
         <aapt:attr name="android:animation">
             <objectAnimator
-                android:duration="1000"
+                android:duration="800"
                 android:propertyName="rotation"
                 android:valueFrom="0"
-                android:interpolator="@anim/splash_anim_interpolator"
-                android:valueTo="360" />
+                android:valueTo="360"
+                android:interpolator="@anim/splash_anim_interpolator" />
+        </aapt:attr>
+    </target>
+
+    <!-- Pulse effect for top accent dot -->
+    <target android:name="pulseGroup">
+        <aapt:attr name="android:animation">
+            <set android:ordering="sequentially">
+                <objectAnimator
+                    android:duration="400"
+                    android:propertyName="scaleX"
+                    android:valueFrom="1.0"
+                    android:valueTo="1.4"
+                    android:interpolator="@android:anim/accelerate_decelerate_interpolator" />
+                <objectAnimator
+                    android:duration="400"
+                    android:propertyName="scaleX"
+                    android:valueFrom="1.4"
+                    android:valueTo="1.0"
+                    android:interpolator="@android:anim/accelerate_decelerate_interpolator" />
+            </set>
         </aapt:attr>
     </target>
 </animated-vector>

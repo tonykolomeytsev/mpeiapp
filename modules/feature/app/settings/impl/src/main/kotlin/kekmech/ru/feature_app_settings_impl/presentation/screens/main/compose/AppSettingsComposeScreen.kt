@@ -198,39 +198,54 @@ internal fun AppSettingsComposeScreen(
                     )
                 }
 
-                // Section 5: Support
+                // Section 5: Support & Fork
                 item {
                     SettingsSectionHeader(title = stringResource(Strings.app_settings_header_support))
                 }
                 item {
                     ListItem(
-                        headlineText = stringResource(Strings.app_settings_section_github),
-                        supportingText = "github.com/tonykolomeytsev/mpeiapp",
+                        headlineText = "Репозиторий MpeiX Next",
+                        supportingText = "github.com/ghostoftheeleven/mpei-next",
                         modifier = Modifier.clickable {
                             onOpenGithub()
                         },
                     )
                 }
+                item {
+                    ListItem(
+                        headlineText = "Оригинальный проект (MpeiX)",
+                        supportingText = "Форк от github.com/tonykolomeytsev/mpeiapp",
+                        modifier = Modifier.clickable {
+                            onOpenContributor("https://github.com/tonykolomeytsev/mpeiapp")
+                        },
+                    )
+                }
 
                 // Section 6: Contributors
-                val contributors = state.contributors
-                if (!contributors.isNullOrEmpty()) {
-                    item {
-                        SettingsSectionHeader(title = stringResource(Strings.app_settings_header_contributors))
-                    }
-                    items(contributors) { contributor ->
-                        val displayName = contributor.name ?: contributor.login
-                        ListItem(
-                            headlineText = displayName,
-                            supportingText = contributor.bio,
-                            leadingContent = {
-                                Monogram(letter = displayName.firstOrNull() ?: 'C')
-                            },
-                            modifier = Modifier.clickable {
-                                onOpenContributor(contributor.url)
-                            },
-                        )
-                    }
+                val contributorsList = state.contributors?.takeIf { it.isNotEmpty() } ?: listOf(
+                    kekmech.ru.feature_contributors_api.domain.model.Contributor(
+                        login = "ghostoftheeleven",
+                        name = "Расул Рустамов",
+                        bio = "Разработчик MpeiX Next • студент МЭИ",
+                        url = "https://github.com/ghostoftheeleven",
+                        avatarUrl = "https://avatars.githubusercontent.com/u/98048622?v=4",
+                    )
+                )
+                item {
+                    SettingsSectionHeader(title = stringResource(Strings.app_settings_header_contributors))
+                }
+                items(contributorsList) { contributor ->
+                    val displayName = contributor.name ?: contributor.login
+                    ListItem(
+                        headlineText = displayName,
+                        supportingText = contributor.bio,
+                        leadingContent = {
+                            Monogram(letter = displayName.firstOrNull() ?: 'C')
+                        },
+                        modifier = Modifier.clickable {
+                            onOpenContributor(contributor.url)
+                        },
+                    )
                 }
 
                 // Version
