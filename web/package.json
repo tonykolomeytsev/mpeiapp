@@ -1,0 +1,16 @@
+{
+  "name": "mpei-next-web",
+  "private": true,
+  "type": "module",
+  "description": "PWA-версия MpeiX Next для iPhone и любых браузеров",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "test": "node --test test/schedule.test.mjs test/worker.test.mjs",
+    "vapid": "node scripts/gen-vapid.mjs",
+    "icons": "node scripts/make-icons.mjs"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  }
+}
