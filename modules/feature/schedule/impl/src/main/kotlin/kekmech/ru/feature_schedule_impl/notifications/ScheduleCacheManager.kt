@@ -28,10 +28,11 @@ internal class ScheduleCacheManager(
     suspend fun cacheSchedule(
         name: String,
         type: ScheduleType,
-        schedule: Schedule
+        schedule: Schedule,
+        weekOffset: Int = 0,
     ) = withContext(Dispatchers.IO) {
         try {
-            val cacheFile = getCacheFile(name, type)
+            val cacheFile = getCacheFile(name, type, weekOffset)
             ObjectOutputStream(cacheFile.outputStream().buffered()).use { it.writeObject(schedule) }
             Timber.d("ScheduleCacheManager: Cached schedule for $name ($type)")
         } catch (e: Exception) {
@@ -44,10 +45,11 @@ internal class ScheduleCacheManager(
      */
     suspend fun getCachedSchedule(
         name: String,
-        type: ScheduleType
+        type: ScheduleType,
+        weekOffset: Int = 0,
     ): Schedule? = withContext(Dispatchers.IO) {
         try {
-            val cacheFile = getCacheFile(name, type)
+            val cacheFile = getCacheFile(name, type, weekOffset)
             if (!cacheFile.exists()) {
                 Timber.d("ScheduleCacheManager: No cached schedule for $name ($type)")
                 return@withContext null
@@ -68,9 +70,10 @@ internal class ScheduleCacheManager(
      */
     suspend fun hasCachedSchedule(
         name: String,
-        type: ScheduleType
+        type: ScheduleType,
+        weekOffset: Int = 0,
     ): Boolean = withContext(Dispatchers.IO) {
-        getCacheFile(name, type).exists()
+        getCacheFile(name, type, weekOffset).exists()
     }
     
     /**
@@ -78,10 +81,11 @@ internal class ScheduleCacheManager(
      */
     suspend fun clearCache(
         name: String,
-        type: ScheduleType
+        type: ScheduleType,
+        weekOffset: Int = 0,
     ) = withContext(Dispatchers.IO) {
         try {
-            val cacheFile = getCacheFile(name, type)
+            val cacheFile = getCacheFile(name, type, weekOffset)
             if (cacheFile.exists()) {
                 cacheFile.delete()
                 Timber.d("ScheduleCacheManager: Cleared cache for $name ($type)")
@@ -107,9 +111,9 @@ internal class ScheduleCacheManager(
     /**
      * Get cache file for schedule
      */
-    private fun getCacheFile(name: String, type: ScheduleType): File {
+    private fun getCacheFile(name: String, type: ScheduleType, weekOffset: Int): File {
         val sanitizedName = name.replace(Regex("[^\\p{L}\\p{N}_-]"), "_")
-        val fileName = "${type.pathName}_${sanitizedName}.bin"
+        val fileName = "${type.pathName}_${sanitizedName}_w${weekOffset}.bin"
         return File(cacheDir, fileName)
     }
 }

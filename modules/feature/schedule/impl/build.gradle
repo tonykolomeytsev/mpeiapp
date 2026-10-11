@@ -71,7 +71,5 @@ dependencies {
     implementation(project(":res_strings"))
     // WorkManager for background tasks
     implementation(libs.androidx.work.runtime.ktx)
-    // Kotlinx Serialization for caching
-    implementation(libs.kotlinx.serialization.json)
 }
 

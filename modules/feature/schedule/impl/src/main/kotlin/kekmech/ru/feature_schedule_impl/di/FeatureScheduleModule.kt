@@ -18,6 +18,7 @@ import kekmech.ru.feature_schedule_impl.data.repository.ScheduleRepositoryImpl
 import kekmech.ru.feature_schedule_impl.data.repository.ScheduleSearchRepositoryImpl
 import kekmech.ru.feature_schedule_impl.domain.usecase.HasSelectedScheduleUseCaseImpl
 import kekmech.ru.feature_schedule_impl.notifications.ScheduleCacheManager
+import kekmech.ru.feature_schedule_impl.notifications.ScheduleChangeLifecycleObserver
 import kekmech.ru.feature_schedule_impl.notifications.ScheduleChangeScheduler
 import kekmech.ru.feature_schedule_impl.notifications.ScheduleNotificationManager
 import kekmech.ru.feature_schedule_impl.notifications.ScheduleNotificationSettingsViewModel
@@ -70,4 +71,5 @@ val FeatureScheduleModule = module {
     single { ScheduleCacheManager(androidContext()) }
     single { ScheduleChangeScheduler(androidContext()) }
     factory { ScheduleNotificationSettingsViewModel(androidContext(), get()) }
+    factoryOf(::ScheduleChangeLifecycleObserver) bindIntoList AppLifecycleObserver::class
 }

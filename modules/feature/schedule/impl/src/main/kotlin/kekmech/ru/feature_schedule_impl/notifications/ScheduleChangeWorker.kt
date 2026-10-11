@@ -27,8 +27,7 @@ internal class ScheduleChangeWorker(
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         try {
             Timber.d("ScheduleChangeWorker: Starting schedule check")
-            
-            // Get currently selected schedule
+
             val currentSchedule = try {
                 scheduleRepository.getSelectedSchedule()
             } catch (e: Exception) {
@@ -36,55 +35,53 @@ internal class ScheduleChangeWorker(
                 return@withContext Result.success()
             }
 
-            // Fetch fresh schedule from API
-            val freshSchedule = try {
-                scheduleRepository.getSchedule(
+            val today = LocalDate.now()
+            val futureChanges = mutableListOf<ScheduleChange>()
+            var fetchedAny = false
+
+            for (weekOffset in 0 until WEEKS_TO_CHECK) {
+                val freshSchedule = scheduleRepository.getSchedule(
                     type = currentSchedule.type,
                     name = currentSchedule.name,
-                    weekOffset = 0,
-                ).getOrThrow()
-            } catch (e: Exception) {
-                Timber.e(e, "ScheduleChangeWorker: Failed to fetch schedule")
+                    weekOffset = weekOffset,
+                ).getOrNull()
+
+                if (freshSchedule == null) {
+                    Timber.w("ScheduleChangeWorker: Failed to fetch week offset $weekOffset")
+                    continue
+                }
+                fetchedAny = true
+
+                val cachedSchedule = cacheManager.getCachedSchedule(
+                    name = currentSchedule.name,
+                    type = currentSchedule.type,
+                    weekOffset = weekOffset,
+                )
+
+                futureChanges += ScheduleChangeDetector
+                    .detectChanges(oldSchedule = cachedSchedule, newSchedule = freshSchedule)
+                    .filter { it.date >= today }
+
+                cacheManager.cacheSchedule(
+                    name = currentSchedule.name,
+                    type = currentSchedule.type,
+                    schedule = freshSchedule,
+                    weekOffset = weekOffset,
+                )
+            }
+
+            if (!fetchedAny) {
                 return@withContext Result.retry()
             }
-            
-            // Get cached schedule for comparison
-            val cachedSchedule = cacheManager.getCachedSchedule(
-                name = currentSchedule.name,
-                type = currentSchedule.type
-            )
-            
-            // Detect changes
-            val changes = ScheduleChangeDetector.detectChanges(
-                oldSchedule = cachedSchedule,
-                newSchedule = freshSchedule
-            )
-            
-            if (changes.isNotEmpty()) {
-                Timber.d("ScheduleChangeWorker: Detected ${changes.size} changes")
-                
-                // Filter only future changes
-                val futureChanges = changes.filter { change ->
-                    change.date >= LocalDate.now()
-                }
-                
-                if (futureChanges.isNotEmpty()) {
-                    // Send notification
-                    notificationManager.showScheduleChangesNotification(futureChanges)
-                    
-                    Timber.i("ScheduleChangeWorker: Sent notification for ${futureChanges.size} changes")
-                }
+
+            if (futureChanges.isNotEmpty()) {
+                notificationManager.showScheduleChangesNotification(futureChanges)
+                Timber.i("ScheduleChangeWorker: Sent notification for ${futureChanges.size} changes")
             } else {
                 Timber.d("ScheduleChangeWorker: No changes detected")
             }
-            
-            // Update cache with fresh schedule
-            cacheManager.cacheSchedule(
-                name = currentSchedule.name,
-                type = currentSchedule.type,
-                schedule = freshSchedule
-            )
-            
+            ScheduleNotificationPrefs.recordCheck(applicationContext, futureChanges.size)
+
             Result.success()
         } catch (e: Exception) {
             Timber.e(e, "ScheduleChangeWorker: Unexpected error")
@@ -94,10 +91,14 @@ internal class ScheduleChangeWorker(
 
     companion object {
         const val WORK_NAME = "schedule_change_check"
-        
+        const val IMMEDIATE_WORK_NAME = "schedule_change_check_now"
+
         /**
          * Unique work tag for this worker
          */
         const val WORK_TAG = "schedule_change_worker"
+
+        /** Current week plus the next two */
+        private const val WEEKS_TO_CHECK = 3
     }
 }

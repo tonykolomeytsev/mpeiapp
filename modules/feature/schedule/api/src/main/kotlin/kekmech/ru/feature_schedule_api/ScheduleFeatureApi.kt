@@ -13,5 +13,8 @@ public interface ScheduleFeatureApi {
         resultKey: String,
     ): Fragment
 
+    /** Screen with settings of schedule change notifications */
+    public fun getNotificationSettingsScreen(): Fragment
+
     public enum class ContinueTo : Serializable { DASHBOARD, BACK, BACK_WITH_RESULT }
 }

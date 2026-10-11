@@ -1,7 +1,9 @@
 package kekmech.ru.feature_schedule_impl.notifications
 
+import android.content.Context
 import kekmech.ru.feature_schedule_api.domain.model.Classes
 import kekmech.ru.feature_schedule_api.domain.model.Schedule
+import kekmech.ru.res_strings.R.string as Strings
 import java.time.LocalDate
 
 /**
@@ -23,32 +25,53 @@ internal data class ScheduleChange(
     /**
      * Get human-readable description of the change
      */
-    fun getDescription(): String = when (type) {
-        ChangeType.ADDED -> "Добавлена пара: ${newClass?.name}"
-        ChangeType.REMOVED -> "Отменена пара: ${oldClass?.name}"
-        ChangeType.MODIFIED -> buildModificationDescription()
-        ChangeType.REPLACED -> "Заменена пара: ${oldClass?.name} → ${newClass?.name}"
+    fun getDescription(context: Context): String = when (type) {
+        ChangeType.ADDED -> context.getString(Strings.schedule_change_added, newClass?.name.orEmpty())
+        ChangeType.REMOVED -> context.getString(Strings.schedule_change_removed, oldClass?.name.orEmpty())
+        ChangeType.MODIFIED -> context.getString(
+            Strings.schedule_change_modified,
+            newClass?.name.orEmpty(),
+            buildModificationDescription(context),
+        )
+        ChangeType.REPLACED -> context.getString(
+            Strings.schedule_change_replaced,
+            oldClass?.name.orEmpty(),
+            newClass?.name.orEmpty(),
+        )
     }
-    
-    private fun buildModificationDescription(): String {
+
+    private fun buildModificationDescription(context: Context): String {
         val changes = mutableListOf<String>()
-        
+
         if (oldClass?.time != newClass?.time) {
-            changes.add("время (${oldClass?.time?.start} → ${newClass?.time?.start})")
+            changes.add(
+                context.getString(
+                    Strings.schedule_change_field_time,
+                    oldClass?.time?.start.toString(),
+                    newClass?.time?.start.toString(),
+                )
+            )
         }
         if (oldClass?.place != newClass?.place) {
-            changes.add("аудитория (${oldClass?.place} → ${newClass?.place})")
+            changes.add(
+                context.getString(
+                    Strings.schedule_change_field_place,
+                    oldClass?.place.orEmpty(),
+                    newClass?.place.orEmpty(),
+                )
+            )
         }
         if (oldClass?.person != newClass?.person) {
-            changes.add("преподаватель")
+            changes.add(context.getString(Strings.schedule_change_field_person))
         }
         if (oldClass?.type != newClass?.type) {
-            changes.add("тип")
+            changes.add(context.getString(Strings.schedule_change_field_type))
         }
-        
-        return "Изменена пара ${newClass?.name}: ${changes.joinToString(", ")}"
+
+        return changes.joinToString(", ")
     }
 }
+
 
 /**
  * Compares two schedules and detects changes

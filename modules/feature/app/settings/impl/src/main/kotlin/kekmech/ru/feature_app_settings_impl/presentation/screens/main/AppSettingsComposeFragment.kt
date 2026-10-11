@@ -19,6 +19,7 @@ import kekmech.ru.feature_app_settings_impl.presentation.screens.main.elm.AppSet
 import kekmech.ru.feature_app_settings_impl.presentation.screens.main.elm.AppSettingsStoreFactory
 import kekmech.ru.feature_app_settings_impl.presentation.screens.map_type.SelectMapTypeFragment
 import kekmech.ru.feature_bars_api.BarsLogoutHandle
+import kekmech.ru.feature_schedule_api.ScheduleFeatureApi
 import kekmech.ru.lib_analytics_android.ext.screenAnalytics
 import kekmech.ru.lib_elm_compose.ElmContent
 import kekmech.ru.lib_navigation.addScreenForward
@@ -32,6 +33,7 @@ private const val ACTIVITY_RECREATION_DELAY = 200L
 internal class AppSettingsComposeFragment : ComposeFragment() {
 
     private val logoutHandle by inject<BarsLogoutHandle>()
+    private val scheduleFeatureApi by inject<ScheduleFeatureApi>()
     private val analytics by screenAnalytics("AppSettings")
 
     @Composable
@@ -56,6 +58,10 @@ internal class AppSettingsComposeFragment : ComposeFragment() {
                         onOpenFavorites = {
                             analytics.sendClick("Favorites")
                             addScreenForward { FavoritesFragment() }
+                        },
+                        onOpenScheduleNotifications = {
+                            analytics.sendClick("ScheduleNotifications")
+                            addScreenForward { scheduleFeatureApi.getNotificationSettingsScreen() }
                         },
                         onOpenGithub = {
                             analytics.sendClick("GitHub")

@@ -34,6 +34,7 @@ internal fun AppSettingsComposeScreen(
     onAccept: (AppSettingsEvent) -> Unit,
     onBackClick: (() -> Unit)? = null,
     onOpenFavorites: () -> Unit,
+    onOpenScheduleNotifications: () -> Unit,
     onOpenGithub: () -> Unit,
     onOpenContributor: (String) -> Unit,
     onLogoutBars: () -> Unit,
@@ -131,6 +132,15 @@ internal fun AppSettingsComposeScreen(
                         supportingText = stringResource(Strings.app_settings_favorite_schedule_description),
                         modifier = Modifier.clickable {
                             onOpenFavorites()
+                        },
+                    )
+                }
+                item {
+                    ListItem(
+                        headlineText = stringResource(Strings.app_settings_schedule_notifications_title),
+                        supportingText = stringResource(Strings.app_settings_schedule_notifications_description),
+                        modifier = Modifier.clickable {
+                            onOpenScheduleNotifications()
                         },
                     )
                 }
