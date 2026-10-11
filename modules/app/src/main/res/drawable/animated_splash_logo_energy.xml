@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt">
+    <aapt:attr name="android:drawable">
+        <vector
+            android:width="108dp"
+            android:height="108dp"
+            android:viewportWidth="108"
+            android:viewportHeight="108">
+
+            <!-- Outer glow effect -->
+            <path
+                android:fillColor="#0D2A5C"
+                android:pathData="M54,0 C83.8,0 108,24.2 108,54 C108,83.8 83.8,108 54,108 C24.2,108 0,83.8 0,54 C0,24.2 24.2,0 54,0 Z" />
+
+            <!-- Central core (energy reactor) with gradient -->
+            <group android:name="coreGroup">
+                <!-- Core circle with pulsing effect -->
+                <path
+                    android:fillColor="#FF6B35"
+                    android:pathData="M54,44 C59.5,44 64,48.5 64,54 C64,59.5 59.5,64 54,64 C48.5,64 44,59.5 44,54 C44,48.5 48.5,44 54,44 Z" />
+                
+                <!-- Inner glow -->
+                <path
+                    android:fillColor="#FFAD5A"
+                    android:pathData="M54,48 C57,48 60,51 60,54 C60,57 57,60 54,60 C51,60 48,57 48,54 C48,51 51,48 54,48 Z" />
+            </group>
+
+            <!-- Orbital ring 1 (inner) - Cyan electron path -->
+            <group
+                android:name="orbit1Group"
+                android:pivotX="54.0"
+                android:pivotY="54.0">
+                <path
+                    android:strokeColor="#00E5FF"
+                    android:strokeWidth="1.5"
+                    android:fillColor="#00000000"
+                    android:pathData="M54,30 A24,24 0 1,1 53.99,30 Z" />
+                
+                <!-- Electron 1 -->
+                <path
+                    android:fillColor="#00E5FF"
+                    android:pathData="M54,27 A3,3 0 1,1 53.99,27 Z" />
+            </group>
+
+            <!-- Orbital ring 2 (tilted) - Electric blue -->
+            <group
+                android:name="orbit2Group"
+                android:pivotX="54.0"
+                android:pivotY="54.0"
+                android:rotation="60">
+                <path
+                    android:strokeColor="#448AFF"
+                    android:strokeWidth="1.5"
+                    android:fillColor="#00000000"
+                    android:pathData="M54,24 A30,30 0 1,1 53.99,24 Z" />
+                
+                <!-- Electron 2 -->
+                <path
+                    android:fillColor="#448AFF"
+                    android:pathData="M54,21 A3,3 0 1,1 53.99,21 Z" />
+            </group>
+
+            <!-- Orbital ring 3 (outer, tilted differently) - Lightning bolt color -->
+            <group
+                android:name="orbit3Group"
+                android:pivotX="54.0"
+                android:pivotY="54.0"
+                android:rotation="120">
+                <path
+                    android:strokeColor="#7C4DFF"
+                    android:strokeWidth="1.5"
+                    android:fillColor="#00000000"
+                    android:pathData="M54,18 A36,36 0 1,1 53.99,18 Z" />
+                
+                <!-- Electron 3 -->
+                <path
+                    android:fillColor="#7C4DFF"
+                    android:pathData="M54,15 A3,3 0 1,1 53.99,15 Z" />
+            </group>
+
+            <!-- Energy particles burst effect -->
+            <group
+                android:name="particlesGroup"
+                android:pivotX="54.0"
+                android:pivotY="54.0">
+                <!-- Top particle -->
+                <path
+                    android:fillColor="#FFD700"
+                    android:pathData="M54,10 L55,14 L54,13 L53,14 Z" />
+                <!-- Right particle -->
+                <path
+                    android:fillColor="#FFD700"
+                    android:pathData="M98,54 L94,55 L95,54 L94,53 Z" />
+                <!-- Bottom particle -->
+                <path
+                    android:fillColor="#FFD700"
+                    android:pathData="M54,98 L53,94 L54,95 L55,94 Z" />
+                <!-- Left particle -->
+                <path
+                    android:fillColor="#FFD700"
+                    android:pathData="M10,54 L14,53 L13,54 L14,55 Z" />
+            </group>
+
+            <!-- MPEI acronym (subtle) -->
+            <group android:name="textGroup">
+                <path
+                    android:fillColor="#FFFFFF"
+                    android:fillAlpha="0.9"
+                    android:pathData="M40,74 L40,70 L42,72 L44,70 L46,72 L48,70 L48,74 L46,74 L46,72 L44.5,73.5 L43,72 L41.5,73.5 L40,72 L40,74 Z
+                               M51,74 L51,70 L56,70 L56,71.5 L53,71.5 L53,71.8 L55.5,71.8 L55.5,73 L53,73 L53,74 Z
+                               M58,74 L58,70 L63,70 L63,71.5 L60,71.5 L60,71.8 L62.5,71.8 L62.5,73 L60,73 L60,73.5 L63,73.5 L63,74 Z
+                               M65,74 L65,70 L67,70 L67,74 Z" />
+            </group>
+        </vector>
+    </aapt:attr>
+
+    <!-- Core pulsing animation -->
+    <target android:name="coreGroup">
+        <aapt:attr name="android:animation">
+            <set android:ordering="sequentially">
+                <objectAnimator
+                    android:duration="600"
+                    android:propertyName="scaleX"
+                    android:valueFrom="1.0"
+                    android:valueTo="1.15"
+                    android:repeatCount="infinite"
+                    android:repeatMode="reverse"
+                    android:interpolator="@android:anim/accelerate_decelerate_interpolator" />
+            </set>
+        </aapt:attr>
+    </target>
+    
+    <target android:name="coreGroup">
+        <aapt:attr name="android:animation">
+            <set android:ordering="sequentially">
+                <objectAnimator
+                    android:duration="600"
+                    android:propertyName="scaleY"
+                    android:valueFrom="1.0"
+                    android:valueTo="1.15"
+                    android:repeatCount="infinite"
+                    android:repeatMode="reverse"
+                    android:interpolator="@android:anim/accelerate_decelerate_interpolator" />
+            </set>
+        </aapt:attr>
+    </target>
+
+    <!-- Orbit 1 rotation (fast clockwise) -->
+    <target android:name="orbit1Group">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:duration="2000"
+                android:propertyName="rotation"
+                android:valueFrom="0"
+                android:valueTo="360"
+                android:repeatCount="infinite"
+                android:interpolator="@android:anim/linear_interpolator" />
+        </aapt:attr>
+    </target>
+
+    <!-- Orbit 2 rotation (medium counter-clockwise) -->
+    <target android:name="orbit2Group">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:duration="3000"
+                android:propertyName="rotation"
+                android:valueFrom="360"
+                android:valueTo="0"
+                android:repeatCount="infinite"
+                android:interpolator="@android:anim/linear_interpolator" />
+        </aapt:attr>
+    </target>
+
+    <!-- Orbit 3 rotation (slow clockwise) -->
+    <target android:name="orbit3Group">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:duration="4000"
+                android:propertyName="rotation"
+                android:valueFrom="0"
+                android:valueTo="360"
+                android:repeatCount="infinite"
+                android:interpolator="@android:anim/linear_interpolator" />
+        </aapt:attr>
+    </target>
+
+    <!-- Particles pulse effect -->
+    <target android:name="particlesGroup">
+        <aapt:attr name="android:animation">
+            <set android:ordering="sequentially">
+                <objectAnimator
+                    android:duration="800"
+                    android:propertyName="scaleX"
+                    android:valueFrom="1.0"
+                    android:valueTo="1.5"
+                    android:repeatCount="infinite"
+                    android:repeatMode="reverse"
+                    android:interpolator="@android:anim/accelerate_decelerate_interpolator" />
+            </set>
+        </aapt:attr>
+    </target>
+    
+    <target android:name="particlesGroup">
+        <aapt:attr name="android:animation">
+            <set android:ordering="sequentially">
+                <objectAnimator
+                    android:duration="800"
+                    android:propertyName="scaleY"
+                    android:valueFrom="1.0"
+                    android:valueTo="1.5"
+                    android:repeatCount="infinite"
+                    android:repeatMode="reverse"
+                    android:interpolator="@android:anim/accelerate_decelerate_interpolator" />
+            </set>
+        </aapt:attr>
+    </target>
+
+    <!-- Particles rotation -->
+    <target android:name="particlesGroup">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:duration="5000"
+                android:propertyName="rotation"
+                android:valueFrom="0"
+                android:valueTo="360"
+                android:repeatCount="infinite"
+                android:interpolator="@android:anim/linear_interpolator" />
+        </aapt:attr>
+    </target>
+
+    <!-- Text fade in -->
+    <target android:name="textGroup">
+        <aapt:attr name="android:animation">
+            <set android:ordering="sequentially">
+                <objectAnimator
+                    android:duration="0"
+                    android:propertyName="alpha"
+                    android:valueFrom="0"
+                    android:valueTo="0" />
+                <objectAnimator
+                    android:startOffset="400"
+                    android:duration="600"
+                    android:propertyName="alpha"
+                    android:valueFrom="0"
+                    android:valueTo="1"
+                    android:interpolator="@android:anim/accelerate_interpolator" />
+            </set>
+        </aapt:attr>
+    </target>
+</animated-vector>

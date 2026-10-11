@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt">
+    <aapt:attr name="android:drawable">
+        <vector
+            android:width="108dp"
+            android:height="108dp"
+            android:viewportWidth="108"
+            android:viewportHeight="108">
+
+            <!-- Rounded diamond badge with gradient-style deep blue fill -->
+            <path
+                android:fillColor="#1D62E2"
+                android:pathData="M54,12 C72,12 96,36 96,54 C96,72 72,96 54,96 C36,96 12,72 12,54 C12,36 36,12 54,12 Z" />
+
+            <!-- Stylized 'M' emblem for MPEI / Next -->
+            <path
+                android:fillColor="#FFFFFF"
+                android:pathData="M32,68 L32,40 L44,53 L54,43 L64,53 L76,40 L76,68 L68,68 L68,52 L59,61 L54,56 L49,61 L40,52 L40,68 Z" />
+
+            <!-- Dynamic 'N'/'X' pulse accent dot -->
+            <group
+                android:name="pulseGroup"
+                android:pivotX="54.0"
+                android:pivotY="30.0">
+                <path
+                    android:fillColor="#4BB7E9"
+                    android:pathData="M54,25 A5,5 0 1,1 53.99,25 Z" />
+            </group>
+
+            <!-- Orbiting energetic energy ring -->
+            <group
+                android:name="orbitGroup"
+                android:pivotX="54.0"
+                android:pivotY="54.0">
+                <path
+                    android:strokeColor="#1CE39D"
+                    android:strokeWidth="2.5"
+                    android:strokeLineCap="round"
+                    android:pathData="M30,30 A34,34 0 0,1 78,30" />
+                <path
+                    android:strokeColor="#FFFFFF"
+                    android:strokeWidth="2.5"
+                    android:strokeLineCap="round"
+                    android:pathData="M78,78 A34,34 0 0,1 30,78" />
+            </group>
+        </vector>
+    </aapt:attr>
+
+    <!-- Smooth orbit rotation -->
+    <target android:name="orbitGroup">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:duration="800"
+                android:propertyName="rotation"
+                android:valueFrom="0"
+                android:valueTo="360"
+                android:interpolator="@anim/splash_anim_interpolator" />
+        </aapt:attr>
+    </target>
+
+    <!-- Pulse effect for top accent dot -->
+    <target android:name="pulseGroup">
+        <aapt:attr name="android:animation">
+            <set android:ordering="sequentially">
+                <objectAnimator
+                    android:duration="400"
+                    android:propertyName="scaleX"
+                    android:valueFrom="1.0"
+                    android:valueTo="1.4"
+                    android:interpolator="@android:anim/accelerate_decelerate_interpolator" />
+                <objectAnimator
+                    android:duration="400"
+                    android:propertyName="scaleX"
+                    android:valueFrom="1.4"
+                    android:valueTo="1.0"
+                    android:interpolator="@android:anim/accelerate_decelerate_interpolator" />
+            </set>
+        </aapt:attr>
+    </target>
+</animated-vector>

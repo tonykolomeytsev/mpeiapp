@@ -1,4 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 
+MPEI Campus Launch Animation
+Premium EdTech Motion Design
+
+Duration: 2000ms (2.0s)
+Performance: 60 FPS, hardware-accelerated
+Design System: Minimalist, Apple-like, clean geometric impulses
+
+Color Palette:
+- Background: #0F172A (Deep Navy)
+- Primary Blue: #0072CE (MPEI Electric Blue)
+- Accent Cyan: #00D2FF (Energy Glow)
+- Gold Accent: #FFB800 (Energetic Highlight)
+- White: #FFFFFF (Typography)
+-->
 <animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:aapt="http://schemas.android.com/aapt">
     <aapt:attr name="android:drawable">
@@ -8,74 +23,457 @@
             android:viewportWidth="108"
             android:viewportHeight="108">
 
-            <!-- Rounded diamond badge with gradient-style deep blue fill -->
+            <!-- Deep technical background -->
             <path
-                android:fillColor="#1D62E2"
-                android:pathData="M54,12 C72,12 96,36 96,54 C96,72 72,96 54,96 C36,96 12,72 12,54 C12,36 36,12 54,12 Z" />
+                android:fillColor="#0F172A"
+                android:pathData="M0,0 L108,0 L108,108 L0,108 Z" />
 
-            <!-- Stylized 'M' emblem for MPEI / Next -->
-            <path
-                android:fillColor="#FFFFFF"
-                android:pathData="M32,68 L32,40 L44,53 L54,43 L64,53 L76,40 L76,68 L68,68 L68,52 L59,61 L54,56 L49,61 L40,52 L40,68 Z" />
-
-            <!-- Dynamic 'N'/'X' pulse accent dot -->
-            <group
-                android:name="pulseGroup"
-                android:pivotX="54.0"
-                android:pivotY="30.0">
+            <!-- Phase 1: Energy Impulse Spark (particle trace) -->
+            <group android:name="sparkGroup">
+                <!-- Core impulse particle -->
                 <path
-                    android:fillColor="#4BB7E9"
-                    android:pathData="M54,25 A5,5 0 1,1 53.99,25 Z" />
+                    android:name="sparkCore"
+                    android:fillColor="#00D2FF"
+                    android:pathData="M54,54 A1.5,1.5 0 1,1 53.99,54 Z" />
+                
+                <!-- Outer glow halo -->
+                <path
+                    android:fillColor="#0072CE"
+                    android:fillAlpha="0.4"
+                    android:pathData="M54,54 A3,3 0 1,1 53.99,54 Z" />
             </group>
 
-            <!-- Orbiting energetic energy ring -->
-            <group
-                android:name="orbitGroup"
-                android:pivotX="54.0"
-                android:pivotY="54.0">
+            <!-- Phase 2: Logo Construction - Geometric 'M' with circuit energy flow -->
+            <group android:name="logoGroup">
+                <!-- Left vertical stroke of 'M' -->
                 <path
-                    android:strokeColor="#1CE39D"
+                    android:name="strokeLeft"
+                    android:strokeColor="#00D2FF"
                     android:strokeWidth="2.5"
                     android:strokeLineCap="round"
-                    android:pathData="M30,30 A34,34 0 0,1 78,30" />
+                    android:strokeLineJoin="round"
+                    android:fillColor="#00000000"
+                    android:pathData="M35,72 L35,36"
+                    android:trimPathEnd="0" />
+                
+                <!-- Left diagonal descending -->
                 <path
-                    android:strokeColor="#FFFFFF"
+                    android:name="strokeDiag1"
+                    android:strokeColor="#00D2FF"
                     android:strokeWidth="2.5"
                     android:strokeLineCap="round"
-                    android:pathData="M78,78 A34,34 0 0,1 30,78" />
+                    android:fillColor="#00000000"
+                    android:pathData="M35,36 L48,54"
+                    android:trimPathEnd="0" />
+                
+                <!-- Center peak ascending -->
+                <path
+                    android:name="strokePeak"
+                    android:strokeColor="#00D2FF"
+                    android:strokeWidth="2.5"
+                    android:strokeLineCap="round"
+                    android:fillColor="#00000000"
+                    android:pathData="M48,54 L54,46"
+                    android:trimPathEnd="0" />
+                
+                <!-- Right diagonal descending -->
+                <path
+                    android:name="strokeDiag2"
+                    android:strokeColor="#00D2FF"
+                    android:strokeWidth="2.5"
+                    android:strokeLineCap="round"
+                    android:fillColor="#00000000"
+                    android:pathData="M54,46 L60,54"
+                    android:trimPathEnd="0" />
+                
+                <!-- Right ascending -->
+                <path
+                    android:name="strokeDiag3"
+                    android:strokeColor="#00D2FF"
+                    android:strokeWidth="2.5"
+                    android:strokeLineCap="round"
+                    android:fillColor="#00000000"
+                    android:pathData="M60,54 L73,36"
+                    android:trimPathEnd="0" />
+                
+                <!-- Right vertical stroke of 'M' -->
+                <path
+                    android:name="strokeRight"
+                    android:strokeColor="#00D2FF"
+                    android:strokeWidth="2.5"
+                    android:strokeLineCap="round"
+                    android:fillColor="#00000000"
+                    android:pathData="M73,36 L73,72"
+                    android:trimPathEnd="0" />
             </group>
+
+            <!-- Phase 2: Radial power-on glow (blooms after logo completion) -->
+            <group android:name="glowGroup">
+                <!-- Inner radial gradient simulation via concentric circles -->
+                <path
+                    android:fillColor="#00D2FF"
+                    android:fillAlpha="0.0"
+                    android:pathData="M54,44 A10,10 0 1,1 53.99,44 Z" />
+                <path
+                    android:fillColor="#0072CE"
+                    android:fillAlpha="0.0"
+                    android:pathData="M54,39 A15,15 0 1,1 53.99,39 Z" />
+                <path
+                    android:fillColor="#0072CE"
+                    android:fillAlpha="0.0"
+                    android:pathData="M54,34 A20,20 0 1,1 53.99,34 Z" />
+            </group>
+
+            <!-- Phase 3: Energy node accents (corner impulse indicators) -->
+            <group android:name="energyNodesGroup">
+                <!-- Top node -->
+                <path
+                    android:fillColor="#FFB800"
+                    android:fillAlpha="0.0"
+                    android:pathData="M54,30 A2,2 0 1,1 53.99,30 Z" />
+                <!-- Bottom left -->
+                <path
+                    android:fillColor="#FFB800"
+                    android:fillAlpha="0.0"
+                    android:pathData="M35,78 A2,2 0 1,1 34.99,78 Z" />
+                <!-- Bottom right -->
+                <path
+                    android:fillColor="#FFB800"
+                    android:fillAlpha="0.0"
+                    android:pathData="M73,78 A2,2 0 1,1 72.99,78 Z" />
+            </group>
+
+            <!-- Phase 3: Typography - "НИУ «МЭИ»" (or MPEI) -->
+            <group android:name="typographyGroup">
+                <!-- Simplified letterforms for vector representation -->
+                <!-- Using geometric glyphs: Н И У М Э И -->
+                <path
+                    android:fillColor="#FFFFFF"
+                    android:fillAlpha="0.0"
+                    android:pathData="M 20,85 L 20,82 L 22,82 L 22,83.5 L 24,83.5 L 24,82 L 26,82 L 26,85 L 24,85 L 24,84.5 L 22,84.5 L 22,85 Z
+                               M 28,85 L 28,82 L 30,82 L 32,85 L 34,85 L 34,82 L 32,82 L 32,84 L 30.5,82 L 28,82 Z
+                               M 36,85 L 36,82 L 41,82 L 41,83 L 38,83 L 38,85 Z
+                               M 50,85 L 50,82 L 52,83.5 L 54,82 L 56,83.5 L 58,82 L 58,85 L 56,85 L 56,83.8 L 54,85 L 52,83.8 L 52,85 Z
+                               M 60,85 L 60,82 L 65,82 L 65,83 L 62,83 L 62,83.3 L 64.5,83.3 L 64.5,84.2 L 62,84.2 L 62,85 Z
+                               M 67,85 L 67,82 L 69,82 L 71,85 L 73,85 L 73,82 L 71,82 L 71,84 L 69.5,82 L 67,82 Z" />
+            </group>
+
+            <!-- Phase 4: Light shimmer sweep across logo (horizontal pass) -->
+            <group
+                android:name="shimmerGroup"
+                android:translateX="-30">
+                <path
+                    android:fillColor="#FFFFFF"
+                    android:fillAlpha="0.0"
+                    android:pathData="M40,30 L42,30 L58,78 L56,78 Z" />
+            </group>
+
         </vector>
     </aapt:attr>
 
-    <!-- Smooth orbit rotation -->
-    <target android:name="orbitGroup">
-        <aapt:attr name="android:animation">
-            <objectAnimator
-                android:duration="800"
-                android:propertyName="rotation"
-                android:valueFrom="0"
-                android:valueTo="360"
-                android:interpolator="@anim/splash_anim_interpolator" />
-        </aapt:attr>
-    </target>
-
-    <!-- Pulse effect for top accent dot -->
-    <target android:name="pulseGroup">
+    <!-- ============================================ -->
+    <!-- PHASE 1: THE SPARK (0ms - 400ms) -->
+    <!-- ============================================ -->
+    
+    <!-- Spark particle appearance -->
+    <target android:name="sparkGroup">
         <aapt:attr name="android:animation">
             <set android:ordering="sequentially">
+                <!-- Instant appear -->
                 <objectAnimator
-                    android:duration="400"
-                    android:propertyName="scaleX"
-                    android:valueFrom="1.0"
-                    android:valueTo="1.4"
-                    android:interpolator="@android:anim/accelerate_decelerate_interpolator" />
+                    android:duration="0"
+                    android:propertyName="alpha"
+                    android:valueFrom="0"
+                    android:valueTo="1" />
+                <!-- Scale pulse -->
                 <objectAnimator
-                    android:duration="400"
+                    android:duration="200"
                     android:propertyName="scaleX"
-                    android:valueFrom="1.4"
+                    android:valueFrom="0.5"
+                    android:valueTo="2.0"
+                    android:interpolator="@android:anim/decelerate_interpolator" />
+                <objectAnimator
+                    android:duration="200"
+                    android:propertyName="scaleX"
+                    android:valueFrom="2.0"
                     android:valueTo="1.0"
                     android:interpolator="@android:anim/accelerate_decelerate_interpolator" />
             </set>
         </aapt:attr>
     </target>
+    
+    <target android:name="sparkGroup">
+        <aapt:attr name="android:animation">
+            <set android:ordering="sequentially">
+                <objectAnimator
+                    android:duration="0"
+                    android:propertyName="scaleY"
+                    android:valueFrom="0.5"
+                    android:valueTo="0.5" />
+                <objectAnimator
+                    android:duration="200"
+                    android:propertyName="scaleY"
+                    android:valueFrom="0.5"
+                    android:valueTo="2.0"
+                    android:interpolator="@android:anim/decelerate_interpolator" />
+                <objectAnimator
+                    android:duration="200"
+                    android:propertyName="scaleY"
+                    android:valueFrom="2.0"
+                    android:valueTo="1.0"
+                    android:interpolator="@android:anim/accelerate_decelerate_interpolator" />
+            </set>
+        </aapt:attr>
+    </target>
+
+    <!-- ============================================ -->
+    <!-- PHASE 2: LOGO CONSTRUCTION (400ms - 1000ms) -->
+    <!-- ============================================ -->
+    
+    <!-- Stroke draw animation - Left vertical -->
+    <target android:name="strokeLeft">
+        <aapt:attr name="android:animation">
+            <set android:ordering="sequentially">
+                <objectAnimator
+                    android:startOffset="400"
+                    android:duration="180"
+                    android:propertyName="trimPathEnd"
+                    android:valueFrom="0"
+                    android:valueTo="1"
+                    android:interpolator="@android:interpolator/fast_out_slow_in" />
+            </set>
+        </aapt:attr>
+    </target>
+    
+    <!-- Diagonal 1 -->
+    <target android:name="strokeDiag1">
+        <aapt:attr name="android:animation">
+            <set android:ordering="sequentially">
+                <objectAnimator
+                    android:startOffset="580"
+                    android:duration="120"
+                    android:propertyName="trimPathEnd"
+                    android:valueFrom="0"
+                    android:valueTo="1"
+                    android:interpolator="@android:interpolator/fast_out_slow_in" />
+            </set>
+        </aapt:attr>
+    </target>
+    
+    <!-- Peak -->
+    <target android:name="strokePeak">
+        <aapt:attr name="android:animation">
+            <set android:ordering="sequentially">
+                <objectAnimator
+                    android:startOffset="700"
+                    android:duration="100"
+                    android:propertyName="trimPathEnd"
+                    android:valueFrom="0"
+                    android:valueTo="1"
+                    android:interpolator="@android:interpolator/fast_out_slow_in" />
+            </set>
+        </aapt:attr>
+    </target>
+    
+    <!-- Diagonal 2 -->
+    <target android:name="strokeDiag2">
+        <aapt:attr name="android:animation">
+            <set android:ordering="sequentially">
+                <objectAnimator
+                    android:startOffset="800"
+                    android:duration="100"
+                    android:propertyName="trimPathEnd"
+                    android:valueFrom="0"
+                    android:valueTo="1"
+                    android:interpolator="@android:interpolator/fast_out_slow_in" />
+            </set>
+        </aapt:attr>
+    </target>
+    
+    <!-- Diagonal 3 -->
+    <target android:name="strokeDiag3">
+        <aapt:attr name="android:animation">
+            <set android:ordering="sequentially">
+                <objectAnimator
+                    android:startOffset="900"
+                    android:duration="120"
+                    android:propertyName="trimPathEnd"
+                    android:valueFrom="0"
+                    android:valueTo="1"
+                    android:interpolator="@android:interpolator/fast_out_slow_in" />
+            </set>
+        </aapt:attr>
+    </target>
+    
+    <!-- Right vertical -->
+    <target android:name="strokeRight">
+        <aapt:attr name="android:animation">
+            <set android:ordering="sequentially">
+                <objectAnimator
+                    android:startOffset="1020"
+                    android:duration="180"
+                    android:propertyName="trimPathEnd"
+                    android:valueFrom="0"
+                    android:valueTo="1"
+                    android:interpolator="@android:interpolator/fast_out_slow_in" />
+            </set>
+        </aapt:attr>
+    </target>
+
+    <!-- Radial glow bloom after logo completion -->
+    <target android:name="glowGroup">
+        <aapt:attr name="android:animation">
+            <set android:ordering="sequentially">
+                <objectAnimator
+                    android:startOffset="1200"
+                    android:duration="300"
+                    android:propertyName="alpha"
+                    android:valueFrom="0"
+                    android:valueTo="0.6"
+                    android:interpolator="@android:anim/decelerate_interpolator" />
+                <objectAnimator
+                    android:duration="200"
+                    android:propertyName="alpha"
+                    android:valueFrom="0.6"
+                    android:valueTo="0.3"
+                    android:interpolator="@android:anim/linear_interpolator" />
+            </set>
+        </aapt:attr>
+    </target>
+
+    <!-- Energy nodes pulse -->
+    <target android:name="energyNodesGroup">
+        <aapt:attr name="android:animation">
+            <set android:ordering="sequentially">
+                <objectAnimator
+                    android:startOffset="1200"
+                    android:duration="200"
+                    android:propertyName="alpha"
+                    android:valueFrom="0"
+                    android:valueTo="1"
+                    android:interpolator="@android:anim/decelerate_interpolator" />
+                <objectAnimator
+                    android:duration="150"
+                    android:propertyName="alpha"
+                    android:valueFrom="1"
+                    android:valueTo="0.7" />
+            </set>
+        </aapt:attr>
+    </target>
+
+    <!-- ============================================ -->
+    <!-- PHASE 3: TYPOGRAPHY REVEAL (1000ms - 1500ms) -->
+    <!-- ============================================ -->
+    
+    <target android:name="typographyGroup">
+        <aapt:attr name="android:animation">
+            <set android:ordering="sequentially">
+                <objectAnimator
+                    android:startOffset="1300"
+                    android:duration="400"
+                    android:propertyName="alpha"
+                    android:valueFrom="0"
+                    android:valueTo="0.95"
+                    android:interpolator="@android:anim/decelerate_interpolator" />
+            </set>
+        </aapt:attr>
+    </target>
+    
+    <!-- Typography scale-up with letter spacing effect simulation -->
+    <target android:name="typographyGroup">
+        <aapt:attr name="android:animation">
+            <set android:ordering="sequentially">
+                <objectAnimator
+                    android:startOffset="1300"
+                    android:duration="400"
+                    android:propertyName="scaleX"
+                    android:valueFrom="0.92"
+                    android:valueTo="1.0"
+                    android:interpolator="@android:interpolator/fast_out_slow_in" />
+            </set>
+        </aapt:attr>
+    </target>
+    
+    <target android:name="typographyGroup">
+        <aapt:attr name="android:animation">
+            <set android:ordering="sequentially">
+                <objectAnimator
+                    android:startOffset="1300"
+                    android:duration="400"
+                    android:propertyName="scaleY"
+                    android:valueFrom="0.92"
+                    android:valueTo="1.0"
+                    android:interpolator="@android:interpolator/fast_out_slow_in" />
+            </set>
+        </aapt:attr>
+    </target>
+
+    <!-- Shimmer light sweep across logo -->
+    <target android:name="shimmerGroup">
+        <aapt:attr name="android:animation">
+            <set android:ordering="sequentially">
+                <objectAnimator
+                    android:startOffset="1400"
+                    android:duration="500"
+                    android:propertyName="translateX"
+                    android:valueFrom="-30"
+                    android:valueTo="110"
+                    android:interpolator="@android:anim/accelerate_decelerate_interpolator" />
+            </set>
+        </aapt:attr>
+    </target>
+    
+    <target android:name="shimmerGroup">
+        <aapt:attr name="android:animation">
+            <set android:ordering="sequentially">
+                <objectAnimator
+                    android:startOffset="1400"
+                    android:duration="250"
+                    android:propertyName="alpha"
+                    android:valueFrom="0"
+                    android:valueTo="0.5"
+                    android:interpolator="@android:anim/accelerate_interpolator" />
+                <objectAnimator
+                    android:duration="250"
+                    android:propertyName="alpha"
+                    android:valueFrom="0.5"
+                    android:valueTo="0"
+                    android:interpolator="@android:anim/decelerate_interpolator" />
+            </set>
+        </aapt:attr>
+    </target>
+
+    <!-- ============================================ -->
+    <!-- PHASE 4: SMOOTH EXIT (1700ms - 2000ms) -->
+    <!-- ============================================ -->
+    
+    <!-- Logo scale down and fade out -->
+    <target android:name="logoGroup">
+        <aapt:attr name="android:animation">
+            <set android:ordering="sequentially">
+                <objectAnimator
+                    android:startOffset="1800"
+                    android:duration="200"
+                    android:propertyName="alpha"
+                    android:valueFrom="1"
+                    android:valueTo="0"
+                    android:interpolator="@android:anim/accelerate_interpolator" />
+            </set>
+        </aapt:attr>
+    </target>
+    
+    <target android:name="sparkGroup">
+        <aapt:attr name="android:animation">
+            <set android:ordering="sequentially">
+                <objectAnimator
+                    android:startOffset="1800"
+                    android:duration="200"
+                    android:propertyName="alpha"
+                    android:valueFrom="1"
+                    android:valueTo="0"
+                    android:interpolator="@android:anim/accelerate_interpolator" />
+            </set>
+        </aapt:attr>
+    </target>
+
 </animated-vector>
