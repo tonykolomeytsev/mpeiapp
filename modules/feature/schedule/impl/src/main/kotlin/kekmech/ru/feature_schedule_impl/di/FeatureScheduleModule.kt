@@ -17,15 +17,19 @@ import kekmech.ru.feature_schedule_impl.data.network.mpei.MpeiScheduleService
 import kekmech.ru.feature_schedule_impl.data.repository.ScheduleRepositoryImpl
 import kekmech.ru.feature_schedule_impl.data.repository.ScheduleSearchRepositoryImpl
 import kekmech.ru.feature_schedule_impl.domain.usecase.HasSelectedScheduleUseCaseImpl
-import kekmech.ru.feature_schedule_impl.notifications.ScheduleCacheManager`nimport kekmech.ru.feature_schedule_impl.notifications.ScheduleChangeScheduler`nimport kekmech.ru.feature_schedule_impl.notifications.ScheduleNotificationManager`nimport kekmech.ru.feature_schedule_impl.launcher.ScheduleFeatureApiImpl
+import kekmech.ru.feature_schedule_impl.notifications.ScheduleCacheManager
+import kekmech.ru.feature_schedule_impl.notifications.ScheduleChangeScheduler
+import kekmech.ru.feature_schedule_impl.notifications.ScheduleNotificationManager
+import kekmech.ru.feature_schedule_impl.launcher.ScheduleFeatureApiImpl
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.FindScheduleActor
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.FindScheduleStoreFactory
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleActor
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleStoreFactory
 import kekmech.ru.lib_analytics_api.SelectedScheduleAnalyticsProvider
 import kekmech.ru.lib_app_lifecycle.AppLifecycleObserver
-import kekmech.ru.lib_network.buildApi
-import org.koin.core.module.dsl.factoryOf`nimport kotlinx.serialization.json.Json
+import kotlinx.serialization.json.Json`r`nimport kekmech.ru.lib_network.buildApi
+import org.koin.core.module.dsl.factoryOf
+import kotlinx.serialization.json.Json
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.binds
@@ -59,5 +63,17 @@ val FeatureScheduleModule = module {
     factoryOf(::SelectedScheduleSource)
     factoryOf(::ScheduleCacheWrapper)
     factoryOf(::HasSelectedScheduleUseCaseImpl) bind HasSelectedScheduleUseCase::class
-    factoryOf(::SchedulePreheatLifecycleObserver) bindIntoList AppLifecycleObserver::class`n`n    // Schedule Change Notifications`n    single { ScheduleNotificationManager(androidContext()) }`n    single { ScheduleCacheManager(androidContext(), get()) }`n    single { ScheduleChangeScheduler(androidContext()) }`n    single {`n        Json {`n            ignoreUnknownKeys = true`n            prettyPrint = false`n        }`n    }
+    factoryOf(::SchedulePreheatLifecycleObserver) bindIntoList AppLifecycleObserver::class
+    // Schedule Change Notifications
+    single { ScheduleNotificationManager(androidContext()) }
+    single { ScheduleCacheManager(androidContext(), get()) }
+    single { ScheduleChangeScheduler(androidContext()) }
+    single {
+        Json {
+            ignoreUnknownKeys = true
+            prettyPrint = false
+        }
+    }
 }
+
+
