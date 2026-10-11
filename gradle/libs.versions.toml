@@ -37,7 +37,8 @@ accompanist = "0.23.1"
 composeBom = "2025.08.00"
 
 # MockServer
-ktor = "2.3.0"`nwork = "2.9.0"
+ktor = "2.3.0"
+work = "2.9.0"
 
 [libraries]
 
@@ -69,7 +70,8 @@ androidx-recyclerView = { module = "androidx.recyclerview:recyclerview", version
 androidx-room-common = { module = "androidx.room:room-common", version.ref = "room" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
-androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }`nandroidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "work" }
+androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
+androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "work" }
 androidx-sqlite = { module = "androidx.sqlite:sqlite", version = "2.6.1" }
 androidx-swipeRefreshLayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "swipeRefreshLayout" }
 androidx-viewPager2 = { module = "androidx.viewpager2:viewpager2", version.ref = "viewPager2" }
