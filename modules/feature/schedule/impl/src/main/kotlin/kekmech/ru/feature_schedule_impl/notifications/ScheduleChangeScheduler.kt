@@ -4,8 +4,10 @@ import android.content.Context
 import androidx.work.Constraints
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.NetworkType
+import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
+import kotlinx.coroutines.flow.first
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
@@ -39,7 +41,7 @@ class ScheduleChangeScheduler(
         
         workManager.enqueueUniquePeriodicWork(
             ScheduleChangeWorker.WORK_NAME,
-            ExistingPeriodicWorkPolicy.KEEP, // Keep existing if already scheduled
+            ExistingPeriodicWorkPolicy.UPDATE, // Apply new interval if already scheduled
             workRequest
         )
         
@@ -57,8 +59,10 @@ class ScheduleChangeScheduler(
     /**
      * Check if periodic checks are currently enabled
      */
-    fun arePeriodicChecksEnabled(): Boolean {
-        val workInfos = workManager.getWorkInfosForUniqueWork(ScheduleChangeWorker.WORK_NAME).get()
+    suspend fun arePeriodicChecksEnabled(): Boolean {
+        val workInfos = workManager
+            .getWorkInfosForUniqueWorkFlow(ScheduleChangeWorker.WORK_NAME)
+            .first()
         return workInfos.any { !it.state.isFinished }
     }
     
@@ -66,10 +70,7 @@ class ScheduleChangeScheduler(
      * Trigger immediate schedule check (one-time)
      */
     fun triggerImmediateCheck() {
-        val workRequest = PeriodicWorkRequestBuilder<ScheduleChangeWorker>(
-            repeatInterval = 15, // Minimum allowed by WorkManager
-            repeatIntervalTimeUnit = TimeUnit.MINUTES
-        )
+        val workRequest = OneTimeWorkRequestBuilder<ScheduleChangeWorker>()
             .addTag(ScheduleChangeWorker.WORK_TAG)
             .build()
         

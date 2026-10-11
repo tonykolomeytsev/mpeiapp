@@ -5,17 +5,16 @@ import kekmech.ru.feature_schedule_api.domain.model.Schedule
 import kekmech.ru.feature_schedule_api.domain.model.ScheduleType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 import timber.log.Timber
 import java.io.File
+import java.io.ObjectInputStream
+import java.io.ObjectOutputStream
 
 /**
  * Manages caching of schedules for change detection
  */
 internal class ScheduleCacheManager(
-    private val context: Context,
-    private val json: Json
+    private val context: Context
 ) {
     
     private val cacheDir: File
@@ -33,10 +32,7 @@ internal class ScheduleCacheManager(
     ) = withContext(Dispatchers.IO) {
         try {
             val cacheFile = getCacheFile(name, type)
-            val jsonString = json.encodeToString(schedule)
-            
-            cacheFile.writeText(jsonString)
-            
+            ObjectOutputStream(cacheFile.outputStream().buffered()).use { it.writeObject(schedule) }
             Timber.d("ScheduleCacheManager: Cached schedule for $name ($type)")
         } catch (e: Exception) {
             Timber.e(e, "ScheduleCacheManager: Failed to cache schedule")
@@ -52,15 +48,13 @@ internal class ScheduleCacheManager(
     ): Schedule? = withContext(Dispatchers.IO) {
         try {
             val cacheFile = getCacheFile(name, type)
-            
             if (!cacheFile.exists()) {
                 Timber.d("ScheduleCacheManager: No cached schedule for $name ($type)")
                 return@withContext null
             }
-            
-            val jsonString = cacheFile.readText()
-            val schedule = json.decodeFromString<Schedule>(jsonString)
-            
+            val schedule = ObjectInputStream(cacheFile.inputStream().buffered()).use {
+                it.readObject() as Schedule
+            }
             Timber.d("ScheduleCacheManager: Retrieved cached schedule for $name ($type)")
             schedule
         } catch (e: Exception) {
@@ -114,8 +108,8 @@ internal class ScheduleCacheManager(
      * Get cache file for schedule
      */
     private fun getCacheFile(name: String, type: ScheduleType): File {
-        val sanitizedName = name.replace(Regex("[^a-zA-Z0-9_-]"), "_")
-        val fileName = "${type.pathName}_${sanitizedName}.json"
+        val sanitizedName = name.replace(Regex("[^\\p{L}\\p{N}_-]"), "_")
+        val fileName = "${type.pathName}_${sanitizedName}.bin"
         return File(cacheDir, fileName)
     }
 }

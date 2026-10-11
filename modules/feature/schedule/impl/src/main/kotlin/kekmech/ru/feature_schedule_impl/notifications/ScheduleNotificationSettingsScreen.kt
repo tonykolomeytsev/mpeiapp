@@ -8,13 +8,24 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import android.content.Context
+import androidx.core.content.edit
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import timber.log.Timber
 
 /**
  * Settings screen for schedule change notifications
  */
 @Composable
-fun ScheduleNotificationSettingsScreen(
+internal fun ScheduleNotificationSettingsScreen(
     viewModel: ScheduleNotificationSettingsViewModel
 ) {
     val state by viewModel.state.collectAsState()
@@ -212,7 +223,7 @@ private fun StatisticsCard(
                 )
                 
                 StatItem(
-                    icon = Icons.Default.NotificationsActive,
+                    icon = Icons.Default.Notifications,
                     label = "Изменений",
                     value = changesDetected.toString()
                 )
@@ -253,7 +264,7 @@ private fun StatItem(
 /**
  * State for notification settings
  */
-data class ScheduleNotificationSettingsState(
+internal data class ScheduleNotificationSettingsState(
     val notificationsEnabled: Boolean = false,
     val checkIntervalHours: Long = 6L,
     val isCheckingNow: Boolean = false,
@@ -263,28 +274,77 @@ data class ScheduleNotificationSettingsState(
 )
 
 /**
- * ViewModel for notification settings (to be implemented)
+ * ViewModel for notification settings: persists the choice and drives [ScheduleChangeScheduler]
  */
-class ScheduleNotificationSettingsViewModel {
-    private val _state = MutableStateFlow(ScheduleNotificationSettingsState())
+internal class ScheduleNotificationSettingsViewModel(
+    context: Context,
+    private val scheduler: ScheduleChangeScheduler,
+) {
+    private val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
+
+    private val _state = MutableStateFlow(
+        ScheduleNotificationSettingsState(
+            notificationsEnabled = prefs.getBoolean(KEY_ENABLED, false),
+            checkIntervalHours = prefs.getLong(
+                KEY_INTERVAL,
+                ScheduleChangeScheduler.DEFAULT_CHECK_INTERVAL_HOURS,
+            ),
+            totalChecks = prefs.getInt(KEY_TOTAL_CHECKS, 0),
+            totalChangesDetected = prefs.getInt(KEY_TOTAL_CHANGES, 0),
+        )
+    )
     val state: StateFlow<ScheduleNotificationSettingsState> = _state
-    
+
     fun toggleNotifications(enabled: Boolean) {
         Timber.d("Toggle notifications: $enabled")
+        prefs.edit { putBoolean(KEY_ENABLED, enabled) }
         _state.value = _state.value.copy(notificationsEnabled = enabled)
-        // TODO: Call scheduler.start/stop
+        if (enabled) {
+            scheduler.startPeriodicChecks(_state.value.checkIntervalHours)
+        } else {
+            scheduler.stopPeriodicChecks()
+        }
     }
-    
+
     fun setCheckInterval(hours: Long) {
-        Timber.d("Set check interval: $hours hours")
-        _state.value = _state.value.copy(checkIntervalHours = hours)
-        // TODO: Update WorkManager schedule
+        val interval = hours.coerceIn(
+            ScheduleChangeScheduler.MIN_CHECK_INTERVAL_HOURS,
+            ScheduleChangeScheduler.MAX_CHECK_INTERVAL_HOURS,
+        )
+        Timber.d("Set check interval: $interval hours")
+        prefs.edit { putLong(KEY_INTERVAL, interval) }
+        _state.value = _state.value.copy(checkIntervalHours = interval)
+        if (_state.value.notificationsEnabled) {
+            scheduler.startPeriodicChecks(interval)
+        }
     }
-    
+
     fun checkNow() {
+        if (_state.value.isCheckingNow) return
         Timber.d("Manual check triggered")
         _state.value = _state.value.copy(isCheckingNow = true)
-        // TODO: Trigger immediate check
-        // TODO: Update state when complete
+        scheduler.triggerImmediateCheck()
+        scope.launch {
+            // The worker runs in the background; show the spinner briefly and record the attempt
+            delay(CHECK_INDICATOR_MS)
+            val checks = _state.value.totalChecks + 1
+            prefs.edit { putInt(KEY_TOTAL_CHECKS, checks) }
+            _state.value = _state.value.copy(
+                isCheckingNow = false,
+                totalChecks = checks,
+                lastCheckTime = LocalTime.now().format(TIME_FORMATTER),
+            )
+        }
+    }
+
+    private companion object {
+        const val PREFS_NAME = "schedule_notification_settings"
+        const val KEY_ENABLED = "enabled"
+        const val KEY_INTERVAL = "interval_hours"
+        const val KEY_TOTAL_CHECKS = "total_checks"
+        const val KEY_TOTAL_CHANGES = "total_changes"
+        const val CHECK_INDICATOR_MS = 1500L
+        val TIME_FORMATTER: DateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm")
     }
 }

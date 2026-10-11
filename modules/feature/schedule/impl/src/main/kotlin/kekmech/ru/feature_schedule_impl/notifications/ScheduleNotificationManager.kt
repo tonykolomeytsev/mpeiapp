@@ -8,7 +8,6 @@ import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import kekmech.ru.feature_schedule_impl.R
 import timber.log.Timber
 import java.time.format.DateTimeFormatter
 import java.util.Locale
@@ -77,8 +76,8 @@ internal class ScheduleNotificationManager(
      * Create intent to open schedule screen when notification is tapped
      */
     private fun createContentIntent(): PendingIntent {
-        // TODO: Replace with actual intent to schedule screen
-        val intent = Intent(context, Class.forName("kekmech.ru.mpeix.MainActivity"))
+        val intent = context.packageManager.getLaunchIntentForPackage(context.packageName)
+            ?: Intent()
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
         
         return PendingIntent.getActivity(

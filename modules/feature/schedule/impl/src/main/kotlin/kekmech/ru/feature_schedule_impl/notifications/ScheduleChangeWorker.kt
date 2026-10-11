@@ -3,9 +3,7 @@ package kekmech.ru.feature_schedule_impl.notifications
 import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import kekmech.ru.feature_schedule_api.domain.model.Schedule
-import kekmech.ru.feature_schedule_api.domain.usecase.GetCurrentScheduleUseCase
-import kekmech.ru.feature_schedule_impl.data.repository.ScheduleRepositoryImpl
+import kekmech.ru.feature_schedule_api.data.repository.ScheduleRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
@@ -22,8 +20,7 @@ internal class ScheduleChangeWorker(
     params: WorkerParameters
 ) : CoroutineWorker(context, params), KoinComponent {
 
-    private val getCurrentScheduleUseCase: GetCurrentScheduleUseCase by inject()
-    private val scheduleRepository: ScheduleRepositoryImpl by inject()
+    private val scheduleRepository: ScheduleRepository by inject()
     private val notificationManager: ScheduleNotificationManager by inject()
     private val cacheManager: ScheduleCacheManager by inject()
 
@@ -31,18 +28,21 @@ internal class ScheduleChangeWorker(
         try {
             Timber.d("ScheduleChangeWorker: Starting schedule check")
             
-            // Get current schedule info
-            val currentSchedule = getCurrentScheduleUseCase() ?: run {
-                Timber.w("ScheduleChangeWorker: No schedule selected")
+            // Get currently selected schedule
+            val currentSchedule = try {
+                scheduleRepository.getSelectedSchedule()
+            } catch (e: Exception) {
+                Timber.w(e, "ScheduleChangeWorker: No schedule selected")
                 return@withContext Result.success()
             }
-            
+
             // Fetch fresh schedule from API
             val freshSchedule = try {
                 scheduleRepository.getSchedule(
+                    type = currentSchedule.type,
                     name = currentSchedule.name,
-                    type = currentSchedule.type
-                )
+                    weekOffset = 0,
+                ).getOrThrow()
             } catch (e: Exception) {
                 Timber.e(e, "ScheduleChangeWorker: Failed to fetch schedule")
                 return@withContext Result.retry()

@@ -20,6 +20,7 @@ import kekmech.ru.feature_schedule_impl.domain.usecase.HasSelectedScheduleUseCas
 import kekmech.ru.feature_schedule_impl.notifications.ScheduleCacheManager
 import kekmech.ru.feature_schedule_impl.notifications.ScheduleChangeScheduler
 import kekmech.ru.feature_schedule_impl.notifications.ScheduleNotificationManager
+import kekmech.ru.feature_schedule_impl.notifications.ScheduleNotificationSettingsViewModel
 import kekmech.ru.feature_schedule_impl.launcher.ScheduleFeatureApiImpl
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.FindScheduleActor
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.FindScheduleStoreFactory
@@ -27,9 +28,9 @@ import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleAct
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleStoreFactory
 import kekmech.ru.lib_analytics_api.SelectedScheduleAnalyticsProvider
 import kekmech.ru.lib_app_lifecycle.AppLifecycleObserver
-import kotlinx.serialization.json.Json`r`nimport kekmech.ru.lib_network.buildApi
+import kekmech.ru.lib_network.buildApi
+import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.factoryOf
-import kotlinx.serialization.json.Json
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.binds
@@ -66,14 +67,7 @@ val FeatureScheduleModule = module {
     factoryOf(::SchedulePreheatLifecycleObserver) bindIntoList AppLifecycleObserver::class
     // Schedule Change Notifications
     single { ScheduleNotificationManager(androidContext()) }
-    single { ScheduleCacheManager(androidContext(), get()) }
+    single { ScheduleCacheManager(androidContext()) }
     single { ScheduleChangeScheduler(androidContext()) }
-    single {
-        Json {
-            ignoreUnknownKeys = true
-            prettyPrint = false
-        }
-    }
+    factory { ScheduleNotificationSettingsViewModel(androidContext(), get()) }
 }
-
-
