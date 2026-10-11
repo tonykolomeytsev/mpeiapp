@@ -67,5 +67,10 @@ dependencies {
     implementation(project(":ui_icons"))
     implementation(project(":res_icons"))
     implementation(project(":coreui"))
-    implementation(project(":res_strings"))`n`n    // WorkManager for background tasks`n    implementation(libs.androidx.work.runtime.ktx)`n`n    // Kotlinx Serialization for caching`n    implementation(libs.kotlinx.serialization.json)
+    implementation(project(":res_strings"))
+    // WorkManager for background tasks
+    implementation(libs.androidx.work.runtime.ktx)
+    // Kotlinx Serialization for caching
+    implementation(libs.kotlinx.serialization.json)
 }
+
