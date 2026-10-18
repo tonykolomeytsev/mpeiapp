@@ -1,13 +1,18 @@
 package kekmech.ru.mpeiapp
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
+import android.view.View
+import android.view.animation.AccelerateInterpolator
 import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.animation.doOnEnd
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kekmech.ru.feature_app_settings_api.data.AppSettingsRepository
@@ -34,10 +39,48 @@ class MainActivity : AppCompatActivity() {
         getKoin().getAll()
     }
     private val router: Router by inject()
+    private var isReady = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        installSplashScreen()
+        val startTime = System.currentTimeMillis()
+        val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
+
+        splashScreen.setKeepOnScreenCondition {
+            !isReady || (System.currentTimeMillis() - startTime < MIN_SPLASH_SCREEN_DURATION_MS)
+        }
+        splashScreen.setOnExitAnimationListener { splashScreenViewProvider ->
+            val splashScreenView = splashScreenViewProvider.view
+            val alphaAnimator = ObjectAnimator.ofFloat(
+                splashScreenView,
+                View.ALPHA,
+                1f,
+                0f,
+            )
+            val scaleXAnimator = ObjectAnimator.ofFloat(
+                splashScreenView,
+                View.SCALE_X,
+                1f,
+                SPLASH_SCREEN_EXIT_SCALE,
+            )
+            val scaleYAnimator = ObjectAnimator.ofFloat(
+                splashScreenView,
+                View.SCALE_Y,
+                1f,
+                SPLASH_SCREEN_EXIT_SCALE,
+            )
+
+            AnimatorSet().apply {
+                duration = SPLASH_SCREEN_EXIT_DURATION_MS
+                interpolator = AccelerateInterpolator()
+                playTogether(alphaAnimator, scaleXAnimator, scaleYAnimator)
+                doOnEnd {
+                    splashScreenViewProvider.remove()
+                }
+                start()
+            }
+        }
+
         mainActivityLifecycleObservers.forEach { it.onCreate(this) }
 
         setTheme()
@@ -54,6 +97,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         deeplinkHandlersProcessor.processDeeplink(intent.data)
+        isReady = true
     }
 
     override fun onNewIntent(intent: Intent) {
@@ -95,5 +139,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(LocaleContextWrapper.wrapContext(newBase))
+    }
+
+    private companion object {
+
+        const val MIN_SPLASH_SCREEN_DURATION_MS = 1000L
+        const val SPLASH_SCREEN_EXIT_DURATION_MS = 300L
+        const val SPLASH_SCREEN_EXIT_SCALE = 1.05f
     }
 }
