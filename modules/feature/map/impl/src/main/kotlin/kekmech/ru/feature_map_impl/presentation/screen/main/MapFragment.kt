@@ -71,6 +71,10 @@ internal class MapFragment : Fragment(R.layout.fragment_map),
     }
     private val appSettingsRepository by inject<AppSettingsRepository>()
 
+    private var currentMarkers: List<Marker> = emptyList()
+    private var renderedTab: FilterTab? = null
+    private var renderedMarkers: List<MapMarker>? = null
+
     private val store by androidElmStore(
         viewModelStoreOwner = { requireActivity() },
         savedStateRegistryOwner = { requireActivity() },
@@ -99,7 +103,14 @@ internal class MapFragment : Fragment(R.layout.fragment_map),
     }
 
     override fun onDestroyView() {
-        viewBinding.mapView?.onDetach()
+        viewBinding.mapView?.let { map ->
+            currentMarkers.forEach { map.overlays.remove(it) }
+            map.overlays.clear()
+            map.onDetach()
+        }
+        currentMarkers = emptyList()
+        renderedTab = null
+        renderedMarkers = null
         super.onDestroyView()
     }
 
@@ -129,7 +140,6 @@ internal class MapFragment : Fragment(R.layout.fragment_map),
     private fun createMap() {
         val mapView = viewBinding.mapView ?: return
         mapView.init(requireContext())
-        store.accept(MapEvent.Ui.Action.OnMapReady(mapView))
     }
 
     override fun render(state: MapState) {
@@ -147,25 +157,29 @@ internal class MapFragment : Fragment(R.layout.fragment_map),
                 .radius(1f)
                 .start()
         }
+
+        if (renderedTab != state.selectedTab || renderedMarkers != state.markers || (currentMarkers.isEmpty() && state.markers.isNotEmpty())) {
+            renderedTab = state.selectedTab
+            renderedMarkers = state.markers
+            currentMarkers = generateMapMarkers(
+                map = viewBinding.mapView,
+                markers = state.markers,
+                mapMarkers = currentMarkers,
+                selectedTab = state.selectedTab,
+            )
+        }
+
         DeeplinkHelper.handleDeeplinkIfNecessary(dependencies.deeplinkDelegate, state, store)
     }
 
     override fun handleEffect(effect: MapEffect) =
         when (effect) {
-            is MapEffect.GenerateMapMarkers -> {
-                val markers = generateMapMarkers(
-                    map = effect.map,
-                    markers = effect.markers,
-                    mapMarkers = effect.mapMarkers,
-                    selectedTab = effect.selectedTab
-                )
-                store.accept(MapEvent.Ui.Action.MapMarkersGenerated(markers))
-            }
-
             is MapEffect.AnimateCameraToPlace -> {
-                effect.mapMarkers.find { it.title == effect.mapMarker.name }?.let { marker ->
-                    effect.map.animateCameraTo(marker)
-                    marker.showInfoWindow()
+                viewBinding.mapView?.let { map ->
+                    currentMarkers.find { it.title == effect.mapMarker.name }?.let { marker ->
+                        map.animateCameraTo(marker)
+                        marker.showInfoWindow()
+                    }
                 }
                 if (effect.collapseBottomSheet) {
                     BottomSheetBehavior.from(viewBinding.recyclerView)
