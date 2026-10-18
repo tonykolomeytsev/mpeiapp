@@ -35,6 +35,7 @@ import androidx.glance.text.TextStyle
 import androidx.glance.color.ColorProvider
 import kekmech.ru.feature_schedule_api.data.repository.ScheduleRepository
 import kekmech.ru.feature_schedule_api.domain.model.Classes
+import androidx.glance.appwidget.SizeMode
 import kekmech.ru.feature_schedule_api.domain.model.ClassesType
 import org.koin.java.KoinJavaComponent.getKoin
 import java.time.LocalDate
@@ -42,6 +43,8 @@ import java.time.format.DateTimeFormatter
 import java.util.Locale
 
 public class ScheduleGlanceWidget : GlanceAppWidget() {
+
+    override val sizeMode: SizeMode = SizeMode.Exact
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
         val today = LocalDate.now()
@@ -104,9 +107,10 @@ private fun ScheduleWidgetRoot(
 ) {
     val launchComponent = ComponentName(context.packageName, "kekmech.ru.mpeiapp.MainActivity")
 
-    val dateFormatter = DateTimeFormatter.ofPattern("EEEE, d MMMM", Locale("ru"))
+    val russianLocale = Locale.forLanguageTag("ru")
+    val dateFormatter = DateTimeFormatter.ofPattern("EEEE, d MMMM", russianLocale)
     val formattedDate = today.format(dateFormatter)
-        .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale("ru")) else it.toString() }
+        .replaceFirstChar { if (it.isLowerCase()) it.titlecase(russianLocale) else it.toString() }
 
     Column(
         modifier = GlanceModifier

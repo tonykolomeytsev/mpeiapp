@@ -12,16 +12,16 @@ internal class RouterImpl : NavigationHolder, Router {
 
     override fun subscribe(activity: AppCompatActivity) {
         this.activity = activity
-        commandBuffer
-            .forEach {
-                it.apply(activity.supportFragmentManager)
-                commandBuffer.remove(it)
-            }
-        activityCommandBuffer
-            .forEach {
-                it.apply(activity)
-                activityCommandBuffer.remove(it)
-            }
+        if (commandBuffer.isNotEmpty()) {
+            val pendingCommands = ArrayList(commandBuffer)
+            commandBuffer.clear()
+            pendingCommands.forEach { it.apply(activity.supportFragmentManager) }
+        }
+        if (activityCommandBuffer.isNotEmpty()) {
+            val pendingActivityCommands = ArrayList(activityCommandBuffer)
+            activityCommandBuffer.clear()
+            pendingActivityCommands.forEach { it.apply(activity) }
+        }
     }
 
     override fun unsubscribe() {

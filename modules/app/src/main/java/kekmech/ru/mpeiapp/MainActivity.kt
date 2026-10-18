@@ -137,6 +137,11 @@ class MainActivity : AppCompatActivity() {
         super.onPause()
     }
 
+    override fun onConfigurationChanged(newConfig: android.content.res.Configuration) {
+        super.onConfigurationChanged(newConfig)
+        setTheme()
+    }
+
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(LocaleContextWrapper.wrapContext(newBase))
     }

@@ -8,7 +8,31 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="com.google.android.gms.permission.AD_ID" tools:node="remove" />
+
+    <!-- Allow installation on devices without telephony/GPS hardware (tablets, Chromebooks, foldables) -->
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.location"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.location.network"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.touchscreen"
+        android:required="false" />
+
+    <!-- Explicitly declare full screen size support for tablets, foldables and unconventional displays -->
+    <supports-screens
+        android:smallScreens="true"
+        android:normalScreens="true"
+        android:largeScreens="true"
+        android:xlargeScreens="true"
+        android:anyDensity="true"
+        android:resizeable="true" />
 
     <application
         android:name=".MpeixApp"
@@ -22,13 +46,20 @@
         android:theme="@style/Theme.Mpeix.SplashScreen"
         android:enableOnBackInvokedCallback="true"
         android:usesCleartextTraffic="true"
+        android:resizeableActivity="true"
         tools:targetApi="33">
+
+        <!-- Foldable continuity and multi-display support -->
+        <meta-data
+            android:name="android.supports_size_changes"
+            android:value="true" />
 
         <activity
             android:name="kekmech.ru.mpeiapp.MainActivity"
-            android:configChanges="layoutDirection|locale"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|keyboardHidden|layoutDirection|locale"
             android:launchMode="singleTask"
             android:theme="@style/Theme.Mpeix.SplashScreen"
+            android:windowSoftInputMode="adjustResize"
             android:exported="true">
 
             <intent-filter>
