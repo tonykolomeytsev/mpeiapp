@@ -7,6 +7,11 @@ import org.gradle.api.tasks.testing.Test
 internal fun Project.setupUnitTests() {
     tasks.configureLazy<Test> {
         useJUnitPlatform()
-        jvmArgs("-Xshare:off")
+        exclude("**/*$*")
+        jvmArgs(
+            "-Xshare:off",
+            "-Dfile.encoding=UTF-8",
+        )
+        systemProperty("file.encoding", "UTF-8")
     }
 }
