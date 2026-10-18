@@ -16,9 +16,13 @@ import kekmech.ru.feature_bars_impl.presentation.screen.login.elm.BarsLoginActor
 import kekmech.ru.feature_bars_impl.presentation.screen.login.elm.BarsLoginStoreFactory
 import kekmech.ru.feature_bars_impl.presentation.screen.main_compose.elm.BarsComposeActor
 import kekmech.ru.feature_bars_impl.presentation.screen.main_compose.elm.BarsComposeStoreFactory
+import kekmech.ru.feature_bars_impl.data.network.BarsTwoFactorSessionHolder
+import kekmech.ru.lib_network.AppEnvironment
+import kekmech.ru.lib_network.ServiceUrlResolver
 import kekmech.ru.lib_network.buildApi
 import okhttp3.Interceptor
 import okhttp3.logging.HttpLoggingInterceptor
+import okhttp3.logging.HttpLoggingInterceptor.Level
 import org.koin.android.ext.koin.androidApplication
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
@@ -44,7 +48,13 @@ val FeatureBarsModule = module {
 
     single { DataStore(androidApplication().dataDir) }
     single {
-        val loggingInterceptor = getAll<Interceptor>().find { it is HttpLoggingInterceptor }
+        BarsTwoFactorSessionHolder.init(androidApplication())
+        val loggingInterceptor = if (ServiceUrlResolver.getAppEnvironment() != AppEnvironment.PROD) {
+            getAll<Interceptor>().find { it is HttpLoggingInterceptor }
+                ?: HttpLoggingInterceptor().apply { level = Level.BODY }
+        } else {
+            null
+        }
         BarsHandle(androidApplication(), get()) {
             addInterceptor(kekmech.ru.feature_bars_impl.data.network.BarsTwoFactorCompatInterceptor())
             addNetworkInterceptor(kekmech.ru.feature_bars_impl.data.network.BarsTwoFactorCompatInterceptor())

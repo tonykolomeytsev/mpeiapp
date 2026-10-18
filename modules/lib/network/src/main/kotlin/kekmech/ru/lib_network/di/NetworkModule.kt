@@ -7,6 +7,8 @@ import kekmech.ru.ext_koin.bindIntoList
 import kekmech.ru.ext_okhttp.NoConnectionInterceptor
 import kekmech.ru.ext_okhttp.RequiredHeadersInterceptor
 import kekmech.ru.lib_app_info.AppVersionName
+import kekmech.ru.lib_network.AppEnvironment
+import kekmech.ru.lib_network.ServiceUrlResolver
 import kekmech.ru.lib_network.device_id.DeviceIdProvider
 import kekmech.ru.lib_network.device_id.DeviceLocaleProvider
 import kotlinx.serialization.json.Json
@@ -35,7 +37,7 @@ public val LibraryNetworkModule: Module = module {
     factoryOf(::DeviceLocaleProvider)
     singleOf(::provideRetrofitBuilder) bind Retrofit.Builder::class
     singleOf(::provideJson) bind Json::class
-    single { provideOkHttpClient(getAll()) } bind OkHttpClient::class
+    single { provideOkHttpClient(getAll(), getOrNull()) } bind OkHttpClient::class
 
     single {
         RequiredHeadersInterceptor(
@@ -59,13 +61,27 @@ private fun provideJson() = Json {
     }
 }
 
-private fun provideOkHttpClient(interceptors: List<Interceptor>) = OkHttpClient.Builder()
-    .addNetworkInterceptor(HttpLoggingInterceptor().apply { level = Level.BODY })
-    .apply { interceptors() += interceptors }
-    .readTimeout(DEFAULT_REQUEST_TIMEOUT, TimeUnit.SECONDS)
-    .writeTimeout(DEFAULT_REQUEST_TIMEOUT, TimeUnit.SECONDS)
-    .connectTimeout(DEFAULT_REQUEST_TIMEOUT, TimeUnit.SECONDS)
-    .build()
+private fun provideOkHttpClient(
+    interceptors: List<Interceptor>,
+    appEnvironment: AppEnvironment? = null,
+): OkHttpClient {
+    val loggingInterceptor = HttpLoggingInterceptor()
+    return OkHttpClient.Builder()
+        .addNetworkInterceptor { chain ->
+            val env = appEnvironment ?: ServiceUrlResolver.getAppEnvironment()
+            loggingInterceptor.level = if (env != AppEnvironment.PROD) {
+                Level.BODY
+            } else {
+                Level.NONE
+            }
+            loggingInterceptor.intercept(chain)
+        }
+        .apply { interceptors() += interceptors }
+        .readTimeout(DEFAULT_REQUEST_TIMEOUT, TimeUnit.SECONDS)
+        .writeTimeout(DEFAULT_REQUEST_TIMEOUT, TimeUnit.SECONDS)
+        .connectTimeout(DEFAULT_REQUEST_TIMEOUT, TimeUnit.SECONDS)
+        .build()
+}
 
 private fun provideRetrofitBuilder(
     okHttpClient: OkHttpClient,

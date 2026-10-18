@@ -59,15 +59,28 @@ internal class BarsTwoFactorCompatInterceptor : Interceptor {
         val request = chain.request()
         val url = request.url
 
-        // Outgoing request rewrite: TOTP / Email is mapped to legacy ID 1 in lib_bars, but BARS expects tid=5
-        val actualRequest = if (
-            (url.encodedPath == "/bars_web/Auth/JSON_SendAF2_Code" || url.encodedPath.endsWith("JSON_SendAF2_Code")) &&
-            url.queryParameter("tid") == "1"
-        ) {
-            val rewrittenUrl = url.newBuilder()
-                .setQueryParameter("tid", "5")
-                .build()
-            request.newBuilder().url(rewrittenUrl).build()
+        // Outgoing request rewrite:
+        // lib_bars maps 2FA requests to legacy IDs (MAX=3, VK=2, TG=1).
+        // For TOTP / EMAIL (or providerTid == 5), BARS server expects tid=5.
+        // For TG (Telegram), tid must remain 1.
+        val isSendCodeRequest = (url.encodedPath == "/bars_web/Auth/JSON_SendAF2_Code" ||
+            url.encodedPath.endsWith("JSON_SendAF2_Code"))
+        val session = BarsTwoFactorSessionHolder.currentSession
+        val actualRequest = if (isSendCodeRequest && url.queryParameter("tid") == "1") {
+            val shouldRewriteTo5 = when {
+                session?.activeProvider == CodeProvider.TG -> false
+                session?.activeProvider == CodeProvider.EMAIL || session?.activeProvider == CodeProvider.TOTP -> true
+                session?.providerTid == "5" -> true
+                else -> false
+            }
+            if (shouldRewriteTo5) {
+                val rewrittenUrl = url.newBuilder()
+                    .setQueryParameter("tid", "5")
+                    .build()
+                request.newBuilder().url(rewrittenUrl).build()
+            } else {
+                request
+            }
         } else {
             request
         }
@@ -208,6 +221,16 @@ internal class BarsTwoFactorCompatInterceptor : Interceptor {
 
         val isTotp = defaultProvider == CodeProvider.TOTP
 
+        val providerTidMap = mutableMapOf<CodeProvider, String>()
+        for (btn in buttons) {
+            val prov = resolveProvider(btn.tid, btn.len, btn.dataText)
+            providerTidMap[prov] = btn.tid
+        }
+        providerTidMap[defaultProvider] = defaultTid
+
+        val providerTid = providerTidMap[defaultProvider]
+            ?: BarsTwoFactorSession.defaultTidFor(defaultProvider)
+
         BarsTwoFactorSessionHolder.currentSession = BarsTwoFactorSession(
             defaultProvider = defaultProvider,
             activeProvider = defaultProvider,
@@ -215,6 +238,8 @@ internal class BarsTwoFactorCompatInterceptor : Interceptor {
             codeLength = defaultLen.toIntOrNull() ?: 6,
             isTotp = isTotp,
             isTotpInitialized = false,
+            providerTid = providerTid,
+            providerTidMap = providerTidMap,
         )
     }
 

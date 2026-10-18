@@ -13,9 +13,14 @@ import okhttp3.ResponseBody.Companion.toResponseBody
 import java.io.ByteArrayOutputStream
 import java.util.zip.GZIPOutputStream
 
+import android.content.SharedPreferences
 import kekmech.ru.feature_bars_impl.presentation.screen.login.elm.CodeProvider
 
 internal class BarsTwoFactorCompatInterceptorTest : StringSpec({
+
+    beforeTest {
+        BarsTwoFactorSessionHolder.reset()
+    }
 
     val interceptor = BarsTwoFactorCompatInterceptor()
 
@@ -167,6 +172,12 @@ internal class BarsTwoFactorCompatInterceptorTest : StringSpec({
     }
 
     "intercept rewrites outgoing request tid=1 to tid=5 for Email" {
+        BarsTwoFactorSessionHolder.currentSession = BarsTwoFactorSession(
+            defaultProvider = CodeProvider.EMAIL,
+            activeProvider = CodeProvider.EMAIL,
+            availableProviders = listOf(CodeProvider.EMAIL),
+            providerTid = "5",
+        )
         var passedRequest: Request? = null
         val chain = object : Interceptor.Chain {
             override fun request(): Request = Request.Builder()
@@ -194,6 +205,42 @@ internal class BarsTwoFactorCompatInterceptorTest : StringSpec({
 
         interceptor.intercept(chain)
         passedRequest?.url?.queryParameter("tid") shouldBe "5"
+    }
+
+    "intercept keeps outgoing request tid=1 untouched for Telegram" {
+        BarsTwoFactorSessionHolder.currentSession = BarsTwoFactorSession(
+            defaultProvider = CodeProvider.TG,
+            activeProvider = CodeProvider.TG,
+            availableProviders = listOf(CodeProvider.TG),
+            providerTid = "1",
+        )
+        var passedRequest: Request? = null
+        val chain = object : Interceptor.Chain {
+            override fun request(): Request = Request.Builder()
+                .url("https://bars.mpei.ru/bars_web/Auth/JSON_SendAF2_Code?tid=1")
+                .build()
+            override fun proceed(request: Request): Response {
+                passedRequest = request
+                return Response.Builder()
+                    .request(request)
+                    .protocol(Protocol.HTTP_1_1)
+                    .code(200)
+                    .message("OK")
+                    .body("{}".toResponseBody("application/json".toMediaType()))
+                    .build()
+            }
+            override fun connection() = null
+            override fun call() = throw UnsupportedOperationException()
+            override fun connectTimeoutMillis() = 0
+            override fun withConnectTimeout(timeout: Int, unit: java.util.concurrent.TimeUnit) = this
+            override fun readTimeoutMillis() = 0
+            override fun withReadTimeout(timeout: Int, unit: java.util.concurrent.TimeUnit) = this
+            override fun writeTimeoutMillis() = 0
+            override fun withWriteTimeout(timeout: Int, unit: java.util.concurrent.TimeUnit) = this
+        }
+
+        interceptor.intercept(chain)
+        passedRequest?.url?.queryParameter("tid") shouldBe "1"
     }
 
     "intercept keeps outgoing request tid=3 untouched for MAX" {
@@ -291,4 +338,111 @@ internal class BarsTwoFactorCompatInterceptorTest : StringSpec({
 
         body shouldContain "Некорректный код подтверждения"
     }
+
+    "BarsTwoFactorSessionHolder saves to and restores from SharedPreferences" {
+        val fakePrefs = FakeSharedPreferences()
+        BarsTwoFactorSessionHolder.init(fakePrefs)
+
+        val session = BarsTwoFactorSession(
+            defaultProvider = CodeProvider.TOTP,
+            activeProvider = CodeProvider.TG,
+            availableProviders = listOf(CodeProvider.TOTP, CodeProvider.TG, CodeProvider.MAX),
+            codeLength = 6,
+            isTotp = false,
+            isTotpInitialized = true,
+            lastServerMessage = "test message",
+            providerTid = "1",
+            providerTidMap = mapOf(CodeProvider.TOTP to "5", CodeProvider.TG to "1", CodeProvider.MAX to "3"),
+        )
+
+        BarsTwoFactorSessionHolder.currentSession = session
+
+        // Simulate process recreation: re-init with fakePrefs
+        BarsTwoFactorSessionHolder.init(fakePrefs)
+        val restored = BarsTwoFactorSessionHolder.currentSession
+        restored?.defaultProvider shouldBe CodeProvider.TOTP
+        restored?.activeProvider shouldBe CodeProvider.TG
+        restored?.availableProviders shouldBe listOf(CodeProvider.TOTP, CodeProvider.TG, CodeProvider.MAX)
+        restored?.codeLength shouldBe 6
+        restored?.isTotp shouldBe false
+        restored?.isTotpInitialized shouldBe true
+        restored?.lastServerMessage shouldBe "test message"
+        restored?.providerTid shouldBe "1"
+
+        // Test reset/clear
+        BarsTwoFactorSessionHolder.reset()
+        BarsTwoFactorSessionHolder.currentSession shouldBe null
+    }
 })
+
+private class FakeSharedPreferences : SharedPreferences {
+    private val map = mutableMapOf<String, Any?>()
+
+    override fun getAll(): MutableMap<String, *> = HashMap(map)
+    override fun getString(key: String?, defValue: String?): String? =
+        key?.let { map[it] as? String } ?: defValue
+    @Suppress("UNCHECKED_CAST")
+    override fun getStringSet(key: String?, defValues: MutableSet<String>?): MutableSet<String>? =
+        key?.let { map[it] as? MutableSet<String> } ?: defValues
+    override fun getInt(key: String?, defValue: Int): Int =
+        key?.let { map[it] as? Int } ?: defValue
+    override fun getLong(key: String?, defValue: Long): Long =
+        key?.let { map[it] as? Long } ?: defValue
+    override fun getFloat(key: String?, defValue: Float): Float =
+        key?.let { map[it] as? Float } ?: defValue
+    override fun getBoolean(key: String?, defValue: Boolean): Boolean =
+        key?.let { map[it] as? Boolean } ?: defValue
+    override fun contains(key: String?): Boolean =
+        key != null && map.containsKey(key)
+    override fun edit(): SharedPreferences.Editor = FakeEditor(map)
+    override fun registerOnSharedPreferenceChangeListener(listener: SharedPreferences.OnSharedPreferenceChangeListener?) {}
+    override fun unregisterOnSharedPreferenceChangeListener(listener: SharedPreferences.OnSharedPreferenceChangeListener?) {}
+
+    class FakeEditor(private val target: MutableMap<String, Any?>) : SharedPreferences.Editor {
+        private val pending = mutableMapOf<String, Any?>()
+        private var clearAll = false
+
+        override fun putString(key: String?, value: String?): SharedPreferences.Editor {
+            if (key != null) pending[key] = value
+            return this
+        }
+        override fun putStringSet(key: String?, values: MutableSet<String>?): SharedPreferences.Editor {
+            if (key != null) pending[key] = values
+            return this
+        }
+        override fun putInt(key: String?, value: Int): SharedPreferences.Editor {
+            if (key != null) pending[key] = value
+            return this
+        }
+        override fun putLong(key: String?, value: Long): SharedPreferences.Editor {
+            if (key != null) pending[key] = value
+            return this
+        }
+        override fun putFloat(key: String?, value: Float): SharedPreferences.Editor {
+            if (key != null) pending[key] = value
+            return this
+        }
+        override fun putBoolean(key: String?, value: Boolean): SharedPreferences.Editor {
+            if (key != null) pending[key] = value
+            return this
+        }
+        override fun remove(key: String?): SharedPreferences.Editor {
+            if (key != null) pending[key] = this
+            return this
+        }
+        override fun clear(): SharedPreferences.Editor {
+            clearAll = true
+            return this
+        }
+        override fun commit(): Boolean {
+            apply()
+            return true
+        }
+        override fun apply() {
+            if (clearAll) target.clear()
+            for ((k, v) in pending) {
+                if (v === this) target.remove(k) else target[k] = v
+            }
+        }
+    }
+}

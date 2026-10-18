@@ -73,6 +73,7 @@ internal class BarsRepository(
         barsHandle.auth.logout()
         storage.removeValueForKey("current_user_id")
         loginStateTrigger.tryEmit(Unit)
+        kekmech.ru.feature_bars_impl.data.network.BarsTwoFactorSessionHolder.reset()
         return true
     }
 

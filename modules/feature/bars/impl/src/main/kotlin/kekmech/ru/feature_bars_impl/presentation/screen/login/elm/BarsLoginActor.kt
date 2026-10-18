@@ -12,6 +12,7 @@ import com.kekmech.lib_bars.auth.StudentEntry
 import com.kekmech.lib_bars.auth.SubmitTwoFactorResult
 import com.kekmech.lib_bars.auth.TwoFactorData
 import com.kekmech.lib_bars.auth.TwoFactorProvider
+import kekmech.ru.feature_bars_impl.data.network.BarsTwoFactorSessionHolder
 import kekmech.ru.feature_bars_impl.data.repository.BarsRepository
 import kekmech.ru.feature_bars_impl.domain.ExceptionWithId
 import kekmech.ru.feature_bars_impl.presentation.screen.login.elm.BarsLoginEvent.Internal.CheckAuthStatusFailure
@@ -132,23 +133,28 @@ internal class BarsLoginActor(
                 val deferred = kotlinx.coroutines.CompletableDeferred<Unit>()
                 activeRequestCodeDeferred = deferred
                 val isTotp = command.provider == CodeProvider.TOTP
-                kekmech.ru.feature_bars_impl.data.network.BarsTwoFactorSessionHolder.setActiveProvider(command.provider)
-                try {
-                    val requestResult = withTimeoutOrNull(BARS_REQUEST_TIMEOUT_MS) {
-                        barsHandle.auth.requestTwoFactorCode(command.provider.toLib())
-                    } ?: error("BARS request timeout: auth.requestTwoFactorCode")
-                    when (requestResult) {
-                        RequestTwoFactorResult.Error -> error("Unable to send code")
-                        RequestTwoFactorResult.Success -> Unit
-                    }
-                    if (isTotp) {
-                        kekmech.ru.feature_bars_impl.data.network.BarsTwoFactorSessionHolder.markTotpInitialized()
-                    }
+                BarsTwoFactorSessionHolder.setActiveProvider(command.provider)
+                if (isTotp) {
+                    // For TOTP, code is generated locally in the Authenticator app (e.g. Google Authenticator)
+                    // and does not require sending JSON_SendAF2_Code to the server.
+                    BarsTwoFactorSessionHolder.markTotpInitialized()
                     deferred.complete(Unit)
-                    kekmech.ru.feature_bars_impl.data.network.BarsTwoFactorSessionHolder.currentSession?.lastServerMessage
-                } catch (e: Throwable) {
-                    deferred.completeExceptionally(e)
-                    throw e
+                    BarsTwoFactorSessionHolder.currentSession?.lastServerMessage
+                } else {
+                    try {
+                        val requestResult = withTimeoutOrNull(BARS_REQUEST_TIMEOUT_MS) {
+                            barsHandle.auth.requestTwoFactorCode(command.provider.toLib())
+                        } ?: error("BARS request timeout: auth.requestTwoFactorCode")
+                        when (requestResult) {
+                            RequestTwoFactorResult.Error -> error("Unable to send code")
+                            RequestTwoFactorResult.Success -> Unit
+                        }
+                        deferred.complete(Unit)
+                        BarsTwoFactorSessionHolder.currentSession?.lastServerMessage
+                    } catch (e: Throwable) {
+                        deferred.completeExceptionally(e)
+                        throw e
+                    }
                 }
             }.mapEvents(
                 eventMapper = { serverMsg ->
@@ -178,15 +184,7 @@ internal class BarsLoginActor(
 
             is Command.Submit2faCode -> actorFlow {
                 runCatching { activeRequestCodeDeferred?.await() }
-                val session = kekmech.ru.feature_bars_impl.data.network.BarsTwoFactorSessionHolder.currentSession
-                if (session?.isTotp == true && !session.isTotpInitialized) {
-                    val initResult = withTimeoutOrNull(BARS_REQUEST_TIMEOUT_MS) {
-                        barsHandle.auth.requestTwoFactorCode(TwoFactorProvider.TG)
-                    }
-                    if (initResult == RequestTwoFactorResult.Success) {
-                        kekmech.ru.feature_bars_impl.data.network.BarsTwoFactorSessionHolder.markTotpInitialized()
-                    }
-                }
+                // For TOTP, code is generated locally in Authenticator, no requestTwoFactorCode is needed.
                 val result = withTimeoutOrNull(BARS_REQUEST_TIMEOUT_MS) {
                     barsHandle.auth.submitTwoFactorCode(
                         data = TwoFactorData(
@@ -245,6 +243,7 @@ internal class BarsLoginActor(
                 } ?: error("BARS request timeout: auth.selectStudentById")
                 barsRepository.saveCurrentUserId(command.id)
                 barsRepository.loginStateTrigger.emit(Unit)
+                BarsTwoFactorSessionHolder.reset()
                 withContext(Dispatchers.Main) {
                     router.executeCommand(PopBackStack())
                 }
@@ -253,6 +252,7 @@ internal class BarsLoginActor(
             )
 
             is Command.Exit -> actorFlow {
+                BarsTwoFactorSessionHolder.reset()
                 withContext(Dispatchers.Main) {
                     router.executeCommand(PopBackStack())
                 }
@@ -263,7 +263,7 @@ internal class BarsLoginActor(
         when (this) {
             TwoFactorProvider.MAX -> CodeProvider.MAX
             TwoFactorProvider.VK -> CodeProvider.VK
-            TwoFactorProvider.TG -> CodeProvider.TOTP
+            TwoFactorProvider.TG -> CodeProvider.TG
         }
 
     private fun CodeProvider.toLib(): TwoFactorProvider =

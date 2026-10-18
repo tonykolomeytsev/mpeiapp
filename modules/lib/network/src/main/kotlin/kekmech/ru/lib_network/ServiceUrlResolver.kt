@@ -8,6 +8,8 @@ public object ServiceUrlResolver {
         ServiceUrlResolver.appEnvironment = appEnvironment
     }
 
+    public fun getAppEnvironment(): AppEnvironment = appEnvironment
+
     public fun resolve(url: BackendServiceUrl): String =
         when (appEnvironment) {
             AppEnvironment.PROD -> url.prodEndpoint
