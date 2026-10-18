@@ -115,70 +115,141 @@ internal object ScheduleChangeDetector {
     private fun detectDayChanges(
         date: LocalDate,
         oldClasses: List<Classes>,
-        newClasses: List<Classes>
+        newClasses: List<Classes>,
     ): List<ScheduleChange> {
         val changes = mutableListOf<ScheduleChange>()
-        
-        // Find removed classes
-        oldClasses.forEach { oldClass ->
-            val matchingNewClass = newClasses.find { it.number == oldClass.number }
-            
-            when {
-                matchingNewClass == null -> {
-                    // Class removed
+
+        val oldByNumber = oldClasses.groupBy { it.number }
+        val newByNumber = newClasses.groupBy { it.number }
+        val allNumbers = (oldByNumber.keys + newByNumber.keys).sorted()
+
+        for (number in allNumbers) {
+            val oldSlotClasses = oldByNumber[number].orEmpty().toMutableList()
+            val newSlotClasses = newByNumber[number].orEmpty().toMutableList()
+
+            // 1. Exact matches: identical classes in this slot (no change)
+            val exactOldIterator = oldSlotClasses.iterator()
+            while (exactOldIterator.hasNext()) {
+                val oldClass = exactOldIterator.next()
+                val matchIndex = newSlotClasses.indexOfFirst { areClassesEqual(oldClass, it) }
+                if (matchIndex != -1) {
+                    exactOldIterator.remove()
+                    newSlotClasses.removeAt(matchIndex)
+                }
+            }
+
+            // 2. Same groups and same name (subgroup and discipline matched, details changed)
+            val groupAndNameOldIterator = oldSlotClasses.iterator()
+            while (groupAndNameOldIterator.hasNext()) {
+                val oldClass = groupAndNameOldIterator.next()
+                val matchIndex = newSlotClasses.indexOfFirst {
+                    it.name == oldClass.name && it.groups == oldClass.groups
+                }
+                if (matchIndex != -1) {
+                    val matchingNewClass = newSlotClasses.removeAt(matchIndex)
+                    groupAndNameOldIterator.remove()
                     changes.add(
                         ScheduleChange(
-                            type = ScheduleChange.ChangeType.REMOVED,
+                            type = ScheduleChange.ChangeType.MODIFIED,
                             date = date,
                             oldClass = oldClass,
-                            newClass = null
+                            newClass = matchingNewClass,
                         )
                     )
                 }
-                !areClassesEqual(oldClass, matchingNewClass) -> {
-                    // Class modified
-                    if (oldClass.name != matchingNewClass.name) {
-                        // Completely different class - replaced
+            }
+
+            // 3. Same groups (same subgroup, but discipline changed: REPLACED)
+            val groupOldIterator = oldSlotClasses.iterator()
+            while (groupOldIterator.hasNext()) {
+                val oldClass = groupOldIterator.next()
+                if (oldClass.groups.isNotBlank()) {
+                    val matchIndex = newSlotClasses.indexOfFirst {
+                        it.groups.isNotBlank() && it.groups == oldClass.groups
+                    }
+                    if (matchIndex != -1) {
+                        val matchingNewClass = newSlotClasses.removeAt(matchIndex)
+                        groupOldIterator.remove()
+                        val changeType = if (oldClass.name != matchingNewClass.name) {
+                            ScheduleChange.ChangeType.REPLACED
+                        } else {
+                            ScheduleChange.ChangeType.MODIFIED
+                        }
                         changes.add(
                             ScheduleChange(
-                                type = ScheduleChange.ChangeType.REPLACED,
+                                type = changeType,
                                 date = date,
                                 oldClass = oldClass,
-                                newClass = matchingNewClass
-                            )
-                        )
-                    } else {
-                        // Same class but details changed
-                        changes.add(
-                            ScheduleChange(
-                                type = ScheduleChange.ChangeType.MODIFIED,
-                                date = date,
-                                oldClass = oldClass,
-                                newClass = matchingNewClass
+                                newClass = matchingNewClass,
                             )
                         )
                     }
                 }
             }
-        }
-        
-        // Find added classes
-        newClasses.forEach { newClass ->
-            val matchingOldClass = oldClasses.find { it.number == newClass.number }
-            
-            if (matchingOldClass == null) {
-                // New class added
+
+            // 4. Same name (same discipline, but groups might differ or be empty)
+            val nameOldIterator = oldSlotClasses.iterator()
+            while (nameOldIterator.hasNext()) {
+                val oldClass = nameOldIterator.next()
+                val matchIndex = newSlotClasses.indexOfFirst { it.name == oldClass.name }
+                if (matchIndex != -1) {
+                    val matchingNewClass = newSlotClasses.removeAt(matchIndex)
+                    nameOldIterator.remove()
+                    changes.add(
+                        ScheduleChange(
+                            type = ScheduleChange.ChangeType.MODIFIED,
+                            date = date,
+                            oldClass = oldClass,
+                            newClass = matchingNewClass,
+                        )
+                    )
+                }
+            }
+
+            // 5. Pair remaining classes in this slot (one-to-one replacement)
+            while (oldSlotClasses.isNotEmpty() && newSlotClasses.isNotEmpty()) {
+                val oldClass = oldSlotClasses.removeAt(0)
+                val matchingNewClass = newSlotClasses.removeAt(0)
+                val changeType = if (oldClass.name != matchingNewClass.name) {
+                    ScheduleChange.ChangeType.REPLACED
+                } else {
+                    ScheduleChange.ChangeType.MODIFIED
+                }
+                changes.add(
+                    ScheduleChange(
+                        type = changeType,
+                        date = date,
+                        oldClass = oldClass,
+                        newClass = matchingNewClass,
+                    )
+                )
+            }
+
+            // 6. Leftover in old: REMOVED
+            for (oldClass in oldSlotClasses) {
+                changes.add(
+                    ScheduleChange(
+                        type = ScheduleChange.ChangeType.REMOVED,
+                        date = date,
+                        oldClass = oldClass,
+                        newClass = null,
+                    )
+                )
+            }
+
+            // 7. Leftover in new: ADDED
+            for (newClass in newSlotClasses) {
                 changes.add(
                     ScheduleChange(
                         type = ScheduleChange.ChangeType.ADDED,
                         date = date,
                         oldClass = null,
-                        newClass = newClass
+                        newClass = newClass,
                     )
                 )
             }
         }
-        
+
         return changes
     }
     

@@ -2,6 +2,7 @@ package kekmech.ru.feature_schedule_impl.presentation.screen.main.elm
 
 import kekmech.ru.feature_notes_api.domain.service.AttachNotesToScheduleService
 import kekmech.ru.feature_schedule_api.domain.usecase.GetCurrentScheduleUseCase
+import kekmech.ru.feature_schedule_impl.presentation.widget.ScheduleGlanceWidgetUpdater
 import kekmech.ru.lib_elm.actorFlow
 import kotlinx.coroutines.flow.Flow
 import money.vivid.elmslie.core.store.Actor
@@ -11,6 +12,7 @@ import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleEve
 internal class ScheduleActor(
     private val getCurrentScheduleUseCase: GetCurrentScheduleUseCase,
     private val attachNotesToScheduleService: AttachNotesToScheduleService,
+    private val widgetUpdater: ScheduleGlanceWidgetUpdater? = null,
 ) : Actor<Command, Event>() {
 
     override fun execute(command: Command): Flow<Event> =
@@ -21,6 +23,9 @@ internal class ScheduleActor(
                 attachNotesToScheduleService.attach(currentSchedule)
             }.mapEvents(
                 eventMapper = { schedule ->
+                    if (command.weekOffset == 0) {
+                        widgetUpdater?.update()
+                    }
                     Event.Internal.LoadScheduleSuccess(
                         weekOffset = command.weekOffset,
                         schedule = schedule,

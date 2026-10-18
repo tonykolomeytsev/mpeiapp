@@ -27,6 +27,7 @@ import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.Fi
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.FindScheduleStoreFactory
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleActor
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleStoreFactory
+import kekmech.ru.feature_schedule_impl.presentation.widget.ScheduleGlanceWidgetUpdater
 import kekmech.ru.lib_analytics_api.SelectedScheduleAnalyticsProvider
 import kekmech.ru.lib_app_lifecycle.AppLifecycleObserver
 import kekmech.ru.lib_network.buildApi
@@ -46,6 +47,7 @@ val FeatureScheduleModule = module {
     singleOf(::ScheduleStoreFactory)
     factoryOf(::ScheduleActor)
     factoryOf(::ScheduleDependencies)
+    single { ScheduleGlanceWidgetUpdater(androidContext()) }
 
     factory { get<Retrofit.Builder>().buildApi<LegacyScheduleService>() }
     factory { get<Retrofit.Builder>().buildApi<MpeiScheduleService>() }

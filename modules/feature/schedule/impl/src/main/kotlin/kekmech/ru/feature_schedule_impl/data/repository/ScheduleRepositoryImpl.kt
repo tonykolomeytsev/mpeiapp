@@ -10,12 +10,14 @@ import kekmech.ru.feature_schedule_impl.data.datasource.ScheduleCacheWrapper
 import kekmech.ru.feature_schedule_impl.data.datasource.SelectedScheduleSource
 import kekmech.ru.feature_schedule_impl.data.mapper.ScheduleMapper
 import kekmech.ru.feature_schedule_impl.data.network.ScheduleService
+import kekmech.ru.feature_schedule_impl.presentation.widget.ScheduleGlanceWidgetUpdater
 import kekmech.ru.lib_analytics_api.SelectedScheduleAnalyticsProvider
 
 internal class ScheduleRepositoryImpl(
     private val scheduleService: ScheduleService,
     private val scheduleCacheWrapper: ScheduleCacheWrapper,
     selectedScheduleSource: SelectedScheduleSource,
+    private val widgetUpdater: ScheduleGlanceWidgetUpdater? = null,
 ) :
     ScheduleRepository,
     SelectedScheduleAnalyticsProvider,
@@ -36,17 +38,27 @@ internal class ScheduleRepositoryImpl(
             )
         }
             .map { ScheduleMapper.dtoToDomain(it) }
-            .onSuccess { scheduleCacheWrapper.save(it) }
+            .onSuccess {
+                scheduleCacheWrapper.save(it)
+                if (weekOffset == 0) {
+                    widgetUpdater?.update()
+                }
+            }
             .recoverCatching { sourceThrowable ->
-                scheduleCacheWrapper.restore(name, weekOffset)
+                val cached = scheduleCacheWrapper.restore(name, weekOffset)
                     .getOrNull()
                     ?: throw sourceThrowable
+                if (weekOffset == 0) {
+                    widgetUpdater?.update()
+                }
+                cached
             }
 
     override fun setSelectedSchedule(selectedSchedule: SelectedSchedule) {
         this._selectedSchedule = selectedSchedule
         FirebaseCrashlytics.getInstance()
             .setCustomKey("schedule_name", selectedSchedule.name)
+        widgetUpdater?.update()
     }
 
     override fun getSelectedSchedule(): SelectedSchedule = this._selectedSchedule

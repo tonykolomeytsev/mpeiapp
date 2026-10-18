@@ -142,4 +142,60 @@ class ScheduleChangeDetectorTest : BehaviorSpec({
             changes.shouldBeEmpty()
         }
     }
+
+    Given("Two subgroups in the same slot with identical schedules") {
+        val sub1 = classes(number = 1, name = "Информатика").copy(groups = "А-01-21 (подгруппа 1)")
+        val sub2 = classes(number = 1, name = "Английский язык").copy(groups = "А-01-21 (подгруппа 2)")
+        val changes = ScheduleChangeDetector.detectChanges(
+            oldSchedule = schedule(sub1, sub2),
+            newSchedule = schedule(sub1, sub2),
+        )
+        Then("no changes are detected and no false REPLACED is emitted") {
+            changes.shouldBeEmpty()
+        }
+    }
+
+    Given("Two subgroups in the same slot with reversed order in list") {
+        val sub1 = classes(number = 1, name = "Информатика").copy(groups = "А-01-21 (подгруппа 1)")
+        val sub2 = classes(number = 1, name = "Английский язык").copy(groups = "А-01-21 (подгруппа 2)")
+        val changes = ScheduleChangeDetector.detectChanges(
+            oldSchedule = schedule(sub1, sub2),
+            newSchedule = schedule(sub2, sub1),
+        )
+        Then("no changes are detected") {
+            changes.shouldBeEmpty()
+        }
+    }
+
+    Given("Two subgroups in the same slot with one subgroup modified") {
+        val sub1Old = classes(number = 1, name = "Информатика", place = "Е-101").copy(groups = "А-01-21 (подгруппа 1)")
+        val sub1New = classes(number = 1, name = "Информатика", place = "Е-102").copy(groups = "А-01-21 (подгруппа 1)")
+        val sub2 = classes(number = 1, name = "Английский язык", place = "Е-201").copy(groups = "А-01-21 (подгруппа 2)")
+        val changes = ScheduleChangeDetector.detectChanges(
+            oldSchedule = schedule(sub1Old, sub2),
+            newSchedule = schedule(sub1New, sub2),
+        )
+        Then("only the modified subgroup is reported as modified") {
+            changes shouldHaveSize 1
+            changes.single().type shouldBe ChangeType.MODIFIED
+            changes.single().newClass?.name shouldBe "Информатика"
+            changes.single().newClass?.place shouldBe "Е-102"
+        }
+    }
+
+    Given("Two subgroups in the same slot with one subgroup replaced") {
+        val sub1 = classes(number = 1, name = "Информатика").copy(groups = "А-01-21 (подгруппа 1)")
+        val sub2Old = classes(number = 1, name = "Английский язык").copy(groups = "А-01-21 (подгруппа 2)")
+        val sub2New = classes(number = 1, name = "Немецкий язык").copy(groups = "А-01-21 (подгруппа 2)")
+        val changes = ScheduleChangeDetector.detectChanges(
+            oldSchedule = schedule(sub1, sub2Old),
+            newSchedule = schedule(sub1, sub2New),
+        )
+        Then("only the replaced subgroup is reported as replaced") {
+            changes shouldHaveSize 1
+            changes.single().type shouldBe ChangeType.REPLACED
+            changes.single().oldClass?.name shouldBe "Английский язык"
+            changes.single().newClass?.name shouldBe "Немецкий язык"
+        }
+    }
 })

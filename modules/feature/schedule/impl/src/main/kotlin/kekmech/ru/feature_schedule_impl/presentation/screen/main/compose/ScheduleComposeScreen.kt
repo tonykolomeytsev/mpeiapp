@@ -56,9 +56,18 @@ internal fun ScheduleComposeScreen(
     state: ScheduleState,
     effects: Flow<ScheduleEffect>,
     modifier: Modifier = Modifier,
+    onNavigateToNoteList: ((ScheduleEffect.NavigateToNoteList) -> Unit)? = null,
 ) {
     LaunchedEffect(Unit) {
         onAccept(ScheduleEvent.Ui.Init)
+    }
+
+    LaunchedEffect(effects) {
+        effects.collect { effect ->
+            when (effect) {
+                is ScheduleEffect.NavigateToNoteList -> onNavigateToNoteList?.invoke(effect)
+            }
+        }
     }
 
     val today = moscowLocalDate()
