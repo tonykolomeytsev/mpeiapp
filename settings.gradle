@@ -39,7 +39,7 @@ dependencyResolutionManagement {
     versionCatalogs.create("mpeix").from(files("gradle/mpeix.versions.toml"))
 }
 
-rootProject.name = "mpeix"
+rootProject.name = "mpei-hub"
 
 // Automatically add all project modules
 def sourcesDir = layout.rootDirectory.dir("modules").asFile

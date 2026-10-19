@@ -214,7 +214,7 @@ internal fun AppSettingsComposeScreen(
                 }
                 item {
                     ListItem(
-                        headlineText = "Репозиторий MpeiX Next",
+                        headlineText = stringResource(Strings.app_settings_repo_title),
                         supportingText = "github.com/ghostoftheeleven/mpei-next",
                         modifier = Modifier.clickable {
                             onOpenGithub()
@@ -223,7 +223,7 @@ internal fun AppSettingsComposeScreen(
                 }
                 item {
                     ListItem(
-                        headlineText = "Оригинальный проект (MpeiX)",
+                        headlineText = stringResource(Strings.app_settings_original_repo_title),
                         supportingText = "Форк от github.com/tonykolomeytsev/mpeiapp",
                         modifier = Modifier.clickable {
                             onOpenContributor("https://github.com/tonykolomeytsev/mpeiapp")
@@ -236,19 +236,31 @@ internal fun AppSettingsComposeScreen(
                     kekmech.ru.feature_contributors_api.domain.model.Contributor(
                         login = "ghostoftheeleven",
                         name = "Расул Рустамов",
-                        bio = "Разработчик MpeiX Next • студент МЭИ",
+                        bio = "Разработчик МЭИ.Хаб • студент МЭИ",
                         url = "https://github.com/ghostoftheeleven",
                         avatarUrl = "https://avatars.githubusercontent.com/u/98048622?v=4",
-                    )
+                    ),
+                    kekmech.ru.feature_contributors_api.domain.model.Contributor(
+                        login = "Johnny-Wickky",
+                        name = "Johnny Wickky",
+                        bio = "Студент МЭИ, ИБ- и ИИ-энтузиаст",
+                        url = "https://github.com/Johnny-Wickky",
+                        avatarUrl = "https://avatars.githubusercontent.com/u/Johnny-Wickky?v=4",
+                    ),
                 )
                 item {
                     SettingsSectionHeader(title = stringResource(Strings.app_settings_header_contributors))
                 }
                 items(contributorsList) { contributor ->
                     val displayName = contributor.name ?: contributor.login
+                    val bio = when (contributor.login.lowercase()) {
+                        "johnny-wickky" -> stringResource(Strings.contributor_johnny_wickky_bio)
+                        "ghostoftheeleven" -> stringResource(Strings.contributor_rasul_rustamov_bio)
+                        else -> contributor.bio
+                    }
                     ListItem(
                         headlineText = displayName,
-                        supportingText = contributor.bio,
+                        supportingText = bio,
                         leadingContent = {
                             Monogram(letter = displayName.firstOrNull() ?: 'C')
                         },

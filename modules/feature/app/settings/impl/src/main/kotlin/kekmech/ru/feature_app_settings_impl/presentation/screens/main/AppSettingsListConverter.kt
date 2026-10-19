@@ -87,7 +87,7 @@ internal class AppSettingsListConverter {
 
                 add(
                     BottomLabeledTextItem(
-                        mainText = "Репозиторий MpeiX Next",
+                        mainTextResId = Strings.app_settings_repo_title,
                         label = "github.com/ghostoftheeleven/mpei-next",
                         itemId = ITEM_GITHUB,
                     )

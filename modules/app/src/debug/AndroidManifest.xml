@@ -4,6 +4,7 @@
 
     <application
         android:networkSecurityConfig="@xml/mock_server_network_security_config"
+        tools:replace="android:networkSecurityConfig"
         tools:ignore="GoogleAppIndexingWarning,MissingApplicationIcon"
         tools:targetApi="28" />
 

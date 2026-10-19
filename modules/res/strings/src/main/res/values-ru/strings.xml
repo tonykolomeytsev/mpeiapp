@@ -1,0 +1,348 @@
+<resources>
+    <string name="app_name">МЭИ.Хаб</string>
+    <!-- НУМЕРАЦИЯ ПАР-->
+    <string-array name="classes_numbers">
+        <item>Очередная пара</item>
+        <item>Первая пара</item>
+        <item>Вторая пара</item>
+        <item>Третья пара</item>
+        <item>Четвертая пара</item>
+        <item>Пятая пара</item>
+        <item>Шестая пара</item>
+        <item>Седьмая пара</item>
+    </string-array>
+
+    <string-array name="days_of_week">
+        <item>Понедельник</item>
+        <item>Вторник</item>
+        <item>Среда</item>
+        <item>Четверг</item>
+        <item>Пятница</item>
+        <item>Суббота</item>
+        <item>Воскресенье</item>
+    </string-array>
+
+    <string-array name="days_of_week_short">
+        <item>ВС</item>
+        <item>ПН</item>
+        <item>ВТ</item>
+        <item>СР</item>
+        <item>ЧТ</item>
+        <item>ПТ</item>
+        <item>СБ</item>
+        <item>ВС</item>
+    </string-array>
+
+    <string-array name="months">
+        <item>января</item>
+        <item>февраля</item>
+        <item>марта</item>
+        <item>апреля</item>
+        <item>мая</item>
+        <item>июня</item>
+        <item>июля</item>
+        <item>августа</item>
+        <item>сентября</item>
+        <item>октября</item>
+        <item>ноября</item>
+        <item>декабря</item>
+    </string-array>
+
+    <string-array name="months_short">
+        <item>янв</item>
+        <item>фев</item>
+        <item>мар</item>
+        <item>апр</item>
+        <item>мая</item>
+        <item>июн</item>
+        <item>июл</item>
+        <item>авг</item>
+        <item>сен</item>
+        <item>окт</item>
+        <item>ноя</item>
+        <item>дек</item>
+    </string-array>
+
+    <string-array name="classes_types">
+        <item>Очередная пара</item>
+        <item>Лекция</item>
+        <item>Практика</item>
+        <item>Лабораторная</item>
+        <item>Курсовая</item>
+        <item>Консультация</item>
+        <item>Экзамен</item>
+    </string-array>
+
+    <string-array name="hours_declensions">
+        <item>час</item>
+        <item>часа</item>
+        <item>часов</item>
+    </string-array>
+
+    <string-array name="minutes_declensions">
+        <item>минуту</item>
+        <item>минуты</item>
+        <item>минут</item>
+    </string-array>
+
+    <string-array name="days_declensions">
+        <item>день</item>
+        <item>дня</item>
+        <item>дней</item>
+    </string-array>
+
+    <string-array name="points_declensions">
+        <item>балл</item>
+        <item>балла</item>
+        <item>баллов</item>
+    </string-array>
+
+    <string name="today">Сегодня</string>
+    <string name="tomorrow">Завтра</string>
+    <string name="after_tomorrow">Послезавтра</string>
+    <string name="yesterday">Вчера</string>
+    <string name="before_yesterday">Позавчера</string>
+
+    <string name="something_went_wrong_error">Что-то пошло не так…</string>
+    <string name="connection_lost_error">Нет интернет соединения</string>
+
+    <string name="common_error_no_internet_title">Нет интернета</string>
+    <string name="common_error_no_internet_description">Проверьте свое подключение к интернету и попробуйте загрузить данные снова</string>
+    <string name="common_error_bad_response_title">Ошибка на сервере</string>
+    <string name="common_error_bad_response_description">Сервер не смог нормально ответить на запрос и прислал ошибку с кодом %s. Если проблема сохраняется в течение нескольких минут, сообщите о ней разработчикам.</string>
+    <string name="common_error_handshake_title">Проблемы с шифрованием</string>
+    <string name="common_error_handshake_description">Убедитесь в том, что время и дата на телефоне выставлены верно. Это нужно для установки шифрованного соединения. Если это не помогло, срочно сообщите о проблеме разработчикам.</string>
+    <string name="common_error_view_title">Ошибка отображения</string>
+    <string name="common_error_view_description">Сервер прислал данные, но мы не смогли их обработать. Так может быть, если вы давно не обновляли приложение. Если это не так, сообщите о проблеме разработчикам.</string>
+
+    <string name="onboarding_welcome_start_using">Погнали!</string>
+    <string name="onboarding_welcome_title_schedule">Смотрите расписания</string>
+    <string name="onboarding_welcome_subtitle_schedule">К просмотренным ранее расписаниям вы имеете доступ даже без интернета</string>
+    <string name="onboarding_welcome_title_notes">Создавайте заметки</string>
+    <string name="onboarding_welcome_subtitle_notes">Заметки стали еще удобнее! Самые актуальные заметки всегда отображаются на главном экране</string>
+    <string name="onboarding_welcome_title_map">Пользуйтесь картой</string>
+    <string name="onboarding_welcome_subtitle_map">На карте можно найти корпуса, столовые, общежития и много других важных мест</string>
+    <string name="onboarding_welcome_title_bars">Смотрите оценки</string>
+    <string name="onboarding_welcome_subtitle_bars">Просматривайте БАРС прямо в приложении. Для особых случаев есть встроенный браузер</string>
+
+    <string name="schedule_find_header">Поиск расписания</string>
+    <string name="schedule_find_description">Введите номер группы или имя преподавателя и мы загрузим выбранное расписание на устройство</string>
+    <string name="schedule_find_hint">Номер группы или имя преподавателя</string>
+    <string name="schedule_find_button_continue">Продолжить</string>
+    <string name="schedule_find_error_loading">Не удалось загрузить расписание для %s</string>
+
+    <string name="schedule_semester_week">Учебная неделя №%d</string>
+    <string name="schedule_weekend_week">Неучебная неделя</string>
+    <string name="schedule_loading_error">При загрузке расписания произошла ошибка</string>
+    <string name="schedule_item_window_header">Окно между парами</string>
+    <string name="schedule_item_window_description">Проведите его с пользой</string>
+    <string name="schedule_item_lunch_header">Обеденный перерыв</string>
+    <string name="schedule_item_lunch_description">Искать столовые на карте</string>
+    <string name="schedule_item_lunch_time_start">12:45</string>
+    <string name="schedule_item_lunch_time_end">13:45</string>
+    <string name="schedule_item_self_study_header">День самостоятельных занятий</string>
+    <string name="schedule_item_self_study_description">Потратьте этот день с пользой, начните проходить курсы по программированию или начните читать книгу</string>
+    <string name="schedule_empty_state_title">Упс! Не удалось загрузить расписание</string>
+    <string name="schedule_empty_state_subtitle">Возможно это произошло из-за проблем с интернет соединением.\nЛибо сервер МЭИ.Хаб упал :)</string>
+    <string name="schedule_fab_tooltip">Кнопка быстрой навигации. Убрать кнопку можно в настройках</string>
+    <string name="schedule_fab_next">К следующей неделе</string>
+    <string name="schedule_fab_prev">К текущей неделе</string>
+
+    <string name="dashboard_loading_error">Произошла ошибка при загрузке данных с сервера</string>
+    <string name="dashboard_item_change_group">Группа %s</string>
+    <string name="dashboard_item_click_to_change_group">Нажмите, чтобы сменить расписание</string>
+    <string name="dashboard_section_header_events">Ближайшие события</string>
+    <string name="dashboard_events_empty_state_title">Пока ничего интересного</string>
+    <string name="dashboard_events_empty_state_subtitle">На ближайшую неделю не запланировано никаких событий</string>
+    <string name="dashboard_section_header_favorites">Избранные расписания</string>
+    <string name="dashboard_section_header_favorites_subtitle">Нажмите для переключения</string>
+    <string name="dashboard_section_header_favorites_action">НАСТРОИТЬ</string>
+    <string name="dashboard_section_header_session">Расписание сессии</string>
+    <string name="dashboard_section_header_session_subtitle">Таков путь</string>
+    <string name="dashboard_session_item_exam">ЭКЗАМЕН</string>
+    <string name="dashboard_session_item_consultation">КОНСУЛЬТАЦИЯ</string>
+    <string name="dashboard_section_header_notes">Заметки</string>
+    <string name="dashboard_section_header_notes_action">ПОКАЗАТЬ ВСЕ</string>
+    <string name="dashboard_actual_notes_empty_state_title">Нет ни одной актуальной заметки</string>
+    <string name="dashboard_events_today">Сегодняшние пары</string>
+    <string name="dashboard_events_tomorrow">Завтрашние пары</string>
+    <string name="dashboard_events_after_tomorrow">Пары послезавтра</string>
+    <string name="dashboard_events_n_days">Пары через %s</string>
+    <string name="dashboard_banner_lunch_header">Судя по всему, сейчас обеденный перерыв</string>
+    <string name="dashboard_banner_lunch_description">Найти столовые на карте</string>
+    <string name="dashboard_banner_eol">MPEI Next: О проекте и обновлениях</string>
+    <string name="dashboard_banner_eol_desc">Прямое расписание, офлайн-карты МЭИ и новый дизайн</string>
+    <string name="dashboard_search_field_text">Искать в МЭИ…</string>
+    <string name="dashboard_day_status_semester">Идет %d учебная неделя</string>
+    <string name="dashboard_day_status_not_semester">Неучебная неделя</string>
+    <string name="dashboard_item_time_prediction_prefix">Пара начнется через</string>
+
+    <string name="map_tab_name_eat">Еда</string>
+    <string name="map_section_name_eat">Еда</string>
+    <string name="map_tab_name_buildings">Корпуса</string>
+    <string name="map_section_name_buildings">Корпуса</string>
+    <string name="map_tab_name_hostels">Общаги</string>
+    <string name="map_section_name_hostels">Общаги</string>
+    <string name="map_tab_name_others">Места</string>
+    <string name="map_section_name_others">Места</string>
+    <string name="map_tab_name_structures">Кафедры</string>
+    <string name="map_section_name_structures">Кафедры</string>
+    <string name="map_section_tag_others">Остальные места</string>
+    <string name="map_loading_error_message">При загрузке списка мест для карты произошла ошибка</string>
+
+    <string name="note_list_section_add">СОЗДАТЬ ЗАМЕТКУ</string>
+    <string name="note_list_section_header">Прикрепленные заметки</string>
+    <string name="note_list_section_subtitle_empty">У этой пары нет заметок</string>
+    <plurals name="note_list_section_subtitle">
+        <item quantity="one">У этой пары одна заметка</item>
+        <item quantity="two">У этой пары две заметки</item>
+        <item quantity="other">Заметок у пары: %d</item>
+    </plurals>
+
+    <string name="note_edit_screen_title">Заметка</string>
+    <string name="note_edit_button_save">Сохранить</string>
+
+    <string name="all_notes_screen_title">Все заметки</string>
+    <string name="all_notes_section_header_forthcoming">Актуальные заметки</string>
+    <string name="all_notes_section_header_past">Прошедшие заметки</string>
+    <string name="all_notes_empty_state_title">Вы пока не создали ни одной заметки</string>
+    <string name="all_notes_empty_state_subtitle">Для создания заметки нажмите на любую пару в разделе расписания</string>
+    <string name="all_notes_search_menu_item">Поиск</string>
+
+    <string name="bars_stub_student_name">Анонимный Пользователь</string>
+    <string name="bars_stub_student_group">Группа</string>
+    <string name="bars_stub_login_header">Вы не вошли в БАРС</string>
+    <string name="bars_stub_login_description">Вход в БАРС осуществляется прямо в приложении, после этого вводить логин и пароль больше не нужно</string>
+    <string name="bars_stub_login_button">Войти в БАРС</string>
+    <string name="bars_stub_show_browser_label">Показать БАРС в браузере</string>
+    <string name="bars_stub_banner_return">Данные обновлены. Нажмите на баннер, чтобы вернуться к обычному отображению</string>
+    <string name="bars_stub_disclaimer">Функциональность БАРСа все еще в разработке, возможны сбои и некорректное поведение в этой части приложения</string>
+    <string name="bars_stub_error_loading_config_header">Произошла ошибка</string>
+    <string name="bars_stub_error_loading_config_description">Возникли проблемы при загрузке конфигурации для работы с БАРС. Попробуйте повторить попытку позже.</string>
+    <string name="bars_stub_empty_disciplines_header">Нет дисциплин</string>
+    <string name="bars_stub_empty_disciplines_description">Список дисциплин для заданного семестра пуст, либо во время загрузки произошла ошибка</string>
+    <string name="bars_webview_menu_refresh">Обновить страницу</string>
+    <string name="bars_webview_menu_open_external">Открыть в браузере</string>
+    <string name="bars_item_no_marks">Нет оценок</string>
+
+    <string name="app_settings_screen_title">Настройки</string>
+    <string name="app_settings_header_schedule">Расписание</string>
+    <string name="app_settings_header_map">Карта</string>
+    <string name="app_settings_dark_theme">Темная тема</string>
+    <string name="app_settings_dark_theme_description">Вы можете сменить визуальное оформление со светлого на темное и наоборот</string>
+    <string name="app_settings_snowy_mood">Снежное настроение</string>
+    <string name="app_settings_show_navigation_fab">Кнопка быстрой навигации</string>
+    <string name="app_settings_show_navigation_fab_description">Показать либо скрыть кнопку навигации (внизу экрана расписания), позволяющую быстро переключаться на текущую и следующую недели</string>
+    <string name="app_settings_auto_hide_bottom_sheet">Скрывать список по клику</string>
+    <string name="app_settings_auto_hide_bottom_sheet_description">При включенной настройке, на экране карты нажатие на любой адрес в списке автоматически свернет список и переместит камеру к указанному адресу</string>
+    <string name="app_settings_map_appearance_type">Внешний вид карты</string>
+    <string name="app_settings_favorite_schedule_title">Избранные расписания</string>
+    <string name="app_settings_favorite_schedule_description">Настройка быстрого доступа к расписаниям</string>
+    <string name="app_settings_header_bars">БАРС</string>
+    <string name="app_settings_header_support">Поддержка</string>
+    <string name="app_settings_section_ask">Задать вопрос в группу</string>
+    <string name="app_settings_section_github">Завести Issue или Pull Request</string>
+    <string name="app_settings_header_contributors">Контрибьюторы</string>
+    <string name="app_settings_section_lang">Язык приложения</string>
+    <string name="app_settings_section_lang_description">Иногда после смены языка требуется перезапустить приложение</string>
+    <string name="app_settings_app_version">МЭИ.Хаб для Android v%s</string>
+    <string name="app_settings_repo_title">Репозиторий МЭИ.Хаб</string>
+    <string name="app_settings_original_repo_title">Оригинальный проект (MpeiX)</string>
+    <string name="about_project_title">О проекте МЭИ.Хаб</string>
+    <string name="about_project_subtitle">🚀 МЭИ.Хаб — Новое поколение</string>
+    <string name="contributor_rasul_rustamov_bio">Разработчик МЭИ.Хаб • студент МЭИ</string>
+    <string name="contributor_johnny_wickky_bio">Студент МЭИ, ИБ- и ИИ-энтузиаст</string>
+
+    <string name="favorites_screen_title">Избранные расписания</string>
+    <string name="favorites_empty_state_title">Ни одно расписание не добавлено в избранные</string>
+    <string name="favorites_empty_state_add">ДОБАВИТЬ РАСПИСАНИЕ</string>
+    <string name="favorites_help_title">Как это работает?</string>
+    <string name="favorites_help_text">Внесенные в этот список группы и преподаватели будут отображаться на главной странице. Вы сможете одним нажатием переключаться между их расписаниями, не набирая имен в поиске.</string>
+
+    <string name="edit_favorite_screen_subtitle">Оставьте краткое описание для выбранного расписания. Вы также можете оставить описание пустым.</string>
+    <string name="edit_favorite_hint">Описание группы или преподавателя</string>
+    <string name="edit_favorite_button_continue">Продолжить</string>
+
+    <string name="change_language_screen_title">Выбор языка</string>
+    <string name="change_language_description_russian">Русский язык</string>
+    <string name="change_language_description_english">English language</string>
+    <string name="change_language_disclaimer">На данный момент, на английский язык переведен только графический интерфейс приложения. Названия занятий, имена преподавателей и названия аудиторий на английский не переведены. Автоматический машинный перевод для них начнет работать в будущих версиях приложения.</string>
+
+    <string name="change_map_type_screen_title">Внешний вид карты</string>
+    <string name="change_map_type_hybrid">Гибрид</string>
+    <string name="change_map_type_scheme">Схема</string>
+
+    <string name="search_section_title_map">Карта</string>
+    <string name="search_section_title_notes">Заметки</string>
+    <string name="search_empty_state_title">Введите текст чтобы начать поиск</string>
+    <string name="search_empty_state_subtitle">Вы можете искать группы, преподавателей, заметки и места на карте</string>
+    <string name="search_not_found_state_title">По вашему запросу ничего не найдено</string>
+    <string name="search_not_found_state_subtitle">Вы можете искать заметки по контенту и названиям дисциплин, а также места на карте по названию, адресу и категории</string>
+    <string name="search_filter_all">Все категории</string>
+    <string name="search_filter_notes">Заметки</string>
+    <string name="search_filter_map">Карта</string>
+    <string name="search_filter_groups">Группы</string>
+    <string name="search_filter_persons">Преподаватели</string>
+
+    <string name="search_schedule_details_classes_1">пара</string>
+    <string name="search_schedule_details_classes_2_4">пары</string>
+    <string name="search_schedule_details_classes_5_0">пар</string>
+    <string name="search_schedule_details_this_week_description_empty">Нет пар на этой неделе</string>
+    <string name="search_schedule_details_this_week_description">%s на этой неделе</string>
+    <string name="search_schedule_details_next_week_description_empty">нет пар на следующей.</string>
+    <string name="search_schedule_details_next_week_description">%s на следующей.</string>
+    <string name="search_schedule_details_add_favorites">Добавить в избранное</string>
+    <string name="search_schedule_details_remove_favorites">Удалить из избранного</string>
+    <string name="search_schedule_details_switch_schedule">Перейти к расписанию</string>
+    <string name="search_schedule_details_empty_title">В этот день нет занятий</string>
+
+    <string name="navigation_name_dashboard">Главная</string>
+    <string name="navigation_name_schedule">Расписание</string>
+    <string name="navigation_name_bars">БАРС</string>
+    <string name="navigation_name_map">Карта</string>
+    <string name="navigation_name_profile">Профиль</string>
+
+    <string name="image_picker_attach_button">Прикрепить</string>
+
+    <string name="blocking_update_title">Пришло время\nобновить приложение</string>
+    <string name="blocking_update_description">Над приложением работает всего один человек, поэтому нет возможности поддерживать старые версии вечно.\n\nВы не обновляли МЭИ.Хаб уже более полугода, с тех пор мы внесли очень много улучшений как в клиентскую часть приложения, так и в серверную. Вам действительно стоит обновиться.\n\nЕсли у вас есть веские причины не обновляться, сообщите о них нам на GitHub в разделе Issues:</string>
+    <string name="blocking_update_exit">Выйти</string>
+    <string name="blocking_update_update">Обновить</string>
+    <string name="schedule_widget_name">Расписание на сегодня</string>
+    <string name="schedule_widget_description">Виджет расписания занятий на сегодня</string>
+    <!-- Уведомления об изменениях в расписании -->
+    <string name="app_settings_schedule_notifications_title">Уведомления об изменениях</string>
+    <string name="app_settings_schedule_notifications_description">Сообщать, когда в расписании что-то поменялось</string>
+    <string name="schedule_notifications_title">Изменения в расписании</string>
+    <string name="schedule_notifications_toggle_title">Уведомления об изменениях</string>
+    <string name="schedule_notifications_toggle_description">Получать уведомления при изменении расписания</string>
+    <string name="schedule_notifications_interval_title">Частота проверки</string>
+    <string name="schedule_notifications_interval_value">Проверять расписание каждые %1$d ч</string>
+    <string name="schedule_notifications_interval_min">1 час</string>
+    <string name="schedule_notifications_interval_max">24 часа</string>
+    <string name="schedule_notifications_check_now_title">Проверить сейчас</string>
+    <string name="schedule_notifications_last_check">Последняя проверка: %1$s</string>
+    <string name="schedule_notifications_checking">Проверяем…</string>
+    <string name="schedule_notifications_check_button">Проверить изменения</string>
+    <string name="schedule_notifications_stats_title">Статистика</string>
+    <string name="schedule_notifications_stats_checks">Проверок</string>
+    <string name="schedule_notifications_stats_changes">Изменений</string>
+    <string name="schedule_notifications_permission_denied">Разрешите уведомления в настройках системы, чтобы получать сообщения об изменениях</string>
+    <string name="schedule_changes_channel_name">Изменения расписания</string>
+    <string name="schedule_changes_channel_description">Уведомления об изменениях в расписании пар</string>
+    <string name="schedule_changes_title_single">Изменение в расписании</string>
+    <string name="schedule_changes_title_few">Изменения в расписании</string>
+    <string name="schedule_changes_title_many">Много изменений в расписании</string>
+    <string name="schedule_changes_preview_many">Изменений в расписании: %1$d</string>
+    <string name="schedule_changes_today">Сегодня</string>
+    <string name="schedule_changes_tomorrow">Завтра</string>
+    <string name="schedule_changes_more">… и ещё %1$d</string>
+    <string name="schedule_change_added">Добавлена пара: %1$s</string>
+    <string name="schedule_change_removed">Отменена пара: %1$s</string>
+    <string name="schedule_change_replaced">Заменена пара: %1$s → %2$s</string>
+    <string name="schedule_change_modified">Изменена пара %1$s: %2$s</string>
+    <string name="schedule_change_field_time">время (%1$s → %2$s)</string>
+    <string name="schedule_change_field_place">аудитория (%1$s → %2$s)</string>
+    <string name="schedule_change_field_person">преподаватель</string>
+    <string name="schedule_change_field_type">тип</string>
+</resources>

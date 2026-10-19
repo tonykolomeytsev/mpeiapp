@@ -42,8 +42,13 @@ internal class ContributorViewHolder(
         with(viewBinding) {
             login.text = contributor.login
 
-            bio.isVisible = contributor.bio != null
-            contributor.bio?.let(bio::setText)
+            val bioText = when (contributor.login.lowercase()) {
+                "johnny-wickky" -> itemView.context.getString(kekmech.ru.res_strings.R.string.contributor_johnny_wickky_bio)
+                "ghostoftheeleven" -> itemView.context.getString(kekmech.ru.res_strings.R.string.contributor_rasul_rustamov_bio)
+                else -> contributor.bio
+            }
+            bio.isVisible = bioText != null
+            bioText?.let(bio::setText)
 
             name.isVisible = contributor.name != null
             contributor.name?.let(name::setText)

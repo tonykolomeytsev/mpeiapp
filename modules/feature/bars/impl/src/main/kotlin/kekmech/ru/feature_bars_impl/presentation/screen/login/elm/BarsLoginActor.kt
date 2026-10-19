@@ -85,6 +85,7 @@ internal class BarsLoginActor(
 
             is Command.LoginWithPassword -> actorFlow {
                 timber.log.Timber.d("BarsLoginActor: Starting login with username=${command.login}")
+                BarsTwoFactorSessionHolder.reset()
                 val loginResult = withTimeoutOrNull(BARS_REQUEST_TIMEOUT_MS) {
                     timber.log.Timber.d("BarsLoginActor: Calling barsHandle.auth.login()")
                     barsHandle.auth.login(
@@ -132,29 +133,23 @@ internal class BarsLoginActor(
             is Command.RequestTwoFactorCode -> actorFlow {
                 val deferred = kotlinx.coroutines.CompletableDeferred<Unit>()
                 activeRequestCodeDeferred = deferred
-                val isTotp = command.provider == CodeProvider.TOTP
                 BarsTwoFactorSessionHolder.setActiveProvider(command.provider)
-                if (isTotp) {
-                    // For TOTP, code is generated locally in the Authenticator app (e.g. Google Authenticator)
-                    // and does not require sending JSON_SendAF2_Code to the server.
-                    BarsTwoFactorSessionHolder.markTotpInitialized()
+                try {
+                    val requestResult = withTimeoutOrNull(BARS_REQUEST_TIMEOUT_MS) {
+                        barsHandle.auth.requestTwoFactorCode(command.provider.toLib())
+                    } ?: error("BARS request timeout: auth.requestTwoFactorCode")
+                    when (requestResult) {
+                        RequestTwoFactorResult.Error -> error("Unable to send code")
+                        RequestTwoFactorResult.Success -> Unit
+                    }
+                    if (command.provider == CodeProvider.TOTP) {
+                        BarsTwoFactorSessionHolder.markTotpInitialized()
+                    }
                     deferred.complete(Unit)
                     BarsTwoFactorSessionHolder.currentSession?.lastServerMessage
-                } else {
-                    try {
-                        val requestResult = withTimeoutOrNull(BARS_REQUEST_TIMEOUT_MS) {
-                            barsHandle.auth.requestTwoFactorCode(command.provider.toLib())
-                        } ?: error("BARS request timeout: auth.requestTwoFactorCode")
-                        when (requestResult) {
-                            RequestTwoFactorResult.Error -> error("Unable to send code")
-                            RequestTwoFactorResult.Success -> Unit
-                        }
-                        deferred.complete(Unit)
-                        BarsTwoFactorSessionHolder.currentSession?.lastServerMessage
-                    } catch (e: Throwable) {
-                        deferred.completeExceptionally(e)
-                        throw e
-                    }
+                } catch (e: Throwable) {
+                    deferred.completeExceptionally(e)
+                    throw e
                 }
             }.mapEvents(
                 eventMapper = { serverMsg ->

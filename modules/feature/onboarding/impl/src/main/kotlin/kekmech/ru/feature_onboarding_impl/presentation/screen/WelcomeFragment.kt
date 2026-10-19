@@ -53,4 +53,10 @@ internal class WelcomeFragment : Fragment(R.layout.fragment_welcome) {
     private fun createAdapter() = BaseAdapter(
         PromoPageAdapterItem()
     )
+
+    override fun onDestroyView() {
+        viewBinding.recycler.adapter = null
+        viewBinding.buttonStart.setOnClickListener(null)
+        super.onDestroyView()
+    }
 }

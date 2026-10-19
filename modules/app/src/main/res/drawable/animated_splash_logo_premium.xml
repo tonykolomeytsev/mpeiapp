@@ -3,7 +3,7 @@
 MPEI Campus Launch Animation
 Premium EdTech Motion Design
 
-Duration: 2000ms (2.0s)
+Duration: 1350ms (1.35s)
 Performance: 60 FPS, hardware-accelerated
 Design System: Minimalist, Apple-like, clean geometric impulses
 
@@ -172,7 +172,7 @@ Color Palette:
     </aapt:attr>
 
     <!-- ============================================ -->
-    <!-- PHASE 1: THE SPARK (0ms - 400ms) -->
+    <!-- PHASE 1: THE SPARK (0ms - 300ms) -->
     <!-- ============================================ -->
     
     <!-- Spark particle appearance -->
@@ -187,13 +187,13 @@ Color Palette:
                     android:valueTo="1" />
                 <!-- Scale pulse -->
                 <objectAnimator
-                    android:duration="200"
+                    android:duration="150"
                     android:propertyName="scaleX"
                     android:valueFrom="0.5"
                     android:valueTo="2.0"
                     android:interpolator="@android:anim/decelerate_interpolator" />
                 <objectAnimator
-                    android:duration="200"
+                    android:duration="150"
                     android:propertyName="scaleX"
                     android:valueFrom="2.0"
                     android:valueTo="1.0"
@@ -211,13 +211,13 @@ Color Palette:
                     android:valueFrom="0.5"
                     android:valueTo="0.5" />
                 <objectAnimator
-                    android:duration="200"
+                    android:duration="150"
                     android:propertyName="scaleY"
                     android:valueFrom="0.5"
                     android:valueTo="2.0"
                     android:interpolator="@android:anim/decelerate_interpolator" />
                 <objectAnimator
-                    android:duration="200"
+                    android:duration="150"
                     android:propertyName="scaleY"
                     android:valueFrom="2.0"
                     android:valueTo="1.0"
@@ -227,7 +227,7 @@ Color Palette:
     </target>
 
     <!-- ============================================ -->
-    <!-- PHASE 2: LOGO CONSTRUCTION (400ms - 1000ms) -->
+    <!-- PHASE 2: LOGO CONSTRUCTION (250ms - 850ms) -->
     <!-- ============================================ -->
     
     <!-- Stroke draw animation - Left vertical -->
@@ -235,8 +235,8 @@ Color Palette:
         <aapt:attr name="android:animation">
             <set android:ordering="sequentially">
                 <objectAnimator
-                    android:startOffset="400"
-                    android:duration="180"
+                    android:startOffset="250"
+                    android:duration="100"
                     android:propertyName="trimPathEnd"
                     android:valueFrom="0"
                     android:valueTo="1"
@@ -250,8 +250,8 @@ Color Palette:
         <aapt:attr name="android:animation">
             <set android:ordering="sequentially">
                 <objectAnimator
-                    android:startOffset="580"
-                    android:duration="120"
+                    android:startOffset="350"
+                    android:duration="70"
                     android:propertyName="trimPathEnd"
                     android:valueFrom="0"
                     android:valueTo="1"
@@ -265,8 +265,8 @@ Color Palette:
         <aapt:attr name="android:animation">
             <set android:ordering="sequentially">
                 <objectAnimator
-                    android:startOffset="700"
-                    android:duration="100"
+                    android:startOffset="420"
+                    android:duration="60"
                     android:propertyName="trimPathEnd"
                     android:valueFrom="0"
                     android:valueTo="1"
@@ -280,8 +280,8 @@ Color Palette:
         <aapt:attr name="android:animation">
             <set android:ordering="sequentially">
                 <objectAnimator
-                    android:startOffset="800"
-                    android:duration="100"
+                    android:startOffset="480"
+                    android:duration="60"
                     android:propertyName="trimPathEnd"
                     android:valueFrom="0"
                     android:valueTo="1"
@@ -295,8 +295,8 @@ Color Palette:
         <aapt:attr name="android:animation">
             <set android:ordering="sequentially">
                 <objectAnimator
-                    android:startOffset="900"
-                    android:duration="120"
+                    android:startOffset="540"
+                    android:duration="70"
                     android:propertyName="trimPathEnd"
                     android:valueFrom="0"
                     android:valueTo="1"
@@ -310,8 +310,8 @@ Color Palette:
         <aapt:attr name="android:animation">
             <set android:ordering="sequentially">
                 <objectAnimator
-                    android:startOffset="1020"
-                    android:duration="180"
+                    android:startOffset="610"
+                    android:duration="100"
                     android:propertyName="trimPathEnd"
                     android:valueFrom="0"
                     android:valueTo="1"
@@ -325,14 +325,14 @@ Color Palette:
         <aapt:attr name="android:animation">
             <set android:ordering="sequentially">
                 <objectAnimator
-                    android:startOffset="1200"
-                    android:duration="300"
+                    android:startOffset="710"
+                    android:duration="80"
                     android:propertyName="alpha"
                     android:valueFrom="0"
                     android:valueTo="0.6"
                     android:interpolator="@android:anim/decelerate_interpolator" />
                 <objectAnimator
-                    android:duration="200"
+                    android:duration="60"
                     android:propertyName="alpha"
                     android:valueFrom="0.6"
                     android:valueTo="0.3"
@@ -346,14 +346,14 @@ Color Palette:
         <aapt:attr name="android:animation">
             <set android:ordering="sequentially">
                 <objectAnimator
-                    android:startOffset="1200"
-                    android:duration="200"
+                    android:startOffset="710"
+                    android:duration="80"
                     android:propertyName="alpha"
                     android:valueFrom="0"
                     android:valueTo="1"
                     android:interpolator="@android:anim/decelerate_interpolator" />
                 <objectAnimator
-                    android:duration="150"
+                    android:duration="60"
                     android:propertyName="alpha"
                     android:valueFrom="1"
                     android:valueTo="0.7" />
@@ -362,19 +362,26 @@ Color Palette:
     </target>
 
     <!-- ============================================ -->
-    <!-- PHASE 3: TYPOGRAPHY REVEAL (1000ms - 1500ms) -->
+    <!-- PHASE 3: TYPOGRAPHY REVEAL (800ms - 1200ms) -->
     <!-- ============================================ -->
     
     <target android:name="typographyGroup">
         <aapt:attr name="android:animation">
             <set android:ordering="sequentially">
                 <objectAnimator
-                    android:startOffset="1300"
-                    android:duration="400"
+                    android:startOffset="800"
+                    android:duration="350"
                     android:propertyName="alpha"
                     android:valueFrom="0"
                     android:valueTo="0.95"
                     android:interpolator="@android:anim/decelerate_interpolator" />
+                <objectAnimator
+                    android:startOffset="50"
+                    android:duration="150"
+                    android:propertyName="alpha"
+                    android:valueFrom="0.95"
+                    android:valueTo="0"
+                    android:interpolator="@android:anim/accelerate_interpolator" />
             </set>
         </aapt:attr>
     </target>
@@ -384,8 +391,8 @@ Color Palette:
         <aapt:attr name="android:animation">
             <set android:ordering="sequentially">
                 <objectAnimator
-                    android:startOffset="1300"
-                    android:duration="400"
+                    android:startOffset="800"
+                    android:duration="350"
                     android:propertyName="scaleX"
                     android:valueFrom="0.92"
                     android:valueTo="1.0"
@@ -398,8 +405,8 @@ Color Palette:
         <aapt:attr name="android:animation">
             <set android:ordering="sequentially">
                 <objectAnimator
-                    android:startOffset="1300"
-                    android:duration="400"
+                    android:startOffset="800"
+                    android:duration="350"
                     android:propertyName="scaleY"
                     android:valueFrom="0.92"
                     android:valueTo="1.0"
@@ -408,13 +415,17 @@ Color Palette:
         </aapt:attr>
     </target>
 
+    <!-- ============================================ -->
+    <!-- PHASE 4: EXIT / SHIMMER (1150ms - 1350ms) -->
+    <!-- ============================================ -->
+
     <!-- Shimmer light sweep across logo -->
     <target android:name="shimmerGroup">
         <aapt:attr name="android:animation">
             <set android:ordering="sequentially">
                 <objectAnimator
-                    android:startOffset="1400"
-                    android:duration="500"
+                    android:startOffset="1150"
+                    android:duration="200"
                     android:propertyName="translateX"
                     android:valueFrom="-30"
                     android:valueTo="110"
@@ -427,14 +438,14 @@ Color Palette:
         <aapt:attr name="android:animation">
             <set android:ordering="sequentially">
                 <objectAnimator
-                    android:startOffset="1400"
-                    android:duration="250"
+                    android:startOffset="1150"
+                    android:duration="100"
                     android:propertyName="alpha"
                     android:valueFrom="0"
                     android:valueTo="0.5"
                     android:interpolator="@android:anim/accelerate_interpolator" />
                 <objectAnimator
-                    android:duration="250"
+                    android:duration="100"
                     android:propertyName="alpha"
                     android:valueFrom="0.5"
                     android:valueTo="0"
@@ -443,17 +454,13 @@ Color Palette:
         </aapt:attr>
     </target>
 
-    <!-- ============================================ -->
-    <!-- PHASE 4: SMOOTH EXIT (1700ms - 2000ms) -->
-    <!-- ============================================ -->
-    
     <!-- Logo scale down and fade out -->
     <target android:name="logoGroup">
         <aapt:attr name="android:animation">
             <set android:ordering="sequentially">
                 <objectAnimator
-                    android:startOffset="1800"
-                    android:duration="200"
+                    android:startOffset="1200"
+                    android:duration="150"
                     android:propertyName="alpha"
                     android:valueFrom="1"
                     android:valueTo="0"
@@ -466,8 +473,8 @@ Color Palette:
         <aapt:attr name="android:animation">
             <set android:ordering="sequentially">
                 <objectAnimator
-                    android:startOffset="1800"
-                    android:duration="200"
+                    android:startOffset="1200"
+                    android:duration="150"
                     android:propertyName="alpha"
                     android:valueFrom="1"
                     android:valueTo="0"

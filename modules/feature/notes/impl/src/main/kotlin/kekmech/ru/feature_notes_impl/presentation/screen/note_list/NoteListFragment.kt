@@ -70,6 +70,11 @@ internal class NoteListFragment :
         close()
     }
 
+    override fun onDestroyView() {
+        viewBinding.recyclerView.adapter = null
+        super.onDestroyView()
+    }
+
     override fun render(state: NoteListState) {
         adapter.update(listConverter.map(state))
     }

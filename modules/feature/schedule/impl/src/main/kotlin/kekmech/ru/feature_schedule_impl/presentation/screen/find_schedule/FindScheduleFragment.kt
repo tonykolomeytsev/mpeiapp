@@ -122,6 +122,12 @@ internal class FindScheduleFragment :
         super.onPause()
     }
 
+    override fun onDestroyView() {
+        viewBinding.flowLayout.removeAllViews()
+        viewBinding.buttonContinue.setOnClickListener(null)
+        super.onDestroyView()
+    }
+
     companion object {
 
         private const val ARG_CONTINUE_TO = "Arg.ContinueTo"

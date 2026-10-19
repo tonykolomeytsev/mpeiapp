@@ -16,7 +16,7 @@ import java.util.zip.GZIPOutputStream
 import android.content.SharedPreferences
 import kekmech.ru.feature_bars_impl.presentation.screen.login.elm.CodeProvider
 
-internal class BarsTwoFactorCompatInterceptorTest : StringSpec({
+class BarsTwoFactorCompatInterceptorTest : StringSpec({
 
     beforeTest {
         BarsTwoFactorSessionHolder.reset()
@@ -176,6 +176,42 @@ internal class BarsTwoFactorCompatInterceptorTest : StringSpec({
             defaultProvider = CodeProvider.EMAIL,
             activeProvider = CodeProvider.EMAIL,
             availableProviders = listOf(CodeProvider.EMAIL),
+            providerTid = "5",
+        )
+        var passedRequest: Request? = null
+        val chain = object : Interceptor.Chain {
+            override fun request(): Request = Request.Builder()
+                .url("https://bars.mpei.ru/bars_web/Auth/JSON_SendAF2_Code?tid=1")
+                .build()
+            override fun proceed(request: Request): Response {
+                passedRequest = request
+                return Response.Builder()
+                    .request(request)
+                    .protocol(Protocol.HTTP_1_1)
+                    .code(200)
+                    .message("OK")
+                    .body("{}".toResponseBody("application/json".toMediaType()))
+                    .build()
+            }
+            override fun connection() = null
+            override fun call() = throw UnsupportedOperationException()
+            override fun connectTimeoutMillis() = 0
+            override fun withConnectTimeout(timeout: Int, unit: java.util.concurrent.TimeUnit) = this
+            override fun readTimeoutMillis() = 0
+            override fun withReadTimeout(timeout: Int, unit: java.util.concurrent.TimeUnit) = this
+            override fun writeTimeoutMillis() = 0
+            override fun withWriteTimeout(timeout: Int, unit: java.util.concurrent.TimeUnit) = this
+        }
+
+        interceptor.intercept(chain)
+        passedRequest?.url?.queryParameter("tid") shouldBe "5"
+    }
+
+    "intercept rewrites outgoing request tid=1 to tid=5 for TOTP" {
+        BarsTwoFactorSessionHolder.currentSession = BarsTwoFactorSession(
+            defaultProvider = CodeProvider.TOTP,
+            activeProvider = CodeProvider.TOTP,
+            availableProviders = listOf(CodeProvider.TOTP, CodeProvider.MAX),
             providerTid = "5",
         )
         var passedRequest: Request? = null
@@ -373,9 +409,48 @@ internal class BarsTwoFactorCompatInterceptorTest : StringSpec({
         BarsTwoFactorSessionHolder.reset()
         BarsTwoFactorSessionHolder.currentSession shouldBe null
     }
-})
 
-private class FakeSharedPreferences : SharedPreferences {
+    "BarsTwoFactorSessionHolder expires session when TTL exceeded" {
+        val fakePrefs = FakeSharedPreferences()
+        BarsTwoFactorSessionHolder.init(fakePrefs)
+
+        val expiredTimestamp = System.currentTimeMillis() - (BarsTwoFactorSessionHolder.SESSION_TTL_MS + 1000L)
+        val session = BarsTwoFactorSession(
+            defaultProvider = CodeProvider.TOTP,
+            activeProvider = CodeProvider.TOTP,
+            availableProviders = listOf(CodeProvider.TOTP),
+            savedAtTimestamp = expiredTimestamp,
+        )
+        BarsTwoFactorSessionHolder.currentSession = session
+
+        BarsTwoFactorSessionHolder.currentSession shouldBe null
+    }
+
+    "parsing new 2FA page resets isTotpInitialized to false" {
+        BarsTwoFactorSessionHolder.currentSession = BarsTwoFactorSession(
+            defaultProvider = CodeProvider.TOTP,
+            activeProvider = CodeProvider.TOTP,
+            availableProviders = listOf(CodeProvider.TOTP),
+            isTotpInitialized = true,
+        )
+        BarsTwoFactorSessionHolder.currentSession?.isTotpInitialized shouldBe true
+
+        val html = """
+            <html>
+            <body>
+            <script>
+                af2_code_send('btnSend', '/bars_web/Auth/JSON_SendAF2_Code', '5', '6');
+            </script>
+            <a id="btnSend" href="#" onclick="af2_code_send('btnSend', '/bars_web/Auth/JSON_SendAF2_Code', '5', '6');" data-text="Войти по одноразовому коду">
+            </body>
+            </html>
+        """.trimIndent()
+
+        execute(html)
+        BarsTwoFactorSessionHolder.currentSession?.isTotpInitialized shouldBe false
+    }
+}) {
+    private class FakeSharedPreferences : SharedPreferences {
     private val map = mutableMapOf<String, Any?>()
 
     override fun getAll(): MutableMap<String, *> = HashMap(map)
@@ -446,3 +521,6 @@ private class FakeSharedPreferences : SharedPreferences {
         }
     }
 }
+}
+
+

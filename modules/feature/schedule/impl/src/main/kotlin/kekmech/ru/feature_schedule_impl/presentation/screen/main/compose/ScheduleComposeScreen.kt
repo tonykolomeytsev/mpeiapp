@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -39,6 +40,7 @@ import kekmech.ru.ext_kotlin.moscowLocalDate
 import kekmech.ru.feature_schedule_api.domain.model.Classes
 import kekmech.ru.feature_schedule_api.domain.model.ClassesType
 import kekmech.ru.feature_schedule_api.domain.model.Day
+import kekmech.ru.feature_schedule_api.domain.model.ScheduleType
 import kekmech.ru.feature_schedule_api.domain.model.WeekOfSemester
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleEffect
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleEvent
@@ -57,6 +59,7 @@ internal fun ScheduleComposeScreen(
     effects: Flow<ScheduleEffect>,
     modifier: Modifier = Modifier,
     onNavigateToNoteList: ((ScheduleEffect.NavigateToNoteList) -> Unit)? = null,
+    onGroupClick: ((String) -> Unit)? = null,
 ) {
     LaunchedEffect(Unit) {
         onAccept(ScheduleEvent.Ui.Init)
@@ -87,10 +90,11 @@ internal fun ScheduleComposeScreen(
         selectedClassesType = null
     }
 
+    val currentScheduleType = state.selectedSchedule?.type ?: ScheduleType.GROUP
     // Collect all classes for the active week
     val rawDays = state.selectedSchedule?.weeks?.firstOrNull()?.days.orEmpty()
-    val allWeekClasses = remember(rawDays) {
-        rawDays.flatMap { it.classes }
+    val allWeekClasses = remember(rawDays, currentScheduleType) {
+        rawDays.flatMap { it.classes }.onEach { it.scheduleType = currentScheduleType }
     }
 
     // Extract unique disciplines for quick filter chips
@@ -127,12 +131,13 @@ internal fun ScheduleComposeScreen(
     val isFilterActive = searchQuery.isNotBlank() || selectedClassesType != null || selectedDiscipline != null
 
     // Filtered classes grouped by day for the week
-    val daysWithFilteredClasses = remember(rawDays, monday, filterPredicate) {
+    val daysWithFilteredClasses = remember(rawDays, monday, filterPredicate, currentScheduleType) {
         (0..6).map { dayOffset ->
             val date = monday.plusDays(dayOffset.toLong())
             val day = rawDays.find { it.date == date || it.dayOfWeek == date.dayOfWeek.value }
                 ?: Day(dayOfWeek = date.dayOfWeek.value, date = date, classes = emptyList())
-            day to day.classes.filter(filterPredicate)
+            val filtered = day.classes.filter(filterPredicate).onEach { it.scheduleType = currentScheduleType }
+            day to filtered
         }
     }
 
@@ -160,7 +165,8 @@ internal fun ScheduleComposeScreen(
         modifier = modifier.fillMaxSize(),
         containerColor = MpeixTheme.palette.background,
         topBar = {
-            val titleText = state.selectedSchedule?.name?.let { "$it • $weekSubtitle" } ?: "Расписание"
+            val scheduleTypePrefix = if (state.selectedSchedule?.type == ScheduleType.PERSON) "Преподаватель • " else ""
+            val titleText = state.selectedSchedule?.name?.let { "$scheduleTypePrefix$it • $weekSubtitle" } ?: "Расписание"
             TopAppBar(
                 title = titleText,
                 actions = {
@@ -292,7 +298,8 @@ internal fun ScheduleComposeScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues),
+                .padding(paddingValues)
+                .imePadding(),
         ) {
             // Expandable Compact Filter & Search Bar
             ScheduleFilterBar(
@@ -320,6 +327,7 @@ internal fun ScheduleComposeScreen(
                         onAccept(ScheduleEvent.Ui.Click.Day(date))
                         isWeeklyGridMode = false
                     },
+                    onGroupClick = onGroupClick,
                     modifier = Modifier.weight(1f),
                 )
             } else {
@@ -343,6 +351,7 @@ internal fun ScheduleComposeScreen(
                     onReloadClick = {
                         onAccept(ScheduleEvent.Ui.Click.Reload)
                     },
+                    onGroupClick = onGroupClick,
                     isFilterActive = isFilterActive,
                     modifier = Modifier.weight(1f),
                 )

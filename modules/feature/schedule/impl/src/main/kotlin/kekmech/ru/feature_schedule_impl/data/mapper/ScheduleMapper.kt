@@ -17,14 +17,15 @@ internal object ScheduleMapper {
     private const val MaxWeekNumber = 17
     private const val NonStudyingWeekNumber = -1
 
-    fun dtoToDomain(dto: ScheduleDto): Schedule =
-        Schedule(
+    fun dtoToDomain(dto: ScheduleDto): Schedule {
+        val scheduleType = when (dto.type) {
+            ScheduleTypeDto.GROUP -> ScheduleType.GROUP
+            ScheduleTypeDto.PERSON -> ScheduleType.PERSON
+        }
+        return Schedule(
             name = dto.name,
             id = dto.id,
-            type = when (dto.type) {
-                ScheduleTypeDto.GROUP -> ScheduleType.GROUP
-                ScheduleTypeDto.PERSON -> ScheduleType.PERSON
-            },
+            type = scheduleType,
             weeks = dto.weeks.map { week ->
                 Week(
                     weekOfYear = week.weekOfYear,
@@ -58,7 +59,9 @@ internal object ScheduleMapper {
                                         end = cls.time.end,
                                     ),
                                     number = cls.number,
-                                )
+                                ).apply {
+                                    this.scheduleType = scheduleType
+                                }
                             }
                         )
                     }
@@ -66,4 +69,5 @@ internal object ScheduleMapper {
                 )
             }
         )
+    }
 }

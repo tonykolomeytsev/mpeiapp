@@ -148,8 +148,8 @@ class MainActivity : AppCompatActivity() {
 
     private companion object {
 
-        const val MIN_SPLASH_SCREEN_DURATION_MS = 1000L
-        const val SPLASH_SCREEN_EXIT_DURATION_MS = 300L
+        const val MIN_SPLASH_SCREEN_DURATION_MS = 1350L
+        const val SPLASH_SCREEN_EXIT_DURATION_MS = 250L
         const val SPLASH_SCREEN_EXIT_SCALE = 1.05f
     }
 }

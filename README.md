@@ -1,4 +1,4 @@
-# MPEI-NEXT - Альтернатива для МЭИ
+# «МЭИ.Хаб» / MPEI.Hub (ранее MPEI-NEXT) — Альтернатива для МЭИ
 
 **Когда мы форкнули этот проект, только три человека на планете знали как он работает. Теперь ни одна живая душа этого не знает**
 
@@ -162,6 +162,14 @@ mpei-next/
 │   └── lib/                    # Сеть (безопасное логирование), навигация, утилиты, ELM Compose bridge
 └── README.md
 ```
+
+---
+
+## 👥 Авторы и разработчики
+
+- **Расул Рустамов** ([@ghostoftheeleven](https://github.com/ghostoftheeleven)) — Разработчик «МЭИ.Хаб», студент МЭИ
+- **Johnny Wickky** ([@Johnny-Wickky](https://github.com/Johnny-Wickky)) — Соавтор, студент МЭИ, ИБ- и ИИ-энтузиаст
+- **Tony Kolomeytsev** ([@tonykolomeytsev](https://github.com/tonykolomeytsev)) — Создатель оригинального MpeiX
 
 ---
 

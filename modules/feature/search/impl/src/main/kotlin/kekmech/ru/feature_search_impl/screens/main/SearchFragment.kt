@@ -97,6 +97,12 @@ internal class SearchFragment : Fragment(R.layout.fragment_search),
         }
     }
 
+    override fun onDestroyView() {
+        viewBinding.recyclerView.adapter = null
+        viewBinding.filterItemsRecycler.adapter = null
+        super.onDestroyView()
+    }
+
     override fun render(state: SearchState) {
         filterItemsAdapter.update(state.filterItems)
         adapter.update(SearchListConverter().map(state))

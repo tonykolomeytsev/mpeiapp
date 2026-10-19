@@ -21,6 +21,7 @@ interface ScheduleTypeViewHolder : ClickableItemViewHolder {
 
     fun setScheduleName(name: String)
     fun setScheduleTypeIcon(@DrawableRes iconRes: Int)
+    fun setScheduleDescription(description: String)
 }
 
 private class ScheduleTypeViewHolderImpl(
@@ -39,6 +40,10 @@ private class ScheduleTypeViewHolderImpl(
     override fun setScheduleTypeIcon(iconRes: Int) {
         viewBinding.imageView.setImageResource(iconRes)
     }
+
+    override fun setScheduleDescription(description: String) {
+        viewBinding.scheduleDescription.text = description
+    }
 }
 
 private class ScheduleTypeItemBinder(
@@ -51,6 +56,12 @@ private class ScheduleTypeItemBinder(
             when (model.selectedScheduleType) {
                 ScheduleType.GROUP -> Icons.ic_groups_black_24
                 ScheduleType.PERSON -> R.drawable.ic_person_24
+            }
+        )
+        vh.setScheduleDescription(
+            when (model.selectedScheduleType) {
+                ScheduleType.GROUP -> "Студент • Нажмите, чтобы сменить группу"
+                ScheduleType.PERSON -> "Преподаватель • Нажмите, чтобы сменить преподавателя"
             }
         )
         vh.setOnClickListener { onClickListener() }

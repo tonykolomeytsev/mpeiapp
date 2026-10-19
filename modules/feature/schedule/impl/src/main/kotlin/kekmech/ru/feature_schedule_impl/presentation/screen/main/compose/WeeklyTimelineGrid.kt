@@ -46,6 +46,7 @@ internal fun WeeklyTimelineGrid(
     onClassesClick: (Classes) -> Unit,
     onDayHeaderClick: (LocalDate) -> Unit,
     modifier: Modifier = Modifier,
+    onGroupClick: ((String) -> Unit)? = null,
 ) {
     val today = moscowLocalDate()
 
@@ -152,6 +153,7 @@ internal fun WeeklyTimelineGrid(
                             ClassesItemCard(
                                 classes = cls,
                                 onClick = { onClassesClick(cls) },
+                                onGroupClick = onGroupClick,
                             )
                         }
                     }

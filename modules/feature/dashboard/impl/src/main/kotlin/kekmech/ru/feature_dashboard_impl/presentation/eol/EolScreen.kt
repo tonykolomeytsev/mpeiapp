@@ -18,11 +18,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kekmech.ru.feature_dashboard_impl.R
+import kekmech.ru.res_strings.R.string as Strings
 import kekmech.ru.ui_kit_topappbar.TopAppBar
 import kekmech.ru.ui_theme.theme.MpeixTheme
 
@@ -33,7 +35,7 @@ internal fun EolScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = "О проекте MPEI Next",
+                title = stringResource(Strings.about_project_title),
                 navigationIcon = { BackIconButton(onBackClick) }
             )
         },
@@ -55,7 +57,7 @@ internal fun EolScreen(
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Text(
-                        text = "🚀 MPEI Next — Новое поколение",
+                        text = stringResource(Strings.about_project_subtitle),
                         style = MpeixTheme.typography.header3.copy(
                             fontWeight = FontWeight.Bold,
                             color = MpeixTheme.palette.content,

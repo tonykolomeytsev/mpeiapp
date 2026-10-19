@@ -10,12 +10,16 @@ internal data class BarsTwoFactorSession(
     val activeProvider: CodeProvider = defaultProvider,
     val availableProviders: List<CodeProvider>,
     val codeLength: Int = 6,
-    val isTotp: Boolean = defaultProvider == CodeProvider.TOTP,
+    val isTotp: Boolean = activeProvider == CodeProvider.TOTP,
     val isTotpInitialized: Boolean = false,
     val lastServerMessage: String? = null,
     val providerTid: String = defaultTidFor(activeProvider),
     val providerTidMap: Map<CodeProvider, String> = emptyMap(),
+    val savedAtTimestamp: Long = System.currentTimeMillis(),
 ) {
+    fun isExpired(now: Long = System.currentTimeMillis(), ttlMs: Long = BarsTwoFactorSessionHolder.SESSION_TTL_MS): Boolean =
+        now - savedAtTimestamp > ttlMs
+
     companion object {
         fun defaultTidFor(provider: CodeProvider): String =
             when (provider) {
@@ -30,8 +34,11 @@ internal data class BarsTwoFactorSession(
 
 internal object BarsTwoFactorSessionHolder {
 
+    const val SESSION_TTL_MS = 5 * 60 * 1000L // 5 minutes
+
     private const val PREFS_NAME = "bars_2fa_session"
     private const val KEY_HAS_SAVED_SESSION = "key_has_saved_session"
+    private const val KEY_SAVED_AT_TIMESTAMP = "key_saved_at_timestamp"
     private const val KEY_DEFAULT_PROVIDER = "key_default_provider"
     private const val KEY_ACTIVE_PROVIDER = "key_active_provider"
     private const val KEY_AVAILABLE_PROVIDERS = "key_available_providers"
@@ -51,8 +58,18 @@ internal object BarsTwoFactorSessionHolder {
     var currentSession: BarsTwoFactorSession?
         get() {
             val inMemory = _currentSession
-            if (inMemory != null) return inMemory
+            if (inMemory != null) {
+                if (inMemory.isExpired()) {
+                    reset()
+                    return null
+                }
+                return inMemory
+            }
             val restored = restoreFromPreferences()
+            if (restored != null && restored.isExpired()) {
+                reset()
+                return null
+            }
             _currentSession = restored
             return restored
         }
@@ -96,13 +113,18 @@ internal object BarsTwoFactorSessionHolder {
         currentSession = session.copy(
             activeProvider = provider,
             isTotp = provider == CodeProvider.TOTP,
+            isTotpInitialized = if (provider == CodeProvider.TOTP) session.isTotpInitialized else false,
             providerTid = tid,
+            savedAtTimestamp = System.currentTimeMillis(),
         )
     }
 
     fun markTotpInitialized() {
         val session = currentSession ?: return
-        currentSession = session.copy(isTotpInitialized = true)
+        currentSession = session.copy(
+            isTotpInitialized = true,
+            savedAtTimestamp = System.currentTimeMillis(),
+        )
     }
 
     private fun getStorage(): SharedPreferences? {
@@ -119,6 +141,7 @@ internal object BarsTwoFactorSessionHolder {
         runCatching {
             getStorage()?.edit()?.apply {
                 putBoolean(KEY_HAS_SAVED_SESSION, true)
+                putLong(KEY_SAVED_AT_TIMESTAMP, session.savedAtTimestamp)
                 putString(KEY_DEFAULT_PROVIDER, session.defaultProvider.name)
                 putString(KEY_ACTIVE_PROVIDER, session.activeProvider.name)
                 putString(
@@ -144,6 +167,13 @@ internal object BarsTwoFactorSessionHolder {
             val storage = getStorage() ?: return null
             if (!storage.getBoolean(KEY_HAS_SAVED_SESSION, false)) return null
 
+            val savedAt = storage.getLong(KEY_SAVED_AT_TIMESTAMP, 0L)
+            val now = System.currentTimeMillis()
+            if (savedAt <= 0L || now - savedAt > SESSION_TTL_MS) {
+                clearPreferences()
+                return null
+            }
+
             val defaultProviderStr = storage.getString(KEY_DEFAULT_PROVIDER, null) ?: return null
             val defaultProvider = runCatching { CodeProvider.valueOf(defaultProviderStr) }.getOrNull() ?: return null
 
@@ -158,7 +188,7 @@ internal object BarsTwoFactorSessionHolder {
             }?.ifEmpty { null } ?: listOf(defaultProvider)
 
             val codeLength = storage.getInt(KEY_CODE_LENGTH, 6)
-            val isTotp = storage.getBoolean(KEY_IS_TOTP, defaultProvider == CodeProvider.TOTP)
+            val isTotp = storage.getBoolean(KEY_IS_TOTP, activeProvider == CodeProvider.TOTP)
             val isTotpInitialized = storage.getBoolean(KEY_IS_TOTP_INITIALIZED, false)
             val providerTid = storage.getString(KEY_PROVIDER_TID, null)
                 ?: BarsTwoFactorSession.defaultTidFor(activeProvider)
@@ -183,6 +213,7 @@ internal object BarsTwoFactorSessionHolder {
                 lastServerMessage = lastServerMessage,
                 providerTid = providerTid,
                 providerTidMap = providerTidMap,
+                savedAtTimestamp = savedAt,
             )
         }.getOrNull()
     }

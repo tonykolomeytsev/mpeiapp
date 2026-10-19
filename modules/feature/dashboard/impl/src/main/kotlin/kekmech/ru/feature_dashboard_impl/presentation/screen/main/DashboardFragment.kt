@@ -95,6 +95,7 @@ internal class DashboardFragment :
 
     override fun onDestroyView() {
         saveState(viewBinding.recyclerView)
+        viewBinding.recyclerView.adapter = null
         super.onDestroyView()
     }
 

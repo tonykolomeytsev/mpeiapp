@@ -67,11 +67,10 @@ internal class BarsTwoFactorCompatInterceptor : Interceptor {
             url.encodedPath.endsWith("JSON_SendAF2_Code"))
         val session = BarsTwoFactorSessionHolder.currentSession
         val actualRequest = if (isSendCodeRequest && url.queryParameter("tid") == "1") {
-            val shouldRewriteTo5 = when {
-                session?.activeProvider == CodeProvider.TG -> false
-                session?.activeProvider == CodeProvider.EMAIL || session?.activeProvider == CodeProvider.TOTP -> true
-                session?.providerTid == "5" -> true
-                else -> false
+            val shouldRewriteTo5 = when (session?.activeProvider) {
+                CodeProvider.TOTP, CodeProvider.EMAIL -> true
+                CodeProvider.TG, CodeProvider.MAX, CodeProvider.VK -> false
+                null -> session?.providerTid == "5"
             }
             if (shouldRewriteTo5) {
                 val rewrittenUrl = url.newBuilder()
@@ -240,6 +239,7 @@ internal class BarsTwoFactorCompatInterceptor : Interceptor {
             isTotpInitialized = false,
             providerTid = providerTid,
             providerTidMap = providerTidMap,
+            savedAtTimestamp = System.currentTimeMillis(),
         )
     }
 
@@ -272,8 +272,8 @@ internal class BarsTwoFactorCompatInterceptor : Interceptor {
     private fun resolveProvider(tid: String, len: String?, dataText: String?): CodeProvider {
         val text = dataText?.lowercase().orEmpty()
         return when {
-            text.contains("одноразов") || text.contains("totp") || text.contains("authenticator") -> CodeProvider.TOTP
             text.contains("почт") || text.contains("email") || text.contains("e-mail") -> CodeProvider.EMAIL
+            text.contains("одноразов") || text.contains("totp") || text.contains("authenticator") -> CodeProvider.TOTP
             text.contains("макс") || text.contains("max") || tid == "3" -> CodeProvider.MAX
             text.contains("telegram") || text.contains("телеграм") || text.contains("тг") -> CodeProvider.TG
             text.contains("vk") || text.contains("вконтакт") || tid == "2" -> CodeProvider.VK

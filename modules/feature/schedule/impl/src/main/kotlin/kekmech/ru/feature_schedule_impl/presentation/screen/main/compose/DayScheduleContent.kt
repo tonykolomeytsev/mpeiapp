@@ -39,6 +39,7 @@ internal fun DayScheduleContent(
     onReloadClick: () -> Unit,
     isFilterActive: Boolean = false,
     modifier: Modifier = Modifier,
+    onGroupClick: ((String) -> Unit)? = null,
 ) {
     Box(
         modifier = modifier.fillMaxSize(),
@@ -84,6 +85,7 @@ internal fun DayScheduleContent(
                         ClassesItemCard(
                             classes = cls,
                             onClick = { onClassesClick(cls) },
+                            onGroupClick = onGroupClick,
                         )
                     }
 

@@ -74,6 +74,7 @@ internal class MapFragment : Fragment(R.layout.fragment_map),
     private var currentMarkers: List<Marker> = emptyList()
     private var renderedTab: FilterTab? = null
     private var renderedMarkers: List<MapMarker>? = null
+    private var bottomSheetCallback: BottomSheetBehavior.BottomSheetCallback? = null
 
     private val store by androidElmStore(
         viewModelStoreOwner = { requireActivity() },
@@ -103,6 +104,11 @@ internal class MapFragment : Fragment(R.layout.fragment_map),
     }
 
     override fun onDestroyView() {
+        bottomSheetCallback?.let {
+            BottomSheetBehavior.from(viewBinding.recyclerView).removeBottomSheetCallback(it)
+            bottomSheetCallback = null
+        }
+        viewBinding.recyclerView.adapter = null
         viewBinding.mapView?.let { map ->
             currentMarkers.forEach { map.overlays.remove(it) }
             map.overlays.clear()
@@ -119,22 +125,21 @@ internal class MapFragment : Fragment(R.layout.fragment_map),
             val systemBarsInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             viewBinding.coordinatorLayout.setMargins(top = systemBarsInsets.top + padding.top)
         }
-        @Suppress("UnnecessaryApply")
-        BottomSheetBehavior.from(viewBinding.recyclerView).apply {
-            addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+        val callback = object : BottomSheetBehavior.BottomSheetCallback() {
 
-                override fun onStateChanged(bottomSheet: View, newState: Int) {
-                    if (newState == BottomSheetBehavior.STATE_DRAGGING) {
-                        analytics.sendScroll("MapBottomSheet")
-                    }
-                    store.accept(MapEvent.Ui.Action.BottomSheetStateChanged(newState))
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                if (newState == BottomSheetBehavior.STATE_DRAGGING) {
+                    analytics.sendScroll("MapBottomSheet")
                 }
+                store.accept(MapEvent.Ui.Action.BottomSheetStateChanged(newState))
+            }
 
-                override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                    viewBinding.viewFade.alpha = slideOffset * MAX_OVERLAY_ALPHA
-                }
-            })
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                viewBinding.viewFade.alpha = slideOffset * MAX_OVERLAY_ALPHA
+            }
         }
+        bottomSheetCallback = callback
+        BottomSheetBehavior.from(viewBinding.recyclerView).addBottomSheetCallback(callback)
     }
 
     private fun createMap() {

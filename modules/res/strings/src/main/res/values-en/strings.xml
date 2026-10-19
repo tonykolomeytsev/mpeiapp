@@ -1,4 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">MPEI.Hub</string>
     <!-- НУМЕРАЦИЯ ПАР-->
     <string-array name="classes_numbers">
         <item>Some class</item>
@@ -142,7 +143,7 @@
     <string name="schedule_item_self_study_header">Self-study day</string>
     <string name="schedule_item_self_study_description">Spend your day to good use, start taking programming courses or start reading a book</string>
     <string name="schedule_empty_state_title">Oops! Failed to load schedule</string>
-    <string name="schedule_empty_state_subtitle">Perhaps this happened due to problems with the Internet connection.\nOr the MpeiX server crashed :)</string>
+    <string name="schedule_empty_state_subtitle">Perhaps this happened due to problems with the Internet connection.\nOr the MPEI.Hub server crashed :)</string>
     <string name="schedule_fab_tooltip">Quick navigation button. You can disable this button in the settings</string>
     <string name="schedule_fab_next">Go to next week</string>
     <string name="schedule_fab_prev">Go to current week</string>
@@ -241,7 +242,15 @@
     <string name="app_settings_header_contributors">Contributors</string>
     <string name="app_settings_section_lang">App language</string>
     <string name="app_settings_section_lang_description">Sometimes after changing the language, you need to restart the application</string>
-    <string name="app_settings_app_version">MpeiX for Android v%s</string>
+    <string name="app_settings_app_version">MPEI.Hub for Android v%s</string>
+    <string name="app_settings_repo_title">MPEI.Hub Repository</string>
+    <string name="app_settings_original_repo_title">Original project (MpeiX)</string>
+    <string name="about_project_title">About MPEI.Hub</string>
+    <string name="about_project_subtitle">🚀 MPEI.Hub — Next Generation</string>
+    <string name="contributor_rasul_rustamov_bio">MPEI.Hub Developer • MPEI Student</string>
+    <string name="contributor_johnny_wickky_bio">MPEI Student, InfoSec &amp; AI Enthusiast</string>
+    <string name="dashboard_banner_eol">MPEI.Hub: About &amp; Updates</string>
+    <string name="dashboard_banner_eol_desc">Direct schedule, offline MPEI maps and modern design</string>
 
     <string name="favorites_screen_title">Favorite schedules</string>
     <string name="favorites_empty_state_title">No schedule has been added to favorites</string>
@@ -295,7 +304,7 @@
     <string name="image_picker_attach_button">Attach</string>
 
     <string name="blocking_update_title">It`s time to\nupdate the application</string>
-    <string name="blocking_update_description">There is only one person working on the application and it is impossible support old versions forever.\n\nYou have not updated MpeiX for over half a year, since then we have made a lot of improvements both in the client side of the application and in the server side. You should really upgrade.\n\n If you have a compelling reason not to upgrade, please let us know in GitHub Issues:</string>
+    <string name="blocking_update_description">There is only one person working on the application and it is impossible support old versions forever.\n\nYou have not updated MPEI.Hub for over half a year, since then we have made a lot of improvements both in the client side of the application and in the server side. You should really upgrade.\n\n If you have a compelling reason not to upgrade, please let us know in GitHub Issues:</string>
     <string name="blocking_update_exit">Exit</string>
     <string name="blocking_update_update">Update</string>
     <string name="schedule_widget_name">Today\'s Schedule</string>

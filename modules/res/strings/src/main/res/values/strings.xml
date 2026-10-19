@@ -1,4 +1,5 @@
 <resources>
+    <string name="app_name">МЭИ.Хаб</string>
     <!-- НУМЕРАЦИЯ ПАР-->
     <string-array name="classes_numbers">
         <item>Очередная пара</item>
@@ -142,7 +143,7 @@
     <string name="schedule_item_self_study_header">День самостоятельных занятий</string>
     <string name="schedule_item_self_study_description">Потратьте этот день с пользой, начните проходить курсы по программированию или начните читать книгу</string>
     <string name="schedule_empty_state_title">Упс! Не удалось загрузить расписание</string>
-    <string name="schedule_empty_state_subtitle">Возможно это произошло из-за проблем с интернет соединением.\nЛибо сервер MpeiX упал :)</string>
+    <string name="schedule_empty_state_subtitle">Возможно это произошло из-за проблем с интернет соединением.\nЛибо сервер МЭИ.Хаб упал :)</string>
     <string name="schedule_fab_tooltip">Кнопка быстрой навигации. Убрать кнопку можно в настройках</string>
     <string name="schedule_fab_next">К следующей неделе</string>
     <string name="schedule_fab_prev">К текущей неделе</string>
@@ -244,7 +245,13 @@
     <string name="app_settings_header_contributors">Контрибьюторы</string>
     <string name="app_settings_section_lang">Язык приложения</string>
     <string name="app_settings_section_lang_description">Иногда после смены языка требуется перезапустить приложение</string>
-    <string name="app_settings_app_version">MpeiX для Android v%s</string>
+    <string name="app_settings_app_version">МЭИ.Хаб для Android v%s</string>
+    <string name="app_settings_repo_title">Репозиторий МЭИ.Хаб</string>
+    <string name="app_settings_original_repo_title">Оригинальный проект (MpeiX)</string>
+    <string name="about_project_title">О проекте МЭИ.Хаб</string>
+    <string name="about_project_subtitle">🚀 МЭИ.Хаб — Новое поколение</string>
+    <string name="contributor_rasul_rustamov_bio">Разработчик МЭИ.Хаб • студент МЭИ</string>
+    <string name="contributor_johnny_wickky_bio">Студент МЭИ, ИБ- и ИИ-энтузиаст</string>
 
     <string name="favorites_screen_title">Избранные расписания</string>
     <string name="favorites_empty_state_title">Ни одно расписание не добавлено в избранные</string>
@@ -298,7 +305,7 @@
     <string name="image_picker_attach_button">Прикрепить</string>
 
     <string name="blocking_update_title">Пришло время\nобновить приложение</string>
-    <string name="blocking_update_description">Над приложением работает всего один человек, поэтому нет возможности поддерживать старые версии вечно.\n\nВы не обновляли MpeiX уже более полугода, с тех пор мы внесли очень много улучшений как в клиентскую часть приложения, так и в серверную. Вам действительно стоит обновиться.\n\nЕсли у вас есть веские причины не обновляться, сообщите о них нам на GitHub в разделе Issues:</string>
+    <string name="blocking_update_description">Над приложением работает всего один человек, поэтому нет возможности поддерживать старые версии вечно.\n\nВы не обновляли МЭИ.Хаб уже более полугода, с тех пор мы внесли очень много улучшений как в клиентскую часть приложения, так и в серверную. Вам действительно стоит обновиться.\n\nЕсли у вас есть веские причины не обновляться, сообщите о них нам на GitHub в разделе Issues:</string>
     <string name="blocking_update_exit">Выйти</string>
     <string name="blocking_update_update">Обновить</string>
     <string name="schedule_widget_name">Расписание на сегодня</string>

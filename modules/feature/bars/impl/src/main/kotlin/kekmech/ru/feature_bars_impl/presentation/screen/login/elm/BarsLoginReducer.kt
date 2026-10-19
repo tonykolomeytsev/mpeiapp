@@ -48,26 +48,15 @@ internal class BarsLoginReducer :
                     is LoginStatus.AccountSelectionRequired -> handleAccountSelection()
 
                     is LoginStatus.TwoFactorRequired -> {
-                        val isTotp = status.defaultProvider == CodeProvider.TOTP
                         twoFactorCodeState {
                             copy(
                                 providers = status.providers,
-                                codeState = if (isTotp) {
-                                    CodeState.CodeSent(
-                                        provider = CodeProvider.TOTP,
-                                        resendDebounceSec = 0,
-                                        serverMessage = null,
-                                    )
-                                } else {
-                                    CodeState.SendingCode(status.defaultProvider)
-                                },
+                                codeState = CodeState.SendingCode(status.defaultProvider),
                                 isLoading = false,
                             )
                         }
                         state { copy(stage = BarsLoginStage.TWO_FACTOR_CODE) }
-                        if (!isTotp) {
-                            commands { +Command.RequestTwoFactorCode(status.defaultProvider) }
-                        }
+                        commands { +Command.RequestTwoFactorCode(status.defaultProvider) }
                         Unit
                     }
                 }

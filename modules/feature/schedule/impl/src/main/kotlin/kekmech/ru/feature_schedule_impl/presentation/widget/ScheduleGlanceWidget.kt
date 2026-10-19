@@ -127,7 +127,7 @@ private fun ScheduleWidgetRoot(
         ) {
             Column(modifier = GlanceModifier.defaultWeight()) {
                 Text(
-                    text = scheduleName ?: "MpeiX",
+                    text = scheduleName ?: "МЭИ.Хаб",
                     style = TextStyle(
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold,
@@ -155,7 +155,7 @@ private fun ScheduleWidgetRoot(
                 contentAlignment = Alignment.Center,
             ) {
                 Text(
-                    text = "Откройте MpeiX, чтобы выбрать группу",
+                    text = "Откройте МЭИ.Хаб, чтобы выбрать группу",
                     style = TextStyle(
                         fontSize = 13.sp,
                         color = ColorProvider(day = Color(0xFF757575), night = Color(0xFF9E9E9E)),

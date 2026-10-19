@@ -69,6 +69,11 @@ internal class AllNotesFragment :
         }
     }
 
+    override fun onDestroyView() {
+        viewBinding.recyclerView.adapter = null
+        super.onDestroyView()
+    }
+
     override fun render(state: AllNotesState) {
         adapter.update(AllNotesListConverter().map(state))
         scrollToSelectedNote(state)

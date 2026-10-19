@@ -92,6 +92,7 @@ internal class ScheduleFragment :
     override fun onDestroyView() {
         saveViewPagerState()
         viewBinding.viewPager.adapter = null
+        viewBinding.recyclerView.adapter = null
         weeksScrollHelper.detach(viewBinding.recyclerView)
         super.onDestroyView()
     }

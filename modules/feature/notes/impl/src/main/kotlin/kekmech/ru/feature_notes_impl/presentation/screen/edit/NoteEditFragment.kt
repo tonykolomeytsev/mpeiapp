@@ -67,6 +67,11 @@ internal class NoteEditFragment :
         }
     }
 
+    override fun onDestroyView() {
+        viewBinding.recyclerView.adapter = null
+        super.onDestroyView()
+    }
+
     override fun render(state: NoteEditState) {
         if (adapter.allData.isEmpty())
             adapter.update(listOf(state.note))

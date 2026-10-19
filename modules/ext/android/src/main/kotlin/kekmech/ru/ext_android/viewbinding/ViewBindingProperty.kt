@@ -45,9 +45,7 @@ internal class ViewBindingProperty<in F : Fragment, VB : ViewBinding>(
 
         @MainThread
         override fun onDestroy(owner: LifecycleOwner) {
-            if (!mainHandler.post { property.clear() }) {
-                property.clear()
-            }
+            property.clear()
         }
     }
 

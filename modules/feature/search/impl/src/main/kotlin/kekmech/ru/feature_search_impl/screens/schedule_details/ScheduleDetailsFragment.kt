@@ -83,6 +83,11 @@ internal class ScheduleDetailsFragment :
         viewBinding.recyclerView.minimumHeight = point.y
     }
 
+    override fun onDestroyView() {
+        viewBinding.recyclerView.adapter = null
+        super.onDestroyView()
+    }
+
     override fun render(state: ScheduleDetailsState) {
         adapter.update(ScheduleDetailsListConverter.map(state, requireContext()))
     }

@@ -18,9 +18,17 @@ internal class ContributorsRepositoryImpl(
     private val leadContributor = Contributor(
         login = "ghostoftheeleven",
         name = "Расул Рустамов",
-        bio = "Разработчик MpeiX Next • студент МЭИ",
+        bio = "Разработчик МЭИ.Хаб • студент МЭИ",
         url = "https://github.com/ghostoftheeleven",
         avatarUrl = "https://avatars.githubusercontent.com/u/98048622?v=4",
+    )
+
+    private val coAuthor = Contributor(
+        login = "Johnny-Wickky",
+        name = "Johnny Wickky",
+        bio = "Студент МЭИ, ИБ- и ИИ-энтузиаст",
+        url = "https://github.com/Johnny-Wickky",
+        avatarUrl = "https://avatars.githubusercontent.com/u/Johnny-Wickky?v=4",
     )
 
     override fun observeContributors(): Flow<List<Contributor>> =
@@ -43,6 +51,9 @@ internal class ContributorsRepositoryImpl(
                     }
             }.getOrDefault(emptyList())
 
-            listOf(leadContributor) + originalContributors.filterNot { it.login.equals("ghostoftheeleven", ignoreCase = true) }
+            listOf(leadContributor, coAuthor) + originalContributors.filterNot {
+                it.login.equals("ghostoftheeleven", ignoreCase = true) ||
+                    it.login.equals("Johnny-Wickky", ignoreCase = true)
+            }
         }.mapCatching { contributorsCache.put(it) }
 }
