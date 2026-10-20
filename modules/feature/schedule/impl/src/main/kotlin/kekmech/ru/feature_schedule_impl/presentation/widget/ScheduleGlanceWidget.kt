@@ -168,7 +168,7 @@ private fun ScheduleWidgetRoot(
                 contentAlignment = Alignment.Center,
             ) {
                 Text(
-                    text = "Пар нет! Можно отдохнуть 🎉",
+                    text = "Пар нет, можно отдохнуть",
                     style = TextStyle(
                         fontSize = 14.sp,
                         fontWeight = FontWeight.Medium,

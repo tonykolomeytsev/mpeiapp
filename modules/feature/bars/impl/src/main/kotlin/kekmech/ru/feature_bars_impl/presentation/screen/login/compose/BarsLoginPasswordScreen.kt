@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.OutlinedTextField
@@ -110,6 +111,15 @@ internal fun BarsLoginPasswordScreen(
                 shape = shape,
                 label = { Text("Пароль") },
                 visualTransformation = PasswordVisualTransformation(),
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+                keyboardActions = KeyboardActions(
+                    onDone = {
+                        val isContinueEnabled = login.isNotEmpty() && password.isNotEmpty()
+                        if (isContinueEnabled) {
+                            onAccept(Ui.Click.SubmitLoginPassword(login, password))
+                        }
+                    }
+                ),
                 singleLine = true,
                 textStyle = LocalTextStyle.current.copy(
                     letterSpacing = 6.sp,

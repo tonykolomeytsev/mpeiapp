@@ -71,6 +71,11 @@ internal class AppSettingsFragment :
         }
     }
 
+    override fun onDestroyView() {
+        viewBinding.recyclerView.adapter = null
+        super.onDestroyView()
+    }
+
     override fun render(state: AppSettingsState) {
         adapter.update(AppSettingsListConverter().map(state, requireContext()))
     }

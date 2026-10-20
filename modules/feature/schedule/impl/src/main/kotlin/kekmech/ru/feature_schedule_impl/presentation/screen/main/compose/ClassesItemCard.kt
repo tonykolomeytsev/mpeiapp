@@ -134,7 +134,7 @@ internal fun ClassesItemCard(
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Text(
-                            text = "📍 ${classes.place}",
+                            text = classes.place,
                             style = MpeixTheme.typography.paragraphNormal.copy(
                                 color = MpeixTheme.palette.primary,
                                 fontWeight = FontWeight.SemiBold,
@@ -204,7 +204,7 @@ internal fun ClassesItemCard(
                     ) {
                         if (classes.place.isNotBlank()) {
                             Text(
-                                text = "📍 ${classes.place}",
+                                text = classes.place,
                                 style = MpeixTheme.typography.paragraphNormal.copy(
                                     color = MpeixTheme.palette.primary,
                                     fontWeight = FontWeight.SemiBold,
@@ -228,7 +228,7 @@ internal fun ClassesItemCard(
                         }
                         if (classes.person.isNotBlank()) {
                             Text(
-                                text = "👤 ${classes.person}",
+                                text = classes.person,
                                 style = MpeixTheme.typography.paragraphNormal.copy(
                                     color = MpeixTheme.palette.contentVariant,
                                     fontSize = 12.sp,
@@ -266,7 +266,7 @@ internal fun ClassesItemCard(
                         .padding(horizontal = 10.dp, vertical = 6.dp),
                 ) {
                     Text(
-                        text = "📝 $note",
+                        text = note,
                         style = MpeixTheme.typography.paragraphNormal.copy(
                             color = MpeixTheme.palette.content,
                         ),

@@ -12,6 +12,14 @@ import timber.log.Timber
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 
+/**
+ * Делегат свойства ViewBinding для фрагментов с автоматическим обнулением ссылки.
+ *
+ * Предотвращает утечки памяти View-иерархии:
+ * - Привязывается к жизненному циклу `viewLifecycleOwner`.
+ * - Автоматически очищает ссылку на биндинг при `onDestroyView`.
+ * - Предоставляет синхронный метод [clear] для принудительного освобождения ресурсов.
+ */
 internal class ViewBindingProperty<in F : Fragment, VB : ViewBinding>(
     private val viewBinder: (F) -> VB,
 ) : ReadOnlyProperty<F, VB> {

@@ -43,6 +43,11 @@ internal class SelectMapTypeFragment :
         adapter.update(getItems())
     }
 
+    override fun onDestroyView() {
+        viewBinding.recyclerView.adapter = null
+        super.onDestroyView()
+    }
+
     private fun getItems() = mutableListOf<Any>().apply {
         add(PullItem)
         add(SpaceItem.VERTICAL_8)

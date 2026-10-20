@@ -67,6 +67,11 @@ internal class FavoritesFragment :
         }
     }
 
+    override fun onDestroyView() {
+        viewBinding.recyclerView.adapter = null
+        super.onDestroyView()
+    }
+
     override fun render(state: FavoritesState) {
         adapter.update(FavoritesListConverter(requireContext()).map(state))
     }

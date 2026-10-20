@@ -12,6 +12,15 @@ import kekmech.ru.lib_schedule.utils.atStartOfWeek
 import java.time.format.DateTimeFormatter
 import java.util.concurrent.ConcurrentHashMap
 
+/**
+ * Прямой сетевой сервис взаимодействия с официальным API расписания НИУ «МЭИ» (ts.mpei.ru).
+ *
+ * Особенности реализации:
+ * - Выполняет поиск по группам и преподавателям с сохранением сопоставления ID в [idCache].
+ * - Формирует диапазон дат (понедельник–воскресенье) с учетом смещения недели [weekOffset].
+ * - При сетевых сбоях официального API выполняет контролируемый фоллбэк к легаси-сервису,
+ *   гарантируя приоритетное пробрасывание реальной ошибки вызывающему слою.
+ */
 internal class MpeiDirectScheduleService(
     private val mpeiService: MpeiScheduleService,
     private val legacyService: LegacyScheduleService,
@@ -29,8 +38,9 @@ internal class MpeiDirectScheduleService(
             fetchDirectSchedule(type, name, weekOffset)
         }.onFailure { e ->
             Timber.tag("MpeiDirectScheduleService").w(e, "Direct MPEI schedule fetch failed for $name, falling back to legacy")
-        }.recoverCatching {
-            legacyService.getSchedule(type, name, weekOffset)
+        }.recoverCatching { directError ->
+            runCatching { legacyService.getSchedule(type, name, weekOffset) }
+                .getOrElse { throw directError }
         }.getOrThrow()
     }
 
@@ -53,8 +63,9 @@ internal class MpeiDirectScheduleService(
             GetSearchResultsResponse(items = items)
         }.onFailure { e ->
             Timber.tag("MpeiDirectScheduleService").w(e, "Direct MPEI search failed for $query, falling back to legacy")
-        }.recoverCatching {
-            legacyService.getSearchResults(query, type)
+        }.recoverCatching { directError ->
+            runCatching { legacyService.getSearchResults(query, type) }
+                .getOrElse { throw directError }
         }.getOrThrow()
     }
 

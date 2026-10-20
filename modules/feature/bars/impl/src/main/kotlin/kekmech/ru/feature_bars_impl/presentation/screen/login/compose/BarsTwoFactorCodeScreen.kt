@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -47,6 +48,9 @@ internal fun BarsTwoFactorCodeScreen(
 ) {
     var code by rememberSaveable { mutableStateOf("") }
     var wrongCodeAlert by remember { mutableStateOf(false) }
+    val isContinueEnabled by remember {
+        derivedStateOf { code.isNotEmpty() }
+    }
     Scaffold(
         topBar = {
             TopAppBar(
@@ -57,9 +61,6 @@ internal fun BarsTwoFactorCodeScreen(
             )
         },
         bottomBar = {
-            val isContinueEnabled by remember {
-                derivedStateOf { code.isNotEmpty() }
-            }
             LegacyButton(
                 text = "Продолжить",
                 onClick = { onAccept(Ui.Click.SubmitCode(code)) },
@@ -93,8 +94,15 @@ internal fun BarsTwoFactorCodeScreen(
                 shape = shape,
                 label = { Text("Код подтверждения") },
                 keyboardOptions = KeyboardOptions(
-                    imeAction = ImeAction.Next,
+                    imeAction = ImeAction.Done,
                     keyboardType = KeyboardType.Number,
+                ),
+                keyboardActions = KeyboardActions(
+                    onDone = {
+                        if (isContinueEnabled) {
+                            onAccept(Ui.Click.SubmitCode(code))
+                        }
+                    }
                 ),
                 singleLine = true,
                 supportingText = {

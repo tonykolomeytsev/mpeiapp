@@ -50,6 +50,11 @@ class BarsDetailsFragment : BottomSheetDialogFragment(R.layout.fragment_bars_det
         adapter.update(getItems(notNullSerializableArg(ARG_DISCIPLINE_INFO)))
     }
 
+    override fun onDestroyView() {
+        viewBinding.recyclerView.adapter = null
+        super.onDestroyView()
+    }
+
     @Suppress("NestedBlockDepth")
     private fun getItems(discipline: AssessedDiscipline): List<Any> = mutableListOf<Any>().apply {
         add(PullItem)

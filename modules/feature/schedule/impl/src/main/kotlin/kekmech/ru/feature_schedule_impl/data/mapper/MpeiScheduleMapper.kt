@@ -120,14 +120,15 @@ internal object MpeiScheduleMapper {
     }
 
     private fun getLessonNumber(start: LocalTime): Int {
-        return when (start.hour to start.minute) {
-            9 to 20 -> 1
-            11 to 10 -> 2
-            13 to 45 -> 3
-            15 to 35 -> 4
-            17 to 20 -> 5
-            18 to 55 -> 6
-            20 to 30 -> 7
+        val totalMinutes = start.hour * 60 + start.minute
+        return when {
+            totalMinutes in (8 * 60 + 30)..(10 * 60 + 15) -> 1
+            totalMinutes in (10 * 60 + 16)..(12 * 60 + 45) -> 2
+            totalMinutes in (12 * 60 + 46)..(14 * 60 + 40) -> 3
+            totalMinutes in (14 * 60 + 41)..(16 * 60 + 30) -> 4
+            totalMinutes in (16 * 60 + 31)..(18 * 60 + 15) -> 5
+            totalMinutes in (18 * 60 + 16)..(19 * 60 + 45) -> 6
+            totalMinutes in (19 * 60 + 46)..(21 * 60 + 30) -> 7
             else -> -1
         }
     }
@@ -142,11 +143,9 @@ internal object MpeiScheduleMapper {
             firstMonday to 1
         } else {
             // Spring semester
-            var feb1 = LocalDate.of(monday.year, 2, 1)
-            while (feb1.dayOfWeek != DayOfWeek.MONDAY) {
-                feb1 = feb1.plusDays(1)
-            }
-            feb1 to 1
+            val feb1 = LocalDate.of(monday.year, 2, 1)
+            val firstMonday = feb1.atStartOfWeek()
+            firstMonday to 1
         }
         val diffWeeks = ChronoUnit.WEEKS.between(startMonday, monday).toInt()
         val weekNum = startWeekNum + diffWeeks

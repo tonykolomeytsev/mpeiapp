@@ -18,16 +18,19 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kekmech.ru.feature_schedule_api.domain.model.Classes
+import kekmech.ru.res_icons.R.drawable as ResIcons
 import kekmech.ru.ui_theme.theme.MpeixTheme
 
 @Composable
@@ -202,9 +205,11 @@ private fun FilterEmptyContent() {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
         ) {
-            Text(
-                text = "🔍",
-                fontSize = 44.sp,
+            Icon(
+                painter = painterResource(ResIcons.ic_search_24),
+                contentDescription = null,
+                modifier = Modifier.size(48.dp),
+                tint = MpeixTheme.palette.contentDisabled,
             )
             Spacer(modifier = Modifier.height(16.dp))
             Text(

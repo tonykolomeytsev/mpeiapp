@@ -49,9 +49,9 @@ internal class BarsRepository(
         val parts = encodedContent.split(":")
         return Account(
             id = currentId,
-            name = parts[1].fromBase64(),
-            group = parts[2].fromBase64(),
-            status = parts[3].fromBase64(),
+            name = parts.getOrNull(1)?.fromBase64().orEmpty(),
+            group = parts.getOrNull(2)?.fromBase64().orEmpty(),
+            status = parts.getOrNull(3)?.fromBase64().orEmpty(),
         )
     }
 
@@ -69,9 +69,11 @@ internal class BarsRepository(
     }
 
     override fun logout(): Boolean {
-        storage.decodeString("current_user_id") ?: return false
+        val currentId = storage.decodeString("current_user_id") ?: return false
         barsHandle.auth.logout()
         storage.removeValueForKey("current_user_id")
+        storage.removeValueForKey("user-$currentId")
+        storage.removeValueForKey("user-$currentId-disciplines")
         loginStateTrigger.tryEmit(Unit)
         kekmech.ru.feature_bars_impl.data.network.BarsTwoFactorSessionHolder.reset()
         return true

@@ -60,7 +60,11 @@ internal class ScheduleCacheManager(
             Timber.d("ScheduleCacheManager: Retrieved cached schedule for $name ($type)")
             schedule
         } catch (e: Exception) {
-            Timber.e(e, "ScheduleCacheManager: Failed to retrieve cached schedule")
+            Timber.e(e, "ScheduleCacheManager: Failed to retrieve cached schedule, invalidating corrupted file")
+            runCatching {
+                val cacheFile = getCacheFile(name, type, weekOffset)
+                if (cacheFile.exists()) cacheFile.delete()
+            }
             null
         }
     }

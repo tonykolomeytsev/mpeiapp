@@ -98,6 +98,7 @@ internal class SearchFragment : Fragment(R.layout.fragment_search),
     }
 
     override fun onDestroyView() {
+        hideKeyboard()
         viewBinding.recyclerView.adapter = null
         viewBinding.filterItemsRecycler.adapter = null
         super.onDestroyView()

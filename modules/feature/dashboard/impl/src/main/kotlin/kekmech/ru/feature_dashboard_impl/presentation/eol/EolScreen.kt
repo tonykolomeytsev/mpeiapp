@@ -77,7 +77,7 @@ internal fun EolScreen(
             Spacer(modifier = Modifier.height(20.dp))
 
             Text(
-                text = "✨ Ключевые возможности:",
+                text = "Ключевые возможности:",
                 style = MpeixTheme.typography.header4.copy(
                     fontWeight = FontWeight.Bold,
                     color = MpeixTheme.palette.content,
@@ -86,19 +86,19 @@ internal fun EolScreen(
             Spacer(modifier = Modifier.height(10.dp))
 
             AboutFeatureItem(
-                title = "📅 Прямой парсер расписания МЭИ",
+                title = "Прямой парсер расписания МЭИ",
                 desc = "Больше нет зависимости от сторонних серверов. Расписание парсится напрямую с официального портала mpei.ru.",
             )
             AboutFeatureItem(
-                title = "🗺 Офлайн-карты OpenStreetMap",
+                title = "Офлайн-карты OpenStreetMap",
                 desc = "Все корпуса (А, Б, В, Г, Д, Е, Ж, З, И, К, М, Р, С, Т, Ч, Э), кафедры, столовые и общежития кампуса Лефортово работают полностью автономно.",
             )
             AboutFeatureItem(
-                title = "🎨 Современный дизайн",
-                desc = "Интерфейс на Jetpack Compose, плавные карточки с типами пар, виджеты и полная поддержка Android 14+.",
+                title = "Современный интерфейс",
+                desc = "Интерфейс на Jetpack Compose, карточки занятий с типами пар, виджеты и полная поддержка Android 14+.",
             )
             AboutFeatureItem(
-                title = "🌐 Открытый исходный код",
+                title = "Открытый исходный код",
                 desc = "Разработка ведётся открыто сообществом студентов МЭИ на GitHub.",
             )
 
