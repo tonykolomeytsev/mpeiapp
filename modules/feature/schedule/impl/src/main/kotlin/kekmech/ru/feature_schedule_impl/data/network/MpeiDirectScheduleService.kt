@@ -18,12 +18,10 @@ import java.util.concurrent.ConcurrentHashMap
  * Особенности реализации:
  * - Выполняет поиск по группам и преподавателям с сохранением сопоставления ID в [idCache].
  * - Формирует диапазон дат (понедельник–воскресенье) с учетом смещения недели [weekOffset].
- * - При сетевых сбоях официального API выполняет контролируемый фоллбэк к легаси-сервису,
- *   гарантируя приоритетное пробрасывание реальной ошибки вызывающему слою.
+ * - Ошибки официального API пробрасываются вызывающему слою без подмены.
  */
 internal class MpeiDirectScheduleService(
     private val mpeiService: MpeiScheduleService,
-    private val legacyService: LegacyScheduleService,
 ) : ScheduleService {
 
     private val dateFormatter = DateTimeFormatter.ofPattern("yyyy.MM.dd")
@@ -37,10 +35,7 @@ internal class MpeiDirectScheduleService(
         return runCatching {
             fetchDirectSchedule(type, name, weekOffset)
         }.onFailure { e ->
-            Timber.tag("MpeiDirectScheduleService").w(e, "Direct MPEI schedule fetch failed for $name, falling back to legacy")
-        }.recoverCatching { directError ->
-            runCatching { legacyService.getSchedule(type, name, weekOffset) }
-                .getOrElse { throw directError }
+            Timber.tag("MpeiDirectScheduleService").w(e, "MPEI schedule fetch failed for $name")
         }.getOrThrow()
     }
 
@@ -62,10 +57,7 @@ internal class MpeiDirectScheduleService(
             val items = results.map { MpeiScheduleMapper.mapSearchResult(it) }
             GetSearchResultsResponse(items = items)
         }.onFailure { e ->
-            Timber.tag("MpeiDirectScheduleService").w(e, "Direct MPEI search failed for $query, falling back to legacy")
-        }.recoverCatching { directError ->
-            runCatching { legacyService.getSearchResults(query, type) }
-                .getOrElse { throw directError }
+            Timber.tag("MpeiDirectScheduleService").w(e, "MPEI search failed for $query")
         }.getOrThrow()
     }
 

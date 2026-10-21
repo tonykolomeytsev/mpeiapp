@@ -10,7 +10,6 @@ import kekmech.ru.feature_schedule_api.domain.usecase.HasSelectedScheduleUseCase
 import kekmech.ru.feature_schedule_impl.SchedulePreheatLifecycleObserver
 import kekmech.ru.feature_schedule_impl.data.datasource.ScheduleCacheWrapper
 import kekmech.ru.feature_schedule_impl.data.datasource.SelectedScheduleSource
-import kekmech.ru.feature_schedule_impl.data.network.LegacyScheduleService
 import kekmech.ru.feature_schedule_impl.data.network.MpeiDirectScheduleService
 import kekmech.ru.feature_schedule_impl.data.network.ScheduleService
 import kekmech.ru.feature_schedule_impl.data.network.mpei.MpeiScheduleService
@@ -49,12 +48,10 @@ val FeatureScheduleModule = module {
     factoryOf(::ScheduleDependencies)
     single { ScheduleGlanceWidgetUpdater(androidContext()) }
 
-    factory { get<Retrofit.Builder>().buildApi<LegacyScheduleService>() }
     factory { get<Retrofit.Builder>().buildApi<MpeiScheduleService>() }
     single<ScheduleService> {
         MpeiDirectScheduleService(
             mpeiService = get(),
-            legacyService = get(),
         )
     }
     singleOf(::ScheduleRepositoryImpl) binds arrayOf(

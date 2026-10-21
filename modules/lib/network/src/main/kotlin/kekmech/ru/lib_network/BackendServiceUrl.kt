@@ -12,12 +12,6 @@ public enum class BackendServiceUrl(
     public val stagingEndpoint: String,
     public val mockEndpoint: String,
 ) {
-    /** Легаси-сервер расписания MpeiX (сохранен для совместимости) */
-    SCHEDULE(
-        prodEndpoint = "https://api.kekmech.com/mpeix/schedule/",
-        stagingEndpoint = "https://dev-api.kekmech.com/mpeix/schedule/",
-        mockEndpoint = "http://localhost:8080/schedule/",
-    ),
     /** Официальный прямой REST API расписания НИУ «МЭИ» */
     MPEI_TIMETABLE(
         prodEndpoint = "https://ts.mpei.ru/api/",
