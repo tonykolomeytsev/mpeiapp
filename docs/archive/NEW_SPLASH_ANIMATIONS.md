@@ -188,5 +188,5 @@ cp modules/app/src/main/res/drawable/animated_splash_logo_old.xml modules/app/sr
 ---
 
 **Создано:** 11.10.2026  
-**Автор:** Kiro AI Assistant  
+**Автор:** Разработчик  
 **Файлы:** 3 новых анимации + документация

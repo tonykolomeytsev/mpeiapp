@@ -256,21 +256,14 @@ data class SubjectChat(
 
 ---
 
-#### 8. 🎓 Базовый AI помощник (через Gemini API)
-**Что:** Чат-бот для ответов на вопросы
+#### 8. 🎓 Базовый информационный помощник
+**Что:** Информационный бот для быстрых ответов на вопросы
 
 ```kotlin
-class MPEIAssistant(private val gemini: GenerativeModel) {
+class MPEIAssistant(private val searchEngine: SearchEngine) {
     
     suspend fun ask(question: String): String {
-        val context = """
-        Ты помощник студентов МЭИ (Московский Энергетический Институт).
-        Отвечай кратко и по делу. Если не знаешь - так и скажи.
-        """
-        
-        val prompt = "$context\n\nВопрос: $question\n\nОтвет:"
-        
-        return gemini.generateContent(prompt).text ?: "Не могу ответить"
+        return searchEngine.findAnswer(question) ?: "Не могу найти ответ в базе"
     }
     
     // Предзагруженные знания о МЭИ
@@ -330,7 +323,7 @@ data class Question(
 
 class QuizGame {
     suspend fun generateQuiz(subject: String, count: Int): List<Question> {
-        // Можно генерировать через Gemini или брать из БД
+        // Загрузка вопросов из базы данных
         return database.getQuestions(subject, count)
     }
 }
@@ -378,48 +371,36 @@ fun QuizScreen() {
 ---
 
 #### 10. 📚 Умная библиотека заметок
-**Что:** AI для конспектов
+**Что:** Инструменты для конспектов
 
 ```kotlin
-class SmartNotes(private val gemini: GenerativeModel) {
+class SmartNotes(private val notesProcessor: NotesProcessor) {
     
     // Краткое содержание
     suspend fun summarize(text: String): String {
-        return gemini.generateContent(
-            "Сократи этот текст до ключевых моментов:\n\n$text"
-        ).text ?: text
+        return notesProcessor.summarize(text)
     }
     
     // Ключевые термины
     suspend fun extractKeyTerms(text: String): List<String> {
-        val response = gemini.generateContent(
-            "Выдели ключевые термины из этого текста списком:\n\n$text"
-        ).text ?: ""
-        
-        return response.lines().filter { it.isNotBlank() }
+        return notesProcessor.extractKeywords(text)
     }
     
     // Генерация вопросов для самопроверки
     suspend fun generateQuestions(text: String): List<String> {
-        val response = gemini.generateContent(
-            "Составь 5 вопросов для самопроверки по этому материалу:\n\n$text"
-        ).text ?: ""
-        
-        return response.lines().filter { it.startsWith("1.") || it.contains("?") }
+        return notesProcessor.generateQuestions(text)
     }
     
     // Объяснение простыми словами
     suspend fun explainSimply(text: String): String {
-        return gemini.generateContent(
-            "Объясни это простыми словами для студента:\n\n$text"
-        ).text ?: text
+        return notesProcessor.simplify(text)
     }
 }
 
 @Composable
 fun EnhancedNoteScreen(noteId: String) {
     val note = viewModel.getNote(noteId).collectAsState()
-    var aiSummary by remember { mutableStateOf<String?>(null) }
+    var summary by remember { mutableStateOf<String?>(null) }
     
     Column {
         // Оригинальная заметка
@@ -427,7 +408,7 @@ fun EnhancedNoteScreen(noteId: String) {
         
         Divider()
         
-        // AI улучшения
+        // Улучшения
         Row {
             Button(onClick = {
                 viewModel.summarize(note.value.text)
@@ -451,10 +432,10 @@ fun EnhancedNoteScreen(noteId: String) {
             }
         }
         
-        // Результат AI
-        if (aiSummary != null) {
+        // Результат
+        if (summary != null) {
             Card {
-                Text(aiSummary!!)
+                Text(summary!!)
             }
         }
     }
@@ -469,11 +450,6 @@ fun EnhancedNoteScreen(noteId: String) {
 
 ## 💰 Стоимость реализации
 
-### Gemini API (для AI)
-- **Free tier:** 60 запросов/минуту
-- **Paid:** $0.00025 за 1K символов input
-- **Достаточно** для 1000+ студентов бесплатно!
-
 ### Firebase (для чатов/соцсети)
 - **Free tier:** 
   - 10GB storage
@@ -485,7 +461,7 @@ fun EnhancedNoteScreen(noteId: String) {
 - **Free tier:** до 100 MAU
 - **Paid:** от $399/мес для unlimited
 
-**Рекомендация:** Начать с Firebase + Gemini (бесплатно!)
+**Рекомендация:** Начать с Firebase (бесплатно!)
 
 ---
 
@@ -497,61 +473,11 @@ fun EnhancedNoteScreen(noteId: String) {
 - День 5-7: Глобальный поиск
 
 ### Неделя 2  
-- День 8-10: AI помощник (базовый)
+- День 8-10: Помощник (базовый)
 - День 11-12: Меню столовых
 - День 13-14: Статистика посещаемости
 
 **Результат:** 6 новых крутых фич за 2 недели! 🎉
-
----
-
-## 🎯 QUICK START: AI Помощник за выходные
-
-### Суббота (4-6 часов)
-```kotlin
-// 1. Добавить Gemini SDK
-implementation("com.google.ai.client.generativeai:generativeai:0.9.0")
-
-// 2. Создать базовый ассистент
-class MPEIAssistant {
-    private val gemini = GenerativeModel(
-        modelName = "gemini-pro",
-        apiKey = BuildConfig.GEMINI_API_KEY
-    )
-    
-    suspend fun ask(question: String) = gemini.generateContent(question)
-}
-
-// 3. Простой UI
-@Composable
-fun AssistantScreen() {
-    var messages by remember { mutableStateOf(listOf<Message>()) }
-    var input by remember { mutableStateOf("") }
-    
-    Column {
-        LazyColumn(Modifier.weight(1f)) {
-            items(messages) { MessageBubble(it) }
-        }
-        Row {
-            TextField(input, { input = it })
-            IconButton(onClick = { 
-                viewModel.send(input)
-                input = ""
-            }) {
-                Icon(Icons.Default.Send, null)
-            }
-        }
-    }
-}
-```
-
-### Воскресенье (4-6 часов)
-- Улучшить промпты для МЭИ
-- Добавить контекст о университете
-- Интеграция с расписанием
-- Полировка UI
-
-**Результат:** Рабочий AI помощник к понедельнику! 🤖
 
 ---
 

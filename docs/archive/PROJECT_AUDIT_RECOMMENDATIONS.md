@@ -176,21 +176,21 @@ modules/feature/library/
 
 ---
 
-#### 7. 📝 **Умные заметки с AI**
+#### 7. 📝 **Умные заметки**
 **Улучшить существующую функцию:**
 ```kotlin
-// modules/feature/notes/impl/.../AINotesEnhancer.kt
-class AINotesEnhancer(private val geminiApi: GeminiApi) {
+// modules/feature/notes/impl/.../NotesEnhancer.kt
+class NotesEnhancer(private val notesApi: NotesApi) {
     suspend fun summarizeNote(text: String): String {
-        return geminiApi.summarize(text)
+        return notesApi.summarize(text)
     }
     
     suspend fun extractKeyPoints(text: String): List<String> {
-        return geminiApi.extractKeyPoints(text)
+        return notesApi.extractKeyPoints(text)
     }
     
     suspend fun generateQuiz(text: String): List<Question> {
-        return geminiApi.generateQuiz(text)
+        return notesApi.generateQuiz(text)
     }
 }
 ```
@@ -385,7 +385,7 @@ android {
 5. 📚 Библиотека
 6. 🍽️ Меню столовых
 7. 🔍 Глобальный поиск
-8. 📝 AI для заметок
+8. 📝 Умные заметки
 
 ### Квартал 3 (Q3 2027)
 9. 🎓 Социальные функции
@@ -412,7 +412,7 @@ android {
 - БАРС
 
 **Premium ($2-3/месяц или $15-20/год):**
-- AI заметки
+- Умные заметки
 - Приоритетные уведомления
 - Кастомизация
 - Без рекламы

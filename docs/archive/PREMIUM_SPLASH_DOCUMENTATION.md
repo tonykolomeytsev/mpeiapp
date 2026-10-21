@@ -335,6 +335,6 @@ These are core to Apple's Human Interface Guidelines and Google's Material Motio
 ---
 
 **Created:** 11.10.2026  
-**Designer:** Kiro AI (Senior Motion Designer Mode)  
+**Designer:** Motion Design  
 **Status:** 🚀 Production Ready  
 **File:** `animated_splash_logo_premium.xml`
