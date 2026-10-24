@@ -58,13 +58,15 @@ internal class BarsRepository(
     fun saveDisciplines(list: List<AssessedDiscipline>) {
         val currentId = storage.decodeString("current_user_id") ?: return
         val container = Container(list)
-        storage.encode("user-$currentId-disciplines", container)
+        storage.encode(disciplinesKey(currentId), container)
+        // The Parcelable layout of the cached marks changed (ControlActivity.rawMark), drop the old cache
+        storage.removeValueForKey(legacyDisciplinesKey(currentId))
     }
 
     fun getSavedDisciplines(): List<AssessedDiscipline>? {
         val currentId = storage.decodeString("current_user_id") ?: return null
         val container =
-            storage.decodeParcelable("user-$currentId-disciplines", Container::class.java)
+            storage.decodeParcelable(disciplinesKey(currentId), Container::class.java)
         return container?.disciplines
     }
 
@@ -73,11 +75,16 @@ internal class BarsRepository(
         barsHandle.auth.logout()
         storage.removeValueForKey("current_user_id")
         storage.removeValueForKey("user-$currentId")
-        storage.removeValueForKey("user-$currentId-disciplines")
+        storage.removeValueForKey(disciplinesKey(currentId))
+        storage.removeValueForKey(legacyDisciplinesKey(currentId))
         loginStateTrigger.tryEmit(Unit)
         kekmech.ru.feature_bars_impl.data.network.BarsTwoFactorSessionHolder.reset()
         return true
     }
+
+    private fun disciplinesKey(userId: String) = "user-$userId-disciplines-v2"
+
+    private fun legacyDisciplinesKey(userId: String) = "user-$userId-disciplines"
 
     @Parcelize
     private data class Container(val disciplines: List<AssessedDiscipline>) : Parcelable

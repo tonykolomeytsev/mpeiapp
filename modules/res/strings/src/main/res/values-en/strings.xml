@@ -344,4 +344,24 @@
     <string name="schedule_change_field_place">room (%1$s → %2$s)</string>
     <string name="schedule_change_field_person">teacher</string>
     <string name="schedule_change_field_type">type</string>
+
+    <string name="bars_tab_disciplines">Disciplines</string>
+    <string name="bars_tab_summary">Summary</string>
+    <string name="bars_summary_km_progress">Control activities: %1$d of %2$d passed</string>
+    <string name="bars_summary_no_km">This discipline has no control activities</string>
+    <string name="bars_summary_week">Week %1$d</string>
+    <string name="bars_summary_weight">Weight %1$s%%</string>
+    <string name="bars_summary_mark">Score: %1$d</string>
+    <string name="bars_summary_no_mark">No mark</string>
+    <string name="bars_summary_expand">Expand</string>
+    <string name="bars_summary_collapse">Collapse</string>
+    <string name="bars_km_status_passed">Passed</string>
+    <string name="bars_km_status_retake">Retake</string>
+    <string name="bars_km_status_debt">Overdue</string>
+    <string name="bars_km_status_upcoming">Upcoming</string>
+    <string name="bars_summary_error_network_title">No connection to BARS</string>
+    <string name="bars_summary_error_network_description">Check your internet connection and try again. Previously loaded marks are shown from the cache.</string>
+    <string name="bars_summary_error_parsing_title">Could not read BARS data</string>
+    <string name="bars_summary_error_parsing_description">The portal may have changed its response format or is temporarily down. Try again later.</string>
+    <string name="bars_summary_error_retry">Retry</string>
 </resources>

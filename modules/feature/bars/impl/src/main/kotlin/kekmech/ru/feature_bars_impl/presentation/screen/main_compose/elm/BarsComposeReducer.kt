@@ -35,6 +35,7 @@ internal class BarsComposeReducer :
                             +Command.GetProfile
                                 .takeIf { !state.profile.isData }
                             +Command.GetMarks
+                            +Command.GetCurrentWeek
                         }
                     }
 
@@ -79,6 +80,10 @@ internal class BarsComposeReducer :
                 }
             }
 
+            is Internal.GetCurrentWeekSuccess -> {
+                state { copy(currentWeek = event.week) }
+            }
+
             is Internal.GetMarksFailure -> {
                 state {
                     copy(
@@ -117,12 +122,35 @@ internal class BarsComposeReducer :
                 commands { +Command.OpenDetails(event.model.discipline) }
             }
 
+            is Ui.Click.Tab -> {
+                state { copy(selectedTab = event.tab) }
+            }
+
+            is Ui.Click.SummaryDiscipline -> {
+                state {
+                    copy(
+                        expandedSummary = if (event.name in expandedSummary) {
+                            expandedSummary - event.name
+                        } else {
+                            expandedSummary + event.name
+                        }
+                    )
+                }
+            }
+
             is Ui.Action.PullToRefresh -> {
-                state { copy(isRefreshing = true) }
+                state {
+                    copy(
+                        isRefreshing = true,
+                        // let the summary show the skeleton again instead of a stale error
+                        disciplines = if (disciplines.isError) Resource.Loading else disciplines,
+                    )
+                }
                 commands {
                     +Command.GetProfile
                         .takeIf { !state.profile.isData }
                     +Command.GetMarks
+                    +Command.GetCurrentWeek
                 }
             }
         }

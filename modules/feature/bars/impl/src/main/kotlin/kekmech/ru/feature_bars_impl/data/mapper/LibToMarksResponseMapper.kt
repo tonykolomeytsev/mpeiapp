@@ -25,7 +25,8 @@ internal object LibToMarksResponseMapper {
                             name = caRow.name.orEmpty(),
                             weight = caRow.weight?.trim().orEmpty(),
                             deadline = caRow.weekNum?.extractIntOrNull()?.toString().orEmpty(),
-                            finalMark = caRow.markAndDate?.extractFloatOrNull() ?: -1f
+                            finalMark = caRow.markAndDate?.extractFloatOrNull() ?: -1f,
+                            rawMark = caRow.markAndDate?.trim().orEmpty(),
                         )
                     },
                 finalGrades = disciplineRow.activities

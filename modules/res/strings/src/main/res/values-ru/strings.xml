@@ -345,4 +345,24 @@
     <string name="schedule_change_field_place">аудитория (%1$s → %2$s)</string>
     <string name="schedule_change_field_person">преподаватель</string>
     <string name="schedule_change_field_type">тип</string>
+
+    <string name="bars_tab_disciplines">Предметы</string>
+    <string name="bars_tab_summary">Сводка</string>
+    <string name="bars_summary_km_progress">КМ: сдано %1$d из %2$d</string>
+    <string name="bars_summary_no_km">Для этой дисциплины нет контрольных мероприятий</string>
+    <string name="bars_summary_week">Неделя %1$d</string>
+    <string name="bars_summary_weight">Вес %1$s%%</string>
+    <string name="bars_summary_mark">Балл: %1$d</string>
+    <string name="bars_summary_no_mark">Нет оценки</string>
+    <string name="bars_summary_expand">Развернуть</string>
+    <string name="bars_summary_collapse">Свернуть</string>
+    <string name="bars_km_status_passed">Сдано</string>
+    <string name="bars_km_status_retake">Пересдача</string>
+    <string name="bars_km_status_debt">Долг</string>
+    <string name="bars_km_status_upcoming">Предстоит</string>
+    <string name="bars_summary_error_network_title">Нет соединения с БАРС</string>
+    <string name="bars_summary_error_network_description">Проверьте подключение к интернету и повторите попытку. Если оценки уже загружались, они будут показаны из кэша.</string>
+    <string name="bars_summary_error_parsing_title">Не удалось прочитать данные БАРС</string>
+    <string name="bars_summary_error_parsing_description">Портал мог изменить формат ответа или временно не работает. Повторите попытку позже.</string>
+    <string name="bars_summary_error_retry">Повторить</string>
 </resources>

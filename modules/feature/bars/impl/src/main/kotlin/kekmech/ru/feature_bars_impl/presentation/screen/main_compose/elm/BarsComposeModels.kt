@@ -11,7 +11,17 @@ internal data class BarsComposeState(
     val isRefreshing: Boolean = false,
     val isLoginRequired: Boolean = false,
     val disciplines: Resource<List<DisciplineUiItem>> = Resource.Loading,
+    val selectedTab: BarsTab = BarsTab.DISCIPLINES,
+    /** Current week of the semester, used to decide whether a control activity is overdue */
+    val currentWeek: Int? = null,
+    /** Names of the disciplines expanded on the summary tab */
+    val expandedSummary: Set<String> = emptySet(),
 )
+
+internal enum class BarsTab {
+    DISCIPLINES,
+    SUMMARY,
+}
 
 internal sealed interface AuthStatus {
     data object LoggedIn : AuthStatus
@@ -33,6 +43,8 @@ internal sealed interface BarsComposeEvent {
             data object Settings : Click
             data object Login : Click
             data class Discipline(val model: DisciplineUiItem) : Click
+            data class Tab(val tab: BarsTab) : Click
+            data class SummaryDiscipline(val name: String) : Click
         }
 
         sealed interface Action : Ui {
@@ -49,6 +61,7 @@ internal sealed interface BarsComposeEvent {
             val fromCache: Boolean,
         ) : Internal
         data class GetMarksFailure(val throwable: Throwable) : Internal
+        data class GetCurrentWeekSuccess(val week: Int?) : Internal
     }
 }
 
@@ -58,6 +71,7 @@ internal sealed interface BarsComposeCommand {
     data object OpenLogin : BarsComposeCommand
     data object GetProfile : BarsComposeCommand
     data object GetMarks : BarsComposeCommand
+    data object GetCurrentWeek : BarsComposeCommand
     data class OpenDetails(val discipline: AssessedDiscipline) : BarsComposeCommand
 }
 

@@ -133,7 +133,7 @@ private fun MarkItem(
 }
 
 @Composable
-private fun Float.asMarkColor(): Pair<Color, Color> =
+internal fun Float.asMarkColor(): Pair<Color, Color> =
     with(MpeixTheme.palette) {
         when (this@asMarkColor) {
             in 3.5f..5f -> greenMarkColor to greenBgMarkColor

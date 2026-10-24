@@ -22,7 +22,9 @@ data class ControlActivity(
     val name: String,
     val weight: String,
     val deadline: String,
-    val finalMark: Float
+    val finalMark: Float,
+    /** Unparsed BARS mark cell ("4 (12.10.2025)", ...), used to detect retakes. Empty if absent */
+    val rawMark: String = "",
 ) : Parcelable, Serializable
 
 @Parcelize
