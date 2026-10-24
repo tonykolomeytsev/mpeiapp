@@ -2,6 +2,7 @@ package kekmech.ru.feature_schedule_impl.notifications
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.edit
 import kekmech.ru.feature_schedule_impl.notifications.ScheduleNotificationPrefs.KEY_ENABLED
 import kekmech.ru.feature_schedule_impl.notifications.ScheduleNotificationPrefs.KEY_INTERVAL
@@ -10,6 +11,12 @@ import kekmech.ru.feature_schedule_impl.notifications.ScheduleNotificationPrefs.
 import kekmech.ru.feature_schedule_impl.notifications.ScheduleNotificationPrefs.KEY_TOTAL_CHECKS
 import kekmech.ru.feature_schedule_impl.notifications.ScheduleNotificationPrefs.intervalHours
 import kekmech.ru.feature_schedule_impl.notifications.ScheduleNotificationPrefs.isEnabled
+import kekmech.ru.feature_schedule_impl.notifications.reminders.ClassReminderAlarmScheduler
+import kekmech.ru.feature_schedule_impl.notifications.reminders.ClassReminderController
+import kekmech.ru.feature_schedule_impl.notifications.reminders.ClassReminderPrefs
+import kekmech.ru.feature_schedule_impl.notifications.reminders.ClassReminderPrefs.areRemindersEnabled
+import kekmech.ru.feature_schedule_impl.notifications.reminders.ClassReminderPrefs.isKindEnabled
+import kekmech.ru.feature_schedule_impl.notifications.reminders.ReminderKind
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -32,6 +39,13 @@ internal data class ScheduleNotificationSettingsState(
     val lastCheckTime: String? = null,
     val totalChecks: Int = 0,
     val totalChangesDetected: Int = 0,
+    val classRemindersEnabled: Boolean = true,
+    val remindDayBefore: Boolean = true,
+    val remindHoursBefore: Boolean = true,
+    /** Without the exact alarm permission (Android 12+) reminders may come a few minutes late */
+    val canScheduleExactAlarms: Boolean = true,
+    /** System-level switch: POST_NOTIFICATIONS on Android 13+ and the per-app switch of older versions */
+    val notificationsAllowed: Boolean = true,
 )
 
 /**
@@ -40,22 +54,24 @@ internal data class ScheduleNotificationSettingsState(
  * state is refreshed whenever they change.
  */
 internal class ScheduleNotificationSettingsViewModel(
-    context: Context,
+    private val context: Context,
     private val scheduler: ScheduleChangeScheduler,
+    private val reminderController: ClassReminderController,
+    private val reminderAlarms: ClassReminderAlarmScheduler,
 ) {
     private val prefs = ScheduleNotificationPrefs.of(context)
+    private val reminderPrefs = ClassReminderPrefs.of(context)
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
     private val _state = MutableStateFlow(readState(isCheckingNow = false))
     val state: StateFlow<ScheduleNotificationSettingsState> = _state
 
     // Must be held by a strong reference, SharedPreferences keeps listeners weakly
-    private val prefsListener = SharedPreferences.OnSharedPreferenceChangeListener { _, _ ->
-        _state.value = readState(isCheckingNow = _state.value.isCheckingNow)
-    }
+    private val prefsListener = SharedPreferences.OnSharedPreferenceChangeListener { _, _ -> refresh() }
 
     init {
         prefs.registerOnSharedPreferenceChangeListener(prefsListener)
+        reminderPrefs.registerOnSharedPreferenceChangeListener(prefsListener)
         scope.launch {
             scheduler.observeImmediateCheckRunning().collect { running ->
                 _state.value = _state.value.copy(isCheckingNow = running)
@@ -86,6 +102,21 @@ internal class ScheduleNotificationSettingsViewModel(
         }
     }
 
+    fun toggleClassReminders(enabled: Boolean) {
+        Timber.d("Toggle class reminders: $enabled")
+        reminderController.setEnabled(enabled)
+    }
+
+    fun toggleReminderKind(kind: ReminderKind, enabled: Boolean) {
+        Timber.d("Toggle class reminder $kind: $enabled")
+        reminderController.setKindEnabled(kind, enabled)
+    }
+
+    /** The exact alarm permission is changed in the system settings, so the state is re-read on return */
+    fun refresh() {
+        _state.value = readState(isCheckingNow = _state.value.isCheckingNow)
+    }
+
     fun checkNow() {
         if (_state.value.isCheckingNow) return
         Timber.d("Manual check triggered")
@@ -94,6 +125,7 @@ internal class ScheduleNotificationSettingsViewModel(
 
     fun clear() {
         prefs.unregisterOnSharedPreferenceChangeListener(prefsListener)
+        reminderPrefs.unregisterOnSharedPreferenceChangeListener(prefsListener)
         scope.cancel()
     }
 
@@ -110,6 +142,11 @@ internal class ScheduleNotificationSettingsViewModel(
             },
             totalChecks = prefs.getInt(KEY_TOTAL_CHECKS, 0),
             totalChangesDetected = prefs.getInt(KEY_TOTAL_CHANGES, 0),
+            classRemindersEnabled = reminderPrefs.areRemindersEnabled(),
+            remindDayBefore = reminderPrefs.isKindEnabled(ReminderKind.DAY_BEFORE),
+            remindHoursBefore = reminderPrefs.isKindEnabled(ReminderKind.HOURS_BEFORE),
+            canScheduleExactAlarms = reminderAlarms.canScheduleExactAlarms(),
+            notificationsAllowed = NotificationManagerCompat.from(context).areNotificationsEnabled(),
         )
     }
 

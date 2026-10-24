@@ -21,6 +21,9 @@ import kekmech.ru.feature_schedule_impl.notifications.ScheduleChangeLifecycleObs
 import kekmech.ru.feature_schedule_impl.notifications.ScheduleChangeScheduler
 import kekmech.ru.feature_schedule_impl.notifications.ScheduleNotificationManager
 import kekmech.ru.feature_schedule_impl.notifications.ScheduleNotificationSettingsViewModel
+import kekmech.ru.feature_schedule_impl.notifications.reminders.ClassReminderAlarmScheduler
+import kekmech.ru.feature_schedule_impl.notifications.reminders.ClassReminderController
+import kekmech.ru.feature_schedule_impl.notifications.reminders.ClassReminderLifecycleObserver
 import kekmech.ru.feature_schedule_impl.launcher.ScheduleFeatureApiImpl
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.FindScheduleActor
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.FindScheduleStoreFactory
@@ -69,6 +72,10 @@ val FeatureScheduleModule = module {
     single { ScheduleNotificationManager(androidContext()) }
     single { ScheduleCacheManager(androidContext()) }
     single { ScheduleChangeScheduler(androidContext()) }
-    factory { ScheduleNotificationSettingsViewModel(androidContext(), get()) }
+    factory { ScheduleNotificationSettingsViewModel(androidContext(), get(), get(), get()) }
+    // Practice / laboratory work reminders
+    single { ClassReminderAlarmScheduler(androidContext()) }
+    single { ClassReminderController(androidContext(), get()) }
+    factoryOf(::ClassReminderLifecycleObserver) bindIntoList AppLifecycleObserver::class
     factoryOf(::ScheduleChangeLifecycleObserver) bindIntoList AppLifecycleObserver::class
 }

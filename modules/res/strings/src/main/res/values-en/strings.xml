@@ -310,9 +310,9 @@
     <string name="schedule_widget_name">Today\'s Schedule</string>
     <string name="schedule_widget_description">Home screen widget showing today\'s classes</string>
     <!-- Schedule change notifications -->
-    <string name="app_settings_schedule_notifications_title">Change notifications</string>
-    <string name="app_settings_schedule_notifications_description">Notify me when my schedule changes</string>
-    <string name="schedule_notifications_title">Schedule changes</string>
+    <string name="app_settings_schedule_notifications_title">Schedule notifications</string>
+    <string name="app_settings_schedule_notifications_description">Reminders about practical classes and labs, schedule changes</string>
+    <string name="schedule_notifications_title">Schedule notifications</string>
     <string name="schedule_notifications_toggle_title">Change notifications</string>
     <string name="schedule_notifications_toggle_description">Get notified when your schedule changes</string>
     <string name="schedule_notifications_interval_title">Check frequency</string>
@@ -364,4 +364,20 @@
     <string name="bars_summary_error_parsing_title">Could not read BARS data</string>
     <string name="bars_summary_error_parsing_description">The portal may have changed its response format or is temporarily down. Try again later.</string>
     <string name="bars_summary_error_retry">Retry</string>
+
+    <string name="class_reminder_toggle_title">Class reminders</string>
+    <string name="class_reminder_toggle_description">Practical classes and laboratory works. No notifications at night (23:00–07:00)</string>
+    <string name="class_reminder_kind_day_before">24 hours before</string>
+    <string name="class_reminder_kind_hours_before">5 hours before</string>
+    <string name="class_reminder_permission_hint">Notifications are disabled for MPEI.Hub, reminders will not be shown</string>
+    <string name="class_reminder_permission_button">Allow notifications</string>
+    <string name="class_reminder_permission_denied">Class reminders cannot be shown without the notification permission</string>
+    <string name="class_reminder_exact_alarm_hint">Without the exact alarm permission reminders may arrive a few minutes late</string>
+    <string name="class_reminder_exact_alarm_button">Allow exact reminders</string>
+    <string name="class_reminder_channel_name">Class reminders</string>
+    <string name="class_reminder_channel_description">Reminders about practical classes and laboratory works</string>
+    <string name="class_reminder_type_practice">Practical class</string>
+    <string name="class_reminder_type_lab">Laboratory work</string>
+    <string name="class_reminder_title_day_before">%1$s tomorrow</string>
+    <string name="class_reminder_title_hours_before">%1$s in 5 hours</string>
 </resources>

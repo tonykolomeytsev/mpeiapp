@@ -23,6 +23,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Switch
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -35,6 +36,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import kekmech.ru.feature_schedule_impl.notifications.reminders.ReminderKind
 import kekmech.ru.res_strings.R.string as Strings
 import kekmech.ru.ui_kit_topappbar.TopAppBar
 import kekmech.ru.ui_theme.theme.MpeixTheme
@@ -46,6 +48,8 @@ import kekmech.ru.ui_theme.theme.MpeixTheme
 internal fun ScheduleNotificationSettingsScreen(
     viewModel: ScheduleNotificationSettingsViewModel,
     onToggleNotifications: (Boolean) -> Unit,
+    onRequestNotificationPermission: () -> Unit,
+    onOpenExactAlarmSettings: () -> Unit,
     onBackClick: () -> Unit,
 ) {
     val state by viewModel.state.collectAsState()
@@ -68,6 +72,14 @@ internal fun ScheduleNotificationSettingsScreen(
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
+            ClassRemindersCard(
+                state = state,
+                onToggleReminders = viewModel::toggleClassReminders,
+                onToggleKind = viewModel::toggleReminderKind,
+                onRequestNotificationPermission = onRequestNotificationPermission,
+                onOpenExactAlarmSettings = onOpenExactAlarmSettings,
+            )
+
             NotificationToggleCard(
                 enabled = state.notificationsEnabled,
                 onToggle = onToggleNotifications,
@@ -88,6 +100,111 @@ internal fun ScheduleNotificationSettingsScreen(
                     changesDetected = state.totalChangesDetected,
                 )
             }
+        }
+    }
+}
+
+/** Reminders 24 h and 5 h before practices and laboratory works */
+@Composable
+private fun ClassRemindersCard(
+    state: ScheduleNotificationSettingsState,
+    onToggleReminders: (Boolean) -> Unit,
+    onToggleKind: (ReminderKind, Boolean) -> Unit,
+    onRequestNotificationPermission: () -> Unit,
+    onOpenExactAlarmSettings: () -> Unit,
+) {
+    Card(modifier = Modifier.fillMaxWidth()) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(
+                        text = stringResource(Strings.class_reminder_toggle_title),
+                        style = MaterialTheme.typography.titleMedium,
+                    )
+                    Text(
+                        text = stringResource(Strings.class_reminder_toggle_description),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+                Switch(
+                    checked = state.classRemindersEnabled,
+                    onCheckedChange = onToggleReminders,
+                )
+            }
+            if (state.classRemindersEnabled) {
+                ReminderKindRow(
+                    title = stringResource(Strings.class_reminder_kind_day_before),
+                    checked = state.remindDayBefore,
+                    onCheckedChange = { onToggleKind(ReminderKind.DAY_BEFORE, it) },
+                )
+                ReminderKindRow(
+                    title = stringResource(Strings.class_reminder_kind_hours_before),
+                    checked = state.remindHoursBefore,
+                    onCheckedChange = { onToggleKind(ReminderKind.HOURS_BEFORE, it) },
+                )
+                if (!state.notificationsAllowed) {
+                    ReminderHint(
+                        text = stringResource(Strings.class_reminder_permission_hint),
+                        buttonText = stringResource(Strings.class_reminder_permission_button),
+                        onClick = onRequestNotificationPermission,
+                    )
+                }
+                if (!state.canScheduleExactAlarms) {
+                    ReminderHint(
+                        text = stringResource(Strings.class_reminder_exact_alarm_hint),
+                        buttonText = stringResource(Strings.class_reminder_exact_alarm_button),
+                        onClick = onOpenExactAlarmSettings,
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun ReminderKindRow(
+    title: String,
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit,
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(
+            text = title,
+            style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier.weight(1f),
+        )
+        Switch(checked = checked, onCheckedChange = onCheckedChange)
+    }
+}
+
+@Composable
+private fun ReminderHint(
+    text: String,
+    buttonText: String,
+    onClick: () -> Unit,
+) {
+    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+        Text(
+            text = text,
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+        TextButton(onClick = onClick) {
+            Text(buttonText)
         }
     }
 }

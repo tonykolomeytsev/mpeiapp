@@ -4,7 +4,30 @@
     <!-- Permission for notifications (Android 13+) -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
+    <!-- Class reminders: alarms are lost after a reboot and have to be registered again -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!--
+        Exact alarms (Android 12+). Without the permission the reminders are registered as inexact alarms,
+        the settings screen offers the user to grant it.
+    -->
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+
     <application>
+        <receiver
+            android:name="kekmech.ru.feature_schedule_impl.notifications.reminders.ClassReminderReceiver"
+            android:exported="false" />
+
+        <receiver
+            android:name="kekmech.ru.feature_schedule_impl.notifications.reminders.ClassReminderSystemReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+                <action android:name="android.intent.action.TIME_SET" />
+            </intent-filter>
+        </receiver>
+
         <receiver
             android:name="kekmech.ru.feature_schedule_impl.presentation.widget.ScheduleGlanceWidgetReceiver"
             android:label="@string/schedule_widget_name"

@@ -1,8 +1,11 @@
 package kekmech.ru.feature_schedule_impl.notifications
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
+import android.provider.Settings
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
@@ -41,6 +44,21 @@ internal class ScheduleNotificationSettingsFragment : ComposeFragment() {
         }
     }
 
+    private val reminderPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { granted ->
+        viewModel.refresh()
+        if (!granted) {
+            Toast
+                .makeText(
+                    requireContext(),
+                    Strings.class_reminder_permission_denied,
+                    Toast.LENGTH_LONG,
+                )
+                .show()
+        }
+    }
+
     @Composable
     override fun Screen() {
         val appSettings = koinInject<AppSettingsRepository>()
@@ -50,9 +68,17 @@ internal class ScheduleNotificationSettingsFragment : ComposeFragment() {
             ScheduleNotificationSettingsScreen(
                 viewModel = viewModel,
                 onToggleNotifications = ::onToggleNotifications,
+                onRequestNotificationPermission = ::requestReminderNotificationPermission,
+                onOpenExactAlarmSettings = ::openExactAlarmSettings,
                 onBackClick = { close() },
             )
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // permissions are changed in the system settings: re-read them on return
+        viewModel.refresh()
     }
 
     override fun onDestroy() {
@@ -65,6 +91,29 @@ internal class ScheduleNotificationSettingsFragment : ComposeFragment() {
             permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
         } else {
             viewModel.toggleNotifications(enabled)
+        }
+    }
+
+    private fun requestReminderNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && !hasNotificationPermission()) {
+            reminderPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+        } else {
+            // notifications are disabled for the whole app in the system settings
+            startActivity(
+                Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+                    .putExtra(Settings.EXTRA_APP_PACKAGE, requireContext().packageName)
+            )
+        }
+    }
+
+    private fun openExactAlarmSettings() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            startActivity(
+                Intent(
+                    Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM,
+                    Uri.parse("package:${requireContext().packageName}"),
+                )
+            )
         }
     }
 

@@ -10,6 +10,7 @@ import kekmech.ru.feature_schedule_impl.data.datasource.ScheduleCacheWrapper
 import kekmech.ru.feature_schedule_impl.data.datasource.SelectedScheduleSource
 import kekmech.ru.feature_schedule_impl.data.mapper.ScheduleMapper
 import kekmech.ru.feature_schedule_impl.data.network.ScheduleService
+import kekmech.ru.feature_schedule_impl.notifications.reminders.ClassReminderController
 import kekmech.ru.feature_schedule_impl.presentation.widget.ScheduleGlanceWidgetUpdater
 import kekmech.ru.lib_analytics_api.SelectedScheduleAnalyticsProvider
 
@@ -18,6 +19,7 @@ internal class ScheduleRepositoryImpl(
     private val scheduleCacheWrapper: ScheduleCacheWrapper,
     selectedScheduleSource: SelectedScheduleSource,
     private val widgetUpdater: ScheduleGlanceWidgetUpdater? = null,
+    private val classReminderController: ClassReminderController? = null,
 ) :
     ScheduleRepository,
     SelectedScheduleAnalyticsProvider,
@@ -59,6 +61,8 @@ internal class ScheduleRepositoryImpl(
         FirebaseCrashlytics.getInstance()
             .setCustomKey("schedule_name", selectedSchedule.name)
         widgetUpdater?.update()
+        // reminders belong to the selected schedule
+        classReminderController?.syncNow()
     }
 
     override fun getSelectedSchedule(): SelectedSchedule = this._selectedSchedule

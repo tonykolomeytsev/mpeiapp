@@ -311,9 +311,9 @@
     <string name="schedule_widget_name">Расписание на сегодня</string>
     <string name="schedule_widget_description">Виджет расписания занятий на сегодня</string>
     <!-- Уведомления об изменениях в расписании -->
-    <string name="app_settings_schedule_notifications_title">Уведомления об изменениях</string>
-    <string name="app_settings_schedule_notifications_description">Сообщать, когда в расписании что-то поменялось</string>
-    <string name="schedule_notifications_title">Изменения в расписании</string>
+    <string name="app_settings_schedule_notifications_title">Уведомления о расписании</string>
+    <string name="app_settings_schedule_notifications_description">Напоминания о практиках и лабораторных, изменения в расписании</string>
+    <string name="schedule_notifications_title">Уведомления о расписании</string>
     <string name="schedule_notifications_toggle_title">Уведомления об изменениях</string>
     <string name="schedule_notifications_toggle_description">Получать уведомления при изменении расписания</string>
     <string name="schedule_notifications_interval_title">Частота проверки</string>
@@ -365,4 +365,20 @@
     <string name="bars_summary_error_parsing_title">Не удалось прочитать данные БАРС</string>
     <string name="bars_summary_error_parsing_description">Портал мог изменить формат ответа или временно не работает. Повторите попытку позже.</string>
     <string name="bars_summary_error_retry">Повторить</string>
+
+    <string name="class_reminder_toggle_title">Напоминания о занятиях</string>
+    <string name="class_reminder_toggle_description">Практические и лабораторные занятия. Ночью (с 23:00 до 07:00) уведомления не приходят</string>
+    <string name="class_reminder_kind_day_before">За 24 часа до начала</string>
+    <string name="class_reminder_kind_hours_before">За 5 часов до начала</string>
+    <string name="class_reminder_permission_hint">Уведомления для МЭИ.Хаб отключены, напоминания не будут показываться</string>
+    <string name="class_reminder_permission_button">Разрешить уведомления</string>
+    <string name="class_reminder_permission_denied">Без разрешения на уведомления напоминания о занятиях показываться не будут</string>
+    <string name="class_reminder_exact_alarm_hint">Без разрешения на точные будильники напоминания могут приходить с задержкой в несколько минут</string>
+    <string name="class_reminder_exact_alarm_button">Разрешить точные напоминания</string>
+    <string name="class_reminder_channel_name">Напоминания о занятиях</string>
+    <string name="class_reminder_channel_description">Напоминания о практических и лабораторных занятиях</string>
+    <string name="class_reminder_type_practice">Практика</string>
+    <string name="class_reminder_type_lab">Лабораторная</string>
+    <string name="class_reminder_title_day_before">%1$s — завтра</string>
+    <string name="class_reminder_title_hours_before">%1$s — через 5 часов</string>
 </resources>
