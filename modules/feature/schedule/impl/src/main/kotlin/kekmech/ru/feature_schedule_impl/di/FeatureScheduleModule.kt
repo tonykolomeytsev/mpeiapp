@@ -16,7 +16,9 @@ import kekmech.ru.feature_schedule_impl.data.network.mpei.MpeiScheduleService
 import kekmech.ru.feature_schedule_impl.data.repository.ScheduleRepositoryImpl
 import kekmech.ru.feature_schedule_impl.data.repository.ScheduleSearchRepositoryImpl
 import kekmech.ru.feature_schedule_impl.domain.usecase.HasSelectedScheduleUseCaseImpl
+import kekmech.ru.feature_schedule_api.ScheduleNotificationSettings
 import kekmech.ru.feature_schedule_impl.notifications.ScheduleCacheManager
+import kekmech.ru.feature_schedule_impl.notifications.ScheduleNotificationSettingsImpl
 import kekmech.ru.feature_schedule_impl.notifications.ScheduleChangeLifecycleObserver
 import kekmech.ru.feature_schedule_impl.notifications.ScheduleChangeScheduler
 import kekmech.ru.feature_schedule_impl.notifications.ScheduleNotificationManager
@@ -77,5 +79,7 @@ val FeatureScheduleModule = module {
     single { ClassReminderAlarmScheduler(androidContext()) }
     single { ClassReminderController(androidContext(), get()) }
     factoryOf(::ClassReminderLifecycleObserver) bindIntoList AppLifecycleObserver::class
+    // Switches for the main settings screen
+    single<ScheduleNotificationSettings> { ScheduleNotificationSettingsImpl(androidContext(), get(), get()) }
     factoryOf(::ScheduleChangeLifecycleObserver) bindIntoList AppLifecycleObserver::class
 }

@@ -22,6 +22,7 @@ import kekmech.ru.feature_app_settings_impl.presentation.screens.main.elm.AppSet
 import kekmech.ru.feature_app_settings_impl.presentation.screens.map_type.SelectMapTypeFragment
 import kekmech.ru.feature_bars_api.BarsLogoutHandle
 import kekmech.ru.feature_schedule_api.ScheduleFeatureApi
+import kekmech.ru.feature_schedule_api.ScheduleNotificationSettings
 import kekmech.ru.lib_analytics_android.ext.screenAnalytics
 import kekmech.ru.lib_elm_compose.ElmContent
 import kekmech.ru.lib_navigation.addScreenForward
@@ -42,6 +43,7 @@ internal class AppSettingsComposeFragment : ComposeFragment() {
     override fun Screen() {
         val factory = koinInject<AppSettingsStoreFactory>()
         val activity = LocalActivity.current as ComponentActivity
+        val notificationSettings = koinInject<ScheduleNotificationSettings>()
 
         ElmContent(
             key = "AppSettingsScreen",
@@ -62,6 +64,7 @@ internal class AppSettingsComposeFragment : ComposeFragment() {
                             analytics.sendClick("Favorites")
                             addScreenForward { FavoritesFragment() }
                         },
+                        notificationSettings = notificationSettings,
                         onOpenScheduleNotifications = {
                             analytics.sendClick("ScheduleNotifications")
                             addScreenForward { scheduleFeatureApi.getNotificationSettingsScreen() }

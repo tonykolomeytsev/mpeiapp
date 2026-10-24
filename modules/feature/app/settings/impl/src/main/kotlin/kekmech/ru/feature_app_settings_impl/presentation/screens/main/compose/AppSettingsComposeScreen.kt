@@ -22,6 +22,7 @@ import kekmech.ru.feature_app_settings_impl.presentation.screens.main.elm.AppSet
 import kekmech.ru.feature_app_settings_impl.presentation.screens.main.elm.AppSettingsEvent
 import kekmech.ru.feature_app_settings_impl.presentation.screens.main.elm.AppSettingsEvent.Ui
 import kekmech.ru.feature_app_settings_impl.presentation.screens.main.elm.AppSettingsState
+import kekmech.ru.feature_schedule_api.ScheduleNotificationSettings
 import kekmech.ru.res_strings.R.string as Strings
 import kekmech.ru.ui_kit_lists.ListItem
 import kekmech.ru.ui_kit_segmented.SegmentedControl
@@ -38,6 +39,7 @@ internal fun AppSettingsComposeScreen(
     onBackClick: (() -> Unit)? = null,
     onOpenFavorites: () -> Unit,
     onOpenScheduleNotifications: () -> Unit,
+    notificationSettings: ScheduleNotificationSettings,
     onOpenGithub: () -> Unit,
     onOpenContributor: (String) -> Unit,
     onLogoutBars: () -> Unit,
@@ -133,6 +135,14 @@ internal fun AppSettingsComposeScreen(
                     }
                 }
 
+                // Notifications: on / off right here
+                item {
+                    NotificationSettingsSection(
+                        settings = notificationSettings,
+                        onOpenDetails = onOpenScheduleNotifications,
+                    )
+                }
+
                 // Section 2: Schedule
                 item {
                     SettingsSectionHeader(title = stringResource(Strings.app_settings_header_schedule))
@@ -143,15 +153,6 @@ internal fun AppSettingsComposeScreen(
                         supportingText = stringResource(Strings.app_settings_favorite_schedule_description),
                         modifier = Modifier.clickable {
                             onOpenFavorites()
-                        },
-                    )
-                }
-                item {
-                    ListItem(
-                        headlineText = stringResource(Strings.app_settings_schedule_notifications_title),
-                        supportingText = stringResource(Strings.app_settings_schedule_notifications_description),
-                        modifier = Modifier.clickable {
-                            onOpenScheduleNotifications()
                         },
                     )
                 }
@@ -304,7 +305,7 @@ internal fun AppSettingsComposeScreen(
 }
 
 @Composable
-private fun SettingsSectionHeader(
+internal fun SettingsSectionHeader(
     title: String,
     modifier: Modifier = Modifier,
 ) {

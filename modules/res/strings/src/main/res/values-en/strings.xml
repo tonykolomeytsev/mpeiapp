@@ -410,4 +410,12 @@
     <string name="support_copy_action">Copy</string>
     <string name="support_copied">Copied: %1$s</string>
     <string name="support_copy_failed">Could not copy</string>
+
+    <string name="app_settings_header_notifications">Notifications</string>
+    <string name="app_settings_notify_reminders_title">Class reminders</string>
+    <string name="app_settings_notify_reminders_description">Practical classes and labs: 24 hours and 5 hours before the start</string>
+    <string name="app_settings_notify_changes_title">Schedule changes</string>
+    <string name="app_settings_notify_changes_description">Tell me when something in the schedule changes</string>
+    <string name="app_settings_notify_more_title">Notification settings</string>
+    <string name="app_settings_notify_more_description">Reminder times, check frequency, permissions</string>
 </resources>

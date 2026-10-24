@@ -69,9 +69,20 @@ jobs:
           echo "apk_path=$APK" >> "$GITHUB_OUTPUT"
 
       - name: Verify signature
+        env:
+          # SHA-256 of the MPEI.Hub release certificate (alias mpeihub in keystore/release.keystore).
+          # The release is published only when the APK is signed with exactly this key.
+          EXPECTED_SHA256: "eeb529089673cb4f77b7efb5c6d191bf0ec36d20b2ceed5519169989dc1f53fc"
         run: |
           APKSIGNER=$(ls "$ANDROID_HOME"/build-tools/*/apksigner | sort -V | tail -n 1)
-          "$APKSIGNER" verify --print-certs "${{ steps.apk.outputs.apk_path }}"
+          "$APKSIGNER" verify --verbose --print-certs "${{ steps.apk.outputs.apk_path }}" | tee signature.txt
+          ACTUAL=$(grep -m1 "certificate SHA-256 digest" signature.txt | sed 's/.*: //' | tr -d ' \r' | tr 'A-F' 'a-f')
+          echo "expected: $EXPECTED_SHA256"
+          echo "actual:   $ACTUAL"
+          if [ "$ACTUAL" != "$EXPECTED_SHA256" ]; then
+            echo "::error::The APK is not signed with the MPEI.Hub release key"
+            exit 1
+          fi
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
