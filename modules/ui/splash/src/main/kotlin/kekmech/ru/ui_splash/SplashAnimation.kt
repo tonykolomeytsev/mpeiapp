@@ -202,7 +202,7 @@ private fun DrawScope.drawRim(t: Float, ringPath: Path) {
 
     val radius = emblemRadius()
     val center = emblemCenter()
-    val rimRadius = radius * 0.955f
+    val rimRadius = radius * 0.962f
     val strokeWidth = max(2.dp.toPx(), radius * 0.028f)
     val headDegrees = -90f + 360f * progress
 
