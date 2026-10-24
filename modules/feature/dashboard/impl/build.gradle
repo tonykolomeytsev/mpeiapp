@@ -7,10 +7,27 @@ android.buildFeatures{
     androidResources = true
 }
 
+android.testOptions {
+    unitTests {
+        // Robolectric needs merged resources and manifest to render Compose screens
+        includeAndroidResources = true
+    }
+}
+
 dependencies {
     testImplementation(libs.kotest.assertions)
     testImplementation(libs.kotest.property)
     testImplementation(libs.kotest.runner)
+
+    // Compose UI tests on the JVM (Robolectric)
+    testImplementation(platform(libs.compose.bom))
+    testImplementation(libs.compose.ui.test.junit4)
+    testImplementation(libs.androidx.test.core)
+    testImplementation(libs.androidx.test.ext.junit)
+    testImplementation(libs.junit4)
+    testImplementation(libs.robolectric)
+    testRuntimeOnly(libs.junit.vintage.engine)
+    debugImplementation(libs.compose.ui.test.manifest)
 
     implementation(libs.bundles.compose)
     implementation(libs.compose.material3)
@@ -24,6 +41,7 @@ dependencies {
     implementation(libs.google.material)
     implementation(libs.koin.android)
     implementation(libs.koin.core)
+    implementation(libs.koin.compose)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.vivid.elmslie.android)
     implementation(libs.vivid.elmslie.core)

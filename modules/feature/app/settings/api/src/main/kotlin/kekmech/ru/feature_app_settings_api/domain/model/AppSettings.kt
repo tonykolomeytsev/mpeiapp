@@ -14,3 +14,14 @@ public data class AppSettings(
     val autoHideBottomSheet: Boolean,
     val mapAppearanceType: String,
 )
+
+/**
+ * Whether the dark palette has to be used for the theme chosen by the user.
+ * [isSystemInDarkTheme] is the current system (night mode) setting, used for [AppTheme.System].
+ */
+public fun AppSettings.isDarkTheme(isSystemInDarkTheme: Boolean): Boolean =
+    when (appTheme) {
+        AppTheme.Light -> false
+        AppTheme.Dark -> true
+        AppTheme.System -> isSystemInDarkTheme
+    }

@@ -1,5 +1,7 @@
 package kekmech.ru.feature_schedule_impl.notifications
 
+import androidx.compose.foundation.isSystemInDarkTheme
+import kekmech.ru.feature_app_settings_api.domain.model.isDarkTheme
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -16,7 +18,7 @@ import com.kekmech.lib_fragment.ComposeFragment
 import kekmech.ru.ext_android.close
 import kekmech.ru.feature_app_settings_api.data.AppSettingsRepository
 import kekmech.ru.res_strings.R.string as Strings
-import kekmech.ru.ui_theme.theme.MpeixTheme
+import kekmech.ru.ui_theme.theme.MpeixScreenTheme
 import org.koin.android.ext.android.inject
 import org.koin.compose.koinInject
 
@@ -62,9 +64,10 @@ internal class ScheduleNotificationSettingsFragment : ComposeFragment() {
     @Composable
     override fun Screen() {
         val appSettings = koinInject<AppSettingsRepository>()
-        val darkTheme = remember { derivedStateOf { appSettings.getAppSettings().isDarkThemeEnabled } }
+        val isSystemDark = isSystemInDarkTheme()
+        val darkTheme = remember(isSystemDark) { derivedStateOf { appSettings.getAppSettings().isDarkTheme(isSystemDark) } }
 
-        MpeixTheme(darkTheme = darkTheme.value) {
+        MpeixScreenTheme(darkTheme = darkTheme.value) {
             ScheduleNotificationSettingsScreen(
                 viewModel = viewModel,
                 onToggleNotifications = ::onToggleNotifications,

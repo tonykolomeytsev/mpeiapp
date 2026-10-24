@@ -1,5 +1,7 @@
 package kekmech.ru.feature_schedule_impl.presentation.screen.main
 
+import androidx.compose.foundation.isSystemInDarkTheme
+import kekmech.ru.feature_app_settings_api.domain.model.isDarkTheme
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.LocalActivity
@@ -19,7 +21,7 @@ import kekmech.ru.feature_schedule_impl.presentation.screen.main.compose.Schedul
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleEvent
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleStoreFactory
 import kekmech.ru.lib_elm_compose.ElmContent
-import kekmech.ru.ui_theme.theme.MpeixTheme
+import kekmech.ru.ui_theme.theme.MpeixScreenTheme
 import org.koin.compose.koinInject
 
 internal class ScheduleComposeFragment : ComposeFragment() {
@@ -28,9 +30,10 @@ internal class ScheduleComposeFragment : ComposeFragment() {
     override fun Screen() {
         val appSettings = koinInject<AppSettingsRepository>()
         val scheduleRepository = koinInject<ScheduleRepository>()
+        val isSystemDark = isSystemInDarkTheme()
         val darkTheme =
-            remember { derivedStateOf { appSettings.getAppSettings().isDarkThemeEnabled } }
-        MpeixTheme(darkTheme = darkTheme.value) {
+            remember(isSystemDark) { derivedStateOf { appSettings.getAppSettings().isDarkTheme(isSystemDark) } }
+        MpeixScreenTheme(darkTheme = darkTheme.value) {
             val factory = koinInject<ScheduleStoreFactory>()
             val dependencies = koinInject<ScheduleDependencies>()
             val activity = LocalActivity.current as ComponentActivity

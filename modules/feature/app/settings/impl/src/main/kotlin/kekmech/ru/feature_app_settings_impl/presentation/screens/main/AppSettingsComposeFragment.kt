@@ -1,5 +1,7 @@
 package kekmech.ru.feature_app_settings_impl.presentation.screens.main
 
+import androidx.compose.foundation.isSystemInDarkTheme
+import kekmech.ru.feature_app_settings_api.domain.model.isDarkTheme
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -24,7 +26,7 @@ import kekmech.ru.lib_analytics_android.ext.screenAnalytics
 import kekmech.ru.lib_elm_compose.ElmContent
 import kekmech.ru.lib_navigation.addScreenForward
 import kekmech.ru.lib_navigation.showDialog
-import kekmech.ru.ui_theme.theme.MpeixTheme
+import kekmech.ru.ui_theme.theme.MpeixScreenTheme
 import org.koin.android.ext.android.inject
 import org.koin.compose.koinInject
 
@@ -47,8 +49,9 @@ internal class AppSettingsComposeFragment : ComposeFragment() {
             viewModelStoreOwner = activity,
             savedStateRegistryOwner = activity,
             content = { onAccept, state, effects ->
-                val isDarkTheme = state.appSettings?.isDarkThemeEnabled ?: false
-                MpeixTheme(darkTheme = isDarkTheme) {
+                val isSystemDark = isSystemInDarkTheme()
+                val isDarkTheme = state.appSettings?.isDarkTheme(isSystemDark) ?: isSystemDark
+                MpeixScreenTheme(darkTheme = isDarkTheme) {
                     val isRootTab = parentFragment != null
                     AppSettingsComposeScreen(
                         state = state,

@@ -36,6 +36,12 @@ internal class AppSettingsReducer :
                 commands { +Command.SetDarkThemeEnabled(event.isEnabled) }
             }
 
+            is Ui.Action.SetTheme -> {
+                // the activity applies the theme to View-based screens only when it is created
+                effects { +Effect.RecreateActivity.takeIf { event.theme != state.appSettings?.appTheme } }
+                commands { +Command.SetTheme(event.theme) }
+            }
+
             is Ui.Action.SetSnowEnabled -> commands { +Command.SetSnowEnabled(event.isEnabled) }
             is Ui.Action.SetAutoHideBottomSheet -> commands {
                 +Command.SetAutoHideBottomSheet(event.isEnabled)

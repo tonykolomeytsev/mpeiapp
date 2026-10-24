@@ -13,32 +13,48 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kekmech.ru.ext_android.copyToClipboard
+import kekmech.ru.ext_android.openLinkExternal
 import kekmech.ru.feature_dashboard_impl.R
 import kekmech.ru.res_strings.R.string as Strings
 import kekmech.ru.ui_kit_topappbar.TopAppBar
 import kekmech.ru.ui_theme.theme.MpeixTheme
+import kotlinx.coroutines.launch
 
 @Composable
 internal fun EolScreen(
     onBackClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    donationOptions: List<DonationOption> = rememberDonationOptions(),
 ) {
+    val context = LocalContext.current
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
+
     Scaffold(
+        modifier = modifier,
         topBar = {
             TopAppBar(
                 title = stringResource(Strings.about_project_title),
                 navigationIcon = { BackIconButton(onBackClick) }
             )
         },
+        snackbarHost = { SnackbarHost(snackbarHostState) },
         contentColor = MpeixTheme.palette.content,
         containerColor = MpeixTheme.palette.background,
     ) { innerPadding ->
@@ -65,7 +81,7 @@ internal fun EolScreen(
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        text = "Проект получил второе дыхание: автономная работа, прямое подключение к порталу МЭИ, современные офлайн-карты и обновлённый дизайн.",
+                        text = stringResource(Strings.about_project_intro),
                         style = MpeixTheme.typography.paragraphNormal.copy(
                             color = MpeixTheme.palette.content,
                             lineHeight = 20.sp,
@@ -77,7 +93,7 @@ internal fun EolScreen(
             Spacer(modifier = Modifier.height(20.dp))
 
             Text(
-                text = "Ключевые возможности:",
+                text = stringResource(Strings.about_features_title),
                 style = MpeixTheme.typography.header4.copy(
                     fontWeight = FontWeight.Bold,
                     color = MpeixTheme.palette.content,
@@ -86,21 +102,40 @@ internal fun EolScreen(
             Spacer(modifier = Modifier.height(10.dp))
 
             AboutFeatureItem(
-                title = "Прямой парсер расписания МЭИ",
-                desc = "Больше нет зависимости от сторонних серверов. Расписание парсится напрямую с официального портала mpei.ru.",
+                title = stringResource(Strings.about_feature_parser_title),
+                desc = stringResource(Strings.about_feature_parser_desc),
             )
             AboutFeatureItem(
-                title = "Офлайн-карты OpenStreetMap",
-                desc = "Все корпуса (А, Б, В, Г, Д, Е, Ж, З, И, К, М, Р, С, Т, Ч, Э), кафедры, столовые и общежития кампуса Лефортово работают полностью автономно.",
+                title = stringResource(Strings.about_feature_maps_title),
+                desc = stringResource(Strings.about_feature_maps_desc),
             )
             AboutFeatureItem(
-                title = "Современный интерфейс",
-                desc = "Интерфейс на Jetpack Compose, карточки занятий с типами пар, виджеты и полная поддержка Android 14+.",
+                title = stringResource(Strings.about_feature_ui_title),
+                desc = stringResource(Strings.about_feature_ui_desc),
             )
             AboutFeatureItem(
-                title = "Открытый исходный код",
-                desc = "Разработка ведётся открыто сообществом студентов МЭИ на GitHub.",
+                title = stringResource(Strings.about_feature_opensource_title),
+                desc = stringResource(Strings.about_feature_opensource_desc),
             )
+
+            if (donationOptions.isNotEmpty()) {
+                Spacer(modifier = Modifier.height(20.dp))
+                SupportCard(
+                    options = donationOptions,
+                    onCopy = { label, text ->
+                        val copied = context.copyToClipboard(text = text, label = label)
+                        val message = context.getString(
+                            if (copied) Strings.support_copied else Strings.support_copy_failed,
+                            label,
+                        )
+                        scope.launch {
+                            snackbarHostState.currentSnackbarData?.dismiss()
+                            snackbarHostState.showSnackbar(message)
+                        }
+                    },
+                    onOpen = { url -> context.openLinkExternal(url) },
+                )
+            }
 
             Spacer(modifier = Modifier.height(24.dp))
 
@@ -152,6 +187,14 @@ private fun AboutFeatureItem(title: String, desc: String) {
 @Composable
 private fun EolScreenPreview() {
     MpeixTheme {
-        EolScreen(onBackClick = { /* no-op */ })
+        EolScreen(
+            onBackClick = { /* no-op */ },
+            donationOptions = donationOptions(
+                sbpPhone = "+7 900 000-00-00",
+                tbankCard = "0000 0000 0000 0000",
+                tbankUrl = "https://www.tbank.ru/cf/example",
+                boostyUrl = "https://boosty.to/example",
+            ),
+        )
     }
 }

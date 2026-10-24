@@ -141,6 +141,16 @@ compose-material3 = { module = "androidx.compose.material3:material3" }
 compose-activity = { module = "androidx.activity:activity-compose", version = "1.12.4" }
 compose-ui-fonts = { module = "androidx.compose.ui:ui-text-google-fonts", version = "1.10.4" }
 
+## Compose UI tests (run on the JVM with Robolectric, see modules/feature/*/impl/src/test)
+compose-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4" }
+compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
+androidx-test-core = { module = "androidx.test:core", version = "1.6.1" }
+androidx-test-ext-junit = { module = "androidx.test.ext:junit", version = "1.2.1" }
+junit4 = { module = "junit:junit", version = "4.13.2" }
+# JUnit 4 tests (Robolectric) run through the JUnit Platform that the project uses for Kotest
+junit-vintage-engine = { module = "org.junit.vintage:junit-vintage-engine", version = "5.9.3" }
+robolectric = { module = "org.robolectric:robolectric", version = "4.14.1" }
+
 ## Accompanist
 accompanist-insets = { module = "com.google.accompanist:accompanist-insets", version.ref = "accompanist" }
 accompanist-insets-ui = { module = "com.google.accompanist:accompanist-insets-ui", version.ref = "accompanist" }

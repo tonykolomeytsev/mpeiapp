@@ -5,6 +5,12 @@ plugins {
 }
 
 android{
+    testOptions {
+        unitTests {
+            // Robolectric needs merged resources and manifest to render Compose screens
+            includeAndroidResources = true
+        }
+    }
     defaultConfig {
         consumerProguardFiles(file("proguard-consumer-rules.pro"))
     }
@@ -19,6 +25,16 @@ dependencies {
     testImplementation(libs.kotest.property)
     testImplementation(libs.kotest.runner)
     testImplementation(libs.kotlin.test)
+
+    // Compose UI tests on the JVM (Robolectric)
+    testImplementation(platform(libs.compose.bom))
+    testImplementation(libs.compose.ui.test.junit4)
+    testImplementation(libs.androidx.test.core)
+    testImplementation(libs.androidx.test.ext.junit)
+    testImplementation(libs.junit4)
+    testImplementation(libs.robolectric)
+    testRuntimeOnly(libs.junit.vintage.engine)
+    debugImplementation(libs.compose.ui.test.manifest)
 
     implementation(libs.bundles.compose)
     implementation(libs.compose.material3)
@@ -66,6 +82,7 @@ dependencies {
 
     implementation(project(":ui_theme"))
     implementation(project(":ui_shimmer"))
+    implementation(project(":ui_kit_segmented"))
     implementation(project(":ui_kit_topappbar"))
     implementation(project(":ui_kit_buttons"))
 

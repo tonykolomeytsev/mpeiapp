@@ -14,14 +14,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import kekmech.ru.feature_app_settings_api.domain.model.AppTheme
 import kekmech.ru.feature_app_settings_impl.presentation.screens.main.elm.AppSettingsEffect
 import kekmech.ru.feature_app_settings_impl.presentation.screens.main.elm.AppSettingsEvent
 import kekmech.ru.feature_app_settings_impl.presentation.screens.main.elm.AppSettingsEvent.Ui
 import kekmech.ru.feature_app_settings_impl.presentation.screens.main.elm.AppSettingsState
 import kekmech.ru.res_strings.R.string as Strings
 import kekmech.ru.ui_kit_lists.ListItem
+import kekmech.ru.ui_kit_segmented.SegmentedControl
 import kekmech.ru.ui_kit_switch.Switch
 import kekmech.ru.ui_kit_topappbar.TopAppBar
 import kekmech.ru.ui_theme.theme.MpeixTheme
@@ -75,16 +78,24 @@ internal fun AppSettingsComposeScreen(
                 // Section 1: Appearance
                 item {
                     ListItem(
-                        headlineText = stringResource(Strings.app_settings_dark_theme),
-                        supportingText = stringResource(Strings.app_settings_dark_theme_description),
-                        trailingContent = {
-                            Switch(
-                                checked = appSettings.isDarkThemeEnabled,
-                                onCheckedChange = { isChecked ->
-                                    onAccept(Ui.Action.SetDarkThemeEnabled(isChecked))
-                                },
+                        headlineText = stringResource(Strings.app_settings_theme_title),
+                        supportingText = stringResource(Strings.app_settings_theme_description),
+                    )
+                    SegmentedControl(
+                        options = AppTheme.entries,
+                        selected = appSettings.appTheme,
+                        onSelect = { onAccept(Ui.Action.SetTheme(it)) },
+                        label = { theme ->
+                            stringResource(
+                                when (theme) {
+                                    AppTheme.Light -> Strings.app_settings_theme_light
+                                    AppTheme.Dark -> Strings.app_settings_theme_dark
+                                    AppTheme.System -> Strings.app_settings_theme_system
+                                }
                             )
                         },
+                        role = Role.RadioButton,
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
                     )
                 }
 

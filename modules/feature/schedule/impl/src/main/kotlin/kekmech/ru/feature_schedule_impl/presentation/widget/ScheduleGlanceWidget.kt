@@ -33,6 +33,7 @@ import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
 import androidx.glance.color.ColorProvider
+import kekmech.ru.res_strings.R.string as Strings
 import kekmech.ru.feature_schedule_api.data.repository.ScheduleRepository
 import kekmech.ru.feature_schedule_api.domain.model.Classes
 import androidx.glance.appwidget.SizeMode
@@ -127,7 +128,7 @@ private fun ScheduleWidgetRoot(
         ) {
             Column(modifier = GlanceModifier.defaultWeight()) {
                 Text(
-                    text = scheduleName ?: "МЭИ.Хаб",
+                    text = scheduleName ?: context.getString(Strings.brand_name),
                     style = TextStyle(
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold,
@@ -155,7 +156,7 @@ private fun ScheduleWidgetRoot(
                 contentAlignment = Alignment.Center,
             ) {
                 Text(
-                    text = "Откройте МЭИ.Хаб, чтобы выбрать группу",
+                    text = context.getString(Strings.schedule_widget_select_group, context.getString(Strings.brand_name)),
                     style = TextStyle(
                         fontSize = 13.sp,
                         color = ColorProvider(day = Color(0xFF757575), night = Color(0xFF9E9E9E)),

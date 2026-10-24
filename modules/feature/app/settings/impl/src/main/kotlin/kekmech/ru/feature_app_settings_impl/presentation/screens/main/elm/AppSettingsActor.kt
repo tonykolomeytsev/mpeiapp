@@ -1,5 +1,6 @@
 package kekmech.ru.feature_app_settings_impl.presentation.screens.main.elm
 
+import kekmech.ru.feature_app_settings_api.domain.model.AppTheme
 import kekmech.ru.feature_app_settings_impl.data.AppSettingsRepositoryImpl
 import kekmech.ru.feature_app_settings_impl.presentation.screens.main.elm.AppSettingsEvent.Internal
 import kekmech.ru.feature_contributors_api.data.repository.ContributorsRepository
@@ -20,7 +21,14 @@ internal class AppSettingsActor(
 
             is AppSettingsCommand.SetDarkThemeEnabled -> actorFlow {
                 appSettingsRepository
-                    .updateAppSettings { copy(isDarkThemeEnabled = command.isEnabled) }
+                    .updateAppSettings {
+                        copy(appTheme = if (command.isEnabled) AppTheme.Dark else AppTheme.Light)
+                    }
+            }.mapEvents(Internal::LoadAppSettingsSuccess)
+
+            is AppSettingsCommand.SetTheme -> actorFlow {
+                appSettingsRepository
+                    .updateAppSettings { copy(appTheme = command.theme) }
             }.mapEvents(Internal::LoadAppSettingsSuccess)
 
             is AppSettingsCommand.SetSnowEnabled -> actorFlow {

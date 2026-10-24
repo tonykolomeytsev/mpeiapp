@@ -1,18 +1,7 @@
 package kekmech.ru.feature_bars_impl.presentation.screen.main_compose
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.selection.selectable
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Text
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.Role
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
@@ -44,6 +33,7 @@ import kekmech.ru.feature_bars_impl.presentation.screen.main_compose.summary.car
 import kekmech.ru.feature_bars_impl.presentation.screen.main_compose.summary.summaryItems
 import kekmech.ru.feature_bars_impl.presentation.screen.main_compose.summary.toSummary
 import kekmech.ru.lib_elm.Resource
+import kekmech.ru.ui_kit_segmented.SegmentedControl
 import kekmech.ru.ui_theme.theme.MpeixTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -163,42 +153,20 @@ private fun BarsTabs(
     onSelect: (BarsTab) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Row(
-        modifier = modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-    ) {
-        BarsTab.entries.forEach { tab ->
-            val isSelected = tab == selected
-            val shape = RoundedCornerShape(8.dp)
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier = Modifier
-                    .weight(1f)
-                    .clip(shape)
-                    .background(
-                        color = if (isSelected) MpeixTheme.palette.primaryContainer else MpeixTheme.palette.surface,
-                        shape = shape,
-                    )
-                    .selectable(selected = isSelected, role = Role.Tab, onClick = { onSelect(tab) })
-                    .padding(vertical = 10.dp),
-            ) {
-                Text(
-                    text = stringResource(
-                        when (tab) {
-                            BarsTab.DISCIPLINES -> Strings.bars_tab_disciplines
-                            BarsTab.SUMMARY -> Strings.bars_tab_summary
-                        }
-                    ),
-                    style = if (isSelected) {
-                        MpeixTheme.typography.paragraphNormalAccent
-                    } else {
-                        MpeixTheme.typography.paragraphNormal
-                    },
-                    color = if (isSelected) MpeixTheme.palette.content else MpeixTheme.palette.contentVariant,
-                )
-            }
-        }
-    }
+    SegmentedControl(
+        options = BarsTab.entries,
+        selected = selected,
+        onSelect = onSelect,
+        label = { tab ->
+            stringResource(
+                when (tab) {
+                    BarsTab.DISCIPLINES -> Strings.bars_tab_disciplines
+                    BarsTab.SUMMARY -> Strings.bars_tab_summary
+                }
+            )
+        },
+        modifier = modifier,
+    )
 }
 
 private const val DISCIPLINES_SKELETON_COUNT = 4

@@ -22,6 +22,8 @@ import kekmech.ru.ext_android.doOnApplyWindowInsets
 import kekmech.ru.ext_android.notNullSerializable
 import kekmech.ru.ext_android.setResultListener
 import kekmech.ru.ext_android.viewbinding.viewBinding
+import kekmech.ru.ext_android.dpToPx
+import kekmech.ru.ext_android.views.restingSpinnerExtent
 import kekmech.ru.ext_android.views.setProgressViewOffset
 import kekmech.ru.ext_kotlin.fastLazy
 import kekmech.ru.feature_app_settings_api.AppSettingsFeatureLauncher
@@ -67,6 +69,7 @@ internal class DashboardFragment :
     private val dependencies by inject<DashboardDependencies>()
     private val adapter by fastLazy { createAdapter() }
     private val analytics by screenAnalytics("Dashboard")
+    private var isUserRefresh = false
     private val viewBinding by viewBinding(FragmentDashboardBinding::bind)
     private val router by inject<Router>()
     private val store by androidElmStore(
@@ -82,11 +85,15 @@ internal class DashboardFragment :
             recyclerView.addSystemVerticalPadding()
             recyclerView.addScrollAnalytics(analytics, "DashboardRecyclerView")
             swipeRefresh.apply {
-                setOnRefreshListener { store.accept(DashboardEvent.Ui.Action.SwipeToRefresh) }
+                setOnRefreshListener {
+                    isUserRefresh = true
+                    store.accept(DashboardEvent.Ui.Action.SwipeToRefresh)
+                }
                 doOnApplyWindowInsets { _, windowInsets, _ ->
                     val systemBarsInsets =
                         windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
-                    setProgressViewOffset(systemBarsInsets.top)
+                    // the spinner rests right under the status bar, the list is moved below it (see render)
+                    setProgressViewOffset(systemBarsInsets.top + resources.dpToPx(SPINNER_MARGIN_DP))
                 }
             }
             restoreState(recyclerView)
@@ -101,9 +108,19 @@ internal class DashboardFragment :
 
     override fun render(state: DashboardState) {
         adapter.update(DashboardListConverter(requireContext()).map(state))
+        // The spinner is only for a refresh the user asked for. Loading on start / on return to the screen
+        // is shown by the shimmers of the list, a spinner on top of the date there looked like a glitch.
+        val showSpinner = state.isLoading && isUserRefresh
+        if (!state.isLoading) isUserRefresh = false
         viewBinding.swipeRefresh.post {
-            viewBinding.swipeRefresh.isRefreshing = state.isLoading
+            viewBinding.swipeRefresh.isRefreshing = showSpinner
         }
+        // While the spinner is on screen the list moves down, so the spinner never covers the date
+        val extent = viewBinding.swipeRefresh.restingSpinnerExtent + resources.dpToPx(SPINNER_MARGIN_DP * 2)
+        viewBinding.recyclerView.animate()
+            .translationY(if (showSpinner) extent.toFloat() else 0f)
+            .setDuration(SPINNER_SHIFT_DURATION_MS)
+            .start()
     }
 
     override fun handleEffect(effect: DashboardEffect) = when (effect) {
@@ -205,6 +222,8 @@ internal class DashboardFragment :
 
     companion object {
 
+        private const val SPINNER_MARGIN_DP = 4
+        private const val SPINNER_SHIFT_DURATION_MS = 200L
         private const val NOTES_LIST_RESULT_KEY = "NOTES_LIST_RESULT_KEY"
         private const val EDIT_NOTE_RESULT_KEY = "EDIT_NOTE_RESULT_KEY"
         private const val FIND_GROUP_RESULT_KEY = "FIND_GROUP_RESULT_KEY"

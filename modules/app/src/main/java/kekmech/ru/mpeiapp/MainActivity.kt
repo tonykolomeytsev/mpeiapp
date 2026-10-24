@@ -3,6 +3,7 @@ package kekmech.ru.mpeiapp
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.SystemBarStyle
@@ -11,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kekmech.ru.feature_app_settings_api.data.AppSettingsRepository
+import kekmech.ru.feature_app_settings_api.domain.model.isDarkTheme
 import kekmech.ru.feature_main_screen_api.MainScreenLauncher
 import kekmech.ru.feature_onboarding_api.OnboardingFeatureApi
 import kekmech.ru.lib_app_lifecycle.MainActivityLifecycleObserver
@@ -85,7 +87,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun setTheme() {
         val preheatAppSettings = appSettingsRepository.getAppSettings()
-        val darkTheme = preheatAppSettings.isDarkThemeEnabled
+        // "System" follows the night mode of the device, it is re-read when the activity is recreated
+        val isSystemNight = (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) ==
+            Configuration.UI_MODE_NIGHT_YES
+        val darkTheme = preheatAppSettings.isDarkTheme(isSystemNight)
         if (darkTheme) {
             setTheme(coreui_R.style.AppTheme_Dark)
         } else {
@@ -115,7 +120,7 @@ class MainActivity : AppCompatActivity() {
         super.onPause()
     }
 
-    override fun onConfigurationChanged(newConfig: android.content.res.Configuration) {
+    override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         setTheme()
     }

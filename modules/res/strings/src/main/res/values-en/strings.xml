@@ -380,4 +380,33 @@
     <string name="class_reminder_type_lab">Laboratory work</string>
     <string name="class_reminder_title_day_before">%1$s tomorrow</string>
     <string name="class_reminder_title_hours_before">%1$s in 5 hours</string>
+    <string name="brand_name">MPEI.Hub</string>
+    <string name="schedule_widget_select_group">Open %1$s to choose a group</string>
+
+    <string name="app_settings_theme_title">Appearance</string>
+    <string name="app_settings_theme_description">Light, dark or follow the system settings</string>
+    <string name="app_settings_theme_light">Light</string>
+    <string name="app_settings_theme_dark">Dark</string>
+    <string name="app_settings_theme_system">System</string>
+
+    <string name="about_project_intro">The project got a second wind: standalone operation, a direct connection to the MPEI portal, modern offline maps and a refreshed design.</string>
+    <string name="about_features_title">Key features:</string>
+    <string name="about_feature_parser_title">Direct MPEI schedule parser</string>
+    <string name="about_feature_parser_desc">No more dependence on third-party servers. The schedule is parsed straight from the official mpei.ru portal.</string>
+    <string name="about_feature_maps_title">Offline OpenStreetMap maps</string>
+    <string name="about_feature_maps_desc">All buildings (A, B, V, G, D, E, Zh, Z, I, K, M, R, S, T, Ch, E), departments, canteens and dormitories of the Lefortovo campus work completely offline.</string>
+    <string name="about_feature_ui_title">Modern interface</string>
+    <string name="about_feature_ui_desc">Jetpack Compose interface, class cards with lesson types, widgets and full Android 14+ support.</string>
+    <string name="about_feature_opensource_title">Open source</string>
+    <string name="about_feature_opensource_desc">The development is open and driven by the community of MPEI students on GitHub.</string>
+    <string name="support_title">Support the project</string>
+    <string name="support_description">The app is made by students in their free time and stays free and open source. If it helps you, you can support the development.</string>
+    <string name="support_copy_hint">Tap the details to copy them</string>
+    <string name="support_method_sbp">SBP</string>
+    <string name="support_method_tbank">T-Bank</string>
+    <string name="support_method_boosty">Boosty</string>
+    <string name="support_open">Open</string>
+    <string name="support_copy_action">Copy</string>
+    <string name="support_copied">Copied: %1$s</string>
+    <string name="support_copy_failed">Could not copy</string>
 </resources>

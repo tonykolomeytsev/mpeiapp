@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Requisites for the "Support the project" card on the About screen.
+    Fill in only what you really want to publish: an empty value hides that payment method,
+    if everything is empty the whole card is hidden. Not translatable on purpose.
+
+    donation_sbp_phone   - phone number for SBP transfers, e.g. "+7 900 000-00-00"
+    donation_tbank_card  - T-Bank card number, e.g. "0000 0000 0000 0000" (copied on tap)
+    donation_tbank_url   - T-Bank collection / transfer link, e.g. "https://www.tbank.ru/cf/..."
+    donation_boosty_url  - Boosty page, e.g. "https://boosty.to/..."
+-->
+<resources>
+    <string name="donation_sbp_phone" translatable="false"></string>
+    <string name="donation_tbank_card" translatable="false"></string>
+    <string name="donation_tbank_url" translatable="false"></string>
+    <string name="donation_boosty_url" translatable="false"></string>
+</resources>

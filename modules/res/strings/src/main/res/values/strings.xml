@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">МЭИ.Хаб</string>
+    <string name="app_name">MPEI.Hub</string>
     <!-- НУМЕРАЦИЯ ПАР-->
     <string-array name="classes_numbers">
         <item>Очередная пара</item>
@@ -143,7 +143,7 @@
     <string name="schedule_item_self_study_header">День самостоятельных занятий</string>
     <string name="schedule_item_self_study_description">Потратьте этот день с пользой, начните проходить курсы по программированию или начните читать книгу</string>
     <string name="schedule_empty_state_title">Упс! Не удалось загрузить расписание</string>
-    <string name="schedule_empty_state_subtitle">Возможно это произошло из-за проблем с интернет соединением.\nЛибо сервер МЭИ.Хаб упал :)</string>
+    <string name="schedule_empty_state_subtitle">Возможно это произошло из-за проблем с интернет соединением.\nЛибо сервер MPEI.Hub упал :)</string>
     <string name="schedule_fab_tooltip">Кнопка быстрой навигации. Убрать кнопку можно в настройках</string>
     <string name="schedule_fab_next">К следующей неделе</string>
     <string name="schedule_fab_prev">К текущей неделе</string>
@@ -170,7 +170,7 @@
     <string name="dashboard_events_n_days">Пары через %s</string>
     <string name="dashboard_banner_lunch_header">Судя по всему, сейчас обеденный перерыв</string>
     <string name="dashboard_banner_lunch_description">Найти столовые на карте</string>
-    <string name="dashboard_banner_eol">МЭИ.Хаб: О проекте и обновлениях</string>
+    <string name="dashboard_banner_eol">MPEI.Hub: О проекте и обновлениях</string>
     <string name="dashboard_banner_eol_desc">Прямое расписание, офлайн-карты МЭИ и новый дизайн</string>
     <string name="dashboard_search_field_text">Искать в МЭИ…</string>
     <string name="dashboard_day_status_semester">Идет %d учебная неделя</string>
@@ -245,12 +245,12 @@
     <string name="app_settings_header_contributors">Контрибьюторы</string>
     <string name="app_settings_section_lang">Язык приложения</string>
     <string name="app_settings_section_lang_description">Иногда после смены языка требуется перезапустить приложение</string>
-    <string name="app_settings_app_version">МЭИ.Хаб для Android v%s</string>
-    <string name="app_settings_repo_title">Репозиторий МЭИ.Хаб</string>
+    <string name="app_settings_app_version">MPEI.Hub для Android v%s</string>
+    <string name="app_settings_repo_title">Репозиторий MPEI.Hub</string>
     <string name="app_settings_original_repo_title">Оригинальный проект (MpeiX)</string>
-    <string name="about_project_title">О проекте МЭИ.Хаб</string>
-    <string name="about_project_subtitle">МЭИ.Хаб — Новое поколение</string>
-    <string name="contributor_rasul_rustamov_bio">Разработчик МЭИ.Хаб • студент МЭИ</string>
+    <string name="about_project_title">О проекте MPEI.Hub</string>
+    <string name="about_project_subtitle">MPEI.Hub — Новое поколение</string>
+    <string name="contributor_rasul_rustamov_bio">Разработчик MPEI.Hub • студент МЭИ</string>
     <string name="contributor_johnny_wickky_bio">Студент МЭИ, ИБ- и ИИ-энтузиаст</string>
 
     <string name="favorites_screen_title">Избранные расписания</string>
@@ -305,7 +305,7 @@
     <string name="image_picker_attach_button">Прикрепить</string>
 
     <string name="blocking_update_title">Пришло время\nобновить приложение</string>
-    <string name="blocking_update_description">Над приложением работает всего один человек, поэтому нет возможности поддерживать старые версии вечно.\n\nВы не обновляли МЭИ.Хаб уже более полугода, с тех пор мы внесли очень много улучшений как в клиентскую часть приложения, так и в серверную. Вам действительно стоит обновиться.\n\nЕсли у вас есть веские причины не обновляться, сообщите о них нам на GitHub в разделе Issues:</string>
+    <string name="blocking_update_description">Над приложением работает всего один человек, поэтому нет возможности поддерживать старые версии вечно.\n\nВы не обновляли MPEI.Hub уже более полугода, с тех пор мы внесли очень много улучшений как в клиентскую часть приложения, так и в серверную. Вам действительно стоит обновиться.\n\nЕсли у вас есть веские причины не обновляться, сообщите о них нам на GitHub в разделе Issues:</string>
     <string name="blocking_update_exit">Выйти</string>
     <string name="blocking_update_update">Обновить</string>
     <string name="schedule_widget_name">Расписание на сегодня</string>
@@ -370,7 +370,7 @@
     <string name="class_reminder_toggle_description">Практические и лабораторные занятия. Ночью (с 23:00 до 07:00) уведомления не приходят</string>
     <string name="class_reminder_kind_day_before">За 24 часа до начала</string>
     <string name="class_reminder_kind_hours_before">За 5 часов до начала</string>
-    <string name="class_reminder_permission_hint">Уведомления для МЭИ.Хаб отключены, напоминания не будут показываться</string>
+    <string name="class_reminder_permission_hint">Уведомления для MPEI.Hub отключены, напоминания не будут показываться</string>
     <string name="class_reminder_permission_button">Разрешить уведомления</string>
     <string name="class_reminder_permission_denied">Без разрешения на уведомления напоминания о занятиях показываться не будут</string>
     <string name="class_reminder_exact_alarm_hint">Без разрешения на точные будильники напоминания могут приходить с задержкой в несколько минут</string>
@@ -381,4 +381,33 @@
     <string name="class_reminder_type_lab">Лабораторная</string>
     <string name="class_reminder_title_day_before">%1$s — завтра</string>
     <string name="class_reminder_title_hours_before">%1$s — через 5 часов</string>
+    <string name="brand_name">MPEI.Hub</string>
+    <string name="schedule_widget_select_group">Откройте %1$s, чтобы выбрать группу</string>
+
+    <string name="app_settings_theme_title">Тема оформления</string>
+    <string name="app_settings_theme_description">Светлая, тёмная или как в настройках системы</string>
+    <string name="app_settings_theme_light">Светлая</string>
+    <string name="app_settings_theme_dark">Тёмная</string>
+    <string name="app_settings_theme_system">Системная</string>
+
+    <string name="about_project_intro">Проект получил второе дыхание: автономная работа, прямое подключение к порталу МЭИ, современные офлайн-карты и обновлённый дизайн.</string>
+    <string name="about_features_title">Ключевые возможности:</string>
+    <string name="about_feature_parser_title">Прямой парсер расписания МЭИ</string>
+    <string name="about_feature_parser_desc">Больше нет зависимости от сторонних серверов. Расписание парсится напрямую с официального портала mpei.ru.</string>
+    <string name="about_feature_maps_title">Офлайн-карты OpenStreetMap</string>
+    <string name="about_feature_maps_desc">Все корпуса (А, Б, В, Г, Д, Е, Ж, З, И, К, М, Р, С, Т, Ч, Э), кафедры, столовые и общежития кампуса Лефортово работают полностью автономно.</string>
+    <string name="about_feature_ui_title">Современный интерфейс</string>
+    <string name="about_feature_ui_desc">Интерфейс на Jetpack Compose, карточки занятий с типами пар, виджеты и полная поддержка Android 14+.</string>
+    <string name="about_feature_opensource_title">Открытый исходный код</string>
+    <string name="about_feature_opensource_desc">Разработка ведётся открыто сообществом студентов МЭИ на GitHub.</string>
+    <string name="support_title">Поддержать проект</string>
+    <string name="support_description">Приложение делают студенты в свободное время, оно остаётся бесплатным и с открытым исходным кодом. Если оно вам помогает, можно поддержать разработку.</string>
+    <string name="support_copy_hint">Нажмите на реквизиты, чтобы скопировать</string>
+    <string name="support_method_sbp">СБП</string>
+    <string name="support_method_tbank">Т-Банк</string>
+    <string name="support_method_boosty">Boosty</string>
+    <string name="support_open">Открыть</string>
+    <string name="support_copy_action">Скопировать</string>
+    <string name="support_copied">Скопировано: %1$s</string>
+    <string name="support_copy_failed">Не удалось скопировать</string>
 </resources>

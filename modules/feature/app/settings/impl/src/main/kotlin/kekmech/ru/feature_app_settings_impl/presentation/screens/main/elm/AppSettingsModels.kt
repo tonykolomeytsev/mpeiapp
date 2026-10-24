@@ -1,6 +1,7 @@
 package kekmech.ru.feature_app_settings_impl.presentation.screens.main.elm
 
 import kekmech.ru.feature_app_settings_api.domain.model.AppSettings
+import kekmech.ru.feature_app_settings_api.domain.model.AppTheme
 import kekmech.ru.feature_contributors_api.domain.model.Contributor
 import kekmech.ru.lib_app_info.AppVersionName
 
@@ -19,6 +20,7 @@ internal sealed interface AppSettingsEvent {
 
         object Action {
             data class SetDarkThemeEnabled(val isEnabled: Boolean) : Ui
+            data class SetTheme(val theme: AppTheme) : Ui
             data class SetSnowEnabled(val isEnabled: Boolean) : Ui
             data class SetShowQuickNavigationFab(val isVisible: Boolean) : Ui
             data class SetAutoHideBottomSheet(val isEnabled: Boolean) : Ui
@@ -42,6 +44,7 @@ internal sealed interface AppSettingsCommand {
     object LoadAppSettings : AppSettingsCommand
 
     data class SetDarkThemeEnabled(val isEnabled: Boolean) : AppSettingsCommand
+    data class SetTheme(val theme: AppTheme) : AppSettingsCommand
     data class SetSnowEnabled(val isEnabled: Boolean) : AppSettingsCommand
     data class SetShowQuickNavigationFab(val isVisible: Boolean) : AppSettingsCommand
     data class SetAutoHideBottomSheet(val isEnabled: Boolean) : AppSettingsCommand

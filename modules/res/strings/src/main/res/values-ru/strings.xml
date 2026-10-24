@@ -381,4 +381,33 @@
     <string name="class_reminder_type_lab">Лабораторная</string>
     <string name="class_reminder_title_day_before">%1$s — завтра</string>
     <string name="class_reminder_title_hours_before">%1$s — через 5 часов</string>
+    <string name="brand_name">МЭИ.Хаб</string>
+    <string name="schedule_widget_select_group">Откройте %1$s, чтобы выбрать группу</string>
+
+    <string name="app_settings_theme_title">Тема оформления</string>
+    <string name="app_settings_theme_description">Светлая, тёмная или как в настройках системы</string>
+    <string name="app_settings_theme_light">Светлая</string>
+    <string name="app_settings_theme_dark">Тёмная</string>
+    <string name="app_settings_theme_system">Системная</string>
+
+    <string name="about_project_intro">Проект получил второе дыхание: автономная работа, прямое подключение к порталу МЭИ, современные офлайн-карты и обновлённый дизайн.</string>
+    <string name="about_features_title">Ключевые возможности:</string>
+    <string name="about_feature_parser_title">Прямой парсер расписания МЭИ</string>
+    <string name="about_feature_parser_desc">Больше нет зависимости от сторонних серверов. Расписание парсится напрямую с официального портала mpei.ru.</string>
+    <string name="about_feature_maps_title">Офлайн-карты OpenStreetMap</string>
+    <string name="about_feature_maps_desc">Все корпуса (А, Б, В, Г, Д, Е, Ж, З, И, К, М, Р, С, Т, Ч, Э), кафедры, столовые и общежития кампуса Лефортово работают полностью автономно.</string>
+    <string name="about_feature_ui_title">Современный интерфейс</string>
+    <string name="about_feature_ui_desc">Интерфейс на Jetpack Compose, карточки занятий с типами пар, виджеты и полная поддержка Android 14+.</string>
+    <string name="about_feature_opensource_title">Открытый исходный код</string>
+    <string name="about_feature_opensource_desc">Разработка ведётся открыто сообществом студентов МЭИ на GitHub.</string>
+    <string name="support_title">Поддержать проект</string>
+    <string name="support_description">Приложение делают студенты в свободное время, оно остаётся бесплатным и с открытым исходным кодом. Если оно вам помогает, можно поддержать разработку.</string>
+    <string name="support_copy_hint">Нажмите на реквизиты, чтобы скопировать</string>
+    <string name="support_method_sbp">СБП</string>
+    <string name="support_method_tbank">Т-Банк</string>
+    <string name="support_method_boosty">Boosty</string>
+    <string name="support_open">Открыть</string>
+    <string name="support_copy_action">Скопировать</string>
+    <string name="support_copied">Скопировано: %1$s</string>
+    <string name="support_copy_failed">Не удалось скопировать</string>
 </resources>
