@@ -194,6 +194,7 @@ private fun EolScreenPreview() {
                 tbankCard = "0000 0000 0000 0000",
                 tbankUrl = "https://www.tbank.ru/cf/example",
                 boostyUrl = "https://boosty.to/example",
+                lavaUrl = "https://app.lava.top/pharosteam",
             ),
         )
     }

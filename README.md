@@ -130,7 +130,7 @@ mpei-next/
 ## Авторы и разработчики
 
 - **Расул Рустамов** ([@ghostoftheeleven](https://github.com/ghostoftheeleven)) — Разработчик «МЭИ.Хаб», студент МЭИ
-- **Johnny Wickky** ([@Johnny-Wickky](https://github.com/Johnny-Wickky)) — Соавтор, студент МЭИ, ИБ- и ИИ-энтузиаст
+- **Johnny Wickky** ([@Johnny-Wickky](https://github.com/Johnny-Wickky)) — Соавтор, студент МЭИ, ИБ-энтузиаст
 - **Антон Коломейцев** ([@tonykolomeytsev](https://github.com/tonykolomeytsev)) — Создатель оригинального приложения MpeiX
 
 ---

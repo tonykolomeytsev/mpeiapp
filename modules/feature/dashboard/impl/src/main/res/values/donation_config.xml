@@ -8,10 +8,12 @@
     donation_tbank_card  - T-Bank card number, e.g. "0000 0000 0000 0000" (copied on tap)
     donation_tbank_url   - T-Bank collection / transfer link, e.g. "https://www.tbank.ru/cf/..."
     donation_boosty_url  - Boosty page, e.g. "https://boosty.to/..."
+    donation_lava_url    - Lava.top page
 -->
 <resources>
     <string name="donation_sbp_phone" translatable="false"></string>
     <string name="donation_tbank_card" translatable="false"></string>
     <string name="donation_tbank_url" translatable="false"></string>
     <string name="donation_boosty_url" translatable="false"></string>
+    <string name="donation_lava_url" translatable="false">https://app.lava.top/pharosteam</string>
 </resources>

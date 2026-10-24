@@ -52,6 +52,7 @@ class EolScreenTest {
         tbankCard = "1111 2222 3333 4444",
         tbankUrl = "https://www.tbank.ru/cf/test",
         boostyUrl = "https://boosty.to/test",
+        lavaUrl = LAVA_URL,
     )
 
     private var palette: MpeixPalette? = null
@@ -158,14 +159,24 @@ class EolScreenTest {
     }
 
     @Test
+    fun lavaLink_isShown_andCanBeOpened() {
+        showScreen(darkTheme = false, width = PHONE_W, height = PHONE_H)
+        composeRule.onNodeWithText(context.getString(Strings.support_method_lava)).assertExists()
+        composeRule.onNodeWithText(LAVA_URL).assertExists()
+        assertEquals(LAVA_URL, options.first { it.method == DonationMethod.LAVA }.url)
+    }
+
+    @Test
     fun donationOptions_dropEmptyMethods() {
         val onlyBoosty = donationOptions(sbpPhone = " ", tbankCard = "", tbankUrl = "", boostyUrl = "https://boosty.to/x")
         assertEquals(listOf(DonationMethod.BOOSTY), onlyBoosty.map { it.method })
         assertEquals(emptyList<DonationOption>(), donationOptions("", "", "", ""))
+        assertEquals(listOf(DonationMethod.LAVA), donationOptions("", "", "", "", lavaUrl = LAVA_URL).map { it.method })
     }
 
     private companion object {
         const val ROOT_TAG = "eol_root"
+        const val LAVA_URL = "https://app.lava.top/pharosteam"
         val PHONE_W = 360.dp
         val PHONE_H = 800.dp
         val TABLET_PORTRAIT_W = 800.dp

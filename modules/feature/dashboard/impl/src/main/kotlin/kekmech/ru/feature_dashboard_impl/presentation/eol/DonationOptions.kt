@@ -7,6 +7,7 @@ import androidx.compose.ui.res.stringResource
 import kekmech.ru.feature_dashboard_impl.R
 
 internal enum class DonationMethod {
+    LAVA,
     SBP,
     TBANK,
     BOOSTY,
@@ -34,11 +35,13 @@ internal fun donationOptions(
     tbankCard: String,
     tbankUrl: String,
     boostyUrl: String,
+    lavaUrl: String = "",
 ): List<DonationOption> =
     listOfNotNull(
+        // the link is also the requisite: tap copies it, the button opens it
+        DonationOption(DonationMethod.LAVA, requisite = lavaUrl.clean(), url = lavaUrl.clean()),
         DonationOption(DonationMethod.SBP, requisite = sbpPhone.clean(), url = null),
         DonationOption(DonationMethod.TBANK, requisite = tbankCard.clean(), url = tbankUrl.clean()),
-        // the link is also the requisite: tap copies it, the button opens it
         DonationOption(DonationMethod.BOOSTY, requisite = boostyUrl.clean(), url = boostyUrl.clean()),
     ).filter { it.requisite != null || it.url != null }
 
@@ -51,7 +54,8 @@ internal fun rememberDonationOptions(): List<DonationOption> {
     val tbankCard = stringResource(R.string.donation_tbank_card)
     val tbankUrl = stringResource(R.string.donation_tbank_url)
     val boostyUrl = stringResource(R.string.donation_boosty_url)
-    return remember(sbpPhone, tbankCard, tbankUrl, boostyUrl) {
-        donationOptions(sbpPhone, tbankCard, tbankUrl, boostyUrl)
+    val lavaUrl = stringResource(R.string.donation_lava_url)
+    return remember(sbpPhone, tbankCard, tbankUrl, boostyUrl, lavaUrl) {
+        donationOptions(sbpPhone, tbankCard, tbankUrl, boostyUrl, lavaUrl)
     }
 }

@@ -251,7 +251,7 @@
     <string name="about_project_title">О проекте МЭИ.Хаб</string>
     <string name="about_project_subtitle">МЭИ.Хаб — Новое поколение</string>
     <string name="contributor_rasul_rustamov_bio">Разработчик МЭИ.Хаб • студент МЭИ</string>
-    <string name="contributor_johnny_wickky_bio">Студент МЭИ, ИБ- и ИИ-энтузиаст</string>
+    <string name="contributor_johnny_wickky_bio">Студент МЭИ, ИБ-энтузиаст</string>
 
     <string name="favorites_screen_title">Избранные расписания</string>
     <string name="favorites_empty_state_title">Ни одно расписание не добавлено в избранные</string>
@@ -403,6 +403,7 @@
     <string name="support_title">Поддержать проект</string>
     <string name="support_description">Приложение делают студенты в свободное время, оно остаётся бесплатным и с открытым исходным кодом. Если оно вам помогает, можно поддержать разработку.</string>
     <string name="support_copy_hint">Нажмите на реквизиты, чтобы скопировать</string>
+    <string name="support_method_lava">Lava.top</string>
     <string name="support_method_sbp">СБП</string>
     <string name="support_method_tbank">Т-Банк</string>
     <string name="support_method_boosty">Boosty</string>

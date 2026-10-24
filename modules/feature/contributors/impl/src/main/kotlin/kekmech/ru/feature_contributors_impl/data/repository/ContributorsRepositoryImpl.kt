@@ -26,7 +26,7 @@ internal class ContributorsRepositoryImpl(
     private val coAuthor = Contributor(
         login = "Johnny-Wickky",
         name = "Johnny Wickky",
-        bio = "Студент МЭИ, ИБ- и ИИ-энтузиаст",
+        bio = "Студент МЭИ, ИБ-энтузиаст",
         url = "https://github.com/Johnny-Wickky",
         avatarUrl = "https://avatars.githubusercontent.com/u/Johnny-Wickky?v=4",
     )

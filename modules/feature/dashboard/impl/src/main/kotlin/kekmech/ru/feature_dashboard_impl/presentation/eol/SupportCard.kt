@@ -121,6 +121,7 @@ private fun DonationRow(
 
 private fun DonationMethod.titleRes(): Int =
     when (this) {
+        DonationMethod.LAVA -> Strings.support_method_lava
         DonationMethod.SBP -> Strings.support_method_sbp
         DonationMethod.TBANK -> Strings.support_method_tbank
         DonationMethod.BOOSTY -> Strings.support_method_boosty
@@ -136,6 +137,7 @@ private fun SupportCardPreview() {
                 tbankCard = "0000 0000 0000 0000",
                 tbankUrl = "https://www.tbank.ru/cf/example",
                 boostyUrl = "https://boosty.to/example",
+                lavaUrl = "https://app.lava.top/pharosteam",
             ),
             onCopy = { _, _ -> },
             onOpen = {},

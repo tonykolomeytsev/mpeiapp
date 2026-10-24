@@ -248,7 +248,7 @@
     <string name="about_project_title">About MPEI.Hub</string>
     <string name="about_project_subtitle">MPEI.Hub — New Generation</string>
     <string name="contributor_rasul_rustamov_bio">MPEI.Hub Developer • MPEI Student</string>
-    <string name="contributor_johnny_wickky_bio">MPEI Student, InfoSec &amp; AI Enthusiast</string>
+    <string name="contributor_johnny_wickky_bio">MPEI Student, InfoSec Enthusiast</string>
     <string name="dashboard_banner_eol">MPEI.Hub: About &amp; Updates</string>
     <string name="dashboard_banner_eol_desc">Direct schedule, offline MPEI maps and modern design</string>
 
@@ -402,6 +402,7 @@
     <string name="support_title">Support the project</string>
     <string name="support_description">The app is made by students in their free time and stays free and open source. If it helps you, you can support the development.</string>
     <string name="support_copy_hint">Tap the details to copy them</string>
+    <string name="support_method_lava">Lava.top</string>
     <string name="support_method_sbp">SBP</string>
     <string name="support_method_tbank">T-Bank</string>
     <string name="support_method_boosty">Boosty</string>
