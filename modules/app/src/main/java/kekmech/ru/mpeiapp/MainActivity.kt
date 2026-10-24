@@ -1,18 +1,13 @@
 package kekmech.ru.mpeiapp
 
-import android.animation.AnimatorSet
-import android.animation.ObjectAnimator
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
-import android.view.View
-import android.view.animation.AccelerateInterpolator
 import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.animation.doOnEnd
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kekmech.ru.feature_app_settings_api.data.AppSettingsRepository
@@ -23,6 +18,7 @@ import kekmech.ru.lib_navigation.NavigationHolder
 import kekmech.ru.lib_navigation.NewRoot
 import kekmech.ru.lib_navigation.Router
 import kekmech.ru.mpeiapp.deeplink.DeeplinkHandlersProcessor
+import kekmech.ru.ui_splash.SplashOverlay
 import org.koin.android.ext.android.getKoin
 import org.koin.android.ext.android.inject
 import kekmech.ru.coreui.R as coreui_R
@@ -42,43 +38,14 @@ class MainActivity : AppCompatActivity() {
     private var isReady = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val startTime = System.currentTimeMillis()
         val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
 
-        splashScreen.setKeepOnScreenCondition {
-            !isReady || (System.currentTimeMillis() - startTime < MIN_SPLASH_SCREEN_DURATION_MS)
-        }
+        // The system splash is a plain black screen: the animated splash is drawn by SplashOverlay
+        // right below, so the system one is dismissed without its own exit animation
+        splashScreen.setKeepOnScreenCondition { !isReady }
         splashScreen.setOnExitAnimationListener { splashScreenViewProvider ->
-            val splashScreenView = splashScreenViewProvider.view
-            val alphaAnimator = ObjectAnimator.ofFloat(
-                splashScreenView,
-                View.ALPHA,
-                1f,
-                0f,
-            )
-            val scaleXAnimator = ObjectAnimator.ofFloat(
-                splashScreenView,
-                View.SCALE_X,
-                1f,
-                SPLASH_SCREEN_EXIT_SCALE,
-            )
-            val scaleYAnimator = ObjectAnimator.ofFloat(
-                splashScreenView,
-                View.SCALE_Y,
-                1f,
-                SPLASH_SCREEN_EXIT_SCALE,
-            )
-
-            AnimatorSet().apply {
-                duration = SPLASH_SCREEN_EXIT_DURATION_MS
-                interpolator = AccelerateInterpolator()
-                playTogether(alphaAnimator, scaleXAnimator, scaleYAnimator)
-                doOnEnd {
-                    splashScreenViewProvider.remove()
-                }
-                start()
-            }
+            splashScreenViewProvider.remove()
         }
 
         mainActivityLifecycleObservers.forEach { it.onCreate(this) }
@@ -97,7 +64,18 @@ class MainActivity : AppCompatActivity() {
         }
 
         deeplinkHandlersProcessor.processDeeplink(intent.data)
+        showSplashOverlayOnColdStart(savedInstanceState)
         isReady = true
+    }
+
+    private fun showSplashOverlayOnColdStart(savedInstanceState: Bundle?) {
+        if (savedInstanceState != null || isSplashShown) return
+        isSplashShown = true
+        SplashOverlay.attach(
+            activity = this,
+            logoRes = R.drawable.ic_mpei_hub_logo,
+            brandName = getString(R.string.splash_brand_name),
+        )
     }
 
     override fun onNewIntent(intent: Intent) {
@@ -148,8 +126,7 @@ class MainActivity : AppCompatActivity() {
 
     private companion object {
 
-        const val MIN_SPLASH_SCREEN_DURATION_MS = 1350L
-        const val SPLASH_SCREEN_EXIT_DURATION_MS = 250L
-        const val SPLASH_SCREEN_EXIT_SCALE = 1.05f
+        /** The animated splash is played once per process, not on every activity recreation */
+        var isSplashShown = false
     }
 }

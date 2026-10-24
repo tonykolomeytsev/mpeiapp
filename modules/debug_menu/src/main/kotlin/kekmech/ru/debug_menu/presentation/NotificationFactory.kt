@@ -16,9 +16,9 @@ internal class NotificationFactory {
 
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_debug_menu_24)
-            .setContentTitle("MpeiX Debug Menu")
+            .setContentTitle("МЭИ.Хаб Debug Menu")
             .setContentText("Tap to open the debug menu")
-            .setTicker("MpeiX debug menu available")
+            .setTicker("МЭИ.Хаб debug menu available")
             .setContentIntent(pendingIntent)
             .setAutoCancel(false)
             .setOngoing(true)
@@ -42,8 +42,8 @@ internal class NotificationFactory {
 
     private companion object {
 
-        const val CHANNEL_ID = "mpeix_debug_menu"
-        const val CHANNEL_NAME = "MpeiX Debug Menu"
-        const val CHANNEL_DESCRIPTION = "MpeiX Debug Menu Notification"
+        const val CHANNEL_ID = "mpei_hub_debug_menu"
+        const val CHANNEL_NAME = "МЭИ.Хаб Debug Menu"
+        const val CHANNEL_DESCRIPTION = "МЭИ.Хаб Debug Menu Notification"
     }
 }

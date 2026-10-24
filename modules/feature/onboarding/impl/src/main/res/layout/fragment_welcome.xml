@@ -8,10 +8,10 @@
 
     <ImageView
         android:id="@+id/gradientLogo"
-        android:layout_width="150dp"
-        android:layout_height="60dp"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
         android:importantForAccessibility="no"
-        android:src="@drawable/gradient_logo"
+        android:src="@drawable/ic_welcome_logo"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toTopOf="@id/recycler"
         app:layout_constraintEnd_toEndOf="parent"

@@ -46,7 +46,7 @@ private fun MainScreen() {
             .nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             TopAppBar(
-                title = "MpeiX Ui Kit Demo",
+                title = "МЭИ.Хаб Ui Kit Demo",
                 scrollBehavior = scrollBehavior,
                 actions = {
                     ToggleThemeActionButton()

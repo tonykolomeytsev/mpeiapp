@@ -1,0 +1,8 @@
+plugins {
+    alias(mpeix.plugins.lib.android.compose)
+}
+
+dependencies {
+    implementation(libs.androidx.activity)
+    implementation(libs.androidx.coreKtx)
+}

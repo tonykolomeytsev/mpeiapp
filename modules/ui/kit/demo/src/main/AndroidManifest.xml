@@ -4,7 +4,7 @@
         <activity
             android:name="kekmech.ru.mpeiapp.demo.MainActivity"
             android:exported="true"
-            android:label="MpeiX UI Kit"
+            android:label="МЭИ.Хаб UI Kit"
             android:theme="@style/Theme.Mpeix">
 
             <intent-filter>

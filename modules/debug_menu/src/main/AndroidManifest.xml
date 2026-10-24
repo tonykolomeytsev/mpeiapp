@@ -11,7 +11,7 @@
         <activity
             android:name="kekmech.ru.debug_menu.presentation.DebugMenuActivity"
             android:exported="false"
-            android:label="MpeiX Debug Menu"
+            android:label="МЭИ.Хаб Debug Menu"
             android:theme="@style/Theme.Mpeix" />
     </application>
 </manifest>

@@ -70,7 +70,7 @@ private fun DebugMenuScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(title = "MpeiX Debug Menu")
+            TopAppBar(title = "МЭИ.Хаб Debug Menu")
         },
         snackbarHost = {
             SnackbarHost(snackbarHostState)
@@ -117,9 +117,9 @@ private fun DebugMenuScreen(
                 AppVersionItem(
                     versionName = versionName,
                     onClick = {
-                        context.copyToClipboard(versionName, label = "MpeiX version")
+                        context.copyToClipboard(versionName, label = "МЭИ.Хаб version")
                         coroutineScope.launch {
-                            snackbarHostState.showSnackbar(message = "MpeiX version copied")
+                            snackbarHostState.showSnackbar(message = "МЭИ.Хаб version copied")
                         }
                     }
                 )
