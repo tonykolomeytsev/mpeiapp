@@ -1,0 +1,40 @@
+name: Export APK (temporary)
+
+# One-off helper: copies the APK of a finished "Release APK" run to the orphan branch `apk-handoff`
+# so that it can be fetched with git. Contains no secrets. To be removed after use.
+
+on:
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: "Run id of the Release APK workflow"
+        required: true
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: release-apk
+          run-id: ${{ inputs.run_id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: out
+
+      - name: Push the APK to apk-handoff
+        run: |
+          cp out/*.apk "$RUNNER_TEMP/handoff.apk"
+          git config user.name "github-actions"
+          git config user.email "actions@users.noreply.github.com"
+          git checkout --orphan apk-handoff
+          git rm -rf . > /dev/null
+          cp "$RUNNER_TEMP/handoff.apk" handoff.apk
+          git add handoff.apk
+          git commit -m "APK of run ${{ inputs.run_id }}"
+          git push -f origin apk-handoff
