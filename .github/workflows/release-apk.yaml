@@ -6,8 +6,8 @@ name: Release APK
 #      publish = false  -> only build and check (unit tests + APK artifact)
 #      publish = true   -> build and publish the release for `tag`
 #
-# Signing uses `keystore/release.keystore` from the repository (see AndroidSigningConventionPlugin),
-# so the APK is signed with the same key as the previous releases and installs over them.
+# Signing uses `keystore/mpei_hub_release.jks` from the repository (see AndroidSigningConventionPlugin).
+# This is a NEW key: an APK signed with it can not be installed over a build signed with the old key.
 
 on:
   push:
@@ -70,9 +70,9 @@ jobs:
 
       - name: Verify signature
         env:
-          # SHA-256 of the MPEI.Hub release certificate (alias mpeihub in keystore/release.keystore).
+          # SHA-256 of the MPEI.Hub release certificate (alias mpei_hub in keystore/mpei_hub_release.jks).
           # The release is published only when the APK is signed with exactly this key.
-          EXPECTED_SHA256: "eeb529089673cb4f77b7efb5c6d191bf0ec36d20b2ceed5519169989dc1f53fc"
+          EXPECTED_SHA256: "44d02669450e75eda80a66e75968fdb01fff9a917c1bd41b04bacc5250a75ea6"
         run: |
           APKSIGNER=$(ls "$ANDROID_HOME"/build-tools/*/apksigner | sort -V | tail -n 1)
           "$APKSIGNER" verify --verbose --print-certs "${{ steps.apk.outputs.apk_path }}" | tee signature.txt

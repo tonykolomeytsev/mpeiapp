@@ -10,10 +10,10 @@ import java.io.File
  * Плагин конвенции подписи релизных сборок приложения «МЭИ.Хаб».
  *
  * Применяет единые правила подписания APK / AAB:
- * 1. Проверяет наличие переменных окружения CI/CD (SIGNING_KEYSTORE_PATH, SIGNING_STORE_PASSWORD и др.).
- * 2. При их отсутствии выполняет безопасный фоллбэк к локальному хранилищу ключей проекта:
- *    - `keystore/release.keystore` (официальный ключ МЭИ.Хаб, RSA 2048)
- *    - `keystore.jks` (исторический ключ)
+ * 1. Если задан `SIGNING_KEYSTORE_PATH` (или CI положил `keystore.jks` и задан `KEY_STORE_PASSWORD`),
+ *    используется это хранилище и пароли из переменных окружения CI/CD.
+ * 2. Иначе используется ключ проекта `keystore/mpei_hub_release.jks` (RSA 4096, alias `mpei_hub`),
+ *    так что `assembleRelease` подписывается им без дополнительной настройки.
  * 3. Если ключ не найден, откатывается к стандартному debug-сертификату для сохранения успешности сборки.
  */
 @Suppress("unused")
@@ -22,16 +22,16 @@ internal class AndroidSigningConventionPlugin : Plugin<Project> {
     override fun apply(target: Project): Unit = with(target) {
         extensions.configure<ApplicationExtension> {
             val releaseSigning = signingConfigs.maybeCreate("release").apply {
-                val defaultKeystore = rootProject.file("keystore/release.keystore")
-                val legacyKeystore = rootProject.file("keystore.jks")
+                val projectKeystore = rootProject.file(PROJECT_KEYSTORE)
+                val ciKeystore = rootProject.file(CI_KEYSTORE)
                 val customKeystorePath = System.getenv("SIGNING_KEYSTORE_PATH")
                 val keystoreFile = if (!customKeystorePath.isNullOrBlank()) {
                     val customFile = File(customKeystorePath)
                     if (customFile.isAbsolute) customFile else rootProject.file(customKeystorePath)
-                } else if (defaultKeystore.exists()) {
-                    defaultKeystore
-                } else if (legacyKeystore.exists()) {
-                    legacyKeystore
+                } else if (ciKeystore.exists() && !System.getenv("KEY_STORE_PASSWORD").isNullOrBlank()) {
+                    ciKeystore
+                } else if (projectKeystore.exists()) {
+                    projectKeystore
                 } else {
                     null
                 }
@@ -40,13 +40,13 @@ internal class AndroidSigningConventionPlugin : Plugin<Project> {
                     storeFile = keystoreFile
                     storePassword = System.getenv("SIGNING_STORE_PASSWORD")
                         ?: System.getenv("KEY_STORE_PASSWORD")
-                        ?: "REMOVED"
+                        ?: PROJECT_KEY_PASSWORD
                     keyAlias = System.getenv("SIGNING_KEY_ALIAS")
                         ?: System.getenv("KEY_ALIAS")
-                        ?: "mpeihub"
+                        ?: PROJECT_KEY_ALIAS
                     keyPassword = System.getenv("SIGNING_KEY_PASSWORD")
                         ?: System.getenv("KEY_PASSWORD")
-                        ?: "REMOVED"
+                        ?: PROJECT_KEY_PASSWORD
                 } else {
                     val debugConfig = signingConfigs.getByName("debug")
                     storeFile = debugConfig.storeFile
@@ -56,5 +56,14 @@ internal class AndroidSigningConventionPlugin : Plugin<Project> {
                 }
             }
         }
+    }
+
+    private companion object {
+        const val PROJECT_KEYSTORE = "keystore/mpei_hub_release.jks"
+        const val CI_KEYSTORE = "keystore.jks"
+        const val PROJECT_KEY_ALIAS = "mpei_hub"
+
+        // storePassword == keyPassword (PKCS12 keystore)
+        const val PROJECT_KEY_PASSWORD = "REMOVED"
     }
 }
