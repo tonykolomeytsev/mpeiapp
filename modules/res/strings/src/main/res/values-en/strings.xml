@@ -239,10 +239,10 @@
     <string name="app_settings_header_support">Support</string>
     <string name="app_settings_section_ask">Ask us a question</string>
     <string name="app_settings_section_github">Create an Issue or Pull Request</string>
-    <string name="app_settings_header_contributors">Contributors</string>
+    <string name="app_settings_header_developers">Developers</string>
     <string name="app_settings_section_lang">App language</string>
     <string name="app_settings_section_lang_description">Sometimes after changing the language, you need to restart the application</string>
-    <string name="app_settings_app_version">MPEI.Hub for Android v%s</string>
+    <string name="app_settings_app_version">MPEI.Hub for Android v %s</string>
     <string name="app_settings_repo_title">MPEI.Hub Repository</string>
     <string name="app_settings_original_repo_title">Original project (MpeiX)</string>
     <string name="about_project_title">About MPEI.Hub</string>
@@ -418,4 +418,8 @@
     <string name="app_settings_notify_changes_description">Tell me when something in the schedule changes</string>
     <string name="app_settings_notify_more_title">Notification settings</string>
     <string name="app_settings_notify_more_description">Reminder times, check frequency, permissions</string>
+    <string name="developer_rasul_rustamov_name">Rasul Rustamov</string>
+    <string name="developer_ivan_myalitsin_name">Ivan Myalitsin</string>
+    <string name="developer_ivan_myalitsin_role">Developer, MPEI Student</string>
+    <string name="developer_johnny_wickky_name">Johnny Wickky</string>
 </resources>

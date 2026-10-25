@@ -81,8 +81,8 @@ internal class SelectLanguageFragment : BottomSheetDialogFragment(R.layout.fragm
                 if (it.languageCode == selectLanguage) {
                     close()
                 } else {
-                    close()
                     setResult(resultKey, result = it.languageCode)
+                    close()
                 }
             },
             PullAdapterItem()

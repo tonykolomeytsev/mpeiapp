@@ -242,10 +242,10 @@
     <string name="app_settings_header_support">Поддержка</string>
     <string name="app_settings_section_ask">Задать вопрос в группу</string>
     <string name="app_settings_section_github">Завести Issue или Pull Request</string>
-    <string name="app_settings_header_contributors">Контрибьюторы</string>
+    <string name="app_settings_header_developers">Разработчики</string>
     <string name="app_settings_section_lang">Язык приложения</string>
     <string name="app_settings_section_lang_description">Иногда после смены языка требуется перезапустить приложение</string>
-    <string name="app_settings_app_version">МЭИ.Хаб для Android v%s</string>
+    <string name="app_settings_app_version">МЭИ.Хаб для Android v %s</string>
     <string name="app_settings_repo_title">Репозиторий МЭИ.Хаб</string>
     <string name="app_settings_original_repo_title">Оригинальный проект (MpeiX)</string>
     <string name="about_project_title">О проекте МЭИ.Хаб</string>
@@ -419,4 +419,8 @@
     <string name="app_settings_notify_changes_description">Сообщать, когда в расписании что-то поменялось</string>
     <string name="app_settings_notify_more_title">Настроить уведомления</string>
     <string name="app_settings_notify_more_description">Время напоминаний, частота проверки, разрешения</string>
+    <string name="developer_rasul_rustamov_name">Расул Рустамов</string>
+    <string name="developer_ivan_myalitsin_name">Мялицин Иван</string>
+    <string name="developer_ivan_myalitsin_role">Разработчик, студент МЭИ</string>
+    <string name="developer_johnny_wickky_name">Johnny Wickky</string>
 </resources>

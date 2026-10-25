@@ -243,43 +243,9 @@ internal fun AppSettingsComposeScreen(
                     )
                 }
 
-                // Section 6: Contributors
-                val contributorsList = state.contributors?.takeIf { it.isNotEmpty() } ?: listOf(
-                    kekmech.ru.feature_contributors_api.domain.model.Contributor(
-                        login = "ghostoftheeleven",
-                        name = "Расул Рустамов",
-                        bio = "Разработчик МЭИ.Хаб • студент МЭИ",
-                        url = "https://github.com/ghostoftheeleven",
-                        avatarUrl = "https://avatars.githubusercontent.com/u/98048622?v=4",
-                    ),
-                    kekmech.ru.feature_contributors_api.domain.model.Contributor(
-                        login = "Johnny-Wickky",
-                        name = "Johnny Wickky",
-                        bio = "Студент МЭИ, ИБ-энтузиаст",
-                        url = "https://github.com/Johnny-Wickky",
-                        avatarUrl = "https://avatars.githubusercontent.com/u/Johnny-Wickky?v=4",
-                    ),
-                )
+                // Section 6: Developers
                 item {
-                    SettingsSectionHeader(title = stringResource(Strings.app_settings_header_contributors))
-                }
-                items(contributorsList) { contributor ->
-                    val displayName = contributor.name ?: contributor.login
-                    val bio = when (contributor.login.lowercase()) {
-                        "johnny-wickky" -> stringResource(Strings.contributor_johnny_wickky_bio)
-                        "ghostoftheeleven" -> stringResource(Strings.contributor_rasul_rustamov_bio)
-                        else -> contributor.bio
-                    }
-                    ListItem(
-                        headlineText = displayName,
-                        supportingText = bio,
-                        leadingContent = {
-                            Monogram(letter = displayName.firstOrNull() ?: 'C')
-                        },
-                        modifier = Modifier.clickable {
-                            onOpenContributor(contributor.url)
-                        },
-                    )
+                    DevelopersSection(onOpenProfile = onOpenContributor)
                 }
 
                 // Version
@@ -288,7 +254,7 @@ internal fun AppSettingsComposeScreen(
                     Text(
                         text = stringResource(
                             Strings.app_settings_app_version,
-                            state.appVersionName.versionName,
+                            state.appVersionName.versionName.removePrefix("v"),
                         ),
                         style = MpeixTheme.typography.paragraphNormal,
                         color = MpeixTheme.palette.contentVariant,

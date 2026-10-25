@@ -1,6 +1,5 @@
 package kekmech.ru.mpeiapp
 
-import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
@@ -11,6 +10,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import kekmech.ru.ext_android.AppLocales
 import kekmech.ru.feature_app_settings_api.data.AppSettingsRepository
 import kekmech.ru.feature_app_settings_api.domain.model.isDarkTheme
 import kekmech.ru.feature_main_screen_api.MainScreenLauncher
@@ -76,7 +76,8 @@ class MainActivity : AppCompatActivity() {
         SplashOverlay.attach(
             activity = this,
             logoRes = R.drawable.ic_mpei_hub_logo,
-            brandName = getString(R.string.splash_brand_name),
+            // read in the chosen language, not in the language of the system
+            brandName = AppLocales.localized(this).getString(R.string.splash_brand_name),
         )
     }
 
@@ -123,10 +124,6 @@ class MainActivity : AppCompatActivity() {
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         setTheme()
-    }
-
-    override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(LocaleContextWrapper.wrapContext(newBase))
     }
 
     private companion object {

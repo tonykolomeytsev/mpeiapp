@@ -13,7 +13,7 @@ import com.kekmech.lib_fragment.ComposeFragment
 import kekmech.ru.ext_android.close
 import kekmech.ru.ext_android.notNullString
 import kekmech.ru.ext_android.openLinkExternal
-import kekmech.ru.ext_android.setResultListener
+import kekmech.ru.ext_android.setActivityResultListener
 import kekmech.ru.feature_app_settings_impl.presentation.screens.favorites.FavoritesFragment
 import kekmech.ru.feature_app_settings_impl.presentation.screens.lang.SelectLanguageFragment
 import kekmech.ru.feature_app_settings_impl.presentation.screens.main.compose.AppSettingsComposeScreen
@@ -85,25 +85,25 @@ internal class AppSettingsComposeFragment : ComposeFragment() {
                             }
                         },
                         onOpenLanguageSelection = { selectedLanguage ->
-                            showDialog {
-                                SelectLanguageFragment.newInstance(selectedLanguage, LANGUAGE_RESULT_KEY)
-                            }
-                            setResultListener(
+                            setActivityResultListener(
                                 key = LANGUAGE_RESULT_KEY,
                                 resultMapper = Bundle::notNullString,
                             ) { result ->
                                 onAccept(Ui.Action.LanguageChanged(result))
                             }
+                            showDialog {
+                                SelectLanguageFragment.newInstance(selectedLanguage, LANGUAGE_RESULT_KEY)
+                            }
                         },
                         onOpenMapTypeSelection = { selectedMapType ->
-                            showDialog {
-                                SelectMapTypeFragment.newInstance(selectedMapType, MAP_TYPE_RESULT_KEY)
-                            }
-                            setResultListener(
+                            setActivityResultListener(
                                 key = MAP_TYPE_RESULT_KEY,
                                 resultMapper = Bundle::notNullString,
                             ) { result ->
                                 onAccept(Ui.Action.MapTypeChanged(result))
+                            }
+                            showDialog {
+                                SelectMapTypeFragment.newInstance(selectedMapType, MAP_TYPE_RESULT_KEY)
                             }
                         },
                         onRecreateActivity = {
