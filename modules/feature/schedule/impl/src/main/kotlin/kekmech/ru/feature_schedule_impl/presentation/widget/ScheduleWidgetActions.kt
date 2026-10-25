@@ -5,7 +5,6 @@ import androidx.glance.GlanceId
 import androidx.glance.action.ActionParameters
 import androidx.glance.appwidget.GlanceAppWidgetManager
 import androidx.glance.appwidget.action.ActionCallback
-import androidx.glance.appwidget.update
 
 internal val ShiftDaysKey = ActionParameters.Key<Int>("shift_days")
 

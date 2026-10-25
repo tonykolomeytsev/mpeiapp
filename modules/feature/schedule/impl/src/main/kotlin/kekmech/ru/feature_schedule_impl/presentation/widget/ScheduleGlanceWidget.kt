@@ -109,14 +109,14 @@ public class ScheduleGlanceWidget : GlanceAppWidget() {
 
     internal companion object {
         const val MAIN_ACTIVITY = "kekmech.ru.mpeiapp.MainActivity"
-
-        // 70 * cells - 30 dp is the size a launcher gives to a widget of that many cells
-        val CompactSize = DpSize(110.dp, 40.dp)
-        val SquareSize = DpSize(110.dp, 110.dp)
-        val MediumSize = DpSize(250.dp, 110.dp)
-        val LargeSize = DpSize(250.dp, 180.dp)
     }
 }
+
+// 70 * cells - 30 dp is the size a launcher gives to a widget of that many cells
+private val CompactSize = DpSize(110.dp, 40.dp)
+private val SquareSize = DpSize(110.dp, 110.dp)
+private val MediumSize = DpSize(250.dp, 110.dp)
+private val LargeSize = DpSize(250.dp, 180.dp)
 
 /** What the widget shows */
 internal data class WidgetDay(
@@ -174,7 +174,7 @@ private fun ScheduleWidgetRoot(
 }
 
 @Composable
-private fun Message(text: String, color: ColorProvider, fontSize: Int = 13) {
+private fun Message(text: String, color: androidx.glance.unit.ColorProvider, fontSize: Int = 13) {
     Box(modifier = GlanceModifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Text(
             text = text,
