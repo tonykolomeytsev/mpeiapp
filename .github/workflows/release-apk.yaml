@@ -6,8 +6,12 @@ name: Release APK
 #      publish = false  -> only build and check (unit tests + APK artifact)
 #      publish = true   -> build and publish the release for `tag`
 #
-# Signing uses `keystore/mpei_hub_release.jks` from the repository (see AndroidSigningConventionPlugin).
-# This is a NEW key: an APK signed with it can not be installed over a build signed with the old key.
+# The signing key is NEVER stored in the repository. For a signed build add the repository secrets
+# (Settings -> Secrets and variables -> Actions):
+#   SIGNING_KEYSTORE_BASE64  the keystore file encoded with base64
+#   SIGNING_STORE_PASSWORD, SIGNING_KEY_ALIAS, SIGNING_KEY_PASSWORD
+# Without them the APK is signed with the debug key; such an APK can be built and tested,
+# but it is never published (see "Verify signature").
 
 on:
   push:
@@ -55,10 +59,26 @@ jobs:
         env:
           MAP_KEY: ${{ secrets.MAP_KEY }}
 
+      - name: Restore the signing key
+        id: key
+        env:
+          KEYSTORE_BASE64: ${{ secrets.SIGNING_KEYSTORE_BASE64 }}
+        run: |
+          if [ -n "$KEYSTORE_BASE64" ]; then
+            echo "$KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/release.jks"
+            echo "path=$RUNNER_TEMP/release.jks" >> "$GITHUB_OUTPUT"
+          else
+            echo "::warning::No signing secrets: the APK will be signed with the debug key and can not be published"
+          fi
+
       - name: Build release APK
         run: ./gradlew :app:assembleRelease
         env:
           MAP_KEY: ${{ secrets.MAP_KEY }}
+          SIGNING_KEYSTORE_PATH: ${{ steps.key.outputs.path }}
+          SIGNING_STORE_PASSWORD: ${{ secrets.SIGNING_STORE_PASSWORD }}
+          SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
+          SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
 
       - name: Locate APK
         id: apk
@@ -70,17 +90,12 @@ jobs:
 
       - name: Verify signature
         env:
-          # SHA-256 of the MPEI.Hub release certificate (alias mpei_hub in keystore/mpei_hub_release.jks).
-          # The release is published only when the APK is signed with exactly this key.
-          EXPECTED_SHA256: "44d02669450e75eda80a66e75968fdb01fff9a917c1bd41b04bacc5250a75ea6"
+          WILL_PUBLISH: ${{ startsWith(github.ref, 'refs/tags/v') || (github.event_name == 'workflow_dispatch' && inputs.publish) }}
         run: |
           APKSIGNER=$(ls "$ANDROID_HOME"/build-tools/*/apksigner | sort -V | tail -n 1)
           "$APKSIGNER" verify --verbose --print-certs "${{ steps.apk.outputs.apk_path }}" | tee signature.txt
-          ACTUAL=$(grep -m1 "certificate SHA-256 digest" signature.txt | sed 's/.*: //' | tr -d ' \r' | tr 'A-F' 'a-f')
-          echo "expected: $EXPECTED_SHA256"
-          echo "actual:   $ACTUAL"
-          if [ "$ACTUAL" != "$EXPECTED_SHA256" ]; then
-            echo "::error::The APK is not signed with the MPEI.Hub release key"
+          if [ "$WILL_PUBLISH" = "true" ] && grep -qi "Android Debug" signature.txt; then
+            echo "::error::The APK is signed with the debug key: add the SIGNING_* secrets before publishing"
             exit 1
           fi
 

@@ -29,8 +29,7 @@ import kekmech.ru.ui_theme.theme.MpeixTheme
 internal data class Developer(
     @StringRes val nameRes: Int,
     @StringRes val roleRes: Int,
-    /** Link to the profile, null if the person has no public profile to open */
-    val url: String?,
+    val url: String,
 )
 
 internal val Developers = listOf(
@@ -42,7 +41,7 @@ internal val Developers = listOf(
     Developer(
         nameRes = Strings.developer_ivan_myalitsin_name,
         roleRes = Strings.developer_ivan_myalitsin_role,
-        url = null,
+        url = "https://github.com/bezpaniki-arch",
     ),
     Developer(
         nameRes = Strings.developer_johnny_wickky_name,
@@ -79,7 +78,6 @@ private fun DeveloperCard(
     modifier: Modifier = Modifier,
 ) {
     val name = stringResource(developer.nameRes)
-    val url = developer.url
     Surface(
         shape = RoundedCornerShape(16.dp),
         color = MpeixTheme.palette.surface,
@@ -87,7 +85,7 @@ private fun DeveloperCard(
         modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(16.dp))
-            .then(if (url != null) Modifier.clickable { onOpenProfile(url) } else Modifier),
+            .clickable { onOpenProfile(developer.url) },
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
