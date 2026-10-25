@@ -40,6 +40,62 @@
             android:background="?attr/colorWhite"
             tools:alpha="0.5" />
 
+    <LinearLayout
+            android:id="@+id/mapOverlayControls"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="12dp"
+            android:paddingTop="12dp"
+            android:paddingEnd="12dp">
+
+        <TextView
+                android:id="@+id/mapCopyright"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="#99000000"
+                android:paddingHorizontal="6dp"
+                android:paddingVertical="2dp"
+                android:textColor="#FFFFFF"
+                android:textSize="10sp"
+                android:visibility="gone"
+                tools:text="© Esri, Maxar, Earthstar Geographics"
+                tools:visibility="visible" />
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/mapAppearanceToggle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                app:checkedButton="@+id/mapAppearanceScheme"
+                app:selectionRequired="true"
+                app:singleSelection="true">
+
+            <Button
+                    android:id="@+id/mapAppearanceScheme"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="?attr/colorWhite"
+                    android:text="@string/change_map_type_scheme"
+                    android:textColor="?android:attr/textColorPrimary" />
+
+            <Button
+                    android:id="@+id/mapAppearanceHybrid"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="?attr/colorWhite"
+                    android:text="@string/change_map_type_hybrid"
+                    android:textColor="?android:attr/textColorPrimary" />
+
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+
+    </LinearLayout>
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:id="@+id/coordinatorLayout"
             android:layout_width="match_parent"
