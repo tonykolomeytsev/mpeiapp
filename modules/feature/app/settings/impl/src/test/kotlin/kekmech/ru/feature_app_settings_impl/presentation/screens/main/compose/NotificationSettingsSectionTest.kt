@@ -56,6 +56,10 @@ class NotificationSettingsSectionTest {
         override fun setScheduleChangesEnabled(enabled: Boolean) {
             state.value = state.value.copy(scheduleChanges = enabled)
         }
+
+        override fun setLockScreenScheduleEnabled(enabled: Boolean) {
+            state.value = state.value.copy(lockScreenSchedule = enabled)
+        }
     }
 
     @Before
@@ -98,6 +102,14 @@ class NotificationSettingsSectionTest {
         composeRule.onAllNodes(isToggleable())[1].assertIsOn()
         composeRule.onAllNodes(isToggleable())[1].performClick()
         assertFalse(settings.current().scheduleChanges)
+
+        // lock screen schedule: off by default, on, then off
+        composeRule.onAllNodes(isToggleable())[2].assertIsOff()
+        composeRule.onAllNodes(isToggleable())[2].performClick()
+        assertTrue(settings.current().lockScreenSchedule)
+        composeRule.onAllNodes(isToggleable())[2].assertIsOn()
+        composeRule.onAllNodes(isToggleable())[2].performClick()
+        assertFalse(settings.current().lockScreenSchedule)
     }
 
     @Test

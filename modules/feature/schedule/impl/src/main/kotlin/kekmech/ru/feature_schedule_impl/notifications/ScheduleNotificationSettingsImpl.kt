@@ -8,6 +8,9 @@ import kekmech.ru.feature_schedule_api.ScheduleNotificationSettings.State
 import kekmech.ru.feature_schedule_impl.notifications.ScheduleNotificationPrefs.KEY_ENABLED
 import kekmech.ru.feature_schedule_impl.notifications.ScheduleNotificationPrefs.intervalHours
 import kekmech.ru.feature_schedule_impl.notifications.ScheduleNotificationPrefs.isEnabled
+import kekmech.ru.feature_schedule_impl.notifications.lockscreen.LockScreenPrefs
+import kekmech.ru.feature_schedule_impl.notifications.lockscreen.LockScreenPrefs.isLockScreenEnabled
+import kekmech.ru.feature_schedule_impl.notifications.lockscreen.LockScreenScheduleController
 import kekmech.ru.feature_schedule_impl.notifications.reminders.ClassReminderController
 import kekmech.ru.feature_schedule_impl.notifications.reminders.ClassReminderPrefs
 import kekmech.ru.feature_schedule_impl.notifications.reminders.ClassReminderPrefs.areRemindersEnabled
@@ -24,25 +27,30 @@ internal class ScheduleNotificationSettingsImpl(
     context: Context,
     private val classReminders: ClassReminderController,
     private val changeScheduler: ScheduleChangeScheduler,
+    private val lockScreen: LockScreenScheduleController,
 ) : ScheduleNotificationSettings {
 
     private val changePrefs = ScheduleNotificationPrefs.of(context)
     private val reminderPrefs = ClassReminderPrefs.of(context)
+    private val lockScreenPrefs = LockScreenPrefs.of(context)
 
     override fun current(): State =
         State(
             classReminders = reminderPrefs.areRemindersEnabled(),
             scheduleChanges = changePrefs.isEnabled(),
+            lockScreenSchedule = lockScreenPrefs.isLockScreenEnabled(),
         )
 
     override fun observe(): Flow<State> = callbackFlow {
         val listener = SharedPreferences.OnSharedPreferenceChangeListener { _, _ -> trySend(current()) }
         changePrefs.registerOnSharedPreferenceChangeListener(listener)
         reminderPrefs.registerOnSharedPreferenceChangeListener(listener)
+        lockScreenPrefs.registerOnSharedPreferenceChangeListener(listener)
         trySend(current())
         awaitClose {
             changePrefs.unregisterOnSharedPreferenceChangeListener(listener)
             reminderPrefs.unregisterOnSharedPreferenceChangeListener(listener)
+            lockScreenPrefs.unregisterOnSharedPreferenceChangeListener(listener)
         }
     }.distinctUntilChanged()
 
@@ -57,5 +65,9 @@ internal class ScheduleNotificationSettingsImpl(
         } else {
             changeScheduler.stopPeriodicChecks()
         }
+    }
+
+    override fun setLockScreenScheduleEnabled(enabled: Boolean) {
+        lockScreen.setEnabled(enabled)
     }
 }

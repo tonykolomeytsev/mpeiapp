@@ -94,6 +94,22 @@ internal fun NotificationSettingsSection(
             },
         )
         ListItem(
+            headlineText = stringResource(Strings.app_settings_notify_lock_screen_title),
+            supportingText = stringResource(Strings.app_settings_notify_lock_screen_description),
+            trailingContent = {
+                Switch(
+                    checked = state.lockScreenSchedule,
+                    onCheckedChange = { enabled ->
+                        toggle(
+                            enabled,
+                            Strings.lock_screen_permission_denied,
+                            settings::setLockScreenScheduleEnabled,
+                        )
+                    },
+                )
+            },
+        )
+        ListItem(
             headlineText = stringResource(Strings.app_settings_notify_more_title),
             supportingText = stringResource(Strings.app_settings_notify_more_description),
             modifier = Modifier.clickable(onClick = onOpenDetails),

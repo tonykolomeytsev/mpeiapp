@@ -23,6 +23,9 @@ import kekmech.ru.feature_schedule_impl.notifications.ScheduleChangeLifecycleObs
 import kekmech.ru.feature_schedule_impl.notifications.ScheduleChangeScheduler
 import kekmech.ru.feature_schedule_impl.notifications.ScheduleNotificationManager
 import kekmech.ru.feature_schedule_impl.notifications.ScheduleNotificationSettingsViewModel
+import kekmech.ru.feature_schedule_impl.notifications.lockscreen.LockScreenLifecycleObserver
+import kekmech.ru.feature_schedule_impl.notifications.lockscreen.LockScreenNotifier
+import kekmech.ru.feature_schedule_impl.notifications.lockscreen.LockScreenScheduleController
 import kekmech.ru.feature_schedule_impl.notifications.reminders.ClassReminderAlarmScheduler
 import kekmech.ru.feature_schedule_impl.notifications.reminders.ClassReminderController
 import kekmech.ru.feature_schedule_impl.notifications.reminders.ClassReminderLifecycleObserver
@@ -80,6 +83,9 @@ val FeatureScheduleModule = module {
     single { ClassReminderController(androidContext(), get()) }
     factoryOf(::ClassReminderLifecycleObserver) bindIntoList AppLifecycleObserver::class
     // Switches for the main settings screen
-    single<ScheduleNotificationSettings> { ScheduleNotificationSettingsImpl(androidContext(), get(), get()) }
+    single { LockScreenNotifier(androidContext()) }
+    single { LockScreenScheduleController(androidContext(), get()) }
+    factoryOf(::LockScreenLifecycleObserver) bindIntoList AppLifecycleObserver::class
+    single<ScheduleNotificationSettings> { ScheduleNotificationSettingsImpl(androidContext(), get(), get(), get()) }
     factoryOf(::ScheduleChangeLifecycleObserver) bindIntoList AppLifecycleObserver::class
 }

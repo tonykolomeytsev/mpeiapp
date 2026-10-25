@@ -9,6 +9,7 @@ import android.net.Uri
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import kekmech.ru.ext_android.AppLocales
 import kekmech.ru.feature_schedule_api.domain.model.ClassesType
 import timber.log.Timber
 import java.time.Instant
@@ -21,6 +22,9 @@ import kekmech.ru.res_strings.R.string as Strings
 internal class ClassReminderNotifier(
     private val context: Context,
 ) {
+
+    // the language chosen in the app, not the one of the system
+    private val localized get() = AppLocales.localized(context)
 
     fun show(reminder: ClassReminder) {
         createChannel()
@@ -50,10 +54,10 @@ internal class ClassReminderNotifier(
     }
 
     private fun title(reminder: ClassReminder): String {
-        val type = context.getString(
+        val type = localized.getString(
             if (reminder.type == ClassesType.LAB) Strings.class_reminder_type_lab else Strings.class_reminder_type_practice,
         )
-        return context.getString(
+        return localized.getString(
             when (reminder.kind) {
                 ReminderKind.DAY_BEFORE -> Strings.class_reminder_title_day_before
                 ReminderKind.HOURS_BEFORE -> Strings.class_reminder_title_hours_before
@@ -86,10 +90,10 @@ internal class ClassReminderNotifier(
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 CHANNEL_ID,
-                context.getString(Strings.class_reminder_channel_name),
+                localized.getString(Strings.class_reminder_channel_name),
                 NotificationManager.IMPORTANCE_HIGH,
             ).apply {
-                description = context.getString(Strings.class_reminder_channel_description)
+                description = localized.getString(Strings.class_reminder_channel_description)
             }
             context.getSystemService(NotificationManager::class.java).createNotificationChannel(channel)
         }

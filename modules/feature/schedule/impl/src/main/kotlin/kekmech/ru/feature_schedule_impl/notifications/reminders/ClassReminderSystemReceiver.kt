@@ -3,6 +3,7 @@ package kekmech.ru.feature_schedule_impl.notifications.reminders
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import kekmech.ru.feature_schedule_impl.notifications.lockscreen.LockScreenScheduleController
 import org.koin.core.context.GlobalContext
 
 /**
@@ -16,9 +17,10 @@ internal class ClassReminderSystemReceiver : BroadcastReceiver() {
             Intent.ACTION_BOOT_COMPLETED,
             Intent.ACTION_MY_PACKAGE_REPLACED,
             Intent.ACTION_TIMEZONE_CHANGED,
-            Intent.ACTION_TIME_CHANGED -> GlobalContext.getOrNull()
-                ?.get<ClassReminderController>()
-                ?.ensureScheduled()
+            Intent.ACTION_TIME_CHANGED -> GlobalContext.getOrNull()?.let { koin ->
+                koin.get<ClassReminderController>().ensureScheduled()
+                koin.get<LockScreenScheduleController>().ensureScheduled()
+            }
         }
     }
 }

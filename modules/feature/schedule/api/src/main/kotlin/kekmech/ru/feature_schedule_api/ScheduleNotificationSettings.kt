@@ -13,6 +13,8 @@ public interface ScheduleNotificationSettings {
         val classReminders: Boolean,
         /** "The schedule has changed" notifications */
         val scheduleChanges: Boolean,
+        /** Persistent notification with the current and the next class, also on the lock screen */
+        val lockScreenSchedule: Boolean = false,
     )
 
     public fun current(): State
@@ -23,4 +25,6 @@ public interface ScheduleNotificationSettings {
     public fun setClassRemindersEnabled(enabled: Boolean)
 
     public fun setScheduleChangesEnabled(enabled: Boolean)
+
+    public fun setLockScreenScheduleEnabled(enabled: Boolean)
 }
