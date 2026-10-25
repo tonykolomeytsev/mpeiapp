@@ -10,7 +10,7 @@ name: Release APK
 # (Settings -> Secrets and variables -> Actions):
 #   SIGNING_KEYSTORE_BASE64  the keystore file encoded with base64
 #   SIGNING_STORE_PASSWORD, SIGNING_KEY_ALIAS, SIGNING_KEY_PASSWORD
-# Without them the APK is signed with the debug key; such an APK can be built and tested,
+# Without them the APK is signed with a throwaway key; such an APK can be built and tested,
 # but it is never published (see "Verify signature").
 
 on:
@@ -67,8 +67,17 @@ jobs:
           if [ -n "$KEYSTORE_BASE64" ]; then
             echo "$KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/release.jks"
             echo "path=$RUNNER_TEMP/release.jks" >> "$GITHUB_OUTPUT"
+            echo "ephemeral=false" >> "$GITHUB_OUTPUT"
           else
-            echo "::warning::No signing secrets: the APK will be signed with the debug key and can not be published"
+            # no secrets: a throwaway key, only to build and test the APK; such an APK is never published
+            echo "::warning::No signing secrets: the APK is signed with a throwaway key and can not be published"
+            PASS=$(openssl rand -hex 16)
+            keytool -genkeypair -keystore "$RUNNER_TEMP/ci.jks" -storetype PKCS12 -alias ci -keyalg RSA -keysize 2048 \
+              -validity 2 -storepass "$PASS" -keypass "$PASS" -dname "CN=CI throwaway key"
+            echo "::add-mask::$PASS"
+            echo "path=$RUNNER_TEMP/ci.jks" >> "$GITHUB_OUTPUT"
+            echo "pass=$PASS" >> "$GITHUB_OUTPUT"
+            echo "ephemeral=true" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Build release APK
@@ -76,9 +85,9 @@ jobs:
         env:
           MAP_KEY: ${{ secrets.MAP_KEY }}
           SIGNING_KEYSTORE_PATH: ${{ steps.key.outputs.path }}
-          SIGNING_STORE_PASSWORD: ${{ secrets.SIGNING_STORE_PASSWORD }}
-          SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
-          SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
+          SIGNING_STORE_PASSWORD: ${{ secrets.SIGNING_STORE_PASSWORD || steps.key.outputs.pass }}
+          SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS || 'ci' }}
+          SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD || steps.key.outputs.pass }}
 
       - name: Locate APK
         id: apk
@@ -91,11 +100,12 @@ jobs:
       - name: Verify signature
         env:
           WILL_PUBLISH: ${{ startsWith(github.ref, 'refs/tags/v') || (github.event_name == 'workflow_dispatch' && inputs.publish) }}
+          THROWAWAY_KEY: ${{ steps.key.outputs.ephemeral }}
         run: |
           APKSIGNER=$(ls "$ANDROID_HOME"/build-tools/*/apksigner | sort -V | tail -n 1)
           "$APKSIGNER" verify --verbose --print-certs "${{ steps.apk.outputs.apk_path }}" | tee signature.txt
-          if [ "$WILL_PUBLISH" = "true" ] && grep -qi "Android Debug" signature.txt; then
-            echo "::error::The APK is signed with the debug key: add the SIGNING_* secrets before publishing"
+          if [ "$WILL_PUBLISH" = "true" ] && [ "$THROWAWAY_KEY" = "true" ]; then
+            echo "::error::The APK is signed with a throwaway key: add the SIGNING_* secrets before publishing"
             exit 1
           fi
 
