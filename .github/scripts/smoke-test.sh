@@ -41,6 +41,9 @@ launch_and_check() {
 explore_tabs() {
   echo "== bottom tabs =="
   adb shell am force-stop "$PKG"
+  # a slow emulator shows "... isn't responding" dialogs of other apps (launcher, Google services) over the app
+  adb shell settings put global hide_error_dialogs 1 >/dev/null 2>&1 || true
+  adb shell am broadcast -a android.intent.action.CLOSE_SYSTEM_DIALOGS >/dev/null 2>&1 || true
   adb root >/dev/null 2>&1 || true
   adb wait-for-device
   # a selected group: without it the app shows the onboarding instead of the main screen
@@ -87,10 +90,25 @@ PY
 }
 
 tap_by_id() {
+  local xy="" attempt
+  for attempt in 1 2 3 4; do
+    xy=$(find_tab "$1")
+    [ -n "$xy" ] && break
+    echo "tab $1 not found (attempt $attempt), closing dialogs and trying again"
+    adb shell am broadcast -a android.intent.action.CLOSE_SYSTEM_DIALOGS >/dev/null 2>&1 || true
+    adb shell input keyevent KEYCODE_BACK
+    adb shell monkey -p "$PKG" -c android.intent.category.LAUNCHER 1 >/dev/null 2>&1
+    sleep 8
+  done
+  if [ -z "$xy" ]; then echo "tab $1 not found on the screen"; return 1; fi
+  echo "tap $1 at $xy"
+  adb shell input tap $xy
+}
+
+find_tab() {
   adb shell uiautomator dump /sdcard/ui.xml >/dev/null 2>&1
   adb pull /sdcard/ui.xml "$OUT/ui.xml" >/dev/null 2>&1
-  local xy
-  xy=$(python3 - "$OUT/ui.xml" "$1" <<'PY'
+  python3 - "$OUT/ui.xml" "$1" <<'PY'
 import re, sys
 xml = open(sys.argv[1], encoding="utf-8").read()
 m = re.search(r'resource-id="[^"]*:id/' + sys.argv[2] + r'"[^>]*bounds="\[(\d+),(\d+)\]\[(\d+),(\d+)\]"', xml)
@@ -98,10 +116,6 @@ if m:
     x1, y1, x2, y2 = map(int, m.groups())
     print((x1 + x2) // 2, (y1 + y2) // 2)
 PY
-)
-  if [ -z "$xy" ]; then echo "tab $1 not found on the screen"; return 1; fi
-  echo "tap $1 at $xy"
-  adb shell input tap $xy
 }
 
 STATUS=0
