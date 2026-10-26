@@ -1,6 +1,7 @@
 package kekmech.ru.mpeiapp.ui.main
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -97,6 +98,8 @@ class BottomBarController(
     private fun FragmentTransaction.commitNowIgnoreStateLossError() = try {
         commitNowAllowingStateLoss()
     } catch (e: Exception) {
+        // Timber has no tree in release builds: a tab that fails to open must leave a trace in logcat
+        Log.e("TabSwitch", "Failed to open the tab", e)
         Timber.e(e)
         // TODO: remove in future if will no exceptions
         FirebaseCrashlytics.getInstance().recordException(e)

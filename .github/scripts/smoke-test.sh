@@ -61,7 +61,8 @@ explore_tabs() {
   done
   echo "--- app log (errors) ---"
   adb logcat -d > "$OUT/tabs-logcat.txt" || true
-  grep -E "FATAL|AndroidRuntime|Exception|Error|kekmech" "$OUT/tabs-logcat.txt" | grep -v "^---" | tail -80
+  grep -E "TabSwitch|FATAL EXCEPTION" -A25 "$OUT/tabs-logcat.txt" | head -120
+  grep -E " E " "$OUT/tabs-logcat.txt" | grep -v "AccessibilityNodeInfoDumper" | tail -40
 }
 
 screen_texts() {
