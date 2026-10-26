@@ -56,13 +56,20 @@ explore_tabs() {
     tap_by_id "$tab"
     sleep 4
     echo "--- after tapping $tab: texts on the screen ---"
-    screen_texts | head -40
+    screen_texts | tee "$OUT/texts-$tab.txt" | head -40
     adb exec-out screencap -p > "$OUT/tab-$tab.png" || true
   done
   echo "--- app log (errors) ---"
   adb logcat -d > "$OUT/tabs-logcat.txt" || true
   grep -E "TabSwitch|FATAL EXCEPTION" -A25 "$OUT/tabs-logcat.txt" | head -120
   grep -E " E " "$OUT/tabs-logcat.txt" | grep -v "AccessibilityNodeInfoDumper" | tail -40
+
+  # every tab has to show its own screen
+  local failed=0
+  grep -qiE "Scheme|Схема" "$OUT/texts-navigation_map.txt" || { echo "::error::The Map tab does not show the map"; failed=1; }
+  grep -qiE "Settings|Настройки" "$OUT/texts-navigation_profile.txt" || { echo "::error::The Profile tab does not open"; failed=1; }
+  grep -qiE "Upcoming|Ближайшие" "$OUT/texts-navigation_dashboard.txt" || { echo "::error::The Home tab does not open"; failed=1; }
+  return $failed
 }
 
 screen_texts() {
@@ -106,7 +113,7 @@ echo "== dark theme =="
 adb shell cmd uimode night yes
 launch_and_check dark || STATUS=1
 
-explore_tabs || true
+explore_tabs || STATUS=1
 
 # The home screen must have been reached: the main activity is on top
 adb shell dumpsys activity activities | grep -m1 "topResumedActivity" || true

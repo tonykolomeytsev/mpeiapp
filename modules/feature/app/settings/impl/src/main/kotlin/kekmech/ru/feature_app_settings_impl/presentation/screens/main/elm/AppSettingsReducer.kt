@@ -17,7 +17,6 @@ internal class AppSettingsReducer :
     override fun Result.internal(event: Internal) {
         when (event) {
             is Internal.LoadAppSettingsSuccess -> state { copy(appSettings = event.appSettings) }
-            is Internal.ObserveContributorsSuccess -> state { copy(contributors = event.contributors) }
         }
     }
 
