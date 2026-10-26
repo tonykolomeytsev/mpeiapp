@@ -79,18 +79,20 @@
                     style="?attr/materialButtonOutlinedStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="?attr/colorWhite"
+                    app:backgroundTint="@color/map_toggle_bg"
+                    app:strokeColor="@color/map_toggle_stroke"
                     android:text="@string/change_map_type_scheme"
-                    android:textColor="?android:attr/textColorPrimary" />
+                    android:textColor="@color/map_toggle_text" />
 
             <Button
                     android:id="@+id/mapAppearanceHybrid"
                     style="?attr/materialButtonOutlinedStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="?attr/colorWhite"
+                    app:backgroundTint="@color/map_toggle_bg"
+                    app:strokeColor="@color/map_toggle_stroke"
                     android:text="@string/change_map_type_hybrid"
-                    android:textColor="?android:attr/textColorPrimary" />
+                    android:textColor="@color/map_toggle_text" />
 
         </com.google.android.material.button.MaterialButtonToggleGroup>
 
