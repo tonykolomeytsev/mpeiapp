@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!--
+        Library modules only have the debug variant (see enableOnlyDebugBuildType), so the release app picks up
+        their debug-only dependencies. These two exported activities come from ui-tooling and ui-test-manifest:
+        a release build must not register them.
+    -->
+    <application>
+        <activity
+            android:name="androidx.compose.ui.tooling.PreviewActivity"
+            tools:node="remove" />
+        <activity
+            android:name="androidx.activity.ComponentActivity"
+            tools:node="remove" />
+    </application>
+
+</manifest>

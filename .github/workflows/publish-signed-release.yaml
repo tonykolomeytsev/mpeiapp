@@ -2,6 +2,8 @@ name: Publish signed release
 
 # Publishes a GitHub Release from an APK that is already signed and committed to the repository
 # (the signing key is never stored in CI or in git). The APK signature is checked before publishing.
+# Do not keep APKs on main (they stay in the git history forever): commit the signed APK to a temporary branch,
+# run this workflow on that branch ("Use workflow from"), then delete the branch.
 
 on:
   workflow_dispatch:

@@ -80,8 +80,9 @@ jobs:
             echo "ephemeral=true" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Build release APK
-        run: ./gradlew :app:assembleRelease
+      # the APK is for GitHub Releases / RuStore, the AAB is for Google Play (and RuStore)
+      - name: Build release APK and AAB
+        run: ./gradlew :app:assembleRelease :app:bundleRelease
         env:
           MAP_KEY: ${{ secrets.MAP_KEY }}
           SIGNING_KEYSTORE_PATH: ${{ steps.key.outputs.path }}
@@ -109,11 +110,24 @@ jobs:
             exit 1
           fi
 
+      - name: Verify the AAB signature
+        run: |
+          AAB=$(ls modules/app/build/outputs/bundle/release/*.aab | head -n 1)
+          echo "Built: $AAB"
+          jarsigner -verify -certs "$AAB" | tee aab-signature.txt | tail -n 5
+          grep -q "jar verified" aab-signature.txt
+
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: release-apk
           path: modules/app/build/outputs/apk/release/*.apk
+
+      - name: Upload AAB
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-aab
+          path: modules/app/build/outputs/bundle/release/*.aab
 
       - name: Upload test reports
         if: always()
