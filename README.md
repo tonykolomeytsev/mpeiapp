@@ -89,7 +89,9 @@ cd mpei-next
 ./gradlew assembleRelease --no-configuration-cache
 ```
 
-> Ключ подписи в репозитории **не хранится**. Для подписанной сборки задайте `SIGNING_KEYSTORE_PATH`, `SIGNING_STORE_PASSWORD`, `SIGNING_KEY_ALIAS` (и при необходимости `SIGNING_KEY_PASSWORD`) через переменные окружения или `~/.gradle/gradle.properties`. Без них `release` подписывается debug-сертификатом — такой APK публиковать нельзя. Подробнее: `AndroidSigningConventionPlugin.kt`, `.github/workflows/release-apk.yaml`.
+> Ключ подписи в репозитории **не хранится**. Для подписанной сборки задайте `SIGNING_KEYSTORE_PATH`, `SIGNING_STORE_PASSWORD`, `SIGNING_KEY_ALIAS` (и при необходимости `SIGNING_KEY_PASSWORD`) через переменные окружения или `~/.gradle/gradle.properties`. Без них `release` подписывается debug-сертификатом — такой APK публиковать нельзя.
+>
+> Идентификатор приложения — `ru.mpei.hub` (debug: `ru.mpei.hub.dev`). Как подписываются и публикуются релизы (APK и AAB), где хранить ключ и какие нужны секреты CI — в [docs/RELEASE.md](./docs/RELEASE.md).
 
 ### Рекомендации для рабочих станций с 8 ГБ ОЗУ (Windows)
 1. **Настройки памяти демона:** в `gradle.properties` установлены безопасные лимиты кучи JVM (`-Xmx2048m`), предотвращающие ошибки OutOfMemoryError при одновременной работе среды разработки и Gradle-демона.
@@ -107,6 +109,9 @@ cd mpei-next
 mpei-next/
 ├── build-logic/                # Конвенции сборки и Gradle-плагины проекта
 ├── gradle/                     # Version Catalog (libs.versions.toml) и Gradle Wrapper
+├── docs/                       # Документация: выпуск релизов (RELEASE.md), план миграции на iOS, архив
+├── third_party/                # Готовые сторонние артефакты (локальный Maven-репозиторий, lib_bars)
+├── statics/                    # Данные карты и конфигурация БАРС, загружаемые приложением с GitHub (ветка main)
 ├── modules/
 │   ├── app/                    # Точка входа, Application, навигация, SplashScreen
 │   ├── feature/
