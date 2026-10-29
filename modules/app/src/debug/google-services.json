@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "123456789012",
-    "project_id": "mpeix-app",
-    "storage_bucket": "mpeix-app.appspot.com"
+    "project_number": "855395924639",
+    "project_id": "mpei-hub",
+    "storage_bucket": "mpei-hub.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:123456789012:android:abcdef1234567890abcdef",
+        "mobilesdk_app_id": "1:855395924639:android:45a56112ec4ece8c2a80aa",
         "android_client_info": {
-          "package_name": "kekmech.ru.mpeiapp"
+          "package_name": "ru.mpei.hub"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "dummy_api_key_for_local_builds"
+          "current_key": "AIzaSyA7UgIP7uHZJZN8S7KMtbOetl96LCO-6EU"
         }
       ],
       "services": {
@@ -26,15 +26,15 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:123456789012:android:abcdef1234567890abcdev",
+        "mobilesdk_app_id": "1:855395924639:android:4093b2f900412bf52a80aa",
         "android_client_info": {
-          "package_name": "kekmech.ru.mpeiapp.dev"
+          "package_name": "ru.mpei.hub.dev"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "dummy_api_key_for_local_builds"
+          "current_key": "AIzaSyA7UgIP7uHZJZN8S7KMtbOetl96LCO-6EU"
         }
       ],
       "services": {

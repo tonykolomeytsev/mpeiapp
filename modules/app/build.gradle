@@ -11,7 +11,7 @@ android {
     namespace = "kekmech.ru.mpeiapp"
 
     defaultConfig {
-        applicationId = "kekmech.ru.mpeiapp"
+        applicationId = "ru.mpei.hub"
         versionName = "v0.5.1"
         versionCode = 63
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

@@ -105,7 +105,7 @@ jobs:
         uses: r0adkll/upload-google-play@v1
         with:
           serviceAccountJson: service_account.json
-          packageName: kekmech.ru.mpeiapp
+          packageName: ru.mpei.hub
           releaseFiles: app-release.aab
           track: internal
           status: completed

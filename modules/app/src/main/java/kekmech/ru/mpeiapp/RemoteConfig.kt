@@ -15,7 +15,7 @@ object RemoteConfig {
         remoteConfigDefaults[ForceUpdateChecker.KEY_UPDATE_REQUIRED] = false
         remoteConfigDefaults[ForceUpdateChecker.KEY_CURRENT_VERSION] = BuildConfig.VERSION_NAME
         remoteConfigDefaults[ForceUpdateChecker.KEY_UPDATE_URL] =
-            "https://play.google.com/store/apps/details?id=kekmech.ru.mpeiapp"
+            "https://play.google.com/store/apps/details?id=ru.mpei.hub"
         remoteConfigDefaults[ForceUpdateChecker.KEY_UPDATE_DESCRIPTION] = ""
 
         firebaseRemoteConfig.setDefaultsAsync(remoteConfigDefaults)

@@ -2,7 +2,7 @@
 # Installs the release APK on the running emulator, launches it and fails on a crash.
 # Collects a screenshot and the logcat into ./smoke-output.
 set -u
-PKG="kekmech.ru.mpeiapp"
+PKG="ru.mpei.hub"
 OUT="smoke-output"
 mkdir -p "$OUT"
 
