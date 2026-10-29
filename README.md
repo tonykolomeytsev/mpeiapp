@@ -143,7 +143,7 @@ mpei-next/
 2. Создайте рабочую ветку под вашу задачу (`git checkout -b feature/improvement`).
 3. Закоммитьте изменения с понятным описанием (`git commit -m 'feat: add feature description'`).
 4. Отправьте ветку в ваш форк (`git push origin feature/improvement`).
-5. Откройте Pull Request в ветку `master`.
+5. Откройте Pull Request в ветку `main`.
 
 ---
 

@@ -20,13 +20,13 @@ public enum class BackendServiceUrl(
     ),
     /** Статические геометки и контуры зданий кампуса OpenStreetMap */
     MAP(
-        prodEndpoint = "https://raw.githubusercontent.com/ghostoftheeleven/mpei-next/master/statics/map/",
+        prodEndpoint = "https://raw.githubusercontent.com/ghostoftheeleven/mpei-next/main/statics/map/",
         stagingEndpoint = "https://raw.githubusercontent.com/ghostoftheeleven/mpei-next/dev/statics/map/",
         mockEndpoint = "http://localhost:8080/map/",
     ),
     /** Конфигурация и JS-скрипты парсинга личного кабинета БАРС */
     BARS(
-        prodEndpoint = "https://raw.githubusercontent.com/ghostoftheeleven/mpei-next/master/statics/bars/",
+        prodEndpoint = "https://raw.githubusercontent.com/ghostoftheeleven/mpei-next/main/statics/bars/",
         stagingEndpoint = "https://raw.githubusercontent.com/ghostoftheeleven/mpei-next/dev/statics/bars/",
         mockEndpoint = "http://localhost:8080/bars/",
     ),
