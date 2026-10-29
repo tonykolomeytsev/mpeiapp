@@ -22,6 +22,10 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
 
+      # gradlew loses the executable bit when the repository is edited on Windows
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
       - name: Unit tests
         run: ./gradlew test
         env:
@@ -41,6 +45,10 @@ jobs:
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
+
+      # gradlew loses the executable bit when the repository is edited on Windows
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
 
       - name: Build with Gradle
         run: ./gradlew :app:assembleDebug
