@@ -1,8 +1,8 @@
 package kekmech.ru.mpeiapp
 
 import android.app.Application
-import android.content.Context
 import com.tencent.mmkv.MMKV
+import kekmech.ru.ext_android.AppLocales
 import kekmech.ru.feature_app_settings_api.data.AppEnvironmentRepository
 import kekmech.ru.lib_app_lifecycle.AppLifecycleObserver
 import kekmech.ru.lib_elm.TimberLogger
@@ -30,16 +30,14 @@ class MpeixApp : Application(),
     @Suppress("MagicNumber")
     override fun onCreate() {
         super.onCreate()
+        // the language chosen in the settings must be known before the first activity (and its splash) is created
+        AppLocales.applySaved(this)
         initKoin()
         appLifecycleObservers.forEach { it.onCreate(applicationContext) }
         ServiceUrlResolver.setAppEnvironment(appEnvironmentRepository.getAppEnvironment())
         RemoteConfig.setup()
         initTimber()
         MMKV.initialize(this)
-    }
-
-    override fun attachBaseContext(base: Context) {
-        super.attachBaseContext(LocaleContextWrapper.wrapContext(base))
     }
 
     private fun initKoin() = startKoin {

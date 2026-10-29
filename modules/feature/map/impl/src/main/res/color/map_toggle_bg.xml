@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Fixed colors: the toggle lies on top of a map, which is light or dark regardless of the app theme -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="#FF3D6FE0" android:state_checked="true" />
+    <item android:color="#F2FFFFFF" />
+</selector>

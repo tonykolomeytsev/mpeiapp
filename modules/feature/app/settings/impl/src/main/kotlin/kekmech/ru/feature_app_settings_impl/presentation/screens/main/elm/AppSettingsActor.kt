@@ -1,16 +1,17 @@
 package kekmech.ru.feature_app_settings_impl.presentation.screens.main.elm
 
+import kekmech.ru.ext_android.AppLocales
 import kekmech.ru.feature_app_settings_api.domain.model.AppTheme
 import kekmech.ru.feature_app_settings_impl.data.AppSettingsRepositoryImpl
 import kekmech.ru.feature_app_settings_impl.presentation.screens.main.elm.AppSettingsEvent.Internal
-import kekmech.ru.feature_contributors_api.data.repository.ContributorsRepository
 import kekmech.ru.lib_elm.actorFlow
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.withContext
 import money.vivid.elmslie.core.store.Actor
 
 internal class AppSettingsActor(
     private val appSettingsRepository: AppSettingsRepositoryImpl,
-    private val contributorsRepository: ContributorsRepository,
 ) : Actor<AppSettingsCommand, AppSettingsEvent>() {
 
     override fun execute(command: AppSettingsCommand): Flow<AppSettingsEvent> =
@@ -42,8 +43,11 @@ internal class AppSettingsActor(
             }.mapEvents(Internal::LoadAppSettingsSuccess)
 
             is AppSettingsCommand.ChangeLanguage -> actorFlow {
-                appSettingsRepository
+                val settings = appSettingsRepository
                     .updateAppSettings { copy(languageCode = command.selectedLanguage) }
+                // The language is saved first: applying it recreates the activity
+                withContext(Dispatchers.Main) { AppLocales.apply(command.selectedLanguage) }
+                settings
             }.mapEvents(Internal::LoadAppSettingsSuccess)
 
             is AppSettingsCommand.ChangeMapType -> actorFlow {
@@ -55,12 +59,5 @@ internal class AppSettingsActor(
                 appSettingsRepository
                     .updateAppSettings { copy(showNavigationButton = command.isVisible) }
             }.mapEvents(Internal::LoadAppSettingsSuccess)
-
-            is AppSettingsCommand.FetchContributors ->
-                actorFlow { contributorsRepository.fetchContributors() }.mapEvents()
-
-            is AppSettingsCommand.ObserveContributors ->
-                contributorsRepository.observeContributors()
-                    .mapEvents(Internal::ObserveContributorsSuccess)
         }
 }

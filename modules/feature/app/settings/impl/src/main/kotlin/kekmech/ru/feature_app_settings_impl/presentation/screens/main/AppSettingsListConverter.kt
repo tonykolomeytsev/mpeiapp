@@ -94,7 +94,7 @@ internal class AppSettingsListConverter {
                 )
             }
 
-            if (state.contributors != null) addSection(titleResId = Strings.app_settings_header_contributors) {
+            if (state.contributors != null) addSection(titleResId = Strings.app_settings_header_developers) {
                 addAll(state.contributors)
             }
 
@@ -106,7 +106,7 @@ internal class AppSettingsListConverter {
 
     private fun getVersionItem(context: Context, appVersionName: AppVersionName): Any {
         return TextItem(
-            text = context.getString(Strings.app_settings_app_version, appVersionName.versionName),
+            text = context.getString(Strings.app_settings_app_version, appVersionName.versionName.removePrefix("v")),
             styleResId = coreui_R.style.H6_Gray70,
             textGravity = Gravity.CENTER
         )

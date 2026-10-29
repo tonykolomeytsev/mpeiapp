@@ -35,6 +35,20 @@ public inline fun <reified T : Any> Fragment.setResultListener(
     }
 }
 
+/**
+ * Listens for a result sent from a dialog that was shown through the router.
+ * Such dialogs live on the activity fragment manager, so a plain [setResultListener] never receives them.
+ */
+public inline fun <reified T : Any> Fragment.setActivityResultListener(
+    key: String,
+    noinline resultMapper: (Bundle, key: String) -> T,
+    crossinline onResult: (T) -> Unit,
+) {
+    requireActivity().supportFragmentManager.setFragmentResultListener(key, this) { requestKey, bundle ->
+        onResult(resultMapper(bundle, requestKey))
+    }
+}
+
 public fun Fragment.setResult(key: String, result: Any = EmptyResult) {
     setFragmentResult(key, bundleOf(key to result))
 }

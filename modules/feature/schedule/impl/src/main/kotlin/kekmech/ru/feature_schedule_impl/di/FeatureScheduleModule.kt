@@ -16,11 +16,16 @@ import kekmech.ru.feature_schedule_impl.data.network.mpei.MpeiScheduleService
 import kekmech.ru.feature_schedule_impl.data.repository.ScheduleRepositoryImpl
 import kekmech.ru.feature_schedule_impl.data.repository.ScheduleSearchRepositoryImpl
 import kekmech.ru.feature_schedule_impl.domain.usecase.HasSelectedScheduleUseCaseImpl
+import kekmech.ru.feature_schedule_api.ScheduleNotificationSettings
 import kekmech.ru.feature_schedule_impl.notifications.ScheduleCacheManager
+import kekmech.ru.feature_schedule_impl.notifications.ScheduleNotificationSettingsImpl
 import kekmech.ru.feature_schedule_impl.notifications.ScheduleChangeLifecycleObserver
 import kekmech.ru.feature_schedule_impl.notifications.ScheduleChangeScheduler
 import kekmech.ru.feature_schedule_impl.notifications.ScheduleNotificationManager
 import kekmech.ru.feature_schedule_impl.notifications.ScheduleNotificationSettingsViewModel
+import kekmech.ru.feature_schedule_impl.notifications.lockscreen.LockScreenLifecycleObserver
+import kekmech.ru.feature_schedule_impl.notifications.lockscreen.LockScreenNotifier
+import kekmech.ru.feature_schedule_impl.notifications.lockscreen.LockScreenScheduleController
 import kekmech.ru.feature_schedule_impl.notifications.reminders.ClassReminderAlarmScheduler
 import kekmech.ru.feature_schedule_impl.notifications.reminders.ClassReminderController
 import kekmech.ru.feature_schedule_impl.notifications.reminders.ClassReminderLifecycleObserver
@@ -77,5 +82,10 @@ val FeatureScheduleModule = module {
     single { ClassReminderAlarmScheduler(androidContext()) }
     single { ClassReminderController(androidContext(), get()) }
     factoryOf(::ClassReminderLifecycleObserver) bindIntoList AppLifecycleObserver::class
+    // Switches for the main settings screen
+    single { LockScreenNotifier(androidContext()) }
+    single { LockScreenScheduleController(androidContext(), get()) }
+    factoryOf(::LockScreenLifecycleObserver) bindIntoList AppLifecycleObserver::class
+    single<ScheduleNotificationSettings> { ScheduleNotificationSettingsImpl(androidContext(), get(), get(), get()) }
     factoryOf(::ScheduleChangeLifecycleObserver) bindIntoList AppLifecycleObserver::class
 }

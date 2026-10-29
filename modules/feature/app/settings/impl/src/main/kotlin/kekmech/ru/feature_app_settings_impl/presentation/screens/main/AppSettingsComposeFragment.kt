@@ -13,7 +13,7 @@ import com.kekmech.lib_fragment.ComposeFragment
 import kekmech.ru.ext_android.close
 import kekmech.ru.ext_android.notNullString
 import kekmech.ru.ext_android.openLinkExternal
-import kekmech.ru.ext_android.setResultListener
+import kekmech.ru.ext_android.setActivityResultListener
 import kekmech.ru.feature_app_settings_impl.presentation.screens.favorites.FavoritesFragment
 import kekmech.ru.feature_app_settings_impl.presentation.screens.lang.SelectLanguageFragment
 import kekmech.ru.feature_app_settings_impl.presentation.screens.main.compose.AppSettingsComposeScreen
@@ -22,6 +22,7 @@ import kekmech.ru.feature_app_settings_impl.presentation.screens.main.elm.AppSet
 import kekmech.ru.feature_app_settings_impl.presentation.screens.map_type.SelectMapTypeFragment
 import kekmech.ru.feature_bars_api.BarsLogoutHandle
 import kekmech.ru.feature_schedule_api.ScheduleFeatureApi
+import kekmech.ru.feature_schedule_api.ScheduleNotificationSettings
 import kekmech.ru.lib_analytics_android.ext.screenAnalytics
 import kekmech.ru.lib_elm_compose.ElmContent
 import kekmech.ru.lib_navigation.addScreenForward
@@ -42,6 +43,7 @@ internal class AppSettingsComposeFragment : ComposeFragment() {
     override fun Screen() {
         val factory = koinInject<AppSettingsStoreFactory>()
         val activity = LocalActivity.current as ComponentActivity
+        val notificationSettings = koinInject<ScheduleNotificationSettings>()
 
         ElmContent(
             key = "AppSettingsScreen",
@@ -62,6 +64,7 @@ internal class AppSettingsComposeFragment : ComposeFragment() {
                             analytics.sendClick("Favorites")
                             addScreenForward { FavoritesFragment() }
                         },
+                        notificationSettings = notificationSettings,
                         onOpenScheduleNotifications = {
                             analytics.sendClick("ScheduleNotifications")
                             addScreenForward { scheduleFeatureApi.getNotificationSettingsScreen() }
@@ -82,25 +85,25 @@ internal class AppSettingsComposeFragment : ComposeFragment() {
                             }
                         },
                         onOpenLanguageSelection = { selectedLanguage ->
-                            showDialog {
-                                SelectLanguageFragment.newInstance(selectedLanguage, LANGUAGE_RESULT_KEY)
-                            }
-                            setResultListener(
+                            setActivityResultListener(
                                 key = LANGUAGE_RESULT_KEY,
                                 resultMapper = Bundle::notNullString,
                             ) { result ->
                                 onAccept(Ui.Action.LanguageChanged(result))
                             }
+                            showDialog {
+                                SelectLanguageFragment.newInstance(selectedLanguage, LANGUAGE_RESULT_KEY)
+                            }
                         },
                         onOpenMapTypeSelection = { selectedMapType ->
-                            showDialog {
-                                SelectMapTypeFragment.newInstance(selectedMapType, MAP_TYPE_RESULT_KEY)
-                            }
-                            setResultListener(
+                            setActivityResultListener(
                                 key = MAP_TYPE_RESULT_KEY,
                                 resultMapper = Bundle::notNullString,
                             ) { result ->
                                 onAccept(Ui.Action.MapTypeChanged(result))
+                            }
+                            showDialog {
+                                SelectMapTypeFragment.newInstance(selectedMapType, MAP_TYPE_RESULT_KEY)
                             }
                         },
                         onRecreateActivity = {

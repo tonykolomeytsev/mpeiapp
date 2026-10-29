@@ -85,9 +85,11 @@ cd mpei-next
 # Запуск юнит-тестов (расписание, 2FA БАРС, мапперы)
 ./gradlew :feature_schedule_impl:testDebugUnitTest :feature_bars_impl:testDebugUnitTest
 
-# Сборка release APK с проектной подписью
+# Сборка release APK
 ./gradlew assembleRelease --no-configuration-cache
 ```
+
+> Ключ подписи в репозитории **не хранится**. Для подписанной сборки задайте `SIGNING_KEYSTORE_PATH`, `SIGNING_STORE_PASSWORD`, `SIGNING_KEY_ALIAS` (и при необходимости `SIGNING_KEY_PASSWORD`) через переменные окружения или `~/.gradle/gradle.properties`. Без них `release` подписывается debug-сертификатом — такой APK публиковать нельзя. Подробнее: `AndroidSigningConventionPlugin.kt`, `.github/workflows/release-apk.yaml`.
 
 ### Рекомендации для рабочих станций с 8 ГБ ОЗУ (Windows)
 1. **Настройки памяти демона:** в `gradle.properties` установлены безопасные лимиты кучи JVM (`-Xmx2048m`), предотвращающие ошибки OutOfMemoryError при одновременной работе среды разработки и Gradle-демона.
@@ -105,7 +107,6 @@ cd mpei-next
 mpei-next/
 ├── build-logic/                # Конвенции сборки и Gradle-плагины проекта
 ├── gradle/                     # Version Catalog (libs.versions.toml) и Gradle Wrapper
-├── keystore/                   # Проектный ключ цифровой подписи (RSA 2048)
 ├── modules/
 │   ├── app/                    # Точка входа, Application, навигация, SplashScreen
 │   ├── feature/

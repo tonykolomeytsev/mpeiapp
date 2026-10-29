@@ -24,12 +24,6 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      # The Google Services Plugin cannot function without it
-      - name: Materialize google services
-        run: .github/materialize.sh $GOOGLE_SERVICES_DEBUG modules/app/google-services.json
-        env:
-          GOOGLE_SERVICES_DEBUG: ${{ secrets.GOOGLE_SERVICES_DEBUG }}
-
       - name: Build with Gradle
         run: ./gradlew :app:assembleDebug
         env:

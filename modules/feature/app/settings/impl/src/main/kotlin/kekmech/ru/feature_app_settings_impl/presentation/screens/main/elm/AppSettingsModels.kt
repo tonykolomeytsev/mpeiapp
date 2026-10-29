@@ -36,7 +36,6 @@ internal sealed interface AppSettingsEvent {
 
     sealed interface Internal : AppSettingsEvent {
         data class LoadAppSettingsSuccess(val appSettings: AppSettings) : Internal
-        data class ObserveContributorsSuccess(val contributors: List<Contributor>) : Internal
     }
 }
 
@@ -50,8 +49,6 @@ internal sealed interface AppSettingsCommand {
     data class SetAutoHideBottomSheet(val isEnabled: Boolean) : AppSettingsCommand
     data class ChangeLanguage(val selectedLanguage: String) : AppSettingsCommand
     data class ChangeMapType(val selectedMapType: String) : AppSettingsCommand
-    object ObserveContributors : AppSettingsCommand
-    object FetchContributors : AppSettingsCommand
 }
 
 internal sealed interface AppSettingsEffect {

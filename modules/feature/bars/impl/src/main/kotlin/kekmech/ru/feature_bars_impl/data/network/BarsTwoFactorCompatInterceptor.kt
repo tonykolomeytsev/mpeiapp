@@ -111,7 +111,7 @@ internal class BarsTwoFactorCompatInterceptor : Interceptor {
         val isSendCodeResponse = (url.encodedPath == "/bars_web/Auth/JSON_SendAF2_Code" || url.encodedPath.endsWith("JSON_SendAF2_Code"))
         if (isSendCodeResponse && response.isSuccessful) {
             val msgRegex = Regex("""\"message\"\s*:\s*\"([^\"]+)\"""")
-            msgRegex.find(text)?.groupValues?.get(1)?.let { serverMsg ->
+            msgRegex.find(text)?.groupValues?.get(1)?.let(::decodeJsonEscapes)?.let { serverMsg ->
                 val prev = BarsTwoFactorSessionHolder.currentSession
                 BarsTwoFactorSessionHolder.currentSession = (prev ?: BarsTwoFactorSession(
                     defaultProvider = CodeProvider.MAX,
@@ -310,3 +310,23 @@ internal class BarsTwoFactorCompatInterceptor : Interceptor {
         const val SHIM_MARKER = "lib_bars_compat_shim"
     }
 }
+
+private val JsonEscape = Regex("""\\(u[0-9a-fA-F]{4}|["\\/bfnrt])""")
+
+/**
+ * The text was cut out of a JSON string with a regular expression, so the escape sequences are still there:
+ * `\u0027MAX\u0027` has to become `'MAX'` before the user sees it.
+ */
+internal fun decodeJsonEscapes(raw: String): String =
+    JsonEscape.replace(raw) { match ->
+        val code = match.groupValues[1]
+        when (code[0]) {
+            'u' -> code.substring(1).toInt(16).toChar().toString()
+            'b' -> "\b"
+            'f' -> "\u000C"
+            'n' -> "\n"
+            'r' -> "\r"
+            't' -> "\t"
+            else -> code // \" \\ \/
+        }
+    }

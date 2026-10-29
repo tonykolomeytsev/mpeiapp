@@ -17,7 +17,6 @@ internal class AppSettingsReducer :
     override fun Result.internal(event: Internal) {
         when (event) {
             is Internal.LoadAppSettingsSuccess -> state { copy(appSettings = event.appSettings) }
-            is Internal.ObserveContributorsSuccess -> state { copy(contributors = event.contributors) }
         }
     }
 
@@ -25,8 +24,6 @@ internal class AppSettingsReducer :
         when (event) {
             is Ui.Init -> commands {
                 +Command.LoadAppSettings
-                +Command.FetchContributors
-                +Command.ObserveContributors
             }
 
             is Ui.Action.SetDarkThemeEnabled -> {
@@ -55,15 +52,10 @@ internal class AppSettingsReducer :
                 +state.appSettings?.let { Effect.OpenMapTypeDialog(it.mapAppearanceType) }
             }
 
-            is Ui.Action.LanguageChanged -> {
-                effects { +Effect.RecreateActivity }
-                commands { +Command.ChangeLanguage(event.selectedLanguage) }
-            }
+            // AppCompatDelegate recreates the activity itself once the locale is applied
+            is Ui.Action.LanguageChanged -> commands { +Command.ChangeLanguage(event.selectedLanguage) }
 
-            is Ui.Action.MapTypeChanged -> {
-                effects { +Effect.RecreateActivity }
-                commands { +Command.ChangeMapType(event.selectedMapType) }
-            }
+            is Ui.Action.MapTypeChanged -> commands { +Command.ChangeMapType(event.selectedMapType) }
 
             is Ui.Action.SetShowQuickNavigationFab -> commands {
                 +Command.SetShowQuickNavigationFab(event.isVisible)

@@ -68,8 +68,8 @@ internal class SelectMapTypeFragment :
             if (it.mapTypeCode == selectMapType) {
                 close()
             } else {
-                close()
                 setResult(resultKey, result = it.mapTypeCode)
+                close()
             }
         },
         PullAdapterItem()

@@ -22,6 +22,7 @@ import kekmech.ru.feature_app_settings_impl.presentation.screens.main.elm.AppSet
 import kekmech.ru.feature_app_settings_impl.presentation.screens.main.elm.AppSettingsEvent
 import kekmech.ru.feature_app_settings_impl.presentation.screens.main.elm.AppSettingsEvent.Ui
 import kekmech.ru.feature_app_settings_impl.presentation.screens.main.elm.AppSettingsState
+import kekmech.ru.feature_schedule_api.ScheduleNotificationSettings
 import kekmech.ru.res_strings.R.string as Strings
 import kekmech.ru.ui_kit_lists.ListItem
 import kekmech.ru.ui_kit_segmented.SegmentedControl
@@ -38,6 +39,7 @@ internal fun AppSettingsComposeScreen(
     onBackClick: (() -> Unit)? = null,
     onOpenFavorites: () -> Unit,
     onOpenScheduleNotifications: () -> Unit,
+    notificationSettings: ScheduleNotificationSettings,
     onOpenGithub: () -> Unit,
     onOpenContributor: (String) -> Unit,
     onLogoutBars: () -> Unit,
@@ -133,6 +135,14 @@ internal fun AppSettingsComposeScreen(
                     }
                 }
 
+                // Notifications: on / off right here
+                item {
+                    NotificationSettingsSection(
+                        settings = notificationSettings,
+                        onOpenDetails = onOpenScheduleNotifications,
+                    )
+                }
+
                 // Section 2: Schedule
                 item {
                     SettingsSectionHeader(title = stringResource(Strings.app_settings_header_schedule))
@@ -143,15 +153,6 @@ internal fun AppSettingsComposeScreen(
                         supportingText = stringResource(Strings.app_settings_favorite_schedule_description),
                         modifier = Modifier.clickable {
                             onOpenFavorites()
-                        },
-                    )
-                }
-                item {
-                    ListItem(
-                        headlineText = stringResource(Strings.app_settings_schedule_notifications_title),
-                        supportingText = stringResource(Strings.app_settings_schedule_notifications_description),
-                        modifier = Modifier.clickable {
-                            onOpenScheduleNotifications()
                         },
                     )
                 }
@@ -242,43 +243,9 @@ internal fun AppSettingsComposeScreen(
                     )
                 }
 
-                // Section 6: Contributors
-                val contributorsList = state.contributors?.takeIf { it.isNotEmpty() } ?: listOf(
-                    kekmech.ru.feature_contributors_api.domain.model.Contributor(
-                        login = "ghostoftheeleven",
-                        name = "Расул Рустамов",
-                        bio = "Разработчик МЭИ.Хаб • студент МЭИ",
-                        url = "https://github.com/ghostoftheeleven",
-                        avatarUrl = "https://avatars.githubusercontent.com/u/98048622?v=4",
-                    ),
-                    kekmech.ru.feature_contributors_api.domain.model.Contributor(
-                        login = "Johnny-Wickky",
-                        name = "Johnny Wickky",
-                        bio = "Студент МЭИ, ИБ-энтузиаст",
-                        url = "https://github.com/Johnny-Wickky",
-                        avatarUrl = "https://avatars.githubusercontent.com/u/Johnny-Wickky?v=4",
-                    ),
-                )
+                // Section 6: Developers
                 item {
-                    SettingsSectionHeader(title = stringResource(Strings.app_settings_header_contributors))
-                }
-                items(contributorsList) { contributor ->
-                    val displayName = contributor.name ?: contributor.login
-                    val bio = when (contributor.login.lowercase()) {
-                        "johnny-wickky" -> stringResource(Strings.contributor_johnny_wickky_bio)
-                        "ghostoftheeleven" -> stringResource(Strings.contributor_rasul_rustamov_bio)
-                        else -> contributor.bio
-                    }
-                    ListItem(
-                        headlineText = displayName,
-                        supportingText = bio,
-                        leadingContent = {
-                            Monogram(letter = displayName.firstOrNull() ?: 'C')
-                        },
-                        modifier = Modifier.clickable {
-                            onOpenContributor(contributor.url)
-                        },
-                    )
+                    DevelopersSection(onOpenProfile = onOpenContributor)
                 }
 
                 // Version
@@ -287,7 +254,7 @@ internal fun AppSettingsComposeScreen(
                     Text(
                         text = stringResource(
                             Strings.app_settings_app_version,
-                            state.appVersionName.versionName,
+                            state.appVersionName.versionName.removePrefix("v"),
                         ),
                         style = MpeixTheme.typography.paragraphNormal,
                         color = MpeixTheme.palette.contentVariant,
@@ -304,7 +271,7 @@ internal fun AppSettingsComposeScreen(
 }
 
 @Composable
-private fun SettingsSectionHeader(
+internal fun SettingsSectionHeader(
     title: String,
     modifier: Modifier = Modifier,
 ) {

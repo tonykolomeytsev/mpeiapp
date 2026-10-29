@@ -11,3 +11,10 @@ local.properties
 **/.DS_Store
 .figx-out
 .kotlin
+
+# signing keys and passwords must never be committed
+*.jks
+*.keystore
+keystore/
+keystore.properties
+signing.properties

@@ -4,4 +4,5 @@ plugins {
 
 dependencies {
     aarCompileOnly(libs.androidx.fragment)
+    implementation(libs.kotlinx.coroutines.core)
 }

@@ -4,6 +4,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -32,7 +33,10 @@ import kekmech.ru.feature_map_impl.presentation.screen.main.elm.MapEffect
 import kekmech.ru.feature_map_impl.presentation.screen.main.elm.MapEvent
 import kekmech.ru.feature_map_impl.presentation.screen.main.elm.MapState
 import kekmech.ru.feature_map_impl.presentation.screen.main.elm.MapStoreFactory
+import kekmech.ru.feature_map_impl.presentation.screen.main.ext.MapAppearance
 import kekmech.ru.feature_map_impl.presentation.screen.main.ext.animateCameraTo
+import kekmech.ru.feature_map_impl.presentation.screen.main.ext.applyAppearance
+import kekmech.ru.feature_map_impl.presentation.screen.main.ext.copyright
 import kekmech.ru.feature_map_impl.presentation.screen.main.ext.init
 import kekmech.ru.feature_map_impl.presentation.screen.main.ext.toMarkerType
 import kekmech.ru.feature_map_impl.presentation.screen.main.view.BottomSheetBackgroundDrawable
@@ -49,6 +53,7 @@ import org.koin.android.ext.android.inject
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker
+import org.osmdroid.views.overlay.TilesOverlay
 import kekmech.ru.coreui.R as CoreUiR
 import kekmech.ru.res_strings.R.string as Strings
 
@@ -72,6 +77,8 @@ internal class MapFragment : Fragment(R.layout.fragment_map),
     private val appSettingsRepository by inject<AppSettingsRepository>()
 
     private var currentMarkers: List<Marker> = emptyList()
+    private var appliedAppearance: MapAppearance? = null
+    private var labelsOverlay: TilesOverlay? = null
     private var renderedTab: FilterTab? = null
     private var renderedMarkers: List<MapMarker>? = null
     private var bottomSheetCallback: BottomSheetBehavior.BottomSheetCallback? = null
@@ -96,6 +103,15 @@ internal class MapFragment : Fragment(R.layout.fragment_map),
     override fun onResume() {
         super.onResume()
         viewBinding.mapView?.onResume()
+        // the appearance can be changed in the settings while the map is in the background
+        showAppearance(MapAppearance.fromCode(appSettingsRepository.getAppSettings().mapAppearanceType))
+    }
+
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        if (!hidden) {
+            showAppearance(MapAppearance.fromCode(appSettingsRepository.getAppSettings().mapAppearanceType))
+        }
     }
 
     override fun onPause() {
@@ -110,6 +126,9 @@ internal class MapFragment : Fragment(R.layout.fragment_map),
         }
         viewBinding.recyclerView.adapter = null
         viewBinding.mapView?.let { map ->
+            labelsOverlay?.let { map.overlays.remove(it) }
+            labelsOverlay = null
+            appliedAppearance = null
             currentMarkers.forEach { map.overlays.remove(it) }
             map.overlays.clear()
             map.onDetach()
@@ -124,6 +143,7 @@ internal class MapFragment : Fragment(R.layout.fragment_map),
         view.doOnApplyWindowInsets { _, insets, padding ->
             val systemBarsInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             viewBinding.coordinatorLayout.setMargins(top = systemBarsInsets.top + padding.top)
+            viewBinding.mapOverlayControls.setMargins(top = systemBarsInsets.top + padding.top)
         }
         val callback = object : BottomSheetBehavior.BottomSheetCallback() {
 
@@ -145,6 +165,32 @@ internal class MapFragment : Fragment(R.layout.fragment_map),
     private fun createMap() {
         val mapView = viewBinding.mapView ?: return
         mapView.init(requireContext())
+
+        val appearance = MapAppearance.fromCode(appSettingsRepository.getAppSettings().mapAppearanceType)
+        showAppearance(appearance)
+        viewBinding.mapAppearanceToggle.check(appearance.buttonId())
+        viewBinding.mapAppearanceToggle.addOnButtonCheckedListener { _, checkedId, isChecked ->
+            if (!isChecked) return@addOnButtonCheckedListener
+            val selected = if (checkedId == R.id.mapAppearanceHybrid) MapAppearance.HYBRID else MapAppearance.SCHEME
+            analytics.sendClick("MapAppearance_${selected.code}")
+            appSettingsRepository.updateAppSettings { copy(mapAppearanceType = selected.code) }
+            showAppearance(selected)
+        }
+    }
+
+    private fun MapAppearance.buttonId() =
+        if (this == MapAppearance.HYBRID) R.id.mapAppearanceHybrid else R.id.mapAppearanceScheme
+
+    /** Changes the layer of the map (and the toggle) if it is not the one that is already shown */
+    private fun showAppearance(appearance: MapAppearance) {
+        val binding = viewBinding
+        val mapView = binding.mapView ?: return
+        if (appearance == appliedAppearance) return
+        appliedAppearance = appearance
+        labelsOverlay = mapView.applyAppearance(appearance, labelsOverlay)
+        binding.mapAppearanceToggle.check(appearance.buttonId())
+        binding.mapCopyright.text = appearance.copyright()
+        binding.mapCopyright.isVisible = appearance.copyright() != null
     }
 
     override fun render(state: MapState) {

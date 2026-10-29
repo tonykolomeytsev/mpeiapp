@@ -1,0 +1,48 @@
+name: Publish signed release
+
+# Publishes a GitHub Release from an APK that is already signed and committed to the repository
+# (the signing key is never stored in CI or in git). The APK signature is checked before publishing.
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag, e.g. v0.5.0"
+        required: true
+      apk:
+        description: "Path of the signed APK in the repository"
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check the signature
+        env:
+          EXPECTED_SHA256: "9a101fb9d9e2cea0f0e0e1b7d1600c00fca3f006addc99561c33fa7ef115c8f2"
+        run: |
+          APKSIGNER=$(ls "$ANDROID_HOME"/build-tools/*/apksigner | sort -V | tail -n 1)
+          "$APKSIGNER" verify --verbose --print-certs "${{ inputs.apk }}" | tee signature.txt
+          ACTUAL=$(grep -m1 "certificate SHA-256 digest" signature.txt | sed 's/.*: //' | tr -d ' \r' | tr 'A-F' 'a-f')
+          if [ "$ACTUAL" != "$EXPECTED_SHA256" ]; then
+            echo "::error::The APK is not signed with the MPEI.Hub release key"
+            exit 1
+          fi
+
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ inputs.tag }}
+          target_commitish: ${{ github.sha }}
+          name: МЭИ.Хаб ${{ inputs.tag }}
+          body_path: .github/release-notes.md
+          draft: false
+          prerelease: false
+          make_latest: true
+          fail_on_unmatched_files: true
+          files: ${{ inputs.apk }}

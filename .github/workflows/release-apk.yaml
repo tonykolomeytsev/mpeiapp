@@ -6,8 +6,12 @@ name: Release APK
 #      publish = false  -> only build and check (unit tests + APK artifact)
 #      publish = true   -> build and publish the release for `tag`
 #
-# Signing uses `keystore/release.keystore` from the repository (see AndroidSigningConventionPlugin),
-# so the APK is signed with the same key as the previous releases and installs over them.
+# The signing key is NEVER stored in the repository. For a signed build add the repository secrets
+# (Settings -> Secrets and variables -> Actions):
+#   SIGNING_KEYSTORE_BASE64  the keystore file encoded with base64
+#   SIGNING_STORE_PASSWORD, SIGNING_KEY_ALIAS, SIGNING_KEY_PASSWORD
+# Without them the APK is signed with a throwaway key; such an APK can be built and tested,
+# but it is never published (see "Verify signature").
 
 on:
   push:
@@ -55,10 +59,35 @@ jobs:
         env:
           MAP_KEY: ${{ secrets.MAP_KEY }}
 
+      - name: Restore the signing key
+        id: key
+        env:
+          KEYSTORE_BASE64: ${{ secrets.SIGNING_KEYSTORE_BASE64 }}
+        run: |
+          if [ -n "$KEYSTORE_BASE64" ]; then
+            echo "$KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/release.jks"
+            echo "path=$RUNNER_TEMP/release.jks" >> "$GITHUB_OUTPUT"
+            echo "ephemeral=false" >> "$GITHUB_OUTPUT"
+          else
+            # no secrets: a throwaway key, only to build and test the APK; such an APK is never published
+            echo "::warning::No signing secrets: the APK is signed with a throwaway key and can not be published"
+            PASS=$(openssl rand -hex 16)
+            keytool -genkeypair -keystore "$RUNNER_TEMP/ci.jks" -storetype PKCS12 -alias ci -keyalg RSA -keysize 2048 \
+              -validity 2 -storepass "$PASS" -keypass "$PASS" -dname "CN=CI throwaway key"
+            echo "::add-mask::$PASS"
+            echo "path=$RUNNER_TEMP/ci.jks" >> "$GITHUB_OUTPUT"
+            echo "pass=$PASS" >> "$GITHUB_OUTPUT"
+            echo "ephemeral=true" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Build release APK
         run: ./gradlew :app:assembleRelease
         env:
           MAP_KEY: ${{ secrets.MAP_KEY }}
+          SIGNING_KEYSTORE_PATH: ${{ steps.key.outputs.path }}
+          SIGNING_STORE_PASSWORD: ${{ secrets.SIGNING_STORE_PASSWORD || steps.key.outputs.pass }}
+          SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS || 'ci' }}
+          SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD || steps.key.outputs.pass }}
 
       - name: Locate APK
         id: apk
@@ -69,9 +98,16 @@ jobs:
           echo "apk_path=$APK" >> "$GITHUB_OUTPUT"
 
       - name: Verify signature
+        env:
+          WILL_PUBLISH: ${{ startsWith(github.ref, 'refs/tags/v') || (github.event_name == 'workflow_dispatch' && inputs.publish) }}
+          THROWAWAY_KEY: ${{ steps.key.outputs.ephemeral }}
         run: |
           APKSIGNER=$(ls "$ANDROID_HOME"/build-tools/*/apksigner | sort -V | tail -n 1)
-          "$APKSIGNER" verify --print-certs "${{ steps.apk.outputs.apk_path }}"
+          "$APKSIGNER" verify --verbose --print-certs "${{ steps.apk.outputs.apk_path }}" | tee signature.txt
+          if [ "$WILL_PUBLISH" = "true" ] && [ "$THROWAWAY_KEY" = "true" ]; then
+            echo "::error::The APK is signed with a throwaway key: add the SIGNING_* secrets before publishing"
+            exit 1
+          fi
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
@@ -89,10 +125,48 @@ jobs:
             modules/**/build/test-results/
           if-no-files-found: ignore
 
+  smoke-test:
+    name: Launch on an emulator (light + dark)
+    runs-on: ubuntu-latest
+    needs: build
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download APK
+        uses: actions/download-artifact@v4
+        with:
+          name: release-apk
+          path: dist
+
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: Run the app
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 34
+          arch: x86_64
+          target: google_apis
+          profile: pixel_6
+          disable-animations: true
+          script: bash .github/scripts/smoke-test.sh
+
+      - name: Upload screenshots and logcat
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: smoke-output
+          path: smoke-output/
+          if-no-files-found: ignore
+
   publish:
     name: Publish GitHub Release
     runs-on: ubuntu-latest
-    needs: build
+    needs: [build, smoke-test]
     if: startsWith(github.ref, 'refs/tags/v') || (github.event_name == 'workflow_dispatch' && inputs.publish && inputs.tag != '')
     permissions:
       contents: write
