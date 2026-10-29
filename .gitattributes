@@ -7,3 +7,4 @@
 *.ttf binary
 *.otf binary
 *.keystore binary
+*.aar binary

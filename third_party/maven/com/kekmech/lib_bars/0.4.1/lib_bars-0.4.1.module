@@ -1,0 +1,118 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.kekmech",
+    "module": "lib_bars",
+    "version": "0.4.1",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.2.0"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseVariantReleaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.3.10"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "lib_bars-0.4.1.aar",
+          "url": "lib_bars-0.4.1.aar",
+          "size": 98742,
+          "sha512": "de72db417c6a9d2dbe384f8ac0695045147180de6910d6edd96774e74cb027e587124aa0d398ad24b17a4a176c1fce27cb6a3611d740b6cd6222a3a929ffc701",
+          "sha256": "76a40465cb3a8723ebf4db65599869e7e37532648aefbfd90cfdac455c38fbe1",
+          "sha1": "65a495b547f408f7c378d5e22085a77da88477e8",
+          "md5": "ee98df8e503fc3bfce5b87426a5469cc"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "org.lsposed.lsparanoid",
+          "module": "core",
+          "version": {
+            "requires": "0.6.0"
+          }
+        },
+        {
+          "group": "com.squareup.okhttp3",
+          "module": "okhttp",
+          "version": {
+            "requires": "5.1.0"
+          }
+        },
+        {
+          "group": "com.squareup.okhttp3",
+          "module": "logging-interceptor",
+          "version": {
+            "requires": "5.1.0"
+          }
+        },
+        {
+          "group": "com.squareup.okhttp3",
+          "module": "okhttp-brotli",
+          "version": {
+            "requires": "5.1.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-coroutines-core",
+          "version": {
+            "requires": "1.10.2"
+          }
+        },
+        {
+          "group": "org.jsoup",
+          "module": "jsoup",
+          "version": {
+            "requires": "1.22.1"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.3.10"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "lib_bars-0.4.1.aar",
+          "url": "lib_bars-0.4.1.aar",
+          "size": 98742,
+          "sha512": "de72db417c6a9d2dbe384f8ac0695045147180de6910d6edd96774e74cb027e587124aa0d398ad24b17a4a176c1fce27cb6a3611d740b6cd6222a3a929ffc701",
+          "sha256": "76a40465cb3a8723ebf4db65599869e7e37532648aefbfd90cfdac455c38fbe1",
+          "sha1": "65a495b547f408f7c378d5e22085a77da88477e8",
+          "md5": "ee98df8e503fc3bfce5b87426a5469cc"
+        }
+      ]
+    }
+  ]
+}
