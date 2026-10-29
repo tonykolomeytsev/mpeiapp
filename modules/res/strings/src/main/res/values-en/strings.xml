@@ -372,8 +372,6 @@
     <string name="class_reminder_permission_hint">Notifications are disabled for MPEI.Hub, reminders will not be shown</string>
     <string name="class_reminder_permission_button">Allow notifications</string>
     <string name="class_reminder_permission_denied">Class reminders cannot be shown without the notification permission</string>
-    <string name="class_reminder_exact_alarm_hint">Without the exact alarm permission reminders may arrive a few minutes late</string>
-    <string name="class_reminder_exact_alarm_button">Allow exact reminders</string>
     <string name="class_reminder_channel_name">Class reminders</string>
     <string name="class_reminder_channel_description">Reminders about practical classes and laboratory works</string>
     <string name="class_reminder_type_practice">Practical class</string>

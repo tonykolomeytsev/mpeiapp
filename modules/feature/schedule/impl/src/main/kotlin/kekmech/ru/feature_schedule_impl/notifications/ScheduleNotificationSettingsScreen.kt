@@ -49,7 +49,6 @@ internal fun ScheduleNotificationSettingsScreen(
     viewModel: ScheduleNotificationSettingsViewModel,
     onToggleNotifications: (Boolean) -> Unit,
     onRequestNotificationPermission: () -> Unit,
-    onOpenExactAlarmSettings: () -> Unit,
     onBackClick: () -> Unit,
 ) {
     val state by viewModel.state.collectAsState()
@@ -77,7 +76,6 @@ internal fun ScheduleNotificationSettingsScreen(
                 onToggleReminders = viewModel::toggleClassReminders,
                 onToggleKind = viewModel::toggleReminderKind,
                 onRequestNotificationPermission = onRequestNotificationPermission,
-                onOpenExactAlarmSettings = onOpenExactAlarmSettings,
             )
 
             NotificationToggleCard(
@@ -111,7 +109,6 @@ private fun ClassRemindersCard(
     onToggleReminders: (Boolean) -> Unit,
     onToggleKind: (ReminderKind, Boolean) -> Unit,
     onRequestNotificationPermission: () -> Unit,
-    onOpenExactAlarmSettings: () -> Unit,
 ) {
     Card(modifier = Modifier.fillMaxWidth()) {
         Column(
@@ -157,13 +154,6 @@ private fun ClassRemindersCard(
                         text = stringResource(Strings.class_reminder_permission_hint),
                         buttonText = stringResource(Strings.class_reminder_permission_button),
                         onClick = onRequestNotificationPermission,
-                    )
-                }
-                if (!state.canScheduleExactAlarms) {
-                    ReminderHint(
-                        text = stringResource(Strings.class_reminder_exact_alarm_hint),
-                        buttonText = stringResource(Strings.class_reminder_exact_alarm_button),
-                        onClick = onOpenExactAlarmSettings,
                     )
                 }
             }

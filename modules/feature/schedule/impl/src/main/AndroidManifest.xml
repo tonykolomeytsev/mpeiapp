@@ -6,12 +6,6 @@
 
     <!-- Class reminders: alarms are lost after a reboot and have to be registered again -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <!--
-        Exact alarms (Android 12+). Without the permission the reminders are registered as inexact alarms,
-        the settings screen offers the user to grant it.
-    -->
-    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
-
     <application>
         <receiver
             android:name="kekmech.ru.feature_schedule_impl.notifications.reminders.ClassReminderReceiver"

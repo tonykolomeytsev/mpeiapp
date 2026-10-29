@@ -11,7 +11,6 @@ import kekmech.ru.feature_schedule_impl.notifications.ScheduleNotificationPrefs.
 import kekmech.ru.feature_schedule_impl.notifications.ScheduleNotificationPrefs.KEY_TOTAL_CHECKS
 import kekmech.ru.feature_schedule_impl.notifications.ScheduleNotificationPrefs.intervalHours
 import kekmech.ru.feature_schedule_impl.notifications.ScheduleNotificationPrefs.isEnabled
-import kekmech.ru.feature_schedule_impl.notifications.reminders.ClassReminderAlarmScheduler
 import kekmech.ru.feature_schedule_impl.notifications.reminders.ClassReminderController
 import kekmech.ru.feature_schedule_impl.notifications.reminders.ClassReminderPrefs
 import kekmech.ru.feature_schedule_impl.notifications.reminders.ClassReminderPrefs.areRemindersEnabled
@@ -42,8 +41,6 @@ internal data class ScheduleNotificationSettingsState(
     val classRemindersEnabled: Boolean = true,
     val remindDayBefore: Boolean = true,
     val remindHoursBefore: Boolean = true,
-    /** Without the exact alarm permission (Android 12+) reminders may come a few minutes late */
-    val canScheduleExactAlarms: Boolean = true,
     /** System-level switch: POST_NOTIFICATIONS on Android 13+ and the per-app switch of older versions */
     val notificationsAllowed: Boolean = true,
 )
@@ -57,7 +54,6 @@ internal class ScheduleNotificationSettingsViewModel(
     private val context: Context,
     private val scheduler: ScheduleChangeScheduler,
     private val reminderController: ClassReminderController,
-    private val reminderAlarms: ClassReminderAlarmScheduler,
 ) {
     private val prefs = ScheduleNotificationPrefs.of(context)
     private val reminderPrefs = ClassReminderPrefs.of(context)
@@ -145,7 +141,6 @@ internal class ScheduleNotificationSettingsViewModel(
             classRemindersEnabled = reminderPrefs.areRemindersEnabled(),
             remindDayBefore = reminderPrefs.isKindEnabled(ReminderKind.DAY_BEFORE),
             remindHoursBefore = reminderPrefs.isKindEnabled(ReminderKind.HOURS_BEFORE),
-            canScheduleExactAlarms = reminderAlarms.canScheduleExactAlarms(),
             notificationsAllowed = NotificationManagerCompat.from(context).areNotificationsEnabled(),
         )
     }

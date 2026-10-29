@@ -373,8 +373,6 @@
     <string name="class_reminder_permission_hint">Уведомления для MPEI.Hub отключены, напоминания не будут показываться</string>
     <string name="class_reminder_permission_button">Разрешить уведомления</string>
     <string name="class_reminder_permission_denied">Без разрешения на уведомления напоминания о занятиях показываться не будут</string>
-    <string name="class_reminder_exact_alarm_hint">Без разрешения на точные будильники напоминания могут приходить с задержкой в несколько минут</string>
-    <string name="class_reminder_exact_alarm_button">Разрешить точные напоминания</string>
     <string name="class_reminder_channel_name">Напоминания о занятиях</string>
     <string name="class_reminder_channel_description">Напоминания о практических и лабораторных занятиях</string>
     <string name="class_reminder_type_practice">Практика</string>

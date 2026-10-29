@@ -77,7 +77,7 @@ val FeatureScheduleModule = module {
     single { ScheduleNotificationManager(androidContext()) }
     single { ScheduleCacheManager(androidContext()) }
     single { ScheduleChangeScheduler(androidContext()) }
-    factory { ScheduleNotificationSettingsViewModel(androidContext(), get(), get(), get()) }
+    factory { ScheduleNotificationSettingsViewModel(androidContext(), get(), get()) }
     // Practice / laboratory work reminders
     single { ClassReminderAlarmScheduler(androidContext()) }
     single { ClassReminderController(androidContext(), get()) }
