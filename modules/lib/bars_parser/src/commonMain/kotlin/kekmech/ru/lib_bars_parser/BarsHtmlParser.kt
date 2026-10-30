@@ -49,7 +49,24 @@ object BarsHtmlParser {
         )
     }
 
-    /** The rating block of the marks page, null if there is none. Also works on a part of a page. */
+    /**
+     * The answer of the ajax request that the marks page makes when the semester is changed
+     * (`_PartialListStudent_SemesterSheet__Mark`): the inside of the marks container, without the container itself.
+     * A whole marks page is accepted too.
+     */
+    fun parseMarksPart(html: String): BarsMarksPart {
+        val document = Ksoup.parse(html)
+        val container = document.getElementById(MARKS_CONTAINER_ID) ?: document.body()
+        return BarsMarksPart(
+            semesterName = container.selectFirst("span.h3")?.text()?.let(::normalizeBarsText)?.ifEmpty { null },
+            disciplines = parseDisciplines(document, container),
+        )
+    }
+
+    /**
+     * The rating block, null if there is none. It is on the marks page and in the answer of the ajax request that
+     * changes the semester of the rating (`_PartialHeader`), so this works on a part of a page too.
+     */
     fun parseRating(html: String): BarsRating? = parseRating(Ksoup.parse(html))
 
     /**

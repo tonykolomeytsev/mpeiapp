@@ -255,3 +255,13 @@ data class BarsSendCodeResult(
     val message: String?,
     val error: String? = null,
 )
+
+/**
+ * The marks of one semester as BARS sends them when the semester is changed (the inner part of the marks container:
+ * `_PartialListStudent_SemesterSheet__Mark`). There is no header and no rating in it.
+ */
+data class BarsMarksPart(
+    /** "2025/2026, Весенний семестр" */
+    val semesterName: String?,
+    val disciplines: List<BarsDiscipline>,
+)

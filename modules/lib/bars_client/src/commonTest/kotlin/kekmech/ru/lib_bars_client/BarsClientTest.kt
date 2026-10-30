@@ -144,6 +144,37 @@ class BarsClientTest {
     }
 
     @Test
+    fun `loads the marks of another semester with the request of the page`() = runTest {
+        signIn()
+
+        val part = client.loadSemesterMarks("27")
+
+        assertEquals("2025/2026, Весенний семестр", part.semesterName)
+        assertEquals(listOf("Химия"), part.disciplines.map { it.name })
+        val request = log.last()
+        assertEquals("/bars_web/ST_Study/Student_SemesterSheet/_PartialListStudent_SemesterSheet__Mark", request.url.encodedPath)
+        assertEquals(STUDENT, request.url.parameters["studentID"])
+        assertEquals("""{"ID":"$STUDENT","FilterSemester":{"Value":"27"}}""", request.url.parameters["query"])
+    }
+
+    @Test
+    fun `loads the rating of a semester`() = runTest {
+        signIn()
+
+        val rating = client.loadRating("27")
+
+        assertEquals("27", rating?.semesterId)
+        assertEquals(6f, rating?.complex)
+        assertEquals("/bars_web/ST_Study/Main/_PartialHeader", log.last().url.encodedPath)
+    }
+
+    @Test
+    fun `a part of a page without a session says that the session is gone`() = runTest {
+        assertFailsWith<BarsSessionExpiredException> { client.loadSemesterMarks("27", studentId = STUDENT) }
+        assertFailsWith<IllegalStateException> { client.loadRating("27") }
+    }
+
+    @Test
     fun `an id that is not an id never gets into a request`() = runTest {
         signIn()
         val before = log.size
@@ -224,6 +255,10 @@ class BarsClientTest {
                 path == "/bars_web/st_study/main/_partialsummary" || path == "/bars_web/st_study/main/summary" ->
                     html(if (signedIn) SUMMARY_PART else LOGIN_PAGE)
 
+                path == "/bars_web/st_study/student_semestersheet/_partialliststudent_semestersheet__mark" -> html(if (signedIn) MARKS_PART else LOGIN_PAGE)
+
+                path == "/bars_web/st_study/main/_partialheader" -> html(if (signedIn) HEADER_PART else LOGIN_PAGE)
+
                 path == "/bars_web/auth/exit" -> html(LOGIN_PAGE)
 
                 else -> respond("", HttpStatusCode.NotFound)
@@ -285,6 +320,22 @@ class BarsClientTest {
   </tbody></table></div>
 </div>
 </body></html>
+"""
+
+        const val MARKS_PART = """
+<div class="row"><div class="col"></div></div>
+<span class="h3">2025/2026, Весенний семестр</span>
+<div class="my-2"><div data-bs-toggle="collapse" data-bs-target="#s_ss_0">Химия, Орлов О.О., экзамен, 2ЗЕ</div></div>
+<div id="s_ss_0" class="collapse"><table><tbody>
+  <tr><td>1. КМ</td><td>100</td><td>5</td><td>4  (01.01.26)</td></tr>
+</tbody></table></div>
+"""
+
+        const val HEADER_PART = """
+<div class="row"><div class="col-sm"><span class="fw-bold">Иванов Иван Иванович (№ЗК - 0)</span></div>
+<div class="col-sm"><ul class="list-inline">
+  <li class="list-inline-item"><span>Комплексный:</span><strong><span id="total_score" data-sem-id="27">6</span></strong></li>
+</ul></div></div>
 """
 
         const val SUMMARY_PART = """

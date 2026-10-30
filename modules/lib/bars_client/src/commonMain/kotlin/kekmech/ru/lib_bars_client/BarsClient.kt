@@ -21,7 +21,9 @@ import io.ktor.http.takeFrom
 import kekmech.ru.lib_bars_parser.BarsAuthParser
 import kekmech.ru.lib_bars_parser.BarsHtmlParser
 import kekmech.ru.lib_bars_parser.BarsMarksPage
+import kekmech.ru.lib_bars_parser.BarsMarksPart
 import kekmech.ru.lib_bars_parser.BarsPageKind
+import kekmech.ru.lib_bars_parser.BarsRating
 import kekmech.ru.lib_bars_parser.BarsSendCodeResult
 import kekmech.ru.lib_bars_parser.BarsSummaryPage
 import kekmech.ru.lib_bars_parser.BarsTwoFactorPage
@@ -141,25 +143,52 @@ class BarsClient(
      * (a value of the semester filter, see `BarsSummaryPage.semesters`).
      */
     suspend fun loadSummary(semesterId: String? = null, studentId: String? = null): BarsSummaryPage = mutex.withLock {
-        val id = checkedId(
-            studentId ?: this.studentId ?: error("The student is not known yet, call login() or loadMarksPage() first"),
-        )
         val response = if (semesterId == null) {
-            send(HttpMethod.Get, endpoints.summary, query = listOf("studentID" to id))
+            send(HttpMethod.Get, endpoints.summary, query = listOf("studentID" to knownStudent(studentId)))
         } else {
-            // The same request that the page makes when the semester is changed
-            val query = """{"ID":"$id","FilterSemester":{"Value":"${checkedId(semesterId)}"}}"""
-            send(
-                HttpMethod.Get,
-                endpoints.summaryPart,
-                query = listOf("studentID" to id, "query" to query),
-                ajax = true,
-            )
+            sendSemesterPart(endpoints.summaryPart, semesterId, studentId)
         }
         when (BarsHtmlParser.detectPage(response.body)) {
             BarsPageKind.SUMMARY -> BarsHtmlParser.parseSummaryPage(response.body)
             else -> throw unexpectedPage(response)
         }
+    }
+
+    /**
+     * The marks of another semester ([semesterId] is a value of the semester filter, see `BarsMarksPage.semesters`):
+     * the same request that the marks page makes when the semester is changed.
+     * @throws BarsSessionExpiredException if BARS wants the sign-in again
+     */
+    suspend fun loadSemesterMarks(semesterId: String, studentId: String? = null): BarsMarksPart = mutex.withLock {
+        BarsHtmlParser.parseMarksPart(sendSemesterPart(endpoints.marksPart, semesterId, studentId).body)
+    }
+
+    /**
+     * The rating of a semester: what the marks page asks for when the semester of the rating is changed. Null if BARS
+     * answers without a rating.
+     */
+    suspend fun loadRating(semesterId: String, studentId: String? = null): BarsRating? = mutex.withLock {
+        BarsHtmlParser.parseRating(sendSemesterPart(endpoints.headerPart, semesterId, studentId).body)
+    }
+
+    private fun knownStudent(studentId: String?): String = checkedId(
+        studentId ?: this.studentId ?: error("The student is not known yet, call login() or loadMarksPage() first"),
+    )
+
+    /** The ajax request of the pages that have a semester filter: `studentID` and a JSON `query` with the semester. */
+    private suspend fun sendSemesterPart(address: String, semesterId: String, studentId: String?): BarsResponse {
+        val id = knownStudent(studentId)
+        val query = """{"ID":"$id","FilterSemester":{"Value":"${checkedId(semesterId)}"}}"""
+        val response = send(
+            HttpMethod.Get,
+            address,
+            query = listOf("studentID" to id, "query" to query),
+            ajax = true,
+        )
+        // A part is not a page, but the sign-in page comes instead of it when the session is gone
+        val kind = BarsHtmlParser.detectPage(response.body)
+        if (kind == BarsPageKind.LOGIN || kind == BarsPageKind.TWO_FACTOR) throw BarsSessionExpiredException()
+        return response
     }
 
     /** Ends the session on the server and forgets the cookies. */

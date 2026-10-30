@@ -12,6 +12,12 @@ data class BarsEndpoints(
     val marks: String get() = "$baseUrl/BARS_Web/ST_Study/Main/Main"
     val summary: String get() = "$baseUrl/bars_web/ST_Study/Main/Summary"
     val summaryPart: String get() = "$baseUrl/bars_web/ST_Study/Main/_PartialSummary"
+
+    /** The marks of a semester: what the marks page asks for when the semester is changed. */
+    val marksPart: String get() = "$baseUrl/bars_web/ST_Study/Student_SemesterSheet/_PartialListStudent_SemesterSheet__Mark"
+
+    /** The header with the rating of a semester: what the marks page asks for when the semester of the rating is changed. */
+    val headerPart: String get() = "$baseUrl/bars_web/ST_Study/Main/_PartialHeader"
     val logout: String get() = "$baseUrl/BARS_Web/Auth/Exit"
 }
 

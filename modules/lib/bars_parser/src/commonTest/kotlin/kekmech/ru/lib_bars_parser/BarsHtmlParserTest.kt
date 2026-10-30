@@ -172,7 +172,46 @@ class BarsHtmlParserTest {
         )
     }
 
+    @Test
+    fun `reads the part that comes when the semester is changed`() {
+        val part = BarsHtmlParser.parseMarksPart(MARKS_PART)
+
+        assertEquals("2025/2026, Весенний семестр", part.semesterName)
+        assertEquals(listOf("Химия", "Физика"), part.disciplines.map { it.name })
+        assertEquals(4f, part.disciplines[0].activities.single().mark?.value)
+        assertEquals("07.06.2026", part.disciplines[0].deadline)
+    }
+
+    @Test
+    fun `a whole marks page is a marks part too`() {
+        val part = BarsHtmlParser.parseMarksPart(MARKS_PAGE)
+
+        assertEquals(3, part.disciplines.size)
+    }
+
+    @Test
+    fun `an empty part has no disciplines`() {
+        val part = BarsHtmlParser.parseMarksPart("""<span class="h3">2026/2027, Осенний семестр</span>""")
+
+        assertEquals("2026/2027, Осенний семестр", part.semesterName)
+        assertTrue(part.disciplines.isEmpty())
+    }
+
     private companion object {
+
+        const val MARKS_PART = """
+<div class="row"><div class="col"><select id="ddl_StudyFilterSemester" name="ddl_StudyFilterSemester">
+  <option value="27" selected>2025/2026, Весенний семестр</option></select></div></div>
+<hr class="hr-separator">
+<span class="h3">2025/2026, Весенний семестр</span>
+<a href="#" class="h5" id="s_ss_All" role="button">Развернуть всё</a>
+<div class="my-2"><div data-bs-toggle="collapse" data-bs-target="#s_ss_0">Химия, Орлов О.О., экзамен, 2ЗЕ <span class="badge bg-light">сдать до 07.06.2026</span></div></div>
+<div id="s_ss_0" class="collapse"><table><tbody>
+  <tr><td>1. КМ</td><td>100</td><td>5</td><td>4  (01.01.26)</td></tr>
+</tbody></table></div>
+<div class="my-2"><div data-bs-toggle="collapse" data-bs-target="#s_ss_1">Физика, Сидоров С.С., зачёт, 3ЗЕ</div></div>
+<div id="s_ss_1" class="collapse"><table><tbody></tbody></table></div>
+"""
 
         const val MARKS_PAGE = """
 <html><body>
