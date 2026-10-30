@@ -184,10 +184,11 @@ class BarsClientTest {
 
         fun fakeBars(log: MutableList<HttpRequestData>) = MockEngine { request ->
             log += request
-            val path = request.url.encodedPath
+            // IIS does not care about the case of a path, and neither does the fake
+            val path = request.url.encodedPath.lowercase()
             val signedIn = request.headers[HttpHeaders.Cookie].orEmpty().contains("auth=1")
             when {
-                request.method == HttpMethod.Get && path == "/BARS_Web" ->
+                request.method == HttpMethod.Get && path == "/bars_web" ->
                     html(LOGIN_PAGE, cookie = "sess=1; path=/; HttpOnly")
 
                 request.method == HttpMethod.Post && path == "/bars_web/" -> {
@@ -199,10 +200,10 @@ class BarsClientTest {
                     }
                 }
 
-                path == "/bars_web/Auth/JSON_SendAF2_Code" ->
+                path == "/bars_web/auth/json_sendaf2_code" ->
                     html("""{"success":true,"message":"sent"}""")
 
-                request.method == HttpMethod.Post && path == "/bars_web/Auth/LoginCode" -> {
+                request.method == HttpMethod.Post && path == "/bars_web/auth/logincode" -> {
                     val form = (request.body as FormDataContent).formData
                     if (form["AF2_Code"] == "123456") {
                         respond(
@@ -218,12 +219,12 @@ class BarsClientTest {
                     }
                 }
 
-                path == "/bars_web/ST_Study/Main/Main" -> html(if (signedIn) MARKS_PAGE else LOGIN_PAGE)
+                path == "/bars_web/st_study/main/main" -> html(if (signedIn) MARKS_PAGE else LOGIN_PAGE)
 
-                path == "/bars_web/ST_Study/Main/_PartialSummary" || path == "/bars_web/ST_Study/Main/Summary" ->
+                path == "/bars_web/st_study/main/_partialsummary" || path == "/bars_web/st_study/main/summary" ->
                     html(if (signedIn) SUMMARY_PART else LOGIN_PAGE)
 
-                path == "/BARS_Web/Auth/Exit" -> html(LOGIN_PAGE)
+                path == "/bars_web/auth/exit" -> html(LOGIN_PAGE)
 
                 else -> respond("", HttpStatusCode.NotFound)
             }
