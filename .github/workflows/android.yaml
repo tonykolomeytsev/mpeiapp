@@ -28,6 +28,10 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x ./gradlew
 
+      # Pure Kotlin module (no Android SDK needed): the parser of the BARS pages, shared with iOS
+      - name: BARS parser tests
+        run: ./gradlew :lib_bars_parser:jvmTest
+
       - name: Build with Gradle
         run: ./gradlew :app:assembleDebug
         env:
