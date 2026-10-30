@@ -105,6 +105,8 @@ private val surfaceContainerHighestDark = Color(0xFF33353A)
 public class MpeixPalette internal constructor(
     public val primary: Color,
     public val onPrimary: Color,
+    public val secondary: Color,
+    public val onSecondary: Color,
     public val surface: Color,
     public val surfaceContainer: Color,
     public val surfaceContainerHighest: Color,
@@ -119,6 +121,8 @@ public class MpeixPalette internal constructor(
 public val LightMpeixPalette: MpeixPalette = MpeixPalette(
     primary = primaryLight,
     onPrimary = onPrimaryLight,
+    secondary = secondaryLight,
+    onSecondary = onSecondaryLight,
     surface = surfaceLight,
     surfaceContainer = surfaceContainerLight,
     surfaceContainerHighest = surfaceContainerHighestLight,
@@ -133,6 +137,8 @@ public val LightMpeixPalette: MpeixPalette = MpeixPalette(
 public val DarkMpeixPalette: MpeixPalette = MpeixPalette(
     primary = primaryDark,
     onPrimary = onPrimaryDark,
+    secondary = secondaryDark,
+    onSecondary = onSecondaryDark,
     surface = surfaceDark,
     surfaceContainer = surfaceContainerDark,
     surfaceContainerHighest = surfaceContainerHighestDark,
@@ -272,9 +278,15 @@ private fun PalettePreview(
             colorItem("OnPrimary", palette.onPrimary, palette.primary)
             colorItem("Surface", palette.surface, palette.onSurface)
             colorItem("Surface\nContainer", palette.surfaceContainer, palette.onSurface)
-            colorItem("Surface\nContainer\nHighest", palette.surfaceContainerHighest, palette.onSurface)
+            colorItem(
+                "Surface\nContainer\nHighest",
+                palette.surfaceContainerHighest,
+                palette.onSurface
+            )
         }
         Row(Modifier.padding(bottom = 12.dp)) {
+            colorItem("Secondary", palette.secondary, palette.onSecondary)
+            colorItem("OnSecondary", palette.onSecondary, palette.secondary)
             colorItem("OnSurface", palette.onSurface, palette.surface)
             colorItem("OnSurface\nVariant", palette.onSurfaceVariant, palette.surface)
             colorItem("Error", palette.error, palette.onError)
