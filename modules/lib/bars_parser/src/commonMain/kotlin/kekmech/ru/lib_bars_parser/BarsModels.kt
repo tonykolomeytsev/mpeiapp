@@ -14,6 +14,9 @@ enum class BarsPageKind {
     /** The sign-in page: the session is absent or has expired. */
     LOGIN,
 
+    /** The page that asks for the second factor (a one-time code) after the login and the password. */
+    TWO_FACTOR,
+
     UNKNOWN,
 }
 
@@ -177,4 +180,58 @@ data class BarsMark(
 data class BarsStudentLink(
     val id: String,
     val name: String,
+)
+
+/**
+ * The sign-in form of "/BARS_Web". It is a plain html form that is posted to [action]; the page has no ajax in it.
+ * [hiddenFields] has to be posted back as they are (the anti-forgery token among them), [accountField] and
+ * [passwordField] are the names of the login and password inputs.
+ */
+data class BarsLoginForm(
+    val action: String,
+    val method: String,
+    val accountField: String,
+    val passwordField: String,
+    /** The name of the "remember me" checkbox, null if the form has none. */
+    val rememberMeField: String?,
+    val hiddenFields: Map<String, String>,
+) {
+    val antiForgeryToken: String? get() = hiddenFields["__RequestVerificationToken"]
+}
+
+enum class BarsTwoFactorKind {
+    /** One-time code of an authenticator app (provider 5, 6 digits). */
+    TOTP,
+    EMAIL,
+    MAX,
+    TELEGRAM,
+    VK,
+}
+
+/** One way to get a code: a button `af2_code_send(buttonId, url, tid, length)` of the page. */
+data class BarsTwoFactorProvider(
+    val kind: BarsTwoFactorKind,
+    val buttonId: String,
+    /** The `tid` that goes to JSON_SendAF2_Code. */
+    val tid: String,
+    val codeLength: Int,
+    /** The caption of the button ("Отправить повторно через МАКС"). */
+    val caption: String,
+)
+
+data class BarsTwoFactorPage(
+    /** The provider that the page starts with (the call in its script). */
+    val default: BarsTwoFactorProvider,
+    /** All the providers of the page, [default] included. */
+    val providers: List<BarsTwoFactorProvider>,
+    /** The address that sends a code, for example "/bars_web/Auth/JSON_SendAF2_Code". */
+    val sendCodeUrl: String,
+    /** The error that the page shows (a wrong code), null if there is none. */
+    val error: String?,
+)
+
+/** The answer of JSON_SendAF2_Code: {"success":true,"message":"Сообщение отправлено в 'MAX'"}. */
+data class BarsSendCodeResult(
+    val success: Boolean?,
+    val message: String?,
 )

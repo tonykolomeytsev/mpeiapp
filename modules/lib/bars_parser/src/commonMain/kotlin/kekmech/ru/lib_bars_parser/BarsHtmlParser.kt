@@ -24,6 +24,7 @@ object BarsHtmlParser {
         return when {
             document.getElementById(MARKS_CONTAINER_ID) != null -> BarsPageKind.MARKS
             document.getElementById(SUMMARY_TABLE_ID) != null -> BarsPageKind.SUMMARY
+            "af2_code_send" in html || "JSON_SendAF2_Code" in html -> BarsPageKind.TWO_FACTOR
             document.select("input[type=password]").isNotEmpty() -> BarsPageKind.LOGIN
             parseStudentLinks(document).isNotEmpty() -> BarsPageKind.STUDENT_LIST
             else -> BarsPageKind.UNKNOWN
