@@ -40,6 +40,8 @@ composeMultiplatform = "1.9.3"
 
 # MockServer
 ktor = "2.3.0"
+# Ktor client for the Kotlin Multiplatform code (the line above is the mock server). 3.3.3 is built with Kotlin 2.2.21
+ktorClient = "3.3.3"
 work = "2.9.0"
 
 [libraries]
@@ -130,6 +132,10 @@ ktor-server-core = { module = "io.ktor:ktor-server-core", version.ref = "ktor" }
 ktor-server-netty = { module = "io.ktor:ktor-server-netty", version.ref = "ktor" }
 ktor-server-content-negotiation = { module = "io.ktor:ktor-server-content-negotiation", version.ref = "ktor" }
 ktor-serialization-kser = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
+ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktorClient" }
+ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktorClient" }
+ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktorClient" }
+ktor-client-mock = { module = "io.ktor:ktor-client-mock", version.ref = "ktorClient" }
 
 # Jetpack Compose
 ## Compose

@@ -27,7 +27,7 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Unit tests
-        run: ./gradlew test :lib_bars_parser:jvmTest
+        run: ./gradlew test :lib_bars_parser:jvmTest :lib_bars_client:jvmTest
         env:
           MAP_KEY: ${{ secrets.MAP_KEY }}
 

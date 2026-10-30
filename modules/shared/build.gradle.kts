@@ -21,7 +21,7 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation(project(":lib_bars_parser"))
+            implementation(project(":lib_bars_client"))
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)

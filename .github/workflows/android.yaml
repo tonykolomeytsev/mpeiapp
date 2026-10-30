@@ -30,7 +30,7 @@ jobs:
 
       # Pure Kotlin module (no Android SDK needed): the parser of the BARS pages, shared with iOS
       - name: BARS parser tests
-        run: ./gradlew :lib_bars_parser:jvmTest
+        run: ./gradlew :lib_bars_parser:jvmTest :lib_bars_client:jvmTest
 
       - name: Build with Gradle
         run: ./gradlew :app:assembleDebug
