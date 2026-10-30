@@ -4,6 +4,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
+import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
@@ -110,6 +111,44 @@ class BarsAuthParserTest {
     }
 
     @Test
+    fun `reads the code entry form and the providers of the live page`() {
+        assertEquals(BarsPageKind.TWO_FACTOR, BarsHtmlParser.detectPage(TWO_FACTOR_LIVE_PAGE))
+
+        val page = BarsAuthParser.parseTwoFactorPage(TWO_FACTOR_LIVE_PAGE)
+
+        val form = assertNotNull(page.form)
+        assertEquals("/bars_web/Auth/LoginCode", form.action)
+        assertEquals("AF2_Code", form.codeField)
+        assertEquals(6, form.codeLength)
+        assertEquals(
+            setOf("__RequestVerificationToken", "StopOpenDefault", "Account", "RememberMe"),
+            form.hiddenFields.keys,
+        )
+        assertEquals("test-user", form.hiddenFields["Account"])
+
+        // the definition of af2_code_send in the script is not a call
+        assertEquals(BarsTwoFactorKind.TOTP, page.default.kind)
+        assertEquals(6, page.default.codeLength)
+        assertEquals(listOf(BarsTwoFactorKind.TOTP, BarsTwoFactorKind.MAX), page.providers.map { it.kind })
+        assertNull(page.error)
+    }
+
+    @Test
+    fun `the second factor page without the code form has no form`() {
+        assertNull(BarsAuthParser.parseTwoFactorPage(TWO_FACTOR_TOTP_PAGE).form)
+    }
+
+    @Test
+    fun `reads the error of a refused request for a code`() {
+        val refused = BarsAuthParser.parseSendCodeResult("""{"success":false,"error":"Код уже отправлен"}""")
+
+        assertEquals(false, refused.success)
+        assertEquals("Код уже отправлен", refused.error)
+        assertNull(refused.message)
+        assertNull(BarsAuthParser.parseSendCodeResult("""{"success":true,"message":"ok","error":null}""").error)
+    }
+
+    @Test
     fun `a page after the sign-in is the marks page, not the form`() {
         assertTrue(BarsHtmlParser.detectPage("""<div id="div-Student_SemesterSheet__Mark"></div>""") == BarsPageKind.MARKS)
     }
@@ -150,6 +189,32 @@ class BarsAuthParserTest {
 </script>
 <a id="btnSend" href="#" onclick="af2_code_send('btnSend', '/bars_web/Auth/JSON_SendAF2_Code', '5', '6');" data-text="Войти по одноразовому коду">Код</a>
 <a id="btnSend3" href="#" onclick="af2_code_send('btnSend3', '/bars_web/Auth/JSON_SendAF2_Code', '3', '4');" data-text="Отправить повторно через МАКС">МАКС</a>
+</body></html>
+"""
+
+        // The markup of the page that bars.mpei.ru shows after the login and the password (values are made up)
+        const val TWO_FACTOR_LIVE_PAGE = """
+<html><body>
+<div class="form-signin"><span class="h2">БАРС МЭИ</span>
+<form action="/bars_web/Auth/LoginCode" class="mt-3" method="post">
+  <input name="__RequestVerificationToken" type="hidden" value="test-token">
+  <input data-val="true" id="StopOpenDefault" name="StopOpenDefault" type="hidden" value="False">
+  <input data-val="true" id="Account" name="Account" type="hidden" value="test-user">
+  <input data-val="true" id="RememberMe" name="RememberMe" type="hidden" value="False">
+  <div class="offset-1 col-10"><b>Введите код подтверждения</b></div>
+  <div class="offset-sm-1 col-sm-10 mt-2"><div class="input-group"><span class="input-group-text"><i class="fa fa-lock"></i></span>
+    <input id="AF2_Code" name="AF2_Code" type="text" class="form-control" maxlength="6" placeholder="Код подтверждения" autocomplete="off"></div></div>
+  <div class="offset-sm-1 col-sm-10 mt-2"><button id="btnLogin" type="button" class="btn btn-primary w-100" onclick="login();">Войти</button></div>
+  <div class="offset-sm-1 col-sm-10 mt-2"><div class="d-flex"><a href="/bars_web/">Назад</a>
+    <div><a id="btnSend" href="#" onclick="af2_code_send('btnSend', '/bars_web/Auth/JSON_SendAF2_Code', '5', '6');" data-text="Войти по одноразовому коду">Войти по одноразовому коду</a></div>
+    <div><a id="btnSend3" href="#" onclick="af2_code_send('btnSend3', '/bars_web/Auth/JSON_SendAF2_Code', '3', '4');" data-text="Отправить повторно через МАКС">Отправить повторно через МАКС</a></div>
+  </div></div>
+</form></div>
+<script>
+  window.AUTH_CODE_LENGTH = 4;
+  function af2_code_send(btnId, url, tid, af2_len) { window.AUTH_CODE_LENGTH = parseInt(af2_len); url = url + "?tid=" + tid; }
+  jQuery(document).ready(function() { af2_code_send('btnSend', '/bars_web/Auth/JSON_SendAF2_Code', '5', '6'); });
+</script>
 </body></html>
 """
 

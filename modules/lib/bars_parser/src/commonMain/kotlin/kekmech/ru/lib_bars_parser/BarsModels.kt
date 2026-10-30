@@ -228,10 +228,30 @@ data class BarsTwoFactorPage(
     val sendCodeUrl: String,
     /** The error that the page shows (a wrong code), null if there is none. */
     val error: String?,
+    /** The form that the code is posted with, null if the page has no such form. */
+    val form: BarsTwoFactorForm? = null,
 )
 
-/** The answer of JSON_SendAF2_Code: {"success":true,"message":"Сообщение отправлено в 'MAX'"}. */
+/**
+ * The form of the code entry: a post to [action] ("/bars_web/Auth/LoginCode") with the [hiddenFields] of the page
+ * (the anti-forgery token and the login among them, they are on the page, not to be made up) and the code in [codeField].
+ * The page itself asks BARS to send a code when it is loaded (`af2_code_send` for the default provider), a client
+ * that does not run the page's scripts has to make that request itself.
+ */
+data class BarsTwoFactorForm(
+    val action: String,
+    val codeField: String,
+    /** The maxlength of the code input, null if it has none. */
+    val codeLength: Int?,
+    val hiddenFields: Map<String, String>,
+)
+
+/**
+ * The answer of JSON_SendAF2_Code: {"success":true,"message":"Сообщение отправлено в 'MAX'"},
+ * with an "error" text instead of the message when BARS refuses.
+ */
 data class BarsSendCodeResult(
     val success: Boolean?,
     val message: String?,
+    val error: String? = null,
 )

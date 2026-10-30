@@ -8,6 +8,7 @@ private val AF2_CALL = Regex(
 )
 private val JSON_SUCCESS = Regex(""""success"\s*:\s*(true|false)""")
 private val JSON_MESSAGE = Regex(""""message"\s*:\s*"((?:[^"\\]|\\.)*)"""")
+private val JSON_ERROR = Regex(""""error"\s*:\s*"((?:[^"\\]|\\.)*)"""")
 private val JSON_ESCAPE = Regex("""\\(u[0-9a-fA-F]{4}|["\\/bfnrt])""")
 
 /**
@@ -76,6 +77,18 @@ object BarsAuthParser {
             providers = (listOf(default) + providers).distinctBy { it.tid },
             sendCodeUrl = (scriptCall ?: buttons.first().second).groupValues[2],
             error = findError(document),
+            form = parseCodeForm(document),
+        )
+    }
+
+    private fun parseCodeForm(document: Document): BarsTwoFactorForm? {
+        val input = document.selectFirst("input[name=AF2_Code]") ?: return null
+        val form = input.parents().firstOrNull { it.tagName() == "form" } ?: return null
+        return BarsTwoFactorForm(
+            action = form.attr("action"),
+            codeField = input.attr("name"),
+            codeLength = input.attr("maxlength").toIntOrNull(),
+            hiddenFields = form.select("input[type=hidden][name]").associate { it.attr("name") to it.attr("value") },
         )
     }
 
@@ -86,6 +99,7 @@ object BarsAuthParser {
     fun parseSendCodeResult(json: String): BarsSendCodeResult = BarsSendCodeResult(
         success = JSON_SUCCESS.find(json)?.groupValues?.get(1)?.toBooleanStrictOrNull(),
         message = JSON_MESSAGE.find(json)?.groupValues?.get(1)?.let(::decodeJsonEscapes),
+        error = JSON_ERROR.find(json)?.groupValues?.get(1)?.let(::decodeJsonEscapes),
     )
 
     private fun findError(document: Document): String? =
