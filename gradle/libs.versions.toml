@@ -35,6 +35,8 @@ elmslie = "3.0.0"
 # Jetpack Compose Versions
 accompanist = "0.23.1"
 composeBom = "2025.08.00"
+# Compose Multiplatform (iOS); the 1.9 line matches the Jetpack Compose 1.9 line of composeBom
+composeMultiplatform = "1.9.3"
 
 # MockServer
 ktor = "2.3.0"
@@ -163,6 +165,8 @@ accompanist-pager = { module = "com.google.accompanist:accompanist-pager", versi
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+compose-multiplatform = { id = "org.jetbrains.compose", version.ref = "composeMultiplatform" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 kotlin-parcelize = { id = "kotlin-parcelize" }

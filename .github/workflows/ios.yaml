@@ -1,0 +1,85 @@
+name: iOS
+
+# Builds the iOS app on a macOS runner and publishes an UNSIGNED .ipa as an artifact.
+# The .ipa is signed later on the PC with a free Apple ID (Sideloadly/AltStore), or by a signing step
+# once an Apple Developer account exists (TestFlight / App Store).
+# Install: see docs/IOS.md.
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - ccr-5000a5ce-bvdz0t
+    paths:
+      - "iosApp/**"
+      - "modules/shared/**"
+      - ".github/workflows/ios.yaml"
+
+env:
+  GRADLE_OPTS: "-Dorg.gradle.unsafe.configuration-cache=false"
+
+jobs:
+  ipa:
+    name: Build unsigned .ipa
+    runs-on: macos-15
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v5
+        with:
+          java-version: 17
+          distribution: adopt
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      # gradlew may lose the executable bit when the repository is edited on Windows
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
+      # Kotlin/Native links the whole Compose UI: give the compiler and the Gradle daemon enough memory
+      - name: Gradle memory
+        run: |
+          mkdir -p ~/.gradle
+          printf '%s\n' \
+            'org.gradle.jvmargs=-Xmx4g -XX:MaxMetaspaceSize=1g -Dfile.encoding=UTF-8' \
+            'kotlin.daemon.jvm.options=-Xmx3g' \
+            'kotlin.native.jvmArgs=-Xmx4g' >> ~/.gradle/gradle.properties
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Generate the Xcode project
+        working-directory: iosApp
+        run: xcodegen generate
+
+      - name: Build for a device (no code signing)
+        working-directory: iosApp
+        run: |
+          xcodebuild \
+            -project iosApp.xcodeproj \
+            -scheme iosApp \
+            -configuration Release \
+            -sdk iphoneos \
+            -destination 'generic/platform=iOS' \
+            -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" \
+            build
+
+      - name: Pack the .ipa
+        run: |
+          APP=$(find iosApp/build/Build/Products/Release-iphoneos -maxdepth 1 -name '*.app' | head -n 1)
+          echo "Built: $APP"
+          mkdir -p ipa/Payload
+          cp -R "$APP" ipa/Payload/
+          (cd ipa && zip -qry "MPEI-Hub-ios-unsigned.ipa" Payload)
+          ls -la ipa
+
+      - name: Upload the .ipa
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-ipa-unsigned
+          path: ipa/MPEI-Hub-ios-unsigned.ipa

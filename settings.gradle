@@ -43,7 +43,7 @@ rootProject.name = "mpei-hub"
 def sourcesDir = layout.rootDirectory.dir("modules").asFile
 fileTree(sourcesDir) {
     exclude("**/build/**", "**/src/**", "build-logic", ".*")
-    include("*/**/build.gradle")
+    include("*/**/build.gradle", "*/**/build.gradle.kts")
 }.forEach { buildScriptFile ->
     def moduleDir = buildScriptFile.parentFile
     // do NOT use absolute paths, or Gradle will shit himself
