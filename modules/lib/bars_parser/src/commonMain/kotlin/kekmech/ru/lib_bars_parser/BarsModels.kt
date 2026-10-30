@@ -5,6 +5,9 @@ enum class BarsPageKind {
     /** "Оценки в БАРС": the marks of one semester of one student. */
     MARKS,
 
+    /** "Сводка по оценкам БАРС и пропускам" (a whole page or the ajax part of it). */
+    SUMMARY,
+
     /** The list of students of an account that has several of them. */
     STUDENT_LIST,
 
@@ -25,9 +28,74 @@ data class BarsMarksPage(
     val meta: List<BarsMetaItem>,
     val semesters: List<BarsSemester>,
     val disciplines: List<BarsDiscipline>,
+    /** The rating block of the page, null if the page has none. */
+    val rating: BarsRating? = null,
 ) {
     val selectedSemester: BarsSemester? get() = semesters.firstOrNull { it.selected }
 }
+
+/**
+ * The rating block ("Учебная деятельность 12,0 / Учебный / Комплексный: 6 ..."). The set of labels depends on the
+ * semester, so everything is kept as a list and the well-known ones have shortcuts.
+ */
+data class BarsRating(
+    /** The semester the numbers belong to (data-sem-id of the total score). */
+    val semesterId: String?,
+    val items: List<BarsRatingItem>,
+    /** The semesters of the rating filter. */
+    val semesters: List<BarsSemester>,
+) {
+    fun value(label: String): Float? = items.firstOrNull { it.label == label }?.value
+
+    val complex: Float? get() = value("Комплексный")
+    val complexSemester: Float? get() = value("Комплексный за семестр")
+    val study: Float? get() = value("Учебный")
+    val studySemester: Float? get() = value("Учебный за семестр")
+    val studyActivity: Float? get() = value("Учебная деятельность")
+}
+
+data class BarsRatingItem(
+    /** "Комплексный за семестр", the colon is cut. */
+    val label: String,
+    /** 12.0 for "12,0", null if the cell is not a number. */
+    val value: Float?,
+    val raw: String,
+)
+
+/** The table of the page "Сводка": the marks of a semester by the weeks. */
+data class BarsSummaryPage(
+    /** "2025/2026, Весенний семестр" */
+    val semesterName: String?,
+    val semesters: List<BarsSemester>,
+    /** The number of the current week, null if BARS does not mark it (a past semester). */
+    val currentWeek: Int?,
+    val rows: List<BarsSummaryRow>,
+)
+
+data class BarsSummaryRow(
+    val discipline: String,
+    /** "экзамен", the last brackets of the row title. */
+    val assessmentType: String?,
+    /** Only the weeks that have marks. */
+    val weeks: List<BarsSummaryWeek>,
+    /** "ТБ": the current score. */
+    val currentScore: BarsMark?,
+    /** "ПА": the intermediate attestation. */
+    val intermediate: BarsMark?,
+    /** "И": the final mark. */
+    val finalMark: BarsMark?,
+)
+
+data class BarsSummaryWeek(
+    val week: Int,
+    val marks: List<BarsSummaryMark>,
+)
+
+data class BarsSummaryMark(
+    /** The name of the control event (the tooltip of the mark), null if the page does not give it. */
+    val title: String?,
+    val mark: BarsMark,
+)
 
 data class BarsMetaItem(
     val description: String,

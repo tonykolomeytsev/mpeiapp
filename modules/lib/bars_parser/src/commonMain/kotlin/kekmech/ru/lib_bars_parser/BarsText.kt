@@ -45,6 +45,31 @@ fun parseBarsWeekNumber(weekNum: String?): Int? {
     return number.substringBefore('.').substringBefore(',').toIntOrNull()
 }
 
+/** "12,0" -> 12.0, null if the whole text is not a number. */
+fun parseBarsNumber(text: String): Float? =
+    normalizeBarsText(text).replace(',', '.').toFloatOrNull()
+
+/** "Электротехника (экзамен)" -> "Электротехника" to "экзамен"; the last brackets only, the rest may have its own. */
+internal fun splitTrailingBrackets(text: String): Pair<String, String?> {
+    val trimmed = normalizeBarsText(text)
+    if (!trimmed.endsWith(")")) return trimmed to null
+    var depth = 0
+    for (index in trimmed.indices.reversed()) {
+        when (trimmed[index]) {
+            ')' -> depth++
+            '(' -> {
+                depth--
+                if (depth == 0) {
+                    val inner = trimmed.substring(index + 1, trimmed.length - 1).trim()
+                    val name = trimmed.substring(0, index).trim()
+                    return if (name.isEmpty()) trimmed to null else name to inner.ifEmpty { null }
+                }
+            }
+        }
+    }
+    return trimmed to null
+}
+
 internal data class DisciplineHeader(
     val name: String,
     val person: String,

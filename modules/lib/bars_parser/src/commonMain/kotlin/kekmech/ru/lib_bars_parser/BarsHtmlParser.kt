@@ -6,6 +6,8 @@ import com.fleeksoft.ksoup.nodes.Element
 
 private const val MARKS_CONTAINER_ID = "div-Student_SemesterSheet__Mark"
 private const val SEMESTER_SELECT_ID = "ddl_StudyFilterSemester"
+private const val SUMMARY_TABLE_ID = "tableMarkSummary"
+private const val SUMMARY_BLOCK_ID = "div-Student_SemesterSheet__MarkSummary"
 private const val DEADLINE_PREFIX = "сдать до"
 private val STUDENT_ID = Regex("studentID=([0-9a-fA-F-]{36})", RegexOption.IGNORE_CASE)
 
@@ -21,6 +23,7 @@ object BarsHtmlParser {
         val document = Ksoup.parse(html)
         return when {
             document.getElementById(MARKS_CONTAINER_ID) != null -> BarsPageKind.MARKS
+            document.getElementById(SUMMARY_TABLE_ID) != null -> BarsPageKind.SUMMARY
             document.select("input[type=password]").isNotEmpty() -> BarsPageKind.LOGIN
             parseStudentLinks(document).isNotEmpty() -> BarsPageKind.STUDENT_LIST
             else -> BarsPageKind.UNKNOWN
@@ -41,6 +44,96 @@ object BarsHtmlParser {
             meta = header?.let { parseMeta(it) }.orEmpty(),
             semesters = parseSemesters(document),
             disciplines = parseDisciplines(document, container),
+            rating = parseRating(document),
+        )
+    }
+
+    /** The rating block of the marks page, null if there is none. Also works on a part of a page. */
+    fun parseRating(html: String): BarsRating? = parseRating(Ksoup.parse(html))
+
+    /**
+     * The page "Сводка" or the answer of its ajax request (`_PartialSummary`), which is only the part with the table.
+     * @throws BarsParseException if there is no table of the summary in [html]
+     */
+    fun parseSummaryPage(html: String): BarsSummaryPage {
+        val document = Ksoup.parse(html)
+        val table = document.getElementById(SUMMARY_TABLE_ID)
+            ?: throw BarsParseException("There is no #$SUMMARY_TABLE_ID in the text, it is not the summary")
+
+        val weekHeaders = table.select("thead tr").lastOrNull()?.select("th").orEmpty()
+        val weekNumbers = weekHeaders.mapNotNull { it.text().trim().toIntOrNull() }
+        val currentWeek = weekHeaders.firstOrNull { it.hasClass("summary-td-current-week") }
+            ?.text()?.trim()?.toIntOrNull()
+
+        return BarsSummaryPage(
+            semesterName = document.selectFirst("#$SUMMARY_BLOCK_ID h5")?.text()
+                ?.let(::normalizeBarsText)?.removeSuffix(", успеваемость")?.ifEmpty { null },
+            semesters = parseSemesters(document),
+            currentWeek = currentWeek,
+            rows = table.select("tbody tr")
+                .filter { it.children().firstOrNull()?.hasClass("summary-td-row-header") == true }
+                .mapNotNull { parseSummaryRow(it, weekNumbers) },
+        )
+    }
+
+    private fun parseSummaryRow(row: Element, weekNumbers: List<Int>): BarsSummaryRow? {
+        val cells = row.children().filter { it.tagName() == "td" }
+        // the title, the weeks, then ТБ, ПА and И
+        if (cells.size < 4) return null
+
+        val (discipline, assessmentType) = splitTrailingBrackets(cells[0].text())
+        val weekCells = cells.subList(1, cells.size - 3)
+        val (currentScore, intermediate, finalMark) = cells.takeLast(3).map { parseMarkCell(it) }
+        return BarsSummaryRow(
+            discipline = discipline,
+            assessmentType = assessmentType,
+            weeks = weekCells.withIndex().mapNotNull { (index, cell) ->
+                val marks = parseSummaryMarks(cell)
+                if (marks.isEmpty()) null else BarsSummaryWeek(weekNumbers.getOrNull(index) ?: (index + 1), marks)
+            },
+            currentScore = currentScore,
+            intermediate = intermediate,
+            finalMark = finalMark,
+        )
+    }
+
+    private fun parseSummaryMarks(cell: Element): List<BarsSummaryMark> {
+        val spans = cell.select("span.summary-mark")
+        if (spans.isNotEmpty()) {
+            return spans.mapNotNull { span ->
+                val mark = parseBarsMark(span.text()) ?: return@mapNotNull null
+                BarsSummaryMark(title = normalizeBarsText(span.attr("title")).ifEmpty { null }, mark = mark)
+            }
+        }
+        // No tooltips: the marks go through a space
+        return normalizeBarsText(cell.text()).split(' ')
+            .mapNotNull { parseBarsMark(it) }
+            .map { BarsSummaryMark(title = null, mark = it) }
+    }
+
+    private fun parseRating(document: Document): BarsRating? {
+        val total = document.getElementById("total_score") ?: return null
+        val list = total.parents().firstOrNull { it.tagName() == "ul" } ?: return null
+        val items = list.select("li.list-inline-item").mapNotNull { item ->
+            val label = item.children().firstOrNull { it.tagName() == "span" } ?: return@mapNotNull null
+            val value = item.selectFirst("strong") ?: return@mapNotNull null
+            val raw = normalizeBarsText(value.text())
+            BarsRatingItem(
+                label = normalizeBarsText(label.text()).removeSuffix(":").trim(),
+                value = parseBarsNumber(raw),
+                raw = raw,
+            )
+        }
+        return BarsRating(
+            semesterId = total.attr("data-sem-id").ifEmpty { null },
+            items = items,
+            semesters = document.select("#divRatingSemesterFilter a[data-value]").map { option ->
+                BarsSemester(
+                    id = option.attr("data-value"),
+                    name = normalizeBarsText(option.text()),
+                    selected = option.hasClass("active"),
+                )
+            },
         )
     }
 
@@ -56,7 +149,9 @@ object BarsHtmlParser {
             .distinctBy { it.id }
 
     private fun parseMeta(header: Element): List<BarsMetaItem> =
-        header.select("li.list-inline-item").mapNotNull { item ->
+        (header.selectFirst("ul.list-inline") ?: header).select("li.list-inline-item").mapNotNull { item ->
+            // The rating items (a span and a strong) may sit in the same list, they are not the meta
+            if (item.children().any { it.tagName() == "span" }) return@mapNotNull null
             val text = normalizeBarsText(item.text())
             if (':' !in text) return@mapNotNull null
             val value = item.selectFirst("strong")?.text() ?: text.substringAfter(':')

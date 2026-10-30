@@ -60,6 +60,22 @@ class BarsTextTest {
     }
 
     @Test
+    fun `number with a comma`() {
+        assertEquals(12f, parseBarsNumber("12,0"))
+        assertEquals(6f, parseBarsNumber(" 6 "))
+        assertNull(parseBarsNumber("н/д"))
+        assertNull(parseBarsNumber(""))
+    }
+
+    @Test
+    fun `last brackets of a title`() {
+        assertEquals("Электротехника" to "экзамен", splitTrailingBrackets("Электротехника (экзамен)"))
+        assertEquals("Физика (часть 1)" to "зачёт с оценкой", splitTrailingBrackets("Физика (часть 1) (зачёт с оценкой)"))
+        assertEquals("Химия" to null, splitTrailingBrackets("Химия"))
+        assertEquals("(экзамен)" to null, splitTrailingBrackets("(экзамен)"))
+    }
+
+    @Test
     fun `week number`() {
         assertEquals(15, parseBarsWeekNumber("15 (07.12.26-13.12.26)"))
         assertEquals(4, parseBarsWeekNumber("4"))
