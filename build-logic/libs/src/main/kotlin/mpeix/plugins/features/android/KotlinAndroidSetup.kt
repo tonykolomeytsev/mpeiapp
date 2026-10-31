@@ -1,6 +1,6 @@
 package mpeix.plugins.features.android
 
-import com.android.build.api.dsl.CommonExtension
+import com.android.build.api.dsl.LibraryExtension
 import com.android.build.api.variant.LibraryAndroidComponentsExtension
 import mpeix.plugins.ext.configure
 import mpeix.plugins.features.globalconfig.getAndroidProjectConfiguration
@@ -12,7 +12,7 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
 
 context(
     project: Project,
-    extension: CommonExtension<*, *, *, *, *, *>,
+    extension: LibraryExtension,
 )
 internal fun configureKotlinAndroid(
     explicitApi: Boolean,
@@ -42,7 +42,6 @@ internal fun configureKotlinAndroid(
         if (explicitApi) explicitApi()
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_17)
-            freeCompilerArgs.add("-Xannotation-default-target=param-property")
         }
     }
     project.dependencies.add(
@@ -52,7 +51,7 @@ internal fun configureKotlinAndroid(
 }
 
 internal fun Project.configureAndroidNamespace(
-    extension: CommonExtension<*, *, *, *, *, *>,
+    extension: LibraryExtension,
 ) {
     // у нас есть модули с именами типа instaledApp, pushNotification
     // А имена пакетов требуют lowercase()

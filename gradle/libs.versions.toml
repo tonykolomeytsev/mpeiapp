@@ -1,8 +1,8 @@
 [versions]
 
-agp = "8.12.3" # android gradle plugin
-kotlin = "2.2.10"
-ksp = "2.2.10-2.0.2"
+agp = "9.5.0" # android gradle plugin
+kotlin = "2.4.21"
+ksp = "2.3.13"
 coroutines = "1.10.2"
 detekt = "1.23.8"
 
@@ -152,7 +152,7 @@ kotlin-parcelize = { id = "kotlin-parcelize" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 firebase-crashlytics = "com.google.firebase.crashlytics:3.0.6"
 google-services = "com.google.gms.google-services:4.4.3"
-gradle-android-cacheFix = "org.gradle.android.cache-fix:3.0.1"
+gradle-android-cacheFix = "org.gradle.android.cache-fix:3.0.3"
 
 [bundles]
 
