@@ -29,6 +29,10 @@ import androidx.compose.ui.unit.dp
 import kekmech.ru.ui_theme.theme.MpeixTheme
 import androidx.compose.material3.NavigationBarItem as Material3NavigationBarItem
 
+
+// Material 3 opacity for disabled content
+private const val DisabledContentAlpha = 0.38f
+
 /**
  * # NavigationBar
  *
@@ -73,7 +77,7 @@ public fun NavigationBar(
     androidx.compose.material3.NavigationBar(
         modifier = modifier,
         containerColor = MpeixTheme.palette.surface,
-        contentColor = MpeixTheme.palette.content,
+        contentColor = MpeixTheme.palette.onSurface,
         tonalElevation = 0.dp,
         windowInsets = windowInsets,
         content = content,
@@ -139,13 +143,13 @@ public fun RowScope.NavigationBarItem(
         },
         alwaysShowLabel = true,
         colors = NavigationBarItemDefaults.colors(
-            selectedIconColor = MpeixTheme.palette.content,
-            selectedTextColor = MpeixTheme.palette.content,
-            indicatorColor = MpeixTheme.palette.primaryContainer,
-            unselectedIconColor = MpeixTheme.palette.contentVariant,
-            unselectedTextColor = MpeixTheme.palette.contentVariant,
-            disabledIconColor = MpeixTheme.palette.contentDisabled,
-            disabledTextColor = MpeixTheme.palette.contentDisabled,
+            selectedIconColor = MpeixTheme.palette.onSurface,
+            selectedTextColor = MpeixTheme.palette.onSurface,
+            indicatorColor = MpeixTheme.palette.surfaceContainer,
+            unselectedIconColor = MpeixTheme.palette.onSurfaceVariant,
+            unselectedTextColor = MpeixTheme.palette.onSurfaceVariant,
+            disabledIconColor = MpeixTheme.palette.onSurface.copy(alpha = DisabledContentAlpha),
+            disabledTextColor = MpeixTheme.palette.onSurface.copy(alpha = DisabledContentAlpha),
         ),
         interactionSource = interactionSource,
     )

@@ -49,24 +49,7 @@ public fun Switch(
         modifier = modifier,
         thumbContent = null,
         enabled = enabled,
-        colors = SwitchDefaults.colors(
-            checkedThumbColor = MpeixTheme.palette.contentAccent,
-            checkedTrackColor = MpeixTheme.palette.primary,
-            checkedBorderColor = MpeixTheme.palette.primary,
-            checkedIconColor = MpeixTheme.palette.primary,
-            uncheckedThumbColor = MpeixTheme.palette.outline,
-            uncheckedTrackColor = MpeixTheme.palette.surfacePlus1,
-            uncheckedBorderColor = MpeixTheme.palette.outline,
-            uncheckedIconColor = MpeixTheme.palette.surfacePlus1,
-            disabledCheckedThumbColor = MpeixTheme.palette.surface,
-            disabledCheckedTrackColor = MpeixTheme.palette.content.copy(alpha = 0.20f),
-            disabledCheckedBorderColor = Color.Transparent,
-            disabledCheckedIconColor = MpeixTheme.palette.content.copy(alpha = 0.30f),
-            disabledUncheckedThumbColor = MpeixTheme.palette.content.copy(alpha = 0.38f),
-            disabledUncheckedTrackColor = MpeixTheme.palette.surfacePlus1,
-            disabledUncheckedBorderColor = MpeixTheme.palette.content.copy(alpha = 0.10f),
-            disabledUncheckedIconColor = MpeixTheme.palette.surface.copy(alpha = 0.30f),
-        ),
+        colors = SwitchDefaults.colors(),
         interactionSource = interactionSource,
     )
 }
@@ -77,7 +60,7 @@ private fun SwitchPreviewLight() {
     MpeixTheme {
         Column(
             modifier = Modifier
-                .background(MpeixTheme.palette.background)
+                .background(MpeixTheme.palette.surface)
                 .padding(16.dp),
         ) {
             Row {
@@ -113,7 +96,7 @@ private fun SwitchPreviewDark() {
     MpeixTheme {
         Column(
             modifier = Modifier
-                .background(MpeixTheme.palette.background)
+                .background(MpeixTheme.palette.surface)
                 .padding(16.dp),
         ) {
             Row {

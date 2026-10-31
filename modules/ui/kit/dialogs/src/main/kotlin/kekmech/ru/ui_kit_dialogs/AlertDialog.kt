@@ -109,7 +109,7 @@ public fun AlertDialog(
             Surface(
                 shape = RoundedCornerShape(28.dp),
                 color = MpeixTheme.palette.surface,
-                contentColor = MpeixTheme.palette.content,
+                contentColor = MpeixTheme.palette.onSurface,
             ) {
                 content.invoke(PaddingValues(24.dp))
             }
@@ -194,7 +194,7 @@ public fun AlertDialog(
                     Text(
                         text = title,
                         modifier = Modifier.fillMaxWidth(),
-                        style = MpeixTheme.typography.header3,
+                        style = MpeixTheme.typography.titleLarge,
                         textAlign = TextAlign.Center,
                     )
                 }
@@ -205,8 +205,8 @@ public fun AlertDialog(
                         Column {
                             Text(
                                 text = text,
-                                style = MpeixTheme.typography.paragraphNormal,
-                                color = MpeixTheme.palette.contentVariant,
+                                style = MpeixTheme.typography.bodyMedium,
+                                color = MpeixTheme.palette.onSurfaceVariant,
                                 modifier = Modifier.padding(bottom = 16.dp),
                             )
                             HorizontalDivider()
@@ -219,8 +219,8 @@ public fun AlertDialog(
                     {
                         Text(
                             text = text,
-                            style = MpeixTheme.typography.paragraphNormal,
-                            color = MpeixTheme.palette.contentVariant,
+                            style = MpeixTheme.typography.bodyMedium,
+                            color = MpeixTheme.palette.onSurfaceVariant,
                         )
                     }
                 }
@@ -229,9 +229,9 @@ public fun AlertDialog(
             },
             shape = RoundedCornerShape(28.dp),
             containerColor = MpeixTheme.palette.surface,
-            iconContentColor = MpeixTheme.palette.contentVariant,
-            titleContentColor = MpeixTheme.palette.content,
-            textContentColor = MpeixTheme.palette.contentVariant,
+            iconContentColor = MpeixTheme.palette.onSurfaceVariant,
+            titleContentColor = MpeixTheme.palette.onSurface,
+            textContentColor = MpeixTheme.palette.onSurfaceVariant,
             tonalElevation = 0.dp,
             properties = properties,
         )
@@ -290,7 +290,7 @@ private fun LayoutAlertDialogPreview() {
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(48.dp)
-                        .background(MpeixTheme.palette.surfacePlus1),
+                        .background(MpeixTheme.palette.surfaceContainerHighest),
                     contentAlignment = Alignment.Center,
                 ) {
                     Text(text = "Some grass to be touched")

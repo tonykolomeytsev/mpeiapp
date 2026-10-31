@@ -48,8 +48,8 @@ internal fun ResendCodeBlock(
                             append("${codeState.resendDebounceSec} секунд")
                         }
                     },
-                    style = MpeixTheme.typography.paragraphBig,
-                    color = MpeixTheme.palette.content,
+                    style = MpeixTheme.typography.bodyLarge,
+                    color = MpeixTheme.palette.onSurface,
                 )
             } else {
                 val clickableSpanStyle = SpanStyle(
@@ -83,8 +83,8 @@ internal fun ResendCodeBlock(
                             }
                         }
                     },
-                    style = MpeixTheme.typography.paragraphBig,
-                    color = MpeixTheme.palette.content,
+                    style = MpeixTheme.typography.bodyLarge,
+                    color = MpeixTheme.palette.onSurface,
                 )
             }
         }
@@ -92,8 +92,8 @@ internal fun ResendCodeBlock(
         is CodeState.SendingCode -> {
             Text(
                 text = "Отправляем код...",
-                style = MpeixTheme.typography.paragraphBig,
-                color = MpeixTheme.palette.content,
+                style = MpeixTheme.typography.bodyMedium,
+                color = MpeixTheme.palette.onSurface,
             )
         }
     }

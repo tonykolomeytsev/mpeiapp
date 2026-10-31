@@ -32,8 +32,8 @@ internal fun EolScreen(
                 navigationIcon = { BackIconButton(onBackClick) }
             )
         },
-        contentColor = MpeixTheme.palette.content,
-        containerColor = MpeixTheme.palette.background,
+        contentColor = MpeixTheme.palette.onSurface,
+        containerColor = MpeixTheme.palette.surface,
     ) { innerPadding ->
         Column(
             modifier = Modifier
@@ -66,7 +66,7 @@ internal fun EolScreen(
                                 "Следим за ситуацией."
                     )
                 },
-                style = MpeixTheme.typography.paragraphBig,
+                style = MpeixTheme.typography.bodyLarge,
             )
             Image(
                 painter = painterResource(R.drawable.ic_banner_eol),
