@@ -1,7 +1,7 @@
 package mpeix.plugins
 
 import com.android.build.api.variant.LibraryAndroidComponentsExtension
-import com.android.build.gradle.LibraryExtension
+import com.android.build.api.dsl.LibraryExtension
 import mpeix.plugins.ext.configure
 import mpeix.plugins.features.android.configureAndroidNamespace
 import mpeix.plugins.features.android.configureKotlinAndroid
@@ -16,7 +16,6 @@ internal abstract class FeatureImplConventionPlugin : Plugin<Project> {
     override fun apply(target: Project): Unit = with(target) {
         with(plugins) {
             apply(Plugins.AndroidLibrary)
-            apply(Plugins.KotlinAndroid)
             apply(Plugins.GradleAndroidCacheFix)
         }
 

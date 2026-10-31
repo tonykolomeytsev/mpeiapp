@@ -49,12 +49,12 @@ internal fun LoginPrompt(
         Text(
             text = stringResource(Strings.bars_stub_login_header),
             style = LegacyH3,
-            color = MpeixTheme.palette.content,
+            color = MpeixTheme.palette.onSurface,
         )
         Text(
             text = stringResource(Strings.bars_stub_login_description),
-            style = MpeixTheme.typography.paragraphNormal,
-            color = MpeixTheme.palette.content,
+            style = MpeixTheme.typography.bodyLarge,
+            color = MpeixTheme.palette.onSurface,
         )
         Button(
             onClick = onLoginClick,

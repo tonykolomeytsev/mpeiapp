@@ -31,14 +31,16 @@ plugins {
 androidProjectConfiguration {
     targetSdk = 36
     minSdk = 26
-    buildToolsVersion = "35.0.0"
+    buildToolsVersion = "37.0.0"
     coreLibraryDesugaringVersion = "2.1.5"
 
     defaultComposeDependencies {
         add("implementation", platform(libs.compose.bom))
         add("implementation", libs.bundles.compose)
         add("implementation", libs.compose.ui.preview)
-        add("debugImplementation", libs.compose.ui.tooling)
+        if (System.getenv("CI") != "true") {
+            add("debugImplementation", libs.compose.ui.tooling)
+        }
     }
 }
 

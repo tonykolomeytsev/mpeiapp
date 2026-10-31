@@ -65,14 +65,14 @@ internal fun DisciplineItem(
     ) {
         Text(
             text = discipline.name,
-            color = MpeixTheme.palette.content,
-            style = MpeixTheme.typography.paragraphBig,
+            color = MpeixTheme.palette.onSurface,
+            style = MpeixTheme.typography.bodyLarge,
         )
         val personAndType = remember { discipline.type + " • " + discipline.person.replaceFirst(" ", " ") }
         Text(
             text = personAndType,
-            color = MpeixTheme.palette.contentDisabled,
-            style = MpeixTheme.typography.paragraphNormal,
+            color = MpeixTheme.palette.onSurfaceVariant,
+            style = MpeixTheme.typography.bodyMedium,
             modifier = Modifier.padding(top = 4.dp, bottom = 6.dp),
             maxLines = 2,
             overflow = TextOverflow.Ellipsis,
@@ -103,11 +103,11 @@ internal fun DisciplineItem(
 private fun NoMarksItem() {
     Text(
         text = stringResource(Strings.bars_item_no_marks),
-        style = MpeixTheme.typography.paragraphNormalAccent,
-        color = MpeixTheme.palette.contentDisabled,
+        style = MpeixTheme.typography.bodyLarge,
+        color = MpeixTheme.palette.onSurfaceVariant,
         modifier = Modifier
             .background(
-                color = MpeixTheme.palette.surfacePlus3,
+                color = MpeixTheme.palette.surfaceContainerHighest,
                 shape = RoundedCornerShape(4.dp),
             )
             .padding(horizontal = 6.dp, vertical = 2.dp)
@@ -121,7 +121,7 @@ private fun MarkItem(
 ) {
     Text(
         text = string,
-        style = MpeixTheme.typography.paragraphNormalAccent,
+        style = MpeixTheme.typography.bodyLarge,
         color = colors.first,
         modifier = Modifier
             .background(
@@ -133,15 +133,15 @@ private fun MarkItem(
 }
 
 @Composable
-private fun Float.asMarkColor(): Pair<Color, Color> =
-    with(MpeixTheme.palette) {
-        when (this@asMarkColor) {
-            in 3.5f..5f -> greenMarkColor to greenBgMarkColor
-            in 2.5f..<3.5f -> yellowMarkColor to yellowBgMarkColor
-            in 0f..<2.5f -> redMarkColor to redBgMarkColor
-            else -> contentDisabled to surfacePlus3
-        }
-    }
+private fun Float.asMarkColor(): Pair<Color, Color> = TODO()
+//    with(MpeixTheme.palette) {
+//        when (this@asMarkColor) {
+//            in 3.5f..5f -> greenMarkColor to greenBgMarkColor
+//            in 2.5f..<3.5f -> yellowMarkColor to yellowBgMarkColor
+//            in 0f..<2.5f -> redMarkColor to redBgMarkColor
+//            else -> contentDisabled to surfacePlus3
+//        }
+//    }
 
 @Preview
 @Composable

@@ -16,7 +16,6 @@ internal fun Project.configureKotlinJvm(
         if (explicitApi) explicitApi()
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_17)
-            freeCompilerArgs.add("-Xannotation-default-target=param-property")
         }
     }
     extensions.configure<JavaPluginExtension> {

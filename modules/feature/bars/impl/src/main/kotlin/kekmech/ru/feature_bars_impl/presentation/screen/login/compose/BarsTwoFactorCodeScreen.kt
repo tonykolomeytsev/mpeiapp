@@ -69,8 +69,6 @@ internal fun BarsTwoFactorCodeScreen(
                     .padding(16.dp)
             )
         },
-        containerColor = MpeixTheme.palette.background,
-        contentColor = MpeixTheme.palette.content,
         modifier = Modifier
             .navigationBarsPadding()
             .imePadding(),
@@ -97,7 +95,7 @@ internal fun BarsTwoFactorCodeScreen(
                     if (wrongCodeAlert) {
                         Text(
                             text = "Введен неверный код",
-                            color = MpeixTheme.palette.redMarkColor,
+                            color = MpeixTheme.palette.error,
                         )
                     }
                 }

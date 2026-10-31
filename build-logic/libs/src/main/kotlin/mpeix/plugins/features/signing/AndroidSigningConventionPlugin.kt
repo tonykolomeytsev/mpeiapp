@@ -1,6 +1,6 @@
 package mpeix.plugins.features.signing
 
-import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
+import com.android.build.api.dsl.ApplicationExtension
 import mpeix.plugins.ext.configure
 import mpeix.plugins.ext.isCiBuild
 import org.gradle.api.Plugin
@@ -11,7 +11,7 @@ internal class AndroidSigningConventionPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
         with(target) {
-            extensions.configure<BaseAppModuleExtension> {
+            extensions.configure<ApplicationExtension> {
                 with(signingConfigs.maybeCreate("release")) {
                     if (isCiBuild) {
                         storeFile = rootProject.file("keystore.jks")

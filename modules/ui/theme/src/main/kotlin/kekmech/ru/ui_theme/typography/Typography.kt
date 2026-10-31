@@ -50,85 +50,81 @@ public val RobotoFontFamily: FontFamily = FontFamily(
     ),
 )
 
+private val H1 = TextStyle(
+    fontFamily = RobotoFontFamily,
+    fontWeight = FontWeight.Bold,
+    fontSize = 32.sp,
+    lineHeight = 38.sp,
+)
+private val H2 = TextStyle(
+    fontFamily = RobotoFontFamily,
+    fontWeight = FontWeight.Bold,
+    fontSize = 24.sp,
+    lineHeight = 28.sp,
+)
+private val H3 = TextStyle(
+    fontFamily = RobotoFontFamily,
+    fontWeight = FontWeight.Bold,
+    fontSize = 20.sp,
+    lineHeight = 23.sp,
+)
+private val H4 = TextStyle(
+    fontFamily = RobotoFontFamily,
+    fontWeight = FontWeight.Medium,
+    fontSize = 16.sp,
+    lineHeight = 22.sp,
+)
+private val H5 = TextStyle(
+    fontFamily = RobotoFontFamily,
+    fontWeight = FontWeight.Normal,
+    fontSize = 16.sp,
+    lineHeight = 22.sp,
+)
+private val H6 = TextStyle(
+    fontFamily = RobotoFontFamily,
+    fontWeight = FontWeight.Medium,
+    fontSize = 14.sp,
+    lineHeight = 19.sp,
+)
+private val H7 = TextStyle(
+    fontFamily = RobotoFontFamily,
+    fontWeight = FontWeight.Normal,
+    fontSize = 14.sp,
+    lineHeight = 19.sp,
+)
+private val H8 = TextStyle(
+    fontFamily = RobotoFontFamily,
+    fontWeight = FontWeight.Normal,
+    fontSize = 12.sp,
+    lineHeight = 16.sp,
+)
+private val H8Medium = TextStyle(
+    fontFamily = RobotoFontFamily,
+    fontWeight = FontWeight.Medium,
+    fontSize = 12.sp,
+    lineHeight = 16.sp,
+)
+private val H9 = TextStyle(
+    fontFamily = RobotoFontFamily,
+    fontWeight = FontWeight.Medium,
+    fontSize = 10.sp,
+    lineHeight = 14.sp,
+)
+
+
 @Immutable
 public class MpeixTypography internal constructor(
-    public val header1: TextStyle = TextStyle(
-        fontFamily = RobotoFontFamily,
-        fontSize = 32.sp,
-        lineHeight = 38.sp,
-        fontWeight = FontWeight.Normal,
-        fontStyle = FontStyle.Normal,
-    ),
-    public val header2: TextStyle = TextStyle(
-        fontFamily = RobotoFontFamily,
-        fontSize = 28.sp,
-        lineHeight = 36.sp,
-        fontWeight = FontWeight.Normal,
-        fontStyle = FontStyle.Normal,
-    ),
-    public val header3: TextStyle = TextStyle(
-        fontFamily = RobotoFontFamily,
-        fontSize = 22.sp,
-        lineHeight = 28.sp,
-        fontWeight = FontWeight.Normal,
-        fontStyle = FontStyle.Normal,
-    ),
-    public val header4: TextStyle = TextStyle(
-        fontFamily = RobotoFontFamily,
-        fontSize = 20.sp,
-        lineHeight = 24.sp,
-        fontWeight = FontWeight.Medium,
-        fontStyle = FontStyle.Normal,
-    ),
-    public val paragraphBig: TextStyle = TextStyle(
-        fontFamily = RobotoFontFamily,
-        fontSize = 16.sp,
-        lineHeight = 24.sp,
-        fontWeight = FontWeight.Normal,
-        fontStyle = FontStyle.Normal,
-    ),
-    public val paragraphNormal: TextStyle = TextStyle(
-        fontFamily = RobotoFontFamily,
-        fontSize = 14.sp,
-        lineHeight = 20.sp,
-        fontWeight = FontWeight.Normal,
-        fontStyle = FontStyle.Normal,
-    ),
-    public val paragraphBigAccent: TextStyle = TextStyle(
-        fontFamily = RobotoFontFamily,
-        fontSize = 16.sp,
-        lineHeight = 24.sp,
-        fontWeight = FontWeight.Bold,
-        fontStyle = FontStyle.Normal,
-    ),
-    public val paragraphNormalAccent: TextStyle = TextStyle(
-        fontFamily = RobotoFontFamily,
-        fontSize = 14.sp,
-        lineHeight = 20.sp,
-        fontWeight = FontWeight.Bold,
-        fontStyle = FontStyle.Normal,
-    ),
-    public val labelBig: TextStyle = TextStyle(
-        fontFamily = RobotoFontFamily,
-        fontSize = 14.sp,
-        lineHeight = 20.sp,
-        fontWeight = FontWeight.Medium,
-        fontStyle = FontStyle.Normal,
-    ),
-    public val labelNormal: TextStyle = TextStyle(
-        fontFamily = RobotoFontFamily,
-        fontSize = 12.sp,
-        lineHeight = 16.sp,
-        fontWeight = FontWeight.Medium,
-        fontStyle = FontStyle.Normal,
-    ),
-    public val labelMini: TextStyle = TextStyle(
-        fontFamily = RobotoFontFamily,
-        fontSize = 10.sp,
-        lineHeight = 16.sp,
-        fontWeight = FontWeight.Medium,
-        fontStyle = FontStyle.Normal,
-    ),
+    public val headlineBig: TextStyle = H1,
+    public val headlineSmall: TextStyle = H2,
+    public val titleLarge: TextStyle = H3,
+    public val titleMedium: TextStyle = H4,
+    public val titleSmall: TextStyle = H6,
+    public val bodyLarge: TextStyle = H5,
+    public val bodyMedium: TextStyle = H7,
+    public val bodySmall: TextStyle = H8,
+    public val labelLarge: TextStyle = H4, // + ALL CAPS
+    public val labelMedium: TextStyle = H8Medium,
+    public val labelSmall: TextStyle = H9,
 )
 
 @Composable
@@ -169,53 +165,66 @@ private fun TypographyPreview() {
             ) {
                 Column {
                     Text(
-                        text = "Header H1 32/38",
-                        style = MpeixTheme.typography.header1,
-                        color = LightMpeixPalette.content,
+                        text = "Headline Big",
+                        style = MpeixTheme.typography.headlineBig,
+                        color = LightMpeixPalette.onSurface,
                         modifier = linePaddingModifier,
                     )
                     Text(
-                        text = "Header H2 28/36",
-                        style = MpeixTheme.typography.header2,
-                        color = LightMpeixPalette.content,
+                        text = "Headline Small",
+                        style = MpeixTheme.typography.headlineSmall,
+                        color = LightMpeixPalette.onSurface,
                         modifier = linePaddingModifier,
                     )
                     Text(
-                        text = "Header H3 22/28",
-                        style = MpeixTheme.typography.header3,
-                        color = LightMpeixPalette.content,
+                        text = "Title Large",
+                        style = MpeixTheme.typography.titleLarge,
+                        color = LightMpeixPalette.onSurface,
                         modifier = linePaddingModifier,
                     )
                     Text(
-                        text = "Header H4 20/24",
-                        style = MpeixTheme.typography.header4,
-                        color = LightMpeixPalette.content,
+                        text = "Title Medium",
+                        style = MpeixTheme.typography.titleMedium,
+                        color = LightMpeixPalette.onSurface,
+                        modifier = linePaddingModifier,
+                    )
+                    Text(
+                        text = "Title Small",
+                        style = MpeixTheme.typography.titleSmall,
+                        color = LightMpeixPalette.onSurface,
                     )
                 }
                 Spacer(Modifier.width(64.dp))
                 Column {
                     Text(
-                        text = "Заголовки экранов",
-                        style = MpeixTheme.typography.header1,
-                        color = LightMpeixPalette.content,
+                        text = "Крупные заголовки экранов",
+                        style = MpeixTheme.typography.headlineBig,
+                        color = LightMpeixPalette.onSurface,
                         modifier = linePaddingModifier,
                     )
                     Text(
-                        text = "Заголовки экранов",
-                        style = MpeixTheme.typography.header2,
-                        color = LightMpeixPalette.content,
+                        text = "Заголовки экранов и AlertDialog",
+                        style = MpeixTheme.typography.headlineSmall,
+                        color = LightMpeixPalette.onSurface,
                         modifier = linePaddingModifier,
                     )
                     Text(
-                        text = "Заголовки экранов",
-                        style = MpeixTheme.typography.header3,
-                        color = LightMpeixPalette.content,
+                        text = "Заголовки секция, TopAppBar",
+                        style = MpeixTheme.typography.titleLarge,
+                        color = LightMpeixPalette.onSurface,
                         modifier = linePaddingModifier,
                     )
                     Text(
-                        text = "Заголовки внутри блоков контента",
-                        style = MpeixTheme.typography.header4,
-                        color = LightMpeixPalette.content,
+                        text = "???",
+                        style = MpeixTheme.typography.titleMedium,
+                        color = LightMpeixPalette.onSurface,
+                        modifier = linePaddingModifier,
+                    )
+                    Text(
+                        text = "Вкладки",
+                        style = MpeixTheme.typography.titleSmall,
+                        color = LightMpeixPalette.onSurface,
+                        modifier = linePaddingModifier,
                     )
                 }
             }
@@ -227,53 +236,43 @@ private fun TypographyPreview() {
             ) {
                 Column {
                     Text(
-                        text = "Paragraph Big 16/24",
-                        style = MpeixTheme.typography.paragraphBig,
-                        color = LightMpeixPalette.content,
+                        text = "Body Large",
+                        style = MpeixTheme.typography.bodyLarge,
+                        color = LightMpeixPalette.onSurface,
                         modifier = linePaddingModifier,
                     )
                     Text(
-                        text = "Paragraph Normal 14/20",
-                        style = MpeixTheme.typography.paragraphNormal,
-                        color = LightMpeixPalette.content,
+                        text = "Body Medium",
+                        style = MpeixTheme.typography.bodyMedium,
+                        color = LightMpeixPalette.onSurface,
                         modifier = linePaddingModifier,
                     )
                     Text(
-                        text = "Paragraph Big Accent 16/24",
-                        style = MpeixTheme.typography.paragraphBigAccent,
-                        color = LightMpeixPalette.content,
+                        text = "Body Small",
+                        style = MpeixTheme.typography.bodySmall,
+                        color = LightMpeixPalette.onSurface,
                         modifier = linePaddingModifier,
-                    )
-                    Text(
-                        text = "Paragraph Normal Accent 14/20",
-                        style = MpeixTheme.typography.paragraphNormalAccent,
-                        color = LightMpeixPalette.content,
                     )
                 }
                 Spacer(Modifier.width(64.dp))
                 Column {
                     Text(
-                        text = "Текстовый контент, несущий много смысла",
-                        style = MpeixTheme.typography.paragraphBig,
-                        color = LightMpeixPalette.content,
+                        text = "Текст по-умолчанию, ListItem, поля ввода",
+                        style = MpeixTheme.typography.bodyLarge,
+                        color = LightMpeixPalette.onSurface,
                         modifier = linePaddingModifier,
                     )
                     Text(
-                        text = "Короткие надписи внутри UI, подзаголовки внутри контента",
-                        style = MpeixTheme.typography.paragraphNormal,
-                        color = LightMpeixPalette.content,
+                        text = "Вторичный текст, тексты диалогов, снекбаров",
+                        style = MpeixTheme.typography.bodyMedium,
+                        color = LightMpeixPalette.onSurface,
                         modifier = linePaddingModifier,
                     )
                     Text(
-                        text = "Текстовый контент, несущий много смысла",
-                        style = MpeixTheme.typography.paragraphBigAccent,
-                        color = LightMpeixPalette.content,
+                        text = "???",
+                        style = MpeixTheme.typography.bodySmall,
+                        color = LightMpeixPalette.onSurface,
                         modifier = linePaddingModifier,
-                    )
-                    Text(
-                        text = "Короткие надписи внутри UI, подзаголовки внутри контента",
-                        style = MpeixTheme.typography.paragraphNormalAccent,
-                        color = LightMpeixPalette.content,
                     )
                 }
             }
@@ -285,41 +284,41 @@ private fun TypographyPreview() {
             ) {
                 Column {
                     Text(
-                        text = "Label Big 14/20",
-                        style = MpeixTheme.typography.labelBig,
-                        color = LightMpeixPalette.content,
+                        text = "Label Large".uppercase(),
+                        style = MpeixTheme.typography.labelLarge,
+                        color = LightMpeixPalette.onSurface,
                         modifier = linePaddingModifier,
                     )
                     Text(
-                        text = "Label Normal 12/16",
-                        style = MpeixTheme.typography.labelNormal,
-                        color = LightMpeixPalette.content,
+                        text = "Label Medium",
+                        style = MpeixTheme.typography.labelMedium,
+                        color = LightMpeixPalette.onSurface,
                         modifier = linePaddingModifier,
                     )
                     Text(
-                        text = "Label Mini 10/16",
-                        style = MpeixTheme.typography.labelMini,
-                        color = LightMpeixPalette.content,
+                        text = "Label Small",
+                        style = MpeixTheme.typography.labelSmall,
+                        color = LightMpeixPalette.onSurface,
                     )
                 }
                 Spacer(Modifier.width(64.dp))
                 Column {
                     Text(
-                        text = "Кнопки, поля ввода, ячейки",
-                        style = MpeixTheme.typography.labelBig,
-                        color = LightMpeixPalette.content,
+                        text = "Кнопки + CAPS",
+                        style = MpeixTheme.typography.labelLarge,
+                        color = LightMpeixPalette.onSurface,
                         modifier = linePaddingModifier,
                     )
                     Text(
-                        text = "Ячейки и короткие надписи в UI",
-                        style = MpeixTheme.typography.labelNormal,
-                        color = LightMpeixPalette.content,
+                        text = "Подписи в NavigationBar",
+                        style = MpeixTheme.typography.labelMedium,
+                        color = LightMpeixPalette.onSurface,
                         modifier = linePaddingModifier,
                     )
                     Text(
-                        text = "Ячейки и короткие надписи в UI",
-                        style = MpeixTheme.typography.labelMini,
-                        color = LightMpeixPalette.content,
+                        text = "Мелкие сноски",
+                        style = MpeixTheme.typography.labelSmall,
+                        color = LightMpeixPalette.onSurface,
                     )
                 }
             }

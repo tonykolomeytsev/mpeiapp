@@ -63,6 +63,7 @@ import kekmech.ru.ui_theme.theme.MpeixTheme
  * @see androidx.compose.material3.TopAppBar
  */
 @Composable
+@Deprecated("Use ui-kit TopAppBar")
 public fun TopAppBar(
     title: String,
     modifier: Modifier = Modifier,
@@ -75,7 +76,7 @@ public fun TopAppBar(
         title = {
             Text(
                 text = title,
-                style = MpeixTheme.typography.header3,
+                style = MpeixTheme.typography.titleLarge,
                 color = LocalContentColor.current,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
@@ -85,13 +86,7 @@ public fun TopAppBar(
         navigationIcon = { navigationIcon.invoke(TopAppBarNavigationIconScope) },
         actions = actions,
         windowInsets = windowInsets,
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MpeixTheme.palette.background,
-            scrolledContainerColor = MpeixTheme.palette.surface,
-            navigationIconContentColor = MpeixTheme.palette.content,
-            titleContentColor = MpeixTheme.palette.content,
-            actionIconContentColor = MpeixTheme.palette.content,
-        ),
+        colors = TopAppBarDefaults.topAppBarColors(),
         scrollBehavior = scrollBehavior,
     )
 }
@@ -137,6 +132,7 @@ public fun TopAppBar(
  * scrolls. See [TopAppBarScrollBehavior.nestedScrollConnection].
  */
 @Composable
+@Deprecated("Excluded from ui-kit")
 public fun LargeTopAppBar(
     title: String,
     modifier: Modifier = Modifier,
@@ -158,13 +154,7 @@ public fun LargeTopAppBar(
         navigationIcon = { navigationIcon.invoke(TopAppBarNavigationIconScope) },
         actions = actions,
         windowInsets = windowInsets,
-        colors = TopAppBarDefaults.largeTopAppBarColors(
-            containerColor = MpeixTheme.palette.background,
-            scrolledContainerColor = MpeixTheme.palette.surface,
-            navigationIconContentColor = MpeixTheme.palette.content,
-            titleContentColor = MpeixTheme.palette.content,
-            actionIconContentColor = MpeixTheme.palette.content,
-        ),
+        colors = TopAppBarDefaults.largeTopAppBarColors(),
         scrollBehavior = scrollBehavior,
     )
 }

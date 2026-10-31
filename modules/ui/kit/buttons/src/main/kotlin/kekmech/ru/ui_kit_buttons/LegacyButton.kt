@@ -42,6 +42,13 @@ private val LegacyH4 = TextStyle(
 )
 
 @Composable
+@Deprecated(
+    message = "Use ui-kit Button instead",
+    replaceWith = ReplaceWith(
+        expression = "Button(text = text, onClick = onClick)",
+        imports = ["kekmech.ru.ui_kit_buttons.button.Button"],
+    ),
+)
 public fun LegacyButton(
     text: String,
     onClick: () -> Unit,

@@ -1,5 +1,5 @@
 plugins {
-    alias(mpeix.plugins.feature.impl)
+    alias(mpeix.plugins.feature.impl.compose)
     alias(libs.plugins.kotlin.serialization)
 }
 
@@ -20,6 +20,8 @@ dependencies {
     implementation(libs.facebook.shimmer)
     implementation(libs.firebase.crashlytics)
     implementation(libs.google.material)
+    implementation(libs.compose.material3)
+    implementation(libs.koin.compose)
     implementation(libs.koin.android)
     implementation(libs.koin.core)
     implementation(libs.kotlinx.serialization.json)
@@ -40,11 +42,18 @@ dependencies {
     implementation(project(":lib_app_info"))
     implementation(project(":ext_kotlin"))
     implementation(project(":lib_elm"))
+    implementation(project(":lib_elm_compose"))
     implementation(project(":lib_navigation"))
     implementation(project(":lib_network"))
     implementation(project(":lib_schedule"))
     implementation(project(":lib_persistent_cache"))
+    implementation(project(":lib_fragment"))
 
     implementation(project(":coreui"))
+    implementation(project(":ui_theme"))
+    implementation(project(":ui_preview"))
+    implementation(project(":ui_kit_buttons"))
+    implementation(project(":ui_kit_topappbar"))
+    implementation(project(":ui_kit_textfield"))
     implementation(project(":res_strings"))
 }

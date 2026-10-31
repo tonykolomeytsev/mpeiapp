@@ -75,8 +75,8 @@ internal fun BarsLoginPasswordScreen(
                     .padding(16.dp)
             )
         },
-        containerColor = MpeixTheme.palette.background,
-        contentColor = MpeixTheme.palette.content,
+        containerColor = MpeixTheme.palette.surface,
+        contentColor = MpeixTheme.palette.onSurface,
         modifier = Modifier
             .navigationBarsPadding()
             .imePadding(),
@@ -119,7 +119,7 @@ internal fun BarsLoginPasswordScreen(
                     if (wrongCredentialsAlert) {
                         Text(
                             text = "Неверный логин или пароль",
-                            color = MpeixTheme.palette.redMarkColor,
+                            color = MpeixTheme.palette.error,
                         )
                     }
                 }
@@ -136,7 +136,7 @@ internal fun BarsLoginPasswordScreen(
                         append("политикой конфиденциальности")
                     }
                 },
-                style = MpeixTheme.typography.paragraphNormal,
+                style = MpeixTheme.typography.bodyLarge,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .fillMaxWidth()

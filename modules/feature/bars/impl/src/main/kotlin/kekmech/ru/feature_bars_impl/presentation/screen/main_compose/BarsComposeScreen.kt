@@ -42,8 +42,6 @@ internal fun BarsComposeScreen(
     }
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        containerColor = MpeixTheme.palette.background,
-        contentColor = MpeixTheme.palette.content,
     ) { innerPadding ->
         PullToRefreshBox(
             isRefreshing = isRefreshing,

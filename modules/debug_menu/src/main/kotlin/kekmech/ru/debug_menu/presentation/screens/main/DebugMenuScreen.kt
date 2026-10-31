@@ -105,7 +105,7 @@ private fun DebugMenuScreen(
             item {
                 Text(
                     text = "Build info",
-                    style = MpeixTheme.typography.header3,
+                    style = MpeixTheme.typography.titleLarge,
                     modifier = Modifier
                         .padding(horizontal = 16.dp)
                         .padding(top = 24.dp, bottom = 12.dp)
@@ -144,7 +144,7 @@ private fun BackendEnvDialog(
             item {
                 Text(
                     text = "Select backend environment",
-                    style = MpeixTheme.typography.header3,
+                    style = MpeixTheme.typography.titleLarge,
                     textAlign = TextAlign.Center,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -178,7 +178,7 @@ private fun ThemeSelectionDialog(
             item {
                 Text(
                     text = "Select theme",
-                    style = MpeixTheme.typography.header3,
+                    style = MpeixTheme.typography.titleLarge,
                     textAlign = TextAlign.Center,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -219,14 +219,14 @@ private fun BackendEnvironmentItem(
                         is Resource.Loading -> "Loading..."
                         is Resource.Error -> "Error!"
                     },
-                    style = MpeixTheme.typography.paragraphNormal,
+                    style = MpeixTheme.typography.bodyMedium,
                 )
             }
         )
         Text(
             text = "For the 'Backend environment' setting to take effect, " +
                     "you need to restart the application",
-            style = MpeixTheme.typography.paragraphNormal,
+            style = MpeixTheme.typography.bodyMedium,
             modifier = Modifier
                 .padding(horizontal = 16.dp)
                 .padding(top = 12.dp, bottom = 24.dp),
@@ -281,7 +281,7 @@ private fun ThemeSelectionItem(
                     is Resource.Loading -> "Loading..."
                     is Resource.Error -> "Error!"
                 },
-                style = MpeixTheme.typography.paragraphNormal,
+                style = MpeixTheme.typography.bodyMedium,
             )
         },
         modifier = Modifier

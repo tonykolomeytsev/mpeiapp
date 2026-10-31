@@ -56,8 +56,6 @@ internal fun BarsAccountSelectionScreen(
                     .padding(16.dp)
             )
         },
-        containerColor = MpeixTheme.palette.background,
-        contentColor = MpeixTheme.palette.content,
         modifier = Modifier
             .navigationBarsPadding()
             .imePadding(),
@@ -75,7 +73,7 @@ internal fun BarsAccountSelectionScreen(
                             .shimmer()
                             .fillMaxWidth()
                             .height(64.dp)
-                            .background(MpeixTheme.palette.shimmer, RoundedCornerShape(8.dp))
+                            .background(MpeixTheme.palette.outlineVariant, RoundedCornerShape(8.dp))
                     )
                 }
             } else {

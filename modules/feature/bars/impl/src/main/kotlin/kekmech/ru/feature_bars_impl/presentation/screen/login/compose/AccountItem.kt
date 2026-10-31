@@ -44,20 +44,20 @@ internal fun AccountItem(
     ) {
         Text(
             text = account.name,
-            style = MpeixTheme.typography.paragraphBig,
-            color = MpeixTheme.palette.content,
+            style = MpeixTheme.typography.titleMedium,
+            color = MpeixTheme.palette.onSurface,
         )
         Row {
             Text(
                 text = account.group,
-                style = MpeixTheme.typography.paragraphNormal,
-                color = MpeixTheme.palette.contentVariant,
+                style = MpeixTheme.typography.bodyLarge,
+                color = MpeixTheme.palette.onSurface,
             )
             Spacer(Modifier.weight(1f))
             Text(
                 text = account.status,
-                style = MpeixTheme.typography.paragraphNormal,
-                color = MpeixTheme.palette.contentDisabled,
+                style = MpeixTheme.typography.bodyLarge,
+                color = MpeixTheme.palette.onSurfaceVariant,
             )
         }
     }

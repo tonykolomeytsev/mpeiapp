@@ -63,7 +63,7 @@ internal fun UserHeader(
                         .height(32.dp)
                         .fillMaxWidth()
                         .background(
-                            color = MpeixTheme.palette.shimmer,
+                            color = MpeixTheme.palette.outlineVariant,
                             shape = RoundedCornerShape(8.dp),
                         )
                 )
@@ -85,12 +85,12 @@ internal fun UserHeader(
                         painter = painterResource(Icons.ic_groups_black_24),
                         contentDescription = null,
                         modifier = Modifier.size(18.dp),
-                        tint = MpeixTheme.palette.contentVariant,
+                        tint = MpeixTheme.palette.onSurfaceVariant,
                     )
                     Text(
                         text = group,
-                        style = MpeixTheme.typography.labelBig,
-                        color = MpeixTheme.palette.contentVariant,
+                        style = MpeixTheme.typography.labelLarge,
+                        color = MpeixTheme.palette.onSurfaceVariant,
                     )
                 }
             }

@@ -8,6 +8,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.DateRange
 import androidx.compose.material.icons.outlined.ShoppingCart
 import androidx.compose.material3.ListItemDefaults
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -20,6 +21,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kekmech.ru.ui_theme.theme.MpeixTheme
+
+
+// Material 3 opacity for disabled content
+private const val DisabledContentAlpha = 0.38f
 
 /**
  * # ListItem
@@ -62,7 +67,7 @@ public fun ListItem(
         headlineContent = {
             Text(
                 text = headlineText,
-                style = MpeixTheme.typography.paragraphBig,
+                style = MpeixTheme.typography.bodyLarge,
             )
         },
         modifier = modifier,
@@ -76,7 +81,7 @@ public fun ListItem(
                 {
                     Text(
                         text = overlineText,
-                        style = MpeixTheme.typography.labelMini,
+                        style = MpeixTheme.typography.labelSmall,
                     )
                 }
             }
@@ -85,7 +90,7 @@ public fun ListItem(
             {
                 Text(
                     text = it,
-                    style = MpeixTheme.typography.paragraphNormal,
+                    style = MpeixTheme.typography.bodyMedium,
                 )
             }
         },
@@ -101,14 +106,14 @@ public fun ListItem(
         },
         colors = ListItemDefaults.colors(
             containerColor = MpeixTheme.palette.surface,
-            headlineColor = MpeixTheme.palette.content,
-            leadingIconColor = MpeixTheme.palette.contentVariant,
-            overlineColor = MpeixTheme.palette.contentVariant,
-            supportingColor = MpeixTheme.palette.contentVariant,
-            trailingIconColor = MpeixTheme.palette.contentVariant,
-            disabledHeadlineColor = MpeixTheme.palette.contentDisabled,
-            disabledLeadingIconColor = MpeixTheme.palette.contentDisabled,
-            disabledTrailingIconColor = MpeixTheme.palette.contentDisabled,
+            headlineColor = MpeixTheme.palette.onSurface,
+            leadingIconColor = MpeixTheme.palette.onSurfaceVariant,
+            overlineColor = MpeixTheme.palette.onSurfaceVariant,
+            supportingColor = MpeixTheme.palette.onSurfaceVariant,
+            trailingIconColor = MpeixTheme.palette.onSurfaceVariant,
+            disabledHeadlineColor = MpeixTheme.palette.onSurface.copy(alpha = DisabledContentAlpha),
+            disabledLeadingIconColor = MpeixTheme.palette.onSurface.copy(alpha = DisabledContentAlpha),
+            disabledTrailingIconColor = MpeixTheme.palette.onSurface.copy(alpha = DisabledContentAlpha),
         ),
         tonalElevation = 0.dp,
         shadowElevation = 0.dp,
@@ -126,7 +131,7 @@ public object ListItemLeadingContentScope {
             painter = painter,
             contentDescription = null,
             modifier = Modifier.size(24.dp),
-            tint = MpeixTheme.palette.contentVariant,
+            tint = LocalContentColor.current,
         )
     }
 
@@ -139,7 +144,7 @@ public object ListItemLeadingContentScope {
             imageVector = imageVector,
             contentDescription = null,
             modifier = Modifier.size(24.dp),
-            tint = MpeixTheme.palette.contentVariant,
+            tint = LocalContentColor.current,
         )
     }
 
@@ -148,7 +153,7 @@ public object ListItemLeadingContentScope {
      */
     @Composable
     public fun Monogram(letter: Char) {
-        val backgroundColor = MpeixTheme.palette.primaryContainer
+        val backgroundColor = MpeixTheme.palette.surfaceContainer
         Box(
             modifier = Modifier
                 .size(40.dp)
@@ -159,8 +164,8 @@ public object ListItemLeadingContentScope {
         ) {
             Text(
                 text = "$letter",
-                style = MpeixTheme.typography.paragraphBig.copy(fontWeight = FontWeight.Medium),
-                color = MpeixTheme.palette.contentVariant,
+                style = MpeixTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Medium),
+                color = MpeixTheme.palette.onSurfaceVariant,
                 textAlign = TextAlign.Center,
             )
         }
@@ -176,8 +181,8 @@ public object ListItemTrailingContentScope {
     public fun SupportingText(text: String) {
         Text(
             text = text,
-            style = MpeixTheme.typography.labelMini,
-            color = MpeixTheme.palette.contentVariant,
+            style = MpeixTheme.typography.labelSmall,
+            color = MpeixTheme.palette.onSurfaceVariant,
         )
     }
 }

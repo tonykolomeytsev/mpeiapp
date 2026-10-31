@@ -47,6 +47,8 @@ private fun Project.registerTransformActions() {
             // you need to specify unpacking directly into ProcessedJar.
             par.targetType.set(ProcessedJar)
             par.namespacedSharedLibSupport.set(sharedLibSupport)
+            // Do not lose the rules
+            par.filterOutGlobalRules.set(false)
         }
     }
 }

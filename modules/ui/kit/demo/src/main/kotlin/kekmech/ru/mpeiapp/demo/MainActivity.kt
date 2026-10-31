@@ -14,10 +14,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
 import androidx.navigation3.runtime.NavEntry
+import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.rememberNavBackStack
-import androidx.navigation3.runtime.rememberSavedStateNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
-import androidx.navigation3.ui.rememberSceneSetupNavEntryDecorator
 import kekmech.ru.mpeiapp.demo.di.AppModule
 import kekmech.ru.mpeiapp.demo.navigation.LocalNavBackStack
 import kekmech.ru.mpeiapp.demo.navigation.NavScreen
@@ -60,20 +59,16 @@ class MainActivity : ComponentActivity() {
                     // A surface container using the 'background' color from the theme
                     Surface(
                         modifier = Modifier.fillMaxSize(),
-                        color = MpeixTheme.palette.background,
+                        color = MpeixTheme.palette.surface,
                     ) {
                         val backStack = rememberNavBackStack(MainScreen)
                         WithBackStack(backStack) {
                             NavDisplay(
                                 backStack = LocalNavBackStack.current,
                                 modifier = Modifier.fillMaxSize(),
-                                entryDecorators = listOf(
-                                    rememberSavedStateNavEntryDecorator(),
-                                    rememberSceneSetupNavEntryDecorator(),
-                                ),
                             ) { key ->
                                 when (key) {
-                                    is NavScreen -> NavEntry(key) { key.Content() }
+                                    is NavScreen -> NavEntry<NavKey>(key) { key.Content() }
                                     else -> error("Invalid nav key!")
                                 }
                             }

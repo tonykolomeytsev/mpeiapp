@@ -8,11 +8,13 @@ internal class FindScheduleStoreFactory(
 ) {
 
     fun create(
+        resultKey: String,
         continueTo: ScheduleFeatureApi.ContinueTo,
         selectGroupAfterSuccess: Boolean,
     ) =
         ElmStore(
             initialState = FindScheduleState(
+                resultKey = resultKey,
                 continueTo = continueTo,
                 selectScheduleAfterSuccess = selectGroupAfterSuccess,
             ),

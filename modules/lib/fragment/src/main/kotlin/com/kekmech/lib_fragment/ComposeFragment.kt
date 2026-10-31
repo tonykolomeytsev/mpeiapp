@@ -16,6 +16,11 @@ import kekmech.ru.lib_navigation.di.RouterHolder
  */
 public abstract class ComposeFragment : Fragment() {
 
+    // Живет вместе с фрагментом, а не с view, чтобы не пересоздаваться при каждой композиции
+    private val resultController by lazy(LazyThreadSafetyMode.NONE) {
+        FragmentResultController(this)
+    }
+
     @CallSuper
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -24,7 +29,6 @@ public abstract class ComposeFragment : Fragment() {
     ): View? = content {
         // Зависимости, нужные внутри экранов для взаимодействия с внешним миром
         val router = (requireContext().applicationContext as RouterHolder).router
-        val resultController = FragmentResultController(this@ComposeFragment)
         CompositionLocalProvider(
             LocalRouter provides router,
             LocalResultController provides resultController,

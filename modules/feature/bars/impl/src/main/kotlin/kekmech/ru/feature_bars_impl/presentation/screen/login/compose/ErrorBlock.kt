@@ -39,8 +39,8 @@ internal fun ErrorBlock(
                 append("antonkolomeytsev@gmail.com")
             }
         },
-        style = MpeixTheme.typography.paragraphBig,
-        color = MpeixTheme.palette.redMarkColor,
+        style = MpeixTheme.typography.bodyLarge,
+        color = MpeixTheme.palette.error,
         modifier = modifier,
     )
 }

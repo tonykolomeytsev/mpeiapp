@@ -45,72 +45,52 @@ private fun ColorsScreen() {
                 name = "Primary",
             ),
             ColorCell(
+                color = MpeixTheme.palette.onPrimary,
+                name = "OnPrimary",
+            ),
+            ColorCell(
                 color = MpeixTheme.palette.secondary,
                 name = "Secondary",
             ),
             ColorCell(
-                color = MpeixTheme.palette.tertiary,
-                name = "Tertiary",
-            ),
-            ColorCell(
-                color = MpeixTheme.palette.background,
-                name = "Background",
+                color = MpeixTheme.palette.onSecondary,
+                name = "OnSecondary",
             ),
             ColorCell(
                 color = MpeixTheme.palette.surface,
                 name = "Surface",
             ),
             ColorCell(
-                color = MpeixTheme.palette.surfacePlus1,
-                name = "Surface+1",
+                color = MpeixTheme.palette.surfaceContainer,
+                name = "SurfaceContainer",
             ),
             ColorCell(
-                color = MpeixTheme.palette.surfacePlus2,
-                name = "Surface+2",
+                color = MpeixTheme.palette.surfaceContainerHighest,
+                name = "SurfaceContainerHighest",
             ),
             ColorCell(
-                color = MpeixTheme.palette.surfacePlus3,
-                name = "Surface+3",
+                color = MpeixTheme.palette.onSurface,
+                name = "OnSurface",
             ),
             ColorCell(
-                color = MpeixTheme.palette.primaryContainer,
-                name = "PrimaryContainer",
-            ),
-            ColorCell(
-                color = MpeixTheme.palette.secondaryContainer,
-                name = "SecondaryContainer",
-            ),
-            ColorCell(
-                color = MpeixTheme.palette.content,
-                name = "Content",
-            ),
-            ColorCell(
-                color = MpeixTheme.palette.contentAccent,
-                name = "ContentAccent",
-            ),
-            ColorCell(
-                color = MpeixTheme.palette.contentVariant,
-                name = "ContentVariant",
-            ),
-            ColorCell(
-                color = MpeixTheme.palette.contentDisabled,
-                name = "ContentDisabled",
+                color = MpeixTheme.palette.onSurfaceVariant,
+                name = "OnSurfaceVariant",
             ),
             ColorCell(
                 color = MpeixTheme.palette.outline,
                 name = "Outline",
             ),
             ColorCell(
-                color = MpeixTheme.palette.classesTypeLecture,
-                name = "Lecture",
+                color = MpeixTheme.palette.outlineVariant,
+                name = "OutlineVariant",
             ),
             ColorCell(
-                color = MpeixTheme.palette.classesTypePractice,
-                name = "Practice",
+                color = MpeixTheme.palette.error,
+                name = "Error",
             ),
             ColorCell(
-                color = MpeixTheme.palette.classesTypeLab,
-                name = "Lab",
+                color = MpeixTheme.palette.onError,
+                name = "OnError",
             ),
         )
 
@@ -152,7 +132,7 @@ private fun ColorItem(cell: ColorCell) {
         )
         Text(
             text = cell.name,
-            style = MpeixTheme.typography.paragraphBig,
+            style = MpeixTheme.typography.bodyLarge,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 12.dp, vertical = 8.dp),
