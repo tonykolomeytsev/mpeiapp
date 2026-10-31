@@ -129,6 +129,7 @@
     <string name="schedule_find_hint">Номер группы или имя преподавателя</string>
     <string name="schedule_find_button_continue">Продолжить</string>
     <string name="schedule_find_error_loading">Не удалось загрузить расписание для %s</string>
+    <string name="schedule_find_error_invalid_input">Введите валидное имя группы или преподавателя</string>
 
     <string name="schedule_semester_week">Учебная неделя №%d</string>
     <string name="schedule_weekend_week">Неучебная неделя</string>
