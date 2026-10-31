@@ -3,6 +3,7 @@ plugins {
 }
 
 dependencies {
+    implementation(libs.androidx.coreKtx)
     implementation(libs.androidx.fragmentKtx)
     implementation(libs.androidx.fragment.compose)
     implementation(libs.vivid.elmslie.core)
