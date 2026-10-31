@@ -14,4 +14,5 @@ dependencies {
     implementation(project(":ext_android"))
 
     testImplementation(libs.kotlin.test)
+    testImplementation(libs.kotlin.test.junit5)
 }

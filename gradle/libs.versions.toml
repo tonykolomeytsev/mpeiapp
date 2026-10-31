@@ -107,6 +107,7 @@ kotest-runner = { module = "io.kotest:kotest-runner-junit5", version = "5.6.1" }
 kotest-assertions = { module = "io.kotest:kotest-assertions-core", version = "5.6.1" }
 kotest-property = { module = "io.kotest:kotest-property", version = "5.6.1" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
+kotlin-test-junit5 = { module = "org.jetbrains.kotlin:kotlin-test-junit5", version.ref = "kotlin" }
 
 # Coroutines
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
