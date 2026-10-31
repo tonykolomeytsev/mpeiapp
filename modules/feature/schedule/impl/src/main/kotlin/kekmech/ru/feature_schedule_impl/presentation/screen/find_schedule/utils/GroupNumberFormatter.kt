@@ -1,34 +1,35 @@
 package kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.utils
 
-import android.text.Editable
-import android.text.TextWatcher
-import android.widget.EditText
-import kekmech.ru.ext_android.getStringArray
-import kekmech.ru.coreui.R as coreui_R
+import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.TextFieldValue
 
-internal class GroupFormatTextWatcher(
-    private val editText: EditText
-) : TextWatcher {
+private val LabelModifierPattern = "[а-яА-Я]+-[0-9]+([а-яА-Я])+(-[0-9]+)?".toRegex()
+private val SingleDigitGroupNumberPattern = "[а-яА-Я]+-([0-9])[а-яА-Я]*-([0-9]+)?".toRegex()
 
-    private val facultyLabels = editText.context.getStringArray(coreui_R.array.faculties_labels)
-        .sortedByDescending { it.length }
+/**
+ * Normalizes group number while user is typing:
+ * - capitalizes faculty label: `с-12-16` -> `С-12-16`
+ * - lowercases label modifiers: `С-12М-16` -> `С-12м-16`
+ * - adds leading zero to course number: `С-6-` -> `С-06-`
+ */
+internal class GroupNumberFormatter(facultyLabels: List<String>) {
 
-    override fun afterTextChanged(s: Editable?) = Unit
+    private val facultyLabels = facultyLabels.sortedByDescending { it.length }
 
-    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int)  = Unit
-
-    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-        s ?: return
-        val modifiedString = ModifiedString(s.toString())
-            .let { capitalizeFacultyLabel(it) }
-            .let { lowerCaseForLabelModifiers(it) }
-            .let { doubleDigitGroupNumber(it) }
-        if (s.toString() != modifiedString.string) {
-            var selection = editText.selectionStart
-            editText.setText(modifiedString.string)
-            selection += modifiedString.selectionOffset
-            editText.setSelection(selection)
-        }
+    fun format(value: TextFieldValue): TextFieldValue {
+        val modifiedString = ModifiedString(value.text)
+            .let(::capitalizeFacultyLabel)
+            .let(::lowerCaseForLabelModifiers)
+            .let(::doubleDigitGroupNumber)
+        if (modifiedString.string == value.text) return value
+        val length = modifiedString.string.length
+        return value.copy(
+            text = modifiedString.string,
+            selection = TextRange(
+                start = (value.selection.start + modifiedString.selectionOffset).coerceIn(0, length),
+                end = (value.selection.end + modifiedString.selectionOffset).coerceIn(0, length),
+            ),
+        )
     }
 
     private fun capitalizeFacultyLabel(s: ModifiedString): ModifiedString {
@@ -44,7 +45,7 @@ internal class GroupFormatTextWatcher(
     }
 
     private fun lowerCaseForLabelModifiers(s: ModifiedString): ModifiedString {
-        return "[а-яА-Я]+-[0-9]+([а-яА-Я])+(-[0-9]+)?".toRegex()
+        return LabelModifierPattern
             .find(s.string)
             ?.groups?.get(1)
             ?.let { it.value to it.range }
@@ -54,11 +55,10 @@ internal class GroupFormatTextWatcher(
                     string = s.string.replaceRange(range, value.lowercase())
                 )
             } ?: s
-
     }
 
     private fun doubleDigitGroupNumber(s: ModifiedString): ModifiedString {
-        return "[а-яА-Я]+-([0-9])[а-яА-Я]*-([0-9]+)?".toRegex()
+        return SingleDigitGroupNumberPattern
             .find(s.string)
             ?.groups?.get(1)
             ?.let { it.value to it.range }
@@ -69,7 +69,6 @@ internal class GroupFormatTextWatcher(
                 )
             } ?: s
     }
-
 
     private data class ModifiedString(
         val string: String,

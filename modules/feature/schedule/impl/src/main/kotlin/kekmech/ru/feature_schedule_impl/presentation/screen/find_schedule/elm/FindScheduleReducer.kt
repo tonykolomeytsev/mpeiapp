@@ -1,16 +1,17 @@
 package kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm
 
+import kekmech.ru.feature_schedule_api.ScheduleFeatureApi.ContinueTo.BACK
+import kekmech.ru.feature_schedule_api.ScheduleFeatureApi.ContinueTo.BACK_WITH_RESULT
+import kekmech.ru.feature_schedule_api.ScheduleFeatureApi.ContinueTo.DASHBOARD
 import kekmech.ru.feature_schedule_api.domain.model.SelectedSchedule
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.FindScheduleEvent.Internal
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.FindScheduleEvent.Ui
 import money.vivid.elmslie.core.store.ScreenReducer
-import retrofit2.HttpException
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.FindScheduleCommand as Command
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.FindScheduleEffect as Effect
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.FindScheduleEvent as Event
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.FindScheduleState as State
 
-private const val HTTP_BAD_REQUEST_CODE = 400
 val GROUP_NUMBER_PATTERN = "[а-яА-Я]+-[а-яА-Я0-9]+-[0-9]+".toRegex()
 val PERSON_NAME_PATTERN = "[а-яА-Я]+\\s+([а-яА-Я]+\\s?)+".toRegex()
 
@@ -24,7 +25,7 @@ internal class FindScheduleReducer :
         when (event) {
             is Internal.FindScheduleFailure -> {
                 state { copy(isLoading = false) }
-                effects { +calculateErrorEffect(event.throwable) }
+                effects { +Effect.ShowLoadingError }
             }
 
             is Internal.FindScheduleSuccess -> {
@@ -33,11 +34,10 @@ internal class FindScheduleReducer :
                     type = event.type,
                 )
                 state { copy(isLoading = false) }
-                effects {
-                    +Effect.NavigateNextFragment(
-                        continueTo = state.continueTo,
-                        selectedSchedule = selectedSchedule,
-                    )
+                when (state.continueTo) {
+                    BACK -> effects { +Effect.CloseScreen }
+                    BACK_WITH_RESULT -> effects { +Effect.CloseScreenWithResult(selectedSchedule) }
+                    DASHBOARD -> commands { +Command.OpenDashboard }
                 }
                 commands {
                     +Command.SelectSchedule(selectedSchedule)
@@ -55,14 +55,17 @@ internal class FindScheduleReducer :
         when (event) {
             is Ui.Init -> Unit
             is Ui.Click.Continue -> {
-                state { copy(isLoading = true) }
-                commands { +Command.FindSchedule(name = event.scheduleName) }
+                if (event.scheduleName.isValidGroupNumberOrPersonName()) {
+                    state { copy(isLoading = true) }
+                    commands { +Command.FindSchedule(name = event.scheduleName) }
+                } else {
+                    effects { +Effect.ShowInvalidInputError }
+                }
             }
 
             is Ui.Action.GroupNumberChanged -> {
                 state {
                     copy(
-                        isContinueButtonEnabled = event.scheduleName.isValidGroupNumberOrPersonName(),
                         searchResults = state.searchResults.takeIf { event.scheduleName.length > 2 }
                             .orEmpty(),
                     )
@@ -72,15 +75,6 @@ internal class FindScheduleReducer :
                         ?.let(Command::SearchForAutocomplete)
                 }
             }
-        }
-    }
-
-
-    private fun calculateErrorEffect(throwable: Throwable): Effect {
-        return if (throwable is HttpException && throwable.code() == HTTP_BAD_REQUEST_CODE) {
-            Effect.ShowError
-        } else {
-            Effect.ShowSomethingWentWrongError
         }
     }
 

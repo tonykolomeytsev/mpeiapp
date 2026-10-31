@@ -15,9 +15,6 @@ import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.Fi
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.FindScheduleEvent.Ui
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.FindScheduleReducer
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.FindScheduleState
-import okhttp3.ResponseBody.Companion.toResponseBody
-import retrofit2.HttpException
-import retrofit2.Response
 
 class FindScheduleReducerTest : BehaviorSpec({
     val reducer = FindScheduleReducer()
@@ -48,11 +45,24 @@ class FindScheduleReducerTest : BehaviorSpec({
                 actions.shouldContainExactly(FindScheduleCommand.FindSchedule(CORRECT_NAME))
             }
         }
+        When("Wish.Click.Continue (invalid input)") {
+            val (state, effects, actions) = reducer
+                .reduce(Ui.Click.Continue(INVALID_NAME), givenState)
+            Then("Check state") {
+                state.isLoading.shouldBeFalse()
+            }
+            Then("Check effects") {
+                effects.shouldContainExactly(FindScheduleEffect.ShowInvalidInputError)
+            }
+            Then("Check actions") {
+                actions.shouldBeEmpty()
+            }
+        }
         When("Wish.Action.GroupNumberChanged (correct)") {
             val (state, effects, actions) = reducer
                 .reduce(Ui.Action.GroupNumberChanged(CORRECT_NAME), givenState)
             Then("Check state") {
-                state.isContinueButtonEnabled.shouldBeTrue()
+                state shouldBe givenState
             }
             Then("Check effects") {
                 effects.shouldBeEmpty()
@@ -66,7 +76,7 @@ class FindScheduleReducerTest : BehaviorSpec({
             val (state, effects, actions) = reducer
                 .reduce(Ui.Action.GroupNumberChanged(INVALID_NAME), givenState)
             Then("Check state") {
-                state.isContinueButtonEnabled.shouldBeFalse()
+                state shouldBe givenState
             }
             Then("Check effects") {
                 effects.shouldBeEmpty()
@@ -79,33 +89,20 @@ class FindScheduleReducerTest : BehaviorSpec({
     }
     Given("Loading state") {
         val givenState = STATE.copy(isLoading = true)
-        When("News.GroupLoadingError (group not found)") {
-            val (state, effects, actions) = reducer
-                .reduce(Internal.FindScheduleFailure(VALIDATION_ERROR), givenState)
-            Then("Check state") {
-                state.isLoading.shouldBeFalse()
-            }
-            Then("Check effects") {
-                effects.shouldContainExactly(FindScheduleEffect.ShowError)
-            }
-            Then("Check actions") {
-                actions.shouldBeEmpty()
-            }
-        }
-        When("News.GroupLoadingError (unknown error)") {
+        When("News.GroupLoadingError") {
             val (state, effects, actions) = reducer
                 .reduce(Internal.FindScheduleFailure(UNKNOWN_ERROR), givenState)
             Then("Check state") {
                 state.isLoading.shouldBeFalse()
             }
             Then("Check effects") {
-                effects.shouldContainExactly(FindScheduleEffect.ShowSomethingWentWrongError)
+                effects.shouldContainExactly(FindScheduleEffect.ShowLoadingError)
             }
             Then("Check actions") {
                 actions.shouldBeEmpty()
             }
         }
-        When("News.News.GroupLoadedSuccessfully") {
+        When("News.News.GroupLoadedSuccessfully (continueTo = BACK)") {
             val (state, effects, actions) = reducer.reduce(
                 event = Internal.FindScheduleSuccess(CORRECT_NAME, ScheduleType.GROUP),
                 state = givenState,
@@ -114,15 +111,38 @@ class FindScheduleReducerTest : BehaviorSpec({
                 state.isLoading.shouldBeFalse()
             }
             Then("Check effects") {
+                effects.shouldContainExactly(FindScheduleEffect.CloseScreen)
+            }
+            Then("Check actions") {
+                actions.shouldBeEmpty()
+            }
+        }
+        When("News.News.GroupLoadedSuccessfully (continueTo = BACK_WITH_RESULT)") {
+            val (_, effects, actions) = reducer.reduce(
+                event = Internal.FindScheduleSuccess(CORRECT_NAME, ScheduleType.GROUP),
+                state = givenState.copy(continueTo = ScheduleFeatureApi.ContinueTo.BACK_WITH_RESULT),
+            )
+            Then("Check effects") {
                 effects.shouldContainExactly(
-                    FindScheduleEffect.NavigateNextFragment(
-                        givenState.continueTo,
+                    FindScheduleEffect.CloseScreenWithResult(
                         SelectedSchedule(CORRECT_NAME, ScheduleType.GROUP),
                     )
                 )
             }
             Then("Check actions") {
                 actions.shouldBeEmpty()
+            }
+        }
+        When("News.News.GroupLoadedSuccessfully (continueTo = DASHBOARD)") {
+            val (_, effects, actions) = reducer.reduce(
+                event = Internal.FindScheduleSuccess(CORRECT_NAME, ScheduleType.GROUP),
+                state = givenState.copy(continueTo = ScheduleFeatureApi.ContinueTo.DASHBOARD),
+            )
+            Then("Check effects") {
+                effects.shouldBeEmpty()
+            }
+            Then("Check actions") {
+                actions.shouldContainExactly(FindScheduleCommand.OpenDashboard)
             }
         }
     }
@@ -137,12 +157,7 @@ class FindScheduleReducerTest : BehaviorSpec({
                 state.isLoading.shouldBeFalse()
             }
             Then("Check effects") {
-                effects.shouldContainExactly(
-                    FindScheduleEffect.NavigateNextFragment(
-                        givenState.continueTo,
-                        SelectedSchedule(CORRECT_NAME, ScheduleType.GROUP),
-                    )
-                )
+                effects.shouldContainExactly(FindScheduleEffect.CloseScreen)
             }
             Then("Check actions") {
                 actions.shouldContainExactly(
@@ -158,13 +173,12 @@ class FindScheduleReducerTest : BehaviorSpec({
     private companion object {
 
         private val STATE = FindScheduleState(
+            resultKey = "",
             continueTo = ScheduleFeatureApi.ContinueTo.BACK,
             selectScheduleAfterSuccess = false
         )
         private const val CORRECT_NAME = "С-06-18"
         private const val INVALID_NAME = "С-vv--"
-        private val VALIDATION_ERROR =
-            HttpException(Response.error<Unit>(400, "".toResponseBody()))
         private val UNKNOWN_ERROR = IllegalStateException("Unknown error!")
     }
 }
