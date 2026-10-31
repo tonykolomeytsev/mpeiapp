@@ -39,6 +39,7 @@ import kekmech.ru.feature_schedule_api.domain.model.SearchResult
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.compose.SearchSuggestions
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.FindScheduleEvent.Ui
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.utils.GroupNumberFormatter
+import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.utils.adaptiveContentWidth
 import kekmech.ru.lib_elm_compose.EffectHandler
 import kekmech.ru.lib_navigation.PopBackStack
 import kekmech.ru.ui_kit_buttons.button.Button
@@ -46,14 +47,13 @@ import kekmech.ru.ui_kit_buttons.button.ButtonState
 import kekmech.ru.ui_kit_textfield.textfield.TextField
 import kekmech.ru.ui_kit_topappbar.topappbar.TopAppBar
 import kekmech.ru.ui_preview.MpeixPreview
-import kekmech.ru.ui_theme.layout.adaptiveContentWidth
 import kekmech.ru.ui_theme.theme.MpeixTheme
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
+import kekmech.ru.coreui.R.array as CoreUiArrays
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.FindScheduleEffect as Effect
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.FindScheduleEvent as Event
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.FindScheduleState as State
-import kekmech.ru.coreui.R.array as CoreUiArrays
 import kekmech.ru.res_strings.R.string as Strings
 
 private sealed interface InputError {
