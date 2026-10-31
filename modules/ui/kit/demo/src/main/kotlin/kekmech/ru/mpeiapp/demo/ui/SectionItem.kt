@@ -40,14 +40,14 @@ internal fun SectionItem(
         ) {
             Text(
                 text = name,
-                color = MpeixTheme.palette.content,
-                style = MpeixTheme.typography.paragraphBig,
+                color = MpeixTheme.palette.onSurface,
+                style = MpeixTheme.typography.bodyLarge,
             )
             Image(
                 imageVector = Icons.Outlined.KeyboardArrowRight,
                 contentDescription = null,
                 modifier = Modifier.align(Alignment.CenterEnd),
-                colorFilter = ColorFilter.tint(MpeixTheme.palette.content),
+                colorFilter = ColorFilter.tint(MpeixTheme.palette.onSurface),
             )
         }
     }
