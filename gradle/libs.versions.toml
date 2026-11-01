@@ -46,6 +46,7 @@ agp = { module = "com.android.tools.build:gradle", version.ref = "agp" }
 timber = { module = "com.jakewharton.timber:timber", version = "5.0.1" }
 picasso = { module = "com.squareup.picasso:picasso", version = "2.8" }
 coil = { module = "io.coil-kt:coil", version = "2.7.0" }
+coil-compose = { module = "io.coil-kt:coil-compose", version = "2.7.0" }
 facebook-shimmer = { module = "com.facebook.shimmer:shimmer", version = "0.5.0" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version = "1.9.0" }
 kekmech-lib-bars = { module = "com.kekmech:lib_bars", version = "0.4.1" }

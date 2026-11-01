@@ -1,4 +1,4 @@
-package kekmech.ru.feature_app_settings_impl.presentation.screens.edit_favorite.utils
+package kekmech.ru.feature_app_settings_impl.presentation.utils
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.widthIn
