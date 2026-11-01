@@ -23,8 +23,6 @@ android {
 }
 
 dependencies {
-    implementation(libs.androidx.appCompat)
-    implementation(libs.androidx.constraintLayout)
     implementation(libs.androidx.coordinatorLayout)
     implementation(libs.androidx.coreKtx)
     implementation(libs.androidx.recyclerView)
@@ -45,7 +43,6 @@ dependencies {
     implementation(project(":ext_kotlin"))
     implementation(project(":lib_adapter"))
     implementation(project(":lib_analytics_android"))
-    implementation(project(":lib_app_info"))
     implementation(project(":lib_app_lifecycle"))
     implementation(project(":lib_elm"))
     implementation(project(":lib_emoji"))

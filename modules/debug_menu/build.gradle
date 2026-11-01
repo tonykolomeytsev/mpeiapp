@@ -14,7 +14,6 @@ dependencies {
     implementation(project(":feature_app_settings_api"))
 
     implementation(project(":ext_koin"))
-    implementation(project(":ext_kotlin"))
     implementation(project(":ext_android"))
 
     implementation(project(":lib_app_info"))
@@ -31,7 +30,6 @@ dependencies {
     implementation(project(":ui_theme"))
     compileOnly(libs.timber)
 
-    implementation(libs.androidx.coreKtx)
     implementation(libs.compose.activity)
     implementation(libs.compose.material3)
     implementation(libs.androidx.navigation3.runtime)

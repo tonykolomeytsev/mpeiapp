@@ -21,13 +21,10 @@ dependencies {
     implementation(project(":ext_kotlin"))
 
     implementation(project(":feature_notes_api"))
-    implementation(project(":feature_schedule_api"))
     implementation(project(":feature_favorite_schedule_api"))
 
     implementation(project(":ext_okhttp"))
 
-    implementation(project(":lib_elm"))
-    implementation(project(":lib_network"))
 
     implementation(project(":res_icons"))
     implementation(project(":res_images"))
