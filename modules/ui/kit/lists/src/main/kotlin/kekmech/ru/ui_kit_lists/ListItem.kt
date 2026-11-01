@@ -74,7 +74,7 @@ public fun ListItem(
         headlineContent = {
             Text(
                 text = headlineText,
-                style = MpeixTheme.typography.bodyLarge,
+                style = MpeixTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Medium),
             )
         },
         modifier = modifier,
@@ -97,7 +97,8 @@ public fun ListItem(
             {
                 Text(
                     text = it,
-                    style = MpeixTheme.typography.bodyMedium,
+                    style = MpeixTheme.typography.labelMedium,
+                    modifier = Modifier.padding(top = 4.dp),
                 )
             }
         },
@@ -201,7 +202,7 @@ public object ListItemTrailingContentScope {
     public fun SupportingText(text: String) {
         Text(
             text = text,
-            style = MpeixTheme.typography.labelSmall,
+            style = MpeixTheme.typography.labelMedium,
             color = MpeixTheme.palette.onSurfaceVariant,
         )
     }
