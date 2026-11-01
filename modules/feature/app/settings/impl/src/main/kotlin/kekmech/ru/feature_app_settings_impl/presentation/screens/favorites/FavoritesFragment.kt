@@ -1,87 +1,38 @@
 package kekmech.ru.feature_app_settings_impl.presentation.screens.favorites
 
-import android.os.Bundle
-import android.view.View
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import kekmech.ru.coreui.attachScrollListenerForAppBarLayoutShadow
-import kekmech.ru.coreui.items.AddActionAdapterItem
-import kekmech.ru.coreui.items.FavoriteScheduleAdapterItem
-import kekmech.ru.coreui.items.FavoriteScheduleItem
-import kekmech.ru.coreui.items.SpaceAdapterItem
-import kekmech.ru.coreui.touch_helpers.attachSwipeToDeleteCallback
-import kekmech.ru.ext_android.addSystemBottomPadding
-import kekmech.ru.ext_android.addSystemTopPadding
-import kekmech.ru.ext_android.close
-import kekmech.ru.ext_android.notNullSerializable
-import kekmech.ru.ext_android.setResultListener
-import kekmech.ru.ext_android.viewbinding.viewBinding
-import kekmech.ru.ext_kotlin.fastLazy
-import kekmech.ru.feature_app_settings_impl.R
-import kekmech.ru.feature_app_settings_impl.databinding.FragmentFavoritesBinding
+import androidx.compose.runtime.Composable
+import com.kekmech.lib_fragment.ComposeFragment
+import com.kekmech.lib_fragment.LocalRouter
+import com.kekmech.lib_fragment.ResultListener
 import kekmech.ru.feature_app_settings_impl.di.AppSettingDependencies
 import kekmech.ru.feature_app_settings_impl.presentation.screens.edit_favorite.EditFavoriteFragment
-import kekmech.ru.feature_app_settings_impl.presentation.screens.favorites.elm.FavoritesEffect
 import kekmech.ru.feature_app_settings_impl.presentation.screens.favorites.elm.FavoritesEvent.Ui
-import kekmech.ru.feature_app_settings_impl.presentation.screens.favorites.elm.FavoritesState
-import kekmech.ru.feature_app_settings_impl.presentation.screens.favorites.item.HelpBannerAdapterItem
 import kekmech.ru.feature_favorite_schedule_api.domain.model.FavoriteSchedule
 import kekmech.ru.feature_schedule_api.ScheduleFeatureApi.ContinueTo.BACK_WITH_RESULT
 import kekmech.ru.feature_schedule_api.domain.model.SelectedSchedule
-import kekmech.ru.lib_adapter.BaseAdapter
 import kekmech.ru.lib_analytics_android.ext.screenAnalytics
+import kekmech.ru.lib_elm_compose.ElmContent
 import kekmech.ru.lib_navigation.AddScreenForward
-import kekmech.ru.lib_navigation.Router
-import kekmech.ru.lib_navigation.addScreenForward
-import money.vivid.elmslie.android.renderer.ElmRendererDelegate
-import money.vivid.elmslie.android.renderer.androidElmStore
+import kekmech.ru.lib_navigation.PopBackStack
+import kekmech.ru.ui_theme.theme.MpeixTheme
 import org.koin.android.ext.android.inject
-import kekmech.ru.res_strings.R.string as Strings
 
-internal class FavoritesFragment :
-    Fragment(R.layout.fragment_favorites),
-    ElmRendererDelegate<FavoritesEffect, FavoritesState> {
+internal class FavoritesFragment : ComposeFragment() {
 
     private val dependencies by inject<AppSettingDependencies>()
     private val analytics by screenAnalytics("Favorites")
-    private val adapter by fastLazy { createAdapter() }
-    private val viewBinding by viewBinding(FragmentFavoritesBinding::bind)
-    private val router by inject<Router>()
-    private val store by androidElmStore { dependencies.favoritesStoreFactory.create() }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        viewBinding.apply {
-            appBarLayout.addSystemTopPadding()
-
-            toolbar.setTitle(Strings.favorites_screen_title)
-            toolbar.setNavigationOnClickListener { close() }
-            recyclerView.attachScrollListenerForAppBarLayoutShadow(appBarLayout)
-            recyclerView.addSystemBottomPadding()
-            recyclerView.layoutManager = LinearLayoutManager(requireContext())
-            recyclerView.adapter = adapter
-            recyclerView.attachSwipeToDeleteCallback(isItemForDelete = { it is FavoriteScheduleItem }) {
-                analytics.sendClick("DeleteFavorite")
-                store.accept(Ui.Click.DeleteFavorite((it as FavoriteScheduleItem).value))
-            }
-        }
-    }
-
-    override fun render(state: FavoritesState) {
-        adapter.update(FavoritesListConverter(requireContext()).map(state))
-    }
-
-    private fun createAdapter() =
-        BaseAdapter(
-            SpaceAdapterItem(),
-            AddActionAdapterItem {
-                analytics.sendClick("AddFavorite")
-                setResultListener<SelectedSchedule>(
-                    key = FIND_GROUP_RESULT_KEY,
-                    resultMapper = Bundle::notNullSerializable,
-                ) { selectedSchedule ->
-                    setResultListenerForUpdateFavorite(NEW_FAVORITE_RESULT_KEY)
-                    addScreenForward {
+    @Composable
+    override fun Screen() {
+        MpeixTheme {
+            val router = LocalRouter.current
+            ElmContent(
+                key = "FavoritesScreen",
+                storeFactory = { dependencies.favoritesStoreFactory.create() },
+            ) { onAccept, state, _ ->
+                // Group found by search screen becomes a new favorite after editing its description
+                ResultListener<SelectedSchedule>(FIND_GROUP_RESULT_KEY) { selectedSchedule ->
+                    router.executeCommand(AddScreenForward {
                         EditFavoriteFragment.newInstance(
                             favoriteSchedule = FavoriteSchedule(
                                 name = selectedSchedule.name,
@@ -89,43 +40,49 @@ internal class FavoritesFragment :
                                 description = "",
                                 order = 0,
                             ),
-                            resultKey = NEW_FAVORITE_RESULT_KEY
+                            resultKey = EDIT_FAVORITE_RESULT_KEY,
                         )
-                    }
+                    })
                 }
-                router.executeCommand(AddScreenForward {
-                    dependencies.scheduleFeatureApi.getSearchGroupScreen(
-                        continueTo = BACK_WITH_RESULT,
-                        selectGroupAfterSuccess = false,
-                        resultKey = FIND_GROUP_RESULT_KEY
-                    )
-                })
-            },
-            FavoriteScheduleAdapterItem {
-                analytics.sendClick("EditFavorite")
-                setResultListenerForUpdateFavorite(EDIT_FAVORITE_RESULT_KEY)
-                addScreenForward {
-                    EditFavoriteFragment.newInstance(
-                        favoriteSchedule = it.value,
-                        resultKey = EDIT_FAVORITE_RESULT_KEY,
-                    )
+                ResultListener<FavoriteSchedule>(EDIT_FAVORITE_RESULT_KEY) { favoriteSchedule ->
+                    onAccept(Ui.Action.UpdateFavorite(favoriteSchedule))
                 }
-            },
-            HelpBannerAdapterItem()
-        )
-
-    private fun setResultListenerForUpdateFavorite(resultKey: String) =
-        setResultListener<FavoriteSchedule>(
-            key = resultKey,
-            resultMapper = Bundle::notNullSerializable,
-        ) { favoriteSchedule ->
-            store.accept(Ui.Action.UpdateFavorite(favoriteSchedule))
+                FavoritesScreen(
+                    favorites = state.favorites,
+                    onBackClick = { router.executeCommand(PopBackStack()) },
+                    onAddClick = {
+                        analytics.sendClick("AddFavorite")
+                        router.executeCommand(AddScreenForward {
+                            dependencies.scheduleFeatureApi.getSearchGroupScreen(
+                                continueTo = BACK_WITH_RESULT,
+                                selectGroupAfterSuccess = false,
+                                resultKey = FIND_GROUP_RESULT_KEY,
+                            )
+                        })
+                    },
+                    onFavoriteClick = { favoriteSchedule ->
+                        analytics.sendClick("EditFavorite")
+                        router.executeCommand(AddScreenForward {
+                            EditFavoriteFragment.newInstance(
+                                favoriteSchedule = favoriteSchedule,
+                                resultKey = EDIT_FAVORITE_RESULT_KEY,
+                            )
+                        })
+                    },
+                    onFavoriteDelete = { favoriteSchedule ->
+                        analytics.sendClick("DeleteFavorite")
+                        onAccept(Ui.Click.DeleteFavorite(favoriteSchedule))
+                    },
+                )
+            }
         }
+    }
 
-    companion object {
+    private companion object {
 
-        private const val FIND_GROUP_RESULT_KEY = "FIND_GROUP_RESULT_KEY"
-        private const val NEW_FAVORITE_RESULT_KEY = "NEW_FAVORITE_RESULT_KEY"
-        private const val EDIT_FAVORITE_RESULT_KEY = "EDIT_FAVORITE_RESULT_KEY"
+        const val FIND_GROUP_RESULT_KEY = "FIND_GROUP_RESULT_KEY"
+
+        // New and edited favorites are handled the same way, so they share the result key
+        const val EDIT_FAVORITE_RESULT_KEY = "EDIT_FAVORITE_RESULT_KEY"
     }
 }
