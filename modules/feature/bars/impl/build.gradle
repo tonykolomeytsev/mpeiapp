@@ -9,7 +9,6 @@ android{
         consumerProguardFiles(file("proguard-consumer-rules.pro"))
     }
     buildFeatures {
-        viewBinding = true
         androidResources = true
     }
 }
@@ -18,14 +17,8 @@ dependencies {
     implementation(libs.bundles.compose)
     implementation(libs.compose.material3)
 
-    implementation(libs.androidx.appCompat)
-    implementation(libs.androidx.constraintLayout)
-    implementation(libs.androidx.coreKtx)
-    implementation(libs.androidx.recyclerView)
-    implementation(libs.androidx.swipeRefreshLayout)
     implementation(libs.androidx.datastore.prefs)
     implementation(libs.kekmech.lib.bars)
-    implementation(libs.facebook.shimmer)
     implementation(libs.firebase.crashlytics)
     implementation(libs.google.material)
     implementation(libs.koin.android)
@@ -44,7 +37,6 @@ dependencies {
     implementation(project(":ext_android"))
     implementation(project(":ext_kotlin"))
     implementation(project(":ext_shared_preferences"))
-    implementation(project(":lib_adapter"))
     implementation(project(":lib_analytics_android"))
     implementation(project(":lib_elm"))
     implementation(project(":lib_navigation"))
@@ -56,8 +48,10 @@ dependencies {
     implementation(project(":ui_shimmer"))
     implementation(project(":ui_kit_topappbar"))
     implementation(project(":ui_kit_buttons"))
+    implementation(project(":ui_kit_dialogs"))
+    implementation(project(":ui_kit_lists"))
+    implementation(project(":ui_preview"))
 
-    implementation(project(":coreui"))
     implementation(project(":res_icons"))
     implementation(project(":res_strings"))
 }
