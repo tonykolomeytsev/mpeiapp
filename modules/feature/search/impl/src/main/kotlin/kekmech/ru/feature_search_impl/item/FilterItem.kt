@@ -1,14 +1,6 @@
 package kekmech.ru.feature_search_impl.item
 
-import android.view.View
-import android.widget.TextView
 import androidx.annotation.StringRes
-import androidx.recyclerview.widget.RecyclerView
-import kekmech.ru.coreui.items.ClickableItemViewHolder
-import kekmech.ru.coreui.items.ClickableItemViewHolderImpl
-import kekmech.ru.feature_search_impl.R
-import kekmech.ru.lib_adapter.AdapterItem
-import kekmech.ru.lib_adapter.BaseItemBinder
 import kekmech.ru.res_strings.R.string as Strings
 
 internal data class FilterItem(
@@ -36,39 +28,5 @@ internal enum class FilterItemType(
     MAP(Strings.search_filter_map)
 }
 
-internal class FilterAdapterItem(
-    onCLickListener: ((FilterItem) -> Unit)? = null,
-) : AdapterItem<FilterViewHolder, FilterItem>(
-    isType = { it is FilterItem },
-    layoutRes = R.layout.item_filter,
-    viewHolderGenerator = ::FilterViewHolder,
-    itemBinder = FilterItemBinder(onCLickListener),
-    areItemsTheSame = { a, b -> a.type == b.type }
-)
-
 internal fun FilterItemType.compareFilter(filterItemType: FilterItemType) =
     this == FilterItemType.ALL || this == filterItemType
-
-internal class FilterViewHolder(
-    private val containerView: View,
-) : RecyclerView.ViewHolder(containerView),
-    ClickableItemViewHolder by ClickableItemViewHolderImpl(containerView) {
-
-    fun setText(@StringRes textRes: Int) {
-        (containerView as TextView).setText(textRes)
-    }
-
-    fun setIsSelected(isSelected: Boolean) {
-        (containerView as TextView).isSelected = isSelected
-    }
-}
-
-private class FilterItemBinder(
-    private val onCLickListener: ((FilterItem) -> Unit)?,
-) : BaseItemBinder<FilterViewHolder, FilterItem>() {
-    override fun bind(vh: FilterViewHolder, model: FilterItem, position: Int) {
-        vh.setText(model.type.nameRes)
-        vh.setIsSelected(model.isSelected)
-        vh.setOnClickListener { onCLickListener?.invoke(model) }
-    }
-}

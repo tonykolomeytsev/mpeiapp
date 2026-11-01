@@ -28,6 +28,7 @@
             android:configChanges="layoutDirection|locale"
             android:launchMode="singleTask"
             android:theme="@style/Theme.Mpeix.SplashScreen"
+            android:windowSoftInputMode="adjustResize"
             android:exported="true">
 
             <intent-filter>

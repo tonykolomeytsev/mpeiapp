@@ -46,7 +46,7 @@ private val onBackgroundLight = Color(0xFF1A1B20)
 private val surfaceLight = Color(0xFFFFFFFF)
 private val onSurfaceLight = Color(0xFF1A1B20)
 private val surfaceVariantLight = Color(0xFFDFE2EE)
-private val onSurfaceVariantLight = Color(0xFF565962)
+private val onSurfaceVariantLight = Color(0xFF6E727D)
 private val outlineLight = Color(0xFF737782)
 private val outlineVariantLight = Color(0xFFC3C6D2)
 private val scrimLight = Color(0xFF000000)
@@ -60,6 +60,12 @@ private val surfaceContainerLowLight = Color(0xFFF3F3FA)
 private val surfaceContainerLight = Color(0xFFEEEDF4)
 private val surfaceContainerHighLight = Color(0xFFE8E7EE)
 private val surfaceContainerHighestLight = Color(0xFFE2E2E8)
+private val markGreenLight = Color(0xFFC8D9B2)
+private val onMarkGreenLight = Color(0xFF47720C)
+private val markYellowLight = Color(0xFFE6D3B1)
+private val onMarkYellowLight = Color(0xFFA7761C)
+private val markRedLight = Color(0xFFEBBDBD)
+private val onMarkRedLight = Color(0xFFB73F3F)
 // end region: light colors
 
 // region: dark colors
@@ -84,7 +90,7 @@ private val onBackgroundDark = Color(0xFFE2E2E8)
 private val surfaceDark = Color(0xFF1A1A1A)
 private val onSurfaceDark = Color(0xFFE2E2E8)
 private val surfaceVariantDark = Color(0xFF434751)
-private val onSurfaceVariantDark = Color(0xFFB0B2BD)
+private val onSurfaceVariantDark = Color(0xFF9497A6)
 private val outlineDark = Color(0xFF8D909C)
 private val outlineVariantDark = Color(0xFF434751)
 private val scrimDark = Color(0xFF000000)
@@ -98,6 +104,12 @@ private val surfaceContainerLowDark = Color(0xFF1A1B20)
 private val surfaceContainerDark = Color(0xFF1E2024)
 private val surfaceContainerHighDark = Color(0xFF282A2F)
 private val surfaceContainerHighestDark = Color(0xFF33353A)
+private val markGreenDark = Color(0xFF47720C)
+private val onMarkGreenDark = Color(0xCCFFFFFF)
+private val markYellowDark = Color(0xFFA7761C)
+private val onMarkYellowDark = Color(0xCCFFFFFF)
+private val markRedDark = Color(0xFFB73F3F)
+private val onMarkRedDark = Color(0xCCFFFFFF)
 // end region: dark colors
 
 @Suppress("LongParameterList")
@@ -116,6 +128,13 @@ public class MpeixPalette internal constructor(
     public val outlineVariant: Color,
     public val error: Color,
     public val onError: Color,
+    // Backgrounds and texts of good, satisfactory and bad marks in BARS
+    public val markGreen: Color,
+    public val onMarkGreen: Color,
+    public val markYellow: Color,
+    public val onMarkYellow: Color,
+    public val markRed: Color,
+    public val onMarkRed: Color,
 )
 
 public val LightMpeixPalette: MpeixPalette = MpeixPalette(
@@ -132,6 +151,12 @@ public val LightMpeixPalette: MpeixPalette = MpeixPalette(
     outlineVariant = outlineVariantLight,
     error = errorLight,
     onError = onErrorLight,
+    markGreen = markGreenLight,
+    onMarkGreen = onMarkGreenLight,
+    markYellow = markYellowLight,
+    onMarkYellow = onMarkYellowLight,
+    markRed = markRedLight,
+    onMarkRed = onMarkRedLight,
 )
 
 public val DarkMpeixPalette: MpeixPalette = MpeixPalette(
@@ -148,6 +173,12 @@ public val DarkMpeixPalette: MpeixPalette = MpeixPalette(
     outlineVariant = outlineVariantDark,
     error = errorDark,
     onError = onErrorDark,
+    markGreen = markGreenDark,
+    onMarkGreen = onMarkGreenDark,
+    markYellow = markYellowDark,
+    onMarkYellow = onMarkYellowDark,
+    markRed = markRedDark,
+    onMarkRed = onMarkRedDark,
 )
 
 internal val LightMpeixScheme = lightColorScheme(
@@ -294,6 +325,9 @@ private fun PalettePreview(
         Row(Modifier.padding(bottom = 12.dp)) {
             colorItem("Outline", palette.outline, palette.onSurface)
             colorItem("Outline\nVariant", palette.outlineVariant, palette.onSurface)
+            colorItem("Mark\nGreen", palette.markGreen, palette.onMarkGreen)
+            colorItem("Mark\nYellow", palette.markYellow, palette.onMarkYellow)
+            colorItem("Mark\nRed", palette.markRed, palette.onMarkRed)
         }
     }
 }

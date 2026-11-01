@@ -1,97 +1,75 @@
 package kekmech.ru.feature_notes_impl.presentation.screen.edit
 
-import android.os.Bundle
-import android.view.View
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import kekmech.ru.coreui.PrettyDateFormatter
-import kekmech.ru.coreui.attachScrollListenerForAppBarLayoutShadow
-import kekmech.ru.coreui.banner.showBanner
+import android.widget.Toast
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
+import com.kekmech.lib_fragment.ComposeFragment
+import com.kekmech.lib_fragment.LocalResultController
+import com.kekmech.lib_fragment.LocalRouter
 import kekmech.ru.ext_android.EmptyResult
-import kekmech.ru.ext_android.addSystemVerticalPadding
-import kekmech.ru.ext_android.close
 import kekmech.ru.ext_android.hideKeyboard
 import kekmech.ru.ext_android.notNullSerializableArg
 import kekmech.ru.ext_android.notNullStringArg
-import kekmech.ru.ext_android.setResult
-import kekmech.ru.ext_android.viewbinding.viewBinding
 import kekmech.ru.ext_android.withArguments
 import kekmech.ru.ext_kotlin.fastLazy
 import kekmech.ru.feature_notes_api.domain.model.Note
-import kekmech.ru.feature_notes_impl.R
-import kekmech.ru.feature_notes_impl.databinding.FragmentNoteEditBinding
 import kekmech.ru.feature_notes_impl.di.NotesDependencies
 import kekmech.ru.feature_notes_impl.presentation.screen.edit.elm.NoteEditEffect
 import kekmech.ru.feature_notes_impl.presentation.screen.edit.elm.NoteEditEvent.Ui
-import kekmech.ru.feature_notes_impl.presentation.screen.edit.elm.NoteEditState
-import kekmech.ru.lib_adapter.BaseAdapter
 import kekmech.ru.lib_analytics_android.ext.screenAnalytics
-import money.vivid.elmslie.android.renderer.ElmRendererDelegate
-import money.vivid.elmslie.android.renderer.androidElmStore
+import kekmech.ru.lib_elm_compose.EffectHandler
+import kekmech.ru.lib_elm_compose.ElmContent
+import kekmech.ru.lib_navigation.PopBackStack
+import kekmech.ru.ui_theme.theme.MpeixTheme
 import org.koin.android.ext.android.inject
 import kekmech.ru.res_strings.R.string as Strings
 
-internal class NoteEditFragment :
-    Fragment(R.layout.fragment_note_edit),
-    ElmRendererDelegate<NoteEditEffect, NoteEditState> {
+internal class NoteEditFragment : ComposeFragment() {
 
     private val dependencies: NotesDependencies by inject()
     private val analytics by screenAnalytics("NoteEdit")
-    private val adapter by fastLazy {
-        BaseAdapter(NoteEditAdapterItem(::onNoteContentChanged))
-    }
-    private val formatter by fastLazy { PrettyDateFormatter(requireContext()) }
-    private val viewBinding by viewBinding(FragmentNoteEditBinding::bind)
     private val resultKey by fastLazy { notNullStringArg(ARG_RESULT_KEY) }
-
-    private val store by androidElmStore {
-        dependencies.noteEditStoreFactory.create(
-            note = notNullSerializableArg(ARG_NOTE)
-        )
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        view.addSystemVerticalPadding()
-        viewBinding.apply {
-            toolbar.setNavigationOnClickListener { close() }
-            buttonSave.setOnClickListener {
-                analytics.sendClick("SaveNote")
-                store.accept(Ui.Click.SaveNote)
-            }
-            recyclerView.layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, true)
-            recyclerView.adapter = adapter
-            recyclerView.itemAnimator = null
-            recyclerView.attachScrollListenerForAppBarLayoutShadow(appBarLayout)
-        }
-    }
-
-    override fun render(state: NoteEditState) {
-        if (adapter.allData.isEmpty())
-            adapter.update(listOf(state.note))
-        viewBinding.textViewNoteDiscipline.text = state.note.classesName
-        viewBinding.textViewNoteDate.text =
-            formatter.formatRelative(state.note.dateTime.toLocalDate())
-    }
-
-    override fun handleEffect(effect: NoteEditEffect) = when (effect) {
-        is NoteEditEffect.CloseWithSuccess -> {
-            close()
-            setResult(resultKey, EmptyResult)
-        }
-
-        is NoteEditEffect.ShowError -> showBanner(Strings.something_went_wrong_error)
-    }
-
-    private fun onNoteContentChanged(content: String) {
-        viewBinding.appBarLayout.isSelected = viewBinding.recyclerView.canScrollVertically(-1)
-        store.accept(Ui.Action.NoteContentChanged(content))
-    }
 
     override fun onPause() {
         hideKeyboard()
         super.onPause()
+    }
+
+    @Composable
+    override fun Screen() {
+        MpeixTheme {
+            val router = LocalRouter.current
+            val resultController = LocalResultController.current
+            val context = LocalContext.current
+            ElmContent(
+                key = "NoteEditScreen",
+                storeFactory = {
+                    dependencies.noteEditStoreFactory.create(note = notNullSerializableArg(ARG_NOTE))
+                },
+            ) { onAccept, state, effects ->
+                NoteEditScreen(
+                    note = state.note,
+                    onBackClick = { router.executeCommand(PopBackStack()) },
+                    onContentChange = { content -> onAccept(Ui.Action.NoteContentChanged(content)) },
+                    onSaveClick = {
+                        analytics.sendClick("SaveNote")
+                        onAccept(Ui.Click.SaveNote)
+                    },
+                )
+                EffectHandler(effects) { effect ->
+                    when (effect) {
+                        is NoteEditEffect.CloseWithSuccess -> {
+                            resultController.setResult(resultKey, EmptyResult)
+                            router.executeCommand(PopBackStack())
+                        }
+
+                        is NoteEditEffect.ShowError -> Toast
+                            .makeText(context, Strings.something_went_wrong_error, Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                }
+            }
+        }
     }
 
     companion object {
@@ -105,7 +83,7 @@ internal class NoteEditFragment :
         ) = NoteEditFragment()
             .withArguments(
                 ARG_NOTE to note,
-                ARG_RESULT_KEY to resultKey
+                ARG_RESULT_KEY to resultKey,
             )
     }
 }

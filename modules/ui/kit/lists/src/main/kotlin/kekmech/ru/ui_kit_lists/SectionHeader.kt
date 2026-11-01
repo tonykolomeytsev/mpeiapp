@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kekmech.ru.ui_theme.theme.MpeixTheme
@@ -47,7 +48,7 @@ public fun SectionHeader(
             Text(
                 text = subtitle,
                 modifier = Modifier.padding(top = 2.dp),
-                style = MpeixTheme.typography.bodyMedium,
+                style = MpeixTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium),
                 color = MpeixTheme.palette.onSurfaceVariant,
             )
         }

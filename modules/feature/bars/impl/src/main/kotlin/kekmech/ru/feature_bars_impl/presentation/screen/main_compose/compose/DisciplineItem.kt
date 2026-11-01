@@ -16,7 +16,6 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -28,6 +27,7 @@ import kekmech.ru.feature_bars_impl.domain.AssessedDiscipline
 import kekmech.ru.feature_bars_impl.domain.ControlActivity
 import kekmech.ru.feature_bars_impl.domain.FinalGrade
 import kekmech.ru.feature_bars_impl.domain.FinalGradeType
+import kekmech.ru.feature_bars_impl.presentation.compose.MarkItem
 import kekmech.ru.ui_theme.theme.MpeixTheme
 import kotlin.math.roundToInt
 import kekmech.ru.res_strings.R.string as Strings
@@ -79,8 +79,8 @@ internal fun DisciplineItem(
         )
         if (discipline.finalMark != null) {
             MarkItem(
-                string = "Итог: ${discipline.finalMark.roundToInt()}",
-                colors = discipline.finalMark.asMarkColor(),
+                text = "Итог: ${discipline.finalMark.roundToInt()}",
+                mark = discipline.finalMark,
             )
         } else if (discipline.marks.isNotEmpty()) {
             Row(
@@ -88,8 +88,8 @@ internal fun DisciplineItem(
             ) {
                 discipline.marks.fastForEach { mark ->
                     MarkItem(
-                        string = mark.roundToInt().toString(),
-                        colors = mark.asMarkColor(),
+                        text = mark.roundToInt().toString(),
+                        mark = mark,
                     )
                 }
             }
@@ -113,35 +113,6 @@ private fun NoMarksItem() {
             .padding(horizontal = 6.dp, vertical = 2.dp)
     )
 }
-
-@Composable
-private fun MarkItem(
-    string: String,
-    colors: Pair<Color, Color>,
-) {
-    Text(
-        text = string,
-        style = MpeixTheme.typography.bodyLarge,
-        color = colors.first,
-        modifier = Modifier
-            .background(
-                color = colors.second,
-                shape = RoundedCornerShape(4.dp),
-            )
-            .padding(horizontal = 6.dp, vertical = 2.dp)
-    )
-}
-
-@Composable
-private fun Float.asMarkColor(): Pair<Color, Color> = TODO()
-//    with(MpeixTheme.palette) {
-//        when (this@asMarkColor) {
-//            in 3.5f..5f -> greenMarkColor to greenBgMarkColor
-//            in 2.5f..<3.5f -> yellowMarkColor to yellowBgMarkColor
-//            in 0f..<2.5f -> redMarkColor to redBgMarkColor
-//            else -> contentDisabled to surfacePlus3
-//        }
-//    }
 
 @Preview
 @Composable

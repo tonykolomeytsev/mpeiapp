@@ -1,5 +1,6 @@
 package kekmech.ru.ui_kit_topappbar.topappbar
 
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material.icons.outlined.Close
@@ -19,6 +20,7 @@ public fun TopAppBar(
     title: String? = null,
     palette: TopAppBarPalette = TopAppBarPalette.Default,
     form: TopAppBarForm = TopAppBarForm.Small,
+    actions: @Composable RowScope.() -> Unit = {},
 ) {
     androidx.compose.material3.TopAppBar(
         title = {
@@ -30,6 +32,7 @@ public fun TopAppBar(
             }
         },
         navigationIcon = { navigationIcon.invoke(TopAppBarNavigationIconScope) },
+        actions = actions,
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = palette.background,
             scrolledContainerColor = palette.background,

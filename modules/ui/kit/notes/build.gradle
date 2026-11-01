@@ -1,0 +1,11 @@
+plugins {
+    alias(mpeix.plugins.lib.android.compose)
+}
+
+dependencies {
+    implementation(libs.compose.material3)
+    implementation(project(":ui_theme"))
+    implementation(project(":ui_shimmer"))
+
+    implementation(project(":res_strings"))
+}
