@@ -300,4 +300,6 @@
     <string name="blocking_update_description">Над приложением работает всего один человек, поэтому нет возможности поддерживать старые версии вечно.\n\nВы не обновляли MpeiX уже более полугода, с тех пор мы внесли очень много улучшений как в клиентскую часть приложения, так и в серверную. Вам действительно стоит обновиться.\n\nЕсли у вас есть веские причины не обновляться, сообщите о них нам на GitHub в разделе Issues:</string>
     <string name="blocking_update_exit">Выйти</string>
     <string name="blocking_update_update">Обновить</string>
+    <string name="force_update_title">Доступна новая версия приложения</string>
+    <string name="force_update_later">Не сейчас</string>
 </resources>

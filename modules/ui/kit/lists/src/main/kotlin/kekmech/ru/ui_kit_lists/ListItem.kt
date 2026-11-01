@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.outlined.DateRange
 import androidx.compose.material.icons.outlined.ShoppingCart
 import androidx.compose.material3.ListItemDefaults
@@ -13,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -49,8 +51,10 @@ private const val DisabledContentAlpha = 0.38f
  * @param leadingContent the leading content:
  *   - [ListItemLeadingContentScope.Icon]
  *   - [ListItemLeadingContentScope.Monogram]
+ *   - [ListItemLeadingContentScope.Image]
  * @param trailingContent the trailing content:
  *   - [ListItemTrailingContentScope.SupportingText]
+ *   - [ListItemTrailingContentScope.SelectionIndicator]
  *
  * @see androidx.compose.material3.ListItem
  */
@@ -149,6 +153,19 @@ public object ListItemLeadingContentScope {
     }
 
     /**
+     * Leading image for [ListItem]. Unlike [Icon], keeps original colors of the [painter],
+     * so it is suitable for multicolor pictures, e.g. flags or illustrations.
+     */
+    @Composable
+    public fun Image(painter: Painter) {
+        androidx.compose.foundation.Image(
+            painter = painter,
+            contentDescription = null,
+            modifier = Modifier.size(40.dp),
+        )
+    }
+
+    /**
      * Leading monogram (Avatar placeholder with letter) for [ListItem]
      */
     @Composable
@@ -184,6 +201,31 @@ public object ListItemTrailingContentScope {
             style = MpeixTheme.typography.labelSmall,
             color = MpeixTheme.palette.onSurfaceVariant,
         )
+    }
+
+    /**
+     * Trailing indicator of the selected option, for single choice lists.
+     * When not [selected], it still takes place, so headlines of all list items stay aligned.
+     */
+    @Composable
+    public fun SelectionIndicator(selected: Boolean) {
+        val backgroundColor = MpeixTheme.palette.primary
+        Box(
+            modifier = Modifier
+                .size(24.dp)
+                .alpha(if (selected) 1f else 0f)
+                .drawBehind {
+                    drawCircle(color = backgroundColor)
+                },
+            contentAlignment = Alignment.Center,
+        ) {
+            androidx.compose.material3.Icon(
+                imageVector = Icons.Filled.Check,
+                contentDescription = null,
+                modifier = Modifier.size(16.dp),
+                tint = MpeixTheme.palette.onPrimary,
+            )
+        }
     }
 }
 
@@ -302,6 +344,27 @@ private fun ListItemWithTrailingTextPreview() {
                     SupportingText(text = "400+")
                 },
                 modifier = Modifier.padding(bottom = 8.dp),
+            )
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun ListItemWithSelectionIndicatorPreview() {
+    MpeixTheme {
+        Column {
+            ListItem(
+                headlineText = "Selected option",
+                trailingContent = {
+                    SelectionIndicator(selected = true)
+                },
+            )
+            ListItem(
+                headlineText = "Other option",
+                trailingContent = {
+                    SelectionIndicator(selected = false)
+                },
             )
         }
     }

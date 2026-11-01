@@ -1,84 +1,59 @@
 package kekmech.ru.feature_app_settings_impl.presentation.screens.map_type
 
-import android.os.Bundle
-import android.view.View
-import androidx.recyclerview.widget.LinearLayoutManager
-import kekmech.ru.coreui.items.PullAdapterItem
-import kekmech.ru.coreui.items.PullItem
-import kekmech.ru.coreui.items.SectionHeaderAdapterItem
-import kekmech.ru.coreui.items.SectionHeaderItem
-import kekmech.ru.coreui.items.SpaceAdapterItem
-import kekmech.ru.coreui.items.SpaceItem
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import com.kekmech.lib_fragment.ComposeBottomSheetDialogFragment
+import com.kekmech.lib_fragment.LocalResultController
 import kekmech.ru.ext_android.close
-import kekmech.ru.ext_android.fragment.BottomSheetDialogFragment
 import kekmech.ru.ext_android.notNullStringArg
-import kekmech.ru.ext_android.setResult
-import kekmech.ru.ext_android.viewbinding.viewBinding
 import kekmech.ru.ext_android.withArguments
 import kekmech.ru.ext_kotlin.fastLazy
-import kekmech.ru.feature_app_settings_impl.R
-import kekmech.ru.feature_app_settings_impl.databinding.FragmentSelectMapTypeBinding
 import kekmech.ru.feature_app_settings_impl.presentation.screens.map_type.dto.MapTypeEntry
-import kekmech.ru.feature_app_settings_impl.presentation.screens.map_type.item.MapTypeAdapterItem
-import kekmech.ru.feature_app_settings_impl.presentation.screens.map_type.item.MapTypeItem
-import kekmech.ru.lib_adapter.BaseAdapter
+import kekmech.ru.feature_app_settings_impl.presentation.screens.select_option.SelectOptionScreen
+import kekmech.ru.feature_app_settings_impl.presentation.screens.select_option.SelectableOption
 import kekmech.ru.lib_analytics_android.ext.screenAnalytics
+import kekmech.ru.ui_theme.theme.MpeixTheme
 import kekmech.ru.res_strings.R.string as Strings
 
-internal class SelectMapTypeFragment :
-    BottomSheetDialogFragment(R.layout.fragment_select_map_type) {
+internal class SelectMapTypeFragment : ComposeBottomSheetDialogFragment() {
 
-    private val viewBinding by viewBinding(FragmentSelectMapTypeBinding::bind)
-    private val adapter by fastLazy { createAdapter() }
-    private val selectMapType by fastLazy { notNullStringArg(ARG_SELECTED_MAP_TYPE) }
-    private val analytics by screenAnalytics("SelectMapType")
+    private val selectedMapType by fastLazy { notNullStringArg(ARG_SELECTED_MAP_TYPE) }
     private val resultKey by fastLazy { notNullStringArg(ARG_RESULT_KEY) }
+    private val analytics by screenAnalytics("SelectMapType")
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        viewBinding.apply {
-            recyclerView.layoutManager = LinearLayoutManager(requireContext())
-            recyclerView.adapter = adapter
+    @Composable
+    override fun Screen() {
+        val resultController = LocalResultController.current
+        MpeixTheme {
+            SelectOptionScreen(
+                title = stringResource(Strings.change_map_type_screen_title),
+                options = MapTypeEntry.entries.map {
+                    SelectableOption(
+                        code = it.mapTypeCode,
+                        titleRes = it.descriptionRes,
+                    )
+                },
+                selectedCode = selectedMapType,
+                onOptionClick = {
+                    analytics.sendClick("SelectMapType_${it.code}")
+                    if (it.code != selectedMapType) {
+                        resultController.setResult(resultKey, it.code)
+                    }
+                    close()
+                },
+            )
         }
-        adapter.update(getItems())
     }
-
-    private fun getItems() = mutableListOf<Any>().apply {
-        add(PullItem)
-        add(SpaceItem.VERTICAL_8)
-        add(SectionHeaderItem(titleRes = Strings.change_map_type_screen_title))
-        add(SpaceItem.VERTICAL_12)
-        addAll(
-            MapTypeEntry.entries
-                .map { MapTypeItem(it, it.mapTypeCode == selectMapType) }
-        )
-        add(SpaceItem.VERTICAL_16)
-    }
-
-    private fun createAdapter() = BaseAdapter(
-        SectionHeaderAdapterItem(),
-        SpaceAdapterItem(),
-        MapTypeAdapterItem {
-            analytics.sendClick("SelectMapType_${it.mapTypeCode}")
-            if (it.mapTypeCode == selectMapType) {
-                close()
-            } else {
-                close()
-                setResult(resultKey, result = it.mapTypeCode)
-            }
-        },
-        PullAdapterItem()
-    )
 
     companion object {
 
         private const val ARG_SELECTED_MAP_TYPE = "Arg.Type"
         private const val ARG_RESULT_KEY = "Arg.ResultKey"
 
-        fun newInstance(selectedLanguage: String, resultKey: String) =
+        fun newInstance(selectedMapType: String, resultKey: String) =
             SelectMapTypeFragment()
                 .withArguments(
-                    ARG_SELECTED_MAP_TYPE to selectedLanguage,
+                    ARG_SELECTED_MAP_TYPE to selectedMapType,
                     ARG_RESULT_KEY to resultKey
                 )
     }

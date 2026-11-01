@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kekmech.ru.ui_theme.theme.MpeixTheme
@@ -63,7 +64,16 @@ public fun TextField(
         readOnly = readOnly,
         textStyle = form.textStyle,
         label = label?.let { { Text(text = it, lineHeight = form.labelLineHeight) } },
-        placeholder = placeholder?.let { { Text(text = it, style = form.textStyle) } },
+        placeholder = placeholder?.let {
+            {
+                Text(
+                    text = it,
+                    style = form.textStyle,
+                    maxLines = maxLines,
+                    overflow = TextOverflow.Ellipsis,
+                )
+            }
+        },
         trailingIcon = trailingIcon?.let { { it.invoke(trailingIconScope) } },
         supportingText = supportingText?.let { { Text(text = it, style = form.supportingTextStyle) } },
         isError = isError,
@@ -113,7 +123,16 @@ public fun TextField(
         readOnly = readOnly,
         textStyle = form.textStyle,
         label = label?.let { { Text(text = it, lineHeight = form.labelLineHeight) } },
-        placeholder = placeholder?.let { { Text(text = it, style = form.textStyle) } },
+        placeholder = placeholder?.let {
+            {
+                Text(
+                    text = it,
+                    style = form.textStyle,
+                    maxLines = maxLines,
+                    overflow = TextOverflow.Ellipsis,
+                )
+            }
+        },
         trailingIcon = trailingIcon?.let { { it.invoke(trailingIconScope) } },
         supportingText = supportingText?.let { { Text(text = it, style = form.supportingTextStyle) } },
         isError = isError,

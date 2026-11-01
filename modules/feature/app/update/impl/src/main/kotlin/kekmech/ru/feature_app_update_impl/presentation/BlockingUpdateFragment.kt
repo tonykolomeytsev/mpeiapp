@@ -1,50 +1,32 @@
 package kekmech.ru.feature_app_update_impl.presentation
 
-import android.os.Bundle
-import android.view.View
-import androidx.fragment.app.Fragment
-import kekmech.ru.ext_android.addSystemVerticalPadding
+import androidx.compose.runtime.Composable
+import com.kekmech.lib_fragment.ComposeFragment
 import kekmech.ru.ext_android.close
 import kekmech.ru.ext_android.notNullSerializableArg
 import kekmech.ru.ext_android.openLinkExternal
-import kekmech.ru.ext_android.viewbinding.viewBinding
 import kekmech.ru.ext_android.withArguments
 import kekmech.ru.ext_kotlin.fastLazy
-import kekmech.ru.feature_app_update_impl.R
-import kekmech.ru.feature_app_update_impl.databinding.FragmentBlockingUpdateBinding
 import kekmech.ru.feature_app_update_impl.domain.models.ForceUpdateInfo
-import kekmech.ru.lib_analytics_android.ext.screenAnalytics
-import kekmech.ru.res_strings.R.string as Strings
+import kekmech.ru.ui_theme.theme.MpeixTheme
 
 private const val ARG_UPDATE_INFO = "Arg.UpdateInfo"
 private const val LINK_GITHUB = "https://github.com/tonykolomeytsev/mpeiapp/issues"
 
-class BlockingUpdateFragment : Fragment(R.layout.fragment_blocking_update) {
+class BlockingUpdateFragment : ComposeFragment() {
 
-    private val viewBinding by viewBinding(FragmentBlockingUpdateBinding::bind)
     private val updateInfo: ForceUpdateInfo by fastLazy { notNullSerializableArg(ARG_UPDATE_INFO) }
-    private val analytics by screenAnalytics("BlockingUpdate")
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        with(viewBinding) {
-            buttonExit.setOnClickListener {
-                analytics.sendClick("DismissBlockingUpdate")
-                close()
-            }
-            buttonUpdateNow.setOnClickListener {
-                analytics.sendClick("UpdateBlockingUpdate")
-                requireContext().openLinkExternal(updateInfo.updateUrl)
-            }
-            header.setText(Strings.blocking_update_title)
-            fullText.setText(Strings.blocking_update_description)
-            link.text = LINK_GITHUB
-            link.setOnClickListener {
-                analytics.sendClick("GoToVkBlockingUpdate")
-                requireContext().openLinkExternal(LINK_GITHUB)
-            }
+    @Composable
+    override fun Screen() {
+        MpeixTheme {
+            BlockingUpdateScreen(
+                link = LINK_GITHUB,
+                onExitClick = { close() },
+                onUpdateClick = { requireContext().openLinkExternal(updateInfo.updateUrl) },
+                onLinkClick = { requireContext().openLinkExternal(LINK_GITHUB) },
+            )
         }
-        view.addSystemVerticalPadding()
     }
 
     companion object {

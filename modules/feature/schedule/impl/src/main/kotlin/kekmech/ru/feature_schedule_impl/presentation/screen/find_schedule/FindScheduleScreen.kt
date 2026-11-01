@@ -153,7 +153,12 @@ internal fun FindScheduleScreen(
                 },
                 isError = inputError != null,
                 singleLine = true,
-                trailingIcon = { ClearIconButton() },
+                // Trailing icon reserves space even when empty, so it is passed only with text
+                trailingIcon = if (searchQuery.value.text.isNotEmpty()) {
+                    { ClearIconButton() }
+                } else {
+                    null
+                },
             )
             Spacer(Modifier.height(16.dp))
             SearchSuggestions(

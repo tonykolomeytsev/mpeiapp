@@ -8,6 +8,7 @@ import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -131,7 +132,9 @@ private fun PulsatingDot(
 private fun ButtonPrimaryPreview() {
     MpeixTheme {
         Column(
-            modifier = Modifier.padding(8.dp),
+            modifier = Modifier
+                .background(MpeixTheme.palette.surface)
+                .padding(8.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
@@ -149,6 +152,39 @@ private fun ButtonPrimaryPreview() {
                 onClick = { /* no-op */ },
                 modifier = Modifier.fillMaxWidth(),
                 state = ButtonState.Loading,
+            )
+        }
+    }
+}
+
+@Composable
+@Preview
+private fun ButtonSecondaryPreview() {
+    MpeixTheme {
+        Column(
+            modifier = Modifier
+                .background(MpeixTheme.palette.surface)
+                .padding(8.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Button(
+                text = "Primary Button (MAX WIDTH)",
+                onClick = { /* no-op */ },
+                modifier = Modifier.fillMaxWidth(),
+                palette = ButtonPalette.Secondary,
+            )
+            Button(
+                text = "Primary Button",
+                onClick = { /* no-op */ },
+                palette = ButtonPalette.Secondary,
+            )
+            Button(
+                text = "Primary Button (LOADING)",
+                onClick = { /* no-op */ },
+                modifier = Modifier.fillMaxWidth(),
+                state = ButtonState.Loading,
+                palette = ButtonPalette.Secondary,
             )
         }
     }

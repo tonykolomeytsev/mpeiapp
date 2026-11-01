@@ -1,87 +1,51 @@
 package kekmech.ru.feature_app_settings_impl.presentation.screens.lang
 
-import android.os.Bundle
-import android.view.View
-import androidx.recyclerview.widget.LinearLayoutManager
-import kekmech.ru.coreui.items.PullAdapterItem
-import kekmech.ru.coreui.items.PullItem
-import kekmech.ru.coreui.items.SectionHeaderAdapterItem
-import kekmech.ru.coreui.items.SectionHeaderItem
-import kekmech.ru.coreui.items.SpaceAdapterItem
-import kekmech.ru.coreui.items.SpaceItem
-import kekmech.ru.coreui.items.TextAdapterItem
-import kekmech.ru.coreui.items.TextItem
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import com.kekmech.lib_fragment.ComposeBottomSheetDialogFragment
+import com.kekmech.lib_fragment.LocalResultController
 import kekmech.ru.ext_android.close
-import kekmech.ru.ext_android.fragment.BottomSheetDialogFragment
 import kekmech.ru.ext_android.notNullStringArg
-import kekmech.ru.ext_android.setResult
-import kekmech.ru.ext_android.viewbinding.viewBinding
 import kekmech.ru.ext_android.withArguments
 import kekmech.ru.ext_kotlin.fastLazy
-import kekmech.ru.feature_app_settings_impl.R
-import kekmech.ru.feature_app_settings_impl.databinding.FragmentChangeLanguageBinding
 import kekmech.ru.feature_app_settings_impl.presentation.screens.lang.dto.LanguageEntry
-import kekmech.ru.feature_app_settings_impl.presentation.screens.lang.item.LanguageAdapterItem
-import kekmech.ru.feature_app_settings_impl.presentation.screens.lang.item.LanguageItem
-import kekmech.ru.lib_adapter.BaseAdapter
+import kekmech.ru.feature_app_settings_impl.presentation.screens.select_option.SelectOptionScreen
+import kekmech.ru.feature_app_settings_impl.presentation.screens.select_option.SelectableOption
 import kekmech.ru.lib_analytics_android.ext.screenAnalytics
-import kekmech.ru.coreui.R as coreui_R
+import kekmech.ru.ui_theme.theme.MpeixTheme
 import kekmech.ru.res_strings.R.string as Strings
 
-internal class SelectLanguageFragment : BottomSheetDialogFragment(R.layout.fragment_change_language) {
+internal class SelectLanguageFragment : ComposeBottomSheetDialogFragment() {
 
-    private val viewBinding by viewBinding(FragmentChangeLanguageBinding::bind)
-    private val adapter by fastLazy { createAdapter() }
-    private val selectLanguage by fastLazy { notNullStringArg(ARG_SELECTED_LANG) }
-    private val analytics by screenAnalytics("SelectLanguage")
+    private val selectedLanguage by fastLazy { notNullStringArg(ARG_SELECTED_LANG) }
     private val resultKey by fastLazy { notNullStringArg(ARG_RESULT_KEY) }
+    private val analytics by screenAnalytics("SelectLanguage")
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        viewBinding.apply {
-            recyclerView.layoutManager = LinearLayoutManager(requireContext())
-            recyclerView.adapter = adapter
+    @Composable
+    override fun Screen() {
+        val resultController = LocalResultController.current
+        MpeixTheme {
+            SelectOptionScreen(
+                title = stringResource(Strings.change_language_screen_title),
+                options = LanguageEntry.entries.map {
+                    SelectableOption(
+                        code = it.languageCode,
+                        titleRes = it.descriptionRes,
+                        iconRes = it.iconRes,
+                    )
+                },
+                selectedCode = selectedLanguage,
+                onOptionClick = {
+                    analytics.sendClick("SelectLanguage_${it.code}")
+                    if (it.code != selectedLanguage) {
+                        resultController.setResult(resultKey, it.code)
+                    }
+                    close()
+                },
+                footer = stringResource(Strings.change_language_disclaimer),
+            )
         }
-        adapter.update(getItems())
     }
-
-    private fun getItems() =
-        mutableListOf<Any>().apply {
-            add(PullItem)
-            add(SpaceItem.VERTICAL_8)
-            add(SectionHeaderItem(titleRes = Strings.change_language_screen_title))
-            add(SpaceItem.VERTICAL_12)
-            addAll(
-                LanguageEntry
-                    .values()
-                    .asList()
-                    .map { LanguageItem(it, it.languageCode == selectLanguage) }
-            )
-            add(SpaceItem.VERTICAL_16)
-            add(
-                TextItem(
-                    textResId = Strings.change_language_disclaimer,
-                    styleResId = coreui_R.style.H6_Gray70
-                )
-            )
-        }
-
-    private fun createAdapter() =
-        BaseAdapter(
-            SectionHeaderAdapterItem(),
-            SpaceAdapterItem(),
-            TextAdapterItem(),
-            LanguageAdapterItem {
-                analytics.sendClick("SelectLanguage_${it.languageCode}")
-                if (it.languageCode == selectLanguage) {
-                    close()
-                } else {
-                    close()
-                    setResult(resultKey, result = it.languageCode)
-                }
-            },
-            PullAdapterItem()
-        )
 
     companion object {
 

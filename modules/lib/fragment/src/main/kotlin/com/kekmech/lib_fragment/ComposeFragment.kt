@@ -27,16 +27,27 @@ public abstract class ComposeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? = content {
-        // Зависимости, нужные внутри экранов для взаимодействия с внешним миром
-        val router = (requireContext().applicationContext as RouterHolder).router
-        CompositionLocalProvider(
-            LocalRouter provides router,
-            LocalResultController provides resultController,
-        ) {
+        ProvideScreenDependencies(resultController) {
             Screen()
         }
     }
 
     @Composable
     public abstract fun Screen()
+}
+
+/**
+ * Зависимости, нужные внутри экранов для взаимодействия с внешним миром
+ */
+@Composable
+internal fun Fragment.ProvideScreenDependencies(
+    resultController: ResultController,
+    content: @Composable () -> Unit,
+) {
+    val router = (requireContext().applicationContext as RouterHolder).router
+    CompositionLocalProvider(
+        LocalRouter provides router,
+        LocalResultController provides resultController,
+        content = content,
+    )
 }
