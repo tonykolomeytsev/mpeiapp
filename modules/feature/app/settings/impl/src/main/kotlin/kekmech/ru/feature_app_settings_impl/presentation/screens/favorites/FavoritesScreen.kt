@@ -27,7 +27,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import kekmech.ru.feature_app_settings_impl.R
-import kekmech.ru.feature_app_settings_impl.presentation.utils.adaptiveContentWidth
 import kekmech.ru.feature_favorite_schedule_api.domain.model.FavoriteSchedule
 import kekmech.ru.feature_schedule_api.domain.model.ScheduleType
 import kekmech.ru.ui_kit_buttons.button.Button
@@ -35,6 +34,7 @@ import kekmech.ru.ui_kit_buttons.button.ButtonPalette
 import kekmech.ru.ui_kit_lists.SwipeToDeleteItem
 import kekmech.ru.ui_kit_topappbar.topappbar.TopAppBar
 import kekmech.ru.ui_preview.MpeixPreview
+import kekmech.ru.ui_theme.layout.adaptiveContentWidth
 import kekmech.ru.ui_theme.theme.MpeixTheme
 import kekmech.ru.res_strings.R.string as Strings
 

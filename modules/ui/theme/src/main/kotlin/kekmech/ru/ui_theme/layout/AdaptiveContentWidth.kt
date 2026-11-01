@@ -1,4 +1,4 @@
-package kekmech.ru.feature_app_settings_impl.presentation.utils
+package kekmech.ru.ui_theme.layout
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.widthIn
@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.dp
 /**
  * Max width of single-column content, matches compact -> medium window size class breakpoint.
  */
-internal val ContentMaxWidth: Dp = 600.dp
+public val ContentMaxWidth: Dp = 600.dp
 
 /**
  * Fills available width on phones, but on wide screens (tablets, landscape, foldables)
@@ -19,7 +19,7 @@ internal val ContentMaxWidth: Dp = 600.dp
  *
  * Apply it before content paddings, so the paddings stay inside the limited area.
  */
-internal fun Modifier.adaptiveContentWidth(maxWidth: Dp = ContentMaxWidth): Modifier =
+public fun Modifier.adaptiveContentWidth(maxWidth: Dp = ContentMaxWidth): Modifier =
     this
         .fillMaxWidth()
         .wrapContentWidth(Alignment.CenterHorizontally)

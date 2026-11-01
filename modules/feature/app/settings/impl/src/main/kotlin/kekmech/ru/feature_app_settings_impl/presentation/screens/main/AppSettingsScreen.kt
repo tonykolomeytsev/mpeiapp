@@ -24,13 +24,13 @@ import kekmech.ru.feature_app_settings_api.domain.model.AppTheme
 import kekmech.ru.feature_app_settings_impl.presentation.screens.main.compose.ContributorItem
 import kekmech.ru.feature_app_settings_impl.presentation.screens.main.compose.Description
 import kekmech.ru.feature_app_settings_impl.presentation.screens.main.compose.ToggleItem
-import kekmech.ru.feature_app_settings_impl.presentation.utils.adaptiveContentWidth
 import kekmech.ru.feature_contributors_api.domain.model.Contributor
 import kekmech.ru.lib_app_info.AppVersionName
 import kekmech.ru.ui_kit_lists.ListItem
 import kekmech.ru.ui_kit_lists.SectionHeader
 import kekmech.ru.ui_kit_topappbar.topappbar.TopAppBar
 import kekmech.ru.ui_preview.MpeixPreview
+import kekmech.ru.ui_theme.layout.adaptiveContentWidth
 import kekmech.ru.ui_theme.theme.MpeixTheme
 import kekmech.ru.feature_app_settings_impl.presentation.screens.main.elm.AppSettingsState as State
 import kekmech.ru.res_strings.R.string as Strings
