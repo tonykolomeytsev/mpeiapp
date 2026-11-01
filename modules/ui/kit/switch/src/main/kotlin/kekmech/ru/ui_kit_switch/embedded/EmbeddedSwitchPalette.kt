@@ -24,7 +24,7 @@ public sealed class EmbeddedSwitchPalette {
         override val unchecked: Color @Composable @ReadOnlyComposable get() = MpeixTheme.palette.outline
         override val disabled: Color @Composable @ReadOnlyComposable get() = MpeixTheme.palette.outlineVariant.copy(alpha = 0.55f)
         override val disabledChecked: Color @Composable @ReadOnlyComposable get() = MpeixTheme.palette.outlineVariant.copy(alpha = 0.55f)
-        override val borderChecked: Color @Composable @ReadOnlyComposable get() = MpeixTheme.palette.outlineVariant
+        override val borderChecked: Color @Composable @ReadOnlyComposable get() = MpeixTheme.palette.primary
         override val borderUnchecked: Color @Composable @ReadOnlyComposable get() = MpeixTheme.palette.outlineVariant
     }
 }

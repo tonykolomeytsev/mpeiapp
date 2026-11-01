@@ -34,8 +34,6 @@ import kekmech.ru.ui_theme.theme.MpeixTheme
 /**
  * Indicator of a boolean state.
  *
- * Unlike Material Switch,
- * [EmbeddedSwitch] is not a standalone component and must not be clickable.
  * It is used only as a part of a list item or another layout component.
  */
 @Suppress("AnimateAsStateLabel")
