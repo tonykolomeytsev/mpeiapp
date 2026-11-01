@@ -17,14 +17,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.snapshotFlow
-import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -41,7 +38,6 @@ import kekmech.ru.ui_kit_topappbar.topappbar.TopAppBar
 import kekmech.ru.ui_preview.MpeixPreview
 import kekmech.ru.ui_theme.layout.adaptiveContentWidth
 import kekmech.ru.ui_theme.theme.MpeixTheme
-import kotlinx.coroutines.flow.first
 import java.time.LocalDateTime
 import kekmech.ru.res_strings.R.string as Strings
 
@@ -58,13 +54,8 @@ internal fun NoteEditScreen(
     }
     val focusRequester = remember { FocusRequester() }
     val keyboardController = LocalSoftwareKeyboardController.current
-    val windowInfo = LocalWindowInfo.current
 
     LaunchedEffect(Unit) {
-        // Text field is composed in the same frame as fragment transaction is committed,
-        // so focus request is ignored until window is focused and the screen is laid out
-        snapshotFlow { windowInfo.isWindowFocused }.first { it }
-        withFrameNanos { }
         focusRequester.requestFocus()
         keyboardController?.show()
     }

@@ -1,5 +1,5 @@
 plugins {
-    alias(mpeix.plugins.feature.impl)
+    alias(mpeix.plugins.feature.impl.compose)
 }
 
 android.buildFeatures {
@@ -16,6 +16,7 @@ dependencies {
     implementation(libs.androidx.recyclerView)
     implementation(libs.facebook.shimmer)
     implementation(libs.google.material)
+    implementation(libs.compose.material3)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.koin.android)
     implementation(libs.koin.core)
@@ -33,8 +34,15 @@ dependencies {
     implementation(project(":ext_android"))
     implementation(project(":ext_kotlin"))
     implementation(project(":lib_elm"))
+    implementation(project(":lib_elm_compose"))
+    implementation(project(":lib_fragment"))
     implementation(project(":lib_navigation"))
     implementation(project(":lib_schedule"))
+
+    implementation(project(":ui_theme"))
+    implementation(project(":ui_preview"))
+    implementation(project(":ui_kit_lists"))
+    implementation(project(":ui_kit_notes"))
 
     implementation(project(":coreui"))
     implementation(project(":res_icons"))
