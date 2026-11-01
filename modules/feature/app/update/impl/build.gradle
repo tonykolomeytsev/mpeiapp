@@ -10,7 +10,6 @@ dependencies {
     implementation(libs.firebase.config)
     implementation(libs.google.material)
     implementation(libs.compose.material3)
-    implementation(libs.koin.android)
     implementation(libs.koin.core)
 
     implementation(project(":feature_app_update_api"))
@@ -18,7 +17,6 @@ dependencies {
 
     implementation(project(":lib_analytics_android"))
     implementation(project(":ext_android"))
-    implementation(project(":lib_app_info"))
     implementation(project(":ext_kotlin"))
     implementation(project(":lib_navigation"))
     implementation(project(":lib_fragment"))
