@@ -8,6 +8,7 @@ import android.os.Bundle
 import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kekmech.ru.feature_app_settings_api.data.AppSettingsRepository
@@ -37,6 +38,13 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
+        // Applied before super.onCreate, so the configuration is updated in place without recreation.
+        // Compose screens read dark theme from configuration uiMode via isSystemInDarkTheme()
+        delegate.localNightMode = if (appSettingsRepository.getAppSettings().isDarkThemeEnabled) {
+            AppCompatDelegate.MODE_NIGHT_YES
+        } else {
+            AppCompatDelegate.MODE_NIGHT_NO
+        }
         super.onCreate(savedInstanceState)
         mainActivityLifecycleObservers.forEach { it.onCreate(this) }
 
