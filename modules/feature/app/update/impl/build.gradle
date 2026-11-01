@@ -3,14 +3,10 @@ plugins {
 }
 
 android.buildFeatures{
-    viewBinding = true
     androidResources = true
 }
 
 dependencies {
-    implementation(libs.androidx.appCompat)
-    implementation(libs.androidx.constraintLayout)
-    implementation(libs.androidx.coreKtx)
     implementation(libs.firebase.config)
     implementation(libs.google.material)
     implementation(libs.compose.material3)
@@ -31,5 +27,6 @@ dependencies {
     implementation(project(":ui_theme"))
     implementation(project(":ui_preview"))
     implementation(project(":ui_kit_buttons"))
+    implementation(project(":ui_kit_dialogs"))
     implementation(project(":res_strings"))
 }
