@@ -51,6 +51,8 @@ dependencies {
     implementation(project(":ui_theme"))
     implementation(project(":ui_preview"))
     implementation(project(":ui_kit_buttons"))
+    implementation(project(":ui_kit_dialogs"))
+    implementation(project(":ui_kit_lists"))
     implementation(project(":ui_kit_textfield"))
     implementation(project(":ui_kit_topappbar"))
     implementation(project(":res_strings"))
