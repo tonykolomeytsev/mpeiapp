@@ -119,7 +119,12 @@ internal fun EditFavoriteScreen(
                     .focusRequester(focusRequester),
                 placeholder = stringResource(Strings.edit_favorite_hint),
                 singleLine = true,
-                trailingIcon = { ClearIconButton() },
+                // Trailing icon reserves space even when empty, so it is passed only with text
+                trailingIcon = if (description.value.text.isNotEmpty()) {
+                    { ClearIconButton() }
+                } else {
+                    null
+                },
                 keyboardOptions = KeyboardOptions(
                     capitalization = KeyboardCapitalization.Sentences,
                 ),
