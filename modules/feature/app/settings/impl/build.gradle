@@ -3,7 +3,6 @@ plugins {
 }
 
 android.buildFeatures {
-    viewBinding = true
     androidResources = true
 }
 
@@ -12,19 +11,13 @@ dependencies {
     testImplementation(libs.kotest.property)
     testImplementation(libs.kotest.runner)
 
-    implementation(libs.androidx.appCompat)
-    implementation(libs.androidx.constraintLayout)
-    implementation(libs.androidx.coreKtx)
-    implementation(libs.androidx.viewPager2)
-    implementation(libs.facebook.shimmer)
+    implementation(libs.coil.compose)
     implementation(libs.google.material)
     implementation(libs.compose.material3)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.koin.android)
+    implementation(libs.koin.compose)
     implementation(libs.koin.core)
-    implementation(libs.picasso)
-    implementation(libs.squareup.retrofit)
-    implementation(libs.vivid.elmslie.android)
     implementation(libs.vivid.elmslie.core)
 
     implementation(project(":feature_app_settings_api"))
@@ -33,13 +26,13 @@ dependencies {
     implementation(project(":feature_schedule_api"))
     implementation(project(":feature_bars_api"))
 
-    implementation(project(":lib_adapter"))
     implementation(project(":lib_analytics_android"))
     implementation(project(":ext_android"))
     implementation(project(":lib_app_info"))
     implementation(project(":lib_feature_toggles"))
     implementation(project(":ext_kotlin"))
     implementation(project(":lib_elm"))
+    implementation(project(":lib_elm_compose"))
     implementation(project(":lib_navigation"))
     implementation(project(":lib_network"))
     implementation(project(":lib_fragment"))
@@ -47,7 +40,6 @@ dependencies {
     implementation(project(":ext_koin"))
     implementation(project(":ext_shared_preferences"))
 
-    implementation(project(":coreui"))
     implementation(project(":ui_theme"))
     implementation(project(":ui_preview"))
     implementation(project(":ui_kit_buttons"))
@@ -55,5 +47,7 @@ dependencies {
     implementation(project(":ui_kit_lists"))
     implementation(project(":ui_kit_textfield"))
     implementation(project(":ui_kit_topappbar"))
+    implementation(project(":ui_kit_switch"))
+    implementation(project(":res_icons"))
     implementation(project(":res_strings"))
 }
