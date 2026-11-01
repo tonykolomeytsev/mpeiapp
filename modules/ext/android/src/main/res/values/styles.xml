@@ -12,4 +12,10 @@
     </style>
 
     <style name="BottomSheetDialogTheme" parent="BaseBottomSheetDialog" />
+
+    <!-- Шторка рисуется под navigation bar, отступ под него добавляет compose контент -->
+    <style name="ComposeBottomSheetDialogTheme" parent="BaseBottomSheetDialog">
+        <item name="enableEdgeToEdge">true</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+    </style>
 </resources>
