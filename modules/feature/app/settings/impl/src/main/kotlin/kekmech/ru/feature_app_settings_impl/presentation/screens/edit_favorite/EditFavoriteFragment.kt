@@ -1,56 +1,47 @@
 package kekmech.ru.feature_app_settings_impl.presentation.screens.edit_favorite
 
-import android.os.Bundle
-import android.view.View
-import androidx.fragment.app.Fragment
-import kekmech.ru.ext_android.addSystemBottomPadding
-import kekmech.ru.ext_android.addSystemTopPadding
-import kekmech.ru.ext_android.close
+import androidx.compose.runtime.Composable
+import com.kekmech.lib_fragment.ComposeFragment
+import com.kekmech.lib_fragment.LocalResultController
+import com.kekmech.lib_fragment.LocalRouter
 import kekmech.ru.ext_android.hideKeyboard
 import kekmech.ru.ext_android.notNullSerializableArg
 import kekmech.ru.ext_android.notNullStringArg
-import kekmech.ru.ext_android.setResult
-import kekmech.ru.ext_android.showKeyboard
-import kekmech.ru.ext_android.viewbinding.viewBinding
 import kekmech.ru.ext_android.withArguments
 import kekmech.ru.ext_kotlin.fastLazy
-import kekmech.ru.feature_app_settings_impl.R
-import kekmech.ru.feature_app_settings_impl.databinding.FragmentEditFavoriteBinding
 import kekmech.ru.feature_favorite_schedule_api.domain.model.FavoriteSchedule
-import kekmech.ru.lib_analytics_android.ext.screenAnalytics
+import kekmech.ru.lib_navigation.PopBackStack
+import kekmech.ru.ui_theme.theme.MpeixTheme
 
-internal class EditFavoriteFragment : Fragment(R.layout.fragment_edit_favorite) {
+internal class EditFavoriteFragment : ComposeFragment() {
 
-    private val viewBinding by viewBinding(FragmentEditFavoriteBinding::bind)
-    private val analytics by screenAnalytics("EditFavorite")
     private val resultKey by fastLazy { notNullStringArg(ArgResultKey) }
     private val favoriteSchedule by fastLazy {
         notNullSerializableArg<FavoriteSchedule>(ArgFavoriteSchedule)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        viewBinding.apply {
-            appBarLayout.addSystemTopPadding()
-            root.addSystemBottomPadding()
+    override fun onPause() {
+        hideKeyboard()
+        super.onPause()
+    }
 
-            toolbar.setNavigationOnClickListener {
-                close()
-                hideKeyboard()
-            }
-            header.text = favoriteSchedule.name
-            groupText.setText(favoriteSchedule.description)
-            groupText.setSelection(favoriteSchedule.description.length)
-            groupText.showKeyboard()
-            buttonContinue.setOnClickListener {
-                analytics.sendClick("SaveFavoriteDescription")
-                close()
-                hideKeyboard()
-                setResult(
-                    key = resultKey,
-                    result = favoriteSchedule.copy(description = groupText.text.toString()),
-                )
-            }
+    @Composable
+    override fun Screen() {
+        MpeixTheme {
+            val router = LocalRouter.current
+            val resultController = LocalResultController.current
+            EditFavoriteScreen(
+                name = favoriteSchedule.name,
+                initialDescription = favoriteSchedule.description,
+                onBackClick = { router.executeCommand(PopBackStack()) },
+                onSaveClick = { description ->
+                    resultController.setResult(
+                        resultKey,
+                        favoriteSchedule.copy(description = description),
+                    )
+                    router.executeCommand(PopBackStack())
+                },
+            )
         }
     }
 
@@ -68,5 +59,4 @@ internal class EditFavoriteFragment : Fragment(R.layout.fragment_edit_favorite) 
                 ArgResultKey to resultKey,
             )
     }
-
 }
