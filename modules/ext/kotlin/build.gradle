@@ -4,6 +4,4 @@ plugins {
 
 dependencies {
     compileOnly(androidJar)
-
-    testImplementation(libs.kotlin.test)
 }

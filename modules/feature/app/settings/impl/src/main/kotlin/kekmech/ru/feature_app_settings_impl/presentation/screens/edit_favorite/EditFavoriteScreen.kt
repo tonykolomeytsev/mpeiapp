@@ -33,7 +33,7 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import kekmech.ru.feature_app_settings_impl.presentation.screens.edit_favorite.utils.adaptiveContentWidth
+import kekmech.ru.feature_app_settings_impl.presentation.utils.adaptiveContentWidth
 import kekmech.ru.ui_kit_buttons.button.Button
 import kekmech.ru.ui_kit_textfield.textfield.TextField
 import kekmech.ru.ui_kit_topappbar.topappbar.TopAppBar

@@ -10,7 +10,6 @@ dependencies {
     implementation(libs.koin.core)
 
     implementation(project(":lib_app_lifecycle"))
-    implementation(project(":lib_app_info"))
     implementation(project(":lib_network"))
 
     implementation(project(":lib_analytics_api"))

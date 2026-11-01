@@ -7,8 +7,6 @@ dependencies {
     implementation(libs.androidx.fragmentKtx)
     implementation(libs.androidx.fragment.compose)
     implementation(libs.google.material)
-    implementation(libs.vivid.elmslie.core)
     implementation(project(":ext_android"))
     implementation(project(":lib_navigation"))
-    implementation(project(":ui_theme"))
 }

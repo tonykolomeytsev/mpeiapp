@@ -8,10 +8,10 @@ android.buildFeatures{
 }
 
 dependencies {
+    implementation(libs.androidx.constraintLayout)
     implementation(libs.androidx.coreKtx)
-    implementation(libs.google.material)
+    implementation(libs.androidx.recyclerView)
     testImplementation(libs.kotest.assertions)
-    testImplementation(libs.kotest.property)
     testImplementation(libs.kotest.runner)
 
     implementation(project(":lib_adapter"))

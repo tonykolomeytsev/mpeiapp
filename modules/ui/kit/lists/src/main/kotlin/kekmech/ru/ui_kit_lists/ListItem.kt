@@ -22,6 +22,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import kekmech.ru.ui_kit_switch.embedded.EmbeddedSwitch
+import kekmech.ru.ui_kit_switch.embedded.EmbeddedSwitchForm
 import kekmech.ru.ui_theme.theme.MpeixTheme
 
 
@@ -55,6 +57,7 @@ private const val DisabledContentAlpha = 0.38f
  * @param trailingContent the trailing content:
  *   - [ListItemTrailingContentScope.SupportingText]
  *   - [ListItemTrailingContentScope.SelectionIndicator]
+ *   - [ListItemTrailingContentScope.Switch]
  *
  * @see androidx.compose.material3.ListItem
  */
@@ -71,7 +74,7 @@ public fun ListItem(
         headlineContent = {
             Text(
                 text = headlineText,
-                style = MpeixTheme.typography.bodyLarge,
+                style = MpeixTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Medium),
             )
         },
         modifier = modifier,
@@ -94,7 +97,8 @@ public fun ListItem(
             {
                 Text(
                     text = it,
-                    style = MpeixTheme.typography.bodyMedium,
+                    style = MpeixTheme.typography.labelMedium,
+                    modifier = Modifier.padding(top = 4.dp),
                 )
             }
         },
@@ -198,7 +202,7 @@ public object ListItemTrailingContentScope {
     public fun SupportingText(text: String) {
         Text(
             text = text,
-            style = MpeixTheme.typography.labelSmall,
+            style = MpeixTheme.typography.labelMedium,
             color = MpeixTheme.palette.onSurfaceVariant,
         )
     }
@@ -226,6 +230,18 @@ public object ListItemTrailingContentScope {
                 tint = MpeixTheme.palette.onPrimary,
             )
         }
+    }
+
+    /**
+     * Trailing switch for [ListItem], for on/off settings.
+     */
+    @Composable
+    public fun Switch(
+        checked: Boolean,
+    ) {
+        EmbeddedSwitch(
+            checked = checked,
+        )
     }
 }
 
@@ -364,6 +380,28 @@ private fun ListItemWithSelectionIndicatorPreview() {
                 headlineText = "Other option",
                 trailingContent = {
                     SelectionIndicator(selected = false)
+                },
+            )
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun ListItemWithSwitchPreview() {
+    MpeixTheme {
+        Column {
+            ListItem(
+                headlineText = "Enabled setting",
+                trailingContent = {
+                    EmbeddedSwitch(checked = true, form = EmbeddedSwitchForm.S)
+                },
+            )
+            ListItem(
+                headlineText = "Disabled setting",
+                supportingText = "Setting description",
+                trailingContent = {
+                    EmbeddedSwitch(checked = false, form = EmbeddedSwitchForm.S)
                 },
             )
         }

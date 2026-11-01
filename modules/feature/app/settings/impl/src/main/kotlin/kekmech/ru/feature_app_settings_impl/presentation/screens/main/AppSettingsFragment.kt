@@ -1,205 +1,150 @@
 package kekmech.ru.feature_app_settings_impl.presentation.screens.main
 
-import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.View
 import android.widget.Toast
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.squareup.picasso.Picasso
-import kekmech.ru.coreui.attachScrollListenerForAppBarLayoutShadow
-import kekmech.ru.coreui.items.BottomLabeledTextAdapterItem
-import kekmech.ru.coreui.items.RightLabeledTextAdapterItem
-import kekmech.ru.coreui.items.SectionHeaderAdapterItem
-import kekmech.ru.coreui.items.SpaceAdapterItem
-import kekmech.ru.coreui.items.TextAdapterItem
-import kekmech.ru.coreui.items.ToggleAdapterItem
-import kekmech.ru.ext_android.addSystemBottomPadding
-import kekmech.ru.ext_android.addSystemTopPadding
-import kekmech.ru.ext_android.close
-import kekmech.ru.ext_android.notNullString
+import androidx.compose.runtime.Composable
+import com.kekmech.lib_fragment.ComposeFragment
+import com.kekmech.lib_fragment.LocalRouter
+import com.kekmech.lib_fragment.ResultListener
 import kekmech.ru.ext_android.openLinkExternal
-import kekmech.ru.ext_android.setResultListener
-import kekmech.ru.ext_android.viewbinding.viewBinding
-import kekmech.ru.ext_kotlin.fastLazy
-import kekmech.ru.feature_app_settings_impl.R
-import kekmech.ru.feature_app_settings_impl.databinding.FragmentAppSettingsBinding
 import kekmech.ru.feature_app_settings_impl.presentation.screens.favorites.FavoritesFragment
 import kekmech.ru.feature_app_settings_impl.presentation.screens.lang.SelectLanguageFragment
 import kekmech.ru.feature_app_settings_impl.presentation.screens.main.elm.AppSettingsEffect
+import kekmech.ru.feature_app_settings_impl.presentation.screens.main.elm.AppSettingsEvent
 import kekmech.ru.feature_app_settings_impl.presentation.screens.main.elm.AppSettingsEvent.Ui
-import kekmech.ru.feature_app_settings_impl.presentation.screens.main.elm.AppSettingsState
 import kekmech.ru.feature_app_settings_impl.presentation.screens.main.elm.AppSettingsStoreFactory
-import kekmech.ru.feature_app_settings_impl.presentation.screens.main.list.ContributorAdapterItem
 import kekmech.ru.feature_app_settings_impl.presentation.screens.map_type.SelectMapTypeFragment
 import kekmech.ru.feature_bars_api.BarsLogoutHandle
-import kekmech.ru.lib_adapter.BaseAdapter
 import kekmech.ru.lib_analytics_android.ext.screenAnalytics
-import kekmech.ru.lib_navigation.addScreenForward
-import kekmech.ru.lib_navigation.showDialog
-import money.vivid.elmslie.android.renderer.ElmRendererDelegate
-import money.vivid.elmslie.android.renderer.androidElmStore
+import kekmech.ru.lib_elm_compose.EffectHandler
+import kekmech.ru.lib_elm_compose.ElmContent
+import kekmech.ru.lib_navigation.AddScreenForward
+import kekmech.ru.lib_navigation.PopBackStack
+import kekmech.ru.lib_navigation.Router
+import kekmech.ru.lib_navigation.ShowDialog
+import kekmech.ru.ui_theme.theme.MpeixTheme
 import org.koin.android.ext.android.inject
-import kekmech.ru.res_strings.R.string as Strings
+import org.koin.compose.koinInject
 
 private const val ACTIVITY_RECREATION_DELAY = 200L
+private const val LINK_GITHUB = "https://github.com/tonykolomeytsev/mpeiapp"
 
-internal class AppSettingsFragment :
-    Fragment(R.layout.fragment_app_settings),
-    ElmRendererDelegate<AppSettingsEffect, AppSettingsState> {
+internal class AppSettingsFragment : ComposeFragment() {
 
-    private val adapter by fastLazy { createAdapter() }
     private val analytics by screenAnalytics("AppSettings")
-    private val viewBinding by viewBinding(FragmentAppSettingsBinding::bind)
     private val logoutHandle by inject<BarsLogoutHandle>()
 
-    private val store by androidElmStore { inject<AppSettingsStoreFactory>().value.create() }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        viewBinding.apply {
-            recyclerView.layoutManager = LinearLayoutManager(requireContext())
-            recyclerView.adapter = adapter
-            recyclerView.attachScrollListenerForAppBarLayoutShadow(appBarLayout)
-            recyclerView.addSystemBottomPadding()
-            recyclerView.disablePicassoLoadingOnScroll()
-            appBarLayout.addSystemTopPadding()
-            toolbar.setTitle(Strings.app_settings_screen_title)
-            toolbar.setNavigationOnClickListener { close() }
+    @Composable
+    override fun Screen() {
+        MpeixTheme {
+            val storeFactory = koinInject<AppSettingsStoreFactory>()
+            val router = LocalRouter.current
+            ElmContent(
+                key = "AppSettingsScreen",
+                storeFactory = { storeFactory.create() },
+            ) { onAccept, state, effects ->
+                ResultListener<String>(LANGUAGE_RESULT_KEY) {
+                    onAccept(Ui.Action.LanguageChanged(it))
+                }
+                ResultListener<String>(MAP_TYPE_RESULT_KEY) {
+                    onAccept(Ui.Action.MapTypeChanged(it))
+                }
+                EffectHandler(effects) { effect ->
+                    handleEffect(effect, router)
+                }
+                AppSettingsScreen(
+                    state = state,
+                    onAction = { handleAction(it, onAccept, router) },
+                )
+            }
         }
     }
 
-    override fun render(state: AppSettingsState) {
-        adapter.update(AppSettingsListConverter().map(state, requireContext()))
-    }
-
-    override fun handleEffect(effect: AppSettingsEffect) =
+    @Deprecated("Migrate to compose fully")
+    private fun handleEffect(effect: AppSettingsEffect, router: Router) =
         when (effect) {
             is AppSettingsEffect.RecreateActivity -> recreateActivity()
-            is AppSettingsEffect.OpenLanguageSelectionDialog -> {
-                showDialog {
-                    SelectLanguageFragment.newInstance(effect.selectedLanguage, LANGUAGE_RESULT_KEY)
-                }
-                setResultListener(
-                    key = LANGUAGE_RESULT_KEY,
-                    resultMapper = Bundle::notNullString,
-                ) { selectedLanguage ->
-                    store.accept(Ui.Action.LanguageChanged(selectedLanguage))
-                }
-            }
+            is AppSettingsEffect.OpenLanguageSelectionDialog -> router.executeCommand(ShowDialog {
+                SelectLanguageFragment.newInstance(effect.selectedLanguage, LANGUAGE_RESULT_KEY)
+            })
 
-            is AppSettingsEffect.OpenMapTypeDialog -> {
-                showDialog {
-                    SelectMapTypeFragment.newInstance(effect.mapType, MAP_TYPE_RESULT_KEY)
-                }
-                setResultListener(
-                    key = MAP_TYPE_RESULT_KEY,
-                    resultMapper = Bundle::notNullString,
-                ) { selectedMapType ->
-                    store.accept(Ui.Action.MapTypeChanged(selectedMapType))
-                }
-            }
+            is AppSettingsEffect.OpenMapTypeDialog -> router.executeCommand(ShowDialog {
+                SelectMapTypeFragment.newInstance(effect.mapType, MAP_TYPE_RESULT_KEY)
+            })
         }
 
-    private fun createAdapter() =
-        BaseAdapter(
-            SectionHeaderAdapterItem(),
-            ToggleAdapterItem(TOGGLE_DARK_THEME) {
-                analytics.sendChangeSetting("DarkTheme", it.toString())
-                store.accept(Ui.Action.SetDarkThemeEnabled(it))
-            },
-            ToggleAdapterItem(TOGGLE_AUTO_HIDE_BOTTOM_SHEET) {
-                analytics.sendChangeSetting("AutoHideMapBottomSheet", it.toString())
-                store.accept(Ui.Action.SetAutoHideBottomSheet(it))
-            },
-            ToggleAdapterItem(TOGGLE_SNOW_FLAKES) {
-                analytics.sendChangeSetting("SnowFlakes", it.toString())
-                store.accept(Ui.Action.SetSnowEnabled(it))
-            },
-            ToggleAdapterItem(TOGGLE_SHOW_NAV_FAB) {
-                analytics.sendChangeSetting("ShowQuickNavFab", it.toString())
-                store.accept(Ui.Action.SetShowQuickNavigationFab(it))
-            },
-            TextAdapterItem(),
-            SpaceAdapterItem(),
-            BottomLabeledTextAdapterItem { onItemClick(it.itemId) },
-            RightLabeledTextAdapterItem { onItemClick(it.itemId) },
-            ContributorAdapterItem {
-                requireContext().openLinkExternal(it.url)
-            },
-        )
+    @Suppress("CyclomaticComplexMethod")
+    @Deprecated("Migrate to compose fully")
+    private fun handleAction(
+        action: AppSettingsAction,
+        onAccept: (AppSettingsEvent) -> Unit,
+        router: Router,
+    ) {
+        when (action) {
+            is AppSettingsAction.BackClick -> router.executeCommand(PopBackStack())
+            is AppSettingsAction.DarkThemeChange -> {
+                analytics.sendChangeSetting("DarkTheme", action.isEnabled.toString())
+                onAccept(Ui.Action.SetDarkThemeEnabled(action.isEnabled))
+            }
 
-    private fun onItemClick(itemId: Int?) =
-        when (itemId) {
-            ITEM_GITHUB -> {
+            is AppSettingsAction.AutoHideBottomSheetChange -> {
+                analytics.sendChangeSetting("AutoHideMapBottomSheet", action.isEnabled.toString())
+                onAccept(Ui.Action.SetAutoHideBottomSheet(action.isEnabled))
+            }
+
+            is AppSettingsAction.SnowChange -> {
+                analytics.sendChangeSetting("SnowFlakes", action.isEnabled.toString())
+                onAccept(Ui.Action.SetSnowEnabled(action.isEnabled))
+            }
+
+            is AppSettingsAction.QuickNavigationFabChange -> {
+                analytics.sendChangeSetting("ShowQuickNavFab", action.isVisible.toString())
+                onAccept(Ui.Action.SetShowQuickNavigationFab(action.isVisible))
+            }
+
+            is AppSettingsAction.GitHubClick -> {
                 analytics.sendClick("GitHub")
-                requireContext().openLinkExternal("https://github.com/tonykolomeytsev/mpeiapp")
+                requireContext().openLinkExternal(LINK_GITHUB)
             }
 
-            ITEM_FAVORITES -> {
+            is AppSettingsAction.FavoritesClick -> {
                 analytics.sendClick("Favorites")
-                addScreenForward { FavoritesFragment() }
+                router.executeCommand(AddScreenForward { FavoritesFragment() })
             }
 
-            ITEM_LANGUAGE -> {
+            is AppSettingsAction.LanguageClick -> {
                 analytics.sendClick("SelectLanguage")
-                store.accept(Ui.Click.Language)
+                onAccept(Ui.Click.Language)
             }
 
-            ITEM_MAP_TYPE -> {
+            is AppSettingsAction.MapTypeClick -> {
                 analytics.sendClick("SelectMapType")
-                store.accept(Ui.Click.MapType)
+                onAccept(Ui.Click.MapType)
             }
 
-            ITEM_BARS_LOGOUT -> {
+            is AppSettingsAction.BarsLogoutClick -> {
                 analytics.sendClick("BarsLogout")
                 if (logoutHandle.logout()) {
                     Toast
                         .makeText(requireContext(), "Вы вышли из БАРС", Toast.LENGTH_SHORT)
                         .show()
                 }
-                Unit
             }
 
-            else -> { /* no-op */
-            }
+            is AppSettingsAction.ContributorClick ->
+                requireContext().openLinkExternal(action.contributor.url)
         }
+    }
 
     private fun recreateActivity() {
         Handler(Looper.getMainLooper())
             .postDelayed({ activity?.recreate() }, ACTIVITY_RECREATION_DELAY)
     }
 
-    private fun RecyclerView.disablePicassoLoadingOnScroll() =
-        addOnScrollListener(object : RecyclerView.OnScrollListener() {
+    private companion object {
 
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                when (newState) {
-                    RecyclerView.SCROLL_STATE_IDLE -> Picasso.get()
-                        .resumeTag(ContributorAdapterItem::class)
-
-                    else -> Picasso.get().pauseTag(ContributorAdapterItem::class)
-                }
-            }
-        })
-
-    companion object {
-
-        const val TOGGLE_DARK_THEME = 0
-        const val TOGGLE_AUTO_HIDE_BOTTOM_SHEET = 2
-        const val TOGGLE_SNOW_FLAKES = 3
-        const val TOGGLE_SHOW_NAV_FAB = 4
-
-        const val ITEM_SUPPORT = 1
-        const val ITEM_GITHUB = 2
-        const val ITEM_FAVORITES = 3
-        const val ITEM_LANGUAGE = 4
-        const val ITEM_MAP_TYPE = 5
-        const val ITEM_BARS_LOGOUT = 6
-
-        private const val LANGUAGE_RESULT_KEY = "LANGUAGE_RESULT_KEY"
-        private const val MAP_TYPE_RESULT_KEY = "MAP_TYPE_RESULT_KEY"
+        const val LANGUAGE_RESULT_KEY = "LANGUAGE_RESULT_KEY"
+        const val MAP_TYPE_RESULT_KEY = "MAP_TYPE_RESULT_KEY"
     }
 }

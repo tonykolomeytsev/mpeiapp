@@ -3,15 +3,11 @@ plugins {
 }
 
 dependencies {
-    implementation(libs.androidx.appCompat)
-    implementation(libs.androidx.coreKtx)
-    implementation(libs.google.material)
     compileOnly(libs.timber)
 
-    implementation(libs.vivid.elmslie.android)
+    implementation(libs.kotlinx.coroutines.core)
     implementation(libs.vivid.elmslie.core)
 
-    implementation(project(":ext_android"))
 
     testImplementation(libs.kotlin.test)
     testImplementation(libs.kotlin.test.junit5)

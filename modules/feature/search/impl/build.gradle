@@ -9,7 +9,6 @@ android.buildFeatures {
 
 dependencies {
     testImplementation(libs.kotest.assertions)
-    testImplementation(libs.kotest.property)
     testImplementation(libs.kotest.runner)
 
     implementation(libs.androidx.appCompat)
@@ -32,7 +31,6 @@ dependencies {
     implementation(project(":lib_adapter"))
     implementation(project(":lib_analytics_android"))
     implementation(project(":ext_android"))
-    implementation(project(":lib_app_info"))
     implementation(project(":ext_kotlin"))
     implementation(project(":lib_elm"))
     implementation(project(":lib_navigation"))

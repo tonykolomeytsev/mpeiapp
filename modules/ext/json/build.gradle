@@ -3,5 +3,5 @@ plugins {
 }
 
 dependencies {
-    implementation(libs.squareup.retrofit.kser)
+    implementation(libs.kotlinx.serialization.json)
 }
