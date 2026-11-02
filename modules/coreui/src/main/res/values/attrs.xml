@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <attr name="text" format="string" />
-
-    <declare-styleable name="ProgressButton">
-        <attr name="text" />
-        <attr name="enabled" format="boolean" />
-    </declare-styleable>
-
     <attr name="colorMainDark" format="reference" />
     <attr name="colorMainLight" format="reference" />
     <attr name="colorMain" format="reference" />
@@ -29,7 +22,6 @@
     <attr name="themed_snow_flake" format="reference" />
     <attr name="colorCloud" format="reference" />
     <attr name="colorActive" format="reference" />
-
 
     <!-- BARS marks -->
     <attr name="colorMarkGreenText" format="reference" />

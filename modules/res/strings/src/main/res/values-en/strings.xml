@@ -90,12 +90,6 @@
         <item>days</item>
     </string-array>
 
-    <string-array name="points_declensions">
-        <item>point</item>
-        <item>points</item>
-        <item>points</item>
-    </string-array>
-
     <string name="today">Today</string>
     <string name="tomorrow">Tomorrow</string>
     <string name="after_tomorrow">Day after tomorrow</string>
@@ -133,23 +127,18 @@
 
     <string name="schedule_semester_week">Academic week #%d</string>
     <string name="schedule_weekend_week">Non-academic week</string>
-    <string name="schedule_loading_error">There was an error loading the schedule</string>
     <string name="schedule_item_window_header">"Window" between classes</string>
-    <string name="schedule_item_window_description">Make the most of this time</string>
     <string name="schedule_item_lunch_header">Lunch break</string>
     <string name="schedule_item_lunch_description">Search for food on the map</string>
     <string name="schedule_item_lunch_time_start">12:45</string>
     <string name="schedule_item_lunch_time_end">13:45</string>
     <string name="schedule_item_self_study_header">Self-study day</string>
     <string name="schedule_item_self_study_description">Spend your day to good use, start taking programming courses or start reading a book</string>
-    <string name="schedule_empty_state_title">Oops! Failed to load schedule</string>
-    <string name="schedule_empty_state_subtitle">Perhaps this happened due to problems with the Internet connection.\nOr the MpeiX server crashed :)</string>
     <string name="schedule_fab_tooltip">Quick navigation button. You can disable this button in the settings</string>
     <string name="schedule_fab_next">Go to next week</string>
     <string name="schedule_fab_prev">Go to current week</string>
 
     <string name="dashboard_loading_error">An error occurred while loading data from the server</string>
-    <string name="dashboard_item_change_group">Group %s</string>
     <string name="dashboard_item_click_to_change_group">Click to change schedule</string>
     <string name="dashboard_section_header_events">Upcoming events</string>
     <string name="dashboard_events_empty_state_title">Nothing interesting yet</string>
@@ -157,10 +146,6 @@
     <string name="dashboard_section_header_favorites">Favorite schedules</string>
     <string name="dashboard_section_header_favorites_subtitle">Click to switch group number</string>
     <string name="dashboard_section_header_favorites_action">SETTINGS</string>
-    <string name="dashboard_section_header_session">Session schedule</string>
-    <string name="dashboard_section_header_session_subtitle">This is the way</string>
-    <string name="dashboard_session_item_exam">EXAM</string>
-    <string name="dashboard_session_item_consultation">CONSULTATION</string>
     <string name="dashboard_section_header_notes">Notes</string>
     <string name="dashboard_section_header_notes_action">SHOW ALL</string>
     <string name="dashboard_actual_notes_empty_state_title">There are no relevant notes for you</string>
@@ -170,6 +155,7 @@
     <string name="dashboard_events_n_days">Classes in %s</string>
     <string name="dashboard_banner_lunch_header">Apparently,\nit`s lunch break now</string>
     <string name="dashboard_banner_lunch_description">Search for food on the map</string>
+    <string name="dashboard_banner_eol">Due to mass internet blocking</string>
     <string name="dashboard_search_field_text">Search in MPEI…</string>
     <string name="dashboard_day_status_semester">The academic week #%d is in progress</string>
     <string name="dashboard_day_status_not_semester">Non-academic week</string>
@@ -208,19 +194,9 @@
     <string name="all_notes_search_menu_item">Search</string>
 
     <string name="bars_stub_student_name">Anonymous User</string>
-    <string name="bars_stub_student_group">Group</string>
     <string name="bars_stub_login_header">You are not logged into BARS</string>
     <string name="bars_stub_login_description">Logging into BARS in the app, after which all information is viewed here</string>
     <string name="bars_stub_login_button">Login to BARS</string>
-    <string name="bars_stub_show_browser_label">Show BARS in browser</string>
-    <string name="bars_stub_banner_return">Data has been updated. Click on the banner to return to normal display</string>
-    <string name="bars_stub_disclaimer">The functionality of BARS is still under development, there may be crashes and incorrect behavior of this part of the application</string>
-    <string name="bars_stub_error_loading_config_header">An error has occurred</string>
-    <string name="bars_stub_error_loading_config_description">There were problems loading the configuration for working with BARS. Please try again later. </string>
-    <string name="bars_stub_empty_disciplines_header">No academic disciplines</string>
-    <string name="bars_stub_empty_disciplines_description">The list of disciplines for the given semester is empty, or an error occurred during the download.</string>
-    <string name="bars_webview_menu_refresh">Refresh page</string>
-    <string name="bars_webview_menu_open_external">Open in browser</string>
     <string name="bars_item_no_marks">No grades</string>
     <string name="bars_details_weight">Weight: %s%%</string>
     <string name="bars_details_deadline">Deadline: week %s</string>
@@ -239,8 +215,8 @@
     <string name="app_settings_map_appearance_type">Map appearance</string>
     <string name="app_settings_favorite_schedule_title">Favorite schedules</string>
     <string name="app_settings_favorite_schedule_description">Setting up quick access to schedules</string>
+    <string name="app_settings_header_bars">BARS</string>
     <string name="app_settings_header_support">Support</string>
-    <string name="app_settings_section_ask">Ask us a question</string>
     <string name="app_settings_section_github">Create an Issue or Pull Request</string>
     <string name="app_settings_header_contributors">Contributors</string>
     <string name="app_settings_section_lang">App language</string>
@@ -248,7 +224,6 @@
     <string name="app_settings_app_version">MpeiX for Android v%s</string>
 
     <string name="favorites_screen_title">Favorite schedules</string>
-    <string name="favorites_empty_state_title">No schedule has been added to favorites</string>
     <string name="favorites_empty_state_add">ADD SCHEDULE</string>
     <string name="favorites_help_title">How it works?</string>
     <string name="favorites_help_text">The groups and persons included in this list will be displayed on the main page. You can switch between groups with one click without typing their name in the search.</string>
@@ -294,8 +269,6 @@
     <string name="navigation_name_schedule">Schedule</string>
     <string name="navigation_name_map">Map</string>
     <string name="navigation_name_profile">Profile</string>
-
-    <string name="image_picker_attach_button">Attach</string>
 
     <string name="blocking_update_title">It`s time to\nupdate the application</string>
     <string name="blocking_update_description">There is only one person working on the application and it is impossible support old versions forever.\n\nYou have not updated MpeiX for over half a year, since then we have made a lot of improvements both in the client side of the application and in the server side. You should really upgrade.\n\n If you have a compelling reason not to upgrade, please let us know in GitHub Issues:</string>

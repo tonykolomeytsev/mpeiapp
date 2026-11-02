@@ -18,10 +18,10 @@ public fun Fragment.showBanner(text: String, @ColorRes color: Int = R.color.colo
     }
 }
 
-public fun Fragment.findBanner(): BannerContainer? =
+private fun Fragment.findBanner(): BannerContainer? =
     requireActivity().findBanner()
 
-public fun FragmentActivity.findBanner(): BannerContainer? =
+private fun FragmentActivity.findBanner(): BannerContainer? =
     findViewById<BannerContainer>(R.id.bannerContainer)
         ?.takeIf { findNetworkStateBanner()?.isVisible != true }
 

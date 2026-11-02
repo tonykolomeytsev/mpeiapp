@@ -67,7 +67,6 @@ dependencies {
     implementation(platform(libs.compose.bom))
     implementation(libs.bundles.compose)
     implementation(libs.compose.activity)
-    implementation(libs.androidx.fragment.compose)
     implementation(libs.androidx.lifecycle.viewmodel.navigation3)
     implementation(libs.androidx.navigation3.runtime)
     implementation(libs.androidx.navigation3.ui)
@@ -75,14 +74,11 @@ dependencies {
 
     implementation(libs.androidx.appCompat)
     implementation(libs.androidx.activity)
-    implementation(libs.androidx.constraintLayout)
-    implementation(libs.androidx.coreKtx)
     implementation(libs.androidx.datastore.prefs)
     implementation(libs.androidx.splashscreen)
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.config)
     implementation(libs.firebase.crashlytics)
-    implementation(libs.google.material)
     implementation(libs.koin.android)
     implementation(libs.koin.core)
     implementation(libs.vivid.elmslie.android)
@@ -92,10 +88,8 @@ dependencies {
 
     implementation(project(":feature_app_settings_api"))
     implementation(project(":feature_app_settings_impl"))
-    implementation(project(":feature_app_settings_impl"))
     implementation(project(":feature_app_update_api"))
     implementation(project(":feature_app_update_impl"))
-    implementation(project(":feature_bars_api"))
     implementation(project(":feature_bars_impl"))
     implementation(project(":feature_contributors_impl"))
     implementation(project(":feature_dashboard_impl"))
@@ -107,13 +101,10 @@ dependencies {
     implementation(project(":feature_notes_impl"))
     implementation(project(":feature_onboarding_api"))
     implementation(project(":feature_onboarding_impl"))
-    implementation(project(":feature_schedule_api"))
     implementation(project(":feature_schedule_impl"))
     implementation(project(":feature_search_api"))
     implementation(project(":feature_search_impl"))
 
-    implementation(project(":ext_android"))
-    implementation(project(":ext_kotlin"))
 
     implementation(project(":lib_analytics_android"))
     implementation(project(":lib_app_database"))
@@ -141,5 +132,4 @@ dependencies {
     qaImplementation(project(":debug_menu"))
     debugImplementation(project(":lib_chucker"))
     qaImplementation(project(":lib_chucker"))
-
 }

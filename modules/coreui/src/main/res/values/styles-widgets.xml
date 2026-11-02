@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <style name="Toolbar" parent="Widget.AppCompat.Toolbar">
         <item name="navigationIcon">@drawable/ic_nav_back_24</item>
         <item name="navigationIconTint">?attr/colorBlack</item>
@@ -8,23 +7,5 @@
         <item name="android:fontFamily">@font/roboto_bold</item>
     </style>
 
-    <style name="Toolbar.Close">
-        <item name="navigationIcon">@drawable/ic_close_24</item>
-    </style>
-
-    <style name="Toolbar.WebView">
-        <item name="titleTextAppearance">@style/H4</item>
-        <item name="subtitleTextAppearance">@style/H7.Gray70</item>
-        <item name="navigationIcon">@drawable/ic_close_24</item>
-        <item name="navigationIconTint">?attr/colorBlack</item>
-        <item name="tint">?attr/colorBlack</item>
-        <item name="popupTheme">@style/PopupMenu.WebView</item>
-    </style>
-
-    <style name="PopupMenu.WebView" parent="Widget.AppCompat.PopupMenu">
-        <item name="popupMenuBackground">?attr/cardViewColor</item>
-    </style>
-
     <style name="EditText" parent="Widget.AppCompat.EditText"/>
-
 </resources>

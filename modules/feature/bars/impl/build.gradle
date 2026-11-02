@@ -14,7 +14,6 @@ android{
 }
 
 dependencies {
-    implementation(libs.bundles.compose)
     implementation(libs.compose.material3)
 
     implementation(libs.androidx.datastore.prefs)
@@ -52,7 +51,6 @@ dependencies {
     implementation(project(":ui_kit_buttons"))
     implementation(project(":ui_kit_dialogs"))
     implementation(project(":ui_kit_lists"))
-    implementation(project(":ui_preview"))
 
     implementation(project(":res_icons"))
     implementation(project(":res_strings"))

@@ -22,7 +22,6 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.scene.Scene
 import androidx.navigation3.ui.NavDisplay
-import androidx.navigationevent.NavigationEvent
 import com.kekmech.lib_fragment.LocalRouter
 import com.kekmech.lib_fragment.rememberResultControllerNavEntryDecorator
 import kekmech.ru.lib_navigation.NavEntries
@@ -69,7 +68,8 @@ fun App(
             ),
             transitionSpec = { screenTransition() },
             popTransitionSpec = { screenTransition() },
-            predictivePopTransitionSpec = { swipeEdge -> predictivePopTransition(swipeEdge) },
+            // Swipe edge is ignored: closing screen always slides to the right, whichever edge the gesture starts from
+            predictivePopTransitionSpec = { predictivePopTransition() },
             entryProvider = entryProvider,
         )
     }
@@ -88,17 +88,13 @@ private fun AnimatedContentTransitionScope<Scene<ScreenKey>>.screenTransition():
  * Closing screen follows the thumb: while the gesture is in progress NavDisplay seeks this
  * transition by the gesture progress, so linear easing keeps the screen right under the finger.
  */
-private fun AnimatedContentTransitionScope<Scene<ScreenKey>>.predictivePopTransition(
-    @NavigationEvent.SwipeEdge swipeEdge: Int,
-): ContentTransform {
+private fun AnimatedContentTransitionScope<Scene<ScreenKey>>.predictivePopTransition(): ContentTransform {
     if (isTabSwitch()) return EnterTransition.None togetherWith ExitTransition.None
-    // Swipe from the right edge moves the screen to the left, otherwise to the right
-    val direction = if (swipeEdge == NavigationEvent.EDGE_RIGHT) -1 else 1
     val spec = tween<IntOffset>(PREDICTIVE_BACK_DURATION_MS, easing = LinearEasing)
     return ContentTransform(
         // Previous screen moves slightly from behind, like in the system back animation
-        targetContentEnter = slideInHorizontally(spec) { width -> -direction * width / PARALLAX_DIVIDER },
-        initialContentExit = slideOutHorizontally(spec) { width -> direction * width },
+        targetContentEnter = slideInHorizontally(spec) { width -> -width / PARALLAX_DIVIDER },
+        initialContentExit = slideOutHorizontally(spec) { width -> width },
         // Closing screen stays on top of the screen it reveals
         targetContentZIndex = -1f,
     )

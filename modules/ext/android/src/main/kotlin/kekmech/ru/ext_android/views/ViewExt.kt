@@ -1,8 +1,6 @@
 package kekmech.ru.ext_android.views
 
-import android.annotation.SuppressLint
 import android.os.SystemClock
-import android.view.MotionEvent.ACTION_DOWN
 import android.view.View
 import android.view.ViewGroup
 
@@ -38,33 +36,4 @@ public fun View.setOnClickListenerWithDebounce(debounceDuration: Long, onClickLi
             }
         }
     })
-}
-
-
-public const val SCALE_ON_TOUCH_FACTOR: Float = 0.97f
-public const val SCALE_ON_TOUCH_DURATION: Long = 100L
-
-@SuppressLint("ClickableViewAccessibility")
-public fun View.scaleOnTouch(
-    factor: Float = SCALE_ON_TOUCH_FACTOR,
-    duration: Long = SCALE_ON_TOUCH_DURATION,
-) {
-    setOnTouchListener { _, event ->
-        if (event.action == ACTION_DOWN) {
-            clearAnimation()
-            animate()
-                .scaleX(factor)
-                .scaleY(factor)
-                .setDuration(duration)
-                .start()
-        } else {
-            clearAnimation()
-            animate()
-                .scaleX(1f)
-                .scaleY(1f)
-                .setDuration(duration)
-                .start()
-        }
-        false
-    }
 }

@@ -7,7 +7,7 @@ dependencies {
     api(libs.androidx.navigation3.runtime)
 
     implementation(libs.androidx.appCompat)
-    implementation(libs.androidx.fragmentKtx)
+    implementation(libs.androidx.fragment)
     implementation(libs.androidx.recyclerView)
     implementation(libs.koin.core)
     implementation(libs.kotlinx.coroutines.core)

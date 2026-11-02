@@ -26,7 +26,6 @@ dependencies {
     implementation(project(":ext_okhttp"))
 
 
-    implementation(project(":res_icons"))
     implementation(project(":res_images"))
     implementation(project(":res_strings"))
 }
