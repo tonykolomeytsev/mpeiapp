@@ -10,7 +10,7 @@ import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val MainScreenModule = module {
-    single { BottomTabsSwitcherImpl } bind BottomTabsSwitcher::class
-    singleOf(::MainScreenDependencies)
+    // single, because it holds the flow of tab reselect events
+    singleOf(::BottomTabsSwitcherImpl) bind BottomTabsSwitcher::class
     factoryOf(::MainScreenLauncherImpl) bind MainScreenLauncher::class
 }

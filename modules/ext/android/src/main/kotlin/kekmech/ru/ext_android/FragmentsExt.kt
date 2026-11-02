@@ -52,10 +52,6 @@ public inline fun <reified T : Serializable> Fragment.notNullSerializableArg(key
 public inline fun <reified T : Serializable> Fragment.serializableArg(key: String): T? =
     arguments?.let { BundleCompat.getSerializable(it, key, T::class.java) }
 
-public fun Fragment.removeArg(key: String) {
-    arguments?.remove(key)
-}
-
 // endregion: ARGUMENTS
 
 public fun Fragment.hideKeyboard() {

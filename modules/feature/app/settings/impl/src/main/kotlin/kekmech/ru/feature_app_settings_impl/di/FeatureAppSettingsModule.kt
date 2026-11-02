@@ -12,11 +12,13 @@ import kekmech.ru.feature_app_settings_impl.data.AppEnvironmentRepositoryImpl
 import kekmech.ru.feature_app_settings_impl.data.AppSettingsRepositoryImpl
 import kekmech.ru.feature_app_settings_impl.domain.usecase.ObserveAppThemeUseCaseImpl
 import kekmech.ru.feature_app_settings_impl.launcher.AppSettingsFeatureLauncherImpl
+import kekmech.ru.feature_app_settings_impl.navigation.AppSettingsNavEntries
 import kekmech.ru.feature_app_settings_impl.presentation.screens.favorites.elm.FavoritesActor
 import kekmech.ru.feature_app_settings_impl.presentation.screens.favorites.elm.FavoritesStoreFactory
 import kekmech.ru.feature_app_settings_impl.presentation.screens.main.elm.AppSettingsActor
 import kekmech.ru.feature_app_settings_impl.presentation.screens.main.elm.AppSettingsStoreFactory
 import kekmech.ru.lib_feature_toggles.RemoteVariable
+import kekmech.ru.lib_navigation.NavEntries
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
@@ -38,6 +40,7 @@ val FeatureAppSettingsModule = module {
     factoryOf(::AppSettingsStoreFactory)
     factoryOf(::AppSettingDependencies)
     factoryOf(::AppSettingsFeatureLauncherImpl) bind AppSettingsFeatureLauncher::class
+    factoryOf(::AppSettingsNavEntries) bindIntoList NavEntries::class
 
     factoryOf(::FavoritesActor)
     factoryOf(::FavoritesStoreFactory)

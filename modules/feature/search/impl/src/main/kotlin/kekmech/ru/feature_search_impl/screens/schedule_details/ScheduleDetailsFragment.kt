@@ -36,8 +36,6 @@ import kekmech.ru.lib_adapter.BaseAdapter
 import kekmech.ru.lib_analytics_android.ext.screenAnalytics
 import kekmech.ru.lib_navigation.BottomTab
 import kekmech.ru.lib_navigation.BottomTabsSwitcher
-import kekmech.ru.lib_navigation.ClearBackStack
-import kekmech.ru.lib_navigation.Router
 import kekmech.ru.lib_schedule.items.ClassesItemBinder
 import kekmech.ru.lib_schedule.items.ClassesViewHolderImpl
 import money.vivid.elmslie.android.renderer.ElmRendererDelegate
@@ -56,7 +54,6 @@ internal class ScheduleDetailsFragment :
 
     private val viewBinding by viewBinding(FragmentScheduleDetailsBinding::bind)
     private val adapter by fastLazy { createAdapter() }
-    private val router by inject<Router>()
     private val bottomTabsSwitcher by inject<BottomTabsSwitcher>()
     private val analytics by screenAnalytics("SearchScheduleDetails")
 
@@ -90,7 +87,6 @@ internal class ScheduleDetailsFragment :
     override fun handleEffect(effect: ScheduleDetailsEffect) = when (effect) {
         is ScheduleDetailsEffect.CloseAndGoToSchedule -> {
             close()
-            router.executeCommand(ClearBackStack())
             bottomTabsSwitcher.changeTab(BottomTab.DASHBOARD)
         }
     }

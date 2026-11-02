@@ -3,13 +3,13 @@ package kekmech.ru.ui_preview
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.fragment.app.FragmentManager
 import com.kekmech.lib_fragment.LocalResultController
 import com.kekmech.lib_fragment.LocalRouter
 import com.kekmech.lib_fragment.ResultController
 import kekmech.ru.lib_navigation.ActivityCommand
 import kekmech.ru.lib_navigation.Command
 import kekmech.ru.lib_navigation.Router
+import kekmech.ru.lib_navigation.ScreenKey
 import kekmech.ru.ui_theme.theme.MpeixTheme
 import java.io.Serializable
 import kotlin.reflect.KClass
@@ -17,7 +17,7 @@ import kotlin.reflect.KClass
 /**
  * Wrapper for Compose previews. Use it instead of [MpeixTheme] in `@Preview` functions.
  *
- * Provides stubs for composition locals which are normally provided by the host Fragment,
+ * Provides stubs for composition locals which are normally provided by the app's NavDisplay,
  * so screens using `LocalRouter.current` or `LocalResultController.current` can be rendered in previews.
  */
 @Composable
@@ -38,11 +38,11 @@ public fun MpeixPreview(
  */
 private object PreviewRouter : Router {
 
+    override val backStack: List<ScreenKey> = emptyList()
+
     override fun executeCommand(vararg commands: Command): Unit = Unit
 
     override fun executeCommand(command: ActivityCommand): Unit = Unit
-
-    override fun executeCommand(fragmentManager: FragmentManager, command: Command): Unit = Unit
 }
 
 /**

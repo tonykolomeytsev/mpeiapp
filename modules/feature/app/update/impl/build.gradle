@@ -1,5 +1,6 @@
 plugins {
     alias(mpeix.plugins.feature.impl.compose)
+    alias(libs.plugins.kotlin.parcelize)
 }
 
 android.buildFeatures{
@@ -12,6 +13,9 @@ dependencies {
     implementation(libs.compose.material3)
     implementation(libs.koin.core)
 
+    implementation(libs.androidx.navigation3.runtime)
+    implementation(libs.compose.activity)
+    implementation(project(":ext_koin"))
     implementation(project(":feature_app_update_api"))
     implementation(project(":lib_app_info"))
 

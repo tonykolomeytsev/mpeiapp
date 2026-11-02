@@ -9,7 +9,7 @@ import kekmech.ru.feature_app_update_api.ForceUpdateChecker.Companion.KEY_UPDATE
 import kekmech.ru.feature_app_update_api.ForceUpdateChecker.Companion.KEY_UPDATE_URL
 import kekmech.ru.feature_app_update_impl.domain.models.AppVersion
 import kekmech.ru.feature_app_update_impl.domain.models.ForceUpdateInfo
-import kekmech.ru.feature_app_update_impl.presentation.BlockingUpdateFragment
+import kekmech.ru.feature_app_update_impl.navigation.BlockingUpdateScreenKey
 import kekmech.ru.feature_app_update_impl.presentation.ForceUpdateFragment
 import kekmech.ru.lib_app_info.AppVersionName
 import kekmech.ru.lib_navigation.NewRoot
@@ -38,7 +38,7 @@ internal class ForceUpdateCheckerImpl(
             isUpdateRequired = (actualVersion > appVersion) and isUpdateRequired
         )
         if (appVersion < minRequiredVersion) {
-            router.executeCommand(NewRoot { BlockingUpdateFragment.newInstance(forceUpdateInfo) })
+            router.executeCommand(NewRoot(BlockingUpdateScreenKey(forceUpdateInfo)))
         } else if (forceUpdateInfo.isUpdateRequired) {
             router.executeCommand(ShowDialog {
                 ForceUpdateFragment.newInstance(forceUpdateInfo)

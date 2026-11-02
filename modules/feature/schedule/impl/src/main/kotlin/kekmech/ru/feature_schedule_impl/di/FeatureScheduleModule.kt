@@ -1,5 +1,6 @@
 package kekmech.ru.feature_schedule_impl.di
 
+import kekmech.ru.ext_koin.bindIntoList
 import kekmech.ru.feature_schedule_api.PreheatSelectedScheduleProvider
 import kekmech.ru.feature_schedule_api.ScheduleFeatureApi
 import kekmech.ru.feature_schedule_api.data.repository.ScheduleRepository
@@ -13,11 +14,13 @@ import kekmech.ru.feature_schedule_impl.data.repository.ScheduleRepositoryImpl
 import kekmech.ru.feature_schedule_impl.data.repository.ScheduleSearchRepositoryImpl
 import kekmech.ru.feature_schedule_impl.domain.usecase.HasSelectedScheduleUseCaseImpl
 import kekmech.ru.feature_schedule_impl.launcher.ScheduleFeatureApiImpl
+import kekmech.ru.feature_schedule_impl.navigation.ScheduleNavEntries
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.FindScheduleActor
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.FindScheduleStoreFactory
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleActor
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleStoreFactory
 import kekmech.ru.lib_analytics_api.SelectedScheduleAnalyticsProvider
+import kekmech.ru.lib_navigation.NavEntries
 import kekmech.ru.lib_network.buildApi
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
@@ -46,4 +49,5 @@ val FeatureScheduleModule = module {
     factoryOf(::SelectedScheduleSource)
     factoryOf(::ScheduleCacheWrapper)
     factoryOf(::HasSelectedScheduleUseCaseImpl) bind HasSelectedScheduleUseCase::class
+    factoryOf(::ScheduleNavEntries) bindIntoList NavEntries::class
 }

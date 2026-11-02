@@ -2,7 +2,7 @@ package kekmech.ru.feature_bars_impl.di
 
 import com.kekmech.lib_bars.BarsHandle
 import com.kekmech.lib_bars.DataStore
-import kekmech.ru.feature_bars_api.BarsFeatureLauncher
+import kekmech.ru.ext_koin.bindIntoList
 import kekmech.ru.feature_bars_api.BarsLogoutHandle
 import kekmech.ru.feature_bars_impl.data.datasource.BarsConfigDataSource
 import kekmech.ru.feature_bars_impl.data.datasource.BarsExtractJsDataSource
@@ -11,11 +11,12 @@ import kekmech.ru.feature_bars_impl.data.repository.BarsConfigRepository
 import kekmech.ru.feature_bars_impl.data.repository.BarsExtractJsRepository
 import kekmech.ru.feature_bars_impl.data.repository.BarsRepository
 import kekmech.ru.feature_bars_impl.data.repository.BarsUserInfoRepository
-import kekmech.ru.feature_bars_impl.launcher.BarsFeatureLauncherImpl
+import kekmech.ru.feature_bars_impl.navigation.BarsNavEntries
 import kekmech.ru.feature_bars_impl.presentation.screen.login.elm.BarsLoginActor
 import kekmech.ru.feature_bars_impl.presentation.screen.login.elm.BarsLoginStoreFactory
 import kekmech.ru.feature_bars_impl.presentation.screen.main_compose.elm.BarsComposeActor
 import kekmech.ru.feature_bars_impl.presentation.screen.main_compose.elm.BarsComposeStoreFactory
+import kekmech.ru.lib_navigation.NavEntries
 import kekmech.ru.lib_network.buildApi
 import okhttp3.Interceptor
 import okhttp3.logging.HttpLoggingInterceptor
@@ -32,7 +33,6 @@ val FeatureBarsModule = module {
     factoryOf(::BarsLoginActor)
     singleOf(::BarsComposeStoreFactory)
     singleOf(::BarsLoginStoreFactory)
-    factoryOf(::BarsFeatureLauncherImpl) bind BarsFeatureLauncher::class
 
     singleOf(::BarsRepository) binds arrayOf(BarsRepository::class, BarsLogoutHandle::class)
     factoryOf(::BarsConfigDataSource)
@@ -50,4 +50,5 @@ val FeatureBarsModule = module {
             this
         }
     }
+    factoryOf(::BarsNavEntries) bindIntoList NavEntries::class
 }

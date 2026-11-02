@@ -1,17 +1,17 @@
 package kekmech.ru.feature_schedule_api
 
-import androidx.fragment.app.Fragment
 import java.io.Serializable
 
 public interface ScheduleFeatureApi {
 
-    public fun getTabScreen(): Fragment
-
-    public fun getSearchGroupScreen(
+    /**
+     * Открывает экран поиска группы поверх текущего экрана
+     */
+    public fun launchSearchGroup(
         continueTo: ContinueTo = ContinueTo.BACK,
         selectGroupAfterSuccess: Boolean = true,
         resultKey: String,
-    ): Fragment
+    )
 
     public enum class ContinueTo : Serializable { DASHBOARD, BACK, BACK_WITH_RESULT }
 }

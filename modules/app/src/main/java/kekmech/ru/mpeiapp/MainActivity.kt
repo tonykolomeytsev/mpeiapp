@@ -9,16 +9,18 @@ import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.compose.ui.platform.ComposeView
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kekmech.ru.feature_app_settings_api.data.AppSettingsRepository
 import kekmech.ru.feature_main_screen_api.MainScreenLauncher
 import kekmech.ru.feature_onboarding_api.OnboardingFeatureApi
 import kekmech.ru.lib_app_lifecycle.MainActivityLifecycleObserver
+import kekmech.ru.lib_navigation.NavEntries
 import kekmech.ru.lib_navigation.NavigationHolder
-import kekmech.ru.lib_navigation.NewRoot
 import kekmech.ru.lib_navigation.Router
 import kekmech.ru.mpeiapp.deeplink.DeeplinkHandlersProcessor
+import kekmech.ru.mpeiapp.ui.App
 import org.koin.android.ext.android.getKoin
 import org.koin.android.ext.android.inject
 import kekmech.ru.coreui.R as coreui_R
@@ -35,6 +37,7 @@ class MainActivity : AppCompatActivity() {
         getKoin().getAll()
     }
     private val router: Router by inject()
+    private val navEntries: List<NavEntries> by lazy { getKoin().getAll() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
@@ -51,17 +54,31 @@ class MainActivity : AppCompatActivity() {
         setTheme()
         setContentView(R.layout.activity_main)
 
-        if (savedInstanceState == null) {
-            val selectedGroup = sharedPreferences.getString("selected_group", "")
-            if (!selectedGroup.isNullOrEmpty()) {
-                FirebaseCrashlytics.getInstance().setCustomKey("schedule_name", selectedGroup)
-                mainScreenLauncher.launch()
-            } else {
-                router.executeCommand(NewRoot { onboardingFeatureApi.getScreen() })
-            }
+        savedInstanceState?.getBundle(KEY_NAVIGATION_STATE)?.let(navigationHolder::restoreState)
+        // Back stack может оказаться пустым, если состояние не удалось восстановить
+        if (savedInstanceState == null || router.backStack.isEmpty()) {
+            launchFirstScreen()
+        }
+        findViewById<ComposeView>(R.id.composeRoot).setContent {
+            App(router = router, navEntries = navEntries)
         }
 
         deeplinkHandlersProcessor.processDeeplink(intent.data)
+    }
+
+    private fun launchFirstScreen() {
+        val selectedGroup = sharedPreferences.getString("selected_group", "")
+        if (!selectedGroup.isNullOrEmpty()) {
+            FirebaseCrashlytics.getInstance().setCustomKey("schedule_name", selectedGroup)
+            mainScreenLauncher.launch()
+        } else {
+            onboardingFeatureApi.launch()
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBundle(KEY_NAVIGATION_STATE, navigationHolder.saveState())
     }
 
     override fun onNewIntent(intent: Intent) {
@@ -103,5 +120,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(LocaleContextWrapper.wrapContext(newBase))
+    }
+
+    private companion object {
+        const val KEY_NAVIGATION_STATE = "MainActivity.NavigationState"
     }
 }

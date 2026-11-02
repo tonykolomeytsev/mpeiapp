@@ -1,5 +1,6 @@
 plugins {
     alias(mpeix.plugins.app)
+    alias(libs.plugins.kotlin.compose.compiler)
     alias(mpeix.plugins.app.signing)
     alias(libs.plugins.google.services)
     alias(libs.plugins.firebase.crashlytics)
@@ -48,7 +49,7 @@ android {
         lintConfig = rootProject.file("lint.xml")
     }
     buildFeatures {
-        viewBinding = true
+        compose = true
     }
     packaging {
         // This is to make it possible to use Ktor (mock_server) on android
@@ -63,6 +64,15 @@ android {
 }
 
 dependencies {
+    implementation(platform(libs.compose.bom))
+    implementation(libs.bundles.compose)
+    implementation(libs.compose.activity)
+    implementation(libs.androidx.fragment.compose)
+    implementation(libs.androidx.lifecycle.viewmodel.navigation3)
+    implementation(libs.androidx.navigation3.runtime)
+    implementation(libs.androidx.navigation3.ui)
+    implementation(libs.koin.compose)
+
     implementation(libs.androidx.appCompat)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintLayout)
@@ -88,7 +98,6 @@ dependencies {
     implementation(project(":feature_bars_api"))
     implementation(project(":feature_bars_impl"))
     implementation(project(":feature_contributors_impl"))
-    implementation(project(":feature_dashboard_api"))
     implementation(project(":feature_dashboard_impl"))
     implementation(project(":feature_favorite_schedule_impl"))
     implementation(project(":feature_main_screen_api"))
@@ -117,6 +126,10 @@ dependencies {
     implementation(project(":lib_network"))
     implementation(project(":lib_persistent_cache"))
     implementation(project(":lib_snowfall"))
+    implementation(project(":lib_fragment"))
+
+    implementation(project(":ui_theme"))
+    implementation(project(":ui_kit_navigationbar"))
 
     implementation(project(":coreui"))
     implementation(project(":res_icons"))

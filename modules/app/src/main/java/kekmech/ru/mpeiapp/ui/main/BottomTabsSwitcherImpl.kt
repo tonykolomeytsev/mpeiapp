@@ -2,23 +2,34 @@ package kekmech.ru.mpeiapp.ui.main
 
 import kekmech.ru.lib_navigation.BottomTab
 import kekmech.ru.lib_navigation.BottomTabsSwitcher
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kekmech.ru.lib_navigation.DashboardTabKey
+import kekmech.ru.lib_navigation.NewRoot
+import kekmech.ru.lib_navigation.Router
+import kekmech.ru.lib_navigation.TabScreenKey
+import kekmech.ru.lib_navigation.screenKey
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 
-object BottomTabsSwitcherImpl : BottomTabsSwitcher {
+class BottomTabsSwitcherImpl(
+    private val router: Router,
+) : BottomTabsSwitcher {
 
-    // StateFlow сразу требует стартовое значение
-    private val _state = MutableStateFlow<BottomTab?>(null)
-    val state: StateFlow<BottomTab?> = _state.asStateFlow()
+    private val reselectsFlow = MutableSharedFlow<BottomTab>(extraBufferCapacity = 1)
+
+    override val reselects: Flow<BottomTab> = reselectsFlow.asSharedFlow()
 
     override fun changeTab(tab: BottomTab) {
-        _state.value = tab
+        val currentTab = (router.backStack.lastOrNull() as? TabScreenKey)?.tab
+        if (currentTab == tab) {
+            reselectsFlow.tryEmit(tab)
+            return
+        }
+        // Лента всегда лежит под остальными табами, чтобы "назад" с любого таба вело на нее
+        if (tab == BottomTab.DASHBOARD) {
+            router.executeCommand(NewRoot(DashboardTabKey))
+        } else {
+            router.executeCommand(NewRoot(DashboardTabKey, tab.screenKey))
+        }
     }
-
-    override fun clearTab() {
-        _state.value = null
-    }
-
-    override fun observe(): StateFlow<BottomTab?> = state
 }

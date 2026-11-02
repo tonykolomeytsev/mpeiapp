@@ -1,27 +1,23 @@
 package kekmech.ru.lib_navigation
 
+import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentManager
+import androidx.compose.runtime.mutableStateListOf
+import androidx.core.os.BundleCompat
 
 internal class RouterImpl : NavigationHolder, Router {
 
     private var activity: AppCompatActivity? = null
 
     private val activityCommandBuffer = mutableListOf<ActivityCommand>()
-    private val commandBuffer = mutableListOf<Command>()
+    override val backStack: List<ScreenKey>
+        field: MutableList<ScreenKey> = mutableStateListOf<ScreenKey>()
 
     override fun subscribe(activity: AppCompatActivity) {
         this.activity = activity
-        commandBuffer
-            .forEach {
-                it.apply(activity.supportFragmentManager)
-                commandBuffer.remove(it)
-            }
-        activityCommandBuffer
-            .forEach {
-                it.apply(activity)
-                activityCommandBuffer.remove(it)
-            }
+        val bufferedCommands = activityCommandBuffer.toList()
+        activityCommandBuffer.clear()
+        bufferedCommands.forEach { it.apply(activity) }
     }
 
     override fun unsubscribe() {
@@ -29,24 +25,27 @@ internal class RouterImpl : NavigationHolder, Router {
     }
 
     override fun executeCommand(vararg commands: Command) {
-        commands.forEach { command ->
-            activity?.supportFragmentManager?.let {
-                executeCommand(it, command)
-            } ?: run {
-                commandBuffer.add(command)
-            }
-        }
+        commands.forEach { it.apply(backStack) }
     }
 
     override fun executeCommand(command: ActivityCommand) {
-        activity?.let {
-            command.apply(it)
-        } ?: run {
-            activityCommandBuffer.add(command)
-        }
+        activity?.let(command::apply) ?: activityCommandBuffer.add(command)
     }
 
-    override fun executeCommand(fragmentManager: FragmentManager, command: Command) {
-        command.apply(fragmentManager)
+    override fun saveState(): Bundle = Bundle().apply {
+        putParcelableArrayList(KEY_BACK_STACK, ArrayList(backStack))
+    }
+
+    override fun restoreState(state: Bundle) {
+        // Роутер - синглтон, поэтому после пересоздания активити back stack уже на месте.
+        // Восстанавливаем только после смерти процесса
+        if (backStack.isNotEmpty()) return
+        val restored =
+            BundleCompat.getParcelableArrayList(state, KEY_BACK_STACK, ScreenKey::class.java)
+        if (!restored.isNullOrEmpty()) backStack.addAll(restored)
+    }
+
+    private companion object {
+        const val KEY_BACK_STACK = "Router.BackStack"
     }
 }

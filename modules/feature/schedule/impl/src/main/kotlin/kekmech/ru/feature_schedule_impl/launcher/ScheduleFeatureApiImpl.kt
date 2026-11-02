@@ -1,21 +1,27 @@
 package kekmech.ru.feature_schedule_impl.launcher
 
-import androidx.fragment.app.Fragment
 import kekmech.ru.feature_schedule_api.ScheduleFeatureApi
-import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.FindScheduleFragment
-import kekmech.ru.feature_schedule_impl.presentation.screen.main.ScheduleFragment
+import kekmech.ru.feature_schedule_impl.navigation.FindScheduleScreenKey
+import kekmech.ru.lib_navigation.AddScreenForward
+import kekmech.ru.lib_navigation.Router
 
-internal class ScheduleFeatureApiImpl : ScheduleFeatureApi {
+internal class ScheduleFeatureApiImpl(
+    private val router: Router,
+) : ScheduleFeatureApi {
 
-    override fun getTabScreen(): Fragment = ScheduleFragment()
-
-    override fun getSearchGroupScreen(
+    override fun launchSearchGroup(
         continueTo: ScheduleFeatureApi.ContinueTo,
         selectGroupAfterSuccess: Boolean,
-        resultKey: String
-    ): Fragment = FindScheduleFragment.newInstance(
-        continueTo = continueTo,
-        selectGroupAfterSuccess = selectGroupAfterSuccess,
-        resultKey = resultKey
-    )
+        resultKey: String,
+    ) {
+        router.executeCommand(
+            AddScreenForward(
+                FindScheduleScreenKey(
+                    continueTo = continueTo,
+                    selectGroupAfterSuccess = selectGroupAfterSuccess,
+                    resultKey = resultKey,
+                )
+            )
+        )
+    }
 }

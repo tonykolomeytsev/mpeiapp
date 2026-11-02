@@ -7,8 +7,6 @@
         tools:context="kekmech.ru.mpeiapp.MainActivity"
         tools:theme="@style/AppTheme">
 
-    <include layout="@layout/layout_container" />
-
     <kekmech.ru.coreui.banner.NetworkStateBannerContainer
             android:id="@+id/networkStateBannerContainer"
             android:layout_width="match_parent"
@@ -18,5 +16,10 @@
             android:id="@+id/bannerContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
+    <androidx.compose.ui.platform.ComposeView
+        android:id="@+id/composeRoot"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </FrameLayout>
