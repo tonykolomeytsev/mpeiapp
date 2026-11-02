@@ -10,6 +10,7 @@ ksp {
 dependencies {
     implementation(libs.androidx.room.runtime)
     implementation(libs.koin.core)
+    implementation(libs.firebase.crashlytics)
 
     ksp(libs.androidx.room.compiler)
 

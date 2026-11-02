@@ -12,6 +12,6 @@ internal class MigrationV6V7Impl : MigrationV6V7 {
         // create new table
         database.execSQL("CREATE TABLE IF NOT EXISTS `$newTableName` (`name` TEXT NOT NULL, `type` TEXT NOT NULL, `description` TEXT NOT NULL, `order` INTEGER NOT NULL, PRIMARY KEY(`name`));")
         // drop old table
-        database.execSQL("DROP TABLE `$oldTableName`;")
+        database.execSQL("DROP TABLE IF EXISTS `$oldTableName`;")
     }
 }
