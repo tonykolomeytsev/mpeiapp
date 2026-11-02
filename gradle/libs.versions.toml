@@ -66,6 +66,8 @@ androidx-swipeRefreshLayout = { module = "androidx.swiperefreshlayout:swiperefre
 androidx-viewPager2 = { module = "androidx.viewpager2:viewpager2", version.ref = "viewPager2" }
 androidx-datastore-prefs = { module = "androidx.datastore:datastore-preferences", version = "1.1.7" }
 androidx-splashscreen = { module = "androidx.core:core-splashscreen", version = "1.0.1" }
+# Same artifact AGP adds for `buildFeatures.viewBinding`, versioned with AGP
+androidx-viewBinding = { module = "androidx.databinding:viewbinding", version.ref = "agp" }
 
 androidx-navigation3-runtime = { group = "androidx.navigation3", name = "navigation3-runtime", version.ref = "nav3" }
 androidx-navigation3-ui = { group = "androidx.navigation3", name = "navigation3-ui", version.ref = "nav3" }

@@ -112,20 +112,4 @@
         <item name="colorMarkRedText">@color/colorMarkRedTextDark</item>
         <item name="colorMarkRedBg">@color/colorMarkRedBgDark</item>
     </style>
-
-    <style name="CollapsingToolbarLayoutExpandedTextStyle" parent="AppTheme">
-        <item name="android:textSize">28sp</item>
-        <item name="android:fontFamily">sans-serif-light</item>
-    </style>
-
-    <style name="TextViewMapTab" parent="Widget.AppCompat.TextView">
-        <item name="android:paddingTop">6dp</item>
-        <item name="android:paddingBottom">6dp</item>
-        <item name="android:paddingLeft">12dp</item>
-        <item name="android:paddingRight">12dp</item>
-        <item name="android:textSize">13sp</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
-        <item name="android:textColor">@color/colorGray90</item>
-    </style>
-
 </resources>

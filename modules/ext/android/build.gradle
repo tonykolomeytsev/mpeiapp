@@ -3,11 +3,11 @@ plugins {
 }
 
 android.buildFeatures {
-    viewBinding = true
     androidResources = true
 }
 
 dependencies {
+    api(libs.androidx.viewBinding)
     implementation(libs.androidx.coreKtx)
     implementation(libs.androidx.fragmentKtx)
     implementation(libs.androidx.swipeRefreshLayout)

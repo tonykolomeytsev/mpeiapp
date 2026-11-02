@@ -12,7 +12,6 @@ dependencies {
     testImplementation(libs.kotest.assertions)
     testImplementation(libs.kotest.runner)
 
-    implementation(libs.bundles.compose)
     implementation(libs.compose.material3)
 
     implementation(libs.androidx.constraintLayout)

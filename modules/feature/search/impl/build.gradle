@@ -13,7 +13,6 @@ dependencies {
     testImplementation(libs.kotest.runner)
 
     implementation(libs.androidx.appCompat)
-    implementation(libs.androidx.constraintLayout)
     implementation(libs.androidx.recyclerView)
     implementation(libs.facebook.shimmer)
     implementation(libs.google.material)

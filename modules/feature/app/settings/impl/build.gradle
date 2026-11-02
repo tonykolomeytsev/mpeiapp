@@ -50,6 +50,5 @@ dependencies {
     implementation(project(":ui_kit_textfield"))
     implementation(project(":ui_kit_topappbar"))
     implementation(project(":ui_kit_switch"))
-    implementation(project(":res_icons"))
     implementation(project(":res_strings"))
 }

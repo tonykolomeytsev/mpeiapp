@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import kekmech.ru.coreui.banner.showBanner
-import kekmech.ru.coreui.items.AddActionAdapterItem
 import kekmech.ru.coreui.items.EmptyStateAdapterItem
 import kekmech.ru.coreui.items.ErrorStateAdapterItem
 import kekmech.ru.coreui.items.FavoriteScheduleAdapterItem
@@ -168,7 +167,6 @@ internal class DashboardFragment :
                 resultKey = EDIT_NOTE_RESULT_KEY
             )
         },
-        AddActionAdapterItem(),
         DayStatusAdapterItem(),
         DashboardClassesAdapterItem(requireContext(), ::clickOnClasses),
         ScheduleTypeAdapterItem {
