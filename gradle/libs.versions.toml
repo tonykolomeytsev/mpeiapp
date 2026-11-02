@@ -16,7 +16,7 @@ swipeRefreshLayout = "1.1.0"
 fragment = "1.8.9"
 room = "2.8.1"
 
-nav3 = "1.0.0"
+nav3 = "1.1.7"
 # Google Versions
 material = "1.12.0"
 
