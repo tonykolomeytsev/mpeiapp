@@ -1,5 +1,5 @@
 plugins {
-    alias(mpeix.plugins.feature.impl)
+    alias(mpeix.plugins.feature.impl.compose)
     alias(mpeix.plugins.util.secrets)
     alias(libs.plugins.kotlin.serialization)
 }
@@ -35,6 +35,8 @@ dependencies {
     implementation(libs.vivid.elmslie.core)
     compileOnly(libs.timber)
 
+    implementation(libs.androidx.navigation3.runtime)
+    implementation(project(":lib_fragment"))
     implementation(project(":feature_app_settings_api"))
     implementation(project(":feature_map_api"))
 

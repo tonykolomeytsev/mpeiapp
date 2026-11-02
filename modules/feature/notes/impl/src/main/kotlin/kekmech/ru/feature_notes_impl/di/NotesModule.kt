@@ -11,6 +11,7 @@ import kekmech.ru.feature_notes_impl.data.repository.NotesRepository
 import kekmech.ru.feature_notes_impl.domain.usecase.GetNotesForSelectedScheduleUseCaseImpl
 import kekmech.ru.feature_notes_impl.domain.usecase.PutNoteForSelectedScheduleUseCaseImpl
 import kekmech.ru.feature_notes_impl.launcher.NotesFeatureLauncherImpl
+import kekmech.ru.feature_notes_impl.navigation.NotesNavEntries
 import kekmech.ru.feature_notes_impl.presentation.screen.all_notes.elm.AllNotesActor
 import kekmech.ru.feature_notes_impl.presentation.screen.all_notes.elm.AllNotesStoreFactory
 import kekmech.ru.feature_notes_impl.presentation.screen.edit.elm.NoteEditActor
@@ -18,6 +19,7 @@ import kekmech.ru.feature_notes_impl.presentation.screen.edit.elm.NoteEditStoreF
 import kekmech.ru.feature_notes_impl.presentation.screen.note_list.elm.NoteListActor
 import kekmech.ru.feature_notes_impl.presentation.screen.note_list.elm.NoteListStoreFactory
 import kekmech.ru.lib_app_database.api.MigrationV6V7
+import kekmech.ru.lib_navigation.NavEntries
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
@@ -45,4 +47,5 @@ val FeatureNotesModule = module {
     factoryOf(::PutNoteForSelectedScheduleUseCaseImpl) bind PutNoteForSelectedScheduleUseCase::class
 
     factory { MigrationV6V7Impl() } bindIntoList MigrationV6V7::class
+    factoryOf(::NotesNavEntries) bindIntoList NavEntries::class
 }

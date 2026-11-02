@@ -12,7 +12,7 @@ import kekmech.ru.feature_bars_impl.data.repository.BarsRepository
 import kekmech.ru.feature_bars_impl.domain.AssessedDiscipline
 import kekmech.ru.feature_bars_impl.domain.ExceptionWithId
 import kekmech.ru.feature_bars_impl.presentation.screen.details.BarsDetailsFragment
-import kekmech.ru.feature_bars_impl.presentation.screen.login.BarsLoginFragment
+import kekmech.ru.feature_bars_impl.navigation.BarsLoginScreenKey
 import kekmech.ru.feature_bars_impl.presentation.screen.login.elm.Account
 import kekmech.ru.feature_bars_impl.presentation.screen.main_compose.elm.BarsComposeEvent.Internal.CheckAuthStatusFailure
 import kekmech.ru.feature_bars_impl.presentation.screen.main_compose.elm.BarsComposeEvent.Internal.GetMarksFailure
@@ -112,7 +112,7 @@ internal class BarsComposeActor(
 
             is Command.OpenLogin -> actorFlow {
                 withContext(Dispatchers.Main) {
-                    router.executeCommand(AddScreenForward { BarsLoginFragment() })
+                    router.executeCommand(AddScreenForward(BarsLoginScreenKey))
                 }
             }.mapEvents()
 

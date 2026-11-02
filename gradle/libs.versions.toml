@@ -16,7 +16,7 @@ swipeRefreshLayout = "1.1.0"
 fragment = "1.8.9"
 room = "2.8.1"
 
-nav3 = "1.0.0"
+nav3 = "1.1.7"
 # Google Versions
 material = "1.12.0"
 
@@ -69,6 +69,7 @@ androidx-splashscreen = { module = "androidx.core:core-splashscreen", version = 
 
 androidx-navigation3-runtime = { group = "androidx.navigation3", name = "navigation3-runtime", version.ref = "nav3" }
 androidx-navigation3-ui = { group = "androidx.navigation3", name = "navigation3-ui", version.ref = "nav3" }
+androidx-lifecycle-viewmodel-navigation3 = { module = "androidx.lifecycle:lifecycle-viewmodel-navigation3", version = "2.10.0" }
 
 # Google Libraries
 google-material = { module = "com.google.android.material:material", version.ref = "material" }

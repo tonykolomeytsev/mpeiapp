@@ -11,7 +11,7 @@ import kekmech.ru.ext_android.notNullStringArg
 import kekmech.ru.ext_android.withArguments
 import kekmech.ru.ext_kotlin.fastLazy
 import kekmech.ru.feature_notes_impl.di.NotesDependencies
-import kekmech.ru.feature_notes_impl.presentation.screen.edit.NoteEditFragment
+import kekmech.ru.feature_notes_impl.navigation.NoteEditScreenKey
 import kekmech.ru.feature_notes_impl.presentation.screen.note_list.elm.NoteListEffect
 import kekmech.ru.feature_notes_impl.presentation.screen.note_list.elm.NoteListEvent.Ui
 import kekmech.ru.feature_schedule_api.domain.model.Classes
@@ -67,9 +67,7 @@ internal class NoteListFragment : ComposeBottomSheetDialogFragment() {
 
                         is NoteListEffect.OpenNoteEdit -> {
                             close()
-                            router.executeCommand(AddScreenForward {
-                                NoteEditFragment.newInstance(effect.note, resultKey)
-                            })
+                            router.executeCommand(AddScreenForward(NoteEditScreenKey(effect.note, resultKey)))
                         }
                     }
                 }

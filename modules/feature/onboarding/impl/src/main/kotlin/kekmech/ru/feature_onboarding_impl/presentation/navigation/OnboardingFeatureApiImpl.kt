@@ -1,10 +1,14 @@
 package kekmech.ru.feature_onboarding_impl.presentation.navigation
 
-import androidx.fragment.app.Fragment
 import kekmech.ru.feature_onboarding_api.OnboardingFeatureApi
-import kekmech.ru.feature_onboarding_impl.presentation.screen.WelcomeFragment
+import kekmech.ru.lib_navigation.NewRoot
+import kekmech.ru.lib_navigation.Router
 
-internal class OnboardingFeatureApiImpl : OnboardingFeatureApi {
+internal class OnboardingFeatureApiImpl(
+    private val router: Router,
+) : OnboardingFeatureApi {
 
-    override fun getScreen(): Fragment = WelcomeFragment()
+    override fun launch() {
+        router.executeCommand(NewRoot(WelcomeScreenKey))
+    }
 }

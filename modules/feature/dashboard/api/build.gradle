@@ -1,7 +1,0 @@
-plugins {
-    alias(mpeix.plugins.feature.api)
-}
-
-dependencies {
-    aarCompileOnly(libs.androidx.fragment)
-}

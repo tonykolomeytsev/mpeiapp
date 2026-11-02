@@ -14,12 +14,12 @@ val DeeplinkModule = module {
     factory {
         val handlers =
             listOf<DeeplinkHandler>(
-                BarsDeeplinkHandler(get(), get()),
-                MainScreenDeeplinkHandler(get(), get()),
-                MapDeeplinkHandler(get(), get(), get()),
-                ScheduleDeeplinkHandler(get(), get()),
-                SearchScreenDeeplinkHandler(get(), get(), get()),
-                SettingsScreenDeeplinkHandler(get(), get(), get())
+                BarsDeeplinkHandler(get()),
+                MainScreenDeeplinkHandler(get()),
+                MapDeeplinkHandler(get(), get()),
+                ScheduleDeeplinkHandler(get()),
+                SearchScreenDeeplinkHandler(get(), get()),
+                SettingsScreenDeeplinkHandler(get(), get())
             )
         DeeplinkHandlersProcessor(handlers)
     }

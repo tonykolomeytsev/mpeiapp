@@ -8,11 +8,13 @@ import kekmech.ru.feature_map_impl.data.network.MapService
 import kekmech.ru.feature_map_impl.data.repository.MapRepositoryImpl
 import kekmech.ru.feature_map_impl.launcher.DeeplinkDelegate
 import kekmech.ru.feature_map_impl.launcher.MapFeatureLauncherImpl
+import kekmech.ru.feature_map_impl.navigation.MapNavEntries
 import kekmech.ru.feature_map_impl.presentation.screen.main.elm.MapActor
 import kekmech.ru.feature_map_impl.presentation.screen.main.elm.MapStoreFactory
 import kekmech.ru.feature_map_impl.presentation.screen.main.view.MarkersBitmapFactory
 import kekmech.ru.lib_app_lifecycle.MainActivityLifecycleObserver
 import kekmech.ru.lib_emoji.CommonEmojiModule
+import kekmech.ru.lib_navigation.NavEntries
 import kekmech.ru.lib_network.buildApi
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.factoryOf
@@ -34,4 +36,5 @@ val FeatureMapModule = module {
 
     single { get<Retrofit.Builder>().buildApi<MapService>() } bind MapService::class
     factoryOf(::MapRepositoryImpl) bind MapRepository::class
+    factoryOf(::MapNavEntries) bindIntoList NavEntries::class
 }

@@ -108,11 +108,11 @@ public inline fun <reified T : Serializable> ResultController.setResultListener(
  *
  * В отличие от [ResultController.setResultListener], вызванного из `onClick`, подписка
  * восстанавливается при каждом пересоздании композиции (возврат по back stack,
- * поворот экрана, восстановление после смерти процесса), поэтому результат,
- * отправленный пока экран не был виден, будет доставлен после его пересоздания.
+ * поворот экрана, восстановление после смерти процесса). Пока экран не в композиции,
+ * подписки нет, и `FragmentManager` придерживает отправленный результат до тех пор,
+ * пока экран не вернется и не подпишется снова.
  *
- * Вызывай на верхнем уровне экрана, а не внутри условных веток: подписка не снимается
- * при выходе [ResultListener] из композиции, она живет вместе с фрагментом.
+ * Вызывай на верхнем уровне экрана, а не внутри условных веток.
  *
  * ### Пример использования
  * ```kotlin
@@ -144,9 +144,7 @@ public fun <T : Serializable> ResultListener(
     val currentOnResult by rememberUpdatedState(onResult)
     DisposableEffect(resultController, requestKey, resultClass) {
         resultController.setResultListener(requestKey, resultClass) { currentOnResult(it) }
-        // Не отписываемся: при переходе на другой экран view фрагмента уничтожается вместе
-        // с композицией, а результат должен дойти до нас после возврата назад
-        onDispose { }
+        onDispose { resultController.clearResultListener(requestKey) }
     }
 }
 
@@ -189,12 +187,10 @@ internal class FragmentResultController(
     private val fragment: Fragment,
 ) : ResultController {
 
-    // Фрагменты, находящиеся внутри MainFragment (экраны-табы) не могут поймать
-    // Fragment Result отправленный любым другим фрагментом, поэтому для таких экранов
-    // размещаем подписку в родительском FragmentManager (принадл. MainFragment).
-    // Предполагается не более одного уровня вложенности.
+    // Диалоги показываются в FragmentManager'е активити, через него же результатами
+    // обмениваются экраны NavDisplay (см. NavEntryResultController)
     private val listenerFragmentManager: FragmentManager
-        get() = fragment.parentFragment?.parentFragmentManager ?: fragment.parentFragmentManager
+        get() = fragment.parentFragmentManager
 
     override fun <T : Serializable> setResultListener(
         requestKey: String,

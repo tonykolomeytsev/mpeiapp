@@ -1,6 +1,7 @@
 plugins {
     alias(mpeix.plugins.feature.impl.compose)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.kotlin.parcelize)
 }
 
 android.buildFeatures {
@@ -27,6 +28,8 @@ dependencies {
     implementation(libs.vivid.elmslie.android)
     implementation(libs.vivid.elmslie.core)
 
+    implementation(libs.androidx.navigation3.runtime)
+    implementation(project(":ext_koin"))
     implementation(project(":feature_app_settings_api"))
     implementation(project(":feature_main_screen_api"))
     implementation(project(":feature_notes_api"))

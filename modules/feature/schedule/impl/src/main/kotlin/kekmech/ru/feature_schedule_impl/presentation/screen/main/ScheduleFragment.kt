@@ -64,6 +64,18 @@ internal class ScheduleFragment :
         savedStateRegistryOwner = { requireActivity() },
     ) { inject<ScheduleStoreFactory>().value.create() }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        // Подписываемся заранее, а не при открытии заметок: фрагмент пересоздается каждый раз,
+        // когда возвращаемся на таб, и результат ждет в FragmentManager'е активити
+        setResultListener<EmptyResult>(
+            key = NOTES_LIST_RESULT_KEY,
+            resultMapper = Bundle::notNullSerializable,
+        ) {
+            store.accept(Ui.Action.NotesUpdated)
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewBinding.apply {
@@ -99,12 +111,6 @@ internal class ScheduleFragment :
     override fun handleEffect(effect: ScheduleEffect) =
         when (effect) {
             is ScheduleEffect.NavigateToNoteList -> {
-                parentFragment?.setResultListener<EmptyResult>(
-                    key = NOTES_LIST_RESULT_KEY,
-                    resultMapper = Bundle::notNullSerializable,
-                ) {
-                    store.accept(Ui.Action.NotesUpdated)
-                }
                 dependencies.notesFeatureLauncher.launchNoteList(
                     selectedClasses = effect.classes,
                     selectedDate = effect.date,

@@ -2,8 +2,8 @@ package kekmech.ru.feature_notes_impl.launcher
 
 import kekmech.ru.feature_notes_api.NotesFeatureLauncher
 import kekmech.ru.feature_notes_api.domain.model.Note
-import kekmech.ru.feature_notes_impl.presentation.screen.all_notes.AllNotesFragment
-import kekmech.ru.feature_notes_impl.presentation.screen.edit.NoteEditFragment
+import kekmech.ru.feature_notes_impl.navigation.AllNotesScreenKey
+import kekmech.ru.feature_notes_impl.navigation.NoteEditScreenKey
 import kekmech.ru.feature_notes_impl.presentation.screen.note_list.NoteListFragment
 import kekmech.ru.feature_schedule_api.domain.model.Classes
 import kekmech.ru.lib_navigation.AddScreenForward
@@ -29,17 +29,13 @@ internal class NotesFeatureLauncherImpl(
 
     override fun launchNoteEdit(note: Note, resultKey: String) {
         router.executeCommand(
-            AddScreenForward {
-                NoteEditFragment.newInstance(note, resultKey)
-            }
+            AddScreenForward(NoteEditScreenKey(note, resultKey))
         )
     }
 
     override fun launchAllNotes(selectedNote: Note?) {
         router.executeCommand(
-            AddScreenForward {
-                AllNotesFragment.newInstance(selectedNote)
-            }
+            AddScreenForward(AllNotesScreenKey(selectedNote))
         )
     }
 }

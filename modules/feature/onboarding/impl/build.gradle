@@ -1,5 +1,6 @@
 plugins {
     alias(mpeix.plugins.feature.impl.compose)
+    alias(libs.plugins.kotlin.parcelize)
 }
 
 android {
@@ -11,12 +12,12 @@ dependencies {
     implementation(libs.koin.core)
     implementation(libs.koin.compose)
 
+    implementation(libs.androidx.navigation3.runtime)
+    implementation(project(":ext_koin"))
     implementation(project(":feature_onboarding_api"))
     implementation(project(":feature_schedule_api"))
 
-    implementation(project(":ext_kotlin"))
     implementation(project(":lib_navigation"))
-    implementation(project(":lib_fragment"))
 
     implementation(project(":ui_theme"))
     implementation(project(":ui_kit_buttons"))

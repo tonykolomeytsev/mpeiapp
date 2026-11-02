@@ -28,7 +28,7 @@ import kekmech.ru.feature_app_settings_api.AppSettingsFeatureLauncher
 import kekmech.ru.feature_dashboard_impl.R
 import kekmech.ru.feature_dashboard_impl.databinding.FragmentDashboardBinding
 import kekmech.ru.feature_dashboard_impl.di.DashboardDependencies
-import kekmech.ru.feature_dashboard_impl.presentation.eol.EolFragment
+import kekmech.ru.feature_dashboard_impl.navigation.EolScreenKey
 import kekmech.ru.feature_dashboard_impl.presentation.items.BannerEolAdapterItem
 import kekmech.ru.feature_dashboard_impl.presentation.items.BannerLunchAdapterItem
 import kekmech.ru.feature_dashboard_impl.presentation.items.DashboardClassesAdapterItem
@@ -45,9 +45,7 @@ import kekmech.ru.feature_schedule_api.domain.model.SelectedSchedule
 import kekmech.ru.lib_adapter.BaseAdapter
 import kekmech.ru.lib_analytics_android.addScrollAnalytics
 import kekmech.ru.lib_analytics_android.ext.screenAnalytics
-import kekmech.ru.lib_navigation.AddScreenForward
 import kekmech.ru.lib_navigation.BottomTab
-import kekmech.ru.lib_navigation.Router
 import kekmech.ru.lib_navigation.addScreenForward
 import kekmech.ru.lib_navigation.features.ScrollToTop
 import kekmech.ru.lib_navigation.features.TabScreenStateSaver
@@ -68,11 +66,34 @@ internal class DashboardFragment :
     private val adapter by fastLazy { createAdapter() }
     private val analytics by screenAnalytics("Dashboard")
     private val viewBinding by viewBinding(FragmentDashboardBinding::bind)
-    private val router by inject<Router>()
     private val store by androidElmStore(
         viewModelStoreOwner = { requireActivity() },
         savedStateRegistryOwner = { requireActivity() },
     ) { inject<DashboardStoreFactory>().value.create() }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        // Подписываемся заранее, а не по клику: фрагмент пересоздается каждый раз,
+        // когда возвращаемся на таб, и результат ждет в FragmentManager'е активити
+        setResultListener<EmptyResult>(
+            key = NOTES_LIST_RESULT_KEY,
+            resultMapper = Bundle::notNullSerializable,
+        ) {
+            store.accept(DashboardEvent.Ui.Action.SwipeToRefresh)
+        }
+        setResultListener<EmptyResult>(
+            key = EDIT_NOTE_RESULT_KEY,
+            resultMapper = Bundle::notNullSerializable,
+        ) {
+            store.accept(DashboardEvent.Ui.Action.SwipeToRefresh)
+        }
+        setResultListener<SelectedSchedule>(
+            key = FIND_GROUP_RESULT_KEY,
+            resultMapper = Bundle::notNullSerializable,
+        ) {
+            store.accept(DashboardEvent.Ui.Action.SwipeToRefresh)
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -109,12 +130,6 @@ internal class DashboardFragment :
         is DashboardEffect.ShowLoadingError -> showBanner(Strings.dashboard_loading_error)
         is DashboardEffect.ShowNotesLoadingError -> showBanner(Strings.something_went_wrong_error)
         is DashboardEffect.NavigateToNotesList -> {
-            parentFragment?.setResultListener<EmptyResult>(
-                key = NOTES_LIST_RESULT_KEY,
-                resultMapper = Bundle::notNullSerializable,
-            ) {
-                store.accept(DashboardEvent.Ui.Action.SwipeToRefresh)
-            }
             dependencies.notesFeatureLauncher.launchNoteList(
                 selectedClasses = effect.classes,
                 selectedDate = effect.date,
@@ -135,7 +150,7 @@ internal class DashboardFragment :
             dependencies.bottomTabsSwitcher.changeTab(BottomTab.MAP)
         },
         BannerEolAdapterItem {
-            addScreenForward { EolFragment() }
+            addScreenForward(EolScreenKey)
         },
         SectionHeaderAdapterItem(),
         SectionHeaderAdapterItem(SECTION_NOTES_ACTION) {
@@ -148,12 +163,6 @@ internal class DashboardFragment :
         },
         NoteAdapterItem(requireContext()) {
             analytics.sendClick("EditNote")
-            parentFragment?.setResultListener<EmptyResult>(
-                key = EDIT_NOTE_RESULT_KEY,
-                resultMapper = Bundle::notNullSerializable,
-            ) {
-                store.accept(DashboardEvent.Ui.Action.SwipeToRefresh)
-            }
             dependencies.notesFeatureLauncher.launchNoteEdit(
                 note = it,
                 resultKey = EDIT_NOTE_RESULT_KEY
@@ -164,18 +173,10 @@ internal class DashboardFragment :
         DashboardClassesAdapterItem(requireContext(), ::clickOnClasses),
         ScheduleTypeAdapterItem {
             analytics.sendClick("ChangeGroup")
-            parentFragment?.setResultListener<SelectedSchedule>(
-                key = FIND_GROUP_RESULT_KEY,
-                resultMapper = Bundle::notNullSerializable,
-            ) {
-                store.accept(DashboardEvent.Ui.Action.SwipeToRefresh)
-            }
-            router.executeCommand(AddScreenForward {
-                dependencies.scheduleFeatureApi.getSearchGroupScreen(
-                    continueTo = ScheduleFeatureApi.ContinueTo.BACK_WITH_RESULT,
-                    resultKey = FIND_GROUP_RESULT_KEY
-                )
-            })
+            dependencies.scheduleFeatureApi.launchSearchGroup(
+                continueTo = ScheduleFeatureApi.ContinueTo.BACK_WITH_RESULT,
+                resultKey = FIND_GROUP_RESULT_KEY
+            )
         },
         EmptyStateAdapterItem(),
         FavoriteScheduleAdapterItem {
