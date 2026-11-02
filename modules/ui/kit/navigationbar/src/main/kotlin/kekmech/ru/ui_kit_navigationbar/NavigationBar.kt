@@ -119,7 +119,7 @@ public fun RowScope.NavigationBarItem(
     selected: Boolean,
     onClick: () -> Unit,
     icon: @Composable NavigationBarItemIconScope.() -> Unit,
-    label: String,
+    label: String? = null,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
@@ -136,15 +136,13 @@ public fun RowScope.NavigationBarItem(
         },
         modifier = modifier,
         enabled = enabled,
-        label = {
-            Text(
-                text = label,
-            )
+        label = label?.let {
+            { Text(text = it) }
         },
         alwaysShowLabel = true,
         colors = NavigationBarItemDefaults.colors(
-            selectedIconColor = MpeixTheme.palette.onSurface,
-            selectedTextColor = MpeixTheme.palette.onSurface,
+            selectedIconColor = MpeixTheme.palette.primary,
+            selectedTextColor = MpeixTheme.palette.primary,
             indicatorColor = MpeixTheme.palette.surfaceContainer,
             unselectedIconColor = MpeixTheme.palette.onSurfaceVariant,
             unselectedTextColor = MpeixTheme.palette.onSurfaceVariant,

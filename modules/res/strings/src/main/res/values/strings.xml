@@ -107,6 +107,7 @@
     <string name="common_error_handshake_description">Убедитесь в том, что время и дата на телефоне выставлены верно. Это нужно для установки шифрованного соединения. Если это не помогло, срочно сообщите о проблеме разработчикам.</string>
     <string name="common_error_view_title">Ошибка отображения</string>
     <string name="common_error_view_description">Сервер прислал данные, но мы не смогли их обработать. Так может быть, если вы давно не обновляли приложение. Если это не так, сообщите о проблеме разработчикам.</string>
+    <string name="common_error_reload">Попробовать снова</string>
 
     <string name="onboarding_welcome_start_using">Погнали!</string>
     <string name="onboarding_welcome_title_schedule">Смотрите расписания</string>

@@ -14,7 +14,6 @@ secrets {
 android {
     buildFeatures {
         resValues = true
-        viewBinding = true
         androidResources = true
     }
     defaultConfig {
@@ -23,35 +22,42 @@ android {
 }
 
 dependencies {
-    implementation(libs.androidx.coordinatorLayout)
+    implementation(libs.compose.material3)
+
     implementation(libs.androidx.coreKtx)
-    implementation(libs.androidx.recyclerView)
     implementation(libs.google.maps)
-    implementation(libs.google.material)
+    implementation(libs.google.maps.compose)
     implementation(libs.koin.android)
     implementation(libs.koin.core)
+    implementation(libs.koin.compose)
     implementation(libs.squareup.retrofit)
-    implementation(libs.vivid.elmslie.android)
     implementation(libs.vivid.elmslie.core)
     compileOnly(libs.timber)
 
     implementation(libs.androidx.navigation3.runtime)
-    implementation(project(":lib_fragment"))
     implementation(project(":feature_app_settings_api"))
     implementation(project(":feature_map_api"))
 
     implementation(project(":ext_android"))
     implementation(project(":ext_koin"))
     implementation(project(":ext_kotlin"))
-    implementation(project(":lib_adapter"))
+    implementation(project(":ext_okhttp"))
     implementation(project(":lib_analytics_android"))
     implementation(project(":lib_app_lifecycle"))
     implementation(project(":lib_elm"))
+    implementation(project(":lib_elm_compose"))
     implementation(project(":lib_emoji"))
     implementation(project(":lib_navigation"))
     implementation(project(":lib_network"))
     implementation(project(":lib_persistent_cache"))
 
+    implementation(project(":ui_theme"))
+    implementation(project(":ui_kit_buttons"))
+    implementation(project(":ui_kit_lists"))
+    implementation(project(":ui_preview"))
+
+    // Markers are still drawn on a Canvas, with colors and font from coreui
     implementation(project(":coreui"))
+    implementation(project(":res_images"))
     implementation(project(":res_strings"))
 }

@@ -107,6 +107,7 @@
     <string name="common_error_handshake_description">Make sure the time and date on your phone are correct. This is necessary to establish an encrypted connection. If this does not help, please report the problem to the developers immediately.</string>
     <string name="common_error_view_title">Display error</string>
     <string name="common_error_view_description">The server sent data, but we could not process it. So maybe if you haven\'t updated the app for a long time. If this is not the case, please report the problem to the developers.</string>
+    <string name="common_error_reload">Try again</string>
 
     <string name="onboarding_welcome_start_using">Let\'s go!</string>
     <string name="onboarding_welcome_title_schedule">Check your schedule</string>
