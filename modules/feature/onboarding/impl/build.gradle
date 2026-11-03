@@ -13,13 +13,17 @@ dependencies {
     implementation(libs.koin.compose)
 
     implementation(libs.androidx.navigation3.runtime)
+    implementation(libs.compose.activity)
     implementation(project(":ext_koin"))
+    implementation(project(":feature_app_settings_api"))
     implementation(project(":feature_onboarding_api"))
     implementation(project(":feature_schedule_api"))
 
+    implementation(project(":lib_fragment"))
     implementation(project(":lib_navigation"))
 
     implementation(project(":ui_theme"))
     implementation(project(":ui_kit_buttons"))
+    implementation(project(":ui_kit_lists"))
     implementation(project(":res_strings"))
 }

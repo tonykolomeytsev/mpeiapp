@@ -1,6 +1,7 @@
 package kekmech.ru.feature_onboarding_impl.presentation.screen
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,25 +19,39 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import kekmech.ru.feature_onboarding_impl.R
 import kekmech.ru.feature_onboarding_impl.presentation.screen.compose.PromoPager
+import kekmech.ru.feature_onboarding_impl.presentation.screen.compose.SettingsBlock
 import kekmech.ru.ui_kit_buttons.button.Button
 import kekmech.ru.ui_theme.theme.MpeixTheme
 import kekmech.ru.res_strings.R.string as Strings
 
 @Composable
 internal fun WelcomeScreen(
+    darkThemeEnabled: Boolean,
+    languageCode: String,
+    onToggleDarkTheme: (Boolean) -> Unit,
+    onClickLanguage: () -> Unit,
     onContinueClick: () -> Unit,
 ) {
     Scaffold(
         bottomBar = {
-            Button(
-                text = stringResource(Strings.onboarding_welcome_start_using),
-                onClick = onContinueClick,
-                Modifier
-                    .padding(horizontal = 16.dp)
-                    .padding(bottom = 16.dp)
+            Column(
+                modifier = Modifier
                     .navigationBarsPadding()
-                    .fillMaxWidth()
-            )
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+            ) {
+                SettingsBlock(
+                    darkThemeEnabled = darkThemeEnabled,
+                    languageCode = languageCode,
+                    onToggleDarkTheme = onToggleDarkTheme,
+                    onClickLanguage = onClickLanguage,
+                )
+                Button(
+                    text = stringResource(Strings.onboarding_welcome_start_using),
+                    onClick = onContinueClick,
+                    Modifier.fillMaxWidth()
+                )
+            }
         }
     ) { innerPadding ->
         Column(
@@ -61,6 +76,10 @@ internal fun WelcomeScreen(
 private fun WelcomeScreenPreview() {
     MpeixTheme {
         WelcomeScreen(
+            darkThemeEnabled = isSystemInDarkTheme(),
+            languageCode = "ru_RU",
+            onToggleDarkTheme = { /* no-op */ },
+            onClickLanguage = { /* no-op */ },
             onContinueClick = { /* no-op */ },
         )
     }
