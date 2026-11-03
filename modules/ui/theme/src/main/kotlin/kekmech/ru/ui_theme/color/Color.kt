@@ -60,6 +60,8 @@ private val surfaceContainerLowLight = Color(0xFFF5F5F6)
 private val surfaceContainerLight = Color(0xFFEFEFF1)
 private val surfaceContainerHighLight = Color(0xFFE9E9EB)
 private val surfaceContainerHighestLight = Color(0xFFE3E3E5)
+private val floatingContainerLight = surfaceLight
+private val floatingContainerHighLight = surfaceContainerLight
 private val markGreenLight = Color(0xFFC8D9B2)
 private val onMarkGreenLight = Color(0xFF47720C)
 private val markYellowLight = Color(0xFFE6D3B1)
@@ -104,6 +106,8 @@ private val surfaceContainerLowDark = Color(0xFF1F1F20)
 private val surfaceContainerDark = Color(0xFF262628)
 private val surfaceContainerHighDark = Color(0xFF2E2E30)
 private val surfaceContainerHighestDark = Color(0xFF38383A)
+private val floatingContainerDark = surfaceContainerDark
+private val floatingContainerHighDark = surfaceContainerHighestDark
 private val markGreenDark = Color(0xFF47720C)
 private val onMarkGreenDark = Color(0xCCFFFFFF)
 private val markYellowDark = Color(0xFFA7761C)
@@ -122,6 +126,10 @@ public class MpeixPalette internal constructor(
     public val surface: Color,
     public val surfaceContainer: Color,
     public val surfaceContainerHighest: Color,
+    // Containers floating above the content, like the floating nav bar.
+    // In dark theme they are lighter than surface, because shadows are barely visible there
+    public val floatingContainer: Color,
+    public val floatingContainerHigh: Color,
     public val onSurface: Color,
     public val onSurfaceVariant: Color,
     public val outline: Color,
@@ -145,6 +153,8 @@ public val LightMpeixPalette: MpeixPalette = MpeixPalette(
     surface = surfaceLight,
     surfaceContainer = surfaceContainerLight,
     surfaceContainerHighest = surfaceContainerHighestLight,
+    floatingContainer = floatingContainerLight,
+    floatingContainerHigh = floatingContainerHighLight,
     onSurface = onSurfaceLight,
     onSurfaceVariant = onSurfaceVariantLight,
     outline = outlineLight,
@@ -167,6 +177,8 @@ public val DarkMpeixPalette: MpeixPalette = MpeixPalette(
     surface = surfaceDark,
     surfaceContainer = surfaceContainerDark,
     surfaceContainerHighest = surfaceContainerHighestDark,
+    floatingContainer = floatingContainerDark,
+    floatingContainerHigh = floatingContainerHighDark,
     onSurface = onSurfaceDark,
     onSurfaceVariant = onSurfaceVariantDark,
     outline = outlineDark,
@@ -328,6 +340,10 @@ private fun PalettePreview(
             colorItem("Mark\nGreen", palette.markGreen, palette.onMarkGreen)
             colorItem("Mark\nYellow", palette.markYellow, palette.onMarkYellow)
             colorItem("Mark\nRed", palette.markRed, palette.onMarkRed)
+        }
+        Row(Modifier.padding(bottom = 12.dp)) {
+            colorItem("Floating\nContainer", palette.floatingContainer, palette.onSurface)
+            colorItem("Floating\nContainer\nHigh", palette.floatingContainerHigh, palette.onSurface)
         }
     }
 }
