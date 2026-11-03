@@ -36,7 +36,7 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import kekmech.ru.ui_theme.layout.adaptiveContentWidth
 import kekmech.ru.ui_theme.theme.MpeixTheme
@@ -170,12 +170,12 @@ public class FloatingNavBarScope internal constructor(
 }
 
 @Composable
-@Preview
+@PreviewLightDark
 private fun FloatingNavBarPreview() {
     MpeixTheme {
         Box(
             modifier = Modifier
-                .background(MpeixTheme.palette.surfaceContainer)
+                .background(MpeixTheme.palette.surface)
                 .padding(16.dp),
         ) {
             var selectedItemIdx by remember { mutableIntStateOf(0) }
