@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
@@ -113,7 +114,7 @@ public fun ListItem(
             null
         },
         colors = ListItemDefaults.colors(
-            containerColor = MpeixTheme.palette.surface,
+            containerColor = Color.Transparent,
             headlineColor = MpeixTheme.palette.onSurface,
             leadingIconColor = MpeixTheme.palette.onSurfaceVariant,
             overlineColor = MpeixTheme.palette.onSurfaceVariant,
@@ -246,7 +247,7 @@ public object ListItemTrailingContentScope {
 }
 
 @Suppress("StringLiteralDuplication")
-@Preview
+@Preview(backgroundColor = 0xFFFFFFFF, showBackground = true)
 @Composable
 private fun ListItemPreview() {
     MpeixTheme {
@@ -282,7 +283,7 @@ private fun ListItemPreview() {
 }
 
 @Suppress("StringLiteralDuplication")
-@Preview
+@Preview(backgroundColor = 0xFFFFFFFF, showBackground = true)
 @Composable
 private fun ListItemWithLeadingIconPreview() {
     MpeixTheme {
@@ -308,7 +309,7 @@ private fun ListItemWithLeadingIconPreview() {
 }
 
 @Suppress("StringLiteralDuplication")
-@Preview
+@Preview(backgroundColor = 0xFFFFFFFF, showBackground = true)
 @Composable
 private fun ListItemWithLeadingMonogramPreview() {
     MpeixTheme {
@@ -334,7 +335,7 @@ private fun ListItemWithLeadingMonogramPreview() {
 }
 
 @Suppress("StringLiteralDuplication")
-@Preview
+@Preview(backgroundColor = 0xFFFFFFFF, showBackground = true)
 @Composable
 private fun ListItemWithTrailingTextPreview() {
     MpeixTheme {
@@ -365,7 +366,7 @@ private fun ListItemWithTrailingTextPreview() {
     }
 }
 
-@Preview
+@Preview(backgroundColor = 0xFFFFFFFF, showBackground = true)
 @Composable
 private fun ListItemWithSelectionIndicatorPreview() {
     MpeixTheme {
@@ -386,7 +387,7 @@ private fun ListItemWithSelectionIndicatorPreview() {
     }
 }
 
-@Preview
+@Preview(backgroundColor = 0xFFFFFFFF, showBackground = true)
 @Composable
 private fun ListItemWithSwitchPreview() {
     MpeixTheme {
