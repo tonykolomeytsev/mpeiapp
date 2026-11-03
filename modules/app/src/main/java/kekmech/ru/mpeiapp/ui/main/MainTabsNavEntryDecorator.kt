@@ -2,14 +2,16 @@ package kekmech.ru.mpeiapp.ui.main
 
 import android.view.View
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation3.runtime.NavEntryDecorator
 import kekmech.ru.feature_app_settings_api.IsSnowFlakesEnabledFeatureToggle
@@ -19,11 +21,18 @@ import kekmech.ru.lib_navigation.BottomTabsSwitcher
 import kekmech.ru.lib_navigation.ScreenKey
 import kekmech.ru.lib_navigation.bottomTab
 import kekmech.ru.mpeiapp.R
-import kekmech.ru.ui_kit_navigationbar.NavigationBar
-import kekmech.ru.ui_kit_navigationbar.NavigationBarItem
+import kekmech.ru.mpeiapp.ui.main.icons.AccountCircle
+import kekmech.ru.mpeiapp.ui.main.icons.AccountCircleFilled
+import kekmech.ru.mpeiapp.ui.main.icons.CalendarToday
+import kekmech.ru.mpeiapp.ui.main.icons.CalendarTodayFilled
+import kekmech.ru.mpeiapp.ui.main.icons.LocationOn
+import kekmech.ru.mpeiapp.ui.main.icons.LocationOnFilled
+import kekmech.ru.mpeiapp.ui.main.icons.ModeHeat
+import kekmech.ru.mpeiapp.ui.main.icons.ModeHeatFilled
+import kekmech.ru.mpeiapp.ui.main.icons.NavigationIcons
+import kekmech.ru.ui_kit_navigationbar.floating.FloatingNavBar
 import kekmech.ru.ui_theme.theme.MpeixTheme
 import org.koin.compose.koinInject
-import kekmech.ru.res_icons.R.drawable as Icons
 import kekmech.ru.res_strings.R.string as Strings
 
 /**
@@ -65,16 +74,15 @@ private fun MainTabsScaffold(
     content: @Composable () -> Unit,
 ) {
     Box(Modifier.fillMaxSize()) {
-        Column(Modifier.fillMaxSize()) {
-            Box(Modifier.weight(1f)) {
-                content()
-            }
-            MpeixTheme {
-                MainNavigationBar(
-                    selectedTab = selectedTab,
-                    onTabClick = onTabClick,
-                )
-            }
+        // Навигация плавает поверх контента, поэтому экраны табов сами добавляют отступ снизу:
+        // высоту системной навигации + 80dp
+        content()
+        MpeixTheme {
+            MainNavigationBar(
+                selectedTab = selectedTab,
+                onTabClick = onTabClick,
+                modifier = Modifier.align(Alignment.BottomCenter),
+            )
         }
         if (isSnowFlakesEnabled) {
             AndroidView(
@@ -89,28 +97,39 @@ private fun MainTabsScaffold(
 private fun MainNavigationBar(
     selectedTab: BottomTab,
     onTabClick: (BottomTab) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
-    NavigationBar(modifier = Modifier.fillMaxWidth()) {
+    FloatingNavBar(
+        modifier = modifier
+            .navigationBarsPadding()
+            .padding(start = 24.dp, end = 24.dp, bottom = 8.dp),
+    ) {
         BottomTab.entries.forEach { tab ->
-            NavigationBarItem(
+            Tab(
                 selected = tab == selectedTab,
                 onClick = { onTabClick(tab) },
-                icon = {
-                    val painter = painterResource(tab.icon)
-                    Icon(painterSelected = painter, painterUnselected = painter)
-                },
+                iconSelected = tab.iconSelected,
+                iconUnselected = tab.iconUnselected,
                 label = stringResource(tab.label),
             )
         }
     }
 }
 
-private val BottomTab.icon: Int
+private val BottomTab.iconSelected: ImageVector
     get() = when (this) {
-        BottomTab.DASHBOARD -> Icons.ic_navigation_dashboard
-        BottomTab.SCHEDULE -> Icons.ic_navigation_schedule
-        BottomTab.MAP -> Icons.ic_navigation_map
-        BottomTab.PROFILE -> Icons.ic_navigation_profile
+        BottomTab.DASHBOARD -> NavigationIcons.ModeHeatFilled
+        BottomTab.SCHEDULE -> NavigationIcons.CalendarTodayFilled
+        BottomTab.MAP -> NavigationIcons.LocationOnFilled
+        BottomTab.PROFILE -> NavigationIcons.AccountCircleFilled
+    }
+
+private val BottomTab.iconUnselected: ImageVector
+    get() = when (this) {
+        BottomTab.DASHBOARD -> NavigationIcons.ModeHeat
+        BottomTab.SCHEDULE -> NavigationIcons.CalendarToday
+        BottomTab.MAP -> NavigationIcons.LocationOn
+        BottomTab.PROFILE -> NavigationIcons.AccountCircle
     }
 
 private val BottomTab.label: Int

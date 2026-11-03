@@ -1,5 +1,8 @@
 package kekmech.ru.feature_bars_impl.presentation.screen.main_compose
 
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -13,6 +16,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kekmech.ru.feature_bars_impl.presentation.screen.main_compose.compose.DisciplineItem
@@ -35,6 +39,7 @@ internal fun BarsComposeScreen(
     @Suppress("Unused")
     effects: Flow<BarsComposeEffect>,
 ) {
+    val layoutDirection = LocalLayoutDirection.current
     var isRefreshing by remember { mutableStateOf(false) }
     LaunchedEffect(isRefreshing) {
         delay(3000)
@@ -53,7 +58,12 @@ internal fun BarsComposeScreen(
         ) {
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
-                contentPadding = innerPadding,
+                contentPadding = PaddingValues(
+                    start = innerPadding.calculateStartPadding(layoutDirection),
+                    top = innerPadding.calculateTopPadding(),
+                    end = innerPadding.calculateEndPadding(layoutDirection),
+                    bottom = innerPadding.calculateBottomPadding() + 80.dp,
+                ),
             ) {
                 item {
                     UserHeader(

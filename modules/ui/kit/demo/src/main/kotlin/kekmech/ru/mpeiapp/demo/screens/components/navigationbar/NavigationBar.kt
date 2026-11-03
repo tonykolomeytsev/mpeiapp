@@ -3,22 +3,30 @@ package kekmech.ru.mpeiapp.demo.screens.components.navigationbar
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.LocationOn
+import androidx.compose.material.icons.outlined.AccountCircle
+import androidx.compose.material.icons.outlined.DateRange
+import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.LocationOn
 import androidx.compose.material3.ScaffoldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import kekmech.ru.mpeiapp.demo.navigation.NavScreen
 import kekmech.ru.mpeiapp.demo.ui.UiKitScreen
-import kekmech.ru.ui_icons.MpeixIcons
-import kekmech.ru.ui_kit_navigationbar.NavigationBar
-import kekmech.ru.ui_kit_navigationbar.NavigationBarItem
+import kekmech.ru.ui_kit_navigationbar.floating.FloatingNavBar
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -43,52 +51,38 @@ private fun NavigationBarScreen() {
                 .fillMaxSize(),
             contentAlignment = Alignment.BottomCenter,
         ) {
-            var selectedItemIdx by remember { mutableStateOf(0) }
-            NavigationBar(
-                modifier = Modifier.fillMaxWidth(),
+            var selectedItemIdx by remember { mutableIntStateOf(0) }
+            FloatingNavBar(
+                modifier = Modifier
+                    .navigationBarsPadding()
+                    .padding(start = 16.dp, end = 16.dp, bottom = 8.dp),
             ) {
-                NavigationBarItem(
+                Tab(
                     selected = selectedItemIdx == 0,
                     onClick = { selectedItemIdx = 0 },
-                    icon = {
-                        Icon(
-                            painterSelected = MpeixIcons.WhatshotBlack24,
-                            painterUnselected = MpeixIcons.WhatshotOutline24,
-                        )
-                    },
+                    iconSelected = Icons.Filled.Home,
+                    iconUnselected = Icons.Outlined.Home,
                     label = "Главная",
                 )
-                NavigationBarItem(
+                Tab(
                     selected = selectedItemIdx == 1,
                     onClick = { selectedItemIdx = 1 },
-                    icon = {
-                        Icon(
-                            painterSelected = MpeixIcons.EventBlack24,
-                            painterUnselected = MpeixIcons.EventOutline24,
-                        )
-                    },
+                    iconSelected = Icons.Filled.DateRange,
+                    iconUnselected = Icons.Outlined.DateRange,
                     label = "Расписание",
                 )
-                NavigationBarItem(
+                Tab(
                     selected = selectedItemIdx == 2,
                     onClick = { selectedItemIdx = 2 },
-                    icon = {
-                        Icon(
-                            painterSelected = MpeixIcons.ExploreBlack24,
-                            painterUnselected = MpeixIcons.ExploreOutline24,
-                        )
-                    },
+                    iconSelected = Icons.Filled.LocationOn,
+                    iconUnselected = Icons.Outlined.LocationOn,
                     label = "Карта",
                 )
-                NavigationBarItem(
+                Tab(
                     selected = selectedItemIdx == 3,
                     onClick = { selectedItemIdx = 3 },
-                    icon = {
-                        Icon(
-                            painterSelected = MpeixIcons.AccountBlack24,
-                            painterUnselected = MpeixIcons.AccountOutline24,
-                        )
-                    },
+                    iconSelected = Icons.Filled.AccountCircle,
+                    iconUnselected = Icons.Outlined.AccountCircle,
                     label = "Профиль",
                 )
             }

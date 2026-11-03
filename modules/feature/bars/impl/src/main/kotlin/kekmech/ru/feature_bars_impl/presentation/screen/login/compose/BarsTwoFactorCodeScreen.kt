@@ -31,7 +31,8 @@ import kekmech.ru.feature_bars_impl.presentation.screen.login.elm.BarsTwoFactorC
 import kekmech.ru.feature_bars_impl.presentation.screen.login.elm.CodeProvider
 import kekmech.ru.feature_bars_impl.presentation.screen.login.elm.CodeState
 import kekmech.ru.lib_elm_compose.EffectHandler
-import kekmech.ru.ui_kit_buttons.LegacyButton
+import kekmech.ru.ui_kit_buttons.button.Button
+import kekmech.ru.ui_kit_buttons.button.ButtonState
 import kekmech.ru.ui_kit_topappbar.TopAppBar
 import kekmech.ru.ui_theme.theme.MpeixTheme
 import kotlinx.coroutines.flow.Flow
@@ -59,11 +60,10 @@ internal fun BarsTwoFactorCodeScreen(
             val isContinueEnabled by remember {
                 derivedStateOf { code.isNotEmpty() }
             }
-            LegacyButton(
+            Button(
                 text = "Продолжить",
-                onClick = { onAccept(Ui.Click.SubmitCode(code)) },
-                enabled = isContinueEnabled,
-                loading = state.isLoading,
+                onClick = { if (isContinueEnabled) onAccept(Ui.Click.SubmitCode(code)) },
+                state = if (state.isLoading) ButtonState.Loading else ButtonState.Default,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp)

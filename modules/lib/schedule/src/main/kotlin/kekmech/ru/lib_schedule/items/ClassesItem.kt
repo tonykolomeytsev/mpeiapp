@@ -124,7 +124,7 @@ public open class ClassesViewHolderImpl(
 
     private companion object {
 
-        private const val PROGRESS_BACKGROUND_CORNER_RADIUS = 7f
+        private const val PROGRESS_BACKGROUND_CORNER_RADIUS = 11f
     }
 }
 
@@ -206,7 +206,7 @@ public class ClassesItemBinder(
     }
 
     private companion object {
-        private val SUBGROUP_MARKER_PATTERN = """\\\d(п|П)""".toRegex()
+        private val SUBGROUP_MARKER_PATTERN = """\\\d([пП])""".toRegex()
     }
 }
 

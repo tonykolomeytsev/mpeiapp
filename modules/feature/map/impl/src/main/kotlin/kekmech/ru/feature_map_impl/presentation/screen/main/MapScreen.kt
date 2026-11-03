@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -67,7 +68,7 @@ import kekmech.ru.res_strings.R.string as Strings
 
 private const val MAP_START_UP_DELAY = 100L // ms
 private const val MAX_OVERLAY_ALPHA = 0.5f
-private val SheetPeekHeight = 120.dp
+private val SheetPeekHeight = 200.dp
 private val SheetCornerRadius = 16.dp
 
 internal sealed interface MapAction {
@@ -150,8 +151,11 @@ internal fun MapScreen(
     BoxWithConstraints(Modifier.fillMaxSize()) {
         // Expanded sheet stops under the status bar, while the map is drawn behind it
         val statusBarHeight = WindowInsets.statusBars.asPaddingValues().calculateTopPadding()
+        // Collapsed sheet peeks above the floating navigation bar
+        val navigationBarHeight = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
+        val sheetPeekHeight = SheetPeekHeight + navigationBarHeight
         val sheetHeight = maxHeight - statusBarHeight
-        val collapsedOffset = with(density) { (maxHeight - SheetPeekHeight).toPx() }
+        val collapsedOffset = with(density) { (maxHeight - sheetPeekHeight).toPx() }
         val expandedOffset = with(density) { statusBarHeight.toPx() }
         val cornerRadius by animateDpAsState(
             targetValue = if (sheetState.currentValue == SheetValue.Expanded) 0.dp else SheetCornerRadius,
@@ -171,7 +175,7 @@ internal fun MapScreen(
                 )
             },
             scaffoldState = scaffoldState,
-            sheetPeekHeight = SheetPeekHeight,
+            sheetPeekHeight = sheetPeekHeight,
             sheetMaxWidth = ContentMaxWidth,
             sheetShape = RoundedCornerShape(topStart = cornerRadius, topEnd = cornerRadius),
             sheetContainerColor = MpeixTheme.palette.surface,
@@ -194,7 +198,7 @@ internal fun MapScreen(
                         cameraPositionState = cameraPositionState,
                         mapAppearanceType = mapAppearanceType,
                         markerIcon = markerIcon,
-                        bottomPadding = SheetPeekHeight,
+                        bottomPadding = sheetPeekHeight,
                         onMapLoaded = { onAction(MapAction.MapLoaded) },
                         modifier = Modifier.fillMaxSize(),
                     )

@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 
-private val CornerRadius = 8.dp
+private val CornerRadius = 12.dp
 private val FoldSize = 24.dp
 
 /**

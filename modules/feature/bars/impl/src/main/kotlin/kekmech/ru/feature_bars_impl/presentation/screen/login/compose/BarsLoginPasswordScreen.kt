@@ -39,7 +39,8 @@ import kekmech.ru.feature_bars_impl.presentation.screen.login.elm.BarsLoginEvent
 import kekmech.ru.feature_bars_impl.presentation.screen.login.elm.BarsLoginEvent.Ui
 import kekmech.ru.feature_bars_impl.presentation.screen.login.elm.BarsLoginPasswordState
 import kekmech.ru.lib_elm_compose.EffectHandler
-import kekmech.ru.ui_kit_buttons.LegacyButton
+import kekmech.ru.ui_kit_buttons.button.Button
+import kekmech.ru.ui_kit_buttons.button.ButtonState
 import kekmech.ru.ui_kit_topappbar.TopAppBar
 import kekmech.ru.ui_theme.theme.MpeixTheme
 import kotlinx.coroutines.flow.Flow
@@ -65,11 +66,10 @@ internal fun BarsLoginPasswordScreen(
             val isContinueEnabled by remember {
                 derivedStateOf { login.isNotEmpty() && password.isNotEmpty() }
             }
-            LegacyButton(
+            Button(
                 text = "Продолжить",
-                onClick = { onAccept(Ui.Click.SubmitLoginPassword(login, password)) },
-                enabled = isContinueEnabled,
-                loading = state.isLoading,
+                onClick = { if (isContinueEnabled) onAccept(Ui.Click.SubmitLoginPassword(login, password)) },
+                state = if (state.isLoading) ButtonState.Loading else ButtonState.Default,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp)
