@@ -5,6 +5,7 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import kekmech.ru.ext_android.EmptyResult
+import kekmech.ru.ext_android.addSystemBottomMargin
 import kekmech.ru.ext_android.addSystemTopPadding
 import kekmech.ru.ext_android.getStringArray
 import kekmech.ru.ext_android.notNullSerializable
@@ -93,6 +94,7 @@ internal class ScheduleFragment :
             appBarLayout.outlineProvider = null
             appBarLayout.addSystemTopPadding()
             fab.setOnClickListener { store.accept(Ui.Click.FAB) }
+            fab.addSystemBottomMargin()
         }
     }
 

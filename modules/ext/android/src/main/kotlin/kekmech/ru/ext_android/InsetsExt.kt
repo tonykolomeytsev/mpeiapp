@@ -1,8 +1,10 @@
 package kekmech.ru.ext_android
 
 import android.view.View
+import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 
 public fun View.doOnApplyWindowInsets(f: (View, WindowInsetsCompat, InitialPadding) -> Unit) {
@@ -54,5 +56,22 @@ public fun View.addSystemTopPadding() {
     doOnApplyWindowInsets { view, insets, padding ->
         val systemBarsInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
         view.updatePadding(top = padding.top + systemBarsInsets.top)
+    }
+}
+
+public fun View.addSystemBottomPadding() {
+    doOnApplyWindowInsets { view, insets, padding ->
+        val systemBarsInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+        view.updatePadding(bottom = padding.bottom + systemBarsInsets.bottom)
+    }
+}
+
+public fun View.addSystemBottomMargin() {
+    val initialMargin = (layoutParams as ViewGroup.MarginLayoutParams).bottomMargin
+    doOnApplyWindowInsets { view, insets, _ ->
+        val systemBarsInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+        view.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+            bottomMargin = initialMargin + systemBarsInsets.bottom
+        }
     }
 }

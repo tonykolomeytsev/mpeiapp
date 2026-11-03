@@ -6,6 +6,7 @@ import kekmech.ru.coreui.items.EmptyStateAdapterItem
 import kekmech.ru.coreui.items.ErrorStateAdapterItem
 import kekmech.ru.coreui.items.ShimmerAdapterItem
 import kekmech.ru.coreui.items.SpaceAdapterItem
+import kekmech.ru.ext_android.addSystemBottomPadding
 import kekmech.ru.ext_android.openLinkExternal
 import kekmech.ru.ext_kotlin.fastLazy
 import kekmech.ru.feature_schedule_api.domain.model.Classes
@@ -70,6 +71,7 @@ internal class WorkingDayViewHolder(
 
     init {
         viewBinding.recyclerView.adapter = adapter
+        viewBinding.recyclerView.addSystemBottomPadding()
     }
 
     fun update(list: List<Any>) {
