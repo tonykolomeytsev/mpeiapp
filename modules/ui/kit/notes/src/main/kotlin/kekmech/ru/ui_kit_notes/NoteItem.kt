@@ -97,7 +97,7 @@ public fun NoteItemShimmer(modifier: Modifier = Modifier) {
             .height(88.dp)
             .background(
                 color = MpeixTheme.palette.outlineVariant,
-                shape = RoundedCornerShape(8.dp),
+                shape = RoundedCornerShape(12.dp),
             ),
     )
 }

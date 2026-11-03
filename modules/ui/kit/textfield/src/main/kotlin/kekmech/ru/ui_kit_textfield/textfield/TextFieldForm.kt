@@ -27,7 +27,7 @@ public sealed class TextFieldForm {
     internal abstract val labelLineHeight: TextUnit @Composable @ReadOnlyComposable get
 
     public data object Filled : TextFieldForm() {
-        override val shape: Shape @Composable @ReadOnlyComposable get() = RoundedCornerShape(topStart = 4.dp, topEnd = 4.dp)
+        override val shape: Shape @Composable @ReadOnlyComposable get() = RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp)
         override val textStyle: TextStyle @Composable @ReadOnlyComposable get() = MpeixTheme.typography.bodyLarge
         override val supportingTextStyle: TextStyle @Composable @ReadOnlyComposable get() = MpeixTheme.typography.bodySmall
         override val labelLineHeight: TextUnit @Composable @ReadOnlyComposable get() = 16.sp

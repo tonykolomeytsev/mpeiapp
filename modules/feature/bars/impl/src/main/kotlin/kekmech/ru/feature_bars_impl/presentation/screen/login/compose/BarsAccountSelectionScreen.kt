@@ -22,7 +22,8 @@ import kekmech.ru.feature_bars_impl.presentation.screen.login.elm.BarsAccountSel
 import kekmech.ru.feature_bars_impl.presentation.screen.login.elm.BarsLoginEffect
 import kekmech.ru.feature_bars_impl.presentation.screen.login.elm.BarsLoginEvent
 import kekmech.ru.feature_bars_impl.presentation.screen.login.elm.BarsLoginEvent.Ui
-import kekmech.ru.ui_kit_buttons.LegacyButton
+import kekmech.ru.ui_kit_buttons.button.Button
+import kekmech.ru.ui_kit_buttons.button.ButtonState
 import kekmech.ru.ui_kit_topappbar.TopAppBar
 import kekmech.ru.ui_shimmer.shimmer
 import kekmech.ru.ui_theme.theme.MpeixTheme
@@ -46,11 +47,10 @@ internal fun BarsAccountSelectionScreen(
             )
         },
         bottomBar = {
-            LegacyButton(
+            Button(
                 text = "Продолжить",
-                onClick = { onAccept(Ui.Click.SubmitAccountName) },
-                enabled = state.selectedAccountId != null,
-                loading = state.isLoading,
+                onClick = { if (state.selectedAccountId != null) onAccept(Ui.Click.SubmitAccountName) },
+                state = if (state.isLoading) ButtonState.Loading else ButtonState.Default,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp)

@@ -30,7 +30,7 @@ public sealed class ButtonForm {
         override val internalVerticalPadding: Dp @Composable @ReadOnlyComposable get() = 12.dp
         override val progressDotSize: Dp @Composable @ReadOnlyComposable get() = 8.dp
         override val progressDotSpacing: Dp @Composable @ReadOnlyComposable get() = 16.dp
-        override val shape: Shape @Composable @ReadOnlyComposable get() = RoundedCornerShape(8.dp)
+        override val shape: Shape @Composable @ReadOnlyComposable get() = RoundedCornerShape(12.dp)
         override val textStyle: TextStyle @Composable @ReadOnlyComposable get() = MpeixTheme.typography.labelLarge
     }
 }

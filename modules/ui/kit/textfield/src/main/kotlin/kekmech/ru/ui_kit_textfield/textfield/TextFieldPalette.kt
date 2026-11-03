@@ -27,7 +27,7 @@ public sealed class TextFieldPalette {
     internal abstract val error: Color @Composable @ReadOnlyComposable get
 
     public data object Default : TextFieldPalette() {
-        override val container: Color @Composable @ReadOnlyComposable get() = MpeixTheme.palette.surfaceContainerHighest
+        override val container: Color @Composable @ReadOnlyComposable get() = MpeixTheme.palette.surfaceContainer
         override val disabledContainer: Color @Composable @ReadOnlyComposable get() = MpeixTheme.palette.onSurface.copy(alpha = 0.04f)
         override val text: Color @Composable @ReadOnlyComposable get() = MpeixTheme.palette.onSurface
         override val disabledContent: Color @Composable @ReadOnlyComposable get() = MpeixTheme.palette.onSurface.copy(alpha = 0.38f)
