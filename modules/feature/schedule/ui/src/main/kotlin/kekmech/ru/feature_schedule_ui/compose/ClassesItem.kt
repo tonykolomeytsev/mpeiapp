@@ -9,7 +9,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -34,6 +36,9 @@ private val TimeFormatter = DateTimeFormatter.ofPattern("HH:mm")
 private val TimeColumnWidth = 80.dp
 private val ItemShape = RoundedCornerShape(12.dp)
 private val ChipShape = RoundedCornerShape(12.dp)
+private val LectureTagColor = Color(0xFF578B0F)
+private val PracticeTagColor = Color(0xFFFFC954)
+private val LabTagColor = Color(0xFFDB4437)
 private val NoteShape = RoundedCornerShape(topStart = 3.dp, topEnd = 16.dp, bottomEnd = 16.dp, bottomStart = 16.dp)
 
 /**
@@ -141,17 +146,27 @@ private fun ClassesInfo(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(4.dp),
     ) {
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
             Chip(
                 text = classesNumbers.getOrElse(model.number) { classesNumbers[0] },
                 containerColor = MpeixTheme.palette.outlineVariant,
                 contentColor = MpeixTheme.palette.onSurface,
             )
-            val (containerColor, contentColor) = model.type.chipColors()
-            Chip(
-                text = classesTypeName(model.type, model.rawType, classesTypes),
-                containerColor = containerColor,
-                contentColor = contentColor,
+            Box(
+                modifier = Modifier
+                    .size(16.dp)
+                    .background(model.type.tagColor(), CircleShape),
+            )
+            Text(
+                text = classesTypeName(model.type, model.rawType, classesTypes).uppercase(),
+                style = MpeixTheme.typography.labelSmall,
+                fontWeight = FontWeight.Bold,
+                color = MpeixTheme.palette.onSurface,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
             )
         }
         Text(
@@ -194,13 +209,17 @@ private fun Chip(
     )
 }
 
+/**
+ * Color of the classes type circle. Same colors as in the old RecyclerView item,
+ * they don't depend on the theme.
+ */
 @Composable
-private fun ClassesType.chipColors(): Pair<Color, Color> =
+private fun ClassesType.tagColor(): Color =
     when (this) {
-        ClassesType.LECTURE -> MpeixTheme.palette.markGreen to MpeixTheme.palette.onMarkGreen
-        ClassesType.PRACTICE -> MpeixTheme.palette.markYellow to MpeixTheme.palette.onMarkYellow
-        ClassesType.LAB -> MpeixTheme.palette.markRed to MpeixTheme.palette.onMarkRed
-        else -> MpeixTheme.palette.outlineVariant to MpeixTheme.palette.onSurface
+        ClassesType.LECTURE -> LectureTagColor
+        ClassesType.PRACTICE -> PracticeTagColor
+        ClassesType.LAB -> LabTagColor
+        else -> MpeixTheme.palette.outlineVariant
     }
 
 @Composable
