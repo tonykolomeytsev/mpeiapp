@@ -4,6 +4,7 @@ plugins {
 
 dependencies {
     implementation(libs.compose.material3)
+    implementation(libs.compose.material.icons)
     implementation(project(":ui_kit_switch"))
     implementation(project(":ui_theme"))
 
