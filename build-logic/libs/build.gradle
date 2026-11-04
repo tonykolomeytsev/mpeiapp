@@ -30,6 +30,10 @@ gradlePlugin {
         id = "mpeix.feature.api"
         implementationClass = "mpeix.plugins.FeatureApiConventionPlugin"
     }
+    plugins.create("FeatureUiConventionPlugin") {
+        id = "mpeix.feature.ui"
+        implementationClass = "mpeix.plugins.FeatureUiConventionPlugin"
+    }
     plugins.create("LibAndroidConventionPlugin") {
         id = "mpeix.lib.android"
         implementationClass = "mpeix.plugins.LibAndroidConventionPlugin"

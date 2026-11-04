@@ -2,12 +2,13 @@ package mpeix.plugins
 
 import com.android.build.api.dsl.ApplicationExtension
 import mpeix.plugins.ext.configure
-import org.gradle.api.Plugin
-import org.gradle.api.Project
-import mpeix.plugins.setup.Plugins
+import mpeix.plugins.features.compose.configureAndroidCompose
 import mpeix.plugins.features.globalconfig.getAndroidProjectConfiguration
 import mpeix.plugins.features.unittesting.setupUnitTests
+import mpeix.plugins.setup.Plugins
 import org.gradle.api.JavaVersion
+import org.gradle.api.Plugin
+import org.gradle.api.Project
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
 import java.io.File
@@ -21,6 +22,7 @@ internal abstract class AppConventionPlugin : Plugin<Project> {
         }
 
         val config = getAndroidProjectConfiguration()
+        configureAndroidCompose(config)
         extensions.configure<ApplicationExtension> {
             compileSdk = config.targetSdk.get()
             buildToolsVersion = config.buildToolsVersion.get()
@@ -43,7 +45,7 @@ internal abstract class AppConventionPlugin : Plugin<Project> {
             }
 
             with(buildFeatures) {
-                compose = false
+                compose = true
                 viewBinding = false
                 shaders = false
                 resValues = true

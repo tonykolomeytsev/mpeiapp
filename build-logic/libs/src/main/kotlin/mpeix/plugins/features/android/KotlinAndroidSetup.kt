@@ -3,7 +3,7 @@ package mpeix.plugins.features.android
 import com.android.build.api.dsl.LibraryExtension
 import com.android.build.api.variant.LibraryAndroidComponentsExtension
 import mpeix.plugins.ext.configure
-import mpeix.plugins.features.globalconfig.getAndroidProjectConfiguration
+import mpeix.plugins.features.globalconfig.AndroidProjectConfigurationExtension
 import mpeix.plugins.features.unittesting.setupUnitTests
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
@@ -15,10 +15,10 @@ context(
     extension: LibraryExtension,
 )
 internal fun configureKotlinAndroid(
+    config: AndroidProjectConfigurationExtension,
     explicitApi: Boolean,
 ) {
     project.setupUnitTests()
-    val config = project.getAndroidProjectConfiguration()
     with(extension) {
         compileSdk = config.targetSdk.get()
         buildToolsVersion = config.buildToolsVersion.get()
@@ -50,12 +50,14 @@ internal fun configureKotlinAndroid(
     )
 }
 
-internal fun Project.configureAndroidNamespace(
+context(
+    project: Project,
     extension: LibraryExtension,
-) {
+)
+internal fun configureAndroidNamespace() {
     // у нас есть модули с именами типа instaledApp, pushNotification
     // А имена пакетов требуют lowercase()
-    extension.namespace = "kekmech.ru.${name.lowercase().replace('-', '.')}"
+    extension.namespace = "kekmech.ru.${project.name.lowercase().replace('-', '.')}"
 }
 
 internal fun LibraryAndroidComponentsExtension.enableOnlyDebugBuildType() {

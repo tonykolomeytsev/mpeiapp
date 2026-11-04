@@ -2,17 +2,16 @@ package mpeix.plugins.features.compose
 
 import mpeix.plugins.ext.configure
 import mpeix.plugins.ext.configureLazy
-import mpeix.plugins.features.globalconfig.getAndroidProjectConfiguration
+import mpeix.plugins.features.globalconfig.AndroidProjectConfigurationExtension
 import mpeix.plugins.setup.Plugins
 import org.gradle.api.Project
 import org.jetbrains.kotlin.compose.compiler.gradle.ComposeCompilerGradlePluginExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-internal fun Project.configureAndroidCompose() {
+internal fun Project.configureAndroidCompose(config: AndroidProjectConfigurationExtension) {
     // Compose compiler plugin will override the coordinates of the Compose
     // compiler supplied automatically by AGP
     plugins.apply(Plugins.ComposeCompiler)
-    val config = getAndroidProjectConfiguration()
     tasks.configureLazy<KotlinCompile> {
         compilerOptions {
             freeCompilerArgs.addAll(getOptInCompilerArgs())
@@ -27,6 +26,10 @@ internal fun Project.configureAndroidCompose() {
             reportsDestination.set(metricsDir)
             metricsDestination.set(metricsDir)
         }
+        stabilityConfigurationFiles.add(
+            rootProject.layout.projectDirectory
+                .file("gradle/compose-stability-config.conf")
+        )
     }
     config.defaultComposeDependencies.orNull?.execute(dependencies)
 }
