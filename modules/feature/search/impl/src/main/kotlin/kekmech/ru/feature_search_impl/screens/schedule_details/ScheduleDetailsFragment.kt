@@ -21,6 +21,8 @@ import kekmech.ru.ext_android.withArguments
 import kekmech.ru.ext_kotlin.fastLazy
 import kekmech.ru.feature_schedule_api.domain.model.Classes
 import kekmech.ru.feature_schedule_api.domain.model.SearchResult
+import kekmech.ru.feature_schedule_ui.items.ClassesItemBinder
+import kekmech.ru.feature_schedule_ui.items.ClassesViewHolderImpl
 import kekmech.ru.feature_search_impl.R
 import kekmech.ru.feature_search_impl.databinding.FragmentScheduleDetailsBinding
 import kekmech.ru.feature_search_impl.item.ButtonAdapterItem
@@ -36,13 +38,11 @@ import kekmech.ru.lib_adapter.BaseAdapter
 import kekmech.ru.lib_analytics_android.ext.screenAnalytics
 import kekmech.ru.lib_navigation.BottomTab
 import kekmech.ru.lib_navigation.BottomTabsSwitcher
-import kekmech.ru.lib_schedule.items.ClassesItemBinder
-import kekmech.ru.lib_schedule.items.ClassesViewHolderImpl
 import money.vivid.elmslie.android.renderer.ElmRendererDelegate
 import money.vivid.elmslie.android.renderer.androidElmStore
 import org.koin.android.ext.android.inject
 import kekmech.ru.coreui.R as coreui_R
-import kekmech.ru.lib_schedule.R as common_schedule_R
+import kekmech.ru.feature_schedule_ui.R as common_schedule_R
 
 private const val ARG_RESULT_ITEM = "Arg.Item"
 internal const val ITEM_BUTTON_SWITCH = 1

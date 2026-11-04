@@ -1,17 +1,17 @@
 package mpeix.plugins
 
-import com.android.build.api.variant.LibraryAndroidComponentsExtension
 import com.android.build.api.dsl.LibraryExtension
+import com.android.build.api.variant.LibraryAndroidComponentsExtension
 import mpeix.plugins.ext.configure
 import mpeix.plugins.features.android.configureAndroidNamespace
 import mpeix.plugins.features.android.configureKotlinAndroid
 import mpeix.plugins.features.android.disableAndroidTestTasks
 import mpeix.plugins.features.android.enableOnlyDebugBuildType
 import mpeix.plugins.features.compose.configureAndroidCompose
+import mpeix.plugins.features.globalconfig.getAndroidProjectConfiguration
+import mpeix.plugins.setup.Plugins
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import mpeix.plugins.setup.Plugins
-import org.jetbrains.kotlin.compose.compiler.gradle.ComposeCompilerGradlePluginExtension
 
 internal abstract class FeatureImplComposeConventionPlugin : Plugin<Project> {
 
@@ -20,10 +20,12 @@ internal abstract class FeatureImplComposeConventionPlugin : Plugin<Project> {
             apply(Plugins.AndroidLibrary)
             apply(Plugins.GradleAndroidCacheFix)
         }
-        configureAndroidCompose()
+
+        val config = getAndroidProjectConfiguration()
+        configureAndroidCompose(config)
         extensions.configure<LibraryExtension> {
-            configureAndroidNamespace(this)
-            configureKotlinAndroid(explicitApi = false)
+            configureAndroidNamespace()
+            configureKotlinAndroid(config, explicitApi = false)
 
             androidResources.enable = false
             with(buildFeatures) {
@@ -38,11 +40,7 @@ internal abstract class FeatureImplComposeConventionPlugin : Plugin<Project> {
             enableOnlyDebugBuildType()
             disableAndroidTestTasks()
         }
-        extensions.configure<ComposeCompilerGradlePluginExtension> {
-            stabilityConfigurationFiles.add(
-                rootProject.layout.projectDirectory
-                    .file("gradle/compose-stability-config.conf")
-            )
-        }
+        config.defaultDependencies.orNull?.execute(dependencies)
+        config.defaultAndroidDependencies.orNull?.execute(dependencies)
     }
 }

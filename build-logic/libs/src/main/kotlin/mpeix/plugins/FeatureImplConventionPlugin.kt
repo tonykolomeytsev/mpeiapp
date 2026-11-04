@@ -1,15 +1,16 @@
 package mpeix.plugins
 
-import com.android.build.api.variant.LibraryAndroidComponentsExtension
 import com.android.build.api.dsl.LibraryExtension
+import com.android.build.api.variant.LibraryAndroidComponentsExtension
 import mpeix.plugins.ext.configure
 import mpeix.plugins.features.android.configureAndroidNamespace
 import mpeix.plugins.features.android.configureKotlinAndroid
 import mpeix.plugins.features.android.disableAndroidTestTasks
 import mpeix.plugins.features.android.enableOnlyDebugBuildType
+import mpeix.plugins.features.globalconfig.getAndroidProjectConfiguration
+import mpeix.plugins.setup.Plugins
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import mpeix.plugins.setup.Plugins
 
 internal abstract class FeatureImplConventionPlugin : Plugin<Project> {
 
@@ -19,9 +20,10 @@ internal abstract class FeatureImplConventionPlugin : Plugin<Project> {
             apply(Plugins.GradleAndroidCacheFix)
         }
 
+        val config = getAndroidProjectConfiguration()
         extensions.configure<LibraryExtension> {
-            configureAndroidNamespace(this)
-            configureKotlinAndroid(explicitApi = false)
+            configureAndroidNamespace()
+            configureKotlinAndroid(config, explicitApi = false)
 
             androidResources.enable = false
             with(buildFeatures) {
@@ -36,5 +38,7 @@ internal abstract class FeatureImplConventionPlugin : Plugin<Project> {
             enableOnlyDebugBuildType()
             disableAndroidTestTasks()
         }
+        config.defaultDependencies.orNull?.execute(dependencies)
+        config.defaultAndroidDependencies.orNull?.execute(dependencies)
     }
 }

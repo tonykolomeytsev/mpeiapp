@@ -17,6 +17,7 @@ dependencies {
     implementation(libs.facebook.shimmer)
     implementation(libs.google.material)
     implementation(libs.compose.material3)
+    implementation(libs.compose.material.icons)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.koin.android)
     implementation(libs.koin.core)
@@ -40,12 +41,12 @@ dependencies {
     implementation(project(":lib_elm_compose"))
     implementation(project(":lib_fragment"))
     implementation(project(":lib_navigation"))
-    implementation(project(":lib_schedule"))
+    implementation(project(":feature_schedule_ui"))
 
     implementation(project(":ui_theme"))
     implementation(project(":ui_preview"))
     implementation(project(":ui_kit_lists"))
-    implementation(project(":ui_kit_notes"))
+    implementation(project(":feature_notes_ui"))
 
     implementation(project(":coreui"))
     implementation(project(":res_icons"))

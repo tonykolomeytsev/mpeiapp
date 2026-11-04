@@ -1,5 +1,6 @@
 package kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm
 
+import androidx.compose.runtime.Immutable
 import kekmech.ru.feature_dashboard_impl.domain.model.UpcomingEventsPrediction
 import kekmech.ru.feature_favorite_schedule_api.domain.model.FavoriteSchedule
 import kekmech.ru.feature_notes_api.domain.model.Note
@@ -9,6 +10,7 @@ import kekmech.ru.feature_schedule_api.domain.model.WeekOfSemester
 import kekmech.ru.lib_elm.Resource
 import java.time.LocalDate
 
+@Immutable
 internal data class DashboardState(
     val selectedSchedule: SelectedSchedule,
     val weekOfSemester: Resource<WeekOfSemester> = Resource.Loading,

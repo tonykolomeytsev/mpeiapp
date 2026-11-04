@@ -35,10 +35,10 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import kekmech.ru.feature_notes_api.domain.model.Note
 import kekmech.ru.feature_notes_impl.presentation.compose.lazyKey
+import kekmech.ru.feature_notes_ui.NoteItem
 import kekmech.ru.ui_kit_dialogs.BottomSheet
 import kekmech.ru.ui_kit_lists.SectionHeader
 import kekmech.ru.ui_kit_lists.SwipeToDeleteItem
-import kekmech.ru.ui_kit_notes.NoteItem
 import kekmech.ru.ui_preview.MpeixPreview
 import kekmech.ru.ui_theme.theme.MpeixTheme
 import java.time.LocalDateTime

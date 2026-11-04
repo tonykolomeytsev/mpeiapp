@@ -4,12 +4,12 @@ import android.content.Context
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import kekmech.ru.ext_kotlin.fastLazy
+import kekmech.ru.feature_schedule_ui.items.DayAdapterItem
+import kekmech.ru.feature_schedule_ui.items.DayItem
 import kekmech.ru.feature_search_impl.R
 import kekmech.ru.feature_search_impl.databinding.ItemWeekMinBinding
 import kekmech.ru.lib_adapter.BaseAdapter
 import kekmech.ru.lib_adapter.BaseItemBinder
-import kekmech.ru.lib_schedule.items.DayAdapterItem
-import kekmech.ru.lib_schedule.items.DayItem
 
 internal data class WeekMinItem(
     val days: List<DayItem>,

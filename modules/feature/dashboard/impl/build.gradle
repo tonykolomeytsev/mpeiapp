@@ -1,10 +1,8 @@
 plugins {
     alias(mpeix.plugins.feature.impl.compose)
-    alias(libs.plugins.kotlin.parcelize)
 }
 
 android.buildFeatures{
-    viewBinding = true
     androidResources = true
 }
 
@@ -14,16 +12,10 @@ dependencies {
 
     implementation(libs.compose.material3)
 
-    implementation(libs.androidx.constraintLayout)
-    implementation(libs.androidx.fragment)
-    implementation(libs.androidx.recyclerView)
-    implementation(libs.androidx.swipeRefreshLayout)
-    implementation(libs.facebook.shimmer)
-    implementation(libs.google.material)
     implementation(libs.koin.android)
     implementation(libs.koin.core)
+    implementation(libs.koin.compose)
     implementation(libs.kotlinx.coroutines.core)
-    implementation(libs.vivid.elmslie.android)
     implementation(libs.vivid.elmslie.core)
     implementation(libs.firebase.crashlytics)
 
@@ -36,20 +28,25 @@ dependencies {
     implementation(project(":feature_app_settings_api"))
     implementation(project(":feature_favorite_schedule_api"))
     implementation(project(":feature_notes_api"))
+    implementation(project(":feature_notes_ui"))
     implementation(project(":feature_schedule_api"))
     implementation(project(":feature_search_api"))
 
     implementation(project(":ext_android"))
     implementation(project(":ext_kotlin"))
-    implementation(project(":lib_adapter"))
     implementation(project(":lib_analytics_android"))
     implementation(project(":lib_elm"))
+    implementation(project(":lib_elm_compose"))
     implementation(project(":lib_navigation"))
-    implementation(project(":lib_schedule"))
+    implementation(project(":feature_schedule_ui"))
     implementation(project(":lib_fragment"))
 
     implementation(project(":ui_theme"))
-    implementation(project(":ui_kit_topappbar"))
+    implementation(project(":ui_preview"))
+    implementation(project(":ui_shimmer"))
+    implementation(project(":ui_kit_banner"))
+    implementation(project(":ui_kit_lists"))
+    implementation(project(":ui_kit_states"))
 
     implementation(project(":coreui"))
     implementation(project(":res_icons"))

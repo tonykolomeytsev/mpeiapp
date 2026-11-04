@@ -23,10 +23,10 @@ import androidx.compose.ui.unit.dp
 import kekmech.ru.feature_notes_api.domain.model.Note
 import kekmech.ru.feature_notes_impl.presentation.compose.EmptyState
 import kekmech.ru.feature_notes_impl.presentation.compose.lazyKey
+import kekmech.ru.feature_notes_ui.NoteItem
+import kekmech.ru.feature_notes_ui.NoteItemShimmer
 import kekmech.ru.ui_kit_lists.SectionHeader
 import kekmech.ru.ui_kit_lists.SwipeToDeleteItem
-import kekmech.ru.ui_kit_notes.NoteItem
-import kekmech.ru.ui_kit_notes.NoteItemShimmer
 import kekmech.ru.ui_kit_topappbar.topappbar.TopAppBar
 import kekmech.ru.ui_preview.MpeixPreview
 import kekmech.ru.ui_theme.layout.adaptiveContentWidth

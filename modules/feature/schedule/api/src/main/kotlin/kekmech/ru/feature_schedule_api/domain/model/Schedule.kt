@@ -45,12 +45,19 @@ public data class Classes(
     val number: Int,
 
     // for ui purposes
+    /**
+     * Mutated in place by `AttachNotesToScheduleService`. Used only by the RecyclerView items,
+     * don't use it in the new code: pass the note to the `ClassesUiModel` explicitly.
+     */
     var attachedNotePreview: String? = null,
     val progress: Float? = null,
 ) : Serializable {
 
-    // its to optimize recyclerview items
-    // sets the same as parent schedule type
+    /**
+     * Mutated in place by the list converters to pass the parent schedule type to the
+     * RecyclerView items. Not a part of [equals]. Don't use it in the new code:
+     * pass the schedule type to the `toUiModel` explicitly.
+     */
     var scheduleType: ScheduleType = ScheduleType.GROUP
 }
 

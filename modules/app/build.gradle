@@ -1,6 +1,5 @@
 plugins {
     alias(mpeix.plugins.app)
-    alias(libs.plugins.kotlin.compose.compiler)
     alias(mpeix.plugins.app.signing)
     alias(libs.plugins.google.services)
     alias(libs.plugins.firebase.crashlytics)
@@ -64,8 +63,6 @@ android {
 }
 
 dependencies {
-    implementation(platform(libs.compose.bom))
-    implementation(libs.bundles.compose)
     implementation(libs.compose.activity)
     implementation(libs.androidx.lifecycle.viewmodel.navigation3)
     implementation(libs.androidx.navigation3.runtime)
