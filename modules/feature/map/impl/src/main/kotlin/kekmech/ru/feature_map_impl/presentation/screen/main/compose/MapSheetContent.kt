@@ -36,6 +36,7 @@ import kekmech.ru.feature_map_impl.presentation.screen.main.elm.FilterTab
 import kekmech.ru.feature_map_impl.presentation.screen.main.elm.MapState
 import kekmech.ru.ui_kit_lists.ListItem
 import kekmech.ru.ui_kit_lists.SectionHeader
+import kekmech.ru.ui_kit_states.ErrorState
 import kekmech.ru.ui_preview.MpeixPreview
 import kekmech.ru.ui_theme.theme.MpeixTheme
 import java.net.UnknownHostException

@@ -1,0 +1,15 @@
+plugins {
+    alias(mpeix.plugins.lib.android.compose)
+}
+
+dependencies {
+    implementation(libs.compose.material3)
+    implementation(libs.squareup.retrofit)
+    implementation(project(":ext_okhttp"))
+    implementation(project(":ui_theme"))
+    implementation(project(":ui_kit_buttons"))
+    implementation(project(":ui_preview"))
+
+    implementation(project(":res_images"))
+    implementation(project(":res_strings"))
+}

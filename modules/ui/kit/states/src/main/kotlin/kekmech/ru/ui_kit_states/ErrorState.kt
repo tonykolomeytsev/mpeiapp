@@ -1,4 +1,4 @@
-package kekmech.ru.feature_map_impl.presentation.screen.main.compose
+package kekmech.ru.ui_kit_states
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
@@ -17,13 +17,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import kekmech.ru.ext_okhttp.NoInternetConnectionException
 import kekmech.ru.ui_kit_buttons.button.Button
 import kekmech.ru.ui_kit_buttons.button.ButtonPalette
 import kekmech.ru.ui_preview.MpeixPreview
 import kekmech.ru.ui_theme.theme.MpeixTheme
+import okhttp3.ResponseBody.Companion.toResponseBody
 import retrofit2.HttpException
+import retrofit2.Response
 import java.net.UnknownHostException
 import javax.net.ssl.SSLHandshakeException
 import kekmech.ru.res_images.R.drawable as Images
@@ -37,10 +41,25 @@ private data class ErrorStateContent(
 )
 
 /**
- * Compose version of `ErrorStateItem` from coreui
+ * # ErrorState
+ *
+ * Compose version of `ErrorStateItem` from coreui: illustration, title and description
+ * picked by the type of the [throwable], and the reload button.
+ *
+ * Usage example:
+ * ```kotlin
+ * ErrorState(
+ *     throwable = state.loadingError,
+ *     onReloadClick = { onAccept(Ui.Action.Reload) },
+ * )
+ * ```
+ *
+ * @param throwable the error to describe
+ * @param onReloadClick called when the reload button is clicked
+ * @param modifier [Modifier] to be applied to the error state
  */
 @Composable
-internal fun ErrorState(
+public fun ErrorState(
     throwable: Throwable,
     onReloadClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -117,12 +136,34 @@ private fun getErrorStateContent(throwable: Throwable?): ErrorStateContent =
         )
     }
 
+/**
+ * One throwable for every branch of [getErrorStateContent]
+ */
+private class ErrorStatePreviewProvider : PreviewParameterProvider<Throwable> {
+
+    override val values: Sequence<Throwable> = sequenceOf(
+        NoInternetConnectionException(),
+        UnknownHostException(),
+        httpException(code = 502),
+        // Codes outside of 300..599 fall back to the generic error,
+        // and Response.error() accepts only codes >= 400
+        httpException(code = 600),
+        SSLHandshakeException("Handshake failed"),
+        IllegalStateException(),
+    )
+
+    private fun httpException(code: Int): HttpException =
+        HttpException(Response.error<Unit>(code, "".toResponseBody()))
+}
+
 @Composable
 @PreviewLightDark
-private fun ErrorStatePreview() {
+private fun ErrorStatePreview(
+    @PreviewParameter(ErrorStatePreviewProvider::class) throwable: Throwable,
+) {
     MpeixPreview {
         ErrorState(
-            throwable = UnknownHostException(),
+            throwable = throwable,
             onReloadClick = { /* no-op */ },
             modifier = Modifier
                 .background(MpeixTheme.palette.surface)
