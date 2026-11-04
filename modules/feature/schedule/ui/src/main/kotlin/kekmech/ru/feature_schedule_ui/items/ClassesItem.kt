@@ -19,9 +19,10 @@ import kekmech.ru.ext_android.views.setOnClickListenerWithDebounce
 import kekmech.ru.ext_kotlin.fastLazy
 import kekmech.ru.feature_schedule_api.domain.model.Classes
 import kekmech.ru.feature_schedule_api.domain.model.ClassesType
-import kekmech.ru.feature_schedule_api.domain.model.ScheduleType
 import kekmech.ru.feature_schedule_ui.R
 import kekmech.ru.feature_schedule_ui.drawable.ProgressBackgroundDrawable
+import kekmech.ru.feature_schedule_ui.utils.secondaryLabel
+import kekmech.ru.feature_schedule_ui.utils.typeName
 import kekmech.ru.lib_adapter.AdapterItem
 import kekmech.ru.lib_adapter.BaseItemBinder
 import java.time.format.DateTimeFormatter
@@ -128,26 +129,13 @@ public open class ClassesViewHolderImpl(
     }
 }
 
-@Suppress("MagicNumber")
 public class ClassesItemBinder(
     context: Context,
     private val onClickListener: ((Classes) -> Unit)? = null,
 ) : BaseItemBinder<ClassesViewHolder, Classes>() {
 
     private val classesNumbers by fastLazy { context.getStringArray(StringArrays.classes_numbers) }
-    private val classesTypes by fastLazy {
-        val types = listOf(
-            ClassesType.UNDEFINED to 0,
-            ClassesType.LECTURE to 1,
-            ClassesType.PRACTICE to 2,
-            ClassesType.LAB to 3,
-            ClassesType.COURSE to 4,
-            ClassesType.CONSULTATION to 5,
-            ClassesType.EXAM to 6,
-        )
-        val string = context.getStringArray(StringArrays.classes_types)
-        types.associate { (k, v) -> k to string[v] }
-    }
+    private val classesTypes by fastLazy { context.getStringArray(StringArrays.classes_types) }
     private val colorTags by fastLazy {
         mapOf(
             ClassesType.UNDEFINED to context.getThemeColor(coreui_R.attr.colorGray30),
@@ -161,52 +149,15 @@ public class ClassesItemBinder(
 
     override fun bind(vh: ClassesViewHolder, model: Classes, position: Int) {
         vh.setDisciplineName(model.name)
-        vh.setPersonName(
-            when (model.scheduleType) {
-                ScheduleType.GROUP -> buildGroupLabel(model).takeIfNotEmpty()
-                ScheduleType.PERSON -> model.groups.takeIfNotEmpty()
-            }
-        )
+        vh.setPersonName(model.secondaryLabel())
         vh.setPlace(model.place)
         vh.setNumberName(classesNumbers.getOrElse(model.number) { classesNumbers[0] }.uppercase())
-        vh.setTypeName(getClassesTypeName(model).uppercase())
+        vh.setTypeName(model.typeName(classesTypes).uppercase())
         vh.setTagColor(colorTags[model.type] ?: colorTags.getValue(ClassesType.UNDEFINED))
         vh.setStartTime(model.time.start.format(timeFormatter))
         vh.setEndTime(model.time.end.format(timeFormatter))
         vh.setOnClickListener { onClickListener?.invoke(model) }
         vh.setProgress(model.progress)
-    }
-
-    private fun buildGroupLabel(model: Classes): String =
-        buildString {
-            val hasSubgroupLabel = SUBGROUP_MARKER_PATTERN.containsMatchIn(model.groups)
-            if (model.person.isNotEmpty()) {
-                append(model.person)
-                if (hasSubgroupLabel) append('\n')
-            }
-            // Покажем еще и номер подгруппы, т.к. в большинстве случаев его наличие говорит о
-            // "сдвоенных" парах в расписании, расположенных в одно время. Обычно относится к
-            // раздеделению на подгруппы и т.д.
-            if (hasSubgroupLabel) {
-                append(model.groups)
-            }
-        }
-
-
-    private fun String.takeIfNotEmpty() = takeIf {
-        isNotBlank() && !it.contains("Вакансия", ignoreCase = true)
-    }
-
-    private fun getClassesTypeName(classes: Classes): String {
-        return if (classes.type == ClassesType.UNDEFINED && classes.rawType != null) {
-            classes.rawType.orEmpty()
-        } else {
-            classesTypes[classes.type].orEmpty()
-        }
-    }
-
-    private companion object {
-        private val SUBGROUP_MARKER_PATTERN = """\\\d([пП])""".toRegex()
     }
 }
 

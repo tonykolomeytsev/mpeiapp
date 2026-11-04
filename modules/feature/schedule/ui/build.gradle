@@ -11,6 +11,7 @@ dependencies {
     implementation(libs.androidx.constraintLayout)
     implementation(libs.androidx.coreKtx)
     implementation(libs.androidx.recyclerView)
+    implementation(libs.compose.material3)
     testImplementation(libs.kotest.assertions)
     testImplementation(libs.kotest.runner)
 
@@ -21,5 +22,6 @@ dependencies {
     implementation(project(":feature_schedule_api"))
 
     implementation(project(":coreui"))
+    implementation(project(":ui_theme"))
     implementation(project(":res_strings"))
 }
