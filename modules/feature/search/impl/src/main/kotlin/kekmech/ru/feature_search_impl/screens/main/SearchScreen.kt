@@ -43,6 +43,7 @@ import kekmech.ru.feature_map_api.domain.model.Location
 import kekmech.ru.feature_map_api.domain.model.MapMarker
 import kekmech.ru.feature_map_api.domain.model.MarkerType
 import kekmech.ru.feature_notes_api.domain.model.Note
+import kekmech.ru.feature_notes_ui.NoteItem
 import kekmech.ru.feature_schedule_api.domain.model.ScheduleType
 import kekmech.ru.feature_schedule_api.domain.model.SearchResult
 import kekmech.ru.feature_search_impl.screens.main.compose.EmptyState
@@ -54,7 +55,6 @@ import kekmech.ru.feature_search_impl.item.FilterItemType
 import kekmech.ru.lib_elm_compose.EffectHandler
 import kekmech.ru.ui_kit_lists.ListItem
 import kekmech.ru.ui_kit_lists.SectionHeader
-import kekmech.ru.ui_kit_notes.NoteItem
 import kekmech.ru.ui_preview.MpeixPreview
 import kekmech.ru.ui_theme.layout.adaptiveContentWidth
 import kotlinx.coroutines.FlowPreview

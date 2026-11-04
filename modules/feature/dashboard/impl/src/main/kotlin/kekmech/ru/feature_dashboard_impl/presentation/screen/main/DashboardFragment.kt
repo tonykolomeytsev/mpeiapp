@@ -41,6 +41,7 @@ import kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm.DashboardS
 import kekmech.ru.feature_schedule_api.ScheduleFeatureApi
 import kekmech.ru.feature_schedule_api.domain.model.Classes
 import kekmech.ru.feature_schedule_api.domain.model.SelectedSchedule
+import kekmech.ru.feature_schedule_ui.items.NotePreviewAdapterItem
 import kekmech.ru.lib_adapter.BaseAdapter
 import kekmech.ru.lib_analytics_android.addScrollAnalytics
 import kekmech.ru.lib_analytics_android.ext.screenAnalytics
@@ -49,7 +50,6 @@ import kekmech.ru.lib_navigation.addScreenForward
 import kekmech.ru.lib_navigation.features.ScrollToTop
 import kekmech.ru.lib_navigation.features.TabScreenStateSaver
 import kekmech.ru.lib_navigation.features.TabScreenStateSaverImpl
-import kekmech.ru.lib_schedule.items.NotePreviewAdapterItem
 import money.vivid.elmslie.android.renderer.ElmRendererDelegate
 import money.vivid.elmslie.android.renderer.androidElmStore
 import org.koin.android.ext.android.inject

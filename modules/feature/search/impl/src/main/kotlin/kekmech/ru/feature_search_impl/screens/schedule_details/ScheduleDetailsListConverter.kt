@@ -10,11 +10,11 @@ import android.text.style.StyleSpan
 import androidx.annotation.StringRes
 import kekmech.ru.coreui.items.*
 import kekmech.ru.ext_android.getThemeColor
+import kekmech.ru.feature_schedule_ui.items.DayItem
 import kekmech.ru.feature_search_impl.R
 import kekmech.ru.feature_search_impl.item.ButtonItem
 import kekmech.ru.feature_search_impl.item.WeekMinItem
 import kekmech.ru.feature_search_impl.screens.schedule_details.elm.ScheduleDetailsState
-import kekmech.ru.lib_schedule.items.DayItem
 import kekmech.ru.coreui.R as coreui_R
 import kekmech.ru.res_icons.R.drawable as Icons
 import kekmech.ru.res_strings.R.string as Strings

@@ -40,7 +40,7 @@ dependencies {
     implementation(project(":ui_kit_buttons"))
     implementation(project(":ui_kit_dialogs"))
     implementation(project(":ui_kit_lists"))
-    implementation(project(":ui_kit_notes"))
+    implementation(project(":feature_notes_ui"))
     implementation(project(":ui_kit_topappbar"))
     implementation(project(":res_icons"))
     implementation(project(":res_strings"))

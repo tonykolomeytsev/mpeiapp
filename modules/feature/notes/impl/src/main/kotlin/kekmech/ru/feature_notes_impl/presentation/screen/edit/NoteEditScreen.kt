@@ -31,9 +31,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import kekmech.ru.feature_notes_api.domain.model.Note
+import kekmech.ru.feature_notes_ui.noteBackground
+import kekmech.ru.feature_notes_ui.relativeDateString
 import kekmech.ru.ui_kit_buttons.button.Button
-import kekmech.ru.ui_kit_notes.noteBackground
-import kekmech.ru.ui_kit_notes.relativeDateString
 import kekmech.ru.ui_kit_topappbar.topappbar.TopAppBar
 import kekmech.ru.ui_preview.MpeixPreview
 import kekmech.ru.ui_theme.layout.adaptiveContentWidth

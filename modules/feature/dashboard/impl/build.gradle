@@ -45,7 +45,7 @@ dependencies {
     implementation(project(":lib_analytics_android"))
     implementation(project(":lib_elm"))
     implementation(project(":lib_navigation"))
-    implementation(project(":lib_schedule"))
+    implementation(project(":feature_schedule_ui"))
     implementation(project(":lib_fragment"))
 
     implementation(project(":ui_theme"))
