@@ -1,20 +1,16 @@
 package kekmech.ru.feature_dashboard_impl.presentation.screen.main.upcoming_events
 
 import android.content.Context
-import kekmech.ru.coreui.items.EmptyStateItem
-import kekmech.ru.coreui.items.ErrorStateItem
-import kekmech.ru.coreui.items.SectionHeaderItem
-import kekmech.ru.coreui.items.ShimmerItem
-import kekmech.ru.coreui.items.SpaceItem
-import kekmech.ru.coreui.items.TextItem
-import kekmech.ru.feature_dashboard_impl.R
+import androidx.compose.ui.unit.dp
 import kekmech.ru.feature_dashboard_impl.domain.model.UpcomingEventsPrediction
+import kekmech.ru.feature_dashboard_impl.presentation.screen.main.DashboardListItem
+import kekmech.ru.feature_dashboard_impl.presentation.screen.main.DashboardListItem.Section
+import kekmech.ru.feature_dashboard_impl.presentation.screen.main.DashboardListItem.Space
 import kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm.DashboardState
 import kekmech.ru.feature_dashboard_impl.presentation.screen.main.helpers.TimeDeclensionHelper
 import kekmech.ru.feature_schedule_api.domain.model.Classes
 import kekmech.ru.feature_schedule_api.domain.model.ScheduleType
-import kekmech.ru.feature_schedule_ui.items.NotePreview
-import kekmech.ru.feature_schedule_ui.utils.withNotePreview
+import kekmech.ru.feature_schedule_ui.compose.toUiModel
 import kekmech.ru.lib_elm.Resource
 import kotlin.time.Duration
 import kekmech.ru.res_strings.R.string as Strings
@@ -23,11 +19,13 @@ internal class UpcomingEventsListConverter(
     private val context: Context,
 ) {
 
-    fun map(state: DashboardState): List<Any> {
-        val list = mutableListOf<Any>()
+    private val eventsTitle = context.getString(Strings.dashboard_section_header_events)
+
+    fun map(state: DashboardState): List<DashboardListItem> {
+        val list = mutableListOf<DashboardListItem>()
         when (state.upcomingEvents) {
             is Resource.Loading -> list.addShimmerItems()
-            is Resource.Error -> list.add(ErrorStateItem(state.upcomingEvents.error))
+            is Resource.Error -> list.add(DashboardListItem.EventsError(state.upcomingEvents.error))
             is Resource.Data -> {
                 when (val prediction = state.upcomingEvents.value) {
                     is UpcomingEventsPrediction.NoClassesNextWeek -> list.addEmptyStateItems()
@@ -45,100 +43,83 @@ internal class UpcomingEventsListConverter(
         return list
     }
 
-    private fun MutableList<Any>.addShimmerItems() {
-        add(SectionHeaderItem(titleRes = Strings.dashboard_section_header_events))
-        add(ShimmerItem(R.layout.item_events_shimmer))
+    private fun MutableList<DashboardListItem>.addShimmerItems() {
+        add(DashboardListItem.SectionHeader(section = Section.EVENTS, title = eventsTitle))
+        add(Space("after_events_header", 4.dp))
+        add(DashboardListItem.EventsShimmer)
     }
 
-    private fun MutableList<Any>.addEmptyStateItems() {
-        addAll(
-            listOf(
-                SectionHeaderItem(
-                    titleRes = Strings.dashboard_section_header_events,
-                    subtitleRes = Strings.dashboard_events_empty_state_title,
-                ),
-                SpaceItem.VERTICAL_12,
-                EmptyStateItem(
-                    titleRes = Strings.dashboard_events_empty_state_title,
-                    subtitleRes = Strings.dashboard_events_empty_state_subtitle,
-                ),
-            ),
+    private fun MutableList<DashboardListItem>.addEmptyStateItems() {
+        add(
+            DashboardListItem.SectionHeader(
+                section = Section.EVENTS,
+                title = eventsTitle,
+                subtitle = context.getString(Strings.dashboard_events_empty_state_title),
+            )
+        )
+        add(Space("after_events_header", 4.dp))
+        add(
+            DashboardListItem.EmptyState(
+                section = Section.EVENTS,
+                title = context.getString(Strings.dashboard_events_empty_state_title),
+                subtitle = context.getString(Strings.dashboard_events_empty_state_subtitle),
+            )
         )
     }
 
-    private fun MutableList<Any>.addClassesTodayNotStarted(
+    private fun MutableList<DashboardListItem>.addEventsHeader(dayOffset: Int) {
+        add(
+            DashboardListItem.SectionHeader(
+                section = Section.EVENTS,
+                title = eventsTitle,
+                subtitle = TimeDeclensionHelper.formatTimePrediction(
+                    context = context,
+                    dayOffset = dayOffset,
+                ),
+            )
+        )
+        add(Space("after_events_header", 4.dp))
+    }
+
+    private fun MutableList<DashboardListItem>.addClassesTodayNotStarted(
         selectedScheduleType: ScheduleType,
         prediction: UpcomingEventsPrediction.ClassesTodayNotStarted,
     ) {
-        addAll(
-            listOf(
-                SectionHeaderItem(
-                    titleRes = Strings.dashboard_section_header_events,
-                    subtitle = TimeDeclensionHelper.formatTimePrediction(
-                        context = context,
-                        dayOffset = 0,
-                    ),
-                ),
-                SpaceItem.VERTICAL_12,
-            )
-        )
+        addEventsHeader(dayOffset = 0)
         addTimePredictionItem(prediction.timeLeft)
-        addAll(prediction.futureClasses.handleClasses(selectedScheduleType))
+        addClasses(prediction.futureClasses, selectedScheduleType)
     }
 
-    private fun MutableList<Any>.addClassesTodayStarted(
+    private fun MutableList<DashboardListItem>.addClassesTodayStarted(
         selectedScheduleType: ScheduleType,
         prediction: UpcomingEventsPrediction.ClassesTodayStarted,
     ) {
-        addAll(
-            listOf(
-                SectionHeaderItem(
-                    titleRes = Strings.dashboard_section_header_events,
-                    subtitle = TimeDeclensionHelper.formatTimePrediction(
-                        context = context,
-                        dayOffset = 0,
-                    ),
+        addEventsHeader(dayOffset = 0)
+        add(
+            DashboardListItem.ClassesEntry(
+                index = 0,
+                classes = prediction.inProgressClasses,
+                model = prediction.inProgressClasses.toUiModel(
+                    scheduleType = selectedScheduleType,
+                    progress = prediction.inProgressFactor,
                 ),
-                SpaceItem.VERTICAL_12,
             )
         )
-        add(prediction.inProgressClasses.copy(progress = prediction.inProgressFactor))
-        // Add note preview (if exists)
-        prediction.inProgressClasses.attachedNotePreview?.let { notePreviewContent ->
-            add(
-                NotePreview(
-                    notePreviewContent,
-                    linkedClasses = prediction.inProgressClasses,
-                    prediction.inProgressFactor
-                )
-            )
-        }
-        addAll(prediction.futureClasses.handleClasses(selectedScheduleType))
+        addClasses(prediction.futureClasses, selectedScheduleType, firstIndex = 1)
     }
 
-    private fun MutableList<Any>.addClassesInNDays(
+    private fun MutableList<DashboardListItem>.addClassesInNDays(
         selectedScheduleType: ScheduleType,
         prediction: UpcomingEventsPrediction.ClassesInNDays,
     ) {
-        addAll(
-            listOf(
-                SectionHeaderItem(
-                    titleRes = Strings.dashboard_section_header_events,
-                    subtitle = TimeDeclensionHelper.formatTimePrediction(
-                        context = context,
-                        dayOffset = prediction.dayOffset,
-                    ),
-                ),
-                SpaceItem.VERTICAL_12,
-            )
-        )
+        addEventsHeader(dayOffset = prediction.dayOffset)
         if (prediction.dayOffset < 2) {
             addTimePredictionItem(prediction.timeLeft)
         }
-        addAll(prediction.futureClasses.handleClasses(selectedScheduleType))
+        addClasses(prediction.futureClasses, selectedScheduleType)
     }
 
-    private fun MutableList<Any>.addTimePredictionItem(timeLeft: Duration) {
+    private fun MutableList<DashboardListItem>.addTimePredictionItem(timeLeft: Duration) {
         val hours = timeLeft.inWholeHours
 
         @Suppress("MagicNumber")
@@ -147,17 +128,24 @@ internal class UpcomingEventsListConverter(
         val formattedHoursMinutes =
             TimeDeclensionHelper.formatHoursMinutes(context, hours, minutes)
         if (formattedHoursMinutes.isNotBlank()) {
-            add(TextItem("$prefix $formattedHoursMinutes"))
+            add(DashboardListItem.TimePrediction("$prefix $formattedHoursMinutes"))
+            add(Space("after_time_prediction", 12.dp))
         }
     }
 
-    /**
-     * Apply all necessary modifiers to the list of pairs
-     */
-    private fun List<Any>.handleClasses(selectedScheduleType: ScheduleType) = this
-        .setScheduleType(selectedScheduleType)
-        .withNotePreview()
-
-    private fun List<Any>.setScheduleType(scheduleType: ScheduleType) =
-        onEach { (it as? Classes)?.scheduleType = scheduleType }
+    private fun MutableList<DashboardListItem>.addClasses(
+        classes: List<Classes>,
+        scheduleType: ScheduleType,
+        firstIndex: Int = 0,
+    ) {
+        classes.forEachIndexed { i, cls ->
+            add(
+                DashboardListItem.ClassesEntry(
+                    index = firstIndex + i,
+                    classes = cls,
+                    model = cls.toUiModel(scheduleType),
+                )
+            )
+        }
+    }
 }
