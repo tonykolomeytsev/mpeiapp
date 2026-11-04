@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -24,12 +23,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import kekmech.ru.feature_schedule_api.domain.model.Classes
 import kekmech.ru.feature_schedule_api.domain.model.ClassesType
-import kekmech.ru.feature_schedule_api.domain.model.ScheduleType
-import kekmech.ru.feature_schedule_api.domain.model.Time
-import kekmech.ru.feature_schedule_ui.utils.secondaryLabel
-import kekmech.ru.feature_schedule_ui.utils.typeName
+import kekmech.ru.feature_schedule_ui.utils.classesTypeName
 import kekmech.ru.ui_theme.theme.MpeixTheme
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
@@ -45,8 +40,8 @@ private val NoteShape = RoundedCornerShape(topStart = 3.dp, topEnd = 16.dp, bott
  * # ClassesItem
  *
  * Card of the single classes in the schedule: time, number, type, name, place and person/groups.
- * Optionally shows the [notePreview] at the bottom and the animated [progress] background
- * of the ongoing classes.
+ * Optionally shows the [ClassesUiModel.notePreview] at the bottom and the animated
+ * [ClassesUiModel.progress] background of the ongoing classes.
  *
  * Replaces the `ClassesAdapterItem` + `NotePreviewAdapterItem` + `ProgressBackgroundDrawable`
  * combination of the RecyclerView implementation.
@@ -54,25 +49,23 @@ private val NoteShape = RoundedCornerShape(topStart = 3.dp, topEnd = 16.dp, bott
  * Usage example:
  * ```kotlin
  * ClassesItem(
- *     classes = classes,
+ *     model = classes.toUiModel(scheduleType),
  *     onClick = { onClassesClick(classes) },
  * )
  * ```
  *
- * @param classes the classes to show
+ * @param model the classes to show, see [toUiModel]
  * @param modifier [Modifier] to be applied to the card
- * @param notePreview text of the note attached to the classes, or null if there is no note
- * @param progress progress of the ongoing classes from 0 to 1, or null if classes are not ongoing
  * @param onClick called when the card is clicked, or null if the card is not clickable
  */
 @Composable
 public fun ClassesItem(
-    classes: Classes,
+    model: ClassesUiModel,
     modifier: Modifier = Modifier,
-    notePreview: String? = classes.attachedNotePreview,
-    progress: Float? = classes.progress,
     onClick: (() -> Unit)? = null,
 ) {
+    val progress = model.progress
+    val notePreview = model.notePreview
     Box(
         modifier = modifier
             .fillMaxWidth()
@@ -90,13 +83,13 @@ public fun ClassesItem(
         Column(modifier = Modifier.padding(bottom = 16.dp)) {
             Row {
                 ClassesTime(
-                    time = classes.time,
+                    model = model,
                     modifier = Modifier
                         .width(TimeColumnWidth)
                         .padding(top = 32.dp, end = 16.dp),
                 )
                 ClassesInfo(
-                    classes = classes,
+                    model = model,
                     modifier = Modifier
                         .weight(1f)
                         .padding(top = 12.dp, end = 24.dp),
@@ -114,7 +107,7 @@ public fun ClassesItem(
 
 @Composable
 private fun ClassesTime(
-    time: Time,
+    model: ClassesUiModel,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -123,13 +116,13 @@ private fun ClassesTime(
         verticalArrangement = Arrangement.spacedBy(4.dp),
     ) {
         Text(
-            text = time.start.format(TimeFormatter),
+            text = model.startTime.format(TimeFormatter),
             style = MpeixTheme.typography.bodyLarge,
             fontSize = 18.sp,
             color = MpeixTheme.palette.onSurface,
         )
         Text(
-            text = time.end.format(TimeFormatter),
+            text = model.endTime.format(TimeFormatter),
             style = MpeixTheme.typography.bodyMedium,
             color = MpeixTheme.palette.onSurfaceVariant,
         )
@@ -138,12 +131,11 @@ private fun ClassesTime(
 
 @Composable
 private fun ClassesInfo(
-    classes: Classes,
+    model: ClassesUiModel,
     modifier: Modifier = Modifier,
 ) {
     val classesNumbers = stringArrayResource(StringArrays.classes_numbers)
     val classesTypes = stringArrayResource(StringArrays.classes_types)
-    val secondaryLabel = remember(classes) { classes.secondaryLabel() }
 
     Column(
         modifier = modifier,
@@ -151,32 +143,32 @@ private fun ClassesInfo(
     ) {
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             Chip(
-                text = classesNumbers.getOrElse(classes.number) { classesNumbers[0] },
+                text = classesNumbers.getOrElse(model.number) { classesNumbers[0] },
                 containerColor = MpeixTheme.palette.outlineVariant,
                 contentColor = MpeixTheme.palette.onSurface,
             )
-            val (containerColor, contentColor) = classes.type.chipColors()
+            val (containerColor, contentColor) = model.type.chipColors()
             Chip(
-                text = classes.typeName(classesTypes),
+                text = classesTypeName(model.type, model.rawType, classesTypes),
                 containerColor = containerColor,
                 contentColor = contentColor,
             )
         }
         Text(
-            text = classes.name,
+            text = model.name,
             style = MpeixTheme.typography.bodyLarge,
             fontSize = 18.sp,
             color = MpeixTheme.palette.onSurface,
         )
         Text(
-            text = classes.place,
+            text = model.place,
             style = MpeixTheme.typography.bodyMedium,
             fontWeight = FontWeight.Bold,
             color = MpeixTheme.palette.onSurfaceVariant,
         )
-        if (secondaryLabel != null) {
+        if (model.secondaryLabel != null) {
             Text(
-                text = secondaryLabel,
+                text = model.secondaryLabel,
                 style = MpeixTheme.typography.bodyMedium,
                 color = MpeixTheme.palette.onSurfaceVariant,
             )
@@ -237,15 +229,15 @@ private fun NotePreview(
 @PreviewLightDark
 @Composable
 private fun ClassesItemPreview() {
-    val classes = Classes(
+    val model = ClassesUiModel(
         name = "Инженерная и компьютерная графика",
         type = ClassesType.LECTURE,
         rawType = null,
-        place = "Аудитория Б-407",
-        groups = "А-08-19",
-        person = "Чахеев Е.Я.",
-        time = Time(start = LocalTime.of(9, 20), end = LocalTime.of(10, 55)),
         number = 1,
+        place = "Аудитория Б-407",
+        secondaryLabel = "Чахеев Е.Я.",
+        startTime = LocalTime.of(9, 20),
+        endTime = LocalTime.of(10, 55),
     )
     MpeixTheme {
         Column(
@@ -254,25 +246,29 @@ private fun ClassesItemPreview() {
                 .padding(8.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            ClassesItem(classes = classes, onClick = {})
+            ClassesItem(model = model, onClick = {})
             ClassesItem(
-                classes = classes.copy(
+                model = model.copy(
                     name = "Технология металлов",
                     type = ClassesType.PRACTICE,
-                    groups = "А-08-19\\1п",
                     number = 2,
+                    secondaryLabel = "Чахеев Е.Я.\nА-08-19\\1п",
+                    notePreview = "Принести типовой расчет №1 и все-все остальные расчеты",
                 ),
-                notePreview = "Принести типовой расчет №1 и все-все остальные расчеты",
             )
             ClassesItem(
-                classes = classes.copy(type = ClassesType.LAB, number = 3),
-                progress = 0.5f,
+                model = model.copy(type = ClassesType.LAB, number = 3, progress = 0.5f),
+                onClick = { /* no-op */ },
             )
             ClassesItem(
-                classes = classes.copy(type = ClassesType.UNDEFINED, rawType = "Зачёт", number = 4)
-                    .apply { scheduleType = ScheduleType.PERSON },
-                notePreview = "Не забыть зачётку",
-                progress = 0.8f,
+                model = model.copy(
+                    type = ClassesType.UNDEFINED,
+                    rawType = "Зачёт",
+                    number = 4,
+                    secondaryLabel = "А-08-19, А-12-19",
+                    notePreview = "Не забыть зачётку",
+                    progress = 0.8f,
+                ),
             )
         }
     }

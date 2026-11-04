@@ -21,8 +21,8 @@ import kekmech.ru.feature_schedule_api.domain.model.Classes
 import kekmech.ru.feature_schedule_api.domain.model.ClassesType
 import kekmech.ru.feature_schedule_ui.R
 import kekmech.ru.feature_schedule_ui.drawable.ProgressBackgroundDrawable
+import kekmech.ru.feature_schedule_ui.utils.classesTypeName
 import kekmech.ru.feature_schedule_ui.utils.secondaryLabel
-import kekmech.ru.feature_schedule_ui.utils.typeName
 import kekmech.ru.lib_adapter.AdapterItem
 import kekmech.ru.lib_adapter.BaseItemBinder
 import java.time.format.DateTimeFormatter
@@ -149,10 +149,10 @@ public class ClassesItemBinder(
 
     override fun bind(vh: ClassesViewHolder, model: Classes, position: Int) {
         vh.setDisciplineName(model.name)
-        vh.setPersonName(model.secondaryLabel())
+        vh.setPersonName(model.secondaryLabel(model.scheduleType))
         vh.setPlace(model.place)
         vh.setNumberName(classesNumbers.getOrElse(model.number) { classesNumbers[0] }.uppercase())
-        vh.setTypeName(model.typeName(classesTypes).uppercase())
+        vh.setTypeName(classesTypeName(model.type, model.rawType, classesTypes).uppercase())
         vh.setTagColor(colorTags[model.type] ?: colorTags.getValue(ClassesType.UNDEFINED))
         vh.setStartTime(model.time.start.format(timeFormatter))
         vh.setEndTime(model.time.end.format(timeFormatter))

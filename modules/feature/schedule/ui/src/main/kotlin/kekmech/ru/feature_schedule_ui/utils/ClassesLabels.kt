@@ -9,8 +9,10 @@ private val SUBGROUP_MARKER_PATTERN = """\\\d([пП])""".toRegex()
 /**
  * Secondary label of the classes: the person and subgroup for group schedules,
  * or the groups for person schedules. Null if there is nothing meaningful to show.
+ *
+ * @param scheduleType type of the schedule the classes belong to
  */
-internal fun Classes.secondaryLabel(): String? =
+internal fun Classes.secondaryLabel(scheduleType: ScheduleType): String? =
     when (scheduleType) {
         ScheduleType.GROUP -> buildGroupLabel().takeIfNotEmpty()
         ScheduleType.PERSON -> groups.takeIfNotEmpty()
@@ -32,11 +34,17 @@ internal val ClassesType.nameIndex: Int
     }
 
 /**
- * Type name of the classes, falls back to the raw type from the backend for unknown types.
+ * Type name of the classes, falls back to the [rawType] from the backend for unknown types.
+ *
+ * @param classesTypes contents of the `classes_types` string array
  */
-internal fun Classes.typeName(classesTypes: Array<String>): String =
+internal fun classesTypeName(
+    type: ClassesType,
+    rawType: String?,
+    classesTypes: Array<String>,
+): String =
     if (type == ClassesType.UNDEFINED && rawType != null) {
-        rawType.orEmpty()
+        rawType
     } else {
         classesTypes.getOrNull(type.nameIndex).orEmpty()
     }
