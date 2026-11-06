@@ -120,7 +120,6 @@ dependencies {
     implementation(project(":ui_kit_navigationbar"))
 
     implementation(project(":coreui"))
-    implementation(project(":res_icons"))
     implementation(project(":res_strings"))
 
     debugImplementation(project(":mock_server"))
