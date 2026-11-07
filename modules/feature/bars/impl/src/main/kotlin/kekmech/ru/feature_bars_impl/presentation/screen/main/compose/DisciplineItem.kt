@@ -48,7 +48,7 @@ internal fun DisciplineItem(
     onClick: (DisciplineUiItem) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val shape = RoundedCornerShape(8.dp)
+    val shape = RoundedCornerShape(12.dp)
     Column(
         modifier = modifier
             .clip(shape)
@@ -57,7 +57,7 @@ internal fun DisciplineItem(
             ) { onClick.invoke(discipline) }
             .fillMaxWidth()
             .background(
-                color = MpeixTheme.palette.surface,
+                color = MpeixTheme.palette.surfaceContainer,
                 shape = shape,
             )
             .padding(vertical = 12.dp, horizontal = 16.dp),

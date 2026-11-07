@@ -8,13 +8,14 @@ import kekmech.ru.feature_app_settings_api.AppSettingsFeatureLauncher
 import kekmech.ru.feature_bars_impl.data.mapper.SdkToAssessedDisciplineMapper
 import kekmech.ru.feature_bars_impl.data.repository.BarsProfileIdRepository
 import kekmech.ru.feature_bars_impl.domain.ExceptionWithId
+import kekmech.ru.feature_bars_impl.navigation.BarsAccountsScreenKey
 import kekmech.ru.feature_bars_impl.navigation.BarsLoginScreenKey
 import kekmech.ru.feature_bars_impl.presentation.screen.details.BarsDetailsFragment
-import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsComposeEvent.Internal.CheckAuthStatusFailure
-import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsComposeEvent.Internal.GetMarksFailure
-import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsComposeEvent.Internal.GetMarksSuccess
-import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsComposeEvent.Internal.GetProfileSuccess
-import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsComposeEvent.Internal.SubscribeAuthStatusSuccess
+import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsEvent.Internal.CheckAuthStatusFailure
+import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsEvent.Internal.GetMarksFailure
+import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsEvent.Internal.GetMarksSuccess
+import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsEvent.Internal.GetProfileSuccess
+import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsEvent.Internal.SubscribeAuthStatusSuccess
 import kekmech.ru.lib_elm.actorFlow
 import kekmech.ru.lib_navigation.AddScreenForward
 import kekmech.ru.lib_navigation.Router
@@ -23,16 +24,17 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.withContext
 import money.vivid.elmslie.core.store.Actor
 import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsComposeCommand as Command
-import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsComposeEvent as Event
+import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsEvent as Event
 
 @OptIn(ExperimentalCoroutinesApi::class)
-internal class BarsComposeActor(
+internal class BarsActor(
     private val sdk: MpeixSdk,
     private val appSettingsFeatureLauncher: AppSettingsFeatureLauncher,
     private val router: Router,
@@ -84,8 +86,16 @@ internal class BarsComposeActor(
             }.mapEvents()
 
             is Command.OpenLogin -> actorFlow {
+                // Without known accounts the account list has nothing to choose from
+                val key = if (sdk.bars.auth.accounts.first().isEmpty()) BarsLoginScreenKey() else BarsAccountsScreenKey
                 withContext(Dispatchers.Main) {
-                    router.executeCommand(AddScreenForward(BarsLoginScreenKey))
+                    router.executeCommand(AddScreenForward(key))
+                }
+            }.mapEvents()
+
+            is Command.OpenAccounts -> actorFlow {
+                withContext(Dispatchers.Main) {
+                    router.executeCommand(AddScreenForward(BarsAccountsScreenKey))
                 }
             }.mapEvents()
 
@@ -110,7 +120,9 @@ internal class BarsComposeActor(
 
     private fun Profile.toBarsProfile(): BarsProfile =
         BarsProfile(
-            name = fullName.split("\\s+".toRegex()).take(2).joinToString(" "),
+            // "Иван Иванов" for the top bar, the full name has the patronymic too
+            name = listOfNotNull(firstName, lastName).joinToString(" ")
+                .ifEmpty { fullName.split("\\s+".toRegex()).take(2).joinToString(" ") },
             group = group.orEmpty(),
         )
 }

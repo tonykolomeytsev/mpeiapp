@@ -4,17 +4,17 @@ import androidx.compose.ui.util.fastFirstOrNull
 import kekmech.ru.feature_bars_impl.domain.AssessedDiscipline
 import kekmech.ru.feature_bars_impl.domain.FinalGradeType
 import kekmech.ru.feature_bars_impl.presentation.screen.main.compose.DisciplineUiItem
-import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsComposeEvent.Internal
-import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsComposeEvent.Ui
+import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsEvent.Internal
+import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsEvent.Ui
 import kekmech.ru.lib_elm.Resource
 import kekmech.ru.lib_elm.toResource
 import money.vivid.elmslie.core.store.ScreenReducer
 import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsComposeCommand as Command
-import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsComposeEffect as Effect
-import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsComposeEvent as Event
-import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsComposeState as State
+import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsEffect as Effect
+import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsEvent as Event
+import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsState as State
 
-internal class BarsComposeReducer :
+internal class BarsReducer :
     ScreenReducer<Event, Ui, Internal, State, Effect, Command>(
         uiEventClass = Ui::class,
         internalEventClass = Internal::class
@@ -102,6 +102,10 @@ internal class BarsComposeReducer :
 
             is Ui.Click.Login -> {
                 commands { +Command.OpenLogin }
+            }
+
+            is Ui.Click.Profile -> {
+                commands { +Command.OpenAccounts }
             }
 
             is Ui.Click.Settings -> {
