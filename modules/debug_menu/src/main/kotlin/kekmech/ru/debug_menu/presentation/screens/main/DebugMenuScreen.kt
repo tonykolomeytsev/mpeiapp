@@ -23,6 +23,7 @@ import kekmech.ru.debug_menu.R
 import kekmech.ru.debug_menu.presentation.navigation.LocalNavBackStack
 import kekmech.ru.debug_menu.presentation.navigation.NavScreen
 import kekmech.ru.debug_menu.presentation.screens.feature_toggles.FeatureTogglesScreen
+import kekmech.ru.debug_menu.presentation.screens.main.elm.DebugMenuEffect
 import kekmech.ru.debug_menu.presentation.screens.main.elm.DebugMenuEvent
 import kekmech.ru.debug_menu.presentation.screens.main.elm.DebugMenuEvent.Ui
 import kekmech.ru.debug_menu.presentation.screens.main.elm.DebugMenuState
@@ -38,19 +39,21 @@ import kekmech.ru.ui_kit_dialogs.rememberAlertDialogState
 import kekmech.ru.ui_kit_lists.ListItem
 import kekmech.ru.ui_kit_topappbar.TopAppBar
 import kekmech.ru.ui_theme.theme.MpeixTheme
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
+import org.koin.compose.koinInject
 
 @Serializable
 internal object DebugMenuScreen : NavScreen {
 
     @Composable
     override fun Content() {
-        ElmContent<DebugMenuStoreFactory, _, _, _>(
-            factory = { create() },
-            composable = { store, state, _, modifier ->
-                DebugMenuScreen(store, state, modifier)
-            },
+        val factory = koinInject<DebugMenuStoreFactory>()
+        ElmContent(
+            key = "DebugMenu",
+            storeFactory = { factory.create() },
+            content = ::DebugMenuScreen,
         )
     }
 }
@@ -60,7 +63,8 @@ internal object DebugMenuScreen : NavScreen {
 private fun DebugMenuScreen(
     onAccept: (DebugMenuEvent) -> Unit,
     state: DebugMenuState,
-    modifier: Modifier = Modifier,
+    @Suppress("Unused")
+    effects: Flow<DebugMenuEffect>,
 ) {
     val backendEnvDialog = rememberAlertDialogState()
     val themeSelectionDialog = rememberAlertDialogState()
@@ -75,7 +79,6 @@ private fun DebugMenuScreen(
         snackbarHost = {
             SnackbarHost(snackbarHostState)
         },
-        modifier = modifier,
     ) { innerPadding ->
         LazyColumn(
             modifier = Modifier.padding(innerPadding),

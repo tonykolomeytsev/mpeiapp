@@ -17,9 +17,12 @@ import androidx.compose.ui.unit.dp
 import kekmech.ru.lib_elm.Resource
 import kekmech.ru.lib_elm_compose.ElmContent
 import kekmech.ru.mpeiapp.demo.navigation.NavScreen
+import kekmech.ru.mpeiapp.demo.screens.elmslie.elm.ElmDemoEffect
 import kekmech.ru.mpeiapp.demo.screens.elmslie.elm.ElmDemoStoreFactory
 import kekmech.ru.ui_kit_topappbar.TopAppBar
+import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.Serializable
+import org.koin.compose.koinInject
 import kekmech.ru.mpeiapp.demo.screens.elmslie.elm.ElmDemoEvent as Event
 import kekmech.ru.mpeiapp.demo.screens.elmslie.elm.ElmDemoState as ElmState
 
@@ -30,9 +33,11 @@ internal class ElmDemoScreen(
 
     @Composable
     override fun Content() {
-        ElmContent<ElmDemoStoreFactory, _, _, _>(
-            factory = { create(randomArgument = randomArgument) },
-            composable = { onAccept, state, _, _ -> ElmDemoScreen(onAccept, state) }
+        val factory = koinInject<ElmDemoStoreFactory>()
+        ElmContent(
+            key = "ElmDemoScreen",
+            storeFactory = { factory.create(randomArgument = randomArgument) },
+            content = ::ElmDemoScreen,
         )
     }
 }
@@ -42,6 +47,8 @@ internal class ElmDemoScreen(
 private fun ElmDemoScreen(
     onAccept: (Event) -> Unit,
     state: ElmState,
+    @Suppress("Unused")
+    effects: Flow<ElmDemoEffect>,
 ) {
     Scaffold(
         topBar = {

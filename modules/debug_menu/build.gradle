@@ -36,6 +36,7 @@ dependencies {
     implementation(libs.androidx.navigation3.ui)
     implementation(libs.koin.core)
     implementation(libs.koin.android)
+    implementation(libs.koin.compose)
     implementation(libs.vivid.elmslie.core)
     implementation(libs.chucker.impl)
 }
