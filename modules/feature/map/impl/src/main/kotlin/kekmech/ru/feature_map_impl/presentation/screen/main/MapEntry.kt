@@ -19,7 +19,6 @@ import kekmech.ru.lib_analytics_android.ext.rememberScreenAnalytics
 import kekmech.ru.lib_elm_compose.ElmContent
 import kekmech.ru.lib_navigation.BottomTab
 import kekmech.ru.lib_navigation.BottomTabsSwitcher
-import kekmech.ru.ui_theme.theme.MpeixTheme
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import org.koin.compose.koinInject
@@ -39,49 +38,47 @@ internal fun MapEntry() {
             .map { }
     }
     val activity = LocalActivity.current as ComponentActivity
-    MpeixTheme {
-        val storeFactory = koinInject<MapStoreFactory>()
-        ElmContent(
-            key = "MapScreen",
-            storeFactory = { storeFactory.create() },
-            viewModelStoreOwner = activity,
-            savedStateRegistryOwner = activity,
-        ) { onAccept, state, effects ->
-            var isMapLoaded by remember { mutableStateOf(false) }
-            LaunchedEffect(state.markers, state.selectedTab, isMapLoaded) {
-                if (isMapLoaded) {
-                    DeeplinkHelper.handleDeeplinkIfNecessary(dependencies.deeplinkDelegate, state, onAccept)
-                }
+    val storeFactory = koinInject<MapStoreFactory>()
+    ElmContent(
+        key = "MapScreen",
+        storeFactory = { storeFactory.create() },
+        viewModelStoreOwner = activity,
+        savedStateRegistryOwner = activity,
+    ) { onAccept, state, effects ->
+        var isMapLoaded by remember { mutableStateOf(false) }
+        LaunchedEffect(state.markers, state.selectedTab, isMapLoaded) {
+            if (isMapLoaded) {
+                DeeplinkHelper.handleDeeplinkIfNecessary(dependencies.deeplinkDelegate, state, onAccept)
             }
-            MapScreen(
-                state = state,
-                effects = effects,
-                mapAppearanceType = mapAppearanceType,
-                // Factory draws every marker into the same bitmap, fromBitmap() copies it right away
-                markerIcon = { BitmapDescriptorFactory.fromBitmap(markersBitmapFactory.getBitmap(it)) },
-                scrollToTopRequests = scrollToTopRequests,
-                onAction = { action ->
-                    when (action) {
-                        is MapAction.TabClick -> {
-                            analytics.sendClick("Tab_${action.tab}")
-                            onAccept(Ui.Action.SelectTab(action.tab))
-                        }
-
-                        is MapAction.MarkerClick -> {
-                            analytics.sendClick("ListMarker_(${action.marker.name})")
-                            onAccept(Ui.Action.OnListMarkerSelected(action.marker))
-                        }
-
-                        is MapAction.ReloadClick -> {
-                            analytics.sendClick("MapReload")
-                            onAccept(Ui.Action.Reload)
-                        }
-
-                        is MapAction.SheetDragged -> analytics.sendScroll("MapBottomSheet")
-                        is MapAction.MapLoaded -> isMapLoaded = true
-                    }
-                },
-            )
         }
+        MapScreen(
+            state = state,
+            effects = effects,
+            mapAppearanceType = mapAppearanceType,
+            // Factory draws every marker into the same bitmap, fromBitmap() copies it right away
+            markerIcon = { BitmapDescriptorFactory.fromBitmap(markersBitmapFactory.getBitmap(it)) },
+            scrollToTopRequests = scrollToTopRequests,
+            onAction = { action ->
+                when (action) {
+                    is MapAction.TabClick -> {
+                        analytics.sendClick("Tab_${action.tab}")
+                        onAccept(Ui.Action.SelectTab(action.tab))
+                    }
+
+                    is MapAction.MarkerClick -> {
+                        analytics.sendClick("ListMarker_(${action.marker.name})")
+                        onAccept(Ui.Action.OnListMarkerSelected(action.marker))
+                    }
+
+                    is MapAction.ReloadClick -> {
+                        analytics.sendClick("MapReload")
+                        onAccept(Ui.Action.Reload)
+                    }
+
+                    is MapAction.SheetDragged -> analytics.sendScroll("MapBottomSheet")
+                    is MapAction.MapLoaded -> isMapLoaded = true
+                }
+            },
+        )
     }
 }

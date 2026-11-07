@@ -1,0 +1,111 @@
+package kekmech.ru.feature_bars_impl.presentation.screen.main
+
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.calculateStartPadding
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import kekmech.ru.feature_bars_impl.presentation.screen.main.compose.DisciplineItem
+import kekmech.ru.feature_bars_impl.presentation.screen.main.compose.LoginPrompt
+import kekmech.ru.feature_bars_impl.presentation.screen.main.compose.UserHeader
+import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsComposeEffect
+import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsComposeEvent
+import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsComposeEvent.Ui
+import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsComposeState
+import kekmech.ru.lib_elm.Resource
+import kekmech.ru.ui_theme.theme.MpeixTheme
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
+
+@Composable
+internal fun BarsComposeScreen(
+    onAccept: (BarsComposeEvent) -> Unit,
+    state: BarsComposeState,
+    @Suppress("Unused")
+    effects: Flow<BarsComposeEffect>,
+) {
+    val layoutDirection = LocalLayoutDirection.current
+    var isRefreshing by remember { mutableStateOf(false) }
+    LaunchedEffect(isRefreshing) {
+        delay(3000)
+        isRefreshing = false
+    }
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+    ) { innerPadding ->
+        PullToRefreshBox(
+            isRefreshing = isRefreshing,
+            onRefresh = {
+                isRefreshing = true
+                onAccept(Ui.Action.PullToRefresh)
+            },
+            modifier = Modifier.fillMaxSize()
+        ) {
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(),
+                contentPadding = PaddingValues(
+                    start = innerPadding.calculateStartPadding(layoutDirection),
+                    top = innerPadding.calculateTopPadding(),
+                    end = innerPadding.calculateEndPadding(layoutDirection),
+                    bottom = innerPadding.calculateBottomPadding() + 80.dp,
+                ),
+            ) {
+                item {
+                    UserHeader(
+                        name = state.profile.value?.name,
+                        group = state.profile.value?.group,
+                        isLoading = state.profile.isLoading && !state.isLoginRequired,
+                        onSettingsClick = { onAccept(Ui.Click.Settings) },
+                    )
+                }
+                if (state.isLoginRequired) {
+                    item {
+                        LoginPrompt(
+                            onLoginClick = { onAccept(Ui.Click.Login) }
+                        )
+                    }
+                }
+                when (state.disciplines) {
+                    is Resource.Data -> items(state.disciplines.value) {
+                        DisciplineItem(
+                            discipline = it,
+                            onClick = { onAccept(Ui.Click.Discipline(it)) },
+                            modifier = Modifier
+                                .padding(horizontal = 8.dp)
+                                .padding(bottom = 8.dp)
+                        )
+                    }
+
+                    else -> Unit
+                }
+            }
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun BarsComposeScreenPreview() {
+    MpeixTheme {
+        BarsComposeScreen(
+            onAccept = { /* no-op */ },
+            state = BarsComposeState(),
+            effects = emptyFlow(),
+        )
+    }
+}

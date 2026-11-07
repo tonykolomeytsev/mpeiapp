@@ -27,7 +27,6 @@ import kekmech.ru.lib_navigation.AddScreenForward
 import kekmech.ru.lib_navigation.PopBackStack
 import kekmech.ru.lib_navigation.Router
 import kekmech.ru.lib_navigation.ShowDialog
-import kekmech.ru.ui_theme.theme.MpeixTheme
 import org.koin.compose.koinInject
 
 private const val ACTIVITY_RECREATION_DELAY = 200L
@@ -41,29 +40,27 @@ internal fun AppSettingsEntry() {
     val logoutHandle = koinInject<BarsLogoutHandle>()
     val context = LocalContext.current
     val activity = LocalActivity.current
-    MpeixTheme {
-        val storeFactory = koinInject<AppSettingsStoreFactory>()
-        val router = LocalRouter.current
-        ElmContent(
-            key = "AppSettingsScreen",
-            storeFactory = { storeFactory.create() },
-        ) { onAccept, state, effects ->
-            ResultListener<String>(LANGUAGE_RESULT_KEY) {
-                onAccept(Ui.Action.LanguageChanged(it))
-            }
-            ResultListener<String>(MAP_TYPE_RESULT_KEY) {
-                onAccept(Ui.Action.MapTypeChanged(it))
-            }
-            EffectHandler(effects) { effect ->
-                handleEffect(effect, router, activity)
-            }
-            AppSettingsScreen(
-                state = state,
-                onAction = {
-                    handleAction(it, onAccept, router, analytics, logoutHandle, context)
-                },
-            )
+    val storeFactory = koinInject<AppSettingsStoreFactory>()
+    val router = LocalRouter.current
+    ElmContent(
+        key = "AppSettingsScreen",
+        storeFactory = { storeFactory.create() },
+    ) { onAccept, state, effects ->
+        ResultListener<String>(LANGUAGE_RESULT_KEY) {
+            onAccept(Ui.Action.LanguageChanged(it))
         }
+        ResultListener<String>(MAP_TYPE_RESULT_KEY) {
+            onAccept(Ui.Action.MapTypeChanged(it))
+        }
+        EffectHandler(effects) { effect ->
+            handleEffect(effect, router, activity)
+        }
+        AppSettingsScreen(
+            state = state,
+            onAction = {
+                handleAction(it, onAccept, router, analytics, logoutHandle, context)
+            },
+        )
     }
 }
 

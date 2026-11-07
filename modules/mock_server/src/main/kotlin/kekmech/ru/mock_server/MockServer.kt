@@ -11,8 +11,6 @@ import io.ktor.server.routing.routing
 import kekmech.ru.ext_json.LocalDateSerializer
 import kekmech.ru.ext_json.LocalDateTimeSerializer
 import kekmech.ru.ext_json.LocalTimeSerializer
-import kekmech.ru.mock_server.routing.bars.getExtractJs
-import kekmech.ru.mock_server.routing.bars.getRemoteBarsConfig
 import kekmech.ru.mock_server.routing.github.getContributors
 import kekmech.ru.mock_server.routing.github.getUser
 import kekmech.ru.mock_server.routing.map.getMapMarkers
@@ -76,11 +74,6 @@ public class MockServer(
 
                 // region map
                 getMapMarkers(assetManager)
-                // end region
-
-                // region bars
-                getExtractJs(assetManager)
-                getRemoteBarsConfig(assetManager)
                 // end region
 
                 // region github

@@ -1,54 +1,55 @@
 package kekmech.ru.feature_bars_impl.di
 
-import com.kekmech.lib_bars.BarsHandle
-import com.kekmech.lib_bars.DataStore
+import io.github.tonykolomeytsev.mpeix.sdk.LogLevel
+import io.github.tonykolomeytsev.mpeix.sdk.MpeixSdk
+import io.github.tonykolomeytsev.mpeix.sdk.MpeixSdkConfig
+import io.github.tonykolomeytsev.mpeix.sdk.SdkLogger
+import io.github.tonykolomeytsev.mpeix.sdk.provider.MpeixSdkProvider
 import kekmech.ru.ext_koin.bindIntoList
 import kekmech.ru.feature_bars_api.BarsLogoutHandle
-import kekmech.ru.feature_bars_impl.data.datasource.BarsConfigDataSource
-import kekmech.ru.feature_bars_impl.data.datasource.BarsExtractJsDataSource
-import kekmech.ru.feature_bars_impl.data.network.BarsService
-import kekmech.ru.feature_bars_impl.data.repository.BarsConfigRepository
-import kekmech.ru.feature_bars_impl.data.repository.BarsExtractJsRepository
-import kekmech.ru.feature_bars_impl.data.repository.BarsRepository
-import kekmech.ru.feature_bars_impl.data.repository.BarsUserInfoRepository
+import kekmech.ru.feature_bars_impl.data.repository.BarsProfileIdRepository
+import kekmech.ru.feature_bars_impl.data.sdk.SdkCrashlyticsEventSink
 import kekmech.ru.feature_bars_impl.navigation.BarsNavEntries
-import kekmech.ru.feature_bars_impl.presentation.screen.login.elm.BarsLoginActor
-import kekmech.ru.feature_bars_impl.presentation.screen.login.elm.BarsLoginStoreFactory
-import kekmech.ru.feature_bars_impl.presentation.screen.main_compose.elm.BarsComposeActor
-import kekmech.ru.feature_bars_impl.presentation.screen.main_compose.elm.BarsComposeStoreFactory
+import kekmech.ru.feature_bars_impl.presentation.screen.login.BarsLoginViewModel
+import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsComposeActor
+import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsComposeStoreFactory
+import kekmech.ru.lib_app_info.AppVersionName
 import kekmech.ru.lib_navigation.NavEntries
-import kekmech.ru.lib_network.buildApi
-import okhttp3.Interceptor
-import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidApplication
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
-import org.koin.dsl.bind
+import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.binds
 import org.koin.dsl.module
-import retrofit2.Retrofit
+import timber.log.Timber
 
 val FeatureBarsModule = module {
     factoryOf(::BarsComposeActor)
-    factoryOf(::BarsLoginActor)
     singleOf(::BarsComposeStoreFactory)
-    singleOf(::BarsLoginStoreFactory)
+    viewModelOf(::BarsLoginViewModel)
 
-    singleOf(::BarsRepository) binds arrayOf(BarsRepository::class, BarsLogoutHandle::class)
-    factoryOf(::BarsConfigDataSource)
-    factoryOf(::BarsConfigRepository)
-    factoryOf(::BarsExtractJsDataSource)
-    factoryOf(::BarsExtractJsRepository)
-    factoryOf(::BarsUserInfoRepository)
-    single { get<Retrofit.Builder>().buildApi<BarsService>() } bind BarsService::class
+    singleOf(::BarsProfileIdRepository) binds arrayOf(BarsProfileIdRepository::class, BarsLogoutHandle::class)
 
-    single { DataStore(androidApplication().dataDir) }
-    single {
-        val loggingInterceptor = getAll<Interceptor>().find { it is HttpLoggingInterceptor }
-        BarsHandle(androidApplication(),get()) {
-            loggingInterceptor?.let(::addNetworkInterceptor)
-            this
-        }
+    single<MpeixSdk> {
+        MpeixSdkProvider.create(
+            MpeixSdkConfig {
+                storageDirectory = androidApplication().filesDir.resolve("mpeix-sdk").path
+                appVersion = get<AppVersionName>().versionName
+                logger = SdkLogger { level, tag, message, error ->
+                    Timber.tag(tag).log(level.priority, error, message)
+                }
+                eventSink = SdkCrashlyticsEventSink()
+            }
+        )
     }
     factoryOf(::BarsNavEntries) bindIntoList NavEntries::class
 }
+
+private val LogLevel.priority: Int
+    get() = when (this) {
+        LogLevel.Verbose -> android.util.Log.VERBOSE
+        LogLevel.Debug -> android.util.Log.DEBUG
+        LogLevel.Info -> android.util.Log.INFO
+        LogLevel.Warning -> android.util.Log.WARN
+        LogLevel.Error -> android.util.Log.ERROR
+    }

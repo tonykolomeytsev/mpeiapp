@@ -5,6 +5,8 @@ plugins {
 
 dependencies {
     api(libs.androidx.navigation3.runtime)
+    implementation(libs.androidx.navigation3.ui)
+    implementation(libs.compose.material3)
 
     implementation(libs.androidx.appCompat)
     implementation(libs.androidx.fragment)

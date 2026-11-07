@@ -2,7 +2,6 @@ package kekmech.ru.mpeiapp
 
 import android.app.Application
 import android.content.Context
-import com.tencent.mmkv.MMKV
 import kekmech.ru.feature_app_settings_api.data.AppEnvironmentRepository
 import kekmech.ru.lib_app_lifecycle.AppLifecycleObserver
 import kekmech.ru.lib_elm.TimberLogger
@@ -35,7 +34,6 @@ class MpeixApp : Application(),
         ServiceUrlResolver.setAppEnvironment(appEnvironmentRepository.getAppEnvironment())
         RemoteConfig.setup()
         initTimber()
-        MMKV.initialize(this)
     }
 
     override fun attachBaseContext(base: Context) {

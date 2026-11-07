@@ -24,12 +24,14 @@ import androidx.navigation3.scene.Scene
 import androidx.navigation3.ui.NavDisplay
 import com.kekmech.lib_fragment.LocalRouter
 import com.kekmech.lib_fragment.rememberResultControllerNavEntryDecorator
+import kekmech.ru.lib_navigation.BottomSheetSceneStrategy
 import kekmech.ru.lib_navigation.NavEntries
 import kekmech.ru.lib_navigation.PopBackStack
 import kekmech.ru.lib_navigation.Router
 import kekmech.ru.lib_navigation.ScreenKey
 import kekmech.ru.lib_navigation.bottomTab
 import kekmech.ru.mpeiapp.ui.main.rememberMainTabsNavEntryDecorator
+import kekmech.ru.ui_theme.theme.MpeixTheme
 
 // Same as the old fragment transactions (anim_in/anim_out)
 private const val TRANSITION_DURATION_MS = 100
@@ -56,22 +58,28 @@ fun App(
             navEntries.forEach { with(it) { register() } }
         }
     }
-    CompositionLocalProvider(LocalRouter provides router) {
-        NavDisplay(
-            backStack = router.backStack,
-            onBack = { router.executeCommand(PopBackStack()) },
-            entryDecorators = listOf(
-                rememberSaveableStateHolderNavEntryDecorator(),
-                rememberViewModelStoreNavEntryDecorator(),
-                rememberResultControllerNavEntryDecorator(activity),
-                rememberMainTabsNavEntryDecorator(),
-            ),
-            transitionSpec = { screenTransition() },
-            popTransitionSpec = { screenTransition() },
-            // Swipe edge is ignored: closing screen always slides to the right, whichever edge the gesture starts from
-            predictivePopTransitionSpec = { predictivePopTransition() },
-            entryProvider = entryProvider,
-        )
+    val bottomSheetStrategy = remember { BottomSheetSceneStrategy<ScreenKey>() }
+    // The only theme of the app's screens: they don't wrap themselves in MpeixTheme.
+    // It also covers scenes drawn outside of the screens, e.g. the bottom sheet container
+    MpeixTheme {
+        CompositionLocalProvider(LocalRouter provides router) {
+            NavDisplay(
+                backStack = router.backStack,
+                onBack = { router.executeCommand(PopBackStack()) },
+                entryDecorators = listOf(
+                    rememberSaveableStateHolderNavEntryDecorator(),
+                    rememberViewModelStoreNavEntryDecorator(),
+                    rememberResultControllerNavEntryDecorator(activity),
+                    rememberMainTabsNavEntryDecorator(),
+                ),
+                sceneStrategies = listOf(bottomSheetStrategy),
+                transitionSpec = { screenTransition() },
+                popTransitionSpec = { screenTransition() },
+                // Swipe edge is ignored: closing screen always slides to the right, whichever edge the gesture starts from
+                predictivePopTransitionSpec = { predictivePopTransition() },
+                entryProvider = entryProvider,
+            )
+        }
     }
 }
 
