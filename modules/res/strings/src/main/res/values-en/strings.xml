@@ -197,6 +197,14 @@
     <string name="bars_stub_login_header">You are not logged into BARS</string>
     <string name="bars_stub_login_description">Logging into BARS in the app, after which all information is viewed here</string>
     <string name="bars_stub_login_button">Login to BARS</string>
+    <string name="bars_showing_from_cache">Showing cached data</string>
+    <string name="bars_showing_from_cache_processing_failed">Unable to process data</string>
+    <string name="bars_showing_from_cache_logged_out">BARS session has expired</string>
+    <string name="bars_showing_from_cache_network">Problems with internet connection</string>
+    <string name="bars_showing_from_cache_login">Log in</string>
+    <string name="bars_disciplines_header">Disciplines</string>
+    <string name="bars_disciplines_empty_title">Nothing here yet</string>
+    <string name="bars_disciplines_empty_subtitle">The list of disciplines for this semester is not available yet</string>
     <string name="bars_item_no_marks">No grades</string>
     <string name="bars_details_weight">Weight: %s%%</string>
     <string name="bars_details_deadline">Deadline: week %s</string>

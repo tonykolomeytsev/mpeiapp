@@ -197,6 +197,14 @@
     <string name="bars_stub_login_header">Вы не вошли в БАРС</string>
     <string name="bars_stub_login_description">Вход в БАРС осуществляется прямо в приложении, после этого вводить логин и пароль больше не нужно</string>
     <string name="bars_stub_login_button">Войти в БАРС</string>
+    <string name="bars_showing_from_cache">Показаны кэшированные данные</string>
+    <string name="bars_showing_from_cache_processing_failed">Не удалось обработать данные</string>
+    <string name="bars_showing_from_cache_logged_out">Сессия БАРС истекла</string>
+    <string name="bars_showing_from_cache_network">Проблемы с интернетом</string>
+    <string name="bars_showing_from_cache_login">Войти</string>
+    <string name="bars_disciplines_header">Дисциплины</string>
+    <string name="bars_disciplines_empty_title">Здесь пока ничего нет</string>
+    <string name="bars_disciplines_empty_subtitle">В этом семестре пока не указан список дисциплин</string>
     <string name="bars_item_no_marks">Нет оценок</string>
     <string name="bars_details_weight">Вес: %s%%</string>
     <string name="bars_details_deadline">Срок: %s неделя</string>

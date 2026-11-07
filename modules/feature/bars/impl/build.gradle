@@ -3,13 +3,8 @@ plugins {
     alias(libs.plugins.kotlin.parcelize)
 }
 
-android {
-    buildFeatures {
-        androidResources = true
-    }
-}
-
 dependencies {
+    implementation(libs.compose.activity)
     implementation(libs.compose.material3)
     implementation(libs.compose.material.icons)
 
@@ -21,8 +16,6 @@ dependencies {
     }
 
     implementation(libs.firebase.crashlytics)
-    // BarsDetailsFragment's base class from ui_kit_dialogs extends BottomSheetDialogFragment
-    implementation(libs.google.material)
     implementation(libs.koin.android)
     implementation(libs.koin.core)
     implementation(libs.koin.compose)
@@ -36,9 +29,7 @@ dependencies {
     implementation(project(":feature_app_settings_api"))
     implementation(project(":feature_bars_api"))
 
-    implementation(project(":ext_android"))
     implementation(project(":ext_kotlin"))
-    implementation(project(":lib_analytics_android"))
     implementation(project(":lib_elm"))
     implementation(project(":lib_navigation"))
     implementation(project(":lib_fragment"))
@@ -48,9 +39,8 @@ dependencies {
     implementation(project(":ui_shimmer"))
     implementation(project(":ui_kit_topappbar"))
     implementation(project(":ui_kit_buttons"))
-    implementation(project(":ui_kit_dialogs"))
     implementation(project(":ui_kit_lists"))
+    implementation(project(":ui_kit_states"))
 
-    implementation(project(":res_icons"))
     implementation(project(":res_strings"))
 }

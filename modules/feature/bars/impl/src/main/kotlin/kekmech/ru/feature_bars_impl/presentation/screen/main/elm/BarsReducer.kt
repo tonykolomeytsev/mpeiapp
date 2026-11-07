@@ -1,9 +1,5 @@
 package kekmech.ru.feature_bars_impl.presentation.screen.main.elm
 
-import androidx.compose.ui.util.fastFirstOrNull
-import kekmech.ru.feature_bars_impl.domain.AssessedDiscipline
-import kekmech.ru.feature_bars_impl.domain.FinalGradeType
-import kekmech.ru.feature_bars_impl.presentation.screen.main.compose.DisciplineUiItem
 import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsEvent.Internal
 import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsEvent.Ui
 import kekmech.ru.lib_elm.Resource
@@ -26,12 +22,7 @@ internal class BarsReducer :
             is Internal.SubscribeAuthStatusSuccess -> {
                 when (event.authStatus) {
                     AuthStatus.LoggedIn -> {
-                        // Profile and marks are already subscribed to the current profile, see Ui.Init
-                        state {
-                            copy(
-                                isLoginRequired = false,
-                            )
-                        }
+                        state { copy(isLoginRequired = false) }
                     }
 
                     AuthStatus.LoginRequired -> {
@@ -39,7 +30,9 @@ internal class BarsReducer :
                             copy(
                                 profile = Resource.Loading,
                                 isLoginRequired = true,
+                                showingFromCacheReasons = emptySet(),
                                 disciplines = Resource.Loading,
+                                semesterName = null,
                             )
                         }
                     }
@@ -47,14 +40,14 @@ internal class BarsReducer :
             }
 
             is Internal.CheckAuthStatusFailure -> {
-                state {
-                    copy(
-                        profile = Resource.Error(event.throwable),
-                    )
-                }
+                state { copy(profile = Resource.Error(event.throwable)) }
             }
 
-            is Internal.GetProfileSuccess -> {
+            is Internal.CacheReasonsChanged -> {
+                state { copy(showingFromCacheReasons = event.reasons) }
+            }
+
+            is Internal.ObserveProfileSuccess -> {
                 state {
                     copy(
                         profile = Resource.Data(event.profile),
@@ -63,16 +56,17 @@ internal class BarsReducer :
                 }
             }
 
-            is Internal.GetMarksSuccess -> {
+            is Internal.ObserveMarksSuccess -> {
                 state {
                     copy(
-                        disciplines = event.disciplines.map { it.toUi() }.toResource(),
+                        disciplines = event.disciplines.toResource(),
+                        semesterName = event.semesterName,
                         isLoginRequired = false,
                     )
                 }
             }
 
-            is Internal.GetMarksFailure -> {
+            is Internal.ObserveMarksFailure -> {
                 state {
                     copy(
                         disciplines = if (disciplines.isData) {
@@ -83,6 +77,10 @@ internal class BarsReducer :
                     )
                 }
             }
+
+            is Internal.RefreshSuccess -> {
+                state { copy(isLoading = false) }
+            }
         }
 
     override fun Result.ui(event: Ui) =
@@ -90,8 +88,9 @@ internal class BarsReducer :
             is Ui.Init -> {
                 commands {
                     +Command.SubscribeAuthStatus
-                    +Command.GetProfile
-                    +Command.GetMarks
+                    +Command.ObserveProfile
+                    +Command.ObserveMarks
+                    +Command.ObserveCacheReasons
                 }
                 state {
                     copy(
@@ -101,7 +100,7 @@ internal class BarsReducer :
             }
 
             is Ui.Click.Login -> {
-                commands { +Command.OpenLogin }
+                commands { +Command.OpenAccounts }
             }
 
             is Ui.Click.Profile -> {
@@ -113,22 +112,14 @@ internal class BarsReducer :
             }
 
             is Ui.Click.Discipline -> {
-                commands { +Command.OpenDetails(event.model.discipline) }
+                // The details screen reads the discipline from the SDK by its position in the semester
+                val index = state.disciplines.value?.indexOf(event.discipline) ?: -1
+                if (index >= 0) commands { +Command.OpenDetails(index) } else Unit
             }
 
             is Ui.Action.PullToRefresh -> {
+                state { copy(isLoading = true) }
                 commands { +Command.Refresh }
             }
         }
-
-    private fun AssessedDiscipline.toUi() =
-        DisciplineUiItem(
-            name = name,
-            person = person,
-            type = assessmentType,
-            finalMark = finalGrades.fastFirstOrNull { it.type == FinalGradeType.FINAL_MARK }?.finalMark
-                ?.takeIf { it != -1f },
-            marks = controlActivities.map { it.finalMark }.filter { it != -1f },
-            discipline = this,
-        )
 }
