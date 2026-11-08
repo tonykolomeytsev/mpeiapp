@@ -33,10 +33,15 @@ internal class BarsProfileIdRepository(
         currentProfileId.value = id
     }
 
-    override fun logout(): Boolean {
-        val profileId = currentProfileId.value ?: return false
+    /** Forgets the current profile without touching the SDK session. */
+    fun clearCurrentProfileId() {
         preferences.edit { remove(CURRENT_PROFILE_ID_KEY) }
         currentProfileId.value = null
+    }
+
+    override fun logout(): Boolean {
+        val profileId = currentProfileId.value ?: return false
+        clearCurrentProfileId()
         scope.launch { sdk.bars.auth.signOut(profileId.accountId) }
         return true
     }

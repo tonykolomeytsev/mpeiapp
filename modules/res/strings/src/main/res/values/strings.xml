@@ -209,6 +209,17 @@
     <string name="bars_details_weight">Вес: %s%%</string>
     <string name="bars_details_deadline">Срок: %s неделя</string>
     <string name="bars_details_final_grades">Итоговые оценки</string>
+    <string name="bars_accounts_title">Аккаунты БАРС</string>
+    <string name="bars_accounts_empty">Вы ещё не вошли в БАРС, нажмите кнопку ниже чтобы войти</string>
+    <string name="bars_accounts_add">Добавить аккаунт</string>
+    <string name="bars_accounts_edit">Управление аккаунтами</string>
+    <string name="bars_accounts_finish_editing">Завершить редактирование</string>
+    <string name="bars_accounts_status_unfinished">Вход не завершен</string>
+    <string name="bars_accounts_status_login_required">Требуется вход</string>
+    <string name="bars_accounts_delete_title">Удалить аккаунт?</string>
+    <string name="bars_accounts_delete_text">Аккаунт %s будет удалён с этого устройства вместе со всеми сохранёнными данными БАРС. Это действие нельзя отменить, чтобы снова пользоваться аккаунтом, придётся войти заново.</string>
+    <string name="bars_accounts_delete_confirm">Удалить</string>
+    <string name="bars_accounts_delete_cancel">Отмена</string>
 
     <string name="app_settings_screen_title">Настройки</string>
     <string name="app_settings_header_schedule">Расписание</string>

@@ -10,9 +10,11 @@ import kekmech.ru.feature_bars_api.BarsLogoutHandle
 import kekmech.ru.feature_bars_impl.data.repository.BarsProfileIdRepository
 import kekmech.ru.feature_bars_impl.data.sdk.SdkCrashlyticsEventSink
 import kekmech.ru.feature_bars_impl.navigation.BarsNavEntries
+import kekmech.ru.feature_bars_impl.presentation.screen.accounts.BarsAccountsViewModel
+import kekmech.ru.feature_bars_impl.presentation.screen.details.BarsDetailsViewModel
 import kekmech.ru.feature_bars_impl.presentation.screen.login.BarsLoginViewModel
-import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsComposeActor
-import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsComposeStoreFactory
+import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsActor
+import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsStoreFactory
 import kekmech.ru.lib_app_info.AppVersionName
 import kekmech.ru.lib_navigation.NavEntries
 import org.koin.android.ext.koin.androidApplication
@@ -24,8 +26,10 @@ import org.koin.dsl.module
 import timber.log.Timber
 
 val FeatureBarsModule = module {
-    factoryOf(::BarsComposeActor)
-    singleOf(::BarsComposeStoreFactory)
+    factoryOf(::BarsActor)
+    singleOf(::BarsStoreFactory)
+    viewModelOf(::BarsAccountsViewModel)
+    viewModelOf(::BarsDetailsViewModel)
     viewModelOf(::BarsLoginViewModel)
 
     singleOf(::BarsProfileIdRepository) binds arrayOf(BarsProfileIdRepository::class, BarsLogoutHandle::class)
