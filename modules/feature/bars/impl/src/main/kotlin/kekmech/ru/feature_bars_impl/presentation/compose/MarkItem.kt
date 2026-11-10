@@ -11,6 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
+import io.github.tonykolomeytsev.mpeix.sdk.Grade
+import io.github.tonykolomeytsev.mpeix.sdk.Mark
 import kekmech.ru.ui_theme.theme.MpeixTheme
 import kotlin.math.floor
 
@@ -37,6 +39,10 @@ internal fun MarkItem(
     )
 }
 
+/** Value for [MarkItem], null for marks without a number like "зачтено". */
+internal val Mark.numeric: Float?
+    get() = (grade as? Grade.Numeric)?.value?.toFloat()
+
 private fun Float.formatMark(): String =
     if (floor(this) == this) toInt().toString() else toString()
 
@@ -55,19 +61,15 @@ private fun Float.markColors(): Pair<Color, Color> =
 @PreviewLightDark
 @Composable
 private fun MarkItemPreview() {
-    MpeixTheme {
-        Row(
-            modifier = Modifier
-                .background(MpeixTheme.palette.surface)
-                .padding(16.dp),
-            horizontalArrangement = Arrangement.spacedBy(4.dp),
-        ) {
-            MarkItem(mark = 5f)
-            MarkItem(mark = 4.5f)
-            MarkItem(mark = 3f)
-            MarkItem(mark = 2f)
-            MarkItem(mark = 0f)
-            MarkItem(mark = -1f, text = "–")
-        }
+    Row(
+        modifier = Modifier.padding(16.dp),
+        horizontalArrangement = Arrangement.spacedBy(4.dp),
+    ) {
+        MarkItem(mark = 5f)
+        MarkItem(mark = 4.5f)
+        MarkItem(mark = 3f)
+        MarkItem(mark = 2f)
+        MarkItem(mark = 0f)
+        MarkItem(mark = -1f, text = "–")
     }
 }

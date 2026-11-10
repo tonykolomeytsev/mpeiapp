@@ -39,6 +39,7 @@ dependencies {
     implementation(project(":ui_shimmer"))
     implementation(project(":ui_kit_topappbar"))
     implementation(project(":ui_kit_buttons"))
+    implementation(project(":ui_kit_dialogs"))
     implementation(project(":ui_kit_lists"))
     implementation(project(":ui_kit_states"))
 

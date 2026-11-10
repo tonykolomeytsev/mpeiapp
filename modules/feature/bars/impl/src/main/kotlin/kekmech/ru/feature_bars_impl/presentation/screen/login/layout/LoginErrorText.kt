@@ -1,21 +1,7 @@
 package kekmech.ru.feature_bars_impl.presentation.screen.login.layout
 
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import io.github.tonykolomeytsev.mpeix.sdk.LoginError
 import io.github.tonykolomeytsev.mpeix.sdk.SdkError
-import kekmech.ru.ui_theme.theme.MpeixTheme
-
-@Composable
-internal fun ErrorText(error: LoginError, modifier: Modifier = Modifier) {
-    Text(
-        text = error.text(),
-        style = MpeixTheme.typography.bodyMedium,
-        color = MpeixTheme.palette.error,
-        modifier = modifier,
-    )
-}
 
 internal fun LoginError.text(): String =
     when (this) {
