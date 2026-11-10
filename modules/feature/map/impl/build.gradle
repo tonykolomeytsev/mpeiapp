@@ -40,8 +40,6 @@ dependencies {
 
     implementation(project(":ext_android"))
     implementation(project(":ext_koin"))
-    implementation(project(":ext_kotlin"))
-    implementation(project(":ext_okhttp"))
     implementation(project(":lib_analytics_android"))
     implementation(project(":lib_app_lifecycle"))
     implementation(project(":lib_elm"))
@@ -52,13 +50,11 @@ dependencies {
     implementation(project(":lib_persistent_cache"))
 
     implementation(project(":ui_theme"))
-    implementation(project(":ui_kit_buttons"))
     implementation(project(":ui_kit_lists"))
     implementation(project(":ui_kit_states"))
     implementation(project(":ui_preview"))
 
     // Markers are still drawn on a Canvas, with colors and font from coreui
     implementation(project(":coreui"))
-    implementation(project(":res_images"))
     implementation(project(":res_strings"))
 }

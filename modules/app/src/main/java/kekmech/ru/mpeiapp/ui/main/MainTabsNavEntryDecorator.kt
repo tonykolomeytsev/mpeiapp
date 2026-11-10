@@ -31,7 +31,6 @@ import kekmech.ru.mpeiapp.ui.main.icons.ModeHeat
 import kekmech.ru.mpeiapp.ui.main.icons.ModeHeatFilled
 import kekmech.ru.mpeiapp.ui.main.icons.NavigationIcons
 import kekmech.ru.ui_kit_navigationbar.floating.FloatingNavBar
-import kekmech.ru.ui_theme.theme.MpeixTheme
 import org.koin.compose.koinInject
 import kekmech.ru.res_strings.R.string as Strings
 
@@ -77,13 +76,11 @@ private fun MainTabsScaffold(
         // Навигация плавает поверх контента, поэтому экраны табов сами добавляют отступ снизу:
         // высоту системной навигации + 80dp
         content()
-        MpeixTheme {
-            MainNavigationBar(
-                selectedTab = selectedTab,
-                onTabClick = onTabClick,
-                modifier = Modifier.align(Alignment.BottomCenter),
-            )
-        }
+        MainNavigationBar(
+            selectedTab = selectedTab,
+            onTabClick = onTabClick,
+            modifier = Modifier.align(Alignment.BottomCenter),
+        )
         if (isSnowFlakesEnabled) {
             AndroidView(
                 factory = { context -> View.inflate(context, R.layout.item_snow_flakes, null) },

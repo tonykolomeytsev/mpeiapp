@@ -1,5 +1,6 @@
 package kekmech.ru.debug_menu.presentation.screens.main.elm
 
+import androidx.compose.runtime.Immutable
 import kekmech.ru.feature_app_settings_api.domain.model.AppTheme
 import kekmech.ru.lib_app_info.AppVersionName
 import kekmech.ru.lib_elm.Resource
@@ -8,6 +9,7 @@ import money.vivid.elmslie.core.store.Store
 
 internal typealias DebugMenuStore = Store<DebugMenuEvent, DebugMenuEffect, DebugMenuState>
 
+@Immutable
 internal data class DebugMenuState(
     val appEnvironment: Resource<AppEnvironment> = Resource.Loading,
     val appVersionName: AppVersionName,

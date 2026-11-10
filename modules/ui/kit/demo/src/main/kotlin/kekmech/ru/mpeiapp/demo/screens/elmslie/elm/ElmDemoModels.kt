@@ -1,10 +1,12 @@
 package kekmech.ru.mpeiapp.demo.screens.elmslie.elm
 
+import androidx.compose.runtime.Immutable
 import kekmech.ru.lib_elm.Resource
 import money.vivid.elmslie.core.store.Store
 
 typealias ElmDemoStore = Store<ElmDemoEvent, ElmDemoEffect, ElmDemoState>
 
+@Immutable
 data class ElmDemoState(
     val randomArgument: Int,
     val resource: Resource<String> = Resource.Loading,

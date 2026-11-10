@@ -1,11 +1,13 @@
 package kekmech.ru.debug_menu.presentation.screens.feature_toggles.elm
 
+import androidx.compose.runtime.Immutable
 import kekmech.ru.lib_elm.Resource
 import money.vivid.elmslie.core.store.Store
 
 internal typealias FeatureTogglesStore =
         Store<FeatureTogglesEvent, FeatureTogglesEffect, FeatureTogglesState>
 
+@Immutable
 internal data class FeatureTogglesState(
     val featureToggles: Resource<List<FeatureToggle>> = Resource.Loading,
 )

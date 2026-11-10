@@ -14,7 +14,6 @@ import kekmech.ru.lib_navigation.BottomTab
 import kekmech.ru.lib_navigation.BottomTabsSwitcher
 import kekmech.ru.lib_navigation.PopBackStack
 import kekmech.ru.lib_navigation.ShowDialog
-import kekmech.ru.ui_theme.theme.MpeixTheme
 import org.koin.compose.koinInject
 
 @Composable
@@ -23,46 +22,44 @@ internal fun SearchEntry(key: SearchScreenKey) {
     val analytics = rememberScreenAnalytics("Search")
     val bottomTabsSwitcher = koinInject<BottomTabsSwitcher>()
     HideKeyboardOnPause()
-    MpeixTheme {
-        val router = LocalRouter.current
-        val keyboardController = LocalSoftwareKeyboardController.current
-        ElmContent(
-            key = "SearchScreen",
-            storeFactory = {
-                dependencies.searchStoreFactory.create(
-                    query = key.query,
-                    filter = key.filter,
-                )
-            },
-        ) { onAccept, state, effects ->
-            SearchScreen(
-                onAccept = onAccept,
-                state = state,
-                effects = effects,
-                onBackClick = { router.executeCommand(PopBackStack()) },
-                onFilterClick = { filter ->
-                    analytics.sendClick("SearchFilter_${filter.type}")
-                    onAccept(Ui.Action.SelectFilter(filter))
-                },
-                onNoteClick = { note ->
-                    analytics.sendClick("SearchNote")
-                    dependencies.notesFeatureLauncher.launchAllNotes(note)
-                },
-                onMapMarkerClick = { marker ->
-                    analytics.sendClick("SearchMarker")
-                    dependencies.mapFeatureLauncher.selectPlace(marker.uid)
-                    keyboardController?.hide()
-                    // Переключение таба заменяет весь back stack, экран поиска закроется сам
-                    bottomTabsSwitcher.changeTab(BottomTab.MAP)
-                },
-                onScheduleClick = { searchResult ->
-                    analytics.sendClick("ScheduleDetails")
-                    keyboardController?.hide()
-                    router.executeCommand(ShowDialog {
-                        ScheduleDetailsFragment.newInstance(searchResult)
-                    })
-                },
+    val router = LocalRouter.current
+    val keyboardController = LocalSoftwareKeyboardController.current
+    ElmContent(
+        key = "SearchScreen",
+        storeFactory = {
+            dependencies.searchStoreFactory.create(
+                query = key.query,
+                filter = key.filter,
             )
-        }
+        },
+    ) { onAccept, state, effects ->
+        SearchScreen(
+            onAccept = onAccept,
+            state = state,
+            effects = effects,
+            onBackClick = { router.executeCommand(PopBackStack()) },
+            onFilterClick = { filter ->
+                analytics.sendClick("SearchFilter_${filter.type}")
+                onAccept(Ui.Action.SelectFilter(filter))
+            },
+            onNoteClick = { note ->
+                analytics.sendClick("SearchNote")
+                dependencies.notesFeatureLauncher.launchAllNotes(note)
+            },
+            onMapMarkerClick = { marker ->
+                analytics.sendClick("SearchMarker")
+                dependencies.mapFeatureLauncher.selectPlace(marker.uid)
+                keyboardController?.hide()
+                // Переключение таба заменяет весь back stack, экран поиска закроется сам
+                bottomTabsSwitcher.changeTab(BottomTab.MAP)
+            },
+            onScheduleClick = { searchResult ->
+                analytics.sendClick("ScheduleDetails")
+                keyboardController?.hide()
+                router.executeCommand(ShowDialog {
+                    ScheduleDetailsFragment.newInstance(searchResult)
+                })
+            },
+        )
     }
 }

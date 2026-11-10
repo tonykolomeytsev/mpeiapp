@@ -1,39 +1,39 @@
 package kekmech.ru.feature_bars_impl.presentation.screen.login
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
-import kekmech.ru.feature_bars_impl.presentation.screen.login.compose.BarsAccountSelectionScreen
-import kekmech.ru.feature_bars_impl.presentation.screen.login.compose.BarsLoginPasswordScreen
-import kekmech.ru.feature_bars_impl.presentation.screen.login.compose.BarsTwoFactorCodeScreen
-import kekmech.ru.feature_bars_impl.presentation.screen.login.elm.BarsLoginEffect
-import kekmech.ru.feature_bars_impl.presentation.screen.login.elm.BarsLoginEvent
-import kekmech.ru.feature_bars_impl.presentation.screen.login.elm.BarsLoginStage
-import kekmech.ru.feature_bars_impl.presentation.screen.login.elm.BarsLoginState
-import kotlinx.coroutines.flow.Flow
+import com.kekmech.lib_fragment.HideKeyboardOnPause
+import io.github.tonykolomeytsev.mpeix.sdk.LoginState
+import io.github.tonykolomeytsev.mpeix.sdk.LoginStep
+import kekmech.ru.feature_bars_impl.presentation.screen.login.layout.AbortedLayout
+import kekmech.ru.feature_bars_impl.presentation.screen.login.layout.CodeLayout
+import kekmech.ru.feature_bars_impl.presentation.screen.login.layout.CompletedLayout
+import kekmech.ru.feature_bars_impl.presentation.screen.login.layout.CredentialsLayout
+import kekmech.ru.feature_bars_impl.presentation.screen.login.layout.SubaccountsLayout
+import kekmech.ru.feature_bars_impl.presentation.screen.login.layout.VerificationMethodsLayout
 
+/**
+ * Login screen. Every step is a separate screen with its own Scaffold.
+ * Layouts of the steps are in the `layout` package.
+ */
 @Composable
 internal fun BarsLoginScreen(
-    onAccept: (BarsLoginEvent) -> Unit,
-    state: BarsLoginState,
-    effects: Flow<BarsLoginEffect>,
+    state: LoginState,
+    actions: BarsLoginActions,
 ) {
-    when (state.stage) {
-        BarsLoginStage.INIT -> Unit
-        BarsLoginStage.LOGIN_PASSWORD -> BarsLoginPasswordScreen(
-            onAccept = onAccept,
-            state = state.loginPasswordState,
-            effects = effects,
-        )
+    HideKeyboardOnPause()
+    // On the first step and after the error system back closes the screen as usual,
+    // in the middle of the attempt it goes to the previous step
+    BackHandler(enabled = state.step !is LoginStep.EnterCredentials && state.step !is LoginStep.Aborted) {
+        actions.onBack()
+    }
 
-        BarsLoginStage.TWO_FACTOR_CODE -> BarsTwoFactorCodeScreen(
-            onAccept = onAccept,
-            state = state.twoFactorCodeState,
-            effects = effects,
-        )
-
-        BarsLoginStage.ACCOUNT_SELECTION -> BarsAccountSelectionScreen(
-            onAccept = onAccept,
-            state = state.accountSelectionState,
-            effects = effects,
-        )
+    when (val step = state.step) {
+        is LoginStep.EnterCredentials -> CredentialsLayout(step, state, actions)
+        is LoginStep.ChooseVerificationMethod -> VerificationMethodsLayout(step, state, actions)
+        is LoginStep.EnterCode -> CodeLayout(step, state, actions)
+        is LoginStep.ChooseSubaccount -> SubaccountsLayout(step, state, actions)
+        is LoginStep.Completed -> CompletedLayout()
+        is LoginStep.Aborted -> AbortedLayout(step, actions)
     }
 }

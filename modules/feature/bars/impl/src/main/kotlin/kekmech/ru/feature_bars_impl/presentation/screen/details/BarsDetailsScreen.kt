@@ -7,18 +7,17 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.rememberNestedScrollInteropConnection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
@@ -27,63 +26,92 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import kekmech.ru.feature_bars_impl.domain.AssessedDiscipline
-import kekmech.ru.feature_bars_impl.domain.ControlActivity
-import kekmech.ru.feature_bars_impl.domain.FinalGrade
-import kekmech.ru.feature_bars_impl.domain.FinalGradeType
+import io.github.tonykolomeytsev.mpeix.sdk.ControlPoint
+import io.github.tonykolomeytsev.mpeix.sdk.Discipline
+import kekmech.ru.ext_kotlin.capitalizeSafe
+import kekmech.ru.feature_bars_impl.navigation.BarsDetailsScreenKey
 import kekmech.ru.feature_bars_impl.presentation.compose.MarkItem
-import kekmech.ru.ui_kit_dialogs.BottomSheet
+import kekmech.ru.feature_bars_impl.presentation.compose.numeric
+import kekmech.ru.feature_bars_impl.presentation.compose.previewDiscipline
 import kekmech.ru.ui_kit_lists.SectionHeader
 import kekmech.ru.ui_theme.theme.MpeixTheme
+import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.parameter.parametersOf
 import kekmech.ru.res_strings.R.string as Strings
 
-private const val NO_MARK = -1f
 private val CardShape = RoundedCornerShape(8.dp)
 
+/** Row of the final grades section. Only numeric marks get a row, as there is no chip for "зачтено". */
+private class FinalGrade(
+    val name: String,
+    val mark: Float,
+    val isAttestation: Boolean = false,
+    val isFinal: Boolean = false,
+)
+
 @Composable
-internal fun BarsDetailsScreen(discipline: AssessedDiscipline) {
-    val finalGrades = remember(discipline) {
-        discipline.finalGrades.filter { it.finalMark != NO_MARK }
-    }
-    BottomSheet {
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxWidth()
-                .nestedScroll(rememberNestedScrollInteropConnection()),
-            contentPadding = PaddingValues(bottom = 24.dp),
-        ) {
-            item(key = "header") {
-                DisciplineHeader(discipline)
-            }
-            items(discipline.controlActivities) { activity ->
-                ControlActivityItem(
-                    activity = activity,
-                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
+internal fun BarsDetailsScreen(key: BarsDetailsScreenKey) {
+    val viewModel = koinViewModel<BarsDetailsViewModel> { parametersOf(key) }
+    val discipline by viewModel.discipline.collectAsState()
+    discipline?.let { BarsDetailsScreen(discipline = it) }
+}
+
+/** Content of the details bottom sheet, the sheet itself is shown by the navigation. */
+@Composable
+internal fun BarsDetailsScreen(discipline: Discipline) {
+    val finalGrades = remember(discipline) { discipline.finalGrades() }
+    LazyColumn(
+        modifier = Modifier.fillMaxWidth(),
+        contentPadding = PaddingValues(bottom = 24.dp),
+    ) {
+        item(key = "header") {
+            DisciplineHeader(discipline)
+        }
+        items(discipline.controlPoints) { point ->
+            ControlPointItem(
+                point = point,
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
+            )
+        }
+        if (finalGrades.isNotEmpty()) {
+            item(key = "final_grades_header") {
+                SectionHeader(
+                    title = stringResource(Strings.bars_details_final_grades),
+                    modifier = Modifier.padding(top = 12.dp, bottom = 4.dp),
                 )
             }
-            if (finalGrades.isNotEmpty()) {
-                item(key = "final_grades_header") {
-                    SectionHeader(
-                        title = stringResource(Strings.bars_details_final_grades),
-                        modifier = Modifier.padding(top = 12.dp, bottom = 4.dp),
-                    )
-                }
-                items(finalGrades) { grade ->
-                    FinalGradeItem(
-                        grade = grade,
-                        modifier = Modifier
-                            .padding(horizontal = 16.dp, vertical = 4.dp)
-                            // Intermediate mark is visually separated from the current marks
-                            .padding(top = if (grade.type == FinalGradeType.INTERMEDIATE_MARK) 16.dp else 0.dp),
-                    )
-                }
+            items(finalGrades) { grade ->
+                FinalGradeItem(
+                    grade = grade,
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp, vertical = 4.dp)
+                        // Intermediate mark is visually separated from the current marks
+                        .padding(top = if (grade.isAttestation) 16.dp else 0.dp),
+                )
             }
         }
     }
 }
 
+private fun Discipline.finalGrades(): List<FinalGrade> = buildList {
+    currentControlScore?.numeric?.let { add(FinalGrade("Балл текущего контроля", it)) }
+    controlWeeks.forEach { week ->
+        week.mark?.numeric?.let { add(FinalGrade("Контрольная неделя №${week.number}", it)) }
+    }
+    attestation?.numeric?.let {
+        add(
+            FinalGrade(
+                "Промежуточная аттестация",
+                it,
+                isAttestation = true
+            )
+        )
+    }
+    finalGrade?.numeric?.let { add(FinalGrade("Итоговая оценка", it, isFinal = true)) }
+}
+
 @Composable
-private fun DisciplineHeader(discipline: AssessedDiscipline) {
+private fun DisciplineHeader(discipline: Discipline) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -98,10 +126,12 @@ private fun DisciplineHeader(discipline: AssessedDiscipline) {
         Text(
             text = buildAnnotatedString {
                 withStyle(SpanStyle(color = MpeixTheme.palette.onSurface)) {
-                    append(discipline.assessmentType)
+                    append(discipline.assessment.raw.capitalizeSafe())
                 }
-                append(" • ")
-                append(discipline.person)
+                discipline.teacher?.let {
+                    append(" • ")
+                    append(it)
+                }
             },
             style = MpeixTheme.typography.titleMedium,
             color = MpeixTheme.palette.onSurfaceVariant,
@@ -110,8 +140,8 @@ private fun DisciplineHeader(discipline: AssessedDiscipline) {
 }
 
 @Composable
-private fun ControlActivityItem(
-    activity: ControlActivity,
+private fun ControlPointItem(
+    point: ControlPoint,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -121,7 +151,7 @@ private fun ControlActivityItem(
             .padding(horizontal = 16.dp, vertical = 12.dp),
     ) {
         Text(
-            text = activity.name,
+            text = point.name,
             style = MpeixTheme.typography.bodyMedium,
             color = MpeixTheme.palette.onSurface,
         )
@@ -130,28 +160,31 @@ private fun ControlActivityItem(
             horizontalArrangement = Arrangement.spacedBy(24.dp),
             verticalAlignment = Alignment.Bottom,
         ) {
-            if (activity.weight.isNotEmpty()) {
+            point.weightPercent?.formatWeight()?.let { weight ->
                 ActivityProperty(
-                    text = stringResource(Strings.bars_details_weight, activity.weight),
-                    value = activity.weight,
+                    text = stringResource(Strings.bars_details_weight, weight),
+                    value = weight,
                 )
             }
-            if (activity.deadline.isNotBlank()) {
+            point.week?.toString()?.let { week ->
                 ActivityProperty(
-                    text = stringResource(Strings.bars_details_deadline, activity.deadline),
-                    value = activity.deadline,
+                    text = stringResource(Strings.bars_details_deadline, week),
+                    value = week,
                 )
             }
             Spacer(Modifier.weight(1f))
-            if (activity.finalMark != NO_MARK) {
+            point.mark?.numeric?.let { mark ->
                 MarkItem(
-                    mark = activity.finalMark,
+                    mark = mark,
                     modifier = Modifier.padding(top = 8.dp),
                 )
             }
         }
     }
 }
+
+private fun Double.formatWeight(): String =
+    if (this % 1.0 == 0.0) toInt().toString() else toString()
 
 /**
  * Property of the control activity, e.g. "Weight: **9**%", where [value] is highlighted.
@@ -196,10 +229,10 @@ private fun FinalGradeItem(
                 .weight(1f)
                 .padding(end = 8.dp),
             style = MpeixTheme.typography.bodyMedium,
-            fontWeight = if (grade.type == FinalGradeType.FINAL_MARK) FontWeight.Bold else null,
+            fontWeight = if (grade.isFinal) FontWeight.Bold else null,
             color = MpeixTheme.palette.onSurface,
         )
-        MarkItem(mark = grade.finalMark)
+        MarkItem(mark = grade.mark)
     }
 }
 
@@ -208,36 +241,12 @@ private fun FinalGradeItem(
 private fun BarsDetailsScreenPreview() {
     MpeixTheme {
         BarsDetailsScreen(
-            discipline = AssessedDiscipline(
+            discipline = previewDiscipline(
                 name = "Вычислительная математика",
-                person = "Амосова О.А.",
-                assessmentType = "Экзамен",
-                controlActivities = listOf(
-                    ControlActivity(
-                        name = "1. Контрольная работа по теме «Погрешности вычислений»",
-                        weight = "9",
-                        deadline = "4",
-                        finalMark = 5f,
-                    ),
-                    ControlActivity(
-                        name = "2. Контрольная работа по теме «Решение СЛАУ методом Холецкого»",
-                        weight = "9",
-                        deadline = "8",
-                        finalMark = 3f,
-                    ),
-                    ControlActivity(
-                        name = "3. Защита расчетного задания",
-                        weight = "12",
-                        deadline = "14",
-                        finalMark = NO_MARK,
-                    ),
-                ),
-                finalGrades = listOf(
-                    FinalGrade(name = "Текущая успеваемость", finalMark = 4.2f, type = FinalGradeType.CURRENT_SCORE),
-                    FinalGrade(name = "Контрольная неделя", finalMark = 2f, type = FinalGradeType.CONTROL_WEEK),
-                    FinalGrade(name = "Промежуточная аттестация", finalMark = 4f, type = FinalGradeType.INTERMEDIATE_MARK),
-                    FinalGrade(name = "Итоговая оценка", finalMark = 4f, type = FinalGradeType.FINAL_MARK),
-                ),
+                teacher = "Амосова О.А.",
+                assessment = "экзамен",
+                finalGrade = 4.0,
+                5.0, 3.0, null,
             ),
         )
     }

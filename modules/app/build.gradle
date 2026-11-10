@@ -71,7 +71,6 @@ dependencies {
 
     implementation(libs.androidx.appCompat)
     implementation(libs.androidx.activity)
-    implementation(libs.androidx.datastore.prefs)
     implementation(libs.androidx.splashscreen)
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.config)
@@ -81,7 +80,6 @@ dependencies {
     implementation(libs.vivid.elmslie.android)
     implementation(libs.vivid.elmslie.core)
     implementation(libs.timber)
-    implementation(libs.mmkv)
 
     implementation(project(":feature_app_settings_api"))
     implementation(project(":feature_app_settings_impl"))
@@ -120,7 +118,6 @@ dependencies {
     implementation(project(":ui_kit_navigationbar"))
 
     implementation(project(":coreui"))
-    implementation(project(":res_icons"))
     implementation(project(":res_strings"))
 
     debugImplementation(project(":mock_server"))

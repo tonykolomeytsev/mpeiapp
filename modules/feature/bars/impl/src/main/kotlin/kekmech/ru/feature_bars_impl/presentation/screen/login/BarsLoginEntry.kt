@@ -1,19 +1,15 @@
 package kekmech.ru.feature_bars_impl.presentation.screen.login
 
 import androidx.compose.runtime.Composable
-import kekmech.ru.feature_bars_impl.presentation.screen.login.elm.BarsLoginStoreFactory
-import kekmech.ru.lib_elm_compose.ElmContent
-import kekmech.ru.ui_theme.theme.MpeixTheme
-import org.koin.compose.koinInject
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import kekmech.ru.feature_bars_impl.navigation.BarsLoginScreenKey
+import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.parameter.parametersOf
 
 @Composable
-internal fun BarsLoginEntry() {
-    MpeixTheme {
-        val factory = koinInject<BarsLoginStoreFactory>()
-        ElmContent(
-            key = "BarsLoginScreen",
-            storeFactory = { factory.create() },
-            content = ::BarsLoginScreen,
-        )
-    }
+internal fun BarsLoginEntry(key: BarsLoginScreenKey) {
+    val viewModel = koinViewModel<BarsLoginViewModel> { parametersOf(key) }
+    val state by viewModel.state.collectAsState()
+    BarsLoginScreen(state, viewModel)
 }

@@ -18,9 +18,6 @@ dependencies {
     implementation(libs.koin.core)
     implementation(libs.vivid.elmslie.core)
 
-    // For non-fatals
-    compileOnly(libs.firebase.crashlytics)
-
     implementation(libs.androidx.navigation3.runtime)
     implementation(project(":feature_notes_api"))
     implementation(project(":feature_schedule_api"))

@@ -12,7 +12,6 @@ import androidx.compose.runtime.setValue
 import com.kekmech.lib_fragment.ResultListener
 import kekmech.ru.feature_onboarding_impl.di.OnboardingDependencies
 import kekmech.ru.feature_schedule_api.ScheduleFeatureApi.ContinueTo.DASHBOARD
-import kekmech.ru.ui_theme.theme.MpeixTheme
 import org.koin.compose.koinInject
 
 // Lets the switch finish its animation before the activity is recreated
@@ -31,26 +30,24 @@ internal fun WelcomeEntry() {
         recreateActivity(activity)
     }
 
-    MpeixTheme {
-        WelcomeScreen(
-            darkThemeEnabled = appSettings.isDarkThemeEnabled,
-            languageCode = appSettings.languageCode,
-            onToggleDarkTheme = { isEnabled ->
-                if (isEnabled != appSettings.isDarkThemeEnabled) {
-                    appSettings = appSettingsRepository.updateAppSettings {
-                        copy(isDarkThemeEnabled = isEnabled)
-                    }
-                    recreateActivity(activity)
+    WelcomeScreen(
+        darkThemeEnabled = appSettings.isDarkThemeEnabled,
+        languageCode = appSettings.languageCode,
+        onToggleDarkTheme = { isEnabled ->
+            if (isEnabled != appSettings.isDarkThemeEnabled) {
+                appSettings = appSettingsRepository.updateAppSettings {
+                    copy(isDarkThemeEnabled = isEnabled)
                 }
-            },
-            onClickLanguage = {
-                dependencies.appSettingsFeatureLauncher.launchLanguageSelection(LANGUAGE_RESULT_KEY)
-            },
-            onContinueClick = {
-                dependencies.scheduleFeatureApi.launchSearchGroup(DASHBOARD, resultKey = "")
-            },
-        )
-    }
+                recreateActivity(activity)
+            }
+        },
+        onClickLanguage = {
+            dependencies.appSettingsFeatureLauncher.launchLanguageSelection(LANGUAGE_RESULT_KEY)
+        },
+        onContinueClick = {
+            dependencies.scheduleFeatureApi.launchSearchGroup(DASHBOARD, resultKey = "")
+        },
+    )
 }
 
 private fun recreateActivity(activity: Activity?) {

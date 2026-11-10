@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import kekmech.ru.debug_menu.R
 import kekmech.ru.debug_menu.presentation.navigation.LocalNavBackStack
 import kekmech.ru.debug_menu.presentation.navigation.NavScreen
+import kekmech.ru.debug_menu.presentation.screens.feature_toggles.elm.FeatureTogglesEffect
 import kekmech.ru.debug_menu.presentation.screens.feature_toggles.elm.FeatureTogglesEvent
 import kekmech.ru.debug_menu.presentation.screens.feature_toggles.elm.FeatureTogglesEvent.Ui
 import kekmech.ru.debug_menu.presentation.screens.feature_toggles.elm.FeatureTogglesState
@@ -25,18 +26,20 @@ import kekmech.ru.ui_kit_lists.ListItem
 import kekmech.ru.ui_kit_switch.Switch
 import kekmech.ru.ui_kit_topappbar.TopAppBar
 import kekmech.ru.ui_theme.theme.MpeixTheme
+import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.Serializable
+import org.koin.compose.koinInject
 
 @Serializable
 internal object FeatureTogglesScreen : NavScreen {
 
     @Composable
     override fun Content() {
-        ElmContent<FeatureTogglesStoreFactory, _, _, _>(
-            factory = { create() },
-            composable = { onAccept, state, _, modifier ->
-                FeatureTogglesScreen(onAccept, state, modifier)
-            },
+        val factory = koinInject<FeatureTogglesStoreFactory>()
+        ElmContent(
+            key = "FeatureToggleScreen",
+            storeFactory = { factory.create() },
+            content = ::FeatureTogglesScreen,
         )
     }
 }
@@ -46,7 +49,8 @@ internal object FeatureTogglesScreen : NavScreen {
 private fun FeatureTogglesScreen(
     onAccept: (FeatureTogglesEvent) -> Unit,
     state: FeatureTogglesState,
-    modifier: Modifier = Modifier,
+    @Suppress("Unused")
+    effects: Flow<FeatureTogglesEffect>,
 ) {
     val backStack = LocalNavBackStack.current
 
@@ -71,7 +75,6 @@ private fun FeatureTogglesScreen(
                 onClick = { onAccept(Ui.Click.Reset) },
             )
         },
-        modifier = modifier,
     ) { innerPadding ->
         val primaryColor = MpeixTheme.palette.primary
         LazyColumn(
