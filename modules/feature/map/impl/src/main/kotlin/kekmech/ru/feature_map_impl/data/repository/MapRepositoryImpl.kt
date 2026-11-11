@@ -19,4 +19,7 @@ internal class MapRepositoryImpl internal constructor(
             .map { MapMarkerMapper.dtoToDomain(it) }
             .onSuccess { mapMarkersCache.put(ArrayList(it)) }
             .recoverCatching { mapMarkersCache.get().getOrThrow() }
+
+    override suspend fun getSavedMarkers(): Result<List<MapMarker>> =
+        mapMarkersCache.get()
 }
