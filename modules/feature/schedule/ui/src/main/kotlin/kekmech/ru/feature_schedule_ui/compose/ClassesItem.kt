@@ -85,7 +85,8 @@ public fun ClassesItem(
                 modifier = Modifier.matchParentSize(),
             )
         }
-        Column(modifier = Modifier.padding(bottom = 16.dp)) {
+        val hasNotePreview = !notePreview.isNullOrBlank()
+        Column(modifier = Modifier.padding(bottom = if (hasNotePreview) 8.dp else 16.dp)) {
             Row {
                 ClassesTime(
                     model = model,
@@ -100,7 +101,7 @@ public fun ClassesItem(
                         .padding(top = 12.dp, end = 24.dp),
                 )
             }
-            if (!notePreview.isNullOrBlank()) {
+            if (hasNotePreview) {
                 NotePreview(
                     text = notePreview,
                     modifier = Modifier.padding(start = TimeColumnWidth, end = 16.dp, top = 12.dp),
