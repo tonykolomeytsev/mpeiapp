@@ -3,6 +3,7 @@ package kekmech.ru.feature_bars_impl.presentation.compose
 import io.github.tonykolomeytsev.mpeix.sdk.Assessment
 import io.github.tonykolomeytsev.mpeix.sdk.ControlPoint
 import io.github.tonykolomeytsev.mpeix.sdk.Discipline
+import io.github.tonykolomeytsev.mpeix.sdk.DisciplineId
 import io.github.tonykolomeytsev.mpeix.sdk.Grade
 import io.github.tonykolomeytsev.mpeix.sdk.Mark
 
@@ -14,7 +15,7 @@ internal fun previewDiscipline(
     finalGrade: Double?,
     vararg marks: Double?,
 ) = Discipline(
-    id = null,
+    id = DisciplineId("preview-$name"),
     title = name,
     name = name,
     teacher = teacher,

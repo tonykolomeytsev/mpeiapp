@@ -26,6 +26,6 @@ internal class BarsDetailsViewModel(
     val discipline: StateFlow<Discipline?> = barsProfileIdRepository.currentProfileId
         .filterNotNull()
         .flatMapLatest { sdk.bars.study.academicPerformance(it) }
-        .map { it.value?.current?.disciplines?.getOrNull(key.index) }
+        .map { resource -> resource.value?.current?.disciplines?.firstOrNull { it.id.value == key.disciplineId } }
         .stateIn(viewModelScope, SharingStarted.Eagerly, null)
 }

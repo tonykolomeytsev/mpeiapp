@@ -3,17 +3,15 @@ package kekmech.ru.feature_bars_impl.presentation.screen.login.layout
 import io.github.tonykolomeytsev.mpeix.sdk.LoginError
 import io.github.tonykolomeytsev.mpeix.sdk.SdkError
 
+/** The reason shown after [MAX_CODE_ATTEMPTS] wrong codes: the site has no limit, the app sets it. */
+internal const val TOO_MANY_CODES_MESSAGE = "Слишком много неверных кодов. Попробуйте войти ещё раз"
+
 internal fun LoginError.text(): String =
     when (this) {
         is LoginError.InvalidCredentials -> "Неверный логин или пароль"
-        is LoginError.InvalidCode -> buildString {
-            append("Неверный код")
-            if (attemptsLeft != null) append(". Осталось попыток: $attemptsLeft")
-        }
-
+        is LoginError.InvalidCode -> "Неверный код"
         is LoginError.CodeExpired -> "Код устарел. Отправьте новый код"
         is LoginError.AttemptExpired -> "Время на вход истекло. Введите пароль ещё раз"
-        is LoginError.TooManyAttempts -> "Слишком много попыток. Попробуйте позже"
         is LoginError.Rejected -> message ?: "Сайт БАРС отклонил вход"
         is LoginError.Sdk -> error.text()
         else -> "Произошла ошибка"

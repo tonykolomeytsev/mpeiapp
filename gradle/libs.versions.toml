@@ -5,7 +5,7 @@ kotlin = "2.4.21"
 ksp = "2.3.13"
 coroutines = "1.10.2"
 detekt = "1.23.8"
-mpeix-sdk = "0.1.0-SNAPSHOT"
+mpeix-sdk = "0.1.0"
 
 # AndroidX Versions
 appCompat = "1.7.1"

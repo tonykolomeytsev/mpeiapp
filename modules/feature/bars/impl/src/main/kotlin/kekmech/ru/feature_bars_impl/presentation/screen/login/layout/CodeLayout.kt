@@ -96,10 +96,8 @@ internal fun CodeLayout(
                 )
                 OutlinedTextField(
                     value = code,
-                    onValueChange = { value ->
-                        val length = step.codeLength
-                        code = if (length != null) value.take(length) else value
-                    },
+                    // Any length: the site may change it
+                    onValueChange = { value -> code = value },
                     label = { Text("Код") },
                     singleLine = true,
                     enabled = !login.isWorking,
@@ -186,12 +184,8 @@ private fun Resend.AvailableAt.secondsLeft(): Long =
 private fun VerificationMethod.destinationText(): String =
     when (kind) {
         VerificationKind.Totp -> "Код из приложения-аутентификатора"
-        VerificationKind.OneTimeCode -> "Одноразовый код, выданный университетом"
-        else -> buildString {
-            append("Код отправлен в ")
-            append(label)
-            if (maskedDestination != null) append(" на $maskedDestination")
-        }
+        VerificationKind.TemporaryCode -> "Временный код, выданный университетом"
+        else -> "Код отправлен в $label"
     }
 
 @OptIn(ExperimentalTime::class)
@@ -200,19 +194,13 @@ private fun VerificationMethod.destinationText(): String =
 private fun CodePreview() {
     MpeixTheme {
         val step = LoginStep.EnterCode(
-            method = VerificationMethod(
-                VerificationMethodId("tg"),
-                VerificationKind.Telegram,
-                "Telegram",
-                "@iva***"
-            ),
-            codeLength = 6,
+            method = VerificationMethod(VerificationMethodId("1"), VerificationKind.Telegram, "Telegram"),
             resend = Resend.AvailableAt(Instant.DISTANT_PAST),
             canChangeMethod = true,
         )
         CodeLayout(
             step = step,
-            login = previewLoginState(step, error = LoginError.InvalidCode(attemptsLeft = 2)),
+            login = previewLoginState(step, error = LoginError.InvalidCode),
             actions = NoOpActions,
         )
     }

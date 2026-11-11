@@ -2,6 +2,7 @@ package kekmech.ru.feature_bars_impl.presentation.screen.main.elm
 
 import androidx.compose.runtime.Immutable
 import io.github.tonykolomeytsev.mpeix.sdk.Discipline
+import io.github.tonykolomeytsev.mpeix.sdk.DisciplineId
 import kekmech.ru.feature_bars_impl.presentation.screen.main.compose.ShowingFromCacheReason
 import kekmech.ru.lib_elm.Resource
 
@@ -67,7 +68,7 @@ internal sealed interface BarsComposeCommand {
     data object ObserveMarks : BarsComposeCommand
     data object ObserveCacheReasons : BarsComposeCommand
     data object Refresh : BarsComposeCommand
-    data class OpenDetails(val index: Int) : BarsComposeCommand
+    data class OpenDetails(val disciplineId: DisciplineId) : BarsComposeCommand
 }
 
 internal sealed interface BarsEffect

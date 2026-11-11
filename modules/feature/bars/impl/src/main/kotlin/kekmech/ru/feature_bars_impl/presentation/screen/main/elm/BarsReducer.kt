@@ -112,9 +112,8 @@ internal class BarsReducer :
             }
 
             is Ui.Click.Discipline -> {
-                // The details screen reads the discipline from the SDK by its position in the semester
-                val index = state.disciplines.value?.indexOf(event.discipline) ?: -1
-                if (index >= 0) commands { +Command.OpenDetails(index) } else Unit
+                // The details screen reads the discipline from the SDK by its id: stable across refreshes
+                commands { +Command.OpenDetails(event.discipline.id) }
             }
 
             is Ui.Action.PullToRefresh -> {
