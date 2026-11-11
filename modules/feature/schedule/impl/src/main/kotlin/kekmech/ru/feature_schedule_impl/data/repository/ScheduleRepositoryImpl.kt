@@ -2,6 +2,7 @@ package kekmech.ru.feature_schedule_impl.data.repository
 
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kekmech.ru.feature_schedule_api.PreheatSelectedScheduleProvider
+import kekmech.ru.feature_schedule_api.ScheduleSyncScheduler
 import kekmech.ru.feature_schedule_api.data.repository.ScheduleRepository
 import kekmech.ru.feature_schedule_api.domain.model.ScheduleKey
 import kekmech.ru.feature_schedule_api.domain.model.ScheduleResource
@@ -15,6 +16,7 @@ import kotlinx.coroutines.flow.filterNotNull
 
 internal class ScheduleRepositoryImpl(
     private val cachedScheduleSource: CachedScheduleSource,
+    private val scheduleSyncScheduler: ScheduleSyncScheduler,
     selectedScheduleSource: SelectedScheduleSource,
 ) :
     ScheduleRepository,
@@ -37,8 +39,11 @@ internal class ScheduleRepositoryImpl(
         selectedScheduleFlow.filterNotNull()
 
     override fun setSelectedSchedule(selectedSchedule: SelectedSchedule) {
+        val isChanged = selectedScheduleFlow.value != selectedSchedule
         this._selectedSchedule = selectedSchedule
         selectedScheduleFlow.value = selectedSchedule
+        // download the next weeks too, even if the app is closed right away
+        if (isChanged) scheduleSyncScheduler.requestSync()
         FirebaseCrashlytics.getInstance()
             .setCustomKey("schedule_name", selectedSchedule.name)
     }

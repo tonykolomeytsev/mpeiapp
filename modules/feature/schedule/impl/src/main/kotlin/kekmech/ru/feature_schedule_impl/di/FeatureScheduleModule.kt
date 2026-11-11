@@ -4,6 +4,7 @@ import androidx.room.Room
 import kekmech.ru.ext_koin.bindIntoList
 import kekmech.ru.feature_schedule_api.PreheatSelectedScheduleProvider
 import kekmech.ru.feature_schedule_api.ScheduleFeatureApi
+import kekmech.ru.feature_schedule_api.ScheduleSyncScheduler
 import kekmech.ru.feature_schedule_api.data.repository.ScheduleRepository
 import kekmech.ru.feature_schedule_api.data.repository.ScheduleSearchRepository
 import kekmech.ru.feature_schedule_api.domain.usecase.HasSelectedScheduleUseCase
@@ -21,7 +22,11 @@ import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.Fi
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.FindScheduleStoreFactory
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleActor
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleStoreFactory
+import kekmech.ru.feature_schedule_impl.sync.ScheduleSyncInitializer
+import kekmech.ru.feature_schedule_impl.sync.ScheduleSyncSchedulerImpl
+import kekmech.ru.feature_schedule_impl.sync.SyncSchedulesUseCase
 import kekmech.ru.lib_analytics_api.SelectedScheduleAnalyticsProvider
+import kekmech.ru.lib_app_lifecycle.AppLifecycleObserver
 import kekmech.ru.lib_navigation.NavEntries
 import kekmech.ru.lib_network.buildApi
 import kotlinx.coroutines.CoroutineScope
@@ -70,6 +75,11 @@ val FeatureScheduleModule = module {
             clock = Clock.system(ZoneId.of("Europe/Moscow")),
         )
     }
+    // background sync
+    factory { SyncSchedulesUseCase(scheduleRepository = get(), favoriteScheduleRepository = get()) }
+    factoryOf(::ScheduleSyncSchedulerImpl) bind ScheduleSyncScheduler::class
+    factoryOf(::ScheduleSyncInitializer) bindIntoList AppLifecycleObserver::class
+
     singleOf(::ScheduleRepositoryImpl) binds arrayOf(
         ScheduleRepository::class,
         SelectedScheduleAnalyticsProvider::class,
