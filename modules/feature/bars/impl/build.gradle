@@ -9,7 +9,7 @@ dependencies {
     implementation(libs.compose.material.icons)
 
     implementation(libs.mpeix.sdk.api)
-    if (providers.gradleProperty("mpeix.sdk.real").present) {
+    if (providers.gradleProperty("mpeix.sdk.real").present || System.getenv("CI") == "true") {
         implementation(libs.mpeix.sdk.runtime) // CI only
     } else {
         implementation(libs.mpeix.sdk.runtime.stub)

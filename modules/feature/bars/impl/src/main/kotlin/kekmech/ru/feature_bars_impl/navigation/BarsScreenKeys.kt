@@ -20,6 +20,9 @@ internal class CloseBarsLogin : Command {
     }
 }
 
-/** Details of the discipline at [index] of the current semester. */
+/**
+ * Details of one discipline of the current semester. [disciplineId] is `DisciplineId.value`: stable across
+ * refreshes, so the sheet keeps showing the same discipline when the list changes.
+ */
 @Parcelize
-internal data class BarsDetailsScreenKey(val index: Int) : ScreenKey
+internal data class BarsDetailsScreenKey(val disciplineId: String) : ScreenKey

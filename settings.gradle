@@ -23,6 +23,14 @@ develocity {
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
+        // First: a SNAPSHOT of the SDK published locally (`./gradlew publishToMavenLocal` in mpeix-sdk) wins over
+        // the one on Central. Gradle takes a snapshot from the first repository that has it. To go back to Central,
+        // delete ~/.m2/repository/io/github/tonykolomeytsev.
+        mavenLocal {
+            name = "MpeixSdkDevSnapshots"
+            mavenContent { snapshotsOnly() }
+            content { includeGroup("io.github.tonykolomeytsev") }
+        }
         google()
         mavenCentral()
         maven {
@@ -31,10 +39,27 @@ dependencyResolutionManagement {
             mavenContent { snapshotsOnly() }
             content { includeGroup("io.github.tonykolomeytsev") }
         }
-        mavenLocal {
-            name = "MpeixSdkDevSnapshots"
-            mavenContent { snapshotsOnly() }
-            content {includeGroup("io.github.tonykolomeytsev") }
+        // The private real runtime, only for builds with -Pmpeix.sdk.real (CI). Stub builds never touch it.
+        // Credentials (a token with read:packages): githubPackagesUsername / githubPackagesPassword, or the
+        // ghp_user / ghp_pass pair, in ~/.gradle/gradle.properties; on CI ORG_GRADLE_PROJECT_githubPackagesUsername/Password.
+        if (providers.gradleProperty("mpeix.sdk.real").present || System.getenv("CI") == "true") {
+            def ghUser = providers.gradleProperty("githubPackagesUsername").orElse(providers.gradleProperty("ghp_user"))
+            def ghToken = providers.gradleProperty("githubPackagesPassword").orElse(providers.gradleProperty("ghp_pass"))
+            if (!ghUser.present || !ghToken.present) {
+                throw new GradleException(
+                    "-Pmpeix.sdk.real needs GitHub Packages credentials: githubPackagesUsername / githubPackagesPassword " +
+                        "(or ghp_user / ghp_pass) in ~/.gradle/gradle.properties"
+                )
+            }
+            maven {
+                name = "githubPackages"
+                url = uri("https://maven.pkg.github.com/tonykolomeytsev/mpeix-sdk")
+                credentials {
+                    username = ghUser.get()
+                    password = ghToken.get()
+                }
+                content { includeModuleByRegex("io\\.github\\.tonykolomeytsev", "mpeix-sdk-runtime(-.*)?") }
+            }
         }
     }
     versionCatalogs.create("mpeix").from(files("gradle/mpeix.versions.toml"))

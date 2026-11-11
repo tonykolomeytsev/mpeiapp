@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.github.tonykolomeytsev.mpeix.sdk.AccountId
 import io.github.tonykolomeytsev.mpeix.sdk.LoginAttempt
+import io.github.tonykolomeytsev.mpeix.sdk.LoginError
 import io.github.tonykolomeytsev.mpeix.sdk.LoginState
 import io.github.tonykolomeytsev.mpeix.sdk.LoginStep
 import io.github.tonykolomeytsev.mpeix.sdk.MpeixSdk
@@ -12,6 +13,7 @@ import io.github.tonykolomeytsev.mpeix.sdk.VerificationMethodId
 import kekmech.ru.feature_bars_impl.data.repository.BarsProfileIdRepository
 import kekmech.ru.feature_bars_impl.navigation.BarsLoginScreenKey
 import kekmech.ru.feature_bars_impl.navigation.CloseBarsLogin
+import kekmech.ru.feature_bars_impl.presentation.screen.login.layout.TOO_MANY_CODES_MESSAGE
 import kekmech.ru.lib_navigation.PopBackStack
 import kekmech.ru.lib_navigation.Router
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -20,15 +22,20 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlin.time.Duration.Companion.milliseconds
 
 private const val SUCCESS_DISPLAY_MILLIS = 2000L
+
+/** Wrong codes allowed in one attempt. The site shows no limit, so the app sets one. */
+internal const val MAX_CODE_ATTEMPTS = 3
 
 internal interface BarsLoginActions {
     /** Back arrow and system back: the previous step, or closes the screen on the first one. */
@@ -63,9 +70,12 @@ internal class BarsLoginViewModel(
     private val attempt = MutableStateFlow(newAttempt())
     private var completionJob: Job? = null
 
-    val state: StateFlow<LoginState> = attempt
-        .flatMapLatest { it.state }
-        .stateIn(viewModelScope, SharingStarted.Eagerly, attempt.value.state.value)
+    /** Wrong codes in the current attempt. At [MAX_CODE_ATTEMPTS] the attempt is cancelled. */
+    private val wrongCodes = MutableStateFlow(0)
+
+    val state: StateFlow<LoginState> = combine(attempt.flatMapLatest { it.state }, wrongCodes) { login, wrong ->
+        if (wrong >= MAX_CODE_ATTEMPTS) TOO_MANY_CODES else login
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, attempt.value.state.value)
 
     init {
         watchCompletion(attempt.value)
@@ -73,7 +83,8 @@ internal class BarsLoginViewModel(
 
     override fun onBack() {
         val attempt = attempt.value
-        val state = attempt.state.value
+        // What the screen shows: the app's own "too many codes" state included
+        val state = state.value
         when (state.step) {
             // The attempt is cancelled in onCleared
             is LoginStep.EnterCredentials,
@@ -91,6 +102,7 @@ internal class BarsLoginViewModel(
 
     override fun onRetry() {
         attempt.value.cancel()
+        wrongCodes.value = 0
         attempt.value = newAttempt().also(::watchCompletion)
     }
 
@@ -99,7 +111,17 @@ internal class BarsLoginViewModel(
 
     override fun onChooseVerificationMethod(id: VerificationMethodId) = act { chooseVerificationMethod(id) }
 
-    override fun onSubmitCode(code: String) = act { submitCode(code.trim()) }
+    override fun onSubmitCode(code: String) = act {
+        // `this` is the attempt: its own state, not the screen state
+        val before = this.state.value
+        submitCode(code.trim())
+        // An ignored call (e.g. while a request runs) leaves the very same state: not a try
+        val after = this.state.value
+        if (after !== before && after.error == LoginError.InvalidCode) {
+            wrongCodes.update { it + 1 }
+            if (wrongCodes.value >= MAX_CODE_ATTEMPTS) this.cancel()
+        }
+    }
 
     override fun onResendCode() = act { resendCode() }
 
@@ -107,7 +129,7 @@ internal class BarsLoginViewModel(
 
     override fun onCleared() {
         // Nothing to keep on the first step and after the terminal error
-        when (attempt.value.state.value.step) {
+        when (state.value.step) {
             is LoginStep.EnterCredentials,
             is LoginStep.Aborted -> attempt.value.cancel()
 
@@ -136,5 +158,9 @@ internal class BarsLoginViewModel(
     private fun act(action: suspend LoginAttempt.() -> Unit) {
         val attempt = attempt.value
         viewModelScope.launch { attempt.action() }
+    }
+
+    private companion object {
+        val TOO_MANY_CODES = LoginState(LoginStep.Aborted(LoginError.Rejected(TOO_MANY_CODES_MESSAGE)), false, null)
     }
 }

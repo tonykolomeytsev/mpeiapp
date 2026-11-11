@@ -9,6 +9,7 @@ import io.github.tonykolomeytsev.mpeix.sdk.RefreshState
 import io.github.tonykolomeytsev.mpeix.sdk.SdkError
 import kekmech.ru.feature_app_settings_api.AppSettingsFeatureLauncher
 import kekmech.ru.feature_bars_impl.data.repository.BarsProfileIdRepository
+import kekmech.ru.feature_bars_impl.data.sdk.SdkErrorException
 import kekmech.ru.feature_bars_impl.navigation.BarsAccountsScreenKey
 import kekmech.ru.feature_bars_impl.navigation.BarsDetailsScreenKey
 import kekmech.ru.feature_bars_impl.presentation.screen.main.compose.ShowingFromCacheReason
@@ -62,9 +63,12 @@ internal class BarsActor(
             is Command.ObserveProfile -> barsProfileIdRepository.currentProfileId
                 .filterNotNull()
                 .flatMapLatest { sdk.bars.profile.profile(it) }
-                .mapNotNull { it.value?.toBarsProfile() }
+                .mapNotNull { resource ->
+                    resource.value?.let { ObserveProfileSuccess(it.toBarsProfile()) }
+                        ?: resource.firstLoadFailure()?.let(::CheckAuthStatusFailure)
+                }
                 .mapEvents(
-                    eventMapper = ::ObserveProfileSuccess,
+                    eventMapper = { it },
                     errorMapper = { CheckAuthStatusFailure(it.recorded("observeProfile")) },
                 )
 
@@ -72,7 +76,8 @@ internal class BarsActor(
                 .filterNotNull()
                 .flatMapLatest { sdk.bars.study.academicPerformance(it) }
                 .mapNotNull { resource ->
-                    val performance = resource.value ?: return@mapNotNull null
+                    val performance = resource.value
+                        ?: return@mapNotNull resource.firstLoadFailure()?.let(::ObserveMarksFailure)
                     ObserveMarksSuccess(
                         disciplines = performance.current.disciplines,
                         semesterName = performance.current.info.title,
@@ -128,7 +133,7 @@ internal class BarsActor(
 
             is Command.OpenDetails -> actorFlow {
                 withContext(Dispatchers.Main) {
-                    router.executeCommand(AddScreenForward(BarsDetailsScreenKey(command.index)))
+                    router.executeCommand(AddScreenForward(BarsDetailsScreenKey(command.disciplineId.value)))
                 }
             }.mapEvents()
         }
@@ -139,6 +144,16 @@ internal class BarsActor(
             key("stage", stage)
         }
         return this
+    }
+
+    /**
+     * Nothing cached and the automatic first load failed: without this the screen would wait for a value forever.
+     * With a cached value a failed refresh is only a banner, see [cacheReasons].
+     */
+    private fun SdkResource<*>.firstLoadFailure(): Throwable? {
+        if (value != null) return null
+        val error = (refresh as? RefreshState.Failed)?.error ?: return null
+        return SdkErrorException(error)
     }
 
     /** Why this resource shows the cached value. Nothing to tell when there is no cached value yet. */

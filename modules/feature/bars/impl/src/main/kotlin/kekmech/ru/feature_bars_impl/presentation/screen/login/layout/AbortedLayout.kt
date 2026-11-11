@@ -81,7 +81,7 @@ internal fun AbortedLayout(
 private fun AbortedPreview() {
     MpeixTheme {
         AbortedLayout(
-            step = LoginStep.Aborted(LoginError.TooManyAttempts(retryAt = null)),
+            step = LoginStep.Aborted(LoginError.Rejected(TOO_MANY_CODES_MESSAGE)),
             actions = NoOpActions,
         )
     }

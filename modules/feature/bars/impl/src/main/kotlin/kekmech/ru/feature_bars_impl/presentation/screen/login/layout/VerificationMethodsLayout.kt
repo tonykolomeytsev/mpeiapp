@@ -12,9 +12,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Lock
-import androidx.compose.material.icons.outlined.Phone
 import androidx.compose.material.icons.outlined.Send
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -81,7 +79,6 @@ internal fun VerificationMethodsLayout(
                 val isChosen = login.isWorking && method.id.value == chosenId
                 ListItem(
                     headlineText = method.label,
-                    supportingText = method.maskedDestination,
                     leadingContent = { Icon(method.kind.icon()) },
                     trailingContent = if (isChosen) {
                         {
@@ -116,10 +113,9 @@ internal fun VerificationMethodsLayout(
 
 private fun VerificationKind.icon(): ImageVector =
     when (this) {
-        VerificationKind.Email -> Icons.Outlined.Email
-        VerificationKind.Sms -> Icons.Outlined.Phone
         VerificationKind.Totp,
-        VerificationKind.OneTimeCode -> Icons.Outlined.Lock
+        VerificationKind.TemporaryCode -> Icons.Outlined.Lock
+        // Telegram, VK, MAX and messengers the SDK doesn't know yet
         else -> Icons.Outlined.Send
     }
 
@@ -128,9 +124,9 @@ private fun VerificationKind.icon(): ImageVector =
 private fun VerificationMethodsPreview() {
     val step = LoginStep.ChooseVerificationMethod(
         listOf(
-            VerificationMethod(VerificationMethodId("tg"), VerificationKind.Telegram, "Telegram", "@iva***"),
-            VerificationMethod(VerificationMethodId("max"), VerificationKind.Max, "MAX", "+7 *** ***-12-34"),
-            VerificationMethod(VerificationMethodId("totp"), VerificationKind.Totp, "Приложение", null),
+            VerificationMethod(VerificationMethodId("3"), VerificationKind.Max, "МАКС"),
+            VerificationMethod(VerificationMethodId("1"), VerificationKind.Telegram, "Telegram"),
+            VerificationMethod(VerificationMethodId("2"), VerificationKind.Vk, "ВКонтакте"),
         )
     )
     VerificationMethodsLayout(
