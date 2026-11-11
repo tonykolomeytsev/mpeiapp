@@ -23,10 +23,13 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
 
       # The Google Services Plugin cannot function without it
-      - name: Materialize google services
-        run: .github/materialize.sh $GOOGLE_SERVICES_DEBUG modules/app/google-services.json
+      - name: Materialize Google services and GitHub packages
+        run: |
+          .github/materialize.sh $GOOGLE_SERVICES_DEBUG modules/app/google-services.json
+          echo "$GHP_PRIVATE_CREDENTIALS" >> gradle.properties
         env:
           GOOGLE_SERVICES_DEBUG: ${{ secrets.GOOGLE_SERVICES_DEBUG }}
+          GHP_PRIVATE_CREDENTIALS: ${{ secrets.GHP_PRIVATE_CREDENTIALS }}
 
       - name: Unit tests
         run: ./gradlew test
@@ -49,10 +52,13 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
 
       # The Google Services Plugin cannot function without it
-      - name: Materialize google services
-        run: .github/materialize.sh $GOOGLE_SERVICES_DEBUG modules/app/google-services.json
+      - name: Materialize Google services and GitHub packages
+        run: |
+          .github/materialize.sh $GOOGLE_SERVICES_DEBUG modules/app/google-services.json
+          echo "$GHP_PRIVATE_CREDENTIALS" >> gradle.properties
         env:
           GOOGLE_SERVICES_DEBUG: ${{ secrets.GOOGLE_SERVICES_DEBUG }}
+          GHP_PRIVATE_CREDENTIALS: ${{ secrets.GHP_PRIVATE_CREDENTIALS }}
 
       - name: Build with Gradle
         run: ./gradlew :app:assembleDebug

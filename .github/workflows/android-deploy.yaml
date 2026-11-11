@@ -33,9 +33,11 @@ jobs:
         run: |
           .github/materialize.sh $GOOGLE_SERVICES modules/app/google-services.json
           .github/materialize.sh $KEY_STORE_FILE keystore.jks
+          echo "$GHP_PRIVATE_CREDENTIALS" >> gradle.properties
         env:
           GOOGLE_SERVICES: ${{ secrets.GOOGLE_SERVICES }}
           KEY_STORE_FILE: ${{ secrets.KEY_STORE_FILE }}
+          GHP_PRIVATE_CREDENTIALS: ${{ secrets.GHP_PRIVATE_CREDENTIALS }}
 
       - name: Build Release artifacts
         run: ./gradlew :app:bundleRelease :app:assembleRelease
