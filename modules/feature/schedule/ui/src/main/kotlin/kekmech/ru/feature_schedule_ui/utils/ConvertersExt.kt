@@ -4,7 +4,6 @@ import kekmech.ru.ext_kotlin.moscowLocalDate
 import kekmech.ru.ext_kotlin.moscowLocalTime
 import kekmech.ru.feature_schedule_api.domain.model.Classes
 import kekmech.ru.feature_schedule_ui.items.LunchItem
-import kekmech.ru.feature_schedule_ui.items.NotePreview
 import kekmech.ru.feature_schedule_ui.items.WindowItem
 import java.time.LocalDate
 import java.time.LocalTime
@@ -12,20 +11,6 @@ import java.time.temporal.ChronoUnit
 
 private const val CLASSES_BEFORE_LUNCH_NUMBER = 2
 private const val CLASSES_AFTER_LUNCH_NUMBER = 3
-
-/**
- * Insert notes preview items after classes items and return new list
- */
-public fun List<Any>.withNotePreview(): List<Any> = mutableListOf<Any>().apply {
-    val raw = this@withNotePreview
-    for (e in raw) {
-        add(e)
-        val classes = e as? Classes ?: continue
-        classes.attachedNotePreview?.let { notePreviewContent ->
-            add(NotePreview(notePreviewContent, linkedClasses = e, classes.progress))
-        }
-    }
-}
 
 /**
  * Insert lunch item between second and third classes (if exists) and return new list

@@ -18,7 +18,6 @@ dependencies {
 
     implementation(libs.androidx.constraintLayout)
     implementation(libs.androidx.coreKtx)
-    implementation(libs.androidx.viewPager2)
     implementation(libs.facebook.shimmer)
     implementation(libs.firebase.crashlytics)
     implementation(libs.google.material)
@@ -60,6 +59,8 @@ dependencies {
     implementation(project(":coreui"))
     implementation(project(":ui_theme"))
     implementation(project(":ui_preview"))
+    implementation(project(":ui_shimmer"))
+    implementation(project(":ui_kit_states"))
     implementation(project(":ui_kit_buttons"))
     implementation(project(":ui_kit_topappbar"))
     implementation(project(":ui_kit_textfield"))
