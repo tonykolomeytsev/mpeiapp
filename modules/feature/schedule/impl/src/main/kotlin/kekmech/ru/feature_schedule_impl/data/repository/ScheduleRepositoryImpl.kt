@@ -3,18 +3,18 @@ package kekmech.ru.feature_schedule_impl.data.repository
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kekmech.ru.feature_schedule_api.PreheatSelectedScheduleProvider
 import kekmech.ru.feature_schedule_api.data.repository.ScheduleRepository
-import kekmech.ru.feature_schedule_api.domain.model.Schedule
-import kekmech.ru.feature_schedule_api.domain.model.ScheduleType
+import kekmech.ru.feature_schedule_api.domain.model.ScheduleKey
+import kekmech.ru.feature_schedule_api.domain.model.ScheduleResource
 import kekmech.ru.feature_schedule_api.domain.model.SelectedSchedule
-import kekmech.ru.feature_schedule_impl.data.datasource.ScheduleCacheWrapper
+import kekmech.ru.feature_schedule_impl.data.datasource.CachedScheduleSource
 import kekmech.ru.feature_schedule_impl.data.datasource.SelectedScheduleSource
-import kekmech.ru.feature_schedule_impl.data.mapper.ScheduleMapper
-import kekmech.ru.feature_schedule_impl.data.network.ScheduleService
 import kekmech.ru.lib_analytics_api.SelectedScheduleAnalyticsProvider
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.filterNotNull
 
 internal class ScheduleRepositoryImpl(
-    private val scheduleService: ScheduleService,
-    private val scheduleCacheWrapper: ScheduleCacheWrapper,
+    private val cachedScheduleSource: CachedScheduleSource,
     selectedScheduleSource: SelectedScheduleSource,
 ) :
     ScheduleRepository,
@@ -23,28 +23,22 @@ internal class ScheduleRepositoryImpl(
 
     private var _selectedSchedule: SelectedSchedule by selectedScheduleSource
 
-    override suspend fun getSchedule(
-        type: ScheduleType,
-        name: String,
-        weekOffset: Int,
-    ): Result<Schedule> =
-        runCatching {
-            scheduleService.getSchedule(
-                type = type.pathName,
-                name = name,
-                weekOffset = weekOffset,
-            )
-        }
-            .map { ScheduleMapper.dtoToDomain(it) }
-            .onSuccess { scheduleCacheWrapper.save(it) }
-            .recoverCatching { sourceThrowable ->
-                scheduleCacheWrapper.restore(name, weekOffset)
-                    .getOrNull()
-                    ?: throw sourceThrowable
-            }
+    private val selectedScheduleFlow by lazy {
+        MutableStateFlow(runCatching { _selectedSchedule }.getOrNull())
+    }
+
+    override fun observeSchedule(key: ScheduleKey): Flow<ScheduleResource> =
+        cachedScheduleSource.observe(key)
+
+    override suspend fun refreshSchedule(key: ScheduleKey): Result<Unit> =
+        cachedScheduleSource.refresh(key)
+
+    override fun observeSelectedSchedule(): Flow<SelectedSchedule> =
+        selectedScheduleFlow.filterNotNull()
 
     override fun setSelectedSchedule(selectedSchedule: SelectedSchedule) {
         this._selectedSchedule = selectedSchedule
+        selectedScheduleFlow.value = selectedSchedule
         FirebaseCrashlytics.getInstance()
             .setCustomKey("schedule_name", selectedSchedule.name)
     }

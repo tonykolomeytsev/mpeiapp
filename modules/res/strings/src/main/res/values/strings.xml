@@ -138,6 +138,8 @@
     <string name="schedule_fab_tooltip">Кнопка быстрой навигации. Убрать кнопку можно в настройках</string>
     <string name="schedule_fab_next">К следующей неделе</string>
     <string name="schedule_fab_prev">К текущей неделе</string>
+    <string name="schedule_saved_banner_text">Не удалось обновить.\nРасписание от %s</string>
+    <string name="schedule_saved_banner_refresh">Обновить</string>
 
     <string name="dashboard_loading_error">Произошла ошибка при загрузке данных с сервера</string>
     <string name="dashboard_item_click_to_change_group">Нажмите, чтобы сменить расписание</string>

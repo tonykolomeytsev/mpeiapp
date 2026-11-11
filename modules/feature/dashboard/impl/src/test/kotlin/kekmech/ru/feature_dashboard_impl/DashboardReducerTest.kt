@@ -9,6 +9,7 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeTypeOf
 import kekmech.ru.feature_dashboard_impl.domain.model.UpcomingEventsPrediction
 import kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm.DashboardCommand
+import kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm.DashboardEffect
 import kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm.DashboardEvent.Internal
 import kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm.DashboardEvent.Ui
 import kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm.DashboardReducer
@@ -37,15 +38,14 @@ internal class DashboardReducerTest : BehaviorSpec({
             }
             Then("Check commands") {
                 commands.shouldContainExactly(
-                    DashboardCommand.GetSelectedSchedule,
-                    DashboardCommand.GetWeekOfSemester,
-                    DashboardCommand.GetUpcomingEvents,
+                    DashboardCommand.ObserveSelectedSchedule,
+                    DashboardCommand.ObserveSchedule,
                     DashboardCommand.GetActualNotes,
                     DashboardCommand.GetFavoriteSchedules,
                 )
             }
         }
-        When("Internal.GetSelectedScheduleSuccess") {
+        When("Internal.GetSelectedScheduleSuccess (another schedule)") {
             val (state, effects, commands) = reducer
                 .reduce(Internal.GetSelectedScheduleSuccess(NewSelectedSchedule), givenState)
             Then("Check state") {
@@ -55,43 +55,34 @@ internal class DashboardReducerTest : BehaviorSpec({
             Then("No effects") {
                 effects.shouldBeEmpty()
             }
+            Then("Reload notes of the new schedule") {
+                commands.shouldContainExactly(DashboardCommand.GetActualNotes)
+            }
+        }
+        When("Internal.GetSelectedScheduleSuccess (same schedule)") {
+            val (state, effects, commands) = reducer
+                .reduce(Internal.GetSelectedScheduleSuccess(InitialSelectedSchedule), givenState)
+            Then("Check state") {
+                state.selectedSchedule.shouldBe(InitialSelectedSchedule)
+            }
+            Then("No effects") {
+                effects.shouldBeEmpty()
+            }
             Then("No commands") {
                 commands.shouldBeEmpty()
             }
         }
-        When("Internal.GetWeekOfSemesterSuccess") {
-            val (state, effects, commands) = reducer
-                .reduce(Internal.GetWeekOfSemesterSuccess(NewWeekOfSemester), givenState)
+        When("Internal.ScheduleUpdated (success)") {
+            val (state, effects, commands) = reducer.reduce(
+                Internal.ScheduleUpdated(
+                    weekOfSemester = NewWeekOfSemester.toResource(),
+                    upcomingEvents = NewUpcomingEvents.toResource(),
+                ),
+                givenState,
+            )
             Then("Check state") {
                 state.isLoading.shouldBeTrue()
                 state.weekOfSemester.shouldBe(NewWeekOfSemester.toResource())
-            }
-            Then("No effects") {
-                effects.shouldBeEmpty()
-            }
-            Then("No commands") {
-                commands.shouldBeEmpty()
-            }
-        }
-        When("Internal.GetWeekOfSemesterFailure") {
-            val (state, effects, commands) = reducer
-                .reduce(Internal.GetWeekOfSemesterFailure(RuntimeException()), givenState)
-            Then("Check state") {
-                state.isLoading.shouldBeTrue()
-                state.weekOfSemester.shouldBeTypeOf<Resource.Error>()
-            }
-            Then("No effects") {
-                effects.shouldBeEmpty()
-            }
-            Then("No commands") {
-                commands.shouldBeEmpty()
-            }
-        }
-        When("Internal.GetUpcomingEventsSuccess") {
-            val (state, effects, commands) = reducer
-                .reduce(Internal.GetUpcomingEventsSuccess(NewUpcomingEvents), givenState)
-            Then("Check state") {
-                state.isLoading.shouldBeTrue()
                 state.upcomingEvents.shouldBe(NewUpcomingEvents.toResource())
             }
             Then("No effects") {
@@ -101,11 +92,17 @@ internal class DashboardReducerTest : BehaviorSpec({
                 commands.shouldBeEmpty()
             }
         }
-        When("Internal.GetUpcomingEventsFailure") {
-            val (state, effects, commands) = reducer
-                .reduce(Internal.GetUpcomingEventsFailure(RuntimeException()), givenState)
+        When("Internal.ScheduleUpdated (failure)") {
+            val (state, effects, commands) = reducer.reduce(
+                Internal.ScheduleUpdated(
+                    weekOfSemester = Resource.Error(RuntimeException()),
+                    upcomingEvents = Resource.Error(RuntimeException()),
+                ),
+                givenState,
+            )
             Then("Check state") {
                 state.isLoading.shouldBeTrue()
+                state.weekOfSemester.shouldBeTypeOf<Resource.Error>()
                 state.upcomingEvents.shouldBeTypeOf<Resource.Error>()
             }
             Then("No effects") {
@@ -185,21 +182,77 @@ internal class DashboardReducerTest : BehaviorSpec({
         When("Ui.Action.SwipeToRefresh") {
             val (state, effects, commands) = reducer
                 .reduce(Ui.Action.SwipeToRefresh, givenState)
-            Then("Check state") {
+            Then("Show the refresh indicator") {
+                state.isLoading.shouldBeTrue()
+                state.shouldBe(givenState.copy(isRefreshingSchedule = true))
+            }
+            Then("No effects") {
+                effects.shouldBeEmpty()
+            }
+            Then("Download the schedule") {
+                commands.shouldContainExactly(
+                    DashboardCommand.RefreshSchedule,
+                    DashboardCommand.ObserveSchedule,
+                    DashboardCommand.GetActualNotes,
+                    DashboardCommand.GetFavoriteSchedules,
+                )
+            }
+        }
+        When("Ui.Action.SilentUpdate") {
+            val (state, effects, commands) = reducer
+                .reduce(Ui.Action.SilentUpdate, givenState)
+            Then("No refresh indicator") {
                 state.isLoading.shouldBeFalse()
                 state.shouldBe(givenState)
             }
             Then("No effects") {
                 effects.shouldBeEmpty()
             }
-            Then("Check commands") {
+            Then("Don't force a download") {
                 commands.shouldContainExactly(
-                    DashboardCommand.GetSelectedSchedule,
-                    DashboardCommand.GetWeekOfSemester,
-                    DashboardCommand.GetUpcomingEvents,
+                    DashboardCommand.ObserveSchedule,
                     DashboardCommand.GetActualNotes,
                     DashboardCommand.GetFavoriteSchedules,
                 )
+            }
+        }
+    }
+    Given("Pulled to refresh with the schedule shown") {
+        val givenState =
+            DashboardState(
+                selectedSchedule = NewSelectedSchedule,
+                weekOfSemester = NewWeekOfSemester.toResource(),
+                upcomingEvents = NewUpcomingEvents.toResource(),
+                actualNotes = NewActualNotes.toResource(),
+                favoriteSchedules = NewFavoriteSchedules.toResource(),
+                isRefreshingSchedule = true,
+            )
+
+        When("Internal.RefreshScheduleFinished (success)") {
+            val (state, effects, commands) = reducer
+                .reduce(Internal.RefreshScheduleFinished(error = null), givenState)
+            Then("Hide the refresh indicator") {
+                state.isLoading.shouldBeFalse()
+            }
+            Then("No effects") {
+                effects.shouldBeEmpty()
+            }
+            Then("No commands") {
+                commands.shouldBeEmpty()
+            }
+        }
+        When("Internal.RefreshScheduleFinished (failure)") {
+            val (state, effects, commands) = reducer
+                .reduce(Internal.RefreshScheduleFinished(RuntimeException()), givenState)
+            Then("Hide the refresh indicator, keep the saved schedule") {
+                state.isLoading.shouldBeFalse()
+                state.upcomingEvents.shouldBe(NewUpcomingEvents.toResource())
+            }
+            Then("Tell that it couldn't be updated") {
+                effects.shouldContainExactly(DashboardEffect.ShowLoadingError)
+            }
+            Then("No commands") {
+                commands.shouldBeEmpty()
             }
         }
     }

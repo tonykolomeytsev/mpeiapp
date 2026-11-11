@@ -15,6 +15,9 @@ import kekmech.ru.feature_schedule_api.domain.model.Classes
 import kekmech.ru.feature_schedule_api.domain.model.ClassesType
 import kekmech.ru.feature_schedule_api.domain.model.Day
 import kekmech.ru.feature_schedule_api.domain.model.Schedule
+import kekmech.ru.feature_schedule_api.domain.model.ScheduleKey
+import kekmech.ru.feature_schedule_api.domain.model.ScheduleRefreshState
+import kekmech.ru.feature_schedule_api.domain.model.ScheduleResource
 import kekmech.ru.feature_schedule_api.domain.model.ScheduleType
 import kekmech.ru.feature_schedule_api.domain.model.Time
 import kekmech.ru.feature_schedule_api.domain.model.Week
@@ -26,6 +29,7 @@ import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleEve
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleReducer
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleState
 import kekmech.ru.feature_schedule_ui.utils.atStartOfWeek
+import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.Month
@@ -49,8 +53,8 @@ class ScheduleReducerTest : BehaviorSpec({
             }
             Then("Check actions") {
                 actions.shouldContainExactly(
-                    ScheduleCommand.LoadSchedule(0),
-                    ScheduleCommand.LoadSchedule(1)
+                    ScheduleCommand.ObserveSchedule(0),
+                    ScheduleCommand.ObserveSchedule(1)
                 )
             }
         }
@@ -71,8 +75,8 @@ class ScheduleReducerTest : BehaviorSpec({
             }
             Then("Check actions") {
                 actions.shouldContainExactly(
-                    ScheduleCommand.LoadSchedule(0),
-                    ScheduleCommand.LoadSchedule(1)
+                    ScheduleCommand.ObserveSchedule(0),
+                    ScheduleCommand.ObserveSchedule(1)
                 )
             }
         }
@@ -93,8 +97,8 @@ class ScheduleReducerTest : BehaviorSpec({
             }
             Then("Check actions") {
                 actions.shouldContainExactly(
-                    ScheduleCommand.LoadSchedule(0),
-                    ScheduleCommand.LoadSchedule(1)
+                    ScheduleCommand.ObserveSchedule(0),
+                    ScheduleCommand.ObserveSchedule(1)
                 )
             }
         }
@@ -102,11 +106,13 @@ class ScheduleReducerTest : BehaviorSpec({
     Given("While schedule loading") {
         val givenState = STATE
         When("News.ScheduleWeekLoadSuccess (0)") {
-            val internal = Internal.LoadScheduleSuccess(0, SCHEDULE_0)
+            val internal = Internal.ScheduleUpdated(0, RESOURCE_0)
             val (state, effects, actions) = reducer.reduce(internal, givenState)
             Then("Check state") {
-                state.schedule.shouldContainExactly(mapOf(0 to SCHEDULE_0))
+                state.schedule.shouldContainExactly(mapOf(0 to RESOURCE_0))
+                state.selectedSchedule shouldBe SCHEDULE_0
                 state.isAfterError.shouldBeFalse()
+                state.isShowingSavedSchedule.shouldBeFalse()
             }
             Then("Check effects") {
                 effects.shouldBeEmpty()
@@ -116,7 +122,7 @@ class ScheduleReducerTest : BehaviorSpec({
             }
         }
         When("News.ScheduleWeekLoadError (0)") {
-            val internal = Internal.LoadScheduleFailure(IllegalStateException("Wake up Neo"))
+            val internal = Internal.ObserveScheduleFailure(0, IllegalStateException("Wake up Neo"))
             val (state, effects, actions) = reducer.reduce(
                 internal,
                 givenState.copy(schedule = mutableLinkedHashMap(CACHE_ENTRIES_SIZE))
@@ -133,6 +139,71 @@ class ScheduleReducerTest : BehaviorSpec({
             }
         }
     }
+    Given("Refresh of the selected week failed") {
+        When("There is a saved schedule") {
+            val internal = Internal.ScheduleUpdated(0, RESOURCE_0.copy(refresh = FAILED_REFRESH))
+            val (state, effects, actions) = reducer.reduce(internal, STATE)
+            Then("Show the saved schedule with the banner, not the error") {
+                state.selectedSchedule shouldBe SCHEDULE_0
+                state.isAfterError.shouldBeFalse()
+                state.isShowingSavedSchedule.shouldBeTrue()
+            }
+            Then("Check effects") {
+                effects.shouldBeEmpty()
+            }
+            Then("Check actions") {
+                actions.shouldBeEmpty()
+            }
+        }
+        When("There is no saved schedule") {
+            val internal = Internal.ScheduleUpdated(
+                0,
+                RESOURCE_0.copy(value = null, updatedAt = null, refresh = FAILED_REFRESH),
+            )
+            val (state, _, _) = reducer.reduce(internal, STATE)
+            Then("Show the error") {
+                state.selectedSchedule shouldBe null
+                state.isAfterError.shouldBeTrue()
+                state.isShowingSavedSchedule.shouldBeFalse()
+            }
+        }
+    }
+    Given("Saved schedule is shown after a failed refresh") {
+        val givenState = STATE.copy(schedule = mapOf(0 to RESOURCE_0.copy(refresh = FAILED_REFRESH)))
+        When("Ui.Click.SavedScheduleBanner") {
+            val (state, effects, actions) = reducer.reduce(Ui.Click.SavedScheduleBanner, givenState)
+            Then("Check state") {
+                state shouldBe givenState
+            }
+            Then("Check effects") {
+                effects.shouldBeEmpty()
+            }
+            Then("Refresh the week") {
+                actions.shouldContainExactly(ScheduleCommand.RefreshSchedule(RESOURCE_0.key))
+            }
+        }
+        When("Ui.Click.Reload") {
+            val (_, _, actions) = reducer.reduce(Ui.Click.Reload, givenState)
+            Then("Refresh the week, the subscription is alive") {
+                actions.shouldContainExactly(ScheduleCommand.RefreshSchedule(RESOURCE_0.key))
+            }
+        }
+    }
+    Given("Subscription to the selected week failed") {
+        val givenState = STATE.copy(observeErrors = mapOf(0 to IllegalStateException()))
+        When("Ui.Click.Reload") {
+            val (state, effects, actions) = reducer.reduce(Ui.Click.Reload, givenState)
+            Then("Clear the error") {
+                state.isAfterError.shouldBeFalse()
+            }
+            Then("Check effects") {
+                effects.shouldBeEmpty()
+            }
+            Then("Subscribe again") {
+                actions.shouldContainExactly(ScheduleCommand.ObserveSchedule(0))
+            }
+        }
+    }
     Given("After schedule loading success") {
         val givenState = STATE.copy(schedule = mutableLinkedHashMap(CACHE_ENTRIES_SIZE))
         When("Wish.Action.SelectWeek (1)") {
@@ -146,7 +217,7 @@ class ScheduleReducerTest : BehaviorSpec({
                 effects.shouldBeEmpty()
             }
             Then("Check actions") {
-                actions.shouldContainExactly(ScheduleCommand.LoadSchedule(1))
+                actions.shouldContainExactly(ScheduleCommand.ObserveSchedule(1))
             }
         }
         When("Wish.Action.SelectWeek (-1)") {
@@ -160,7 +231,7 @@ class ScheduleReducerTest : BehaviorSpec({
                 effects.shouldBeEmpty()
             }
             Then("Check actions") {
-                actions.shouldContainExactly(ScheduleCommand.LoadSchedule(-1))
+                actions.shouldContainExactly(ScheduleCommand.ObserveSchedule(-1))
             }
         }
         When("Wish.Click.Day") {
@@ -221,7 +292,7 @@ class ScheduleReducerTest : BehaviorSpec({
                 effects.shouldBeEmpty()
             }
             Then("Check actions") {
-                actions.shouldContainExactly(ScheduleCommand.LoadSchedule(1))
+                actions.shouldContainExactly(ScheduleCommand.ObserveSchedule(1))
             }
         }
         When("Wish.Action.NotesUpdated") {
@@ -236,7 +307,7 @@ class ScheduleReducerTest : BehaviorSpec({
                 effects.shouldBeEmpty()
             }
             Then("Check actions") {
-                actions.shouldContainExactly(ScheduleCommand.LoadSchedule(0))
+                actions.shouldContainExactly(ScheduleCommand.ObserveSchedule(0))
             }
         }
         When("Wish.Action.UpdateScheduleIfNeeded") {
@@ -251,7 +322,7 @@ class ScheduleReducerTest : BehaviorSpec({
                 effects.shouldBeEmpty()
             }
             Then("Check actions") {
-                actions.shouldContainExactly(ScheduleCommand.LoadSchedule(0))
+                actions.shouldContainExactly(ScheduleCommand.ObserveSchedule(0))
             }
         }
         When("Wish.Action.ClassesScrolled (scrolled down)") {
@@ -323,6 +394,16 @@ class ScheduleReducerTest : BehaviorSpec({
                     )
                 )
             )
+        )
+        private val RESOURCE_0 = ScheduleResource(
+            key = ScheduleKey(ScheduleType.GROUP, "C-12-16", CURRENT_MONDAY),
+            value = SCHEDULE_0,
+            updatedAt = Instant.parse("2020-09-17T10:15:30Z"),
+            refresh = ScheduleRefreshState.Idle,
+        )
+        private val FAILED_REFRESH = ScheduleRefreshState.Failed(
+            error = IllegalStateException("No connection"),
+            at = Instant.parse("2020-09-17T10:20:30Z"),
         )
         private val CLASSES = Classes(
             name = "Гидропневмопривод мехатронных и робототехнчиеских систем",

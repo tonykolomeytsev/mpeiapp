@@ -1,13 +1,15 @@
 package kekmech.ru.feature_schedule_impl.di
 
+import androidx.room.Room
 import kekmech.ru.ext_koin.bindIntoList
 import kekmech.ru.feature_schedule_api.PreheatSelectedScheduleProvider
 import kekmech.ru.feature_schedule_api.ScheduleFeatureApi
 import kekmech.ru.feature_schedule_api.data.repository.ScheduleRepository
 import kekmech.ru.feature_schedule_api.data.repository.ScheduleSearchRepository
-import kekmech.ru.feature_schedule_api.domain.usecase.GetCurrentScheduleUseCase
 import kekmech.ru.feature_schedule_api.domain.usecase.HasSelectedScheduleUseCase
-import kekmech.ru.feature_schedule_impl.data.datasource.ScheduleCacheWrapper
+import kekmech.ru.feature_schedule_api.domain.usecase.ObserveCurrentScheduleUseCase
+import kekmech.ru.feature_schedule_impl.data.database.ScheduleCacheDatabase
+import kekmech.ru.feature_schedule_impl.data.datasource.CachedScheduleSource
 import kekmech.ru.feature_schedule_impl.data.datasource.SelectedScheduleSource
 import kekmech.ru.feature_schedule_impl.data.network.ScheduleService
 import kekmech.ru.feature_schedule_impl.data.repository.ScheduleRepositoryImpl
@@ -22,12 +24,17 @@ import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleSto
 import kekmech.ru.lib_analytics_api.SelectedScheduleAnalyticsProvider
 import kekmech.ru.lib_navigation.NavEntries
 import kekmech.ru.lib_network.buildApi
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.binds
 import org.koin.dsl.module
 import retrofit2.Retrofit
+import java.time.Clock
+import java.time.ZoneId
 
 val FeatureScheduleModule = module {
     factoryOf(::ScheduleFeatureApiImpl) bind ScheduleFeatureApi::class
@@ -39,15 +46,38 @@ val FeatureScheduleModule = module {
     factoryOf(::ScheduleDependencies)
 
     factory { get<Retrofit.Builder>().buildApi<ScheduleService>() }
+    single {
+        Room
+            .databaseBuilder(
+                context = get(),
+                klass = ScheduleCacheDatabase::class.java,
+                name = ScheduleCacheDatabase.Name,
+            )
+            // It's a cache: drop it on any schema change and download again, never migrate
+            .fallbackToDestructiveMigration(dropAllTables = true)
+            .fallbackToDestructiveMigrationOnDowngrade(dropAllTables = true)
+            .build()
+    }
+    factory { get<ScheduleCacheDatabase>().scheduleWeekDao() }
+    single {
+        CachedScheduleSource(
+            scheduleService = get(),
+            scheduleWeekDao = get(),
+            json = get(),
+            // application scope: downloads outlive the screens that started them
+            scope = CoroutineScope(SupervisorJob() + Dispatchers.IO),
+            dispatcher = Dispatchers.IO,
+            clock = Clock.system(ZoneId.of("Europe/Moscow")),
+        )
+    }
     singleOf(::ScheduleRepositoryImpl) binds arrayOf(
         ScheduleRepository::class,
         SelectedScheduleAnalyticsProvider::class,
         PreheatSelectedScheduleProvider::class,
     )
     factoryOf(::ScheduleSearchRepositoryImpl) bind ScheduleSearchRepository::class
-    factoryOf(::GetCurrentScheduleUseCase)
+    factoryOf(::ObserveCurrentScheduleUseCase)
     factoryOf(::SelectedScheduleSource)
-    factoryOf(::ScheduleCacheWrapper)
     factoryOf(::HasSelectedScheduleUseCaseImpl) bind HasSelectedScheduleUseCase::class
     factoryOf(::ScheduleNavEntries) bindIntoList NavEntries::class
 }

@@ -18,16 +18,16 @@ internal class ScheduleReducer :
 
     override fun Result.internal(event: Internal) {
         when (event) {
-            is Internal.LoadScheduleSuccess -> {
-                state {
-                    copy(
-                        loadingError = null,
-                        schedule = schedule + mapOf(event.weekOffset to event.schedule),
-                    )
-                }
+            is Internal.ScheduleUpdated -> state {
+                copy(
+                    schedule = schedule + (event.weekOffset to event.resource),
+                    observeErrors = observeErrors - event.weekOffset,
+                )
             }
 
-            is Internal.LoadScheduleFailure -> state { copy(loadingError = event.throwable) }
+            is Internal.ObserveScheduleFailure -> state {
+                copy(observeErrors = observeErrors + (event.weekOffset to event.throwable))
+            }
         }
     }
 
@@ -36,8 +36,8 @@ internal class ScheduleReducer :
             is Ui.Init -> {
                 state { showNextWeekIfWeekend() }
                 commands {
-                    +Command.LoadSchedule(0)
-                    +Command.LoadSchedule(1)
+                    +Command.ObserveSchedule(0)
+                    +Command.ObserveSchedule(1)
                 }
             }
 
@@ -69,12 +69,15 @@ internal class ScheduleReducer :
             }
 
             is Ui.Action.NotesUpdated, is Ui.Action.UpdateScheduleIfNeeded -> commands {
-                +Command.LoadSchedule(state.weekOffset)
+                +Command.ObserveSchedule(state.weekOffset)
             }
 
             is Ui.Action.ClassesScrolled -> state { copy(isNavigationFabVisible = event.dy <= 0) }
             is Ui.Click.FAB -> selectWeek(Ui.Action.SelectWeek(if (state.weekOffset != 0) 0 else 1))
-            is Ui.Click.Reload -> commands { +Command.LoadSchedule(state.weekOffset) }
+            is Ui.Click.Reload -> reload()
+            is Ui.Click.SavedScheduleBanner -> state.selectedResource?.key?.let { key ->
+                commands { +Command.RefreshSchedule(key) }
+            }
         }
     }
 
@@ -86,10 +89,21 @@ internal class ScheduleReducer :
             copy(
                 weekOffset = event.weekOffset,
                 selectedDate = selectNecessaryDate(state, event.weekOffset),
-                loadingError = null,
             )
         }
-        commands { +Command.LoadSchedule(event.weekOffset) }
+        commands { +Command.ObserveSchedule(event.weekOffset) }
+    }
+
+    private fun Result.reload() {
+        val weekOffset = state.weekOffset
+        val key = state.selectedResource?.key
+        if (key != null && weekOffset !in state.observeErrors) {
+            // the subscription is alive, it will receive the result of the refresh
+            commands { +Command.RefreshSchedule(key) }
+        } else {
+            state { copy(observeErrors = observeErrors - weekOffset) }
+            commands { +Command.ObserveSchedule(weekOffset) }
+        }
     }
 
     private fun selectNecessaryDate(

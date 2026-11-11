@@ -49,10 +49,11 @@ internal fun DashboardEntry() {
         viewModelStoreOwner = activity,
         savedStateRegistryOwner = activity,
     ) { onAccept, state, effects ->
-        // Results of the screens opened from the dashboard: notes or selected schedule could change
-        ResultListener<EmptyResult>(NOTES_LIST_RESULT_KEY) { onAccept(Ui.Action.SwipeToRefresh) }
-        ResultListener<EmptyResult>(EDIT_NOTE_RESULT_KEY) { onAccept(Ui.Action.SwipeToRefresh) }
-        ResultListener<SelectedSchedule>(FIND_GROUP_RESULT_KEY) { onAccept(Ui.Action.SwipeToRefresh) }
+        // Results of the screens opened from the dashboard: notes or selected schedule could change.
+        // Only local data changed, so update without forcing a schedule download
+        ResultListener<EmptyResult>(NOTES_LIST_RESULT_KEY) { onAccept(Ui.Action.SilentUpdate) }
+        ResultListener<EmptyResult>(EDIT_NOTE_RESULT_KEY) { onAccept(Ui.Action.SilentUpdate) }
+        ResultListener<SelectedSchedule>(FIND_GROUP_RESULT_KEY) { onAccept(Ui.Action.SilentUpdate) }
 
         EffectHandler(effects) { effect ->
             when (effect) {

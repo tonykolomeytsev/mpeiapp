@@ -138,6 +138,8 @@
     <string name="schedule_fab_tooltip">Quick navigation button. You can disable this button in the settings</string>
     <string name="schedule_fab_next">Go to next week</string>
     <string name="schedule_fab_prev">Go to current week</string>
+    <string name="schedule_saved_banner_text">Couldn\'t update.\nSchedule from %s</string>
+    <string name="schedule_saved_banner_refresh">Retry</string>
 
     <string name="dashboard_loading_error">An error occurred while loading data from the server</string>
     <string name="dashboard_item_click_to_change_group">Click to change schedule</string>

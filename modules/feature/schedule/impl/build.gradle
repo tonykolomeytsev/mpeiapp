@@ -2,6 +2,7 @@ plugins {
     alias(mpeix.plugins.feature.impl.compose)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.ksp)
 }
 
 android.buildFeatures {
@@ -12,6 +13,8 @@ android.buildFeatures {
 dependencies {
     testImplementation(libs.kotest.assertions)
     testImplementation(libs.kotest.runner)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(project(":ext_json"))
 
     implementation(libs.androidx.constraintLayout)
     implementation(libs.androidx.coreKtx)
@@ -24,6 +27,9 @@ dependencies {
     implementation(libs.koin.android)
     implementation(libs.koin.core)
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
     implementation(libs.squareup.retrofit)
     implementation(libs.vivid.elmslie.android)
     implementation(libs.vivid.elmslie.core)
@@ -46,7 +52,6 @@ dependencies {
     implementation(project(":lib_navigation"))
     implementation(project(":lib_network"))
     implementation(project(":feature_schedule_ui"))
-    implementation(project(":lib_persistent_cache"))
     implementation(project(":lib_fragment"))
 
     implementation(project(":coreui"))

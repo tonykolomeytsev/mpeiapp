@@ -40,7 +40,10 @@ import kekmech.ru.lib_navigation.features.TabScreenStateSaverImpl
 import money.vivid.elmslie.android.renderer.ElmRendererDelegate
 import money.vivid.elmslie.android.renderer.androidElmStore
 import org.koin.android.ext.android.inject
+import java.time.Instant
 import java.time.LocalDate
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 import kekmech.ru.res_strings.R.array as StringArrays
 import kekmech.ru.res_strings.R.string as Strings
 
@@ -95,6 +98,10 @@ internal class ScheduleFragment :
             appBarLayout.addSystemTopPadding()
             fab.setOnClickListener { store.accept(Ui.Click.FAB) }
             fab.addSystemBottomMargin()
+            savedScheduleBanner.setOnClickListener {
+                analytics.sendClick("SavedScheduleBannerRefresh")
+                store.accept(Ui.Click.SavedScheduleBanner)
+            }
         }
     }
 
@@ -124,6 +131,7 @@ internal class ScheduleFragment :
     override fun render(state: ScheduleState) {
         viewPagerAdapter.update(ScheduleClassesListConverter.map(state))
         renderStatusBar(state)
+        renderSavedScheduleBanner(state)
         renderWeekCalendar(state)
         renderViewPager(state)
         renderFloatingActionButton(state)
@@ -133,6 +141,16 @@ internal class ScheduleFragment :
         with(viewBinding) {
             textViewHeader.text = getFormattedDay(state.selectedDate)
             textViewDescription.text = state.weekOfSemester?.let(::getFormattedWeek).orEmpty()
+        }
+
+    private fun renderSavedScheduleBanner(state: ScheduleState) =
+        with(viewBinding) {
+            savedScheduleBanner.isVisible = state.isShowingSavedSchedule
+            if (state.isShowingSavedSchedule) {
+                val updatedAt = state.selectedResource?.updatedAt?.let(::getFormattedUpdatedAt)
+                savedScheduleBannerText.text =
+                    getString(Strings.schedule_saved_banner_text, updatedAt.orEmpty())
+            }
         }
 
     private fun renderViewPager(state: ScheduleState) =
@@ -264,6 +282,12 @@ internal class ScheduleFragment :
             .getOrElse(day.monthValue - 1) { "" }
         return "$dayOfWeekName, ${day.dayOfMonth} $dayOfMonthName"
     }
+
+    private fun getFormattedUpdatedAt(updatedAt: Instant): String =
+        DateTimeFormatter
+            .ofPattern("d MMMM, HH:mm", resources.configuration.locales[0])
+            .withZone(ZoneId.systemDefault())
+            .format(updatedAt)
 
     private fun getFormattedWeek(weekOfSemester: WeekOfSemester): String {
         return when (weekOfSemester) {

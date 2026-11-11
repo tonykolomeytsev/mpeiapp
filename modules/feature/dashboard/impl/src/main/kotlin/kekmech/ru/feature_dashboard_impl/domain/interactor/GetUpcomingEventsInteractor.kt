@@ -4,10 +4,12 @@ import kekmech.ru.ext_kotlin.moscowLocalDate
 import kekmech.ru.ext_kotlin.moscowLocalTime
 import kekmech.ru.feature_dashboard_impl.domain.model.UpcomingEventsPrediction
 import kekmech.ru.feature_notes_api.domain.service.AttachNotesToScheduleService
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kekmech.ru.feature_schedule_api.domain.model.Classes
 import kekmech.ru.feature_schedule_api.domain.model.Day
+import kekmech.ru.feature_schedule_api.domain.model.Schedule
 import kekmech.ru.feature_schedule_api.domain.model.Week
-import kekmech.ru.feature_schedule_api.domain.usecase.GetCurrentScheduleUseCase
+import kotlinx.coroutines.CancellationException
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.temporal.ChronoUnit
@@ -15,18 +17,19 @@ import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
 internal class GetUpcomingEventsInteractor(
-    private val getCurrentScheduleUseCase: GetCurrentScheduleUseCase,
     private val attachNotesToScheduleService: AttachNotesToScheduleService,
 ) {
 
-    suspend operator fun invoke(): UpcomingEventsPrediction {
+    /**
+     * @param schedules the weeks to look for the upcoming classes in, usually this and next week
+     */
+    suspend operator fun invoke(schedules: List<Schedule>): UpcomingEventsPrediction {
         val currentDate = moscowLocalDate()
         val currentTime = moscowLocalTime()
         val days = mutableListOf<Day>()
-        for (i in 0..1) {
-            getCurrentScheduleUseCase
-                .getSchedule(weekOffset = i)
-                .let { attachNotesToScheduleService.attach(it) }
+        for (schedule in schedules) {
+            attachNotesSafely(schedule)
+            schedule
                 .weeks
                 .flatMap(Week::days)
                 .let { days.addAll(it) }
@@ -46,6 +49,18 @@ internal class GetUpcomingEventsInteractor(
             currentDate = currentDate,
             currentTime = currentTime,
         )
+    }
+
+    /** Notes are secondary: predict without them rather than not predict at all */
+    @Suppress("TooGenericExceptionCaught")
+    private suspend fun attachNotesSafely(schedule: Schedule) {
+        try {
+            attachNotesToScheduleService.attach(schedule)
+        } catch (e: CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            FirebaseCrashlytics.getInstance().recordException(e)
+        }
     }
 
     private fun createPredictionFromDays(
