@@ -56,7 +56,6 @@ internal sealed interface AppSettingsAction {
     data object LanguageClick : AppSettingsAction
     data object MapTypeClick : AppSettingsAction
     data object FavoritesClick : AppSettingsAction
-    data object BarsLogoutClick : AppSettingsAction
     data object GitHubClick : AppSettingsAction
     data class EmailClick(val email: String) : AppSettingsAction
     data object TelegramClick : AppSettingsAction
@@ -200,15 +199,6 @@ private fun LazyListScope.settingsItems(
                     },
                 )
             },
-        )
-    }
-
-    section(Strings.app_settings_header_bars)
-    item {
-        ListItem(
-            headlineText = "Выйти из аккаунта",
-            supportingText = "Нажмите чтобы завершить сессию в БАРС",
-            modifier = Modifier.clickable { onAction(AppSettingsAction.BarsLogoutClick) },
         )
     }
 

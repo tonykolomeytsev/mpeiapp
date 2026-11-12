@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
-import android.widget.Toast
 import androidx.activity.compose.LocalActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
@@ -18,7 +17,6 @@ import kekmech.ru.feature_app_settings_impl.presentation.screens.main.elm.AppSet
 import kekmech.ru.feature_app_settings_impl.presentation.screens.main.elm.AppSettingsEvent.Ui
 import kekmech.ru.feature_app_settings_impl.presentation.screens.main.elm.AppSettingsStoreFactory
 import kekmech.ru.feature_app_settings_impl.presentation.screens.map_type.SelectMapTypeFragment
-import kekmech.ru.feature_bars_api.BarsLogoutHandle
 import kekmech.ru.lib_analytics_android.Analytics
 import kekmech.ru.lib_analytics_android.ext.rememberScreenAnalytics
 import kekmech.ru.lib_elm_compose.EffectHandler
@@ -38,7 +36,6 @@ private const val MAP_TYPE_RESULT_KEY = "MAP_TYPE_RESULT_KEY"
 @Composable
 internal fun AppSettingsEntry() {
     val analytics = rememberScreenAnalytics("AppSettings")
-    val logoutHandle = koinInject<BarsLogoutHandle>()
     val context = LocalContext.current
     val activity = LocalActivity.current
     val storeFactory = koinInject<AppSettingsStoreFactory>()
@@ -59,7 +56,7 @@ internal fun AppSettingsEntry() {
         AppSettingsScreen(
             state = state,
             onAction = {
-                handleAction(it, onAccept, router, analytics, logoutHandle, context)
+                handleAction(it, onAccept, router, analytics, context)
             },
         )
     }
@@ -85,7 +82,6 @@ private fun handleAction(
     onAccept: (AppSettingsEvent) -> Unit,
     router: Router,
     analytics: Analytics,
-    logoutHandle: BarsLogoutHandle,
     context: Context,
 ) {
     when (action) {
@@ -138,15 +134,6 @@ private fun handleAction(
         is AppSettingsAction.MapTypeClick -> {
             analytics.sendClick("SelectMapType")
             onAccept(Ui.Click.MapType)
-        }
-
-        is AppSettingsAction.BarsLogoutClick -> {
-            analytics.sendClick("BarsLogout")
-            if (logoutHandle.logout()) {
-                Toast
-                    .makeText(context, "Вы вышли из БАРС", Toast.LENGTH_SHORT)
-                    .show()
-            }
         }
 
         is AppSettingsAction.ContributorClick ->
