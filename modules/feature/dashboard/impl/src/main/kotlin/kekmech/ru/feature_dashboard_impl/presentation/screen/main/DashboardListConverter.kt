@@ -53,6 +53,11 @@ internal class DashboardListConverter(
             )
             add(Space("after_selected_schedule", 8.dp))
 
+            if (state.isWhatsNewBannerVisible) {
+                add(DashboardListItem.WhatsNewBanner)
+                add(Space("after_whats_new_banner", 16.dp))
+            }
+
             // Section headers have their own top padding, so spaces before them are smaller
             if (moscowLocalTime() in lunchStartTime..lunchEndTime) {
                 add(DashboardListItem.LunchBanner)

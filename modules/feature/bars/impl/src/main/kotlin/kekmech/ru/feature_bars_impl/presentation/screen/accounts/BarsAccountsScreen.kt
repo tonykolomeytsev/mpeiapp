@@ -39,6 +39,7 @@ import io.github.tonykolomeytsev.mpeix.sdk.AccountStatus
 import io.github.tonykolomeytsev.mpeix.sdk.Subaccount
 import io.github.tonykolomeytsev.mpeix.sdk.SubaccountId
 import kekmech.ru.feature_bars_impl.presentation.screen.accounts.compose.AccountItem
+import kekmech.ru.feature_bars_impl.presentation.shortName
 import kekmech.ru.res_strings.R.string as Strings
 import kekmech.ru.ui_kit_dialogs.AlertDialog
 import kekmech.ru.ui_kit_dialogs.rememberAlertDialogState
@@ -210,7 +211,7 @@ private fun DeleteAccountDialog(
             dialogState.hideDialog()
         }
     }
-    val name = lastAccount?.let { it.displayName ?: it.username }.orEmpty()
+    val name = lastAccount?.shortName.orEmpty()
     AlertDialog(
         onDismissRequest = onDismiss,
         state = dialogState,

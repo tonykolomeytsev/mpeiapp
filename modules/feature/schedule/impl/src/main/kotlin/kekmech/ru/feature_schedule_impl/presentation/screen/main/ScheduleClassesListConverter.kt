@@ -1,59 +1,81 @@
 package kekmech.ru.feature_schedule_impl.presentation.screen.main
 
-import kekmech.ru.coreui.items.ErrorStateItem
-import kekmech.ru.coreui.items.ShimmerItem
-import kekmech.ru.coreui.items.SpaceItem
-import kekmech.ru.feature_schedule_impl.R
+import kekmech.ru.feature_schedule_api.domain.model.Classes
+import kekmech.ru.feature_schedule_api.domain.model.ScheduleType
+import kekmech.ru.feature_schedule_impl.presentation.screen.main.compose.ScheduleDayItem
+import kekmech.ru.feature_schedule_impl.presentation.screen.main.compose.ScheduleDayPage
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleState
-import kekmech.ru.feature_schedule_impl.presentation.screen.main.item.WorkingDayItem
-import kekmech.ru.feature_schedule_ui.items.SelfStudyItem
+import kekmech.ru.feature_schedule_ui.compose.groupParallelClasses
+import kekmech.ru.feature_schedule_ui.compose.toUiModel
+import kekmech.ru.feature_schedule_ui.items.LunchItem
+import kekmech.ru.feature_schedule_ui.items.WindowItem
 import kekmech.ru.feature_schedule_ui.utils.withLunch
-import kekmech.ru.feature_schedule_ui.utils.withNotePreview
 import kekmech.ru.feature_schedule_ui.utils.withWindows
 
-private const val DAY_ITEMS_COUNT = 6
+internal const val DAY_PAGES_COUNT = 6
 
 internal object ScheduleClassesListConverter {
 
-    fun map(state: ScheduleState): List<Any> {
+    /**
+     * Pages shown before the first state is rendered
+     */
+    val loadingPages: List<ScheduleDayPage> = List(DAY_PAGES_COUNT) {
+        ScheduleDayPage(dayOfWeek = it + 1, items = listOf(ScheduleDayItem.Shimmer))
+    }
+
+    fun map(state: ScheduleState): List<ScheduleDayPage> {
         val selectedSchedule = state.selectedSchedule
         val selectedScheduleWeek = selectedSchedule?.weeks?.firstOrNull()
+        val loadingError = state.loadingError
         return when {
             // error state
-            state.loadingError != null && selectedScheduleWeek == null -> List(DAY_ITEMS_COUNT) {
-                val dayOfWeek = it + 1
-                WorkingDayItem(
-                    dayOfWeek = dayOfWeek,
-                    items = listOf(SpaceItem.VERTICAL_24, ErrorStateItem(state.loadingError))
+            loadingError != null && selectedScheduleWeek == null -> List(DAY_PAGES_COUNT) {
+                ScheduleDayPage(
+                    dayOfWeek = it + 1,
+                    items = listOf(ScheduleDayItem.Error(loadingError)),
                 )
             }
-            selectedSchedule == null || selectedScheduleWeek == null -> List(DAY_ITEMS_COUNT) {
-                val dayOfWeek = it + 1
-                WorkingDayItem(
-                    dayOfWeek = dayOfWeek,
-                    items = listOf(ShimmerItem(R.layout.item_working_day_shimmer))
-                )
-            }
-            else -> List(DAY_ITEMS_COUNT) {
+            selectedSchedule == null || selectedScheduleWeek == null -> loadingPages
+            else -> List(DAY_PAGES_COUNT) {
                 val dayOfWeek = it + 1
                 val rawClasses = selectedScheduleWeek.days
                     .find { day -> day.dayOfWeek == dayOfWeek }
                     ?.classes
                     ?.onEach { classes -> classes.scheduleType = selectedSchedule.type }
                     .orEmpty()
-                val modifiedClasses = if (rawClasses.isEmpty()) {
-                    listOf(SelfStudyItem)
+                val items = if (rawClasses.isEmpty()) {
+                    listOf(ScheduleDayItem.SelfStudy)
                 } else {
-                    rawClasses
-                        .withWindows()
-                        .withLunch()
-                        .withNotePreview()
+                    rawClasses.toDayItems(selectedSchedule.type)
                 }
-                WorkingDayItem(
-                    dayOfWeek = dayOfWeek,
-                    items = modifiedClasses
-                )
+                ScheduleDayPage(dayOfWeek = dayOfWeek, items = items)
             }
         }
+    }
+
+    /**
+     * Converts the classes of the day to the list items. Parallel classes (e.g. labs of different
+     * subgroups) are merged into a single [ScheduleDayItem.ClassesEntry].
+     */
+    private fun List<Classes>.toDayItems(scheduleType: ScheduleType): List<ScheduleDayItem> {
+        // Parallel classes have the same number and time, so the first of them is enough
+        // to place the windows and lunch, the rest are attached back by it
+        val parallelClassesByFirst = groupParallelClasses().associateBy { it.first() }
+        return parallelClassesByFirst.keys.toList()
+            .withWindows()
+            .withLunch()
+            .mapIndexedNotNull { index, item ->
+                when (item) {
+                    is Classes -> ScheduleDayItem.ClassesEntry(
+                        index = index,
+                        // Notes are attached by the classes name and time, so the first is used for clicks
+                        classes = item,
+                        model = parallelClassesByFirst.getValue(item).toUiModel(scheduleType),
+                    )
+                    is WindowItem -> ScheduleDayItem.Window(index)
+                    is LunchItem -> ScheduleDayItem.Lunch
+                    else -> null
+                }
+            }
     }
 }

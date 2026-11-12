@@ -12,6 +12,7 @@ import kekmech.ru.feature_bars_impl.data.repository.BarsProfileIdRepository
 import kekmech.ru.feature_bars_impl.data.sdk.SdkErrorException
 import kekmech.ru.feature_bars_impl.navigation.BarsAccountsScreenKey
 import kekmech.ru.feature_bars_impl.navigation.BarsDetailsScreenKey
+import kekmech.ru.feature_bars_impl.presentation.firstLastName
 import kekmech.ru.feature_bars_impl.presentation.screen.main.compose.ShowingFromCacheReason
 import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsEvent.Internal
 import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsEvent.Internal.CacheReasonsChanged
@@ -179,7 +180,7 @@ internal class BarsActor(
         BarsProfile(
             // "Иван Иванов" for the top bar, the full name has the patronymic too
             name = listOfNotNull(firstName, lastName).joinToString(" ")
-                .ifEmpty { fullName.split("\\s+".toRegex()).take(2).joinToString(" ") },
+                .ifEmpty { firstLastName(fullName) },
             group = group.orEmpty(),
         )
 }

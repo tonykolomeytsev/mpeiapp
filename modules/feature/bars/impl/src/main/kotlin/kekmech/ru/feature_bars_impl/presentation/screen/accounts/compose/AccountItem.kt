@@ -25,6 +25,7 @@ import io.github.tonykolomeytsev.mpeix.sdk.AccountId
 import io.github.tonykolomeytsev.mpeix.sdk.AccountStatus
 import io.github.tonykolomeytsev.mpeix.sdk.Subaccount
 import io.github.tonykolomeytsev.mpeix.sdk.SubaccountId
+import kekmech.ru.feature_bars_impl.presentation.shortName
 import kekmech.ru.res_strings.R.string as Strings
 import kekmech.ru.ui_kit_lists.ListItem
 import kekmech.ru.ui_theme.theme.MpeixTheme
@@ -37,7 +38,7 @@ internal fun AccountItem(
     editMode: Boolean = false,
     onClickDelete: () -> Unit = { /* no-op */ },
 ) {
-    val name = account.displayName ?: account.username
+    val name = account.shortName
     val bottomText = remember(account.subaccounts) {
         account.subaccounts
             .mapNotNull { it.group }

@@ -1,5 +1,6 @@
 plugins {
     alias(mpeix.plugins.feature.impl.compose)
+    alias(libs.plugins.kotlin.parcelize)
 }
 
 android.buildFeatures{
@@ -11,6 +12,7 @@ dependencies {
     testImplementation(libs.kotest.runner)
 
     implementation(libs.compose.material3)
+    implementation(libs.compose.material.icons)
 
     implementation(libs.koin.core)
     implementation(libs.koin.compose)
@@ -33,6 +35,7 @@ dependencies {
 
     implementation(project(":ext_android"))
     implementation(project(":ext_kotlin"))
+    implementation(project(":ext_shared_preferences"))
     implementation(project(":lib_analytics_android"))
     implementation(project(":lib_elm"))
     implementation(project(":lib_elm_compose"))
@@ -46,6 +49,7 @@ dependencies {
     implementation(project(":ui_kit_banner"))
     implementation(project(":ui_kit_lists"))
     implementation(project(":ui_kit_states"))
+    implementation(project(":ui_kit_topappbar"))
 
     implementation(project(":coreui"))
     implementation(project(":res_icons"))

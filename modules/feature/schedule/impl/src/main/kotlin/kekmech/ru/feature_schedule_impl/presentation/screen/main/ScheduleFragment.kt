@@ -2,45 +2,47 @@ package kekmech.ru.feature_schedule_impl.presentation.screen.main
 
 import android.os.Bundle
 import android.view.View
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import kekmech.ru.ext_android.EmptyResult
 import kekmech.ru.ext_android.addSystemBottomMargin
 import kekmech.ru.ext_android.addSystemTopPadding
 import kekmech.ru.ext_android.getStringArray
+import kekmech.ru.ext_android.openLinkExternal
 import kekmech.ru.ext_android.notNullSerializable
 import kekmech.ru.ext_android.setResultListener
 import kekmech.ru.ext_android.viewbinding.viewBinding
-import kekmech.ru.ext_android.views.onPageSelected
 import kekmech.ru.ext_kotlin.fastLazy
-import kekmech.ru.feature_schedule_api.domain.model.Classes
 import kekmech.ru.feature_schedule_api.domain.model.WeekOfSemester
 import kekmech.ru.feature_schedule_impl.R
 import kekmech.ru.feature_schedule_impl.databinding.FragmentScheduleBinding
 import kekmech.ru.feature_schedule_impl.di.ScheduleDependencies
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.adapter.WeeksScrollAdapter
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.adapter.WeeksScrollHelper
+import kekmech.ru.feature_schedule_impl.presentation.screen.main.compose.ScheduleDaysAction
+import kekmech.ru.feature_schedule_impl.presentation.screen.main.compose.ScheduleDaysPager
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleEffect
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleEvent.Ui
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleState
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleStoreFactory
-import kekmech.ru.feature_schedule_impl.presentation.screen.main.item.DAY_OF_WEEK_FRIDAY
-import kekmech.ru.feature_schedule_impl.presentation.screen.main.item.DAY_OF_WEEK_MONDAY
-import kekmech.ru.feature_schedule_impl.presentation.screen.main.item.DAY_OF_WEEK_SATURDAY
-import kekmech.ru.feature_schedule_impl.presentation.screen.main.item.DAY_OF_WEEK_THURSDAY
-import kekmech.ru.feature_schedule_impl.presentation.screen.main.item.DAY_OF_WEEK_TUESDAY
-import kekmech.ru.feature_schedule_impl.presentation.screen.main.item.DAY_OF_WEEK_WEDNESDAY
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.item.WeekAdapterItem
-import kekmech.ru.feature_schedule_impl.presentation.screen.main.item.WorkingDayAdapterItem
-import kekmech.ru.lib_adapter.BaseAdapter
 import kekmech.ru.lib_analytics_android.addScrollAnalytics
 import kekmech.ru.lib_analytics_android.ext.screenAnalytics
 import kekmech.ru.lib_navigation.features.TabScreenStateSaver
 import kekmech.ru.lib_navigation.features.TabScreenStateSaverImpl
+import kekmech.ru.ui_theme.theme.MpeixTheme
 import money.vivid.elmslie.android.renderer.ElmRendererDelegate
 import money.vivid.elmslie.android.renderer.androidElmStore
 import org.koin.android.ext.android.inject
+import java.time.Instant
 import java.time.LocalDate
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 import kekmech.ru.res_strings.R.array as StringArrays
 import kekmech.ru.res_strings.R.string as Strings
 
@@ -51,14 +53,18 @@ internal class ScheduleFragment :
     TabScreenStateSaver by TabScreenStateSaverImpl("schedule") {
 
     private val dependencies by inject<ScheduleDependencies>()
-    private val viewPagerAdapter by fastLazy { createViewPagerAdapter() }
     private val weeksScrollAdapter by fastLazy { createWeekScrollAdapter() }
     private val weeksScrollHelper by fastLazy { createWeekDaysHelper() }
     private val analytics by screenAnalytics("Schedule")
     private val viewBinding by viewBinding(FragmentScheduleBinding::bind)
 
-    // for viewPager sliding debounce
-    private var viewPagerPositionToBeSelected: Int? = null
+    // Compose state of the days pager, updated in render()
+    private var dayPages by mutableStateOf(ScheduleClassesListConverter.loadingPages)
+    private var selectedDayPage by mutableIntStateOf(-1)
+    private var savedScheduleBannerText by mutableStateOf<String?>(null)
+
+    // Last page the days pager settled on, saved to the TabScreenStateSaver
+    private var currentDayPage = 0
 
     private val store by androidElmStore(
         viewModelStoreOwner = { requireActivity() },
@@ -86,10 +92,24 @@ internal class ScheduleFragment :
             recyclerView.setHasFixedSize(true)
             recyclerView.addScrollAnalytics(analytics, "WeeksRecyclerView")
 
-            viewPager.adapter = viewPagerAdapter
-            viewPager.setCurrentItem(getSavedViewPagerCurrentItem(), false)
-            viewPager.onPageSelected { store.accept(Ui.Action.PageChanged(it)) }
-            viewPager.addScrollAnalytics(analytics, "WorkingDaysViewPager")
+            // Apply the current state before the first composition,
+            // so the pager opens on the selected day instead of scrolling to it
+            renderDaysPager(store.states.value)
+            currentDayPage = selectedDayPage
+                .takeIf { it in 0 until DAY_PAGES_COUNT }
+                ?: getSavedViewPagerCurrentItem()
+            daysPager.setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+            daysPager.setContent {
+                MpeixTheme {
+                    ScheduleDaysPager(
+                        pages = dayPages,
+                        selectedPage = selectedDayPage,
+                        onAction = ::onDaysPagerAction,
+                        savedScheduleBannerText = savedScheduleBannerText,
+                        initialPage = currentDayPage,
+                    )
+                }
+            }
 
             appBarLayout.outlineProvider = null
             appBarLayout.addSystemTopPadding()
@@ -105,7 +125,6 @@ internal class ScheduleFragment :
 
     override fun onDestroyView() {
         saveViewPagerState()
-        viewBinding.viewPager.adapter = null
         weeksScrollHelper.detach(viewBinding.recyclerView)
         super.onDestroyView()
     }
@@ -122,10 +141,9 @@ internal class ScheduleFragment :
         }
 
     override fun render(state: ScheduleState) {
-        viewPagerAdapter.update(ScheduleClassesListConverter.map(state))
+        renderDaysPager(state)
         renderStatusBar(state)
         renderWeekCalendar(state)
-        renderViewPager(state)
         renderFloatingActionButton(state)
     }
 
@@ -135,17 +153,21 @@ internal class ScheduleFragment :
             textViewDescription.text = state.weekOfSemester?.let(::getFormattedWeek).orEmpty()
         }
 
-    private fun renderViewPager(state: ScheduleState) =
-        with(viewBinding) {
-            val newSelectedPosition = state.selectedDate.dayOfWeek.value - 1
-            if (viewPagerPositionToBeSelected != newSelectedPosition &&
-                viewPager.currentItem != newSelectedPosition &&
-                newSelectedPosition in 0 until DAYS_TO_VIEW
-            ) {
-                viewPager.setCurrentItem(newSelectedPosition, viewPagerPositionToBeSelected != null)
-                viewPagerPositionToBeSelected = newSelectedPosition
-            }
+    private fun renderDaysPager(state: ScheduleState) {
+        dayPages = ScheduleClassesListConverter.map(state)
+        // Out of range pages (Sunday) are ignored by the pager
+        selectedDayPage = state.selectedDate.dayOfWeek.value - 1
+        renderSavedScheduleBanner(state)
+    }
+
+    private fun renderSavedScheduleBanner(state: ScheduleState) {
+        savedScheduleBannerText = if (state.isShowingSavedSchedule) {
+            val updatedAt = state.selectedResource?.updatedAt?.let(::getFormattedUpdatedAt)
+            getString(Strings.schedule_saved_banner_text, updatedAt.orEmpty())
+        } else {
+            null
         }
+    }
 
     private fun renderWeekCalendar(state: ScheduleState) {
         weeksScrollAdapter.selectDay(state.selectedDate) { position ->
@@ -186,57 +208,28 @@ internal class ScheduleFragment :
         }
     }
 
-    private fun createViewPagerAdapter() = BaseAdapter(
-        WorkingDayAdapterItem(
-            DAY_OF_WEEK_MONDAY,
-            ::onClassesClick,
-            ::onClassesScroll,
-            ::onReloadClick
-        ),
-        WorkingDayAdapterItem(
-            DAY_OF_WEEK_TUESDAY,
-            ::onClassesClick,
-            ::onClassesScroll,
-            ::onReloadClick
-        ),
-        WorkingDayAdapterItem(
-            DAY_OF_WEEK_WEDNESDAY,
-            ::onClassesClick,
-            ::onClassesScroll,
-            ::onReloadClick
-        ),
-        WorkingDayAdapterItem(
-            DAY_OF_WEEK_THURSDAY,
-            ::onClassesClick,
-            ::onClassesScroll,
-            ::onReloadClick
-        ),
-        WorkingDayAdapterItem(
-            DAY_OF_WEEK_FRIDAY,
-            ::onClassesClick,
-            ::onClassesScroll,
-            ::onReloadClick
-        ),
-        WorkingDayAdapterItem(
-            DAY_OF_WEEK_SATURDAY,
-            ::onClassesClick,
-            ::onClassesScroll,
-            ::onReloadClick
-        )
-    )
-
-    private fun onClassesClick(classes: Classes) {
-        analytics.sendClick("ClickClasses")
-        store.accept(Ui.Click.Classes(classes))
-    }
-
-    private fun onClassesScroll(dy: Int) {
-        store.accept(Ui.Action.ClassesScrolled(dy))
-    }
-
-    private fun onReloadClick() {
-        analytics.sendClick("ClassesReload")
-        store.accept(Ui.Click.Reload)
+    private fun onDaysPagerAction(action: ScheduleDaysAction) {
+        when (action) {
+            is ScheduleDaysAction.PageSelected -> {
+                currentDayPage = action.page
+                store.accept(Ui.Action.PageChanged(action.page))
+            }
+            is ScheduleDaysAction.PagerDragged -> analytics.sendScroll("WorkingDaysViewPager")
+            is ScheduleDaysAction.ClassesScrolled -> store.accept(Ui.Action.ClassesScrolled(action.dy))
+            is ScheduleDaysAction.ClassesClick -> {
+                analytics.sendClick("ClickClasses")
+                store.accept(Ui.Click.Classes(action.classes))
+            }
+            is ScheduleDaysAction.LunchClick -> requireContext().openLinkExternal("mpeix://map?tab=FOOD")
+            is ScheduleDaysAction.SavedScheduleBannerClick -> {
+                analytics.sendClick("SavedScheduleBannerRefresh")
+                store.accept(Ui.Click.SavedScheduleBanner)
+            }
+            is ScheduleDaysAction.ReloadClick -> {
+                analytics.sendClick("ClassesReload")
+                store.accept(Ui.Click.Reload)
+            }
+        }
     }
 
     private fun createWeekDaysHelper() = WeeksScrollHelper(
@@ -265,6 +258,12 @@ internal class ScheduleFragment :
         return "$dayOfWeekName, ${day.dayOfMonth} $dayOfMonthName"
     }
 
+    private fun getFormattedUpdatedAt(updatedAt: Instant): String =
+        DateTimeFormatter
+            .ofPattern("d MMMM, HH:mm", resources.configuration.locales[0])
+            .withZone(ZoneId.systemDefault())
+            .format(updatedAt)
+
     private fun getFormattedWeek(weekOfSemester: WeekOfSemester): String {
         return when (weekOfSemester) {
             is WeekOfSemester.Studying -> requireContext()
@@ -278,13 +277,12 @@ internal class ScheduleFragment :
         stateBundle.getInt("selected_page")
 
     private fun saveViewPagerState() {
-        stateBundle.putInt("selected_page", viewBinding.viewPager.currentItem)
+        stateBundle.putInt("selected_page", currentDayPage)
     }
 
     companion object {
 
         private const val FAB_ANIMATION_DURATION = 100L
-        private const val DAYS_TO_VIEW = 6
 
         private const val NOTES_LIST_RESULT_KEY = "NOTES_LIST_RESULT_KEY"
     }

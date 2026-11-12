@@ -138,6 +138,8 @@
     <string name="schedule_fab_tooltip">Quick navigation button. You can disable this button in the settings</string>
     <string name="schedule_fab_next">Go to next week</string>
     <string name="schedule_fab_prev">Go to current week</string>
+    <string name="schedule_saved_banner_text">Couldn\'t update.\nSchedule from %s</string>
+    <string name="schedule_saved_banner_refresh">Retry</string>
 
     <string name="dashboard_loading_error">An error occurred while loading data from the server</string>
     <string name="dashboard_item_click_to_change_group">Click to change schedule</string>
@@ -156,6 +158,8 @@
     <string name="dashboard_events_n_days">Classes in %s</string>
     <string name="dashboard_banner_lunch_header">Apparently,\nit`s lunch break now</string>
     <string name="dashboard_banner_lunch_description">Search for food on the map</string>
+    <string name="dashboard_banner_whats_new_header">What\'s new?</string>
+    <string name="dashboard_banner_whats_new_description">Sorry for the long absence</string>
     <string name="dashboard_search_field_text">Search in MPEI…</string>
     <string name="dashboard_day_status_semester">The academic week #%d is in progress</string>
     <string name="dashboard_day_status_not_semester">Non-academic week</string>
@@ -234,9 +238,10 @@
     <string name="app_settings_map_appearance_type">Map appearance</string>
     <string name="app_settings_favorite_schedule_title">Favorite schedules</string>
     <string name="app_settings_favorite_schedule_description">Setting up quick access to schedules</string>
-    <string name="app_settings_header_bars">BARS</string>
     <string name="app_settings_header_support">Support</string>
     <string name="app_settings_section_github">Create an Issue or Pull Request</string>
+    <string name="app_settings_section_email">Send an email</string>
+    <string name="app_settings_section_telegram">Text me in Telegram</string>
     <string name="app_settings_header_contributors">Contributors</string>
     <string name="app_settings_section_lang">App language</string>
     <string name="app_settings_section_lang_description">Sometimes after changing the language, you need to restart the application</string>

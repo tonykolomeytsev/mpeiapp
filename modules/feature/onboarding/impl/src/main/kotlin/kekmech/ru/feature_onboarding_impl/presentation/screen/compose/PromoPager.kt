@@ -4,10 +4,13 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
@@ -31,6 +34,9 @@ import kekmech.ru.feature_onboarding_impl.presentation.item.PromoPage
 import kekmech.ru.ui_theme.theme.MpeixTheme
 import kotlin.math.abs
 
+private val PagerMaxHeight = 400.dp
+private val IllustrationMaxSize = 250.dp
+
 @Composable
 internal fun PromoPager(
     modifier: Modifier = Modifier,
@@ -42,9 +48,14 @@ internal fun PromoPager(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
+        // Takes all the height it is given, but not more than PagerMaxHeight,
+        // so the pager shrinks on short screens (landscape, split screen)
         HorizontalPager(
             state = pagerState,
-            modifier = Modifier.height(400.dp),
+            modifier = Modifier
+                .weight(1f, fill = false)
+                .heightIn(max = PagerMaxHeight)
+                .fillMaxHeight(),
         ) { index ->
             PromoPageContent(pages[index])
         }
@@ -61,15 +72,19 @@ private fun PromoPageContent(
     modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier,
+        modifier = modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
     ) {
+        // Texts are measured first, the illustration gets the remaining height
         Image(
             painter = painterResource(page.icon),
             contentDescription = null,
             modifier = Modifier
+                .weight(1f, fill = false)
                 .padding(bottom = 24.dp)
-                .size(250.dp),
+                .sizeIn(maxWidth = IllustrationMaxSize, maxHeight = IllustrationMaxSize)
+                .aspectRatio(1f),
         )
         Text(
             text = stringResource(page.title),

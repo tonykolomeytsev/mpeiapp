@@ -19,13 +19,11 @@ import kekmech.ru.ext_android.notNullSerializableArg
 import kekmech.ru.ext_android.viewbinding.viewBinding
 import kekmech.ru.ext_android.withArguments
 import kekmech.ru.ext_kotlin.fastLazy
-import kekmech.ru.feature_schedule_api.domain.model.Classes
 import kekmech.ru.feature_schedule_api.domain.model.SearchResult
-import kekmech.ru.feature_schedule_ui.items.ClassesItemBinder
-import kekmech.ru.feature_schedule_ui.items.ClassesViewHolderImpl
 import kekmech.ru.feature_search_impl.R
 import kekmech.ru.feature_search_impl.databinding.FragmentScheduleDetailsBinding
 import kekmech.ru.feature_search_impl.item.ButtonAdapterItem
+import kekmech.ru.feature_search_impl.item.ClassesComposeAdapterItem
 import kekmech.ru.feature_search_impl.item.WeekMinItem
 import kekmech.ru.feature_search_impl.item.WeekMinItemBinder
 import kekmech.ru.feature_search_impl.item.WeekMinViewHolder
@@ -42,7 +40,6 @@ import money.vivid.elmslie.android.renderer.ElmRendererDelegate
 import money.vivid.elmslie.android.renderer.androidElmStore
 import org.koin.android.ext.android.inject
 import kekmech.ru.coreui.R as coreui_R
-import kekmech.ru.feature_schedule_ui.R as common_schedule_R
 
 private const val ARG_RESULT_ITEM = "Arg.Item"
 internal const val ITEM_BUTTON_SWITCH = 1
@@ -121,12 +118,7 @@ internal class ScheduleDetailsFragment :
             },
             areItemsTheSame = { _, _ -> true }
         ),
-        AdapterItem(
-            isType = { it is Classes },
-            layoutRes = common_schedule_R.layout.item_classes_padding_horisontal_16dp,
-            viewHolderGenerator = ::ClassesViewHolderImpl,
-            itemBinder = ClassesItemBinder(requireContext()) { /* no-op */ }
-        ),
+        ClassesComposeAdapterItem(),
         EmptyStateAdapterItem()
     )
 

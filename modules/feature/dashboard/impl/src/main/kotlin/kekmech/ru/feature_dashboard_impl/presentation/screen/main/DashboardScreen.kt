@@ -41,6 +41,7 @@ import kekmech.ru.feature_dashboard_impl.presentation.screen.main.compose.Search
 import kekmech.ru.feature_dashboard_impl.presentation.screen.main.compose.SelectedScheduleItem
 import kekmech.ru.feature_dashboard_impl.presentation.screen.main.compose.TimePrediction
 import kekmech.ru.feature_dashboard_impl.presentation.screen.main.compose.UpcomingEventsShimmer
+import kekmech.ru.feature_dashboard_impl.presentation.screen.main.compose.WhatsNewBanner
 import kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm.DashboardState
 import kekmech.ru.feature_favorite_schedule_api.domain.model.FavoriteSchedule
 import kekmech.ru.feature_notes_api.domain.model.Note
@@ -175,6 +176,12 @@ private fun LazyItemScope.DashboardItem(
             modifier = itemModifier,
         )
 
+        is DashboardListItem.WhatsNewBanner -> WhatsNewBanner(
+            onClick = { onAction(DashboardAction.WhatsNewBannerClick) },
+            onDismissClick = { onAction(DashboardAction.WhatsNewBannerDismissClick) },
+            modifier = itemModifier.padding(horizontal = 16.dp),
+        )
+
         is DashboardListItem.LunchBanner -> LunchBanner(
             onClick = { onAction(DashboardAction.LunchBannerClick) },
             modifier = itemModifier.padding(horizontal = 16.dp),
@@ -256,7 +263,7 @@ private val PreviewState = DashboardState(
     selectedSchedule = SelectedSchedule(name = "С-12-16", type = ScheduleType.GROUP),
     weekOfSemester = WeekOfSemester.Studying(12).toResource(),
     upcomingEvents = UpcomingEventsPrediction.ClassesTodayStarted(
-        inProgressClasses = PreviewClasses,
+        inProgressClasses = listOf(PreviewClasses),
         inProgressFactor = 0.4f,
         futureClasses = listOf(
             PreviewClasses.copy(
@@ -264,6 +271,23 @@ private val PreviewState = DashboardState(
                 type = ClassesType.PRACTICE,
                 number = 2,
                 time = Time(LocalTime.of(11, 10), LocalTime.of(12, 45)),
+            ),
+            PreviewClasses.copy(
+                name = "Электротехническое материаловедение",
+                type = ClassesType.LAB,
+                place = "Аудитория Е-306",
+                groups = "С-12-16\\1п",
+                number = 3,
+                time = Time(LocalTime.of(13, 45), LocalTime.of(15, 20)),
+            ),
+            PreviewClasses.copy(
+                name = "Электротехническое материаловедение",
+                type = ClassesType.LAB,
+                place = "Аудитория Е-308",
+                groups = "С-12-16\\2п",
+                person = "Иванов И.И.",
+                number = 3,
+                time = Time(LocalTime.of(13, 45), LocalTime.of(15, 20)),
             ),
         ),
     ).toResource(),
@@ -288,6 +312,18 @@ private fun DashboardScreenPreview() {
     MpeixPreview {
         DashboardScreen(
             state = PreviewState,
+            scrollToTopRequests = emptyFlow(),
+            onAction = { /* no-op */ },
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun DashboardScreenWhatsNewPreview() {
+    MpeixPreview {
+        DashboardScreen(
+            state = PreviewState.copy(isWhatsNewBannerVisible = true),
             scrollToTopRequests = emptyFlow(),
             onAction = { /* no-op */ },
         )

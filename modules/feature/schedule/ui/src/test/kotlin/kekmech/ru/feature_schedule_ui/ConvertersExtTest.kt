@@ -7,85 +7,13 @@ import kekmech.ru.feature_schedule_api.domain.model.Classes
 import kekmech.ru.feature_schedule_api.domain.model.ClassesType
 import kekmech.ru.feature_schedule_api.domain.model.Time
 import kekmech.ru.feature_schedule_ui.items.LunchItem
-import kekmech.ru.feature_schedule_ui.items.NotePreview
 import kekmech.ru.feature_schedule_ui.items.WindowItem
 import kekmech.ru.feature_schedule_ui.utils.withLunch
-import kekmech.ru.feature_schedule_ui.utils.withNotePreview
 import kekmech.ru.feature_schedule_ui.utils.withProgressPreview
 import kekmech.ru.feature_schedule_ui.utils.withWindows
 import java.time.LocalTime
 
 class ConvertersExtTest : BehaviorSpec({
-    Given("Classes with notes") {
-        When("Two classes, one note") {
-            val classes1WithContent = CLASSES_1.copy(attachedNotePreview = NOTE_CONTENT)
-            val givenClasses = listOf<Any>(
-                classes1WithContent,
-                CLASSES_2
-            )
-            Then("Check withNotePreview() content") {
-                givenClasses.withNotePreview().shouldContainExactly(
-                    classes1WithContent,
-                    NotePreview(NOTE_CONTENT, classes1WithContent),
-                    CLASSES_2
-                )
-            }
-        }
-        When("Two classes, one note, lunch between classes") {
-            val classes2WithContent = CLASSES_2.copy(attachedNotePreview = NOTE_CONTENT)
-            val givenClasses = listOf<Any>(
-                classes2WithContent,
-                LunchItem,
-                CLASSES_3
-            )
-            Then("Check withNotePreview() content") {
-                givenClasses.withNotePreview().shouldContainExactly(
-                    classes2WithContent,
-                    NotePreview(NOTE_CONTENT, classes2WithContent),
-                    LunchItem,
-                    CLASSES_3
-                )
-            }
-        }
-        When("Two classes, one note, window between classes") {
-            val classes1WithContent = CLASSES_1.copy(attachedNotePreview = NOTE_CONTENT)
-            val givenClasses = listOf<Any>(
-                classes1WithContent,
-                WindowItem(TIME.start, TIME.end),
-                CLASSES_3
-            )
-            Then("Check withNotePreview() content") {
-                givenClasses.withNotePreview().shouldContainExactly(
-                    classes1WithContent,
-                    NotePreview(NOTE_CONTENT, classes1WithContent),
-                    WindowItem(TIME.start, TIME.end),
-                    CLASSES_3
-                )
-            }
-        }
-        When("Three classes, two notes, lunch item, window item") {
-            val classes2WithContent = CLASSES_2.copy(attachedNotePreview = NOTE_CONTENT)
-            val classes5WithContent = CLASSES_5.copy(attachedNotePreview = NOTE_CONTENT)
-            val givenClasses = listOf<Any>(
-                classes2WithContent,
-                LunchItem,
-                CLASSES_3,
-                WindowItem(TIME.start, TIME.end),
-                classes5WithContent
-            )
-            Then("Check withNotePreview() content") {
-                givenClasses.withNotePreview().shouldContainExactly(
-                    classes2WithContent,
-                    NotePreview(NOTE_CONTENT, classes2WithContent),
-                    LunchItem,
-                    CLASSES_3,
-                    WindowItem(TIME.start, TIME.end),
-                    classes5WithContent,
-                    NotePreview(NOTE_CONTENT, classes5WithContent),
-                )
-            }
-        }
-    }
     Given("Lunch insertion") {
         When("First and second classes") {
             val givenClasses = listOf<Any>(CLASSES_1, CLASSES_2)
@@ -242,7 +170,6 @@ class ConvertersExtTest : BehaviorSpec({
     private companion object {
 
         private val TIME = Time(LocalTime.of(12, 45), LocalTime.of(13, 45))
-        private const val NOTE_CONTENT = "blah blah blah"
         private val CLASSES_1 = Classes(
             name = "one", number = 1,
             time = Time(LocalTime.of(9, 20), LocalTime.of(10, 55)),

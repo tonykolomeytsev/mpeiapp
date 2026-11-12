@@ -27,12 +27,13 @@ sealed interface UpcomingEventsPrediction {
     ) : UpcomingEventsPrediction
 
     /**
-     * @param inProgressClasses Classes that have already begun
+     * @param inProgressClasses Classes that have already begun, may contain several parallel
+     * classes (e.g. labs of different subgroups), never empty
      * @param inProgressFactor Progress value between `0.0` and `1.0` (0% - 100%)
      * @param futureClasses Next classes after [inProgressClasses] classes
      */
     data class ClassesTodayStarted(
-        val inProgressClasses: Classes,
+        val inProgressClasses: List<Classes>,
         val inProgressFactor: Float,
         val futureClasses: List<Classes>,
     ) : UpcomingEventsPrediction

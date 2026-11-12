@@ -3,13 +3,15 @@ package kekmech.ru.feature_schedule_impl.presentation.screen.main.elm
 import kekmech.ru.ext_kotlin.moscowLocalDate
 import kekmech.ru.feature_app_settings_api.domain.model.AppSettings
 import kekmech.ru.feature_schedule_api.domain.model.Schedule
+import kekmech.ru.feature_schedule_api.domain.model.ScheduleKey
+import kekmech.ru.feature_schedule_api.domain.model.ScheduleResource
 import java.time.LocalDate
 
-private const val SCHEDULE_RAM_CACHE_CAPACITY = 5
-
 internal data class ScheduleState(
-    val schedule: Map<Int, Schedule> = LinkedHashMap(SCHEDULE_RAM_CACHE_CAPACITY),
-    val loadingError: Throwable? = null,
+    /** Cached state of each observed week by its week offset */
+    val schedule: Map<Int, ScheduleResource> = emptyMap(),
+    /** Unexpected failures of week subscriptions by week offset */
+    val observeErrors: Map<Int, Throwable> = emptyMap(),
 
     // region settings
     val weekOffset: Int = 0,
@@ -24,13 +26,22 @@ internal data class ScheduleState(
      * Get weekOfSemester number by weekOffset
      */
     val weekOfSemester
-        get() = schedule[weekOffset]?.weeks?.firstOrNull()?.weekOfSemester
+        get() = selectedSchedule?.weeks?.firstOrNull()?.weekOfSemester
 
-    val selectedSchedule get() = schedule[weekOffset]
+    val selectedResource: ScheduleResource? get() = schedule[weekOffset]
+
+    val selectedSchedule: Schedule? get() = selectedResource?.value
 
     val isOnCurrentWeek get() = weekOffset == 0
 
+    /** Nothing to show for the selected week because it failed to load */
+    val loadingError: Throwable?
+        get() = observeErrors[weekOffset] ?: selectedResource?.error
+
     val isAfterError get() = loadingError != null
+
+    /** The selected week is shown from the cache because it couldn't be updated */
+    val isShowingSavedSchedule get() = selectedResource?.isSavedAfterFailedRefresh == true
 }
 
 internal sealed interface ScheduleEvent {
@@ -53,12 +64,13 @@ internal sealed interface ScheduleEvent {
 
             object FAB : Ui
             object Reload : Ui
+            object SavedScheduleBanner : Ui
         }
     }
 
     sealed interface Internal : ScheduleEvent {
-        data class LoadScheduleSuccess(val weekOffset: Int, val schedule: Schedule) : Internal
-        data class LoadScheduleFailure(val throwable: Throwable) : Internal
+        data class ScheduleUpdated(val weekOffset: Int, val resource: ScheduleResource) : Internal
+        data class ObserveScheduleFailure(val weekOffset: Int, val throwable: Throwable) : Internal
     }
 }
 
@@ -70,5 +82,12 @@ internal sealed interface ScheduleEffect {
 }
 
 internal sealed interface ScheduleCommand {
-    data class LoadSchedule(val weekOffset: Int) : ScheduleCommand
+    /**
+     * Subscribe to the week of the selected schedule. Repeating the command restarts the
+     * subscription: notes are attached again and the week is refreshed if it's stale.
+     */
+    data class ObserveSchedule(val weekOffset: Int) : ScheduleCommand
+
+    /** Download the week now, the result arrives through [ObserveSchedule] */
+    data class RefreshSchedule(val key: ScheduleKey) : ScheduleCommand
 }

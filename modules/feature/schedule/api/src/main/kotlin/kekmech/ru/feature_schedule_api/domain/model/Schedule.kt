@@ -47,9 +47,11 @@ public data class Classes(
     // for ui purposes
     /**
      * Mutated in place by `AttachNotesToScheduleService`. Used only by the RecyclerView items,
-     * don't use it in the new code: pass the note to the `ClassesUiModel` explicitly.
+     * don't use it in the new code: pass the note to the `toUiModel` explicitly.
      */
+    @Deprecated("Do not use in new code")
     var attachedNotePreview: String? = null,
+    @Deprecated("Do not use in new code")
     val progress: Float? = null,
 ) : Serializable {
 

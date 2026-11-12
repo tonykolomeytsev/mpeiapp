@@ -1,7 +1,5 @@
 package kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm
 
-import com.google.firebase.crashlytics.FirebaseCrashlytics
-import com.google.firebase.crashlytics.recordException
 import kekmech.ru.ext_kotlin.moscowLocalDate
 import kekmech.ru.feature_dashboard_impl.domain.model.UpcomingEventsPrediction
 import kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm.DashboardEvent.Internal
@@ -24,23 +22,26 @@ internal class DashboardReducer :
     override fun Result.internal(event: Internal) {
         when (event) {
             is Internal.GetSelectedScheduleSuccess -> {
+                // notes belong to the schedule, reload them if another schedule was selected
+                if (event.selectedSchedule != state.selectedSchedule) {
+                    commands { +Command.GetActualNotes }
+                }
                 state { copy(selectedSchedule = event.selectedSchedule) }
             }
 
-            is Internal.GetWeekOfSemesterSuccess -> {
-                state { copy(weekOfSemester = event.weekOfSemester.toResource()) }
+            is Internal.ScheduleUpdated -> state {
+                copy(
+                    weekOfSemester = event.weekOfSemester,
+                    upcomingEvents = event.upcomingEvents,
+                )
             }
 
-            is Internal.GetWeekOfSemesterFailure -> {
-                state { copy(weekOfSemester = event.throwable.toResource()) }
-            }
-
-            is Internal.GetUpcomingEventsSuccess -> {
-                state { copy(upcomingEvents = event.upcomingEvents.toResource()) }
-            }
-
-            is Internal.GetUpcomingEventsFailure -> {
-                state { copy(upcomingEvents = event.throwable.toResource()) }
+            is Internal.RefreshScheduleFinished -> {
+                state { copy(isRefreshingSchedule = false) }
+                // without a saved schedule the error is already shown instead of the events
+                if (event.error != null && state.upcomingEvents.isData) {
+                    effects { +Effect.ShowLoadingError }
+                }
             }
 
             is Internal.GetActualNotesSuccess -> {
@@ -59,14 +60,29 @@ internal class DashboardReducer :
                 state { copy(favoriteSchedules = event.throwable.toResource()) }
             }
 
-            is Internal.SelectScheduleSuccess -> refreshCommands()
+            is Internal.SelectScheduleSuccess -> updateCommands()
+            is Internal.GetWhatsNewBannerVisibilitySuccess -> state {
+                copy(isWhatsNewBannerVisible = event.isVisible)
+            }
         }
     }
 
     override fun Result.ui(event: Ui) {
         when (event) {
-            is Ui.Init -> refreshCommands()
-            is Ui.Action.SwipeToRefresh -> refreshCommands()
+            is Ui.Init -> commands {
+                +Command.ObserveSelectedSchedule
+                +Command.ObserveSchedule
+                +Command.GetActualNotes
+                +Command.GetFavoriteSchedules
+                +Command.GetWhatsNewBannerVisibility
+            }
+
+            is Ui.Action.SwipeToRefresh -> {
+                state { copy(isRefreshingSchedule = true) }
+                commands { +Command.RefreshSchedule }
+                updateCommands()
+            }
+
             is Ui.Click.ClassesItem -> effects {
                 val shownDay =
                     when (val events = state.upcomingEvents.value) {
@@ -80,7 +96,12 @@ internal class DashboardReducer :
                 shownDay?.let { +Effect.NavigateToNotesList(event.classes, it) }
             }
 
-            is Ui.Action.SilentUpdate -> refreshCommands()
+            is Ui.Click.WhatsNewBannerDismiss -> {
+                state { copy(isWhatsNewBannerVisible = false) }
+                commands { +Command.DismissWhatsNewBanner }
+            }
+
+            is Ui.Action.SilentUpdate -> updateCommands()
             is Ui.Action.SelectFavoriteSchedule -> {
                 state {
                     copy(
@@ -100,11 +121,10 @@ internal class DashboardReducer :
         }
     }
 
-    private fun Result.refreshCommands() {
+    /** Re-read everything local, the schedule is refreshed only if it's stale */
+    private fun Result.updateCommands() {
         commands {
-            +Command.GetSelectedSchedule
-            +Command.GetWeekOfSemester
-            +Command.GetUpcomingEvents
+            +Command.ObserveSchedule
             +Command.GetActualNotes
             +Command.GetFavoriteSchedules
         }

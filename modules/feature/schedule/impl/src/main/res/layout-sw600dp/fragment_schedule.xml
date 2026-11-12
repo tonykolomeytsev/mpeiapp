@@ -56,8 +56,8 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/viewPager"
+    <androidx.compose.ui.platform.ComposeView
+            android:id="@+id/daysPager"
             android:layout_width="@dimen/tablet_frame_width"
             android:layout_height="0dp"
             android:background="?attr/colorWhite"
