@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.sp
 import kekmech.ru.ui_theme.theme.MpeixTheme
 import kekmech.ru.res_strings.R.string as Strings
 
-private val TimeColumnWidth = 80.dp
+private val TimeColumnWidth = 76.dp
 private val ItemShape = RoundedCornerShape(12.dp)
 
 /**

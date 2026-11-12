@@ -271,9 +271,13 @@ private val PreviewPages = listOf(
             PreviewClasses.copy(
                 name = "Физика",
                 type = ClassesType.LAB,
+                place = "Аудитория Е-306",
+                groups = "С-12-16\\1п",
                 number = 5,
                 time = Time(LocalTime.of(16, 20), LocalTime.of(17, 55)),
-            ).let { ScheduleDayItem.ClassesEntry(4, it, it.toUiModel(ScheduleType.GROUP)) },
+            ).let { lab ->
+                listOf(lab, lab.copy(place = "Аудитория Е-308", groups = "С-12-16\\2п", person = "Иванов И.И."))
+            }.let { ScheduleDayItem.ClassesEntry(4, it.first(), it.toUiModel(ScheduleType.GROUP)) },
         ),
     ),
     ScheduleDayPage(dayOfWeek = 2, items = listOf(ScheduleDayItem.SelfStudy)),

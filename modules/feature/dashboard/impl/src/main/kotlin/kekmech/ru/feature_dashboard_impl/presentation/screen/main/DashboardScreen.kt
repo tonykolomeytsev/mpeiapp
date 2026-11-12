@@ -256,7 +256,7 @@ private val PreviewState = DashboardState(
     selectedSchedule = SelectedSchedule(name = "С-12-16", type = ScheduleType.GROUP),
     weekOfSemester = WeekOfSemester.Studying(12).toResource(),
     upcomingEvents = UpcomingEventsPrediction.ClassesTodayStarted(
-        inProgressClasses = PreviewClasses,
+        inProgressClasses = listOf(PreviewClasses),
         inProgressFactor = 0.4f,
         futureClasses = listOf(
             PreviewClasses.copy(
@@ -264,6 +264,23 @@ private val PreviewState = DashboardState(
                 type = ClassesType.PRACTICE,
                 number = 2,
                 time = Time(LocalTime.of(11, 10), LocalTime.of(12, 45)),
+            ),
+            PreviewClasses.copy(
+                name = "Электротехническое материаловедение",
+                type = ClassesType.LAB,
+                place = "Аудитория Е-306",
+                groups = "С-12-16\\1п",
+                number = 3,
+                time = Time(LocalTime.of(13, 45), LocalTime.of(15, 20)),
+            ),
+            PreviewClasses.copy(
+                name = "Электротехническое материаловедение",
+                type = ClassesType.LAB,
+                place = "Аудитория Е-308",
+                groups = "С-12-16\\2п",
+                person = "Иванов И.И.",
+                number = 3,
+                time = Time(LocalTime.of(13, 45), LocalTime.of(15, 20)),
             ),
         ),
     ).toResource(),

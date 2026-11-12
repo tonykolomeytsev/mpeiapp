@@ -10,6 +10,7 @@ import kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm.DashboardS
 import kekmech.ru.feature_dashboard_impl.presentation.screen.main.helpers.TimeDeclensionHelper
 import kekmech.ru.feature_schedule_api.domain.model.Classes
 import kekmech.ru.feature_schedule_api.domain.model.ScheduleType
+import kekmech.ru.feature_schedule_ui.compose.groupParallelClasses
 import kekmech.ru.feature_schedule_ui.compose.toUiModel
 import kekmech.ru.lib_elm.Resource
 import kotlin.time.Duration
@@ -95,17 +96,12 @@ internal class UpcomingEventsListConverter(
         prediction: UpcomingEventsPrediction.ClassesTodayStarted,
     ) {
         addEventsHeader(dayOffset = 0)
-        add(
-            DashboardListItem.ClassesEntry(
-                index = 0,
-                classes = prediction.inProgressClasses,
-                model = prediction.inProgressClasses.toUiModel(
-                    scheduleType = selectedScheduleType,
-                    progress = prediction.inProgressFactor,
-                ),
-            )
+        addClasses(
+            classes = prediction.inProgressClasses,
+            scheduleType = selectedScheduleType,
+            progress = prediction.inProgressFactor,
         )
-        addClasses(prediction.futureClasses, selectedScheduleType, firstIndex = 1)
+        addClasses(prediction.futureClasses, selectedScheduleType)
     }
 
     private fun MutableList<DashboardListItem>.addClassesInNDays(
@@ -133,17 +129,28 @@ internal class UpcomingEventsListConverter(
         }
     }
 
+    /**
+     * Adds the [classes] as cards, parallel classes (e.g. labs of different subgroups)
+     * are merged into a single card.
+     *
+     * @param progress progress of the classes, if they are in progress
+     */
     private fun MutableList<DashboardListItem>.addClasses(
         classes: List<Classes>,
         scheduleType: ScheduleType,
-        firstIndex: Int = 0,
+        progress: Float? = null,
     ) {
-        classes.forEachIndexed { i, cls ->
+        val firstIndex = count { it is DashboardListItem.ClassesEntry }
+        classes.groupParallelClasses().forEachIndexed { i, parallelClasses ->
             add(
                 DashboardListItem.ClassesEntry(
                     index = firstIndex + i,
-                    classes = cls,
-                    model = cls.toUiModel(scheduleType),
+                    // Notes are attached by the classes name and time, so the first is used for clicks
+                    classes = parallelClasses.first(),
+                    model = parallelClasses.toUiModel(
+                        scheduleType = scheduleType,
+                        progress = progress,
+                    ),
                 )
             )
         }

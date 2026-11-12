@@ -2,7 +2,7 @@ package kekmech.ru.feature_schedule_impl.presentation.screen.main.compose
 
 import androidx.compose.runtime.Immutable
 import kekmech.ru.feature_schedule_api.domain.model.Classes
-import kekmech.ru.feature_schedule_ui.compose.ClassesUiModel
+import kekmech.ru.feature_schedule_ui.compose.ParallelClassesUi
 
 /**
  * Single page of the [ScheduleDaysPager]: the list of the one working day.
@@ -30,7 +30,7 @@ internal sealed interface ScheduleDayItem {
     data class ClassesEntry(
         val index: Int,
         val classes: Classes,
-        val model: ClassesUiModel,
+        val model: ParallelClassesUi,
     ) : ScheduleDayItem {
         // Classes with the same name may follow each other, so the index is used
         override val key: String get() = "classes_$index"

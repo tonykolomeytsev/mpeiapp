@@ -6,7 +6,7 @@ import kekmech.ru.feature_favorite_schedule_api.domain.model.FavoriteSchedule
 import kekmech.ru.feature_notes_api.domain.model.Note
 import kekmech.ru.feature_schedule_api.domain.model.Classes
 import kekmech.ru.feature_schedule_api.domain.model.ScheduleType
-import kekmech.ru.feature_schedule_ui.compose.ClassesUiModel
+import kekmech.ru.feature_schedule_ui.compose.ParallelClassesUi
 
 /**
  * Items of the [DashboardScreen] list, created by the [DashboardListConverter]
@@ -69,7 +69,7 @@ internal sealed interface DashboardListItem {
     data class ClassesEntry(
         val index: Int,
         val classes: Classes,
-        val model: ClassesUiModel,
+        val model: ParallelClassesUi,
     ) : DashboardListItem {
         // Classes with the same name may follow each other, so the index is used
         override val key: String get() = "classes_$index"

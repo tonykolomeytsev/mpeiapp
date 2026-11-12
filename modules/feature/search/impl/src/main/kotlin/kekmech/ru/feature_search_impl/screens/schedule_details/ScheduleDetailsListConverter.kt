@@ -10,9 +10,11 @@ import android.text.style.StyleSpan
 import androidx.annotation.StringRes
 import kekmech.ru.coreui.items.*
 import kekmech.ru.ext_android.getThemeColor
+import kekmech.ru.feature_schedule_ui.compose.groupParallelClasses
 import kekmech.ru.feature_schedule_ui.items.DayItem
 import kekmech.ru.feature_search_impl.R
 import kekmech.ru.feature_search_impl.item.ButtonItem
+import kekmech.ru.feature_search_impl.item.ParallelClassesItem
 import kekmech.ru.feature_search_impl.item.WeekMinItem
 import kekmech.ru.feature_search_impl.screens.schedule_details.elm.ScheduleDetailsState
 import kekmech.ru.coreui.R as coreui_R
@@ -77,7 +79,7 @@ internal object ScheduleDetailsListConverter {
                 if (classes.isNullOrEmpty()) {
                     add(classesEmptyStateItem)
                 } else {
-                    addAll(classes)
+                    addAll(classes.groupParallelClasses().map(::ParallelClassesItem))
                 }
             } else {
                 add(classesShimmerItem)

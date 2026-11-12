@@ -76,10 +76,11 @@ internal class GetUpcomingEventsInteractor(
 
         return if (actualDayIsCurrentDay) {
             // today we can have classes in progress or only future classes
+            // there may be several parallel classes in progress, e.g. labs of different subgroups
             val inProgressClasses = actualDay
                 .classes
-                .find { cls -> currentTime in cls.time.start..cls.time.end }
-            if (inProgressClasses != null) {
+                .filter { cls -> currentTime in cls.time.start..cls.time.end }
+            if (inProgressClasses.isNotEmpty()) {
                 predictClassesTodayStarted(actualDay, currentTime, inProgressClasses)
             } else {
                 predictClassesTodayNotStarted(actualDay, currentTime)
@@ -133,14 +134,14 @@ internal class GetUpcomingEventsInteractor(
     private fun predictClassesTodayStarted(
         actualDay: Day,
         currentTime: LocalTime,
-        inProgressClasses: Classes,
+        inProgressClasses: List<Classes>,
     ): UpcomingEventsPrediction.ClassesTodayStarted {
         // we have classes in progress
         val restOfFutureClasses = actualDay
             .classes
             .filter { cls -> cls.time.start > currentTime }
         // calculate progress factor
-        val time = inProgressClasses.time
+        val time = inProgressClasses.first().time
         val classesDuration = time.start.until(time.end, ChronoUnit.SECONDS)
         val elapsedTime = time.start.until(currentTime, ChronoUnit.SECONDS)
         return UpcomingEventsPrediction.ClassesTodayStarted(
