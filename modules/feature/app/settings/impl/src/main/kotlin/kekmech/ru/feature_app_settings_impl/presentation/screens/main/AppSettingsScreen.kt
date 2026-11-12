@@ -40,6 +40,8 @@ private const val LanguageCodeEnglish = "en_US"
 private const val MapTypeHybrid = "hybrid"
 private const val MapTypeScheme = "scheme"
 private const val GitHubLabel = "github.com/tonykolomeytsev/mpeiapp"
+private const val SupportEmail = "antonkolomeytsev@gmail.com"
+private const val TelegramLabel = "t.me/tonykolomeytsev"
 
 /**
  * User intentions on the settings screen.
@@ -56,6 +58,8 @@ internal sealed interface AppSettingsAction {
     data object FavoritesClick : AppSettingsAction
     data object BarsLogoutClick : AppSettingsAction
     data object GitHubClick : AppSettingsAction
+    data class EmailClick(val email: String) : AppSettingsAction
+    data object TelegramClick : AppSettingsAction
     data class ContributorClick(val contributor: Contributor) : AppSettingsAction
 }
 
@@ -214,6 +218,20 @@ private fun LazyListScope.settingsItems(
             headlineText = stringResource(Strings.app_settings_section_github),
             supportingText = GitHubLabel,
             modifier = Modifier.clickable { onAction(AppSettingsAction.GitHubClick) },
+        )
+    }
+    item {
+        ListItem(
+            headlineText = stringResource(Strings.app_settings_section_email),
+            supportingText = SupportEmail,
+            modifier = Modifier.clickable { onAction(AppSettingsAction.EmailClick(SupportEmail)) },
+        )
+    }
+    item {
+        ListItem(
+            headlineText = stringResource(Strings.app_settings_section_telegram),
+            supportingText = TelegramLabel,
+            modifier = Modifier.clickable { onAction(AppSettingsAction.TelegramClick) },
         )
     }
 }

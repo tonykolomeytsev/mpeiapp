@@ -241,6 +241,8 @@
     <string name="app_settings_header_bars">BARS</string>
     <string name="app_settings_header_support">Support</string>
     <string name="app_settings_section_github">Create an Issue or Pull Request</string>
+    <string name="app_settings_section_email">Send an email</string>
+    <string name="app_settings_section_telegram">Text me in Telegram</string>
     <string name="app_settings_header_contributors">Contributors</string>
     <string name="app_settings_section_lang">App language</string>
     <string name="app_settings_section_lang_description">Sometimes after changing the language, you need to restart the application</string>

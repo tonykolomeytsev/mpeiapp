@@ -241,6 +241,8 @@
     <string name="app_settings_header_bars">БАРС</string>
     <string name="app_settings_header_support">Поддержка</string>
     <string name="app_settings_section_github">Завести Issue или Pull Request</string>
+    <string name="app_settings_section_email">Написать на почту</string>
+    <string name="app_settings_section_telegram">Написать в Telegram</string>
     <string name="app_settings_header_contributors">Контрибьюторы</string>
     <string name="app_settings_section_lang">Язык приложения</string>
     <string name="app_settings_section_lang_description">Иногда после смены языка требуется перезапустить приложение</string>

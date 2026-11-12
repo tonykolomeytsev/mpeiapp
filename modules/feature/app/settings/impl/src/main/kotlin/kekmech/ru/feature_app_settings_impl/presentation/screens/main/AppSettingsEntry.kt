@@ -31,6 +31,7 @@ import org.koin.compose.koinInject
 
 private const val ACTIVITY_RECREATION_DELAY = 200L
 private const val LINK_GITHUB = "https://github.com/tonykolomeytsev/mpeiapp"
+private const val LINK_TELEGRAM = "https://t.me/tonykolomeytsev"
 private const val LANGUAGE_RESULT_KEY = "LANGUAGE_RESULT_KEY"
 private const val MAP_TYPE_RESULT_KEY = "MAP_TYPE_RESULT_KEY"
 
@@ -112,6 +113,16 @@ private fun handleAction(
         is AppSettingsAction.GitHubClick -> {
             analytics.sendClick("GitHub")
             context.openLinkExternal(LINK_GITHUB)
+        }
+
+        is AppSettingsAction.EmailClick -> {
+            analytics.sendClick("Email")
+            context.openLinkExternal("mailto:${action.email}")
+        }
+
+        is AppSettingsAction.TelegramClick -> {
+            analytics.sendClick("Telegram")
+            context.openLinkExternal(LINK_TELEGRAM)
         }
 
         is AppSettingsAction.FavoritesClick -> {
