@@ -1,6 +1,7 @@
 package kekmech.ru.feature_dashboard_impl.di
 
 import kekmech.ru.ext_koin.bindIntoList
+import kekmech.ru.feature_dashboard_impl.data.repository.WhatsNewBannerRepository
 import kekmech.ru.feature_dashboard_impl.domain.interactor.GetUpcomingEventsInteractor
 import kekmech.ru.feature_dashboard_impl.navigation.DashboardNavEntries
 import kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm.DashboardActor
@@ -18,5 +19,6 @@ val FeatureDashboardModule = module {
     factoryOf(::DashboardReducer)
     factoryOf(::DashboardActor)
     factoryOf(::GetUpcomingEventsInteractor)
+    factoryOf(::WhatsNewBannerRepository)
     factoryOf(::DashboardNavEntries) bindIntoList NavEntries::class
 }

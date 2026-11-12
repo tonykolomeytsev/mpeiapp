@@ -61,6 +61,9 @@ internal class DashboardReducer :
             }
 
             is Internal.SelectScheduleSuccess -> updateCommands()
+            is Internal.GetWhatsNewBannerVisibilitySuccess -> state {
+                copy(isWhatsNewBannerVisible = event.isVisible)
+            }
         }
     }
 
@@ -71,6 +74,7 @@ internal class DashboardReducer :
                 +Command.ObserveSchedule
                 +Command.GetActualNotes
                 +Command.GetFavoriteSchedules
+                +Command.GetWhatsNewBannerVisibility
             }
 
             is Ui.Action.SwipeToRefresh -> {
@@ -90,6 +94,11 @@ internal class DashboardReducer :
                         else -> null
                     }
                 shownDay?.let { +Effect.NavigateToNotesList(event.classes, it) }
+            }
+
+            is Ui.Click.WhatsNewBannerDismiss -> {
+                state { copy(isWhatsNewBannerVisible = false) }
+                commands { +Command.DismissWhatsNewBanner }
             }
 
             is Ui.Action.SilentUpdate -> updateCommands()

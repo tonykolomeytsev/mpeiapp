@@ -1,6 +1,7 @@
 package kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm
 
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import kekmech.ru.feature_dashboard_impl.data.repository.WhatsNewBannerRepository
 import kekmech.ru.feature_dashboard_impl.domain.interactor.GetUpcomingEventsInteractor
 import kekmech.ru.feature_dashboard_impl.domain.model.UpcomingEventsPrediction
 import kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm.DashboardEvent.Internal
@@ -33,6 +34,7 @@ internal class DashboardActor(
     private val favoriteScheduleRepository: FavoriteScheduleRepository,
     private val getUpcomingEventsInteractor: GetUpcomingEventsInteractor,
     private val getActualNotesInteractor: GetActualNotesInteractor,
+    private val whatsNewBannerRepository: WhatsNewBannerRepository,
 ) : Actor<Command, Event>() {
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -106,6 +108,14 @@ internal class DashboardActor(
             is Command.SelectSchedule -> actorFlow {
                 scheduleRepository.setSelectedSchedule(command.selectedSchedule)
             }.mapEvents({ Internal.SelectScheduleSuccess })
+
+            is Command.GetWhatsNewBannerVisibility -> actorFlow {
+                whatsNewBannerRepository.isBannerVisible()
+            }.mapEvents(Internal::GetWhatsNewBannerVisibilitySuccess)
+
+            is Command.DismissWhatsNewBanner -> actorFlow {
+                whatsNewBannerRepository.dismissBanner()
+            }.mapEvents()
         }
 
     private fun ScheduleResource.toWeekOfSemester(): Resource<WeekOfSemester> {

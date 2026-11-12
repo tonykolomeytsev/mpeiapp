@@ -13,6 +13,8 @@ internal sealed interface DashboardAction {
     data object SearchClick : DashboardAction
     data object ChangeScheduleClick : DashboardAction
     data object LunchBannerClick : DashboardAction
+    data object WhatsNewBannerClick : DashboardAction
+    data object WhatsNewBannerDismissClick : DashboardAction
     data object ShowAllNotesClick : DashboardAction
     data object SetUpFavoritesClick : DashboardAction
     data object ListScrolled : DashboardAction

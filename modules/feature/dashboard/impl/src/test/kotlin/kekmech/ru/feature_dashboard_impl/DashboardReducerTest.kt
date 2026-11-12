@@ -42,7 +42,21 @@ internal class DashboardReducerTest : BehaviorSpec({
                     DashboardCommand.ObserveSchedule,
                     DashboardCommand.GetActualNotes,
                     DashboardCommand.GetFavoriteSchedules,
+                    DashboardCommand.GetWhatsNewBannerVisibility,
                 )
+            }
+        }
+        When("Internal.GetWhatsNewBannerVisibilitySuccess") {
+            val (state, effects, commands) = reducer
+                .reduce(Internal.GetWhatsNewBannerVisibilitySuccess(isVisible = true), givenState)
+            Then("Show the banner") {
+                state.isWhatsNewBannerVisible.shouldBeTrue()
+            }
+            Then("No effects") {
+                effects.shouldBeEmpty()
+            }
+            Then("No commands") {
+                commands.shouldBeEmpty()
             }
         }
         When("Internal.GetSelectedScheduleSuccess (another schedule)") {
@@ -253,6 +267,22 @@ internal class DashboardReducerTest : BehaviorSpec({
             }
             Then("No commands") {
                 commands.shouldBeEmpty()
+            }
+        }
+    }
+
+    Given("The \"What's new\" banner is visible") {
+        val givenState = STATE.copy(isWhatsNewBannerVisible = true)
+        When("Ui.Click.WhatsNewBannerDismiss") {
+            val (state, effects, commands) = reducer.reduce(Ui.Click.WhatsNewBannerDismiss, givenState)
+            Then("Hide the banner") {
+                state.isWhatsNewBannerVisible.shouldBeFalse()
+            }
+            Then("No effects") {
+                effects.shouldBeEmpty()
+            }
+            Then("Remember that the banner was dismissed") {
+                commands.shouldContainExactly(DashboardCommand.DismissWhatsNewBanner)
             }
         }
     }

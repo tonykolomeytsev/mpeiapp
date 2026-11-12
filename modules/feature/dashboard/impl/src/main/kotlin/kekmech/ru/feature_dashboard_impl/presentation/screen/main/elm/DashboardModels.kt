@@ -19,6 +19,8 @@ internal data class DashboardState(
     val favoriteSchedules: Resource<List<FavoriteSchedule>> = Resource.Loading,
     /** The user pulled to refresh and the schedule is being downloaded */
     val isRefreshingSchedule: Boolean = false,
+    /** The "What's new" banner is shown until the user dismisses it */
+    val isWhatsNewBannerVisible: Boolean = false,
 ) {
 
     val isLoading: Boolean =
@@ -44,6 +46,7 @@ internal sealed interface DashboardEvent {
 
         object Click {
             data class ClassesItem(val classes: Classes) : Ui
+            object WhatsNewBannerDismiss : Ui
         }
     }
 
@@ -61,6 +64,7 @@ internal sealed interface DashboardEvent {
         data class GetFavoriteSchedulesSuccess(val favorites: List<FavoriteSchedule>) : Internal
         data class GetFavoriteSchedulesFailure(val throwable: Throwable) : Internal
         object SelectScheduleSuccess : Internal
+        data class GetWhatsNewBannerVisibilitySuccess(val isVisible: Boolean) : Internal
     }
 }
 
@@ -84,4 +88,6 @@ internal sealed interface DashboardCommand {
     object GetActualNotes : DashboardCommand
     object GetFavoriteSchedules : DashboardCommand
     data class SelectSchedule(val selectedSchedule: SelectedSchedule) : DashboardCommand
+    object GetWhatsNewBannerVisibility : DashboardCommand
+    object DismissWhatsNewBanner : DashboardCommand
 }

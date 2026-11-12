@@ -33,6 +33,10 @@ internal sealed interface DashboardListItem {
         override val key: String get() = "selected_schedule"
     }
 
+    data object WhatsNewBanner : DashboardListItem {
+        override val key: String get() = "whats_new_banner"
+    }
+
     data object LunchBanner : DashboardListItem {
         override val key: String get() = "lunch_banner"
     }
