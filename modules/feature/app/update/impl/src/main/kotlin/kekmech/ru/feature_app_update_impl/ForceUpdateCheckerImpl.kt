@@ -10,11 +10,11 @@ import kekmech.ru.feature_app_update_api.ForceUpdateChecker.Companion.KEY_UPDATE
 import kekmech.ru.feature_app_update_impl.domain.models.AppVersion
 import kekmech.ru.feature_app_update_impl.domain.models.ForceUpdateInfo
 import kekmech.ru.feature_app_update_impl.navigation.BlockingUpdateScreenKey
-import kekmech.ru.feature_app_update_impl.presentation.ForceUpdateFragment
+import kekmech.ru.feature_app_update_impl.navigation.ForceUpdateScreenKey
 import kekmech.ru.lib_app_info.AppVersionName
+import kekmech.ru.lib_navigation.AddScreenForward
 import kekmech.ru.lib_navigation.NewRoot
 import kekmech.ru.lib_navigation.Router
-import kekmech.ru.lib_navigation.ShowDialog
 
 internal class ForceUpdateCheckerImpl(
     private val router: Router,
@@ -40,9 +40,7 @@ internal class ForceUpdateCheckerImpl(
         if (appVersion < minRequiredVersion) {
             router.executeCommand(NewRoot(BlockingUpdateScreenKey(forceUpdateInfo)))
         } else if (forceUpdateInfo.isUpdateRequired) {
-            router.executeCommand(ShowDialog {
-                ForceUpdateFragment.newInstance(forceUpdateInfo)
-            })
+            router.executeCommand(AddScreenForward(ForceUpdateScreenKey(forceUpdateInfo)))
         }
     }
 }

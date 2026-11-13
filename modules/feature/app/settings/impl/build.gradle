@@ -12,7 +12,6 @@ dependencies {
     testImplementation(libs.kotest.runner)
 
     implementation(libs.coil.compose)
-    implementation(libs.google.material)
     implementation(libs.compose.material3)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.koin.android)

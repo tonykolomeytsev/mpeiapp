@@ -18,15 +18,14 @@ import kekmech.ru.ui_theme.theme.MpeixTheme
 
 /**
  * Фон шторки: скругленные верхние углы, drag handle и отступ под navigation bar.
- * Используется как корневой элемент экрана внутри `ComposeBottomSheetDialogFragment`.
+ * Используется как корневой элемент экрана, зарегистрированного через
+ * `bottomSheetEntry(isBare = true)`: такая шторка не рисует свой фон и drag handle.
  *
  * ### Пример использования
  * ```kotlin
- * override fun Screen() {
- *     MpeixTheme {
- *         BottomSheet {
- *             Text("Hello")
- *         }
+ * bottomSheetEntry<MyScreenKey>(isBare = true) {
+ *     BottomSheet {
+ *         Text("Hello")
  *     }
  * }
  * ```

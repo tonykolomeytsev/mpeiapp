@@ -4,11 +4,10 @@ import kekmech.ru.feature_notes_api.NotesFeatureLauncher
 import kekmech.ru.feature_notes_api.domain.model.Note
 import kekmech.ru.feature_notes_impl.navigation.AllNotesScreenKey
 import kekmech.ru.feature_notes_impl.navigation.NoteEditScreenKey
-import kekmech.ru.feature_notes_impl.presentation.screen.note_list.NoteListFragment
+import kekmech.ru.feature_notes_impl.navigation.NoteListScreenKey
 import kekmech.ru.feature_schedule_api.domain.model.Classes
 import kekmech.ru.lib_navigation.AddScreenForward
 import kekmech.ru.lib_navigation.Router
-import kekmech.ru.lib_navigation.ShowDialog
 import java.time.LocalDate
 
 internal class NotesFeatureLauncherImpl(
@@ -21,9 +20,7 @@ internal class NotesFeatureLauncherImpl(
         resultKey: String,
     ) {
         router.executeCommand(
-            ShowDialog {
-                NoteListFragment.newInstance(selectedClasses, selectedDate, resultKey)
-            }
+            AddScreenForward(NoteListScreenKey(selectedClasses, selectedDate, resultKey))
         )
     }
 

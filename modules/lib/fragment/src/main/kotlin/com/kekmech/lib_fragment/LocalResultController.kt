@@ -1,7 +1,5 @@
 package com.kekmech.lib_fragment
 
-import android.os.Handler
-import android.os.Looper
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.ProvidableCompositionLocal
@@ -9,12 +7,6 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.staticCompositionLocalOf
-import androidx.core.os.BundleCompat
-import androidx.core.os.bundleOf
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.setFragmentResult
-import androidx.lifecycle.Lifecycle
 import java.io.Serializable
 import kotlin.reflect.KClass
 
@@ -50,7 +42,7 @@ public interface ResultController {
 
     /**
      * Подписаться на получение результата другого экрана.
-     * Подписка не переживает пересоздание фрагмента, поэтому в большинстве случаев
+     * Подписка не переживает пересоздание экрана, поэтому в большинстве случаев
      * удобнее использовать [ResultListener].
      *
      * ### Пример использования
@@ -182,46 +174,3 @@ public fun <T : Serializable> ResultListener(
  */
 public val LocalResultController: ProvidableCompositionLocal<ResultController> =
     staticCompositionLocalOf { error("No LocalResultController provided!") }
-
-internal class FragmentResultController(
-    private val fragment: Fragment,
-) : ResultController {
-
-    // Диалоги показываются в FragmentManager'е активити, через него же результатами
-    // обмениваются экраны NavDisplay (см. NavEntryResultController)
-    private val listenerFragmentManager: FragmentManager
-        get() = fragment.parentFragmentManager
-
-    override fun <T : Serializable> setResultListener(
-        requestKey: String,
-        resultClass: KClass<T>,
-        listener: (T) -> Unit,
-    ) {
-        // Lifecycle owner'ом всегда остается текущий фрагмент, чтобы подписка
-        // не пережила экран, который ее создал
-        listenerFragmentManager.setFragmentResultListener(requestKey, fragment) { _, bundle ->
-            val result = BundleCompat.getSerializable(bundle, requestKey, resultClass.javaObjectType)
-                ?: return@setFragmentResultListener
-            // Для случаев, когда внутри result listener'а сразу хотим куда-то навигироваться.
-            // Если запустить транзакцию fragment manager'а прямо здесь, то приложение упадет,
-            // поэтому добавляем вызов колбэка в очередь, а не вызываем сразу
-            mainHandler.post {
-                if (fragment.lifecycle.currentState != Lifecycle.State.DESTROYED) {
-                    listener(result)
-                }
-            }
-        }
-    }
-
-    override fun clearResultListener(requestKey: String) {
-        listenerFragmentManager.clearFragmentResultListener(requestKey)
-    }
-
-    override fun <T : Serializable> setResult(requestKey: String, result: T) {
-        fragment.setFragmentResult(requestKey, bundleOf(requestKey to result))
-    }
-
-    private companion object {
-        val mainHandler = Handler(Looper.getMainLooper())
-    }
-}

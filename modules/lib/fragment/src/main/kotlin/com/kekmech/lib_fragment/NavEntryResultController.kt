@@ -19,9 +19,8 @@ import kotlin.reflect.KClass
 /**
  * Предоставляет каждому экрану `NavDisplay` свой [LocalResultController].
  *
- * Результаты ходят через `FragmentManager` активити: туда же их отправляют диалоги
- * ([ComposeBottomSheetDialogFragment]) и фрагменты-табы внутри `AndroidFragment`,
- * поэтому все экраны приложения обмениваются результатами через одну шину.
+ * Результаты ходят через `FragmentManager` активити: туда же их отправляют фрагменты-табы
+ * внутри `AndroidFragment`, поэтому все экраны приложения обмениваются результатами через одну шину.
  */
 @Composable
 public fun <T : Any> rememberResultControllerNavEntryDecorator(

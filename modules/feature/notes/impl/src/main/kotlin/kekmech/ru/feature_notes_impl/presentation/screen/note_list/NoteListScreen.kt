@@ -26,8 +26,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.rememberNestedScrollInteropConnection
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
@@ -60,9 +58,7 @@ internal fun NoteListScreen(
 ) {
     BottomSheet(modifier = Modifier.heightIn(min = SheetMinHeight)) {
         LazyColumn(
-            modifier = Modifier
-                .fillMaxWidth()
-                .nestedScroll(rememberNestedScrollInteropConnection()),
+            modifier = Modifier.fillMaxWidth(),
             contentPadding = PaddingValues(bottom = 16.dp),
         ) {
             item(key = "header") {

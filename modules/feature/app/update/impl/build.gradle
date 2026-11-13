@@ -9,7 +9,6 @@ android.buildFeatures{
 
 dependencies {
     implementation(libs.firebase.config)
-    implementation(libs.google.material)
     implementation(libs.compose.material3)
     implementation(libs.koin.core)
 
