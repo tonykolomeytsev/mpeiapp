@@ -44,7 +44,6 @@
 
         <!--Additional theme colors-->
         <item name="themeBoxBackgroundColor">@color/colorGray10</item>
-        <item name="themed_snow_flake">@drawable/ic_snow_flake_light_theme</item>
         <item name="colorCloud">@color/colorCloudDay</item>
         <item name="colorActive">@color/colorMain</item>
 
@@ -100,7 +99,6 @@
 
         <!--Additional theme colors-->
         <item name="themeBoxBackgroundColor">@color/colorGray90</item>
-        <item name="themed_snow_flake">@drawable/ic_snow_flake_dark_theme</item>
         <item name="colorCloud">@color/colorCloudNight</item>
         <item name="colorActive">@color/colorMainLight</item>
 

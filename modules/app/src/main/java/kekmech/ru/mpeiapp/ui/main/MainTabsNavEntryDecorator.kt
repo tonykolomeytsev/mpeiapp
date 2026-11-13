@@ -1,6 +1,6 @@
 package kekmech.ru.mpeiapp.ui.main
 
-import android.view.View
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
@@ -9,10 +9,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation3.runtime.NavEntryDecorator
 import kekmech.ru.feature_app_settings_api.IsSnowFlakesEnabledFeatureToggle
 import kekmech.ru.feature_app_settings_api.data.AppSettingsRepository
@@ -20,7 +20,8 @@ import kekmech.ru.lib_navigation.BottomTab
 import kekmech.ru.lib_navigation.BottomTabsSwitcher
 import kekmech.ru.lib_navigation.ScreenKey
 import kekmech.ru.lib_navigation.bottomTab
-import kekmech.ru.mpeiapp.R
+import kekmech.ru.lib_snowfall.Snowfall
+import kekmech.ru.lib_snowfall.SnowfallState
 import kekmech.ru.mpeiapp.ui.main.icons.AccountCircle
 import kekmech.ru.mpeiapp.ui.main.icons.AccountCircleFilled
 import kekmech.ru.mpeiapp.ui.main.icons.CalendarToday
@@ -45,10 +46,12 @@ fun rememberMainTabsNavEntryDecorator(): NavEntryDecorator<ScreenKey> {
     val bottomTabsSwitcher = koinInject<BottomTabsSwitcher>()
     val snowFlakesFeatureToggle = koinInject<IsSnowFlakesEnabledFeatureToggle>()
     val appSettingsRepository = koinInject<AppSettingsRepository>()
-    val isSnowFlakesEnabled = remember {
-        snowFlakesFeatureToggle.value && appSettingsRepository.getAppSettings().isSnowEnabled
+    // Snow is remembered here, outside of the tab entries, so switching tabs doesn't restart it
+    val snowfallState = remember {
+        val isSnowEnabled = snowFlakesFeatureToggle.value && appSettingsRepository.getAppSettings().isSnowEnabled
+        if (isSnowEnabled) SnowfallState() else null
     }
-    return remember(bottomTabsSwitcher, isSnowFlakesEnabled) {
+    return remember(bottomTabsSwitcher, snowfallState) {
         NavEntryDecorator { entry ->
             val selectedTab = entry.bottomTab
             if (selectedTab == null) {
@@ -57,7 +60,7 @@ fun rememberMainTabsNavEntryDecorator(): NavEntryDecorator<ScreenKey> {
                 MainTabsScaffold(
                     selectedTab = selectedTab,
                     onTabClick = bottomTabsSwitcher::changeTab,
-                    isSnowFlakesEnabled = isSnowFlakesEnabled,
+                    snowfallState = snowfallState,
                     content = { entry.Content() },
                 )
             }
@@ -69,7 +72,7 @@ fun rememberMainTabsNavEntryDecorator(): NavEntryDecorator<ScreenKey> {
 private fun MainTabsScaffold(
     selectedTab: BottomTab,
     onTabClick: (BottomTab) -> Unit,
-    isSnowFlakesEnabled: Boolean,
+    snowfallState: SnowfallState?,
     content: @Composable () -> Unit,
 ) {
     Box(Modifier.fillMaxSize()) {
@@ -81,14 +84,18 @@ private fun MainTabsScaffold(
             onTabClick = onTabClick,
             modifier = Modifier.align(Alignment.BottomCenter),
         )
-        if (isSnowFlakesEnabled) {
-            AndroidView(
-                factory = { context -> View.inflate(context, R.layout.item_snow_flakes, null) },
+        if (snowfallState != null) {
+            Snowfall(
+                state = snowfallState,
+                color = if (isSystemInDarkTheme()) SnowFlakeColorDark else SnowFlakeColorLight,
                 modifier = Modifier.fillMaxSize(),
             )
         }
     }
 }
+
+private val SnowFlakeColorLight = Color(0xFFD0D0D0)
+private val SnowFlakeColorDark = Color.White
 
 @Composable
 private fun MainNavigationBar(
