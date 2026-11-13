@@ -1,5 +1,6 @@
 package kekmech.ru.lib_navigation
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -9,7 +10,10 @@ import androidx.compose.material3.SheetState
 import androidx.compose.material3.contentColorFor
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.scene.OverlayScene
@@ -69,6 +73,12 @@ private data class BottomSheetScene<T : Any>(
             skipPartiallyExpanded = options.skipPartiallyExpanded,
         )
         sheetState = state
+        val contentNestedScrollConnection = remember { SheetContentNestedScrollConnection() }
+        val sheetContent: @Composable () -> Unit = {
+            Box(Modifier.nestedScroll(contentNestedScrollConnection)) {
+                entry.Content()
+            }
+        }
         if (options.isBare) {
             ModalBottomSheet(
                 onDismissRequest = onBack,
@@ -81,7 +91,7 @@ private data class BottomSheetScene<T : Any>(
                 contentWindowInsets = { WindowInsets(0) },
                 properties = options.properties,
             ) {
-                entry.Content()
+                sheetContent()
             }
         } else {
             ModalBottomSheet(
@@ -89,7 +99,7 @@ private data class BottomSheetScene<T : Any>(
                 sheetState = state,
                 properties = options.properties,
             ) {
-                entry.Content()
+                sheetContent()
             }
         }
     }

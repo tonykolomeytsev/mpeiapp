@@ -5,15 +5,15 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import com.kekmech.lib_fragment.HideKeyboardOnPause
 import com.kekmech.lib_fragment.LocalRouter
 import kekmech.ru.feature_search_impl.di.SearchDependencies
+import kekmech.ru.feature_search_impl.navigation.ScheduleDetailsScreenKey
 import kekmech.ru.feature_search_impl.navigation.SearchScreenKey
 import kekmech.ru.feature_search_impl.screens.main.elm.SearchEvent.Ui
-import kekmech.ru.feature_search_impl.screens.schedule_details.ScheduleDetailsFragment
 import kekmech.ru.lib_analytics_android.ext.rememberScreenAnalytics
 import kekmech.ru.lib_elm_compose.ElmContent
+import kekmech.ru.lib_navigation.AddScreenForward
 import kekmech.ru.lib_navigation.BottomTab
 import kekmech.ru.lib_navigation.BottomTabsSwitcher
 import kekmech.ru.lib_navigation.PopBackStack
-import kekmech.ru.lib_navigation.ShowDialog
 import org.koin.compose.koinInject
 
 @Composable
@@ -56,9 +56,7 @@ internal fun SearchEntry(key: SearchScreenKey) {
             onScheduleClick = { searchResult ->
                 analytics.sendClick("ScheduleDetails")
                 keyboardController?.hide()
-                router.executeCommand(ShowDialog {
-                    ScheduleDetailsFragment.newInstance(searchResult)
-                })
+                router.executeCommand(AddScreenForward(ScheduleDetailsScreenKey(searchResult)))
             },
         )
     }

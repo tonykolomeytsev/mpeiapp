@@ -13,7 +13,13 @@ internal data class ScheduleDetailsState(
     val searchResult: SearchResult,
     val thisWeek: List<Day>? = null,
     val nextWeek: List<Day>? = null,
+    /** Null while the favorites are loading */
     val isInFavorites: Boolean? = null,
+    /**
+     * The schedule is being added to or removed from favorites. [isInFavorites] keeps the previous
+     * value meanwhile, so the favorites row stays on the screen and doesn't cut its click ripple.
+     */
+    val isFavoritesUpdating: Boolean = false,
     val selectedDayDate: LocalDate = moscowLocalDate(),
     val favoriteSchedule: FavoriteSchedule? = null,
 ) {

@@ -58,6 +58,7 @@ class ScheduleDetailsReducerTest : BehaviorSpec({
             val (state, effects, actions) = reducer.reduce(Ui.Click.Favorites, givenState)
             Then("Check state") {
                 state.isInFavorites shouldBe null
+                state.isFavoritesUpdating shouldBe true
             }
             Then("Check effects") {
                 effects.shouldBeEmpty()
@@ -216,14 +217,45 @@ class ScheduleDetailsReducerTest : BehaviorSpec({
         val givenState = STATE.copy(isInFavorites = true, favoriteSchedule = FAVORITE)
         When("Wish.Click.Favorites") {
             val (state, effects, actions) = reducer.reduce(Ui.Click.Favorites, givenState)
-            Then("Check state") {
-                state.isInFavorites shouldBe null
+            Then("Check the previous value is kept while favorites update") {
+                state.isInFavorites shouldBe true
+                state.isFavoritesUpdating shouldBe true
             }
             Then("Check effects") {
                 effects.shouldBeEmpty()
             }
             Then("Check actions") {
                 actions.shouldContainExactly(ScheduleDetailsCommand.RemoveFromFavorites(FAVORITE))
+            }
+        }
+    }
+    Given("Favorites are updating") {
+        val givenState = STATE.copy(isInFavorites = false, isFavoritesUpdating = true)
+        When("Wish.Click.Favorites") {
+            val (state, effects, actions) = reducer.reduce(Ui.Click.Favorites, givenState)
+            Then("Check repeated click is ignored") {
+                state shouldBe givenState
+                effects.shouldBeEmpty()
+                actions.shouldBeEmpty()
+            }
+        }
+        When("News.FavoriteAdded") {
+            val (state, _, _) = reducer.reduce(Internal.AddToFavoritesSuccess(FAVORITE), givenState)
+            Then("Check update is finished") {
+                state.isInFavorites shouldBe true
+                state.isFavoritesUpdating shouldBe false
+                state.favoriteSchedule shouldBe FAVORITE
+            }
+        }
+        When("News.FavoriteRemoved") {
+            val (state, _, _) = reducer.reduce(
+                Internal.RemoveFromFavoritesSuccess,
+                givenState.copy(isInFavorites = true, favoriteSchedule = FAVORITE),
+            )
+            Then("Check update is finished") {
+                state.isInFavorites shouldBe false
+                state.isFavoritesUpdating shouldBe false
+                state.favoriteSchedule.shouldBeNull()
             }
         }
     }

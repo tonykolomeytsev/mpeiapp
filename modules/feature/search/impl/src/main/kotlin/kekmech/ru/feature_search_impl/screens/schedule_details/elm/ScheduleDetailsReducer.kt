@@ -51,6 +51,7 @@ internal class ScheduleDetailsReducer :
             is Internal.RemoveFromFavoritesSuccess -> state {
                 copy(
                     isInFavorites = false,
+                    isFavoritesUpdating = false,
                     favoriteSchedule = null,
                 )
             }
@@ -58,6 +59,7 @@ internal class ScheduleDetailsReducer :
             is Internal.AddToFavoritesSuccess -> state {
                 copy(
                     isInFavorites = true,
+                    isFavoritesUpdating = false,
                     favoriteSchedule = event.schedule,
                 )
             }
@@ -76,7 +78,9 @@ internal class ScheduleDetailsReducer :
 
             is Ui.Click.Day -> state { copy(selectedDayDate = event.date) }
             is Ui.Click.Favorites -> {
-                state { copy(isInFavorites = null) }
+                // The row stays clickable while the favorites update, so the repeated clicks are ignored
+                if (state.isFavoritesUpdating) return
+                state { copy(isFavoritesUpdating = true) }
                 val favoriteSchedule = state.favoriteSchedule
                 if (favoriteSchedule == null) {
                     val newFavorite =

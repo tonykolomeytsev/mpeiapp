@@ -4,6 +4,9 @@ plugins {
 }
 
 dependencies {
+    testImplementation(libs.kotest.assertions)
+    testImplementation(libs.kotest.runner)
+
     api(libs.androidx.navigation3.runtime)
     implementation(libs.androidx.navigation3.ui)
     implementation(libs.compose.material3)

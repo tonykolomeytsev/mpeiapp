@@ -1,5 +1,6 @@
 package kekmech.ru.feature_search_impl.navigation
 
+import kekmech.ru.feature_schedule_api.domain.model.SearchResult
 import kekmech.ru.lib_navigation.ScreenKey
 import kotlinx.parcelize.Parcelize
 
@@ -7,4 +8,9 @@ import kotlinx.parcelize.Parcelize
 internal data class SearchScreenKey(
     val query: String,
     val filter: String = "ALL",
+) : ScreenKey
+
+@Parcelize
+internal data class ScheduleDetailsScreenKey(
+    val searchResult: SearchResult,
 ) : ScreenKey
