@@ -97,7 +97,6 @@
     <string name="before_yesterday">Позавчера</string>
 
     <string name="something_went_wrong_error">Что-то пошло не так…</string>
-    <string name="connection_lost_error">Нет интернет соединения</string>
 
     <string name="common_error_no_internet_title">Нет интернета</string>
     <string name="common_error_no_internet_description">Проверьте свое подключение к интернету и попробуйте загрузить данные снова</string>

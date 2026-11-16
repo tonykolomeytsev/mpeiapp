@@ -12,9 +12,11 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
+import androidx.compose.foundation.background
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.IntOffset
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
@@ -65,6 +67,9 @@ fun App(
         CompositionLocalProvider(LocalRouter provides router) {
             NavDisplay(
                 backStack = router.backStack,
+                // Shows through while screens cross-fade. The window background can't do it:
+                // the dark XML theme still has a light window background
+                modifier = Modifier.background(MpeixTheme.palette.surface),
                 onBack = { router.executeCommand(PopBackStack()) },
                 entryDecorators = listOf(
                     rememberSaveableStateHolderNavEntryDecorator(),

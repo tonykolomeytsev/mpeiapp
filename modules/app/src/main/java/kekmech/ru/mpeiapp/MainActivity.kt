@@ -6,10 +6,10 @@ import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.SystemBarStyle
+import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.compose.ui.platform.ComposeView
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kekmech.ru.feature_app_settings_api.data.AppSettingsRepository
@@ -52,14 +52,13 @@ class MainActivity : AppCompatActivity() {
         mainActivityLifecycleObservers.forEach { it.onCreate(this) }
 
         setTheme()
-        setContentView(R.layout.activity_main)
 
         savedInstanceState?.getBundle(KEY_NAVIGATION_STATE)?.let(navigationHolder::restoreState)
         // Back stack может оказаться пустым, если состояние не удалось восстановить
         if (savedInstanceState == null || router.backStack.isEmpty()) {
             launchFirstScreen()
         }
-        findViewById<ComposeView>(R.id.composeRoot).setContent {
+        setContent {
             App(router = router, navEntries = navEntries)
         }
 

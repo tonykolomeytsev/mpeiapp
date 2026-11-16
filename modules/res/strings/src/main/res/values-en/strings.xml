@@ -97,7 +97,6 @@
     <string name="before_yesterday">Day before yesterday</string>
 
     <string name="something_went_wrong_error">Something went wrong…</string>
-    <string name="connection_lost_error">No internet connection</string>
 
     <string name="common_error_no_internet_title">No Internet</string>
     <string name="common_error_no_internet_description">Check your internet connection and try loading the data again</string>
