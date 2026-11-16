@@ -25,14 +25,12 @@ import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.filterIsInstance
 import java.time.LocalDate
 
-// Weeks reachable in each direction from the current one, about 20 years in total.
-// The page count is limited because the pager measures the scroll offset of all the pages before
-// the current one, which overflows with Int.MAX_VALUE pages of the RecyclerView implementation
-private const val WEEKS_IN_EACH_DIRECTION = 520
-private const val WEEKS_PAGE_COUNT = WEEKS_IN_EACH_DIRECTION * 2 + 1
+// Endless in practice: about 20 million years in each direction from the current week.
+// The pager keeps its scroll offset in Long, so the huge page count doesn't overflow
+private const val WEEKS_PAGE_COUNT = Int.MAX_VALUE
 
-// Page of the current week
-private const val CURRENT_WEEK_PAGE = WEEKS_IN_EACH_DIRECTION
+// Page of the current week, in the middle so the weeks are swiped both ways
+private const val CURRENT_WEEK_PAGE = WEEKS_PAGE_COUNT / 2
 
 private val StripHeight = 64.dp
 
