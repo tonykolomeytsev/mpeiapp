@@ -145,8 +145,9 @@ internal fun ScheduleDaysPager(
         state = pagerState,
         modifier = modifier.fillMaxSize(),
         key = { pages[it].dayOfWeek },
-        // All days are composed at once, so swiping doesn't compose the next page mid-animation
-        beyondViewportPageCount = (pages.size - 1).coerceAtLeast(0),
+        // Neighbour days are composed ahead, so swiping doesn't compose the next page mid-animation.
+        // Composing all the days at once made opening the tab ~40% slower (153 vs 44 text measures)
+        beyondViewportPageCount = 1,
     ) { page ->
         ScheduleDay(
             page = pages[page],
