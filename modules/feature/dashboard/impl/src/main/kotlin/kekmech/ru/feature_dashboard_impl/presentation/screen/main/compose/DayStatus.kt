@@ -41,7 +41,7 @@ internal fun DayStatus(
     ) {
         Text(
             text = header,
-            modifier = Modifier.padding(top = 4.dp), // fine-tuning pixel perfect old view
+            modifier = Modifier.padding(top = 4.dp),
             style = MpeixTheme.typography.headlineSmall,
             color = MpeixTheme.palette.onSurface,
         )
@@ -49,7 +49,7 @@ internal fun DayStatus(
             // Space keeps the height of the line while the description is loading
             text = description ?: " ",
             modifier = Modifier
-                .padding(top = 6.dp) // also fine-tuning, was 4.dp
+                .padding(top = 4.dp)
                 .alpha(descriptionAlpha),
             style = MpeixTheme.typography.titleSmall,
             color = MpeixTheme.palette.onSurfaceVariant,

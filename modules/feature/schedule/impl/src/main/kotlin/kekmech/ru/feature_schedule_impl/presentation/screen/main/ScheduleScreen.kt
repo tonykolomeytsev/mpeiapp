@@ -149,7 +149,7 @@ private fun ScheduleHeader(
             },
             style = MpeixTheme.typography.headlineSmall,
             color = MpeixTheme.palette.onSurface,
-            modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 12.dp),
+            modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp),
         )
         Text(
             text = ui.weekOfSemester?.let { weekOfSemesterText(it) }.orEmpty(),
