@@ -3,6 +3,7 @@ package mpeix.plugins
 import com.android.build.api.dsl.ApplicationExtension
 import mpeix.plugins.ext.configure
 import mpeix.plugins.features.compose.configureAndroidCompose
+import mpeix.plugins.features.composeonly.setupComposeOnlyCheck
 import mpeix.plugins.features.globalconfig.getAndroidProjectConfiguration
 import mpeix.plugins.features.unittesting.setupUnitTests
 import mpeix.plugins.setup.Plugins
@@ -67,6 +68,7 @@ internal abstract class AppConventionPlugin : Plugin<Project> {
         config.defaultDependencies.orNull?.execute(dependencies)
         config.defaultAndroidDependencies.orNull?.execute(dependencies)
         setupUnitTests()
+        setupComposeOnlyCheck()
         project.extensions.configure<KotlinAndroidProjectExtension> {
             compilerOptions {
                 jvmTarget.set(JvmTarget.JVM_17)
