@@ -7,8 +7,7 @@ import android.os.Looper
 import androidx.activity.compose.LocalActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
-import com.kekmech.lib_fragment.LocalRouter
-import com.kekmech.lib_fragment.ResultListener
+import androidx.navigation3.runtime.result.ResultEffect
 import kekmech.ru.ext_android.openLinkExternal
 import kekmech.ru.feature_app_settings_impl.navigation.FavoritesScreenKey
 import kekmech.ru.feature_app_settings_impl.navigation.SelectLanguageScreenKey
@@ -22,6 +21,7 @@ import kekmech.ru.lib_analytics_android.ext.rememberScreenAnalytics
 import kekmech.ru.lib_elm_compose.EffectHandler
 import kekmech.ru.lib_elm_compose.ElmContent
 import kekmech.ru.lib_navigation.AddScreenForward
+import kekmech.ru.lib_navigation.LocalRouter
 import kekmech.ru.lib_navigation.PopBackStack
 import kekmech.ru.lib_navigation.Router
 import org.koin.compose.koinInject
@@ -43,10 +43,10 @@ internal fun AppSettingsEntry() {
         key = "AppSettingsScreen",
         storeFactory = { storeFactory.create() },
     ) { onAccept, state, effects ->
-        ResultListener<String>(LANGUAGE_RESULT_KEY) {
+        ResultEffect<String>(LANGUAGE_RESULT_KEY) {
             onAccept(Ui.Action.LanguageChanged(it))
         }
-        ResultListener<String>(MAP_TYPE_RESULT_KEY) {
+        ResultEffect<String>(MAP_TYPE_RESULT_KEY) {
             onAccept(Ui.Action.MapTypeChanged(it))
         }
         EffectHandler(effects) { effect ->

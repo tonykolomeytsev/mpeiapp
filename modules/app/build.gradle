@@ -69,7 +69,6 @@ dependencies {
     implementation(libs.androidx.navigation3.ui)
     implementation(libs.koin.compose)
 
-    implementation(libs.androidx.appCompat)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.splashscreen)
     implementation(libs.firebase.analytics)
@@ -112,12 +111,10 @@ dependencies {
     implementation(project(":lib_network"))
     implementation(project(":lib_persistent_cache"))
     implementation(project(":lib_snowfall"))
-    implementation(project(":lib_fragment"))
 
     implementation(project(":ui_theme"))
     implementation(project(":ui_kit_navigationbar"))
 
-    implementation(project(":coreui"))
     implementation(project(":res_strings"))
 
     debugImplementation(project(":mock_server"))

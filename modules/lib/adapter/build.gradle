@@ -1,8 +1,0 @@
-plugins {
-    alias(mpeix.plugins.lib.android)
-}
-
-dependencies {
-    implementation(libs.androidx.recyclerView)
-    compileOnly(libs.timber)
-}

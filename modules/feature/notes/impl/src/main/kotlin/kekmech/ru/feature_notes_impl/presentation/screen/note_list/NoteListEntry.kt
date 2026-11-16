@@ -3,7 +3,6 @@ package kekmech.ru.feature_notes_impl.presentation.screen.note_list
 import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
-import com.kekmech.lib_fragment.LocalRouter
 import kekmech.ru.feature_notes_impl.di.NotesDependencies
 import kekmech.ru.feature_notes_impl.navigation.NoteEditScreenKey
 import kekmech.ru.feature_notes_impl.navigation.NoteListScreenKey
@@ -12,6 +11,7 @@ import kekmech.ru.feature_notes_impl.presentation.screen.note_list.elm.NoteListE
 import kekmech.ru.lib_analytics_android.ext.rememberScreenAnalytics
 import kekmech.ru.lib_elm_compose.EffectHandler
 import kekmech.ru.lib_elm_compose.ElmContent
+import kekmech.ru.lib_navigation.LocalRouter
 import kekmech.ru.lib_navigation.ReplaceScreen
 import org.koin.compose.koinInject
 import kekmech.ru.res_strings.R.string as Strings

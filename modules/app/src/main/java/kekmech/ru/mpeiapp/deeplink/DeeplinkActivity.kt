@@ -2,10 +2,10 @@ package kekmech.ru.mpeiapp.deeplink
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.ComponentActivity
 import kekmech.ru.mpeiapp.MainActivity
 
-class DeeplinkActivity : AppCompatActivity() {
+class DeeplinkActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

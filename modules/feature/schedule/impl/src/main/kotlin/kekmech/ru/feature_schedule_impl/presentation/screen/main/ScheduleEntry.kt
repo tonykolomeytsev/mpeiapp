@@ -7,8 +7,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
-import com.kekmech.lib_fragment.ResultListener
-import kekmech.ru.ext_android.EmptyResult
+import androidx.navigation3.runtime.result.ResultEffect
 import kekmech.ru.ext_android.openLinkExternal
 import kekmech.ru.feature_schedule_impl.di.ScheduleDependencies
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.compose.ScheduleDaysAction
@@ -40,7 +39,7 @@ internal fun ScheduleEntry() {
         savedStateRegistryOwner = activity,
     ) { onAccept, state, effects ->
         // Notes of the classes could change in the note list
-        ResultListener<EmptyResult>(NOTES_LIST_RESULT_KEY) { onAccept(Ui.Action.NotesUpdated) }
+        ResultEffect<Unit>(NOTES_LIST_RESULT_KEY) { onAccept(Ui.Action.NotesUpdated) }
         LifecycleEventEffect(Lifecycle.Event.ON_RESUME) { onAccept(Ui.Action.UpdateScheduleIfNeeded) }
 
         EffectHandler(effects) { effect ->

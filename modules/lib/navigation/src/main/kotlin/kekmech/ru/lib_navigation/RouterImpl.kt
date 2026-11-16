@@ -1,19 +1,19 @@
 package kekmech.ru.lib_navigation
 
+import android.app.Activity
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.mutableStateListOf
 import androidx.core.os.BundleCompat
 
 internal class RouterImpl : NavigationHolder, Router {
 
-    private var activity: AppCompatActivity? = null
+    private var activity: Activity? = null
 
     private val activityCommandBuffer = mutableListOf<ActivityCommand>()
     override val backStack: List<ScreenKey>
         field: MutableList<ScreenKey> = mutableStateListOf<ScreenKey>()
 
-    override fun subscribe(activity: AppCompatActivity) {
+    override fun subscribe(activity: Activity) {
         this.activity = activity
         val bufferedCommands = activityCommandBuffer.toList()
         activityCommandBuffer.clear()

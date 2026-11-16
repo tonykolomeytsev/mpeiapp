@@ -32,7 +32,6 @@ dependencies {
     implementation(project(":ext_kotlin"))
     implementation(project(":lib_elm"))
     implementation(project(":lib_elm_compose"))
-    implementation(project(":lib_fragment"))
     implementation(project(":lib_navigation"))
     implementation(project(":feature_schedule_ui"))
 

@@ -2,13 +2,13 @@ package kekmech.ru.feature_app_settings_impl.presentation.screens.lang
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import com.kekmech.lib_fragment.LocalResultController
-import com.kekmech.lib_fragment.LocalRouter
+import androidx.navigation3.runtime.result.LocalResultEventBus
 import kekmech.ru.feature_app_settings_impl.navigation.SelectLanguageScreenKey
 import kekmech.ru.feature_app_settings_impl.presentation.screens.lang.dto.LanguageEntry
 import kekmech.ru.feature_app_settings_impl.presentation.screens.select_option.SelectOptionScreen
 import kekmech.ru.feature_app_settings_impl.presentation.screens.select_option.SelectableOption
 import kekmech.ru.lib_analytics_android.ext.rememberScreenAnalytics
+import kekmech.ru.lib_navigation.LocalRouter
 import kekmech.ru.lib_navigation.PopBackStack
 import kekmech.ru.res_strings.R.string as Strings
 
@@ -24,7 +24,7 @@ private val LanguageOptions = LanguageEntry.entries.map {
 internal fun SelectLanguageEntry(key: SelectLanguageScreenKey) {
     val analytics = rememberScreenAnalytics("SelectLanguage")
     val router = LocalRouter.current
-    val resultController = LocalResultController.current
+    val resultEventBus = LocalResultEventBus.current
     SelectOptionScreen(
         title = stringResource(Strings.change_language_screen_title),
         options = LanguageOptions,
@@ -32,7 +32,7 @@ internal fun SelectLanguageEntry(key: SelectLanguageScreenKey) {
         onOptionClick = {
             analytics.sendClick("SelectLanguage_${it.code}")
             if (it.code != key.selectedLanguage) {
-                resultController.setResult(key.resultKey, it.code)
+                resultEventBus.sendResult(key.resultKey, it.code)
             }
             router.executeCommand(PopBackStack())
         },

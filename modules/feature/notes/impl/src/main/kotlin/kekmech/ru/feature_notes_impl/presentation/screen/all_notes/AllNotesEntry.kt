@@ -5,9 +5,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import com.kekmech.lib_fragment.LocalRouter
-import com.kekmech.lib_fragment.ResultListener
-import kekmech.ru.ext_android.EmptyResult
+import androidx.navigation3.runtime.result.ResultEffect
 import kekmech.ru.feature_notes_impl.di.NotesDependencies
 import kekmech.ru.feature_notes_impl.navigation.AllNotesScreenKey
 import kekmech.ru.feature_notes_impl.navigation.NoteEditScreenKey
@@ -15,6 +13,7 @@ import kekmech.ru.feature_notes_impl.presentation.screen.all_notes.elm.AllNotesE
 import kekmech.ru.lib_analytics_android.ext.rememberScreenAnalytics
 import kekmech.ru.lib_elm_compose.ElmContent
 import kekmech.ru.lib_navigation.AddScreenForward
+import kekmech.ru.lib_navigation.LocalRouter
 import kekmech.ru.lib_navigation.PopBackStack
 import org.koin.compose.koinInject
 
@@ -31,7 +30,7 @@ internal fun AllNotesEntry(key: AllNotesScreenKey) {
         key = "AllNotesScreen",
         storeFactory = { dependencies.allNotesStoreFactory.create() },
     ) { onAccept, state, _ ->
-        ResultListener<EmptyResult>(NOTE_EDIT_RESULT_KEY) {
+        ResultEffect<Unit>(NOTE_EDIT_RESULT_KEY) {
             onAccept(Ui.Init)
         }
         AllNotesScreen(

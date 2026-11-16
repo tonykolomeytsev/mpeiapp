@@ -8,7 +8,7 @@
         android:pathData="M114,27L114,27A100,100 0,0 1,214 127L214,127A100,100 0,0 1,114 227L114,227A100,100 0,0 1,14 127L14,127A100,100 0,0 1,114 27z"/>
     <path
         android:pathData="M114,27L114,27A100,100 0,0 1,214 127L214,127A100,100 0,0 1,114 227L114,227A100,100 0,0 1,14 127L14,127A100,100 0,0 1,114 27z"
-        android:fillColor="?attr/colorGray10"/>
+        android:fillColor="@color/self_study_day_background"/>
     <group>
       <clip-path
           android:pathData="M24,101h100v100h-100z"/>

@@ -29,7 +29,6 @@ dependencies {
     implementation(project(":ext_koin"))
     implementation(project(":lib_elm"))
     implementation(project(":lib_elm_compose"))
-    implementation(project(":lib_fragment"))
     implementation(project(":lib_navigation"))
 
     implementation(project(":ui_theme"))

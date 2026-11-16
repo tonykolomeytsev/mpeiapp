@@ -124,6 +124,17 @@
 
 ## Вещи, которые стоит знать
 
+### UI только на Compose
+
+Весь UI написан на Jetpack Compose: в проекте нет фрагментов, XML-разметки, `RecyclerView` и ViewBinding.
+`MainActivity` рисует один `NavDisplay` (Navigation 3), все экраны живут в одном back stack'е `Router`.
+Фичи регистрируют свои экраны через `NavEntries`, нижние шторки — через `bottomSheetEntry`, а результаты
+между экранами передают через `ResultListener` / `LocalResultController`. Все это лежит в `lib_navigation`.
+
+**Архитектурный инвариант:** модули НЕ МОГУТ содержать `res/layout` и импортировать View UI
+(фрагменты, `RecyclerView`, ViewBinding, Material Components и т.п.). Это проверяет таска `verifyComposeOnly`
+из `build-logic`, она запускается перед сборкой каждого модуля.
+
 ### Контуры бекенда
 
 Приложение поддерживает работу с `mock`, `staging` и `production` окружениями. 

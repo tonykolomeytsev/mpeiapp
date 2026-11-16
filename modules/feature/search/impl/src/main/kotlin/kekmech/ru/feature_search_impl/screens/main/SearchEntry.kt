@@ -2,8 +2,6 @@ package kekmech.ru.feature_search_impl.screens.main
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import com.kekmech.lib_fragment.HideKeyboardOnPause
-import com.kekmech.lib_fragment.LocalRouter
 import kekmech.ru.feature_search_impl.di.SearchDependencies
 import kekmech.ru.feature_search_impl.navigation.ScheduleDetailsScreenKey
 import kekmech.ru.feature_search_impl.navigation.SearchScreenKey
@@ -13,6 +11,8 @@ import kekmech.ru.lib_elm_compose.ElmContent
 import kekmech.ru.lib_navigation.AddScreenForward
 import kekmech.ru.lib_navigation.BottomTab
 import kekmech.ru.lib_navigation.BottomTabsSwitcher
+import kekmech.ru.lib_navigation.HideKeyboardOnPause
+import kekmech.ru.lib_navigation.LocalRouter
 import kekmech.ru.lib_navigation.PopBackStack
 import org.koin.compose.koinInject
 

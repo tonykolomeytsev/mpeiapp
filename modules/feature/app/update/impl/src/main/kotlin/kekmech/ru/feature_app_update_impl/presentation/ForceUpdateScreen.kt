@@ -24,7 +24,7 @@ import kekmech.ru.ui_kit_buttons.button.ButtonPalette
 import kekmech.ru.ui_kit_dialogs.BottomSheet
 import kekmech.ru.ui_preview.MpeixPreview
 import kekmech.ru.ui_theme.theme.MpeixTheme
-import kekmech.ru.coreui.R.drawable as CoreUiDrawables
+import kekmech.ru.feature_app_update_impl.R
 import kekmech.ru.res_strings.R.string as Strings
 
 // Icon is placed half above the sheet's top edge
@@ -93,7 +93,7 @@ internal fun ForceUpdateScreen(
             }
         }
         Image(
-            painter = painterResource(CoreUiDrawables.splash),
+            painter = painterResource(R.drawable.splash),
             contentDescription = null,
             modifier = Modifier.size(IconSize),
         )

@@ -8,18 +8,10 @@ detekt = "1.23.8"
 mpeix-sdk = "0.1.1"
 
 # AndroidX Versions
-appCompat = "1.7.1"
-recyclerView = "1.4.0"
-constraintLayout = "2.2.1"
-viewPager2 = "1.1.0"
-swipeRefreshLayout = "1.1.0"
-fragment = "1.8.9"
 room = "2.8.1"
 work = "2.10.2"
 
-nav3 = "1.1.7"
-# Google Versions
-material = "1.12.0"
+nav3 = "1.2.1"
 
 # Koin Versions
 koin = "4.1.1"
@@ -45,7 +37,6 @@ agp = { module = "com.android.tools.build:gradle", version.ref = "agp" }
 # Single Libraries
 timber = { module = "com.jakewharton.timber:timber", version = "5.0.1" }
 coil-compose = { module = "io.coil-kt:coil-compose", version = "2.7.0" }
-facebook-shimmer = { module = "com.facebook.shimmer:shimmer", version = "0.5.0" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version = "1.9.0" }
 
 # MpeiX SDK
@@ -54,30 +45,19 @@ mpeix-sdk-runtime = { module = "io.github.tonykolomeytsev:mpeix-sdk-runtime", ve
 mpeix-sdk-runtime-stub = { module = "io.github.tonykolomeytsev:mpeix-sdk-runtime-stub", version.ref = "mpeix-sdk" }
 
 # AndroidX Libraries
-androidx-appCompat = { module = "androidx.appcompat:appcompat", version.ref = "appCompat" }
-androidx-constraintLayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintLayout" }
 androidx-coreKtx = { module = "androidx.core:core-ktx", version = "1.17.0" }
-androidx-fragment = { module = "androidx.fragment:fragment", version.ref = "fragment" }
-androidx-fragmentKtx = { module = "androidx.fragment:fragment-ktx", version.ref = "fragment" }
-androidx-fragment-compose = { module = "androidx.fragment:fragment-compose", version.ref = "fragment" }
 androidx-activity = { module = "androidx.activity:activity", version = "1.11.0" }
-androidx-recyclerView = { module = "androidx.recyclerview:recyclerview", version.ref = "recyclerView" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 androidx-work-runtime = { module = "androidx.work:work-runtime-ktx", version.ref = "work" }
 androidx-sqlite = { module = "androidx.sqlite:sqlite", version = "2.6.1" }
-androidx-swipeRefreshLayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "swipeRefreshLayout" }
-androidx-viewPager2 = { module = "androidx.viewpager2:viewpager2", version.ref = "viewPager2" }
 androidx-splashscreen = { module = "androidx.core:core-splashscreen", version = "1.0.1" }
-# Same artifact AGP adds for `buildFeatures.viewBinding`, versioned with AGP
-androidx-viewBinding = { module = "androidx.databinding:viewbinding", version.ref = "agp" }
 
 androidx-navigation3-runtime = { group = "androidx.navigation3", name = "navigation3-runtime", version.ref = "nav3" }
 androidx-navigation3-ui = { group = "androidx.navigation3", name = "navigation3-ui", version.ref = "nav3" }
 androidx-lifecycle-viewmodel-navigation3 = { module = "androidx.lifecycle:lifecycle-viewmodel-navigation3", version = "2.10.0" }
 
 # Google Libraries
-google-material = { module = "com.google.android.material:material", version.ref = "material" }
 google-maps = { module = "com.google.android.gms:play-services-maps", version = "19.2.0" }
 # 6.11.x is the last line built against Compose BOM 2025.08, newer ones bump Compose app-wide
 google-maps-compose = { module = "com.google.maps.android:maps-compose", version = "6.11.0" }

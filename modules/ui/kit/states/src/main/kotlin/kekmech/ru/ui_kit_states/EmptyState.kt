@@ -17,7 +17,7 @@ import kekmech.ru.ui_theme.theme.MpeixTheme
 /**
  * # EmptyState
  *
- * Compose version of `EmptyStateItem` from coreui: centered title and subtitle
+ * Centered title and subtitle
  * shown instead of the empty list.
  *
  * Usage example:

@@ -2,10 +2,10 @@ package kekmech.ru.feature_app_update_impl.presentation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
-import com.kekmech.lib_fragment.LocalRouter
 import kekmech.ru.ext_android.openLinkExternal
 import kekmech.ru.feature_app_update_impl.navigation.ForceUpdateScreenKey
 import kekmech.ru.lib_analytics_android.ext.rememberScreenAnalytics
+import kekmech.ru.lib_navigation.LocalRouter
 import kekmech.ru.lib_navigation.PopBackStack
 
 @Composable

@@ -41,7 +41,6 @@ dependencies {
     implementation(project(":lib_elm_compose"))
     implementation(project(":lib_navigation"))
     implementation(project(":feature_schedule_ui"))
-    implementation(project(":lib_fragment"))
 
     implementation(project(":ui_theme"))
     implementation(project(":ui_preview"))
@@ -51,7 +50,6 @@ dependencies {
     implementation(project(":ui_kit_states"))
     implementation(project(":ui_kit_topappbar"))
 
-    implementation(project(":coreui"))
     implementation(project(":res_icons"))
     implementation(project(":res_strings"))
 }

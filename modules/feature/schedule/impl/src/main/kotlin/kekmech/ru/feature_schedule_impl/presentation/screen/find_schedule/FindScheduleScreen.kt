@@ -31,8 +31,7 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import com.kekmech.lib_fragment.LocalResultController
-import com.kekmech.lib_fragment.LocalRouter
+import androidx.navigation3.runtime.result.LocalResultEventBus
 import kekmech.ru.feature_schedule_api.ScheduleFeatureApi.ContinueTo.DASHBOARD
 import kekmech.ru.feature_schedule_api.domain.model.ScheduleType
 import kekmech.ru.feature_schedule_api.domain.model.SearchResult
@@ -40,6 +39,7 @@ import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.compos
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.FindScheduleEvent.Ui
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.utils.GroupNumberFormatter
 import kekmech.ru.lib_elm_compose.EffectHandler
+import kekmech.ru.lib_navigation.LocalRouter
 import kekmech.ru.lib_navigation.PopBackStack
 import kekmech.ru.ui_kit_buttons.button.Button
 import kekmech.ru.ui_kit_buttons.button.ButtonState
@@ -50,10 +50,10 @@ import kekmech.ru.ui_theme.layout.adaptiveContentWidth
 import kekmech.ru.ui_theme.theme.MpeixTheme
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
-import kekmech.ru.coreui.R.array as CoreUiArrays
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.FindScheduleEffect as Effect
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.FindScheduleEvent as Event
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.FindScheduleState as State
+import kekmech.ru.res_strings.R.array as StringArrays
 import kekmech.ru.res_strings.R.string as Strings
 
 private sealed interface InputError {
@@ -71,12 +71,12 @@ internal fun FindScheduleScreen(
         mutableStateOf(TextFieldValue())
     }
     var inputError by remember { mutableStateOf<InputError?>(null) }
-    val facultyLabels = stringArrayResource(CoreUiArrays.faculties_labels)
+    val facultyLabels = stringArrayResource(StringArrays.faculties_labels)
     val formatter = remember(facultyLabels) { GroupNumberFormatter(facultyLabels.toList()) }
     val focusRequester = remember { FocusRequester() }
     val keyboardController = LocalSoftwareKeyboardController.current
     val router = LocalRouter.current
-    val resultController = LocalResultController.current
+    val resultEventBus = LocalResultEventBus.current
 
     val onQueryChange = { value: TextFieldValue ->
         val formattedValue = formatter.format(value)
@@ -182,7 +182,7 @@ internal fun FindScheduleScreen(
             is Effect.ShowInvalidInputError -> inputError = InputError.Invalid
             is Effect.CloseScreen -> router.executeCommand(PopBackStack())
             is Effect.CloseScreenWithResult -> {
-                resultController.setResult(state.resultKey, effect.selectedSchedule)
+                resultEventBus.sendResult(state.resultKey, effect.selectedSchedule)
                 router.executeCommand(PopBackStack())
             }
         }

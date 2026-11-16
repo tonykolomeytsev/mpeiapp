@@ -6,9 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
-import com.kekmech.lib_fragment.LocalRouter
-import com.kekmech.lib_fragment.ResultListener
-import kekmech.ru.ext_android.EmptyResult
+import androidx.navigation3.runtime.result.ResultEffect
 import kekmech.ru.feature_app_settings_api.AppSettingsFeatureLauncher
 import kekmech.ru.feature_dashboard_impl.di.DashboardDependencies
 import kekmech.ru.feature_dashboard_impl.navigation.WhatsNewScreenKey
@@ -18,10 +16,11 @@ import kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm.DashboardS
 import kekmech.ru.feature_schedule_api.ScheduleFeatureApi
 import kekmech.ru.feature_schedule_api.domain.model.SelectedSchedule
 import kekmech.ru.lib_analytics_android.ext.rememberScreenAnalytics
-import kekmech.ru.lib_elm_compose.ElmContent
 import kekmech.ru.lib_elm_compose.EffectHandler
+import kekmech.ru.lib_elm_compose.ElmContent
 import kekmech.ru.lib_navigation.AddScreenForward
 import kekmech.ru.lib_navigation.BottomTab
+import kekmech.ru.lib_navigation.LocalRouter
 import kekmech.ru.ui_kit_banner.BannerHost
 import kekmech.ru.ui_kit_banner.BannerHostState
 import kotlinx.coroutines.flow.filter
@@ -55,9 +54,9 @@ internal fun DashboardEntry() {
     ) { onAccept, state, effects ->
         // Results of the screens opened from the dashboard: notes or selected schedule could change.
         // Only local data changed, so update without forcing a schedule download
-        ResultListener<EmptyResult>(NOTES_LIST_RESULT_KEY) { onAccept(Ui.Action.SilentUpdate) }
-        ResultListener<EmptyResult>(EDIT_NOTE_RESULT_KEY) { onAccept(Ui.Action.SilentUpdate) }
-        ResultListener<SelectedSchedule>(FIND_GROUP_RESULT_KEY) { onAccept(Ui.Action.SilentUpdate) }
+        ResultEffect<Unit>(NOTES_LIST_RESULT_KEY) { onAccept(Ui.Action.SilentUpdate) }
+        ResultEffect<Unit>(EDIT_NOTE_RESULT_KEY) { onAccept(Ui.Action.SilentUpdate) }
+        ResultEffect<SelectedSchedule>(FIND_GROUP_RESULT_KEY) { onAccept(Ui.Action.SilentUpdate) }
 
         EffectHandler(effects) { effect ->
             when (effect) {

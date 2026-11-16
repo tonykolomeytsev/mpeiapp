@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Splash screen and launcher. The screens themselves take colors from MpeixTheme -->
+    <color name="colorMain">#587FC7</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorBlack">#1A1A1A</color>
+    <color name="colorGray70">#898989</color>
+
+    <!-- Same as MpeixTheme.palette.surface -->
+    <color name="windowBackground">#FFFFFF</color>
+</resources>
