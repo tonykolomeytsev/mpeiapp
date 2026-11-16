@@ -54,7 +54,7 @@ private val ListTopPadding = 8.dp
 private val ListBottomPadding = 144.dp
 
 /**
- * Actions of the [ScheduleDaysPager], handled by the `ScheduleFragment`
+ * Actions of the [ScheduleDaysPager], handled by the `ScheduleEntry`
  */
 internal sealed interface ScheduleDaysAction {
 
@@ -86,7 +86,7 @@ internal sealed interface ScheduleDaysAction {
  * Horizontal pager of the working days (Monday to Saturday) of the selected week.
  * Each page is the list of the classes of the day.
  *
- * Replaces the `ViewPager2` with the nested `RecyclerView`s of the `ScheduleFragment`.
+ * Replaces the `ViewPager2` with the nested `RecyclerView`s of the former `ScheduleFragment`.
  *
  * @param pages pages to show, see `ScheduleClassesListConverter`
  * @param selectedPage page of the selected day, the pager scrolls to it when it changes.
