@@ -10,10 +10,10 @@ import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.navigation3.runtime.result.ResultEffect
 import kekmech.ru.ext_android.openLinkExternal
 import kekmech.ru.feature_schedule_impl.di.ScheduleDependencies
-import kekmech.ru.feature_schedule_impl.presentation.screen.main.compose.ScheduleDaysAction
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleEffect
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleEvent.Ui
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleStoreFactory
+import kekmech.ru.feature_schedule_ui.compose.ScheduleDaysAction
 import kekmech.ru.lib_analytics_android.Analytics
 import kekmech.ru.lib_analytics_android.ext.rememberScreenAnalytics
 import kekmech.ru.lib_elm_compose.EffectHandler
@@ -84,7 +84,7 @@ private fun handleDaysAction(
     onLunchClick: () -> Unit,
 ) {
     when (action) {
-        is ScheduleDaysAction.PageSelected -> onAccept(Ui.Action.PageChanged(action.page))
+        is ScheduleDaysAction.PageSelected -> onAccept(Ui.Action.PageChanged(action.weekOffset, action.dayOfWeek))
         is ScheduleDaysAction.PagerDragged -> analytics.sendScroll("WorkingDaysViewPager")
         is ScheduleDaysAction.ClassesScrolled -> onAccept(Ui.Action.ClassesScrolled(action.dy))
         is ScheduleDaysAction.ClassesClick -> {

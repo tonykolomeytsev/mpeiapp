@@ -44,8 +44,11 @@ class ScheduleUiConverterTest : BehaviorSpec({
         val state = ScheduleState(appSettings = APP_SETTINGS, selectedDate = TUESDAY)
         When("Map state") {
             val ui = ScheduleUiConverter.map(state)
-            Then("Check the selected page is Tuesday") {
-                ui.selectedDayPage shouldBe 1
+            Then("Check the selected day is Tuesday") {
+                ui.selectedDayOfWeek shouldBe 2
+            }
+            Then("Check the pages of the current week and its neighbours") {
+                ui.dayPages.keys shouldBe setOf(-1, 0, 1)
             }
             Then("Check the FAB leads to the next week") {
                 ui.fab shouldBe ScheduleFabUi(isNextWeek = true, isVisible = true)

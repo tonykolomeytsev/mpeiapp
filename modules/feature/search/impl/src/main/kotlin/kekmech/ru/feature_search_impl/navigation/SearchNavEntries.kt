@@ -5,14 +5,11 @@ import kekmech.ru.feature_search_impl.screens.main.SearchEntry
 import kekmech.ru.feature_search_impl.screens.schedule_details.ScheduleDetailsEntry
 import kekmech.ru.lib_navigation.NavEntries
 import kekmech.ru.lib_navigation.ScreenKey
-import kekmech.ru.lib_navigation.bottomSheetEntry
 
 internal class SearchNavEntries : NavEntries {
 
     override fun EntryProviderScope<ScreenKey>.register() {
         entry<SearchScreenKey> { SearchEntry(it) }
-        bottomSheetEntry<ScheduleDetailsScreenKey>(skipPartiallyExpanded = true, isBare = true) {
-            ScheduleDetailsEntry(it)
-        }
+        entry<ScheduleDetailsScreenKey> { ScheduleDetailsEntry(it) }
     }
 }

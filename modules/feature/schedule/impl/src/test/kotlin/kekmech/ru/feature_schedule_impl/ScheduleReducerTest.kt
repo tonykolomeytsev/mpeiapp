@@ -251,9 +251,13 @@ class ScheduleReducerTest : BehaviorSpec({
             }
         }
         When("Wish.Action.PageChanged") {
-            val (state, effects, actions) = reducer.reduce(Ui.Action.PageChanged(1), givenState)
+            val (state, effects, actions) = reducer.reduce(
+                Ui.Action.PageChanged(weekOffset = 0, dayOfWeek = 2),
+                givenState,
+            )
             Then("Check state") {
                 state.selectedDate shouldBe CURRENT_DATE.atStartOfWeek().plusDays(1L)
+                state.weekOffset shouldBe 0
                 state.isNavigationFabVisible.shouldBeTrue()
             }
             Then("Check effects") {
@@ -261,6 +265,36 @@ class ScheduleReducerTest : BehaviorSpec({
             }
             Then("Check actions") {
                 actions.shouldBeEmpty()
+            }
+        }
+        When("Wish.Action.PageChanged (past Saturday to the next Monday)") {
+            val (state, effects, actions) = reducer.reduce(
+                Ui.Action.PageChanged(weekOffset = 1, dayOfWeek = 1),
+                givenState,
+            )
+            Then("Check the next week is selected") {
+                state.selectedDate shouldBe CURRENT_DATE.atStartOfWeek().plusWeeks(1L)
+                state.weekOffset shouldBe 1
+                state.isNavigationFabVisible.shouldBeTrue()
+            }
+            Then("Check effects") {
+                effects.shouldBeEmpty()
+            }
+            Then("Check the next week is observed") {
+                actions.shouldContainExactly(ScheduleCommand.ObserveSchedule(1))
+            }
+        }
+        When("Wish.Action.PageChanged (past Monday to the previous Saturday)") {
+            val (state, _, actions) = reducer.reduce(
+                Ui.Action.PageChanged(weekOffset = -1, dayOfWeek = 6),
+                givenState,
+            )
+            Then("Check the previous week is selected") {
+                state.selectedDate shouldBe CURRENT_DATE.atStartOfWeek().minusDays(2L)
+                state.weekOffset shouldBe -1
+            }
+            Then("Check the previous week is observed") {
+                actions.shouldContainExactly(ScheduleCommand.ObserveSchedule(-1))
             }
         }
         When("Wish.Click.Classes") {

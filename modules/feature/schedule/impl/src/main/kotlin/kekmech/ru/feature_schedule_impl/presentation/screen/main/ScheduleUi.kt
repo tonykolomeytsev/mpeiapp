@@ -1,8 +1,8 @@
 package kekmech.ru.feature_schedule_impl.presentation.screen.main
 
 import kekmech.ru.feature_schedule_api.domain.model.WeekOfSemester
-import kekmech.ru.feature_schedule_impl.presentation.screen.main.compose.ScheduleDayPage
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleState
+import kekmech.ru.feature_schedule_ui.compose.ScheduleDayPage
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
@@ -15,8 +15,8 @@ import java.util.Locale
  * @param selectedDate selected day, the week calendar and the days pager follow it
  * @param weekOffset offset of the selected week from the current one
  * @param weekOfSemester week of the semester of the selected week, null while it's loading
- * @param dayPages pages of the days pager, Monday to Saturday
- * @param selectedDayPage page of the [selectedDate] in the [dayPages]
+ * @param dayPages pages of the days pager by week offset: the selected week and its neighbours
+ * @param selectedDayOfWeek day of week of the [selectedDate], starting from 1 (Monday)
  * @param savedScheduleBanner banner shown when the selected week couldn't be updated, null if hidden
  * @param fab navigation button to the next or current week, null if it's disabled in the settings
  */
@@ -24,8 +24,8 @@ internal data class ScheduleUi(
     val selectedDate: LocalDate,
     val weekOffset: Int,
     val weekOfSemester: WeekOfSemester?,
-    val dayPages: List<ScheduleDayPage>,
-    val selectedDayPage: Int,
+    val dayPages: Map<Int, List<ScheduleDayPage>>,
+    val selectedDayOfWeek: Int,
     val savedScheduleBanner: SavedScheduleBannerUi?,
     val fab: ScheduleFabUi?,
 )
@@ -53,7 +53,7 @@ internal object ScheduleUiConverter {
             weekOfSemester = state.weekOfSemester,
             dayPages = ScheduleClassesListConverter.map(state),
             // Sunday is out of range, the pager stays where it is then
-            selectedDayPage = state.selectedDate.dayOfWeek.value - 1,
+            selectedDayOfWeek = state.selectedDate.dayOfWeek.value,
             savedScheduleBanner = if (state.isShowingSavedSchedule) {
                 SavedScheduleBannerUi(updatedAt = state.selectedResource?.updatedAt)
             } else {

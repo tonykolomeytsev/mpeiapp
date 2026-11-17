@@ -29,12 +29,12 @@ import kekmech.ru.feature_schedule_api.domain.model.ClassesType
 import kekmech.ru.feature_schedule_api.domain.model.ScheduleType
 import kekmech.ru.feature_schedule_api.domain.model.Time
 import kekmech.ru.feature_schedule_api.domain.model.WeekOfSemester
-import kekmech.ru.feature_schedule_impl.presentation.screen.main.compose.ScheduleDayItem
-import kekmech.ru.feature_schedule_impl.presentation.screen.main.compose.ScheduleDayPage
-import kekmech.ru.feature_schedule_impl.presentation.screen.main.compose.ScheduleDaysAction
-import kekmech.ru.feature_schedule_impl.presentation.screen.main.compose.ScheduleDaysPager
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.compose.ScheduleNavigationFab
-import kekmech.ru.feature_schedule_impl.presentation.screen.main.compose.ScheduleWeeksStrip
+import kekmech.ru.feature_schedule_ui.compose.ScheduleDayItem
+import kekmech.ru.feature_schedule_ui.compose.ScheduleDayPage
+import kekmech.ru.feature_schedule_ui.compose.ScheduleDaysAction
+import kekmech.ru.feature_schedule_ui.compose.ScheduleDaysPager
+import kekmech.ru.feature_schedule_ui.compose.ScheduleWeeksStrip
 import kekmech.ru.feature_schedule_ui.compose.toUiModel
 import kekmech.ru.ui_preview.MpeixPreview
 import kekmech.ru.ui_theme.layout.adaptiveContentWidth
@@ -49,6 +49,9 @@ private val HeaderShadowHeight = 8.dp
 
 // The FAB floats above the floating bottom navigation bar
 private val FabBottomPadding = 96.dp
+
+// Space for the bottom navigation bar and the FAB under the classes
+private val DaysBottomPadding = 144.dp
 
 /**
  * Actions of the [ScheduleScreen], handled by the `ScheduleEntry`
@@ -105,12 +108,12 @@ internal fun ScheduleScreen(
             ScheduleHeader(ui = ui, today = today, onAction = onAction)
             Box(modifier = Modifier.weight(1f)) {
                 ScheduleDaysPager(
-                    pages = ui.dayPages,
-                    selectedPage = ui.selectedDayPage,
+                    weeks = ui.dayPages,
+                    weekOffset = ui.weekOffset,
+                    selectedDayOfWeek = ui.selectedDayOfWeek,
                     onAction = { onAction(ScheduleAction.Days(it)) },
                     savedScheduleBannerText = ui.savedScheduleBanner?.let { savedScheduleBannerText(it) },
-                    // The store outlives the screen, so the pager opens on the selected day right away
-                    initialPage = ui.selectedDayPage.coerceIn(0, (ui.dayPages.size - 1).coerceAtLeast(0)),
+                    bottomPadding = DaysBottomPadding,
                 )
                 HeaderShadow()
             }
@@ -213,16 +216,18 @@ private val PreviewUi = ScheduleUi(
     selectedDate = LocalDate.of(2026, 11, 13),
     weekOffset = 0,
     weekOfSemester = WeekOfSemester.Studying(12),
-    dayPages = List(6) { index ->
-        ScheduleDayPage(
-            dayOfWeek = index + 1,
-            items = listOf(
-                ScheduleDayItem.ClassesEntry(0, PreviewClasses, PreviewClasses.toUiModel(ScheduleType.GROUP)),
-                ScheduleDayItem.Lunch,
-            ),
-        )
-    },
-    selectedDayPage = 4,
+    dayPages = mapOf(
+        0 to List(6) { index ->
+            ScheduleDayPage(
+                dayOfWeek = index + 1,
+                items = listOf(
+                    ScheduleDayItem.ClassesEntry(0, PreviewClasses, PreviewClasses.toUiModel(ScheduleType.GROUP)),
+                    ScheduleDayItem.Lunch,
+                ),
+            )
+        },
+    ),
+    selectedDayOfWeek = 5,
     savedScheduleBanner = null,
     fab = ScheduleFabUi(isNextWeek = true, isVisible = true),
 )
@@ -243,6 +248,7 @@ private fun ScheduleScreenSavedSchedulePreview() {
             ui = PreviewUi.copy(
                 selectedDate = PreviewUi.selectedDate.plusWeeks(2),
                 weekOffset = 2,
+                dayPages = mapOf(2 to PreviewUi.dayPages.getValue(0)),
                 weekOfSemester = WeekOfSemester.NonStudying,
                 savedScheduleBanner = SavedScheduleBannerUi(updatedAt = Instant.parse("2026-11-10T11:20:00Z")),
                 fab = ScheduleFabUi(isNextWeek = false, isVisible = true),

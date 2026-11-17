@@ -1,8 +1,6 @@
 package kekmech.ru.feature_search_impl
 
 import io.kotest.core.spec.style.BehaviorSpec
-import io.kotest.matchers.collections.shouldBeEmpty
-import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
@@ -11,79 +9,101 @@ import io.kotest.matchers.types.shouldBeInstanceOf
 import kekmech.ru.feature_schedule_api.domain.model.Classes
 import kekmech.ru.feature_schedule_api.domain.model.ClassesType
 import kekmech.ru.feature_schedule_api.domain.model.Day
+import kekmech.ru.feature_schedule_api.domain.model.Schedule
+import kekmech.ru.feature_schedule_api.domain.model.ScheduleKey
+import kekmech.ru.feature_schedule_api.domain.model.ScheduleRefreshState
+import kekmech.ru.feature_schedule_api.domain.model.ScheduleResource
 import kekmech.ru.feature_schedule_api.domain.model.ScheduleType
 import kekmech.ru.feature_schedule_api.domain.model.SearchResult
 import kekmech.ru.feature_schedule_api.domain.model.Time
+import kekmech.ru.feature_schedule_api.domain.model.Week
+import kekmech.ru.feature_schedule_api.domain.model.WeekOfSemester
 import kekmech.ru.feature_schedule_ui.compose.ParallelClassesUi
+import kekmech.ru.feature_schedule_ui.compose.ScheduleDayItem
+import kekmech.ru.feature_schedule_ui.compose.ScheduleDayPagesConverter
 import kekmech.ru.feature_search_impl.screens.schedule_details.ClassesCountForm
+import kekmech.ru.feature_search_impl.screens.schedule_details.ScheduleDetailsFavoritesFabUi
 import kekmech.ru.feature_search_impl.screens.schedule_details.ScheduleDetailsUiConverter
+import kekmech.ru.feature_search_impl.screens.schedule_details.ScheduleDetailsWeeksSummaryUi
 import kekmech.ru.feature_search_impl.screens.schedule_details.elm.ScheduleDetailsState
+import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.Month
 
 class ScheduleDetailsUiConverterTest : BehaviorSpec({
-    Given("Schedule is loading") {
-        val state = ScheduleDetailsState(SEARCH_RESULT, thisWeek = week(THIS_MONDAY))
+    Given("Next week is loading") {
+        val state = ScheduleDetailsState(
+            searchResult = SEARCH_RESULT,
+            schedule = mapOf(0 to resource(THIS_MONDAY), 1 to loadingResource(NEXT_MONDAY)),
+            selectedDate = THIS_MONDAY,
+        )
         When("Map state") {
             val ui = ScheduleDetailsUiConverter.map(state)
-            Then("Check header is shown right away") {
+            Then("Check the name is shown right away") {
                 ui.name shouldBe SEARCH_RESULT.name
-                ui.description shouldBe SEARCH_RESULT.description
             }
-            Then("Check favorites and weeks are loading") {
-                ui.isInFavorites.shouldBeNull()
-                ui.weeks.shouldBeNull()
+            Then("Check favorites and the weeks summary are loading") {
+                ui.favoritesFab.shouldBeNull()
+                ui.weeksSummary.shouldBeNull()
+            }
+            Then("Check the next week is shown as loading") {
+                ui.dayPages.getValue(1) shouldBe ScheduleDayPagesConverter.loadingPages
             }
         }
     }
     Given("Both weeks are loaded and Monday with parallel labs is selected") {
         val state = ScheduleDetailsState(
             searchResult = SEARCH_RESULT,
-            thisWeek = week(THIS_MONDAY, mondayClasses = listOf(LECTURE, LAB_1, LAB_2)),
-            nextWeek = week(NEXT_MONDAY),
+            schedule = mapOf(
+                0 to resource(THIS_MONDAY, mondayClasses = listOf(LECTURE, LAB_1, LAB_2)),
+                1 to resource(NEXT_MONDAY),
+            ),
+            selectedDate = THIS_MONDAY,
             isInFavorites = true,
-            selectedDayDate = THIS_MONDAY,
         )
         When("Map state") {
             val ui = ScheduleDetailsUiConverter.map(state)
-            val weeks = ui.weeks.shouldNotBeNull()
-            Then("Check favorites") {
-                ui.isInFavorites shouldBe true
+            Then("Check the favorites button removes the schedule from favorites") {
+                ui.favoritesFab shouldBe ScheduleDetailsFavoritesFabUi(isInFavorites = true, isVisible = true)
             }
             Then("Check classes counts of each week") {
-                weeks.thisWeekClassesCount shouldBe 3
-                weeks.nextWeekClassesCount shouldBe 0
+                ui.weeksSummary shouldBe ScheduleDetailsWeeksSummaryUi(thisWeekClassesCount = 3, nextWeekClassesCount = 0)
             }
-            Then("Check days of both weeks, including Sundays, with Monday selected") {
-                weeks.days shouldHaveSize 14
-                weeks.days.first().date shouldBe THIS_MONDAY
-                weeks.days.last().date shouldBe NEXT_MONDAY.plusDays(6)
-                weeks.days.filter { it.isSelected }.map { it.date } shouldContainExactly listOf(THIS_MONDAY)
+            Then("Check the pages of the selected week and its neighbours") {
+                ui.dayPages.keys shouldBe setOf(-1, 0, 1)
+                ui.dayPages.getValue(0) shouldHaveSize 6
             }
             Then("Check parallel labs are merged into a single card") {
-                weeks.selectedDayClasses shouldHaveSize 2
-                weeks.selectedDayClasses[0].shouldBeInstanceOf<ParallelClassesUi.Single>()
-                weeks.selectedDayClasses[1].shouldBeInstanceOf<ParallelClassesUi.SameNameAndType>()
+                val classes = ui.dayPages.getValue(0).first().items.filterIsInstance<ScheduleDayItem.ClassesEntry>()
+                classes shouldHaveSize 2
+                classes[0].model.shouldBeInstanceOf<ParallelClassesUi.Single>()
+                classes[1].model.shouldBeInstanceOf<ParallelClassesUi.SameNameAndType>()
+            }
+            Then("Check the day without classes is the self study day") {
+                ui.dayPages.getValue(0)[1].items shouldBe listOf(ScheduleDayItem.SelfStudy)
             }
         }
     }
-    Given("Next week failed to load and the selected day has no classes") {
+    Given("Next week failed to load and the classes are scrolled down") {
         val state = ScheduleDetailsState(
             searchResult = SEARCH_RESULT,
-            thisWeek = week(THIS_MONDAY, mondayClasses = listOf(LECTURE)),
-            nextWeek = emptyList(),
-            selectedDayDate = THIS_MONDAY.plusDays(1),
+            schedule = mapOf(0 to resource(THIS_MONDAY, mondayClasses = listOf(LECTURE))),
+            observeErrors = mapOf(1 to ERROR),
+            selectedDate = THIS_MONDAY,
+            isInFavorites = false,
+            isFavoritesFabVisible = false,
         )
         When("Map state") {
-            val weeks = ScheduleDetailsUiConverter.map(state).weeks.shouldNotBeNull()
-            Then("Check only this week is shown") {
-                weeks.thisWeekClassesCount shouldBe 1
-                weeks.nextWeekClassesCount shouldBe 0
-                weeks.days shouldHaveSize 7
+            val ui = ScheduleDetailsUiConverter.map(state)
+            Then("Check the failed week has no classes in the summary") {
+                ui.weeksSummary shouldBe ScheduleDetailsWeeksSummaryUi(thisWeekClassesCount = 1, nextWeekClassesCount = 0)
             }
-            Then("Check selected day has no classes") {
-                weeks.selectedDayClasses.shouldBeEmpty()
+            Then("Check the failed week shows the error") {
+                ui.dayPages.getValue(1).first().items shouldBe listOf(ScheduleDayItem.Error(ERROR))
+            }
+            Then("Check the favorites button is hidden") {
+                ui.favoritesFab.shouldNotBeNull().isVisible shouldBe false
             }
         }
     }
@@ -115,6 +135,8 @@ class ScheduleDetailsUiConverterTest : BehaviorSpec({
         )
         val THIS_MONDAY: LocalDate = LocalDate.of(2026, Month.NOVEMBER, 9)
         val NEXT_MONDAY: LocalDate = THIS_MONDAY.plusWeeks(1)
+        val UPDATED_AT: Instant = Instant.parse("2026-11-09T10:15:30Z")
+        val ERROR = IllegalStateException()
 
         val LECTURE = Classes(
             name = "Электротехника",
@@ -136,16 +158,31 @@ class ScheduleDetailsUiConverterTest : BehaviorSpec({
         )
         val LAB_2 = LAB_1.copy(place = "Е-308", groups = "С-12-16\\2п")
 
-        /**
-         * Seven days of the week, like `ScheduleDetailsReducer.mapToDays()` makes them
-         */
-        fun week(monday: LocalDate, mondayClasses: List<Classes> = emptyList()): List<Day> =
-            (1..7).map { dayOfWeek ->
-                Day(
-                    dayOfWeek = dayOfWeek,
-                    date = monday.plusDays(dayOfWeek - 1L),
-                    classes = if (dayOfWeek == 1) mondayClasses else emptyList(),
-                )
-            }
+        fun resource(monday: LocalDate, mondayClasses: List<Classes> = emptyList()) = ScheduleResource(
+            key = ScheduleKey(ScheduleType.GROUP, SEARCH_RESULT.name, monday),
+            value = Schedule(
+                name = SEARCH_RESULT.name,
+                id = "12345",
+                type = ScheduleType.GROUP,
+                weeks = listOf(
+                    Week(
+                        weekOfSemester = WeekOfSemester.Studying(12),
+                        weekOfYear = 46,
+                        firstDayOfWeek = monday,
+                        days = listOf(Day(dayOfWeek = 1, date = monday, classes = mondayClasses)),
+                    ),
+                ),
+            ),
+            updatedAt = UPDATED_AT,
+            refresh = ScheduleRefreshState.Idle,
+        )
+
+        /** Never downloaded and the download is in progress */
+        fun loadingResource(monday: LocalDate) = ScheduleResource(
+            key = ScheduleKey(ScheduleType.GROUP, SEARCH_RESULT.name, monday),
+            value = null,
+            updatedAt = null,
+            refresh = ScheduleRefreshState.InProgress,
+        )
     }
 }

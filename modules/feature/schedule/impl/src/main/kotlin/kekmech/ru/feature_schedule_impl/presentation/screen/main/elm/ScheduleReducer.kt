@@ -50,15 +50,17 @@ internal class ScheduleReducer :
             }
 
             is Ui.Action.PageChanged -> {
-                val oldSelectedDay = state.selectedDate.dayOfWeek.value
-                val newSelectedDay = event.page + 1L
+                // Swiping past Saturday or Monday leads to the neighbour week
+                val isAnotherWeek = event.weekOffset != state.weekOffset
                 state {
                     copy(
-                        selectedDate = state
-                            .selectedDate.plusDays(newSelectedDay - oldSelectedDay),
+                        weekOffset = event.weekOffset,
+                        selectedDate = selectNecessaryDate(state, event.weekOffset)
+                            .plusDays(event.dayOfWeek.toLong() - state.selectedDate.dayOfWeek.value),
                         isNavigationFabVisible = true,
                     )
                 }
+                if (isAnotherWeek) commands { +Command.ObserveSchedule(event.weekOffset) }
             }
 
             is Ui.Click.Classes -> effects {

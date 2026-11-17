@@ -1,298 +1,228 @@
 package kekmech.ru.feature_search_impl.screens.schedule_details
 
-import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBars
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.Layout
-import androidx.compose.ui.layout.layout
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.hideFromAccessibility
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.TextLayoutResult
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.PreviewLightDark
-import androidx.compose.ui.unit.Constraints
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import kekmech.ru.ext_kotlin.moscowLocalDate
 import kekmech.ru.feature_schedule_api.domain.model.Classes
 import kekmech.ru.feature_schedule_api.domain.model.ClassesType
 import kekmech.ru.feature_schedule_api.domain.model.ScheduleType
 import kekmech.ru.feature_schedule_api.domain.model.Time
-import kekmech.ru.feature_schedule_ui.compose.ClassesItem
-import kekmech.ru.feature_schedule_ui.compose.DayChip
-import kekmech.ru.feature_schedule_ui.compose.WORKING_DAYS_IN_WEEK
+import kekmech.ru.feature_schedule_ui.compose.ScheduleDayItem
+import kekmech.ru.feature_schedule_ui.compose.ScheduleDayPage
+import kekmech.ru.feature_schedule_ui.compose.ScheduleDaysAction
+import kekmech.ru.feature_schedule_ui.compose.ScheduleDaysPager
+import kekmech.ru.feature_schedule_ui.compose.ScheduleWeeksStrip
 import kekmech.ru.feature_schedule_ui.compose.toUiModel
 import kekmech.ru.feature_search_impl.R
-import kekmech.ru.ui_kit_buttons.button.Button
-import kekmech.ru.ui_kit_buttons.button.ButtonPalette
-import kekmech.ru.ui_kit_dialogs.BottomSheet
-import kekmech.ru.ui_kit_states.EmptyState
+import kekmech.ru.ui_kit_topappbar.topappbar.TopAppBar
 import kekmech.ru.ui_preview.MpeixPreview
 import kekmech.ru.ui_shimmer.shimmer
+import kekmech.ru.ui_theme.layout.adaptiveContentWidth
 import kekmech.ru.ui_theme.theme.MpeixTheme
 import java.time.LocalDate
 import java.time.LocalTime
-import kotlin.math.roundToInt
-import kekmech.ru.res_icons.R.drawable as Icons
 import kekmech.ru.res_strings.R.string as Strings
 
 private val HorizontalPadding = 16.dp
-private val IconSize = 18.dp
-private val DayChipWidth = 64.dp
+private val HeaderShadowHeight = 8.dp
+
+private const val FAB_ANIMATION_DURATION_MS = 100
+private val FabHeight = 48.dp
+private val FabIconSize = 24.dp
+private val FabBottomPadding = 16.dp
+
+// Space for the FAB under the classes
+private val DaysBottomPadding = 80.dp
+
 private val PlaceholderShape = RoundedCornerShape(8.dp)
-private val ClassesPlaceholderHeight = 128.dp
-private val DayPlaceholderWidth = 44.dp
-private val DayPlaceholderHeight = 64.dp
-private val RowPlaceholderIconSize = 20.dp
-private val RowPlaceholderTextWidth = 250.dp
+private val SummaryPlaceholderWidth = 250.dp
+private val SummaryPlaceholderHeight = 16.dp
+
+// The placeholder is centered on the line of the summary text, so the header doesn't jump on load
+private val SummaryPlaceholderVerticalPadding = 2.dp
 
 /**
  * Actions of the [ScheduleDetailsScreen], handled by the [ScheduleDetailsEntry]
  */
 internal sealed interface ScheduleDetailsAction {
+    data object BackClick : ScheduleDetailsAction
     data object FavoritesClick : ScheduleDetailsAction
+
+    /**
+     * The user swiped the week calendar to the week with the [weekOffset]
+     */
+    data class WeekSelected(val weekOffset: Int) : ScheduleDetailsAction
+
+    /**
+     * The user started dragging the week calendar
+     */
+    data object WeeksDragged : ScheduleDetailsAction
+
     data class DayClick(val date: LocalDate) : ScheduleDetailsAction
-    data object SwitchScheduleClick : ScheduleDetailsAction
+
+    /**
+     * Action of the days pager
+     */
+    data class Days(val action: ScheduleDaysAction) : ScheduleDetailsAction
 }
 
 /**
  * # ScheduleDetailsScreen
  *
- * Bottom sheet with the schedule found by the search: this and next weeks,
- * classes of the selected day and buttons to add the schedule to favorites or switch to it.
+ * Schedule found by the search, browsed like the Schedule tab: the name in the top app bar,
+ * the classes summary of this and next weeks under it, the endless week calendar below,
+ * and the classes of the selected week day by day in the pager at the bottom.
+ * The FAB adds the schedule to favorites or removes it from them.
  *
- * The sheet always takes the full height below the status bar,
- * so it doesn't jump when the schedule loads or another day is selected.
- *
- * @param ui content of the sheet, see [ScheduleDetailsUiConverter]
+ * @param ui what to show, see [ScheduleDetailsUiConverter]
  * @param onAction called on the user actions
- * @param modifier [Modifier] to be applied to the sheet
+ * @param modifier [Modifier] to be applied to the screen
+ * @param today current day, the week offsets of the [ui] are counted from its week
  */
 @Composable
 internal fun ScheduleDetailsScreen(
     ui: ScheduleDetailsUi,
     onAction: (ScheduleDetailsAction) -> Unit,
     modifier: Modifier = Modifier,
+    today: LocalDate = moscowLocalDate(),
 ) {
-    val statusBarHeight = WindowInsets.statusBars.asPaddingValues().calculateTopPadding()
-    BottomSheet(
-        modifier = modifier.fillMaxHeightBelow(statusBarHeight),
+    Box(
+        modifier = modifier
+            .fillMaxSize()
+            .background(MpeixTheme.palette.surface),
     ) {
-        LazyColumn(
+        Column(
             modifier = Modifier
-                .weight(1f)
-                .fillMaxWidth(),
-            contentPadding = PaddingValues(top = 4.dp, bottom = 16.dp),
+                .fillMaxSize()
+                .adaptiveContentWidth(),
         ) {
-            item(key = "header") {
-                Header(name = ui.name, description = ui.description)
-            }
-            item(key = "favorites") {
-                if (ui.isInFavorites == null) {
-                    RowPlaceholder()
-                } else {
-                    FavoritesRow(
-                        isInFavorites = ui.isInFavorites,
-                        onClick = { onAction(ScheduleDetailsAction.FavoritesClick) },
-                    )
-                }
-            }
-            item(key = "weeks_summary") {
-                if (ui.weeks == null) {
-                    RowPlaceholder()
-                } else {
-                    IconTextRow(
-                        iconRes = Icons.ic_navigation_schedule,
-                        iconTint = MpeixTheme.palette.onSurfaceVariant,
-                        text = weeksSummary(ui.weeks),
-                        textStyle = MpeixTheme.typography.bodyMedium,
-                        textColor = MpeixTheme.palette.onSurface,
-                    )
-                }
-            }
-            item(key = "days") {
-                if (ui.weeks == null) {
-                    DaysPlaceholder(Modifier.padding(vertical = 8.dp))
-                } else {
-                    Days(
-                        days = ui.weeks.days,
-                        onDayClick = { onAction(ScheduleDetailsAction.DayClick(it)) },
-                        modifier = Modifier.padding(vertical = 8.dp),
-                    )
-                }
-            }
-            classes(ui.weeks)
-            item(key = "switch_schedule") {
-                Button(
-                    text = stringResource(Strings.search_schedule_details_switch_schedule),
-                    onClick = { onAction(ScheduleDetailsAction.SwitchScheduleClick) },
-                    palette = ButtonPalette.Secondary,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = HorizontalPadding, end = HorizontalPadding, top = 8.dp),
+            ScheduleDetailsHeader(ui = ui, today = today, onAction = onAction)
+            Box(modifier = Modifier.weight(1f)) {
+                ScheduleDaysPager(
+                    weeks = ui.dayPages,
+                    weekOffset = ui.weekOffset,
+                    selectedDayOfWeek = ui.selectedDate.dayOfWeek.value,
+                    onAction = { onAction(ScheduleDetailsAction.Days(it)) },
+                    // Notes are attached to the selected schedule only, the found one has nothing to open
+                    isClassesClickable = false,
+                    bottomPadding = DaysBottomPadding,
                 )
+                HeaderShadow()
             }
+        }
+        ui.favoritesFab?.let { fab ->
+            FavoritesFab(
+                isInFavorites = fab.isInFavorites,
+                isVisible = fab.isVisible,
+                onClick = { onAction(ScheduleDetailsAction.FavoritesClick) },
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .navigationBarsPadding()
+                    .padding(bottom = FabBottomPadding),
+            )
         }
     }
 }
 
-/**
- * Takes the whole available height except the [topGap].
- *
- * `statusBarsPadding()` can't be used here: the modal sheet consumes the status bar insets by its
- * offset, so near the top the padding changes on every frame of the drag. The sheet edge then
- * stands still while the content shrinks, and the sheet feels stuck under the finger.
- */
-private fun Modifier.fillMaxHeightBelow(topGap: Dp): Modifier = layout { measurable, constraints ->
-    val placeable = if (constraints.hasBoundedHeight) {
-        val height = (constraints.maxHeight - topGap.roundToPx())
-            .coerceIn(constraints.minHeight, constraints.maxHeight)
-        measurable.measure(constraints.copy(minHeight = height, maxHeight = height))
-    } else {
-        measurable.measure(constraints)
-    }
-    layout(placeable.width, placeable.height) { placeable.place(0, 0) }
-}
-
 @Composable
-private fun Header(name: String, description: String) {
-    Column(modifier = Modifier.padding(start = HorizontalPadding, end = HorizontalPadding, bottom = 8.dp)) {
-        Text(
-            text = name,
-            style = MpeixTheme.typography.headlineSmall,
-            color = MpeixTheme.palette.onSurface,
-        )
-        Text(
-            text = description,
-            style = MpeixTheme.typography.titleSmall,
-            color = MpeixTheme.palette.onSurfaceVariant,
-            modifier = Modifier.padding(top = 12.dp),
-        )
-    }
-}
-
-@Composable
-private fun FavoritesRow(isInFavorites: Boolean, onClick: () -> Unit) {
-    val (textRes, iconRes) = if (isInFavorites) {
-        Strings.search_schedule_details_remove_favorites to R.drawable.ic_star_black_18dp
-    } else {
-        Strings.search_schedule_details_add_favorites to R.drawable.ic_star_outline_black_18dp
-    }
-    IconTextRow(
-        iconRes = iconRes,
-        iconTint = MpeixTheme.palette.primary,
-        text = AnnotatedString(stringResource(textRes)),
-        textStyle = MpeixTheme.typography.titleSmall,
-        textColor = MpeixTheme.palette.primary,
-        onClick = onClick,
-    )
-}
-
-/**
- * Icon followed by the text, the icon is centered on the first line of the text:
- * a single line row is centered, and the icon stays next to the first line when the text wraps.
- *
- * A `Row` can't do both: Compose trims the line height above the first line
- * (`LineHeightStyle.Trim.Both`), so a top aligned icon sits lower than a single line text,
- * and a centered icon drifts between the lines of a wrapped text.
- */
-@Composable
-private fun IconTextRow(
-    @DrawableRes iconRes: Int,
-    iconTint: Color,
-    text: AnnotatedString,
-    textStyle: TextStyle,
-    textColor: Color,
-    onClick: (() -> Unit)? = null,
+private fun ScheduleDetailsHeader(
+    ui: ScheduleDetailsUi,
+    today: LocalDate,
+    onAction: (ScheduleDetailsAction) -> Unit,
 ) {
-    // The text writes its layout while it's measured, the icon is placed by it in the same layout pass
-    val textLayout = remember { TextLayoutHolder() }
-    Layout(
-        content = {
-            Icon(
-                painter = painterResource(iconRes),
-                contentDescription = null,
-                tint = iconTint,
-                modifier = Modifier.size(IconSize),
-            )
-            Text(
-                text = text,
-                style = textStyle,
-                color = textColor,
-                onTextLayout = { textLayout.result = it },
-            )
-        },
+    Column(
         modifier = Modifier
             .fillMaxWidth()
-            .then(if (onClick != null) Modifier.clickable(onClick = onClick) else Modifier)
-            .padding(horizontal = HorizontalPadding, vertical = 6.dp),
-    ) { measurables, constraints ->
-        val gap = HorizontalPadding.roundToPx()
-        val icon = measurables[0].measure(Constraints())
-        val textMaxWidth = (constraints.maxWidth - icon.width - gap).coerceAtLeast(0)
-        val text = measurables[1].measure(Constraints(maxWidth = textMaxWidth))
-        val firstLineCenter = textLayout.result
-            ?.takeIf { it.lineCount > 0 }
-            ?.let { (it.getLineTop(0) + it.getLineBottom(0)) / 2f }
-            ?: (text.height / 2f)
-        val iconTop = (firstLineCenter - icon.height / 2f).roundToInt()
-        // The icon is taller than a single line, so it may stick out above the text: move both down
-        val contentTop = (-iconTop).coerceAtLeast(0)
-        val height = maxOf(contentTop + text.height, contentTop + iconTop + icon.height)
-            .coerceAtLeast(constraints.minHeight)
-        layout(constraints.maxWidth, height) {
-            icon.placeRelative(0, contentTop + iconTop)
-            text.placeRelative(icon.width + gap, contentTop)
-        }
+            .background(MpeixTheme.palette.surface),
+    ) {
+        TopAppBar(
+            navigationIcon = {
+                BackIconButton { onAction(ScheduleDetailsAction.BackClick) }
+            },
+            title = ui.name,
+        )
+        WeeksSummary(
+            summary = ui.weeksSummary,
+            modifier = Modifier.padding(start = HorizontalPadding, end = HorizontalPadding, bottom = 8.dp),
+        )
+        ScheduleWeeksStrip(
+            weekOffset = ui.weekOffset,
+            selectedDate = ui.selectedDate,
+            onWeekSelect = { onAction(ScheduleDetailsAction.WeekSelected(it)) },
+            onDayClick = { onAction(ScheduleDetailsAction.DayClick(it)) },
+            onScroll = { onAction(ScheduleDetailsAction.WeeksDragged) },
+            today = today,
+        )
     }
 }
 
-private class TextLayoutHolder {
-    var result: TextLayoutResult? = null
+@Composable
+private fun WeeksSummary(
+    summary: ScheduleDetailsWeeksSummaryUi?,
+    modifier: Modifier = Modifier,
+) {
+    if (summary == null) {
+        Box(
+            modifier = modifier
+                .shimmer()
+                .padding(vertical = SummaryPlaceholderVerticalPadding)
+                .size(SummaryPlaceholderWidth, SummaryPlaceholderHeight)
+                .background(MpeixTheme.palette.outlineVariant, PlaceholderShape),
+        )
+    } else {
+        Text(
+            text = weeksSummary(summary),
+            style = MpeixTheme.typography.titleSmall,
+            color = MpeixTheme.palette.onSurfaceVariant,
+            modifier = modifier,
+        )
+    }
 }
 
 /**
  * "12 пар на этой неделе, нет пар на следующей." with the classes counts in bold
  */
 @Composable
-private fun weeksSummary(weeks: ScheduleDetailsWeeksUi): AnnotatedString {
+private fun weeksSummary(summary: ScheduleDetailsWeeksSummaryUi): AnnotatedString {
     val thisWeek = weekSummary(
-        classesCount = weeks.thisWeekClassesCount,
+        classesCount = summary.thisWeekClassesCount,
         descriptionRes = Strings.search_schedule_details_this_week_description,
         emptyDescriptionRes = Strings.search_schedule_details_this_week_description_empty,
     )
     val nextWeek = weekSummary(
-        classesCount = weeks.nextWeekClassesCount,
+        classesCount = summary.nextWeekClassesCount,
         descriptionRes = Strings.search_schedule_details_next_week_description,
         emptyDescriptionRes = Strings.search_schedule_details_next_week_description_empty,
     )
@@ -326,112 +256,70 @@ private fun weekSummary(
     }
 }
 
-@Composable
-private fun Days(
-    days: List<ScheduleDetailsDayUi>,
-    onDayClick: (LocalDate) -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    val today = remember { moscowLocalDate() }
-    LazyRow(
-        modifier = modifier.padding(horizontal = HorizontalPadding),
-        contentPadding = PaddingValues(horizontal = 8.dp),
-    ) {
-        items(days, key = { it.date.toEpochDay() }) { day ->
-            DayChip(
-                date = day.date,
-                isSelected = day.isSelected,
-                isToday = day.date == today,
-                onClick = { onDayClick(day.date) },
-                modifier = Modifier.width(DayChipWidth),
-            )
-        }
-    }
-}
-
-private fun LazyListScope.classes(weeks: ScheduleDetailsWeeksUi?) {
-    when {
-        weeks == null -> item(key = "classes_placeholder") {
-            ClassesPlaceholder()
-        }
-
-        weeks.selectedDayClasses.isEmpty() -> item(key = "classes_empty") {
-            EmptyState(title = stringResource(Strings.search_schedule_details_empty_title))
-        }
-
-        else -> items(weeks.selectedDayClasses) { classes ->
-            ClassesItem(
-                model = classes,
-                modifier = Modifier.padding(start = HorizontalPadding, end = HorizontalPadding, bottom = 8.dp),
-            )
-        }
-    }
-}
-
-@Composable
-private fun RowPlaceholder() {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .shimmer()
-            .padding(horizontal = HorizontalPadding, vertical = 6.dp),
-    ) {
-        Box(
-            Modifier
-                .size(RowPlaceholderIconSize)
-                .background(MpeixTheme.palette.outlineVariant, PlaceholderShape)
-        )
-        Box(
-            Modifier
-                .padding(start = HorizontalPadding)
-                .width(RowPlaceholderTextWidth)
-                .height(RowPlaceholderIconSize)
-                .background(MpeixTheme.palette.outlineVariant, PlaceholderShape)
-        )
-    }
-}
-
 /**
- * Placeholders are laid out exactly like the [DayChip]s of the loaded [Days]
+ * Shadow under the header, the classes scroll under it
  */
 @Composable
-private fun DaysPlaceholder(modifier: Modifier = Modifier) {
-    Row(
-        modifier = modifier
+private fun HeaderShadow() {
+    val surface = MpeixTheme.palette.surface
+    Box(
+        modifier = Modifier
             .fillMaxWidth()
-            .shimmer()
-            .padding(horizontal = HorizontalPadding + 8.dp),
-    ) {
-        repeat(WORKING_DAYS_IN_WEEK) {
-            Box(
-                modifier = Modifier.width(DayChipWidth),
-                contentAlignment = Alignment.TopCenter,
-            ) {
-                Box(
-                    Modifier
-                        .padding(bottom = 8.dp)
-                        .width(DayPlaceholderWidth)
-                        .height(DayPlaceholderHeight)
-                        .background(MpeixTheme.palette.outlineVariant, PlaceholderShape)
-                )
-            }
-        }
-    }
-}
-
-@Composable
-private fun ClassesPlaceholder() {
-    Spacer(
-        Modifier
-            .fillMaxWidth()
-            .shimmer()
-            .padding(start = HorizontalPadding, end = HorizontalPadding, bottom = 8.dp)
-            .height(ClassesPlaceholderHeight)
-            .background(MpeixTheme.palette.secondary, PlaceholderShape)
+            .height(HeaderShadowHeight)
+            .background(Brush.verticalGradient(listOf(surface, Color.Transparent))),
     )
 }
 
-private val PreviewMonday = LocalDate.of(2026, 11, 9)
+/**
+ * Adds the schedule to favorites or removes it from them, styled like the navigation FAB of the Schedule tab.
+ *
+ * @param isVisible the button fades out when false and doesn't react to clicks while hidden
+ */
+@Composable
+private fun FavoritesFab(
+    isInFavorites: Boolean,
+    isVisible: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val alpha by animateFloatAsState(
+        targetValue = if (isVisible) 1f else 0f,
+        animationSpec = tween(FAB_ANIMATION_DURATION_MS),
+        label = "FavoritesFabAlpha",
+    )
+    val (textRes, iconRes) = if (isInFavorites) {
+        Strings.search_schedule_details_remove_favorites to R.drawable.ic_star_black_18dp
+    } else {
+        Strings.search_schedule_details_add_favorites to R.drawable.ic_star_outline_black_18dp
+    }
+    ExtendedFloatingActionButton(
+        text = {
+            Text(
+                text = stringResource(textRes).uppercase(),
+                style = MpeixTheme.typography.titleSmall,
+                maxLines = 1,
+            )
+        },
+        icon = {
+            Icon(
+                painter = painterResource(iconRes),
+                contentDescription = null,
+                modifier = Modifier.size(FabIconSize),
+            )
+        },
+        // The hidden button stays in the layout, so it keeps its place and just ignores the clicks
+        onClick = { if (isVisible) onClick() },
+        modifier = modifier
+            .height(FabHeight)
+            .alpha(alpha)
+            .then(if (isVisible) Modifier else Modifier.semantics { hideFromAccessibility() }),
+        containerColor = MpeixTheme.palette.primary,
+        contentColor = MpeixTheme.palette.onPrimary,
+        shape = CircleShape,
+    )
+}
+
+private val PreviewToday = LocalDate.of(2026, 11, 10)
 
 private val PreviewClasses = Classes(
     name = "Электротехника",
@@ -444,44 +332,49 @@ private val PreviewClasses = Classes(
     number = 1,
 )
 
+private val PreviewDayPages = List(6) { index ->
+    val practice = PreviewClasses.copy(
+        type = ClassesType.PRACTICE,
+        number = 2,
+        time = Time(LocalTime.of(11, 10), LocalTime.of(12, 45)),
+    )
+    ScheduleDayPage(
+        dayOfWeek = index + 1,
+        items = listOf(
+            ScheduleDayItem.ClassesEntry(0, PreviewClasses, PreviewClasses.toUiModel(ScheduleType.PERSON)),
+            ScheduleDayItem.ClassesEntry(1, practice, practice.toUiModel(ScheduleType.PERSON)),
+            ScheduleDayItem.Lunch,
+        ),
+    )
+}
+
 private val PreviewUi = ScheduleDetailsUi(
     name = "Зуев Юрий Юрьевич",
-    description = "Кафедра электротехники",
-    isInFavorites = false,
-    weeks = ScheduleDetailsWeeksUi(
-        thisWeekClassesCount = 12,
-        nextWeekClassesCount = 0,
-        days = List(14) { ScheduleDetailsDayUi(PreviewMonday.plusDays(it.toLong()), isSelected = it == 1) },
-        selectedDayClasses = listOf(
-            PreviewClasses.toUiModel(ScheduleType.PERSON),
-            PreviewClasses.copy(
-                type = ClassesType.PRACTICE,
-                number = 2,
-                time = Time(LocalTime.of(11, 10), LocalTime.of(12, 45)),
-            ).toUiModel(ScheduleType.PERSON),
-        ),
-    ),
+    weeksSummary = ScheduleDetailsWeeksSummaryUi(thisWeekClassesCount = 12, nextWeekClassesCount = 0),
+    selectedDate = PreviewToday,
+    weekOffset = 0,
+    dayPages = mapOf(0 to PreviewDayPages),
+    favoritesFab = ScheduleDetailsFavoritesFabUi(isInFavorites = false, isVisible = true),
 )
 
 @PreviewLightDark
 @Composable
 private fun ScheduleDetailsScreenPreview() {
     MpeixPreview {
-        ScheduleDetailsScreen(ui = PreviewUi, onAction = {}, modifier = Modifier.height(720.dp))
+        ScheduleDetailsScreen(ui = PreviewUi, onAction = {}, today = PreviewToday)
     }
 }
 
 @PreviewLightDark
 @Composable
-private fun ScheduleDetailsScreenEmptyDayPreview() {
+private fun ScheduleDetailsScreenInFavoritesPreview() {
     MpeixPreview {
         ScheduleDetailsScreen(
             ui = PreviewUi.copy(
-                isInFavorites = true,
-                weeks = PreviewUi.weeks?.copy(selectedDayClasses = emptyList()),
+                favoritesFab = ScheduleDetailsFavoritesFabUi(isInFavorites = true, isVisible = true),
             ),
             onAction = {},
-            modifier = Modifier.height(720.dp),
+            today = PreviewToday,
         )
     }
 }
@@ -491,9 +384,9 @@ private fun ScheduleDetailsScreenEmptyDayPreview() {
 private fun ScheduleDetailsScreenLoadingPreview() {
     MpeixPreview {
         ScheduleDetailsScreen(
-            ui = PreviewUi.copy(isInFavorites = null, weeks = null),
+            ui = PreviewUi.copy(weeksSummary = null, dayPages = emptyMap(), favoritesFab = null),
             onAction = {},
-            modifier = Modifier.height(720.dp),
+            today = PreviewToday,
         )
     }
 }

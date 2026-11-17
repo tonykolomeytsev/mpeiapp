@@ -18,8 +18,8 @@ import kekmech.ru.feature_schedule_api.domain.model.Time
 import kekmech.ru.feature_schedule_api.domain.model.Week
 import kekmech.ru.feature_schedule_api.domain.model.WeekOfSemester
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.ScheduleClassesListConverter
-import kekmech.ru.feature_schedule_impl.presentation.screen.main.compose.ScheduleDayItem
 import kekmech.ru.feature_schedule_impl.presentation.screen.main.elm.ScheduleState
+import kekmech.ru.feature_schedule_ui.compose.ScheduleDayItem
 import kekmech.ru.feature_schedule_ui.compose.ParallelClassesUi
 import java.time.Instant
 import java.time.LocalDate
@@ -30,7 +30,7 @@ class ScheduleClassesListConverterTest : BehaviorSpec({
     Given("Day with parallel labs after the lunch and a window after them") {
         val state = stateWithClasses(listOf(CLASSES_1, CLASSES_2, LAB_1, LAB_2, CLASSES_5))
         When("Map state") {
-            val items = ScheduleClassesListConverter.map(state).first().items
+            val items = ScheduleClassesListConverter.map(state).getValue(0).first().items
             Then("Check parallel labs are merged into a single card") {
                 items.map { it::class } shouldBe listOf(
                     ScheduleDayItem.ClassesEntry::class,
@@ -54,7 +54,7 @@ class ScheduleClassesListConverterTest : BehaviorSpec({
         val language = LAB_2.copy(name = "Foreign language", type = ClassesType.PRACTICE)
         val state = stateWithClasses(listOf(CLASSES_1, CLASSES_2, LAB_1, language))
         When("Map state") {
-            val items = ScheduleClassesListConverter.map(state).first().items
+            val items = ScheduleClassesListConverter.map(state).getValue(0).first().items
             Then("Check they are separate cards without a window between them") {
                 items.map { it::class } shouldBe listOf(
                     ScheduleDayItem.ClassesEntry::class,

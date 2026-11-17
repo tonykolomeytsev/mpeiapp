@@ -1,4 +1,4 @@
-package kekmech.ru.feature_schedule_impl.presentation.screen.main.compose
+package kekmech.ru.feature_schedule_ui.compose
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

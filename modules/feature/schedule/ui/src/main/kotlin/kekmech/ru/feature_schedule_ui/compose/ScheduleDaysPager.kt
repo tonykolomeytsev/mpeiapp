@@ -1,4 +1,4 @@
-package kekmech.ru.feature_schedule_impl.presentation.screen.main.compose
+package kekmech.ru.feature_schedule_ui.compose
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.DragInteraction
@@ -29,16 +29,12 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import kekmech.ru.feature_schedule_api.domain.model.Classes
 import kekmech.ru.feature_schedule_api.domain.model.ClassesType
 import kekmech.ru.feature_schedule_api.domain.model.ScheduleType
 import kekmech.ru.feature_schedule_api.domain.model.Time
-import kekmech.ru.feature_schedule_ui.compose.ClassesItem
-import kekmech.ru.feature_schedule_ui.compose.LunchItem
-import kekmech.ru.feature_schedule_ui.compose.SelfStudyItem
-import kekmech.ru.feature_schedule_ui.compose.WindowItem
-import kekmech.ru.feature_schedule_ui.compose.toUiModel
 import kekmech.ru.ui_kit_states.ErrorState
 import kekmech.ru.ui_theme.theme.MpeixTheme
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -48,79 +44,103 @@ import kotlinx.coroutines.flow.filterNotNull
 import java.time.LocalTime
 import kotlin.math.roundToInt
 
+// Endless in practice, like the weeks of the ScheduleWeeksStrip: about 3 million years each way
+private const val DAYS_PAGE_COUNT = Int.MAX_VALUE
+
+// Monday of the current week, in the middle so the days are swiped both ways.
+// It's a multiple of the week length, so the day of week of a page is just its remainder
+private const val CURRENT_WEEK_MONDAY_PAGE = DAYS_PAGE_COUNT / 2 / WORKING_DAYS_IN_WEEK * WORKING_DAYS_IN_WEEK
+
 private val ListTopPadding = 8.dp
 
-// Space for the bottom navigation bar and the FAB
-private val ListBottomPadding = 144.dp
-
 /**
- * Actions of the [ScheduleDaysPager], handled by the `ScheduleEntry`
+ * Actions of the [ScheduleDaysPager]
  */
-internal sealed interface ScheduleDaysAction {
+public sealed interface ScheduleDaysAction {
 
     /**
-     * The user swiped the pager to the [page]. Sent when the finger is released,
-     * before the pager finishes settling on the page.
+     * The user swiped the pager to the day [dayOfWeek] (1 is Monday) of the week with the [weekOffset].
+     * Swiping past Saturday leads to Monday of the next week, and past Monday to Saturday of the previous one.
+     * Sent when the finger is released, before the pager finishes settling on the page.
      */
-    data class PageSelected(val page: Int) : ScheduleDaysAction
+    public data class PageSelected(val weekOffset: Int, val dayOfWeek: Int) : ScheduleDaysAction
 
     /**
      * The user started dragging the pager
      */
-    data object PagerDragged : ScheduleDaysAction
+    public data object PagerDragged : ScheduleDaysAction
 
     /**
      * The day list was scrolled by [dy] pixels, positive [dy] means scrolling to the end of the list
      */
-    data class ClassesScrolled(val dy: Int) : ScheduleDaysAction
+    public data class ClassesScrolled(val dy: Int) : ScheduleDaysAction
 
-    data class ClassesClick(val classes: Classes) : ScheduleDaysAction
-    data object LunchClick : ScheduleDaysAction
-    data object ReloadClick : ScheduleDaysAction
-    data object SavedScheduleBannerClick : ScheduleDaysAction
+    public data class ClassesClick(val classes: Classes) : ScheduleDaysAction
+    public data object LunchClick : ScheduleDaysAction
+    public data object ReloadClick : ScheduleDaysAction
+    public data object SavedScheduleBannerClick : ScheduleDaysAction
 }
 
 /**
  * # ScheduleDaysPager
  *
- * Horizontal pager of the working days (Monday to Saturday) of the selected week.
+ * Endless horizontal pager of the working days (Monday to Saturday): Saturday is followed
+ * by Monday of the next week, so the user swipes from week to week without the week calendar.
  * Each page is the list of the classes of the day.
+ *
+ * The week offsets are counted from the current week, like in the [ScheduleWeeksStrip].
+ * Another week selected outside of the pager (week calendar, FAB) replaces the shown days in place,
+ * without scrolling through the days in between.
  *
  * Replaces the `ViewPager2` with the nested `RecyclerView`s of the former `ScheduleFragment`.
  *
- * @param pages pages to show, see `ScheduleClassesListConverter`
- * @param selectedPage page of the selected day, the pager scrolls to it when it changes.
- * Pages out of the range (e.g. Sunday) are ignored.
+ * @param weeks pages of the weeks by their week offsets, see [ScheduleDayPagesConverter].
+ * Weeks which are not in the map are shown as loading. The selected week and its neighbours are enough:
+ * only the days next to the selected one are visible during a swipe.
+ * @param weekOffset offset of the selected week from the current one
+ * @param selectedDayOfWeek selected day of the [weekOffset] week, starting from 1 (Monday).
+ * The pager scrolls to it when it changes, days out of the range (e.g. Sunday) are ignored.
  * @param onAction called on the user actions
- * @param savedScheduleBannerText text of the saved schedule banner at the top of each day list,
- * or null if the banner is hidden
  * @param modifier [Modifier] to be applied to the pager
- * @param initialPage page shown on the first composition, pass the [selectedPage] if it's in range,
- * so the pager doesn't scroll to it right after opening
+ * @param savedScheduleBannerText text of the saved schedule banner at the top of each day list
+ * of the selected week, or null if the banner is hidden
+ * @param isClassesClickable whether the classes cards send [ScheduleDaysAction.ClassesClick]
+ * @param bottomPadding space under the end of each day list, e.g. for the FAB, on top of the system bars
  */
 @Composable
-internal fun ScheduleDaysPager(
-    pages: List<ScheduleDayPage>,
-    selectedPage: Int,
+public fun ScheduleDaysPager(
+    weeks: Map<Int, List<ScheduleDayPage>>,
+    weekOffset: Int,
+    selectedDayOfWeek: Int,
     onAction: (ScheduleDaysAction) -> Unit,
-    savedScheduleBannerText: String? = null,
     modifier: Modifier = Modifier,
-    initialPage: Int = 0,
+    savedScheduleBannerText: String? = null,
+    isClassesClickable: Boolean = true,
+    bottomPadding: Dp = 0.dp,
 ) {
     val currentOnAction by rememberUpdatedState(onAction)
-    val pagerState = rememberPagerState(initialPage = initialPage) { pages.size }
+    val selectedPage = selectedDayOfWeek
+        .takeIf { it in 1..WORKING_DAYS_IN_WEEK }
+        ?.let { dayPageOf(weekOffset, it) }
+    val pagerState = rememberPagerState(initialPage = selectedPage ?: dayPageOf(weekOffset, 1)) {
+        DAYS_PAGE_COUNT
+    }
     val isDragged by pagerState.interactionSource.collectIsDraggedAsState()
     var isProgrammaticScroll by remember { mutableStateOf(false) }
 
     LaunchedEffect(selectedPage) {
         // targetPage is the page the pager is settling to after the swipe, so the selected page
         // reported by the swipe itself doesn't interrupt the fling with another animation
-        if (selectedPage !in 0 until pagerState.pageCount || pagerState.targetPage == selectedPage) {
-            return@LaunchedEffect
-        }
+        if (selectedPage == null || pagerState.targetPage == selectedPage) return@LaunchedEffect
         isProgrammaticScroll = true
         try {
-            pagerState.animateScrollToPage(selectedPage)
+            if (selectedPage.dayPageWeekOffset() == pagerState.currentPage.dayPageWeekOffset()) {
+                pagerState.animateScrollToPage(selectedPage)
+            } else {
+                // Another week was selected with the week calendar or the FAB: its days take the place
+                // of the shown week, as if the pager had only one week
+                pagerState.scrollToPage(selectedPage)
+            }
         } finally {
             isProgrammaticScroll = false
         }
@@ -133,7 +153,9 @@ internal fun ScheduleDaysPager(
             .filterNotNull()
             .distinctUntilChanged()
             .drop(1)
-            .collect { currentOnAction(ScheduleDaysAction.PageSelected(it)) }
+            .collect { page ->
+                currentOnAction(ScheduleDaysAction.PageSelected(page.dayPageWeekOffset(), page.dayPageDayOfWeek()))
+            }
     }
     LaunchedEffect(pagerState) {
         pagerState.interactionSource.interactions
@@ -144,23 +166,38 @@ internal fun ScheduleDaysPager(
     HorizontalPager(
         state = pagerState,
         modifier = modifier.fillMaxSize(),
-        key = { pages[it].dayOfWeek },
+        key = { it },
         // Neighbour days are composed ahead, so swiping doesn't compose the next page mid-animation.
         // Composing all the days at once made opening the tab ~40% slower (153 vs 44 text measures)
         beyondViewportPageCount = 1,
     ) { page ->
+        val pageWeekOffset = page.dayPageWeekOffset()
+        val dayIndex = page.dayPageDayOfWeek() - 1
         ScheduleDay(
-            page = pages[page],
-            savedScheduleBannerText = savedScheduleBannerText,
+            page = weeks[pageWeekOffset]?.getOrNull(dayIndex) ?: ScheduleDayPagesConverter.loadingPages[dayIndex],
+            savedScheduleBannerText = savedScheduleBannerText.takeIf { pageWeekOffset == weekOffset },
+            isClassesClickable = isClassesClickable,
+            bottomPadding = bottomPadding,
             onAction = onAction,
         )
     }
 }
 
+private fun dayPageOf(weekOffset: Int, dayOfWeek: Int): Int =
+    CURRENT_WEEK_MONDAY_PAGE + weekOffset * WORKING_DAYS_IN_WEEK + dayOfWeek - 1
+
+private fun Int.dayPageWeekOffset(): Int =
+    Math.floorDiv(this - CURRENT_WEEK_MONDAY_PAGE, WORKING_DAYS_IN_WEEK)
+
+private fun Int.dayPageDayOfWeek(): Int =
+    Math.floorMod(this - CURRENT_WEEK_MONDAY_PAGE, WORKING_DAYS_IN_WEEK) + 1
+
 @Composable
 private fun ScheduleDay(
     page: ScheduleDayPage,
     savedScheduleBannerText: String?,
+    isClassesClickable: Boolean,
+    bottomPadding: Dp,
     onAction: (ScheduleDaysAction) -> Unit,
 ) {
     val currentOnAction by rememberUpdatedState(onAction)
@@ -191,7 +228,7 @@ private fun ScheduleDay(
         state = listState,
         contentPadding = PaddingValues(
             top = ListTopPadding,
-            bottom = ListBottomPadding + systemBarsPadding.calculateBottomPadding(),
+            bottom = bottomPadding + systemBarsPadding.calculateBottomPadding(),
         ),
     ) {
         if (savedScheduleBannerText != null) {
@@ -210,7 +247,7 @@ private fun ScheduleDay(
             key = { it.key },
             contentType = { it::class },
         ) { item ->
-            ScheduleDayListItem(item, onAction)
+            ScheduleDayListItem(item, isClassesClickable, onAction)
         }
     }
 }
@@ -218,13 +255,18 @@ private fun ScheduleDay(
 @Composable
 private fun LazyItemScope.ScheduleDayListItem(
     item: ScheduleDayItem,
+    isClassesClickable: Boolean,
     onAction: (ScheduleDaysAction) -> Unit,
 ) {
     val itemModifier = Modifier.padding(start = 8.dp, end = 8.dp, bottom = 8.dp)
     when (item) {
         is ScheduleDayItem.ClassesEntry -> ClassesItem(
             model = item.model,
-            onClick = { onAction(ScheduleDaysAction.ClassesClick(item.classes)) },
+            onClick = if (isClassesClickable) {
+                { onAction(ScheduleDaysAction.ClassesClick(item.classes)) }
+            } else {
+                null
+            },
             modifier = itemModifier,
         )
 
@@ -283,15 +325,19 @@ private val PreviewPages = listOf(
     ),
     ScheduleDayPage(dayOfWeek = 2, items = listOf(ScheduleDayItem.SelfStudy)),
     ScheduleDayPage(dayOfWeek = 3, items = listOf(ScheduleDayItem.Shimmer)),
+    ScheduleDayPage(dayOfWeek = 4, items = listOf(ScheduleDayItem.Error(IllegalStateException()))),
 )
+
+private val PreviewWeeks = mapOf(0 to PreviewPages)
 
 @PreviewLightDark
 @Composable
 private fun ScheduleDaysPagerPreview() {
     MpeixTheme {
         ScheduleDaysPager(
-            pages = PreviewPages,
-            selectedPage = 0,
+            weeks = PreviewWeeks,
+            weekOffset = 0,
+            selectedDayOfWeek = 1,
             onAction = {},
             modifier = Modifier.background(MpeixTheme.palette.surface),
         )
@@ -303,8 +349,9 @@ private fun ScheduleDaysPagerPreview() {
 private fun ScheduleDaysPagerSavedBannerPreview() {
     MpeixTheme {
         ScheduleDaysPager(
-            pages = PreviewPages,
-            selectedPage = 0,
+            weeks = PreviewWeeks,
+            weekOffset = 0,
+            selectedDayOfWeek = 1,
             onAction = {},
             savedScheduleBannerText = "Не удалось обновить.\nРасписание от 10 ноября, 14:20",
             modifier = Modifier.background(MpeixTheme.palette.surface),
@@ -317,10 +364,10 @@ private fun ScheduleDaysPagerSavedBannerPreview() {
 private fun ScheduleDaysPagerSelfStudyPreview() {
     MpeixTheme {
         ScheduleDaysPager(
-            pages = PreviewPages,
-            selectedPage = 1,
+            weeks = PreviewWeeks,
+            weekOffset = 0,
+            selectedDayOfWeek = 2,
             onAction = {},
-            initialPage = 1,
             modifier = Modifier.background(MpeixTheme.palette.surface),
         )
     }
@@ -331,10 +378,24 @@ private fun ScheduleDaysPagerSelfStudyPreview() {
 private fun ScheduleDaysPagerShimmerPreview() {
     MpeixTheme {
         ScheduleDaysPager(
-            pages = PreviewPages,
-            selectedPage = 2,
+            weeks = PreviewWeeks,
+            weekOffset = 0,
+            selectedDayOfWeek = 3,
             onAction = {},
-            initialPage = 2,
+            modifier = Modifier.background(MpeixTheme.palette.surface),
+        )
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun ScheduleDaysPagerErrorPreview() {
+    MpeixTheme {
+        ScheduleDaysPager(
+            weeks = PreviewWeeks,
+            weekOffset = 0,
+            selectedDayOfWeek = 4,
+            onAction = {},
             modifier = Modifier.background(MpeixTheme.palette.surface),
         )
     }

@@ -17,5 +17,7 @@ dependencies {
     implementation(project(":feature_schedule_api"))
 
     implementation(project(":ui_theme"))
+    implementation(project(":ui_shimmer"))
+    implementation(project(":ui_kit_states"))
     implementation(project(":res_strings"))
 }
