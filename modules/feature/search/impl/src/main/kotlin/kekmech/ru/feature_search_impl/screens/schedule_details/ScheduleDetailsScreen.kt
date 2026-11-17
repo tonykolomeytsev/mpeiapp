@@ -171,11 +171,12 @@ private fun ScheduleDetailsHeader(
             navigationIcon = {
                 BackIconButton { onAction(ScheduleDetailsAction.BackClick) }
             },
-            title = ui.name,
+            title = "Быстрый просмотр",
         )
         WeeksSummary(
+            title = ui.name,
             summary = ui.weeksSummary,
-            modifier = Modifier.padding(start = HorizontalPadding, end = HorizontalPadding, bottom = 8.dp),
+            modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp, top = 4.dp),
         )
         ScheduleWeeksStrip(
             weekOffset = ui.weekOffset,
@@ -190,24 +191,32 @@ private fun ScheduleDetailsHeader(
 
 @Composable
 private fun WeeksSummary(
+    title: String,
     summary: ScheduleDetailsWeeksSummaryUi?,
     modifier: Modifier = Modifier,
 ) {
-    if (summary == null) {
-        Box(
-            modifier = modifier
-                .shimmer()
-                .padding(vertical = SummaryPlaceholderVerticalPadding)
-                .size(SummaryPlaceholderWidth, SummaryPlaceholderHeight)
-                .background(MpeixTheme.palette.outlineVariant, PlaceholderShape),
-        )
-    } else {
+    Column(modifier) {
         Text(
-            text = weeksSummary(summary),
-            style = MpeixTheme.typography.titleSmall,
-            color = MpeixTheme.palette.onSurfaceVariant,
-            modifier = modifier,
+            text = title,
+            style = MpeixTheme.typography.headlineSmall,
+            color = MpeixTheme.palette.onSurface,
+            modifier = Modifier.padding(bottom = 6.dp),
         )
+        if (summary == null) {
+            Box(
+                modifier = Modifier
+                    .shimmer()
+                    .padding(vertical = SummaryPlaceholderVerticalPadding)
+                    .size(SummaryPlaceholderWidth, SummaryPlaceholderHeight)
+                    .background(MpeixTheme.palette.outlineVariant, PlaceholderShape),
+            )
+        } else {
+            Text(
+                text = weeksSummary(summary),
+                style = MpeixTheme.typography.titleSmall,
+                color = MpeixTheme.palette.onSurfaceVariant,
+            )
+        }
     }
 }
 
@@ -251,7 +260,14 @@ private fun weekSummary(
         append(description)
         val countStart = description.indexOf(count)
         if (countStart >= 0) {
-            addStyle(SpanStyle(fontWeight = FontWeight.Bold), countStart, countStart + count.length)
+            addStyle(
+                SpanStyle(
+                    fontWeight = FontWeight.Bold,
+                    color = MpeixTheme.palette.onSurface,
+                ),
+                countStart,
+                countStart + count.length
+            )
         }
     }
 }
@@ -313,8 +329,8 @@ private fun FavoritesFab(
             .height(FabHeight)
             .alpha(alpha)
             .then(if (isVisible) Modifier else Modifier.semantics { hideFromAccessibility() }),
-        containerColor = MpeixTheme.palette.primary,
-        contentColor = MpeixTheme.palette.onPrimary,
+        containerColor = MpeixTheme.palette.secondary,
+        contentColor = MpeixTheme.palette.onSecondary,
         shape = CircleShape,
     )
 }
@@ -341,7 +357,11 @@ private val PreviewDayPages = List(6) { index ->
     ScheduleDayPage(
         dayOfWeek = index + 1,
         items = listOf(
-            ScheduleDayItem.ClassesEntry(0, PreviewClasses, PreviewClasses.toUiModel(ScheduleType.PERSON)),
+            ScheduleDayItem.ClassesEntry(
+                0,
+                PreviewClasses,
+                PreviewClasses.toUiModel(ScheduleType.PERSON)
+            ),
             ScheduleDayItem.ClassesEntry(1, practice, practice.toUiModel(ScheduleType.PERSON)),
             ScheduleDayItem.Lunch,
         ),
@@ -350,7 +370,10 @@ private val PreviewDayPages = List(6) { index ->
 
 private val PreviewUi = ScheduleDetailsUi(
     name = "Зуев Юрий Юрьевич",
-    weeksSummary = ScheduleDetailsWeeksSummaryUi(thisWeekClassesCount = 12, nextWeekClassesCount = 0),
+    weeksSummary = ScheduleDetailsWeeksSummaryUi(
+        thisWeekClassesCount = 12,
+        nextWeekClassesCount = 0
+    ),
     selectedDate = PreviewToday,
     weekOffset = 0,
     dayPages = mapOf(0 to PreviewDayPages),
@@ -371,7 +394,10 @@ private fun ScheduleDetailsScreenInFavoritesPreview() {
     MpeixPreview {
         ScheduleDetailsScreen(
             ui = PreviewUi.copy(
-                favoritesFab = ScheduleDetailsFavoritesFabUi(isInFavorites = true, isVisible = true),
+                favoritesFab = ScheduleDetailsFavoritesFabUi(
+                    isInFavorites = true,
+                    isVisible = true
+                ),
             ),
             onAction = {},
             today = PreviewToday,
