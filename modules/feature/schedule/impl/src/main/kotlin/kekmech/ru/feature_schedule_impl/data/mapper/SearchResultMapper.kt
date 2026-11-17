@@ -18,6 +18,7 @@ internal object SearchResultMapper {
             type = when (dto.type) {
                 ScheduleTypeDto.GROUP -> ScheduleType.GROUP
                 ScheduleTypeDto.PERSON -> ScheduleType.PERSON
+                ScheduleTypeDto.ROOM -> ScheduleType.ROOM
             }
         )
 }

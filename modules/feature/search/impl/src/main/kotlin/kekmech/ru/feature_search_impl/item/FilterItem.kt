@@ -12,6 +12,7 @@ internal data class FilterItem(
             FilterItem(FilterItemType.ALL, true),
             FilterItem(FilterItemType.GROUPS, false),
             FilterItem(FilterItemType.PERSONS, false),
+            FilterItem(FilterItemType.ROOMS, false),
             FilterItem(FilterItemType.NOTES, false),
             FilterItem(FilterItemType.MAP, false)
         )
@@ -24,6 +25,7 @@ internal enum class FilterItemType(
     ALL(Strings.search_filter_all),
     GROUPS(Strings.search_filter_groups),
     PERSONS(Strings.search_filter_persons),
+    ROOMS(Strings.search_filter_rooms),
     NOTES(Strings.search_filter_notes),
     MAP(Strings.search_filter_map)
 }

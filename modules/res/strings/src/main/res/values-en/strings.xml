@@ -119,11 +119,11 @@
     <string name="onboarding_welcome_subtitle_bars">You can view BARS directly in the application. For special occasions, there is a built-in browser</string>
 
     <string name="schedule_find_header">Search for a schedule</string>
-    <string name="schedule_find_description">Enter the group number or teacher name and we will download the selected schedule to the device</string>
-    <string name="schedule_find_hint">Group number or teacher name</string>
+    <string name="schedule_find_description">Enter the group number, teacher name or room and we will download the selected schedule to the device</string>
+    <string name="schedule_find_hint">Group, teacher or room</string>
     <string name="schedule_find_button_continue">Continue</string>
     <string name="schedule_find_error_loading">Failed to load schedule for %s</string>
-    <string name="schedule_find_error_invalid_input">Enter a valid group number or teacher name</string>
+    <string name="schedule_find_error_invalid_input">Enter a valid group number, teacher name or room</string>
 
     <string name="schedule_semester_week">Academic week #%d</string>
     <string name="schedule_weekend_week">Non-academic week</string>
@@ -275,6 +275,7 @@
     <string name="search_filter_map">Map</string>
     <string name="search_filter_groups">Groups</string>
     <string name="search_filter_persons">Teachers</string>
+    <string name="search_filter_rooms">Rooms</string>
 
     <string name="search_schedule_details_classes_1">classes</string>
     <string name="search_schedule_details_classes_2_4">classes</string>

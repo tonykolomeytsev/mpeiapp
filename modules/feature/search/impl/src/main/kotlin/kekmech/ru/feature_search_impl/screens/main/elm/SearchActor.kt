@@ -50,5 +50,14 @@ internal class SearchActor(
                     )
                     .getOrThrow()
             }.mapEvents({ Event.Internal.SearchPersonsSuccess(it) })
+
+            is Command.SearchRooms -> actorFlow {
+                scheduleSearchRepository
+                    .getSearchResults(
+                        query = command.query,
+                        type = ScheduleType.ROOM,
+                    )
+                    .getOrThrow()
+            }.mapEvents({ Event.Internal.SearchRoomsSuccess(it) })
         }
 }

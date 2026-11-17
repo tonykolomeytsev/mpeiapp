@@ -9,6 +9,7 @@ import kekmech.ru.feature_search_impl.item.FilterItemType.GROUPS
 import kekmech.ru.feature_search_impl.item.FilterItemType.MAP
 import kekmech.ru.feature_search_impl.item.FilterItemType.NOTES
 import kekmech.ru.feature_search_impl.item.FilterItemType.PERSONS
+import kekmech.ru.feature_search_impl.item.FilterItemType.ROOMS
 import kekmech.ru.feature_search_impl.item.compareFilter
 import kekmech.ru.feature_search_impl.screens.main.elm.SearchState
 import kekmech.ru.res_strings.R.string as Strings
@@ -60,6 +61,10 @@ internal class SearchListConverter {
             if (state.selectedFilter.compareFilter(GROUPS)) addResults(
                 titleRes = Strings.search_filter_groups,
                 items = state.searchResultsGroups.map(SearchListItem::ScheduleEntry),
+            )
+            if (state.selectedFilter.compareFilter(ROOMS)) addResults(
+                titleRes = Strings.search_filter_rooms,
+                items = state.searchResultsRooms.map(SearchListItem::ScheduleEntry),
             )
         }
         return if (items.isEmpty()) SearchListState.NotFound else SearchListState.Results(items)

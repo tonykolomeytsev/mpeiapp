@@ -119,4 +119,7 @@ internal enum class ScheduleTypeDto {
 
     @SerialName("PERSON")
     PERSON,
+
+    @SerialName("ROOM")
+    ROOM,
 }

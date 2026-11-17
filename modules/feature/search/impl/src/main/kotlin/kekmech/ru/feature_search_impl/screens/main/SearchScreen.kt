@@ -230,6 +230,7 @@ private fun SearchListItemContent(
                 when (item.result.type) {
                     ScheduleType.GROUP -> IconsRes.ic_groups_black_24
                     ScheduleType.PERSON -> IconsRes.ic_person_24
+                    ScheduleType.ROOM -> IconsRes.ic_meeting_room_24
                 }
             ),
             onClick = { onScheduleClick(item.result) },
@@ -265,6 +266,9 @@ private fun SearchScreenPreview() {
                 ),
                 searchResultsGroups = listOf(
                     SearchResult("2", "ТФ-01-24", "ИТАЭ", ScheduleType.GROUP),
+                ),
+                searchResultsRooms = listOf(
+                    SearchResult("3", "Т-201", "Корпус Т", ScheduleType.ROOM),
                 ),
             ),
             effects = emptyFlow(),

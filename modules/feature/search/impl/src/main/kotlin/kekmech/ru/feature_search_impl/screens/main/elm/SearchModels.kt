@@ -14,6 +14,7 @@ internal data class SearchState(
     val searchResultsNotes: List<Note> = emptyList(),
     val searchResultsGroups: List<SearchResult> = emptyList(),
     val searchResultsPersons: List<SearchResult> = emptyList(),
+    val searchResultsRooms: List<SearchResult> = emptyList(),
     val selectedFilter: FilterItemType = FilterItemType.ALL,
 ) {
     val filterItems: List<FilterItem> = FilterItem
@@ -36,6 +37,7 @@ internal sealed interface SearchEvent {
         data class SearchMapSuccess(val results: List<MapMarker>) : Internal
         data class SearchGroupsSuccess(val results: List<SearchResult>) : Internal
         data class SearchPersonsSuccess(val results: List<SearchResult>) : Internal
+        data class SearchRoomsSuccess(val results: List<SearchResult>) : Internal
     }
 }
 
@@ -48,4 +50,5 @@ internal sealed interface SearchCommand {
     data class SearchMap(val query: String) : SearchCommand
     data class SearchGroups(val query: String) : SearchCommand
     data class SearchPersons(val query: String) : SearchCommand
+    data class SearchRooms(val query: String) : SearchCommand
 }

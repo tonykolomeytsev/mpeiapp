@@ -24,6 +24,7 @@ internal object ScheduleMapper {
             type = when (dto.type) {
                 ScheduleTypeDto.GROUP -> ScheduleType.GROUP
                 ScheduleTypeDto.PERSON -> ScheduleType.PERSON
+                ScheduleTypeDto.ROOM -> ScheduleType.ROOM
             },
             weeks = dto.weeks.map { week ->
                 Week(

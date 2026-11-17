@@ -7,20 +7,21 @@ import kekmech.ru.feature_schedule_api.domain.model.ScheduleType
 private val SUBGROUP_MARKER_PATTERN = """\\\d([пП])""".toRegex()
 
 /**
- * Teacher of the classes for group schedules. Null for person schedules (the teacher is the
- * owner of the schedule), or if there is nothing meaningful to show.
+ * Teacher of the classes for group and room schedules. Null for person schedules (the teacher
+ * is the owner of the schedule), or if there is nothing meaningful to show.
  *
  * @param scheduleType type of the schedule the classes belong to
  */
 internal fun Classes.teacherLabel(scheduleType: ScheduleType): String? =
     when (scheduleType) {
-        ScheduleType.GROUP -> person.takeIfNotEmpty()
+        ScheduleType.GROUP, ScheduleType.ROOM -> person.takeIfNotEmpty()
         ScheduleType.PERSON -> null
     }
 
 /**
- * Groups of the classes: all the groups for person schedules, and only the subgroup for group
- * schedules (the group is the owner of the schedule). Null if there is nothing meaningful to show.
+ * Groups of the classes: all the groups for person and room schedules, and only the subgroup for
+ * group schedules (the group is the owner of the schedule). Null if there is nothing meaningful
+ * to show.
  *
  * @param scheduleType type of the schedule the classes belong to
  */
@@ -30,7 +31,7 @@ internal fun Classes.groupLabel(scheduleType: ScheduleType): String? =
         // "сдвоенных" парах в расписании, расположенных в одно время. Обычно относится к
         // разделению на подгруппы и т.д.
         ScheduleType.GROUP -> groups.takeIfNotEmpty()?.takeIf(SUBGROUP_MARKER_PATTERN::containsMatchIn)
-        ScheduleType.PERSON -> groups.takeIfNotEmpty()
+        ScheduleType.PERSON, ScheduleType.ROOM -> groups.takeIfNotEmpty()
     }
 
 /**
