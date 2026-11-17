@@ -54,7 +54,6 @@ dependencies {
     implementation(project(":ui_kit_states"))
     implementation(project(":ui_preview"))
 
-    // Markers are still drawn on a Canvas, with colors and font from coreui
-    implementation(project(":coreui"))
+    implementation(project(":res_fonts"))
     implementation(project(":res_strings"))
 }

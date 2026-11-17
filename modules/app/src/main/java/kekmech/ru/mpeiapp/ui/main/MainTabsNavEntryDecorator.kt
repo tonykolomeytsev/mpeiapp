@@ -3,6 +3,7 @@ package kekmech.ru.mpeiapp.ui.main
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -32,6 +33,7 @@ import kekmech.ru.mpeiapp.ui.main.icons.ModeHeat
 import kekmech.ru.mpeiapp.ui.main.icons.ModeHeatFilled
 import kekmech.ru.mpeiapp.ui.main.icons.NavigationIcons
 import kekmech.ru.ui_kit_navigationbar.floating.FloatingNavBar
+import kekmech.ru.ui_kit_navigationbar.floating.FloatingNavBarScrim
 import org.koin.compose.koinInject
 import kekmech.ru.res_strings.R.string as Strings
 
@@ -103,19 +105,23 @@ private fun MainNavigationBar(
     onTabClick: (BottomTab) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    FloatingNavBar(
-        modifier = modifier
-            .navigationBarsPadding()
-            .padding(start = 24.dp, end = 24.dp, bottom = 8.dp),
-    ) {
-        BottomTab.entries.forEach { tab ->
-            Tab(
-                selected = tab == selectedTab,
-                onClick = { onTabClick(tab) },
-                iconSelected = tab.iconSelected,
-                iconUnselected = tab.iconUnselected,
-                label = stringResource(tab.label),
-            )
+    // Скрим растягивается от верха навигации до нижнего края экрана
+    Box(modifier.fillMaxWidth()) {
+        FloatingNavBarScrim(Modifier.matchParentSize())
+        FloatingNavBar(
+            modifier = Modifier
+                .navigationBarsPadding()
+                .padding(start = 24.dp, end = 24.dp, bottom = 8.dp),
+        ) {
+            BottomTab.entries.forEach { tab ->
+                Tab(
+                    selected = tab == selectedTab,
+                    onClick = { onTabClick(tab) },
+                    iconSelected = tab.iconSelected,
+                    iconUnselected = tab.iconUnselected,
+                    label = stringResource(tab.label),
+                )
+            }
         }
     }
 }

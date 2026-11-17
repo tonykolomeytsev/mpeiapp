@@ -5,11 +5,10 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
+import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
+import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
-import androidx.compose.ui.platform.ComposeView
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kekmech.ru.feature_app_settings_api.data.AppSettingsRepository
@@ -23,9 +22,8 @@ import kekmech.ru.mpeiapp.deeplink.DeeplinkHandlersProcessor
 import kekmech.ru.mpeiapp.ui.App
 import org.koin.android.ext.android.getKoin
 import org.koin.android.ext.android.inject
-import kekmech.ru.coreui.R as coreui_R
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : ComponentActivity() {
 
     private val navigationHolder: NavigationHolder by inject()
     private val appSettingsRepository: AppSettingsRepository by inject()
@@ -41,25 +39,18 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
-        // Applied before super.onCreate, so the configuration is updated in place without recreation.
-        // Compose screens read dark theme from configuration uiMode via isSystemInDarkTheme()
-        delegate.localNightMode = if (appSettingsRepository.getAppSettings().isDarkThemeEnabled) {
-            AppCompatDelegate.MODE_NIGHT_YES
-        } else {
-            AppCompatDelegate.MODE_NIGHT_NO
-        }
         super.onCreate(savedInstanceState)
         mainActivityLifecycleObservers.forEach { it.onCreate(this) }
 
-        setTheme()
-        setContentView(R.layout.activity_main)
+        // AppTheme itself is applied by the splash screen (postSplashScreenTheme)
+        setUpSystemBars()
 
         savedInstanceState?.getBundle(KEY_NAVIGATION_STATE)?.let(navigationHolder::restoreState)
         // Back stack может оказаться пустым, если состояние не удалось восстановить
         if (savedInstanceState == null || router.backStack.isEmpty()) {
             launchFirstScreen()
         }
-        findViewById<ComposeView>(R.id.composeRoot).setContent {
+        setContent {
             App(router = router, navEntries = navEntries)
         }
 
@@ -86,14 +77,8 @@ class MainActivity : AppCompatActivity() {
         deeplinkHandlersProcessor.processDeeplink(intent.data)
     }
 
-    private fun setTheme() {
-        val preheatAppSettings = appSettingsRepository.getAppSettings()
-        val darkTheme = preheatAppSettings.isDarkThemeEnabled
-        if (darkTheme) {
-            setTheme(coreui_R.style.AppTheme_Dark)
-        } else {
-            setTheme(coreui_R.style.AppTheme)
-        }
+    private fun setUpSystemBars() {
+        val darkTheme = appSettingsRepository.getAppSettings().isDarkThemeEnabled
         enableEdgeToEdge(
             statusBarStyle = SystemBarStyle.auto(
                 lightScrim = Color.TRANSPARENT,
@@ -108,8 +93,8 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    override fun onResumeFragments() {
-        super.onResumeFragments()
+    override fun onResume() {
+        super.onResume()
         navigationHolder.subscribe(this)
     }
 
@@ -119,7 +104,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(LocaleContextWrapper.wrapContext(newBase))
+        // Applied before the activity creates its resources, so the window theme, XML resources
+        // and Compose start with the app's dark theme setting. Changing the setting recreates the activity
+        val isDarkTheme = appSettingsRepository.getAppSettings().isDarkThemeEnabled
+        val localizedContext = LocaleContextWrapper.wrapContext(newBase)
+        super.attachBaseContext(NightModeContextWrapper.wrapContext(localizedContext, isDarkTheme))
     }
 
     private companion object {

@@ -16,7 +16,7 @@ import kekmech.ru.lib_analytics_android.AnalyticsWrapper
 import org.koin.compose.koinInject
 
 /**
- * Compose-аналог [screenAnalytics]: отправляет показ экрана и изменения его видимости
+ * Аналитика экрана: отправляет показ экрана и изменения его видимости
  * по lifecycle текущего экрана.
  */
 @Composable
@@ -24,7 +24,7 @@ public fun rememberScreenAnalytics(screenName: String): Analytics {
     val analyticsWrapper = koinInject<AnalyticsWrapper>()
     val analytics = remember(screenName) { AnalyticsImpl(analyticsWrapper, screenName) }
     // Экран возвращается в композицию при каждом возврате по back stack'у,
-    // а показ экрана должен отправиться один раз, как в onCreate фрагмента
+    // а показ экрана должен отправиться один раз
     var isScreenShownSent by rememberSaveable(screenName) { mutableStateOf(false) }
     val lifecycleOwner = LocalLifecycleOwner.current
     DisposableEffect(lifecycleOwner, analytics) {

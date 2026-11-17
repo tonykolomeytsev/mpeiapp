@@ -12,7 +12,6 @@ dependencies {
     testImplementation(libs.kotest.runner)
 
     implementation(libs.coil.compose)
-    implementation(libs.google.material)
     implementation(libs.compose.material3)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.koin.android)
@@ -36,7 +35,6 @@ dependencies {
     implementation(project(":lib_elm_compose"))
     implementation(project(":lib_navigation"))
     implementation(project(":lib_network"))
-    implementation(project(":lib_fragment"))
 
     implementation(project(":ext_koin"))
     implementation(project(":ext_shared_preferences"))

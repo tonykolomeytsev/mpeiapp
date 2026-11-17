@@ -11,7 +11,6 @@ import kekmech.ru.res_strings.R.string as Strings
 
 /**
  * Formats [date] relative to today, e.g. "Tomorrow" or "Tuesday, 22 September".
- * Compose version of `PrettyDateFormatter.formatRelative` from `coreui`.
  */
 @Suppress("MagicNumber")
 @Composable

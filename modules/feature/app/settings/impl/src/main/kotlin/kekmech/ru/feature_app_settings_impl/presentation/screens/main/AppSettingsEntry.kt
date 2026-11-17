@@ -7,24 +7,23 @@ import android.os.Looper
 import androidx.activity.compose.LocalActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
-import com.kekmech.lib_fragment.LocalRouter
-import com.kekmech.lib_fragment.ResultListener
+import androidx.navigation3.runtime.result.ResultEffect
 import kekmech.ru.ext_android.openLinkExternal
 import kekmech.ru.feature_app_settings_impl.navigation.FavoritesScreenKey
-import kekmech.ru.feature_app_settings_impl.presentation.screens.lang.SelectLanguageFragment
+import kekmech.ru.feature_app_settings_impl.navigation.SelectLanguageScreenKey
+import kekmech.ru.feature_app_settings_impl.navigation.SelectMapTypeScreenKey
 import kekmech.ru.feature_app_settings_impl.presentation.screens.main.elm.AppSettingsEffect
 import kekmech.ru.feature_app_settings_impl.presentation.screens.main.elm.AppSettingsEvent
 import kekmech.ru.feature_app_settings_impl.presentation.screens.main.elm.AppSettingsEvent.Ui
 import kekmech.ru.feature_app_settings_impl.presentation.screens.main.elm.AppSettingsStoreFactory
-import kekmech.ru.feature_app_settings_impl.presentation.screens.map_type.SelectMapTypeFragment
 import kekmech.ru.lib_analytics_android.Analytics
 import kekmech.ru.lib_analytics_android.ext.rememberScreenAnalytics
 import kekmech.ru.lib_elm_compose.EffectHandler
 import kekmech.ru.lib_elm_compose.ElmContent
 import kekmech.ru.lib_navigation.AddScreenForward
+import kekmech.ru.lib_navigation.LocalRouter
 import kekmech.ru.lib_navigation.PopBackStack
 import kekmech.ru.lib_navigation.Router
-import kekmech.ru.lib_navigation.ShowDialog
 import org.koin.compose.koinInject
 
 private const val ACTIVITY_RECREATION_DELAY = 200L
@@ -44,10 +43,10 @@ internal fun AppSettingsEntry() {
         key = "AppSettingsScreen",
         storeFactory = { storeFactory.create() },
     ) { onAccept, state, effects ->
-        ResultListener<String>(LANGUAGE_RESULT_KEY) {
+        ResultEffect<String>(LANGUAGE_RESULT_KEY) {
             onAccept(Ui.Action.LanguageChanged(it))
         }
-        ResultListener<String>(MAP_TYPE_RESULT_KEY) {
+        ResultEffect<String>(MAP_TYPE_RESULT_KEY) {
             onAccept(Ui.Action.MapTypeChanged(it))
         }
         EffectHandler(effects) { effect ->
@@ -66,13 +65,13 @@ internal fun AppSettingsEntry() {
 private fun handleEffect(effect: AppSettingsEffect, router: Router, activity: Activity?) =
     when (effect) {
         is AppSettingsEffect.RecreateActivity -> recreateActivity(activity)
-        is AppSettingsEffect.OpenLanguageSelectionDialog -> router.executeCommand(ShowDialog {
-            SelectLanguageFragment.newInstance(effect.selectedLanguage, LANGUAGE_RESULT_KEY)
-        })
+        is AppSettingsEffect.OpenLanguageSelectionDialog -> router.executeCommand(
+            AddScreenForward(SelectLanguageScreenKey(effect.selectedLanguage, LANGUAGE_RESULT_KEY))
+        )
 
-        is AppSettingsEffect.OpenMapTypeDialog -> router.executeCommand(ShowDialog {
-            SelectMapTypeFragment.newInstance(effect.mapType, MAP_TYPE_RESULT_KEY)
-        })
+        is AppSettingsEffect.OpenMapTypeDialog -> router.executeCommand(
+            AddScreenForward(SelectMapTypeScreenKey(effect.mapType, MAP_TYPE_RESULT_KEY))
+        )
     }
 
 @Suppress("CyclomaticComplexMethod", "LongParameterList")

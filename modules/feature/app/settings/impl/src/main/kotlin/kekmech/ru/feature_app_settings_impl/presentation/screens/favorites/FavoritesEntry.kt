@@ -1,8 +1,7 @@
 package kekmech.ru.feature_app_settings_impl.presentation.screens.favorites
 
 import androidx.compose.runtime.Composable
-import com.kekmech.lib_fragment.LocalRouter
-import com.kekmech.lib_fragment.ResultListener
+import androidx.navigation3.runtime.result.ResultEffect
 import kekmech.ru.feature_app_settings_impl.di.AppSettingDependencies
 import kekmech.ru.feature_app_settings_impl.navigation.EditFavoriteScreenKey
 import kekmech.ru.feature_app_settings_impl.presentation.screens.favorites.elm.FavoritesEvent.Ui
@@ -12,6 +11,7 @@ import kekmech.ru.feature_schedule_api.domain.model.SelectedSchedule
 import kekmech.ru.lib_analytics_android.ext.rememberScreenAnalytics
 import kekmech.ru.lib_elm_compose.ElmContent
 import kekmech.ru.lib_navigation.AddScreenForward
+import kekmech.ru.lib_navigation.LocalRouter
 import kekmech.ru.lib_navigation.PopBackStack
 import org.koin.compose.koinInject
 
@@ -30,7 +30,7 @@ internal fun FavoritesEntry() {
         storeFactory = { dependencies.favoritesStoreFactory.create() },
     ) { onAccept, state, _ ->
         // Group found by search screen becomes a new favorite after editing its description
-        ResultListener<SelectedSchedule>(FIND_GROUP_RESULT_KEY) { selectedSchedule ->
+        ResultEffect<SelectedSchedule>(FIND_GROUP_RESULT_KEY) { selectedSchedule ->
             router.executeCommand(AddScreenForward(
                 EditFavoriteScreenKey(
                     favoriteSchedule = FavoriteSchedule(
@@ -43,7 +43,7 @@ internal fun FavoritesEntry() {
                 )
             ))
         }
-        ResultListener<FavoriteSchedule>(EDIT_FAVORITE_RESULT_KEY) { favoriteSchedule ->
+        ResultEffect<FavoriteSchedule>(EDIT_FAVORITE_RESULT_KEY) { favoriteSchedule ->
             onAccept(Ui.Action.UpdateFavorite(favoriteSchedule))
         }
         FavoritesScreen(

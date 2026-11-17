@@ -6,7 +6,6 @@ plugins {
 }
 
 android.buildFeatures {
-    viewBinding = true
     androidResources = true
 }
 
@@ -16,11 +15,8 @@ dependencies {
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(project(":ext_json"))
 
-    implementation(libs.androidx.constraintLayout)
     implementation(libs.androidx.coreKtx)
-    implementation(libs.facebook.shimmer)
     implementation(libs.firebase.crashlytics)
-    implementation(libs.google.material)
     implementation(libs.compose.material3)
     implementation(libs.koin.compose)
     implementation(libs.koin.android)
@@ -44,7 +40,6 @@ dependencies {
     implementation(project(":feature_favorite_schedule_api"))
     implementation(project(":lib_app_lifecycle"))
 
-    implementation(project(":lib_adapter"))
     implementation(project(":lib_analytics_api"))
     implementation(project(":lib_analytics_android"))
     implementation(project(":ext_android"))
@@ -54,9 +49,7 @@ dependencies {
     implementation(project(":lib_navigation"))
     implementation(project(":lib_network"))
     implementation(project(":feature_schedule_ui"))
-    implementation(project(":lib_fragment"))
 
-    implementation(project(":coreui"))
     implementation(project(":ui_theme"))
     implementation(project(":ui_preview"))
     implementation(project(":ui_shimmer"))

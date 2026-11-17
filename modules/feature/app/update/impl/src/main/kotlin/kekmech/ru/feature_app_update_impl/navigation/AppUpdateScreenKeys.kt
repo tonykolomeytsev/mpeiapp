@@ -6,3 +6,6 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 internal data class BlockingUpdateScreenKey(val updateInfo: ForceUpdateInfo) : ScreenKey
+
+@Parcelize
+internal data class ForceUpdateScreenKey(val updateInfo: ForceUpdateInfo) : ScreenKey

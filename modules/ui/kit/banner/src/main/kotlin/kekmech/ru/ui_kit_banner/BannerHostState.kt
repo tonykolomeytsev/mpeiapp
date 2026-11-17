@@ -10,7 +10,7 @@ import androidx.compose.runtime.setValue
  * Single banner shown by the [BannerHost].
  *
  * Banners with the same [message] are still different, so showing the same message twice
- * restarts the hiding timer, like it did in the old `BannerContainer`.
+ * restarts the hiding timer.
  */
 @Immutable
 public class BannerData internal constructor(

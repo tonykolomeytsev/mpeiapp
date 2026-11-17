@@ -17,11 +17,14 @@ public sealed class FloatingNavBarPalette {
 
     internal abstract val unselectedContent: Color @Composable @ReadOnlyComposable get
 
+    internal abstract val scrim: Color @Composable @ReadOnlyComposable get
+
     public data object Default : FloatingNavBarPalette() {
         override val background: Color @Composable @ReadOnlyComposable get() = MpeixTheme.palette.floatingContainer
         override val selectedTabBackground: Color
             @Composable @ReadOnlyComposable get() = MpeixTheme.palette.floatingContainerHigh
         override val selectedContent: Color @Composable @ReadOnlyComposable get() = MpeixTheme.palette.primary
         override val unselectedContent: Color @Composable @ReadOnlyComposable get() = MpeixTheme.palette.onSurface
+        override val scrim: Color @Composable @ReadOnlyComposable get() = MpeixTheme.palette.surface.copy(alpha = 0.75f)
     }
 }

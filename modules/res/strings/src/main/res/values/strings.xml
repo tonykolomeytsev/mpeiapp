@@ -97,7 +97,6 @@
     <string name="before_yesterday">Позавчера</string>
 
     <string name="something_went_wrong_error">Что-то пошло не так…</string>
-    <string name="connection_lost_error">Нет интернет соединения</string>
 
     <string name="common_error_no_internet_title">Нет интернета</string>
     <string name="common_error_no_internet_description">Проверьте свое подключение к интернету и попробуйте загрузить данные снова</string>
@@ -282,12 +281,10 @@
     <string name="search_schedule_details_classes_5_0">пар</string>
     <string name="search_schedule_details_this_week_description_empty">Нет пар на этой неделе</string>
     <string name="search_schedule_details_this_week_description">%s на этой неделе</string>
-    <string name="search_schedule_details_next_week_description_empty">нет пар на следующей.</string>
-    <string name="search_schedule_details_next_week_description">%s на следующей.</string>
+    <string name="search_schedule_details_next_week_description_empty">нет пар на следующей</string>
+    <string name="search_schedule_details_next_week_description">%s на следующей</string>
     <string name="search_schedule_details_add_favorites">Добавить в избранное</string>
     <string name="search_schedule_details_remove_favorites">Удалить из избранного</string>
-    <string name="search_schedule_details_switch_schedule">Перейти к расписанию</string>
-    <string name="search_schedule_details_empty_title">В этот день нет занятий</string>
 
     <string name="navigation_name_dashboard">Главная</string>
     <string name="navigation_name_schedule">Расписание</string>

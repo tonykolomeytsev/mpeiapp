@@ -3,6 +3,7 @@ package mpeix.plugins.features.android
 import com.android.build.api.dsl.LibraryExtension
 import com.android.build.api.variant.LibraryAndroidComponentsExtension
 import mpeix.plugins.ext.configure
+import mpeix.plugins.features.composeonly.setupComposeOnlyCheck
 import mpeix.plugins.features.globalconfig.AndroidProjectConfigurationExtension
 import mpeix.plugins.features.unittesting.setupUnitTests
 import org.gradle.api.JavaVersion
@@ -19,6 +20,7 @@ internal fun configureKotlinAndroid(
     explicitApi: Boolean,
 ) {
     project.setupUnitTests()
+    project.setupComposeOnlyCheck()
     with(extension) {
         compileSdk = config.targetSdk.get()
         buildToolsVersion = config.buildToolsVersion.get()

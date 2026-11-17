@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
+    <!--
+        Window theme of MainActivity. The UI is Compose and is styled by MpeixTheme,
+        so only the window is configured here. Day or night is picked by the app setting
+        (NightModeContextWrapper), system bars are set up by enableEdgeToEdge in MainActivity.
+        The night variant is in values-night: it keeps platform widgets like the text selection toolbar dark.
+    -->
+    <style name="AppTheme" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/windowBackground</item>
+    </style>
+
     <style name="Theme.Mpeix.SplashScreen" parent="Theme.SplashScreen.IconBackground">
         <item name="windowSplashScreenBackground">@color/colorWhite</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/animated_splash_logo</item>

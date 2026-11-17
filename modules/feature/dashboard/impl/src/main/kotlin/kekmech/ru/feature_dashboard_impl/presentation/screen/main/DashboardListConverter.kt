@@ -2,7 +2,7 @@ package kekmech.ru.feature_dashboard_impl.presentation.screen.main
 
 import android.content.Context
 import androidx.compose.ui.unit.dp
-import kekmech.ru.coreui.PrettyDateFormatter
+import kekmech.ru.ext_android.getStringArray
 import kekmech.ru.ext_kotlin.moscowLocalDate
 import kekmech.ru.ext_kotlin.moscowLocalTime
 import kekmech.ru.feature_dashboard_impl.presentation.screen.main.DashboardListItem.Section
@@ -10,7 +10,9 @@ import kekmech.ru.feature_dashboard_impl.presentation.screen.main.DashboardListI
 import kekmech.ru.feature_dashboard_impl.presentation.screen.main.elm.DashboardState
 import kekmech.ru.feature_dashboard_impl.presentation.screen.main.upcoming_events.UpcomingEventsListConverter
 import kekmech.ru.feature_schedule_api.domain.model.WeekOfSemester
+import java.time.LocalDate
 import java.time.LocalTime
+import kekmech.ru.res_strings.R.array as StringArrays
 import kekmech.ru.res_strings.R.string as Strings
 
 @Suppress("MagicNumber")
@@ -33,7 +35,8 @@ internal class DashboardListConverter(
         actionText = context.getString(Strings.dashboard_section_header_favorites_action),
     )
 
-    private val formatter = PrettyDateFormatter(context)
+    private val dayOfWeekNames = context.getStringArray(StringArrays.days_of_week)
+    private val monthNames = context.getStringArray(StringArrays.months)
 
     private val lunchStartTime = LocalTime.of(12, 45) // 12:45
     private val lunchEndTime = LocalTime.of(13, 45) // 13:45
@@ -117,8 +120,17 @@ internal class DashboardListConverter(
                 null -> null
             }
         return DashboardListItem.DayStatus(
-            header = formatter.formatAbsolute(moscowLocalDate()),
+            header = formatDay(moscowLocalDate()),
             description = weekStatus,
         )
+    }
+
+    /**
+     * E.g. "Monday, 16 November"
+     */
+    private fun formatDay(date: LocalDate): String {
+        val dayOfWeek = dayOfWeekNames.getOrNull(date.dayOfWeek.value - 1).orEmpty()
+        val month = monthNames.getOrNull(date.monthValue - 1).orEmpty()
+        return "$dayOfWeek, ${date.dayOfMonth} $month"
     }
 }

@@ -5,10 +5,9 @@ import kekmech.ru.feature_app_settings_api.AppSettingsFeatureLauncher.SubPage.FA
 import kekmech.ru.feature_app_settings_api.data.AppSettingsRepository
 import kekmech.ru.feature_app_settings_impl.navigation.AppSettingsScreenKey
 import kekmech.ru.feature_app_settings_impl.navigation.FavoritesScreenKey
-import kekmech.ru.feature_app_settings_impl.presentation.screens.lang.SelectLanguageFragment
+import kekmech.ru.feature_app_settings_impl.navigation.SelectLanguageScreenKey
 import kekmech.ru.lib_navigation.AddScreenForward
 import kekmech.ru.lib_navigation.Router
-import kekmech.ru.lib_navigation.ShowDialog
 
 internal class AppSettingsFeatureLauncherImpl(
     private val router: Router,
@@ -24,8 +23,6 @@ internal class AppSettingsFeatureLauncherImpl(
 
     override fun launchLanguageSelection(resultKey: String) {
         val selectedLanguage = appSettingsRepository.getAppSettings().languageCode
-        router.executeCommand(ShowDialog {
-            SelectLanguageFragment.newInstance(selectedLanguage, resultKey)
-        })
+        router.executeCommand(AddScreenForward(SelectLanguageScreenKey(selectedLanguage, resultKey)))
     }
 }

@@ -50,7 +50,10 @@ internal sealed interface ScheduleEvent {
         object Init : Ui
         object Action {
             data class SelectWeek(val weekOffset: Int) : Ui
-            data class PageChanged(val page: Int) : Ui
+            /**
+             * The days pager was swiped to the [dayOfWeek] (1 is Monday) of the week with the [weekOffset]
+             */
+            data class PageChanged(val weekOffset: Int, val dayOfWeek: Int) : Ui
             object NotesUpdated : Ui
             object UpdateScheduleIfNeeded : Ui
             data class ClassesScrolled(val dy: Int) : Ui

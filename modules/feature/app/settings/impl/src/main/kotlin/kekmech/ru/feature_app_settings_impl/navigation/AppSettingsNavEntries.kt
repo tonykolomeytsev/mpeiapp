@@ -3,9 +3,12 @@ package kekmech.ru.feature_app_settings_impl.navigation
 import androidx.navigation3.runtime.EntryProviderScope
 import kekmech.ru.feature_app_settings_impl.presentation.screens.edit_favorite.EditFavoriteEntry
 import kekmech.ru.feature_app_settings_impl.presentation.screens.favorites.FavoritesEntry
+import kekmech.ru.feature_app_settings_impl.presentation.screens.lang.SelectLanguageEntry
 import kekmech.ru.feature_app_settings_impl.presentation.screens.main.AppSettingsEntry
+import kekmech.ru.feature_app_settings_impl.presentation.screens.map_type.SelectMapTypeEntry
 import kekmech.ru.lib_navigation.NavEntries
 import kekmech.ru.lib_navigation.ScreenKey
+import kekmech.ru.lib_navigation.bottomSheetEntry
 
 internal class AppSettingsNavEntries : NavEntries {
 
@@ -13,5 +16,11 @@ internal class AppSettingsNavEntries : NavEntries {
         entry<AppSettingsScreenKey> { AppSettingsEntry() }
         entry<FavoritesScreenKey> { FavoritesEntry() }
         entry<EditFavoriteScreenKey> { EditFavoriteEntry(it) }
+        bottomSheetEntry<SelectLanguageScreenKey>(skipPartiallyExpanded = true, isBare = true) {
+            SelectLanguageEntry(it)
+        }
+        bottomSheetEntry<SelectMapTypeScreenKey>(skipPartiallyExpanded = true, isBare = true) {
+            SelectMapTypeEntry(it)
+        }
     }
 }

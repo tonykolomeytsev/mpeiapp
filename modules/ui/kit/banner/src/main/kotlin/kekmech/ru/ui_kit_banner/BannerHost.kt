@@ -31,7 +31,7 @@ private const val BANNER_SHOWING_DURATION_MILLIS = 3000L
 /**
  * # BannerHost
  *
- * Compose version of the `BannerContainer` from coreui, but local to the screen.
+ * Banner local to the screen.
  * Shows the [BannerHostState.currentBanner] at the top of the screen, under the status bar,
  * and hides it after 3 seconds.
  *

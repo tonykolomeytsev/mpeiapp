@@ -4,15 +4,13 @@ plugins {
 }
 
 dependencies {
+    testImplementation(libs.kotest.assertions)
+    testImplementation(libs.kotest.runner)
+
     api(libs.androidx.navigation3.runtime)
     implementation(libs.androidx.navigation3.ui)
     implementation(libs.compose.material3)
 
-    implementation(libs.androidx.appCompat)
-    implementation(libs.androidx.fragment)
-    implementation(libs.androidx.recyclerView)
     implementation(libs.koin.core)
     implementation(libs.kotlinx.coroutines.core)
-
-    implementation(project(":ext_android"))
 }

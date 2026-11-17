@@ -17,7 +17,7 @@ import kekmech.ru.ui_theme.theme.MpeixTheme
 /**
  * # EmptyState
  *
- * Compose version of `EmptyStateItem` from coreui: centered title and subtitle
+ * Centered title and subtitle
  * shown instead of the empty list.
  *
  * Usage example:
@@ -29,13 +29,13 @@ import kekmech.ru.ui_theme.theme.MpeixTheme
  * ```
  *
  * @param title the title of the empty state
- * @param subtitle the text displayed below the title
+ * @param subtitle the text displayed below the title, or null to show the title only
  * @param modifier [Modifier] to be applied to the empty state
  */
 @Composable
 public fun EmptyState(
     title: String,
-    subtitle: String,
+    subtitle: String? = null,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -51,15 +51,17 @@ public fun EmptyState(
             color = MpeixTheme.palette.onSurface,
             textAlign = TextAlign.Center,
         )
-        Text(
-            text = subtitle,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp),
-            style = MpeixTheme.typography.titleSmall,
-            color = MpeixTheme.palette.onSurfaceVariant,
-            textAlign = TextAlign.Center,
-        )
+        if (subtitle != null) {
+            Text(
+                text = subtitle,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
+                style = MpeixTheme.typography.titleSmall,
+                color = MpeixTheme.palette.onSurfaceVariant,
+                textAlign = TextAlign.Center,
+            )
+        }
     }
 }
 

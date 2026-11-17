@@ -9,7 +9,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import com.kekmech.lib_fragment.ResultListener
+import androidx.navigation3.runtime.result.ResultEffect
 import kekmech.ru.feature_onboarding_impl.di.OnboardingDependencies
 import kekmech.ru.feature_schedule_api.ScheduleFeatureApi.ContinueTo.DASHBOARD
 import org.koin.compose.koinInject
@@ -25,7 +25,7 @@ internal fun WelcomeEntry() {
     val activity = LocalActivity.current
     var appSettings by remember { mutableStateOf(appSettingsRepository.getAppSettings()) }
 
-    ResultListener<String>(LANGUAGE_RESULT_KEY) { languageCode ->
+    ResultEffect<String>(LANGUAGE_RESULT_KEY) { languageCode ->
         appSettings = appSettingsRepository.updateAppSettings { copy(languageCode = languageCode) }
         recreateActivity(activity)
     }

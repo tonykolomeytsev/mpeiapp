@@ -1,6 +1,5 @@
 package kekmech.ru.mpeiapp.ui
 
-import androidx.activity.compose.LocalActivity
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.ContentTransform
 import androidx.compose.animation.EnterTransition
@@ -12,19 +11,20 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
+import androidx.compose.foundation.background
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.IntOffset
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
+import androidx.navigation3.runtime.result.rememberResultEventBusNavEntryDecorator
 import androidx.navigation3.scene.Scene
 import androidx.navigation3.ui.NavDisplay
-import com.kekmech.lib_fragment.LocalRouter
-import com.kekmech.lib_fragment.rememberResultControllerNavEntryDecorator
 import kekmech.ru.lib_navigation.BottomSheetSceneStrategy
+import kekmech.ru.lib_navigation.LocalRouter
 import kekmech.ru.lib_navigation.NavEntries
 import kekmech.ru.lib_navigation.PopBackStack
 import kekmech.ru.lib_navigation.Router
@@ -52,7 +52,6 @@ fun App(
 ) {
     // Back stack пуст только пока MainActivity не открыла первый экран
     if (router.backStack.isEmpty()) return
-    val activity = LocalActivity.current as FragmentActivity
     val entryProvider = remember(navEntries) {
         entryProvider<ScreenKey> {
             navEntries.forEach { with(it) { register() } }
@@ -65,11 +64,15 @@ fun App(
         CompositionLocalProvider(LocalRouter provides router) {
             NavDisplay(
                 backStack = router.backStack,
+                // Shows through while screens cross-fade. Taken from the palette,
+                // the XML window background only mirrors it for the frames before Compose
+                modifier = Modifier.background(MpeixTheme.palette.surface),
                 onBack = { router.executeCommand(PopBackStack()) },
                 entryDecorators = listOf(
                     rememberSaveableStateHolderNavEntryDecorator(),
                     rememberViewModelStoreNavEntryDecorator(),
-                    rememberResultControllerNavEntryDecorator(activity),
+                    // Screens pass results to each other through LocalResultEventBus
+                    rememberResultEventBusNavEntryDecorator(),
                     rememberMainTabsNavEntryDecorator(),
                 ),
                 sceneStrategies = listOf(bottomSheetStrategy),

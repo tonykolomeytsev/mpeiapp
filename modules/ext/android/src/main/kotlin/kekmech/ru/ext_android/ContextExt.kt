@@ -4,22 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.util.TypedValue
 import androidx.annotation.ArrayRes
-import androidx.annotation.AttrRes
-import androidx.annotation.ColorInt
-import androidx.annotation.ColorRes
-import androidx.core.content.ContextCompat
-
-@ColorInt
-public fun Context.getResColor(@ColorRes res: Int): Int = checkNotNull(ContextCompat.getColor(this, res))
-
-@ColorInt
-public fun Context.getThemeColor(@AttrRes attrId: Int): Int {
-    val value = TypedValue()
-    theme.resolveAttribute(attrId, value, true)
-    return value.data
-}
 
 public fun Context.getStringArray(@ArrayRes stringRes: Int): Array<String> =
     resources.getStringArray(stringRes)

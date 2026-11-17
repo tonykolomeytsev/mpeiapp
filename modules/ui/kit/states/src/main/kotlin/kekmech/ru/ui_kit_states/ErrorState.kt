@@ -43,7 +43,7 @@ private data class ErrorStateContent(
 /**
  * # ErrorState
  *
- * Compose version of `ErrorStateItem` from coreui: illustration, title and description
+ * Illustration, title and description
  * picked by the type of the [throwable], and the reload button.
  *
  * Usage example:

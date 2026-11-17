@@ -15,3 +15,15 @@ internal data class EditFavoriteScreenKey(
     val favoriteSchedule: FavoriteSchedule,
     val resultKey: String,
 ) : ScreenKey
+
+@Parcelize
+internal data class SelectLanguageScreenKey(
+    val selectedLanguage: String,
+    val resultKey: String,
+) : ScreenKey
+
+@Parcelize
+internal data class SelectMapTypeScreenKey(
+    val selectedMapType: String,
+    val resultKey: String,
+) : ScreenKey

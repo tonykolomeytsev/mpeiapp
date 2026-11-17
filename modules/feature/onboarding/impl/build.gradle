@@ -19,7 +19,6 @@ dependencies {
     implementation(project(":feature_onboarding_api"))
     implementation(project(":feature_schedule_api"))
 
-    implementation(project(":lib_fragment"))
     implementation(project(":lib_navigation"))
 
     implementation(project(":ui_theme"))

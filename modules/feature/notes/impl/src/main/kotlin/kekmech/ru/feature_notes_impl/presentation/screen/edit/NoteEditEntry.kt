@@ -3,10 +3,7 @@ package kekmech.ru.feature_notes_impl.presentation.screen.edit
 import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
-import com.kekmech.lib_fragment.HideKeyboardOnPause
-import com.kekmech.lib_fragment.LocalResultController
-import com.kekmech.lib_fragment.LocalRouter
-import kekmech.ru.ext_android.EmptyResult
+import androidx.navigation3.runtime.result.LocalResultEventBus
 import kekmech.ru.feature_notes_impl.di.NotesDependencies
 import kekmech.ru.feature_notes_impl.navigation.NoteEditScreenKey
 import kekmech.ru.feature_notes_impl.presentation.screen.edit.elm.NoteEditEffect
@@ -14,6 +11,8 @@ import kekmech.ru.feature_notes_impl.presentation.screen.edit.elm.NoteEditEvent.
 import kekmech.ru.lib_analytics_android.ext.rememberScreenAnalytics
 import kekmech.ru.lib_elm_compose.EffectHandler
 import kekmech.ru.lib_elm_compose.ElmContent
+import kekmech.ru.lib_navigation.HideKeyboardOnPause
+import kekmech.ru.lib_navigation.LocalRouter
 import kekmech.ru.lib_navigation.PopBackStack
 import org.koin.compose.koinInject
 import kekmech.ru.res_strings.R.string as Strings
@@ -24,7 +23,7 @@ internal fun NoteEditEntry(key: NoteEditScreenKey) {
     val analytics = rememberScreenAnalytics("NoteEdit")
     HideKeyboardOnPause()
     val router = LocalRouter.current
-    val resultController = LocalResultController.current
+    val resultEventBus = LocalResultEventBus.current
     val context = LocalContext.current
     ElmContent(
         key = "NoteEditScreen",
@@ -44,7 +43,7 @@ internal fun NoteEditEntry(key: NoteEditScreenKey) {
         EffectHandler(effects) { effect ->
             when (effect) {
                 is NoteEditEffect.CloseWithSuccess -> {
-                    resultController.setResult(key.resultKey, EmptyResult)
+                    resultEventBus.sendResult(key.resultKey, Unit)
                     router.executeCommand(PopBackStack())
                 }
 

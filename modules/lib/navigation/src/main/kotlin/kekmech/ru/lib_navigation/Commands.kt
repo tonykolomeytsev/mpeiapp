@@ -1,9 +1,8 @@
 package kekmech.ru.lib_navigation
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.DialogFragment
 import kotlin.reflect.KClass
 
 public interface Command {
@@ -11,7 +10,7 @@ public interface Command {
 }
 
 public interface ActivityCommand {
-    public fun apply(activity: AppCompatActivity)
+    public fun apply(activity: Activity)
 }
 
 public class AddScreenForward(private val key: ScreenKey) : Command {
@@ -64,16 +63,9 @@ public class PopUntil(
     }
 }
 
-public class ShowDialog(private val fragmentProvider: () -> DialogFragment) : ActivityCommand {
-
-    override fun apply(activity: AppCompatActivity) {
-        fragmentProvider().show(activity.supportFragmentManager, null)
-    }
-}
-
 public class StartActivity(private val intentProvider: (Context) -> Intent) : ActivityCommand {
 
-    override fun apply(activity: AppCompatActivity) {
+    override fun apply(activity: Activity) {
         activity.startActivity(intentProvider(activity))
     }
 }

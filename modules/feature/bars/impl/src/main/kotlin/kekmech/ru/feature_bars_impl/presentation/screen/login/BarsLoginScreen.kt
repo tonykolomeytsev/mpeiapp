@@ -2,7 +2,6 @@ package kekmech.ru.feature_bars_impl.presentation.screen.login
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
-import com.kekmech.lib_fragment.HideKeyboardOnPause
 import io.github.tonykolomeytsev.mpeix.sdk.LoginState
 import io.github.tonykolomeytsev.mpeix.sdk.LoginStep
 import kekmech.ru.feature_bars_impl.presentation.screen.login.layout.AbortedLayout
@@ -11,6 +10,7 @@ import kekmech.ru.feature_bars_impl.presentation.screen.login.layout.CompletedLa
 import kekmech.ru.feature_bars_impl.presentation.screen.login.layout.CredentialsLayout
 import kekmech.ru.feature_bars_impl.presentation.screen.login.layout.SubaccountsLayout
 import kekmech.ru.feature_bars_impl.presentation.screen.login.layout.VerificationMethodsLayout
+import kekmech.ru.lib_navigation.HideKeyboardOnPause
 
 /**
  * Login screen. Every step is a separate screen with its own Scaffold.

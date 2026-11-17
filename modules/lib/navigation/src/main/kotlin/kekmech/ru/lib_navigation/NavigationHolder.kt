@@ -1,11 +1,11 @@
 package kekmech.ru.lib_navigation
 
+import android.app.Activity
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 
 public interface NavigationHolder {
 
-    public fun subscribe(activity: AppCompatActivity)
+    public fun subscribe(activity: Activity)
 
     public fun unsubscribe()
 

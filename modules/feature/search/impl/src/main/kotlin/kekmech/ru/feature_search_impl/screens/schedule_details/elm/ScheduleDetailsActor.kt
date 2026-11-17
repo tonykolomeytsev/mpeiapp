@@ -6,7 +6,6 @@ import kekmech.ru.feature_schedule_api.domain.model.ScheduleKey
 import kekmech.ru.feature_search_impl.screens.schedule_details.elm.ScheduleDetailsEvent.Internal
 import kekmech.ru.lib_elm.actorFlow
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.mapNotNull
 import money.vivid.elmslie.core.store.Actor
 import kekmech.ru.feature_search_impl.screens.schedule_details.elm.ScheduleDetailsCommand as Command
 import kekmech.ru.feature_search_impl.screens.schedule_details.elm.ScheduleDetailsEvent as Event
@@ -18,21 +17,18 @@ internal class ScheduleDetailsActor(
 
     override fun execute(command: Command): Flow<Event> =
         when (command) {
-            is Command.LoadSchedule -> scheduleRepository
+            is Command.ObserveSchedule -> scheduleRepository
                 .observeSchedule(ScheduleKey.of(command.type, command.name, command.weekOffset))
-                .mapNotNull { resource ->
-                    val schedule = resource.value
-                    when {
-                        schedule != null -> Internal.LoadScheduleSuccess(schedule, command.weekOffset)
-                        resource.error != null -> Internal.LoadScheduleError(command.weekOffset)
-                        else -> null // still loading
-                    }
-                }
                 .mapEvents(
-                    eventMapper = { it },
-                    errorMapper = { Internal.LoadScheduleError(command.weekOffset) },
+                    eventMapper = { Internal.ScheduleUpdated(command.weekOffset, it) },
+                    errorMapper = { Internal.ObserveScheduleFailure(command.weekOffset, it) },
                 )
                 .switch(key = command.weekOffset)
+
+            is Command.RefreshSchedule -> actorFlow {
+                // failures are delivered to the subscribers as ScheduleRefreshState.Failed
+                scheduleRepository.refreshSchedule(command.key)
+            }.mapEvents()
 
             is Command.GetFavorites -> actorFlow {
                 favoriteScheduleRepository.getAllFavorites()
@@ -45,9 +41,5 @@ internal class ScheduleDetailsActor(
             is Command.RemoveFromFavorites -> actorFlow {
                 favoriteScheduleRepository.deleteFavorite(command.schedule)
             }.mapEvents({ Internal.RemoveFromFavoritesSuccess })
-
-            is Command.SwitchSchedule -> actorFlow {
-                scheduleRepository.setSelectedSchedule(command.selectedSchedule)
-            }.mapEvents()
         }
 }
