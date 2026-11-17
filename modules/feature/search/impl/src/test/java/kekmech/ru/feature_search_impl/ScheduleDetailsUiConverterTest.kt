@@ -81,7 +81,7 @@ class ScheduleDetailsUiConverterTest : BehaviorSpec({
                 classes[1].model.shouldBeInstanceOf<ParallelClassesUi.SameNameAndType>()
             }
             Then("Check the day without classes is the self study day") {
-                ui.dayPages.getValue(0)[1].items shouldBe listOf(ScheduleDayItem.SelfStudy)
+                ui.dayPages.getValue(0)[1].items shouldBe listOf(ScheduleDayItem.SelfStudy(THIS_MONDAY.plusDays(1)))
             }
         }
     }

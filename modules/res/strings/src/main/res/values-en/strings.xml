@@ -133,7 +133,7 @@
     <string name="schedule_item_lunch_time_start">12:45</string>
     <string name="schedule_item_lunch_time_end">13:45</string>
     <string name="schedule_item_self_study_header">Self-study day</string>
-    <string name="schedule_item_self_study_description">Spend your day to good use, start taking programming courses or start reading a book</string>
+    <string name="schedule_item_self_study_description">No classes on this day</string>
     <string name="schedule_fab_tooltip">Quick navigation button. You can disable this button in the settings</string>
     <string name="schedule_fab_next">Go to next week</string>
     <string name="schedule_fab_prev">Go to current week</string>

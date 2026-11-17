@@ -2,10 +2,6 @@ plugins {
     alias(mpeix.plugins.feature.ui)
 }
 
-android.buildFeatures {
-    androidResources = true
-}
-
 dependencies {
     implementation(libs.androidx.coreKtx)
     implementation(libs.compose.material3)

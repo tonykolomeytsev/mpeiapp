@@ -43,7 +43,7 @@ public object ScheduleDayPagesConverter {
                     ?.onEach { classes -> classes.scheduleType = schedule.type }
                     .orEmpty()
                 val items = if (rawClasses.isEmpty()) {
-                    listOf(ScheduleDayItem.SelfStudy)
+                    listOf(ScheduleDayItem.SelfStudy(week.firstDayOfWeek.plusDays(it.toLong())))
                 } else {
                     rawClasses.toDayItems(schedule.type)
                 }

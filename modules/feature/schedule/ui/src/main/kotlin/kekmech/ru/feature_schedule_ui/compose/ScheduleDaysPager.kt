@@ -41,6 +41,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.filterNotNull
+import java.time.LocalDate
 import java.time.LocalTime
 import kotlin.math.roundToInt
 
@@ -279,7 +280,10 @@ private fun LazyItemScope.ScheduleDayListItem(
             modifier = itemModifier,
         )
 
-        is ScheduleDayItem.SelfStudy -> SelfStudyItem(Modifier.fillParentMaxSize())
+        is ScheduleDayItem.SelfStudy -> SelfStudyItem(
+            seed = item.date.toEpochDay(),
+            modifier = Modifier.fillParentMaxSize(),
+        )
         is ScheduleDayItem.Shimmer -> ScheduleDayShimmer(Modifier.padding(horizontal = 8.dp))
         is ScheduleDayItem.Error -> ErrorState(
             throwable = item.throwable,
@@ -326,7 +330,7 @@ private val PreviewPages = listOf(
             }.let { ScheduleDayItem.ClassesEntry(4, it.first(), it.toUiModel(ScheduleType.GROUP)) },
         ),
     ),
-    ScheduleDayPage(dayOfWeek = 2, items = listOf(ScheduleDayItem.SelfStudy)),
+    ScheduleDayPage(dayOfWeek = 2, items = listOf(ScheduleDayItem.SelfStudy(LocalDate.of(2026, 11, 10)))),
     ScheduleDayPage(dayOfWeek = 3, items = listOf(ScheduleDayItem.Shimmer)),
     ScheduleDayPage(dayOfWeek = 4, items = listOf(ScheduleDayItem.Error(IllegalStateException()))),
 )

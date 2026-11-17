@@ -2,6 +2,7 @@ package kekmech.ru.feature_schedule_ui.compose
 
 import androidx.compose.runtime.Immutable
 import kekmech.ru.feature_schedule_api.domain.model.Classes
+import java.time.LocalDate
 
 /**
  * Single page of the [ScheduleDaysPager]: the list of the one working day.
@@ -43,7 +44,10 @@ public sealed interface ScheduleDayItem {
         override val key: String get() = "lunch"
     }
 
-    public data object SelfStudy : ScheduleDayItem {
+    /**
+     * @param date date of the day, the seed of the [SelfStudyItem] illustration
+     */
+    public data class SelfStudy(val date: LocalDate) : ScheduleDayItem {
         override val key: String get() = "self_study"
     }
 
