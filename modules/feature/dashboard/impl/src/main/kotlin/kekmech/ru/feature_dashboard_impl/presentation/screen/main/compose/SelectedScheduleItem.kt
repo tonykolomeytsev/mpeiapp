@@ -17,7 +17,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import kekmech.ru.feature_dashboard_impl.R
 import kekmech.ru.feature_schedule_api.domain.model.ScheduleType
 import kekmech.ru.ui_theme.theme.MpeixTheme
 import kekmech.ru.res_icons.R.drawable as Icons
@@ -44,7 +43,7 @@ internal fun SelectedScheduleItem(
                 painter = painterResource(
                     when (type) {
                         ScheduleType.GROUP -> Icons.ic_groups_black_24
-                        ScheduleType.PERSON -> R.drawable.ic_person_24
+                        ScheduleType.PERSON -> Icons.ic_person_24
                     }
                 ),
                 contentDescription = null,

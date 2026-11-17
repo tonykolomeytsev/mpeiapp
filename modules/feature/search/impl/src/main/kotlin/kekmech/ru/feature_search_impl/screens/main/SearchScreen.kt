@@ -1,6 +1,5 @@
 package kekmech.ru.feature_search_impl.screens.main
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,6 +12,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
+import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
@@ -29,8 +29,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.LocalWindowInfo
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
@@ -49,11 +51,11 @@ import kekmech.ru.feature_schedule_api.domain.model.SearchResult
 import kekmech.ru.feature_search_impl.screens.main.compose.EmptyState
 import kekmech.ru.feature_search_impl.screens.main.compose.FilterChips
 import kekmech.ru.feature_search_impl.screens.main.compose.SearchField
+import kekmech.ru.feature_search_impl.screens.main.compose.SearchResultItem
 import kekmech.ru.feature_search_impl.screens.main.elm.SearchEvent.Ui
 import kekmech.ru.feature_search_impl.item.FilterItem
 import kekmech.ru.feature_search_impl.item.FilterItemType
 import kekmech.ru.lib_elm_compose.EffectHandler
-import kekmech.ru.ui_kit_lists.ListItem
 import kekmech.ru.ui_kit_lists.SectionHeader
 import kekmech.ru.ui_preview.MpeixPreview
 import kekmech.ru.ui_theme.layout.adaptiveContentWidth
@@ -69,6 +71,7 @@ import kotlin.time.Duration.Companion.milliseconds
 import kekmech.ru.feature_search_impl.screens.main.elm.SearchEffect as Effect
 import kekmech.ru.feature_search_impl.screens.main.elm.SearchEvent as Event
 import kekmech.ru.feature_search_impl.screens.main.elm.SearchState as State
+import kekmech.ru.res_icons.R.drawable as IconsRes
 import kekmech.ru.res_strings.R.string as Strings
 
 private val InputDebounce = 300.milliseconds
@@ -213,16 +216,23 @@ private fun SearchListItemContent(
             onClick = { onNoteClick(item.note) },
         )
 
-        is SearchListItem.MapMarkerEntry -> ListItem(
-            headlineText = item.marker.name,
-            supportingText = item.marker.address,
-            modifier = Modifier.clickable { onMapMarkerClick(item.marker) },
+        is SearchListItem.MapMarkerEntry -> SearchResultItem(
+            title = item.marker.name,
+            subtitle = item.marker.address,
+            icon = rememberVectorPainter(Icons.Filled.LocationOn),
+            onClick = { onMapMarkerClick(item.marker) },
         )
 
-        is SearchListItem.ScheduleEntry -> ListItem(
-            headlineText = item.result.name,
-            supportingText = item.result.description,
-            modifier = Modifier.clickable { onScheduleClick(item.result) },
+        is SearchListItem.ScheduleEntry -> SearchResultItem(
+            title = item.result.name,
+            subtitle = item.result.description,
+            icon = painterResource(
+                when (item.result.type) {
+                    ScheduleType.GROUP -> IconsRes.ic_groups_black_24
+                    ScheduleType.PERSON -> IconsRes.ic_person_24
+                }
+            ),
+            onClick = { onScheduleClick(item.result) },
         )
     }
 }
@@ -252,6 +262,9 @@ private fun SearchScreenPreview() {
                 ),
                 searchResultsPersons = listOf(
                     SearchResult("1", "Техников Иван Иванович", "Кафедра ТМ", ScheduleType.PERSON),
+                ),
+                searchResultsGroups = listOf(
+                    SearchResult("2", "ТФ-01-24", "ИТАЭ", ScheduleType.GROUP),
                 ),
             ),
             effects = emptyFlow(),
