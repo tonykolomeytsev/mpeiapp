@@ -130,8 +130,11 @@ public fun ScheduleDaysPager(
 
     LaunchedEffect(selectedPage) {
         // targetPage is the page the pager is settling to after the swipe, so the selected page
-        // reported by the swipe itself doesn't interrupt the fling with another animation
-        if (selectedPage == null || pagerState.targetPage == selectedPage) return@LaunchedEffect
+        // reported by the swipe itself doesn't interrupt the fling with another animation.
+        // Without a scroll in progress the pager is scrolled even if it's on the selected page already:
+        // an interrupted scroll to the previous selected page leaves it between two pages
+        if (selectedPage == null) return@LaunchedEffect
+        if (pagerState.isScrollInProgress && pagerState.targetPage == selectedPage) return@LaunchedEffect
         isProgrammaticScroll = true
         try {
             if (selectedPage.dayPageWeekOffset() == pagerState.currentPage.dayPageWeekOffset()) {

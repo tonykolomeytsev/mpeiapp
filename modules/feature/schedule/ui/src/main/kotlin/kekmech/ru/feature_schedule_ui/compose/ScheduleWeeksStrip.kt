@@ -2,6 +2,7 @@ package kekmech.ru.feature_schedule_ui.compose
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.DragInteraction
+import androidx.compose.foundation.interaction.collectIsDraggedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,8 +21,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,9 +37,8 @@ import androidx.compose.ui.unit.sp
 import kekmech.ru.ext_kotlin.moscowLocalDate
 import kekmech.ru.feature_schedule_ui.utils.atStartOfWeek
 import kekmech.ru.ui_theme.theme.MpeixTheme
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.filterIsInstance
+import kotlinx.coroutines.flow.filterNotNull
 import java.time.LocalDate
 import kekmech.ru.res_strings.R.array as StringArrays
 
@@ -96,19 +98,31 @@ public fun ScheduleWeeksStrip(
     val currentOnScroll by rememberUpdatedState(onScroll)
     val currentWeekMonday = remember(today) { today.atStartOfWeek() }
     val pagerState = rememberPagerState(initialPage = weekOffset.toWeekPage()) { WEEKS_PAGE_COUNT }
+    // Whether the user dragged the strip after the last programmatic scroll. Only the weeks the user
+    // swiped to are reported: a programmatic scroll interrupted by the next week selected in the store
+    // (fast swipes of the days pager back and forth) stops at a week nobody selected
+    var isUserScroll by remember { mutableStateOf(false) }
+    val isDragged by pagerState.interactionSource.collectIsDraggedAsState()
 
     LaunchedEffect(weekOffset) {
-        // The week changed in the store (FAB, swipe of the days pager), follow it
+        // The week changed in the store (FAB, swipe of the days pager), follow it.
+        // The fling of the user to this week goes on, otherwise the strip is scrolled even if it's
+        // on this page already: the interrupted scroll to the previous week leaves it between two weeks
         val page = weekOffset.toWeekPage()
-        if (pagerState.targetPage != page) pagerState.animateScrollToPage(page)
+        if (pagerState.isScrollInProgress && pagerState.targetPage == page) return@LaunchedEffect
+        isUserScroll = false
+        pagerState.animateScrollToPage(page)
     }
     LaunchedEffect(pagerState) {
         // Report the week the user swiped to once the strip settles, like the RecyclerView did on idle.
-        // The week of a programmatic scroll is the selected one already, so it's not reported back
-        snapshotFlow { pagerState.settledPage }
-            .distinctUntilChanged()
-            .drop(1)
+        // settledPage alone isn't enough: it takes the page under the finger when the fling starts.
+        // isDragged covers the moment between the end of the drag and the start of the fling
+        snapshotFlow {
+            pagerState.settledPage.takeIf { isUserScroll && !isDragged && !pagerState.isScrollInProgress }
+        }
+            .filterNotNull()
             .collect { page ->
+                isUserScroll = false
                 val pageWeekOffset = page - CURRENT_WEEK_PAGE
                 if (pageWeekOffset != currentWeekOffset) currentOnWeekSelect(pageWeekOffset)
             }
@@ -116,7 +130,10 @@ public fun ScheduleWeeksStrip(
     LaunchedEffect(pagerState) {
         pagerState.interactionSource.interactions
             .filterIsInstance<DragInteraction.Start>()
-            .collect { currentOnScroll() }
+            .collect {
+                isUserScroll = true
+                currentOnScroll()
+            }
     }
 
     HorizontalPager(
