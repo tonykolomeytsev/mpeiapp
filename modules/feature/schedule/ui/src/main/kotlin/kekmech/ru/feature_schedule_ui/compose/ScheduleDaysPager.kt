@@ -262,7 +262,10 @@ private fun LazyItemScope.ScheduleDayListItem(
     isClassesClickable: Boolean,
     onAction: (ScheduleDaysAction) -> Unit,
 ) {
-    val itemModifier = Modifier.padding(start = 8.dp, end = 8.dp, bottom = 8.dp)
+    // Like on the dashboard, the items below slide when a card changes its height,
+    // e.g. when a note is attached to the classes
+    val itemModifier = Modifier.animateItem()
+    val cardModifier = itemModifier.padding(start = 8.dp, end = 8.dp, bottom = 8.dp)
     when (item) {
         is ScheduleDayItem.ClassesEntry -> ClassesItem(
             model = item.model,
@@ -271,24 +274,24 @@ private fun LazyItemScope.ScheduleDayListItem(
             } else {
                 null
             },
-            modifier = itemModifier,
+            modifier = cardModifier,
         )
 
-        is ScheduleDayItem.Window -> WindowItem(Modifier.padding(horizontal = 8.dp))
+        is ScheduleDayItem.Window -> WindowItem(itemModifier.padding(horizontal = 8.dp))
         is ScheduleDayItem.Lunch -> LunchItem(
             onClick = { onAction(ScheduleDaysAction.LunchClick) },
-            modifier = itemModifier,
+            modifier = cardModifier,
         )
 
         is ScheduleDayItem.SelfStudy -> SelfStudyItem(
             seed = item.date.toEpochDay(),
-            modifier = Modifier.fillParentMaxSize(),
+            modifier = itemModifier.fillParentMaxSize(),
         )
-        is ScheduleDayItem.Shimmer -> ScheduleDayShimmer(Modifier.padding(horizontal = 8.dp))
+        is ScheduleDayItem.Shimmer -> ScheduleDayShimmer(itemModifier.padding(horizontal = 8.dp))
         is ScheduleDayItem.Error -> ErrorState(
             throwable = item.throwable,
             onReloadClick = { onAction(ScheduleDaysAction.ReloadClick) },
-            modifier = Modifier.padding(top = 24.dp),
+            modifier = itemModifier.padding(top = 24.dp),
         )
     }
 }
