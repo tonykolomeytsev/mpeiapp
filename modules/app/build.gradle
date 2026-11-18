@@ -41,6 +41,10 @@ android {
             applicationIdSuffix = ".dev"
             matchingFallbacks += ["debug"]
             signingConfig = signingConfigs.getByName("debug")
+            firebaseCrashlytics {
+                // A random mapping file id is injected on each upload-enabled build, so R8 never stays up-to-date locally
+                mappingFileUploadEnabled = System.getenv("CI") == "true"
+            }
         }
         debug {
             minifyEnabled = false
