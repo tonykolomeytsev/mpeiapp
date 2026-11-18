@@ -1,5 +1,6 @@
 package kekmech.ru.lib_navigation
 
+import android.view.WindowManager
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.material3.BottomSheetDefaults
@@ -10,10 +11,13 @@ import androidx.compose.material3.SheetState
 import androidx.compose.material3.contentColorFor
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.window.DialogWindowProvider
 import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.scene.OverlayScene
@@ -75,6 +79,7 @@ private data class BottomSheetScene<T : Any>(
         sheetState = state
         val contentNestedScrollConnection = remember { SheetContentNestedScrollConnection() }
         val sheetContent: @Composable () -> Unit = {
+            KeepImeTargetUnderSheet()
             Box(Modifier.nestedScroll(contentNestedScrollConnection)) {
                 entry.Content()
             }
@@ -108,6 +113,26 @@ private data class BottomSheetScene<T : Any>(
         // Шторку убрали из back stack'а не жестом (PopBackStack, ReplaceScreen, NewRoot),
         // поэтому прячем ее с анимацией, а не обрываем. После свайпа шторка уже спрятана
         sheetState?.hide()
+    }
+}
+
+/**
+ * Окно шторки не работает с клавиатурой, как `AlertDialog` без полей ввода
+ * ([WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM]): клавиатурой все время управляет окно приложения.
+ *
+ * Иначе окно шторки, получив фокус, становится целью клавиатуры. Когда шторку закрывают, система
+ * удаляет окно-цель и на мгновение отдает клавиатуру системному контроллеру, а тот может ее показать:
+ * клавиатура мигает, пока фокус не вернется окну приложения. Шторке с полем ввода флаг нужно будет снять.
+ *
+ * Вызывается внутри контента шторки: он компонуется, когда окно шторки уже добавлено,
+ * но еще не получило фокус.
+ */
+@Composable
+private fun KeepImeTargetUnderSheet() {
+    val window = (LocalView.current.parent as? DialogWindowProvider)?.window
+    DisposableEffect(window) {
+        window?.addFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM)
+        onDispose {}
     }
 }
 
