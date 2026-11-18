@@ -80,14 +80,13 @@ internal fun BarsComposeScreen(
                         isLoading = state.profile.isLoading && !state.isLoginRequired,
                         onProfileClick = { onAccept(Ui.Click.Profile) },
                         onSettingsClick = { onAccept(Ui.Click.Settings) },
-                        modifier = Modifier.padding(bottom = 8.dp),
                     )
                 }
                 if (state.showingFromCacheReasons.isNotEmpty() && !state.isLoginRequired) {
                     item {
                         ShowingFromCacheBanner(
                             reasons = state.showingFromCacheReasons,
-                            modifier = Modifier.padding(bottom = 8.dp),
+                            modifier = Modifier.padding(vertical = 8.dp),
                         )
                     }
                 }
