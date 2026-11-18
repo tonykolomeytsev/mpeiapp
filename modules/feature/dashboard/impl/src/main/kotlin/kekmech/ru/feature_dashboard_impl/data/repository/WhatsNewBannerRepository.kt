@@ -20,6 +20,6 @@ internal class WhatsNewBannerRepository(
 
     private companion object {
 
-        const val IS_DISMISSED_KEY = "dashboard_whats_new_banner_dismissed_v2.4.0"
+        const val IS_DISMISSED_KEY = "dashboard_whats_new_banner_dismissed_v2.5.0"
     }
 }

@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -27,7 +28,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.composables.TwemojiSparkles
 import kekmech.ru.feature_dashboard_impl.R
 import kekmech.ru.ui_theme.theme.MpeixTheme
 import kekmech.ru.res_strings.R.string as Strings
@@ -117,30 +117,15 @@ internal fun WhatsNewBanner(
     ) {
         Row(
             // the end padding leaves room for the close button
-            modifier = Modifier.padding(start = 16.dp, end = 40.dp, top = 12.dp, bottom = 12.dp),
+            modifier = Modifier
+                .padding(start = 16.dp, end = 40.dp)
+                .heightIn(min = 48.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Column(
-                modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-            ) {
-                Text(
-                    text = stringResource(Strings.dashboard_banner_whats_new_header),
-                    style = MpeixTheme.typography.titleMedium,
-                    color = MpeixTheme.palette.onSurface,
-                )
-                Text(
-                    text = stringResource(Strings.dashboard_banner_whats_new_description),
-                    style = MpeixTheme.typography.bodyMedium,
-                    color = MpeixTheme.palette.onSurfaceVariant,
-                )
-            }
-            Image(
-                imageVector = TwemojiSparkles,
-                contentDescription = null,
-                modifier = Modifier
-                    .padding(start = 12.dp)
-                    .size(48.dp),
+            Text(
+                text = stringResource(Strings.dashboard_banner_whats_new_header),
+                style = MpeixTheme.typography.titleMedium,
+                color = MpeixTheme.palette.onSurface,
             )
         }
         IconButton(
