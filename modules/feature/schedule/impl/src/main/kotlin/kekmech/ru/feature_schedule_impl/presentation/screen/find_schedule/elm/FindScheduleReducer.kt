@@ -13,7 +13,8 @@ import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.Fi
 import kekmech.ru.feature_schedule_impl.presentation.screen.find_schedule.elm.FindScheduleState as State
 
 val GROUP_NUMBER_PATTERN = "[а-яА-Я]+-[а-яА-Я0-9]+-[0-9]+".toRegex()
-val PERSON_NAME_PATTERN = "[а-яА-Я]+\\s+([а-яА-Я]+\\s?)+".toRegex()
+// Ё and ё are outside of the А-я range, and teachers names may have them (e.g. Алёшин)
+val PERSON_NAME_PATTERN = "[а-яА-ЯёЁ]+\\s+([а-яА-ЯёЁ]+\\s?)+".toRegex()
 
 internal class FindScheduleReducer :
     ScreenReducer<Event, Ui, Internal, State, Effect, Command>(

@@ -98,6 +98,17 @@ class SearchReducerTest : BehaviorSpec({
                 )
             }
         }
+        When("Wish.Action.SearchContent (teacher name with ё)") {
+            val (_, _, actions) = reducer.reduce(
+                Ui.Action.SearchContent(QUERY_WITH_YO),
+                givenState
+            )
+            Then("Check actions") {
+                actions.shouldContainExactly(
+                    SearchCommand.SearchPersons(QUERY_WITH_YO_SIMPLIFIED)
+                )
+            }
+        }
         When("Wish.Action.SelectFilter (non-empty query)") {
             val (state, effects, actions) = reducer.reduce(
                 Ui.Action.SelectFilter(FILTER_ITEM_MAP),
@@ -188,6 +199,8 @@ class SearchReducerTest : BehaviorSpec({
 
         private const val QUERY_EMPTY = ""
         private const val QUERY_NON_EMPTY = "Кек)))"
+        private const val QUERY_WITH_YO = " Алёшин  Иван "
+        private const val QUERY_WITH_YO_SIMPLIFIED = "АЛЁШИН ИВАН"
         private val STATE = SearchState(query = QUERY_EMPTY)
         private val FILTER_ITEM_MAP = FilterItem(FilterItemType.MAP, false)
         private val NOTES_RESULTS = listOf(Note("", LocalDateTime.now(), "", target = 0))

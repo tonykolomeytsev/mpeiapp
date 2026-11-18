@@ -45,6 +45,19 @@ class FindScheduleReducerTest : BehaviorSpec({
                 actions.shouldContainExactly(FindScheduleCommand.FindSchedule(CORRECT_NAME))
             }
         }
+        When("Wish.Click.Continue (teacher name with ё)") {
+            val (state, effects, actions) = reducer
+                .reduce(Ui.Click.Continue(TEACHER_NAME_WITH_YO), givenState)
+            Then("Check state") {
+                state.isLoading.shouldBeTrue()
+            }
+            Then("Check effects") {
+                effects.shouldBeEmpty()
+            }
+            Then("Check actions") {
+                actions.shouldContainExactly(FindScheduleCommand.FindSchedule(TEACHER_NAME_WITH_YO))
+            }
+        }
         When("Wish.Click.Continue (invalid input)") {
             val (state, effects, actions) = reducer
                 .reduce(Ui.Click.Continue(INVALID_NAME), givenState)
@@ -178,6 +191,7 @@ class FindScheduleReducerTest : BehaviorSpec({
             selectScheduleAfterSuccess = false
         )
         private const val CORRECT_NAME = "С-06-18"
+        private const val TEACHER_NAME_WITH_YO = "Алёшин Иван Николаевич"
         private const val INVALID_NAME = "С-vv--"
         private val UNKNOWN_ERROR = IllegalStateException("Unknown error!")
     }

@@ -1,5 +1,6 @@
 plugins {
     alias(mpeix.plugins.lib.android)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
