@@ -69,7 +69,7 @@ public class MockServer(
             routing {
                 // region schedule
                 getScheduleV1()
-                getSearchResultsV1()
+                getSearchResultsV1(assetManager)
                 // end region
 
                 // region map
