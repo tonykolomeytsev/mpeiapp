@@ -13,7 +13,7 @@
 Расписание пар, заметки, личный кабинет БАРС и крутая карта для студентов и преподавателей НИУ МЭИ. Самое функциональное, легковесное и стабильное МЭИшное приложение.
 
 **Фичи приложения:**
-+ Просмотр расписаний **групп и преподавателей**
++ Просмотр расписаний **групп, преподавателей и аудиторий**
 + Карта корпусов, общежитий, мест общепита, известных мест кампуса МЭИ и кафедр.
 + Добавление **заметок** к парам.
 + Просмотр ЛК **БАРС**.
@@ -50,11 +50,10 @@
 
 + **Jetpack Compose** + **Material 3** для UI
 + TEA/ELM для presenter слоя на базе Vivid Money [**Elmslie**](https://github.com/vivid-money/elmslie)
-+ **Navigation 3** (`androidx.navigation3`) с собственной обёрткой `Router` в `lib_navigation`
++ **Navigation 3** (`androidx.navigation3`) с собственной обёрткой `Router`
 + **Retrofit** + **OkHttp** + **kotlinx.serialization** для REST Api
-+ **Kotlin Coroutines + Flow** во всем приложении, ни капельки RxJava
++ **Kotlin Coroutines + Flow** во всем приложении
 + **Room** + **KSP** для хранения в БД заметок и избранных расписаний
-+ **MMKV** и **DataStore** для хранения настроек и кэша
 + **Firebase**: Crashlytics, Analytics, Remote Config
 + **Coil** для загрузки картинок
 + **DI Koin**
@@ -86,14 +85,14 @@
 
    [**Инструкция**](https://support.google.com/firebase/answer/7015592?hl=en) по получению `google-services.json`.
 
-1. В глобальный `~/.gradle/gradle.properties` добавьте поле `mpeiapp_google_maps_api_key=YOUR_KEY`, где `YOUR_KEY` - ключ от API Google Maps (без кавычек, иначе они попадут в значение ключа). На CI ключ берется из переменной окружения `MAP_KEY`. [**Инструкция**](https://developers.google.com/maps/gmp-get-started) по получению ключа.
+2. В глобальный `~/.gradle/gradle.properties` добавьте поле `mpeiapp_google_maps_api_key=YOUR_KEY`, где `YOUR_KEY` - ключ от API Google Maps (без кавычек, иначе они попадут в значение ключа). На CI ключ берется из переменной окружения `MAP_KEY`. [**Инструкция**](https://developers.google.com/maps/gmp-get-started) по получению ключа.
 
-1. Скачайте и установите JDK 17 версии, укажите в настройках проекта java 17 по умолчанию для Gradle и компилятора Kotlin:
+3. Скачайте и установите JDK 17 версии, укажите в настройках проекта java 17 по умолчанию для Gradle и компилятора Kotlin:
 
    - Windows/Linux: `File -> Settings -> Build, Execution, Deployment -> Build Tools -> Gradle`
    - macOS: `Android Studio -> Settings… -> Build, Execution, Deployment -> Build Tools -> Gradle`
 
-1. Установите плагин **Kotest**, с ним будет проще гонять тесты.
+4. Установите плагин **Kotest**, с ним будет проще гонять тесты.
 
 После первых двух пунктов проект соберется, после двух других начнут работать тесты. Для сборки нужен JDK 17: все модули компилируются под JVM 17.
 
