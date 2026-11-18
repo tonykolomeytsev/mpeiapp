@@ -14,10 +14,17 @@ android {
         applicationId = "kekmech.ru.mpeiapp"
         versionName = "2.4.2"
         versionCode = 60
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        // Switches the app to the mock backend before it starts, see MpeixTestRunner
+        testInstrumentationRunner = "kekmech.ru.mpeiapp.MpeixTestRunner"
+        // Orchestrator wipes the app data before every test, so the tests don't depend on each other
+        testInstrumentationRunnerArguments["clearPackageData"] = "true"
         ndk {
             abiFilters("armeabi-v7a", "arm64-v8a", "x86", "x86_64")
         }
+    }
+
+    testOptions {
+        animationsDisabled = true
     }
 
     buildTypes {
@@ -123,4 +130,13 @@ dependencies {
     qaImplementation(project(":debug_menu"))
     debugImplementation(project(":lib_chucker"))
     qaImplementation(project(":lib_chucker"))
+
+    androidTestImplementation(platform(libs.compose.bom))
+    androidTestImplementation(libs.compose.ui.test.junit4)
+    androidTestImplementation(libs.androidx.test.runner)
+    androidTestImplementation(libs.androidx.test.ext.junit)
+    // Compose UI test brings Espresso 3.5.0, which crashes on Android 15+ (InputManager.getInstance is gone)
+    androidTestImplementation(libs.androidx.test.espresso.core)
+    // Orchestrator is switched on in the convention plugins (testOptions.execution)
+    androidTestUtil(libs.androidx.test.orchestrator)
 }
