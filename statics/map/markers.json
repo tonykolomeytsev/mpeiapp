@@ -498,6 +498,17 @@
     "uid": "6bfdcf78-4b47-4b65-b261-bffddbd1df46"
   },
   {
+    "address": "Лапина ул., 17Гс3",
+    "icon": "Ш",
+    "location": {
+      "lat": 55.756401,
+      "lng": 37.710952
+    },
+    "name": "Корпус Ш",
+    "type": "BUILDING",
+    "uid": "b180affd-1b98-4848-a505-8d281def4742"
+  },
+  {
     "address": "Красноказарменная ул., 13",
     "icon": "Э",
     "location": {
