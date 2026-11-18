@@ -5,6 +5,7 @@ import kekmech.ru.feature_search_impl.item.FilterItemType.GROUPS
 import kekmech.ru.feature_search_impl.item.FilterItemType.MAP
 import kekmech.ru.feature_search_impl.item.FilterItemType.NOTES
 import kekmech.ru.feature_search_impl.item.FilterItemType.PERSONS
+import kekmech.ru.feature_search_impl.item.FilterItemType.ROOMS
 import kekmech.ru.feature_search_impl.item.compareFilter
 import kekmech.ru.feature_search_impl.screens.main.elm.SearchEvent.Internal
 import kekmech.ru.feature_search_impl.screens.main.elm.SearchEvent.Ui
@@ -27,6 +28,7 @@ internal class SearchReducer :
             is Internal.SearchMapSuccess -> state { copy(searchResultsMap = event.results) }
             is Internal.SearchGroupsSuccess -> state { copy(searchResultsGroups = event.results) }
             is Internal.SearchPersonsSuccess -> state { copy(searchResultsPersons = event.results) }
+            is Internal.SearchRoomsSuccess -> state { copy(searchResultsRooms = event.results) }
         }
     }
 
@@ -72,6 +74,7 @@ internal class SearchReducer :
             +Command.SearchMap(simplifiedQuery).takeIf { selectedFilter.compareFilter(MAP) }
             +Command.SearchGroups(simplifiedQuery).takeIf { selectedFilter.compareFilter(GROUPS) }
             +Command.SearchPersons(simplifiedQuery).takeIf { selectedFilter.compareFilter(PERSONS) }
+            +Command.SearchRooms(simplifiedQuery).takeIf { selectedFilter.compareFilter(ROOMS) }
         }
     }
 }

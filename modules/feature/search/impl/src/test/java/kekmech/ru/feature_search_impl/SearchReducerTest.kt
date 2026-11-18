@@ -54,7 +54,8 @@ class SearchReducerTest : BehaviorSpec({
                     SearchCommand.SearchNotes(simplifiedQuery),
                     SearchCommand.SearchMap(simplifiedQuery),
                     SearchCommand.SearchGroups(simplifiedQuery),
-                    SearchCommand.SearchPersons(simplifiedQuery)
+                    SearchCommand.SearchPersons(simplifiedQuery),
+                    SearchCommand.SearchRooms(simplifiedQuery),
                 )
             }
         }
@@ -73,6 +74,17 @@ class SearchReducerTest : BehaviorSpec({
                 val simplifiedQuery = QUERY_NON_EMPTY.simplify()
                 actions.shouldContainExactly(
                     SearchCommand.SearchGroups(simplifiedQuery)
+                )
+            }
+        }
+    }
+    Given("Initial state (non-empty query, filter rooms)") {
+        val givenState = STATE.copy(query = QUERY_ROOM, selectedFilter = FilterItemType.ROOMS)
+        When("Wish.Init") {
+            val (_, _, actions) = reducer.reduce(Ui.Init, givenState)
+            Then("Check actions") {
+                actions.shouldContainExactly(
+                    SearchCommand.SearchRooms("М 1/2")
                 )
             }
         }
@@ -192,6 +204,21 @@ class SearchReducerTest : BehaviorSpec({
                 actions.shouldBeEmpty()
             }
         }
+        When("News.SearchRoomsSuccess") {
+            val (state, effects, actions) = reducer.reduce(
+                Internal.SearchRoomsSuccess(ROOM_RESULTS),
+                givenState
+            )
+            Then("Check state") {
+                state.searchResultsRooms.shouldContainExactly(ROOM_RESULTS)
+            }
+            Then("Check effects") {
+                effects.shouldBeEmpty()
+            }
+            Then("Check actions") {
+                actions.shouldBeEmpty()
+            }
+        }
     }
 }) {
 
@@ -201,6 +228,7 @@ class SearchReducerTest : BehaviorSpec({
         private const val QUERY_NON_EMPTY = "Кек)))"
         private const val QUERY_WITH_YO = " Алёшин  Иван "
         private const val QUERY_WITH_YO_SIMPLIFIED = "АЛЁШИН ИВАН"
+        private const val QUERY_ROOM = " м  1/2 "
         private val STATE = SearchState(query = QUERY_EMPTY)
         private val FILTER_ITEM_MAP = FilterItem(FilterItemType.MAP, false)
         private val NOTES_RESULTS = listOf(Note("", LocalDateTime.now(), "", target = 0))
@@ -212,6 +240,9 @@ class SearchReducerTest : BehaviorSpec({
         )
         private val GROUP_RESULTS = listOf(
             SearchResult("", "С-06-18", "", ScheduleType.GROUP)
+        )
+        private val ROOM_RESULTS = listOf(
+            SearchResult("", "М 1/2", "", ScheduleType.ROOM)
         )
     }
 }

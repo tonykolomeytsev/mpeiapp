@@ -16,6 +16,9 @@ val GROUP_NUMBER_PATTERN = "[а-яА-Я]+-[а-яА-Я0-9]+-[0-9]+".toRegex()
 // Ё and ё are outside of the А-я range, and teachers names may have them (e.g. Алёшин)
 val PERSON_NAME_PATTERN = "[а-яА-ЯёЁ]+\\s+([а-яА-ЯёЁ]+\\s?)+".toRegex()
 
+/** Same as the backend's `VALID_ROOM_NAME_PATTERN`: `Б-405`, `Ж-120а`, `М 1/2` */
+val ROOM_NAME_PATTERN = "[а-яА-Я]+(-[0-9]+[а-яА-Я]?| [0-9]+/[0-9]+)".toRegex()
+
 internal class FindScheduleReducer :
     ScreenReducer<Event, Ui, Internal, State, Effect, Command>(
         uiEventClass = Ui::class,
@@ -56,7 +59,7 @@ internal class FindScheduleReducer :
         when (event) {
             is Ui.Init -> Unit
             is Ui.Click.Continue -> {
-                if (event.scheduleName.isValidGroupNumberOrPersonName()) {
+                if (event.scheduleName.isValidScheduleName()) {
                     state { copy(isLoading = true) }
                     commands { +Command.FindSchedule(name = event.scheduleName) }
                 } else {
@@ -79,6 +82,10 @@ internal class FindScheduleReducer :
         }
     }
 
-    private fun String.isValidGroupNumberOrPersonName() =
-        isNotBlank() && (matches(GROUP_NUMBER_PATTERN) || matches(PERSON_NAME_PATTERN))
+    private fun String.isValidScheduleName() =
+        isNotBlank() && (
+            matches(GROUP_NUMBER_PATTERN) ||
+                matches(PERSON_NAME_PATTERN) ||
+                matches(ROOM_NAME_PATTERN)
+            )
 }

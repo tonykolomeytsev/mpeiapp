@@ -58,6 +58,36 @@ class FindScheduleReducerTest : BehaviorSpec({
                 actions.shouldContainExactly(FindScheduleCommand.FindSchedule(TEACHER_NAME_WITH_YO))
             }
         }
+        ROOM_NAMES.forEach { roomName ->
+            When("Wish.Click.Continue (room $roomName)") {
+                val (state, effects, actions) = reducer
+                    .reduce(Ui.Click.Continue(roomName), givenState)
+                Then("Check state") {
+                    state.isLoading.shouldBeTrue()
+                }
+                Then("Check effects") {
+                    effects.shouldBeEmpty()
+                }
+                Then("Check actions") {
+                    actions.shouldContainExactly(FindScheduleCommand.FindSchedule(roomName))
+                }
+            }
+        }
+        INVALID_ROOM_NAMES.forEach { roomName ->
+            When("Wish.Click.Continue (invalid room $roomName)") {
+                val (state, effects, actions) = reducer
+                    .reduce(Ui.Click.Continue(roomName), givenState)
+                Then("Check state") {
+                    state.isLoading.shouldBeFalse()
+                }
+                Then("Check effects") {
+                    effects.shouldContainExactly(FindScheduleEffect.ShowInvalidInputError)
+                }
+                Then("Check actions") {
+                    actions.shouldBeEmpty()
+                }
+            }
+        }
         When("Wish.Click.Continue (invalid input)") {
             val (state, effects, actions) = reducer
                 .reduce(Ui.Click.Continue(INVALID_NAME), givenState)
@@ -193,6 +223,8 @@ class FindScheduleReducerTest : BehaviorSpec({
         private const val CORRECT_NAME = "С-06-18"
         private const val TEACHER_NAME_WITH_YO = "Алёшин Иван Николаевич"
         private const val INVALID_NAME = "С-vv--"
+        private val ROOM_NAMES = listOf("Б-405", "Ж-120а", "ГПМ-1", "М 1/2", "А 10/101")
+        private val INVALID_ROOM_NAMES = listOf("Б-", "Б-405аб", "Б 1/", "Б  1/2", "Б-1/2", "B-405")
         private val UNKNOWN_ERROR = IllegalStateException("Unknown error!")
     }
 }

@@ -39,6 +39,7 @@ internal class SelectedScheduleSource(
         // derive type from name if it is absent in preferences (for app update v1+ to v2+)
         val selectedScheduleType = when {
             selectedScheduleName.matches(GroupNumberPattern) -> ScheduleType.GROUP
+            selectedScheduleName.matches(RoomNamePattern) -> ScheduleType.ROOM
             else -> ScheduleType.PERSON
         }
 
@@ -67,5 +68,8 @@ internal class SelectedScheduleSource(
         private const val KeySelectedScheduleType = "selected_schedule_type"
 
         val GroupNumberPattern = "[а-яА-Я]+-[а-яА-Я0-9]+-[0-9]+".toRegex()
+
+        /** Same as the backend's `VALID_ROOM_NAME_PATTERN`: `Б-405`, `Ж-120а`, `М 1/2` */
+        val RoomNamePattern = "[а-яА-Я]+(-[0-9]+[а-яА-Я]?| [0-9]+/[0-9]+)".toRegex()
     }
 }

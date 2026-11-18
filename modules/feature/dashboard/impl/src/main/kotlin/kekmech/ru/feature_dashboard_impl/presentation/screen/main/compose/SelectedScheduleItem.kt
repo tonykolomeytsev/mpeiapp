@@ -44,6 +44,7 @@ internal fun SelectedScheduleItem(
                     when (type) {
                         ScheduleType.GROUP -> Icons.ic_groups_black_24
                         ScheduleType.PERSON -> Icons.ic_person_24
+                        ScheduleType.ROOM -> Icons.ic_meeting_room_24
                     }
                 ),
                 contentDescription = null,

@@ -81,4 +81,5 @@ public enum class ClassesType : Serializable {
 public enum class ScheduleType(public val pathName: String) : Serializable {
     GROUP("group"),
     PERSON("person"),
+    ROOM("room"),
 }

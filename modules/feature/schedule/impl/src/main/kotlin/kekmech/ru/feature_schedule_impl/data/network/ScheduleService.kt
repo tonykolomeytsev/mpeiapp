@@ -15,7 +15,8 @@ internal interface ScheduleService {
     @GET("v1/{type}/{name}/schedule/{weekOffset}")
     suspend fun getSchedule(
         @Path("type") type: String,
-        @Path("name", encoded = true) name: String,
+        // Not pre-encoded: room names like `Б 1/2` contain a slash, which must become `%2F`
+        @Path("name") name: String,
         @Path("weekOffset") weekOffset: Int,
     ): ScheduleDto
 
