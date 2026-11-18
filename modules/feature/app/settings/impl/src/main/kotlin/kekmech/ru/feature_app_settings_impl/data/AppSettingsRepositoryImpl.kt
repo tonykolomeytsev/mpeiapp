@@ -26,7 +26,7 @@ internal class AppSettingsRepositoryImpl(
             else -> AppTheme.System
         },
     )
-    private var isSnowEnabled by preferences.boolean("app_is_snow_enabled", true)
+    private var isSnowEnabled by preferences.boolean("app_is_snow_enabled_2026", true)
     private var showNavigationButton by preferences.boolean("show_nav_fab", true)
     private var autoHideBottomSheet by preferences.boolean("map_auto_hide_bottom_sheet", true)
     private var languageCode: String by preferences.string(
