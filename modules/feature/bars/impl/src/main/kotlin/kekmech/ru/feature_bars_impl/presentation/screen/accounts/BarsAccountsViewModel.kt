@@ -9,8 +9,8 @@ import io.github.tonykolomeytsev.mpeix.sdk.MpeixSdk
 import io.github.tonykolomeytsev.mpeix.sdk.ProfileId
 import kekmech.ru.feature_bars_impl.data.repository.BarsProfileIdRepository
 import kekmech.ru.feature_bars_impl.navigation.BarsLoginScreenKey
-import kekmech.ru.lib_navigation.AddScreenForward
 import kekmech.ru.lib_navigation.PopBackStack
+import kekmech.ru.lib_navigation.ReplaceScreen
 import kekmech.ru.lib_navigation.Router
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -76,7 +76,8 @@ internal class BarsAccountsViewModel(
     }
 
     override fun onAddAccount() {
-        router.executeCommand(AddScreenForward(BarsLoginScreenKey()))
+        // The login replaces the sheet: back from it leads to the screen under the sheet
+        router.executeCommand(ReplaceScreen(BarsLoginScreenKey()))
     }
 
     override fun onAccountClick(account: Account) {
@@ -86,7 +87,7 @@ internal class BarsAccountsViewModel(
             router.executeCommand(PopBackStack())
         } else {
             // Expired session, unfinished login: the SDK prefills the username or resumes the live attempt
-            router.executeCommand(AddScreenForward(BarsLoginScreenKey(account.id.value)))
+            router.executeCommand(ReplaceScreen(BarsLoginScreenKey(account.id.value)))
         }
     }
 
