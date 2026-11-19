@@ -19,7 +19,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -31,6 +30,7 @@ import io.github.tonykolomeytsev.mpeix.sdk.Discipline
 import kekmech.ru.ext_kotlin.capitalizeSafe
 import kekmech.ru.feature_bars_impl.navigation.BarsDetailsScreenKey
 import kekmech.ru.feature_bars_impl.presentation.compose.MarkItem
+import kekmech.ru.feature_bars_impl.presentation.compose.highlight
 import kekmech.ru.feature_bars_impl.presentation.compose.numeric
 import kekmech.ru.feature_bars_impl.presentation.compose.previewDiscipline
 import kekmech.ru.ui_kit_lists.SectionHeader
@@ -201,14 +201,6 @@ private fun ActivityProperty(text: String, value: String) {
         style = MpeixTheme.typography.bodyMedium,
         color = MpeixTheme.palette.onSurfaceVariant,
     )
-}
-
-private fun String.highlight(value: String, style: SpanStyle): AnnotatedString {
-    val start = indexOf(value)
-    return buildAnnotatedString {
-        append(this@highlight)
-        if (start >= 0) addStyle(style, start, start + value.length)
-    }
 }
 
 @Composable
