@@ -61,15 +61,17 @@ private fun Float.markColors(): Pair<Color, Color> =
 @PreviewLightDark
 @Composable
 private fun MarkItemPreview() {
-    Row(
-        modifier = Modifier.padding(16.dp),
-        horizontalArrangement = Arrangement.spacedBy(4.dp),
-    ) {
-        MarkItem(mark = 5f)
-        MarkItem(mark = 4.5f)
-        MarkItem(mark = 3f)
-        MarkItem(mark = 2f)
-        MarkItem(mark = 0f)
-        MarkItem(mark = -1f, text = "–")
+    MpeixTheme {
+        Row(
+            modifier = Modifier.padding(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(4.dp),
+        ) {
+            MarkItem(mark = 5f)
+            MarkItem(mark = 4.5f)
+            MarkItem(mark = 3f)
+            MarkItem(mark = 2f)
+            MarkItem(mark = 0f)
+            MarkItem(mark = -1f, text = "–")
+        }
     }
 }
