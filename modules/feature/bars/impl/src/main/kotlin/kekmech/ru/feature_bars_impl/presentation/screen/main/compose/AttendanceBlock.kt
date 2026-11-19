@@ -26,12 +26,12 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
+import io.github.tonykolomeytsev.mpeix.sdk.Attendance
 import kekmech.ru.feature_bars_impl.presentation.compose.StackPart
 import kekmech.ru.feature_bars_impl.presentation.compose.StackedBar
+import kekmech.ru.feature_bars_impl.presentation.compose.formatPercent
 import kekmech.ru.feature_bars_impl.presentation.compose.highlight
 import kekmech.ru.ui_theme.theme.MpeixTheme
-import java.text.NumberFormat
-import java.util.Locale
 import kekmech.ru.res_strings.R.string as Strings
 
 @Immutable
@@ -43,6 +43,14 @@ internal data class AttendanceBriefUi(
     val attended: Int get() = total - totalAbsence
     val unexcusedAbsence: Int get() = totalAbsence - excusedAbsence
 }
+
+/** The site's "Пропущено" is `excused + unexcused`. [Attendance.lessons] counts upcoming lessons too. */
+internal fun Attendance.toBrief(): AttendanceBriefUi =
+    AttendanceBriefUi(
+        total = lessons,
+        totalAbsence = excused + unexcused,
+        excusedAbsence = excused,
+    )
 
 /**
  * Brief attendance info: the share of absences without a valid reason and a [StackedBar] with
@@ -62,7 +70,7 @@ internal fun AttendanceBlock(
             .clickable(onClick = onClick)
             .fillMaxWidth()
             .background(
-                color = MpeixTheme.palette.surfaceContainer,
+                color = MpeixTheme.palette.secondary,
                 shape = shape,
             )
             .padding(horizontal = 16.dp, vertical = 16.dp),
@@ -82,7 +90,7 @@ internal fun AttendanceBlock(
                 )
                 if (model.unexcusedAbsence > 0 && model.total > 0) {
                     val locale = LocalConfiguration.current.locales[0]
-                    val percent = remember(model, locale) { model.unexcusedAbsencePercent(locale) }
+                    val percent = remember(model, locale) { formatPercent(model.unexcusedAbsence, model.total, locale) }
                     val text = stringResource(Strings.bars_attendance_unexcused, percent)
                     val highlightColor = MpeixTheme.palette.onSurface
                     Text(
@@ -128,12 +136,6 @@ internal fun AttendanceBlock(
         )
     }
 }
-
-/** E.g. "2,1 %" for ru and "2.1%" for en. */
-private fun AttendanceBriefUi.unexcusedAbsencePercent(locale: Locale): String =
-    NumberFormat.getPercentInstance(locale)
-        .apply { maximumFractionDigits = 2 }
-        .format(unexcusedAbsence.toDouble() / total)
 
 @Composable
 @PreviewLightDark

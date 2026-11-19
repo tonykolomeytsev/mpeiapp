@@ -26,3 +26,10 @@ internal class CloseBarsLogin : Command {
  */
 @Parcelize
 internal data class BarsDetailsScreenKey(val disciplineId: String) : ScreenKey
+
+/**
+ * Attendance of one semester: per discipline and the list of absences. [semesterId] is `SemesterId.value` of the
+ * semester the brief on the main screen showed, so both screens describe the same semester.
+ */
+@Parcelize
+internal data class BarsAttendanceScreenKey(val semesterId: String) : ScreenKey

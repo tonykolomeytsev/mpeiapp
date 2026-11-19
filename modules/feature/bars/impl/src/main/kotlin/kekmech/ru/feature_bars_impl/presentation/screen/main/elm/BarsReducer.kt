@@ -33,6 +33,7 @@ internal class BarsReducer :
                                 showingFromCacheReasons = emptySet(),
                                 disciplines = Resource.Loading,
                                 semesterName = null,
+                                attendance = Resource.Loading,
                             )
                         }
                     }
@@ -78,6 +79,26 @@ internal class BarsReducer :
                 }
             }
 
+            is Internal.ObserveAttendanceSuccess -> {
+                state { copy(attendance = event.attendance.toResource()) }
+            }
+
+            // The brief is hidden without data. A failure keeps what was shown, unless it was another semester:
+            // the brief must not show the old semester next to the grades of a new one
+            is Internal.ObserveAttendanceFailure -> {
+                state {
+                    val shown = attendance.value
+                    val isSameSemester = event.semesterId == null || event.semesterId == shown?.semesterId
+                    copy(
+                        attendance = if (shown != null && isSameSemester) {
+                            attendance
+                        } else {
+                            event.throwable.toResource()
+                        },
+                    )
+                }
+            }
+
             is Internal.RefreshSuccess -> {
                 state { copy(isLoading = false) }
             }
@@ -90,6 +111,7 @@ internal class BarsReducer :
                     +Command.SubscribeAuthStatus
                     +Command.ObserveProfile
                     +Command.ObserveMarks
+                    +Command.ObserveAttendance
                     +Command.ObserveCacheReasons
                 }
                 state {
@@ -114,6 +136,11 @@ internal class BarsReducer :
             is Ui.Click.Discipline -> {
                 // The details screen reads the discipline from the SDK by its id: stable across refreshes
                 commands { +Command.OpenDetails(event.discipline.id) }
+            }
+
+            is Ui.Click.Attendance -> {
+                // The screen shows the semester of the brief, even if the grades moved on meanwhile
+                commands { +state.attendance.value?.let { Command.OpenAttendance(it.semesterId) } }
             }
 
             is Ui.Action.PullToRefresh -> {

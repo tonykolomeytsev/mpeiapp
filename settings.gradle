@@ -42,7 +42,7 @@ dependencyResolutionManagement {
         // The private real runtime, only for builds with -Pmpeix.sdk.real (CI). Stub builds never touch it.
         // Credentials (a token with read:packages): githubPackagesUsername / githubPackagesPassword, or the
         // ghp_user / ghp_pass pair, in ~/.gradle/gradle.properties; on CI ORG_GRADLE_PROJECT_githubPackagesUsername/Password.
-        if (providers.gradleProperty("mpeix.sdk.real").present || System.getenv("CI") == "true") {
+        if (providers.gradleProperty("mpeix.sdk.real").map { it != "false" }.getOrElse(false) || System.getenv("CI") == "true") {
             def ghUser = providers.gradleProperty("githubPackagesUsername").orElse(providers.gradleProperty("ghp_user"))
             def ghToken = providers.gradleProperty("githubPackagesPassword").orElse(providers.gradleProperty("ghp_pass"))
             if (!ghUser.present || !ghToken.present) {

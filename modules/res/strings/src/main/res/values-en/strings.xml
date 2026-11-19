@@ -211,6 +211,15 @@
     <string name="bars_attendance_title">Attendance</string>
     <string name="bars_attendance_unexcused">Unexcused absences: %s</string>
     <string name="bars_attendance_no_unexcused">No unexcused absences</string>
+    <string name="bars_attendance_disciplines_header">By discipline</string>
+    <string name="bars_attendance_disciplines_subtitle">Share of unexcused absences</string>
+    <string name="bars_attendance_disciplines_empty">No attendance data</string>
+    <string name="bars_attendance_absences_header">Absences</string>
+    <string name="bars_attendance_absences_empty_title">No absences</string>
+    <string name="bars_attendance_absences_empty_subtitle">You haven\'t missed a single class this semester</string>
+    <string name="bars_attendance_class_number">Class %d</string>
+    <string name="bars_attendance_excused">Excused</string>
+    <string name="bars_attendance_not_excused">Unexcused</string>
     <string name="bars_details_weight">Weight: %s%%</string>
     <string name="bars_details_deadline">Deadline: week %s</string>
     <string name="bars_details_final_grades">Final grades</string>

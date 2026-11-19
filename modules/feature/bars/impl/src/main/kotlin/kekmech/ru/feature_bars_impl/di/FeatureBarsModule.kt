@@ -11,6 +11,7 @@ import kekmech.ru.feature_bars_impl.data.repository.BarsProfileIdRepository
 import kekmech.ru.feature_bars_impl.data.sdk.SdkCrashlyticsEventSink
 import kekmech.ru.feature_bars_impl.navigation.BarsNavEntries
 import kekmech.ru.feature_bars_impl.presentation.screen.accounts.BarsAccountsViewModel
+import kekmech.ru.feature_bars_impl.presentation.screen.attendance.BarsAttendanceViewModel
 import kekmech.ru.feature_bars_impl.presentation.screen.details.BarsDetailsViewModel
 import kekmech.ru.feature_bars_impl.presentation.screen.login.BarsLoginViewModel
 import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsActor
@@ -29,6 +30,7 @@ val FeatureBarsModule = module {
     factoryOf(::BarsActor)
     singleOf(::BarsStoreFactory)
     viewModelOf(::BarsAccountsViewModel)
+    viewModelOf(::BarsAttendanceViewModel)
     viewModelOf(::BarsDetailsViewModel)
     viewModelOf(::BarsLoginViewModel)
 

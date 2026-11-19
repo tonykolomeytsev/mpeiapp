@@ -2,6 +2,7 @@ package kekmech.ru.feature_bars_impl.navigation
 
 import androidx.navigation3.runtime.EntryProviderScope
 import kekmech.ru.feature_bars_impl.presentation.screen.accounts.BarsAccountsEntry
+import kekmech.ru.feature_bars_impl.presentation.screen.attendance.BarsAttendanceEntry
 import kekmech.ru.feature_bars_impl.presentation.screen.details.BarsDetailsScreen
 import kekmech.ru.feature_bars_impl.presentation.screen.login.BarsLoginEntry
 import kekmech.ru.feature_bars_impl.presentation.screen.main.BarsEntry
@@ -18,5 +19,6 @@ internal class BarsNavEntries : NavEntries {
         bottomSheetEntry<BarsAccountsScreenKey> { BarsAccountsEntry() }
         entry<BarsLoginScreenKey> { BarsLoginEntry(it) }
         bottomSheetEntry<BarsDetailsScreenKey> { BarsDetailsScreen(it) }
+        entry<BarsAttendanceScreenKey> { BarsAttendanceEntry(it) }
     }
 }

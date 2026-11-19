@@ -211,6 +211,15 @@
     <string name="bars_attendance_title">Посещаемость</string>
     <string name="bars_attendance_unexcused">Пропущено %s без уважительной причины</string>
     <string name="bars_attendance_no_unexcused">Нет пропусков без уважительной причины</string>
+    <string name="bars_attendance_disciplines_header">По дисциплинам</string>
+    <string name="bars_attendance_disciplines_subtitle">Доля пропусков без уважительной причины</string>
+    <string name="bars_attendance_disciplines_empty">Нет данных о посещаемости</string>
+    <string name="bars_attendance_absences_header">Пропуски</string>
+    <string name="bars_attendance_absences_empty_title">Пропусков нет</string>
+    <string name="bars_attendance_absences_empty_subtitle">В этом семестре вы не пропустили ни одного занятия</string>
+    <string name="bars_attendance_class_number">%d пара</string>
+    <string name="bars_attendance_excused">По уважительной причине</string>
+    <string name="bars_attendance_not_excused">Без уважительной причины</string>
     <string name="bars_details_weight">Вес: %s%%</string>
     <string name="bars_details_deadline">Срок: %s неделя</string>
     <string name="bars_details_final_grades">Итоговые оценки</string>
