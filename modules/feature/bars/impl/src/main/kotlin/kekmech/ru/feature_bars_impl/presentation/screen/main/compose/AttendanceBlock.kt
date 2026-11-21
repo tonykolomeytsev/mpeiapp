@@ -23,6 +23,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
@@ -85,7 +86,7 @@ internal fun AttendanceBlock(
             ) {
                 Text(
                     text = stringResource(Strings.bars_attendance_title),
-                    style = MpeixTheme.typography.titleSmall,
+                    style = MpeixTheme.typography.bodyLarge,
                     color = MpeixTheme.palette.onSurface,
                 )
                 if (model.unexcusedAbsence > 0 && model.total > 0) {
@@ -95,9 +96,9 @@ internal fun AttendanceBlock(
                     val highlightColor = MpeixTheme.palette.onSurface
                     Text(
                         text = remember(text, percent, highlightColor) {
-                            text.highlight(percent, SpanStyle(color = highlightColor))
+                            text.highlight(percent, SpanStyle(color = highlightColor, fontWeight = FontWeight.Medium))
                         },
-                        style = MpeixTheme.typography.bodySmall,
+                        style = MpeixTheme.typography.bodyMedium,
                         color = MpeixTheme.palette.onSurfaceVariant,
                     )
                 } else {
@@ -112,7 +113,7 @@ internal fun AttendanceBlock(
                 imageVector = Icons.AutoMirrored.Outlined.KeyboardArrowRight,
                 contentDescription = null,
                 tint = MpeixTheme.palette.onSurfaceVariant,
-                modifier = Modifier.size(18.dp),
+                modifier = Modifier.size(24.dp),
             )
         }
         StackedBar(
