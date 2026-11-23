@@ -4,6 +4,9 @@ plugins {
 }
 
 dependencies {
+    testImplementation(libs.kotest.assertions)
+    testImplementation(libs.kotest.runner)
+
     implementation(libs.compose.activity)
     implementation(libs.compose.material3)
     implementation(libs.compose.material.icons)
@@ -20,12 +23,14 @@ dependencies {
     implementation(libs.koin.core)
     implementation(libs.koin.compose)
     implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.androidx.work.runtime)
     implementation(libs.vivid.elmslie.core)
     implementation(libs.timber)
 
     implementation(libs.androidx.navigation3.runtime)
     implementation(project(":ext_koin"))
     implementation(project(":lib_app_info"))
+    implementation(project(":lib_app_lifecycle"))
     implementation(project(":feature_app_settings_api"))
     implementation(project(":feature_bars_api"))
 

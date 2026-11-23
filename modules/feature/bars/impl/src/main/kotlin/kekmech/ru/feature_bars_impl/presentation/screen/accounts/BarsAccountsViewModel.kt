@@ -4,9 +4,7 @@ import androidx.compose.runtime.Immutable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.github.tonykolomeytsev.mpeix.sdk.Account
-import io.github.tonykolomeytsev.mpeix.sdk.AccountStatus
 import io.github.tonykolomeytsev.mpeix.sdk.MpeixSdk
-import io.github.tonykolomeytsev.mpeix.sdk.ProfileId
 import kekmech.ru.feature_bars_impl.data.repository.BarsProfileIdRepository
 import kekmech.ru.feature_bars_impl.navigation.BarsLoginScreenKey
 import kekmech.ru.lib_navigation.PopBackStack
@@ -81,7 +79,8 @@ internal class BarsAccountsViewModel(
     }
 
     override fun onAccountClick(account: Account) {
-        val profileId = account.profileIdToSwitch()
+        // Null if the account needs the login first
+        val profileId = barsProfileIdRepository.profileIdToOpen(account)
         if (profileId != null) {
             barsProfileIdRepository.saveCurrentProfileId(profileId)
             router.executeCommand(PopBackStack())
@@ -123,18 +122,5 @@ internal class BarsAccountsViewModel(
                 Timber.e(e, "Failed to remove BARS account")
             }
         }
-    }
-
-    /**
-     * Null if the account needs the login first. Keeps the current subaccount if this account is already active,
-     * otherwise takes the last one.
-     */
-    private fun Account.profileIdToSwitch(): ProfileId? {
-        if (status != AccountStatus.SignedIn) return null
-        val current = barsProfileIdRepository.currentProfileId.value
-        val subaccount = subaccounts.firstOrNull { current?.accountId == id && it.id == current.subaccountId }
-            ?: subaccounts.lastOrNull()
-            ?: return null
-        return ProfileId(id, subaccount.id)
     }
 }

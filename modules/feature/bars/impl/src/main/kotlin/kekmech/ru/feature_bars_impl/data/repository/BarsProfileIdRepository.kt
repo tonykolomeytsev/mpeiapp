@@ -2,6 +2,8 @@ package kekmech.ru.feature_bars_impl.data.repository
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
+import io.github.tonykolomeytsev.mpeix.sdk.Account
+import io.github.tonykolomeytsev.mpeix.sdk.AccountStatus
 import io.github.tonykolomeytsev.mpeix.sdk.MpeixSdk
 import io.github.tonykolomeytsev.mpeix.sdk.ProfileId
 import kekmech.ru.feature_bars_api.BarsLogoutHandle
@@ -49,6 +51,19 @@ internal class BarsProfileIdRepository(
     fun saveCurrentProfileId(id: ProfileId) {
         preferences.edit { putString(CURRENT_PROFILE_ID_KEY, id.encode()) }
         currentProfileId.value = id
+    }
+
+    /**
+     * The profile a signed in [account] opens with: the current one if it's of this account, else its last
+     * subaccount. Null if the account has no session to open it with.
+     */
+    fun profileIdToOpen(account: Account): ProfileId? {
+        if (account.status != AccountStatus.SignedIn) return null
+        val current = currentProfileId.value
+        val subaccount = account.subaccounts.firstOrNull { current?.accountId == account.id && it.id == current.subaccountId }
+            ?: account.subaccounts.lastOrNull()
+            ?: return null
+        return ProfileId(account.id, subaccount.id)
     }
 
     /** Forgets the current profile without touching the SDK session. */
