@@ -1,8 +1,10 @@
 package kekmech.ru.feature_bars_impl.presentation.screen.main.elm
 
 import androidx.compose.runtime.Immutable
+import io.github.tonykolomeytsev.mpeix.sdk.Attendance
 import io.github.tonykolomeytsev.mpeix.sdk.Discipline
 import io.github.tonykolomeytsev.mpeix.sdk.DisciplineId
+import io.github.tonykolomeytsev.mpeix.sdk.SemesterId
 import kekmech.ru.feature_bars_impl.presentation.screen.main.compose.ShowingFromCacheReason
 import kekmech.ru.lib_elm.Resource
 
@@ -15,7 +17,14 @@ internal data class BarsState(
     val showingFromCacheReasons: Set<ShowingFromCacheReason> = emptySet(),
     val disciplines: Resource<List<Discipline>> = Resource.Loading,
     val semesterName: String? = null,
+    val attendance: Resource<SemesterAttendance> = Resource.Loading,
     val isLoading: Boolean = false,
+)
+
+/** The "Всего" row of the semester whose grades are on screen. [semesterId] opens the attendance screen. */
+internal data class SemesterAttendance(
+    val semesterId: SemesterId,
+    val total: Attendance,
 )
 
 internal sealed interface AuthStatus {
@@ -39,6 +48,7 @@ internal sealed interface BarsEvent {
             data object Login : Click
             data object Profile : Click
             data class Discipline(val discipline: io.github.tonykolomeytsev.mpeix.sdk.Discipline) : Click
+            data object Attendance : Click
         }
 
         sealed interface Action : Ui {
@@ -56,6 +66,9 @@ internal sealed interface BarsEvent {
             val semesterName: String,
         ) : Internal
         data class ObserveMarksFailure(val throwable: Throwable) : Internal
+        data class ObserveAttendanceSuccess(val attendance: SemesterAttendance) : Internal
+        /** [semesterId] is null when the failure is not about one semester. */
+        data class ObserveAttendanceFailure(val throwable: Throwable, val semesterId: SemesterId? = null) : Internal
         data object RefreshSuccess : Internal
     }
 }
@@ -66,9 +79,11 @@ internal sealed interface BarsComposeCommand {
     data object OpenAccounts : BarsComposeCommand
     data object ObserveProfile : BarsComposeCommand
     data object ObserveMarks : BarsComposeCommand
+    data object ObserveAttendance : BarsComposeCommand
     data object ObserveCacheReasons : BarsComposeCommand
     data object Refresh : BarsComposeCommand
     data class OpenDetails(val disciplineId: DisciplineId) : BarsComposeCommand
+    data class OpenAttendance(val semesterId: SemesterId) : BarsComposeCommand
 }
 
 internal sealed interface BarsEffect

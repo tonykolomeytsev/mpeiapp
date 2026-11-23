@@ -12,16 +12,19 @@ import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import kekmech.ru.feature_bars_impl.presentation.screen.main.compose.AttendanceBlock
 import kekmech.ru.feature_bars_impl.presentation.screen.main.compose.DisciplineItem
 import kekmech.ru.feature_bars_impl.presentation.screen.main.compose.DisciplinesShimmer
 import kekmech.ru.feature_bars_impl.presentation.screen.main.compose.LoginPrompt
 import kekmech.ru.feature_bars_impl.presentation.screen.main.compose.ProfileTopBar
 import kekmech.ru.feature_bars_impl.presentation.screen.main.compose.ShowingFromCacheBanner
+import kekmech.ru.feature_bars_impl.presentation.screen.main.compose.toBrief
 import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsEffect
 import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsEvent
 import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsEvent.Ui
@@ -94,6 +97,17 @@ internal fun BarsComposeScreen(
                     item {
                         LoginPrompt(
                             onLoginClick = { onAccept(Ui.Click.Login) }
+                        )
+                    }
+                }
+                // Shown only with data: while loading or after a failed first load there is nothing to tell
+                val attendance = state.attendance.value
+                if (!state.isLoginRequired && attendance != null) {
+                    item {
+                        AttendanceBlock(
+                            model = remember(attendance.total) { attendance.total.toBrief() },
+                            onClick = { onAccept(Ui.Click.Attendance) },
+                            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
                         )
                     }
                 }

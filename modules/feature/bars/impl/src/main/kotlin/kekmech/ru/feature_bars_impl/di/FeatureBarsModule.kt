@@ -11,11 +11,16 @@ import kekmech.ru.feature_bars_impl.data.repository.BarsProfileIdRepository
 import kekmech.ru.feature_bars_impl.data.sdk.SdkCrashlyticsEventSink
 import kekmech.ru.feature_bars_impl.navigation.BarsNavEntries
 import kekmech.ru.feature_bars_impl.presentation.screen.accounts.BarsAccountsViewModel
+import kekmech.ru.feature_bars_impl.presentation.screen.attendance.BarsAttendanceViewModel
 import kekmech.ru.feature_bars_impl.presentation.screen.details.BarsDetailsViewModel
 import kekmech.ru.feature_bars_impl.presentation.screen.login.BarsLoginViewModel
 import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsActor
 import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsStoreFactory
+import kekmech.ru.feature_bars_impl.sync.BarsSyncInitializer
+import kekmech.ru.feature_bars_impl.sync.BarsSyncScheduler
+import kekmech.ru.feature_bars_impl.sync.SyncBarsUseCase
 import kekmech.ru.lib_app_info.AppVersionName
+import kekmech.ru.lib_app_lifecycle.AppLifecycleObserver
 import kekmech.ru.lib_navigation.NavEntries
 import org.koin.android.ext.koin.androidApplication
 import org.koin.core.module.dsl.factoryOf
@@ -29,6 +34,7 @@ val FeatureBarsModule = module {
     factoryOf(::BarsActor)
     singleOf(::BarsStoreFactory)
     viewModelOf(::BarsAccountsViewModel)
+    viewModelOf(::BarsAttendanceViewModel)
     viewModelOf(::BarsDetailsViewModel)
     viewModelOf(::BarsLoginViewModel)
 
@@ -47,6 +53,10 @@ val FeatureBarsModule = module {
         )
     }
     factoryOf(::BarsNavEntries) bindIntoList NavEntries::class
+
+    factoryOf(::BarsSyncScheduler)
+    factory { SyncBarsUseCase(get(), get()) }
+    factory { BarsSyncInitializer(inject(), get()) } bindIntoList AppLifecycleObserver::class
 }
 
 private val LogLevel.priority: Int

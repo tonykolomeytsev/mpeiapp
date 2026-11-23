@@ -43,7 +43,7 @@ internal fun DisciplineItem(
             ) { onClick.invoke(discipline) }
             .fillMaxWidth()
             .background(
-                color = MpeixTheme.palette.surfaceContainer,
+                color = MpeixTheme.palette.secondary,
                 shape = shape,
             )
             .padding(vertical = 12.dp, horizontal = 16.dp),

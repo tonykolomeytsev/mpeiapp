@@ -4,10 +4,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import io.github.tonykolomeytsev.mpeix.sdk.Attendance
+import io.github.tonykolomeytsev.mpeix.sdk.SemesterId
 import kekmech.ru.feature_bars_impl.presentation.compose.PreviewDisciplines
 import kekmech.ru.feature_bars_impl.presentation.screen.main.compose.ShowingFromCacheReason
 import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsProfile
 import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsState
+import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.SemesterAttendance
 import kekmech.ru.lib_elm.Resource
 import kekmech.ru.ui_theme.theme.MpeixTheme
 import kotlinx.coroutines.flow.emptyFlow
@@ -21,6 +24,7 @@ private fun BarsScreenDataPreview() = BarsScreenPreview(
         profile = PreviewProfile,
         disciplines = Resource.Data(PreviewDisciplines),
         semesterName = PreviewSemester,
+        attendance = PreviewAttendance,
     )
 )
 
@@ -32,6 +36,7 @@ private fun BarsScreenSessionExpiredPreview() = BarsScreenPreview(
         showingFromCacheReasons = setOf(ShowingFromCacheReason.SessionExpired, ShowingFromCacheReason.NetworkError),
         disciplines = Resource.Data(PreviewDisciplines),
         semesterName = PreviewSemester,
+        attendance = PreviewAttendance,
     )
 )
 
@@ -89,3 +94,9 @@ private fun BarsScreenPreview(state: BarsState) {
 
 private val PreviewProfile = Resource.Data(BarsProfile(name = "Антон Коломейцев", group = "С-12-16"))
 private const val PreviewSemester = "2025/2026, Весенний семестр"
+private val PreviewAttendance = Resource.Data(
+    SemesterAttendance(
+        semesterId = SemesterId("27"),
+        total = Attendance(lessons = 192, excused = 16, unexcused = 16),
+    )
+)

@@ -11,12 +11,15 @@ import kekmech.ru.feature_app_settings_api.AppSettingsFeatureLauncher
 import kekmech.ru.feature_bars_impl.data.repository.BarsProfileIdRepository
 import kekmech.ru.feature_bars_impl.data.sdk.SdkErrorException
 import kekmech.ru.feature_bars_impl.navigation.BarsAccountsScreenKey
+import kekmech.ru.feature_bars_impl.navigation.BarsAttendanceScreenKey
 import kekmech.ru.feature_bars_impl.navigation.BarsDetailsScreenKey
 import kekmech.ru.feature_bars_impl.presentation.firstLastName
 import kekmech.ru.feature_bars_impl.presentation.screen.main.compose.ShowingFromCacheReason
 import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsEvent.Internal
 import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsEvent.Internal.CacheReasonsChanged
 import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsEvent.Internal.CheckAuthStatusFailure
+import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsEvent.Internal.ObserveAttendanceFailure
+import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsEvent.Internal.ObserveAttendanceSuccess
 import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsEvent.Internal.ObserveMarksFailure
 import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsEvent.Internal.ObserveMarksSuccess
 import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.BarsEvent.Internal.ObserveProfileSuccess
@@ -32,6 +35,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
@@ -89,6 +93,26 @@ internal class BarsActor(
                     errorMapper = { ObserveMarksFailure(it.recorded("observeMarks")) },
                 )
 
+            // Attendance of the semester whose grades are on screen: a new semester in the grades switches it too
+            is Command.ObserveAttendance -> barsProfileIdRepository.currentProfileId
+                .filterNotNull()
+                .flatMapLatest { id ->
+                    sdk.bars.study.academicPerformance(id)
+                        .mapNotNull { it.value?.current?.info?.id }
+                        .distinctUntilChanged()
+                        .flatMapLatest { semesterId ->
+                            sdk.bars.attendance.summary(id, semesterId).map { semesterId to it }
+                        }
+                }
+                .mapNotNull { (semesterId, resource) ->
+                    resource.value?.let { ObserveAttendanceSuccess(SemesterAttendance(semesterId, it.total)) }
+                        ?: resource.firstLoadFailure()?.let { ObserveAttendanceFailure(it, semesterId) }
+                }
+                .mapEvents(
+                    eventMapper = { it },
+                    errorMapper = { ObserveAttendanceFailure(it.recorded("observeAttendance")) },
+                )
+
             // A starting refresh clears the previous failure in the SDK, so emissions during a refresh
             // are skipped: the banner keeps the reasons of the last finished refresh instead of blinking
             is Command.ObserveCacheReasons -> barsProfileIdRepository.currentProfileId
@@ -115,6 +139,12 @@ internal class BarsActor(
                 coroutineScope {
                     launch { sdk.bars.profile.refresh(id) }
                     launch { sdk.bars.study.refresh(id) }
+                    // The first emission is the cache, so this doesn't wait for the grades refresh.
+                    // If the refresh brings a new semester, its attendance loads by itself as it has no cache
+                    launch {
+                        val semesterId = sdk.bars.study.academicPerformance(id).first().value?.current?.info?.id
+                        if (semesterId != null) sdk.bars.attendance.refreshSummary(id, semesterId)
+                    }
                 }
             }.mapEvents(
                 eventMapper = { Internal.RefreshSuccess },
@@ -135,6 +165,12 @@ internal class BarsActor(
             is Command.OpenDetails -> actorFlow {
                 withContext(Dispatchers.Main) {
                     router.executeCommand(AddScreenForward(BarsDetailsScreenKey(command.disciplineId.value)))
+                }
+            }.mapEvents()
+
+            is Command.OpenAttendance -> actorFlow {
+                withContext(Dispatchers.Main) {
+                    router.executeCommand(AddScreenForward(BarsAttendanceScreenKey(command.semesterId.value)))
                 }
             }.mapEvents()
         }
