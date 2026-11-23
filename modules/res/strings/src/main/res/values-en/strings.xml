@@ -213,6 +213,7 @@
     <string name="bars_attendance_no_unexcused">No unexcused absences</string>
     <string name="bars_attendance_disciplines_header">By discipline</string>
     <string name="bars_attendance_disciplines_subtitle">Share of unexcused absences</string>
+    <string name="bars_attendance_discipline_unexcused_of_total">%1$d of %2$d</string>
     <string name="bars_attendance_disciplines_empty">No attendance data</string>
     <string name="bars_attendance_absences_header">Absences</string>
     <string name="bars_attendance_absences_empty_title">No absences</string>

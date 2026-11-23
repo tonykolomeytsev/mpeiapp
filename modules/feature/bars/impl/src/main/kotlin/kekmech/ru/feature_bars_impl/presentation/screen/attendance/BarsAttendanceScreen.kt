@@ -43,6 +43,8 @@ import io.github.tonykolomeytsev.mpeix.sdk.SiteDate
 import io.github.tonykolomeytsev.mpeix.sdk.SiteTime
 import kekmech.ru.ext_kotlin.capitalizeSafe
 import kekmech.ru.feature_bars_impl.data.sdk.SdkErrorException
+import kekmech.ru.feature_bars_impl.presentation.compose.StackPart
+import kekmech.ru.feature_bars_impl.presentation.compose.StackedBar
 import kekmech.ru.feature_bars_impl.presentation.compose.formatPercent
 import kekmech.ru.lib_elm.Resource
 import kekmech.ru.ui_kit_lists.SectionHeader
@@ -195,49 +197,95 @@ private fun LazyListScope.absencesSection(
     }
 }
 
-/** Name and assessment, then the unexcused share the site shows: `unexcused / lessons`. */
+/**
+ * Name and assessment, then the unexcused share the site shows: `unexcused / lessons` with
+ * "4 из 32" under it. At the bottom, a [StackedBar] colored like the brief's one. Without
+ * lessons, neither "0 из 0" nor the bar is shown.
+ */
 @Composable
 private fun DisciplineAttendanceItem(
     discipline: DisciplineAttendance,
     modifier: Modifier = Modifier,
 ) {
     val attendance = discipline.attendance
+    val hasLessons = attendance.lessons > 0
     val locale = LocalConfiguration.current.locales[0]
     val percent = remember(attendance, locale) {
         formatPercent(attendance.unexcused, attendance.lessons, locale)
     }
-    Row(
+    Column(
         modifier = modifier
             .fillMaxWidth()
             .background(MpeixTheme.palette.secondary, CardShape)
             .padding(vertical = 12.dp, horizontal = 16.dp),
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
-        verticalAlignment = Alignment.CenterVertically,
+        verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        Column(
-            modifier = Modifier.weight(1f),
-            verticalArrangement = Arrangement.spacedBy(4.dp),
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            verticalAlignment = Alignment.Top,
         ) {
-            Text(
-                text = discipline.name,
-                style = MpeixTheme.typography.bodyLarge,
-                color = MpeixTheme.palette.onSurface,
-            )
-            Text(
-                text = discipline.assessment.raw.capitalizeSafe(),
-                style = MpeixTheme.typography.bodyMedium,
-                color = MpeixTheme.palette.onSurfaceVariant,
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(4.dp),
+            ) {
+                Text(
+                    text = discipline.name,
+                    style = MpeixTheme.typography.bodyLarge,
+                    color = MpeixTheme.palette.onSurface,
+                )
+                Text(
+                    text = discipline.assessment.raw.capitalizeSafe(),
+                    style = MpeixTheme.typography.bodyMedium,
+                    color = MpeixTheme.palette.onSurfaceVariant,
+                )
+            }
+            Column(
+                horizontalAlignment = Alignment.End,
+                verticalArrangement = Arrangement.spacedBy(2.dp),
+            ) {
+                Text(
+                    text = percent,
+                    style = MpeixTheme.typography.titleMedium,
+                    color = if (attendance.unexcused > 0) {
+                        MpeixTheme.palette.onSurface
+                    } else {
+                        MpeixTheme.palette.onSurfaceVariant
+                    },
+                )
+                if (hasLessons) {
+                    Text(
+                        text = stringResource(
+                            Strings.bars_attendance_discipline_unexcused_of_total,
+                            attendance.unexcused,
+                            attendance.lessons,
+                        ),
+                        style = MpeixTheme.typography.bodySmall,
+                        color = MpeixTheme.palette.onSurfaceVariant,
+                    )
+                }
+            }
+        }
+        if (hasLessons) {
+            StackedBar(
+                parts = listOf(
+                    StackPart(
+                        value = attendance.lessons - attendance.excused - attendance.unexcused,
+                        color = MpeixTheme.palette.markGreen,
+                    ),
+                    StackPart(
+                        value = attendance.excused,
+                        color = MpeixTheme.palette.outlineVariant,
+                    ),
+                    StackPart(
+                        value = attendance.unexcused,
+                        color = MpeixTheme.palette.markRed,
+                    ),
+                ),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(8.dp),
             )
         }
-        Text(
-            text = percent,
-            style = MpeixTheme.typography.titleMedium,
-            color = if (attendance.unexcused > 0) {
-                MpeixTheme.palette.onSurface
-            } else {
-                MpeixTheme.palette.onSurfaceVariant
-            },
-        )
     }
 }
 
@@ -411,6 +459,7 @@ private val PreviewDisciplineAttendance = listOf(
     previewDisciplineAttendance("2", PreviewElectronics, Assessment.GradedCredit("зачёт с оценкой"), 32, 0, 4),
     previewDisciplineAttendance("3", PreviewEnglish, PreviewCredit, 32, 2, 0),
     previewDisciplineAttendance("4", "Физическая культура и спорт", PreviewCredit, 16, 0, 0),
+    previewDisciplineAttendance("5", "Учебная практика", PreviewCredit, 0, 0, 0),
 )
 
 private fun previewDisciplineAttendance(

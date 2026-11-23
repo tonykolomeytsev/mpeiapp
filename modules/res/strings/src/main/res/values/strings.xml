@@ -213,6 +213,7 @@
     <string name="bars_attendance_no_unexcused">Нет пропусков без уважительной причины</string>
     <string name="bars_attendance_disciplines_header">По дисциплинам</string>
     <string name="bars_attendance_disciplines_subtitle">Доля пропусков без уважительной причины</string>
+    <string name="bars_attendance_discipline_unexcused_of_total">%1$d из %2$d</string>
     <string name="bars_attendance_disciplines_empty">Нет данных о посещаемости</string>
     <string name="bars_attendance_absences_header">Пропуски</string>
     <string name="bars_attendance_absences_empty_title">Пропусков нет</string>
