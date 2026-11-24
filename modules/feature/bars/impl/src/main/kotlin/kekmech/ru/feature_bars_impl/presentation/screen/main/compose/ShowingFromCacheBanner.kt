@@ -1,6 +1,7 @@
 package kekmech.ru.feature_bars_impl.presentation.screen.main.compose
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,7 +13,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import kekmech.ru.feature_bars_impl.presentation.screen.main.compose.icon.CloudOff
@@ -34,19 +38,31 @@ internal enum class ShowingFromCacheReason {
  * Small gray banner above the marks when they are shown from the cache.
  * The title is always the same, below it there is one line for each of the [reasons].
  *
- * @param onClick null makes the banner not clickable
+ * @param onLoginClick called on a click anywhere on the banner. Only with
+ * [ShowingFromCacheReason.SessionExpired]: then the banner ends with "Войти" and is clickable
  */
 @Composable
 internal fun ShowingFromCacheBanner(
     reasons: Set<ShowingFromCacheReason>,
+    onLoginClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val isSessionExpired = ShowingFromCacheReason.SessionExpired in reasons
     Row(
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
             .adaptiveContentWidth()
             .padding(horizontal = 16.dp)
+            .then(
+                if (isSessionExpired) {
+                    Modifier
+                        .clip(BannerShape)
+                        .clickable(role = Role.Button, onClick = onLoginClick)
+                } else {
+                    Modifier
+                }
+            )
             .background(MpeixTheme.palette.surfaceContainer, BannerShape)
             .padding(horizontal = 12.dp, vertical = 10.dp),
     ) {
@@ -70,6 +86,14 @@ internal fun ShowingFromCacheBanner(
                 )
             }
         }
+        if (isSessionExpired) {
+            Text(
+                text = stringResource(Strings.bars_showing_from_cache_login),
+                style = MpeixTheme.typography.bodyMedium,
+                fontWeight = FontWeight.Medium,
+                color = MpeixTheme.palette.primary,
+            )
+        }
     }
 }
 
@@ -84,7 +108,15 @@ private val ShowingFromCacheReason.text: Int
 @Composable
 private fun ShowingFromCacheBannerAllReasonsPreview() {
     MpeixTheme {
-        ShowingFromCacheBanner(reasons = ShowingFromCacheReason.entries.toSet())
+        ShowingFromCacheBanner(reasons = ShowingFromCacheReason.entries.toSet(), onLoginClick = {})
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun ShowingFromCacheBannerSessionExpiredPreview() {
+    MpeixTheme {
+        ShowingFromCacheBanner(reasons = setOf(ShowingFromCacheReason.SessionExpired), onLoginClick = {})
     }
 }
 
@@ -92,6 +124,6 @@ private fun ShowingFromCacheBannerAllReasonsPreview() {
 @Composable
 private fun ShowingFromCacheBannerNetworkPreview() {
     MpeixTheme {
-        ShowingFromCacheBanner(reasons = setOf(ShowingFromCacheReason.NetworkError))
+        ShowingFromCacheBanner(reasons = setOf(ShowingFromCacheReason.NetworkError), onLoginClick = {})
     }
 }

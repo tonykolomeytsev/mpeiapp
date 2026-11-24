@@ -93,6 +93,8 @@ internal fun BarsComposeScreen(
                     item {
                         ShowingFromCacheBanner(
                             reasons = state.showingFromCacheReasons,
+                            // Opens the accounts list, like the profile click
+                            onLoginClick = { onAccept(Ui.Click.Login) },
                             modifier = Modifier.padding(vertical = 8.dp),
                         )
                     }
