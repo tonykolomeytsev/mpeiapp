@@ -12,8 +12,8 @@ android {
 
     defaultConfig {
         applicationId = "kekmech.ru.mpeiapp"
-        versionName = "2.6.0"
-        versionCode = 62
+        versionName = "2.6.1"
+        versionCode = 63
         // Switches the app to the mock backend before it starts, see MpeixTestRunner
         testInstrumentationRunner = "kekmech.ru.mpeiapp.MpeixTestRunner"
         // Orchestrator wipes the app data before every test, so the tests don't depend on each other
