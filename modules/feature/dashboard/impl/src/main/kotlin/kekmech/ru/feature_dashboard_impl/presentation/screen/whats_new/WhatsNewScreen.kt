@@ -37,7 +37,7 @@ internal fun WhatsNewScreen(
         topBar = {
             TopAppBar(
                 navigationIcon = { BackIconButton(onBackClick) },
-                title = stringResource(Strings.dashboard_banner_whats_new_header),
+                title = stringResource(Strings.whats_new_title),
             )
         },
         containerColor = MpeixTheme.palette.surface,

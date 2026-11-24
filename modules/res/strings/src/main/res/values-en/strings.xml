@@ -158,6 +158,7 @@
     <string name="dashboard_banner_lunch_header">Apparently,\nit`s lunch break now</string>
     <string name="dashboard_banner_lunch_description">Search for food on the map</string>
     <string name="dashboard_banner_whats_new_header">What\'s new?</string>
+    <string name="whats_new_title">What\'s new?</string>
     <string name="dashboard_search_field_text">Search in MPEI…</string>
     <string name="dashboard_day_status_semester">The academic week #%d is in progress</string>
     <string name="dashboard_day_status_not_semester">Non-academic week</string>

@@ -3,8 +3,6 @@ package kekmech.ru.feature_dashboard_impl.presentation.screen.whats_new
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.AnnotatedString
-import kekmech.ru.feature_dashboard_impl.presentation.screen.whats_new.WhatsNewBlock.Bullet
-import kekmech.ru.feature_dashboard_impl.presentation.screen.whats_new.WhatsNewBlock.Header
 import kekmech.ru.feature_dashboard_impl.presentation.screen.whats_new.WhatsNewBlock.Paragraph
 
 /**
@@ -30,30 +28,12 @@ internal sealed interface WhatsNewBlock {
 
 internal val WhatsNewContent: List<WhatsNewBlock> = listOf(
     Paragraph(
-        "Последнюю неделю я в основном тратил на невидимые глазу улучшения " +
-                "под капотом и избавление от технических долгов, которые накопил за несколько лет. " +
-                "Это поможет мне быстрее выпускать новый функционал в будущем."
+        "Небольшое обновление для вас. Лучше поздно, чем никогда — информация о посещаемости " +
+                "и пропусках теперь показывается в разделе профиля в БАРС."
     ),
-
-    Header("Что изменилось для вас"),
-    Bullet(
-        "Стали доступны расписания аудиторий. Можете делать с ними всё то же самое, " +
-                "что и с остальными расписаниями."
+    Paragraph(
+        "Мне всё ещё предстоит выяснить, как лучше отображать подобную информацию на экране " +
+                "мобильного устройства. Текущий вариант не финальный, будут эксперименты."
     ),
-    Bullet(
-        "Дни в расписаниях теперь можно скроллить бесконечно в обе стороны. С субботы " +
-                "на одной неделе можно перепрыгнуть на понедельник следующей."
-    ),
-    Bullet("Минорные визуальные изменения по всему приложению."),
-
-    Header("Что изменилось под капотом"),
-    Bullet(
-        "Приложение полностью переехало на Jetpack Compose и стало еще ближе " +
-                "к Kotlin Multi-Platform."
-    ),
-    Bullet("Приложение похудело с 4.3 до 3.9 мегабайт."),
-    Bullet(
-        "Я начал автоматизировать тестирование приложения с помощью UI-тестов. " +
-                "Это должно положительно сказаться на скорости выпуска будущих обновлений. "
-    ),
+    Paragraph("Впереди ещё много работы. Всем хорошей недели."),
 )
