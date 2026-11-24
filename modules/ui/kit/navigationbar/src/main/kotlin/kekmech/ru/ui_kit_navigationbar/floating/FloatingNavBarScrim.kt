@@ -74,13 +74,16 @@ public fun FloatingNavBarScrim(
 /**
  * Linear gradient has a visible edge where it starts, so the alpha follows an ease-in-out curve.
  * The transparent end keeps the scrim color to avoid gray tints in the middle of the gradient.
+ *
+ * By default the gradient spans the whole height. With [endY] it ends at that offset in pixels,
+ * and the scrim stays opaque below it.
  */
-private fun scrimBrush(color: Color): Brush {
+internal fun scrimBrush(color: Color, endY: Float = Float.POSITIVE_INFINITY): Brush {
     val colorStops = Array(ScrimGradientSteps + 1) { step ->
         val fraction = step.toFloat() / ScrimGradientSteps
         fraction to color.copy(alpha = color.alpha * EaseInOut.transform(fraction))
     }
-    return Brush.verticalGradient(colorStops = colorStops)
+    return Brush.verticalGradient(colorStops = colorStops, endY = endY)
 }
 
 private const val ScrimGradientSteps = 8
