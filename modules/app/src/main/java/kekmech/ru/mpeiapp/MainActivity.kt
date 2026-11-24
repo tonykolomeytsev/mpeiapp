@@ -79,18 +79,15 @@ class MainActivity : ComponentActivity() {
 
     private fun setUpSystemBars() {
         val darkTheme = appSettingsRepository.getAppSettings().isDarkThemeEnabled
-        enableEdgeToEdge(
-            statusBarStyle = SystemBarStyle.auto(
-                lightScrim = Color.TRANSPARENT,
-                darkScrim = Color.TRANSPARENT,
-                detectDarkMode = { darkTheme },
-            ),
-            navigationBarStyle = SystemBarStyle.auto(
-                lightScrim = Color.TRANSPARENT,
-                darkScrim = Color.TRANSPARENT,
-                detectDarkMode = { darkTheme },
-            ),
-        )
+        // Explicit light or dark style instead of SystemBarStyle.auto: with auto the system draws
+        // its own translucent scrim behind the 3-button navigation bar. Changing the theme
+        // recreates the activity, so there is nothing to detect at runtime
+        val style = if (darkTheme) {
+            SystemBarStyle.dark(Color.TRANSPARENT)
+        } else {
+            SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT)
+        }
+        enableEdgeToEdge(statusBarStyle = style, navigationBarStyle = style)
     }
 
     override fun onResume() {

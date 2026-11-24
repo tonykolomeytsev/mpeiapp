@@ -24,7 +24,6 @@ okhttp = "5.1.0"
 elmslie = "3.0.0"
 
 # Jetpack Compose Versions
-accompanist = "0.36.0"
 composeBom = "2026.06.01"
 
 # MockServer
@@ -120,9 +119,6 @@ compose-foundation = { module = "androidx.compose.foundation:foundation" }
 compose-material3 = { module = "androidx.compose.material3:material3" }
 compose-material-icons = { module = "androidx.compose.material:material-icons-core" }
 compose-activity = { module = "androidx.activity:activity-compose", version = "1.12.4" }
-
-## Accompanist
-accompanist-systemUiController = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }

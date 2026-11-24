@@ -156,6 +156,10 @@ public inline fun <reified K : ScreenKey> EntryProviderScope<ScreenKey>.bottomSh
     )
 }
 
+/** Экран зарегистрирован через [bottomSheetEntry] и открывается в нижней шторке */
+public val NavEntry<*>.isBottomSheet: Boolean
+    get() = BOTTOM_SHEET_METADATA_KEY in metadata
+
 @PublishedApi
 internal fun bottomSheetMetadata(
     properties: ModalBottomSheetProperties,

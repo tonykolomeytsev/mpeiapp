@@ -74,6 +74,7 @@ fun App(
                     // Screens pass results to each other through LocalResultEventBus
                     rememberResultEventBusNavEntryDecorator(),
                     rememberMainTabsNavEntryDecorator(),
+                    rememberSystemNavBarScrimNavEntryDecorator(),
                 ),
                 sceneStrategies = listOf(bottomSheetStrategy),
                 transitionSpec = { screenTransition() },

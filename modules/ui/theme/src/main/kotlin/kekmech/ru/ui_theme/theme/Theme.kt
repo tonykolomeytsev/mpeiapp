@@ -6,12 +6,8 @@ import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalInspectionMode
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import kekmech.ru.ui_theme.color.DarkMpeixPalette
 import kekmech.ru.ui_theme.color.DarkMpeixScheme
 import kekmech.ru.ui_theme.color.LightMpeixPalette
@@ -26,17 +22,6 @@ public fun MpeixTheme(
 ) {
     val colorScheme = if (darkTheme) DarkMpeixScheme else LightMpeixScheme
     val typography = remember { MpeixTypography() }
-    val isInPreview = LocalInspectionMode.current
-
-    if (!isInPreview) {
-        val systemUiController = rememberSystemUiController()
-        SideEffect {
-            systemUiController.setSystemBarsColor(
-                color = Color.Transparent,
-                darkIcons = !darkTheme,
-            )
-        }
-    }
 
     CompositionLocalProvider(
         LocalMpeixPalette provides if (darkTheme) DarkMpeixPalette else LightMpeixPalette,
