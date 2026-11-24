@@ -1,5 +1,9 @@
 package kekmech.ru.feature_bars_impl.presentation.screen.main
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
@@ -100,15 +104,25 @@ internal fun BarsComposeScreen(
                         )
                     }
                 }
-                // Shown only with data: while loading or after a failed first load there is nothing to tell
-                val attendance = state.attendance.value
-                if (!state.isLoginRequired && attendance != null) {
+                // Shown only with data: while loading or after a failed first load there is nothing to tell.
+                // The item stays in the list empty, so the block can expand into place when the data comes.
+                // It hides at once: the brief of an old semester must not linger next to the grades of a new one
+                if (!state.isLoginRequired) {
                     item {
-                        AttendanceBlock(
-                            model = remember(attendance.total) { attendance.total.toBrief() },
-                            onClick = { onAccept(Ui.Click.Attendance) },
-                            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-                        )
+                        val attendance = state.attendance.value
+                        AnimatedVisibility(
+                            visible = attendance != null,
+                            enter = fadeIn() + expandVertically(expandFrom = Alignment.Top),
+                            exit = ExitTransition.None,
+                        ) {
+                            if (attendance != null) {
+                                AttendanceBlock(
+                                    model = remember(attendance.total) { attendance.total.toBrief() },
+                                    onClick = { onAccept(Ui.Click.Attendance) },
+                                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                                )
+                            }
+                        }
                     }
                 }
                 when {
