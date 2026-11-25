@@ -4,7 +4,7 @@ import kekmech.ru.feature_app_settings_api.domain.model.AppSettings
 import kekmech.ru.feature_map_api.domain.model.MapMarker
 
 internal data class MapState(
-    val selectedTab: FilterTab = FilterTab.FOOD,
+    val selectedTab: FilterTab = FilterTab.BUILDINGS,
     val markers: List<MapMarker> = emptyList(),
     val appSettings: AppSettings,
     val loadingError: Throwable? = null,
