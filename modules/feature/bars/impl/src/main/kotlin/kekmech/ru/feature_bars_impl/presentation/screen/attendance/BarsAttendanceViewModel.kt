@@ -11,6 +11,7 @@ import io.github.tonykolomeytsev.mpeix.sdk.SemesterId
 import kekmech.ru.feature_bars_impl.data.repository.BarsProfileIdRepository
 import kekmech.ru.feature_bars_impl.data.sdk.SdkErrorException
 import kekmech.ru.feature_bars_impl.navigation.BarsAttendanceScreenKey
+import kekmech.ru.feature_bars_impl.presentation.compose.olderOf
 import kekmech.ru.lib_elm.Resource
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.coroutineScope
@@ -22,6 +23,7 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlin.time.Instant
 import io.github.tonykolomeytsev.mpeix.sdk.Resource as SdkResource
 
 @Immutable
@@ -32,6 +34,8 @@ internal data class BarsAttendanceState(
     val absences: Resource<List<Absence>> = Resource.Loading,
     /** Only a pull-to-refresh, the automatic first load shows the placeholders instead. */
     val isRefreshing: Boolean = false,
+    /** The older of the two pages, null until one of them is loaded. */
+    val updatedAt: Instant? = null,
 )
 
 /**
@@ -60,6 +64,7 @@ internal class BarsAttendanceViewModel(
                     disciplines = summary.toUiResource { it.disciplines },
                     absences = absences.toUiResource { it },
                     isRefreshing = isRefreshing,
+                    updatedAt = olderOf(summary.updatedAt, absences.updatedAt),
                 )
             }
         }

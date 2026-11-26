@@ -22,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import kekmech.ru.feature_bars_impl.presentation.compose.UpdatedAtCaption
 import kekmech.ru.feature_bars_impl.presentation.screen.main.compose.AttendanceBlock
 import kekmech.ru.feature_bars_impl.presentation.screen.main.compose.DisciplineItem
 import kekmech.ru.feature_bars_impl.presentation.screen.main.compose.DisciplinesShimmer
@@ -136,12 +137,23 @@ internal fun BarsComposeScreen(
                     }
 
                     state.disciplines is Resource.Data -> {
+                        val updatedAt = state.updatedAt
                         item {
                             SectionHeader(
                                 title = stringResource(Strings.bars_disciplines_header),
                                 subtitle = state.semesterName,
-                                modifier = Modifier.padding(bottom = 8.dp)
+                                modifier = Modifier.padding(bottom = if (updatedAt != null) 4.dp else 8.dp)
                             )
+                        }
+                        // Always, not only with the banner: without internet the student wants to know
+                        // how old the data is. Spaced like the time prediction under the header on the dashboard
+                        if (updatedAt != null) {
+                            item {
+                                UpdatedAtCaption(
+                                    updatedAt = updatedAt,
+                                    modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 12.dp),
+                                )
+                            }
                         }
                         if (state.disciplines.value.isEmpty()) {
                             item {
