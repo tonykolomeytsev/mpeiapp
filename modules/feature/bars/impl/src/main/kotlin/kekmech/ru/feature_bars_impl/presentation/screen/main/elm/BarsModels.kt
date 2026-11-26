@@ -5,8 +5,10 @@ import io.github.tonykolomeytsev.mpeix.sdk.Attendance
 import io.github.tonykolomeytsev.mpeix.sdk.Discipline
 import io.github.tonykolomeytsev.mpeix.sdk.DisciplineId
 import io.github.tonykolomeytsev.mpeix.sdk.SemesterId
+import kekmech.ru.feature_bars_impl.presentation.compose.olderOf
 import kekmech.ru.feature_bars_impl.presentation.screen.main.compose.ShowingFromCacheReason
 import kekmech.ru.lib_elm.Resource
+import kotlin.time.Instant
 
 // region: STATE
 
@@ -17,14 +19,22 @@ internal data class BarsState(
     val showingFromCacheReasons: Set<ShowingFromCacheReason> = emptySet(),
     val disciplines: Resource<List<Discipline>> = Resource.Loading,
     val semesterName: String? = null,
+    /** When the grades were downloaded, null until they are loaded. */
+    val disciplinesUpdatedAt: Instant? = null,
     val attendance: Resource<SemesterAttendance> = Resource.Loading,
     val isLoading: Boolean = false,
-)
+) {
+    /** The older of the grades and the attendance brief: everything on screen is at least this fresh. */
+    val updatedAt: Instant?
+        get() = olderOf(disciplinesUpdatedAt, attendance.value?.updatedAt)
+}
 
 /** The "Всего" row of the semester whose grades are on screen. [semesterId] opens the attendance screen. */
 internal data class SemesterAttendance(
     val semesterId: SemesterId,
     val total: Attendance,
+    /** When the attendance page was downloaded. */
+    val updatedAt: Instant? = null,
 )
 
 internal sealed interface AuthStatus {
@@ -64,6 +74,7 @@ internal sealed interface BarsEvent {
         data class ObserveMarksSuccess(
             val disciplines: List<Discipline>,
             val semesterName: String,
+            val updatedAt: Instant?,
         ) : Internal
         data class ObserveMarksFailure(val throwable: Throwable) : Internal
         data class ObserveAttendanceSuccess(val attendance: SemesterAttendance) : Internal

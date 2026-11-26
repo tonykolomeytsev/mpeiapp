@@ -205,6 +205,7 @@
     <string name="bars_showing_from_cache_logged_out">BARS session has expired</string>
     <string name="bars_showing_from_cache_network">Problems with internet connection</string>
     <string name="bars_showing_from_cache_login">Log in</string>
+    <string name="bars_updated_at">Updated %s</string>
     <string name="bars_disciplines_header">Disciplines</string>
     <string name="bars_disciplines_empty_title">Nothing here yet</string>
     <string name="bars_disciplines_empty_subtitle">The list of disciplines for this semester is not available yet</string>

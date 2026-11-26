@@ -86,6 +86,7 @@ internal class BarsActor(
                     ObserveMarksSuccess(
                         disciplines = performance.current.disciplines,
                         semesterName = performance.current.info.title,
+                        updatedAt = resource.updatedAt,
                     )
                 }
                 .mapEvents(
@@ -105,7 +106,8 @@ internal class BarsActor(
                         }
                 }
                 .mapNotNull { (semesterId, resource) ->
-                    resource.value?.let { ObserveAttendanceSuccess(SemesterAttendance(semesterId, it.total)) }
+                    resource.value
+                        ?.let { ObserveAttendanceSuccess(SemesterAttendance(semesterId, it.total, resource.updatedAt)) }
                         ?: resource.firstLoadFailure()?.let { ObserveAttendanceFailure(it, semesterId) }
                 }
                 .mapEvents(

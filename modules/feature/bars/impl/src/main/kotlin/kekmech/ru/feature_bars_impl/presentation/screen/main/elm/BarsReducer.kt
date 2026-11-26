@@ -33,6 +33,7 @@ internal class BarsReducer :
                                 showingFromCacheReasons = emptySet(),
                                 disciplines = Resource.Loading,
                                 semesterName = null,
+                                disciplinesUpdatedAt = null,
                                 attendance = Resource.Loading,
                             )
                         }
@@ -62,6 +63,7 @@ internal class BarsReducer :
                     copy(
                         disciplines = event.disciplines.toResource(),
                         semesterName = event.semesterName,
+                        disciplinesUpdatedAt = event.updatedAt,
                         isLoginRequired = false,
                     )
                 }

@@ -45,6 +45,7 @@ import kekmech.ru.ext_kotlin.capitalizeSafe
 import kekmech.ru.feature_bars_impl.data.sdk.SdkErrorException
 import kekmech.ru.feature_bars_impl.presentation.compose.StackPart
 import kekmech.ru.feature_bars_impl.presentation.compose.StackedBar
+import kekmech.ru.feature_bars_impl.presentation.compose.UpdatedAtCaption
 import kekmech.ru.feature_bars_impl.presentation.compose.formatPercent
 import kekmech.ru.lib_elm.Resource
 import kekmech.ru.ui_kit_lists.SectionHeader
@@ -57,6 +58,7 @@ import kekmech.ru.ui_theme.theme.MpeixTheme
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Locale
+import kotlin.time.Instant
 import kekmech.ru.res_strings.R.string as Strings
 
 private val CardShape = RoundedCornerShape(12.dp)
@@ -108,7 +110,7 @@ internal fun BarsAttendanceScreen(
                     bottom = innerPadding.calculateBottomPadding() + 24.dp,
                 ),
             ) {
-                disciplinesSection(state.disciplines, onReloadDisciplines)
+                disciplinesSection(state.disciplines, state.updatedAt, onReloadDisciplines)
                 absencesSection(state.absences, onReloadAbsences)
             }
         }
@@ -117,14 +119,25 @@ internal fun BarsAttendanceScreen(
 
 private fun LazyListScope.disciplinesSection(
     disciplines: Resource<List<DisciplineAttendance>>,
+    updatedAt: Instant?,
     onReloadClick: () -> Unit,
 ) {
     item(key = "disciplines_header") {
         SectionHeader(
             title = stringResource(Strings.bars_attendance_disciplines_header),
             subtitle = stringResource(Strings.bars_attendance_disciplines_subtitle),
-            modifier = Modifier.padding(bottom = 8.dp),
+            modifier = Modifier.padding(bottom = if (updatedAt != null) 4.dp else 8.dp),
         )
+    }
+    // Always: without internet the student wants to know how old the data is.
+    // Spaced like the time prediction under the header on the dashboard
+    if (updatedAt != null) {
+        item(key = "updated_at") {
+            UpdatedAtCaption(
+                updatedAt = updatedAt,
+                modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 12.dp),
+            )
+        }
     }
     when (disciplines) {
         is Resource.Loading -> item(key = "disciplines_shimmer") { CardsShimmer() }
@@ -402,6 +415,7 @@ private fun BarsAttendanceScreenPreview() {
             state = BarsAttendanceState(
                 disciplines = Resource.Data(PreviewDisciplineAttendance),
                 absences = Resource.Data(PreviewAbsences),
+                updatedAt = PreviewUpdatedAt,
             ),
             onBackClick = {},
             onRefresh = {},
@@ -438,6 +452,7 @@ private fun BarsAttendanceScreenEmptyAndErrorPreview() {
                     }
                 ),
                 absences = Resource.Error(SdkErrorException(SdkError.NoConnection(PreviewDiagnosticId))),
+                updatedAt = PreviewUpdatedAt,
             ),
             onBackClick = {},
             onRefresh = {},
@@ -448,6 +463,7 @@ private fun BarsAttendanceScreenEmptyAndErrorPreview() {
 }
 
 private val PreviewDiagnosticId = DiagnosticId("preview")
+private val PreviewUpdatedAt = Instant.parse("2026-04-14T11:35:00Z")
 
 private const val PreviewTau = "Теория автоматического управления, часть 2"
 private const val PreviewElectronics = "Электроника"

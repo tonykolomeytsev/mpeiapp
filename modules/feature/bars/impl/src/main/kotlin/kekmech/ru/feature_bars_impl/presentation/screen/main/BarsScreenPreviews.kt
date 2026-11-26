@@ -14,6 +14,7 @@ import kekmech.ru.feature_bars_impl.presentation.screen.main.elm.SemesterAttenda
 import kekmech.ru.lib_elm.Resource
 import kekmech.ru.ui_theme.theme.MpeixTheme
 import kotlinx.coroutines.flow.emptyFlow
+import kotlin.time.Instant
 
 // Previews of the BarsComposeScreen states, the screen itself is in BarsScreen.kt
 
@@ -24,6 +25,7 @@ private fun BarsScreenDataPreview() = BarsScreenPreview(
         profile = PreviewProfile,
         disciplines = Resource.Data(PreviewDisciplines),
         semesterName = PreviewSemester,
+        disciplinesUpdatedAt = PreviewUpdatedAt,
         attendance = PreviewAttendance,
     )
 )
@@ -36,6 +38,7 @@ private fun BarsScreenSessionExpiredPreview() = BarsScreenPreview(
         showingFromCacheReasons = setOf(ShowingFromCacheReason.SessionExpired, ShowingFromCacheReason.NetworkError),
         disciplines = Resource.Data(PreviewDisciplines),
         semesterName = PreviewSemester,
+        disciplinesUpdatedAt = PreviewUpdatedAt,
         attendance = PreviewAttendance,
     )
 )
@@ -94,9 +97,11 @@ private fun BarsScreenPreview(state: BarsState) {
 
 private val PreviewProfile = Resource.Data(BarsProfile(name = "Антон Коломейцев", group = "С-12-16"))
 private const val PreviewSemester = "2025/2026, Весенний семестр"
+private val PreviewUpdatedAt = Instant.parse("2026-04-14T11:35:00Z")
 private val PreviewAttendance = Resource.Data(
     SemesterAttendance(
         semesterId = SemesterId("27"),
         total = Attendance(lessons = 192, excused = 16, unexcused = 16),
+        updatedAt = PreviewUpdatedAt,
     )
 )
